@@ -17,18 +17,18 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ObjectHolder;
-import wayoftime.bloodmagic.api.event.BloodMagicCraftedEvent;
-import wayoftime.bloodmagic.impl.BloodMagicAPI;
-import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
-import wayoftime.bloodmagic.tile.container.ContainerSoulForge;
-import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.api.compat.IDemonWill;
 import wayoftime.bloodmagic.api.compat.IDemonWillConduit;
 import wayoftime.bloodmagic.api.compat.IDemonWillGem;
+import wayoftime.bloodmagic.api.event.BloodMagicCraftedEvent;
+import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
+import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
+import wayoftime.bloodmagic.tile.container.ContainerSoulForge;
+import wayoftime.bloodmagic.util.Constants;
 
-public class TileSoulForge extends TileInventory
-		implements ITickableTileEntity, INamedContainerProvider, IDemonWillConduit
+public class TileSoulForge extends TileInventory implements ITickableTileEntity, INamedContainerProvider, IDemonWillConduit
 {
 	@ObjectHolder("bloodmagic:soulforge")
 	public static TileEntityType<TileSoulForge> TYPE;
@@ -108,6 +108,27 @@ public class TileSoulForge extends TileInventory
 		{
 			burnTime = 0;
 			return;
+		}
+
+		if (!getWorld().isRemote)
+		{
+			for (EnumDemonWillType type : EnumDemonWillType.values())
+			{
+				double willInWorld = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, type);
+				double filled = Math.min(willInWorld, worldWillTransferRate);
+
+				if (filled > 0)
+				{
+					filled = this.fillDemonWill(type, filled, false);
+					filled = WorldDemonWillHandler.drainWill(getWorld(), pos, type, filled, false);
+
+					if (filled > 0)
+					{
+						this.fillDemonWill(type, filled, true);
+						WorldDemonWillHandler.drainWill(getWorld(), pos, type, filled, true);
+					}
+				}
+			}
 		}
 
 		double soulsInGem = getWill(EnumDemonWillType.DEFAULT);
@@ -237,8 +258,7 @@ public class TileSoulForge extends TileInventory
 
 		if (soulStack != null)
 		{
-			if (soulStack.getItem() instanceof IDemonWill
-					&& ((IDemonWill) soulStack.getItem()).getType(soulStack) == type)
+			if (soulStack.getItem() instanceof IDemonWill && ((IDemonWill) soulStack.getItem()).getType(soulStack) == type)
 			{
 				IDemonWill soul = (IDemonWill) soulStack.getItem();
 				return soul.getWill(type, soulStack);
@@ -260,8 +280,7 @@ public class TileSoulForge extends TileInventory
 
 		if (soulStack != null)
 		{
-			if (soulStack.getItem() instanceof IDemonWill
-					&& ((IDemonWill) soulStack.getItem()).getType(soulStack) == type)
+			if (soulStack.getItem() instanceof IDemonWill && ((IDemonWill) soulStack.getItem()).getType(soulStack) == type)
 			{
 				IDemonWill soul = (IDemonWill) soulStack.getItem();
 				double souls = soul.drainWill(type, soulStack, requested);
