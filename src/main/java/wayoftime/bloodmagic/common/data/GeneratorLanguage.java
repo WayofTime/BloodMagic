@@ -159,6 +159,9 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.upgradeRemoveRitual", "Sound of the Cleansing Soul");
 		add("ritual.bloodmagic.armourEvolveRitual", "Ritual of Living Evolution");
 		add("ritual.bloodmagic.animalGrowthRitual", "Ritual of the Shepherd");
+		add("ritual.bloodmagic.crystalHarvestRitual", "Crack of the Fractured Crystal");
+		add("ritual.bloodmagic.forsakenSoulRitual", "Gathering of the Forsaken Souls");
+		add("ritual.bloodmagic.crystalSplitRitual", "Resonance of the Faceted Crystal");
 
 		add("ritual.bloodmagic.cobblestoneRitual", "Le Vulcanos Frigius");
 		add("ritual.bloodmagic.placerRitual", "The Filler");

@@ -2,6 +2,15 @@
 Version 3.0.1
 ------------------------------------------------------
 
+Reimplemented the following rituals:
+	- Resonance of the Faceted Crystal
+	- Crack of the Fractured Crystal
+	- Reap of the Harvest Moon
+
+------------------------------------------------------
+Version 3.0.1
+------------------------------------------------------
+
 - Reimplemented the Incense Altar with all appropriate blocks.
 - Added guide entries for the Incense Altar and Blood Altar. Other misc entries added, too.
 - Fixed a server-related crash on the client on the Sigil of the Green Grove.

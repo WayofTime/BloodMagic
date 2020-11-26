@@ -55,6 +55,7 @@ import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.impl.BloodMagicCorePlugin;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
+import wayoftime.bloodmagic.ritual.ModRituals;
 import wayoftime.bloodmagic.ritual.RitualManager;
 import wayoftime.bloodmagic.structures.ModDungeons;
 import wayoftime.bloodmagic.tile.TileAlchemicalReactionChamber;
@@ -163,6 +164,7 @@ public class BloodMagic
 		OrbRegistry.tierMap.put(BloodMagicItems.ORB_MASTER.get().getTier(), new ItemStack(BloodMagicItems.MASTER_BLOOD_ORB.get()));
 		BloodMagicCorePlugin.INSTANCE.register(BloodMagicAPI.INSTANCE);
 		RITUAL_MANAGER.discover();
+		ModRituals.initHarvestHandlers();
 	}
 
 	public void registerTileEntityTypes(RegistryEvent.Register<TileEntityType<?>> event)

@@ -62,7 +62,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 {
 	public static int[] soulBracket = new int[] { 16, 60, 200, 400, 1000 };
 	public static double[] defaultDamageAdded = new double[] { 0.5, 1, 1.5, 2, 2.5 };
-	public static double[] destructiveDamageAdded = new double[] { 2, 3, 4, 5, 6 };
+	public static double[] destructiveDamageAdded = new double[] { 1, 1.5, 2, 2.5, 3 };
 	public static double[] vengefulDamageAdded = new double[] { 0, 0.5, 1, 1.5, 2 };
 	public static double[] steadfastDamageAdded = new double[] { 0, 0.5, 1, 1.5, 2 };
 	public static double[] defaultDigSpeedAdded = new double[] { 1, 1.5, 2, 3, 4 };
@@ -296,8 +296,6 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 				continue;
 			}
 
-			if (!net.minecraftforge.common.ForgeHooks.onPlayerAttackTarget(attacker, targetEntity))
-				continue;
 			if (targetEntity.canBeAttackedWithItem())
 			{
 				if (!targetEntity.hitByEntity(attacker))
@@ -447,6 +445,8 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 									int k = (int) ((double) f5 * 0.5D);
 									((ServerWorld) attacker.world).spawnParticle(ParticleTypes.DAMAGE_INDICATOR, targetEntity.getPosX(), targetEntity.getPosYHeight(0.5D), targetEntity.getPosZ(), k, 0.1D, 0.0D, 0.1D, 0.2D);
 								}
+
+								applyEffectToEntity(type, willBracket, (LivingEntity) targetEntity, attacker);
 							}
 
 						} else
@@ -506,7 +506,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 			if (!target.isAlive())
 			{
 				float absorption = attacker.getAbsorptionAmount();
-				attacker.addPotionEffect(new EffectInstance(Effects.ABSORPTION, absorptionTime[willBracket], 127));
+				attacker.addPotionEffect(new EffectInstance(Effects.ABSORPTION, absorptionTime[willBracket], 127, true, false));
 				attacker.setAbsorptionAmount((float) Math.min(absorption + target.getMaxHealth() * 0.05f, maxAbsorptionHearts));
 			}
 			break;
