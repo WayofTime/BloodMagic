@@ -6,6 +6,8 @@ Reimplemented the following rituals:
 	- Resonance of the Faceted Crystal
 	- Crack of the Fractured Crystal
 	- Reap of the Harvest Moon
+	- Ritual of the Shepherd
+	- Ritual of the Green Grove
 
 ------------------------------------------------------
 Version 3.0.1

@@ -24,25 +24,25 @@ public class BloodMagicAPI implements IBloodMagicAPI
 
 	public static final BloodMagicAPI INSTANCE = new BloodMagicAPI();
 
-//	private final BloodMagicBlacklist blacklist;
+	private final BloodMagicBlacklist blacklist;
 	private final BloodMagicRecipeRegistrar recipeRegistrar;
 	private final BloodMagicValueManager valueManager;
 	private final Multimap<ComponentType, BlockState> altarComponents;
 
 	public BloodMagicAPI()
 	{
-//		this.blacklist = new BloodMagicBlacklist();
+		this.blacklist = new BloodMagicBlacklist();
 		this.recipeRegistrar = new BloodMagicRecipeRegistrar();
 		this.valueManager = new BloodMagicValueManager();
 		this.altarComponents = ArrayListMultimap.create();
 	}
 
-//	@Nonnull
-//	@Override
-//	public BloodMagicBlacklist getBlacklist()
-//	{
-//		return blacklist;
-//	}
+	@Nonnull
+	@Override
+	public BloodMagicBlacklist getBlacklist()
+	{
+		return blacklist;
+	}
 
 	@Nonnull
 	public BloodMagicRecipeRegistrar getRecipeRegistrar()
@@ -91,9 +91,10 @@ public class BloodMagicAPI implements IBloodMagicAPI
 
 		if (type != null)
 		{
-			IncenseTranquilityRegistry.registerTranquilityHandler((world, pos, block, state) -> blockState.test(state) ? new TranquilityStack(type, value) : null);
-		}
-		else
+			IncenseTranquilityRegistry.registerTranquilityHandler((world, pos, block, state) -> blockState.test(state)
+					? new TranquilityStack(type, value)
+					: null);
+		} else
 		{
 			BMLog.API.warn("Invalid Tranquility type: {}.", tranquilityType);
 		}

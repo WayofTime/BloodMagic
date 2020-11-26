@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -14,7 +15,9 @@ import net.minecraft.world.World;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ConfigHandler;
 import wayoftime.bloodmagic.altar.IBloodAltar;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
+import wayoftime.bloodmagic.network.SetClientHealthPacket;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
@@ -23,7 +26,6 @@ import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.ritual.RitualRegister;
 import wayoftime.bloodmagic.util.helper.PlayerSacrificeHelper;
-import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
 @RitualRegister("feathered_knife")
 public class RitualFeatheredKnife extends Ritual
@@ -54,6 +56,10 @@ public class RitualFeatheredKnife extends Ritual
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
 		World world = masterRitualStone.getWorldObj();
+//		if (world.isRemote)
+//		{
+//			return;
+//		}
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
 		if (currentEssence < getRefreshCost())
@@ -118,8 +124,7 @@ public class RitualFeatheredKnife extends Ritual
 			{
 				float healthThreshold = steadfastWill >= steadfastWillThreshold ? 0.7f : 0.3f;
 
-				if (vengefulWill >= vengefulWillThreshold
-						&& !player.getGameProfile().getId().equals(masterRitualStone.getOwner()))
+				if (vengefulWill >= vengefulWillThreshold && !player.getGameProfile().getId().equals(masterRitualStone.getOwner()))
 				{
 					healthThreshold = 0.1f;
 				}
@@ -130,8 +135,7 @@ public class RitualFeatheredKnife extends Ritual
 				float sacrificedHealth = 1;
 				double lpModifier = 1;
 
-				if ((health / player.getMaxHealth() > healthThreshold)
-						&& (!useIncense || !player.isPotionActive(BloodMagicPotions.SOUL_FRAY)))
+				if ((health / player.getMaxHealth() > healthThreshold) && (!useIncense || !player.isPotionActive(BloodMagicPotions.SOUL_FRAY)))
 				{
 					if (useIncense)
 					{
@@ -169,9 +173,9 @@ public class RitualFeatheredKnife extends Ritual
 //					}
 
 					player.setHealth(health - sacrificedHealth);
+					BloodMagic.packetHandler.sendTo(new SetClientHealthPacket(health - sacrificedHealth), (ServerPlayerEntity) player);
 
-					tileAltar.sacrificialDaggerCall((int) (ConfigHandler.values.sacrificialDaggerConversion * lpModifier
-							* sacrificedHealth), false);
+					tileAltar.sacrificialDaggerCall((int) (ConfigHandler.values.sacrificialDaggerConversion * lpModifier * sacrificedHealth), false);
 
 					totalEffects++;
 
@@ -229,8 +233,7 @@ public class RitualFeatheredKnife extends Ritual
 	@Override
 	public ITextComponent[] provideInformationOfRitualToPlayer(PlayerEntity player)
 	{
-		return new ITextComponent[]
-		{ new TranslationTextComponent(this.getTranslationKey() + ".info"),
+		return new ITextComponent[] { new TranslationTextComponent(this.getTranslationKey() + ".info"),
 				new TranslationTextComponent(this.getTranslationKey() + ".default.info"),
 				new TranslationTextComponent(this.getTranslationKey() + ".corrosive.info"),
 				new TranslationTextComponent(this.getTranslationKey() + ".steadfast.info"),

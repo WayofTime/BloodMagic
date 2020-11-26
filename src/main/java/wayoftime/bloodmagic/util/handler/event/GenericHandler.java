@@ -4,6 +4,7 @@ import java.util.Map.Entry;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -12,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.world.BlockEvent.BlockToolInteractEvent;
@@ -20,15 +22,17 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.common.item.BloodOrb;
+import wayoftime.bloodmagic.common.item.IBindable;
+import wayoftime.bloodmagic.common.item.IBloodOrb;
 import wayoftime.bloodmagic.common.item.ItemExperienceBook;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.event.ItemBindEvent;
-import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.network.DemonAuraClientPacket;
-import wayoftime.bloodmagic.common.item.BloodOrb;
-import wayoftime.bloodmagic.common.item.IBloodOrb;
+import wayoftime.bloodmagic.potion.BMPotionUtils;
+import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.util.helper.BindableHelper;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
@@ -159,6 +163,25 @@ public class GenericHandler
 			} else
 			{
 				BloodMagic.packetHandler.sendTo(new DemonAuraClientPacket(new DemonWillHolder()), (ServerPlayerEntity) player);
+			}
+		}
+	}
+
+	// Handles sending the client the Demon Will Aura updates
+	@SubscribeEvent
+	public void onLivingUpdate(LivingUpdateEvent event)
+	{
+		if (!event.getEntityLiving().getEntityWorld().isRemote)
+		{
+			LivingEntity entity = event.getEntityLiving();
+			if (entity.isPotionActive(BloodMagicPotions.PLANT_LEECH))
+			{
+				int amplifier = entity.getActivePotionEffect(BloodMagicPotions.PLANT_LEECH).getAmplifier();
+				int timeRemaining = entity.getActivePotionEffect(BloodMagicPotions.PLANT_LEECH).getDuration();
+				if (timeRemaining % 10 == 0)
+				{
+					BMPotionUtils.damageMobAndGrowSurroundingPlants(entity, 2 + amplifier, 1, 0.5 * 3 / (amplifier + 3), 25 * (1 + amplifier));
+				}
 			}
 		}
 	}

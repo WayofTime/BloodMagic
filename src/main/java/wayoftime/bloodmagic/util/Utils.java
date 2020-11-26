@@ -1,5 +1,6 @@
 package wayoftime.bloodmagic.util;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nullable;
@@ -14,21 +15,27 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
+import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import wayoftime.bloodmagic.api.compat.IDemonWillViewer;
 import wayoftime.bloodmagic.tile.TileInventory;
 
@@ -482,5 +489,138 @@ public class Utils
 		}
 
 		return 100;
+	}
+
+	public static int plantSeedsInArea(World world, AxisAlignedBB aabb, int horizontalRadius, int verticalRadius)
+	{
+		int placedBlocks = 0;
+		List<ItemEntity> itemEntities = world.getEntitiesWithinAABB(ItemEntity.class, aabb);
+
+		for (ItemEntity itemEntity : itemEntities)
+		{
+			placedBlocks += plantEntityItem(itemEntity, horizontalRadius, verticalRadius);
+		}
+
+		return placedBlocks;
+	}
+
+	public static int plantItemStack(World world, BlockPos centralPos, ItemStack stack, int horizontalRadius, int verticalRadius)
+	{
+		if (stack.isEmpty())
+		{
+			return 0;
+		}
+
+		Item item = stack.getItem();
+		if (!(item instanceof IPlantable))
+		{
+			return 0;
+		}
+
+		int planted = 0;
+
+		for (int hR = 0; hR <= horizontalRadius; hR++)
+		{
+			for (int vR = 0; vR <= verticalRadius; vR++)
+			{
+				for (int i = -hR; i <= hR; i++)
+				{
+					for (int k = -hR; k <= hR; k++)
+					{
+						for (int j = -vR; j <= vR; j += 2 * vR + (vR > 0 ? 0 : 1))
+						{
+							if (!(Math.abs(i) == hR || Math.abs(k) == hR))
+							{
+								continue;
+							}
+
+							BlockPos newPos = centralPos.add(i, j, k);
+							if (world.isAirBlock(newPos))
+							{
+								BlockPos offsetPos = newPos.offset(Direction.DOWN);
+								BlockState state = world.getBlockState(offsetPos);
+								if (state.getBlock().canSustainPlant(state, world, offsetPos, Direction.UP, (IPlantable) item))
+								{
+									BlockState plantState = ((IPlantable) item).getPlant(world, newPos);
+									world.setBlockState(newPos, plantState, 3);
+//									Block.
+									world.playEvent(2001, newPos, Block.getStateId(plantState));
+									stack.shrink(1);
+									planted++;
+									if (stack.isEmpty() || stack.getCount() <= 0)
+									{
+										return planted;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return planted;
+	}
+
+	public static int plantEntityItem(ItemEntity itemEntity, int horizontalRadius, int verticalRadius)
+	{
+		if (itemEntity == null || !itemEntity.isAlive())
+		{
+			return 0;
+		}
+
+		World world = itemEntity.getEntityWorld();
+		BlockPos pos = itemEntity.getPosition();
+		ItemStack stack = itemEntity.getItem();
+
+		int planted = plantItemStack(world, pos, stack, horizontalRadius, verticalRadius);
+
+		if (stack.isEmpty())
+		{
+			itemEntity.remove();
+		}
+
+		return planted;
+	}
+
+	@Nullable
+	public static IItemHandler getInventory(TileEntity tile, @Nullable Direction facing)
+	{
+		if (facing == null)
+			facing = Direction.DOWN;
+
+		IItemHandler itemHandler = null;
+
+		if (tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing).isPresent())
+			itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing).resolve().get();
+		else if (tile instanceof ISidedInventory)
+			itemHandler = ((ISidedInventory) tile).getSlotsForFace(facing).length != 0
+					? new SidedInvWrapper((ISidedInventory) tile, facing)
+					: null;
+		else if (tile instanceof IInventory)
+			itemHandler = new InvWrapper((IInventory) tile);
+
+		return itemHandler;
+	}
+
+	public static float addAbsorptionToMaximum(LivingEntity entity, float added, int maximum, int duration)
+	{
+		float currentAmount = entity.getAbsorptionAmount();
+		added = Math.min(maximum - currentAmount, added);
+
+		if (added <= 0)
+		{
+			return 0;
+		}
+
+		if (duration > 0)
+		{
+			int potionLevel = (int) ((currentAmount + added) / 4);
+			entity.addPotionEffect(new EffectInstance(Effects.ABSORPTION, duration, potionLevel, true, false));
+		}
+
+		entity.setAbsorptionAmount(currentAmount + added);
+
+		return added;
 	}
 }
