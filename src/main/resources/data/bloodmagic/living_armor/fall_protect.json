@@ -1,0 +1,19 @@
+{
+  "id": "bloodmagic:fall_protect",
+  "levels": [
+    { "xp": 30, "cost": 2 },
+    { "xp": 200, "cost": 5 },
+    { "xp": 400, "cost": 9 },
+    { "xp": 800, "cost": 15 },
+    { "xp": 1500, "cost": 25 }
+  ],
+  "bonuses": {
+    "protection": [
+      0.2,
+      0.4,
+      0.6,
+      0.8,
+      1
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "bloodmagic:sprint_attack",
+  "levels": [
+    { "xp": 200, "cost": 3 },
+    { "xp": 800, "cost": 7 },
+    { "xp": 1300, "cost": 15 },
+    { "xp": 2500, "cost": 25 },
+    { "xp": 3800, "cost": 40 }
+  ],
+  "bonuses": {
+    "damage_boost": [
+      0.5,
+      0.75,
+      1,
+      1.25,
+      1.5
+    ],
+    "kb": [
+	  1,
+	  2,
+	  3,
+	  4,
+	  5
+    ]
+  }
+}

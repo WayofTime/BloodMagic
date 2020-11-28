@@ -623,4 +623,112 @@ public class Utils
 
 		return added;
 	}
+
+//	public static float getModifiedDamage(LivingEntity attackedEntity, DamageSource source, float amount)
+//	{
+//		if (!attackedEntity.isInvulnerableTo(source))
+//		{
+//			if (amount <= 0)
+//				return 0;
+//
+//			amount = applyArmor(attackedEntity, Iterables.toArray(attackedEntity.getEquipmentAndArmor(), ItemStack.class), source, amount);
+//			if (amount <= 0)
+//				return 0;
+//			amount = applyPotionDamageCalculations(attackedEntity, source, amount);
+//
+//			return amount;
+//		}
+//
+//		return 0;
+//	}
+//
+//	public static float applyArmor(LivingEntity entity, ItemStack[] inventory, DamageSource source, double damage)
+//	{
+//		damage *= 25;
+//		ArrayList<ArmorProperties> dmgVals = new ArrayList<>();
+//		for (int x = 0; x < inventory.length; x++)
+//		{
+//			ItemStack stack = inventory[x];
+//			if (stack.isEmpty())
+//			{
+//				continue;
+//			}
+//			ArmorProperties prop = null;
+//			if (stack.getItem() instanceof ISpecialArmor)
+//			{
+//				ISpecialArmor armor = (ISpecialArmor) stack.getItem();
+//				prop = armor.getProperties(entity, stack, source, damage / 25D, x).copy();
+//			} else if (stack.getItem() instanceof ArmorItem && !source.isUnblockable())
+//			{
+//				ArmorItem armor = (ArmorItem) stack.getItem();
+//				prop = new ArmorProperties(0, armor.damageReduceAmount / 25D, Integer.MAX_VALUE);
+//			}
+//			if (prop != null)
+//			{
+//				prop.Slot = x;
+//				dmgVals.add(prop);
+//			}
+//		}
+//		if (dmgVals.size() > 0)
+//		{
+//			ArmorProperties[] props = dmgVals.toArray(new ArmorProperties[dmgVals.size()]);
+//			int level = props[0].Priority;
+//			double ratio = 0;
+//			for (ArmorProperties prop : props)
+//			{
+//				if (level != prop.Priority)
+//				{
+//					damage -= (damage * ratio);
+//					ratio = 0;
+//					level = prop.Priority;
+//				}
+//				ratio += prop.AbsorbRatio;
+//
+//			}
+//			damage -= (damage * ratio);
+//		}
+//
+//		return (float) (damage / 25.0F);
+//	}
+//
+//	public static float applyPotionDamageCalculations(LivingEntity attackedEntity, DamageSource source, float damage)
+//	{
+//		Effect resistance = Effects.RESISTANCE;
+//
+//		if (source.isDamageAbsolute())
+//		{
+//			return damage;
+//		} else
+//		{
+//			if (attackedEntity.isPotionActive(resistance) && source != DamageSource.OUT_OF_WORLD)
+//			{
+//				int i = (attackedEntity.getActivePotionEffect(resistance).getAmplifier() + 1) * 5;
+//				int j = 25 - i;
+//				float f = damage * (float) j;
+//				damage = f / 25.0F;
+//			}
+//
+//			if (damage <= 0.0F)
+//			{
+//				return 0.0F;
+//			} else
+//			{
+//				int k = EnchantmentHelper.getEnchantmentModifierDamage(attackedEntity.getArmorInventoryList(), source);
+//
+//				if (k > 20)
+//				{
+//					k = 20;
+//				}
+//
+//				if (k > 0 && k <= 20)
+//				{
+//					int l = 25 - k;
+//					float f1 = damage * (float) l;
+//					damage = f1 / 25.0F;
+//				}
+//
+//				return damage;
+//			}
+//		}
+//	}
 }

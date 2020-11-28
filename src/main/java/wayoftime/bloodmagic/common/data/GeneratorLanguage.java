@@ -297,6 +297,52 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.ritualReader.desc.information", "Right click on an active Master Ritual Stone to gather basic information about the ritual.");
 		add("tooltip.bloodmagic.ritualReader.desc.set_will_types", "Set the types of demon will that the ritual will consume from the aura by right clicking on the MRS with the same types of crystals on your hotbar.");
 
+		// Living Armour - the 'u' is important, TehNut!
+		add("living_upgrade.bloodmagic.arrow_protect", "Pin Cushion");
+		add("living_upgrade.bloodmagic.speed", "Quick Feet");
+		add("living_upgrade.bloodmagic.digging", "Dwarven Might");
+		add("living_upgrade.bloodmagic.poisonResist", "Poison Resistance");
+		add("living_upgrade.bloodmagic.fireResist", "Gift of Ignis");
+		add("living_upgrade.bloodmagic.self_sacrifice", "Tough Palms");
+		add("living_upgrade.bloodmagic.knockback", "Body Builder");
+		add("living_upgrade.bloodmagic.physicalProtect", "Tough");
+		add("living_upgrade.bloodmagic.health", "Healthy");
+		add("living_upgrade.bloodmagic.meleeDamage", "Fierce Strike");
+		add("living_upgrade.bloodmagic.arrowShot", "Trick Shot");
+		add("living_upgrade.bloodmagic.stepAssist", "Step Assist");
+		add("living_upgrade.bloodmagic.grimReaper", "Grim Reaper's Sprint");
+		add("living_upgrade.bloodmagic.solarPowered", "Solar Powered");
+		add("living_upgrade.bloodmagic.thaumRunicShielding", "Runic Shielding");
+		add("living_upgrade.bloodmagic.revealing", "Revealing");
+		add("living_upgrade.bloodmagic.experienced", "Experienced");
+		add("living_upgrade.bloodmagic.jump", "Strong Legs");
+		add("living_upgrade.bloodmagic.fallProtect", "Soft Fall");
+		add("living_upgrade.bloodmagic.graveDigger", "Grave Digger");
+		add("living_upgrade.bloodmagic.sprint_attack", "Charging Strike");
+		add("living_upgrade.bloodmagic.criticalStrike", "True Strike");
+		add("living_upgrade.bloodmagic.elytra", "Elytra");
+		add("living_upgrade.bloodmagic.nightSight", "Nocturnal Prowess");
+		add("living_upgrade.bloodmagic.repair", "Repairing");
+
+		add("living_upgrade.bloodmagic.slowness", "Limp Leg");
+		add("living_upgrade.bloodmagic.crippledArm", "Crippled Arm");
+		add("living_upgrade.bloodmagic.slippery", "Loose Traction");
+		add("living_upgrade.bloodmagic.battleHunger", "Battle Hungry");
+		add("living_upgrade.bloodmagic.quenched", "Quenched");
+		add("living_upgrade.bloodmagic.meleeDecrease", "Dulled Blade");
+		add("living_upgrade.bloodmagic.digSlowdown", "Weakened Pick");
+		add("living_upgrade.bloodmagic.stormTrooper", "Storm Trooper");
+		add("living_upgrade.bloodmagic.slowHeal", "Diseased");
+		add("living_upgrade.bloodmagic.disoriented", "Disoriented");
+
+		add("tooltip.bloodmagic.livingarmour.upgrade.level", "%s (Level %d)");
+		add("tooltip.bloodmagic.livingarmour.upgrade.progress", "%s (%d/100)");
+		add("tooltip.bloodmagic.livingarmour.upgrade.points", "Upgrade points: %s / %s");
+
+		add("tooltip.bloodmagic.livingarmour.extraExtraInfo", "&9-Hold shift + M for progress info-");
+
+		add("chat.bloodmagic.living_upgrade_level_increase", "%s has leveled up to %d");
+
 		// Guide
 		add("guide.bloodmagic.name", "Sanguine Scientiem");
 		add("guide.bloodmagic.landing_text", "\"It is my dear hope that by holding this tome in your hands, I may impart the knowledge of the lost art that is Blood Magic\"$(br)$(o)- Magus Arcana$()");
@@ -463,6 +509,13 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.BASIC_CUTTING_FLUID, "Basic Cutting Fluid");
 
 		addItem(BloodMagicItems.EXPERIENCE_TOME, "Tome of Peritia");
+
+		addItem(BloodMagicItems.LIVING_HELMET, "Living Helmet");
+		addItem(BloodMagicItems.LIVING_PLATE, "Living Chestplate");
+		addItem(BloodMagicItems.LIVING_LEGGINGS, "Living Leggings");
+		addItem(BloodMagicItems.LIVING_BOOTS, "Living Boots");
+
+		addItem(BloodMagicItems.LIVING_TOME, "Living Armour Upgrade Tome");
 
 		// Alchemy Items
 		addItem(BloodMagicItems.PLANT_OIL, "Plant Oil");

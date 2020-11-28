@@ -1,19 +1,30 @@
 package wayoftime.bloodmagic.util.handler.event;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.UUID;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingHealEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.world.BlockEvent.BlockToolInteractEvent;
@@ -26,10 +37,14 @@ import wayoftime.bloodmagic.common.item.BloodOrb;
 import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.IBloodOrb;
 import wayoftime.bloodmagic.common.item.ItemExperienceBook;
+import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
+import wayoftime.bloodmagic.core.living.LivingStats;
+import wayoftime.bloodmagic.core.living.LivingUtil;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.event.ItemBindEvent;
+import wayoftime.bloodmagic.event.SacrificeKnifeUsedEvent;
 import wayoftime.bloodmagic.network.DemonAuraClientPacket;
 import wayoftime.bloodmagic.potion.BMPotionUtils;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
@@ -98,6 +113,95 @@ public class GenericHandler
 //		{
 //			((ItemSentientScythe) event.getItemStack().getItem()).onLeftClickAir(event.getItemStack(), event.getEntityLiving());
 //		}
+	}
+
+	@SubscribeEvent
+	// Called when an entity is set to be hurt. Called before vanilla armour
+	// calculations.
+	public void onLivingHurt(LivingHurtEvent event)
+	{
+		Entity sourceEntity = event.getSource().getTrueSource();
+		LivingEntity living = event.getEntityLiving();
+
+		if (sourceEntity instanceof PlayerEntity)
+		{
+			PlayerEntity sourcePlayer = (PlayerEntity) sourceEntity;
+			if (LivingUtil.hasFullSet(sourcePlayer))
+			{
+				ItemStack mainWeapon = sourcePlayer.getActiveItemStack();
+				double additionalDamage = LivingUtil.getAdditionalDamage(sourcePlayer, mainWeapon, living, event.getAmount());
+				event.setAmount((float) (event.getAmount() + additionalDamage));
+			}
+		}
+
+		if (living instanceof PlayerEntity)
+		{
+			PlayerEntity player = (PlayerEntity) living;
+			if (LivingUtil.hasFullSet(player))
+			{
+				event.setAmount((float) LivingUtil.getDamageReceivedForArmour(player, event.getSource(), event.getAmount()));
+			}
+		}
+	}
+
+	@SubscribeEvent
+	// Called after armour calculations (including LivingHurtEvent) are parsed.
+	// Damage that the player should receive after armour/absorption hearts.
+	public void onLivingDamage(LivingDamageEvent event)
+	{
+		Entity sourceEntity = event.getSource().getTrueSource();
+		LivingEntity living = event.getEntityLiving();
+
+		if (sourceEntity instanceof PlayerEntity)
+		{
+			PlayerEntity sourcePlayer = (PlayerEntity) sourceEntity;
+			if (LivingUtil.hasFullSet(sourcePlayer))
+			{
+				if (sourcePlayer.isSprinting())
+				{
+					LivingUtil.applyNewExperience(sourcePlayer, LivingArmorRegistrar.UPGRADE_SPRINT_ATTACK.get(), event.getAmount());
+				}
+			}
+		}
+
+		if (living instanceof PlayerEntity)
+		{
+			PlayerEntity player = (PlayerEntity) living;
+			if (LivingUtil.hasFullSet(player))
+			{
+				if (event.getSource().isProjectile())
+				{
+//					LivingStats stats = LivingStats.fromPlayer(player);
+//					stats.addExperience(LivingArmorRegistrar.TEST_UPGRADE.get().getKey(), 10);
+					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_ARROW_PROTECT.get(), event.getAmount());
+				}
+
+			}
+		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public void onExperiencePickupHighest(PlayerXpEvent.PickupXp event)
+	{
+		LivingEntity living = event.getEntityLiving();
+		if (living instanceof PlayerEntity)
+		{
+			PlayerEntity player = (PlayerEntity) living;
+			if (LivingUtil.hasFullSet(player))
+			{
+				LivingStats stats = LivingStats.fromPlayer(player);
+				double expModifier = 1 + LivingArmorRegistrar.UPGRADE_EXPERIENCE.get().getBonusValue("exp", stats.getLevel(LivingArmorRegistrar.UPGRADE_EXPERIENCE.get().getKey())).doubleValue();
+				System.out.println("Experience modifier: " + expModifier);
+
+				int xp = event.getOrb().xpValue;
+
+				event.getOrb().xpValue = ((int) Math.floor(xp * expModifier) + (player.world.rand.nextDouble() < (xp * expModifier) % 1
+						? 1
+						: 0));
+
+				LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_EXPERIENCE.get(), event.getOrb().getXpValue());
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -185,4 +289,85 @@ public class GenericHandler
 			}
 		}
 	}
+
+	@SubscribeEvent
+	public void onHeal(LivingHealEvent event)
+	{
+		LivingEntity living = event.getEntityLiving();
+		if (living instanceof PlayerEntity)
+		{
+			PlayerEntity player = (PlayerEntity) living;
+			if (LivingUtil.hasFullSet(player))
+			{
+				LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_HEALTH.get(), event.getAmount());
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onSelfSacrifice(SacrificeKnifeUsedEvent event)
+	{
+		if (LivingUtil.hasFullSet(event.player))
+		{
+			LivingStats stats = LivingStats.fromPlayer(event.player);
+			double bonus = LivingArmorRegistrar.UPGRADE_SELF_SACRIFICE.get().getBonusValue("self_mod", stats.getLevel(LivingArmorRegistrar.UPGRADE_SELF_SACRIFICE.get().getKey())).doubleValue();
+			event.lpAdded = (int) Math.round(event.lpAdded * (1 + bonus));
+			LivingUtil.applyNewExperience(event.player, LivingArmorRegistrar.UPGRADE_SELF_SACRIFICE.get(), event.healthDrained);
+		}
+	}
+
+	public static Map<UUID, Double> posXMap = new HashMap<>();
+	public static Map<UUID, Double> posZMap = new HashMap<>();
+
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
+	{
+		if (event.getEntity().world.isRemote)
+		{
+			return;
+		}
+		if (event.getEntityLiving() instanceof PlayerEntity)
+		{
+			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+			float percentIncrease = 0;
+
+			if (LivingUtil.hasFullSet(player))
+			{
+				LivingStats stats = LivingStats.fromPlayer(player);
+				percentIncrease += LivingArmorRegistrar.UPGRADE_SPEED.get().getBonusValue("speed_modifier", stats.getLevel(LivingArmorRegistrar.UPGRADE_SPEED.get().getKey())).doubleValue();
+				if (player.isSprinting())
+				{
+					int speedTime = LivingArmorRegistrar.UPGRADE_SPEED.get().getBonusValue("speed_time", stats.getLevel(LivingArmorRegistrar.UPGRADE_SPEED.get().getKey())).intValue();
+					if (speedTime > 0)
+					{
+						int speedLevel = LivingArmorRegistrar.UPGRADE_SPEED.get().getBonusValue("speed_level", stats.getLevel(LivingArmorRegistrar.UPGRADE_SPEED.get().getKey())).intValue();
+						player.addPotionEffect(new EffectInstance(Effects.SPEED, speedTime, speedLevel, true, false));
+					}
+				}
+
+				double distance = 0;
+
+				if (posXMap.containsKey(player.getUniqueID()))
+				{
+					distance = Math.sqrt((player.getPosX() - posXMap.get(player.getUniqueID())) * (player.getPosX() - posXMap.get(player.getUniqueID())) + (player.getPosZ() - posZMap.get(player.getUniqueID())) * (player.getPosZ() - posZMap.get(player.getUniqueID())));
+				}
+
+//				System.out.println("Distance travelled: " + distance);
+				if (player.isOnGround() && distance > 0 && distance < 50)
+				{
+					distance *= (1 + percentIncrease);
+					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_SPEED.get(), distance);
+				}
+			}
+
+			if (percentIncrease > 0 && (player.isOnGround()) && (Math.abs(player.moveForward) > 0 || Math.abs(player.moveStrafing) > 0))
+			{
+				player.travel(new Vector3d(player.moveStrafing * percentIncrease, 0, player.moveForward * percentIncrease));
+			}
+
+			posXMap.put(player.getUniqueID(), player.getPosX());
+			posZMap.put(player.getUniqueID(), player.getPosZ());
+		}
+	}
+
 }

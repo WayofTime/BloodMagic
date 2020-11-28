@@ -1,5 +1,6 @@
 package wayoftime.bloodmagic.common.item;
 
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -7,6 +8,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.arc.ItemARCToolBase;
 import wayoftime.bloodmagic.common.item.block.ItemBlockAlchemyTable;
@@ -32,7 +34,6 @@ import wayoftime.bloodmagic.common.registration.impl.BloodOrbDeferredRegister;
 import wayoftime.bloodmagic.common.registration.impl.BloodOrbRegistryObject;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.structures.ItemDungeonTester;
-import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
 public class BloodMagicItems
 {
@@ -128,6 +129,13 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> LAVA_CRYSTAL = BASICITEMS.register("lavacrystal", () -> new ItemLavaCrystal());
 	public static final RegistryObject<Item> WEAK_BLOOD_SHARD = BASICITEMS.register("weakbloodshard", () -> new ItemBase());
 	public static final RegistryObject<Item> EXPERIENCE_TOME = BASICITEMS.register("experiencebook", () -> new ItemExperienceBook());
+
+	public static final RegistryObject<Item> LIVING_HELMET = BASICITEMS.register("livinghelmet", () -> new ItemLivingArmor(EquipmentSlotType.HEAD));
+	public static final RegistryObject<Item> LIVING_PLATE = BASICITEMS.register("livingplate", () -> new ItemLivingArmor(EquipmentSlotType.CHEST));
+	public static final RegistryObject<Item> LIVING_LEGGINGS = BASICITEMS.register("livingleggings", () -> new ItemLivingArmor(EquipmentSlotType.LEGS));
+	public static final RegistryObject<Item> LIVING_BOOTS = BASICITEMS.register("livingboots", () -> new ItemLivingArmor(EquipmentSlotType.FEET));
+
+	public static final RegistryObject<Item> LIVING_TOME = BASICITEMS.register("upgradetome", () -> new ItemLivingTome());
 
 	// Ritual stuffs
 	public static final RegistryObject<Item> WEAK_ACTIVATION_CRYSTAL = BASICITEMS.register("activationcrystalweak", () -> new ItemActivationCrystal(ItemActivationCrystal.CrystalType.WEAK));

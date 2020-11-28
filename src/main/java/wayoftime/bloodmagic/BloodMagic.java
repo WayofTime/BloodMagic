@@ -49,6 +49,7 @@ import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeProvider;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
+import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.recipe.IngredientBloodOrb;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
@@ -96,6 +97,7 @@ public class BloodMagic
 		BloodMagicItems.ITEMS.register(modBus);
 //		RegistrarBloodMagic.BLOOD_ORBS.createAndRegister(modBus, "bloodorbs");
 		BloodMagicItems.BLOOD_ORBS.createAndRegister(modBus, "bloodorbs");
+		LivingArmorRegistrar.UPGRADES.createAndRegister(modBus, "upgrades");
 		BloodMagicItems.BASICITEMS.register(modBus);
 		BloodMagicBlocks.BASICBLOCKS.register(modBus);
 		BloodMagicBlocks.DUNGEONBLOCKS.register(modBus);
@@ -165,6 +167,7 @@ public class BloodMagic
 		BloodMagicCorePlugin.INSTANCE.register(BloodMagicAPI.INSTANCE);
 		RITUAL_MANAGER.discover();
 		ModRituals.initHarvestHandlers();
+		LivingArmorRegistrar.register();
 	}
 
 	public void registerTileEntityTypes(RegistryEvent.Register<TileEntityType<?>> event)
