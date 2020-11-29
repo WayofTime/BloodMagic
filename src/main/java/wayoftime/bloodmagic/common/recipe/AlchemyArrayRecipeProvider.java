@@ -9,6 +9,7 @@ import net.minecraft.item.crafting.Ingredient;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.data.recipe.builder.AlchemyArrayRecipeBuilder;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
+import wayoftime.bloodmagic.core.registry.AlchemyArrayRegistry;
 
 public class AlchemyArrayRecipeProvider implements ISubRecipeProvider
 {
@@ -29,7 +30,16 @@ public class AlchemyArrayRecipeProvider implements ISubRecipeProvider
 		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/lightsigil.png"), Ingredient.fromItems(BloodMagicItems.REAGENT_BLOOD_LIGHT.get()), Ingredient.fromItems(BloodMagicItems.IMBUED_SLATE.get()), new ItemStack(BloodMagicItems.BLOOD_LIGHT_SIGIL.get())).build(consumer, BloodMagic.rl(basePath + "bloodlightsigil"));
 		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/airsigil.png"), Ingredient.fromItems(BloodMagicItems.REAGENT_AIR.get()), Ingredient.fromItems(BloodMagicItems.REINFORCED_SLATE.get()), new ItemStack(BloodMagicItems.AIR_SIGIL.get())).build(consumer, BloodMagic.rl(basePath + "airsigil"));
 		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/sightsigil.png"), Ingredient.fromItems(BloodMagicItems.REAGENT_SIGHT.get()), Ingredient.fromItems(BloodMagicItems.REINFORCED_SLATE.get()), new ItemStack(BloodMagicItems.SEER_SIGIL.get())).build(consumer, BloodMagic.rl(basePath + "seersigil"));
-//		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/fastminersigil.png"), Ingredient.fromItems(BloodMagicItems.REAGENT_FAST_MINER.get()), Ingredient.fromItems(BloodMagicItems.REINFORCED_SLATE.get()), new ItemStack(BloodMagicItems.FAST_MINER_SIGIL.get())).build(consumer, BloodMagic.rl(basePath + "frostsigil"));
+		AlchemyArrayRecipeBuilder.array(AlchemyArrayRegistry.BINDING_ARRAY, Ingredient.fromItems(BloodMagicItems.REAGENT_BINDING.get()), Ingredient.fromItems(Items.IRON_HELMET), new ItemStack(BloodMagicItems.LIVING_HELMET.get())).build(consumer, BloodMagic.rl(basePath + "living_helmet"));
+		AlchemyArrayRecipeBuilder.array(AlchemyArrayRegistry.BINDING_ARRAY, Ingredient.fromItems(BloodMagicItems.REAGENT_BINDING.get()), Ingredient.fromItems(Items.IRON_CHESTPLATE), new ItemStack(BloodMagicItems.LIVING_PLATE.get())).build(consumer, BloodMagic.rl(basePath + "living_plate"));
+		AlchemyArrayRecipeBuilder.array(AlchemyArrayRegistry.BINDING_ARRAY, Ingredient.fromItems(BloodMagicItems.REAGENT_BINDING.get()), Ingredient.fromItems(Items.IRON_LEGGINGS), new ItemStack(BloodMagicItems.LIVING_LEGGINGS.get())).build(consumer, BloodMagic.rl(basePath + "living_leggings"));
+		AlchemyArrayRecipeBuilder.array(AlchemyArrayRegistry.BINDING_ARRAY, Ingredient.fromItems(BloodMagicItems.REAGENT_BINDING.get()), Ingredient.fromItems(Items.IRON_BOOTS), new ItemStack(BloodMagicItems.LIVING_BOOTS.get())).build(consumer, BloodMagic.rl(basePath + "living_boots"));
+
+		// AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/fastminersigil.png"),
+		// Ingredient.fromItems(BloodMagicItems.REAGENT_FAST_MINER.get()),
+		// Ingredient.fromItems(BloodMagicItems.REINFORCED_SLATE.get()), new
+		// ItemStack(BloodMagicItems.FAST_MINER_SIGIL.get())).build(consumer,
+		// BloodMagic.rl(basePath + "frostsigil"));
 //		BloodAltarRecipeBuilder.altar(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND), new ItemStack(BloodMagicItems.WEAK_BLOOD_ORB.get()), AltarTier.ONE.ordinal(), 2000, 2, 1).build(consumer, new ResourceLocation(BloodMagic.MODID, basePath
 //				+ "weakbloodorb"));
 //		BloodAltarRecipeBuilder.altar(Ingredient.fromTag(Tags.Items.STONE), new ItemStack(BloodMagicItems.SLATE.get()), AltarTier.ONE.ordinal(), 1000, 5, 5).build(consumer, new ResourceLocation(BloodMagic.MODID, basePath

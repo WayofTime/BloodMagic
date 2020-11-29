@@ -10,9 +10,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import wayoftime.bloodmagic.client.render.alchemyarray.AlchemyArrayRenderer;
+import wayoftime.bloodmagic.client.render.alchemyarray.BindingAlchemyCircleRenderer;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
-import wayoftime.bloodmagic.client.render.alchemyarray.AlchemyArrayRenderer;
 
 public class AlchemyArrayRendererRegistry
 {
@@ -47,6 +48,9 @@ public class AlchemyArrayRendererRegistry
 		}
 
 		ResourceLocation texture = recipe.getTexture();
+		if (AlchemyArrayRegistry.BINDING_ARRAY.equals(texture))
+			return new BindingAlchemyCircleRenderer();
+
 		if (texture != null)
 			return new AlchemyArrayRenderer(texture);
 

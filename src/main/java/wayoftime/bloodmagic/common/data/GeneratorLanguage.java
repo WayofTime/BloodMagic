@@ -459,6 +459,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.REAGENT_AIR, "Air Reagent");
 		addItem(BloodMagicItems.REAGENT_BLOOD_LIGHT, "Blood Lamp Reagent");
 		addItem(BloodMagicItems.REAGENT_SIGHT, "Sight Reagent");
+		addItem(BloodMagicItems.REAGENT_BINDING, "Binding Reagent");
 
 		addItem(BloodMagicItems.PETTY_GEM, "Petty Tartaric Gem");
 		addItem(BloodMagicItems.LESSER_GEM, "Lesser Tartaric Gem");

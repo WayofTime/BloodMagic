@@ -8,14 +8,17 @@ import org.apache.commons.lang3.tuple.Pair;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffect;
+import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectBinding;
+import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectCrafting;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
-import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffect;
-import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectCrafting;
 
 public class AlchemyArrayRegistry
 {
 	public static Map<ResourceLocation, AlchemyArrayEffect> effectMap = new HashMap<ResourceLocation, AlchemyArrayEffect>();
+	public static final ResourceLocation BINDING_ARRAY = BloodMagic.rl("textures/models/alchemyarrays/bindingarray.png");
 
 	public static boolean registerEffect(ResourceLocation rl, AlchemyArrayEffect effect)
 	{
@@ -35,6 +38,10 @@ public class AlchemyArrayRegistry
 
 		if (!recipe.getOutput().isEmpty())
 		{
+			if (recipe.getTexture().equals(BINDING_ARRAY))
+			{
+				return new AlchemyArrayEffectBinding(recipe.getOutput());
+			}
 			// Return a new instance of AlchemyEffectCrafting
 			return new AlchemyArrayEffectCrafting(recipe.getOutput());
 		}
@@ -50,4 +57,5 @@ public class AlchemyArrayRegistry
 
 		return getEffect(world, array.getRight().getId(), array.getRight());
 	}
+
 }
