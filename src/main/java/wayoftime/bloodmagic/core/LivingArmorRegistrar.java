@@ -40,12 +40,20 @@ public class LivingArmorRegistrar
 		def.put("arrow_protect", BloodMagic.rl("arrow_protect"));
 		def.put("arrow_shot", BloodMagic.rl("arrow_shot"));
 		def.put("critical_strike", BloodMagic.rl("critical_strike"));
-		def.put("jump", BloodMagic.rl("jump"));
-		def.put("health", BloodMagic.rl("health"));
+		def.put("digging", BloodMagic.rl("digging"));
 		def.put("experience", BloodMagic.rl("experienced"));
+		def.put("fall_protect", BloodMagic.rl("fall_protect"));
+		def.put("fire_resist", BloodMagic.rl("fire_resist"));
+		def.put("grave_digger", BloodMagic.rl("grave_digger"));
+		def.put("health", BloodMagic.rl("health"));
+		def.put("jump", BloodMagic.rl("jump"));
+		def.put("knockback_resist", BloodMagic.rl("knockback_resist"));
+		def.put("melee_damage", BloodMagic.rl("melee_damage"));
+		def.put("physical_protect", BloodMagic.rl("physical_protect"));
+		def.put("poison_resist", BloodMagic.rl("poison_resist"));
 		def.put("sprint_attack", BloodMagic.rl("sprint_attack"));
-		def.put("self_sacrifice", BloodMagic.rl("self_sacrifice"));
 		def.put("speed", BloodMagic.rl("speed"));
+		def.put("self_sacrifice", BloodMagic.rl("self_sacrifice"));
 		return def;
 	}).get();
 	// private static final Map<String, Path> DEFINITIONS =
@@ -83,7 +91,11 @@ public class LivingArmorRegistrar
 		return 0;
 	}));
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_SELF_SACRIFICE = UPGRADES.register("self_sacrifice", () -> parseDefinition("self_sacrifice"));
-	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_SPEED = UPGRADES.register("speed", () -> parseDefinition("speed"));
+	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_SPEED = UPGRADES.register("speed", () -> parseDefinition("speed").withAttributeProvider((stats, attributeMap, uuid, upgrade, level) -> {
+		attributeMap.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(uuid, "Movement Modifier 2", upgrade.getBonusValue("speed_modifier", level).doubleValue(), AttributeModifier.Operation.MULTIPLY_BASE));
+	}));
+	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_POISON_RESIST = UPGRADES.register("poison_resist", () -> parseDefinition("poison_resist"));
+	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_DIGGING = UPGRADES.register("digging", () -> parseDefinition("digging"));
 
 //	public static final LivingUpgrade UPGRADE_ARROW_PROTECT = parseDefinition("arrow_protect").withArmorProvider((player, stats, source, upgrade, level) -> {
 //		if (source.isProjectile())
@@ -108,6 +120,8 @@ public class LivingArmorRegistrar
 		registerUpgrade(UPGRADE_SPRINT_ATTACK.get());
 		registerUpgrade(UPGRADE_SELF_SACRIFICE.get());
 		registerUpgrade(UPGRADE_SPEED.get());
+		registerUpgrade(UPGRADE_POISON_RESIST.get());
+		registerUpgrade(UPGRADE_DIGGING.get());
 //		Registry.register(UPGRADES, UPGRADE_ARROW_PROTECT.getKey(), UPGRADE_ARROW_PROTECT);
 //		Registry.register(UPGRADES, UPGRADE_ARROW_SHOT.getKey(), UPGRADE_ARROW_SHOT);
 //		Registry.register(UPGRADES, UPGRADE_CRITICAL_STRIKE.getKey(), UPGRADE_CRITICAL_STRIKE);

@@ -12,6 +12,7 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffect;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectBinding;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectCrafting;
+import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectMovement;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
 
@@ -27,6 +28,11 @@ public class AlchemyArrayRegistry
 		effectMap.put(rl, effect);
 
 		return hadKey;
+	}
+
+	public static void registerBaseArrays()
+	{
+		registerEffect(BloodMagic.rl("array/movement"), new AlchemyArrayEffectMovement());
 	}
 
 	public static AlchemyArrayEffect getEffect(World world, ResourceLocation rl, RecipeAlchemyArray recipe)

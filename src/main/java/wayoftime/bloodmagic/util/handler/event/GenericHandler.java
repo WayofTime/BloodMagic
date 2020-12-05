@@ -16,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolType;
@@ -25,8 +24,10 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.BlockEvent.BlockToolInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -334,7 +335,8 @@ public class GenericHandler
 			if (LivingUtil.hasFullSet(player))
 			{
 				LivingStats stats = LivingStats.fromPlayer(player);
-				percentIncrease += LivingArmorRegistrar.UPGRADE_SPEED.get().getBonusValue("speed_modifier", stats.getLevel(LivingArmorRegistrar.UPGRADE_SPEED.get().getKey())).doubleValue();
+				ItemStack chestStack = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
+//				percentIncrease += LivingArmorRegistrar.UPGRADE_SPEED.get().getBonusValue("speed_modifier", stats.getLevel(LivingArmorRegistrar.UPGRADE_SPEED.get().getKey())).doubleValue();
 				if (player.isSprinting())
 				{
 					int speedTime = LivingArmorRegistrar.UPGRADE_SPEED.get().getBonusValue("speed_time", stats.getLevel(LivingArmorRegistrar.UPGRADE_SPEED.get().getKey())).intValue();
@@ -358,16 +360,80 @@ public class GenericHandler
 					distance *= (1 + percentIncrease);
 					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_SPEED.get(), distance);
 				}
+
+				int poisonLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_POISON_RESIST.get().getKey());
+				if (player.isPotionActive(Effects.POISON))
+				{
+					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_POISON_RESIST.get(), 1);
+				}
+				if (poisonLevel > 0)
+				{
+					boolean hasChanged = false;
+					int poisonCooldown = chestStack.getTag().getInt("poison_cooldown");
+					if (poisonCooldown > 0)
+					{
+						poisonCooldown--;
+						hasChanged = true;
+					}
+
+//					System.out.println("Cooldown: " + poisonCooldown);
+//					System.out.println(LivingArmorRegistrar.UPGRADE_POISON_RESIST.get().getBonusValue("max_cure", poisonLevel).intValue());
+
+					if (player.isPotionActive(Effects.POISON) && poisonCooldown <= 0 && LivingArmorRegistrar.UPGRADE_POISON_RESIST.get().getBonusValue("max_cure", poisonLevel).intValue() >= player.getActivePotionEffect(Effects.POISON).getAmplifier())
+					{
+						poisonCooldown = LivingArmorRegistrar.UPGRADE_POISON_RESIST.get().getBonusValue("cooldown", poisonLevel).intValue();
+						player.removePotionEffect(Effects.POISON);
+						hasChanged = true;
+					}
+
+					if (hasChanged)
+					{
+						chestStack.getTag().putInt("poison_cooldown", poisonCooldown);
+					}
+				}
 			}
 
-			if (percentIncrease > 0 && (player.isOnGround()) && (Math.abs(player.moveForward) > 0 || Math.abs(player.moveStrafing) > 0))
-			{
-				player.travel(new Vector3d(player.moveStrafing * percentIncrease, 0, player.moveForward * percentIncrease));
-			}
+//			if (percentIncrease > 0 && (player.isOnGround()) && (Math.abs(player.moveForward) > 0 || Math.abs(player.moveStrafing) > 0))
+//			{
+//				player.travel(new Vector3d(player.moveStrafing * percentIncrease, 0, player.moveForward * percentIncrease));
+//			}
 
 			posXMap.put(player.getUniqueID(), player.getPosX());
 			posZMap.put(player.getUniqueID(), player.getPosZ());
 		}
 	}
 
+	@SubscribeEvent
+	public void onMiningSpeedCheck(PlayerEvent.BreakSpeed event)
+	{
+		PlayerEntity player = event.getPlayer();
+		float percentIncrease = 0;
+
+		if (LivingUtil.hasFullSet(player))
+		{
+			LivingStats stats = LivingStats.fromPlayer(player);
+			percentIncrease += LivingArmorRegistrar.UPGRADE_DIGGING.get().getBonusValue("speed_modifier", stats.getLevel(LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())).doubleValue();
+		}
+
+		event.setNewSpeed((1 + percentIncrease) * event.getNewSpeed());
+	}
+
+	@SubscribeEvent
+	public void onBreakBlock(BlockEvent.BreakEvent event)
+	{
+		PlayerEntity player = event.getPlayer();
+		if (player != null)
+		{
+			if (LivingUtil.hasFullSet(player))
+			{
+				LivingStats stats = LivingStats.fromPlayer(player);
+				LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_DIGGING.get(), 1);
+				int mineTime = LivingArmorRegistrar.UPGRADE_DIGGING.get().getBonusValue("speed_time", stats.getLevel(LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())).intValue();
+				if (mineTime > 0)
+				{
+					player.addPotionEffect(new EffectInstance(Effects.HASTE, mineTime, LivingArmorRegistrar.UPGRADE_DIGGING.get().getBonusValue("speed_level", stats.getLevel(LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())).intValue(), true, false));
+				}
+			}
+		}
+	}
 }

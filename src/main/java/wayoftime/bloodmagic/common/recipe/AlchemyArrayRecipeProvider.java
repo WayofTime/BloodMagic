@@ -6,6 +6,7 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.data.recipe.builder.AlchemyArrayRecipeBuilder;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
@@ -35,6 +36,7 @@ public class AlchemyArrayRecipeProvider implements ISubRecipeProvider
 		AlchemyArrayRecipeBuilder.array(AlchemyArrayRegistry.BINDING_ARRAY, Ingredient.fromItems(BloodMagicItems.REAGENT_BINDING.get()), Ingredient.fromItems(Items.IRON_LEGGINGS), new ItemStack(BloodMagicItems.LIVING_LEGGINGS.get())).build(consumer, BloodMagic.rl(basePath + "living_leggings"));
 		AlchemyArrayRecipeBuilder.array(AlchemyArrayRegistry.BINDING_ARRAY, Ingredient.fromItems(BloodMagicItems.REAGENT_BINDING.get()), Ingredient.fromItems(Items.IRON_BOOTS), new ItemStack(BloodMagicItems.LIVING_BOOTS.get())).build(consumer, BloodMagic.rl(basePath + "living_boots"));
 
+		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/movementarray.png"), Ingredient.fromItems(Items.FEATHER), Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE), ItemStack.EMPTY).build(consumer, BloodMagic.rl(basePath + "movement"));
 		// AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/fastminersigil.png"),
 		// Ingredient.fromItems(BloodMagicItems.REAGENT_FAST_MINER.get()),
 		// Ingredient.fromItems(BloodMagicItems.REINFORCED_SLATE.get()), new

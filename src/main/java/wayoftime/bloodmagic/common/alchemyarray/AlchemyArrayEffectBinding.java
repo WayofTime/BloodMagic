@@ -44,7 +44,6 @@ public class AlchemyArrayEffectBinding extends AlchemyArrayEffectCrafting
 			ItemEntity outputEntity = new ItemEntity(tile.getWorld(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output);
 
 			tile.getWorld().addEntity(outputEntity);
-//			tile.getWorld().spawnEntity(outputEntity);
 
 			return true;
 		}

@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -50,6 +51,16 @@ public class BlockAlchemyArray extends Block
 	public BlockRenderType getRenderType(BlockState state)
 	{
 		return BlockRenderType.ENTITYBLOCK_ANIMATED;
+	}
+
+	@Override
+	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity)
+	{
+		TileEntity tile = world.getTileEntity(pos);
+		if (tile instanceof TileAlchemyArray)
+		{
+			((TileAlchemyArray) tile).onEntityCollidedWithBlock(state, entity);
+		}
 	}
 
 	@Override

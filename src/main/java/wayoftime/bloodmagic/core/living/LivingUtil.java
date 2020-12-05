@@ -71,7 +71,7 @@ public class LivingUtil
 			player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.living_upgrade_level_increase", new TranslationTextComponent(upgrade.getTranslationKey()), newLevel), true);
 		}
 
-		System.out.println("Adding experience!");
+//		System.out.println("Adding experience! Total experience is: " + currentExperience);
 
 		stats.addExperience(upgrade.getKey(), experience);
 		LivingStats.toPlayer(player, stats);

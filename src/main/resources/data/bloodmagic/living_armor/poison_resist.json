@@ -1,0 +1,26 @@
+{
+  "id": "bloodmagic:poison_resist",
+  "levels": [
+    { "xp": 1200, "cost": 2 },
+    { "xp": 3600, "cost": 6 },
+    { "xp": 12000, "cost": 14 },
+    { "xp": 24000, "cost": 25 },
+    { "xp": 30000, "cost": 40 }
+  ],
+  "bonuses": {
+    "cooldown": [
+      1200,
+      800,
+      600,
+      300,
+      100
+    ],
+    "max_cure": [
+      0,
+      1,
+      2,
+      2,
+      3
+    ]
+  }
+}

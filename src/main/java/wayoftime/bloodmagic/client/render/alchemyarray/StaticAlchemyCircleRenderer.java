@@ -14,26 +14,19 @@ import wayoftime.bloodmagic.client.render.BloodMagicRenderer.Model2D;
 import wayoftime.bloodmagic.client.render.RenderResizableQuadrilateral;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 
-public class AlchemyArrayRenderer
+public class StaticAlchemyCircleRenderer extends AlchemyArrayRenderer
 {
-	public final ResourceLocation arrayResource;
-
-	public AlchemyArrayRenderer()
+	public StaticAlchemyCircleRenderer(ResourceLocation arrayResource)
 	{
-		this(new ResourceLocation("bloodmagic", "textures/models/alchemyarrays/sightsigil.png"));
-	}
-
-	public AlchemyArrayRenderer(ResourceLocation arrayResource)
-	{
-		this.arrayResource = arrayResource;
+		super(arrayResource);
 	}
 
 	public float getRotation(float craftTime)
 	{
-		float offset = 2;
+		float offset = 50;
 		if (craftTime >= offset)
 		{
-			float modifier = (float) Math.pow(craftTime - offset, 1.5);
+			float modifier = (float) (craftTime - offset) * 5f;
 			return modifier * 1f;
 		}
 		return 0;
@@ -41,38 +34,28 @@ public class AlchemyArrayRenderer
 
 	public float getSecondaryRotation(float craftTime)
 	{
-		float offset = 50;
-		if (craftTime >= offset)
-		{
-			float modifier = (float) Math.pow(craftTime - offset, 1.7);
-			return modifier * 0.5f;
-		}
 		return 0;
 	}
 
 	public float getSizeModifier(float craftTime)
 	{
-		if (craftTime >= 150 && craftTime <= 250)
-		{
-			return (200 - craftTime) / 50f;
-		}
 		return 1.0f;
 	}
 
-	public float getVerticalOffset(float craftTime)
-	{
-		if (craftTime >= 5)
-		{
-			if (craftTime <= 40)
-			{
-				return (float) (-0.4 + (0.4) * Math.pow((craftTime - 5) / 35f, 3));
-			} else
-			{
-				return 0;
-			}
-		}
-		return -0.4f;
-	}
+//	public float getVerticalOffset(float craftTime)
+//	{
+//		if (craftTime >= 5)
+//		{
+//			if (craftTime <= 40)
+//			{
+//				return (float) (-0.4 + (0.4) * Math.pow((craftTime - 5) / 35f, 3));
+//			} else
+//			{
+//				return 0;
+//			}
+//		}
+//		return -0.4f;
+//	}
 
 	public void renderAt(TileAlchemyArray tileArray, double x, double y, double z, float craftTime, MatrixStack matrixStack, IRenderTypeBuffer renderer, int combinedLightIn, int combinedOverlayIn)
 	{
@@ -92,9 +75,9 @@ public class AlchemyArrayRenderer
 
 		matrixStack.push();
 
-		matrixStack.rotate(new Quaternion(Direction.UP.toVector3f(), rot, true));
-		matrixStack.rotate(new Quaternion(Direction.NORTH.toVector3f(), secondaryRot, true));
-		matrixStack.rotate(new Quaternion(Direction.EAST.toVector3f(), secondaryRot * 0.45812f, true));
+		matrixStack.rotate(new Quaternion(Direction.NORTH.toVector3f(), rot, true));
+//		matrixStack.rotate(new Quaternion(Direction.NORTH.toVector3f(), secondaryRot, true));
+//		matrixStack.rotate(new Quaternion(Direction.EAST.toVector3f(), secondaryRot * 0.45812f, true));
 
 		IVertexBuilder twoDBuffer = renderer.getBuffer(RenderType.getEntityTranslucent(arrayResource));
 		Model2D arrayModel = new BloodMagicRenderer.Model2D();

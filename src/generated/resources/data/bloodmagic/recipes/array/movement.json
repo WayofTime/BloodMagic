@@ -1,0 +1,13 @@
+{
+  "type": "bloodmagic:array",
+  "texture": "bloodmagic:textures/models/alchemyarrays/movementarray.png",
+  "baseinput": {
+    "item": "minecraft:feather"
+  },
+  "addedinput": {
+    "tag": "forge:dusts/redstone"
+  },
+  "output": {
+    "item": "minecraft:air"
+  }
+}

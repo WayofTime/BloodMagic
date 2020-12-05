@@ -42,7 +42,7 @@ public class LivingStats
 		LivingUpgrade upgrade = LivingArmorRegistrar.UPGRADE_MAP.getOrDefault(key, LivingUpgrade.DUMMY);
 		double current = upgrades.getOrDefault(upgrade, 0d);
 
-		System.out.println("Upgrade: " + upgrade);
+//		System.out.println("Upgrade: " + upgrade);
 
 		if (upgrade.getNextRequirement((int) current) == 0)
 			return this;

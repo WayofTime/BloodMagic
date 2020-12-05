@@ -21,6 +21,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.IMultiWillTool;
 import wayoftime.bloodmagic.client.model.MimicColor;
+import wayoftime.bloodmagic.client.render.alchemyarray.StaticAlchemyCircleRenderer;
 import wayoftime.bloodmagic.client.render.block.RenderAlchemyArray;
 import wayoftime.bloodmagic.client.render.block.RenderAltar;
 import wayoftime.bloodmagic.client.render.block.RenderDemonCrucible;
@@ -35,6 +36,7 @@ import wayoftime.bloodmagic.common.item.ItemSacrificialDagger;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilToggleable;
 import wayoftime.bloodmagic.common.item.soul.ItemSentientSword;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
+import wayoftime.bloodmagic.core.registry.AlchemyArrayRendererRegistry;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 import wayoftime.bloodmagic.tile.TileAltar;
 import wayoftime.bloodmagic.tile.TileDemonCrucible;
@@ -99,6 +101,7 @@ public class ClientEvents
 			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.MIMIC.get(), (RenderType) -> true);
 		});
 
+		AlchemyArrayRendererRegistry.registerRenderer(BloodMagic.rl("array/movement"), new StaticAlchemyCircleRenderer(BloodMagic.rl("textures/models/alchemyarrays/movementarray.png")));
 	}
 
 	public static void registerItemModelProperties(FMLClientSetupEvent event)
