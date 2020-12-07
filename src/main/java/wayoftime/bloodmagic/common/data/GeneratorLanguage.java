@@ -162,6 +162,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.crystalHarvestRitual", "Crack of the Fractured Crystal");
 		add("ritual.bloodmagic.forsakenSoulRitual", "Gathering of the Forsaken Souls");
 		add("ritual.bloodmagic.crystalSplitRitual", "Resonance of the Faceted Crystal");
+		add("ritual.bloodmagic.ellipsoidRitual", "Focus of the Ellipsoid");
 
 		add("ritual.bloodmagic.cobblestoneRitual", "Le Vulcanos Frigius");
 		add("ritual.bloodmagic.placerRitual", "The Filler");
@@ -301,27 +302,27 @@ public class GeneratorLanguage extends LanguageProvider
 		add("living_upgrade.bloodmagic.arrow_protect", "Pin Cushion");
 		add("living_upgrade.bloodmagic.speed", "Quick Feet");
 		add("living_upgrade.bloodmagic.digging", "Dwarven Might");
-		add("living_upgrade.bloodmagic.poisonResist", "Poison Resistance");
-		add("living_upgrade.bloodmagic.fireResist", "Gift of Ignis");
+		add("living_upgrade.bloodmagic.poison_resist", "Poison Resistance");
+		add("living_upgrade.bloodmagic.fire_resist", "Gift of Ignis");
 		add("living_upgrade.bloodmagic.self_sacrifice", "Tough Palms");
-		add("living_upgrade.bloodmagic.knockback", "Body Builder");
-		add("living_upgrade.bloodmagic.physicalProtect", "Tough");
+		add("living_upgrade.bloodmagic.knockback_resist", "Body Builder");
+		add("living_upgrade.bloodmagic.physical_protect", "Tough");
 		add("living_upgrade.bloodmagic.health", "Healthy");
-		add("living_upgrade.bloodmagic.meleeDamage", "Fierce Strike");
-		add("living_upgrade.bloodmagic.arrowShot", "Trick Shot");
-		add("living_upgrade.bloodmagic.stepAssist", "Step Assist");
-		add("living_upgrade.bloodmagic.grimReaper", "Grim Reaper's Sprint");
-		add("living_upgrade.bloodmagic.solarPowered", "Solar Powered");
+		add("living_upgrade.bloodmagic.melee_damage", "Fierce Strike");
+		add("living_upgrade.bloodmagic.arrow_shot", "Trick Shot");
+		add("living_upgrade.bloodmagic.step_assist", "Step Assist");
+		add("living_upgrade.bloodmagic.grim_reaper", "Grim Reaper's Sprint");
+		add("living_upgrade.bloodmagic.solar_powered", "Solar Powered");
 		add("living_upgrade.bloodmagic.thaumRunicShielding", "Runic Shielding");
 		add("living_upgrade.bloodmagic.revealing", "Revealing");
 		add("living_upgrade.bloodmagic.experienced", "Experienced");
 		add("living_upgrade.bloodmagic.jump", "Strong Legs");
-		add("living_upgrade.bloodmagic.fallProtect", "Soft Fall");
-		add("living_upgrade.bloodmagic.graveDigger", "Grave Digger");
+		add("living_upgrade.bloodmagic.fall_protect", "Soft Fall");
+		add("living_upgrade.bloodmagic.grave_digger", "Grave Digger");
 		add("living_upgrade.bloodmagic.sprint_attack", "Charging Strike");
-		add("living_upgrade.bloodmagic.criticalStrike", "True Strike");
+		add("living_upgrade.bloodmagic.critical_strike", "True Strike");
 		add("living_upgrade.bloodmagic.elytra", "Elytra");
-		add("living_upgrade.bloodmagic.nightSight", "Nocturnal Prowess");
+		add("living_upgrade.bloodmagic.night_sight", "Nocturnal Prowess");
 		add("living_upgrade.bloodmagic.repair", "Repairing");
 
 		add("living_upgrade.bloodmagic.slowness", "Limp Leg");

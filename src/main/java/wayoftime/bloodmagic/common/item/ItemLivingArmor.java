@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.common.item;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -51,6 +52,32 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 		{
 			return null;
 		}
+	}
+
+	@Override
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+	{
+		return repair.getItem() == BloodMagicItems.REAGENT_BINDING.get() || super.getIsRepairable(toRepair, repair);
+	}
+
+//	@Override
+//	public void setDamage(ItemStack stack, int damage)
+//	{
+//		this.damageItem(stack, amount, entity, onBroken)
+//		if (this.slot != EquipmentSlotType.CHEST)
+//		{
+//			return;
+//		}
+//		if (damage >= this.getMaxDamage(stack))
+//		{
+//			super.setDamage(stack, this.getMaxDamage(stack) - 1);
+//		}
+//	}
+
+	@Override
+	public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken)
+	{
+		return Math.min((stack.getMaxDamage() - 1) - stack.getDamage() - amount, 0);
 	}
 
 	@Override

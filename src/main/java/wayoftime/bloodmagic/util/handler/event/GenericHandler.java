@@ -15,12 +15,14 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -177,6 +179,10 @@ public class GenericHandler
 					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_ARROW_PROTECT.get(), event.getAmount());
 				}
 
+				if (event.getSource() == DamageSource.FALL)
+				{
+					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_FALL_PROTECT.get(), event.getAmount());
+				}
 			}
 		}
 	}
@@ -319,6 +325,7 @@ public class GenericHandler
 
 	public static Map<UUID, Double> posXMap = new HashMap<>();
 	public static Map<UUID, Double> posZMap = new HashMap<>();
+	public static Map<UUID, Integer> foodMap = new HashMap<>();
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
@@ -354,11 +361,46 @@ public class GenericHandler
 					distance = Math.sqrt((player.getPosX() - posXMap.get(player.getUniqueID())) * (player.getPosX() - posXMap.get(player.getUniqueID())) + (player.getPosZ() - posZMap.get(player.getUniqueID())) * (player.getPosZ() - posZMap.get(player.getUniqueID())));
 				}
 
+				int currentFood = player.getFoodStats().getFoodLevel();
+				if (foodMap.getOrDefault(player.getUniqueID(), 20) < currentFood)
+				{
+					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_KNOCKBACK_RESIST.get(), currentFood - foodMap.getOrDefault(player.getUniqueID(), 20));
+					foodMap.put(player.getUniqueID(), currentFood);
+				}
+
 //				System.out.println("Distance travelled: " + distance);
 				if (player.isOnGround() && distance > 0 && distance < 50)
 				{
 					distance *= (1 + percentIncrease);
 					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_SPEED.get(), distance);
+				}
+
+				if (player.getFireTimer() > 0)
+				{
+					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_FIRE_RESIST.get(), 1);
+					int fireLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_FIRE_RESIST.get().getKey());
+					if (fireLevel > 0)
+					{
+						boolean hasChanged = false;
+						int fireCooldown = chestStack.getTag().getInt("fire_cooldown");
+						if (fireCooldown > 0)
+						{
+							fireCooldown--;
+							hasChanged = true;
+						}
+
+						if (player.getFireTimer() > 0 && fireCooldown <= 0)
+						{
+							fireCooldown = LivingArmorRegistrar.UPGRADE_FIRE_RESIST.get().getBonusValue("cooldown_time", fireLevel).intValue();
+							player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, LivingArmorRegistrar.UPGRADE_FIRE_RESIST.get().getBonusValue("resist_duration", fireLevel).intValue(), 0, true, false));
+							hasChanged = true;
+						}
+
+						if (hasChanged)
+						{
+							chestStack.getTag().putInt("fire_cooldown", fireCooldown);
+						}
+					}
 				}
 
 				int poisonLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_POISON_RESIST.get().getKey());
@@ -375,9 +417,6 @@ public class GenericHandler
 						poisonCooldown--;
 						hasChanged = true;
 					}
-
-//					System.out.println("Cooldown: " + poisonCooldown);
-//					System.out.println(LivingArmorRegistrar.UPGRADE_POISON_RESIST.get().getBonusValue("max_cure", poisonLevel).intValue());
 
 					if (player.isPotionActive(Effects.POISON) && poisonCooldown <= 0 && LivingArmorRegistrar.UPGRADE_POISON_RESIST.get().getBonusValue("max_cure", poisonLevel).intValue() >= player.getActivePotionEffect(Effects.POISON).getAmplifier())
 					{
@@ -426,12 +465,33 @@ public class GenericHandler
 		{
 			if (LivingUtil.hasFullSet(player))
 			{
+
 				LivingStats stats = LivingStats.fromPlayer(player);
 				LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_DIGGING.get(), 1);
 				int mineTime = LivingArmorRegistrar.UPGRADE_DIGGING.get().getBonusValue("speed_time", stats.getLevel(LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())).intValue();
 				if (mineTime > 0)
 				{
 					player.addPotionEffect(new EffectInstance(Effects.HASTE, mineTime, LivingArmorRegistrar.UPGRADE_DIGGING.get().getBonusValue("speed_level", stats.getLevel(LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())).intValue(), true, false));
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onJump(LivingJumpEvent event)
+	{
+		if (event.getEntityLiving() instanceof PlayerEntity)
+		{
+			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+
+			if (LivingUtil.hasFullSet(player))
+			{
+				LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_JUMP.get(), 1);
+				if (!player.isSneaking())
+				{
+					LivingStats stats = LivingStats.fromPlayer(player);
+					double jumpModifier = LivingArmorRegistrar.UPGRADE_JUMP.get().getBonusValue("jump", stats.getLevel(LivingArmorRegistrar.UPGRADE_JUMP.get().getKey())).doubleValue();
+					player.setMotion(player.getMotion().add(0, jumpModifier, 0));
 				}
 			}
 		}

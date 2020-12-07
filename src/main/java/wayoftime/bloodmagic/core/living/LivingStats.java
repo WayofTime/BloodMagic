@@ -51,6 +51,19 @@ public class LivingStats
 		return this;
 	}
 
+	public LivingStats resetExperience(ResourceLocation key)
+	{
+		LivingUpgrade upgrade = LivingArmorRegistrar.UPGRADE_MAP.getOrDefault(key, LivingUpgrade.DUMMY);
+		double current = upgrades.getOrDefault(upgrade, 0d);
+
+		if (upgrade.getNextRequirement((int) current) == 0)
+			return this;
+
+		upgrades.put(upgrade, 0d);
+
+		return this;
+	}
+
 	public int getLevel(ResourceLocation key)
 	{
 		LivingUpgrade upgrade = LivingArmorRegistrar.UPGRADE_MAP.getOrDefault(key, LivingUpgrade.DUMMY);

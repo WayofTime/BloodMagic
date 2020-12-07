@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "tag": "forge:dusts/glowstone"
+  },
+  "input1": {
+    "tag": "forge:dusts/redstone"
+  },
+  "input2": {
+    "tag": "forge:gunpowder"
+  },
+  "input3": {
+    "tag": "forge:nuggets/gold"
+  },
+  "output": {
+    "item": "bloodmagic:reagentbinding"
+  },
+  "minimumDrain": 400.0,
+  "drain": 10.0
+}

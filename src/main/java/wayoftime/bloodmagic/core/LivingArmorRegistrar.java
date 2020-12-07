@@ -12,6 +12,7 @@ import com.google.gson.GsonBuilder;
 
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.registration.impl.LivingUpgradeDeferredRegister;
@@ -77,6 +78,27 @@ public class LivingArmorRegistrar
 		}
 		return 0;
 	}));
+	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_FALL_PROTECT = UPGRADES.register("fall_protect", () -> parseDefinition("fall_protect").withArmorProvider((player, stats, source, upgrade, level) -> {
+		if (source == DamageSource.FALL)
+		{
+			return upgrade.getBonusValue("protection", level).doubleValue();
+		}
+		return 0;
+	}));
+	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_PHYSICAL_PROTECT = UPGRADES.register("physical_protect", () -> parseDefinition("physical_protect").withArmorProvider((player, stats, source, upgrade, level) -> {
+		if (!source.isProjectile())
+		{
+			return upgrade.getBonusValue("protection", level).doubleValue();
+		}
+		return 0;
+	}));
+	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_JUMP = UPGRADES.register("jump", () -> parseDefinition("jump").withArmorProvider((player, stats, source, upgrade, level) -> {
+		if (source == DamageSource.FALL)
+		{
+			return upgrade.getBonusValue("fall", level).doubleValue();
+		}
+		return 0;
+	}));
 
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_HEALTH = UPGRADES.register("health", () -> parseDefinition("health").withAttributeProvider((stats, attributeMap, uuid, upgrade, level) -> {
 		attributeMap.put(Attributes.MAX_HEALTH, new AttributeModifier(uuid, "Health Modifier", upgrade.getBonusValue("hp", level).intValue(), AttributeModifier.Operation.ADDITION));
@@ -95,8 +117,12 @@ public class LivingArmorRegistrar
 		attributeMap.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(uuid, "Movement Modifier 2", upgrade.getBonusValue("speed_modifier", level).doubleValue(), AttributeModifier.Operation.MULTIPLY_BASE));
 	}));
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_POISON_RESIST = UPGRADES.register("poison_resist", () -> parseDefinition("poison_resist"));
+	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_FIRE_RESIST = UPGRADES.register("fire_resist", () -> parseDefinition("fire_resist"));
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_DIGGING = UPGRADES.register("digging", () -> parseDefinition("digging"));
-
+	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_KNOCKBACK_RESIST = UPGRADES.register("knockback_resist", () -> parseDefinition("knockback_resist").withAttributeProvider((stats, attributeMap, uuid, upgrade, level) -> {
+		attributeMap.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, "KB Modifier", upgrade.getBonusValue("kb", level).doubleValue(), AttributeModifier.Operation.ADDITION));
+		attributeMap.put(Attributes.MAX_HEALTH, new AttributeModifier(uuid, "Health Modifier 2", upgrade.getBonusValue("hp", level).intValue(), AttributeModifier.Operation.ADDITION));
+	}));
 //	public static final LivingUpgrade UPGRADE_ARROW_PROTECT = parseDefinition("arrow_protect").withArmorProvider((player, stats, source, upgrade, level) -> {
 //		if (source.isProjectile())
 //		{
@@ -122,6 +148,11 @@ public class LivingArmorRegistrar
 		registerUpgrade(UPGRADE_SPEED.get());
 		registerUpgrade(UPGRADE_POISON_RESIST.get());
 		registerUpgrade(UPGRADE_DIGGING.get());
+		registerUpgrade(UPGRADE_FALL_PROTECT.get());
+		registerUpgrade(UPGRADE_PHYSICAL_PROTECT.get());
+		registerUpgrade(UPGRADE_JUMP.get());
+		registerUpgrade(UPGRADE_KNOCKBACK_RESIST.get());
+		registerUpgrade(UPGRADE_FIRE_RESIST.get());
 //		Registry.register(UPGRADES, UPGRADE_ARROW_PROTECT.getKey(), UPGRADE_ARROW_PROTECT);
 //		Registry.register(UPGRADES, UPGRADE_ARROW_SHOT.getKey(), UPGRADE_ARROW_SHOT);
 //		Registry.register(UPGRADES, UPGRADE_CRITICAL_STRIKE.getKey(), UPGRADE_CRITICAL_STRIKE);

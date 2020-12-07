@@ -1,6 +1,21 @@
 ------------------------------------------------------
-Version 3.0.1
+Version 3.0.2
 ------------------------------------------------------
+
+Readded the Living Armour. Currently only with a few upgrades, and no downgrades.
+	- Pin Cushion
+	- Soft Fall
+	- Tough
+	- Strong Legs (Now can be temporarily deactivated when jumping by sneaking)
+	- Healthy
+	- Experienced
+	- Charging Strike
+	- Tough Palms
+	- Quick Feet
+	- Poison Resistance
+	- Gift of Ignis
+	- Dwarven Might
+	- Body Builder
 
 Reimplemented the following rituals:
 	- Resonance of the Faceted Crystal
@@ -8,6 +23,9 @@ Reimplemented the following rituals:
 	- Reap of the Harvest Moon
 	- Ritual of the Shepherd
 	- Ritual of the Green Grove
+	- Focus of the Ellipsoid
+	- Sound of the Cleansing Soul
+	- Ritual of Living Evolution
 
 ------------------------------------------------------
 Version 3.0.1
