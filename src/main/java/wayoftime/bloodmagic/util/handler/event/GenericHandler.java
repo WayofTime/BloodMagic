@@ -196,7 +196,7 @@ public class GenericHandler
 			PlayerEntity player = (PlayerEntity) living;
 			if (LivingUtil.hasFullSet(player))
 			{
-				LivingStats stats = LivingStats.fromPlayer(player);
+				LivingStats stats = LivingStats.fromPlayer(player, true);
 				double expModifier = 1 + LivingArmorRegistrar.UPGRADE_EXPERIENCE.get().getBonusValue("exp", stats.getLevel(LivingArmorRegistrar.UPGRADE_EXPERIENCE.get().getKey())).doubleValue();
 				System.out.println("Experience modifier: " + expModifier);
 
@@ -316,7 +316,7 @@ public class GenericHandler
 	{
 		if (LivingUtil.hasFullSet(event.player))
 		{
-			LivingStats stats = LivingStats.fromPlayer(event.player);
+			LivingStats stats = LivingStats.fromPlayer(event.player, true);
 			double bonus = LivingArmorRegistrar.UPGRADE_SELF_SACRIFICE.get().getBonusValue("self_mod", stats.getLevel(LivingArmorRegistrar.UPGRADE_SELF_SACRIFICE.get().getKey())).doubleValue();
 			event.lpAdded = (int) Math.round(event.lpAdded * (1 + bonus));
 			LivingUtil.applyNewExperience(event.player, LivingArmorRegistrar.UPGRADE_SELF_SACRIFICE.get(), event.healthDrained);
@@ -341,7 +341,7 @@ public class GenericHandler
 
 			if (LivingUtil.hasFullSet(player))
 			{
-				LivingStats stats = LivingStats.fromPlayer(player);
+				LivingStats stats = LivingStats.fromPlayer(player, true);
 				ItemStack chestStack = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
 //				percentIncrease += LivingArmorRegistrar.UPGRADE_SPEED.get().getBonusValue("speed_modifier", stats.getLevel(LivingArmorRegistrar.UPGRADE_SPEED.get().getKey())).doubleValue();
 				if (player.isSprinting())
@@ -450,7 +450,7 @@ public class GenericHandler
 
 		if (LivingUtil.hasFullSet(player))
 		{
-			LivingStats stats = LivingStats.fromPlayer(player);
+			LivingStats stats = LivingStats.fromPlayer(player, true);
 			percentIncrease += LivingArmorRegistrar.UPGRADE_DIGGING.get().getBonusValue("speed_modifier", stats.getLevel(LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())).doubleValue();
 		}
 
@@ -465,9 +465,8 @@ public class GenericHandler
 		{
 			if (LivingUtil.hasFullSet(player))
 			{
-
-				LivingStats stats = LivingStats.fromPlayer(player);
 				LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_DIGGING.get(), 1);
+				LivingStats stats = LivingStats.fromPlayer(player);
 				int mineTime = LivingArmorRegistrar.UPGRADE_DIGGING.get().getBonusValue("speed_time", stats.getLevel(LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())).intValue();
 				if (mineTime > 0)
 				{
