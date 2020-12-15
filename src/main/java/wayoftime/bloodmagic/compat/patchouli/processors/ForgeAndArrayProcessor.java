@@ -98,7 +98,6 @@ public class ForgeAndArrayProcessor implements IComponentProcessor
 			{
 				LogManager.getLogger().warn("Guidebook could not find a large enough Tartaric Gem for " + frecipe.getId());
 				return IVariable.from(new ItemStack(Items.BARRIER));
-
 			}
 		case "array_baseinput":
 			return IVariable.wrapList(Arrays.stream(arecipe.getBaseInput().getMatchingStacks()).map(IVariable::from).collect(Collectors.toList()));
