@@ -1,5 +1,8 @@
 package wayoftime.bloodmagic.compat.patchouli.processors;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import org.apache.logging.log4j.LogManager;
 
 import net.minecraft.client.Minecraft;
@@ -9,24 +12,24 @@ import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
 import vazkii.patchouli.api.IVariableProvider;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
-import wayoftime.bloodmagic.recipe.RecipeBloodAltar;
+import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
 
-public class AltarProcessor implements IComponentProcessor
+public class AlchemyArrayProcessor implements IComponentProcessor
 {
-	private RecipeBloodAltar recipe;
+	private RecipeAlchemyArray recipe;
 
 	@Override
 	public void setup(IVariableProvider variables)
 	{
 		ResourceLocation id = new ResourceLocation(variables.get("recipe").asString());
 		IRecipe<?> recipe = Minecraft.getInstance().world.getRecipeManager().getRecipe(id).get();
-		if (recipe.getType().equals(BloodMagicRecipeType.ALTAR))
+		if (recipe.getType().equals(BloodMagicRecipeType.ARRAY))
 		{
-			this.recipe = (RecipeBloodAltar) recipe;
+			this.recipe = (RecipeAlchemyArray) recipe;
 		}
 		if (this.recipe == null)
 		{
-			LogManager.getLogger().warn("Guidebook missing Blood Altar recipe " + id);
+			LogManager.getLogger().warn("Guidebook missing Alchemy Array recipe " + id);
 		}
 	}
 
@@ -39,14 +42,12 @@ public class AltarProcessor implements IComponentProcessor
 		}
 		switch (key)
 		{
-		case "input":
-			return IVariable.from(recipe.getInput().getMatchingStacks()[0]);
+		case "baseinput":
+			return IVariable.wrapList(Arrays.stream(recipe.getBaseInput().getMatchingStacks()).map(IVariable::from).collect(Collectors.toList()));
+		case "addedinput":
+			return IVariable.wrapList(Arrays.stream(recipe.getAddedInput().getMatchingStacks()).map(IVariable::from).collect(Collectors.toList()));
 		case "output":
 			return IVariable.from(recipe.getOutput());
-		case "tier":
-			return IVariable.wrap(recipe.getMinimumTier() + 1);
-		case "lp":
-			return IVariable.wrap(recipe.getSyphon());
 		default:
 			return null;
 		}

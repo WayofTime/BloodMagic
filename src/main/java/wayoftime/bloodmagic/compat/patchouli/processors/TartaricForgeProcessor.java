@@ -1,5 +1,8 @@
 package wayoftime.bloodmagic.compat.patchouli.processors;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import org.apache.logging.log4j.LogManager;
 
 import net.minecraft.client.Minecraft;
@@ -45,8 +48,7 @@ public class TartaricForgeProcessor implements IComponentProcessor
 			int index = Integer.parseInt(key.substring(5)) - 1;
 			if (recipe.getInput().size() > index)
 			{
-				return IVariable.from(recipe.getInput().get(index).getMatchingStacks()[0]);
-				// todo: try to support tag-like item cycle?
+				return IVariable.wrapList(Arrays.stream(recipe.getInput().get(index).getMatchingStacks()).map(IVariable::from).collect(Collectors.toList()));
 			} else
 			{
 				return null;
