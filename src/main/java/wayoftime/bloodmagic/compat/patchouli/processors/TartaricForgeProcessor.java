@@ -39,60 +39,28 @@ public class TartaricForgeProcessor implements IComponentProcessor
 		if (recipe == null)
 		{
 			return null;
-		} else if (key.equals("input1")) // todo: Handle all inputs in one entry.
-		{
-			if (recipe.getInput().size() >= 1)
-			{
-				return IVariable.from(recipe.getInput().get(0).getMatchingStacks()[0]); // todo: how to show all
-																						// variants.
-			} else
-			{
-				return null;
-			}
-
-		} else if (key.equals("input2"))
-		{
-			if (recipe.getInput().size() >= 2)
-			{
-				return IVariable.from(recipe.getInput().get(1).getMatchingStacks()[0]);
-			} else
-			{
-				return null;
-			}
-
-		} else if (key.equals("input3"))
-		{
-			if (recipe.getInput().size() >= 3)
-			{
-				return IVariable.from(recipe.getInput().get(2).getMatchingStacks()[0]);
-			} else
-			{
-				return null;
-			}
-
-		} else if (key.equals("input4"))
-		{
-			if (recipe.getInput().size() >= 4)
-			{
-				return IVariable.from(recipe.getInput().get(3).getMatchingStacks()[0]);
-			} else
-			{
-				return null;
-			}
-
 		}
-
-		else if (key.equals("output"))
+		if (key.startsWith("input"))
 		{
+			int index = Integer.parseInt(key.substring(5)) - 1;
+			if (recipe.getInput().size() > index)
+			{
+				return IVariable.from(recipe.getInput().get(index).getMatchingStacks()[0]);
+				// todo: try to support tag-like item cycle?
+			} else
+			{
+				return null;
+			}
+		}
+		switch (key)
+		{
+		case "output":
 			return IVariable.from(recipe.getOutput());
-		} else if (key.equals("willrequired"))
-		{
+		case "willrequired":
 			return IVariable.wrap(recipe.getMinimumSouls());
-		} else if (key.equals("willdrain"))
-		{
+		case "willdrain":
 			return IVariable.wrap(recipe.getSoulDrain());
-		} else if (key.equals("will"))
-		{
+		case "will":
 			if (recipe.getMinimumSouls() <= 1)
 			{
 				return IVariable.from(new ItemStack(BloodMagicItems.MONSTER_SOUL_RAW.get()));
@@ -113,12 +81,13 @@ public class TartaricForgeProcessor implements IComponentProcessor
 				// }
 			} else
 			{
-				LogManager.getLogger().warn("Could not find a large enough Tartaric Gem for " + recipe.getId());
+				LogManager.getLogger().warn("Guidebook could not find a large enough Tartaric Gem for " + recipe.getId());
 				return IVariable.from(new ItemStack(Items.BARRIER));
 
 			}
+		default:
+			return null;
 		}
-		return null;
 	}
 
 }

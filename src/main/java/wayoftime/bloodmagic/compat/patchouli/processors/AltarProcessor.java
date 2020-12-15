@@ -36,21 +36,20 @@ public class AltarProcessor implements IComponentProcessor
 		if (recipe == null)
 		{
 			return null;
-		} else if (key.equals("input"))
-		{
-			return IVariable.from(recipe.getInput().getMatchingStacks()[0]);
-
-		} else if (key.equals("output"))
-		{
-			return IVariable.from(recipe.getOutput());
-		} else if (key.equals("tier"))
-		{
-			return IVariable.wrap(recipe.getMinimumTier() + 1);
-		} else if (key.equals("LP"))
-		{
-			return IVariable.wrap(recipe.getSyphon());
 		}
-		return null;
+		switch (key)
+		{
+		case "input":
+			return IVariable.from(recipe.getInput().getMatchingStacks()[0]);
+		case "output":
+			return IVariable.from(recipe.getOutput());
+		case "tier":
+			return IVariable.wrap(recipe.getMinimumTier() + 1);
+		case "lp":
+			return IVariable.wrap(recipe.getSyphon());
+		default:
+			return null;
+		}
 	}
 
 }
