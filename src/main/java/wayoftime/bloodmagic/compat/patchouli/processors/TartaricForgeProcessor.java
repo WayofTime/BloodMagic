@@ -45,7 +45,7 @@ public class TartaricForgeProcessor implements IComponentProcessor
 		}
 		if (key.startsWith("input"))
 		{
-			int index = Integer.parseInt(key.substring(5)) - 1;
+			int index = Integer.parseInt(key.substring("input".length())) - 1;
 			if (recipe.getInput().size() > index)
 			{
 				return IVariable.wrapList(Arrays.stream(recipe.getInput().get(index).getMatchingStacks()).map(IVariable::from).collect(Collectors.toList()));
