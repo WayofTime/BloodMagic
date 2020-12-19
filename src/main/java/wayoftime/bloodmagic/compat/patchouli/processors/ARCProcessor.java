@@ -96,12 +96,6 @@ public class ARCProcessor implements IComponentProcessor
 				return IVariable.wrap(fluid.getAmount() + "mb of " + fluid.getTranslationKey());
 			}
 			return IVariable.wrap("None");
-		/*
-		 * case "fluid_input": return
-		 * IVariable.from(recipe.getFluidIngredient().getRepresentations().get(0).
-		 * getFluid().getFilledBucket()); /case "fluid_output": return
-		 * IVariable.from(recipe.getFluidOutput().getFluid().getFilledBucket());
-		 */
 		default:
 			return null;
 		}
