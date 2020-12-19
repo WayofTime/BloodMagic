@@ -1,0 +1,32 @@
+{
+  "name": "Resonance of the Faceted Crystal",
+  "icon": "bloodmagic:vengefulcrystal",
+  "category": "rituals_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "Resonance of the Faceted Crystal",
+      "multiblock":{
+        "pattern":[
+          ["__D__", "_BFB_", "DE0AD", "_BWB_", "__D__"],
+          ["_D_D_", "D___D", "_____", "D___D", "_D_D_"]
+        ],
+        "mapping":{
+          "0": "bloodmagic:masterritualstone",
+          "B": "bloodmagic:ritualstone",
+          "W": "#bloodmagic:ritual_stones/water_earth_fire_air",
+          "A": "#bloodmagic:ritual_stones/air_water_earth_fire",
+          "F": "#bloodmagic:ritual_stones/fire_air_water_earth",
+          "E": "#bloodmagic:ritual_stones/earth_fire_air_water",
+          "D": "bloodmagic:duskritualstone"
+        },
+        "symetrical": false
+      },
+      "text": "Use a Ritual Diviner for easier contruction."
+    },
+    {
+      "type": "text",
+      "text": "Splits apart a well-grown Raw crystal cluster into seperal aspected crystal clusters. For more information, see $(l:demon_will/aspected_will)Aspected Will$(). $(br2)$(blank)Blank Runes: 4 $(br)$(water)Water Runes: 1 $(br)$(air)Air Runes: 1 $(br)$(fire)Fire Runes: 1 $(br)$(earth)Earth Runes: 1 $(br)$()Dusk Runes: 12 $(br2)$()Total Runes: 20" 
+    }
+  ]
+}

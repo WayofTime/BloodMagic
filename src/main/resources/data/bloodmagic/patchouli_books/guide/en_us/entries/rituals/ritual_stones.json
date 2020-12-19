@@ -1,0 +1,16 @@
+{
+  "name": "Ritual Stones",
+  "icon": "bloodmagic:waterritualstone",
+  "category": "rituals",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(item)Ritual Stones$() are the canvas upon which you will draw your $(item)Rituals$(). They also look quite nifty, and can be manually painted with the various $(item)Elemental Inscription Tools$()." 
+    },
+    {
+      "type": "crafting",
+      "recipe": "bloodmagic:ritual_stone_blank",
+	  "recipe2": "bloodmagic:ritual_stone_master"
+    }
+  ]
+}

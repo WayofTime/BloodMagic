@@ -1,9 +1,22 @@
 {
   "name": "guide.bloodmagic.name",
   "subtitle": "Alchemical Wizardry",
-  "landing_text": "guide.bloodmagic.landing_text",
-  "version": 1,
+  "landing_text": "Welcome to $(6)Blood Magic$()! $(l:utility/nyi)A lot of stuff$() isn't yet implemented, so please excuse our dust. $(br)Click $(l:utility/getting_started)HERE$() to get started. If you find any bugs, please report them on our $(l:https://github.com/WayofTime/BloodMagic/issues)Github$().",
+  "book_texture": "patchouli:textures/gui/book_red.png",
+  "filler_texture": "bloodmagic:textures/gui/patchouli_book/page_filler.png",
   "creative_tab": "bloodmagictab",
   "model": "bloodmagic:book",
-  "show_progress": true
+  "show_progress": true,
+  "macros": {
+	"$(water)": "$(#0000aa)",
+	"$(air)": "$(#aaaa00)",
+	"$(fire)": "$(#aa0000)",
+	"$(earth)": "$(#00aa00)",
+	"$(blank)": "$(#888888)",
+	"$(steadfast)": "$(#0000aa)",
+	"$(destructive)": "$(#aaaa00)",
+	"$(vengeful)": "$(#aa0000)",
+	"$(corrosive)": "$(#00aa00)",
+	"$(raw)": "$(#36C6C6)"
+	}
 }
