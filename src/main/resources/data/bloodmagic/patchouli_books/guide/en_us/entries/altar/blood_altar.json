@@ -5,7 +5,7 @@
   "priority": "true",
   "extra_recipe_mappings":[
     ["bloodmagic:daggerofsacrifice", 13]
-	],
+    ],
   "pages": [
     {
       "type": "text",
@@ -42,7 +42,7 @@
       "type": "crafting",
       "recipe": "bloodmagic:sacrificial_dagger",
       "anchor": "knife",
-	  "text": "Keep in mind that 10% of the total LP the altar can hold will be absorbed into an invisible internal 'tank' used for extracting and inserting Life Essence into the Altar."
+      "text": "Keep in mind that 10% of the total LP the altar can hold will be absorbed into an invisible internal 'tank' used for extracting and inserting Life Essence into the Altar."
     },
     {
       "type": "text",
@@ -86,13 +86,13 @@
       "type": "text",
       "text": "Now that you have a Tier 2 Altar, you can look into getting blood from somewhere other than yourself. The $(item)Dagger of Sacrifice$() will allow you to kill any mob (monster or passive) that stands within 2 blocks of your Altar, instantly killing them and granting you a decent sum of LP. You can increase the amount you get per kill with $(l:altar/blood_rune/sacrifice_rune)Runes of Sacrifice$(). Different entities give different amounts of LP. Check your configs for more info."
     },
-	{
+    {
       "type": "crafting_altar",
-	  "heading": "Dagger of Sacrifice",
+      "heading": "Dagger of Sacrifice",
       "recipe": "bloodmagic:altar/daggerofsacrifice",
-	  "text": "Slaughtering villagers for fun and profit!"
+      "text": "Slaughtering villagers for fun and profit!"
     },
-	{
+    {
       "type": "text",
       "text": "To upgrade the Blood Altar to Tier 3, place 5 $(item)Blood Runes$() one block down and two blocks away from the previous set of runes along each edge. Then place two blocks (indicated by the $(item)Stone Bricks$()) in each corner, starting above the new ring of runes, and then cap each pillar with $(item)Glowstone Blocks$().$(br)To check that it is successfully upgraded, use a $(l:sigil/divination)Divination Sigil$(/l) to check the tier. Note that any non-air block can be used for the pillars below the Glowstone."
     },

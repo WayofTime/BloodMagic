@@ -2,22 +2,22 @@
   "name": "Alchemical Reaction Chamber",
   "icon": "bloodmagic:alchemicalreactionchamber",
   "category": "utility",
-  "extra_recipe_mappings": [
-  ["bloodmagic:sanguinereverter", 2],
-  ["bloodmagic:weakbloodshard", 3],
-  ["bloodmagic:explosivepowder", 6],
-  ["bloodmagic:ironfragment", 7],
-  ["bloodmagic:goldfragment", 7],
-  ["bloodmagic:fragment_netherite_scrap", 7],
-  ["bloodmagic:irongravel", 9],
-  ["bloodmagic:goldgravel", 9],
-  ["bloodmagic:gravel_netherite_scrap", 9],
-  ["bloodmagic:ironsand", 7],
-  ["bloodmagic:goldsand", 7],
-  ["bloodmagic:sand_netherite", 7],
-  ["bloodmagic:sulfur", 7],
-  ["bloodmagic:primitive_crystalline_resonator", 8],
-  ["bloodmagic:basiccuttingfluid", 10]
+  "extra_recipe_mappings":[
+    ["bloodmagic:sanguinereverter", 2],
+    ["bloodmagic:weakbloodshard", 3],
+    ["bloodmagic:explosivepowder", 6],
+    ["bloodmagic:ironfragment", 7],
+    ["bloodmagic:goldfragment", 7],
+    ["bloodmagic:fragment_netherite_scrap", 7],
+    ["bloodmagic:irongravel", 9],
+    ["bloodmagic:goldgravel", 9],
+    ["bloodmagic:gravel_netherite_scrap", 9],
+    ["bloodmagic:ironsand", 7],
+    ["bloodmagic:goldsand", 7],
+    ["bloodmagic:sand_netherite", 7],
+    ["bloodmagic:sulfur", 7],
+    ["bloodmagic:primitive_crystalline_resonator", 8],
+    ["bloodmagic:basiccuttingfluid", 10]
   ],
   "pages": [
      {

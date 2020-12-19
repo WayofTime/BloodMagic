@@ -5,26 +5,26 @@
   "priority": "true",
   "extra_recipe_mappings":[
     ["bloodmagic:reagentbinding", 1],
-	["bloodmagic:livinghelmet", 4],
-	["bloodmagic:livingplate", 4],
-	["bloodmagic:livingleggings", 4],
-	["bloodmagic:livingboots", 4]
-	],
+    ["bloodmagic:livinghelmet", 4],
+    ["bloodmagic:livingplate", 4],
+    ["bloodmagic:livingleggings", 4],
+    ["bloodmagic:livingboots", 4]
+  ],
   "pages": [
     {
       "type": "text",
       "text": "To create $(item)Living Equipment$(), you will first need $(item)Iron Armor$() (or $(item)Iron Armour$(), if you prefer), some $(l:alchemy_array/arcane_ash)Arcane Ash$(), and some $(item)Binding Reagent$(). You'll also need at least a $(l:demon_will/soul_gem)Common Tartaric Gem$() in order to hold the $(item)Demon Will$() required."
     },
-	{
+    {
       "type": "crafting_soulforge",
-	  "heading": "Binding Reagent",
+      "heading": "Binding Reagent",
       "recipe": "bloodmagic:soulforge/reagent_binding",
-	  "text": "It clings to me tightly..."
+      "text": "It clings to me tightly..."
     },
     {
-   	  "type": "text",
-   	  "text": "as with any other Alchemy Array, right click the top of the ground with the $(item)Arcane Ashes$() and apply the $(item)Binding Reagent$(). Then place in your $(item)Iron Helmet$(), $(item)Iron Chestplate$(), $(item)Iron Leggings$() or $(item)Iron Boots$(), stand back, and watch the show.$(br2) Living Equipment starts off equivalent to Iron, but it has $(item)Upgrade Points$() that can, with care, be spent to train it in specific ways. It starts with 100, but there may be ways to surpass this limitation..."
-   	},
+      "type": "text",
+      "text": "as with any other Alchemy Array, right click the top of the ground with the $(item)Arcane Ashes$() and apply the $(item)Binding Reagent$(). Then place in your $(item)Iron Helmet$(), $(item)Iron Chestplate$(), $(item)Iron Leggings$() or $(item)Iron Boots$(), stand back, and watch the show.$(br2) Living Equipment starts off equivalent to Iron, but it has $(item)Upgrade Points$() that can, with care, be spent to train it in specific ways. It starts with 100, but there may be ways to surpass this limitation..."
+    },
     {
       "type": "crafting_array",
       "heading": "Ritual of Binding",

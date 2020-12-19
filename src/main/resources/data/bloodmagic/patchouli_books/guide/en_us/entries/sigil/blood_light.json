@@ -4,8 +4,8 @@
   "category": "sigil",
   "extra_recipe_mappings":[
     ["bloodmagic:reagentbloodlight", 1],
-	["bloodmagic:bloodlightsigil", 1]
-	],
+    ["bloodmagic:bloodlightsigil", 1]
+  ],
   "pages": [
     {
       "type": "text",

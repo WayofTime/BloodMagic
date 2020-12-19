@@ -14,11 +14,11 @@
     {
       "type": "text",
       "text": "(Also not implemented:) $(strike)The blood altar's LP value can be read via a comparator on the side, similar to a vanilla chest. $(br2)If you place a $(item)Bloodstone Brick$()$(strike) underneath the altar, the comparator will instead read the value of the $(l:altar/soul_network)Soul Network$(/l) of the owner of any orb that is placed into the Altar. $(br2)The signal strength depends on the size of the orb in the altar, not the maximum LP of the network, so if you have"
-	},
-	{
+    },
+    {
       "type": "text",
       "text": "$(strike)500,000 LP, a Weak Blood Orb would show as completely full, but a Master Blood Orb would show as only half full. This can be used to, for example, deactivate certain rituals when you are running low on LP, to ensure you don't run out. $(br2)Lastly, placing a $(item)Redstone Lamp$()$(strike) underneath the altar will make it output a redstone signal upon finishing a crafting operation. With a bit of cunning, this should allow you to fully automate the production of slates."
-	}
+    }
   ]
 }
 

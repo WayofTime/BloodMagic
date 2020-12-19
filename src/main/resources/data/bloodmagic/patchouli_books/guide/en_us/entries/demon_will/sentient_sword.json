@@ -2,9 +2,7 @@
   "name": "Sentient Sword",
   "icon": "bloodmagic:soulsword",
   "category": "demon_will",
-  "extra_recipe_mappings":[
-    ["bloodmagic:soulsword", 1]
-	],
+  "extra_recipe_mappings":[["bloodmagic:soulsword", 1]],
   "pages": [
     {
       "type": "text",
@@ -12,9 +10,9 @@
     },
     {
       "type": "crafting_soulforge",
-	  "heading": "Sentient Sword",
+      "heading": "Sentient Sword",
       "recipe": "bloodmagic:soulforge/sentientsword",
-	  "text": "This sword will serve you well."
+      "text": "This sword will serve you well."
     }
   ]
 }

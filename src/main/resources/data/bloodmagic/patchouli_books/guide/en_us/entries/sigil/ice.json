@@ -4,7 +4,7 @@
   "category": "sigil",
   "extra_recipe_mappings":[
     ["bloodmagic:icesigil", 0]
-	],
+  ],
   "pages": [
     {
       "type": "text",

@@ -57,18 +57,18 @@
       "title": "Steadfast",
       "text": "Sets the minimum health for sacrificing from 30% to 70%."
     },
-	{
-	  "type": "spotlight",
+    {
+      "type": "spotlight",
       "item": "bloodmagic:ritualtinkerer",
       "title": "Range",
       "text": "(Altar) This range defines the area that the ritual searches for the blood altar. Changing this will either expand or limit the range to a certain region. $(br) $(li)Maximum Volume: Full Range. $(li)Horizontal Radius: 10 $(li)Vertical Radius: 15"
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "bloodmagic:ritualtinkerer",
       "title": "Range",
       "text": "(Damage) This defines where the ritual will damage a player. Players inside of this range will receive damage over time up to the specified limit. $(br) $(li)Maximum Volume: Full Range. $(li)Horizontal Radius: 25 $(li)Vertical Radius: 15"
-	}
+    }
   ]
 }
 

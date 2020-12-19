@@ -33,18 +33,18 @@
       "title": "Corrosive",
       "text": "Steals health from non-players inside of its Vampirism range and directly heals players."
     },
-	{
-	  "type": "spotlight",
+    {
+      "type": "spotlight",
       "item": "bloodmagic:ritualtinkerer",
       "title": "Range",
       "text": "(Healing) Entities within this range will receive a regeneration buff. $(br) $(li)Maximum Volume: Full Range. $(li)Horizontal Radius: 20 $(li)Vertical Radius: 20"
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "bloodmagic:ritualtinkerer",
       "title": "Range",
       "text": "(Vampirism) Mobs within this range have their health syphoned to heal players in the Healing range. $(br) $(li)Maximum Volume: Full Range. $(li)Horizontal Radius: 20 $(li)Vertical Radius: 20"
-	}
+    }
   ]
 }
 

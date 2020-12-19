@@ -10,7 +10,7 @@
     {
       "type": "crafting",
       "recipe": "bloodmagic:lava_crystal",
-	  "text": "$(br)Furthermore, if placed in the fuel slot of a furnace, it will act as a never-ending fuel source, consuming 50LP to burn for 10 seconds, or long enough to cook one item."
+      "text": "$(br)Furthermore, if placed in the fuel slot of a furnace, it will act as a never-ending fuel source, consuming 50LP to burn for 10 seconds, or long enough to cook one item."
     }
   ]
 }

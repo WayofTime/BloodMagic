@@ -30,11 +30,11 @@
       "type": "text",
       "text": "[WIP Notes]$(br2)[Increase range by placing Iron, Gold, or Diamond Block under the Master Ritual Stone.]" 
     },
-	{
-	  "type": "spotlight",
+    {
+      "type": "spotlight",
       "item": "bloodmagic:ritualtinkerer",
       "title": "Range",
       "text": "(Placement) The range that the ritual will place the grabbed ores into. $(br) $(li)Maximum Volume: 50 $(li)Horizontal Radius: 4 $(li)Vertical Radius: 4"
-	}
+    }
   ]
 }

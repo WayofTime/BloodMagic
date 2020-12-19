@@ -4,8 +4,8 @@
   "category": "sigil",
   "extra_recipe_mappings":[
     ["bloodmagic:reagentsight", 2],
-	["bloodmagic:seersigil", 2]
-	],
+    ["bloodmagic:seersigil", 2]
+  ],
   "pages": [
     {
       "type": "text",
@@ -19,11 +19,11 @@
       "array.recipe": "bloodmagic:array/seersigil",
       "array.text": "$(italic)When seeing all is not enough"
     },
-	{
+    {
       "type": "text",
       "text": "From top to bottom, we have: $(li)The current Tier of the $(l:altar/blood_altar)Blood Altar$(/l). $(li)The amount of blood currently inside the Altar, and the current total capacity of the Altar. (This defaults to 10,000mb, but may be increased with $(l:altar/blood_rune/capacity_rune)Runes of Capacity$() and $(l:altar/blood_rune/aug_capacity_rune)Runes of Augmented Capacity.$() $(li)The current crafting progress, if any. $(li)LP Consumption/Tick - how much LP the Altar will use per tick when crafting. $(li) Current LP Storage of any $(l:altar/blood_rune/charging_rune)Charging Runes$() you may have."
     },
-	{
+    {
       "type": "image",
       "images": [
         "bloodmagic:images/entries/sigil/seer_sigil_info.png"

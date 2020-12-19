@@ -8,11 +8,9 @@
       "name": "Ritual of the Full Spring",
       "multiblock":{
         "pattern":[
-          [
-            "W_W",
-            "_0_",
-            "W_W"
-          ]
+          ["W_W",
+           "_0_",
+           "W_W"]
         ],
         "mapping":{
           "0": "bloodmagic:masterritualstone",

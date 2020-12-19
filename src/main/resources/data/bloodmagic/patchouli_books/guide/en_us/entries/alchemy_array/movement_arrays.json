@@ -1,0 +1,16 @@
+{
+  "name": "Movement Array",
+  "icon": "minecraft:feather",
+  "category": "alchemy_array",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The Movement Arrays are a pair of arrays that thows players, mobs, items, etc in a specific direction.  One will throw the items horizontally, while the other will throw them vertically.$(br2)Note: At this time, only the horizontal Array has been implemented, and it is the only functional non-crafting array currently in the mod."
+    },
+    {
+      "type": "functional_array",
+      "recipe": "bloodmagic:array/movement",
+      "image": "movementarray.png"
+    }
+  ]
+}

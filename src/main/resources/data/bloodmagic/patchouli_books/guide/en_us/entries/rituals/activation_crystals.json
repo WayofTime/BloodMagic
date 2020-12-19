@@ -4,8 +4,8 @@
   "category": "rituals",
   "extra_recipe_mappings":[
     ["bloodmagic:activationcrystalweak", 1],
-	["bloodmagic:activationcrystalawakened", 3]
-	],
+    ["bloodmagic:activationcrystalawakened", 3]
+  ],
   "pages": [
     {
       "type": "text",
@@ -13,9 +13,9 @@
     },
     {
       "type": "crafting_altar",
-	  "heading": "Weak Activation Crystal",
+      "heading": "Weak Activation Crystal",
       "recipe": "bloodmagic:weak_activation_crystal",
-	  "text": "This crystal should do for now."
+      "text": "This crystal should do for now."
     },
     {
       "type": "text",
@@ -23,12 +23,8 @@
     },
     {
       "type": "text",
-	  "heading": "Awakened Activation Crystal",
-      "input": "minecraft:barrier",
-	  "output": "bloodmagic:activationcrystalawakened",
-	  "tier": "???",
-	  "LP": "Lots",
-	  "text": "NOT YET IMPLEMENTED. (Unless it is. Then I forgot to update this. Sorry!)"
+      "title": "Awakened Activation Crystal",
+      "text": "Not Yet Implemented."
     }
   ]
 }

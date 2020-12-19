@@ -8,13 +8,11 @@
       "name": "Ritual of the Shepherd",
       "multiblock":{
         "pattern":[
-          [
-            "_EDE_",
-            "A_W_A",
-            "DW0WD",
-            "A_W_A",
-            "_EDE_"
-          ]
+          ["_EDE_",
+           "A_W_A",
+           "DW0WD",
+           "A_W_A",
+           "_EDE_"]
         ],
         "mapping":{
           "0": "bloodmagic:masterritualstone",

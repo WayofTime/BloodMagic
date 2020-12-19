@@ -56,17 +56,17 @@
       "title": "Steadfast",
       "text": "Causes all blocks that are broken to be picked up with silk touch. Overrides Fortune where applicable."
     },
-	{
-	  "type": "spotlight",
+    {
+      "type": "spotlight",
       "item": "bloodmagic:ritualtinkerer",
       "title": "Range",
       "text": "(Chest) The location of the inventory that the ritual will place the broken blocks into. $(br) $(li)Maximum Volume: 1 $(li)Horizontal Radius: 3 $(li)Vertical Radius: 3"
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "bloodmagic:ritualtinkerer",
       "title": "Range",
       "text": "(Crushing) The blocks that the ritual will break. $(br) $(li)Maximum Volume: 50 $(li)Horizontal Radius: 10 $(li)Vertical Radius: 10"
-	}
+    }
   ]
 }

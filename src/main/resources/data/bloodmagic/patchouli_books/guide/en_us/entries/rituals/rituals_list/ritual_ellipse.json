@@ -8,19 +8,17 @@
       "name": "Focus of the Ellipsoid",
       "multiblock":{
         "pattern":[
-          [
-            "_____AAA___",
-            "_____A_____",
-            "__WWW__EE__",
-            "F_W_____E__",
-            "F___D_D_E__",
-            "FF___0___FF",
-            "__E_D_D___F",
-            "__E_____W_F",
-            "__EE__WWW__",
-            "_____A_____",
-            "___AAA_____"
-          ]
+          ["_____AAA___",
+           "_____A_____",
+           "__WWW__EE__",
+           "F_W_____E__",
+           "F___D_D_E__",
+           "FF___0___FF",
+           "__E_D_D___F",
+           "__E_____W_F",
+           "__EE__WWW__",
+           "_____A_____",
+           "___AAA_____"]
         ],
         "mapping":{
           "0": "bloodmagic:masterritualstone",
@@ -50,6 +48,5 @@
       "title": "Range",
       "text": "(Placement) The range that the ritual will place its blocks in. Note that the Spheroid is centered on the ritual - if one side is shorter than the side opposite, the spheroid will be truncated. $(br) $(li)Maximum Volume: Full Range. $(li)Horizontal Radius: 32 $(li)Vertical Radius: 32"
 	}
-	
   ]
 }

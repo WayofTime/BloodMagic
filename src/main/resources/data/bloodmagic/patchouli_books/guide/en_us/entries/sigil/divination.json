@@ -3,8 +3,8 @@
   "icon": "bloodmagic:divinationsigil",
   "category": "sigil",
   "extra_recipe_mappings":[
-	["bloodmagic:divinationsigil", 3]
-	],
+    ["bloodmagic:divinationsigil", 3]
+  ],
   "pages": [
     {
       "type": "text",

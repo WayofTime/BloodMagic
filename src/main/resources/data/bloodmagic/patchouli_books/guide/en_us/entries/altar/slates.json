@@ -15,16 +15,16 @@
     },
     {
       "type": "2x_crafting_altar",
-	  "a.heading": "Blank Slate",
+      "a.heading": "Blank Slate",
       "a.recipe": "bloodmagic:altar/slate",
-	  "b.heading": "Reinforced Slate",
+      "b.heading": "Reinforced Slate",
       "b.recipe": "bloodmagic:altar/reinforcedslate"
     },
     {
       "type": "2x_crafting_altar",
-	  "a.heading": "Imbued Slate",
+      "a.heading": "Imbued Slate",
       "a.recipe": "bloodmagic:altar/imbuedslate",
-	  "b.heading": "Demonic Slate",
+      "b.heading": "Demonic Slate",
       "b.recipe": "bloodmagic:altar/demonicslate"
     }
   ]

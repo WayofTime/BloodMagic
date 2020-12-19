@@ -4,20 +4,22 @@
   "category": "demon_will",
   "extra_recipe_mappings":[
     ["bloodmagic:demoncrucible", 1],
-	["bloodmagic:demoncrystallizer", 4]
-	],
+    ["bloodmagic:demoncrystallizer", 4],
+    ["bloodmagic:rawdemoncrystal", 4],
+    ["bloodmagic:defaultcrystal", 4]
+  ],
   "pages": [
     {
       "type": "text",
       "text": "Now that you have plenty of $(l:demon_will/demon_will)$(item)Demon Will$() in your $(l:demon_will/soul_gem)$(item)Tartaric Gem$(), it's time to explore what happens when you unleash it upon the world. $(br)First off, you'll need to create a $(item)Demon Crucible$(), and then fill it with $(l:demon_will/demon_will)$(item)Demon Will$()."
     },
-	{
+    {
       "type": "crafting_soulforge",
-	  "heading": "Demon Crucible",
+      "heading": "Demon Crucible",
       "recipe": "bloodmagic:soulforge/demon_crucible",
-	  "text": "This will burn $(l:demon_will/demon_will)$(item)Demon Will$() and release it into the atmosphere. Put a charged $(l:demon_will/soul_gem)$(item)Tartaric Gem$() into it and let it run."
+      "text": "This will burn $(l:demon_will/demon_will)$(item)Demon Will$() and release it into the atmosphere. Put a charged $(l:demon_will/soul_gem)$(item)Tartaric Gem$() into it and let it run."
     },
-	{
+    {
       "type": "image",
       "images": [
         "bloodmagic:images/entries/demon_will/demon_crucible.png"
@@ -30,26 +32,26 @@
       "type": "text",
       "text": "Now we have $(item)Raw Will$() in the atmosphere. Great, now what? $(br2)Some $(l:rituals/ritual_tinkerer)Rituals$() benefit from $(item)Raw Will$(), but the main benefit from this is the ability to create $(item)Demon Will Crystals$() and from there, split them into their $(l:demon_will/aspected_will)Aspects$()."
     },
-	{
+    {
       "type": "crafting_soulforge",
-	  "heading": "Demon Crystallizer",
+      "heading": "Demon Crystallizer",
       "recipe": "bloodmagic:soulforge/demon_crystallizer",
-	  "text": "This will slowly consume $(l:demon_will/demon_will)$(item)Demon Will$() from the atmosphere to produce $(item)Will Crystals$(). The first spire costs about 100 will to form, and all subsequent spires cost roughly half that. The largest $(item)Crystal Cluster$() can be up to 7 spires."
+      "text": "This will slowly consume $(l:demon_will/demon_will)$(item)Demon Will$() from the atmosphere to produce $(item)Will Crystals$(). The first spire costs about 100 will to form, and all subsequent spires cost roughly half that. The largest $(item)Crystal Cluster$() can be up to 7 spires."
     },
     {
       "type": "text",
       "text": "If you have at least 1,000 total Will in your inventory (Across any number of Tartaric Gems), you can harvest these crystals by right-clicking the spire with an empty hand. This will remove all but the central spire. $(br2)However, if you have not got this much will, $(italic)really$() need that central spire, or are just in a hurry, you can harvest the whole lot with a pickaxe."
     },
-	{
-	  "type": "relations",
+    {
+      "type": "relations",
       "title": "Related Links",
         "entries": [
-			"rituals/ritual_tinkerer",
-			"rituals/rituals_list/ritual_crystal_split",
-			"rituals/rituals_list/ritual_crystal_harvest",
-			"demon_will/aspected_will"
-		],
+            "rituals/ritual_tinkerer",
+            "rituals/rituals_list/ritual_crystal_split",
+            "rituals/rituals_list/ritual_crystal_harvest",
+            "demon_will/aspected_will"
+        ],
       "text": "There's more I can do, I can feel it..."
-	}
+    }
   ]
 }

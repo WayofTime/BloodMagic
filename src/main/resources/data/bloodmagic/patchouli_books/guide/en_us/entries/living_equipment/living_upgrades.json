@@ -2,95 +2,93 @@
   "name": "Living Equipment Upgrades",
   "icon": "bloodmagic:upgradetome",
   "category": "living_equipment",
-  "extra_recipe_mappings":[
-    ["bloodmagic:upgradetome", 0]
-	],
+  "extra_recipe_mappings":[["bloodmagic:upgradetome", 0]],
   "pages": [
-  	{
+    {
       "type": "text",
       "text": "While wearing this new armour, you have felt it growing, trying to assist you with various tasks it has seen you perform. $(br2)It seems to be able to perform in a number of areas, but its growth is limited, and trying to do everything at once is quite fruitless."
-	},
-	{
+    },
+    {
       "type": "text",
       "text": "Perhaps multiple specialised sets may be a good idea? Of course, you'll have to train it if you want more than a smattering of poorly-directed benefits. $(br2)Fortunately, you have devised a $(l:rituals/rituals_list/ritual_upgrade_remove)Ritual$() that will assist with training, and $(l:rituals/rituals_list/ritual_armour_evolve)another one$() that will imbue your armour a greater ability to grow. $(br2)On the following pages are a list of all the $(item)Upgrade Tomes$() that the ritual seems capable of producing for you."
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "minecraft:cooked_beef",
       "title": "Body Builder",
       "text": "Effect: Grants Knockback Resistance and bonus Health. Caps out at 100% Resistance and 10 half-hearts of health. $(br2)Trained by: Eating food. $(br2)Maximum level: 5"
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "minecraft:golden_axe",
       "title": "Charging Strike",
       "text": "Effect: Increases damage and knockback from sprinting attacks, up to +50%. $(br2)Trained by: Dealing damage while sprinting. $(br2)Maximum level: 5"
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "minecraft:diamond_pickaxe",
       "title": "Dwarvern Might",
       "text": "Effect: Increases mining speed while mining identical blocks. After a certain level, gives a Haste buff after breaking blocks. $(br2)Trained by: Mining. $(br2)Maximum level: 10"
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "minecraft:experience_bottle",
       "title": "Experienced",
       "text": "Effect: Increases XP drops from killing mobs, up to 150%. $(br2)Trained by: Collecting XP. $(br2)Maximum level: 10"
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "minecraft:blaze_powder",
       "title": "Gift of Ignis",
       "text": "Effect: Provides Fire Resistance. Higher levels last longer and recharge faster. $(br2)Trained by: Being on Fire. ($(item)Potions of Fire Resistance$() may be your friend here.) $(br2)Maximum level: 5"
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "minecraft:golden_apple",
       "title": "Healthy",
       "text": "Effect: Grants additional health, up to 50 half-hearts. $(br2)Trained by: Restoring health (Ordinary healing, or via $(item)Potions of Healing$() or $(item)Potions of Regeneration$().) $(br2)Maximum level: 10"
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "minecraft:arrow",
       "title": "Pin Cushion",
       "text": "Effect: Offers protection from arrows. $(br2)Trained by: Being shot. $(br2)Maximum level: 10"
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "minecraft:milk_bucket",
       "title": "Poison Resistance",
       "text": "Effect: Cures Poison. Has a cooldown which shortens with additional levels. $(br2)Trained by: Being Poisoned. $(br2)Maximum level: 5"
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "minecraft:sugar",
       "title": "Quick Feet",
       "text": "Effect: Increases player movement speed up to 150%. $(br2)Trained by: Running around. $(br2)Maximum level: 10"
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "minecraft:feather",
       "title": "Soft Fall",
       "text": "Effect: Reduces fall damage, up to complete immunity. $(br2)Trained by: Getting hurt from falls. $(br2)Maximum level: 5"
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "minecraft:diamond_leggings",
       "title": "Strong Legs",
       "text": "Effect: Increases jump height and reduces fall damage, up to a maximum of an additional 7.5 blocks and 83% fall resistance. $(br2)Trained by: Jumping around. $(br2)Maximum level: 10"
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "minecraft:shield",
       "title": "Tough",
       "text": "Effect: Protects you from non-projectile harm. $(br2)Trained by: Taking damage from anything but projectiles. $(br2)Maximum level: 10"
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "bloodmagic:sacrificialdagger",
       "title": "Tough Palms",
       "text": "Effect: Grants a bonus to Self Sacrifice, up to 150%. $(br2)Trained by: Sacrificing Blood with the Sacrificial Knife. $(br2)Maximum level: 10"
-	}
+    }
   ]
 }

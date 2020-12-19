@@ -7,49 +7,49 @@
     {
       "type": "text",
       "text": "$(6)Blood Magic$() has quite a tightly tiered progression system. As you start off with nothing but a handful of $(l:demon_will/soul_snare)Soul Snares$(), you'll find much of the mod is closed off to you. Eventually, we hope to include a tutorial and some level of tiering in the book, but as the mod is still in early Alpha for 1.16, we have decided to list things out here as best we can."
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "bloodmagic:soulsnare",
       "title": "Tier Zero",
       "text": "As mentioned, $(6)Blood Magic$() begins with $(l:demon_will/soul_snare)Soul Snares$(). These are used to get $(l:demon_will/demon_will)Demon Will$(), which among other things is used to power the $(l:demon_will/soul_forge)Hellfire Forge$(/l), fill $(l:demon_will/soul_gem)$(item)Tartaric Gems$(), and create the $(l:altar/blood_altar)Blood Altar$(/l)."
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "bloodmagic:sacrificialdagger",
       "title": "Tier One",
       "text": "Once you have a source of $(l:demon_will/demon_will)Demon Will$(), a $(l:demon_will/soul_forge)Hellfire Forge$(/l) and a $(l:altar/blood_altar)Blood Altar$(/l), you can work on making the $(l:demon_will/sentient_sword)Sentient Sword$() for easier Demon Will gathering, and start collecting LP for the crafting of $(l:altar/slates)Slates$() and various Sigils. Your goal at this tier is to upgrade your $(l:demon_will/soul_gem)$(item)Tartaric Gems$() and your Blood Altar, the latter through the creation of Blank Runes."
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "bloodmagic:daggerofsacrifice",
       "title": "Tier Two",
       "text": "At this point, you will be able to craft a Dagger of Sacrifice in order to slaughter mobs for more LP. Various Upgrade Runes should be avaliable for your Blood Altar, and some more Sigils will be available. As before, you should focus on further upgrading your Altar."
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "bloodmagic:ritualdiviner",
       "title": "Tier Three",
       "text": "By this point, you will have the ability to create some $(l:rituals/ritual_basics)basic Rituals$() and $(l:living_equipment/living_basics)Living Armour$() as well. This armour is very versatile, though you'll have to work hard to unlock its full potential. At this point you should look into upgrading your Altar and your $(l:rituals/ritual_diviner)Ritual Diviner$()."
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "bloodmagic:vengefulcrystal",
       "title": "Tier Four",
       "text": "This is the top tier. At this point you have access to everything that $(6)Blood Magic$() has to offer. You may want to look into the $(l:rituals/ritual_tinkerer)Ritual Tinkerer$() and the various kinds of $(l:demon_will/aspected_will)Will Aspects$() avaliable to you, and consider how they may be used to refine your existing rituals and alter how your $(demon_will/sentient_tools)Sentient Tools$() and $(demon_will/sentient_sword)Weapons$() work."
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "bloodmagic:activationcrystalawakened",
       "title": "Tier Five",
       "text": "Currently, this is just a myth. Nothing's implemented at this stage."
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "minecraft:barrier",
       "title": "Tier Six?",
       "text": "What? No. Look, even in 1.12, this only existed as a favor to pack makers and was otherwise unimplemented. You've come too far. Go back two pages."
-	}
+    }
   ]
 }
 

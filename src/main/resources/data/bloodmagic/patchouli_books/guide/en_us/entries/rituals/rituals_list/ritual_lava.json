@@ -8,11 +8,9 @@
       "name": "Serenade of the Nether",
       "multiblock":{
         "pattern":[
-          [
-            "_F_",
-            "F0F",
-            "_F_"
-          ]
+          ["_F_",
+           "F0F",
+           "_F_"]
         ],
         "mapping":{
           "0": "bloodmagic:masterritualstone",
@@ -56,35 +54,35 @@
       "title": "Steadfast",
       "text": "Players in this range have Fire Resist applied."
     },
-	{
-	  "type": "spotlight",
+    {
+      "type": "spotlight",
       "item": "bloodmagic:ritualtinkerer",
       "title": "Range",
       "text": "(Lava) The area that the ritual will place lava source blocks. $(br) $(li)Maximum Volume: 9 $(li)Horizontal Radius: 3 $(li)Vertical Radius: 3"
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "bloodmagic:ritualtinkerer",
       "title": "Range",
       "text": "(Corrosive) Entities within this range that are immune to fire damage are hurt proportional to the Will. $(br) $(li)Maximum Volume: Full Range. $(li)Horizontal Radius: 10 $(li)Vertical Radius: 10"
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "bloodmagic:ritualtinkerer",
       "title": "Range",
       "text": "(Vengeful) Entities in this range are afflicted by Fire Fuse. $(br) $(li)Maximum Volume: Full Range. $(li)Horizontal Radius: 10 $(li)Vertical Radius: 10"
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "bloodmagic:ritualtinkerer",
       "title": "Range",
       "text": "(Steadfast) Players in this range have Fire Resist applied. $(br) $(li)Maximum Volume: Full Range. $(li)Horizontal Radius: 10 $(li)Vertical Radius: 10"
-	},
-	{
-	  "type": "spotlight",
+    },
+    {
+      "type": "spotlight",
       "item": "bloodmagic:ritualtinkerer",
       "title": "Range",
       "text": "(Raw) The tank that the ritual will place lava into. $(br) $(li)Maximum Volume: 1 $(li)Horizontal Radius: 10 $(li)Vertical Radius: 10"
-	}
+    }
   ]
 }

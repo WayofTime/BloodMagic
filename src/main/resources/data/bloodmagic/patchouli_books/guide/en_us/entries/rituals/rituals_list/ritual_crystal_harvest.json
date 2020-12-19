@@ -27,12 +27,12 @@
       "type": "text",
       "text": "Breaks Demon Will crystal clusters within its range, dropping the results on top of the crystals.$(br2)$(air)Air Runes: 4$(br)$(fire)Fire Runes: 20$(br)$(earth)Earth Runes: 8$(br)$()Dusk Runes: 12$(br2)$()Total Runes: 44" 
     },
-	{
-	  "type": "spotlight",
+    {
+      "type": "spotlight",
       "item": "bloodmagic:ritualtinkerer",
       "title": "Range",
       "text": "(Crystal) All Demon Will crystal clusters have a single crystal broken off, spawning the crystal into the world. If there is only one crystal on the cluster, it will not break it. $(br) $(li)Maximum Volume: 250 $(li)Horizontal Radius: 5 $(li)Vertical Radius: 7"
-	}
+    }
   ]
 }
 

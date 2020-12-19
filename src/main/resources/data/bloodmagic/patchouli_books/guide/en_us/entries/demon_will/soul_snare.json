@@ -13,14 +13,14 @@
       "recipe": "bloodmagic:soul_snare"
     },
     {
-   	  "type": "image",
-   	  "images": [
-   	  	"bloodmagic:images/entries/demon_will/snare_particles.png"
-   	  ],
-   	  "title": "Snare on Skeleton",
-   	  "border": true,
-   	  "text": "A skeleton with white particles after hit by a snare."
-   	},
+      "type": "image",
+      "images": [
+        "bloodmagic:images/entries/demon_will/snare_particles.png"
+      ],
+      "title": "Snare on Skeleton",
+      "border": true,
+      "text": "A skeleton with white particles after hit by a snare."
+    },
     {
       "type": "text",
       "text": "Using the Snare is simple enough - craft a good quantity of them, find a hostile mob, and throw Snares at them until white particles appear. Kill them quickly and you should get a $(l:demon_will/demon_will)$(item)Demon Will$(). Before you ask, yes, the Looting enchantment will improve your odds. Once you've gathered a couple, you can get to work on crafting yourself a $(l:demon_will/sentient_sword)$(item)Sentient Sword$() and a $(l:demon_will/soul_gem)$(item)Tartaric Gem$() - these will make collecting $(l:demon_will/demon_will)$(item)Demon Will$() much easier."

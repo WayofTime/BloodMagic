@@ -15,29 +15,29 @@
     },
     {
       "type": "crafting_soulforge",
-	  "heading": "Petty Tartaric Gem",
+      "heading": "Petty Tartaric Gem",
       "recipe": "bloodmagic:soulforge/pettytartaricgem",
-	  "text": "Your first gem will hold a maximum of 64 will. Of course, you'll have to craft two if you want to upgrade it."
+      "text": "Your first gem will hold a maximum of 64 will. Of course, you'll have to craft two if you want to upgrade it."
     },
     {
       "type": "text",
       "text": "Your $(item)Petty Tartaric Gem$() is a useful tool, but it's clearly lacking in power. By carefully working it with $(item)Diamond$(), $(item)Lapis$(), and $(item)Redstone$(), you have found a way to quadruple its storage capabilities."
-    },	
+    },  
     {
       "type": "crafting_soulforge",
-	  "heading": "Lesser Tartaric Gem",
+      "heading": "Lesser Tartaric Gem",
       "recipe": "bloodmagic:soulforge/lessertartaricgem",
-	  "text": "This reinforced gem can hold up to 256 will."
+      "text": "This reinforced gem can hold up to 256 will."
     },
     {
       "type": "text",
       "text": "Your $(item)Lesser Tartaric Gem$() is a noted improvement, but once more you chafe under its limitations. To progress further will involve focusing on your $(l:altar/blood_altar)$(item)Blood Altar$(), as you require the powers of an $(item)Imbued Slate$(). Combining this slate with your gem and further refining it with another $(item)Diamond$() and a $(item)Block of Gold$(), you have found a way to once again quadruple its storage capabilities."
-    },	
+    },  
     {
       "type": "crafting_soulforge",
-	  "heading": "Common Tartaric Gem",
+      "heading": "Common Tartaric Gem",
       "recipe": "bloodmagic:soulforge/commontartaricgem",
-	  "text": "This intricate gem can hold an impressive 1,024 will."
+      "text": "This intricate gem can hold an impressive 1,024 will."
     },
     {
       "type": "text",
@@ -45,9 +45,9 @@
     },
     {
       "type": "crafting_soulforge",
-	  "heading": "Greater Tartaric Gem",
+      "heading": "Greater Tartaric Gem",
       "recipe": "bloodmagic:soulforge/greatertartaricgem",
-	  "text": "This masterpiece of artifice can hold an astounding 4,096 will."
+      "text": "This masterpiece of artifice can hold an astounding 4,096 will."
     }
   ]
 }
