@@ -118,6 +118,9 @@ dependencies {
     
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
+
+    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.16.4:7.1.0.71")
+
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
