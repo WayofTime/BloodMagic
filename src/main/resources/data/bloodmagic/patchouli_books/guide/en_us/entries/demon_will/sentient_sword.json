@@ -1,0 +1,18 @@
+{
+  "name": "Sentient Sword",
+  "icon": "bloodmagic:soulsword",
+  "category": "demon_will",
+  "extra_recipe_mappings":[["bloodmagic:soulsword", 1]],
+  "pages": [
+    {
+      "type": "text",
+      "text": "The $(item)Sentient Sword$() is a much more effective tool for collecting $(l:demon_will/demon_will)$(item)Demon Will$() than $(l:demon_will/soul_snare)$(item)Soul Snares$() could ever hope to be It may seem weak at first, but it is powered by the Wills you carry, so crafting a $(l:demon_will/soul_gem)$(item)Tartaric Gem$() is a must."
+    },
+    {
+      "type": "crafting_soulforge",
+      "heading": "Sentient Sword",
+      "recipe": "bloodmagic:soulforge/sentientsword",
+      "text": "This sword will serve you well."
+    }
+  ]
+}

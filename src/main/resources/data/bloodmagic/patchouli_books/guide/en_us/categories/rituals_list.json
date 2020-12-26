@@ -1,0 +1,6 @@
+{
+  "name": "List of Rituals",
+  "description": "[Available Rituals]",
+  "icon": "bloodmagic:masterritualstone",
+  "parent": "rituals"
+}

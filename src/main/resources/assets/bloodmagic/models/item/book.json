@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "bloodmagic:item/sanguinebook"
+    "layer0": "bloodmagic:item/sanguine_scientiem_guide_book"
   }
 }

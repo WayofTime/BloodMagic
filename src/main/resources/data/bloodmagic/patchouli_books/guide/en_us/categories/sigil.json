@@ -1,6 +1,6 @@
 {
   "name": "Sigils",
-  "description": "",
+  "description": "$(item)Sigils$() are formed using an $(l:alchemy_array/crafting_array)Alchemy Array$(), some form of $(item)Reagent$() and a $(item)Slate$(). They draw LP from your $(altar/soul_network)Soul Network$() in order to perform all sorts of useful tasks.",
   "icon": "bloodmagic:divinationsigil",
   "sortnum": 4
 }
