@@ -253,6 +253,7 @@
   "ritual.bloodmagic.ellipseRitual.chest.info": "(Chest) The location of the inventory that the ritual will grab blocks from to place in the world.",
   "ritual.bloodmagic.ellipseRitual.info": "Creates a hollow spheroid around the ritual using the blocks in the attached chest.",
   "ritual.bloodmagic.ellipseRitual.spheroidRange.info": "(Placement) The range that the ritual will place its blocks in. Spheroid is centered on the ritual - if one side is shorter than the side opposite the spheroid is truncated.",
+  "ritual.bloodmagic.ellipsoidRitual": "Focus of the Ellipsoid",
   "ritual.bloodmagic.eternalSoulRitual.info": "Capable of transferring Life Essence from a Network back into an Altar at a cost.",
   "ritual.bloodmagic.expulsionRitual": "Aura of Expulsion",
   "ritual.bloodmagic.expulsionRitual.expulsionRange.info": "(Expulsion) The area from which players that are not owner or have an orb in the chest will be teleported away from.",

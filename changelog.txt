@@ -1,4 +1,13 @@
 ------------------------------------------------------
+Version 3.0.3
+------------------------------------------------------
+
+- Updated the Sanguine Scientiem - it's very well written! Special thanks to both VT-14 and Wrince for their long hours of effort to make this book better than I could have done!
+- Fixed a crash with the Living Armour when crafted and worn right after enchanting. 
+
+
+
+------------------------------------------------------
 Version 3.0.2
 ------------------------------------------------------
 
