@@ -42,9 +42,9 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 		HarvestRegistry.registerStandardCrop(Blocks.BEETROOTS, 3);
 		HarvestRegistry.registerStandardCrop(Blocks.NETHER_WART, 3);
 
-		addThirdPartyCrop("actuallyadditions", "blockFlax", 7);
-		addThirdPartyCrop("actuallyadditions", "blockCanola", 7);
-		addThirdPartyCrop("actuallyadditions", "blockRice", 7);
+		addThirdPartyCrop("actuallyadditions", "flax_block", 7);
+		addThirdPartyCrop("actuallyadditions", "canola_block", 7);
+		addThirdPartyCrop("actuallyadditions", "rice_block", 7);
 
 		addThirdPartyCrop("extrautils2", "redorchid", 6);
 		addThirdPartyCrop("extrautils2", "enderlily", 7);
