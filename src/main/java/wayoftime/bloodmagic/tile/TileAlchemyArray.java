@@ -118,7 +118,7 @@ public class TileAlchemyArray extends TileInventory implements ITickableTileEnti
 		} else
 		{
 			AlchemyArrayEffect effect = AlchemyArrayRegistry.getEffect(world, this.getStackInSlot(0), this.getStackInSlot(1));
-			System.out.println("Effect: " + effect);
+//			System.out.println("Effect: " + effect);
 			if (effect == null)
 			{
 //				key = effect.i

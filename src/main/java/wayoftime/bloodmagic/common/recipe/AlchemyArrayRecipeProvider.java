@@ -37,6 +37,9 @@ public class AlchemyArrayRecipeProvider implements ISubRecipeProvider
 		AlchemyArrayRecipeBuilder.array(AlchemyArrayRegistry.BINDING_ARRAY, Ingredient.fromItems(BloodMagicItems.REAGENT_BINDING.get()), Ingredient.fromItems(Items.IRON_BOOTS), new ItemStack(BloodMagicItems.LIVING_BOOTS.get())).build(consumer, BloodMagic.rl(basePath + "living_boots"));
 
 		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/movementarray.png"), Ingredient.fromItems(Items.FEATHER), Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE), ItemStack.EMPTY).build(consumer, BloodMagic.rl(basePath + "movement"));
+		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/updraftarray.png"), Ingredient.fromItems(Items.FEATHER), Ingredient.fromTag(Tags.Items.DUSTS_GLOWSTONE), ItemStack.EMPTY).build(consumer, BloodMagic.rl(basePath + "updraft"));
+		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/spikearray.png"), Ingredient.fromItems(Items.COBBLESTONE), Ingredient.fromTag(Tags.Items.INGOTS_IRON), ItemStack.EMPTY).build(consumer, BloodMagic.rl(basePath + "spike"));
+		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/spikearray.png"), Ingredient.fromItems(Items.COAL), Ingredient.fromItems(Items.COAL), ItemStack.EMPTY).build(consumer, BloodMagic.rl(basePath + "day"));
 		// AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/fastminersigil.png"),
 		// Ingredient.fromItems(BloodMagicItems.REAGENT_FAST_MINER.get()),
 		// Ingredient.fromItems(BloodMagicItems.REINFORCED_SLATE.get()), new

@@ -11,6 +11,11 @@
       "type": "functional_array",
       "recipe": "bloodmagic:array/movement",
       "image": "movementarray.png"
+    },
+    {
+      "type": "functional_array",
+      "recipe": "bloodmagic:array/updraft",
+      "image": "updraftarray.png"
     }
   ]
 }

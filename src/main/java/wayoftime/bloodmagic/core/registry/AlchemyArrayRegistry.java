@@ -12,7 +12,10 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffect;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectBinding;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectCrafting;
+import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectDay;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectMovement;
+import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectSpike;
+import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectUpdraft;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
 
@@ -33,6 +36,9 @@ public class AlchemyArrayRegistry
 	public static void registerBaseArrays()
 	{
 		registerEffect(BloodMagic.rl("array/movement"), new AlchemyArrayEffectMovement());
+		registerEffect(BloodMagic.rl("array/updraft"), new AlchemyArrayEffectUpdraft());
+		registerEffect(BloodMagic.rl("array/spike"), new AlchemyArrayEffectSpike());
+		registerEffect(BloodMagic.rl("array/day"), new AlchemyArrayEffectDay());
 	}
 
 	public static AlchemyArrayEffect getEffect(World world, ResourceLocation rl, RecipeAlchemyArray recipe)
