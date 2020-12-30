@@ -561,6 +561,8 @@ public class GenericHandler {
         filledHandMapMap.remove(world);
         attackTaskMapMap.remove(world);
         targetTaskMapMap.remove(world);
+        forceSpawnMap.remove(world);
+        preventSpawnMap.remove(world);
         PotionEventHandlers.flightListMap.remove(world);
         PotionEventHandlers.noGravityListMap.remove(world);
     }
