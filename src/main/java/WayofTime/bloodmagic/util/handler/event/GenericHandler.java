@@ -33,6 +33,7 @@ import WayofTime.bloodmagic.potion.PotionEventHandlers;
 import WayofTime.bloodmagic.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.ritual.RitualManager;
+import WayofTime.bloodmagic.ritual.portal.LocationsHandler;
 import WayofTime.bloodmagic.ritual.types.RitualVeilOfEvil;
 import WayofTime.bloodmagic.ritual.types.RitualWardOfSacrosanctity;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
@@ -552,6 +553,7 @@ public class GenericHandler {
         preventSpawnMap.computeIfAbsent(world, k -> new HashMap<>());
         PotionEventHandlers.flightListMap.computeIfAbsent(world, k -> new ArrayList<>());
         PotionEventHandlers.noGravityListMap.computeIfAbsent(world, k -> new ArrayList<>());
+        LocationsHandler.verifyIsInitialized();
     }
 
     @SubscribeEvent
@@ -566,4 +568,5 @@ public class GenericHandler {
         PotionEventHandlers.flightListMap.remove(world);
         PotionEventHandlers.noGravityListMap.remove(world);
     }
+
 }
