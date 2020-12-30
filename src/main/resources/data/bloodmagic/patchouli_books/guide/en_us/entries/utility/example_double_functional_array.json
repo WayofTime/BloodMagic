@@ -1,0 +1,26 @@
+{
+  "name": "Dev Example - Double Functoinal Array",
+  "icon": "minecraft:barrier",
+  "category": "utility",
+  "pages": [
+    {
+      "type": "functional_array",
+      "heading": "Example Single Array",
+      "recipe": "bloodmagic:array/movement",
+      "image": "movementarray.png",
+      "text": "This is an example using a single functional array.  This template is the normal template.$(br2)The double array template uses the same template, just with an \"a\" recipe on top and a \"b\" recipe below."
+    } ,
+    {
+      "type": "2x_functional_array",
+      "a.heading": "Example Double Array A",
+      "a.recipe": "bloodmagic:array/movement",
+      "a.image": "movementarray.png",
+      "b.heading": "Example Double Array B",
+      "b.recipe": "bloodmagic:array/movement",
+      "b.image": "movementarray.png",
+      "b.text": "text under the B array.  There's nothing stopping you from putting text under the A array, but it would overlap."
+    }
+  ]
+}
+
+

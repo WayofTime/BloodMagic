@@ -1,0 +1,23 @@
+{
+  "name": "Dev Example - Double Array",
+  "icon": "minecraft:barrier",
+  "category": "utility",
+  "pages": [
+    {
+      "type": "crafting_array",
+      "heading": "Example Single Array",
+      "recipe": "bloodmagic:array/living_helmet",
+      "text": "This is an example using a single array.  This template is the normal template.$(br2)The double array template uses the same template, just with an \"a\" recipe on top and a \"b\" recipe below."
+    } ,
+    {
+      "type": "2x_crafting_array",
+      "a.heading": "Example Double Array A",
+      "a.recipe": "bloodmagic:array/living_plate",
+      "b.heading": "Example Double Array B",
+      "b.recipe": "bloodmagic:array/living_leggings",
+      "b.text": "text under the B array.  There's nothing stopping you from putting text under the A array, but it would overlap."
+    }
+  ]
+}
+
+
