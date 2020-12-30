@@ -89,7 +89,8 @@ public class RoutingFluidFilter implements IFluidFilter {
         }
 
         FluidStack copyStack = fluidStack.copy();
-        int filledAmount = fluidHandler.fill(fluidStack, true);
+        copyStack.amount = allowedAmount;
+        int filledAmount = fluidHandler.fill(copyStack, true);
         copyStack.amount = fluidStack.amount - filledAmount;
 
         Iterator<FluidStack> itr = requestList.iterator();
@@ -130,7 +131,6 @@ public class RoutingFluidFilter implements IFluidFilter {
                     drainStack.amount = drained;
 
                     fluidHandler.drain(drainStack, true);
-                    maxTransfer -= drained;
                 }
 
                 Iterator<FluidStack> itr = requestList.iterator();
@@ -148,7 +148,7 @@ public class RoutingFluidFilter implements IFluidFilter {
                 BlockPos pos = accessedTile.getPos();
                 world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 
-                return maxTransfer;
+                return drained;
             }
         }
 

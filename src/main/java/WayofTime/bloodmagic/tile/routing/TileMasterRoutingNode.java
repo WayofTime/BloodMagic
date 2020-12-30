@@ -32,10 +32,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
     @Override
     public void update() {
         if (!getWorld().isRemote) {
-//            currentInput = getWorld().isBlockIndirectlyGettingPowered(pos);
             currentInput = getWorld().getStrongPower(pos);
-
-//            System.out.println(currentInput);
         }
 
         if (getWorld().isRemote || getWorld().getTotalWorldTime() % tickRate != 0) //Temporary tick rate solver
@@ -58,7 +55,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
                         }
 
                         IItemFilter filter = outputNode.getOutputFilterForSide(facing);
-                        if (filter != null) {
+                        if (filter != null && !filter.canSkip()) {
                             int priority = outputNode.getPriority(facing);
                             if (outputMap.containsKey(priority)) {
                                 outputMap.get(priority).add(filter);
@@ -110,7 +107,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
                         }
 
                         IItemFilter filter = inputNode.getInputFilterForSide(facing);
-                        if (filter != null) {
+                        if (filter != null && !filter.canSkip()) {
                             int priority = inputNode.getPriority(facing);
                             if (inputMap.containsKey(priority)) {
                                 inputMap.get(priority).add(filter);

@@ -37,81 +37,49 @@ public class DefaultItemFilter implements IItemFilter {
     }
 
     /**
-     * This method is only called when the output inventory this filter is
-     * managing receives an ItemStack. Should only really be called by the Input
-     * filter via it's transfer method.
-     *
-     * @param inputStack - The stack to transfer
-     * @return - The remainder of the stack after it has been absorbed into the
-     * inventory.
-     */
-    @Override
-    public ItemStack transferStackThroughOutputFilter(ItemStack inputStack) {
-        int allowedAmount = inputStack.getCount(); //This is done to make the migration to a maximum amount transfered a lot easier
-
-        if (allowedAmount <= 0) {
-            return inputStack;
-        }
-
-        ItemStack testStack = inputStack.copy();
-        testStack.setCount(allowedAmount);
-        ItemStack remainderStack = Utils.insertStackIntoTile(testStack, itemHandler);
-
-        int changeAmount = allowedAmount - (remainderStack.isEmpty() ? 0 : remainderStack.getCount());
-        testStack = inputStack.copy();
-        testStack.shrink(changeAmount);
-
-        World world = accessedTile.getWorld();
-        BlockPos pos = accessedTile.getPos();
-        world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
-
-        return testStack;
-    }
-
-    /**
      * This method is only called on an input filter to transfer ItemStacks from
      * the input inventory to the output inventory.
      */
     @Override
     public int transferThroughInputFilter(IItemFilter outputFilter, int maxTransfer) {
         for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
-            ItemStack inputStack = itemHandler.getStackInSlot(slot);
-            if (inputStack.isEmpty() || itemHandler.extractItem(slot, inputStack.getCount(), true).isEmpty())//(accessedInventory instanceof ISidedInventory && !((ISidedInventory) accessedInventory).canExtractItem(slot, inputStack, accessedSide)))
-            {
+            int taken = outputFilter.offerStack(itemHandler, slot, maxTransfer);
+            if (taken == 0) {
                 continue;
             }
-
-            int allowedAmount = Math.min(itemHandler.extractItem(slot, inputStack.getCount(), true).getCount(), maxTransfer);
-
-            ItemStack testStack = inputStack.copy();
-            testStack.setCount(allowedAmount);
-            ItemStack remainderStack = outputFilter.transferStackThroughOutputFilter(testStack);
-            int changeAmount = allowedAmount - (remainderStack.isEmpty() ? 0 : remainderStack.getCount());
-
-            if (!remainderStack.isEmpty() && remainderStack.getCount() == allowedAmount) {
-                //Nothing has changed. Moving on!
-                continue;
-            }
-
-            itemHandler.extractItem(slot, changeAmount, false);
 
             World world = accessedTile.getWorld();
             BlockPos pos = accessedTile.getPos();
             world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 
-            return changeAmount;
+            return taken;
         }
-
         return 0;
     }
 
     @Override
-    public boolean doesStackMatchFilter(ItemStack testStack) {
-        return true;
+    public int offerStack(IItemHandler inv, int slot, int maxTransfer) {
+        if (inv.getStackInSlot(slot).isEmpty()) {
+            return 0;
+        }
+
+        ItemStack extracted = inv.extractItem(slot, maxTransfer, true);
+        if (extracted.isEmpty()) {
+            return 0;
+        }
+        ItemStack remainderStack = Utils.insertStackIntoTile(extracted, itemHandler);
+        int taken = extracted.getCount() - remainderStack.getCount();
+        inv.extractItem(slot, taken, false);
+
+        World world = accessedTile.getWorld();
+        BlockPos pos = accessedTile.getPos();
+        world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+
+        return taken;
     }
 
     @Override
-    public boolean doStacksMatch(ItemStack filterStack, ItemStack testStack) {
-        return true;
+    public boolean canSkip() {
+        return false;
     }
 }

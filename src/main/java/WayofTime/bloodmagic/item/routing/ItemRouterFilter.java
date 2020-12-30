@@ -58,11 +58,11 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
 
     @Override
     public IItemFilter getInputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler) {
-        IItemFilter testFilter = new TestItemFilter();
+        IItemFilter testFilter = new PreciseItemFilter();
 
         switch (filterStack.getMetadata()) {
             case 0:
-                testFilter = new TestItemFilter();
+                testFilter = new PreciseItemFilter();
                 break;
             case 1:
                 testFilter = new IgnoreNBTItemFilter();
@@ -101,7 +101,7 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
 
         switch (filterStack.getMetadata()) {
             case 0:
-                testFilter = new TestItemFilter();
+                testFilter = new PreciseItemFilter();
                 break;
             case 1:
                 testFilter = new IgnoreNBTItemFilter();

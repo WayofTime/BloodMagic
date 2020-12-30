@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.routing;
 
 import net.minecraft.item.ItemStack;
 
-public class ModIdItemFilter extends TestItemFilter {
+public class ModIdItemFilter extends PreciseItemFilter {
 
     @Override
     public boolean doStacksMatch(ItemStack filterStack, ItemStack testStack) {
