@@ -453,7 +453,9 @@ public class BloodAltar// implements IFluidHandler
 			this.efficiencyMultiplier = (float) Math.pow(0.85, upgrade.getLevel(BloodRuneType.EFFICIENCY));
 			this.sacrificeEfficiencyMultiplier = (float) (0.10 * upgrade.getLevel(BloodRuneType.SACRIFICE));
 			this.selfSacrificeEfficiencyMultiplier = (float) (0.10 * upgrade.getLevel(BloodRuneType.SELF_SACRIFICE));
-			this.capacityMultiplier = (float) ((1 + 0.20 * upgrade.getLevel(BloodRuneType.CAPACITY)) * Math.pow(1.075, upgrade.getLevel(BloodRuneType.AUGMENTED_CAPACITY)));
+			int cap = upgrade.getLevel(BloodRuneType.CAPACITY);
+			int cap_aug = upgrade.getLevel(BloodRuneType.AUGMENTED_CAPACITY);
+			this.capacityMultiplier = (float) ((1 + 0.20 * cap) * Math.pow(1.1, cap_aug * Math.pow(0.99, Math.abs(cap_aug - cap))));
 			this.dislocationMultiplier = (float) (Math.pow(1.2, upgrade.getLevel(BloodRuneType.DISPLACEMENT)));
 			this.orbCapacityMultiplier = (float) (1 + 0.02 * upgrade.getLevel(BloodRuneType.ORB));
 			this.chargingFrequency = Math.max(20 - accelerationUpgrades, 1);
