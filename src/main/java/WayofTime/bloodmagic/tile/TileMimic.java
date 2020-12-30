@@ -42,7 +42,7 @@ public class TileMimic extends TileInventory implements ITickable {
     public NBTTagCompound tileTag = new NBTTagCompound();
     public TileEntity mimicedTile = null;
     IBlockState stateOfReplacedBlock = Blocks.AIR.getDefaultState();
-    
+
     public int playerCheckRadius = 5;
     public int potionSpawnRadius = 5;
     public int potionSpawnInterval = 40;
@@ -137,7 +137,7 @@ public class TileMimic extends TileInventory implements ITickable {
 
         Utils.insertItemToTile(this, player, 0);
         ItemStack stack = getStackInSlot(0);
-        if(stateOfReplacedBlock == Blocks.AIR.getDefaultState()) {
+        if (stateOfReplacedBlock == Blocks.AIR.getDefaultState()) {
             if (!stack.isEmpty() && stack.getItem() instanceof ItemBlock) {
                 Block block = ((ItemBlock) stack.getItem()).getBlock();
                 stateOfReplacedBlock = block.getDefaultState();
@@ -273,7 +273,7 @@ public class TileMimic extends TileInventory implements ITickable {
         tag.setInteger("playerCheckRadius", playerCheckRadius);
         tag.setInteger("potionSpawnRadius", potionSpawnRadius);
         tag.setInteger("potionSpawnInterval", potionSpawnInterval);
-        tag.setString("stateOfReplacedBlock",stateOfReplacedBlock.toString());
+        tag.setString("stateOfReplacedBlock", stateOfReplacedBlock.toString());
 
         return tag;
     }
@@ -296,11 +296,11 @@ public class TileMimic extends TileInventory implements ITickable {
     public IBlockState getReplacedState() {
         return stateOfReplacedBlock;
     }
-    
+
     public void setReplacedState(IBlockState state) {
         stateOfReplacedBlock = state;
     }
-    
+
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
         return slot == 0 && dropItemsOnBreak;
@@ -312,7 +312,7 @@ public class TileMimic extends TileInventory implements ITickable {
 
         replaceMimicWithBlockActual(world, pos, mimic.getStackInSlot(0), mimic.tileTag, mimic.stateOfReplacedBlock);
     }
-    
+
     public static boolean replaceMimicWithBlockActual(World world, BlockPos pos, ItemStack stack, NBTTagCompound tileTag, IBlockState replacementState) {
         if (!stack.isEmpty() && stack.getItem() instanceof ItemBlock) {
             Block block = ((ItemBlock) stack.getItem()).getBlock();

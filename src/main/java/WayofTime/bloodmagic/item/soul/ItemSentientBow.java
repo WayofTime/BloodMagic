@@ -44,12 +44,12 @@ import java.util.Locale;
 
 public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentientTool, IVariantProvider//, IMeshProvider
 {
-    public static int[] soulBracket = new int[] {16, 60, 200, 400, 1000, 2000, 4000};
-    public static double[] defaultDamageAdded = new double[] {0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75};
-    public static float[] velocityAdded = new float[] {0.25f, 0.5f, 0.75f, 1, 1.25f, 1.5f, 1.75f};
-    public static double[] soulDrainPerSwing = new double[] {0.05, 0.1, 0.2, 0.4, 0.75, 1, 1.5}; //TODO
-    public static double[] soulDrop = new double[] {2, 4, 7, 10, 13, 16, 24};
-    public static double[] staticDrop = new double[] {1, 1, 2, 3, 3, 3, 4};
+    public static int[] soulBracket = new int[]{16, 60, 200, 400, 1000, 2000, 4000};
+    public static double[] defaultDamageAdded = new double[]{0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75};
+    public static float[] velocityAdded = new float[]{0.25f, 0.5f, 0.75f, 1, 1.25f, 1.5f, 1.75f};
+    public static double[] soulDrainPerSwing = new double[]{0.05, 0.1, 0.2, 0.4, 0.75, 1, 1.5}; //TODO
+    public static double[] soulDrop = new double[]{2, 4, 7, 10, 13, 16, 24};
+    public static double[] staticDrop = new double[]{1, 1, 2, 3, 3, 3, 4};
     public static float soullessShotVelocity = 2.5F;
 
     public ItemSentientBow() {
@@ -331,7 +331,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
         player.addStat(StatList.getObjectUseStats(this));
         return entityArrow;
     }
-    
+
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World world, EntityLivingBase entityLiving, int timeLeft) {
         if (entityLiving instanceof EntityPlayer) {
@@ -361,9 +361,9 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
                         ItemArrow itemarrow = ((ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Items.ARROW));
                         EntityArrow entityArrow;
                         double amount = (this.getDropOfActivatedBow(stack) * world.rand.nextDouble() + this.getStaticDropOfActivatedBow(stack));
-                        
+
                         float newArrowVelocity = arrowVelocity * getVelocityOfArrow(stack);
-                        
+
                         if (getLevel(PlayerDemonWillHandler.getTotalDemonWill(type, player)) <= 0) {
                             entityArrow = itemarrow.createArrow(world, itemstack, entityLiving);
                         } else if (itemarrow == Items.ARROW) {
@@ -382,8 +382,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool, ISentien
 
                         entityArrow.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, newArrowVelocity, 1.0F);
 
-                        if (Float.compare(getVelocityOfArrow(stack), soullessShotVelocity) < Float.MIN_NORMAL)
-                        {
+                        if (Float.compare(getVelocityOfArrow(stack), soullessShotVelocity) < Float.MIN_NORMAL) {
                             world.playSound(null, player.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.NEUTRAL, 0.4F, 1.0F);
                         }
 

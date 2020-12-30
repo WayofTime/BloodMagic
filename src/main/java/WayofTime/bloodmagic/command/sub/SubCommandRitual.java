@@ -49,6 +49,7 @@ public class SubCommandRitual extends CommandTreeBase {
 
     class RitualCreate extends CommandTreeBase {
         public List<String> ritualList = new ArrayList<>();
+
         public RitualCreate() {
             for (Ritual ritual : BloodMagic.RITUAL_MANAGER.getRituals()) {
                 ritualList.add(BloodMagic.RITUAL_MANAGER.getId(ritual));

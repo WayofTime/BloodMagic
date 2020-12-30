@@ -160,7 +160,7 @@ public class RitualAltarBuilder extends Ritual {
     }
 
     /*
-     * 
+     *
      * These methods are utilities for this ritual. They support both the old
      * forge inventory system, and the new one.
      */

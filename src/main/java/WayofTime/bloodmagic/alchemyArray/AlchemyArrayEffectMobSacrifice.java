@@ -29,29 +29,24 @@ import WayofTime.bloodmagic.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.util.DamageSourceBloodMagic;
 import WayofTime.bloodmagic.util.helper.PurificationHelper;
 
-public class AlchemyArrayEffectMobSacrifice extends AlchemyArrayEffect
-{
+public class AlchemyArrayEffectMobSacrifice extends AlchemyArrayEffect {
     public static final AreaDescriptor itemDescriptor = new AreaDescriptor.Rectangle(new BlockPos(-5, -5, -5), 11);
     public static final AreaDescriptor mobDescriptor = new AreaDescriptor.Rectangle(new BlockPos(-5, -5, -5), 11);
     public int craftTime = 0;
     public static final int REQUIRED_CRAFT_TIME = 200;
 
-    public AlchemyArrayEffectMobSacrifice(String key)
-    {
+    public AlchemyArrayEffectMobSacrifice(String key) {
         super(key);
     }
 
     @Override
-    public boolean update(TileEntity tile, int ticksActive)
-    {
+    public boolean update(TileEntity tile, int ticksActive) {
         World world = tile.getWorld();
-        if (world.isRemote && ticksActive < 200 && ticksActive > 40)
-        {
+        if (world.isRemote && ticksActive < 200 && ticksActive > 40) {
             BlockPos pos = tile.getPos();
             Random rand = world.rand;
 
-            for (int i = 0; i < 2; i++)
-            {
+            for (int i = 0; i < 2; i++) {
                 double d0 = (double) pos.getX() + 0.5D + (rand.nextDouble() - 0.5D) * 2.5D;
                 double d1 = (double) pos.getY() + 0.2D + (rand.nextDouble() - 0.5D) * 0.2D;
                 double d2 = (double) pos.getZ() + 0.5D + (rand.nextDouble() - 0.5D) * 2.5D;
@@ -61,26 +56,22 @@ public class AlchemyArrayEffectMobSacrifice extends AlchemyArrayEffect
 
         //We need to do the check on both sides to correctly do particles.
 
-        if (ticksActive >= 200)
-        {
+        if (ticksActive >= 200) {
             BlockPos pos = tile.getPos();
 
             List<EntityItem> itemList = world.getEntitiesWithinAABB(EntityItem.class, itemDescriptor.getAABB(pos));
 
             List<ItemStack> inputList = new ArrayList<ItemStack>();
 
-            for (EntityItem entityItem : itemList)
-            {
-                if (entityItem.isDead || entityItem.getItem().isEmpty())
-                {
+            for (EntityItem entityItem : itemList) {
+                if (entityItem.isDead || entityItem.getItem().isEmpty()) {
                     continue;
                 }
 
                 inputList.add(entityItem.getItem().copy());
             }
 
-            if (inputList.isEmpty())
-            {
+            if (inputList.isEmpty()) {
                 return false;
             }
 
@@ -90,52 +81,42 @@ public class AlchemyArrayEffectMobSacrifice extends AlchemyArrayEffect
             }
 
             RecipeSacrificeCraft recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getSacrificeCraft(inputList);
-            if (recipe != null)
-            {
+            if (recipe != null) {
                 double healthRequired = recipe.getHealthRequired();
                 double healthAvailable = 0;
 
                 List<EntityLivingBase> livingEntities = world.getEntitiesWithinAABB(EntityLivingBase.class, mobDescriptor.getAABB(pos));
-                for (EntityLivingBase living : livingEntities)
-                {
+                for (EntityLivingBase living : livingEntities) {
                     double health = getEffectiveHealth(living);
-                    if (health > 0)
-                    {
+                    if (health > 0) {
                         healthAvailable += health;
                     }
                 }
 
-                if (healthAvailable < healthRequired)
-                {
+                if (healthAvailable < healthRequired) {
                     craftTime = 0;
                     return false;
                 }
 
                 craftTime++;
 
-                if (craftTime >= REQUIRED_CRAFT_TIME)
-                {
-                    if (!world.isRemote)
-                    {
-                        for (EntityLivingBase living : livingEntities)
-                        {
+                if (craftTime >= REQUIRED_CRAFT_TIME) {
+                    if (!world.isRemote) {
+                        for (EntityLivingBase living : livingEntities) {
                             double health = getEffectiveHealth(living);
-                            if (healthAvailable > 0 && health > 0)
-                            {
+                            if (healthAvailable > 0 && health > 0) {
                                 healthAvailable -= health;
                                 living.getEntityWorld().playSound(null, living.posX, living.posY, living.posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (living.getEntityWorld().rand.nextFloat() - living.getEntityWorld().rand.nextFloat()) * 0.8F);
                                 living.setHealth(-1);
                                 living.onDeath(DamageSourceBloodMagic.INSTANCE);
                             }
 
-                            if (healthAvailable <= 0)
-                            {
+                            if (healthAvailable <= 0) {
                                 break;
                             }
                         }
 
-                        for (EntityItem itemEntity : itemList)
-                        {
+                        for (EntityItem itemEntity : itemList) {
                             itemEntity.getItem().setCount(itemEntity.getItem().getCount() - 1);
                             if (itemEntity.getItem().isEmpty()) //TODO: Check container
                             {
@@ -146,13 +127,10 @@ public class AlchemyArrayEffectMobSacrifice extends AlchemyArrayEffect
                         world.spawnEntity(new EntityItem(world, pos.getX() + 0.5, pos.getY() + 2.5, pos.getZ() + 0.5, recipe.getOutput()));
                         craftTime = 0;
                     }
-                } else
-                {
-                    if (world.isRemote)
-                    {
+                } else {
+                    if (world.isRemote) {
                         Vec3d spawnPosition = new Vec3d(pos.getX() + 0.5, pos.getY() + 2.5, pos.getZ() + 0.5);
-                        for (EntityItem itemEntity : itemList)
-                        {
+                        for (EntityItem itemEntity : itemList) {
                             ItemStack stack = itemEntity.getItem();
                             double velocityFactor = 0.1;
 
@@ -168,11 +146,9 @@ public class AlchemyArrayEffectMobSacrifice extends AlchemyArrayEffect
 //                            world.spawnParticle(EnumParticleTypes.ITEM_CRACK, spawnPosition.x, spawnPosition.y, spawnPosition.z, velVec2.x, velVec2.y, velVec2.z, Item.getIdFromItem(stack.getItem()), stack.getMetadata());
                         }
 
-                        for (EntityLivingBase living : livingEntities)
-                        {
+                        for (EntityLivingBase living : livingEntities) {
                             double health = getEffectiveHealth(living);
-                            if (health <= 0)
-                            {
+                            if (health <= 0) {
                                 continue;
                             }
                             double d0 = (double) living.posX + (world.rand.nextDouble() - 0.5D) * 0.5D;
@@ -189,8 +165,7 @@ public class AlchemyArrayEffectMobSacrifice extends AlchemyArrayEffect
     }
 
     //Future-proofing in case I want to make different mobs give different effective health
-    public double getEffectiveHealth(EntityLivingBase living)
-    {
+    public double getEffectiveHealth(EntityLivingBase living) {
         if (living == null)
             return 0;
 
@@ -214,20 +189,17 @@ public class AlchemyArrayEffectMobSacrifice extends AlchemyArrayEffect
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
-    {
+    public void writeToNBT(NBTTagCompound tag) {
 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
-    {
+    public void readFromNBT(NBTTagCompound tag) {
 
     }
 
     @Override
-    public AlchemyArrayEffect getNewCopy()
-    {
+    public AlchemyArrayEffect getNewCopy() {
         return new AlchemyArrayEffectMobSacrifice(key);
     }
 }

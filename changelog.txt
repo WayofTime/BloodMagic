@@ -1,4 +1,102 @@
 ------------------------------------------------------
+Version 2.4.3
+------------------------------------------------------
+
+- Fixed Lava Crystals causing crash when used while not yet bound
+- Fixed Teleposers sending entities at the destination position the wrong way
+- Fixed Speed Runes not working on Tier 2 altars
+- Fixed crash when checking tasks for some entities
+- Fixed crash when checking some entities for potion effects
+- Re-implemented the Boost potion
+    - The PR still had TODOs in the description when I merged so this may not be complete yet
+
+------------------------------------------------------
+Version 2.4.2
+------------------------------------------------------
+Now with no guarantees for working textures!
+
+Blood Altar:
+    - A Blood Altar with a Redstone Lamp below it will now emit a redstone signal upon finishing crafting (#1635)
+    - Fixed Blood Altar being able to obtain negative progress (#1649)
+
+Living Armor:
+    - Fixed Storm Trooper Level 4 costing 65 instead of -65 upgrade points (#1631)
+
+Rituals:
+    - Fixed Ritual of the Eternal Soul (Ritual Stone layout & didn't work) (#1633)
+    - Fixed Ritual Tinkerer (ritual area is now unique per ritual instance), added the ability to reset the ritual ranges to default (#1636)
+
+Misc:
+    - Lava Crystals can now set things on fire (#1652)
+    - Fixed parts of the German translation. Other translations still need to be reworked to accomodate changed translation keys (#1640)
+    - Fixed Guidebook showing wrong recipes (Rune of Self-Sacrifice instead of others) (#1641)
+    - Wooden Paths now behave like wood instead of stone (sound & efficient tool) (#1638)
+
+
+Technical Stuff:
+    - Fixed Veil of Evil and Ward of Sacrosanctity console spam (which could eventually lead to an out of memory exception) (#1639)
+    - Fixed GLSL shader compilation errors (affected Mesa driver (AMD GPU) on Linux) (#1624)
+    - Fixed `/bloodmagic network` command permissions (#1613)
+    - Fixed a rare crash that could occur when summoning mobs (#1618)
+
+------------------------------------------------------
+Version 2.4.1
+------------------------------------------------------
+
+Nut was too lazy to create a changelog, it's AEon's turn now!
+Changes made from Feb 02 - now (Fill end date in later)
+
+
+Living Armor:
+    - Fixed "Soft Fall" not preventing damage
+    - "Nocturnal Prowess" should not flash anymore
+    - "Trickshot" now ignores HurtResistanceTime
+    - "Trickshot" now works properly with sentient arrows
+    - "Step Assist" does not take effect while sneaking
+
+Sentient Bow:
+    - Fixed Destructive Will arrows exploding continuously
+    - Fixed Tipped Arrows getting improved even if no Will can be used
+
+Sigils:
+    - Buffed "Sigil of the Fast Miner" to be in accordance to the "Sanguine Scientium"
+    - Fixed a bug where "Sigil of the Fast Miner" would also cause the whirlwind effect
+    - Added "Whirlwind" to the potion registry
+    - Fixed broken Sigil tooltip formatting
+    - Fixed Sigil of Holding not updating some Sigil data, allowing for exploits
+    - Greatly improved "Sigil of Compression" performance
+    - Fixed "Sigil of Compression" bug that would eat leftover items (usually everything between 55 and 64 items for a 3x3 compression)
+
+
+Rituals:
+    - Ported Veil of Evil & Ward of Sacrosanctity
+    - Fixed "Serenade of the Nether" replacing lava source blocks with lava (fixed underlying function to detect flowing liquids)
+    - Added configurability to Ritual of the High Jump by modifying a new ritual area with the Ritual Tinkerer
+
+Misc:
+    - Fixed routing node oredict filter (crashes)
+    - Fixed mimic vanishing in some cases
+    - Fixed "Blood Letter's Pack" and "Coat of Arms" always being used in the main hand slot (action bar/hotbar)
+    - Stop insertions into Demon Crucible if the inventory is not empty
+    - Fixed abnormal deaths at your own hands through the sacrificial dagger (hopefully) (Gravestone bugginess)
+    - Fixed "Unmending" mod incompatibility
+    - Fixed Teleposers crashing the game if someone force-fed it junk
+    - added Nut being angery at contributors for messing stuff up
+    - Added some Russian language strings for the guide book
+    - Added repair recipes for Sentient Tools & Living Armor to JEI
+    - Many translation keys have changed which makes affected translations fall back to english
+
+Technical Stuff no player cares about:
+    - Formatted Project code
+    - Fixed BlockState parsing (mimic vanishing)
+    - Fixed some and streamlined ritual block ranges
+    - Mystery drain still mysterious
+    - Use TextFormatting rather than color codes in block lang names
+    - Fixed world unload crash (may happen if a world is loaded by world generators or JEI Resource graphing)
+    - Fixed `/bloodmagic network get` command
+    - Added translation keys for tickethistory command help strings
+
+------------------------------------------------------
 Version 2.4.0
 ------------------------------------------------------
 

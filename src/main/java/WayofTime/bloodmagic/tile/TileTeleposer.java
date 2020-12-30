@@ -49,7 +49,7 @@ public class TileTeleposer extends TileInventory implements ITickable {
 
     @Override
     public void update() {
-        if (!getWorld().isRemote) {
+        if (!getWorld().isRemote && canInitiateTeleport()) {
             int currentInput = getWorld().getStrongPower(pos);
 
             if (previousInput == 0 && currentInput != 0) {
@@ -120,7 +120,7 @@ public class TileTeleposer extends TileInventory implements ITickable {
 
                         if (!focusWorldEntities.isEmpty()) {
                             for (Entity entity : focusWorldEntities) {
-                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, bindingOwnerID, true));
+                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(new BlockPos(entity.posX - focusPos.getX() + pos.getX(), entity.posY - focusPos.getY() + pos.getY(), entity.posZ - focusPos.getZ() + pos.getZ()), entity, bindingOwnerID, true));
                             }
                         }
 
@@ -133,7 +133,7 @@ public class TileTeleposer extends TileInventory implements ITickable {
 
                         if (!focusWorldEntities.isEmpty()) {
                             for (Entity entity : focusWorldEntities) {
-                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, bindingOwnerID, focusWorld, getWorld().provider.getDimension(), true));
+                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - focusPos.getX() + pos.getX(), entity.posY - focusPos.getY() + pos.getY(), entity.posZ - focusPos.getZ() + pos.getZ()), entity, bindingOwnerID, focusWorld, getWorld().provider.getDimension(), true));
                             }
                         }
                     }

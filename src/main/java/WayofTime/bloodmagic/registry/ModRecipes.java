@@ -70,14 +70,12 @@ import WayofTime.bloodmagic.util.Utils;
 
 import com.google.common.base.Stopwatch;
 
-public class ModRecipes
-{
+public class ModRecipes {
 
     static ItemStack mundaneLengtheningStack = ComponentTypes.CATALYST_LENGTH_1.getStack();
     static ItemStack mundanePowerStack = ComponentTypes.CATALYST_POWER_1.getStack();
 
-    public static void init()
-    {
+    public static void init() {
         initOreDict();
         addFurnaceRecipes();
         addAltarRecipes();
@@ -88,8 +86,7 @@ public class ModRecipes
         addCompressionHandlers();
     }
 
-    public static void initOreDict()
-    {
+    public static void initOreDict() {
         OreDictionary.registerOre("dustIron", ComponentTypes.SAND_IRON.getStack());
         OreDictionary.registerOre("dustGold", ComponentTypes.SAND_GOLD.getStack());
         OreDictionary.registerOre("dustCoal", ComponentTypes.SAND_COAL.getStack());
@@ -97,19 +94,16 @@ public class ModRecipes
         OreDictionary.registerOre("dustSaltpeter", ComponentTypes.SALTPETER.getStack());
     }
 
-    public static void addFurnaceRecipes()
-    {
+    public static void addFurnaceRecipes() {
         FurnaceRecipes.instance().addSmeltingRecipe(ComponentTypes.SAND_IRON.getStack(), new ItemStack(Items.IRON_INGOT), (float) 0.15);
         FurnaceRecipes.instance().addSmeltingRecipe(ComponentTypes.SAND_GOLD.getStack(), new ItemStack(Items.GOLD_INGOT), (float) 0.15);
     }
 
-    public static void addAltarRecipes()
-    {
+    public static void addAltarRecipes() {
 
     }
 
-    public static void addAlchemyArrayRecipes()
-    {
+    public static void addAlchemyArrayRecipes() {
         AlchemyArrayRecipeRegistry.registerRecipe(ComponentTypes.REAGENT_BINDING.getStack(), new ItemStack(Items.DIAMOND_SWORD), new AlchemyArrayEffectBinding("boundSword", Utils.setUnbreakable(new ItemStack(RegistrarBloodMagicItems.BOUND_SWORD))), new BindingAlchemyCircleRenderer());
         AlchemyArrayRecipeRegistry.registerRecipe(ComponentTypes.REAGENT_BINDING.getStack(), new ItemStack(Items.DIAMOND_AXE), new AlchemyArrayEffectBinding("boundAxe", Utils.setUnbreakable(new ItemStack(RegistrarBloodMagicItems.BOUND_AXE))));
         AlchemyArrayRecipeRegistry.registerRecipe(ComponentTypes.REAGENT_BINDING.getStack(), new ItemStack(Items.DIAMOND_PICKAXE), new AlchemyArrayEffectBinding("boundPickaxe", Utils.setUnbreakable(new ItemStack(RegistrarBloodMagicItems.BOUND_PICKAXE))));
@@ -137,8 +131,7 @@ public class ModRecipes
 
     }
 
-    public static void addCompressionHandlers()
-    {
+    public static void addCompressionHandlers() {
         Stopwatch stopwatch = Stopwatch.createStarted();
         StorageBlockCraftingManager.getInstance().addStorageBlockRecipes();
 
@@ -151,13 +144,11 @@ public class ModRecipes
         BMLog.DEBUG.info("Added compression recipes in {}", stopwatch);
     }
 
-    public static void addAlchemyTableRecipes()
-    {
+    public static void addAlchemyTableRecipes() {
         AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTableDyeableRecipe(0, 100, 0, new ItemStack(RegistrarBloodMagicItems.SIGIL_HOLDING)));
     }
 
-    public static void addPotionRecipes()
-    {
+    public static void addPotionRecipes() {
         addPotionRecipe(1000, 1, new ItemStack(Items.GHAST_TEAR), new PotionEffect(MobEffects.REGENERATION, 450));
         addPotionRecipe(1000, 1, new ItemStack(Items.GOLDEN_CARROT), new PotionEffect(MobEffects.NIGHT_VISION, 2 * 60 * 20));
         addPotionRecipe(1000, 1, new ItemStack(Items.MAGMA_CREAM), new PotionEffect(MobEffects.FIRE_RESISTANCE, 2 * 60 * 20));
@@ -181,8 +172,7 @@ public class ModRecipes
         addPotionRecipe(1000, 1, new ItemStack(Items.BEETROOT), new PotionEffect(RegistrarBloodMagic.DEAFNESS, 450));
     }
 
-    public static void addPotionRecipe(int lpDrained, int tier, ItemStack inputStack, PotionEffect baseEffect)
-    {
+    public static void addPotionRecipe(int lpDrained, int tier, ItemStack inputStack, PotionEffect baseEffect) {
         AlchemyTableRecipeRegistry.registerRecipe(new AlchemyTablePotionRecipe(lpDrained, 100, tier, inputStack, baseEffect));
 
         List<ItemStack> lengtheningList = new ArrayList<>();
@@ -196,8 +186,7 @@ public class ModRecipes
         AlchemyTableRecipeRegistry.registerRecipe(BMPotionUtils.getPowerAugmentRecipe(lpDrained, 100, tier, powerList, baseEffect, 1));
     }
 
-    public static void addLivingArmourDowngradeRecipes()
-    {
+    public static void addLivingArmourDowngradeRecipes() {
         String messageBase = "ritual.bloodmagic.downgradeRitual.dialogue.";
 
         ItemStack bowStack = new ItemStack(Items.BOW);
@@ -211,18 +200,16 @@ public class ModRecipes
         ItemStack stringStack = new ItemStack(Items.STRING);
 
         Map<ItemStack, Pair<String, int[]>> dialogueMap = new HashMap<>();
-        dialogueMap.put(bowStack, Pair.of("bow", new int[] { 1, 100, 300, 500 }));
-        dialogueMap.put(bottleStack, Pair.of("quenched", new int[] { 1, 100, 300, 500 }));
-        dialogueMap.put(swordStack, Pair.of("dulledBlade", new int[] { 1, 100, 300, 500, 700 }));
-        dialogueMap.put(goldenAppleStack, Pair.of("slowHeal", new int[] { 1, 100, 300, 500, 700 }));
+        dialogueMap.put(bowStack, Pair.of("bow", new int[]{1, 100, 300, 500}));
+        dialogueMap.put(bottleStack, Pair.of("quenched", new int[]{1, 100, 300, 500}));
+        dialogueMap.put(swordStack, Pair.of("dulledBlade", new int[]{1, 100, 300, 500, 700}));
+        dialogueMap.put(goldenAppleStack, Pair.of("slowHeal", new int[]{1, 100, 300, 500, 700}));
 
-        for (Entry<ItemStack, Pair<String, int[]>> entry : dialogueMap.entrySet())
-        {
+        for (Entry<ItemStack, Pair<String, int[]>> entry : dialogueMap.entrySet()) {
             ItemStack keyStack = entry.getKey();
             String str = entry.getValue().getKey();
             Map<Integer, List<ITextComponent>> textMap = new HashMap<>();
-            for (int tick : entry.getValue().getValue())
-            {
+            for (int tick : entry.getValue().getValue()) {
                 List<ITextComponent> textList = new ArrayList<>();
                 textList.add(new TextComponentTranslation("\u00A74%s", new TextComponentTranslation(messageBase + str + "." + tick)));
                 textMap.put(tick, textList);
@@ -240,8 +227,7 @@ public class ModRecipes
         LivingArmourDowngradeRecipeRegistry.registerRecipe(new LivingArmourUpgradeQuenched(0), bottleStack, Items.DRAGON_BREATH);
         LivingArmourDowngradeRecipeRegistry.registerRecipe(new LivingArmourUpgradeCrippledArm(0), shieldStack, "gemDiamond");
 
-        for (int i = 0; i < 10; i++)
-        {
+        for (int i = 0; i < 10; i++) {
             addRecipeForTieredDowngrade(new LivingArmourUpgradeMeleeDecrease(i), swordStack, i);
             addRecipeForTieredDowngrade(new LivingArmourUpgradeSlowHeal(i), goldenAppleStack, i);
             addRecipeForTieredDowngrade(new LivingArmourUpgradeBattleHungry(i), fleshStack, i);
@@ -251,39 +237,37 @@ public class ModRecipes
         }
     }
 
-    public static void addRecipeForTieredDowngrade(LivingArmourUpgrade upgrade, ItemStack stack, int tier)
-    {
-        switch (tier)
-        {
-        case 0:
-            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, "ingotIron", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 0));
-            break;
-        case 1:
-            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, "dustRedstone", "dustRedstone", "ingotIron", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 0));
-            break;
-        case 2:
-            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, "ingotGold", "gemLapis", "gemLapis", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 1));
-            break;
-        case 3:
-            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Blocks.VINE, "dyeRed", Items.GOLDEN_CARROT, new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 1));
-            break;
-        case 4:
-            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Items.GOLDEN_APPLE, "treeSapling", "treeSapling", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 2));
-            break;
-        case 5:
-            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Blocks.IRON_BLOCK, Blocks.REDSTONE_BLOCK, new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 2));
-            break;
-        case 6:
-            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Blocks.IRON_BLOCK, Blocks.GLOWSTONE, "ingotGold", "ingotGold", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 3));
-            break;
-        case 7:
-            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Blocks.GOLD_BLOCK, Blocks.LAPIS_BLOCK, "gemDiamond", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 3));
-            break;
-        case 8:
-            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Items.DRAGON_BREATH, "gemDiamond", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 4));
-            break;
-        case 9:
-            LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Items.NETHER_STAR, "gemDiamond", "gemDiamond", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 4));
+    public static void addRecipeForTieredDowngrade(LivingArmourUpgrade upgrade, ItemStack stack, int tier) {
+        switch (tier) {
+            case 0:
+                LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, "ingotIron", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 0));
+                break;
+            case 1:
+                LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, "dustRedstone", "dustRedstone", "ingotIron", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 0));
+                break;
+            case 2:
+                LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, "ingotGold", "gemLapis", "gemLapis", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 1));
+                break;
+            case 3:
+                LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Blocks.VINE, "dyeRed", Items.GOLDEN_CARROT, new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 1));
+                break;
+            case 4:
+                LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Items.GOLDEN_APPLE, "treeSapling", "treeSapling", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 2));
+                break;
+            case 5:
+                LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Blocks.IRON_BLOCK, Blocks.REDSTONE_BLOCK, new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 2));
+                break;
+            case 6:
+                LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Blocks.IRON_BLOCK, Blocks.GLOWSTONE, "ingotGold", "ingotGold", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 3));
+                break;
+            case 7:
+                LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Blocks.GOLD_BLOCK, Blocks.LAPIS_BLOCK, "gemDiamond", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 3));
+                break;
+            case 8:
+                LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Items.DRAGON_BREATH, "gemDiamond", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 4));
+                break;
+            case 9:
+                LivingArmourDowngradeRecipeRegistry.registerRecipe(upgrade, stack, Items.NETHER_STAR, "gemDiamond", "gemDiamond", new ItemStack(RegistrarBloodMagicItems.SLATE, 1, 4));
         }
     }
 }

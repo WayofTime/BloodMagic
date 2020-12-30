@@ -115,12 +115,11 @@ public class NetworkHelper {
     /**
      * Syphons a player from within a container.
      *
-     * @param stack    - ItemStack in the Container.
-     * @param ticket   - SoulTicket to syphon
+     * @param stack  - ItemStack in the Container.
+     * @param ticket - SoulTicket to syphon
      * @return - If the syphon was successful.
      */
-    public static boolean syphonFromContainer(ItemStack stack, SoulTicket ticket)
-    {
+    public static boolean syphonFromContainer(ItemStack stack, SoulTicket ticket) {
         if (!(stack.getItem() instanceof IBindable))
             return false;
 
@@ -131,7 +130,7 @@ public class NetworkHelper {
         SoulNetwork network = getSoulNetwork(binding);
         SoulNetworkEvent.Syphon.Item event = new SoulNetworkEvent.Syphon.Item(network, ticket, stack);
 
-        return !MinecraftForge.EVENT_BUS.post(event) && network.syphon(event.getTicket(),true) >= ticket.getAmount();
+        return !MinecraftForge.EVENT_BUS.post(event) && network.syphon(event.getTicket(), true) >= ticket.getAmount();
     }
 
     /**

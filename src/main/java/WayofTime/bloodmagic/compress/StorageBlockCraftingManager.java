@@ -6,17 +6,91 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class StorageBlockCraftingManager {
     private static final StorageBlockCraftingManager instance = new StorageBlockCraftingManager();
-    private List<IRecipe> recipes = new LinkedList<>();
+    private static InventoryCrafting[] inventoryCrafting = {
+            new InventoryCrafting(new Container() {
+                public boolean canInteractWith(EntityPlayer player) {
+                    return false;
+                }
+            },
+                    3, 3),
+            new InventoryCrafting(new Container() {
+                public boolean canInteractWith(EntityPlayer player) {
+                    return false;
+                }
+            },
+                    2, 2),
+            new InventoryCrafting(new Container() {
+                public boolean canInteractWith(EntityPlayer player) {
+                    return false;
+                }
+            },
+                    1, 1)
 
-    public void addRecipe(IRecipe recipe){
+    };
+    static ItemStack reversibleCheck;
+    private HashSet<IRecipe> recipes = new HashSet<>(); // TODO: Clear when recipes are reloaded in 1.14
+    private Set<ItemStack> blacklist = new HashSet<>();
+
+    public static boolean isResultStackReversible(ItemStack stack, World world) {
+        if (stack.isEmpty()) {
+            return false;
+        }
+
+        inventoryCrafting[2].setInventorySlotContents(0, stack);
+        ItemStack returnStack = getNNRecipeOutput(inventoryCrafting[2], world);
+
+        return !returnStack.isEmpty() && CompressionRegistry.areItemStacksEqual(reversibleCheck, returnStack);
+    }
+
+    public static ItemStack getRecipe(ItemStack stack, World world, int gridSize) {
+        StorageBlockCraftingManager craftingManagerSB = getInstance();
+        if (craftingManagerSB.blacklist.contains(stack)) {
+            return ItemStack.EMPTY;
+        }
+        InventoryCrafting inventory = inventoryCrafting[3 - gridSize];
+        for (int i = 0; i < inventory.getSizeInventory(); i++) {
+            inventory.setInventorySlotContents(i, stack);
+        }
+        ItemStack notEmptyRecipe = craftingManagerSB.findMatchingRecipe(inventory, world);
+        if (!notEmptyRecipe.isEmpty()) {
+            return notEmptyRecipe;
+        }
+        ItemStack result = getNNRecipeOutput(inventory, world);
+
+        if (isResultStackReversible(result, world)) {
+            craftingManagerSB.addRecipe(CraftingManager.findMatchingRecipe(inventory, world));
+            return result;
+        }
+        craftingManagerSB.blacklist.add(stack);
+        return ItemStack.EMPTY;
+    }
+
+    public static ItemStack getNNRecipeOutput(InventoryCrafting inventory, World world) {
+        IRecipe checkForNull = CraftingManager.findMatchingRecipe(inventory, world);
+        if (checkForNull != null) {
+            return checkForNull.getRecipeOutput();
+        }
+        return ItemStack.EMPTY;
+    }
+
+    public static ItemStack get22Recipe(ItemStack stack, World world) {
+        return getRecipe(stack, world, 2);
+    }
+
+    public static ItemStack get33Recipe(ItemStack stack, World world) {
+        return getRecipe(stack, world, 3);
+    }
+
+    public void addRecipe(IRecipe recipe) {
         this.recipes.add(recipe);
     }
 
@@ -32,7 +106,7 @@ public class StorageBlockCraftingManager {
         return this.findMatchingRecipe(craftingInventory, world, this.recipes);
     }
 
-    private ItemStack findMatchingRecipe(InventoryCrafting craftingInventory, World world, List<IRecipe> list) {
+    private ItemStack findMatchingRecipe(InventoryCrafting craftingInventory, World world, HashSet<IRecipe> list) {
         int i = 0;
         ItemStack itemstack = ItemStack.EMPTY;
         ItemStack itemstack1 = ItemStack.EMPTY;
@@ -67,11 +141,10 @@ public class StorageBlockCraftingManager {
 
             return new ItemStack(itemstack.getItem(), 1, i1);
         } else {
-            for (j = 0; j < list.size(); ++j) {
-                IRecipe irecipe = list.get(j);
+            for (IRecipe iRecipe : list) {
 
-                if (irecipe.matches(craftingInventory, world)) {
-                    return irecipe.getCraftingResult(craftingInventory);
+                if (iRecipe.matches(craftingInventory, world)) {
+                    return iRecipe.getCraftingResult(craftingInventory);
                 }
             }
 
@@ -83,62 +156,5 @@ public class StorageBlockCraftingManager {
         return instance;
     }
 
-    private static boolean isResultStackReversible(ItemStack stack, int gridSize, World world, List<IRecipe> list) {
-        if (stack.isEmpty()) {
-            return false;
-        }
-        InventoryCrafting inventory = new InventoryCrafting(new Container() {
-            public boolean canInteractWith(EntityPlayer player) {
-                return false;
-            }
-        }, 2, 2);
 
-        inventory.setInventorySlotContents(0, stack);
-
-        ItemStack returnStack = StorageBlockCraftingManager.getInstance().findMatchingRecipe(inventory, world, list);
-        if (returnStack.isEmpty()) {
-            return false;
-        }
-
-        ItemStack compressedStack = ItemStack.EMPTY;
-        switch (gridSize) {
-            case 2:
-                compressedStack = get22Recipe(returnStack, world, list);
-                break;
-            case 3:
-                compressedStack = get33Recipe(returnStack, world, list);
-                break;
-        }
-
-        return !compressedStack.isEmpty() && CompressionRegistry.areItemStacksEqual(stack, compressedStack);
-    }
-
-    private static ItemStack getRecipe(ItemStack stack, World world, int gridSize, List<IRecipe> list) {
-        InventoryCrafting inventory = new InventoryCrafting(new Container() {
-            public boolean canInteractWith(EntityPlayer player) {
-                return false;
-            }
-        }, gridSize, gridSize);
-        for (int i = 0; i < inventory.getSizeInventory(); i++) {
-            inventory.setInventorySlotContents(i, stack);
-        }
-
-        return StorageBlockCraftingManager.getInstance().findMatchingRecipe(inventory, world, list);
-    }
-
-    private static boolean has22Recipe(ItemStack stack, World world, List<IRecipe> list) {
-        return !get22Recipe(stack, world, list).isEmpty();
-    }
-
-    private static ItemStack get22Recipe(ItemStack stack, World world, List<IRecipe> list) {
-        return getRecipe(stack, world, 2, list);
-    }
-
-    private static boolean has33Recipe(ItemStack stack, World world, List<IRecipe> list) {
-        return !get33Recipe(stack, world, list).isEmpty();
-    }
-
-    private static ItemStack get33Recipe(ItemStack stack, World world, List<IRecipe> list) {
-        return getRecipe(stack, world, 3, list);
-    }
 }

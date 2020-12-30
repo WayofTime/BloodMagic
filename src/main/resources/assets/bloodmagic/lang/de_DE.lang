@@ -1,19 +1,17 @@
-#Creative Tab
-itemGroup.bloodmagic.creativeTab=Blood Magic
+# Creative Tab
 itemGroup.bloodmagic.creativeTabTome=Blood Magic - Upgrades
 
-#Items
-item.bloodmagic.activationCrystal.weak.name=Schwacher Aktivierungskristall
-item.bloodmagic.activationCrystal.awakened.name=Erweckter Aktivierungskristall
-item.bloodmagic.activationCrystal.creative.name=Kreativer Aktivierungskristall
+# Items
 
-item.bloodmagic.sacrificialDagger.normal.name=Opferdolch
-item.bloodmagic.sacrificialDagger.creative.name=Kreativer Opferdolch
 item.bloodmagic.pack.selfSacrifice.name=Blutweste
 item.bloodmagic.pack.sacrifice.name=Vampirische Weste
 item.bloodmagic.daggerOfSacrifice.name=Opfermesser
 
 item.bloodmagic.lavaCrystal.name=Lavakristall
+
+item.bloodmagic.activation_crystal.awakened.name=Erweckter Aktivierungskristall
+item.bloodmagic.activation_crystal.creative.name=Kreativer Aktivierungskristall
+item.bloodmagic.activation_crystal.weak.name=Schwacher Aktivierungskristall
 
 item.bloodmagic.bound.sword.name=Gebundene Klinge
 item.bloodmagic.bound.pickaxe.name=Gebundene Spitzhacke
@@ -63,19 +61,21 @@ item.bloodmagic.reagent.virtus.name=Virtus
 item.bloodmagic.reagent.reductus.name=Reductus
 item.bloodmagic.reagent.potentia.name=Potentia
 
-item.bloodmagic.bloodShard.weak.name=Schwache Blutscherbe
-item.bloodmagic.bloodShard.demon.name=Dämonische Blutscherbe
+item.bloodmagic.blood_shard.demonic.name=Dämonische Blutscherbe
+item.bloodmagic.blood_shard.weak.name=Schwache Blutscherbe
+item.bloodmagic.sacrificial_dagger.creative.name=Kreativer Opferdolch
+item.bloodmagic.sacrificial_dagger.normal.name=Opferdolch
 
-item.bloodmagic.baseComponent.reagentWater.name=Wasserreagenz
-item.bloodmagic.baseComponent.reagentLava.name=Lavareagenz
-item.bloodmagic.baseComponent.reagentAir.name=Luftreagenz
-item.bloodmagic.baseComponent.reagentFastMiner.name=Reagenz der Eile
-item.bloodmagic.baseComponent.reagentVoid.name=Reagenz der Leere
-item.bloodmagic.baseComponent.reagentGrowth.name=Wachstumsreagenz
-item.bloodmagic.baseComponent.reagentAffinity.name=Reagenz der elementaren Verbundenheit
-item.bloodmagic.baseComponent.reagentSight.name=Sichtreagenz
-item.bloodmagic.baseComponent.reagentBinding.name=Bindendes Reagenz
-item.bloodmagic.baseComponent.reagentSuppression.name=Verdrängendes Reagenz
+item.bloodmagic.baseComponent.reagent_affinity.name=Reagenz der elementaren Verbundenheit
+item.bloodmagic.baseComponent.reagent_air.name=Luftreagenz
+item.bloodmagic.baseComponent.reagent_binding.name=Bindendes Reagenz
+item.bloodmagic.baseComponent.reagent_fast_miner.name=Reagenz der Eile
+item.bloodmagic.baseComponent.reagent_growth.name=Wachstumsreagenz
+item.bloodmagic.baseComponent.reagent_lava.name=Lavareagenz
+item.bloodmagic.baseComponent.reagent_sight.name=Sichtreagenz
+item.bloodmagic.baseComponent.reagent_suppression.name=Verdrängendes Reagenz
+item.bloodmagic.baseComponent.reagent_void.name=Reagenz der Leere
+item.bloodmagic.baseComponent.reagent_water.name=Wasserreagenz
 item.bloodmagic.baseComponent.reagent_blood_light.name=Blutlampenreagenz
 item.bloodmagic.baseComponent.reagent_magnetism.name=Magnetismusreagenz
 item.bloodmagic.baseComponent.reagent_haste.name=Reagenz der Hast
@@ -110,29 +110,23 @@ item.bloodmagic.demonCrystal.destructive.name=Kristall zerstörender dämonische
 item.bloodmagic.demonCrystal.vengeful.name=Kristall rachsüchtiger dämonischer Willenskraft
 item.bloodmagic.demonCrystal.steadfast.name=Kristall standhafter dämonischer Willenskraft
 
-item.bloodmagic.monsterSoul.base.name=Dämonische Willenskraft
+item.bloodmagic.monster_soul.raw.name=Dämonische Willenskraft
 item.bloodmagic.monster_soul.corrosive.name=Korrosive dämonische Willenskraft
 item.bloodmagic.monster_soul.destructive.name=Zerstörerische dämonische Willenskraft
 item.bloodmagic.monster_soul.vengeful.name=Rachsüchtige dämonische Willenskraft
 item.bloodmagic.monster_soul.steadfast.name=Standhafte dämonische Willenskraft
 
 item.bloodmagic.sigil.air.name=Luftsiegel
-item.bloodmagic.sigil.bloodLight.name=Siegel der Blutlampe
 item.bloodmagic.sigil.compression.name=Siegel der Kompression
 item.bloodmagic.sigil.divination.name=Siegel der Weissagung
 item.bloodmagic.sigil.water.name=Wassersiegel
 item.bloodmagic.sigil.lava.name=Lavasiegel
 item.bloodmagic.sigil.void.name=Siegel der Leere
-item.bloodmagic.sigil.greenGrove.name=Siegel des grünen Hains
-item.bloodmagic.sigil.elementalAffinity.name=Siegel der elementaren Verbundenheit
 item.bloodmagic.sigil.haste.name=Siegel der Hast
 item.bloodmagic.sigil.suppression.name=Siegel der Verdrängung
 item.bloodmagic.sigil.magnetism.name=Siegel des Magnetismus
-item.bloodmagic.sigil.fastMiner.name=Siegel des Eile
 item.bloodmagic.sigil.seer.name=Siegel des Sehers
-item.bloodmagic.sigil.phantomBridge.name=Siegel der Phantombrücke
 item.bloodmagic.sigil.whirlwind.name=Siegel des Wirbelwindes
-item.bloodmagic.sigil.enderSeverance.name=Siegel des Endertrennens
 item.bloodmagic.sigil.holding.name=Siegel der Aufbewahrung
 item.bloodmagic.sigil.holding.display=&r%s: &o&n%s
 item.bloodmagic.sigil.teleposition.name=Telepositionssiegel
@@ -140,6 +134,12 @@ item.bloodmagic.sigil.transposition.name=Transpositionssiegel
 item.bloodmagic.sigil.claw.name=Siegel der Klaue
 item.bloodmagic.sigil.bounce.name=Siegel der Elastizität
 item.bloodmagic.sigil.frost.name=Siegel des Winteratems
+item.bloodmagic.sigil.blood_light.name=Siegel der Blutlampe
+item.bloodmagic.sigil.elemental_affinity.name=Siegel der elementaren Verbundenheit
+item.bloodmagic.sigil.ender_severance.name=Siegel des Endertrennens
+item.bloodmagic.sigil.fast_miner.name=Siegel des Eile
+item.bloodmagic.sigil.green_grove.name=Siegel des grünen Hains
+item.bloodmagic.sigil.phantom_bridge.name=Siegel der Phantombrücke
 
 item.bloodmagic.livingArmour.helmet.name=Lebender Helm
 item.bloodmagic.livingArmour.chest.name=Lebender Brustpanzer
@@ -152,6 +152,7 @@ item.bloodmagic.sentientArmour.boots.name=Empfindsame Schuhe
 
 item.bloodmagic.altarMaker.name=Altarersteller
 
+item.bloodmagic.ritualDismantler.name=Ritual Dismantler
 item.bloodmagic.ritualDivinernormal.name=Ritualrute
 item.bloodmagic.ritualDivinerdusk.name=Ritualrute [Abenddämmerung]
 item.bloodmagic.ritualDivinerdawn.name=Ritualrute [Morgendämmerung]
@@ -161,7 +162,6 @@ item.bloodmagic.arcaneAshes.name=Arkane Asche
 item.bloodmagic.upgradeTome.name=These zur Verbesserung lebender Rüstung
 item.bloodmagic.downgradeTome.name=These zur Schwächung lebender Rüstung
 item.bloodmagic.upgradeTrainer.name=Trainingsband für Lebende Rüstung
-
 
 item.bloodmagic.sentientSword.name=Empfindsames Schwert
 item.bloodmagic.soulGem.petty.name=Winziges Juwel des Tartaros
@@ -196,24 +196,32 @@ item.bloodmagic.icarusScroll.name=Ikarusrolle
 # Blocks
 tile.bloodmagic.fluid.lifeEssence.name=Lebensessenz
 
+tile.bloodmagic.bloodstone_brick.name=Blutsteinziegel
+tile.bloodmagic.bloodstone_tile.name=Großer Blutsteinziegel
+
+tile.bloodmagic.crystal_brick.name=Kristallklumpenziegel
+tile.bloodmagic.crystal_tile.name=Kristallklumpen
+
+tile.bloodmagic.phantom.name=Phantomblock
+
 tile.bloodmagic.stone.ritual.master.name=Meisterritualstein
 tile.bloodmagic.stone.ritual.imperfect.name=Imperfekter Ritualstein
 tile.bloodmagic.stone.ritual.inverted.name=Umgekehrter Meisterritualstein
 
 tile.bloodmagic.altar.name=Blutaltar
-tile.bloodmagic.alchemyArray.name=&r&fAlchemische Anordnung
+tile.bloodmagic.alchemyArray.name=Alchemische Anordnung
 
 tile.bloodmagic.rune.blank.name=Leere Rune
 tile.bloodmagic.rune.speed.name=Geschwindigkeitsrune
 tile.bloodmagic.rune.efficiency.name=Effizienzrune
 tile.bloodmagic.rune.sacrifice.name=Rune der Opferung
-tile.bloodmagic.rune.selfSacrifice.name=Rune der Selbstopferung
 tile.bloodmagic.rune.displacement.name=Rune der Verlagerung
 tile.bloodmagic.rune.capacity.name=Kapazitätsrune
-tile.bloodmagic.rune.augCapacity.name=Rune der erweiterten Kapazität
 tile.bloodmagic.rune.orb.name=Rune der Blutkugel
 tile.bloodmagic.rune.acceleration.name=Beschleunigungsrune
 tile.bloodmagic.rune.charging.name=Aufladungsrune
+tile.bloodmagic.rune.augmented_capacity.name=Rune der erweiterten Kapazität
+tile.bloodmagic.rune.self_sacrifice.name=Rune der Selbstopferung
 
 tile.bloodmagic.ritualStone.blank.name=Ritualstein
 tile.bloodmagic.ritualStone.water.name=Wasserritualstein
@@ -223,13 +231,8 @@ tile.bloodmagic.ritualStone.air.name=Luftritualstein
 tile.bloodmagic.ritualStone.dusk.name=Abenddämmerungsritualstein
 tile.bloodmagic.ritualStone.dawn.name=Morgendämmerungsritualstein
 
-tile.bloodmagic.bloodstonebrick.large.name=Großer Blutsteinziegel
-tile.bloodmagic.bloodstonebrick.brick.name=Blutsteinziegel
-tile.bloodmagic.crystal.large.name=Kristallklumpen
-tile.bloodmagic.crystal.brick.name=Kristallklumpenziegel
 tile.bloodmagic.bloodLight.name=Blutlampe
 tile.bloodmagic.spectralBlock.name=Spektralblock
-tile.bloodmagic.phantomBlock.name=Phantomblock
 tile.bloodmagic.incenseAltar.name=Räucheraltar
 
 tile.bloodmagic.teleposer.name=Teleposer
@@ -374,6 +377,9 @@ tile.bloodmagic.stairs3.steadfast.name=Standhafte Steintreppe
 # Fluids
 fluid.lifeEssence=Lebensessenz
 
+# HUD
+hud.bloodmagic.inactive=Inactive
+
 # Tooltips
 tooltip.bloodmagic.extraInfo=&9-Halte Shift für mehr Info-
 
@@ -387,10 +393,14 @@ tooltip.bloodmagic.tier=Ausbaustufe %d
 tooltip.bloodmagic.activated=Aktiviert
 tooltip.bloodmagic.deactivated=Deaktiviert
 
+tooltip.bloodmagic.activation_crystal.awakened=Aktiviert mächtigere Rituale
+tooltip.bloodmagic.activation_crystal.creative=Kreativmodus: Aktiviert jedes Ritual
+tooltip.bloodmagic.activation_crystal.weak=Aktiviert niedrig-levelige Rituale
+
 tooltip.bloodmagic.sigil.air.desc=&oIch fühl mich schon leichter...
-tooltip.bloodmagic.sigil.bloodLight.desc=&oIch sehe ein Licht!
 tooltip.bloodmagic.sigil.compression.desc=&oDiamanthände
 tooltip.bloodmagic.sigil.divination.desc=&oSpähe in die Seele
+tooltip.bloodmagic.sigil.divination.otherNetwork=Peering into the soul of %s
 tooltip.bloodmagic.sigil.divination.currentAltarTier=Ausbaustufe: %d
 tooltip.bloodmagic.sigil.divination.currentEssence=Gespeicherte Lebensessenz: %d LP
 tooltip.bloodmagic.sigil.divination.currentAltarCapacity=Maximale Kapazität: %d LP
@@ -400,11 +410,9 @@ tooltip.bloodmagic.sigil.divination.currentBonus=Momentaner Bonus: +%d%%
 tooltip.bloodmagic.sigil.water.desc=&oHat jemand nach unendlichem Wasser gefragt?
 tooltip.bloodmagic.sigil.lava.desc=&oHEISS! NICHT ESSEN!
 tooltip.bloodmagic.sigil.void.desc=&oBesser als Swiffer®!
-tooltip.bloodmagic.sigil.greenGrove.desc=&oUmweltverträglich
 tooltip.bloodmagic.sigil.magnetism.desc=&oIch habe eine anziehende Persönlichkeit
 tooltip.bloodmagic.sigil.suppression.desc=&oBesser als Telekinese
 tooltip.bloodmagic.sigil.haste.desc=&o42 Dosen Koffein später...
-tooltip.bloodmagic.sigil.fastMiner.desc=&oHacke wie ein Weltmeister
 tooltip.bloodmagic.sigil.elementalAffinity.desc=&oAchtung! Fallende Feuerfische
 tooltip.bloodmagic.sigil.seer.desc=&oWenn allsehend nicht genug ist
 tooltip.bloodmagic.sigil.seer.currentAltarProgress=Fortschritt: %d LP/ %s LP
@@ -416,14 +424,17 @@ tooltip.bloodmagic.sigil.seer.currentAltarCapacity=Maximale Kapazität: %d LP
 tooltip.bloodmagic.sigil.seer.currentCharge=Ladung: %d
 tooltip.bloodmagic.sigil.seer.currentTranquility=Momentane Gelassenheit: %d
 tooltip.bloodmagic.sigil.seer.currentBonus=Momentaner Bonus: +%d%%
-tooltip.bloodmagic.sigil.phantomBridge.desc=&oLaufen auf dünner Luft...
 tooltip.bloodmagic.sigil.whirlwind.desc=&oBesser keinen Rock tragen
-tooltip.bloodmagic.sigil.enderSeverance.desc=&oBringt Endermen in Notlage
 tooltip.bloodmagic.sigil.teleposition.desc=Das ist beinahe ein bewegender Moment.
 tooltip.bloodmagic.sigil.transposition.desc=Spüre die Stärke der Macht, mein junger Schüler.
 tooltip.bloodmagic.sigil.holding.press=Drücke &o%s&r&7 zum ändern
 tooltip.bloodmagic.sigil.holding.desc=Gesiegelte Siegel
 tooltip.bloodmagic.sigil.holding.sigilInSlot=Platz %d: %s
+tooltip.bloodmagic.sigil.blood_light.desc=&oIch sehe ein Licht!
+tooltip.bloodmagic.sigil.ender_severance.desc=&oBringt Endermen in Notlage
+tooltip.bloodmagic.sigil.fast_miner.desc=&oHacke wie ein Weltmeister
+tooltip.bloodmagic.sigil.green_grove.desc=&oUmweltverträglich
+tooltip.bloodmagic.sigil.phantom_bridge.desc=&oLaufen auf dünner Luft...
 
 tooltip.bloodmagic.livingArmourPointsUpgrade.desc=Erhöht die maximalen Punkte der Lebenden Rüstung auf %d.
 
@@ -441,9 +452,6 @@ tooltip.bloodmagic.pack.selfSacrifice.desc=Es scheuert richtig...
 tooltip.bloodmagic.pack.sacrifice.desc=Beschreibung
 tooltip.bloodmagic.pack.stored=Enthält: %d LP
 
-tooltip.bloodmagic.activationCrystal.weak=Aktiviert niedrig-levelige Rituale
-tooltip.bloodmagic.activationCrystal.awakened=Aktiviert mächtigere Rituale
-tooltip.bloodmagic.activationCrystal.creative=Kreativmodus: Aktiviert jedes Ritual
 
 tooltip.bloodmagic.diviner.currentRitual=Ritual:
 tooltip.bloodmagic.diviner.blankRune=Leere Runen: %d
@@ -470,6 +478,7 @@ tooltip.bloodmagic.arcaneAshes=Asche gebraucht für einen alchemischen Kreis
 
 tooltip.bloodmagic.telepositionFocus.coords=Koordinaten: (%d, %d, %d)
 tooltip.bloodmagic.telepositionFocus.dimension=Dimensions-ID: %d
+tooltip.bloodmagic.telepositionFocus.bound=Bound: %s at %d, %d, %d
 tooltip.bloodmagic.telepositionFocus.weak=Benutzt, um Blöcke zu teleportieren
 tooltip.bloodmagic.telepositionFocus.enhanced=Benutzt, um Blöcke zu teleportieren
 tooltip.bloodmagic.telepositionFocus.reinforced=Benutzt, um Blöcke zu teleportieren
@@ -517,7 +526,6 @@ tooltip.bloodmagic.livingArmour.upgrade.progress=%s (%d/100)
 tooltip.bloodmagic.livingArmour.upgrade.points=&6Upgrade points: %s / %s
 
 tooltip.bloodmagic.livingArmour.extraExtraInfo=&9-Halte Shift + M für Fortschrittsinfo-
-
 
 tooltip.bloodmagic.will=Willensqualität: %1$,.2f
 tooltip.bloodmagic.sentientSword.desc=Benutzt Dämonenwille um volles Potential freizusetzen
@@ -615,6 +623,12 @@ ritual.bloodmagic.altarBuilderRitual=Die Zusammensetzung des hohen Altares
 ritual.bloodmagic.portalRitual=Das Tor der Faltung
 ritual.bloodmagic.downgradeRitual=Sühne der belasteten Seele
 ritual.bloodmagic.crystalSplitRitual=Resonanz des facettierten Kristalls
+ritual.bloodmagic.condorRitual=Reverence of the Condor
+ritual.bloodmagic.eternalSoulRitual=Cry of the Eternal Soul
+ritual.bloodmagic.groundingRitual=Ritual of Grounding
+ritual.bloodmagic.featheredEarthRitual=Ritual of the Feathered Earth
+ritual.bloodmagic.veilOfEvilRitual=Veil of Evil
+ritual.bloodmagic.wardOfSacrosanctityRitual=Ward of Sacrosanctity
 
 ritual.bloodmagic.waterRitual.info=Generiert eine Wasserquelle auf dem Meisterritualstein.
 ritual.bloodmagic.lavaRitual.info=Generiert eine Lavaquelle auf dem Meisterritualstein.
@@ -660,6 +674,14 @@ ritual.bloodmagic.animalGrowthRitual.steadfast.info=(Standhaft) Züchtet Erwachs
 ritual.bloodmagic.animalGrowthRitual.default.info=(Roh) Erhöht die Geschwindigkeit des Rituals basierend auf dem vorhandenen Willen in der Aura.
 ritual.bloodmagic.animalGrowthRitual.destructive.info=(Zerstörerisch) Lässt Erwachsene, die sich länger nicht mehr gedeckt haben, auf Monster zulaufen und explodieren.
 ritual.bloodmagic.animalGrowthRitual.corrosive.info=(Korrosiv) Nicht implementiert.
+ritual.bloodmagic.groundingRitual.info=Forces entities on the ground and prevents jumping.
+ritual.bloodmagic.groundingRitual.default.info=(Raw) Affects players.
+ritual.bloodmagic.groundingRitual.corrosive.info=(Corrosive) Disables gravity (+Vengeful) Applies Levitation.
+ritual.bloodmagic.groundingRitual.destructive.info=(Destructive) Applies Heavy Heart (increases fall damage) (+Vengeful) Stronger effect.
+ritual.bloodmagic.groundingRitual.steadfast.info=(Steadfast) Affects Bosses. Doesn't affect bosses that are immune against motion change or immune against potions (except Wither and Ender Dragon).
+ritual.bloodmagic.groundingRitual.vengeful.info=(Vengeful) Makes effects stronger. (+Corrosive) Applies Levitation. (+Destructive) Higher Heavy Heart amplifier.
+ritual.bloodmagic.condorRitual.info=Provides flight in an area around the ritual.
+ritual.bloodmagic.eternalSoulRitual.info=Capable of transferring Life Essence from a Network back into an Altar at a cost.
 
 ritual.bloodmagic.crystalSplitRitual.info=Spaltet eine ausgewachsene rohe Kristallgruppe in die Aspekte auf.
 ritual.bloodmagic.fullStomachRitual.info=Entfernt Essen aus der verbundenen Truhe, um die Sättigung des Spielers zu füllen.
@@ -745,6 +767,8 @@ ritual.bloodmagic.downgradeRitual.dialogue.slowHeal.100=Anders als meine Brüder
 ritual.bloodmagic.downgradeRitual.dialogue.slowHeal.300=Auch wenn deine Wunden noch heilen mögen, werden sie es doch nur langsam, fall du mein "Angebot" akzeptieren solltest und die Wunden der Schlacht werden dir noch mehr schmerzen.
 ritual.bloodmagic.downgradeRitual.dialogue.slowHeal.500=Also überlege gut, bevor du einen Handel eingehst, den du bereuen wirst. Denn auch wenn dein Glas leer sein sollte, wird es nahezu unmöglich sein, es wieder zu füllen...
 
+ritual.bloodmagic.featheredEarthRitual.info=Prevents falldamage in an area.
+
 # Chat
 chat.bloodmagic.altarMaker.setTier=Setze Ausbaustufe auf: %d
 chat.bloodmagic.altarMaker.building=Baue Stufe %d-Altar
@@ -786,6 +810,9 @@ chat.bloodmagic.mimic.detectRadius.down=Spieler-Erfassungsradius wurde verringer
 chat.bloodmagic.mimic.potionSpawnRadius.up=Trankerzeugungsradius wurde erhöht auf: %d Blöcke.
 chat.bloodmagic.mimic.potionSpawnRadius.down=Trankerzeugungsradis wurde verringert auf: %d Blöcke.
 
+death.attack.ritual_damage=%1$s wurde für ein Ritual geopfert.
+death.attack.ritual_damage.player=%2$s hat %1$s für ein Ritual geopfert.
+
 # entity
 entity.bloodmagic.SentientSpecter.name=Empfindsamer Geist
 entity.bloodmagic.Mimic.name=Mimik
@@ -794,9 +821,8 @@ entity.bloodmagic.Mimic.name=Mimik
 commands.bloodmagic.error.arg.invalid=Ungültige Argumente
 commands.bloodmagic.error.arg.missing=Nicht genug Argumente
 commands.bloodmagic.error.arg.player.missing=Du musst einen Spieler für diese Aktion bestimmen.
-commands.bloodmagic.error.404=Befehl nicht gefunden!
-commands.bloodmagic.error.unknown=Unbekannter Befehl!
-commands.bloodmagic.error.perm=Du hast keine Berechtigung, diesen Befehl zu nutzen!
+commands.bloodmagic.error.negative=Amount must be a positive Integer.
+commands.bloodmagic.error.outofbounds=Given integer is too large (must be within list ID boundaries).
 
 commands.bloodmagic.success=Erfolgreich ausgeführt
 
@@ -808,6 +834,7 @@ commands.bloodmagic.help.help=Zeigt hilfe für den Befehl "/bloodmagic" an.
 
 commands.bloodmagic.network.usage=/bloodmagic network [syphon|add|get|fill|cap] Spieler [amount]
 commands.bloodmagic.network.help=LP Netzwerk Befehle
+
 commands.bloodmagic.network.syphon.help=Zieht den gegebenen Wert an LP vom LP-Netzwerk des gegebenen Spielers ab.
 commands.bloodmagic.network.syphon.success=Erfolgreich %d LP von %s abgezogen.
 commands.bloodmagic.network.add.help=Fügt den gegebenen Wert an LP dem LP-Netzwerk des gegebenen Spielers zu. Folgt normalen LP Regeln.
@@ -822,31 +849,14 @@ commands.bloodmagic.network.cap.success=%ss LP-Netzwerk erfolgreich gefüllt.
 
 commands.bloodmagic.bind.usage=/bloodmagic bind [true|false] [Spieler]
 commands.bloodmagic.bind.help=Versucht, den gehaltenen Gegenstand zu binden bzw. die Bindung zu entfernen.
-commands.bloodmagic.bind.success=Erfolgreich gebunden
+commands.bloodmagic.bind.success=Gegenstand erfolgreich gebunden!
 commands.bloodmagic.bind.remove.success=Bindung erfolgreich entfernt
+commands.bloodmagic.bind.error.ownerEqualsTarget=Es hat sich nichts geändert: Ziel und Besitzer sind identsich.
+commands.bloodmagic.bind.error.notBound=Bindung kann nicht gelöscht werden: Nicht gebunden.
+commands.bloodmagic.bind.error.notBindable=Kann nicht gebunden werden: Gegenstand nicht bindbar.
 
 commands.bloodmagic.orb.usage=/bloodmagic orb [set|get] Spieler [tier]
 commands.bloodmagic.orb.help=Setzt oder zeigt die Blutkugel-Ausbaustufe des Spielers.
-
-commands.bloodmagic.bind.usage=/bind <Spieler>
-commands.bloodmagic.bind.success=Gegenstand erfolgreich gebunden!
-commands.bloodmagic.bind.failed.noPlayer=Kein Spieler angegeben
-commands.bloodmagic.bind.failed.alreadyBound=Gegenstand ist schon gebunden; benutze /unbind um die Bindung zu entfernen
-commands.bloodmagic.bind.failed.notBindable=Gegenstand kann nicht gebunden werden
-commands.bloodmagic.unbind.usage=/unbind
-commands.bloodmagic.unbind.success=Bindung erfolgreich entfernt.
-commands.bloodmagic.unbind.failed.notBindable=Bindung kann nicht entfernt werden.
-commands.bloodmagic.soulnetwork.usage=/soulnetwork <Spieler> <add|subtract|fill|empty|get> [Menge]
-commands.bloodmagic.soulnetwork.add.success=Erfolgreich %dLP zu %ss LP-Netzwerk hinzugefügt!
-commands.bloodmagic.soulnetwork.subtract.success=Erfolgreich %dLP von %ss LP-Netzwerk entfernt!
-commands.bloodmagic.soulnetwork.fill.success=Erfolgreich %ss LP-Netzwerk gefüllt!
-commands.bloodmagic.soulnetwork.empty.success=Erfolgreich %ss LP-Netzwerk geleert!
-commands.bloodmagic.soulnetwork.get.success=In %ss LP-Netzwerk sind %dLP!
-commands.bloodmagic.soulnetwork.noPlayer=Kein Spieler angegeben
-commands.bloodmagic.soulnetwork.noCommand=Kein Befehl angegeben
-commands.bloodmagic.soulnetwork.notACommand=Das ist kein gültiger Befehl
-commands.bloodmagic.soulnetwork.fillMax.success=%ss LP-Netzwerk erfolgreich zu deren Blutkugel-Maximum befüllt!
-commands.bloodmagic.soulnetwork.create.success=%ss LP-Netzwerk erfolgreich erstellt! (Blutkugel-Ausbaustufe: %d)
 
 # GUI
 tile.bloodmagic.inputNode.name=Eingangsknoten
@@ -856,9 +866,6 @@ tile.bloodmagic.outputNode.name=Ausgangsknoten
 bloodmagic.keybind.open_holding=Öffne Siegel der Aufbewahrung
 bloodmagic.keybind.cycle_holding_pos=Siegelrotation (+)
 bloodmagic.keybind.cycle_holding_neg=Siegelrotation (-)
-
-death.attack.ritual_damage=%1$s wurde für ein Ritual geopfert.
-death.attack.ritual_damage.player=%2$s hat %1$s für ein Ritual geopfert.
 
 # JustEnoughItems
 jei.bloodmagic.recipe.altar=Blutaltar

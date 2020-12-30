@@ -7,7 +7,8 @@ import java.util.Locale;
 public enum EnumRitualController implements IStringSerializable {
     MASTER,
     IMPERFECT,
-    INVERTED,;
+    INVERTED,
+    ;
 
     @Override
     public String toString() {

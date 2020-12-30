@@ -29,8 +29,7 @@ import net.minecraftforge.registries.RegistryBuilder;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 @GameRegistry.ObjectHolder(BloodMagic.MODID)
-public class RegistrarBloodMagic
-{
+public class RegistrarBloodMagic {
 
     private static final BloodOrb ORB_DEF = new BloodOrb("", 0, 0, 0);
     @GameRegistry.ObjectHolder("weak")
@@ -67,8 +66,7 @@ public class RegistrarBloodMagic
     public static IForgeRegistry<BloodOrb> BLOOD_ORBS = null;
 
     @SubscribeEvent
-    public static void registerBloodOrbs(RegistryEvent.Register<BloodOrb> event)
-    {
+    public static void registerBloodOrbs(RegistryEvent.Register<BloodOrb> event) {
         ResourceLocation orb = RegistrarBloodMagicItems.BLOOD_ORB.getRegistryName();
         event.getRegistry().registerAll(
                 new BloodOrb("weak", 1, 5000, 2).withModel(new ModelResourceLocation(orb, "type=weak")).setRegistryName("weak"),
@@ -85,8 +83,7 @@ public class RegistrarBloodMagic
     }
 
     @SubscribeEvent
-    public static void registerPotions(RegistryEvent.Register<Potion> event)
-    {
+    public static void registerPotions(RegistryEvent.Register<Potion> event) {
         event.getRegistry().registerAll(
                 new PotionBloodMagic("Boost", false, 0xFFFFFF, 0, 0).setRegistryName("boost"),
                 new PotionBloodMagic("Whirlwind", false, 0xFFFFFF, 0, 0).setRegistryName("whirlwind"),
@@ -109,8 +106,7 @@ public class RegistrarBloodMagic
     }
 
     @SubscribeEvent
-    public static void registerEntities(RegistryEvent.Register<EntityEntry> event)
-    {
+    public static void registerEntities(RegistryEvent.Register<EntityEntry> event) {
         int entities = 0;
 
         event.getRegistry().registerAll(
@@ -128,8 +124,7 @@ public class RegistrarBloodMagic
     }
 
     @SubscribeEvent
-    public static void onRegistryCreation(RegistryEvent.NewRegistry event)
-    {
+    public static void onRegistryCreation(RegistryEvent.NewRegistry event) {
         BLOOD_ORBS = new RegistryBuilder<BloodOrb>()
                 .setName(new ResourceLocation(BloodMagic.MODID, "blood_orb"))
                 .setIDRange(0, Short.MAX_VALUE)
@@ -140,10 +135,8 @@ public class RegistrarBloodMagic
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public static void registerModels(ModelRegistryEvent event)
-    {
-        for (BloodOrb orb : BLOOD_ORBS)
-        {
+    public static void registerModels(ModelRegistryEvent event) {
+        for (BloodOrb orb : BLOOD_ORBS) {
             ModelResourceLocation modelLocation = orb.getModelLocation();
             if (modelLocation == null)
                 modelLocation = new ModelResourceLocation(orb.getRegistryName(), "inventory");

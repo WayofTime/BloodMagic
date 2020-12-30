@@ -33,6 +33,8 @@ public interface IMasterRitualStone {
 
     void setCooldown(int cooldown);
 
+    boolean isActive();
+
     void setActive(boolean active);
 
     EnumFacing getDirection();
@@ -68,6 +70,10 @@ public interface IMasterRitualStone {
     void addBlockRanges(Map<String, AreaDescriptor> blockRanges);
 
     void addBlockRange(String range, AreaDescriptor defaultRange);
+
+    void setBlockRanges(Map<String, AreaDescriptor> blockRanges);
+
+    void setBlockRange(String range, AreaDescriptor defaultRange);
 
     Ritual getCurrentRitual();
 }

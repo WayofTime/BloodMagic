@@ -17,58 +17,47 @@ import net.minecraft.world.WorldServer;
 import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
 import WayofTime.bloodmagic.iface.IAlchemyArray;
 
-public class AlchemyArrayEffectTeleport extends AlchemyArrayEffect
-{
+public class AlchemyArrayEffectTeleport extends AlchemyArrayEffect {
     public static final int MAX_SEARCH = 20;
     public static final int TELEPORT_DELAY = 40;
 
-    public AlchemyArrayEffectTeleport(String key)
-    {
+    public AlchemyArrayEffectTeleport(String key) {
         super(key);
     }
 
     @Override
-    public boolean update(TileEntity tile, int ticksActive)
-    {
+    public boolean update(TileEntity tile, int ticksActive) {
         return false;
     }
 
     @Override
-    public void onEntityCollidedWithBlock(IAlchemyArray array, World world, BlockPos pos, IBlockState state, Entity entity)
-    {
+    public void onEntityCollidedWithBlock(IAlchemyArray array, World world, BlockPos pos, IBlockState state, Entity entity) {
         EnumFacing direction = array.getRotation();
 
         teleportEntityInDirection(world, pos, entity, direction);
     }
 
-    public void teleportEntityInDirection(World world, BlockPos currentPos, Entity entity, EnumFacing direction)
-    {
-        if (entity != null && entity.timeUntilPortal <= 0)
-        {
-            for (int i = 1; i <= MAX_SEARCH; i++)
-            {
+    public void teleportEntityInDirection(World world, BlockPos currentPos, Entity entity, EnumFacing direction) {
+        if (entity != null && entity.timeUntilPortal <= 0) {
+            for (int i = 1; i <= MAX_SEARCH; i++) {
                 BlockPos offsetPos = currentPos.offset(direction, i);
                 Block testBlock = world.getBlockState(offsetPos).getBlock();
-                if (testBlock == RegistrarBloodMagicBlocks.ALCHEMY_ARRAY)
-                {
+                if (testBlock == RegistrarBloodMagicBlocks.ALCHEMY_ARRAY) {
                     int x = offsetPos.getX();
                     int y = offsetPos.getY();
                     int z = offsetPos.getZ();
 
                     entity.getEntityWorld().playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
                     entity.timeUntilPortal = TELEPORT_DELAY;
-                    if (!world.isRemote)
-                    {
-                        if (entity instanceof EntityPlayer)
-                        {
+                    if (!world.isRemote) {
+                        if (entity instanceof EntityPlayer) {
                             EntityPlayerMP player = (EntityPlayerMP) entity;
 
                             player.setPositionAndUpdate(x + 0.5, y + 0.5, z + 0.5);
                             player.getEntityWorld().updateEntityWithOptionalForce(player, false);
                             player.connection.sendPacket(new SPacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
 
-                        } else
-                        {
+                        } else {
                             WorldServer worldServer = (WorldServer) entity.getEntityWorld();
 
                             entity.setPosition(x + 0.5, y + 0.5, z + 0.5);
@@ -82,20 +71,17 @@ public class AlchemyArrayEffectTeleport extends AlchemyArrayEffect
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
-    {
+    public void writeToNBT(NBTTagCompound tag) {
 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
-    {
+    public void readFromNBT(NBTTagCompound tag) {
 
     }
 
     @Override
-    public AlchemyArrayEffect getNewCopy()
-    {
+    public AlchemyArrayEffect getNewCopy() {
         return new AlchemyArrayEffectTeleport(key);
     }
 }

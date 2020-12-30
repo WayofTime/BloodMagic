@@ -93,7 +93,8 @@ public class ItemTelepositionFocus extends ItemEnum.Variant<ItemTelepositionFocu
         WEAK,
         ENHANCED,
         REINFORCED,
-        DEMONIC,;
+        DEMONIC,
+        ;
 
         @Nonnull
         @Override

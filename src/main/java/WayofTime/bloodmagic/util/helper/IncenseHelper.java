@@ -21,7 +21,7 @@ public class IncenseHelper {
         data.setDouble(Constants.NBT.CURRENT_INCENSE, amount);
     }
 
-    public static void setMaxIncense(EntityPlayer player, double amount){
+    public static void setMaxIncense(EntityPlayer player, double amount) {
         NBTTagCompound data = player.getEntityData();
         data.setDouble(Constants.NBT.MAX_INCENSE, amount);
     }
@@ -38,6 +38,7 @@ public class IncenseHelper {
         stack = NBTHelper.checkNBT(stack);
         stack.getTagCompound().setBoolean(Constants.NBT.HAS_MAX_INCENSE, isMax);
     }
+
     public static boolean getHasMaxIncense(ItemStack stack) {
         stack = NBTHelper.checkNBT(stack);
         return stack.getTagCompound().getBoolean(Constants.NBT.HAS_MAX_INCENSE);

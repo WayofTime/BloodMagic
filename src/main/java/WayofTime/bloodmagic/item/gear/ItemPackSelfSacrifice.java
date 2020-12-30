@@ -60,13 +60,13 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
         RayTraceResult position = this.rayTrace(world, player, false);
 
         if (position == null) {
-            return super.onItemRightClick(world, player, EnumHand.MAIN_HAND);
+            return super.onItemRightClick(world, player, hand);
         } else {
             if (position.typeOfHit == RayTraceResult.Type.BLOCK) {
                 TileEntity tile = world.getTileEntity(position.getBlockPos());
 
                 if (!(tile instanceof IBloodAltar))
-                    return super.onItemRightClick(world, player, EnumHand.MAIN_HAND);
+                    return super.onItemRightClick(world, player, hand);
 
                 LPContainer.tryAndFillAltar((IBloodAltar) tile, stack, world, position.getBlockPos());
             }

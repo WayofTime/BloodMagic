@@ -22,8 +22,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
 import WayofTime.bloodmagic.util.Utils;
 
-public class AlchemyArrayEffectArrowTurret extends AlchemyArrayEffect
-{
+public class AlchemyArrayEffectArrowTurret extends AlchemyArrayEffect {
     public EntityLiving target;
     public int arrowTimer;
     public static final int ARROW_WINDUP = 50;
@@ -34,49 +33,39 @@ public class AlchemyArrayEffectArrowTurret extends AlchemyArrayEffect
     private double yaw = 0;
     private double lastYaw = 0;
 
-    public AlchemyArrayEffectArrowTurret(String key)
-    {
+    public AlchemyArrayEffectArrowTurret(String key) {
         super(key);
     }
 
     @Override
-    public boolean update(TileEntity tile, int ticksActive)
-    {
+    public boolean update(TileEntity tile, int ticksActive) {
         BlockPos pos = tile.getPos();
         World world = tile.getWorld();
 
         BlockPos chestPos = pos.down();
         TileEntity chestTile = world.getTileEntity(chestPos);
-        if (chestTile == null)
-        {
+        if (chestTile == null) {
             return false;
         }
         IItemHandler itemHandler = Utils.getInventory(chestTile, EnumFacing.UP);
-        if (itemHandler == null)
-        {
+        if (itemHandler == null) {
             return false;
         }
 
         ItemStack arrowStack = new ItemStack(Items.AIR);
-        if (lastChestSlot >= 0 && lastChestSlot < itemHandler.getSlots())
-        {
+        if (lastChestSlot >= 0 && lastChestSlot < itemHandler.getSlots()) {
             ItemStack testStack = itemHandler.extractItem(lastChestSlot, 1, true);
-            if (testStack.isEmpty() || !(testStack.getItem() instanceof ItemArrow))
-            {
+            if (testStack.isEmpty() || !(testStack.getItem() instanceof ItemArrow)) {
                 lastChestSlot = -1;
-            } else
-            {
+            } else {
                 arrowStack = testStack;
             }
         }
 
-        if (lastChestSlot < 0)
-        {
-            for (int i = 0; i < itemHandler.getSlots(); i++)
-            {
+        if (lastChestSlot < 0) {
+            for (int i = 0; i < itemHandler.getSlots(); i++) {
                 ItemStack testStack = itemHandler.extractItem(i, 1, true);
-                if (!testStack.isEmpty() && testStack.getItem() instanceof ItemArrow)
-                {
+                if (!testStack.isEmpty() && testStack.getItem() instanceof ItemArrow) {
                     arrowStack = testStack;
                     lastChestSlot = i;
                     break;
@@ -85,13 +74,11 @@ public class AlchemyArrayEffectArrowTurret extends AlchemyArrayEffect
 
         }
 
-        if (lastChestSlot < 0)
-        {
+        if (lastChestSlot < 0) {
             return false; //No arrows in the chest. Welp!
         }
 
-        if (canFireOnMob(world, pos, target))
-        {
+        if (canFireOnMob(world, pos, target)) {
             Vector2d pitchYaw = getPitchYaw(pos, target);
             lastPitch = pitch;
             lastYaw = yaw;
@@ -99,27 +86,23 @@ public class AlchemyArrayEffectArrowTurret extends AlchemyArrayEffect
             yaw = pitchYaw.y;
             arrowTimer++;
 
-            if (arrowTimer >= ARROW_WINDUP)
-            {
+            if (arrowTimer >= ARROW_WINDUP) {
 //                ItemStack arrowStack = new ItemStack(Items.ARROW);
                 fireOnTarget(world, pos, arrowStack, target);
-                if (!world.isRemote)
-                {
+                if (!world.isRemote) {
                     itemHandler.extractItem(lastChestSlot, 1, false);
                 }
                 arrowTimer = 0;
             }
             return false;
-        } else
-        {
+        } else {
             target = null;
             arrowTimer = -1;
         }
 
         List<EntityMob> mobsInRange = world.getEntitiesWithinAABB(EntityMob.class, getBounds(pos));
 
-        for (EntityMob entity : mobsInRange)
-        {
+        for (EntityMob entity : mobsInRange) {
             if (canFireOnMob(world, pos, entity))// && isMobInFilter(ent))
             {
                 target = entity;
@@ -133,34 +116,27 @@ public class AlchemyArrayEffectArrowTurret extends AlchemyArrayEffect
         return false;
     }
 
-    public double getPitch()
-    {
+    public double getPitch() {
         return pitch;
     }
 
-    public double getLastPitch()
-    {
+    public double getLastPitch() {
         return lastPitch;
     }
 
-    public double getYaw()
-    {
+    public double getYaw() {
         return yaw;
     }
 
-    public double getLastYaw()
-    {
+    public double getLastYaw() {
         return lastYaw;
     }
 
-    public void fireOnTarget(World world, BlockPos pos, ItemStack arrowStack, EntityLiving targetMob)
-    {
+    public void fireOnTarget(World world, BlockPos pos, ItemStack arrowStack, EntityLiving targetMob) {
         float vel = 3f;
         double damage = 2;
-        if (!world.isRemote)
-        {
-            if (arrowStack.getItem() instanceof ItemArrow)
-            {
+        if (!world.isRemote) {
+            if (arrowStack.getItem() instanceof ItemArrow) {
 //                ItemArrow arrow = (ItemArrow) arrowStack.getItem();
 //                EntityArrow entityarrow = arrow.createArrow(world, arrowStack, targetMob);
                 EntityTippedArrow entityarrow = new EntityTippedArrow(world);
@@ -180,10 +156,8 @@ public class AlchemyArrayEffectArrowTurret extends AlchemyArrayEffect
         }
     }
 
-    public static Vector2d getPitchYaw(BlockPos pos, Entity entityIn)
-    {
-        if (entityIn == null)
-        {
+    public static Vector2d getPitchYaw(BlockPos pos, Entity entityIn) {
+        if (entityIn == null) {
             return new Vector2d(0, 0);
         }
 
@@ -197,46 +171,38 @@ public class AlchemyArrayEffectArrowTurret extends AlchemyArrayEffect
         return new Vector2d(pitch, yaw);
     }
 
-    public boolean canEntityBeSeen(World world, BlockPos pos, Entity entityIn)
-    {
+    public boolean canEntityBeSeen(World world, BlockPos pos, Entity entityIn) {
         return world.rayTraceBlocks(new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), new Vec3d(entityIn.posX, entityIn.posY + (double) entityIn.getEyeHeight(), entityIn.posZ), false, true, false) == null;
     }
 
-    public boolean canFireOnMob(World world, BlockPos pos, Entity entityIn)
-    {
+    public boolean canFireOnMob(World world, BlockPos pos, Entity entityIn) {
         return entityIn != null && !entityIn.isDead && entityIn.getDistanceSqToCenter(pos) <= getRange() * getRange() && entityIn.getDistanceSqToCenter(pos) >= getMinRange() * getMinRange() && canEntityBeSeen(world, pos, entityIn);
     }
 
-    public AxisAlignedBB getBounds(BlockPos pos)
-    {
+    public AxisAlignedBB getBounds(BlockPos pos) {
         return new AxisAlignedBB(pos).grow(getRange(), getRange(), getRange());
     }
 
-    public float getRange()
-    {
+    public float getRange() {
         return 32;
     }
 
-    public float getMinRange()
-    {
+    public float getMinRange() {
         return 3;
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
-    {
+    public void writeToNBT(NBTTagCompound tag) {
 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
-    {
+    public void readFromNBT(NBTTagCompound tag) {
 
     }
 
     @Override
-    public AlchemyArrayEffect getNewCopy()
-    {
+    public AlchemyArrayEffect getNewCopy() {
         return new AlchemyArrayEffectArrowTurret(key);
     }
 

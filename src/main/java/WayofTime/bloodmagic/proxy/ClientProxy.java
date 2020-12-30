@@ -40,22 +40,18 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import java.awt.Color;
 import java.util.Map;
 
-public class ClientProxy extends CommonProxy
-{
+public class ClientProxy extends CommonProxy {
     public static DemonWillHolder currentAura = new DemonWillHolder();
 
     @Override
-    public void preInit()
-    {
+    public void preInit() {
         super.preInit();
 
         OBJLoader.INSTANCE.addDomain(BloodMagic.MODID);
 
-        ClientRegistry.bindTileEntitySpecialRenderer(TileInversionPillar.class, new AnimationTESR<TileInversionPillar>()
-        {
+        ClientRegistry.bindTileEntitySpecialRenderer(TileInversionPillar.class, new AnimationTESR<TileInversionPillar>() {
             @Override
-            public void handleEvents(TileInversionPillar chest, float time, Iterable<Event> pastEvents)
-            {
+            public void handleEvents(TileInversionPillar chest, float time, Iterable<Event> pastEvents) {
                 chest.handleEvents(time, pastEvents);
             }
         });
@@ -73,8 +69,7 @@ public class ClientProxy extends CommonProxy
     }
 
     @Override
-    public void registerRenderers()
-    {
+    public void registerRenderers() {
         RenderingRegistry.registerEntityRenderingHandler(EntitySoulSnare.class, new SoulSnareRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(EntitySentientArrow.class, new SentientArrowRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(EntityBloodLight.class, new BloodLightRenderFactory());
@@ -90,18 +85,15 @@ public class ClientProxy extends CommonProxy
     }
 
     @Override
-    public void init()
-    {
+    public void init() {
         super.init();
         Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, tintIndex) ->
         {
-            try
-            {
+            try {
                 if (stack.hasTagCompound() && stack.getTagCompound().hasKey(Constants.NBT.COLOR))
                     if (tintIndex == 1)
                         return Color.decode(stack.getTagCompound().getString(Constants.NBT.COLOR)).getRGB();
-            } catch (NumberFormatException e)
-            {
+            } catch (NumberFormatException e) {
                 return -1;
             }
             return -1;
@@ -130,29 +122,24 @@ public class ClientProxy extends CommonProxy
     }
 
     @Override
-    public void postInit()
-    {
+    public void postInit() {
         Elements.registerElements();
     }
 
-    private void addElytraLayer()
-    {
+    private void addElytraLayer() {
         RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
-        try
-        {
+        try {
             Map<String, RenderPlayer> skinMap = ObfuscationReflectionHelper.getPrivateValue(RenderManager.class, renderManager, "skinMap", "field_178636_l");
             skinMap.get("default").addLayer(new LayerBloodElytra(skinMap.get("default")));
             skinMap.get("slim").addLayer(new LayerBloodElytra(skinMap.get("slim")));
             BMLog.DEBUG.info("Elytra layer added");
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             BMLog.DEBUG.error("Failed to set custom Elytra Layer for Elytra Living Armour Upgrade: {}", e.getMessage());
         }
     }
 
     @Override
-    public IAnimationStateMachine load(ResourceLocation location, ImmutableMap<String, ITimeValue> parameters)
-    {
+    public IAnimationStateMachine load(ResourceLocation location, ImmutableMap<String, ITimeValue> parameters) {
         return ModelLoaderRegistry.loadASM(location, parameters);
     }
 }
