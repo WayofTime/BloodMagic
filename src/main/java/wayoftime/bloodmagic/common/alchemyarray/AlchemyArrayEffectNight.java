@@ -9,11 +9,11 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 
-public class AlchemyArrayEffectDay extends AlchemyArrayEffect
+public class AlchemyArrayEffectNight extends AlchemyArrayEffect
 {
 	private long startingTime = 0;
 
-	public AlchemyArrayEffectDay()
+	public AlchemyArrayEffectNight()
 	{
 
 	}
@@ -27,7 +27,6 @@ public class AlchemyArrayEffectDay extends AlchemyArrayEffect
 //		}
 
 		World world = tile.getWorld();
-
 		if (ticksActive == 100)
 		{
 			startingTime = world.getDayTime();
@@ -40,9 +39,10 @@ public class AlchemyArrayEffectDay extends AlchemyArrayEffect
 		}
 
 		// TODO: Add recipe rechecking to verify nothing screwy is going on.
+
 		if (world.isRemote && world instanceof ClientWorld)
 		{
-			long finalTime = ((world.getDayTime() + 24000) / 24000) * 24000;
+			long finalTime = ((world.getDayTime() + 11000) / 24000) * 24000 + 13000;
 			long time = (finalTime - startingTime) * (ticksActive - 100) / 100 + startingTime;
 
 			((ClientWorld) world).getWorldInfo().setDayTime(time);
@@ -53,7 +53,7 @@ public class AlchemyArrayEffectDay extends AlchemyArrayEffect
 		if (world instanceof ServerWorld)
 		{
 //			world.getDayTime()
-			long finalTime = ((world.getDayTime() + 24000) / 24000) * 24000;
+			long finalTime = ((world.getDayTime() + 11000) / 24000) * 24000 + 13000;
 			long time = (finalTime - startingTime) * (ticksActive - 100) / 100 + startingTime;
 			for (ServerWorld serverworld : world.getServer().getWorlds())
 			{
@@ -92,6 +92,6 @@ public class AlchemyArrayEffectDay extends AlchemyArrayEffect
 	@Override
 	public AlchemyArrayEffect getNewCopy()
 	{
-		return new AlchemyArrayEffectDay();
+		return new AlchemyArrayEffectNight();
 	}
 }

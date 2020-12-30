@@ -22,7 +22,9 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.IMultiWillTool;
 import wayoftime.bloodmagic.client.model.MimicColor;
 import wayoftime.bloodmagic.client.render.alchemyarray.BeaconAlchemyCircleRenderer;
+import wayoftime.bloodmagic.client.render.alchemyarray.DayAlchemyCircleRenderer;
 import wayoftime.bloodmagic.client.render.alchemyarray.LowStaticAlchemyCircleRenderer;
+import wayoftime.bloodmagic.client.render.alchemyarray.NightAlchemyCircleRenderer;
 import wayoftime.bloodmagic.client.render.alchemyarray.StaticAlchemyCircleRenderer;
 import wayoftime.bloodmagic.client.render.block.RenderAlchemyArray;
 import wayoftime.bloodmagic.client.render.block.RenderAltar;
@@ -106,7 +108,8 @@ public class ClientEvents
 		AlchemyArrayRendererRegistry.registerRenderer(BloodMagic.rl("array/movement"), new StaticAlchemyCircleRenderer(BloodMagic.rl("textures/models/alchemyarrays/movementarray.png")));
 		AlchemyArrayRendererRegistry.registerRenderer(BloodMagic.rl("array/updraft"), new BeaconAlchemyCircleRenderer(BloodMagic.rl("textures/models/alchemyarrays/updraftarray.png")));
 		AlchemyArrayRendererRegistry.registerRenderer(BloodMagic.rl("array/spike"), new LowStaticAlchemyCircleRenderer(BloodMagic.rl("textures/models/alchemyarrays/spikearray.png")));
-		AlchemyArrayRendererRegistry.registerRenderer(BloodMagic.rl("array/day"), new LowStaticAlchemyCircleRenderer(BloodMagic.rl("textures/models/alchemyarrays/spikearray.png")));
+		AlchemyArrayRendererRegistry.registerRenderer(BloodMagic.rl("array/day"), new DayAlchemyCircleRenderer(BloodMagic.rl("textures/models/alchemyarrays/sunarray.png"), BloodMagic.rl("textures/models/alchemyarrays/sunarrayspikes.png"), BloodMagic.rl("textures/models/alchemyarrays/sunarraycircle.png")));
+		AlchemyArrayRendererRegistry.registerRenderer(BloodMagic.rl("array/night"), new NightAlchemyCircleRenderer(BloodMagic.rl("textures/models/alchemyarrays/moonarrayoutside.png"), BloodMagic.rl("textures/models/alchemyarrays/moonarraysymbols.png"), BloodMagic.rl("textures/models/alchemyarrays/moonarrayinside.png")));
 	}
 
 	public static void registerItemModelProperties(FMLClientSetupEvent event)

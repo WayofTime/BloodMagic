@@ -1,6 +1,6 @@
 {
   "type": "bloodmagic:array",
-  "texture": "bloodmagic:textures/models/alchemyarrays/spikearray.png",
+  "texture": "bloodmagic:textures/models/alchemyarrays/sunarray.png",
   "baseinput": {
     "item": "minecraft:coal"
   },

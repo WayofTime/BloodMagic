@@ -70,6 +70,11 @@ public class TileAlchemyArray extends TileInventory implements ITickableTileEnti
 		}
 	}
 
+	public void doDropIngredients(boolean drop)
+	{
+		this.doDropIngredients = drop;
+	}
+
 	@Override
 	public CompoundNBT serialize(CompoundNBT tagCompound)
 	{

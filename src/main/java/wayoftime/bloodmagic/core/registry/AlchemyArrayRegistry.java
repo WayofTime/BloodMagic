@@ -14,6 +14,7 @@ import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectBinding;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectCrafting;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectDay;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectMovement;
+import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectNight;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectSpike;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectUpdraft;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
@@ -39,6 +40,7 @@ public class AlchemyArrayRegistry
 		registerEffect(BloodMagic.rl("array/updraft"), new AlchemyArrayEffectUpdraft());
 		registerEffect(BloodMagic.rl("array/spike"), new AlchemyArrayEffectSpike());
 		registerEffect(BloodMagic.rl("array/day"), new AlchemyArrayEffectDay());
+		registerEffect(BloodMagic.rl("array/night"), new AlchemyArrayEffectNight());
 	}
 
 	public static AlchemyArrayEffect getEffect(World world, ResourceLocation rl, RecipeAlchemyArray recipe)

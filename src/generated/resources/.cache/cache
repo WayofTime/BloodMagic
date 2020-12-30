@@ -568,7 +568,7 @@ a7f51456052d0fd317164d400cdd595ae2687df8 data/bloodmagic/recipes/arc/reversion/m
 1e5814caf63714b8e1ff2b2f413a86ba8c840ebb data/bloodmagic/recipes/arc/weakbloodshard.json
 e1285ec51100f2336c1ea1a1a3057e74a0dd84d1 data/bloodmagic/recipes/array/airsigil.json
 d1ac23080f72f21adb5908befefe965ffb4efd4f data/bloodmagic/recipes/array/bloodlightsigil.json
-4ea1175f7ee2ce21685edb8906c28abba7207ed2 data/bloodmagic/recipes/array/day.json
+7110895fe75e65404bc66d6c09087d9e58220a11 data/bloodmagic/recipes/array/day.json
 1890706e5b93cd6df764b0419483c348e0d7f277 data/bloodmagic/recipes/array/divinationsigil.json
 4bd220ced486f1d8fc4468ebd61dac755670d716 data/bloodmagic/recipes/array/fastminersigil.json
 f191a3c9982b827b0b2ba93164a81fc4f8cb0959 data/bloodmagic/recipes/array/growthsigil.json
@@ -579,6 +579,7 @@ f191a3c9982b827b0b2ba93164a81fc4f8cb0959 data/bloodmagic/recipes/array/growthsig
 5e3c6dd7bfcd16e79f17e963d8c1b59c0d1aebe9 data/bloodmagic/recipes/array/living_plate.json
 8b1007de1b7fca5d27b54d7c9839cde9e47ab1c0 data/bloodmagic/recipes/array/magnetismsigil.json
 7a674784e0d8d4f6f071a72d26ba677087976970 data/bloodmagic/recipes/array/movement.json
+5c208259e33c3a56c5d6f6ab951ac0c4d5b60e26 data/bloodmagic/recipes/array/night.json
 6fd91801759c6a7a018b9d18601fc3db4d3ee3b4 data/bloodmagic/recipes/array/seersigil.json
 1921cc1cba3bcc36a6be6edd377dd44eb9b884a0 data/bloodmagic/recipes/array/spike.json
 085bf564ec74060e5c0224155cefc6ba0635c2c8 data/bloodmagic/recipes/array/updraft.json

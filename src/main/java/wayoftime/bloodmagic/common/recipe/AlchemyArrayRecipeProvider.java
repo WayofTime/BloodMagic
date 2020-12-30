@@ -39,7 +39,8 @@ public class AlchemyArrayRecipeProvider implements ISubRecipeProvider
 		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/movementarray.png"), Ingredient.fromItems(Items.FEATHER), Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE), ItemStack.EMPTY).build(consumer, BloodMagic.rl(basePath + "movement"));
 		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/updraftarray.png"), Ingredient.fromItems(Items.FEATHER), Ingredient.fromTag(Tags.Items.DUSTS_GLOWSTONE), ItemStack.EMPTY).build(consumer, BloodMagic.rl(basePath + "updraft"));
 		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/spikearray.png"), Ingredient.fromItems(Items.COBBLESTONE), Ingredient.fromTag(Tags.Items.INGOTS_IRON), ItemStack.EMPTY).build(consumer, BloodMagic.rl(basePath + "spike"));
-		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/spikearray.png"), Ingredient.fromItems(Items.COAL), Ingredient.fromItems(Items.COAL), ItemStack.EMPTY).build(consumer, BloodMagic.rl(basePath + "day"));
+		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/sunarray.png"), Ingredient.fromItems(Items.COAL), Ingredient.fromItems(Items.COAL), ItemStack.EMPTY).build(consumer, BloodMagic.rl(basePath + "day"));
+		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/moonarray.png"), Ingredient.fromItems(Items.LAPIS_LAZULI), Ingredient.fromItems(Items.LAPIS_LAZULI), ItemStack.EMPTY).build(consumer, BloodMagic.rl(basePath + "night"));
 		// AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/fastminersigil.png"),
 		// Ingredient.fromItems(BloodMagicItems.REAGENT_FAST_MINER.get()),
 		// Ingredient.fromItems(BloodMagicItems.REINFORCED_SLATE.get()), new
