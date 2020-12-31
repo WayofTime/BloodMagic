@@ -198,7 +198,7 @@ public class GenericHandler
 			{
 				LivingStats stats = LivingStats.fromPlayer(player, true);
 				double expModifier = 1 + LivingArmorRegistrar.UPGRADE_EXPERIENCE.get().getBonusValue("exp", stats.getLevel(LivingArmorRegistrar.UPGRADE_EXPERIENCE.get().getKey())).doubleValue();
-				System.out.println("Experience modifier: " + expModifier);
+//				System.out.println("Experience modifier: " + expModifier);
 
 				int xp = event.getOrb().xpValue;
 
