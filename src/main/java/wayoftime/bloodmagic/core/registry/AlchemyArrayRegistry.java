@@ -11,6 +11,7 @@ import net.minecraft.world.World;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffect;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectBinding;
+import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectBounce;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectCrafting;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectDay;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectMovement;
@@ -41,6 +42,7 @@ public class AlchemyArrayRegistry
 		registerEffect(BloodMagic.rl("array/spike"), new AlchemyArrayEffectSpike());
 		registerEffect(BloodMagic.rl("array/day"), new AlchemyArrayEffectDay());
 		registerEffect(BloodMagic.rl("array/night"), new AlchemyArrayEffectNight());
+		registerEffect(BloodMagic.rl("array/bounce"), new AlchemyArrayEffectBounce());
 	}
 
 	public static AlchemyArrayEffect getEffect(World world, ResourceLocation rl, RecipeAlchemyArray recipe)

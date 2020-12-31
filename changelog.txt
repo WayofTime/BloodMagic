@@ -6,6 +6,7 @@ Version 3.0.4
 	- Two arrays, which changes the current daylight cycle to day and night.
  
 - Fixed the JEI so that it no longer ouputs an error when loading Alchemy Array recipes without a crafting output.
+- Fixed crash with Actually Additions
 
 
 ------------------------------------------------------
