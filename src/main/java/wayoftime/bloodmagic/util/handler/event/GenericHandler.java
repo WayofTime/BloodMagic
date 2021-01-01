@@ -362,11 +362,13 @@ public class GenericHandler
 				}
 
 				int currentFood = player.getFoodStats().getFoodLevel();
-				if (foodMap.getOrDefault(player.getUniqueID(), 20) < currentFood)
+
+				if (foodMap.getOrDefault(player.getUniqueID(), 19) < currentFood)
 				{
-					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_KNOCKBACK_RESIST.get(), currentFood - foodMap.getOrDefault(player.getUniqueID(), 20));
-					foodMap.put(player.getUniqueID(), currentFood);
+					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_KNOCKBACK_RESIST.get(), currentFood - foodMap.getOrDefault(player.getUniqueID(), 19));
 				}
+
+				foodMap.put(player.getUniqueID(), currentFood);
 
 //				System.out.println("Distance travelled: " + distance);
 				if (player.isOnGround() && distance > 0 && distance < 50)
