@@ -2,6 +2,10 @@
 Version 3.0.4
 ------------------------------------------------------
 
+- Fixed the following Living Armour upgrades so that they are now obtainable:
+	- Experienced
+	- Body Builder
+
 - Added new alchemy arrays:
 	- Two arrays, which changes the current daylight cycle to day and night.
  

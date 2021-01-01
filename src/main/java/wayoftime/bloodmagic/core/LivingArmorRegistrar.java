@@ -42,7 +42,7 @@ public class LivingArmorRegistrar
 		def.put("arrow_shot", BloodMagic.rl("arrow_shot"));
 		def.put("critical_strike", BloodMagic.rl("critical_strike"));
 		def.put("digging", BloodMagic.rl("digging"));
-		def.put("experience", BloodMagic.rl("experienced"));
+		def.put("experienced", BloodMagic.rl("experienced"));
 		def.put("fall_protect", BloodMagic.rl("fall_protect"));
 		def.put("fire_resist", BloodMagic.rl("fire_resist"));
 		def.put("grave_digger", BloodMagic.rl("grave_digger"));
