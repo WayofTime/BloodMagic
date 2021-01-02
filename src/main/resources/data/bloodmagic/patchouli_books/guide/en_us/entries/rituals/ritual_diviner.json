@@ -25,6 +25,7 @@
     {
       "type": "crafting",
       "recipe": "bloodmagic:ritual_diviner_1",
+      "anchor": "dusk",
       "text": "There is also an augmented version of the Ritual Diviner, for creating more powerful rituals."
     },
     {
