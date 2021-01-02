@@ -1,0 +1,11 @@
+{
+  "parent": "bloodmagic:block/sub/shaped_charge",
+  "textures": {
+    "1": "bloodmagic:block/dungeon/dungeon_tile",
+    "3": "bloodmagic:block/dungeon/dungeon_stone",
+    "4": "bloodmagic:block/blankrune",
+    "5": "bloodmagic:block/largebloodstonebrick",
+    "6": "bloodmagic:models/defaultcrystal",
+    "particle": "bloodmagic:models/defaultcrystal"
+  }
+}

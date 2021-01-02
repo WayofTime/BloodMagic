@@ -9,9 +9,9 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.fml.RegistryObject;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
-import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
 public class GeneratorItemModels extends ItemModelProvider
 {
@@ -87,6 +87,9 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerCustomFullTexture(BloodMagicBlocks.MIMIC.get(), "solidopaquemimic");
 		registerCustomFullTexture(BloodMagicBlocks.ETHEREAL_MIMIC.get(), "etherealopaquemimic");
 		this.crop(BloodMagicBlocks.GROWING_DOUBT.get().getRegistryName().getPath(), modLoc("block/creeping_doubt_8"));
+
+		registerBlockModel(BloodMagicBlocks.SHAPED_CHARGE.get());
+		registerBlockModel(BloodMagicBlocks.DEFORESTER_CHARGE.get());
 	}
 
 	private void registerCustomFullTexture(Block block, String texturePath)

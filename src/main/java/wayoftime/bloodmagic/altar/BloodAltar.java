@@ -684,7 +684,7 @@ public class BloodAltar// implements IFluidHandler
 			return Math.min(bufferCapacity - fluidInput.getAmount(), resource.getAmount());
 		}
 
-		if (fluidInput == null)
+		if (fluidInput == null || fluidInput.isEmpty())
 		{
 			fluidInput = new FluidStack(resource, Math.min(bufferCapacity, resource.getAmount()));
 
@@ -713,7 +713,7 @@ public class BloodAltar// implements IFluidHandler
 	{
 		if (resource == null || !resource.isFluidEqual(fluidOutput))
 		{
-			return null;
+			return FluidStack.EMPTY;
 		}
 		return drain(resource.getAmount(), doDrain);
 	}
@@ -722,7 +722,7 @@ public class BloodAltar// implements IFluidHandler
 	{
 		if (fluidOutput == null)
 		{
-			return null;
+			return FluidStack.EMPTY;
 		}
 
 		int drained = maxDrain;
