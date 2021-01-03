@@ -1,7 +1,7 @@
 package wayoftime.bloodmagic.compat.patchouli.processors;
 
 import java.util.Arrays;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -26,21 +26,18 @@ public class TartaricForgeProcessor implements IComponentProcessor
 	public void setup(IVariableProvider variables)
 	{
 		ResourceLocation id = new ResourceLocation(variables.get("recipe").asString());
-		try
+		Optional<? extends IRecipe<?>> recipeHandler = Minecraft.getInstance().world.getRecipeManager().getRecipe(id);
+		if (recipeHandler.isPresent())
 		{
-			IRecipe<?> recipe = Minecraft.getInstance().world.getRecipeManager().getRecipe(id).get();
+			IRecipe<?> recipe = recipeHandler.get();
 			if (recipe.getType().equals(BloodMagicRecipeType.TARTARICFORGE))
 			{
 				this.recipe = (RecipeTartaricForge) recipe;
 			}
-		} catch (NoSuchElementException e)
-		{
-			LogManager.getLogger().warn("Guidebook thinks Hellfire Forge recipe " + id + " doesn't exist.");
-			return;
 		}
 		if (this.recipe == null)
 		{
-			LogManager.getLogger().warn("Guidebook missing Hellfire Forge recipe " + id);
+			LogManager.getLogger().warn("Guidebook missing Hellfire Forge recipe {}", id);
 		}
 	}
 
@@ -53,7 +50,7 @@ public class TartaricForgeProcessor implements IComponentProcessor
 		}
 		if (key.startsWith("input"))
 		{
-			int index = Integer.parseInt(key.substring("input".length())) - 1;
+			int index = Integer.parseInt(key.substring(5)) - 1;
 			if (recipe.getInput().size() > index)
 			{
 				return IVariable.wrapList(Arrays.stream(recipe.getInput().get(index).getMatchingStacks()).map(IVariable::from).collect(Collectors.toList()));
@@ -91,7 +88,7 @@ public class TartaricForgeProcessor implements IComponentProcessor
 				// }
 			} else
 			{
-				LogManager.getLogger().warn("Guidebook could not find a large enough Tartaric Gem for " + recipe.getId());
+				LogManager.getLogger().warn("Guidebook could not find a large enough Tartaric Gem for {}", recipe.getId());
 				return IVariable.from(new ItemStack(Items.BARRIER));
 
 			}

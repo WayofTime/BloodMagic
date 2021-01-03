@@ -1,7 +1,7 @@
 package wayoftime.bloodmagic.compat.patchouli.processors;
 
 import java.util.Arrays;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -23,21 +23,18 @@ public class AlchemyArrayProcessor implements IComponentProcessor
 	public void setup(IVariableProvider variables)
 	{
 		ResourceLocation id = new ResourceLocation(variables.get("recipe").asString());
-		try
+		Optional<? extends IRecipe<?>> recipeHandler = Minecraft.getInstance().world.getRecipeManager().getRecipe(id);
+		if (recipeHandler.isPresent())
 		{
 			IRecipe<?> recipe = Minecraft.getInstance().world.getRecipeManager().getRecipe(id).get();
 			if (recipe.getType().equals(BloodMagicRecipeType.ARRAY))
 			{
 				this.recipe = (RecipeAlchemyArray) recipe;
 			}
-		} catch (NoSuchElementException e)
-		{
-			LogManager.getLogger().warn("Guidebook thinks Alchemy Array recipe " + id + " doesn't exist.");
-			return;
 		}
 		if (this.recipe == null)
 		{
-			LogManager.getLogger().warn("Guidebook missing Alchemy Array recipe " + id);
+			LogManager.getLogger().warn("Guidebook missing Alchemy Array recipe {}", id);
 		}
 	}
 

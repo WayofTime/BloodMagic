@@ -1,7 +1,7 @@
 package wayoftime.bloodmagic.compat.patchouli.processors;
 
 import java.util.Arrays;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -24,21 +24,18 @@ public class ARCProcessor implements IComponentProcessor
 	public void setup(IVariableProvider variables)
 	{
 		ResourceLocation id = new ResourceLocation(variables.get("recipe").asString());
-		try
+		Optional<? extends IRecipe<?>> recipeHandler = Minecraft.getInstance().world.getRecipeManager().getRecipe(id);
+		if (recipeHandler.isPresent())
 		{
-			IRecipe<?> recipe = Minecraft.getInstance().world.getRecipeManager().getRecipe(id).get();
+			IRecipe<?> recipe = recipeHandler.get();
 			if (recipe.getType().equals(BloodMagicRecipeType.ARC))
 			{
 				this.recipe = (RecipeARC) recipe;
 			}
-		} catch (NoSuchElementException e)
-		{
-			LogManager.getLogger().warn("Guidebook thinks Alchemical Reaction Chamber recipe " + id + " doesn't exist.");
-			return;
 		}
 		if (this.recipe == null)
 		{
-			LogManager.getLogger().warn("Guidebook missing Alchemical Reaction Chamber recipe " + id);
+			LogManager.getLogger().warn("Guidebook missing Alchemical Reaction Chamber recipe {}", id);
 		}
 	}
 
@@ -50,7 +47,7 @@ public class ARCProcessor implements IComponentProcessor
 			return null;
 		} else if (key.startsWith("output"))
 		{
-			int index = Integer.parseInt(key.substring("output".length())) - 1;
+			int index = Integer.parseInt(key.substring(6)) - 1;
 			if (recipe.getAllListedOutputs().size() > index)
 			{
 				return IVariable.from(recipe.getAllListedOutputs().get(index));
@@ -60,7 +57,7 @@ public class ARCProcessor implements IComponentProcessor
 			}
 		} else if (key.startsWith("chance"))
 		{
-			int index = Integer.parseInt(key.substring("chance".length())) - 2; // Index 0 = 2nd output.
+			int index = Integer.parseInt(key.substring(6)) - 2; // Index 0 = 2nd output.
 			if (recipe.getAllOutputChances().length > index)
 			{
 				double chance = recipe.getAllOutputChances()[index] * 100;
@@ -72,7 +69,7 @@ public class ARCProcessor implements IComponentProcessor
 			}
 		} else if (key.startsWith("show_chance"))
 		{
-			int index = Integer.parseInt(key.substring("show_chance".length())) - 2; // Index 0 = 2nd output.
+			int index = Integer.parseInt(key.substring(11)) - 2; // Index 0 = 2nd output.
 			if (recipe.getAllOutputChances().length > index)
 			{
 				return IVariable.wrap(true);
