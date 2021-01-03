@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.compat.patchouli.processors;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -23,10 +24,17 @@ public class ARCProcessor implements IComponentProcessor
 	public void setup(IVariableProvider variables)
 	{
 		ResourceLocation id = new ResourceLocation(variables.get("recipe").asString());
-		IRecipe<?> recipe = Minecraft.getInstance().world.getRecipeManager().getRecipe(id).get();
-		if (recipe.getType().equals(BloodMagicRecipeType.ARC))
+		try
 		{
-			this.recipe = (RecipeARC) recipe;
+			IRecipe<?> recipe = Minecraft.getInstance().world.getRecipeManager().getRecipe(id).get();
+			if (recipe.getType().equals(BloodMagicRecipeType.ARC))
+			{
+				this.recipe = (RecipeARC) recipe;
+			}
+		} catch (NoSuchElementException e)
+		{
+			LogManager.getLogger().warn("Guidebook thinks Alchemical Reaction Chamber recipe " + id + " doesn't exist.");
+			return;
 		}
 		if (this.recipe == null)
 		{

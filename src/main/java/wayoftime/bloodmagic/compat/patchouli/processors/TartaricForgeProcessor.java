@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.compat.patchouli.processors;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -25,10 +26,17 @@ public class TartaricForgeProcessor implements IComponentProcessor
 	public void setup(IVariableProvider variables)
 	{
 		ResourceLocation id = new ResourceLocation(variables.get("recipe").asString());
-		IRecipe<?> recipe = Minecraft.getInstance().world.getRecipeManager().getRecipe(id).get();
-		if (recipe.getType().equals(BloodMagicRecipeType.TARTARICFORGE))
+		try
 		{
-			this.recipe = (RecipeTartaricForge) recipe;
+			IRecipe<?> recipe = Minecraft.getInstance().world.getRecipeManager().getRecipe(id).get();
+			if (recipe.getType().equals(BloodMagicRecipeType.TARTARICFORGE))
+			{
+				this.recipe = (RecipeTartaricForge) recipe;
+			}
+		} catch (NoSuchElementException e)
+		{
+			LogManager.getLogger().warn("Guidebook thinks Hellfire Forge recipe " + id + " doesn't exist.");
+			return;
 		}
 		if (this.recipe == null)
 		{
