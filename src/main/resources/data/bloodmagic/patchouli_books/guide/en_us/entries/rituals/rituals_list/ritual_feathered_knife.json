@@ -21,7 +21,7 @@
         },
         "symetrical": true
       },
-      "text": "Use a Ritual Diviner for easier contruction."
+      "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {
       "type": "text",

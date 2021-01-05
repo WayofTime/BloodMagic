@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.compat.patchouli.processors;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -22,14 +23,18 @@ public class AlchemyArrayProcessor implements IComponentProcessor
 	public void setup(IVariableProvider variables)
 	{
 		ResourceLocation id = new ResourceLocation(variables.get("recipe").asString());
-		IRecipe<?> recipe = Minecraft.getInstance().world.getRecipeManager().getRecipe(id).get();
-		if (recipe.getType().equals(BloodMagicRecipeType.ARRAY))
+		Optional<? extends IRecipe<?>> recipeHandler = Minecraft.getInstance().world.getRecipeManager().getRecipe(id);
+		if (recipeHandler.isPresent())
 		{
-			this.recipe = (RecipeAlchemyArray) recipe;
+			IRecipe<?> recipe = Minecraft.getInstance().world.getRecipeManager().getRecipe(id).get();
+			if (recipe.getType().equals(BloodMagicRecipeType.ARRAY))
+			{
+				this.recipe = (RecipeAlchemyArray) recipe;
+			}
 		}
 		if (this.recipe == null)
 		{
-			LogManager.getLogger().warn("Guidebook missing Alchemy Array recipe " + id);
+			LogManager.getLogger().warn("Guidebook missing Alchemy Array recipe {}", id);
 		}
 	}
 

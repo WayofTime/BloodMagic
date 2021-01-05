@@ -20,7 +20,7 @@
         },
         "symetrical": true
       },
-      "text": "Use a Ritual Diviner for easier contruction."
+      "text": "Use a $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$(/l) for easier construction."
     },
     {
       "type": "text",

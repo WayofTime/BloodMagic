@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.compat.patchouli.processors;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -25,14 +26,18 @@ public class AlchemyTableProcessor implements IComponentProcessor
 	public void setup(IVariableProvider variables)
 	{
 		ResourceLocation id = new ResourceLocation(variables.get("recipe").asString());
-		IRecipe<?> recipe = Minecraft.getInstance().world.getRecipeManager().getRecipe(id).get();
-		if (recipe.getType().equals(BloodMagicRecipeType.ALCHEMYTABLE))
+		Optional<? extends IRecipe<?>> recipeHandler = Minecraft.getInstance().world.getRecipeManager().getRecipe(id);
+		if (recipeHandler.isPresent())
 		{
-			this.recipe = (RecipeAlchemyTable) recipe;
+			IRecipe<?> recipe = recipeHandler.get();
+			if (recipe.getType().equals(BloodMagicRecipeType.ALCHEMYTABLE))
+			{
+				this.recipe = (RecipeAlchemyTable) recipe;
+			}
 		}
 		if (this.recipe == null)
 		{
-			LogManager.getLogger().warn("Guidebook missing Alchemy Table recipe " + id);
+			LogManager.getLogger().warn("Guidebook missing Alchemy Table recipe {}", id);
 		}
 	}
 
@@ -44,7 +49,7 @@ public class AlchemyTableProcessor implements IComponentProcessor
 			return null;
 		} else if (key.startsWith("input"))
 		{
-			int index = Integer.parseInt(key.substring("input".length())) - 1;
+			int index = Integer.parseInt(key.substring(5)) - 1;
 			if (recipe.getInput().size() > index)
 			{
 				return IVariable.wrapList(Arrays.stream(recipe.getInput().get(index).getMatchingStacks()).map(IVariable::from).collect(Collectors.toList()));
@@ -78,7 +83,7 @@ public class AlchemyTableProcessor implements IComponentProcessor
 			// case 6: return IVariable.from(new
 			// ItemStack(BloodMagicItems.TRANSCENDENT_BLOOD_ORB.get()));
 			default:
-				LogManager.getLogger().warn("Guidebook unable to find large enough Blood Orb for " + recipe.getId());
+				LogManager.getLogger().warn("Guidebook unable to find large enough Blood Orb for {}", recipe.getId());
 				return IVariable.from(new ItemStack(Items.BARRIER));
 			}
 		default:

@@ -3,13 +3,7 @@
   "icon": "bloodmagic:reagentbinding",
   "category": "living_equipment",
   "priority": "true",
-  "extra_recipe_mappings":[
-    ["bloodmagic:reagentbinding", 1],
-    ["bloodmagic:livinghelmet", 4],
-    ["bloodmagic:livingplate", 4],
-    ["bloodmagic:livingleggings", 4],
-    ["bloodmagic:livingboots", 4]
-  ],
+  "extra_recipe_mappings":[["bloodmagic:reagentbinding", 1]],
   "pages": [
     {
       "type": "text",
