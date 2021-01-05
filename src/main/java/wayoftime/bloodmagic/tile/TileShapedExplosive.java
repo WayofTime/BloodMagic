@@ -43,7 +43,7 @@ public class TileShapedExplosive extends TileTicking
 
 	public TileShapedExplosive()
 	{
-		this(TYPE, 1, 3);
+		this(TYPE, 2, 5);
 	}
 
 	@Override

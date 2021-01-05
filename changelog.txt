@@ -8,6 +8,7 @@ Version 3.0.4
 	
 - Fixed NPE in Blood Altar when trying to interact with the contained Fluids
 - Also fixed bug that prevented the Altar from accepting fluids piped in as inputs.
+- Fixed a client-side crash when right clicking the ground with a Lava Crystal when on a server - now properly makes a fire without consuming the client.
 
 - Added new alchemy arrays:
 	- Two arrays, which changes the current daylight cycle to day and night.

@@ -47,7 +47,9 @@ public class TileDeforesterCharge extends TileTicking
 	public int explosionRadius;
 	public int explosionDepth;
 
-	public int maxLogs = 64;
+	public int currentLogs = 0;
+
+	public int maxLogs = 128;
 
 	public TileDeforesterCharge(TileEntityType<?> type, int explosionRadius, int explosionDepth)
 	{
@@ -83,6 +85,7 @@ public class TileDeforesterCharge extends TileTicking
 			treePartsMap.put(pos.offset(explosiveDirection), false);
 			treePartsCache = new LinkedList<BlockPos>();
 			treePartsCache.add(pos.offset(explosiveDirection));
+			internalCounter = 0;
 //			treePartsMap.add(pos.offset(explosiveDirection));
 		}
 
@@ -103,7 +106,22 @@ public class TileDeforesterCharge extends TileTicking
 
 					BlockState checkState = world.getBlockState(checkPos);
 
-					if (BlockTags.LOGS.contains(checkState.getBlock()) || BlockTags.LEAVES.contains(checkState.getBlock()))
+					boolean isTree = false;
+					if (currentLogs >= maxLogs)
+					{
+						continue;
+					}
+					if (BlockTags.LOGS.contains(checkState.getBlock()))
+					{
+						currentLogs++;
+						isTree = true;
+
+					} else if (BlockTags.LEAVES.contains(checkState.getBlock()))
+					{
+						isTree = true;
+					}
+
+					if (isTree)
 					{
 						treePartsMap.put(checkPos, false);
 						newPositions.add(checkPos);
@@ -112,12 +130,17 @@ public class TileDeforesterCharge extends TileTicking
 				}
 
 				treePartsMap.put(currentPos, true);
+				if (currentLogs >= maxLogs)
+				{
+					finishedAnalysis = true;
+					break;
+				}
 			}
 		}
 
 		treePartsCache.addAll(newPositions);
 
-		System.out.println("Found blocks: " + treePartsMap.size());
+//		System.out.println("Found blocks: " + treePartsMap.size());
 
 		if (foundNew)
 		{
