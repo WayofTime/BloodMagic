@@ -1,0 +1,31 @@
+{
+  "name": "Explosive Charges",
+  "icon": "bloodmagic:shaped_charge",
+  "category": "demon_will",
+  "extra_recipe_mappings":[
+    ["bloodmagic:shaped_charge", 1],
+    ["bloodmagic:deforester_charge", 3]
+  ],
+  "pages": [
+    {
+      "type": "text",
+      "text": "While conventional $(item)TNT$() is nice and flashy, it unfortunately is rather unrefined. However, by mixing some fuel with a casing infused with Demon Will, you can create an explosive that, when placed, blows up a 5x5x5 volume! It even gives you all the drops!"
+    },
+    {
+      "type": "crafting_soulforge",
+      "heading": "Shaped Charge",
+      "recipe": "bloodmagic:soulforge/shaped_charge",
+      "text": "A simple explosive with perfect efficiency!"
+    },
+    {
+      "type": "text",
+      "text": "Although $(item)Shaped Charges$() are useful for mining, they seem a bit unsophisticated for chopping down trees. Thankfully, with some minor modifications you can create an explosive that will make you call \"Timber!\". Placing these on a log or some leaves will cause it to break down an entire tree! Assuming that there's not more than 128 logs involved."
+    },  
+    {
+      "type": "crafting_soulforge",
+      "heading": "Deforester Charge",
+      "recipe": "bloodmagic:soulforge/deforester_charge",
+      "text": "Ready to tackle those redwoods."
+    }
+  ]
+}

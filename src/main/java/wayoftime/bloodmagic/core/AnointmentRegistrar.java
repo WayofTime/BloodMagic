@@ -1,0 +1,98 @@
+package wayoftime.bloodmagic.core;
+
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
+
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
+
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.util.ResourceLocation;
+import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.anointment.Anointment;
+import wayoftime.bloodmagic.common.registration.impl.AnointmentDeferredRegister;
+import wayoftime.bloodmagic.common.registration.impl.AnointmentRegistryObject;
+import wayoftime.bloodmagic.gson.Serializers;
+
+public class AnointmentRegistrar
+{
+	public static final AnointmentDeferredRegister ANOINTMENTS = new AnointmentDeferredRegister(BloodMagic.MODID);
+
+	public static final Map<ResourceLocation, Anointment> ANOINTMENT_MAP = new HashMap<>();
+
+	private static final Map<String, ResourceLocation> DEFINITIONS = ((Supplier<Map<String, ResourceLocation>>) () -> {
+		Map<String, ResourceLocation> def = new HashMap<>();
+		def.put("melee_damage", BloodMagic.rl("melee_damage"));
+//		def.put("arrow_shot", BloodMagic.rl("arrow_shot"));
+//		def.put("critical_strike", BloodMagic.rl("critical_strike"));
+//		def.put("digging", BloodMagic.rl("digging"));
+//		def.put("experienced", BloodMagic.rl("experienced"));
+//		def.put("fall_protect", BloodMagic.rl("fall_protect"));
+//		def.put("fire_resist", BloodMagic.rl("fire_resist"));
+//		def.put("grave_digger", BloodMagic.rl("grave_digger"));
+//		def.put("health", BloodMagic.rl("health"));
+//		def.put("jump", BloodMagic.rl("jump"));
+//		def.put("knockback_resist", BloodMagic.rl("knockback_resist"));
+//		def.put("melee_damage", BloodMagic.rl("melee_damage"));
+//		def.put("physical_protect", BloodMagic.rl("physical_protect"));
+//		def.put("poison_resist", BloodMagic.rl("poison_resist"));
+//		def.put("sprint_attack", BloodMagic.rl("sprint_attack"));
+//		def.put("speed", BloodMagic.rl("speed"));
+//		def.put("self_sacrifice", BloodMagic.rl("self_sacrifice"));
+		return def;
+	}).get();
+
+	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_MELEE_DAMAGE = ANOINTMENTS.register("melee_damage", () -> parseDefinition("melee_damage").withAttributeProvider((stats, attributeMap, uuid, upgrade, level) -> {
+//		attributeMap.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, "KB Modifier", upgrade.getBonusValue("kb", level).doubleValue(), AttributeModifier.Operation.ADDITION));
+		attributeMap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Damage", upgrade.getBonusValue("damage", level).intValue(), AttributeModifier.Operation.ADDITION));
+	}));
+
+	public static void register()
+	{
+		registerAnointment(ANOINTMENT_MELEE_DAMAGE.get());
+//		Registry.register(UPGRADES, UPGRADE_ARROW_PROTECT.getKey(), UPGRADE_ARROW_PROTECT);
+//		Registry.register(UPGRADES, UPGRADE_ARROW_SHOT.getKey(), UPGRADE_ARROW_SHOT);
+//		Registry.register(UPGRADES, UPGRADE_CRITICAL_STRIKE.getKey(), UPGRADE_CRITICAL_STRIKE);
+//		Registry.register(UPGRADES, UPGRADE_JUMP.getKey(), UPGRADE_JUMP);
+
+//        Registry.register(Registry.ITEM, new ResourceLocation("livingarmor", "living_helmet"), LIVING_HELMET);
+//        Registry.register(Registry.ITEM, new Identifier("livingarmor", "living_chestplate"), LIVING_CHESTPLATE);
+//        Registry.register(Registry.ITEM, new Identifier("livingarmor", "living_leggings"), LIVING_LEGGINGS);
+//        Registry.register(Registry.ITEM, new Identifier("livingarmor", "living_boots"), LIVING_BOOTS);
+//        Registry.register(Registry.ITEM, new Identifier("livingarmor", "trainer"), TRAINER);
+//        Registry.register(Registry.ITEM, new Identifier("livingarmor", "tome"), TOME);
+	}
+
+	public static void registerAnointment(Anointment anoint)
+	{
+		ANOINTMENT_MAP.put(anoint.getKey(), anoint);
+	}
+
+	public static Anointment parseDefinition(String fileName)
+	{
+//		System.out.println("Attempting to parse Anointment: " + fileName);
+		ResourceLocation path = DEFINITIONS.get(fileName);
+		if (path == null)
+			return Anointment.DUMMY;
+
+		try
+		{
+			URL schematicURL = Anointment.class.getResource(resLocToResourcePath(path));
+			System.out.println("Attempting to load Anointment: " + schematicURL + ", path: " + resLocToResourcePath(path));
+			return Serializers.GSON.fromJson(Resources.toString(schematicURL, Charsets.UTF_8), Anointment.class);
+//			return GSON.fromJson(IOUtils.toString(path.toUri(), StandardCharsets.UTF_8), LivingUpgrade.class);
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+			return Anointment.DUMMY;
+		}
+	}
+
+	public static String resLocToResourcePath(ResourceLocation resourceLocation)
+	{
+		return "/data/" + resourceLocation.getNamespace() + "/anointment/" + resourceLocation.getPath() + ".json";
+	}
+}

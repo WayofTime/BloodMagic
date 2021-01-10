@@ -49,6 +49,7 @@ import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeProvider;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
+import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.recipe.IngredientBloodOrb;
 import wayoftime.bloodmagic.core.registry.AlchemyArrayRegistry;
@@ -101,6 +102,7 @@ public class BloodMagic
 //		RegistrarBloodMagic.BLOOD_ORBS.createAndRegister(modBus, "bloodorbs");
 		BloodMagicItems.BLOOD_ORBS.createAndRegister(modBus, "bloodorbs");
 		LivingArmorRegistrar.UPGRADES.createAndRegister(modBus, "upgrades");
+		AnointmentRegistrar.ANOINTMENTS.createAndRegister(modBus, "anointments");
 		BloodMagicItems.BASICITEMS.register(modBus);
 		BloodMagicBlocks.BASICBLOCKS.register(modBus);
 		BloodMagicBlocks.DUNGEONBLOCKS.register(modBus);
@@ -171,6 +173,7 @@ public class BloodMagic
 		RITUAL_MANAGER.discover();
 		ModRituals.initHarvestHandlers();
 		LivingArmorRegistrar.register();
+		AnointmentRegistrar.register();
 		AlchemyArrayRegistry.registerBaseArrays();
 	}
 
