@@ -6,7 +6,7 @@
   "filler_texture": "bloodmagic:textures/gui/patchouli_book/page_filler.png",
   "creative_tab": "bloodmagictab",
   "model": "bloodmagic:book",
-  "show_progress": true,
+  "show_progress": false,
   "macros": {
 	"$(water)": "$(#0000aa)",
 	"$(air)": "$(#aaaa00)",

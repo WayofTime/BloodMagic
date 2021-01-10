@@ -19,7 +19,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "Unleashing $(l:demon_will/demon_will)$(item)Demon Will$() into the atmosphere was definitely an excellent idea. Not only has it proven most useful in empowering $(item)Rituals$(), you have also successfully condensed it into a $(l:demon_will/crystallized_will)Crystal Cluster$(), and are wondering what to turn your eye to next. $(br2)These $(item)Crystals$() feel somehow... conflicted, to you. A certain $(l:rituals/rituals_list/ritual_crystal_split)Ritual$() may help coax them out into purer forms..."
+      "text": "Unleashing $(l:demon_will/demon_will)Demon Will$() into the atmosphere was definitely an excellent idea. Not only has it proven most useful in empowering $(item)Rituals$(), you have also successfully condensed it into a $(l:demon_will/crystallized_will)Crystal Cluster$(), and are wondering what to turn your eye to next. $(br2)These $(item)Crystals$() feel somehow... conflicted, to you. A certain $(l:rituals/rituals_list/ritual_crystal_split)Ritual$() may help coax them out into purer forms..."
     },
     {
       "type": "image",

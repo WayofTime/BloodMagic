@@ -32,6 +32,7 @@
       "type": "crafting_soulforge",
       "heading": "Sanguine Reverter",
       "recipe": "bloodmagic:soulforge/sanguine_reverter",
+	  "anchor": "blood_shard",
       "text": "The Sanguine Reverter is used to create Weak Blood Shards, and revert Blood Orbs to their input crafting item."
     },
     {

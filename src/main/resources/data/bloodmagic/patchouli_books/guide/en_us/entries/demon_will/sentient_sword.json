@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "The $(item)Sentient Sword$() is a much more effective tool for collecting $(l:demon_will/demon_will)$(item)Demon Will$() than $(l:demon_will/soul_snare)$(item)Soul Snares$() could ever hope to be It may seem weak at first, but it is powered by the Wills you carry, so crafting a $(l:demon_will/soul_gem)$(item)Tartaric Gem$() is a must."
+      "text": "The $(item)Sentient Sword$() is a much more effective tool for collecting $(l:demon_will/demon_will)Demon Will$() than $(l:demon_will/soul_snare)Soul Snares$() could ever hope to be. It may seem weak at first, but it is powered by the Wills you carry, so crafting a $(l:demon_will/soul_gem)Tartaric Gem$() is a must. $(br2) Note that the sword, as with all $(l:demon_will/sentient_tools)Sentient Tools$(), can be repaired with $(l:demon_will/crystallized_will)Crystallized Will$() in an Anvil."
     },
     {
       "type": "crafting_soulforge",
