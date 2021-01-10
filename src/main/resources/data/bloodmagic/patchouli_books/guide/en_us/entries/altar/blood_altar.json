@@ -54,6 +54,7 @@
     },
     {
       "type": "text",
+	  "anchor": "blank_rune",
       "text": "To upgrade the Blood Altar, you need to craft $(item)Blood Runes$() and place them around the Altar. Blood Runes act as upgrades to the Altar, and by using more advanced versions of the Blood Runes you can confer different effects on the Altar. The basic version, the $(item)Blank Rune$(), does not give any upgrades barring upgrading the Tier of the Altar."
     },
     {
