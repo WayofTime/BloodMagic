@@ -1,0 +1,21 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "tag": "forge:cobblestone"
+  },
+  "input1": {
+    "item": "minecraft:charcoal"
+  },
+  "input2": {
+    "tag": "forge:sand"
+  },
+  "input3": {
+    "tag": "forge:stone"
+  },
+  "output": {
+    "item": "bloodmagic:shaped_charge",
+    "count": 8
+  },
+  "minimumDrain": 10.0,
+  "drain": 0.5
+}

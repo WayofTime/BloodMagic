@@ -33,7 +33,7 @@ public class RitualUpgradeRemove extends Ritual
 
 	public RitualUpgradeRemove()
 	{
-		super("ritualUpgradeRemove", 2, 25000, "ritual." + BloodMagic.MODID + ".upgradeRemoveRitual");
+		super("ritualUpgradeRemove", 0, 25000, "ritual." + BloodMagic.MODID + ".upgradeRemoveRitual");
 		addBlockRange(CHECK_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1, 2, 1));
 	}
 

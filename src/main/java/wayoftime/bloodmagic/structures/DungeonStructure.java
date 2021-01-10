@@ -22,7 +22,6 @@ public class DungeonStructure
 
 	public boolean placeStructureAtPosition(Random rand, PlacementSettings settings, ServerWorld world, BlockPos pos)
 	{
-
 		if (pos == null)
 			return false;
 

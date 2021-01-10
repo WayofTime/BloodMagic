@@ -122,7 +122,7 @@ public class TileShapedExplosive extends TileTicking
 
 						BlockState blockstate = this.world.getBlockState(blockpos);
 						Block block = blockstate.getBlock();
-						if (!blockstate.isAir(this.world, blockpos))
+						if (!blockstate.isAir(this.world, blockpos) && blockstate.getBlockHardness(world, blockpos) != -1.0F)
 						{
 							BlockPos blockpos1 = blockpos.toImmutable();
 //							this.world.getProfiler().startSection("explosion_blocks");

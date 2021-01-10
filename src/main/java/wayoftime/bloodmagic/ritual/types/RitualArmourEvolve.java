@@ -27,7 +27,7 @@ public class RitualArmourEvolve extends Ritual
 
 	public RitualArmourEvolve()
 	{
-		super("ritualArmourEvolve", 2, 50000, "ritual." + BloodMagic.MODID + ".armourEvolveRitual");
+		super("ritualArmourEvolve", 0, 50000, "ritual." + BloodMagic.MODID + ".armourEvolveRitual");
 		addBlockRange(CHECK_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1, 2, 1));
 	}
 

@@ -422,6 +422,9 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addBlock(BloodMagicBlocks.DUNGEON_ORE, "Demonite");
 
+		addBlock(BloodMagicBlocks.SHAPED_CHARGE, "Shaped Charge");
+		addBlock(BloodMagicBlocks.DEFORESTER_CHARGE, "Deforester Charge");
+
 		// Item names
 		addItem(BloodMagicItems.WEAK_BLOOD_ORB, "Weak Blood Orb");
 		addItem(BloodMagicItems.APPRENTICE_BLOOD_ORB, "Apprentice Blood Orb");

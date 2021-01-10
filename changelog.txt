@@ -6,12 +6,14 @@ Version 3.0.4
 	- Experienced
 	- Body Builder
 	
+- Fixed the two rituals involving Living Armour so that they are properly activatable using a Weak Activation Crystal.
+	
 - Fixed NPE in Blood Altar when trying to interact with the contained Fluids
 - Also fixed bug that prevented the Altar from accepting fluids piped in as inputs.
 - Fixed a client-side crash when right clicking the ground with a Lava Crystal when on a server - now properly makes a fire without consuming the client.
 
 - Added new alchemy arrays:
-	- Two arrays, which changes the current daylight cycle to day and night.
+	- Two arrays, which changes the current daylight cycle to day and night. Recipes are temp.
  
 - Fixed the JEI so that it no longer ouputs an error when loading Alchemy Array recipes without a crafting output.
 - Fixed crash with Actually Additions

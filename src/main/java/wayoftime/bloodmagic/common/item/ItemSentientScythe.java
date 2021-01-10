@@ -518,38 +518,42 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	@Override
 	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker)
 	{
-		if (super.hitEntity(stack, target, attacker))
+		stack.damageItem(1, attacker, (entity) -> {
+			entity.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+		});
+
+//		if (super.hitEntity(stack, target, attacker))
+//		{
+		if (attacker instanceof PlayerEntity)
 		{
-			if (attacker instanceof PlayerEntity)
+			UUID id = attacker.getUniqueID();
+
+			PlayerEntity attackerPlayer = (PlayerEntity) attacker;
+
+//			System.out.println("Hit map: " + hitMap.containsKey(id));
+
+			if (hitMap.containsKey(id) && hitMap.get(id))
 			{
-				UUID id = attacker.getUniqueID();
-
-				PlayerEntity attackerPlayer = (PlayerEntity) attacker;
-
-				System.out.println("Hit map: " + hitMap.containsKey(id));
-
-				if (hitMap.containsKey(id) && hitMap.get(id))
-				{
-					EnumDemonWillType type = this.getCurrentType(stack);
-					double will = PlayerDemonWillHandler.getTotalDemonWill(type, attackerPlayer);
-					int willBracket = this.getLevel(stack, will);
-					applyEffectToEntity(type, willBracket, target, attackerPlayer);
-				} else
-				{
-					this.recalculatePowers(stack, attackerPlayer.getEntityWorld(), attackerPlayer);
-					EnumDemonWillType type = this.getCurrentType(stack);
-					double will = PlayerDemonWillHandler.getTotalDemonWill(type, attackerPlayer);
-					int willBracket = this.getLevel(stack, will);
-					hitMap.put(id, true);
-					this.attackEntitiesInAreaExcludingEntity(stack, attackerPlayer, type, willBracket, target);
-					hitMap.remove(id);
-				}
+				EnumDemonWillType type = this.getCurrentType(stack);
+				double will = PlayerDemonWillHandler.getTotalDemonWill(type, attackerPlayer);
+				int willBracket = this.getLevel(stack, will);
+				applyEffectToEntity(type, willBracket, target, attackerPlayer);
+			} else
+			{
+				this.recalculatePowers(stack, attackerPlayer.getEntityWorld(), attackerPlayer);
+				EnumDemonWillType type = this.getCurrentType(stack);
+				double will = PlayerDemonWillHandler.getTotalDemonWill(type, attackerPlayer);
+				int willBracket = this.getLevel(stack, will);
+				hitMap.put(id, true);
+				this.attackEntitiesInAreaExcludingEntity(stack, attackerPlayer, type, willBracket, target);
+				hitMap.remove(id);
 			}
-
-			return true;
 		}
 
-		return false;
+		return true;
+//		}
+
+//		return false;
 	}
 
 	@Override

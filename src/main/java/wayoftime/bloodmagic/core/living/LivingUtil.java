@@ -50,14 +50,23 @@ public class LivingUtil
 			if (currentPoints >= stats.getMaxPoints())
 				return stats;
 
+			int currentPointCost = upgrade.getLevelCost(upgrade.getLevel((int) currentExperience));
 			int nextPointCost = upgrade.getLevelCost(upgrade.getLevel((int) currentExperience) + 1);
+
+//			System.out.println("Current point cost: " + currentPointCost + ", Next point cost: " + nextPointCost);
 			// If there's no more levels in this upgrade, we don't want to add experience
 			if (nextPointCost == -1)
 				return stats;
 
+			int pointDif = nextPointCost - currentPointCost;
+			if (pointDif < 0)
+			{
+				return stats;
+			}
+
 			// If applying this new level will go over our cap, we don't want to add
 			// experience
-			if (currentPoints + nextPointCost > stats.getMaxPoints())
+			if (currentPoints + pointDif > stats.getMaxPoints())
 				return stats;
 		}
 
