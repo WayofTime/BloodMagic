@@ -226,8 +226,12 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickableTi
 	protected void invalidateCaps()
 	{
 		super.invalidateCaps();
-		fluidOptional.invalidate();
-		fluidOptional = null;
+		if (fluidOptional != null)
+		{
+			fluidOptional.invalidate();
+			fluidOptional = null;
+		}
+
 	}
 
 	@SuppressWarnings("unchecked")
