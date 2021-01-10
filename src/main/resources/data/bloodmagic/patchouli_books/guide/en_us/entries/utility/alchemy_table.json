@@ -18,6 +18,7 @@
     {
       "type": "crafting_alchemy_table",
       "heading": "Basic Cutting Fluid",
+	  "anchor": "cutting_fluid",
       "recipe": "bloodmagic:alchemytable/basic_cutting_fluid",
       "text": "Basic Cutting Fluid is used for 2x Ore Processing.  It is also used in the $(l:utility/alchemical_reaction_chamber)Alchemical Reaction Chamber$(/l) for the same purpose."
     },

@@ -12,19 +12,19 @@
       "type": "spotlight",
       "item": "bloodmagic:soulsnare",
       "title": "Tier Zero",
-      "text": "As mentioned, $(6)Blood Magic$() begins with $(l:demon_will/soul_snare)Soul Snares$(). These are used to get $(l:demon_will/demon_will)Demon Will$(), which among other things is used to power the $(l:demon_will/soul_forge)Hellfire Forge$(/l), fill $(l:demon_will/soul_gem)$(item)Tartaric Gems$(), and create the $(l:altar/blood_altar)Blood Altar$(/l)."
+      "text": "As mentioned, $(6)Blood Magic$() begins with $(l:demon_will/soul_snare)Soul Snares$(). These are used to get $(l:demon_will/demon_will)Demon Will$(), which among other things is used to power the $(l:demon_will/soul_forge)Hellfire Forge$(/l), fill $(l:demon_will/soul_gem)Tartaric Gems$(), and create the $(l:altar/blood_altar)Blood Altar$(/l)."
     },
     {
       "type": "spotlight",
       "item": "bloodmagic:sacrificialdagger",
       "title": "Tier One",
-      "text": "Once you have a source of $(l:demon_will/demon_will)Demon Will$(), a $(l:demon_will/soul_forge)Hellfire Forge$(/l) and a $(l:altar/blood_altar)Blood Altar$(/l), you can work on making the $(l:demon_will/sentient_sword)Sentient Sword$() for easier Demon Will gathering, and start collecting LP for the crafting of $(l:altar/slates)Slates$() and various Sigils. Your goal at this tier is to upgrade your $(l:demon_will/soul_gem)$(item)Tartaric Gems$() and your Blood Altar, the latter through the creation of Blank Runes."
+      "text": "Once you have a source of $(l:demon_will/demon_will)Demon Will$(), a $(l:demon_will/soul_forge)Hellfire Forge$(/l) and a $(l:altar/blood_altar)Blood Altar$(/l), you can work on making the $(l:demon_will/sentient_sword)Sentient Sword$() for easier Demon Will gathering, and start collecting LP for the crafting of $(l:altar/slates)Slates$() and various Sigils. Your goal at this tier is to upgrade your $(l:demon_will/soul_gem)Tartaric Gems$() and your Blood Altar, the latter through the creation of Blank Runes."
     },
     {
       "type": "spotlight",
       "item": "bloodmagic:daggerofsacrifice",
       "title": "Tier Two",
-      "text": "At this point, you will be able to craft a Dagger of Sacrifice in order to slaughter mobs for more LP. Various Upgrade Runes should be avaliable for your Blood Altar, and some more Sigils will be available. As before, you should focus on further upgrading your Altar."
+      "text": "At this point, you will be able to craft a $(l:altar/blood_altar#dagger_of_sacrifice)Dagger of Sacrifice$() in order to slaughter mobs for more LP. Various $(item)Upgrade Runes$() should be avaliable for your $(item)Blood Altar$(), and some more $(item)Sigils$() will be available. As before, you should focus on further upgrading your $(l:altar/blood_altar)Altar$()."
     },
     {
       "type": "spotlight",
@@ -36,7 +36,7 @@
       "type": "spotlight",
       "item": "bloodmagic:vengefulcrystal",
       "title": "Tier Four",
-      "text": "This is the top tier. At this point you have access to everything that $(6)Blood Magic$() has to offer. You may want to look into the $(l:rituals/ritual_tinkerer)Ritual Tinkerer$() and the various kinds of $(l:demon_will/aspected_will)Will Aspects$() avaliable to you, and consider how they may be used to refine your existing rituals and alter how your $(demon_will/sentient_tools)Sentient Tools$() and $(demon_will/sentient_sword)Weapons$() work."
+      "text": "This is the top tier. At this point you have access to everything that $(6)Blood Magic$() has to offer. You may want to look into the $(l:rituals/ritual_tinkerer)Ritual Tinkerer$() and the various kinds of $(l:demon_will/aspected_will)Will Aspects$() avaliable to you, and consider how they may be used to refine your existing rituals and alter how your $(l:demon_will/sentient_tools)Sentient Tools$() and $(l:demon_will/sentient_sword)Weapons$() work."
     },
     {
       "type": "spotlight",

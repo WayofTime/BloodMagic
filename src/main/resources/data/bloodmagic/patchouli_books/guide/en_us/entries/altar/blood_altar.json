@@ -54,6 +54,7 @@
     },
     {
       "type": "text",
+	  "anchor": "blank_rune",
       "text": "To upgrade the Blood Altar, you need to craft $(item)Blood Runes$() and place them around the Altar. Blood Runes act as upgrades to the Altar, and by using more advanced versions of the Blood Runes you can confer different effects on the Altar. The basic version, the $(item)Blank Rune$(), does not give any upgrades barring upgrading the Tier of the Altar."
     },
     {
@@ -84,6 +85,7 @@
     },
     {
       "type": "text",
+	  "anchor": "dagger_of_sacrifice",
       "text": "Now that you have a Tier 2 Altar, you can look into getting blood from somewhere other than yourself. The $(item)Dagger of Sacrifice$() will allow you to kill any mob (monster or passive) that stands within 2 blocks of your Altar, instantly killing them and granting you a decent sum of LP. You can increase the amount you get per kill with $(l:altar/blood_rune/sacrifice_rune)Runes of Sacrifice$(). Different entities give different amounts of LP. Check your configs for more info."
     },
     {
