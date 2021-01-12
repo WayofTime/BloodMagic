@@ -342,7 +342,14 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("tooltip.bloodmagic.livingarmour.extraExtraInfo", "&9-Hold shift + M for progress info-");
 
+		add("tooltip.bloodmagic.slate_vial", "A glass vial infused with a simple slate");
+
 		add("chat.bloodmagic.living_upgrade_level_increase", "%s has leveled up to %d");
+
+		// Anointments. Doesn't have any spelling to be pedantic about.
+		add("anointment.bloodmagic.melee_damage", "Whetstone");
+		add("anointment.bloodmagic.silk_touch", "Soft Touch");
+		add("anointment.bloodmagic.fortune", "Fortunate");
 
 		// Guide
 		add("guide.bloodmagic.name", "Sanguine Scientiem");
@@ -521,6 +528,12 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.LIVING_BOOTS, "Living Boots");
 
 		addItem(BloodMagicItems.LIVING_TOME, "Living Armour Upgrade Tome");
+
+		// Anointment Items
+		addItem(BloodMagicItems.SLATE_VIAL, "Slate-infused Vial");
+		addItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT, "Honing Oil");
+		addItem(BloodMagicItems.SILK_TOUCH_ANOINTMENT, "Soft Coating");
+		addItem(BloodMagicItems.FORTUNE_ANOINTMENT, "Fortuna Extract");
 
 		// Alchemy Items
 		addItem(BloodMagicItems.PLANT_OIL, "Plant Oil");

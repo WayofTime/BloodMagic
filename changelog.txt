@@ -2,7 +2,7 @@
 Version 3.0.5
 ------------------------------------------------------
 - Fixed a crash with the Blood Altar because I am dumb.
-- Also fixed the recipe for the Day array.
+- Also fixed the recipe for the Day array. Now you don't need to clean your clocks!
 
 ------------------------------------------------------
 Version 3.0.4

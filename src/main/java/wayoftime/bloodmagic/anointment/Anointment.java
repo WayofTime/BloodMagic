@@ -5,9 +5,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Consumer;
 
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.reflect.TypeToken;
@@ -22,11 +25,14 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Util;
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.registries.ForgeRegistryEntry;
-import wayoftime.bloodmagic.core.living.LivingStats;
-import wayoftime.bloodmagic.core.living.LivingUpgrade;
 import wayoftime.bloodmagic.core.living.LivingUpgrade.Level;
 
 @JsonAdapter(Anointment.Deserializer.class)
@@ -36,9 +42,12 @@ public class Anointment extends ForgeRegistryEntry<Anointment>
 
 	private final ResourceLocation key;
 //	private final Set<ResourceLocation> incompatible;
+	private String translationKey = null;
 	private final Map<String, Bonus> bonuses;
 	private IAttributeProvider attributeProvider;
 	private IDamageProvider damageProvider;
+	private boolean consumeOnAttack = false;
+	private boolean consumeOnHarvest = false;
 
 	public Anointment(ResourceLocation key)
 	{
@@ -62,7 +71,7 @@ public class Anointment extends ForgeRegistryEntry<Anointment>
 		if (modifiers.isEmpty() || level == 0)
 			return 0;
 
-		return modifiers.get(level - 1);
+		return level <= modifiers.size() ? modifiers.get(level - 1) : modifiers.get(modifiers.size() - 1);
 	}
 
 	public ResourceLocation getKey()
@@ -74,6 +83,120 @@ public class Anointment extends ForgeRegistryEntry<Anointment>
 	public String toString()
 	{
 		return key.toString();
+	}
+
+	public boolean applyAnointment(AnointmentHolder holder, ItemStack stack, int level)
+	{
+		if (level < 0)
+		{
+			return false;
+		}
+
+		IAttributeProvider prov = this.getAttributeProvider();
+		if (prov == null)
+		{
+			return true;
+		}
+
+		Multimap<Attribute, AttributeModifier> modifiers = HashMultimap.create();
+		modifiers.putAll(stack.getItem().getAttributeModifiers(EquipmentSlotType.MAINHAND, stack));
+
+		this.getAttributeProvider().handleAttributes(holder, modifiers, UUID.nameUUIDFromBytes(this.getKey().toString().getBytes()), this, level);
+
+		for (Entry<Attribute, AttributeModifier> entry : modifiers.entries())
+		{
+			stack.addAttributeModifier(entry.getKey(), entry.getValue(), EquipmentSlotType.MAINHAND);
+		}
+
+		return true;
+	}
+
+	public boolean removeAnointment(AnointmentHolder holder, ItemStack stack, EquipmentSlotType slot)
+	{
+		IAttributeProvider provider = this.getAttributeProvider();
+		if (provider != null)
+		{
+			Multimap<Attribute, AttributeModifier> modifiers = HashMultimap.create();
+			this.getAttributeProvider().handleAttributes(holder, modifiers, UUID.nameUUIDFromBytes(this.getKey().toString().getBytes()), this, 1);
+
+			if (stack.hasTag() && stack.getTag().contains("AttributeModifiers", 9))
+			{
+//		         multimap = HashMultimap.create();
+				ListNBT listnbt = stack.getTag().getList("AttributeModifiers", 10);
+				List<Integer> removeList = new ArrayList<Integer>();
+
+				for (int i = 0; i < listnbt.size(); i++)
+				{
+					CompoundNBT compoundnbt = listnbt.getCompound(i);
+					if (!compoundnbt.contains("Slot", 8) || compoundnbt.getString("Slot").equals(slot.getName()))
+					{
+						Optional<Attribute> optional = Registry.ATTRIBUTE.getOptional(ResourceLocation.tryCreate(compoundnbt.getString("AttributeName")));
+						if (optional.isPresent())
+						{
+							AttributeModifier attributemodifier = AttributeModifier.read(compoundnbt);
+							if (attributemodifier != null && attributemodifier.getID().getLeastSignificantBits() != 0L && attributemodifier.getID().getMostSignificantBits() != 0L)
+							{
+								for (Entry<Attribute, AttributeModifier> entry : modifiers.entries())
+								{
+									if (entry.getKey().equals(optional.get()) && entry.getValue().getID().equals(attributemodifier.getID()))
+									{
+										removeList.add(i);
+									}
+								}
+//								multimap.put(optional.get(), attributemodifier);
+							}
+						}
+					}
+				}
+
+				for (int index : removeList)
+				{
+					listnbt.remove(index);
+				}
+
+				if (removeList.size() >= 1)
+				{
+					stack.getTag().put("AttributeModifiers", listnbt);
+					if (listnbt.isEmpty())
+					{
+						stack.getTag().remove("AttributeModifiers");
+					}
+				}
+			}
+
+//			for (Entry<Attribute, AttributeModifier> entry : modifiers.entries())
+//			{
+//
+//			}
+		}
+		return false;
+	}
+
+	public String getTranslationKey()
+	{
+		return translationKey == null ? translationKey = Util.makeTranslationKey("anointment", key) : translationKey;
+	}
+
+	public Anointment setConsumeOnAttack()
+	{
+		this.consumeOnAttack = true;
+		return this;
+	}
+
+	public boolean consumeOnAttack()
+	{
+		return this.consumeOnAttack;
+	}
+
+	public Anointment setConsumeOnHarvest()
+	{
+		this.consumeOnHarvest = true;
+		return this;
+	}
+
+	public boolean consumeOnHarvest()
+	{
+		return this.consumeOnHarvest;
 	}
 
 	public Anointment withAttributeProvider(IAttributeProvider attributeProvider)
@@ -105,7 +228,7 @@ public class Anointment extends ForgeRegistryEntry<Anointment>
 
 	public interface IDamageProvider
 	{
-		double getAdditionalDamage(PlayerEntity player, ItemStack weapon, double damage, LivingStats stats, LivingEntity attacked, LivingUpgrade upgrade, int level);
+		double getAdditionalDamage(PlayerEntity player, ItemStack weapon, double damage, AnointmentHolder holder, LivingEntity attacked, Anointment anoint, int level);
 	}
 
 	public static class Bonus
@@ -162,4 +285,5 @@ public class Anointment extends ForgeRegistryEntry<Anointment>
 			return upgrade;
 		}
 	}
+
 }

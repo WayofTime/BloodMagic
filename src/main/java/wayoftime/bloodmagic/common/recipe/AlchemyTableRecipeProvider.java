@@ -39,6 +39,8 @@ public class AlchemyTableRecipeProvider implements ISubRecipeProvider
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.COAL_SAND.get(), 4), 400, 200, 1).addIngredient(Ingredient.fromItems(Items.COAL)).addIngredient(Ingredient.fromItems(Items.COAL)).addIngredient(Ingredient.fromItems(Items.FLINT)).build(consumer, BloodMagic.rl(basePath + "sand_coal"));
 
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.BASIC_CUTTING_FLUID.get()), 1000, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.PLANT_OIL.get())).addIngredient(Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE)).addIngredient(Ingredient.fromTag(Tags.Items.GUNPOWDER)).addIngredient(Ingredient.fromItems(Items.SUGAR)).addIngredient(Ingredient.fromTag(BloodMagicTags.DUST_COAL)).addIngredient(Ingredient.fromStacks(new ItemStack(Items.POTION))).build(consumer, BloodMagic.rl(basePath + "basic_cutting_fluid"));
+
+		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.SLATE_VIAL.get(), 8), 500, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SLATE.get())).addIngredient(Ingredient.fromTag(Tags.Items.GLASS)).addIngredient(Ingredient.fromTag(Tags.Items.GLASS)).addIngredient(Ingredient.fromTag(Tags.Items.GLASS)).addIngredient(Ingredient.fromTag(Tags.Items.GLASS)).addIngredient(Ingredient.fromTag(Tags.Items.GLASS)).build(consumer, BloodMagic.rl(basePath + "slate_vial"));
 	}
 
 }

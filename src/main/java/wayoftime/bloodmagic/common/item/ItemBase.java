@@ -23,7 +23,17 @@ public class ItemBase extends Item
 
 	public ItemBase(String desc)
 	{
-		super(new Item.Properties().maxStackSize(64).group(BloodMagic.TAB));
+		this(64, desc);
+	}
+
+	public ItemBase(int stackSize)
+	{
+		this(stackSize, "");
+	}
+
+	public ItemBase(int stackSize, String desc)
+	{
+		super(new Item.Properties().maxStackSize(stackSize).group(BloodMagic.TAB));
 		this.desc = desc;
 	}
 

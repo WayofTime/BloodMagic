@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.common.data;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -90,6 +91,11 @@ public class GeneratorItemModels extends ItemModelProvider
 
 		registerBlockModel(BloodMagicBlocks.SHAPED_CHARGE.get());
 		registerBlockModel(BloodMagicBlocks.DEFORESTER_CHARGE.get());
+
+		registerMultiLayerItem(BloodMagicItems.SLATE_VIAL.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.SILK_TOUCH_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.FORTUNE_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
 	}
 
 	private void registerCustomFullTexture(Block block, String texturePath)
@@ -113,7 +119,21 @@ public class GeneratorItemModels extends ItemModelProvider
 	private void registerBasicItem(Item item)
 	{
 		String path = item.getRegistryName().getPath();
-		singleTexture(path, mcLoc("item/handheld"), "layer0", modLoc("item/" + path));
+		singleTexture(path, mcLoc("item/generated"), "layer0", modLoc("item/" + path));
+	}
+
+	private void registerMultiLayerItem(Item item, ResourceLocation... locations)
+	{
+		String path = item.getRegistryName().getPath();
+		ItemModelBuilder builder = getBuilder(path).parent(getExistingFile(mcLoc("item/generated")));
+//		ModelFile model = withExistingParent(path, mcLoc("item/handheld"));
+
+		for (int i = 0; i < locations.length; i++)
+		{
+			builder.texture("layer" + i, locations[i]);
+		}
+
+		builder.assertExistence();
 	}
 
 	private void registerToggleableItem(Item item)

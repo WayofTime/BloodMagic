@@ -14,6 +14,7 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
@@ -56,6 +57,7 @@ import wayoftime.bloodmagic.core.registry.AlchemyArrayRegistry;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.impl.BloodMagicCorePlugin;
+import wayoftime.bloodmagic.loot.GlobalLootModifier;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.ritual.ModRituals;
@@ -110,6 +112,8 @@ public class BloodMagic
 		BloodMagicBlocks.CONTAINERS.register(modBus);
 		BloodMagicEntityTypes.ENTITY_TYPES.register(modBus);
 
+		GlobalLootModifier.GLM.register(modBus);
+
 		BloodMagicRecipeSerializers.RECIPE_SERIALIZERS.register(modBus);
 
 		// Register the setup method for modloading
@@ -120,6 +124,7 @@ public class BloodMagic
 		modBus.addListener(this::processIMC);
 		// Register the doClientStuff method for modloading
 		modBus.addListener(this::doClientStuff);
+		modBus.addListener(this::registerColors);
 		modBus.addListener(this::loadModels);
 		modBus.addListener(this::gatherData);
 
@@ -242,6 +247,11 @@ public class BloodMagic
 
 		ClientEvents.initClientEvents(event);
 		Elements.registerElements();
+	}
+
+	private void registerColors(final ColorHandlerEvent.Item event)
+	{
+		ClientEvents.colorHandlerEvent(event);
 	}
 
 	private void enqueueIMC(final InterModEnqueueEvent event)

@@ -8,8 +8,6 @@ import java.util.function.Supplier;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.util.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.anointment.Anointment;
@@ -45,14 +43,23 @@ public class AnointmentRegistrar
 		return def;
 	}).get();
 
-	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_MELEE_DAMAGE = ANOINTMENTS.register("melee_damage", () -> parseDefinition("melee_damage").withAttributeProvider((stats, attributeMap, uuid, upgrade, level) -> {
-//		attributeMap.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, "KB Modifier", upgrade.getBonusValue("kb", level).doubleValue(), AttributeModifier.Operation.ADDITION));
-		attributeMap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Damage", upgrade.getBonusValue("damage", level).intValue(), AttributeModifier.Operation.ADDITION));
-	}));
+//	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_MELEE_DAMAGE = ANOINTMENTS.register("melee_damage", () -> parseDefinition("melee_damage").withAttributeProvider((stats, attributeMap, uuid, upgrade, level) -> {
+//		attributeMap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Weapon modifier", upgrade.getBonusValue("damage", level).intValue(), AttributeModifier.Operation.ADDITION));
+//	}).setConsumeOnAttack());
+
+	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_MELEE_DAMAGE = ANOINTMENTS.register("melee_damage", () -> parseDefinition("melee_damage").withDamageProvider((player, weapon, damage, holder, attacked, anoint, level) -> {
+		return anoint.getBonusValue("damage", level).doubleValue();
+	}).setConsumeOnAttack());
+
+	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_SILK_TOUCH = ANOINTMENTS.register("silk_touch", () -> new Anointment(BloodMagic.rl("silk_touch")).setConsumeOnHarvest());
+
+	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_FORTUNE = ANOINTMENTS.register("fortune", () -> new Anointment(BloodMagic.rl("fortune")).setConsumeOnHarvest());
 
 	public static void register()
 	{
 		registerAnointment(ANOINTMENT_MELEE_DAMAGE.get());
+		registerAnointment(ANOINTMENT_SILK_TOUCH.get());
+		registerAnointment(ANOINTMENT_FORTUNE.get());
 //		Registry.register(UPGRADES, UPGRADE_ARROW_PROTECT.getKey(), UPGRADE_ARROW_PROTECT);
 //		Registry.register(UPGRADES, UPGRADE_ARROW_SHOT.getKey(), UPGRADE_ARROW_SHOT);
 //		Registry.register(UPGRADES, UPGRADE_CRITICAL_STRIKE.getKey(), UPGRADE_CRITICAL_STRIKE);

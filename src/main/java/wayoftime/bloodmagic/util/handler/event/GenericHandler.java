@@ -26,6 +26,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
@@ -35,11 +36,13 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodOrb;
 import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.IBloodOrb;
 import wayoftime.bloodmagic.common.item.ItemExperienceBook;
+import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
@@ -135,6 +138,16 @@ public class GenericHandler
 				double additionalDamage = LivingUtil.getAdditionalDamage(sourcePlayer, mainWeapon, living, event.getAmount());
 				event.setAmount((float) (event.getAmount() + additionalDamage));
 			}
+
+			ItemStack heldStack = sourcePlayer.getHeldItemMainhand();
+			AnointmentHolder holder = AnointmentHolder.fromItemStack(heldStack);
+
+			if (holder != null)
+			{
+				double additionalDamage = holder.getAdditionalDamage(sourcePlayer, heldStack, event.getAmount(), living);
+
+				event.setAmount((float) (event.getAmount() + additionalDamage));
+			}
 		}
 
 		if (living instanceof PlayerEntity)
@@ -164,6 +177,16 @@ public class GenericHandler
 				{
 					LivingUtil.applyNewExperience(sourcePlayer, LivingArmorRegistrar.UPGRADE_SPRINT_ATTACK.get(), event.getAmount());
 				}
+			}
+
+			ItemStack heldStack = sourcePlayer.getHeldItemMainhand();
+			AnointmentHolder holder = AnointmentHolder.fromItemStack(heldStack);
+//			AnointmentHolder holder = AnointmentHolder.fromPlayer(sourcePlayer, Hand.MAIN_HAND);
+
+//			System.out.println("Checking consumption. Holder is: " + holder);
+			if (holder != null && holder.consumeAnointmentDurabilityOnHit(heldStack, EquipmentSlotType.MAINHAND))
+			{
+				holder.toItemStack(heldStack);
 			}
 		}
 
@@ -475,6 +498,22 @@ public class GenericHandler
 					player.addPotionEffect(new EffectInstance(Effects.HASTE, mineTime, LivingArmorRegistrar.UPGRADE_DIGGING.get().getBonusValue("speed_level", stats.getLevel(LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())).intValue(), true, false));
 				}
 			}
+
+			ItemStack heldStack = player.getHeldItemMainhand();
+			AnointmentHolder holder = AnointmentHolder.fromItemStack(heldStack);
+
+			if (holder != null)
+			{
+				if (holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get()) >= 1)
+				{
+					int bonusLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand());
+					int exp = event.getState().getExpDrop(event.getWorld(), event.getPos(), bonusLevel, holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get()));
+					event.setExpToDrop(exp);
+				}
+
+				if (holder.consumeAnointmentDurabilityOnHarvest(heldStack, EquipmentSlotType.MAINHAND))
+					holder.toItemStack(heldStack);
+			}
 		}
 	}
 
@@ -496,5 +535,13 @@ public class GenericHandler
 				}
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public void appendTooltip(ItemTooltipEvent event)
+	{
+		ItemStack stack = event.getItemStack();
+		AnointmentHolder holder = AnointmentHolder.fromItemStack(stack);
+		AnointmentHolder.appendAnointmentTooltip(holder, event.getToolTip());
 	}
 }
