@@ -41,6 +41,7 @@ public class AlchemyTableRecipeProvider implements ISubRecipeProvider
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.BASIC_CUTTING_FLUID.get()), 1000, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.PLANT_OIL.get())).addIngredient(Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE)).addIngredient(Ingredient.fromTag(Tags.Items.GUNPOWDER)).addIngredient(Ingredient.fromItems(Items.SUGAR)).addIngredient(Ingredient.fromTag(BloodMagicTags.DUST_COAL)).addIngredient(Ingredient.fromStacks(new ItemStack(Items.POTION))).build(consumer, BloodMagic.rl(basePath + "basic_cutting_fluid"));
 
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.SLATE_VIAL.get(), 8), 500, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SLATE.get())).addIngredient(Ingredient.fromTag(Tags.Items.GLASS)).addIngredient(Ingredient.fromTag(Tags.Items.GLASS)).addIngredient(Ingredient.fromTag(Tags.Items.GLASS)).addIngredient(Ingredient.fromTag(Tags.Items.GLASS)).addIngredient(Ingredient.fromTag(Tags.Items.GLASS)).build(consumer, BloodMagic.rl(basePath + "slate_vial"));
+		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.FORTUNE_ANOINTMENT.get()), 500, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SLATE_VIAL.get())).addIngredient(Ingredient.fromTag(Tags.Items.CROPS_NETHER_WART)).addIngredient(Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE)).addIngredient(Ingredient.fromTag(BloodMagicTags.DUST_COAL)).build(consumer, BloodMagic.rl(basePath + "anointment_silk_touch"));
 	}
 
 }
