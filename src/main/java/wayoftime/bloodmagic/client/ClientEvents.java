@@ -68,7 +68,7 @@ public class ClientEvents
 
 	public static void colorHandlerEvent(ColorHandlerEvent.Item event)
 	{
-		event.getItemColors().register(new AnointmentColor(), BloodMagicItems.MELEE_DAMAGE_ANOINTMENT.get(), BloodMagicItems.SILK_TOUCH_ANOINTMENT.get(), BloodMagicItems.FORTUNE_ANOINTMENT.get());
+		event.getItemColors().register(new AnointmentColor(), BloodMagicItems.MELEE_DAMAGE_ANOINTMENT.get(), BloodMagicItems.SILK_TOUCH_ANOINTMENT.get(), BloodMagicItems.FORTUNE_ANOINTMENT.get(), BloodMagicItems.HOLY_WATER_ANOINTMENT.get(), BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT.get());
 	}
 
 	@SuppressWarnings("deprecation")

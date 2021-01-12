@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:slate_vial"
+    },
+    {
+      "tag": "forge:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "item": "minecraft:enchanted_book"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:hidden_knowledge_anointment"
+  },
+  "syphon": 500,
+  "ticks": 100,
+  "upgradeLevel": 1
+}

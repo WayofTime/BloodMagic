@@ -219,9 +219,11 @@ public class BloodMagicItems
 
 	// Anointments
 	public static final RegistryObject<Item> SLATE_VIAL = ITEMS.register("slate_vial", () -> new ItemBase(16, "slate_vial"));
-	public static final RegistryObject<Item> MELEE_DAMAGE_ANOINTMENT = ITEMS.register("melee_anointment", () -> new ItemAnointmentProvider(BloodMagic.rl("melee_damage"), 0xFF0000, 1, 128));
+	public static final RegistryObject<Item> MELEE_DAMAGE_ANOINTMENT = ITEMS.register("melee_anointment", () -> new ItemAnointmentProvider(BloodMagic.rl("melee_damage"), 0xFF0000, 1, 256));
 	public static final RegistryObject<Item> SILK_TOUCH_ANOINTMENT = ITEMS.register("silk_touch_anointment", () -> new ItemAnointmentProvider(BloodMagic.rl("silk_touch"), 0x00B0FF, 1, 256));
-	public static final RegistryObject<Item> FORTUNE_ANOINTMENT = ITEMS.register("fortune_anointment", () -> new ItemAnointmentProvider(BloodMagic.rl("fortune"), 3381504, 1, 128));
+	public static final RegistryObject<Item> FORTUNE_ANOINTMENT = ITEMS.register("fortune_anointment", () -> new ItemAnointmentProvider(BloodMagic.rl("fortune"), 3381504, 1, 256));
+	public static final RegistryObject<Item> HOLY_WATER_ANOINTMENT = ITEMS.register("holy_water_anointment", () -> new ItemAnointmentProvider(BloodMagic.rl("holy_water"), 0xC6E6FB, 1, 256));
+	public static final RegistryObject<Item> HIDDEN_KNOWLEDGE_ANOINTMENT = ITEMS.register("hidden_knowledge_anointment", () -> new ItemAnointmentProvider(BloodMagic.rl("hidden_knowledge"), 0xC8F902, 1, 256));
 
 	// Fragments
 	public static final RegistryObject<Item> IRON_FRAGMENT = BASICITEMS.register("ironfragment", () -> new ItemBase());

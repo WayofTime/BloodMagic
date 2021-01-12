@@ -44,13 +44,38 @@ public class AnointmentHolder
 		{
 			anointments.put(anointment, data);
 			anointment.applyAnointment(this, stack, data.getLevel());
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	public boolean canApplyAnointment(ItemStack stack, Anointment anointment, AnointmentData data)
 	{
+		ResourceLocation key = anointment.getKey();
+		for (Anointment containedAnoint : anointments.keySet())
+		{
+			ResourceLocation containedKey = containedAnoint.getKey();
+			if (!anointment.isCompatible(containedKey) || !containedAnoint.isCompatible(key))
+			{
+				return false;
+			}
+		}
+
+		if (anointments.containsKey(anointment))
+		{
+			AnointmentData prevData = anointments.get(anointment);
+			int level = prevData.getLevel();
+			int remainingDur = prevData.getMaxDamage() - prevData.getDamage();
+			if (level < data.getLevel() || (level == data.getLevel() && remainingDur < (data.getMaxDamage() - data.getDamage())))
+			{
+				return true;
+			} else
+			{
+				return false;
+			}
+		}
+
 		return true;
 	}
 

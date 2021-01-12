@@ -482,7 +482,7 @@ public class GenericHandler
 		event.setNewSpeed((1 + percentIncrease) * event.getNewSpeed());
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onBreakBlock(BlockEvent.BreakEvent event)
 	{
 		PlayerEntity player = event.getPlayer();
@@ -509,6 +509,14 @@ public class GenericHandler
 					int bonusLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand());
 					int exp = event.getState().getExpDrop(event.getWorld(), event.getPos(), bonusLevel, holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get()));
 					event.setExpToDrop(exp);
+				}
+
+				int hiddenLevel = holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_HIDDEN_KNOWLEDGE.get());
+				if (hiddenLevel > 0)
+				{
+					double expBonus = AnointmentRegistrar.ANOINTMENT_HIDDEN_KNOWLEDGE.get().getBonusValue("exp", hiddenLevel).doubleValue();
+					int expAdded = (int) expBonus + (expBonus % 1 > event.getWorld().getRandom().nextDouble() ? 1 : 0);
+					event.setExpToDrop(event.getExpToDrop() + expAdded);
 				}
 
 				if (holder.consumeAnointmentDurabilityOnHarvest(heldStack, EquipmentSlotType.MAINHAND))

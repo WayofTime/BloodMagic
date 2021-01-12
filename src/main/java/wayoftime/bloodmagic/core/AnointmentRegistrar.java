@@ -24,6 +24,8 @@ public class AnointmentRegistrar
 	private static final Map<String, ResourceLocation> DEFINITIONS = ((Supplier<Map<String, ResourceLocation>>) () -> {
 		Map<String, ResourceLocation> def = new HashMap<>();
 		def.put("melee_damage", BloodMagic.rl("melee_damage"));
+		def.put("holy_water", BloodMagic.rl("holy_water"));
+		def.put("hidden_knowledge", BloodMagic.rl("hidden_knowledge"));
 //		def.put("arrow_shot", BloodMagic.rl("arrow_shot"));
 //		def.put("critical_strike", BloodMagic.rl("critical_strike"));
 //		def.put("digging", BloodMagic.rl("digging"));
@@ -49,17 +51,28 @@ public class AnointmentRegistrar
 
 	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_MELEE_DAMAGE = ANOINTMENTS.register("melee_damage", () -> parseDefinition("melee_damage").withDamageProvider((player, weapon, damage, holder, attacked, anoint, level) -> {
 		return anoint.getBonusValue("damage", level).doubleValue();
-	}).setConsumeOnAttack());
+	}).setConsumeOnAttack().addIncompatibility(BloodMagic.rl("holy_water")));
 
-	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_SILK_TOUCH = ANOINTMENTS.register("silk_touch", () -> new Anointment(BloodMagic.rl("silk_touch")).setConsumeOnHarvest());
+	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_SILK_TOUCH = ANOINTMENTS.register("silk_touch", () -> new Anointment(BloodMagic.rl("silk_touch")).setConsumeOnHarvest().addIncompatibility(BloodMagic.rl("fortune")));
 
-	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_FORTUNE = ANOINTMENTS.register("fortune", () -> new Anointment(BloodMagic.rl("fortune")).setConsumeOnHarvest());
+	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_FORTUNE = ANOINTMENTS.register("fortune", () -> new Anointment(BloodMagic.rl("fortune")).setConsumeOnHarvest().addIncompatibility(BloodMagic.rl("silk_touch")));
+
+	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_HOLY_WATER = ANOINTMENTS.register("holy_water", () -> parseDefinition("holy_water").withDamageProvider((player, weapon, damage, holder, attacked, anoint, level) -> {
+		if (attacked.isEntityUndead())
+			return anoint.getBonusValue("damage", level).doubleValue();
+		else
+			return 0;
+	}).setConsumeOnAttack().addIncompatibility(BloodMagic.rl("melee_damage")));
+
+	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_HIDDEN_KNOWLEDGE = ANOINTMENTS.register("hidden_knowledge", () -> parseDefinition("hidden_knowledge").setConsumeOnHarvest());
 
 	public static void register()
 	{
 		registerAnointment(ANOINTMENT_MELEE_DAMAGE.get());
 		registerAnointment(ANOINTMENT_SILK_TOUCH.get());
 		registerAnointment(ANOINTMENT_FORTUNE.get());
+		registerAnointment(ANOINTMENT_HOLY_WATER.get());
+		registerAnointment(ANOINTMENT_HIDDEN_KNOWLEDGE.get());
 //		Registry.register(UPGRADES, UPGRADE_ARROW_PROTECT.getKey(), UPGRADE_ARROW_PROTECT);
 //		Registry.register(UPGRADES, UPGRADE_ARROW_SHOT.getKey(), UPGRADE_ARROW_SHOT);
 //		Registry.register(UPGRADES, UPGRADE_CRITICAL_STRIKE.getKey(), UPGRADE_CRITICAL_STRIKE);

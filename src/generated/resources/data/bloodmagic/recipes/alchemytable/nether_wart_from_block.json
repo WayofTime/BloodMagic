@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "minecraft:nether_wart_block"
+    }
+  ],
+  "output": {
+    "item": "minecraft:nether_wart"
+  },
+  "syphon": 50,
+  "ticks": 40,
+  "upgradeLevel": 1
+}

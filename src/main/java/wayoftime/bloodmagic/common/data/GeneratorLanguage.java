@@ -350,6 +350,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("anointment.bloodmagic.melee_damage", "Whetstone");
 		add("anointment.bloodmagic.silk_touch", "Soft Touch");
 		add("anointment.bloodmagic.fortune", "Fortunate");
+		add("anointment.bloodmagic.holy_water", "Holy Light");
+		add("anointment.bloodmagic.hidden_knowledge", "Hidden Knowledge");
 
 		// Guide
 		add("guide.bloodmagic.name", "Sanguine Scientiem");
@@ -534,6 +536,8 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT, "Honing Oil");
 		addItem(BloodMagicItems.SILK_TOUCH_ANOINTMENT, "Soft Coating");
 		addItem(BloodMagicItems.FORTUNE_ANOINTMENT, "Fortuna Extract");
+		addItem(BloodMagicItems.HOLY_WATER_ANOINTMENT, "Holy Water");
+		addItem(BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT, "Liquid Knowledge");
 
 		// Alchemy Items
 		addItem(BloodMagicItems.PLANT_OIL, "Plant Oil");
@@ -565,6 +569,9 @@ public class GeneratorLanguage extends LanguageProvider
 		add("jei.bloodmagic.recipe.requiredtier", "Tier: %d");
 		add("jei.bloodmagic.recipe.consumptionrate", "Consumption: %s LP/t");
 		add("jei.bloodmagic.recipe.drainrate", "Drain: %s LP/t");
+
+		add("jei.bloodmagic.recipe.lpDrained", "Drained: %s LP");
+		add("jei.bloodmagic.recipe.ticksRequired", "Time: %sTicks");
 
 		add("jei.bloodmagic.recipe.altar", "Blood Altar");
 		add("jei.bloodmagic.recipe.soulforge", "Hellfire Forge");

@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:slate_vial"
+    },
+    {
+      "tag": "forge:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:glistering_melon_slice"
+    },
+    {
+      "tag": "forge:gems/quartz"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:holy_water_anointment"
+  },
+  "syphon": 500,
+  "ticks": 100,
+  "upgradeLevel": 1
+}

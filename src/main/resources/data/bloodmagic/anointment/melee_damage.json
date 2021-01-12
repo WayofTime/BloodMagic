@@ -2,9 +2,9 @@
   "id": "bloodmagic:melee_damage",
   "bonuses": {
     "damage": [
-      2,
       3,
-      4
+      6,
+      9
     ]
   }
 }

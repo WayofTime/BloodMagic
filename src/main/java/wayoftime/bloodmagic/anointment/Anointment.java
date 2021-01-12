@@ -7,12 +7,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -41,7 +43,7 @@ public class Anointment extends ForgeRegistryEntry<Anointment>
 	public static final Anointment DUMMY = new Anointment(new ResourceLocation("dummy"));
 
 	private final ResourceLocation key;
-//	private final Set<ResourceLocation> incompatible;
+	private final Set<ResourceLocation> incompatible;
 	private String translationKey = null;
 	private final Map<String, Bonus> bonuses;
 	private IAttributeProvider attributeProvider;
@@ -52,12 +54,14 @@ public class Anointment extends ForgeRegistryEntry<Anointment>
 	public Anointment(ResourceLocation key)
 	{
 		this.key = key;
+		this.incompatible = Sets.newHashSet();
 		this.bonuses = Maps.newHashMap();
 	}
 
 	public Anointment withBonusSet(String id, Consumer<List<Number>> modifiers)
 	{
 //		List<Number> values = DefaultedList.of();
+
 		List<Number> values = new ArrayList<Number>();
 		modifiers.accept(values);
 
@@ -170,6 +174,18 @@ public class Anointment extends ForgeRegistryEntry<Anointment>
 //			}
 		}
 		return false;
+	}
+
+	public boolean isCompatible(ResourceLocation otherUpgrade)
+	{
+		return !incompatible.contains(otherUpgrade);
+	}
+
+	public Anointment addIncompatibility(ResourceLocation key, ResourceLocation... otherKeys)
+	{
+		incompatible.add(key);
+		Collections.addAll(incompatible, otherKeys);
+		return this;
 	}
 
 	public String getTranslationKey()
