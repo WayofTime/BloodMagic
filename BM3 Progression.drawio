@@ -1,1 +1,122 @@
-<mxfile host="app.diagrams.net" modified="2021-01-14T14:55:55.303Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="jfdwkI6DCXEzf8qGgKDE" version="14.2.3" type="github"><diagram id="kgpKYQtTHZ0yAKxKKP6v" name="Page-1">7ZjLcpswFIafhmU6RhgbL2Pn0kU6yTSdSbOU4QTUCMQIEeM+fSUQYC5OcGrctNOVpV8XxP/pnMPYsFZhds1xHHxhHlADTbzMsC4MhEyELPmjlK1WTAcVis+Jp7VauCc/QYsTrabEg6QxUTBGBYmbosuiCFzR0DDnbNOc9sRo86kx9qEj3LuYdtUH4omgUB17UuufgfhB+WRzokdCXE7WQhJgj212JOvSsFacMVG0wmwFVLlX+lKsu9ozWh2MQySGLLCidHmV8YW7vZnE0e3DN4Svz/QuL5im+oUN6/x2/UNZWZxabEsr5AvEqpmG9IY8ASWR7C1j4CQEAVyOUC3f1dpSghFYamrczPuU4jgh63zbiVQ4uClPyAt8haTgn6ssjTzwdK8yL+8Izp4rHGpT/RbABWR77TEr0+V1BSYPyLdySnVXNSd9Ux3d3dTUK7bBDnGrFLG+aX61dQ1DNjSPA9igLps2kpiRSOTPtZeGfdHCwbgImM8iTHeBHN/Y/Tdrr9tTu2H2vM/srtfmYiyvrY7XHkliLNyg47kyg8gEcU6JH0lpzYRgYe4e5uJc5RzlvdxKahB5pbKmzH0up+lE5wwlAF4nTQ3xXyZLzH14bR7q58SBYiFjsplQe2zXS+/UTaz5npn9gMsdEpZyF/SiFrvqFO/HOf2HQ8du5qkqb70RO85YoWP/LyFZqxR8mBIy+6vjwD6khPSa3VNCZmN5Pe94zUGkPBpeQHaKBYtBDi09nAS5z2YxvFM2ICPiuzZdtR9V+9PCfndFKVLy25dpWEUZFDe/WWTQvHkFkDVrblEcdbQq4xzho6HnA0G6xrcVWtV5PCTSDgeLBoKd/SmwnaAd+fNh0QEr0dE1lniOAtY8EdihETs9Gdhps0KiduUbGWxZEU6dpM2TJenph4vlNnJ7fqQkLbv1vyfF9PpPKOvyFw==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2021-01-14T15:21:43.963Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="sOzHyn8Ww45X9dP_ep6w" version="14.2.3" type="github">
+  <diagram id="kgpKYQtTHZ0yAKxKKP6v" name="Page-1">
+    <mxGraphModel dx="1170" dy="656" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="3nuBFxr9cyL0pnOWT2aG-1" value="T1 Blood Altar" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=0;shadow=0;strokeWidth=1;size=40;" parent="1" vertex="1">
+          <mxGeometry x="320" y="40" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.005;entryY=0.518;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="AL4MJqAyBT561Gl4Sr2e-2" target="3nuBFxr9cyL0pnOWT2aG-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="370" y="80" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-2" value="Gold Access&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="200" y="40" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-4" value="Soul Snare" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="40" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-5" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1.001;exitY=0.504;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="3nuBFxr9cyL0pnOWT2aG-1" target="AL4MJqAyBT561Gl4Sr2e-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="480" y="110" as="sourcePoint" />
+            <mxPoint x="450" y="270" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="430" y="60" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-6" value="String or Iron" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="440" y="30" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-9" value="Hellfire Forge" style="rounded=0;whiteSpace=wrap;html=1;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="720" y="160" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="AL4MJqAyBT561Gl4Sr2e-12" target="AL4MJqAyBT561Gl4Sr2e-33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-12" value="Alchemy Table" style="rounded=0;whiteSpace=wrap;html=1;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="120" y="160" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="AL4MJqAyBT561Gl4Sr2e-13" target="AL4MJqAyBT561Gl4Sr2e-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-13" value="Arcane Ash" style="rounded=1;whiteSpace=wrap;html=1;glass=0;" vertex="1" parent="1">
+          <mxGeometry y="160" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-14" value="" style="endArrow=classic;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="AL4MJqAyBT561Gl4Sr2e-12" target="AL4MJqAyBT561Gl4Sr2e-13">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="160" as="sourcePoint" />
+            <mxPoint x="470" y="110" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-15" value="Weak Blood orb" style="rounded=1;whiteSpace=wrap;html=1;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="240" y="160" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-17" value="Diamond" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="230" y="130" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-18" value="" style="endArrow=classic;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="AL4MJqAyBT561Gl4Sr2e-15" target="AL4MJqAyBT561Gl4Sr2e-12">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="160" as="sourcePoint" />
+            <mxPoint x="470" y="110" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="AL4MJqAyBT561Gl4Sr2e-19" target="AL4MJqAyBT561Gl4Sr2e-38">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-19" value="Blank Slate" style="rounded=1;whiteSpace=wrap;html=1;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="360" y="160" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-26" value="" style="endArrow=classic;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.501;exitY=0.997;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="3nuBFxr9cyL0pnOWT2aG-1" target="AL4MJqAyBT561Gl4Sr2e-19">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="348" y="160" as="sourcePoint" />
+            <mxPoint x="430" y="90" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="360" y="120" />
+              <mxPoint x="400" y="120" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-28" value="" style="endArrow=classic;html=1;exitX=0.498;exitY=0.997;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="3nuBFxr9cyL0pnOWT2aG-1" target="AL4MJqAyBT561Gl4Sr2e-15">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="160" as="sourcePoint" />
+            <mxPoint x="470" y="110" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="360" y="120" />
+              <mxPoint x="280" y="120" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-29" value="Smooth Stone" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="405" y="130" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-31" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="AL4MJqAyBT561Gl4Sr2e-19" target="AL4MJqAyBT561Gl4Sr2e-9">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="160" as="sourcePoint" />
+            <mxPoint x="470" y="110" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="AL4MJqAyBT561Gl4Sr2e-33" target="AL4MJqAyBT561Gl4Sr2e-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-33" value="Reagents (orb dependent)" style="rounded=1;whiteSpace=wrap;html=1;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="120" y="240" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-35" value="Sigils" style="rounded=1;whiteSpace=wrap;html=1;glass=0;" vertex="1" parent="1">
+          <mxGeometry y="240" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="AL4MJqAyBT561Gl4Sr2e-38" target="AL4MJqAyBT561Gl4Sr2e-40">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-38" value="Blank Rune" style="rounded=1;whiteSpace=wrap;html=1;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="360" y="240" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="AL4MJqAyBT561Gl4Sr2e-40" value="T2 Blood Altar" style="rounded=0;whiteSpace=wrap;html=1;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="320" y="320" width="80" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
