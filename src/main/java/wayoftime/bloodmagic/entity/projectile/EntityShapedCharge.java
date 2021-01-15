@@ -51,6 +51,10 @@ public class EntityShapedCharge extends ThrowableEntity
 		super.tick();
 		RayTraceResult raytraceresult = ProjectileHelper.func_234618_a_(this, this::func_230298_a_);
 //		boolean flag = false;
+		if (world.isRemote)
+		{
+			return;
+		}
 		if (raytraceresult.getType() == RayTraceResult.Type.BLOCK)
 		{
 			Direction faceHit = ((BlockRayTraceResult) raytraceresult).getFace();

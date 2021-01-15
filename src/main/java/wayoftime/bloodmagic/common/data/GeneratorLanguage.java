@@ -355,6 +355,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("anointment.bloodmagic.quick_draw", "Deft Hands");
 		add("anointment.bloodmagic.bow_power", "Heavy Shot");
 		add("anointment.bloodmagic.looting", "Plundering");
+		add("anointment.bloodmagic.smelting", "Heated Tool");
 
 		// Guide
 		add("guide.bloodmagic.name", "Sanguine Scientiem");
@@ -544,6 +545,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.QUICK_DRAW_ANOINTMENT, "Dexterity Alkahest");
 		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT, "Iron Tip");
 		addItem(BloodMagicItems.LOOTING_ANOINTMENT, "Plunderer's Glint");
+		addItem(BloodMagicItems.SMELTING_ANOINTMENT, "Slow-burning Oil");
 
 		// Alchemy Items
 		addItem(BloodMagicItems.PLANT_OIL, "Plant Oil");
