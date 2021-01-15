@@ -49,6 +49,7 @@ public class Anointment extends ForgeRegistryEntry<Anointment>
 	private IAttributeProvider attributeProvider;
 	private IDamageProvider damageProvider;
 	private boolean consumeOnAttack = false;
+	private boolean consumeOnUseFinish = false;
 	private boolean consumeOnHarvest = false;
 
 	public Anointment(ResourceLocation key)
@@ -202,6 +203,17 @@ public class Anointment extends ForgeRegistryEntry<Anointment>
 	public boolean consumeOnAttack()
 	{
 		return this.consumeOnAttack;
+	}
+
+	public Anointment setConsumeOnUseFinish()
+	{
+		this.consumeOnUseFinish = true;
+		return this;
+	}
+
+	public boolean consumeOnUseFinish()
+	{
+		return this.consumeOnUseFinish;
 	}
 
 	public Anointment setConsumeOnHarvest()

@@ -1,0 +1,11 @@
+{
+  "type": "bloodmagic:looting",
+  "conditions": [
+    {
+      "condition": "minecraft:entity",
+      "predicate": {
+
+      }
+    }
+  ]
+}

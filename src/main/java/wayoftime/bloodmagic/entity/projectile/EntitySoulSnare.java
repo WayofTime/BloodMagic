@@ -89,6 +89,5 @@ public class EntitySoulSnare extends ProjectileItemEntity
 				this.world.addParticle(iparticledata, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
 			}
 		}
-
 	}
 }

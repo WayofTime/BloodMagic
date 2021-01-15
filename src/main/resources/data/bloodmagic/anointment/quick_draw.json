@@ -1,0 +1,10 @@
+{
+  "id": "bloodmagic:quick_draw",
+  "bonuses": {
+    "speed": [
+      0.5,
+      1,
+      1.5
+    ]
+  }
+}

@@ -352,6 +352,9 @@ public class GeneratorLanguage extends LanguageProvider
 		add("anointment.bloodmagic.fortune", "Fortunate");
 		add("anointment.bloodmagic.holy_water", "Holy Light");
 		add("anointment.bloodmagic.hidden_knowledge", "Hidden Knowledge");
+		add("anointment.bloodmagic.quick_draw", "Deft Hands");
+		add("anointment.bloodmagic.bow_power", "Heavy Shot");
+		add("anointment.bloodmagic.looting", "Plundering");
 
 		// Guide
 		add("guide.bloodmagic.name", "Sanguine Scientiem");
@@ -538,6 +541,9 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.FORTUNE_ANOINTMENT, "Fortuna Extract");
 		addItem(BloodMagicItems.HOLY_WATER_ANOINTMENT, "Holy Water");
 		addItem(BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT, "Liquid Knowledge");
+		addItem(BloodMagicItems.QUICK_DRAW_ANOINTMENT, "Dexterity Alkahest");
+		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT, "Iron Tip");
+		addItem(BloodMagicItems.LOOTING_ANOINTMENT, "Plunderer's Glint");
 
 		// Alchemy Items
 		addItem(BloodMagicItems.PLANT_OIL, "Plant Oil");

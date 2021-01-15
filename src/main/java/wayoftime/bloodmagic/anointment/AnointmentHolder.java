@@ -117,6 +117,33 @@ public class AnointmentHolder
 		return didConsume;
 	}
 
+	public boolean consumeAnointmentDurabilityOnUseFinish(ItemStack weaponStack, EquipmentSlotType type)
+	{
+		boolean didConsume = false;
+		List<Anointment> removedAnointments = new ArrayList<Anointment>();
+		for (Entry<Anointment, AnointmentData> entry : anointments.entrySet())
+		{
+			Anointment annointment = entry.getKey();
+			if (annointment.consumeOnUseFinish())
+			{
+				AnointmentData data = entry.getValue();
+				data.damage(1);
+				didConsume = true;
+				if (data.isMaxDamage())
+				{
+					removedAnointments.add(annointment);
+				}
+			}
+		}
+
+		for (Anointment anointment : removedAnointments)
+		{
+			removeAnointment(weaponStack, type, anointment);
+		}
+
+		return didConsume;
+	}
+
 	public boolean consumeAnointmentDurabilityOnHarvest(ItemStack weaponStack, EquipmentSlotType type)
 	{
 		boolean didConsume = false;

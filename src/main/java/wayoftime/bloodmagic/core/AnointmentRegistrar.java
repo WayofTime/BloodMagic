@@ -26,6 +26,8 @@ public class AnointmentRegistrar
 		def.put("melee_damage", BloodMagic.rl("melee_damage"));
 		def.put("holy_water", BloodMagic.rl("holy_water"));
 		def.put("hidden_knowledge", BloodMagic.rl("hidden_knowledge"));
+		def.put("quick_draw", BloodMagic.rl("quick_draw"));
+		def.put("bow_power", BloodMagic.rl("bow_power"));
 //		def.put("arrow_shot", BloodMagic.rl("arrow_shot"));
 //		def.put("critical_strike", BloodMagic.rl("critical_strike"));
 //		def.put("digging", BloodMagic.rl("digging"));
@@ -66,6 +68,16 @@ public class AnointmentRegistrar
 
 	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_HIDDEN_KNOWLEDGE = ANOINTMENTS.register("hidden_knowledge", () -> parseDefinition("hidden_knowledge").setConsumeOnHarvest());
 
+	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_QUICK_DRAW = ANOINTMENTS.register("quick_draw", () -> parseDefinition("quick_draw").setConsumeOnUseFinish());
+
+	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_LOOTING = ANOINTMENTS.register("looting", () -> new Anointment(BloodMagic.rl("looting")).setConsumeOnAttack());
+
+	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_BOW_POWER = ANOINTMENTS.register("bow_power", () -> parseDefinition("bow_power").setConsumeOnUseFinish());
+
+	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_WILL_POWER = ANOINTMENTS.register("will_power", () -> new Anointment(BloodMagic.rl("will_power")).setConsumeOnAttack());
+
+	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_SMELTING = ANOINTMENTS.register("smelting", () -> new Anointment(BloodMagic.rl("smelting")).setConsumeOnHarvest());
+
 	public static void register()
 	{
 		registerAnointment(ANOINTMENT_MELEE_DAMAGE.get());
@@ -73,6 +85,12 @@ public class AnointmentRegistrar
 		registerAnointment(ANOINTMENT_FORTUNE.get());
 		registerAnointment(ANOINTMENT_HOLY_WATER.get());
 		registerAnointment(ANOINTMENT_HIDDEN_KNOWLEDGE.get());
+		registerAnointment(ANOINTMENT_QUICK_DRAW.get());
+		registerAnointment(ANOINTMENT_LOOTING.get());
+		registerAnointment(ANOINTMENT_BOW_POWER.get());
+		registerAnointment(ANOINTMENT_WILL_POWER.get());
+		registerAnointment(ANOINTMENT_SMELTING.get());
+
 //		Registry.register(UPGRADES, UPGRADE_ARROW_PROTECT.getKey(), UPGRADE_ARROW_PROTECT);
 //		Registry.register(UPGRADES, UPGRADE_ARROW_SHOT.getKey(), UPGRADE_ARROW_SHOT);
 //		Registry.register(UPGRADES, UPGRADE_CRITICAL_STRIKE.getKey(), UPGRADE_CRITICAL_STRIKE);

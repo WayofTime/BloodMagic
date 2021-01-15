@@ -13,6 +13,7 @@ import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.arc.ItemARCToolBase;
 import wayoftime.bloodmagic.common.item.block.ItemBlockAlchemyTable;
 import wayoftime.bloodmagic.common.item.block.ItemBlockMimic;
+import wayoftime.bloodmagic.common.item.block.ItemBlockShapedCharge;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilAir;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilBloodLight;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilDivination;
@@ -97,8 +98,8 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> NETHE_SOIL_ITEM = ITEMS.register("nether_soil", () -> new BlockItem(BloodMagicBlocks.NETHER_SOIL.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> GROWING_DOUBT_ITEM = ITEMS.register("growing_doubt", () -> new BlockItem(BloodMagicBlocks.GROWING_DOUBT.get(), new Item.Properties().group(BloodMagic.TAB)));
 
-	public static final RegistryObject<Item> SHAPED_CHARGE_ITEM = ITEMS.register("shaped_charge", () -> new BlockItem(BloodMagicBlocks.SHAPED_CHARGE.get(), new Item.Properties().group(BloodMagic.TAB)));
-	public static final RegistryObject<Item> DEFORESTER_CHARGE_ITEM = ITEMS.register("deforester_charge", () -> new BlockItem(BloodMagicBlocks.DEFORESTER_CHARGE.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> SHAPED_CHARGE_ITEM = ITEMS.register("shaped_charge", () -> new ItemBlockShapedCharge(BloodMagicBlocks.SHAPED_CHARGE.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> DEFORESTER_CHARGE_ITEM = ITEMS.register("deforester_charge", () -> new ItemBlockShapedCharge(BloodMagicBlocks.DEFORESTER_CHARGE.get(), new Item.Properties().group(BloodMagic.TAB)));
 	// TODO: Need to rework the above instantiations for the ItemBlocks so that it's
 	// done with the Blocks.
 
@@ -224,6 +225,11 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> FORTUNE_ANOINTMENT = ITEMS.register("fortune_anointment", () -> new ItemAnointmentProvider(BloodMagic.rl("fortune"), 3381504, 1, 256));
 	public static final RegistryObject<Item> HOLY_WATER_ANOINTMENT = ITEMS.register("holy_water_anointment", () -> new ItemAnointmentProvider(BloodMagic.rl("holy_water"), 0xC6E6FB, 1, 256));
 	public static final RegistryObject<Item> HIDDEN_KNOWLEDGE_ANOINTMENT = ITEMS.register("hidden_knowledge_anointment", () -> new ItemAnointmentProvider(BloodMagic.rl("hidden_knowledge"), 0xC8F902, 1, 256));
+	public static final RegistryObject<Item> QUICK_DRAW_ANOINTMENT = ITEMS.register("quick_draw_anointment", () -> new ItemBowAnointmentProvider(BloodMagic.rl("quick_draw"), 0xF0E130, 1, 256, true));
+	public static final RegistryObject<Item> LOOTING_ANOINTMENT = ITEMS.register("looting_anointment", () -> new ItemAnointmentProvider(BloodMagic.rl("looting"), 0x6D2AFF, 1, 256));
+	public static final RegistryObject<Item> BOW_POWER_ANOINTMENT = ITEMS.register("bow_power_anointment", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_power"), 0xD8D8D8, 1, 256, true));
+	public static final RegistryObject<Item> WILL_POWER_ANOINTMENT = ITEMS.register("will_power_anointment", () -> new ItemAnointmentProvider(BloodMagic.rl("will_power"), 0xD8D8D8, 1, 256));
+	public static final RegistryObject<Item> SMELTING_ANOINTMENT = ITEMS.register("smelting_anointment", () -> new ItemAnointmentProvider(BloodMagic.rl("smelting"), 0xCE2029, 1, 256));
 
 	// Fragments
 	public static final RegistryObject<Item> IRON_FRAGMENT = BASICITEMS.register("ironfragment", () -> new ItemBase());

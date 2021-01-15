@@ -77,7 +77,7 @@ public class ItemAnointmentProvider extends Item
 					}
 					stack.shrink(1);
 					holder.toItemStack(weaponStack);
-					return ActionResult.resultSuccess(stack);
+					return ActionResult.resultConsume(stack);
 				}
 			}
 		} else
@@ -100,6 +100,8 @@ public class ItemAnointmentProvider extends Item
 						world.addParticle(flag1 ? ParticleTypes.AMBIENT_ENTITY_EFFECT
 								: ParticleTypes.ENTITY_EFFECT, player.getPosXRandom(0.3D), player.getPosYRandom(), player.getPosZRandom(0.3D), d0, d1, d2);
 					}
+
+					return ActionResult.resultConsume(stack);
 				}
 			}
 		}

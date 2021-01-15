@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "bloodmagic:item/alchemic_vial_will",
+    "layer1": "bloodmagic:item/alchemic_liquid",
+    "layer2": "bloodmagic:item/alchemic_ribbon_will"
+  }
+}
