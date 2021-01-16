@@ -351,7 +351,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("anointment.bloodmagic.silk_touch", "Soft Touch");
 		add("anointment.bloodmagic.fortune", "Fortunate");
 		add("anointment.bloodmagic.holy_water", "Holy Light");
-		add("anointment.bloodmagic.hidden_knowledge", "Hidden Knowledge");
+		add("anointment.bloodmagic.hidden_knowledge", "Miner's Secrets");
 		add("anointment.bloodmagic.quick_draw", "Deft Hands");
 		add("anointment.bloodmagic.bow_power", "Heavy Shot");
 		add("anointment.bloodmagic.looting", "Plundering");
@@ -541,7 +541,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.SILK_TOUCH_ANOINTMENT, "Soft Coating");
 		addItem(BloodMagicItems.FORTUNE_ANOINTMENT, "Fortuna Extract");
 		addItem(BloodMagicItems.HOLY_WATER_ANOINTMENT, "Holy Water");
-		addItem(BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT, "Liquid Knowledge");
+		addItem(BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT, "Miner's Secrets");
 		addItem(BloodMagicItems.QUICK_DRAW_ANOINTMENT, "Dexterity Alkahest");
 		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT, "Iron Tip");
 		addItem(BloodMagicItems.LOOTING_ANOINTMENT, "Plunderer's Glint");
