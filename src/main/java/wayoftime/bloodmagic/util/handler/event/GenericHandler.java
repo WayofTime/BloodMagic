@@ -32,7 +32,6 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
@@ -549,14 +548,6 @@ public class GenericHandler
 				}
 			}
 		}
-	}
-
-	@SubscribeEvent
-	public void appendTooltip(ItemTooltipEvent event)
-	{
-		ItemStack stack = event.getItemStack();
-		AnointmentHolder holder = AnointmentHolder.fromItemStack(stack);
-		AnointmentHolder.appendAnointmentTooltip(holder, event.getToolTip());
 	}
 
 	private static final Map<ItemStack, Double> rollMap = new HashMap<ItemStack, Double>();

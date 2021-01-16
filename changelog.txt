@@ -1,4 +1,19 @@
 ------------------------------------------------------
+Version 3.0.6
+------------------------------------------------------
+- Reimplemented the Well of Suffering.
+- Added several new items, called "Anointments"! These are items that provide temporary buffs to your tools and weapons, such as silk touch, higher damage, and more! Look them up in the Utility section of the book. These include: 
+	- Honing Oil
+	- Soft Coating
+	- Fortuna Extract
+	- Holy Water
+	- Miner's Secrets
+	- Dexterity Alkahest
+	- Iron Tip
+	- Plunderer's Glint
+	- Slow-burning Oil
+
+------------------------------------------------------
 Version 3.0.5
 ------------------------------------------------------
 - Fixed a crash with the Blood Altar because I am dumb.

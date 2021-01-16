@@ -235,7 +235,7 @@ public class GlobalLootModifier
 			ItemStack ctxTool = context.get(LootParameters.TOOL);
 			// return early if silk-touch is already applied (otherwise we'll get stuck in
 			// an infinite loop).
-			if (ctxTool.getTag() != null)
+			if (ctxTool.getTag() == null)
 			{
 				return generatedLoot;
 			}

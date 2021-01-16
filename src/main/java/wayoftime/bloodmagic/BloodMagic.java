@@ -124,7 +124,6 @@ public class BloodMagic
 		modBus.addListener(this::processIMC);
 		// Register the doClientStuff method for modloading
 		modBus.addListener(this::doClientStuff);
-		modBus.addListener(this::registerColors);
 		modBus.addListener(this::loadModels);
 		modBus.addListener(this::gatherData);
 
@@ -134,6 +133,8 @@ public class BloodMagic
 		modBus.addGenericListener(Effect.class, BloodMagicPotions::registerPotions);
 
 		MinecraftForge.EVENT_BUS.register(new GenericHandler());
+//		MinecraftForge.EVENT_BUS.register(new ClientEvents());
+		modBus.addListener(this::registerColors);
 
 		MinecraftForge.EVENT_BUS.register(new WillHandler());
 //		MinecraftForge.EVENT_BUS.register(new BloodMagicBlocks());
@@ -247,11 +248,16 @@ public class BloodMagic
 
 		ClientEvents.initClientEvents(event);
 		Elements.registerElements();
+		MinecraftForge.EVENT_BUS.register(new ClientEvents());
+//		IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+//		
+
 	}
 
-	private void registerColors(final ColorHandlerEvent.Item event)
+	private void registerColors(final ColorHandlerEvent event)
 	{
-		ClientEvents.colorHandlerEvent(event);
+		if (event instanceof ColorHandlerEvent.Item)
+			ClientEvents.colorHandlerEvent((ColorHandlerEvent.Item) event);
 	}
 
 	private void enqueueIMC(final InterModEnqueueEvent event)
