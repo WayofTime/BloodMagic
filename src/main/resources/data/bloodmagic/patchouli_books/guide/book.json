@@ -8,15 +8,16 @@
   "model": "bloodmagic:book",
   "show_progress": false,
   "macros": {
-	"$(water)": "$(#0000aa)",
-	"$(air)": "$(#aaaa00)",
-	"$(fire)": "$(#aa0000)",
-	"$(earth)": "$(#00aa00)",
+	"$(water)": "$(#0000AA)",
+	"$(air)": "$(#AAAA00)",
+	"$(fire)": "$(#AA0000)",
+	"$(earth)": "$(#00AA00)",
 	"$(blank)": "$(#888888)",
-	"$(steadfast)": "$(#0000aa)",
-	"$(destructive)": "$(#aaaa00)",
-	"$(vengeful)": "$(#aa0000)",
-	"$(corrosive)": "$(#00aa00)",
-	"$(raw)": "$(#36C6C6)"
+	"$(steadfast)": "$(#0000AA)",
+	"$(destructive)": "$(#AAAA00)",
+	"$(vengeful)": "$(#AA0000)",
+	"$(corrosive)": "$(#00AA00)",
+	"$(raw)": "$(#36C6C6)",
+	"$(blood)": "$(#AA0000)"
 	}
 }
