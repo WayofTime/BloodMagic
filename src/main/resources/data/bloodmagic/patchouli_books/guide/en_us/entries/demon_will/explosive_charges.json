@@ -1,0 +1,27 @@
+{
+  "name": "Explosive Charges",
+  "icon": "bloodmagic:shaped_charge",
+  "category": "demon_will",
+  "extra_recipe_mappings":[
+    ["bloodmagic:shaped_charge", 1],
+    ["bloodmagic:deforester_charge", 3]
+	],
+  "pages":[
+    {
+      "type": "text",
+      "text": "Mining and foresting is all well and good for those little villagers and others who refuse to dream big, but what self-respecting sanguimancer would ever stoop to such a thing? $(br2)With that in mind, you have devised some devious little devices. Simply throw them at a tree or at some pesky stone and wait for them to self-ignite."
+    },
+    {
+      "type": "crafting_soulforge",
+      "recipe": "bloodmagic:soulforge/shaped_charge",
+	  "anchor":"shaped_charge",
+	  "text": "The $(item)Shaped Charge$() will destroy a 5x5x5 cube facing whichever side of a block it lands on, dropping all blocks as though mined with a pickaxe. It even works on Obsidian, and provides a most satisfying $(o)KABOOM$() whilst doing so."
+    },
+    {
+      "type": "crafting_soulforge",
+      "recipe": "bloodmagic:soulforge/deforester_charge",
+	  "anchor":"deforester_charge",
+	  "text": "The $(item)Deforester Charge$() is for felling trees. It can be used on logs or leaves, and will fell all but the mightiest of trees, breaking up to 2 stacks of logs at a time (and neatly stripping away any leaves it encounters in the process!) Even the giant trees of the Jungle will fall in a matter of seconds."
+    }
+  ]
+}
