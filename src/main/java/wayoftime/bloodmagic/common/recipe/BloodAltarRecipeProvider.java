@@ -46,26 +46,14 @@ public class BloodAltarRecipeProvider implements ISubRecipeProvider
 		BloodAltarRecipeBuilder.altar(Ingredient.fromTag(Tags.Items.STORAGE_BLOCKS_COAL), new ItemStack(BloodMagicItems.DUSK_INSCRIPTION_TOOL.get()), AltarTier.FOUR.ordinal(), 2000, 20, 10).build(consumer, BloodMagic.rl(basePath + "dusk_tool"));
 		BloodAltarRecipeBuilder.altar(Ingredient.fromItems(BloodMagicItems.WEAK_BLOOD_SHARD.get()), new ItemStack(BloodMagicItems.MASTER_BLOOD_ORB.get()), AltarTier.FOUR.ordinal(), 40000, 30, 50).build(consumer, BloodMagic.rl(basePath + "masterbloodorb"));
 
-//		BloodAltarRecipeBuilder.altar(input, output, minimumTier, syphon, consumeRate, drainRate).build(consumer, BloodMagic.rl(basePath + ""));
+		// Changed Recipes
+		{
 
-//		registrar.addBloodAltar(new OreIngredient("stone"), ItemSlate.SlateType.BLANK.getStack(), AltarTier.ONE.ordinal(), 1000, 5, 5);
-//		registrar.addBloodAltar(Ingredient.fromItem(Items.BUCKET), FluidUtil.getFilledBucket(new FluidStack(BlockLifeEssence.getLifeEssence(), Fluid.BUCKET_VOLUME)), AltarTier.ONE.ordinal(), 1000, 5, 0);
-//		registrar.addBloodAltar(Ingredient.fromItem(Items.BOOK), new ItemStack(RegistrarBloodMagicItems.SANGUINE_BOOK), AltarTier.ONE.ordinal(), 1000, 20, 0);
-//
-//		// TWO
-//		registrar.addBloodAltar(new OreIngredient("blockRedstone"), OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_APPRENTICE), AltarTier.TWO.ordinal(), 5000, 5, 5);
-//		registrar.addBloodAltar(Ingredient.fromStacks(ItemSlate.SlateType.BLANK.getStack()), ItemSlate.SlateType.REINFORCED.getStack(), AltarTier.TWO.ordinal(), 2000, 5, 5);
-//		registrar.addBloodAltar(Ingredient.fromItem(Items.IRON_SWORD), new ItemStack(RegistrarBloodMagicItems.DAGGER_OF_SACRIFICE), AltarTier.TWO.ordinal(), 3000, 5, 5);
-//
-//		// THREE
-//		registrar.addBloodAltar(new OreIngredient("blockGold"), OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_MAGICIAN), AltarTier.THREE.ordinal(), 25000, 20, 20);
-//		registrar.addBloodAltar(Ingredient.fromStacks(ItemSlate.SlateType.REINFORCED.getStack()), ItemSlate.SlateType.IMBUED.getStack(), AltarTier.THREE.ordinal(), 5000, 15, 10);
-//		registrar.addBloodAltar(new OreIngredient("obsidian"), EnumRuneType.EARTH.getStack(), AltarTier.THREE.ordinal(), 1000, 5, 5);
-//		registrar.addBloodAltar(new OreIngredient("blockLapis"), EnumRuneType.WATER.getStack(), AltarTier.THREE.ordinal(), 1000, 5, 5);
-//		registrar.addBloodAltar(Ingredient.fromItem(Items.MAGMA_CREAM), EnumRuneType.FIRE.getStack(), AltarTier.THREE.ordinal(), 1000, 5, 5);
-//		registrar.addBloodAltar(Ingredient.fromItem(Items.GHAST_TEAR), EnumRuneType.AIR.getStack(), AltarTier.THREE.ordinal(), 1000, 5, 5);
-//		registrar.addBloodAltar(Ingredient.fromItem(RegistrarBloodMagicItems.LAVA_CRYSTAL), new ItemStack(RegistrarBloodMagicItems.ACTIVATION_CRYSTAL), AltarTier.THREE.ordinal(), 10000, 20, 10);
-//
+		}
+		{
+			BloodAltarRecipeBuilder.altar(Ingredient.fromTag(Tags.Items.STRING), new ItemStack(BloodMagicItems.SOUL_SNARE.get()), AltarTier.ONE.ordinal(), 500, 5, 1).build(consumer, BloodMagic.rl(basePath + "soul_snare"));
+		}
+
 //		// FOUR
 //		registrar.addBloodAltar(Ingredient.fromStacks(new ItemStack(RegistrarBloodMagicItems.BLOOD_SHARD)), OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_MASTER), AltarTier.FOUR.ordinal(), 40000, 30, 50);
 //		registrar.addBloodAltar(Ingredient.fromStacks(ItemSlate.SlateType.IMBUED.getStack()), ItemSlate.SlateType.DEMONIC.getStack(), AltarTier.FOUR.ordinal(), 15000, 20, 20);

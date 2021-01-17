@@ -1,0 +1,13 @@
+{
+  "type": "bloodmagic:altar",
+  "input": {
+    "tag": "forge:string"
+  },
+  "output": {
+    "item": "bloodmagic:soulsnare"
+  },
+  "upgradeLevel": 0,
+  "altarSyphon": 500,
+  "consumptionRate": 5,
+  "drainRate": 1
+}

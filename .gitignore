@@ -35,5 +35,8 @@ usernamecache.json
 options.txt
 BloodMagic_Client.launch
 BloodMagic_Server.launch
+runClient.launch
+runData.launch
+runServer.launch
 
 usercache.json
