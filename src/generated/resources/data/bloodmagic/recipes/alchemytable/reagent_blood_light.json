@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "forge:dusts/glowstone"
+    },
+    {
+      "item": "minecraft:torch"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:reagentbloodlight"
+  },
+  "syphon": 1000,
+  "ticks": 200,
+  "upgradeLevel": 3
+}

@@ -23,8 +23,8 @@
     },
     {
       "type": "crafting_2-step_sigil",
-      "soulforge.heading": "Lava Reagent",
-      "soulforge.recipe": "bloodmagic:soulforge/reagent_lava",
+      "alchemy_table.heading": "Lava Reagent",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_lava",
       "array.heading": "Lava Sigil",
       "array.recipe": "bloodmagic:array/lavasigil",
       "array.text": "$(italic)HOT! DO NOT EAT"

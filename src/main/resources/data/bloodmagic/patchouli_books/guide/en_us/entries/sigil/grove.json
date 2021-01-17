@@ -28,8 +28,8 @@
     },
     {
       "type": "crafting_2-step_sigil",
-      "soulforge.heading": "Growth Reagent",
-      "soulforge.recipe": "bloodmagic:soulforge/reagent_growth",
+      "alchemy_table.heading": "Growth Reagent",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_growth",
       "array.heading": "Sigil of the Green Grove",
       "array.recipe": "bloodmagic:array/growthsigil"
     }

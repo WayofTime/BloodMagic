@@ -13,8 +13,8 @@
     },
     {
       "type": "crafting_2-step_sigil",
-      "soulforge.heading": "Air Reagent",
-      "soulforge.recipe": "bloodmagic:soulforge/reagent_air",
+      "alchemy_table.heading": "Air Reagent",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_air",
       "array.heading": "Air Sigil",
       "array.recipe": "bloodmagic:array/airsigil",
       "array.text": "$(italic)I feel lighter already..."

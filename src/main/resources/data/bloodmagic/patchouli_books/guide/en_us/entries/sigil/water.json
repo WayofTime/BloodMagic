@@ -23,8 +23,8 @@
     },
     {
       "type": "crafting_2-step_sigil",
-      "soulforge.heading": "Water Reagent",
-      "soulforge.recipe": "bloodmagic:soulforge/reagent_water",
+      "alchemy_table.heading": "Water Reagent",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_water",
       "array.heading": "Water Sigil",
       "array.recipe": "bloodmagic:array/watersigil",
       "array.text": "$(italic)Infinite water, anyone?"

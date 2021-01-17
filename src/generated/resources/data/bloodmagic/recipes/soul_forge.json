@@ -2,15 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "i i",
-    "sgs",
+    "sSs",
     "sos"
   ],
   "key": {
     "s": {
       "tag": "forge:stone"
     },
-    "g": {
-      "tag": "forge:ingots/gold"
+    "S": {
+      "item": "bloodmagic:blankslate"
     },
     "i": {
       "tag": "forge:ingots/iron"

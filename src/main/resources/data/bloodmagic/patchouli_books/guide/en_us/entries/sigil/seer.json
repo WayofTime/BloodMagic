@@ -13,8 +13,8 @@
     },
     {
       "type": "crafting_2-step_sigil",
-      "soulforge.heading": "Sight Reagent",
-      "soulforge.recipe": "bloodmagic:soulforge/reagent_sight",
+      "alchemy_table.heading": "Sight Reagent",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_sight",
       "array.heading": "Seer's Sigil",
       "array.recipe": "bloodmagic:array/seersigil",
       "array.text": "$(italic)When seeing all is not enough"

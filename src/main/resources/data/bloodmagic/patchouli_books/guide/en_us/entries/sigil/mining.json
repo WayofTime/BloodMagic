@@ -23,8 +23,8 @@
     },
     {
       "type": "crafting_2-step_sigil",
-      "soulforge.heading": "Mining Reagent",
-      "soulforge.recipe": "bloodmagic:soulforge/reagent_fastminer",
+      "alchemy_table.heading": "Mining Reagent",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_fastminer",
       "array.heading": "Sigil of the Fast Miner",
       "array.recipe": "bloodmagic:array/fastminersigil"
     }

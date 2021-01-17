@@ -1,8 +1,8 @@
 {
   "include": [
     {
-      "template": "crafting_soulforge",
-      "as": "soulforge",
+      "template": "crafting_alchemy_table",
+      "as": "alchemy_table",
       "x": 0,
       "y": 0
     },
