@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:slate_vial"
+    },
+    {
+      "tag": "forge:crops/nether_wart"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    },
+    {
+      "tag": "forge:dusts/coal"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:fortune_anointment"
+  },
+  "syphon": 500,
+  "ticks": 100,
+  "upgradeLevel": 1
+}

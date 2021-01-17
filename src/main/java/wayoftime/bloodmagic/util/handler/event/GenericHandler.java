@@ -11,16 +11,22 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.BowItem;
+import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -35,11 +41,13 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodOrb;
 import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.IBloodOrb;
 import wayoftime.bloodmagic.common.item.ItemExperienceBook;
+import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
@@ -135,6 +143,16 @@ public class GenericHandler
 				double additionalDamage = LivingUtil.getAdditionalDamage(sourcePlayer, mainWeapon, living, event.getAmount());
 				event.setAmount((float) (event.getAmount() + additionalDamage));
 			}
+
+			ItemStack heldStack = sourcePlayer.getHeldItemMainhand();
+			AnointmentHolder holder = AnointmentHolder.fromItemStack(heldStack);
+
+			if (holder != null)
+			{
+				double additionalDamage = holder.getAdditionalDamage(sourcePlayer, heldStack, event.getAmount(), living);
+
+				event.setAmount((float) (event.getAmount() + additionalDamage));
+			}
 		}
 
 		if (living instanceof PlayerEntity)
@@ -164,6 +182,16 @@ public class GenericHandler
 				{
 					LivingUtil.applyNewExperience(sourcePlayer, LivingArmorRegistrar.UPGRADE_SPRINT_ATTACK.get(), event.getAmount());
 				}
+			}
+
+			ItemStack heldStack = sourcePlayer.getHeldItemMainhand();
+			AnointmentHolder holder = AnointmentHolder.fromItemStack(heldStack);
+//			AnointmentHolder holder = AnointmentHolder.fromPlayer(sourcePlayer, Hand.MAIN_HAND);
+
+//			System.out.println("Checking consumption. Holder is: " + holder);
+			if (holder != null && holder.consumeAnointmentDurabilityOnHit(heldStack, EquipmentSlotType.MAINHAND))
+			{
+				holder.toItemStack(heldStack);
 			}
 		}
 
@@ -459,7 +487,7 @@ public class GenericHandler
 		event.setNewSpeed((1 + percentIncrease) * event.getNewSpeed());
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onBreakBlock(BlockEvent.BreakEvent event)
 	{
 		PlayerEntity player = event.getPlayer();
@@ -474,6 +502,30 @@ public class GenericHandler
 				{
 					player.addPotionEffect(new EffectInstance(Effects.HASTE, mineTime, LivingArmorRegistrar.UPGRADE_DIGGING.get().getBonusValue("speed_level", stats.getLevel(LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())).intValue(), true, false));
 				}
+			}
+
+			ItemStack heldStack = player.getHeldItemMainhand();
+			AnointmentHolder holder = AnointmentHolder.fromItemStack(heldStack);
+
+			if (holder != null)
+			{
+				if (holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get()) >= 1)
+				{
+					int bonusLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand());
+					int exp = event.getState().getExpDrop(event.getWorld(), event.getPos(), bonusLevel, holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get()));
+					event.setExpToDrop(exp);
+				}
+
+				int hiddenLevel = holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_HIDDEN_KNOWLEDGE.get());
+				if (hiddenLevel > 0)
+				{
+					double expBonus = AnointmentRegistrar.ANOINTMENT_HIDDEN_KNOWLEDGE.get().getBonusValue("exp", hiddenLevel).doubleValue();
+					int expAdded = (int) expBonus + (expBonus % 1 > event.getWorld().getRandom().nextDouble() ? 1 : 0);
+					event.setExpToDrop(event.getExpToDrop() + expAdded);
+				}
+
+				if (holder.consumeAnointmentDurabilityOnHarvest(heldStack, EquipmentSlotType.MAINHAND))
+					holder.toItemStack(heldStack);
 			}
 		}
 	}
@@ -496,5 +548,109 @@ public class GenericHandler
 				}
 			}
 		}
+	}
+
+	private static final Map<ItemStack, Double> rollMap = new HashMap<ItemStack, Double>();
+
+	@SubscribeEvent
+	public void onEntityUseTick(LivingEntityUseItemEvent.Tick event)
+	{
+		ItemStack stack = event.getItem();
+		if (stack.getItem() instanceof BowItem || stack.getItem() instanceof CrossbowItem)
+		{
+			AnointmentHolder holder = AnointmentHolder.fromItemStack(stack);
+			int quickDrawLevel = holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_QUICK_DRAW.get());
+			if (quickDrawLevel > 0)
+			{
+				double amount = rollMap.getOrDefault(stack, 0D) + AnointmentRegistrar.ANOINTMENT_QUICK_DRAW.get().getBonusValue("speed", quickDrawLevel).doubleValue();
+				if (amount >= 1)
+				{
+					int drawReduction = (int) amount;
+					event.setDuration(event.getDuration() - drawReduction);
+				} else
+				{
+					rollMap.put(stack, amount);
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onEntityFinishUse(LivingEntityUseItemEvent.Stop event)
+	{
+		ItemStack stack = event.getItem();
+		if (stack.getItem() instanceof CrossbowItem)
+		{
+			int i = stack.getUseDuration() - event.getDuration();
+			float f = getCharge(i, stack);
+			if (f < 0)
+			{
+				return;
+			}
+		}
+		AnointmentHolder holder = AnointmentHolder.fromItemStack(stack);
+		if (holder != null)
+		{
+			if (holder.consumeAnointmentDurabilityOnUseFinish(stack, EquipmentSlotType.MAINHAND))
+			{
+
+				holder.toItemStack(stack);
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onEntityJoinEvent(EntityJoinWorldEvent event)
+	{
+		Entity entity = event.getEntity();
+		if (entity instanceof ArrowEntity)
+		{
+			if (entity.ticksExisted <= 0)
+			{
+//				System.out.println("An arrow joined the world! Looking for the shooter...");
+				ArrowEntity arrowEntity = (ArrowEntity) entity;
+				Entity shooter = arrowEntity.func_234616_v_();
+				if (shooter instanceof PlayerEntity)
+				{
+					PlayerEntity playerShooter = (PlayerEntity) shooter;
+					for (Hand hand : Hand.values())
+					{
+						ItemStack heldStack = playerShooter.getHeldItem(hand);
+						AnointmentHolder holder = AnointmentHolder.fromItemStack(heldStack);
+						if (holder == null)
+						{
+							continue;
+						}
+
+						int powerLevel = holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_BOW_POWER.get());
+						if (powerLevel > 0)
+						{
+							arrowEntity.setDamage(arrowEntity.getDamage() * AnointmentRegistrar.ANOINTMENT_BOW_POWER.get().getBonusValue("damage", powerLevel).doubleValue());
+
+//							System.out.println("Arrow damage is now: " + arrowEntity.getDamage());
+						}
+
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	private static float getCharge(int useTime, ItemStack stack)
+	{
+		float f = (float) useTime / (float) getChargeTime(stack);
+		if (f > 1.0F)
+		{
+			f = 1.0F;
+		}
+
+		return f;
+	}
+
+	public static int getChargeTime(ItemStack stack)
+	{
+		int i = EnchantmentHelper.getEnchantmentLevel(Enchantments.QUICK_CHARGE, stack);
+		return i == 0 ? 25 : 25 - 5 * i;
 	}
 }

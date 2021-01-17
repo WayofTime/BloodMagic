@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "forge:string"
+    },
+    {
+      "tag": "forge:string"
+    },
+    {
+      "tag": "forge:string"
+    }
+  ],
+  "output": {
+    "item": "minecraft:cobweb"
+  },
+  "syphon": 50,
+  "ticks": 50,
+  "upgradeLevel": 1
+}

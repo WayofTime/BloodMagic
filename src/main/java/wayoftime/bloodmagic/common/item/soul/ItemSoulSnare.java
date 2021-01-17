@@ -6,7 +6,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.SnowballItem;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -22,8 +21,7 @@ import wayoftime.bloodmagic.entity.projectile.EntitySoulSnare;
 
 public class ItemSoulSnare extends Item
 {
-	public static String[] names =
-	{ "base" };
+	public static String[] names = { "base" };
 
 	public ItemSoulSnare()
 	{
@@ -44,14 +42,11 @@ public class ItemSoulSnare extends Item
 			stack.shrink(1);
 		}
 
-		SnowballItem d;
-
-		worldIn.playSound((PlayerEntity) null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F
-				/ (random.nextFloat() * 0.4F + 0.8F));
+		worldIn.playSound((PlayerEntity) null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
 
 		if (!worldIn.isRemote)
 		{
-			System.out.println("Attempting to spawn");
+//			System.out.println("Attempting to spawn");
 			EntitySoulSnare snare = new EntitySoulSnare(worldIn, playerIn);
 			snare.func_234612_a_(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
 			worldIn.addEntity(snare);

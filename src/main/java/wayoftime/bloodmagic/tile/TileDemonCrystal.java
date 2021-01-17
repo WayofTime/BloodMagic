@@ -194,9 +194,10 @@ public class TileDemonCrystal extends TileTicking
 		if (!tag.contains(Constants.NBT.WILL_TYPE))
 		{
 			this.willType = EnumDemonWillType.DEFAULT;
+		} else
+		{
+			this.willType = EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ENGLISH));
 		}
-
-		this.willType = EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ENGLISH));
 	}
 
 	@Override

@@ -19,7 +19,7 @@ public class BloodMagicTags
 
 	public static final ITag.INamedTag<Item> CRYSTAL_DEMON = ItemTags.makeWrapperTag("bloodmagic:crystals/demon");
 
-	public static final ITag.INamedTag<Fluid> LIFE_ESSENCE = FluidTags.makeWrapperTag("life");
+	public static final ITag.INamedTag<Fluid> LIFE_ESSENCE = FluidTags.makeWrapperTag("forge:life");
 
 	// Ores
 	public static final ITag.INamedTag<Item> ORE_COPPER = getForgeOreTag("copper");

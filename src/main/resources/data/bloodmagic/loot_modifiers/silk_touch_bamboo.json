@@ -1,0 +1,11 @@
+{
+  "type": "bloodmagic:silk_touch_bamboo",
+  "conditions": [
+    {
+      "condition": "minecraft:match_tool",
+      "predicate": {
+
+      }
+    }
+  ]
+}

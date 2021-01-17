@@ -1,4 +1,4 @@
-{
+`{
   "name": "Changelog",
   "icon": "minecraft:map",
   "category": "utility",
@@ -7,6 +7,11 @@
     {
       "type": "text",
       "text": "All the changelogs of $(6)Blood Magic$() to date, from most recent to oldest."
+    },
+    {
+      "type": "text",
+      "title": "3.0.5-10",
+      "text": "Fixed a crash with the Blood Altar on unload."
     },
 	{
       "type": "text",

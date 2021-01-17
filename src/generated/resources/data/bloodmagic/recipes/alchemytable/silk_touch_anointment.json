@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:slate_vial"
+    },
+    {
+      "tag": "forge:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:cobweb"
+    },
+    {
+      "tag": "forge:nuggets/gold"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:silk_touch_anointment"
+  },
+  "syphon": 500,
+  "ticks": 100,
+  "upgradeLevel": 1
+}

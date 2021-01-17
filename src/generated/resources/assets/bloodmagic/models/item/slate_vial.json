@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "bloodmagic:item/alchemic_vial",
+    "layer1": "bloodmagic:item/alchemic_ribbon"
+  }
+}

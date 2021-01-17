@@ -11,7 +11,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -19,6 +21,8 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.anointment.AnointmentColor;
+import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.api.compat.IMultiWillTool;
 import wayoftime.bloodmagic.client.model.MimicColor;
 import wayoftime.bloodmagic.client.render.alchemyarray.BeaconAlchemyCircleRenderer;
@@ -30,6 +34,7 @@ import wayoftime.bloodmagic.client.render.block.RenderAlchemyArray;
 import wayoftime.bloodmagic.client.render.block.RenderAltar;
 import wayoftime.bloodmagic.client.render.block.RenderDemonCrucible;
 import wayoftime.bloodmagic.client.render.entity.BloodLightRenderer;
+import wayoftime.bloodmagic.client.render.entity.EntityShapedChargeRenderer;
 import wayoftime.bloodmagic.client.render.entity.SoulSnareRenderer;
 import wayoftime.bloodmagic.client.screens.ScreenAlchemicalReactionChamber;
 import wayoftime.bloodmagic.client.screens.ScreenAlchemyTable;
@@ -64,11 +69,25 @@ public class ClientEvents
 		ScreenManager.registerFactory(BloodMagicBlocks.ALCHEMY_TABLE_CONTAINER.get(), ScreenAlchemyTable::new);
 	}
 
+	public static void colorHandlerEvent(ColorHandlerEvent.Item event)
+	{
+		event.getItemColors().register(new AnointmentColor(), BloodMagicItems.MELEE_DAMAGE_ANOINTMENT.get(), BloodMagicItems.SILK_TOUCH_ANOINTMENT.get(), BloodMagicItems.FORTUNE_ANOINTMENT.get(), BloodMagicItems.HOLY_WATER_ANOINTMENT.get(), BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT.get(), BloodMagicItems.QUICK_DRAW_ANOINTMENT.get(), BloodMagicItems.LOOTING_ANOINTMENT.get(), BloodMagicItems.BOW_POWER_ANOINTMENT.get(), BloodMagicItems.WILL_POWER_ANOINTMENT.get(), BloodMagicItems.SMELTING_ANOINTMENT.get());
+	}
+
+	@SubscribeEvent
+	public void appendTooltip(ItemTooltipEvent event)
+	{
+		ItemStack stack = event.getItemStack();
+		AnointmentHolder holder = AnointmentHolder.fromItemStack(stack);
+		AnointmentHolder.appendAnointmentTooltip(holder, event.getToolTip());
+	}
+
 	@SuppressWarnings("deprecation")
 	public static void initClientEvents(FMLClientSetupEvent event)
 	{
 		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.SNARE.getEntityType(), SoulSnareRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.BLOOD_LIGHT.getEntityType(), BloodLightRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.SHAPED_CHARGE.getEntityType(), EntityShapedChargeRenderer::new);
 
 		DeferredWorkQueue.runLater(() -> {
 			RenderType rendertype = RenderType.getCutoutMipped();

@@ -14,6 +14,7 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
@@ -49,12 +50,14 @@ import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeProvider;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
+import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.recipe.IngredientBloodOrb;
 import wayoftime.bloodmagic.core.registry.AlchemyArrayRegistry;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.impl.BloodMagicCorePlugin;
+import wayoftime.bloodmagic.loot.GlobalLootModifier;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.ritual.ModRituals;
@@ -101,12 +104,15 @@ public class BloodMagic
 //		RegistrarBloodMagic.BLOOD_ORBS.createAndRegister(modBus, "bloodorbs");
 		BloodMagicItems.BLOOD_ORBS.createAndRegister(modBus, "bloodorbs");
 		LivingArmorRegistrar.UPGRADES.createAndRegister(modBus, "upgrades");
+		AnointmentRegistrar.ANOINTMENTS.createAndRegister(modBus, "anointments");
 		BloodMagicItems.BASICITEMS.register(modBus);
 		BloodMagicBlocks.BASICBLOCKS.register(modBus);
 		BloodMagicBlocks.DUNGEONBLOCKS.register(modBus);
 		BloodMagicBlocks.FLUIDS.register(modBus);
 		BloodMagicBlocks.CONTAINERS.register(modBus);
 		BloodMagicEntityTypes.ENTITY_TYPES.register(modBus);
+
+		GlobalLootModifier.GLM.register(modBus);
 
 		BloodMagicRecipeSerializers.RECIPE_SERIALIZERS.register(modBus);
 
@@ -127,6 +133,8 @@ public class BloodMagic
 		modBus.addGenericListener(Effect.class, BloodMagicPotions::registerPotions);
 
 		MinecraftForge.EVENT_BUS.register(new GenericHandler());
+//		MinecraftForge.EVENT_BUS.register(new ClientEvents());
+		modBus.addListener(this::registerColors);
 
 		MinecraftForge.EVENT_BUS.register(new WillHandler());
 //		MinecraftForge.EVENT_BUS.register(new BloodMagicBlocks());
@@ -171,6 +179,7 @@ public class BloodMagic
 		RITUAL_MANAGER.discover();
 		ModRituals.initHarvestHandlers();
 		LivingArmorRegistrar.register();
+		AnointmentRegistrar.register();
 		AlchemyArrayRegistry.registerBaseArrays();
 	}
 
@@ -239,6 +248,16 @@ public class BloodMagic
 
 		ClientEvents.initClientEvents(event);
 		Elements.registerElements();
+		MinecraftForge.EVENT_BUS.register(new ClientEvents());
+//		IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+//		
+
+	}
+
+	private void registerColors(final ColorHandlerEvent event)
+	{
+		if (event instanceof ColorHandlerEvent.Item)
+			ClientEvents.colorHandlerEvent((ColorHandlerEvent.Item) event);
 	}
 
 	private void enqueueIMC(final InterModEnqueueEvent event)

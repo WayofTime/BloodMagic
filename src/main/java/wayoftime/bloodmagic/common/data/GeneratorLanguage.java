@@ -342,7 +342,20 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("tooltip.bloodmagic.livingarmour.extraExtraInfo", "&9-Hold shift + M for progress info-");
 
+		add("tooltip.bloodmagic.slate_vial", "A glass vial infused with a simple slate");
+
 		add("chat.bloodmagic.living_upgrade_level_increase", "%s has leveled up to %d");
+
+		// Anointments. Doesn't have any spelling to be pedantic about.
+		add("anointment.bloodmagic.melee_damage", "Whetstone");
+		add("anointment.bloodmagic.silk_touch", "Soft Touch");
+		add("anointment.bloodmagic.fortune", "Fortunate");
+		add("anointment.bloodmagic.holy_water", "Holy Light");
+		add("anointment.bloodmagic.hidden_knowledge", "Miner's Secrets");
+		add("anointment.bloodmagic.quick_draw", "Deft Hands");
+		add("anointment.bloodmagic.bow_power", "Heavy Shot");
+		add("anointment.bloodmagic.looting", "Plundering");
+		add("anointment.bloodmagic.smelting", "Heated Tool");
 
 		// Guide
 		add("guide.bloodmagic.name", "Sanguine Scientiem");
@@ -522,6 +535,18 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addItem(BloodMagicItems.LIVING_TOME, "Living Armour Upgrade Tome");
 
+		// Anointment Items
+		addItem(BloodMagicItems.SLATE_VIAL, "Slate-infused Vial");
+		addItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT, "Honing Oil");
+		addItem(BloodMagicItems.SILK_TOUCH_ANOINTMENT, "Soft Coating");
+		addItem(BloodMagicItems.FORTUNE_ANOINTMENT, "Fortuna Extract");
+		addItem(BloodMagicItems.HOLY_WATER_ANOINTMENT, "Holy Water");
+		addItem(BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT, "Miner's Secrets");
+		addItem(BloodMagicItems.QUICK_DRAW_ANOINTMENT, "Dexterity Alkahest");
+		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT, "Iron Tip");
+		addItem(BloodMagicItems.LOOTING_ANOINTMENT, "Plunderer's Glint");
+		addItem(BloodMagicItems.SMELTING_ANOINTMENT, "Slow-burning Oil");
+
 		// Alchemy Items
 		addItem(BloodMagicItems.PLANT_OIL, "Plant Oil");
 
@@ -552,6 +577,9 @@ public class GeneratorLanguage extends LanguageProvider
 		add("jei.bloodmagic.recipe.requiredtier", "Tier: %d");
 		add("jei.bloodmagic.recipe.consumptionrate", "Consumption: %s LP/t");
 		add("jei.bloodmagic.recipe.drainrate", "Drain: %s LP/t");
+
+		add("jei.bloodmagic.recipe.lpDrained", "Drained: %s LP");
+		add("jei.bloodmagic.recipe.ticksRequired", "Time: %sTicks");
 
 		add("jei.bloodmagic.recipe.altar", "Blood Altar");
 		add("jei.bloodmagic.recipe.soulforge", "Hellfire Forge");
