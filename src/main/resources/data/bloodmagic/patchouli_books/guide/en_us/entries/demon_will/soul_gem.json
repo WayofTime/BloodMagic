@@ -17,7 +17,7 @@
       "type": "crafting_soulforge",
       "heading": "Petty Tartaric Gem",
       "recipe": "bloodmagic:soulforge/pettytartaricgem",
-      "text": "Your first gem will hold a maximum of 64 $(l:demon_will/demon_will)Will$(). Of course, you'll have to craft two if you want to upgrade it."
+      "text": "Your first gem will hold a maximum of 64 $(l:demon_will/demon_will)Will$(). Much more compact than before!"
     },
     {
       "type": "text",
@@ -27,7 +27,7 @@
       "type": "crafting_soulforge",
       "heading": "Lesser Tartaric Gem",
       "recipe": "bloodmagic:soulforge/lessertartaricgem",
-      "text": "This reinforced gem can hold up to 256 $(l:demon_will/demon_will)Will$()."
+      "text": "This reinforced gem can hold up to 256 $(l:demon_will/demon_will)Will$(). $(br2)Note: You only need one gem when upgrading - the $(item)Hellfire Forge$() will draw $(raw)Will$() from the gem it's crafting before trying to use will from the gem in its Gem Slot. Don't worry, the newly crafted gem will hold any leftover $(raw)Will$() from the process."
     },
     {
       "type": "text",
