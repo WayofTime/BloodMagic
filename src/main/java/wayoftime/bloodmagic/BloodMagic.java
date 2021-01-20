@@ -36,6 +36,8 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import wayoftime.bloodmagic.client.ClientEvents;
 import wayoftime.bloodmagic.client.hud.Elements;
+import wayoftime.bloodmagic.client.key.BloodMagicKeyHandler;
+import wayoftime.bloodmagic.client.key.KeyBindings;
 import wayoftime.bloodmagic.client.model.MimicModelLoader;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.GeneratorBaseRecipes;
@@ -249,6 +251,8 @@ public class BloodMagic
 		ClientEvents.initClientEvents(event);
 		Elements.registerElements();
 		MinecraftForge.EVENT_BUS.register(new ClientEvents());
+		KeyBindings.initializeKeys();
+		new BloodMagicKeyHandler();
 //		IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 //		
 
@@ -306,4 +310,5 @@ public class BloodMagic
 			return new ItemStack(BloodMagicBlocks.BLOOD_ALTAR.get());
 		}
 	};
+	public static final String NAME = "Blood Magic: Alchemical Wizardry";
 }

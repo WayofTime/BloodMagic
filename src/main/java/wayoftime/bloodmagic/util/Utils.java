@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.util;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import javax.annotation.Nullable;
 
@@ -38,6 +39,7 @@ import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import wayoftime.bloodmagic.api.compat.IDemonWillViewer;
 import wayoftime.bloodmagic.tile.TileInventory;
+import wayoftime.bloodmagic.util.helper.NBTHelper;
 
 public class Utils
 {
@@ -731,4 +733,31 @@ public class Utils
 //			}
 //		}
 //	}
+
+	public static boolean hasUUID(ItemStack stack)
+	{
+		return stack.hasTag() && stack.getTag().contains(Constants.NBT.MOST_SIG) && stack.getTag().contains(Constants.NBT.LEAST_SIG);
+	}
+
+	public static UUID getUUID(ItemStack stack)
+	{
+		if (!hasUUID(stack))
+		{
+			return null;
+		}
+
+		return new UUID(stack.getTag().getLong(Constants.NBT.MOST_SIG), stack.getTag().getLong(Constants.NBT.LEAST_SIG));
+	}
+
+	public static void setUUID(ItemStack stack)
+	{
+		stack = NBTHelper.checkNBT(stack);
+
+		if (!stack.getTag().contains(Constants.NBT.MOST_SIG) && !stack.getTag().contains(Constants.NBT.LEAST_SIG))
+		{
+			UUID itemUUID = UUID.randomUUID();
+			stack.getTag().putLong(Constants.NBT.MOST_SIG, itemUUID.getMostSignificantBits());
+			stack.getTag().putLong(Constants.NBT.LEAST_SIG, itemUUID.getLeastSignificantBits());
+		}
+	}
 }
