@@ -1,17 +1,21 @@
 package wayoftime.bloodmagic.client;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -38,14 +42,18 @@ import wayoftime.bloodmagic.client.render.entity.EntityShapedChargeRenderer;
 import wayoftime.bloodmagic.client.render.entity.SoulSnareRenderer;
 import wayoftime.bloodmagic.client.screens.ScreenAlchemicalReactionChamber;
 import wayoftime.bloodmagic.client.screens.ScreenAlchemyTable;
+import wayoftime.bloodmagic.client.screens.ScreenHolding;
 import wayoftime.bloodmagic.client.screens.ScreenSoulForge;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.item.ItemSacrificialDagger;
+import wayoftime.bloodmagic.common.item.sigil.ItemSigilHolding;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilToggleable;
 import wayoftime.bloodmagic.common.item.soul.ItemSentientSword;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.core.registry.AlchemyArrayRendererRegistry;
+import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
+import wayoftime.bloodmagic.network.SigilHoldingPacket;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 import wayoftime.bloodmagic.tile.TileAltar;
 import wayoftime.bloodmagic.tile.TileDemonCrucible;
@@ -67,11 +75,49 @@ public class ClientEvents
 		ScreenManager.registerFactory(BloodMagicBlocks.SOUL_FORGE_CONTAINER.get(), ScreenSoulForge::new);
 		ScreenManager.registerFactory(BloodMagicBlocks.ARC_CONTAINER.get(), ScreenAlchemicalReactionChamber::new);
 		ScreenManager.registerFactory(BloodMagicBlocks.ALCHEMY_TABLE_CONTAINER.get(), ScreenAlchemyTable::new);
+		ScreenManager.registerFactory(BloodMagicBlocks.HOLDING_CONTAINER.get(), ScreenHolding::new);
 	}
 
 	public static void colorHandlerEvent(ColorHandlerEvent.Item event)
 	{
 		event.getItemColors().register(new AnointmentColor(), BloodMagicItems.MELEE_DAMAGE_ANOINTMENT.get(), BloodMagicItems.SILK_TOUCH_ANOINTMENT.get(), BloodMagicItems.FORTUNE_ANOINTMENT.get(), BloodMagicItems.HOLY_WATER_ANOINTMENT.get(), BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT.get(), BloodMagicItems.QUICK_DRAW_ANOINTMENT.get(), BloodMagicItems.LOOTING_ANOINTMENT.get(), BloodMagicItems.BOW_POWER_ANOINTMENT.get(), BloodMagicItems.WILL_POWER_ANOINTMENT.get(), BloodMagicItems.SMELTING_ANOINTMENT.get());
+	}
+
+	public static void cycleSigil(ItemStack stack, PlayerEntity player, int dWheel)
+	{
+		int mode = dWheel;
+		if (true)
+		{
+			mode = ItemSigilHolding.getCurrentItemOrdinal(stack);
+			mode = dWheel < 0 ? ItemSigilHolding.next(mode) : ItemSigilHolding.prev(mode);
+		}
+
+		ItemSigilHolding.cycleToNextSigil(stack, mode);
+		BloodMagicPacketHandler.INSTANCE.sendToServer(new SigilHoldingPacket(player.inventory.currentItem, mode));
+		ItemStack newStack = ItemSigilHolding.getItemStackInSlot(stack, ItemSigilHolding.getCurrentItemOrdinal(stack));
+		player.sendStatusMessage(newStack.isEmpty() ? new StringTextComponent("") : newStack.getTextComponent(), true);
+	}
+
+	@SubscribeEvent
+	public void onMouseEvent(InputEvent.MouseScrollEvent event)
+	{
+		ClientPlayerEntity player = Minecraft.getInstance().player;
+
+		if (event.getScrollDelta() != 0 && player != null && player.isSneaking())
+		{
+			ItemStack stack = player.getHeldItemMainhand();
+
+			if (!stack.isEmpty())
+			{
+				Item item = stack.getItem();
+
+				if (item instanceof ItemSigilHolding)
+				{
+					cycleSigil(stack, player, event.getScrollDelta() > 0 ? 1 : -1);
+					event.setCanceled(true);
+				}
+			}
+		}
 	}
 
 	@SubscribeEvent

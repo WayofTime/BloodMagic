@@ -135,7 +135,7 @@ public class BloodMagic
 		modBus.addGenericListener(Effect.class, BloodMagicPotions::registerPotions);
 
 		MinecraftForge.EVENT_BUS.register(new GenericHandler());
-//		MinecraftForge.EVENT_BUS.register(new ClientEvents());
+//		MinecraftForge.EVENT_BUS.register(new ClientHandler());
 		modBus.addListener(this::registerColors);
 
 		MinecraftForge.EVENT_BUS.register(new WillHandler());

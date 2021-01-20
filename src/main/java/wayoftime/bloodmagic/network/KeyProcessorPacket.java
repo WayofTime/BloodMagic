@@ -46,7 +46,6 @@ public class KeyProcessorPacket
 
 	public static void sendKeyToServer(KeyProcessorPacket msg, PlayerEntity playerEntity)
 	{
-		System.out.println("Hoiiiii");
 		if (playerEntity != null)
 		{
 			ItemStack heldStack = playerEntity.getHeldItemMainhand();
@@ -62,10 +61,4 @@ public class KeyProcessorPacket
 			}
 		}
 	}
-
-//	@OnlyIn(Dist.CLIENT)
-//	public static void updateClientHolder(DemonWillHolder holder)
-//	{
-//		ClientHandler.currentAura = holder;
-//	}
 }

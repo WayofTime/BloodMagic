@@ -20,6 +20,7 @@ import wayoftime.bloodmagic.common.item.sigil.ItemSigilDivination;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilFastMiner;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilFrost;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilGreenGrove;
+import wayoftime.bloodmagic.common.item.sigil.ItemSigilHolding;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilLava;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilMagnetism;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilVoid;
@@ -127,6 +128,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> ICE_SIGIL = ITEMS.register("icesigil", () -> new ItemSigilFrost());
 	public static final RegistryObject<Item> AIR_SIGIL = BASICITEMS.register("airsigil", ItemSigilAir::new);
 	public static final RegistryObject<Item> BLOOD_LIGHT_SIGIL = BASICITEMS.register("bloodlightsigil", ItemSigilBloodLight::new);
+	public static final RegistryObject<Item> HOLDING_SIGIL = BASICITEMS.register("sigilofholding", ItemSigilHolding::new);
 
 	public static final RegistryObject<Item> ARCANE_ASHES = BASICITEMS.register("arcaneashes", () -> new ItemArcaneAshes());
 	public static final RegistryObject<Item> DAGGER_OF_SACRIFICE = BASICITEMS.register("daggerofsacrifice", () -> new ItemDaggerOfSacrifice());
@@ -168,6 +170,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> REAGENT_BLOOD_LIGHT = BASICITEMS.register("reagentbloodlight", () -> new ItemBase());
 	public static final RegistryObject<Item> REAGENT_SIGHT = BASICITEMS.register("reagentsight", () -> new ItemBase());
 	public static final RegistryObject<Item> REAGENT_BINDING = BASICITEMS.register("reagentbinding", () -> new ItemBase());
+	public static final RegistryObject<Item> REAGENT_HOLDING = BASICITEMS.register("reagentholding", () -> new ItemBase());
 
 	// Tartaric Gems
 	public static final RegistryObject<Item> PETTY_GEM = ITEMS.register("soulgempetty", () -> new ItemSoulGem("petty", 64));

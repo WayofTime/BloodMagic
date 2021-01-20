@@ -59,6 +59,13 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.sigil.seer.currentTranquility", "Current Tranquility: %d");
 		add("tooltip.bloodmagic.sigil.seer.currentBonus", "Current Bonus: +%d%%");
 
+		add("tooltip.bloodmagic.sigil.holding.press", "Press %s to modify");
+		add("tooltip.bloodmagic.sigil.holding.desc", "Sigil-ception");
+		add("tooltip.bloodmagic.sigil.holding.sigilInSlot", "Slot %d: %s");
+
+		add("tooltip.bloodmagic.activated", "Activated");
+		add("tooltip.bloodmagic.deactivated", "Deactivated");
+
 		add("tooltip.bloodmagic.decoration.safe", "Safe for decoration");
 		add("tooltip.bloodmagic.decoration.notSafe", "Dangerous for decoration");
 
@@ -112,6 +119,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.experienceTome", "A book used to store experience");
 		add("tooltip.bloodmagic.experienceTome.exp", "Exp: %0.3f");
 		add("tooltip.bloodmagic.experienceTome.expLevel", "Level: %d");
+
+		add("key.bloodmagic.category", "Blood Magic");
 
 		// Ritual info
 		add("tooltip.bloodmagic.diviner.currentRitual", "Current Ritual: %s");
@@ -361,6 +370,11 @@ public class GeneratorLanguage extends LanguageProvider
 		add("guide.bloodmagic.name", "Sanguine Scientiem");
 		add("guide.bloodmagic.landing_text", "\"It is my dear hope that by holding this tome in your hands, I may impart the knowledge of the lost art that is Blood Magic\"$(br)$(o)- Magus Arcana$()");
 
+		// Keybinds
+		add("bloodmagic.keybind.open_holding", "Open Sigil of Holding");
+		add("bloodmagic.keybind.cycle_holding_pos", "Cycle Sigil (+)");
+		add("bloodmagic.keybind.cycle_holding_neg", "Cycle Sigil (-)");
+
 		// Block names
 		addBlock(BloodMagicBlocks.BLANK_RUNE, "Blank Rune");
 		addBlock(BloodMagicBlocks.SPEED_RUNE, "Speed Rune");
@@ -454,6 +468,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.AIR_SIGIL, "Air Sigil");
 		addItem(BloodMagicItems.BLOOD_LIGHT_SIGIL, "Sigil of the Blood Lamp");
 		addItem(BloodMagicItems.SEER_SIGIL, "Seer's Sigil");
+		addItem(BloodMagicItems.HOLDING_SIGIL, "Sigil of Holding");
 
 		addItem(BloodMagicBlocks.LIFE_ESSENCE_BUCKET, "Bucket of Life");
 		addItem(BloodMagicItems.ARCANE_ASHES, "Arcane Ashes");
@@ -477,6 +492,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.REAGENT_BLOOD_LIGHT, "Blood Lamp Reagent");
 		addItem(BloodMagicItems.REAGENT_SIGHT, "Sight Reagent");
 		addItem(BloodMagicItems.REAGENT_BINDING, "Binding Reagent");
+		addItem(BloodMagicItems.REAGENT_HOLDING, "Holding Reagent");
 
 		addItem(BloodMagicItems.PETTY_GEM, "Petty Tartaric Gem");
 		addItem(BloodMagicItems.LESSER_GEM, "Lesser Tartaric Gem");

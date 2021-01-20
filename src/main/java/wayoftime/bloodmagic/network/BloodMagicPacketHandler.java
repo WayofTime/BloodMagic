@@ -19,6 +19,7 @@ public class BloodMagicPacketHandler extends BasePacketHandler
 		registerServerToClient(SetClientHealthPacket.class, SetClientHealthPacket::encode, SetClientHealthPacket::decode, SetClientHealthPacket::handle);
 
 		registerClientToServer(KeyProcessorPacket.class, KeyProcessorPacket::encode, KeyProcessorPacket::decode, KeyProcessorPacket::handle);
+		registerClientToServer(SigilHoldingPacket.class, SigilHoldingPacket::encode, SigilHoldingPacket::decode, SigilHoldingPacket::handle);
 //		INSTANCE.registerMessage(id, messageType, encoder, decoder, messageConsumer);
 //		INSTANCE.registerMessage(ChatUtil.PacketNoSpamChat.Handler.class, ChatUtil.PacketNoSpamChat.class, 0, Side.CLIENT);
 //		INSTANCE.registerMessage(ItemRouterButtonPacketProcessor.class, ItemRouterButtonPacketProcessor.class, 1, Side.SERVER);

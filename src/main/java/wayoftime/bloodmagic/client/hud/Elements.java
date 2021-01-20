@@ -13,6 +13,7 @@ import wayoftime.bloodmagic.ConfigManager;
 import wayoftime.bloodmagic.client.Sprite;
 import wayoftime.bloodmagic.client.hud.element.ElementDemonAura;
 import wayoftime.bloodmagic.client.hud.element.ElementDivinedInformation;
+import wayoftime.bloodmagic.client.hud.element.ElementHolding;
 import wayoftime.bloodmagic.tile.TileAltar;
 import wayoftime.bloodmagic.tile.TileIncenseAltar;
 import wayoftime.bloodmagic.util.helper.NumeralHelper;
@@ -86,5 +87,7 @@ public class Elements
 						: String.valueOf((int) (100 * incense.incenseAddition))));
 			}
 		}, new Vector2f(0.01F, 0.01F));
+
+		ElementRegistry.registerHandler(new ResourceLocation(BloodMagic.MODID, "holding"), new ElementHolding(), new Vector2f(0.72F, 1.0F));
 	}
 }

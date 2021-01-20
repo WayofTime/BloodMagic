@@ -2,14 +2,20 @@ package wayoftime.bloodmagic.client.key;
 
 import java.util.Locale;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.settings.IKeyConflictContext;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.client.settings.KeyModifier;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.client.ClientEvents;
+import wayoftime.bloodmagic.common.item.sigil.ItemSigilHolding;
 import wayoftime.bloodmagic.network.KeyProcessorPacket;
+import wayoftime.bloodmagic.util.handler.event.ClientHandler;
 
 public enum KeyBindings
 {
@@ -20,10 +26,12 @@ public enum KeyBindings
 		@Override
 		public void handleKeybind()
 		{
-			BloodMagic.packetHandler.sendToServer(new KeyProcessorPacket(this.ordinal(), false));
-			System.out.println("I is on the client.");
-//			ItemStack itemStack = ClientHandler.minecraft.player.getHeldItemMainhand();
-//			if (itemStack.getItem() instanceof IKeybindable)
+			ItemStack itemStack = ClientHandler.minecraft.player.getHeldItemMainhand();
+			if (itemStack.getItem() instanceof IKeybindable)
+				BloodMagic.packetHandler.sendToServer(new KeyProcessorPacket(this.ordinal(), false));
+//			System.out.println("I is on the client.");
+//			
+//			
 //				BloodMagicPacketHandler.INSTANCE.sendToServer(new KeyProcessorPacket(this, false));
 		}
 	},
@@ -33,9 +41,9 @@ public enum KeyBindings
 		@Override
 		public void handleKeybind()
 		{
-//			ClientPlayerEntity player = Minecraft.getInstance().player;
-//			if (player.getHeldItemMainhand().getItem() instanceof ItemSigilHolding)
-//				ClientHandler.cycleSigil(player.getHeldItemMainhand(), player, -1);
+			ClientPlayerEntity player = Minecraft.getInstance().player;
+			if (player.getHeldItemMainhand().getItem() instanceof ItemSigilHolding)
+				ClientEvents.cycleSigil(player.getHeldItemMainhand(), player, -1);
 		}
 	},
 	CYCLE_HOLDING_NEG(KeyConflictContext.IN_GAME, KeyModifier.SHIFT, -1)
@@ -44,9 +52,9 @@ public enum KeyBindings
 		@Override
 		public void handleKeybind()
 		{
-//			ClientPlayerEntity player = Minecraft.getInstance().player;
-//			if (player.getHeldItemMainhand().getItem() instanceof ItemSigilHolding)
-//				ClientHandler.cycleSigil(player.getHeldItemMainhand(), player, 1);
+			ClientPlayerEntity player = Minecraft.getInstance().player;
+			if (player.getHeldItemMainhand().getItem() instanceof ItemSigilHolding)
+				ClientEvents.cycleSigil(player.getHeldItemMainhand(), player, 1);
 		}
 	},;
 	// @formatter:on
@@ -106,5 +114,7 @@ public enum KeyBindings
 	public static void initializeKeys()
 	{
 		OPEN_HOLDING.getKey();
+		CYCLE_HOLDING_POS.getKey();
+		CYCLE_HOLDING_NEG.getKey();
 	}
 }

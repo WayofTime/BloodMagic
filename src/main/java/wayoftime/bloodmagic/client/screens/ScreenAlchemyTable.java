@@ -32,24 +32,6 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 		return background;
 	}
 
-//	public 
-
-//	public ScreenSoulForge(InventoryPlayer playerInventory, IInventory tileSoulForge)
-//	{
-//		super(new ContainerAlchemyTable(playerInventory, tileSoulForge));
-//		this.tileSoulForge = tileSoulForge;
-//		this.xSize = 176;
-//		this.ySize = 205;
-//	}
-//
-//	@Override
-//	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks)
-//	{
-//		this.drawDefaultBackground();
-//		super.drawScreen(mouseX, mouseY, partialTicks);
-//		this.renderHoveredToolTip(mouseX, mouseY);
-//	}
-//
 	@Override
 	protected void drawGuiContainerForegroundLayer(MatrixStack stack, int mouseX, int mouseY)
 	{
@@ -57,7 +39,6 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 		this.font.func_243248_b(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
 	}
 
-//
 	@Override
 	protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
 	{
