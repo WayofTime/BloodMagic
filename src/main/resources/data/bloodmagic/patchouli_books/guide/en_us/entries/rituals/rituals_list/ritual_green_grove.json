@@ -23,19 +23,19 @@
     },
     {
       "type": "text",
-      "text": "Grows crops within its area.$(br2)$(water)Water Runes: 4$()$(br)$(earth)Earth Runes: 4$()$(br2)Total Runes: 8" 
+      "text": "Grows crops within its area.$(br2)$(water)Water Runes: 4$() $(br)$(earth)Earth Runes: 4$() $(br2)Total Runes: 8" 
     },
     {
       "type": "spotlight",
       "item": "bloodmagic:defaultcrystal",
       "title": "Raw",
-      "text": "Increases the speed of all of the ritual operations depending on the total Will in the Aura."
+      "text": "Increases the speed of all ritual operations based on the total amount of $(raw)Raw Will$() in the Aura."
     },
     {
       "type": "spotlight",
       "item": "bloodmagic:corrosivecrystal",
       "title": "Corrosive",
-      "text": "Entities within range are attacked by nearby plants, leeching away their life."
+      "text": "Entities within range are attacked by nearby plants, leeching away their life to feed their own growth."
     },
     {
       "type": "spotlight",
@@ -47,13 +47,13 @@
       "type": "spotlight",
       "item": "bloodmagic:destructivecrystal",
       "title": "Destructive",
-      "text": "Growing range is increased based on total Will."
+      "text": "Increases the maximum growth range of the ritual based on the total amount of $(destructive)Destructive Will$() in the Aura."
     },
     {
       "type": "spotlight",
       "item": "bloodmagic:steadfastcrystal",
       "title": "Steadfast",
-      "text": "Seeds are replanted and blocks are hydrated within the Hydration range."
+      "text": "Seeds are replanted and blocks are hydrated within the specified range."
     },
     {
       "type": "spotlight",

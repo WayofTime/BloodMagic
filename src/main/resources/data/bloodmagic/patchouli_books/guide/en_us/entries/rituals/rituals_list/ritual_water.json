@@ -28,7 +28,7 @@
       "type": "spotlight",
       "item": "bloodmagic:defaultcrystal",
       "title": "Raw",
-      "text": "The tank that the ritual will place water into."
+      "text": "allows the water to be directly placed into a Tank or other fluid-handling block."
     },
     {
       "type": "spotlight",
