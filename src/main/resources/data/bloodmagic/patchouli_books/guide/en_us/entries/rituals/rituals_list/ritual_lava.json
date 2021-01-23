@@ -28,25 +28,25 @@
       "type": "spotlight",
       "item": "bloodmagic:defaultcrystal",
       "title": "Raw",
-      "text": "Decreases the LP cost of placing lava and allows lava to be placed insided of a linked container."
+      "text": "Decreases the LP cost of placing lava and allows the lava to be directly placed into a tank or other fluid-handling block."
     },
     {
       "type": "spotlight",
       "item": "bloodmagic:corrosivecrystal",
       "title": "Corrosive",
-      "text": "Entities within range that are immune to fire are damaged severely."
+      "text": "Entities within range that are immune to fire (e.g. pigmen, blazes) are damaged severely."
     },
     {
       "type": "spotlight",
       "item": "bloodmagic:vengefulcrystal",
       "title": "Vengeful",
-      "text": "Entities in this range are afflicted by Fire Fuse."
+      "text": "Entities in this range are afflicted by Fire Fuse. When the debuff ends, they will do a wonderful impression of a firework."
     },
     {
       "type": "spotlight",
       "item": "bloodmagic:destructivecrystal",
       "title": "Destructive",
-      "text": "Lava placement range is increased based on total Will."
+      "text": "Lava placement range is increased based on the total amount of $(destructive)Destructive Will$() in the Aura."
     },
     {
       "type": "spotlight",

@@ -24,11 +24,11 @@
     },
     {
       "type": "text",
-      "text": "Pulls up ores from the ground and puts them into its placement range.$(br2)$(air)Air Runes: 4$(br)$(fire)Fire Runes: 4$(br)$(earth)Earth Runes: 8$(br2)$()Total Runes: 16" 
+      "text": "Pulls up ores from the ground below and puts them into its placement range.$(br2)$(air)Air Runes: 4$(br)$(fire)Fire Runes: 4$(br)$(earth)Earth Runes: 8$(br2)$()Total Runes: 16" 
     },
     {
       "type": "text",
-      "text": "[WIP Notes]$(br2)[Increase range by placing Iron, Gold, or Diamond Block under the Master Ritual Stone.]" 
+      "text": "By default, the $()Ritual of Magnetism$() searches down to bedrock in a radius of 3 blocks out from the $(item)Master Ritual Stone$() for ores to collect. This can be augmented by placing an expensive block directly underneath the MRS, as follows: $(br2)$(li)$(item)Block of Iron$() - 7 blocks. $(li)$(item)Block of Gold$() - 15 blocks. $(li)$(item)Block of Diamond$() - 31 blocks."
     },
     {
       "type": "spotlight",

@@ -23,7 +23,7 @@
         },
         "symetrical": true
       },
-      "text": "Use a $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$(/l) for easier construction."
+      "text": "Use a $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {
       "type": "text",
@@ -33,13 +33,13 @@
       "type": "spotlight",
       "item": "bloodmagic:ritualtinkerer",
       "title": "Range",
-      "text": "(Altar) The area that the ritual searches for a $(l:altar/blood_altar)Blood Altar$() to deposit its Blood into.$(br2)$(li)Maximum Volume: Full Range. $(li)Horizontal Radius: 10 $(li)Vertical Radius: 15 "
+      "text": "(Altar) The area that the ritual searches for a $(l:altar/blood_altar)Blood Altar$() to deposit its Blood into. $(br2)$(li)Maximum Volume: Full Range. $(li)Horizontal Radius: 10 $(li)Vertical Radius: 15 "
     },
     {
       "type": "spotlight",
       "item": "bloodmagic:ritualtinkerer",
       "title": "Range",
-      "text": "(Damage) All mobs within this area will take damage every second or so until they die. This does not include players, fortunately. $(br2)$(li)Maximum Volume: Full Range. $(li)Horizontal Radius: 15 $(li)Vertical Radius: 15 "
+      "text": "(Damage) All mobs within this area will take damage every second or so until they die. This does not include players, fortunately. $(br2)Mobs will drop $(item)Items$(), so be sure to set up something to clean up the mess. $(br2)$(li)Maximum Volume: Full Range. $(li)Horizontal Radius: 15 $(li)Vertical Radius: 15 "
     }
   ]
 }

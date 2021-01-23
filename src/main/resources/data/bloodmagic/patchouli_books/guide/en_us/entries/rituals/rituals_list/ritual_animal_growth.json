@@ -33,13 +33,7 @@
       "type": "spotlight",
       "item": "bloodmagic:defaultcrystal",
       "title": "Raw",
-      "text": "Increases the speed of the ritual based on the total Will in the Aura."
-    },
-    {
-      "type": "spotlight",
-      "item": "bloodmagic:corrosivecrystal",
-      "title": "Corrosive",
-      "text": "Unimplemented."
+      "text": "Increases the speed of the ritual based on the total amount of $(raw)Raw Will$() in the Aura."
     },
     {
       "type": "spotlight",
@@ -69,7 +63,7 @@
       "type": "spotlight",
       "item": "bloodmagic:ritualtinkerer",
       "title": "Range",
-      "text": "(Chest) Chest for breeding items (if properly augmented, requires steadfast will).$(br) $(li)Maximum Volume: 1 $(li)Horizontal Radius: 3 $(li)Vertical Radius: 3"
+      "text": "(Chest) Chest for breeding items (if properly augmented, requires $(steadfast)Steadfast Will$()).$(br) $(li)Maximum Volume: 1 $(li)Horizontal Radius: 3 $(li)Vertical Radius: 3"
     }
   ]
 }
