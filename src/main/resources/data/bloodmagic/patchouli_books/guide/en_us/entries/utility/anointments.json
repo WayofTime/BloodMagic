@@ -17,7 +17,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "$(item)Anointments$() are essentially $(item)potions$() for your tools and weapons. By right-clicking with the $(item)anointment$() in one hand, it will be applied to the item in your other hand, if possible. Not all anointments work on all equipment! $(br2)Unlike $(item)potions$(), $(item)anointments$() aren't timed; rather, they wear off a bit at a time as your tool or weapon is used."
+      "text": "$(item)Anointments$() are essentially $(item)potions$() for your tools, weapons, and even your $(l:demon_will/explosive_charges)Charges$(). By right-clicking with the $(item)anointment$() in one hand, it will be applied to the item in your other hand, if possible. Not all anointments work on all equipment! $(br2)Unlike $(item)potions$(), $(item)anointments$() aren't timed; rather, they wear off a bit at a time as your tool or weapon is used."
     },
     {
       "type": "crafting_alchemy_table",
@@ -35,13 +35,13 @@
       "type": "crafting_alchemy_table",
       "heading": "Fortuna Extract",
       "recipe": "bloodmagic:alchemytable/fortune_anointment",
-      "text": "Increases the yield of some harvested blocks. Also stacks with the Fortune enchantment.$(br2)Valid items: Tools, Swords.$(br2)Applies: Fortunate I (256 blocks)"
+      "text": "Increases the yield of some harvested blocks. Also stacks with the Fortune enchantment. $(br2)Valid items: Tools, Swords, Charges. $(br2)Applies: Fortunate I (256 blocks)"
     },
     {
       "type": "crafting_alchemy_table",
       "heading": "Soft Coating",
       "recipe": "bloodmagic:alchemytable/silk_touch_anointment",
-      "text": "Applies Silk Touch to blocks harvested. Does not stack with the vanilla enchantment.$(br2)Valid items: Tools, Swords.$(br2)Applies: Soft Touch I (256 blocks)"
+      "text": "Applies Silk Touch to blocks harvested. Does not stack with the vanilla enchantment.$(br2)Valid items: Tools, Swords, Charges.$(br2)Applies: Soft Touch I (256 blocks)"
     },
     {
       "type": "crafting_alchemy_table",
@@ -53,7 +53,7 @@
       "type": "crafting_alchemy_table",
       "heading": "Miner's Secrets",
       "recipe": "bloodmagic:alchemytable/hidden_knowledge_anointment",
-      "text": "Blocks drop exp on successful harvest. Drops +2exp per block. $(br2)Valid items: Tools, Swords.$(br2)Applies: Miner's Secrets I (256 blocks)"
+      "text": "Blocks drop exp on successful harvest. Drops +2exp per block. $(br2)Valid items: Tools, Swords, Charges.$(br2)Applies: Miner's Secrets I (256 blocks)"
     },
     {
       "type": "crafting_alchemy_table",
@@ -77,7 +77,7 @@
       "type": "crafting_alchemy_table",
       "heading": "Slow-burning Oil",
       "recipe": "bloodmagic:alchemytable/smelting_anointment",
-      "text": "Uses heat to smelt harvested blocks. $(br2)Valid items: Tools, Swords.$(br2)Applies: Heated Tool I (256 blocks)"
+      "text": "Uses heat to smelt harvested blocks. $(br2)Valid items: Tools, Swords, Charges. $(br2)Applies: Heated Tool I (256 blocks)"
     }
   ]
 }

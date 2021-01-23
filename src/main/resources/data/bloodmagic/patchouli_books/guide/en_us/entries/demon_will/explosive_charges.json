@@ -9,7 +9,7 @@
   "pages":[
     {
       "type": "text",
-      "text": "Mining and foresting is all well and good for those little villagers and others who refuse to dream big, but what self-respecting sanguimancer would ever stoop to such a thing? $(br2)With that in mind, you have devised some devious little devices. Simply throw them at a tree or at some pesky stone and wait for them to self-ignite."
+      "text": "Mining and foresting is all well and good for those who refuse to dream big, but what self-respecting sanguimancer would ever stoop to that? $(br2)With this in mind, you have devised some devious little devices. Simply throw them at a tree or at some pesky stone and wait for them to self-ignite. Not only that, you can improve their functionality by applying $(l:utility/anointments)Anointments$() to them."
     },
     {
       "type": "crafting_soulforge",
