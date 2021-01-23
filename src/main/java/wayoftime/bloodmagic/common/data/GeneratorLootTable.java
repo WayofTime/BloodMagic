@@ -132,8 +132,8 @@ public class GeneratorLootTable extends LootTableProvider
 
 			registerCropDropLootTable(BloodMagicBlocks.GROWING_DOUBT.get(), BloodMagicItems.WEAK_BLOOD_SHARD.get());
 
-			registerDropSelfLootTable(BloodMagicBlocks.SHAPED_CHARGE.get());
-			registerDropSelfLootTable(BloodMagicBlocks.DEFORESTER_CHARGE.get());
+			registerNoDropLootTable(BloodMagicBlocks.SHAPED_CHARGE.get());
+			registerNoDropLootTable(BloodMagicBlocks.DEFORESTER_CHARGE.get());
 		}
 
 		private void registerNoDropLootTable(Block block)

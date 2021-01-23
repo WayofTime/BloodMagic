@@ -29,9 +29,8 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
-import wayoftime.bloodmagic.tile.base.TileTicking;
 
-public class TileDeforesterCharge extends TileTicking
+public class TileDeforesterCharge extends TileShapedExplosive
 {
 	@ObjectHolder("bloodmagic:deforester_charge")
 	public static TileEntityType<TileDeforesterCharge> TYPE;
@@ -44,8 +43,8 @@ public class TileDeforesterCharge extends TileTicking
 //	private boolean cached = false;
 
 	public double internalCounter = 0;
-	public int explosionRadius;
-	public int explosionDepth;
+//	public int explosionRadius;
+//	public int explosionDepth;
 
 	public int currentLogs = 0;
 
@@ -53,9 +52,9 @@ public class TileDeforesterCharge extends TileTicking
 
 	public TileDeforesterCharge(TileEntityType<?> type, int explosionRadius, int explosionDepth)
 	{
-		super(type);
-		this.explosionRadius = explosionRadius;
-		this.explosionDepth = explosionDepth;
+		super(type, explosionRadius, explosionDepth);
+//		this.explosionRadius = explosionRadius;
+//		this.explosionDepth = explosionDepth;
 	}
 
 	public TileDeforesterCharge()
@@ -172,6 +171,7 @@ public class TileDeforesterCharge extends TileTicking
 
 		if (internalCounter == 100)
 		{
+			ItemStack toolStack = this.getHarvestingTool();
 			world.playSound((PlayerEntity) null, this.getPos().getX() + 0.5, this.getPos().getY() + 0.5, this.getPos().getZ() + 0.5, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F) * 0.7F);
 
 			int numParticles = explosionDepth * (explosionRadius + 1);
@@ -193,7 +193,7 @@ public class TileDeforesterCharge extends TileTicking
 					if (this.world instanceof ServerWorld)
 					{
 						TileEntity tileentity = blockstate.hasTileEntity() ? this.world.getTileEntity(blockPos) : null;
-						LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) this.world)).withRandom(this.world.rand).withParameter(LootParameters.field_237457_g_, Vector3d.copyCentered(blockPos)).withParameter(LootParameters.TOOL, ItemStack.EMPTY).withNullableParameter(LootParameters.BLOCK_ENTITY, tileentity);
+						LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) this.world)).withRandom(this.world.rand).withParameter(LootParameters.field_237457_g_, Vector3d.copyCentered(blockPos)).withParameter(LootParameters.TOOL, toolStack).withNullableParameter(LootParameters.BLOCK_ENTITY, tileentity);
 //                  if (this.mode == Explosion.Mode.DESTROY) {
 //                     lootcontext$builder.withParameter(LootParameters.EXPLOSION_RADIUS, this.size);
 //                  }

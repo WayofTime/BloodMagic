@@ -59,6 +59,7 @@ public class AlchemyTableRecipeProvider implements ISubRecipeProvider
 
 		}
 		{
+			AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.ARCANE_ASHES.get()), 500, 200, 1).addIngredient(Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE)).addIngredient(Ingredient.fromTag(Tags.Items.DYES_WHITE)).addIngredient(Ingredient.fromTag(Tags.Items.GUNPOWDER)).addIngredient(Ingredient.fromTag(ItemTags.COALS)).build(consumer, BloodMagic.rl(basePath + "arcane_ash"));
 			AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.REAGENT_AIR.get()), 2000, 200, 2).addIngredient(Ingredient.fromItems(Items.GHAST_TEAR)).addIngredient(Ingredient.fromTag(Tags.Items.FEATHERS)).addIngredient(Ingredient.fromTag(Tags.Items.FEATHERS)).build(consumer, BloodMagic.rl(basePath + "reagent_air"));
 			AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.REAGENT_WATER.get()), 300, 200, 1).addIngredient(Ingredient.fromItems(Items.SUGAR)).addIngredient(Ingredient.fromItems(Items.WATER_BUCKET)).addIngredient(Ingredient.fromItems(Items.WATER_BUCKET)).build(consumer, BloodMagic.rl(basePath + "reagent_water"));
 			AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.REAGENT_LAVA.get()), 1000, 200, 1).addIngredient(Ingredient.fromItems(Items.LAVA_BUCKET)).addIngredient(Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE)).addIngredient(Ingredient.fromTag(Tags.Items.COBBLESTONE)).addIngredient(Ingredient.fromTag(Tags.Items.STORAGE_BLOCKS_COAL)).build(consumer, BloodMagic.rl(basePath + "reagent_lava"));

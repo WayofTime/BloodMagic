@@ -9,10 +9,13 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.anointment.AnointmentData;
+import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.recipe.builder.TartaricForgeRecipeBuilder;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
+import wayoftime.bloodmagic.core.AnointmentRegistrar;
 
 public class TartaricForgeRecipeProvider implements ISubRecipeProvider
 {
@@ -47,19 +50,26 @@ public class TartaricForgeRecipeProvider implements ISubRecipeProvider
 		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicBlocks.SHAPED_CHARGE.get(), 8), 10, 0.5, Ingredient.fromTag(Tags.Items.COBBLESTONE), Ingredient.fromItems(Items.CHARCOAL), Ingredient.fromTag(Tags.Items.SAND), Ingredient.fromTag(Tags.Items.STONE)).build(consumer, BloodMagic.rl(basePath + "shaped_charge"));
 		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicBlocks.DEFORESTER_CHARGE.get(), 8), 10, 0.5, Ingredient.fromTag(Tags.Items.COBBLESTONE), Ingredient.fromItems(Items.CHARCOAL), Ingredient.fromTag(ItemTags.LOGS), Ingredient.fromTag(ItemTags.PLANKS)).build(consumer, BloodMagic.rl(basePath + "deforester_charge"));
 
+		ItemStack stack = new ItemStack(BloodMagicBlocks.DEFORESTER_CHARGE.get());
+		AnointmentHolder smeltingHolder = new AnointmentHolder();
+		smeltingHolder.applyAnointment(stack, AnointmentRegistrar.ANOINTMENT_SMELTING.get(), new AnointmentData(1, 1, 1));
+		smeltingHolder.toItemStack(stack);
+
+		TartaricForgeRecipeBuilder.tartaricForge(stack, 60, 1, Ingredient.fromItems(BloodMagicItems.DEFORESTER_CHARGE_ITEM.get())).build(consumer, BloodMagic.rl(basePath + "deforester_charge_smelting"));
+
 		// Changed Recipes
 		{
 //			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.ARCANE_ASHES.get()), 0, 0, Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE), Ingredient.fromTag(Tags.Items.DYES_WHITE), Ingredient.fromTag(Tags.Items.GUNPOWDER), Ingredient.fromTag(ItemTags.COALS)).build(consumer, BloodMagic.rl(basePath + "arcaneashes"));
-			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.REAGENT_AIR.get()), 128, 20, Ingredient.fromItems(Items.GHAST_TEAR), Ingredient.fromTag(Tags.Items.FEATHERS), Ingredient.fromTag(Tags.Items.FEATHERS)).build(consumer, BloodMagic.rl(basePath + "reagent_air"));
-			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.REAGENT_WATER.get()), 10, 3, Ingredient.fromItems(Items.SUGAR), Ingredient.fromItems(Items.WATER_BUCKET), Ingredient.fromItems(Items.WATER_BUCKET)).build(consumer, BloodMagic.rl(basePath + "reagent_water"));
-			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.REAGENT_LAVA.get()), 32, 10, Ingredient.fromItems(Items.LAVA_BUCKET), Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE), Ingredient.fromTag(Tags.Items.COBBLESTONE), Ingredient.fromTag(Tags.Items.STORAGE_BLOCKS_COAL)).build(consumer, BloodMagic.rl(basePath + "reagent_lava"));
-			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.REAGENT_VOID.get()), 64, 10, Ingredient.fromItems(Items.BUCKET), Ingredient.fromTag(Tags.Items.STRING), Ingredient.fromTag(Tags.Items.STRING), Ingredient.fromTag(Tags.Items.GUNPOWDER)).build(consumer, BloodMagic.rl(basePath + "reagent_void"));
-			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.REAGENT_GROWTH.get()), 128, 20, Ingredient.fromTag(ItemTags.SAPLINGS), Ingredient.fromTag(ItemTags.SAPLINGS), Ingredient.fromItems(Items.SUGAR_CANE), Ingredient.fromItems(Items.SUGAR)).build(consumer, BloodMagic.rl(basePath + "reagent_growth"));
-			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.REAGENT_MAGNETISM.get()), 600, 10, Ingredient.fromTag(Tags.Items.STRING), Ingredient.fromTag(Tags.Items.INGOTS_GOLD), Ingredient.fromTag(Tags.Items.INGOTS_GOLD), Ingredient.fromTag(Tags.Items.STORAGE_BLOCKS_IRON)).build(consumer, BloodMagic.rl(basePath + "reagent_magnetism"));
-			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.REAGENT_FAST_MINER.get()), 128, 20, Ingredient.fromItems(Items.IRON_PICKAXE), Ingredient.fromItems(Items.IRON_AXE), Ingredient.fromItems(Items.IRON_SHOVEL), Ingredient.fromTag(Tags.Items.GUNPOWDER)).build(consumer, BloodMagic.rl(basePath + "reagent_fastminer"));
-			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.REAGENT_BLOOD_LIGHT.get()), 300, 10, Ingredient.fromTag(Tags.Items.DUSTS_GLOWSTONE), Ingredient.fromItems(Items.TORCH), Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE), Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE)).build(consumer, BloodMagic.rl(basePath + "reagent_blood_light"));
-			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.REAGENT_SIGHT.get()), 64, 0, Ingredient.fromTag(Tags.Items.DUSTS_GLOWSTONE), Ingredient.fromTag(Tags.Items.GLASS), Ingredient.fromTag(Tags.Items.GLASS), Ingredient.fromItems(BloodMagicItems.DIVINATION_SIGIL.get())).build(consumer, BloodMagic.rl(basePath + "reagent_sight"));
-			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.REAGENT_BINDING.get()), 400, 10, Ingredient.fromTag(Tags.Items.DUSTS_GLOWSTONE), Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE), Ingredient.fromTag(Tags.Items.GUNPOWDER), Ingredient.fromTag(Tags.Items.NUGGETS_GOLD)).build(consumer, BloodMagic.rl(basePath + "reagent_binding"));
+//			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.REAGENT_AIR.get()), 128, 20, Ingredient.fromItems(Items.GHAST_TEAR), Ingredient.fromTag(Tags.Items.FEATHERS), Ingredient.fromTag(Tags.Items.FEATHERS)).build(consumer, BloodMagic.rl(basePath + "reagent_air"));
+//			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.REAGENT_WATER.get()), 10, 3, Ingredient.fromItems(Items.SUGAR), Ingredient.fromItems(Items.WATER_BUCKET), Ingredient.fromItems(Items.WATER_BUCKET)).build(consumer, BloodMagic.rl(basePath + "reagent_water"));
+//			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.REAGENT_LAVA.get()), 32, 10, Ingredient.fromItems(Items.LAVA_BUCKET), Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE), Ingredient.fromTag(Tags.Items.COBBLESTONE), Ingredient.fromTag(Tags.Items.STORAGE_BLOCKS_COAL)).build(consumer, BloodMagic.rl(basePath + "reagent_lava"));
+//			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.REAGENT_VOID.get()), 64, 10, Ingredient.fromItems(Items.BUCKET), Ingredient.fromTag(Tags.Items.STRING), Ingredient.fromTag(Tags.Items.STRING), Ingredient.fromTag(Tags.Items.GUNPOWDER)).build(consumer, BloodMagic.rl(basePath + "reagent_void"));
+//			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.REAGENT_GROWTH.get()), 128, 20, Ingredient.fromTag(ItemTags.SAPLINGS), Ingredient.fromTag(ItemTags.SAPLINGS), Ingredient.fromItems(Items.SUGAR_CANE), Ingredient.fromItems(Items.SUGAR)).build(consumer, BloodMagic.rl(basePath + "reagent_growth"));
+//			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.REAGENT_MAGNETISM.get()), 600, 10, Ingredient.fromTag(Tags.Items.STRING), Ingredient.fromTag(Tags.Items.INGOTS_GOLD), Ingredient.fromTag(Tags.Items.INGOTS_GOLD), Ingredient.fromTag(Tags.Items.STORAGE_BLOCKS_IRON)).build(consumer, BloodMagic.rl(basePath + "reagent_magnetism"));
+//			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.REAGENT_FAST_MINER.get()), 128, 20, Ingredient.fromItems(Items.IRON_PICKAXE), Ingredient.fromItems(Items.IRON_AXE), Ingredient.fromItems(Items.IRON_SHOVEL), Ingredient.fromTag(Tags.Items.GUNPOWDER)).build(consumer, BloodMagic.rl(basePath + "reagent_fastminer"));
+//			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.REAGENT_BLOOD_LIGHT.get()), 300, 10, Ingredient.fromTag(Tags.Items.DUSTS_GLOWSTONE), Ingredient.fromItems(Items.TORCH), Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE), Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE)).build(consumer, BloodMagic.rl(basePath + "reagent_blood_light"));
+//			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.REAGENT_SIGHT.get()), 64, 0, Ingredient.fromTag(Tags.Items.DUSTS_GLOWSTONE), Ingredient.fromTag(Tags.Items.GLASS), Ingredient.fromTag(Tags.Items.GLASS), Ingredient.fromItems(BloodMagicItems.DIVINATION_SIGIL.get())).build(consumer, BloodMagic.rl(basePath + "reagent_sight"));
+//			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.REAGENT_BINDING.get()), 400, 10, Ingredient.fromTag(Tags.Items.DUSTS_GLOWSTONE), Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE), Ingredient.fromTag(Tags.Items.GUNPOWDER), Ingredient.fromTag(Tags.Items.NUGGETS_GOLD)).build(consumer, BloodMagic.rl(basePath + "reagent_binding"));
 
 		}
 		{

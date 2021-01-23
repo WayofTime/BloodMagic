@@ -8,7 +8,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.nbt.CompoundNBT;
@@ -22,6 +24,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ObjectHolder;
+import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
 import wayoftime.bloodmagic.tile.base.TileTicking;
 
@@ -33,6 +36,8 @@ public class TileShapedExplosive extends TileTicking
 	public double internalCounter = 0;
 	public int explosionRadius;
 	public int explosionDepth;
+
+	public AnointmentHolder anointmentHolder = new AnointmentHolder();
 
 	public TileShapedExplosive(TileEntityType<?> type, int explosionRadius, int explosionDepth)
 	{
@@ -109,6 +114,8 @@ public class TileShapedExplosive extends TileTicking
 				break;
 			}
 
+			ItemStack toolStack = this.getHarvestingTool();
+
 			ObjectArrayList<Pair<ItemStack, BlockPos>> objectarraylist = new ObjectArrayList<>();
 
 			BlockPos initialPos = getPos();
@@ -130,7 +137,7 @@ public class TileShapedExplosive extends TileTicking
 							{
 								TileEntity tileentity = blockstate.hasTileEntity() ? this.world.getTileEntity(blockpos)
 										: null;
-								LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) this.world)).withRandom(this.world.rand).withParameter(LootParameters.field_237457_g_, Vector3d.copyCentered(blockpos)).withParameter(LootParameters.TOOL, ItemStack.EMPTY).withNullableParameter(LootParameters.BLOCK_ENTITY, tileentity);
+								LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) this.world)).withRandom(this.world.rand).withParameter(LootParameters.field_237457_g_, Vector3d.copyCentered(blockpos)).withParameter(LootParameters.TOOL, toolStack).withNullableParameter(LootParameters.BLOCK_ENTITY, tileentity);
 //			                  if (this.mode == Explosion.Mode.DESTROY) {
 //			                     lootcontext$builder.withParameter(LootParameters.EXPLOSION_RADIUS, this.size);
 //			                  }
@@ -180,16 +187,50 @@ public class TileShapedExplosive extends TileTicking
 		dropPositionArray.add(Pair.of(stack, pos));
 	}
 
+	public ItemStack getHarvestingTool()
+	{
+		ItemStack stack = new ItemStack(Items.DIAMOND_PICKAXE);
+		if (anointmentHolder != null)
+			anointmentHolder.toItemStack(stack);
+		return stack;
+	}
+
 	@Override
 	public void deserialize(CompoundNBT tag)
 	{
 		internalCounter = tag.getDouble("internalCounter");
+		if (tag.contains("holder"))
+		{
+			anointmentHolder = AnointmentHolder.fromNBT(tag.getCompound("holder"));
+		}
+
 	}
 
 	@Override
 	public CompoundNBT serialize(CompoundNBT tag)
 	{
 		tag.putDouble("internalCounter", internalCounter);
+		if (anointmentHolder != null)
+		{
+			tag.put("holder", anointmentHolder.serialize());
+		}
+
 		return tag;
+	}
+
+	public void setAnointmentHolder(AnointmentHolder holder)
+	{
+		this.anointmentHolder = holder;
+	}
+
+	public void dropSelf()
+	{
+		ItemStack stack = new ItemStack(getBlockState().getBlock());
+		if (anointmentHolder != null && !anointmentHolder.isEmpty())
+		{
+			anointmentHolder.toItemStack(stack);
+		}
+
+		InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
 	}
 }

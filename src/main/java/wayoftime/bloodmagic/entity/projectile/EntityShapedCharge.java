@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.IPacket;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -19,14 +20,17 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
+import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
+import wayoftime.bloodmagic.tile.TileShapedExplosive;
 
 public class EntityShapedCharge extends ThrowableEntity
 {
 //	private static final DataParameter<Optional<BlockState>> ITEMSTACK_DATA = EntityDataManager.createKey(ProjectileItemEntity.class, DataSerializers.OPTIONAL_BLOCK_STATE);
 	private BlockState fallTile = BloodMagicBlocks.SHAPED_CHARGE.get().getDefaultState();
+	private AnointmentHolder holder;
 
 	public EntityShapedCharge(EntityType<EntityShapedCharge> p_i50159_1_, World p_i50159_2_)
 	{
@@ -43,6 +47,11 @@ public class EntityShapedCharge extends ThrowableEntity
 	{
 		super(BloodMagicEntityTypes.SHAPED_CHARGE.getEntityType(), x, y, z, worldIn);
 		this.fallTile = block.getDefaultState();
+	}
+
+	public void setAnointmentHolder(AnointmentHolder holder)
+	{
+		this.holder = holder;
 	}
 
 	@Override
@@ -65,6 +74,11 @@ public class EntityShapedCharge extends ThrowableEntity
 			if (blockstate.isAir() || blockstate.isIn(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable())
 			{
 				this.getEntityWorld().setBlockState(blockpos, fallTile.with(BlockShapedExplosive.ATTACHED, faceHit));
+				TileEntity tile = this.getEntityWorld().getTileEntity(blockpos);
+				if (tile instanceof TileShapedExplosive)
+				{
+					((TileShapedExplosive) tile).setAnointmentHolder(holder);
+				}
 				this.setDead();
 			} else
 			{
@@ -80,6 +94,8 @@ public class EntityShapedCharge extends ThrowableEntity
 	protected void writeAdditional(CompoundNBT compound)
 	{
 		compound.put("BlockState", NBTUtil.writeBlockState(this.fallTile));
+		if (holder != null)
+			compound.put("holder", holder.serialize());
 //	      compound.putInt("Time", this.fallTime);
 //	      compound.putBoolean("DropItem", this.shouldDropItem);
 //	      compound.putBoolean("HurtEntities", this.hurtEntities);
@@ -98,6 +114,8 @@ public class EntityShapedCharge extends ThrowableEntity
 	protected void readAdditional(CompoundNBT compound)
 	{
 		this.fallTile = NBTUtil.readBlockState(compound.getCompound("BlockState"));
+		if (compound.contains("holder"))
+			this.holder = AnointmentHolder.fromNBT(compound.getCompound("holder"));
 //	      this.fallTime = compound.getInt("Time");
 //	      if (compound.contains("HurtEntities", 99)) {
 //	         this.hurtEntities = compound.getBoolean("HurtEntities");
@@ -114,8 +132,6 @@ public class EntityShapedCharge extends ThrowableEntity
 //	      if (compound.contains("TileEntityData", 10)) {
 //	         this.tileEntityData = compound.getCompound("TileEntityData");
 //	      }
-
-		System.out.println("Reading additional data");
 
 		if (this.fallTile.isAir())
 		{

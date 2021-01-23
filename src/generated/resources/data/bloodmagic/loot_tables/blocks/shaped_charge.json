@@ -2,18 +2,9 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "bloodmagic:shaped_charge"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ]
+      "name": "bloodmagic:shaped_charge",
+      "rolls": 1.0,
+      "entries": []
     }
   ]
 }

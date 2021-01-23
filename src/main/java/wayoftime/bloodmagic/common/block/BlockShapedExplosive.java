@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
@@ -16,6 +17,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
+import net.minecraft.world.World;
 import wayoftime.bloodmagic.tile.TileShapedExplosive;
 
 public class BlockShapedExplosive extends Block
@@ -104,4 +106,29 @@ public class BlockShapedExplosive extends Block
 	{
 		return new TileShapedExplosive();
 	}
+
+	@Override
+	public void onBlockHarvested(World world, BlockPos blockPos, BlockState blockState, PlayerEntity player)
+	{
+		TileShapedExplosive tile = (TileShapedExplosive) world.getTileEntity(blockPos);
+		if (tile != null && !world.isRemote)
+			tile.dropSelf();
+
+		super.onBlockHarvested(world, blockPos, blockState, player);
+	}
+
+//	@Override
+//	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+//	{
+//		if (!state.isIn(newState.getBlock()))
+//		{
+//			TileEntity tileentity = worldIn.getTileEntity(pos);
+//			if (tileentity instanceof TileShapedExplosive)
+//			{
+//				((TileShapedExplosive) tileentity).dropSelf();
+//			}
+//
+//			super.onReplaced(state, worldIn, pos, newState, isMoving);
+//		}
+//	}
 }

@@ -37,6 +37,11 @@ public class AnointmentHolder
 		this(Maps.newHashMap());
 	}
 
+	public boolean isEmpty()
+	{
+		return anointments.isEmpty();
+	}
+
 	// Returns true if the anointment is applied successfully.
 	public boolean applyAnointment(ItemStack stack, Anointment anointment, AnointmentData data)
 	{
