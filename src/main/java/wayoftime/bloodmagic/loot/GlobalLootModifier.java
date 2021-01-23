@@ -166,43 +166,57 @@ public class GlobalLootModifier
 		public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context)
 		{
 //			System.out.println("Checking for looting");
-			ItemStack ctxTool = context.get(LootParameters.TOOL);
-			// return early if silk-touch is already applied (otherwise we'll get stuck in
-			// an infinite loop).
-			if (ctxTool.getTag() != null && ctxTool.getTag().getBoolean("bloodmagic:checked_looting"))
-			{
-				return generatedLoot;
-			}
-
-			if (EnchantmentHelper.getEnchantments(ctxTool).containsKey(Enchantments.SILK_TOUCH))
-				return generatedLoot;
-			AnointmentHolder holder = AnointmentHolder.fromItemStack(ctxTool);
-			if (holder == null)
-			{
-				return generatedLoot;
-			}
-
-			int additionalLooting = holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_LOOTING.get());
-			if (additionalLooting <= 0)
-			{
-				return generatedLoot;
-			}
-
-//			if (holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get()) > 0)
+//			Entity killerEntity = context.get(LootParameters.KILLER_ENTITY);
+//			if (!(killerEntity instanceof PlayerEntity))
+//			{
+			return generatedLoot;
+//			}
+//			Entity killedEntity = context.get(LootParameters.THIS_ENTITY);
+//			if (!(killedEntity instanceof LivingEntity))
 //			{
 //				return generatedLoot;
 //			}
-
-			ItemStack fakeTool = ctxTool.copy();
-			fakeTool.getOrCreateTag().putBoolean("bloodmagic:checked_looting", true);
-			int baseLootingLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.LOOTING, ctxTool);
-
-			fakeTool.addEnchantment(Enchantments.LOOTING, baseLootingLevel + additionalLooting);
-			LootContext.Builder builder = new LootContext.Builder(context);
-			builder.withParameter(LootParameters.TOOL, fakeTool);
-			LootContext ctx = builder.build(LootParameterSets.BLOCK);
-			LootTable loottable = context.getWorld().getServer().getLootTableManager().getLootTableFromLocation(context.get(LootParameters.BLOCK_STATE).getBlock().getLootTable());
-			return loottable.generate(ctx);
+//			ItemStack ctxTool = ((PlayerEntity) killerEntity).getHeldItemMainhand();
+//			// return early if silk-touch is already applied (otherwise we'll get stuck in
+//			// an infinite loop).
+//
+//			System.out.println("Checking looting. ItemStack context: ");
+////			EndermanEntity d;
+//			if (ctxTool.getTag() != null && ctxTool.getTag().getBoolean("bloodmagic:checked_looting"))
+//			{
+//				return generatedLoot;
+//			}
+//
+//			if (EnchantmentHelper.getEnchantments(ctxTool).containsKey(Enchantments.SILK_TOUCH))
+//				return generatedLoot;
+//			AnointmentHolder holder = AnointmentHolder.fromItemStack(ctxTool);
+//			if (holder == null)
+//			{
+//				return generatedLoot;
+//			}
+//
+//			int additionalLooting = holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_LOOTING.get()) * 20;
+//			if (additionalLooting <= 0)
+//			{
+//				return generatedLoot;
+//			}
+//
+////			if (holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get()) > 0)
+////			{
+////				return generatedLoot;
+////			}
+//
+//			ItemStack fakeTool = ctxTool.copy();
+//			fakeTool.getOrCreateTag().putBoolean("bloodmagic:checked_looting", true);
+//			int baseLootingLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.LOOTING, ctxTool);
+//
+//			fakeTool.addEnchantment(Enchantments.LOOTING, baseLootingLevel + additionalLooting);
+//			LootContext.Builder builder = new LootContext.Builder(context);
+//			builder.withParameter(LootParameters.TOOL, fakeTool);
+//			LootContext ctx = builder.build(LootParameterSets.ENTITY);
+//			ResourceLocation resource = ((LivingEntity) killedEntity).getLootTableResourceLocation();
+//			LootTable loottable = context.getWorld().getServer().getLootTableManager().getLootTableFromLocation(resource);
+//			return loottable.generate(ctx);
 		}
 
 		private static class Serializer extends GlobalLootModifierSerializer<LootingModifier>
@@ -219,6 +233,14 @@ public class GlobalLootModifier
 				return makeConditions(instance.conditions);
 			}
 		}
+
+//		private static class ExtendedLootContext extends LootContext
+//		{
+//			public ExtendedLootContext()
+//			{
+//				
+//			}
+//		}
 	}
 
 	private static class SmeltingModifier extends LootModifier
