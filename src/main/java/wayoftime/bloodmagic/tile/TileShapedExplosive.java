@@ -26,7 +26,7 @@ import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
 public class TileShapedExplosive extends TileExplosiveCharge
 {
 	@ObjectHolder("bloodmagic:shaped_explosive")
-	public static TileEntityType<TileExplosiveCharge> TYPE;
+	public static TileEntityType<TileShapedExplosive> TYPE;
 
 	public double internalCounter = 0;
 	public int explosionRadius;

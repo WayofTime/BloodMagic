@@ -15,7 +15,6 @@ import wayoftime.bloodmagic.tile.base.TileTicking;
 
 public class TileExplosiveCharge extends TileTicking
 {
-
 	public AnointmentHolder anointmentHolder = new AnointmentHolder();
 
 	public TileExplosiveCharge(TileEntityType<?> type)

@@ -17,7 +17,6 @@ import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
@@ -29,34 +28,31 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
 
-public class TileDeforesterCharge extends TileExplosiveCharge
+public class TileVeinMineCharge extends TileExplosiveCharge
 {
-	@ObjectHolder("bloodmagic:deforester_charge")
-	public static TileEntityType<TileDeforesterCharge> TYPE;
+	@ObjectHolder("bloodmagic:veinmine_charge")
+	public static TileEntityType<TileVeinMineCharge> TYPE;
 
-	private Map<BlockPos, Boolean> treePartsMap;
-	private List<BlockPos> treePartsCache;
+	private Map<BlockPos, Boolean> veinPartsMap;
+	private List<BlockPos> veinPartsCache;
 	private boolean finishedAnalysis;
-//	private Iterator<BlockPos> blockPosIterator;
-
-//	private boolean cached = false;
 
 	public double internalCounter = 0;
 
-	public int currentLogs = 0;
+	public int currentBlocks = 0;
 
-	public int maxLogs = 128;
+	public int maxBlocks = 128;
 
-	public TileDeforesterCharge(TileEntityType<?> type, int maxLogs)
+	public TileVeinMineCharge(TileEntityType<?> type, int maxBlocks)
 	{
 		super(type);
 
-		this.maxLogs = maxLogs;
+		this.maxBlocks = maxBlocks;
 	}
 
-	public TileDeforesterCharge()
+	public TileVeinMineCharge()
 	{
-		this(TYPE, 128);
+		this(TYPE, 64 * 3);
 	}
 
 	@Override
@@ -70,32 +66,33 @@ public class TileDeforesterCharge extends TileExplosiveCharge
 
 		Direction explosiveDirection = this.getBlockState().get(BlockShapedExplosive.ATTACHED).getOpposite();
 		BlockState attachedState = world.getBlockState(pos.offset(explosiveDirection));
-		if (!BlockTags.LOGS.contains(attachedState.getBlock()) && !BlockTags.LEAVES.contains(attachedState.getBlock()))
-		{
-			return;
-		}
+		Block attachedBlock = attachedState.getBlock();
+//		if (!BlockTags.LOGS.contains(attachedState.getBlock()) && !BlockTags.LEAVES.contains(attachedState.getBlock()))
+//		{
+//			return;
+//		}
 
-		if (treePartsMap == null)
+		if (veinPartsMap == null)
 		{
-			treePartsMap = new HashMap<BlockPos, Boolean>();
-			treePartsMap.put(pos.offset(explosiveDirection), false);
-			treePartsCache = new LinkedList<BlockPos>();
-			treePartsCache.add(pos.offset(explosiveDirection));
+			veinPartsMap = new HashMap<BlockPos, Boolean>();
+			veinPartsMap.put(pos.offset(explosiveDirection), false);
+			veinPartsCache = new LinkedList<BlockPos>();
+			veinPartsCache.add(pos.offset(explosiveDirection));
 			internalCounter = 0;
-//			treePartsMap.add(pos.offset(explosiveDirection));
+//			veinPartsMap.add(pos.offset(explosiveDirection));
 		}
 
 		boolean foundNew = false;
 		List<BlockPos> newPositions = new LinkedList<BlockPos>();
-		for (BlockPos currentPos : treePartsCache)
+		for (BlockPos currentPos : veinPartsCache)
 		{
-			if (!treePartsMap.getOrDefault(currentPos, false)) // If the BlockPos wasn't checked yet
+			if (!veinPartsMap.getOrDefault(currentPos, false)) // If the BlockPos wasn't checked yet
 			{
 //				BlockPos currentPos = entry.getKey();
 				for (Direction dir : Direction.values())
 				{
 					BlockPos checkPos = currentPos.offset(dir);
-					if (treePartsMap.containsKey(checkPos))
+					if (veinPartsMap.containsKey(checkPos))
 					{
 						continue;
 					}
@@ -103,30 +100,27 @@ public class TileDeforesterCharge extends TileExplosiveCharge
 					BlockState checkState = world.getBlockState(checkPos);
 
 					boolean isTree = false;
-					if (currentLogs >= maxLogs)
+					if (currentBlocks >= maxBlocks)
 					{
 						continue;
 					}
-					if (BlockTags.LOGS.contains(checkState.getBlock()))
+					if (attachedBlock.equals(checkState.getBlock()))
 					{
-						currentLogs++;
+						currentBlocks++;
 						isTree = true;
 
-					} else if (BlockTags.LEAVES.contains(checkState.getBlock()))
-					{
-						isTree = true;
 					}
 
 					if (isTree)
 					{
-						treePartsMap.put(checkPos, false);
+						veinPartsMap.put(checkPos, false);
 						newPositions.add(checkPos);
 						foundNew = true;
 					}
 				}
 
-				treePartsMap.put(currentPos, true);
-				if (currentLogs >= maxLogs)
+				veinPartsMap.put(currentPos, true);
+				if (currentBlocks >= maxBlocks)
 				{
 					finishedAnalysis = true;
 					break;
@@ -134,9 +128,9 @@ public class TileDeforesterCharge extends TileExplosiveCharge
 			}
 		}
 
-		treePartsCache.addAll(newPositions);
+		veinPartsCache.addAll(newPositions);
 
-//		System.out.println("Found blocks: " + treePartsMap.size());
+//		System.out.println("Found blocks: " + veinPartsMap.size());
 
 		if (foundNew)
 		{
@@ -177,7 +171,7 @@ public class TileDeforesterCharge extends TileExplosiveCharge
 
 			ObjectArrayList<Pair<ItemStack, BlockPos>> objectarraylist = new ObjectArrayList<>();
 
-			for (BlockPos blockPos : treePartsCache)
+			for (BlockPos blockPos : veinPartsCache)
 			{
 //				BlockPos blockpos = initialPos.offset(explosiveDirection, i).offset(sweepDir1, j).offset(sweepDir2, k);
 

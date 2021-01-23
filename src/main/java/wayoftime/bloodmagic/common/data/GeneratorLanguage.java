@@ -171,7 +171,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.crystalHarvestRitual", "Crack of the Fractured Crystal");
 		add("ritual.bloodmagic.forsakenSoulRitual", "Gathering of the Forsaken Souls");
 		add("ritual.bloodmagic.crystalSplitRitual", "Resonance of the Faceted Crystal");
-		add("ritual.bloodmagic.ellipsoidRitual", "Focus of the Ellipsoid");
+		add("ritual.bloodmagic.ellipseRitual", "Focus of the Ellipsoid");
 
 		add("ritual.bloodmagic.cobblestoneRitual", "Le Vulcanos Frigius");
 		add("ritual.bloodmagic.placerRitual", "The Filler");
@@ -451,6 +451,7 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addBlock(BloodMagicBlocks.SHAPED_CHARGE, "Shaped Charge");
 		addBlock(BloodMagicBlocks.DEFORESTER_CHARGE, "Deforester Charge");
+		addBlock(BloodMagicBlocks.VEINMINE_CHARGE, "Vein Charge");
 
 		// Item names
 		addItem(BloodMagicItems.WEAK_BLOOD_ORB, "Weak Blood Orb");

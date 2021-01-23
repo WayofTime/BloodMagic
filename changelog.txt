@@ -2,6 +2,7 @@
 Version 3.1.0
 ------------------------------------------------------
 - Fixed Plunderer's Glint
+- Fixed the Blood Altar not being able to input fluids. About time, Way!
 
 
 ------------------------------------------------------
