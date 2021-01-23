@@ -559,6 +559,10 @@ public class GenericHandler
 		if (stack.getItem() instanceof BowItem || stack.getItem() instanceof CrossbowItem)
 		{
 			AnointmentHolder holder = AnointmentHolder.fromItemStack(stack);
+			if (holder == null)
+			{
+				return;
+			}
 			int quickDrawLevel = holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_QUICK_DRAW.get());
 			if (quickDrawLevel > 0)
 			{

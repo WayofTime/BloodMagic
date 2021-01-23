@@ -26,14 +26,14 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.api.event.BloodMagicCraftedEvent;
-import wayoftime.bloodmagic.impl.BloodMagicAPI;
-import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
+import wayoftime.bloodmagic.common.item.BloodOrb;
+import wayoftime.bloodmagic.common.item.IBindable;
+import wayoftime.bloodmagic.common.item.IBloodOrb;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.core.data.SoulTicket;
-import wayoftime.bloodmagic.common.item.IBindable;
-import wayoftime.bloodmagic.common.item.BloodOrb;
-import wayoftime.bloodmagic.common.item.IBloodOrb;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
+import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.tile.container.ContainerAlchemyTable;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
@@ -256,8 +256,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
 		// Simple recipes
 		RecipeAlchemyTable recipeAlchemyTable = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyTable(world, inputList);
-		if (recipeAlchemyTable != null && (burnTime > 0 || (!getWorld().isRemote
-				&& tier >= recipeAlchemyTable.getMinimumTier() && getContainedLp() >= recipeAlchemyTable.getSyphon())))
+		if (recipeAlchemyTable != null && (burnTime > 0 || (!getWorld().isRemote && tier >= recipeAlchemyTable.getMinimumTier() && getContainedLp() >= recipeAlchemyTable.getSyphon())))
 		{
 			if (burnTime == 1)
 				notifyUpdate();
@@ -417,13 +416,21 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 				{
 					setInventorySlotContents(i, inputStack.getItem().getContainerItem(inputStack));
 					continue;
-				} else if (inputStack.isDamageable())
+				} else if (inputStack.getMaxDamage() > 0)
 				{
-					inputStack.setDamage(inputStack.getDamage() + 1);
-					if (inputStack.getDamage() >= inputStack.getMaxDamage())
+//					inputStack.setDamage(inputStack.getDamage() + 1);
+//					if (inputStack.getDamage() >= inputStack.getMaxDamage())
+//					{
+//						
+//					}
+
+					if (inputStack.attemptDamageItem(1, world.rand, null))
 					{
 						setInventorySlotContents(i, ItemStack.EMPTY);
 					}
+					continue;
+				} else if (!inputStack.isDamageable())
+				{
 					continue;
 				}
 
