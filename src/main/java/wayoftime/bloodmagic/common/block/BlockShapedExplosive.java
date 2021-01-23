@@ -18,6 +18,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import wayoftime.bloodmagic.tile.TileExplosiveCharge;
 import wayoftime.bloodmagic.tile.TileShapedExplosive;
 
 public class BlockShapedExplosive extends Block
@@ -110,7 +111,7 @@ public class BlockShapedExplosive extends Block
 	@Override
 	public void onBlockHarvested(World world, BlockPos blockPos, BlockState blockState, PlayerEntity player)
 	{
-		TileShapedExplosive tile = (TileShapedExplosive) world.getTileEntity(blockPos);
+		TileExplosiveCharge tile = (TileExplosiveCharge) world.getTileEntity(blockPos);
 		if (tile != null && !world.isRemote)
 			tile.dropSelf();
 

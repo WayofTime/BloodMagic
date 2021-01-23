@@ -6,11 +6,8 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.nbt.CompoundNBT;
@@ -24,20 +21,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ObjectHolder;
-import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
-import wayoftime.bloodmagic.tile.base.TileTicking;
 
-public class TileShapedExplosive extends TileTicking
+public class TileShapedExplosive extends TileExplosiveCharge
 {
 	@ObjectHolder("bloodmagic:shaped_explosive")
-	public static TileEntityType<TileShapedExplosive> TYPE;
+	public static TileEntityType<TileExplosiveCharge> TYPE;
 
 	public double internalCounter = 0;
 	public int explosionRadius;
 	public int explosionDepth;
-
-	public AnointmentHolder anointmentHolder = new AnointmentHolder();
 
 	public TileShapedExplosive(TileEntityType<?> type, int explosionRadius, int explosionDepth)
 	{
@@ -165,72 +158,19 @@ public class TileShapedExplosive extends TileTicking
 		}
 	}
 
-	private static void handleExplosionDrops(ObjectArrayList<Pair<ItemStack, BlockPos>> dropPositionArray, ItemStack stack, BlockPos pos)
-	{
-		int i = dropPositionArray.size();
-
-		for (int j = 0; j < i; ++j)
-		{
-			Pair<ItemStack, BlockPos> pair = dropPositionArray.get(j);
-			ItemStack itemstack = pair.getFirst();
-			if (ItemEntity.canMergeStacks(itemstack, stack))
-			{
-				ItemStack itemstack1 = ItemEntity.mergeStacks(itemstack, stack, 16);
-				dropPositionArray.set(j, Pair.of(itemstack1, pair.getSecond()));
-				if (stack.isEmpty())
-				{
-					return;
-				}
-			}
-		}
-
-		dropPositionArray.add(Pair.of(stack, pos));
-	}
-
-	public ItemStack getHarvestingTool()
-	{
-		ItemStack stack = new ItemStack(Items.DIAMOND_PICKAXE);
-		if (anointmentHolder != null)
-			anointmentHolder.toItemStack(stack);
-		return stack;
-	}
-
 	@Override
 	public void deserialize(CompoundNBT tag)
 	{
+		super.deserialize(tag);
 		internalCounter = tag.getDouble("internalCounter");
-		if (tag.contains("holder"))
-		{
-			anointmentHolder = AnointmentHolder.fromNBT(tag.getCompound("holder"));
-		}
-
 	}
 
 	@Override
 	public CompoundNBT serialize(CompoundNBT tag)
 	{
+		super.serialize(tag);
 		tag.putDouble("internalCounter", internalCounter);
-		if (anointmentHolder != null)
-		{
-			tag.put("holder", anointmentHolder.serialize());
-		}
 
 		return tag;
-	}
-
-	public void setAnointmentHolder(AnointmentHolder holder)
-	{
-		this.anointmentHolder = holder;
-	}
-
-	public void dropSelf()
-	{
-		ItemStack stack = new ItemStack(getBlockState().getBlock());
-		if (anointmentHolder != null && !anointmentHolder.isEmpty())
-		{
-			anointmentHolder.toItemStack(stack);
-		}
-
-		InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
 	}
 }

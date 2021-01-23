@@ -24,7 +24,7 @@ import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
-import wayoftime.bloodmagic.tile.TileShapedExplosive;
+import wayoftime.bloodmagic.tile.TileExplosiveCharge;
 
 public class EntityShapedCharge extends ThrowableEntity
 {
@@ -75,9 +75,9 @@ public class EntityShapedCharge extends ThrowableEntity
 			{
 				this.getEntityWorld().setBlockState(blockpos, fallTile.with(BlockShapedExplosive.ATTACHED, faceHit));
 				TileEntity tile = this.getEntityWorld().getTileEntity(blockpos);
-				if (tile instanceof TileShapedExplosive)
+				if (tile instanceof TileExplosiveCharge)
 				{
-					((TileShapedExplosive) tile).setAnointmentHolder(holder);
+					((TileExplosiveCharge) tile).setAnointmentHolder(holder);
 				}
 				this.setDead();
 			} else
