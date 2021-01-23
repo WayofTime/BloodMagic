@@ -32,6 +32,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
@@ -664,6 +665,27 @@ public class GenericHandler
 						break;
 					}
 				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onCheckLooting(LootingLevelEvent event)
+	{
+		Entity entity = event.getDamageSource().getTrueSource();
+		if (entity instanceof PlayerEntity)
+		{
+			ItemStack heldStack = ((PlayerEntity) entity).getHeldItemMainhand();
+			AnointmentHolder holder = AnointmentHolder.fromItemStack(heldStack);
+			if (holder == null)
+			{
+				return;
+			}
+
+			int plunderLevel = holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_LOOTING.get());
+			if (plunderLevel > 0)
+			{
+				event.setLootingLevel(event.getLootingLevel() + plunderLevel);
 			}
 		}
 	}
