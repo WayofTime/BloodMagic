@@ -92,13 +92,7 @@ public class LivingArmorRegistrar
 		}
 		return 0;
 	}));
-	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_JUMP = UPGRADES.register("jump", () -> parseDefinition("jump").withArmorProvider((player, stats, source, upgrade, level) -> {
-		if (source == DamageSource.FALL)
-		{
-			return upgrade.getBonusValue("fall", level).doubleValue();
-		}
-		return 0;
-	}));
+	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_JUMP = UPGRADES.register("jump", () -> parseDefinition("jump"));
 
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_HEALTH = UPGRADES.register("health", () -> parseDefinition("health").withAttributeProvider((stats, attributeMap, uuid, upgrade, level) -> {
 		attributeMap.put(Attributes.MAX_HEALTH, new AttributeModifier(uuid, "Health Modifier", upgrade.getBonusValue("hp", level).intValue(), AttributeModifier.Operation.ADDITION));

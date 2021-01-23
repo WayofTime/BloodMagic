@@ -360,12 +360,30 @@ public class GenericHandler
 	{
 		if (event.getEntity().world.isRemote)
 		{
-			return;
+			if (event.getEntityLiving() instanceof PlayerEntity)
+			{
+				PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+				if (LivingUtil.hasFullSet(player))
+				{
+					LivingStats stats = LivingStats.fromPlayer(player, true);
+					if (!player.isOnGround() && player.getMotion().getY() < 0)
+					{
+
+						int jumpLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_JUMP.get().getKey());
+						double fallDistanceMultiplier = LivingArmorRegistrar.UPGRADE_JUMP.get().getBonusValue("fall", jumpLevel).doubleValue();
+						player.fallDistance = (float) Math.max(0, player.fallDistance + fallDistanceMultiplier * player.getMotion().getY());
+//				System.out.println("Player's motion: " + player.getMotion().getY() + ", Player's fall reduction multiplier: " + fallDistanceMultiplier + ", Player's final fall distance: " + player.fallDistance);
+					}
+					return;
+				}
+			}
 		}
 		if (event.getEntityLiving() instanceof PlayerEntity)
 		{
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 			float percentIncrease = 0;
+
+//			System.out.println("Player's motion: " + player.getMotion().getY() + ", Player's final fall distance: " + player.fallDistance);
 
 			if (LivingUtil.hasFullSet(player))
 			{
@@ -403,6 +421,15 @@ public class GenericHandler
 				{
 					distance *= (1 + percentIncrease);
 					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_SPEED.get(), distance);
+				}
+
+				if (!player.isOnGround() && player.getMotion().getY() < 0)
+				{
+
+					int jumpLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_JUMP.get().getKey());
+					double fallDistanceMultiplier = LivingArmorRegistrar.UPGRADE_JUMP.get().getBonusValue("fall", jumpLevel).doubleValue();
+					player.fallDistance = (float) Math.max(0, player.fallDistance + fallDistanceMultiplier * player.getMotion().getY());
+//					System.out.println("Player's motion: " + player.getMotion().getY() + ", Player's fall reduction multiplier: " + fallDistanceMultiplier + ", Player's final fall distance: " + player.fallDistance);
 				}
 
 				if (player.getFireTimer() > 0)
