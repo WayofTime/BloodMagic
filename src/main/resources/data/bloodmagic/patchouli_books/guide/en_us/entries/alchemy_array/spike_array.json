@@ -9,6 +9,7 @@
     },
     {
       "type": "functional_array",
+      "heading": "Spike Array",
       "recipe": "bloodmagic:array/spike",
       "image": "spikearray.png"
     }
