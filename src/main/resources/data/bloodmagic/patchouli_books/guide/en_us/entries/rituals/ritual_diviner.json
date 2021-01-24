@@ -20,7 +20,7 @@
     },
     {
       "type": "text",
-      "text": "The base Ritual Diviner requires one of each $(item)Elemental Inscription Tool$() for its construction, and thus a tier 3 $(l:altar/blood_altar)Blood Altar$(/l). The four base Elemental Inscription Tools can be crafted in your Altar for 1,000 LP each, as defined on the following pages. You can also use these tools to inscribe runes by hand, but this should only seriously be used for decorative purposes, as it is both slow and inaccurate."
+      "text": "The base Ritual Diviner requires one of each $(item)Elemental Inscription Tool$() for its construction, and thus a tier 3 $(l:bloodmagic:altar/blood_altar)Blood Altar$(/l). The four base Elemental Inscription Tools can be crafted in your Altar for 1,000 LP each, as defined on the following pages. You can also use these tools to inscribe runes by hand, but this should only seriously be used for decorative purposes, as it is both slow and inaccurate."
     },
     {
       "type": "crafting",

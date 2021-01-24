@@ -12,7 +12,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "$(item)Ritual Stones$() are the canvas upon which you will draw your $(item)Rituals$(). They also look quite nifty, and can be manually painted with the various $(l:rituals/ritual_diviner)Elemental Inscription Tools$()." 
+      "text": "$(item)Ritual Stones$() are the canvas upon which you will draw your $(item)Rituals$(). They also look quite nifty, and can be manually painted with the various $(l:bloodmagic:rituals/ritual_diviner)Elemental Inscription Tools$()." 
     },
     {
       "type": "crafting",

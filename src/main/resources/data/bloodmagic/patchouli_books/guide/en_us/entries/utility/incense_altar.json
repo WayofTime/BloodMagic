@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "  The $(item)Incense Altar$() is a multiblock structure that can be used to boost your self-sacrificing at a $(l:altar/blood_altar)Blood Altar.$(/l) By standing nearby your setup, the $(item)Incense Altar$() will calm your soul based on the area's total \"Tranquility\", allowing you to significantly increase your LP gains."
+      "text": "  The $(item)Incense Altar$() is a multiblock structure that can be used to boost your self-sacrificing at a $(l:bloodmagic:altar/blood_altar)Blood Altar.$(/l) By standing nearby your setup, the $(item)Incense Altar$() will calm your soul based on the area's total \"Tranquility\", allowing you to significantly increase your LP gains."
     },
     {
       "type": "crafting",
@@ -13,7 +13,7 @@
     },
     {
       "type": "text",
-      "text": "  The basic Tier 1 setup of an $(item)Incense Altar$() is the altar itself; place it down anywhere (You may want to set up a 3x3 block platform, this will be helpful later) and stay within a 5 block radius of the altar.$(br2)  While the altar is working, it will emit flame particles from its top and transform your $(l:altar/blood_altar#knife)Sacrificial Knife.$(/l) Once your knife starts to shine, holding and releasing right click near a Blood Altar will sacrifice 90% of your health all at once."
+      "text": "  The basic Tier 1 setup of an $(item)Incense Altar$() is the altar itself; place it down anywhere (You may want to set up a 3x3 block platform, this will be helpful later) and stay within a 5 block radius of the altar.$(br2)  While the altar is working, it will emit flame particles from its top and transform your $(l:bloodmagic:altar/blood_altar#knife)Sacrificial Knife.$(/l) Once your knife starts to shine, holding and releasing right click near a Blood Altar will sacrifice 90% of your health all at once."
     },
     {
       "type": "image",
@@ -26,7 +26,7 @@
     },
     {
       "type": "text",
-      "text": "  What is more, based on the total Tranquility of the area you will receive a bonus to the LP added to the altar. Hovering over the $(item)Incense Altar$() with either a $(l:sigil/divination)Divination Sigil$(/l) or $(l:sigil/seer)Seer's Sigil$() will display the total Tranquility of the setup (top number) and the percentage bonus received when sacrificing (bottom number). When you sacrifice, it will take the LP that you would normally get and multiply it by (1 + bonus/100)."
+      "text": "  What is more, based on the total Tranquility of the area you will receive a bonus to the LP added to the altar. Hovering over the $(item)Incense Altar$() with either a $(l:bloodmagic:sigil/divination)Divination Sigil$(/l) or $(l:bloodmagic:sigil/seer)Seer's Sigil$() will display the total Tranquility of the setup (top number) and the percentage bonus received when sacrificing (bottom number). When you sacrifice, it will take the LP that you would normally get and multiply it by (1 + bonus/100)."
     },
     {
       "type": "image",

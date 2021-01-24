@@ -6,11 +6,11 @@
   "pages": [
     {
       "type": "text",
-      "text": "Once you have gotten your $(l:altar/blood_altar)Blood Altar$(/l) to Tier 3, you can delve into the wonderful world of Rituals. $(br2)For working with rituals, you will require the following: $(li)An $(l:rituals/activation_crystals)Activation Crystal$(). At tier 3 only the $(item)Weak Crystal$() is avaliable. $(li)A $(item)Master Ritual Stone$(). Every ritual requires exactly one of these at its centre." 
+      "text": "Once you have gotten your $(l:bloodmagic:altar/blood_altar)Blood Altar$(/l) to Tier 3, you can delve into the wonderful world of Rituals. $(br2)For working with rituals, you will require the following: $(li)An $(l:bloodmagic:rituals/activation_crystals)Activation Crystal$(). At tier 3 only the $(item)Weak Crystal$() is avaliable. $(li)A $(item)Master Ritual Stone$(). Every ritual requires exactly one of these at its centre." 
     },
     {
       "type": "text",
-      "text": "$(li)Enough Ritual Stones to built the Ritual. $(li)(Recommended) A $(l:rituals/ritual_diviner)Ritual Diviner$(). Although not required, it will make ritual construction significantly easier. $(br2)Building a ritual is relatively straightforward. Simply shift+click with the Ritual Diviner in hand until it displays the name of the desired ritual. Check the number of runes required by mousing over it in your" 
+      "text": "$(li)Enough Ritual Stones to built the Ritual. $(li)(Recommended) A $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$(). Although not required, it will make ritual construction significantly easier. $(br2)Building a ritual is relatively straightforward. Simply shift+click with the Ritual Diviner in hand until it displays the name of the desired ritual. Check the number of runes required by mousing over it in your" 
     },
     {
       "type": "text",
@@ -26,7 +26,7 @@
     },
     {
       "type": "text",
-      "text": "one last note; all rituals respond to a $(item)Redstone$() signal, so sticking a lever on the side of the Master Ritual Stone is a good way to deactivate it. You can combine this knowledge with some of the information in $(l:altar/redstone_automation)Redstone and Automation$() to ensure your rituals shut down automatically long before your Soul Network runs dry."
+      "text": "one last note; all rituals respond to a $(item)Redstone$() signal, so sticking a lever on the side of the Master Ritual Stone is a good way to deactivate it. You can combine this knowledge with some of the information in $(l:bloodmagic:altar/redstone_automation)Redstone and Automation$() to ensure your rituals shut down automatically long before your Soul Network runs dry."
     }
   ]
 }

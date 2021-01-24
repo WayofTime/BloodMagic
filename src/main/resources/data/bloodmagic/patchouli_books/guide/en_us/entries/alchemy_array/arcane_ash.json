@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "$(item)Arcane Ashes$() is an item that is pivotal in the creation of Alchemy Arrays. $(item)Arcane Ashes$() can be crafted in the $(l:demon_will/soul_forge)Hellfire Forge$(/l) using some early game items."
+      "text": "$(item)Arcane Ashes$() is an item that is pivotal in the creation of Alchemy Arrays. $(item)Arcane Ashes$() can be crafted in the $(l:bloodmagic:demon_will/soul_forge)Hellfire Forge$(/l) using some early game items."
     },
     {
       "type": "crafting_soulforge",
@@ -30,7 +30,7 @@
     },
     {
       "type": "text",
-      "text": "Each effect requires two items: a base and a catalyst. The base is the first item that you click the array with after it is drawn, and the catalyst is the second item. When you apply the input, the design of the array will change if it is valid, and the array will start activating once you apply the catalyst.$(br2)You can have arrays that range from $(l:alchemy_array/crafting_array)crafting arrays$(/l) to even teleportation arrays."
+      "text": "Each effect requires two items: a base and a catalyst. The base is the first item that you click the array with after it is drawn, and the catalyst is the second item. When you apply the input, the design of the array will change if it is valid, and the array will start activating once you apply the catalyst.$(br2)Although only a few arrays are currently implemented, eventually you will have arrays that range from simple $(l:bloodmagic:alchemy_array/crafting_array)crafting arrays$(/l) to even teleportation arrays."
     }
   ]
 }

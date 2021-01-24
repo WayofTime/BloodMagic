@@ -10,7 +10,7 @@
     },
     {
       "type": "text",
-      "text": "Perhaps multiple specialised sets may be a good idea? Of course, you'll have to train it if you want more than a smattering of poorly-directed benefits. $(br2)Fortunately, you have devised a $(l:rituals/rituals_list/ritual_upgrade_remove)Ritual$() that will assist with training, and $(l:rituals/rituals_list/ritual_armour_evolve)another one$() that will imbue your armour a greater ability to grow. $(br2)On the following pages are a list of all the $(item)Upgrade Tomes$() that the ritual seems capable of producing for you."
+      "text": "Perhaps multiple specialised sets may be a good idea? Of course, you'll have to train it if you want more than a smattering of poorly-directed benefits. $(br2)Fortunately, you have devised a $(l:bloodmagic:rituals/rituals_list/ritual_upgrade_remove)Ritual$() that will assist with training, and $(l:bloodmagic:rituals/rituals_list/ritual_armour_evolve)another one$() that will imbue your armour a greater ability to grow. $(br2)On the following pages are a list of all the $(item)Upgrade Tomes$() that the ritual seems capable of producing for you."
     },
     {
       "type": "spotlight",

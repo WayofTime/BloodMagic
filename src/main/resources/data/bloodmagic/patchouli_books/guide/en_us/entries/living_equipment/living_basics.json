@@ -7,7 +7,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "To create $(item)Living Equipment$(), you will first need $(item)Iron Armor$() (or $(item)Iron Armour$(), if you prefer), some $(l:alchemy_array/arcane_ash)Arcane Ash$(), and some $(item)Binding Reagent$(). You'll also need at least a $(l:demon_will/soul_gem)Common Tartaric Gem$() in order to hold the $(item)Demon Will$() required."
+      "text": "To create $(item)Living Equipment$(), you will first need $(item)Iron Armor$() (or $(item)Iron Armour$(), if you prefer), some $(l:bloodmagic:alchemy_array/arcane_ash)Arcane Ash$(), and some $(item)Binding Reagent$(). You'll also need at least a $(l:bloodmagic:demon_will/soul_gem)Common Tartaric Gem$() in order to hold the $(item)Demon Will$() required."
     },
     {
       "type": "crafting_soulforge",
