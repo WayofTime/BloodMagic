@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -16,12 +17,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
+import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.recipe.RecipeARC;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.recipe.RecipeBloodAltar;
 import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
-import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 
 public class BloodMagicRecipeRegistrar
 {
@@ -214,8 +215,9 @@ public class BloodMagicRecipeRegistrar
 
 	public Set<RecipeAlchemyArray> getCraftingAlchemyArrayRecipes(World world)
 	{
-		Set<RecipeAlchemyArray> recipes = Set.copyOf(world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ARRAY));
-		Set<RecipeAlchemyArray> copyRecipes = Set.of();
+		Set<RecipeAlchemyArray> recipes = new HashSet<RecipeAlchemyArray>(world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ARRAY));
+
+		Set<RecipeAlchemyArray> copyRecipes = new HashSet<RecipeAlchemyArray>();
 		for (RecipeAlchemyArray recipe : recipes)
 		{
 			if (!recipe.getOutput().isEmpty())

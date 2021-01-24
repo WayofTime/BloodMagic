@@ -14,7 +14,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.entity.projectile.EntityShapedCharge;
-import wayoftime.bloodmagic.tile.TileShapedExplosive;
+import wayoftime.bloodmagic.tile.TileExplosiveCharge;
 
 public class ItemBlockShapedCharge extends BlockItem
 {
@@ -60,9 +60,9 @@ public class ItemBlockShapedCharge extends BlockItem
 		if (holder != null)
 		{
 			TileEntity tile = context.getWorld().getTileEntity(context.getPos());
-			if (tile instanceof TileShapedExplosive)
+			if (tile instanceof TileExplosiveCharge)
 			{
-				((TileShapedExplosive) tile).setAnointmentHolder(holder);
+				((TileExplosiveCharge) tile).setAnointmentHolder(holder);
 			}
 		}
 

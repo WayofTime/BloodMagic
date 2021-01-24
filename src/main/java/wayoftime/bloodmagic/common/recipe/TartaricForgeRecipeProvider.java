@@ -49,6 +49,8 @@ public class TartaricForgeRecipeProvider implements ISubRecipeProvider
 
 		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicBlocks.SHAPED_CHARGE.get(), 8), 10, 0.5, Ingredient.fromTag(Tags.Items.COBBLESTONE), Ingredient.fromItems(Items.CHARCOAL), Ingredient.fromTag(Tags.Items.SAND), Ingredient.fromTag(Tags.Items.STONE)).build(consumer, BloodMagic.rl(basePath + "shaped_charge"));
 		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicBlocks.DEFORESTER_CHARGE.get(), 8), 10, 0.5, Ingredient.fromTag(Tags.Items.COBBLESTONE), Ingredient.fromItems(Items.CHARCOAL), Ingredient.fromTag(ItemTags.LOGS), Ingredient.fromTag(ItemTags.PLANKS)).build(consumer, BloodMagic.rl(basePath + "deforester_charge"));
+		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicBlocks.VEINMINE_CHARGE.get(), 8), 10, 0.5, Ingredient.fromTag(Tags.Items.COBBLESTONE), Ingredient.fromItems(Items.CHARCOAL), Ingredient.fromTag(Tags.Items.SANDSTONE), Ingredient.fromTag(Tags.Items.SAND)).build(consumer, BloodMagic.rl(basePath + "vein_charge"));
+		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicBlocks.FUNGAL_CHARGE.get(), 8), 10, 0.5, Ingredient.fromTag(Tags.Items.COBBLESTONE), Ingredient.fromItems(Items.CHARCOAL), Ingredient.fromTag(BloodMagicTags.MUSHROOM_HYPHAE), Ingredient.fromTag(Tags.Items.MUSHROOMS)).build(consumer, BloodMagic.rl(basePath + "fungal_charge"));
 
 		ItemStack stack = new ItemStack(BloodMagicBlocks.DEFORESTER_CHARGE.get());
 		AnointmentHolder smeltingHolder = new AnointmentHolder();

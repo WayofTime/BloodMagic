@@ -9,9 +9,9 @@
       "text": "$(item)Arcane Ashes$() is an item that is pivotal in the creation of Alchemy Arrays. $(item)Arcane Ashes$() can be crafted in the $(l:bloodmagic:demon_will/soul_forge)Hellfire Forge$(/l) using some early game items."
     },
     {
-      "type": "crafting_soulforge",
+      "type": "crafting_alchemy_table",
       "heading": "Arcane Ashes",
-      "recipe": "bloodmagic:soulforge/arcaneashes"
+      "recipe": "bloodmagic:alchemytable/arcane_ash"
     },
     {
       "type": "text",

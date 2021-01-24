@@ -11,7 +11,6 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
@@ -30,7 +29,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
 
-public class TileDeforesterCharge extends TileShapedExplosive
+public class TileDeforesterCharge extends TileExplosiveCharge
 {
 	@ObjectHolder("bloodmagic:deforester_charge")
 	public static TileEntityType<TileDeforesterCharge> TYPE;
@@ -43,23 +42,21 @@ public class TileDeforesterCharge extends TileShapedExplosive
 //	private boolean cached = false;
 
 	public double internalCounter = 0;
-//	public int explosionRadius;
-//	public int explosionDepth;
 
 	public int currentLogs = 0;
 
 	public int maxLogs = 128;
 
-	public TileDeforesterCharge(TileEntityType<?> type, int explosionRadius, int explosionDepth)
+	public TileDeforesterCharge(TileEntityType<?> type, int maxLogs)
 	{
-		super(type, explosionRadius, explosionDepth);
-//		this.explosionRadius = explosionRadius;
-//		this.explosionDepth = explosionDepth;
+		super(type);
+
+		this.maxLogs = maxLogs;
 	}
 
 	public TileDeforesterCharge()
 	{
-		this(TYPE, 1, 3);
+		this(TYPE, 128);
 	}
 
 	@Override
@@ -174,7 +171,7 @@ public class TileDeforesterCharge extends TileShapedExplosive
 			ItemStack toolStack = this.getHarvestingTool();
 			world.playSound((PlayerEntity) null, this.getPos().getX() + 0.5, this.getPos().getY() + 0.5, this.getPos().getZ() + 0.5, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F) * 0.7F);
 
-			int numParticles = explosionDepth * (explosionRadius + 1);
+			int numParticles = 10;
 
 			((ServerWorld) this.world).spawnParticle(ParticleTypes.EXPLOSION, pos.getX() + 0.5 + explosiveDirection.getXOffset(), pos.getY() + 0.5 + explosiveDirection.getYOffset(), pos.getZ() + 0.5 + explosiveDirection.getZOffset(), numParticles, 1.0D, 1.0D, 1.0D, 0);
 
@@ -217,28 +214,6 @@ public class TileDeforesterCharge extends TileShapedExplosive
 
 			world.setBlockState(getPos(), Blocks.AIR.getDefaultState());
 		}
-	}
-
-	private static void handleExplosionDrops(ObjectArrayList<Pair<ItemStack, BlockPos>> dropPositionArray, ItemStack stack, BlockPos pos)
-	{
-		int i = dropPositionArray.size();
-
-		for (int j = 0; j < i; ++j)
-		{
-			Pair<ItemStack, BlockPos> pair = dropPositionArray.get(j);
-			ItemStack itemstack = pair.getFirst();
-			if (ItemEntity.canMergeStacks(itemstack, stack))
-			{
-				ItemStack itemstack1 = ItemEntity.mergeStacks(itemstack, stack, 16);
-				dropPositionArray.set(j, Pair.of(itemstack1, pair.getSecond()));
-				if (stack.isEmpty())
-				{
-					return;
-				}
-			}
-		}
-
-		dropPositionArray.add(Pair.of(stack, pos));
 	}
 
 	@Override

@@ -3,16 +3,16 @@
   "icon": "bloodmagic:melee_anointment",
   "category": "utility",
   "extra_recipe_mappings":[
-    ["bloodmagic:slate_vial", 2],
-    ["bloodmagic:melee_anointment", 3],
-    ["bloodmagic:fortune_anointment", 4],
-    ["bloodmagic:silk_touch_anointment", 5],
-    ["bloodmagic:holy_water_anointment", 6],
-    ["bloodmagic:hidden_knowledge_anointment", 7],
-    ["bloodmagic:bow_power_anointment", 8],
-    ["bloodmagic:quick_draw_anointment", 9],
-    ["bloodmagic:looting_anointment", 10],
-    ["bloodmagic:smelting_anointment", 11]
+    ["bloodmagic:slate_vial", 1],
+    ["bloodmagic:melee_anointment", 2],
+    ["bloodmagic:fortune_anointment", 3],
+    ["bloodmagic:silk_touch_anointment", 4],
+    ["bloodmagic:holy_water_anointment", 5],
+    ["bloodmagic:hidden_knowledge_anointment", 6],
+    ["bloodmagic:bow_power_anointment", 7],
+    ["bloodmagic:quick_draw_anointment", 8],
+    ["bloodmagic:looting_anointment", 9],
+    ["bloodmagic:smelting_anointment", 10]
   ],
   "pages": [
     {

@@ -237,6 +237,10 @@ public class BloodAltar// implements IFluidHandler
 //
 //		System.out.println("There are currently " + altarRecipes.size() + " Altar Recipes loaded.");
 //
+//		this.fluidInput = new FluidStack(BloodMagicBlocks.LIFE_ESSENCE_FLUID.get(), 1000);
+
+//		System.out.println(this.fluidOutput.getAmount());
+
 		World world = tileAltar.getWorld();
 		BlockPos pos = tileAltar.getPos();
 
@@ -671,7 +675,7 @@ public class BloodAltar// implements IFluidHandler
 
 		if (!doFill)
 		{
-			if (fluidInput == null)
+			if (fluidInput == null || fluidInput.isEmpty())
 			{
 				return Math.min(bufferCapacity, resource.getAmount());
 			}
