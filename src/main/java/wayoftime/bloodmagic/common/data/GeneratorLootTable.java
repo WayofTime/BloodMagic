@@ -135,6 +135,7 @@ public class GeneratorLootTable extends LootTableProvider
 			registerNoDropLootTable(BloodMagicBlocks.SHAPED_CHARGE.get());
 			registerNoDropLootTable(BloodMagicBlocks.DEFORESTER_CHARGE.get());
 			registerNoDropLootTable(BloodMagicBlocks.VEINMINE_CHARGE.get());
+			registerNoDropLootTable(BloodMagicBlocks.FUNGAL_CHARGE.get());
 		}
 
 		private void registerNoDropLootTable(Block block)

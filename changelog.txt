@@ -3,6 +3,9 @@ Version 3.1.0
 ------------------------------------------------------
 - Fixed Plunderer's Glint
 - Fixed the Blood Altar not being able to input fluids. About time, Way!
+- Added new Shaped Charges
+-> Fungal Charge, which is very useful for giant mushrooms and nether mushrooms
+-> Controlled Charge, which will destroy only blocks that match the block it is placed on.
 
 
 ------------------------------------------------------

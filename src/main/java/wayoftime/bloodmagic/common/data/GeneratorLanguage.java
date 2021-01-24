@@ -451,7 +451,8 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addBlock(BloodMagicBlocks.SHAPED_CHARGE, "Shaped Charge");
 		addBlock(BloodMagicBlocks.DEFORESTER_CHARGE, "Deforester Charge");
-		addBlock(BloodMagicBlocks.VEINMINE_CHARGE, "Vein Charge");
+		addBlock(BloodMagicBlocks.VEINMINE_CHARGE, "Controlled Charge");
+		addBlock(BloodMagicBlocks.FUNGAL_CHARGE, "Fungal Charge");
 
 		// Item names
 		addItem(BloodMagicItems.WEAK_BLOOD_ORB, "Weak Blood Orb");

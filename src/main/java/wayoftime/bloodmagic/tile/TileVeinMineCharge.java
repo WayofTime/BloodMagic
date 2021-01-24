@@ -24,6 +24,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
@@ -36,6 +37,11 @@ public class TileVeinMineCharge extends TileExplosiveCharge
 	private Map<BlockPos, Boolean> veinPartsMap;
 	private List<BlockPos> veinPartsCache;
 	private boolean finishedAnalysis;
+
+	private Vector3i[] diagonals = new Vector3i[] { new Vector3i(0, 1, 1), new Vector3i(0, 1, -1),
+			new Vector3i(0, -1, 1), new Vector3i(0, -1, -1), new Vector3i(1, 0, 1), new Vector3i(-1, 0, 1),
+			new Vector3i(1, 0, -1), new Vector3i(-1, 0, -1), new Vector3i(1, 1, 0), new Vector3i(-1, 1, 0),
+			new Vector3i(1, -1, 0), new Vector3i(-1, -1, 0) };
 
 	public double internalCounter = 0;
 
@@ -67,6 +73,10 @@ public class TileVeinMineCharge extends TileExplosiveCharge
 		Direction explosiveDirection = this.getBlockState().get(BlockShapedExplosive.ATTACHED).getOpposite();
 		BlockState attachedState = world.getBlockState(pos.offset(explosiveDirection));
 		Block attachedBlock = attachedState.getBlock();
+		if (!isValidStartingBlock(attachedState))
+		{
+			return;
+		}
 //		if (!BlockTags.LOGS.contains(attachedState.getBlock()) && !BlockTags.LEAVES.contains(attachedState.getBlock()))
 //		{
 //			return;
@@ -104,7 +114,7 @@ public class TileVeinMineCharge extends TileExplosiveCharge
 					{
 						continue;
 					}
-					if (attachedBlock.equals(checkState.getBlock()))
+					if (isValidBlock(attachedState, checkState))
 					{
 						currentBlocks++;
 						isTree = true;
@@ -116,6 +126,39 @@ public class TileVeinMineCharge extends TileExplosiveCharge
 						veinPartsMap.put(checkPos, false);
 						newPositions.add(checkPos);
 						foundNew = true;
+					}
+				}
+
+				if (this.checkDiagonals())
+				{
+					for (Vector3i vec : this.diagonals)
+					{
+						BlockPos checkPos = currentPos.add(vec);
+						if (veinPartsMap.containsKey(checkPos))
+						{
+							continue;
+						}
+
+						BlockState checkState = world.getBlockState(checkPos);
+
+						boolean isTree = false;
+						if (currentBlocks >= maxBlocks)
+						{
+							continue;
+						}
+						if (isValidBlock(attachedState, checkState))
+						{
+							currentBlocks++;
+							isTree = true;
+
+						}
+
+						if (isTree)
+						{
+							veinPartsMap.put(checkPos, false);
+							newPositions.add(checkPos);
+							foundNew = true;
+						}
 					}
 				}
 
@@ -214,12 +257,29 @@ public class TileVeinMineCharge extends TileExplosiveCharge
 	public void deserialize(CompoundNBT tag)
 	{
 		internalCounter = tag.getDouble("internalCounter");
+		maxBlocks = tag.getInt("maxBlocks");
 	}
 
 	@Override
 	public CompoundNBT serialize(CompoundNBT tag)
 	{
 		tag.putDouble("internalCounter", internalCounter);
+		tag.putInt("maxBlocks", maxBlocks);
 		return tag;
+	}
+
+	public boolean isValidBlock(BlockState originalBlockState, BlockState testState)
+	{
+		return originalBlockState.getBlock() == testState.getBlock();
+	}
+
+	public boolean isValidStartingBlock(BlockState originalBlockState)
+	{
+		return true;
+	}
+
+	public boolean checkDiagonals()
+	{
+		return true;
 	}
 }
