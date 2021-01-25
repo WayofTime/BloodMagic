@@ -1,7 +1,7 @@
 {
   "name": "Rune of Capacity",
   "icon": "bloodmagic:altarcapacityrune",
-  "category": "bloodmagic:blood_rune",
+  "category": "bloodmagic:altar/blood_rune",
   "pages": [
     {
       "type": "text",

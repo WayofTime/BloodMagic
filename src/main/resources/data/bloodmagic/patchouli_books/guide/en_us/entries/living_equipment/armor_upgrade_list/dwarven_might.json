@@ -1,0 +1,11 @@
+{
+  "name": "Dwarven Might",
+  "icon": "minecraft:diamond_pickaxe",
+  "category": "bloodmagic:living_equipment/armor_upgrade_list",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Effect: Increases mining speed while mining identical blocks. After a certain level, gives a Haste buff after breaking blocks. $(br2)Trained by: Mining. $(br2)Maximum level: 10"
+    }
+  ]
+}
