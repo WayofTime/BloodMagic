@@ -65,7 +65,7 @@ public class EntityThrowingDagger extends ProjectileItemEntity
 	private IntOpenHashSet piercedEntities;
 	private List<Entity> hitEntities;
 
-	private ItemStack containedStack = ItemStack.EMPTY;
+//	private ItemStack containedStack = ItemStack.EMPTY;
 	private double willDrop = 0;
 	private EnumDemonWillType willType = EnumDemonWillType.DEFAULT;
 
@@ -77,7 +77,7 @@ public class EntityThrowingDagger extends ProjectileItemEntity
 	public EntityThrowingDagger(ItemStack stack, World worldIn, LivingEntity throwerIn)
 	{
 		super(BloodMagicEntityTypes.THROWING_DAGGER.getEntityType(), throwerIn, worldIn);
-		this.containedStack = stack;
+		this.setItem(stack);
 		if (throwerIn instanceof PlayerEntity)
 		{
 			this.pickupStatus = AbstractArrowEntity.PickupStatus.ALLOWED;
@@ -87,7 +87,14 @@ public class EntityThrowingDagger extends ProjectileItemEntity
 	public EntityThrowingDagger(ItemStack stack, World worldIn, double x, double y, double z)
 	{
 		super(BloodMagicEntityTypes.THROWING_DAGGER.getEntityType(), x, y, z, worldIn);
-		this.containedStack = stack;
+		this.setItem(stack);
+	}
+
+	@Override
+	public void setItem(ItemStack stack)
+	{
+		super.setItem(stack);
+//		this.containedStack = stack;
 	}
 
 	protected Item getDefaultItem()
@@ -301,7 +308,7 @@ public class EntityThrowingDagger extends ProjectileItemEntity
 		compound.putString("SoundEvent", Registry.SOUND_EVENT.getKey(this.hitSound).toString());
 //	      compound.putBoolean("ShotFromCrossbow", this.getShotFromCrossbow());
 		compound.putDouble("willDrop", willDrop);
-		this.containedStack.write(compound);
+//		this.containedStack.write(compound);
 		compound.putString("willType", this.willType.name);
 	}
 
@@ -333,7 +340,7 @@ public class EntityThrowingDagger extends ProjectileItemEntity
 					: AbstractArrowEntity.PickupStatus.DISALLOWED;
 		}
 		this.willDrop = compound.getDouble("willDrop");
-		this.containedStack = ItemStack.read(compound);
+//		this.containedStack = ItemStack.read(compound);
 		this.willType = EnumDemonWillType.getType(compound.getString("willType"));
 
 //	      this.setIsCritical(compound.getBoolean("crit"));
@@ -508,7 +515,8 @@ public class EntityThrowingDagger extends ProjectileItemEntity
 
 	protected ItemStack getArrowStack()
 	{
-		return containedStack;
+		// Gets the item from the data manager
+		return getItem();
 	}
 
 	// OnHitBlock
