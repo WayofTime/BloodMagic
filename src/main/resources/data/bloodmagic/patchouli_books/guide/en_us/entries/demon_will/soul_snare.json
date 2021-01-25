@@ -1,7 +1,7 @@
 {
   "name": "Your First Will",
   "icon": "bloodmagic:soulsnare",
-  "category": "demon_will",
+  "category": "bloodmagic:demon_will",
   "priority": "true",
   "pages": [
     {

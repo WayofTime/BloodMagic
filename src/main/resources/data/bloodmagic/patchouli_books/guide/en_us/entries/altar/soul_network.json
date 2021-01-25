@@ -1,7 +1,7 @@
 {
   "name": "Soul Network",
   "icon": "bloodmagic:weakbloodorb",
-  "category": "altar",
+  "category": "bloodmagic:altar",
   "extra_recipe_mappings":[
     ["bloodmagic:weakbloodorb", 3],
     ["bloodmagic:apprenticebloodorb", 3],

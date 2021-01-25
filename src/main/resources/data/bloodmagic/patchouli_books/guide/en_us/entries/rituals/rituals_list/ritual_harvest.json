@@ -1,7 +1,7 @@
 {
   "name": "Reap of the Harvest Moon",
   "icon": "minecraft:wheat",
-  "category": "rituals_list",
+  "category": "bloodmagic:rituals_list",
   "pages": [
     {
       "type": "multiblock",

@@ -1,7 +1,7 @@
 {
   "name": "Sentient Tools",
   "icon": "bloodmagic:soulpickaxe",
-  "category": "demon_will",
+  "category": "bloodmagic:demon_will",
   "extra_recipe_mappings":[
     ["bloodmagic:soulpickaxe", 1],
     ["bloodmagic:soulscythe", 3],

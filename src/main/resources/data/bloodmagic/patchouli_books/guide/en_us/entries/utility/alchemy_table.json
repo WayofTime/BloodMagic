@@ -1,7 +1,7 @@
 {
   "name": "Alchemy Table",
   "icon": "bloodmagic:alchemytable",
-  "category": "utility",
+  "category": "bloodmagic:utility",
   "extra_recipe_mappings":[
     ["bloodmagic:plantoil", 8],
     ["bloodmagic:coalsand", 9]

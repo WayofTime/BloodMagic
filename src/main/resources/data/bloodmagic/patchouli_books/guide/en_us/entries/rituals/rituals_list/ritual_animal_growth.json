@@ -1,7 +1,7 @@
 {
   "name": "Ritual of the Shepherd",
   "icon": "minecraft:white_wool",
-  "category": "rituals_list",
+  "category": "bloodmagic:rituals_list",
   "pages": [
     {
       "type": "multiblock",

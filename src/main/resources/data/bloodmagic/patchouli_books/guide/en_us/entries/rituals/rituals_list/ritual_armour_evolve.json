@@ -1,7 +1,7 @@
 {
   "name": "Ritual of Living Evolution",
   "icon": "bloodmagic:livingplate",
-  "category": "rituals_list",
+  "category": "bloodmagic:rituals_list",
   "pages": [
     {
       "type": "multiblock",

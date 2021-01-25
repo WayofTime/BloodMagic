@@ -1,7 +1,7 @@
 {
   "name": "Tiers & Getting Started",
   "icon": "bloodmagic:sacrificialdagger",
-  "category": "utility",
+  "category": "bloodmagic:utility",
   "priority": "true",
   "pages": [
     {

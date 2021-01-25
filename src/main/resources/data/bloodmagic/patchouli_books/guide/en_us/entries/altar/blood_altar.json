@@ -1,7 +1,7 @@
 {
   "name": "The Blood Altar",
   "icon": "bloodmagic:altar",
-  "category": "altar",
+  "category": "bloodmagic:altar",
   "priority": "true",
   "extra_recipe_mappings":[
     ["bloodmagic:daggerofsacrifice", 13]

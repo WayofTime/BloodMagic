@@ -1,7 +1,7 @@
 {
   "name": "The Ritual Diviner",
   "icon": "bloodmagic:ritualdiviner",
-  "category": "rituals",
+  "category": "bloodmagic:rituals",
   "extra_recipe_mappings":[
     ["bloodmagic:airscribetool", 4],
     ["bloodmagic:firescribetool", 4],

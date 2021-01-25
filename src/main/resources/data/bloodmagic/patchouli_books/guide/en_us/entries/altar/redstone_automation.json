@@ -1,7 +1,7 @@
 {
   "name": "Redstone and Automation",
   "icon": "minecraft:redstone",
-  "category": "altar",
+  "category": "bloodmagic:altar",
   "pages": [
     {
       "type": "text",

@@ -1,7 +1,7 @@
 {
   "name": "Crystallized Will",
   "icon": "bloodmagic:defaultcrystal",
-  "category": "demon_will",
+  "category": "bloodmagic:demon_will",
   "extra_recipe_mappings":[
     ["bloodmagic:demoncrucible", 1],
     ["bloodmagic:demoncrystallizer", 4],

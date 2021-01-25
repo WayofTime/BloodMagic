@@ -1,7 +1,7 @@
 {
   "name": "Hellfire Forge",
   "icon": "bloodmagic:soulforge",
-  "category": "demon_will",
+  "category": "bloodmagic:demon_will",
   "pages": [
     {
       "type": "text",

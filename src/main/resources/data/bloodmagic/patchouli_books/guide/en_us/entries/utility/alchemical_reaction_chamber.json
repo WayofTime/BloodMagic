@@ -1,7 +1,7 @@
 {
   "name": "Alchemical Reaction Chamber",
   "icon": "bloodmagic:alchemicalreactionchamber",
-  "category": "utility",
+  "category": "bloodmagic:utility",
   "extra_recipe_mappings":[
     ["bloodmagic:sanguinereverter", 2],
     ["bloodmagic:weakbloodshard", 3],

@@ -1,7 +1,7 @@
 {
   "name": "Crafting with Arrays",
   "icon": "bloodmagic:divinationsigil",
-  "category": "alchemy_array",
+  "category": "bloodmagic:alchemy_array",
   "pages": [
     {
       "type": "text",

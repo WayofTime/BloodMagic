@@ -1,7 +1,7 @@
 {
   "name": "Tartaric Gems",
   "icon": "bloodmagic:soulgemgreater",
-  "category": "demon_will",
+  "category": "bloodmagic:demon_will",
   "extra_recipe_mappings":[
     ["bloodmagic:soulgempetty", 1],
     ["bloodmagic:soulgemlesser", 3],

@@ -1,7 +1,7 @@
 {
   "name": "Movement Array",
   "icon": "minecraft:feather",
-  "category": "alchemy_array",
+  "category": "bloodmagic:alchemy_array",
   "pages": [
     {
       "type": "text",

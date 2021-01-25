@@ -1,7 +1,7 @@
 {
   "name": "Ritual of Magnetism",
   "icon": "minecraft:iron_ore",
-  "category": "rituals_list",
+  "category": "bloodmagic:rituals_list",
   "pages": [
     {
       "type": "multiblock",

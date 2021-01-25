@@ -1,7 +1,7 @@
 {
   "name": "Lava Sigil",
   "icon": "bloodmagic:lavasigil",
-  "category": "sigil",
+  "category": "bloodmagic:sigil",
   "extra_recipe_mappings":[
     ["bloodmagic:reagentlava", 2],
     ["bloodmagic:lavasigil", 2]

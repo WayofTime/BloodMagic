@@ -1,7 +1,7 @@
 {
   "name": "Sigil of the Fast Miner",
   "icon": "bloodmagic:miningsigil",
-  "category": "sigil",
+  "category": "bloodmagic:sigil",
   "extra_recipe_mappings":[
     ["bloodmagic:reagentfastminer", 2],
     ["bloodmagic:miningsigil", 2]

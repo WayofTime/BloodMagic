@@ -1,7 +1,7 @@
 {
   "name": "Living Equipment Basics",
   "icon": "bloodmagic:reagentbinding",
-  "category": "living_equipment",
+  "category": "bloodmagic:living_equipment",
   "priority": "true",
   "extra_recipe_mappings":[["bloodmagic:reagentbinding", 1]],
   "pages": [

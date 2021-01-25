@@ -1,7 +1,7 @@
 {
   "name": "Water Sigil",
   "icon": "bloodmagic:watersigil",
-  "category": "sigil",
+  "category": "bloodmagic:sigil",
   "extra_recipe_mappings":[
     ["bloodmagic:reagentwater", 2],
     ["bloodmagic:watersigil", 2]

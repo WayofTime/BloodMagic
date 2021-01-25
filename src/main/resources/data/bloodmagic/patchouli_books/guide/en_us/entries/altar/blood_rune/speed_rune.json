@@ -1,7 +1,7 @@
 {
   "name": "Speed Rune",
   "icon": "bloodmagic:speedrune",
-  "category": "blood_rune",
+  "category": "bloodmagic:blood_rune",
   "pages": [
     {
       "type": "text",

@@ -1,7 +1,7 @@
 {
   "name": "Sigil of the Blood Lamp",
   "icon": "bloodmagic:bloodlightsigil",
-  "category": "sigil",
+  "category": "bloodmagic:sigil",
   "extra_recipe_mappings":[
     ["bloodmagic:reagentbloodlight", 1],
     ["bloodmagic:bloodlightsigil", 1]

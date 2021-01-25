@@ -1,7 +1,7 @@
 {
   "name": "Anointments",
   "icon": "bloodmagic:melee_anointment",
-  "category": "utility",
+  "category": "bloodmagic:utility",
   "extra_recipe_mappings":[
     ["bloodmagic:slate_vial", 1],
     ["bloodmagic:melee_anointment", 2],

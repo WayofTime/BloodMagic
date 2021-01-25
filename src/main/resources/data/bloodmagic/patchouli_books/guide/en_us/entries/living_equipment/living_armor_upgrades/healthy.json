@@ -1,7 +1,7 @@
 {
   "name": "Healthy",
   "icon": "minecraft:golden_apple",
-  "category": "living_armor_upgrades",
+  "category": "bloodmagic:living_armor_upgrades",
   "pages": [
     {
       "type": "text",

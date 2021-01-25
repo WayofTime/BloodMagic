@@ -1,7 +1,7 @@
 {
   "name": "Air Sigil",
   "icon": "bloodmagic:airsigil",
-  "category": "sigil",
+  "category": "bloodmagic:sigil",
   "extra_recipe_mappings":[
     ["bloodmagic:reagentair", 1],
     ["bloodmagic:airsigil", 1]
