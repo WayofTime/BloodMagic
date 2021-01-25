@@ -1,7 +1,7 @@
 {
   "name": "Poison Resistance",
   "icon": "minecraft:milk_bucket",
-  "category": "living_armor_upgrades",
+  "category": "bloodmagic:living_armor_upgrades",
   "pages": [
     {
       "type": "text",

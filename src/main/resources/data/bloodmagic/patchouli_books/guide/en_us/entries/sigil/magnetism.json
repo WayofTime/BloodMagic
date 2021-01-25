@@ -1,7 +1,7 @@
 {
   "name": "Sigil of Magnetism",
   "icon": "bloodmagic:sigilofmagnetism",
-  "category": "sigil",
+  "category": "bloodmagic:sigil",
   "extra_recipe_mappings":[
     ["bloodmagic:reagentmagnetism", 1],
     ["bloodmagic:sigilofmagnetism", 1]

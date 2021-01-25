@@ -1,7 +1,7 @@
 {
   "name": "Bloodstone Bricks",
   "icon": "bloodmagic:largebloodstonebrick",
-  "category": "utility",
+  "category": "bloodmagic:utility",
   "pages":[
     {
       "type": "text",

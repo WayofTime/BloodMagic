@@ -1,7 +1,7 @@
 {
   "name": "Living Equipment Upgrades",
   "icon": "bloodmagic:upgradetome",
-  "category": "living_equipment",
+  "category": "bloodmagic:living_equipment",
   "extra_recipe_mappings":[["bloodmagic:upgradetome", 0]],
   "pages": [
     {

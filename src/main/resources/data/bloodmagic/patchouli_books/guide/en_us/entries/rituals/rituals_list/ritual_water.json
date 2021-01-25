@@ -1,7 +1,7 @@
 {
   "name": "Ritual of the Full Spring",
   "icon": "minecraft:water_bucket",
-  "category": "rituals_list",
+  "category": "bloodmagic:rituals_list",
   "pages": [
     {
       "type": "multiblock",

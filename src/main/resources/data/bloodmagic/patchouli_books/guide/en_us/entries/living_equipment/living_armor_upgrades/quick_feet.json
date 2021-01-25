@@ -1,7 +1,7 @@
 {
   "name": "Quick Feet",
   "icon": "minecraft:sugar",
-  "category": "living_armor_upgrades",
+  "category": "bloodmagic:living_armor_upgrades",
   "pages": [
     {
       "type": "text",

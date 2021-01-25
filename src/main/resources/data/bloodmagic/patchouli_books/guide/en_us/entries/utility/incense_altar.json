@@ -1,7 +1,7 @@
 {
   "name": "Incense Altar",
   "icon": "bloodmagic:incensealtar",
-  "category": "utility",
+  "category": "bloodmagic:utility",
   "pages": [
     {
       "type": "text",

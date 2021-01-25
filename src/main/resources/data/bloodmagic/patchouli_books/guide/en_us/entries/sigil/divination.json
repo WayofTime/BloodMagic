@@ -1,7 +1,7 @@
 {
   "name": "Divination Sigil",
   "icon": "bloodmagic:divinationsigil",
-  "category": "sigil",
+  "category": "bloodmagic:sigil",
   "extra_recipe_mappings":[
     ["bloodmagic:divinationsigil", 3]
   ],

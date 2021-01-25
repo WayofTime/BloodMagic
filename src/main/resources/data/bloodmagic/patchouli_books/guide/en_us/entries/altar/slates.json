@@ -1,7 +1,7 @@
 {
   "name": "Tiers of Slates",
   "icon": "bloodmagic:blankslate",
-  "category": "altar",
+  "category": "bloodmagic:altar",
   "extra_recipe_mappings":[
     ["bloodmagic:blankslate", 1],
     ["bloodmagic:reinforcedslate", 1],

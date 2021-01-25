@@ -1,7 +1,7 @@
 {
   "name": "Changelog",
   "icon": "minecraft:map",
-  "category": "utility",
+  "category": "bloodmagic:utility",
   "priority": "true",
   "pages":[
     {

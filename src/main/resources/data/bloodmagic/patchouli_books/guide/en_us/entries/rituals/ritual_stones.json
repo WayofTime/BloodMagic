@@ -1,7 +1,7 @@
 {
   "name": "Ritual Stones",
   "icon": "bloodmagic:waterritualstone",
-  "category": "rituals",
+  "category": "bloodmagic:rituals",
   "extra_recipe_mappings":[
     ["bloodmagic:airritualstone", 0],
     ["bloodmagic:fireritualstone", 0],

@@ -1,7 +1,7 @@
 {
   "name": "Spike Array",
   "icon": "minecraft:iron_ingot",
-  "category": "alchemy_array",
+  "category": "bloodmagic:alchemy_array",
   "pages": [
     {
       "type": "text",
