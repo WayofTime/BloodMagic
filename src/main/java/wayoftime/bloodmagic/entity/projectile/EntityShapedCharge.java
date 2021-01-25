@@ -1,7 +1,10 @@
 package wayoftime.bloodmagic.entity.projectile;
 
+import java.util.Optional;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -10,6 +13,9 @@ import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -28,8 +34,8 @@ import wayoftime.bloodmagic.tile.TileExplosiveCharge;
 
 public class EntityShapedCharge extends ThrowableEntity
 {
-//	private static final DataParameter<Optional<BlockState>> ITEMSTACK_DATA = EntityDataManager.createKey(ProjectileItemEntity.class, DataSerializers.OPTIONAL_BLOCK_STATE);
-	private BlockState fallTile = BloodMagicBlocks.SHAPED_CHARGE.get().getDefaultState();
+	private static final DataParameter<Optional<BlockState>> ITEMSTACK_DATA = EntityDataManager.createKey(EntityShapedCharge.class, DataSerializers.OPTIONAL_BLOCK_STATE);
+//	private BlockState fallTile = BloodMagicBlocks.SHAPED_CHARGE.get().getDefaultState();
 	private AnointmentHolder holder;
 
 	public EntityShapedCharge(EntityType<EntityShapedCharge> p_i50159_1_, World p_i50159_2_)
@@ -40,18 +46,25 @@ public class EntityShapedCharge extends ThrowableEntity
 	public EntityShapedCharge(World worldIn, Block block, LivingEntity throwerIn)
 	{
 		super(BloodMagicEntityTypes.SHAPED_CHARGE.getEntityType(), throwerIn, worldIn);
-		this.fallTile = block.getDefaultState();
+//		this.fallTile = block.getDefaultState();
+		this.setFallTile(block.getDefaultState());
 	}
 
 	public EntityShapedCharge(World worldIn, Block block, double x, double y, double z)
 	{
 		super(BloodMagicEntityTypes.SHAPED_CHARGE.getEntityType(), x, y, z, worldIn);
-		this.fallTile = block.getDefaultState();
+//		this.fallTile = block.getDefaultState();
+		this.setFallTile(block.getDefaultState());
 	}
 
 	public void setAnointmentHolder(AnointmentHolder holder)
 	{
 		this.holder = holder;
+	}
+
+	public void setFallTile(BlockState state)
+	{
+		this.dataManager.set(ITEMSTACK_DATA, Optional.of(state));
 	}
 
 	@Override
@@ -71,6 +84,7 @@ public class EntityShapedCharge extends ThrowableEntity
 			BlockState blockstate = this.world.getBlockState(blockpos);
 			Material material = blockstate.getMaterial();
 //		      return state.isAir() || state.isIn(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable();
+			BlockState fallTile = this.getBlockState();
 			if (blockstate.isAir() || blockstate.isIn(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable())
 			{
 				this.getEntityWorld().setBlockState(blockpos, fallTile.with(BlockShapedExplosive.ATTACHED, faceHit));
@@ -93,7 +107,7 @@ public class EntityShapedCharge extends ThrowableEntity
 	@Override
 	protected void writeAdditional(CompoundNBT compound)
 	{
-		compound.put("BlockState", NBTUtil.writeBlockState(this.fallTile));
+		compound.put("BlockState", NBTUtil.writeBlockState(this.getBlockState()));
 		if (holder != null)
 			compound.put("holder", holder.serialize());
 //	      compound.putInt("Time", this.fallTime);
@@ -113,7 +127,8 @@ public class EntityShapedCharge extends ThrowableEntity
 	@Override
 	protected void readAdditional(CompoundNBT compound)
 	{
-		this.fallTile = NBTUtil.readBlockState(compound.getCompound("BlockState"));
+		BlockState fallTile = NBTUtil.readBlockState(compound.getCompound("BlockState"));
+		this.setFallTile(fallTile);
 		if (compound.contains("holder"))
 			this.holder = AnointmentHolder.fromNBT(compound.getCompound("holder"));
 //	      this.fallTime = compound.getInt("Time");
@@ -133,9 +148,9 @@ public class EntityShapedCharge extends ThrowableEntity
 //	         this.tileEntityData = compound.getCompound("TileEntityData");
 //	      }
 
-		if (this.fallTile.isAir())
+		if (fallTile.isAir())
 		{
-			this.fallTile = BloodMagicBlocks.SHAPED_CHARGE.get().getDefaultState();
+			fallTile = BloodMagicBlocks.SHAPED_CHARGE.get().getDefaultState();
 		}
 
 	}
@@ -143,14 +158,17 @@ public class EntityShapedCharge extends ThrowableEntity
 	@Override
 	protected void registerData()
 	{
+//		FallingBlockEntity d;
+//		super.registerData();
 		// TODO Auto-generated method stub
-
+//		super.registerData();
+		this.dataManager.register(ITEMSTACK_DATA, Optional.of(Blocks.SAND.getDefaultState()));
 	}
 
 	public BlockState getBlockState()
 	{
 		// TODO Auto-generated method stub
-		return fallTile;
+		return this.dataManager.get(ITEMSTACK_DATA).get();
 	}
 
 	@OnlyIn(Dist.CLIENT)
