@@ -57,6 +57,8 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 		addThirdPartyCrop("roots", "spirit_herb", 7);
 
 		addPamCrops();
+
+		addMysticalCrops();
 	}
 
 	@Override
@@ -147,6 +149,42 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 		} catch (IllegalAccessException | InvocationTargetException e)
 		{
 			BMLog.DEFAULT.error("HarvestCraft integration cancelled; crop name lookup broke");
+		}
+	}
+
+	private static void addMysticalCrops()
+	{
+		if (!ModList.get().isLoaded("mysticalagriculture"))
+			return;
+
+		try
+		{
+			Class<?> mysticalAPI = Class.forName("com.blakebr0.mysticalagriculture.api.MysticalAgricultureAPI");
+			Method getRegistry = mysticalAPI.getMethod("getCropRegistry");
+			Object registry = getRegistry.invoke(null);
+
+			Class<?> mysticalRegistry = Class.forName("com.blakebr0.mysticalagriculture.api.registry.ICropRegistry");
+			Method getCrops = mysticalRegistry.getMethod("getCrops");
+			@SuppressWarnings("unchecked")
+			List<Object> crops = (List<Object>) getCrops.invoke(registry);
+
+			Class<?> mysticalCrop = Class.forName("com.blakebr0.mysticalagriculture.api.crop.ICrop");
+			Method getCrop = mysticalCrop.getMethod("getCrop");
+
+			for (Object maCrop : crops)
+			{
+				CropsBlock crop = (CropsBlock) getCrop.invoke(maCrop);
+				HarvestRegistry.registerStandardCrop(crop, crop.getMaxAge());
+			}
+		} catch (ClassNotFoundException e)
+		{
+			BMLog.DEFAULT.error("MysticalAgriculture integration cancelled: unable to find a class: " + e.getMessage());
+		} catch (NoSuchMethodException e)
+		{
+			BMLog.DEFAULT.error("MysticalAgriculture integration cancelled: unable to find a method: " + e.getMessage());
+		} catch (IllegalAccessException | InvocationTargetException e)
+		{
+			BMLog.DEFAULT.error("MysticalAgriculture integration cancelled: failed to invoke a method: " + e.getMessage());
 		}
 	}
 }
