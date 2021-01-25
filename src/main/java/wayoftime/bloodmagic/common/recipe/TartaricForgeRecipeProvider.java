@@ -59,6 +59,8 @@ public class TartaricForgeRecipeProvider implements ISubRecipeProvider
 
 		TartaricForgeRecipeBuilder.tartaricForge(stack, 60, 1, Ingredient.fromItems(BloodMagicItems.DEFORESTER_CHARGE_ITEM.get())).build(consumer, BloodMagic.rl(basePath + "deforester_charge_smelting"));
 
+		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.THROWING_DAGGER.get(), 16), 32, 5, Ingredient.fromTag(Tags.Items.INGOTS_IRON), Ingredient.fromTag(Tags.Items.INGOTS_IRON), Ingredient.fromTag(Tags.Items.STRING)).build(consumer, BloodMagic.rl(basePath + "throwing_dagger"));
+
 		// Changed Recipes
 		{
 //			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.ARCANE_ASHES.get()), 0, 0, Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE), Ingredient.fromTag(Tags.Items.DYES_WHITE), Ingredient.fromTag(Tags.Items.GUNPOWDER), Ingredient.fromTag(ItemTags.COALS)).build(consumer, BloodMagic.rl(basePath + "arcaneashes"));

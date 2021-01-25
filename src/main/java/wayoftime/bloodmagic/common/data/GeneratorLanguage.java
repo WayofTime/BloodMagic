@@ -120,6 +120,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.experienceTome.exp", "Exp: %0.3f");
 		add("tooltip.bloodmagic.experienceTome.expLevel", "Level: %d");
 
+		add("tooltip.bloodmagic.throwing_dagger.desc", "Not to be used in the kitchen");
+
 		add("key.bloodmagic.category", "Blood Magic");
 
 		// Ritual info
@@ -552,6 +554,8 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.LIVING_BOOTS, "Living Boots");
 
 		addItem(BloodMagicItems.LIVING_TOME, "Living Armour Upgrade Tome");
+
+		addItem(BloodMagicItems.THROWING_DAGGER, "Iron Throwing Dagger");
 
 		// Anointment Items
 		addItem(BloodMagicItems.SLATE_VIAL, "Slate-infused Vial");

@@ -65,7 +65,7 @@
   "block.bloodmagic.steadfastdemoncrystal": "Steadfast Crystal Cluster",
   "block.bloodmagic.stonebrickpath": "Stone Path",
   "block.bloodmagic.stonetilepath": "Tiled Stone Path",
-  "block.bloodmagic.veinmine_charge": "Vein Charge",
+  "block.bloodmagic.veinmine_charge": "Controlled Charge",
   "block.bloodmagic.vengefuldemoncrystal": "Vengeful Crystal Cluster",
   "block.bloodmagic.waterritualstone": "Water Ritual Stone",
   "block.bloodmagic.woodbrickpath": "Wooden Path",
@@ -184,6 +184,7 @@
   "item.bloodmagic.soulsword": "Sentient Sword",
   "item.bloodmagic.steadfastcrystal": "Steadfast Will Crystal",
   "item.bloodmagic.sulfur": "Sulfur",
+  "item.bloodmagic.throwing_dagger": "Iron Throwing Dagger",
   "item.bloodmagic.upgradetome": "Living Armour Upgrade Tome",
   "item.bloodmagic.vengefulcrystal": "Vengeful Will Crystal",
   "item.bloodmagic.voidsigil": "Void Sigil",
@@ -493,6 +494,7 @@
   "tooltip.bloodmagic.soulGem.lesser": "A gem used to contain some will",
   "tooltip.bloodmagic.soulGem.petty": "A gem used to contain a little will",
   "tooltip.bloodmagic.soulSnare.desc": "Throw at a monster and then kill them to obtain their demonic will",
+  "tooltip.bloodmagic.throwing_dagger.desc": "Not to be used in the kitchen",
   "tooltip.bloodmagic.tier": "Tier %d",
   "tooltip.bloodmagic.will": "Will Quality: %s"
 }

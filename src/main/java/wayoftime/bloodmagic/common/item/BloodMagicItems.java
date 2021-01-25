@@ -223,6 +223,8 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> SALTPETER = BASICITEMS.register("saltpeter", () -> new ItemBase());
 	public static final RegistryObject<Item> PLANT_OIL = BASICITEMS.register("plantoil", () -> new ItemBase());
 
+	public static final RegistryObject<Item> THROWING_DAGGER = BASICITEMS.register("throwing_dagger", ItemThrowingDagger::new);
+
 	// Anointments
 	public static final RegistryObject<Item> SLATE_VIAL = ITEMS.register("slate_vial", () -> new ItemBase(16, "slate_vial"));
 	public static final RegistryObject<Item> MELEE_DAMAGE_ANOINTMENT = ITEMS.register("melee_anointment", () -> new ItemAnointmentProvider(BloodMagic.rl("melee_damage"), 0xFF0000, 1, 256));
