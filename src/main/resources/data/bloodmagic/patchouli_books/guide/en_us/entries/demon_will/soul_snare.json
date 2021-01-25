@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "The very first thing you will want to do is craft a $(item)Soul Snare$(). This is your gateway into $(6)Blood Magic$(), as Soul Snares allow you to gather your first $(l:demon_will/demon_will)Demon Will$(), which is a required ingredient for the $(l:altar/blood_altar)Blood Altar$(/l), and will fuel your work within the $(l:demon_will/soul_forge)Hellfire Forge$(/l)."
+      "text": "The very first thing you will want to do is craft a $(item)Soul Snare$(). This is your gateway into $(6)Blood Magic$(), as Soul Snares allow you to gather your first $(l:bloodmagic:demon_will/demon_will)Demon Will$(), which is a required ingredient for the $(l:bloodmagic:altar/blood_altar)Blood Altar$(/l), and will fuel your work within the $(l:bloodmagic:demon_will/soul_forge)Hellfire Forge$(/l)."
     },
     {
       "type": "crafting",
@@ -23,7 +23,7 @@
     },
     {
       "type": "text",
-      "text": "Using the Snare is simple enough - craft a good quantity of them, find a hostile mob, and throw Snares at them until white particles appear. Kill them quickly and you should get a $(l:demon_will/demon_will)Demon Will$(). Before you ask, yes, the Looting enchantment will improve your odds. Once you've gathered a couple, you can get to work on crafting yourself a $(l:demon_will/sentient_sword)Sentient Sword$() and a $(l:demon_will/soul_gem)Tartaric Gem$() - these will make collecting $(l:demon_will/demon_will)Demon Will$() much easier."
+      "text": "Using the Snare is simple enough - craft a good quantity of them, find a hostile mob, and throw Snares at them until white particles appear. Kill them quickly and you should get a $(l:bloodmagic:demon_will/demon_will)Demon Will$(). Before you ask, yes, the Looting enchantment will improve your odds. Once you've gathered a couple, you can get to work on crafting yourself a $(l:bloodmagic:demon_will/sentient_sword)Sentient Sword$() and a $(l:bloodmagic:demon_will/soul_gem)Tartaric Gem$() - these will make collecting $(l:bloodmagic:demon_will/demon_will)Demon Will$() much easier."
     }
   ]
 }
