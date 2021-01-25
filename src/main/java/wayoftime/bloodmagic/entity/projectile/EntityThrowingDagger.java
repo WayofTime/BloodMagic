@@ -400,11 +400,6 @@ public class EntityThrowingDagger extends ProjectileItemEntity
 			{
 				((LivingEntity) entity1).setLastAttackedEntity(entity);
 			}
-
-			if (entity1 instanceof PlayerEntity && entity instanceof LivingEntity)
-			{
-				PlayerDemonWillHandler.addDemonWill(willType, (PlayerEntity) entity1, this.getWillDropForMobHealth(((LivingEntity) entity).getMaxHealth()));
-			}
 		}
 
 		boolean flag = entity.getType() == EntityType.ENDERMAN;
@@ -421,13 +416,18 @@ public class EntityThrowingDagger extends ProjectileItemEntity
 				return;
 			}
 
+			if (!entity.isAlive() && entity1 instanceof PlayerEntity && entity instanceof LivingEntity)
+			{
+				PlayerDemonWillHandler.addDemonWill(willType, (PlayerEntity) entity1, this.getWillDropForMobHealth(((LivingEntity) entity).getMaxHealth()));
+			}
+
 			if (entity instanceof LivingEntity)
 			{
 				LivingEntity livingentity = (LivingEntity) entity;
-				if (!this.world.isRemote && this.getPierceLevel() <= 0)
-				{
-					livingentity.setArrowCountInEntity(livingentity.getArrowCountInEntity() + 1);
-				}
+//				if (!this.world.isRemote && this.getPierceLevel() <= 0)
+//				{
+//					livingentity.setArrowCountInEntity(livingentity.getArrowCountInEntity() + 1);
+//				}
 
 				if (this.knockbackStrength > 0)
 				{
