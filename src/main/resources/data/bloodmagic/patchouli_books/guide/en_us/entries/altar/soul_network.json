@@ -1,7 +1,7 @@
 {
   "name": "Soul Network",
   "icon": "bloodmagic:weakbloodorb",
-  "category": "altar",
+  "category": "bloodmagic:altar",
   "extra_recipe_mappings":[
     ["bloodmagic:weakbloodorb", 3],
     ["bloodmagic:apprenticebloodorb", 3],
@@ -19,7 +19,7 @@
     },
     {
       "type": "text",
-      "text": "being placed inside of a $(l:altar/blood_altar)Blood Altar$(/l) with LP.$(br2)  There is a separate Blood Orb that can be created for each Tier of the Blood Altar:$(li)$(item)Weak Blood Orb$(), Max capacity: 5k LP.$(li)$(item)Apprentice Blood Orb$(), Max capacity: 25k LP. $(li)$(item)Magician Blood Orb$(), Max capacity: 150k LP.$(li)$(item)Master Blood Orb$(), Max capacity: 1M LP."
+      "text": "being placed inside of a $(l:bloodmagic:altar/blood_altar)Blood Altar$(/l) with LP.$(br2)  There is a separate Blood Orb that can be created for each Tier of the Blood Altar:$(li)$(item)Weak Blood Orb$(), Max capacity: 5k LP.$(li)$(item)Apprentice Blood Orb$(), Max capacity: 25k LP. $(li)$(item)Magician Blood Orb$(), Max capacity: 150k LP.$(li)$(item)Master Blood Orb$(), Max capacity: 1M LP."
     },
     {
       "type": "2x_crafting_altar",

@@ -1,7 +1,7 @@
 {
   "name": "Body Builder",
   "icon": "minecraft:cooked_beef",
-  "category": "living_armor_upgrades",
+  "category": "bloodmagic:living_armor_upgrades",
   "pages": [
     {
       "type": "text",

@@ -1,7 +1,7 @@
 {
   "name": "Ritual of the Crusher",
   "icon": "minecraft:iron_pickaxe",
-  "category": "rituals_list",
+  "category": "bloodmagic:rituals_list",
   "pages": [
     {
       "type": "multiblock",
@@ -36,7 +36,7 @@
       "type": "spotlight",
       "item": "bloodmagic:corrosivecrystal",
       "title": "Corrosive",
-      "text": "All blocks are broken to be processed with a form of $(l:utility/alchemy_table#cutting_fluid)Cutting Fluid$(). Overrides $(item)Silk Touch$() where applicable."
+      "text": "All blocks are broken to be processed with a form of $(l:bloodmagic:utility/alchemy_table#cutting_fluid)Cutting Fluid$(). Overrides $(item)Silk Touch$() where applicable."
     },
     {
       "type": "spotlight",

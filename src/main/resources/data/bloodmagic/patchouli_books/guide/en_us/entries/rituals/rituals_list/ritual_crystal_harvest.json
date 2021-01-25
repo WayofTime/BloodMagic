@@ -1,7 +1,7 @@
 {
   "name": "Crack of the Fractured Crystal",
   "icon": "bloodmagic:defaultcrystal",
-  "category": "rituals_list",
+  "category": "bloodmagic:rituals_list",
   "pages": [
     {
       "type": "multiblock",

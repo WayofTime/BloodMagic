@@ -1,7 +1,7 @@
 {
   "name": "Serenade of the Nether",
   "icon": "minecraft:lava_bucket",
-  "category": "rituals_list",
+  "category": "bloodmagic:rituals_list",
   "pages": [
     {
       "type": "multiblock",

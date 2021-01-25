@@ -1,19 +1,19 @@
 {
   "name": "Living Equipment Basics",
   "icon": "bloodmagic:reagentbinding",
-  "category": "living_equipment",
+  "category": "bloodmagic:living_equipment",
   "priority": "true",
   "extra_recipe_mappings":[["bloodmagic:reagentbinding", 1]],
   "pages": [
     {
       "type": "text",
-      "text": "To create $(item)Living Equipment$(), you will first need $(item)Iron Armor$() (or $(item)Iron Armour$(), if you prefer), some $(l:alchemy_array/arcane_ash)Arcane Ash$(), and some $(item)Binding Reagent$(). You'll also need at least a $(l:demon_will/soul_gem)Common Tartaric Gem$() in order to hold the $(item)Demon Will$() required."
+      "text": "To create $(item)Living Equipment$(), you will first need $(item)Iron Armor$() (or $(item)Iron Armour$(), if you prefer), some $(l:bloodmagic:alchemy_array/arcane_ash)Arcane Ash$(), and some $(item)Binding Reagent$(). You'll also need at least a $(br)$(l:bloodmagic:demon_will/soul_gem)Common Tartaric Gem$() in order to hold the $(item)Demon Will$() required."
     },
     {
       "type": "crafting_alchemy_table",
       "heading": "Binding Reagent",
       "recipe": "bloodmagic:alchemytable/reagent_binding",
-      "text": "It clings to me tightly..."
+      "text": "$(italic)It clings to me tightly...$()"
     },
     {
       "type": "text",

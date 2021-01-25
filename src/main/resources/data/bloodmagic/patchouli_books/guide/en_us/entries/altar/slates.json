@@ -1,7 +1,7 @@
 {
   "name": "Tiers of Slates",
   "icon": "bloodmagic:blankslate",
-  "category": "altar",
+  "category": "bloodmagic:altar",
   "extra_recipe_mappings":[
     ["bloodmagic:blankslate", 1],
     ["bloodmagic:reinforcedslate", 1],
@@ -11,7 +11,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "The $(l:altar/blood_altar)Blood Altar$(/l)'s main use is the production of $(item)Slates$(). Each tier of slate requires the previous tier and a more powerful altar than the last. $(br2)Note that $(item)Etherial Slates$() aren't currently implemented by default, but may be if you're playing in a modpack. Check JEI for details." 
+      "text": "The $(l:bloodmagic:altar/blood_altar)Blood Altar$(/l)'s main use is the production of $(item)Slates$(). Each tier of slate requires the previous tier and a more powerful altar than the last. $(br2)Note that $(item)Etherial Slates$() aren't currently implemented by default, but may be if you're playing in a modpack. Check JEI for details." 
     },
     {
       "type": "2x_crafting_altar",

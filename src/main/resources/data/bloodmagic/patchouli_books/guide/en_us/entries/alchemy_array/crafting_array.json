@@ -1,7 +1,7 @@
 {
   "name": "Crafting with Arrays",
   "icon": "bloodmagic:divinationsigil",
-  "category": "alchemy_array",
+  "category": "bloodmagic:alchemy_array",
   "pages": [
     {
       "type": "text",
@@ -9,7 +9,7 @@
     },
     {
       "type": "text",
-      "text": "While some of these resulting items can be crafted $(l:sigil/divination)using very simple ingredients$(/l), others require additional steps to create useful items."
+      "text": "While some of these resulting items can be crafted $(l:bloodmagic:sigil/divination)using very simple ingredients$(/l), others require additional steps to create useful items."
     }
   ]
 }  

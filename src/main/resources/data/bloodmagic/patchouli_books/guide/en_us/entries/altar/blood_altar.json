@@ -1,7 +1,7 @@
 {
   "name": "The Blood Altar",
   "icon": "bloodmagic:altar",
-  "category": "altar",
+  "category": "bloodmagic:altar",
   "priority": "true",
   "extra_recipe_mappings":[
     ["bloodmagic:daggerofsacrifice", 13]
@@ -36,7 +36,7 @@
     },
     {
       "type": "text",
-      "text": "In order for you to add $(1)Life Essence$(), measured as \"LP\", you first have to craft a $(item)Sacrificial Knife$(). By right-clicking in the air with the knife, you can \"extract\" 200LP for the cost of one heart, placing it into a nearby Altar. The Altar starts with a maximum capacity of 10,000LP, and the blood level in the basin indicates the percentage filled. The $(l:sigil/divination)Divination Sigil$(/l) allows more detailed information about the Altar."
+      "text": "In order for you to add $(1)Life Essence$(), measured as \"LP\", you first have to craft a $(item)Sacrificial Knife$(). By right-clicking in the air with the knife, you can \"extract\" 200LP for the cost of one heart, placing it into a nearby Altar. The Altar starts with a maximum capacity of 10,000LP, and the blood level in the basin indicates the percentage filled. The $(l:bloodmagic:sigil/divination)Divination Sigil$(/l) allows more detailed information about the Altar."
     },
     {
       "type": "crafting",
@@ -50,7 +50,7 @@
     },
     {
       "type": "text",
-      "text": "The first item that you will want to craft is a $(l:altar/soul_network)Weak Blood Orb$(/l), which by default is a diamond plus 2000LP inside of a Tier 1 Blood Altar. All items that can be crafted by the Blood Altar can be found using Just Enough Items (JEI)."
+      "text": "The first item that you will want to craft is a $(l:bloodmagic:altar/soul_network)Weak Blood Orb$(/l), which by default is a diamond plus 2000LP inside of a Tier 1 Blood Altar. All items that can be crafted by the Blood Altar can be found using Just Enough Items (JEI)."
     },
     {
       "type": "text",
@@ -86,7 +86,7 @@
     {
       "type": "text",
 	  "anchor": "dagger_of_sacrifice",
-      "text": "Now that you have a Tier 2 Altar, you can look into getting blood from somewhere other than yourself. The $(item)Dagger of Sacrifice$() will allow you to kill any mob (monster or passive) that stands within 2 blocks of your Altar, instantly killing them and granting you a decent sum of LP. You can increase the amount you get per kill with $(l:altar/blood_rune/sacrifice_rune)Runes of Sacrifice$(). Different entities give different amounts of LP. Check your configs for more info."
+      "text": "Now that you have a Tier 2 Altar, you can look into getting blood from somewhere other than yourself. The $(item)Dagger of Sacrifice$() will allow you to kill any mob (monster or passive) that stands within 2 blocks of your Altar, instantly killing them and granting you a decent sum of LP. You can increase the amount you get per kill with $(l:bloodmagic:altar/blood_rune/sacrifice_rune)Runes of Sacrifice$(). Different entities give different amounts of LP. Check your configs for more info."
     },
     {
       "type": "crafting_altar",
@@ -96,7 +96,7 @@
     },
     {
       "type": "text",
-      "text": "To upgrade the Blood Altar to Tier 3, place 5 $(item)Blood Runes$() one block down and two blocks away from the previous set of runes along each edge. Then place two blocks (indicated by the $(item)Stone Bricks$()) in each corner, starting above the new ring of runes, and then cap each pillar with $(item)Glowstone Blocks$().$(br)To check that it is successfully upgraded, use a $(l:sigil/divination)Divination Sigil$(/l) to check the tier. Note that any non-air block can be used for the pillars below the Glowstone."
+      "text": "To upgrade the Blood Altar to Tier 3, place 5 $(item)Blood Runes$() one block down and two blocks away from the previous set of runes along each edge. Then place two blocks (indicated by the $(item)Stone Bricks$()) in each corner, starting above the new ring of runes, and then cap each pillar with $(item)Glowstone Blocks$().$(br)To check that it is successfully upgraded, use a $(l:bloodmagic:sigil/divination)Divination Sigil$(/l) to check the tier. Note that any non-air block can be used for the pillars below the Glowstone."
     },
     {
       "type": "multiblock",
@@ -120,7 +120,7 @@
     },
     {
       "type": "text",
-      "text": "To upgrade the Blood Altar to Tier 4, place 7 $(item) Blood Runes$() one block down and two blocks away from the previous set of runes along each edge. Then place four solid blocks in each corner, starting above the new ring of runes, and then cap each pillar with $(l:utility/bloodstone_bricks)Bloodstone Bricks$(/l) and/or $(l:utility/bloodstone_bricks)Large Bloodstone Bricks$(/l)."
+      "text": "To upgrade the Blood Altar to Tier 4, place 7 $(item) Blood Runes$() one block down and two blocks away from the previous set of runes along each edge. Then place four solid blocks in each corner, starting above the new ring of runes, and then cap each pillar with $(l:bloodmagic:utility/bloodstone_bricks)Bloodstone Bricks$(/l) and/or $(l:bloodmagic:utility/bloodstone_bricks)Large Bloodstone Bricks$(/l)."
     },
     {
       "type": "multiblock",

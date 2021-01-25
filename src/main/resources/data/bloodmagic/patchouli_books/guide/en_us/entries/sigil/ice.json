@@ -1,7 +1,7 @@
 {
   "name": "Sigil of the Frozen Lake [NYI]",
   "icon": "bloodmagic:icesigil",
-  "category": "sigil",
+  "category": "bloodmagic:sigil",
   "extra_recipe_mappings":[
     ["bloodmagic:icesigil", 0]
   ],

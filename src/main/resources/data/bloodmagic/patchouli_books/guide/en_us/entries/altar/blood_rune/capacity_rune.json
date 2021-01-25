@@ -1,11 +1,11 @@
 {
   "name": "Rune of Capacity",
   "icon": "bloodmagic:altarcapacityrune",
-  "category": "blood_rune",
+  "category": "bloodmagic:blood_rune",
   "pages": [
     {
       "type": "text",
-      "text": "The $(item)Rune of Capacity$() increases the capacity of the $(l:altar/bloodaltar)Blood Altar$(/l) by an additive +20% per rune."
+      "text": "The $(item)Rune of Capacity$() increases the capacity of the $(l:bloodmagic:altar/bloodaltar)Blood Altar$(/l) by an additive +20% per rune."
     },
     {
       "type": "crafting",

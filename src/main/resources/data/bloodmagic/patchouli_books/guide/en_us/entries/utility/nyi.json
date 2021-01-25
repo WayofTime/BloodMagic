@@ -1,7 +1,7 @@
 {
   "name": "NOT YET IMPLEMENTED",
   "icon": "minecraft:barrier",
-  "category": "utility",
+  "category": "bloodmagic:utility",
   "pages": [
     {
       "type": "text",

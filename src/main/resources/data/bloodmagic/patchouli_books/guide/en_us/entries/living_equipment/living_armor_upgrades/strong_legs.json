@@ -1,7 +1,7 @@
 {
   "name": "Strong Legs",
   "icon": "minecraft:diamond_leggings",
-  "category": "living_armor_upgrades",
+  "category": "bloodmagic:living_armor_upgrades",
   "pages": [
     {
       "type": "text",

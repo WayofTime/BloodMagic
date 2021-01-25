@@ -1,7 +1,7 @@
 {
   "name": "Alchemical Reaction Chamber",
   "icon": "bloodmagic:alchemicalreactionchamber",
-  "category": "utility",
+  "category": "bloodmagic:utility",
   "extra_recipe_mappings":[
     ["bloodmagic:sanguinereverter", 2],
     ["bloodmagic:weakbloodshard", 3],
@@ -22,7 +22,7 @@
   "pages": [
      {
       "type": "text",
-      "text": "The $(item)Alchemical Reaction Chamber$() isn't fully implemented yet, but among other things it can function as a furnace, offers a form of ore-tripling, revert Blood Orbs, and is currently the only way to get $(item)Weak Blood Shards$(), specifically from an $(l:altar/slates)Imbued Slate$()."
+      "text": "The $(item)Alchemical Reaction Chamber$() isn't fully implemented yet, but among other things it can function as a furnace, offers a form of ore-tripling, revert Blood Orbs, and is currently the only way to get $(item)Weak Blood Shards$(), specifically from an $(l:bloodmagic:altar/slates)Imbued Slate$()."
     },
     {
       "type": "crafting",
@@ -100,7 +100,7 @@
       "type": "crafting",
       "heading": "Fuel Cell (Furnace)",
       "recipe": "bloodmagic:primitive_furnace_cell",
-      "text": "The ARC also functions as a Furnace, but the only fuel sources it accepts is the $(item)Primitive Fuel Cell$() or $(l:utility/lava_crystal)Lava Crystal$(/l)."
+      "text": "The ARC also functions as a Furnace, but the only fuel sources it accepts is the $(item)Primitive Fuel Cell$() or $(l:bloodmagic:utility/lava_crystal)Lava Crystal$(/l)."
     },
     {
       "type": "text",

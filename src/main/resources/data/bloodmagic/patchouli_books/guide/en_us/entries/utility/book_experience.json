@@ -1,7 +1,7 @@
 {
   "name": "Tome of Peritia",
   "icon": "bloodmagic:experiencebook",
-  "category": "utility",
+  "category": "bloodmagic:utility",
   "pages": [
     {
       "type": "text",

@@ -1,7 +1,7 @@
 {
   "name": "Day/Night Arrays",
   "icon": "minecraft:clock",
-  "category": "alchemy_array",
+  "category": "bloodmagic:alchemy_array",
   "pages": [
     {
       "type": "text",
