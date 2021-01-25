@@ -36,7 +36,7 @@
       "type": "spotlight",
       "item": "bloodmagic:corrosivecrystal",
       "title": "Corrosive",
-      "text": "All blocks are broken to be processed with a form of $(l:bloodmagic:utility/alchemy_table#cutting_fluid)Cutting Fluid$(). Overrides $(item)Silk Touch$() where applicable."
+      "text": "All blocks are broken to be processed with a form of $(l:bloodmagic:alchemy_table/alchemy_table#cutting_fluid)Cutting Fluid$(). Overrides $(item)Silk Touch$() where applicable."
     },
     {
       "type": "spotlight",

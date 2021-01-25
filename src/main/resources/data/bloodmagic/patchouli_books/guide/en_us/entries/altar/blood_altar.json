@@ -36,7 +36,7 @@
     },
     {
       "type": "text",
-      "text": "In order for you to add $(1)Life Essence$(), measured as \"LP\", you first have to craft a $(item)Sacrificial Knife$(). By right-clicking in the air with the knife, you can \"extract\" 200LP for the cost of one heart, placing it into a nearby Altar. The Altar starts with a maximum capacity of 10,000LP, and the blood level in the basin indicates the percentage filled. The $(l:bloodmagic:sigil/divination)Divination Sigil$(/l) allows more detailed information about the Altar."
+      "text": "In order for you to add $(1)Life Essence$(), measured as \"LP\", you first have to craft a $(item)Sacrificial Knife$(). By right-clicking in the air with the knife, you can \"extract\" 200LP for the cost of one heart, placing it into a nearby Altar. The Altar starts with a maximum capacity of 10,000LP, and the blood level in the basin indicates the percentage filled. The $(l:bloodmagic:alchemy_array/sigil/divination)Divination Sigil$(/l) allows more detailed information about the Altar."
     },
     {
       "type": "crafting",
@@ -96,7 +96,7 @@
     },
     {
       "type": "text",
-      "text": "To upgrade the Blood Altar to Tier 3, place 5 $(item)Blood Runes$() one block down and two blocks away from the previous set of runes along each edge. Then place two blocks (indicated by the $(item)Stone Bricks$()) in each corner, starting above the new ring of runes, and then cap each pillar with $(item)Glowstone Blocks$().$(br)To check that it is successfully upgraded, use a $(l:bloodmagic:sigil/divination)Divination Sigil$(/l) to check the tier. Note that any non-air block can be used for the pillars below the Glowstone."
+      "text": "To upgrade the Blood Altar to Tier 3, place 5 $(item)Blood Runes$() one block down and two blocks away from the previous set of runes along each edge. Then place two blocks (indicated by the $(item)Stone Bricks$()) in each corner, starting above the new ring of runes, and then cap each pillar with $(item)Glowstone Blocks$().$(br)To check that it is successfully upgraded, use a $(l:bloodmagic:alchemy_array/sigil/divination)Divination Sigil$(/l) to check the tier. Note that any non-air block can be used for the pillars below the Glowstone."
     },
     {
       "type": "multiblock",

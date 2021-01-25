@@ -8,7 +8,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "The $(item)Divination Sigil$() is probably the first of many sigils that you would like to craft in Blood Magic. In order to craft the sigil, you need to create an $(l:bloodmagic:alchemy_array/arcane_ash)Alchemy Array$(/l) and use $(item)Redstone Dust$() and a $(item)Blank Slate$() as the base and catalyst items, respectively."
+      "text": "The $(item)Divination Sigil$() is probably the first of many sigils that you would like to craft in Blood Magic. In order to craft the sigil, you need to create an $(l:bloodmagic:alchemy_array/functional_arrays/arcane_ash)Alchemy Array$(/l) and use $(item)Redstone Dust$() and a $(item)Blank Slate$() as the base and catalyst items, respectively."
     },
     {
       "type": "image",
