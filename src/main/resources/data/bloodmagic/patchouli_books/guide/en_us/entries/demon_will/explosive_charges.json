@@ -3,9 +3,11 @@
   "icon": "bloodmagic:shaped_charge",
   "category": "bloodmagic:demon_will",
   "extra_recipe_mappings":[
-    ["bloodmagic:shaped_charge", 1],
-    ["bloodmagic:deforester_charge", 2]
-	],
+    ["bloodmagic:shaped_charge", 2],
+    ["bloodmagic:deforester_charge", 4],
+    ["bloodmagic:vein_charge", 6],
+    ["bloodmagic:fungal_charge", 8]
+  ],
   "pages":[
     {
       "type": "text",
@@ -36,7 +38,7 @@
       "heading": "Deforester Charge",
       "recipe": "bloodmagic:soulforge/deforester_charge",
 	  "anchor":"deforester_charge",
-	  "text": "The $(item)Deforester Charge$() is for felling trees. It can be used on logs or leaves, and will fell all but the mightiest of trees, breaking up to 2 stacks of logs at a time (and neatly stripping away any leaves it encounters in the process!) Even the giant trees of the Jungle will fall in a matter of seconds."
+	  "text": "The $(item)Deforester Charge$() is for felling trees. It can be used on logs or leaves, and will fell all but the mightiest of trees, breaking up to $(item)two stacks$() of logs at a time (and neatly stripping away any leaves it encounters in the process!) Even the giant trees of the Jungle will fall in a matter of seconds."
     },
     {
       "type": "3x_crafting_soulforge",
@@ -51,7 +53,7 @@
       "type": "crafting_soulforge",
       "heading": "Controlled Charge",
       "recipe": "bloodmagic:soulforge/vein_charge",
-      "anchor":"shaped_charge",
+      "anchor":"controlled_charge",
       "text": "The $(item)Controlled Charge$(), only destroys blocks $(underline)identical to the block it lands on$(). It will destroy up to $(item)Three stacks$() of blocks, seeking out from the original point. As with other charges, all mined blocks will be dropped."
     },
     {
@@ -67,8 +69,8 @@
       "type": "crafting_soulforge",
       "heading": "Fungal Charge",
       "recipe": "bloodmagic:soulforge/fungal_charge",
-      "anchor":"deforester_charge",
-      "text": "The $(item)Fungal Charge$() is for felling giant mushrooms, both in the Overworld and the Nether. Although doubtful that you will ever reach this in a single charge, it can break as many blocks as its fellow charges."
+      "anchor":"fungal_charge",
+      "text": "The $(item)Fungal Charge$() is for felling giant mushrooms, both in the Overworld and the Nether. Although doubtful that you will ever reach this in a single charge, it can break up to $(item)three stacks of blocks$()."
     },
     {
       "type": "3x_crafting_soulforge",
