@@ -30,7 +30,7 @@
       "type": "spotlight",
       "item": "bloodmagic:ritualdiviner",
       "title": "Tier Three",
-      "text": "By this point, you will have the ability to create some $(l:bloodmagic:rituals/ritual_basics)basic Rituals$() and $(l:bloodmagic:living_equipment/living_basics)Living Armour$() as well. This armour is very versatile, though you'll have to work hard to unlock its full potential. At this point you should look into upgrading your Altar and your $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$()."
+      "text": "By this point, you will have the ability to create some $(l:bloodmagic:rituals/ritual_basics)basic Rituals$() and $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$() as well. This armour is very versatile, though you'll have to work hard to unlock its full potential. At this point you should look into upgrading your Altar and your $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$()."
     },
     {
       "type": "spotlight",

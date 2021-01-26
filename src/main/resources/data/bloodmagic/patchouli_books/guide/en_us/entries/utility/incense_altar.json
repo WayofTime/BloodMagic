@@ -26,7 +26,7 @@
     },
     {
       "type": "text",
-      "text": "  What is more, based on the total Tranquility of the area you will receive a bonus to the LP added to the altar. Hovering over the $(item)Incense Altar$() with either a $(l:bloodmagic:sigil/divination)Divination Sigil$(/l) or $(l:bloodmagic:sigil/seer)Seer's Sigil$() will display the total Tranquility of the setup (top number) and the percentage bonus received when sacrificing (bottom number). When you sacrifice, it will take the LP that you would normally get and multiply it by (1 + bonus/100)."
+      "text": "  What is more, based on the total Tranquility of the area you will receive a bonus to the LP added to the altar. Hovering over the $(item)Incense Altar$() with either a $(l:bloodmagic:alchemy_array/sigil/divination)Divination Sigil$(/l) or $(l:bloodmagic:alchemy_array/sigil/seer)Seer's Sigil$() will display the total Tranquility of the setup (top number) and the percentage bonus received when sacrificing (bottom number). When you sacrifice, it will take the LP that you would normally get and multiply it by (1 + bonus/100)."
     },
     {
       "type": "image",

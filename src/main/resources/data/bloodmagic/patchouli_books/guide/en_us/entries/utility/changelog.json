@@ -11,7 +11,7 @@
 	{
       "type": "text",
 	  "title": "3.0.6-11",
-      "text": " $(li)Reimplemented the $(l:bloodmagic:rituals/rituals_list/ritual_well_of_suffering)Well of Suffering$(). $(li)Added several new items, called \"$(l:bloodmagic:utility/anointments)Anointments$()\"! These are items that provide temporary buffs to your tools and weapons, such as silk touch, higher damage, and more! Look them up in the Utility section of the book. These include: $(li2)Honing Oil $(li2)Soft Coating $(li2)Fortuna Extract $(li2)Holy Water"
+      "text": " $(li)Reimplemented the $(l:bloodmagic:rituals/ritual_list/ritual_well_of_suffering)Well of Suffering$(). $(li)Added several new items, called \"$(l:bloodmagic:alchemy_table/anointments)Anointments$()\"! These are items that provide temporary buffs to your tools and weapons, such as silk touch, higher damage, and more! Look them up in the Utility section of the book. These include: $(li2)Honing Oil $(li2)Soft Coating $(li2)Fortuna Extract $(li2)Holy Water"
 	},
 	{
       "type": "text",
@@ -20,7 +20,7 @@
     {
       "type": "text",
       "title": "3.0.5-10",
-      "text": "Fixed a crash with the $(l:bloodmagic:altar/blood_altar)Blood Altar$() on unload and adjusted the recipe for the $(l:bloodmagic:alchemy_array/time_arrays)Day array$() to use $(item)Coal$() instead of $(item)Clocks$()."
+      "text": "Fixed a crash with the $(l:bloodmagic:altar/blood_altar)Blood Altar$() on unload and adjusted the recipe for the $(l:bloodmagic:alchemy_array/functional_arrays/time_arrays)Day array$() to use $(item)Coal$() instead of $(item)Clocks$()."
     },
 	{
       "type": "text",
@@ -29,30 +29,30 @@
 	},
 	{
       "type": "text",
-      "text": "$(li)Added new alchemy arrays: $(li2)$(l:bloodmagic:alchemy_array/time_arrays)Two arrays$(), which changes the current daylight cycle to day and night. Recipes are temp. $(li)Fixed the following $(l:bloodmagic:living_equipment/living_upgrades)Living Armour upgrades$() so that they are now obtainable: $(li2)Experienced $(li2)Body Builder"
+      "text": "$(li)Added new alchemy arrays: $(li2)$(l:bloodmagic:alchemy_array/functional_arrays/time_arrays)Two arrays$(), which changes the current daylight cycle to day and night. Recipes are temp. $(li)Fixed the following $(l:bloodmagic:alchemy_array/living_equipment/living_upgrades)Living Armour upgrades$() so that they are now obtainable: $(li2)Experienced $(li2)Body Builder"
 	},
 	{
       "type": "text",
 	  "title": "3.0.3-8",
-      "text": "$(li)Updated the $(item)Sanguine Scientiem$() - it's very well written! Special thanks to both $(fire)VT-14$() and $(raw)Wrincewind$() for their long hours of effort to make this book better than I could have done! $(li)Fixed a crash with the $(l:bloodmagic:living_equipment/living_basics)Living Armour$() when crafted and worn right after enchanting."
+      "text": "$(li)Updated the $(item)Sanguine Scientiem$() - it's very well written! Special thanks to both $(fire)VT-14$() and $(raw)Wrincewind$() for their long hours of effort to make this book better than I could have done! $(li)Fixed a crash with the $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$() when crafted and worn right after enchanting."
 	},
 	{
       "type": "text",
 	  "title": "3.0.2-7",
-      "text": "Readded the $(l:bloodmagic:living_equipment/living_basics)Living Armour$(). Currently only with a few $(l:bloodmagic:living_equipment/living_upgrades)upgrades$(), and no downgrades. $(li)Pin Cushion $(li)Soft Fall $(li)Tough $(li)Strong Legs (Now can be temporarily deactivated when jumping by sneaking) $(li)Healthy $(li)Experienced $(li)Charging Strike $(li)Tough Palms $(li)Quick Feet $(li)Poison Resistance"
+      "text": "Readded the $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$(). Currently only with a few $(l:bloodmagic:alchemy_array/living_equipment/living_upgrades)upgrades$(), and no downgrades. $(li)Pin Cushion $(li)Soft Fall $(li)Tough $(li)Strong Legs (Now can be temporarily deactivated when jumping by sneaking) $(li)Healthy $(li)Experienced $(li)Charging Strike $(li)Tough Palms $(li)Quick Feet $(li)Poison Resistance"
 	},
 	{
       "type": "text",
-      "text": "$(li)Gift of Ignis $(li)Dwarven Might $(li)Body Builder $(br2)Reimplemented the following rituals: $(li)$(l:bloodmagic:rituals/rituals_list/ritual_crystal_split)Resonance of the Faceted Crystal$() $(li)$(l:bloodmagic:rituals/rituals_list/ritual_crystal_harvest)Crack of the Fractured Crystal$() $(li)$(l:bloodmagic:rituals/rituals_list/ritual_harvest)Reap of the Harvest Moon$() (Mainly vanilla crops) $(li)$(l:bloodmagic:rituals/rituals_list/ritual_animal_growth)Ritual of the Shepherd$() $(li)$(l:bloodmagic:rituals/rituals_list/ritual_green_grove)Ritual of the Green Grove$() $(li)$(l:bloodmagic:rituals/rituals_list/ritual_ellipse)Focus of the Ellipsoid$() $(li)$(l:bloodmagic:rituals/rituals_list/ritual_upgrade_remove)Sound of the Cleansing Soul$()"
+      "text": "$(li)Gift of Ignis $(li)Dwarven Might $(li)Body Builder $(br2)Reimplemented the following rituals: $(li)$(l:bloodmagic:rituals/ritual_list/ritual_crystal_split)Resonance of the Faceted Crystal$() $(li)$(l:bloodmagic:rituals/ritual_list/ritual_crystal_harvest)Crack of the Fractured Crystal$() $(li)$(l:bloodmagic:rituals/ritual_list/ritual_harvest)Reap of the Harvest Moon$() (Mainly vanilla crops) $(li)$(l:bloodmagic:rituals/ritual_list/ritual_animal_growth)Ritual of the Shepherd$() $(li)$(l:bloodmagic:rituals/ritual_list/ritual_green_grove)Ritual of the Green Grove$() $(li)$(l:bloodmagic:rituals/ritual_list/ritual_ellipse)Focus of the Ellipsoid$() $(li)$(l:bloodmagic:rituals/ritual_list/ritual_upgrade_remove)Sound of the Cleansing Soul$()"
 	},
 	{
       "type": "text",
-      "text": "$(li)$(l:bloodmagic:rituals/rituals_list/ritual_armour_evolve)Ritual of Living Evolution$()"
+      "text": "$(li)$(l:bloodmagic:rituals/ritual_list/ritual_armour_evolve)Ritual of Living Evolution$()"
 	},
 	{
       "type": "text",
 	  "title": "3.0.1-6",
-      "text": "$(li)Reimplemented the $(l:bloodmagic:utility/incense_altar)Incense Altar$() with all appropriate blocks. $(li)Added guide entries for the $(l:bloodmagic:utility/incense_altar)Incense Altar$() and $(l:bloodmagic:altar/blood_altar)Blood Altar$(). Other misc entries added, too. $(li)Fixed a server-related crash on the client on the $(l:bloodmagic:sigil/grove)Sigil of the Green Grove$(). $(li)Added $(l:bloodmagic:utility/alchemical_reaction_chamber#ore_processing)ore processing$() to $(item)Ancient Debris.$() $(li)Readded the other $(l:bloodmagic:demon_will/sentient_tools)Sentient Tool$() types (with one more on the way)."
+      "text": "$(li)Reimplemented the $(l:bloodmagic:utility/incense_altar)Incense Altar$() with all appropriate blocks. $(li)Added guide entries for the $(l:bloodmagic:utility/incense_altar)Incense Altar$() and $(l:bloodmagic:altar/blood_altar)Blood Altar$(). Other misc entries added, too. $(li)Fixed a server-related crash on the client on the $(l:bloodmagic:alchemy_array/sigil/grove)Sigil of the Green Grove$(). $(li)Added $(l:bloodmagic:utility/alchemical_reaction_chamber#ore_processing)ore processing$() to $(item)Ancient Debris.$() $(li)Readded the other $(l:bloodmagic:demon_will/sentient_tools)Sentient Tool$() types (with one more on the way)."
 	},
 	{
       "type": "text",
@@ -65,7 +65,7 @@
 	{
       "type": "text",
 	  "title": "3.0.0-3",
-      "text": "$(li)Fix for an issue with the Will Handler, which would cause massive lag. $(li)Reimplemented some recipes which... were not properly implemented. These include the $(l:bloodmagic:utility/alchemy_table#cutting_fluid)Cutting Fluid$() recipes in the $(l:bloodmagic:utility/alchemy_table)Alchemy Table$(). Whoops! $(li)Reduced the cost of the $(l:bloodmagic:altar/blood_altar#blank_rune)Blank Rune$(), swapping one of the $(l:bloodmagic:altar/slates)Blank Slates$() for $(item)Smooth Stone$()."
+      "text": "$(li)Fix for an issue with the Will Handler, which would cause massive lag. $(li)Reimplemented some recipes which... were not properly implemented. These include the $(l:bloodmagic:alchemy_table/alchemy_table#cutting_fluid)Cutting Fluid$() recipes in the $(l:bloodmagic:alchemy_table/alchemy_table)Alchemy Table$(). Whoops! $(li)Reduced the cost of the $(l:bloodmagic:altar/blood_altar#blank_rune)Blank Rune$(), swapping one of the $(l:bloodmagic:altar/slates)Blank Slates$() for $(item)Smooth Stone$()."
 	},
 	{
       "type": "text",
@@ -74,7 +74,7 @@
 	},
 	{
       "type": "text",
-      "text": "will not be added to make room for another system. $(br2)Some of the things that are currently missing from this version of Blood Magic are: $(li)$(l:bloodmagic:living_equipment/living_basics)Living Armour$(), which will need to be completely rewritten to fix some client-server bugs. $(li)Several rituals. Rituals ARE in this release, but only a handful. Most of the rituals WILL be readded. $(li)The $(l:bloodmagic:utility/incense_altar)Incense Altar$(). Will be reimplemented soon."
+      "text": "will not be added to make room for another system. $(br2)Some of the things that are currently missing from this version of Blood Magic are: $(li)$(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$(), which will need to be completely rewritten to fix some client-server bugs. $(li)Several rituals. Rituals ARE in this release, but only a handful. Most of the rituals WILL be readded. $(li)The $(l:bloodmagic:utility/incense_altar)Incense Altar$(). Will be reimplemented soon."
 	},
 	{
       "type": "text",
