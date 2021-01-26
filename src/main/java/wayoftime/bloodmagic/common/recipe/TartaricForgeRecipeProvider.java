@@ -55,9 +55,46 @@ public class TartaricForgeRecipeProvider implements ISubRecipeProvider
 		ItemStack stack = new ItemStack(BloodMagicBlocks.DEFORESTER_CHARGE.get());
 		AnointmentHolder smeltingHolder = new AnointmentHolder();
 		smeltingHolder.applyAnointment(stack, AnointmentRegistrar.ANOINTMENT_SMELTING.get(), new AnointmentData(1, 1, 1));
-		smeltingHolder.toItemStack(stack);
 
-		TartaricForgeRecipeBuilder.tartaricForge(stack, 60, 1, Ingredient.fromItems(BloodMagicItems.DEFORESTER_CHARGE_ITEM.get())).build(consumer, BloodMagic.rl(basePath + "deforester_charge_smelting"));
+		AnointmentHolder fortune1Holder = new AnointmentHolder();
+		fortune1Holder.applyAnointment(stack, AnointmentRegistrar.ANOINTMENT_FORTUNE.get(), new AnointmentData(1, 1, 1));
+
+		AnointmentHolder silkHolder = new AnointmentHolder();
+		silkHolder.applyAnointment(stack, AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get(), new AnointmentData(1, 1, 1));
+
+//		smeltingHolder.toItemStack(stack);
+
+		String[] suffixArray = new String[] { "_smelting", "_fortune_1", "_silk_touch" };
+		AnointmentHolder[] holderArray = new AnointmentHolder[] { smeltingHolder, fortune1Holder, silkHolder };
+		Ingredient[] firstIngredientArray = new Ingredient[] { Ingredient.fromTag(Tags.Items.CROPS_NETHER_WART),
+				Ingredient.fromTag(Tags.Items.CROPS_NETHER_WART), Ingredient.fromTag(Tags.Items.CROPS_NETHER_WART) };
+		Ingredient[] secondIngredientArray = new Ingredient[] { Ingredient.fromItems(Items.FURNACE),
+				Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE), Ingredient.fromItems(Items.COBWEB) };
+		Ingredient[] thirdIngredientArray = new Ingredient[] { Ingredient.fromItems(Items.CHARCOAL, Items.COAL),
+				Ingredient.fromTag(BloodMagicTags.DUST_COAL), Ingredient.fromTag(Tags.Items.NUGGETS_GOLD) };
+
+		for (int i = 0; i < suffixArray.length; i++)
+		{
+			ItemStack deforesterStack = new ItemStack(BloodMagicBlocks.DEFORESTER_CHARGE.get());
+			ItemStack fungalStack = new ItemStack(BloodMagicBlocks.FUNGAL_CHARGE.get());
+			ItemStack shapedStack = new ItemStack(BloodMagicBlocks.SHAPED_CHARGE.get());
+			ItemStack veinStack = new ItemStack(BloodMagicBlocks.VEINMINE_CHARGE.get());
+
+			AnointmentHolder holder = holderArray[i];
+			holder.toItemStack(deforesterStack);
+			holder.toItemStack(fungalStack);
+			holder.toItemStack(shapedStack);
+			holder.toItemStack(veinStack);
+
+			TartaricForgeRecipeBuilder.tartaricForge(shapedStack, 60, 1, Ingredient.fromItems(BloodMagicItems.SHAPED_CHARGE_ITEM.get()), firstIngredientArray[i], secondIngredientArray[i], thirdIngredientArray[i]).build(consumer, BloodMagic.rl(basePath + "shaped_charge" + suffixArray[i]));
+			TartaricForgeRecipeBuilder.tartaricForge(deforesterStack, 60, 1, Ingredient.fromItems(BloodMagicItems.DEFORESTER_CHARGE_ITEM.get()), firstIngredientArray[i], secondIngredientArray[i], thirdIngredientArray[i]).build(consumer, BloodMagic.rl(basePath + "deforester_charge" + suffixArray[i]));
+			TartaricForgeRecipeBuilder.tartaricForge(veinStack, 60, 1, Ingredient.fromItems(BloodMagicItems.VEINMINE_CHARGE_ITEM.get()), firstIngredientArray[i], secondIngredientArray[i], thirdIngredientArray[i]).build(consumer, BloodMagic.rl(basePath + "vein_charge" + suffixArray[i]));
+			TartaricForgeRecipeBuilder.tartaricForge(fungalStack, 60, 1, Ingredient.fromItems(BloodMagicItems.FUNGAL_CHARGE_ITEM.get()), firstIngredientArray[i], secondIngredientArray[i], thirdIngredientArray[i]).build(consumer, BloodMagic.rl(basePath + "fungal_charge" + suffixArray[i]));
+
+		}
+
+		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.THROWING_DAGGER.get(), 16), 32, 5, Ingredient.fromTag(Tags.Items.INGOTS_IRON), Ingredient.fromTag(Tags.Items.INGOTS_IRON), Ingredient.fromTag(Tags.Items.STRING)).build(consumer, BloodMagic.rl(basePath + "throwing_dagger"));
+		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.THROWING_DAGGER_SYRINGE.get(), 8), 10, 2, Ingredient.fromTag(Tags.Items.STONE), Ingredient.fromTag(Tags.Items.GLASS)).build(consumer, BloodMagic.rl(basePath + "throwing_dagger_syringe"));
 
 		// Changed Recipes
 		{

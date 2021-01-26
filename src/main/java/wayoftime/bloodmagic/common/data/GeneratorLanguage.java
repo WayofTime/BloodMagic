@@ -120,6 +120,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.experienceTome.exp", "Exp: %0.3f");
 		add("tooltip.bloodmagic.experienceTome.expLevel", "Level: %d");
 
+		add("tooltip.bloodmagic.throwing_dagger.desc", "Not to be used in the kitchen");
+
 		add("key.bloodmagic.category", "Blood Magic");
 
 		// Ritual info
@@ -352,6 +354,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.livingarmour.extraExtraInfo", "&9-Hold shift + M for progress info-");
 
 		add("tooltip.bloodmagic.slate_vial", "A glass vial infused with a simple slate");
+		add("tooltip.bloodmagic.blood_provider.slate.desc", "A simple ampoule containing 500LP");
 
 		add("chat.bloodmagic.living_upgrade_level_increase", "%s has leveled up to %d");
 
@@ -552,6 +555,10 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.LIVING_BOOTS, "Living Boots");
 
 		addItem(BloodMagicItems.LIVING_TOME, "Living Armour Upgrade Tome");
+
+		addItem(BloodMagicItems.THROWING_DAGGER, "Iron Throwing Dagger");
+		addItem(BloodMagicItems.THROWING_DAGGER_SYRINGE, "Syringe Throwing Dagger");
+		addItem(BloodMagicItems.SLATE_AMPOULE, "Slate Ampoule");
 
 		// Anointment Items
 		addItem(BloodMagicItems.SLATE_VIAL, "Slate-infused Vial");
