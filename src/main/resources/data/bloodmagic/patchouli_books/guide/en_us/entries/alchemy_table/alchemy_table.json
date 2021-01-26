@@ -9,7 +9,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "The Alchemy Table takes a little LP and a few ingredients to do some wondrous things!$(br2)A lot of its content is NYI.$(br2)Mouse over the LP arrow for more info."
+      "text": "The Alchemy Table takes a little LP and a few ingredients to do some wondrous things!$(br2)A lot of its content is NYI. $(br2)Mouse over the LP arrow for more info."
     },
     {
       "type": "crafting",
