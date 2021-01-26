@@ -16,6 +16,24 @@
       "recipe": "bloodmagic:alchemy_table"
     },
     {
+      "type": "image",
+      "images": [
+        "bloodmagic:images/entries/alchemy_table/alchemy_table_gui.png"
+      ],
+      "title": "Alchemy Table GUI",
+      "border": true,
+      "text": "The Alchemy Table can be inserted into or extracted from. This is how it's configured."
+    },
+    {
+      "type": "text",
+      "text": "The $(item)Alchemy Table$() has a number of buttons on its right hand side. These are, in order, $(underline)D$()own, $(underline)U$()p, $(underline)N$()orth, $(underline)S$()outh, $(underline)W$()est, and $(underline)e$()ast. To use them, first click on any slot in the Alchemy Table. (Here, we have selected the central 'finished item' slot, for demonstration.) Next, click on one of these six buttons to toggle whether or not the $(item)Alchemy Table$() should allow $(item)Hoppers$(), pipes, or other such external interference from this face. To return to the table's normal function,"
+    },
+    {
+      "type": "text",
+      "text": "simply click the slot again to deselect it. The icon displayed in the slot shows whether it is accepting inputs or providing outputs. In the example picture, we are allowing pipes to take from our central slot only on the $(underline)D$()own slot, and any attempts to extract items from other sides will not succeed. $(br2)The following pages document a number of recipes currently available for the Alchemy Table."
+    },
+
+    {
       "type": "crafting_alchemy_table",
       "heading": "Basic Cutting Fluid",
 	  "anchor": "cutting_fluid",
