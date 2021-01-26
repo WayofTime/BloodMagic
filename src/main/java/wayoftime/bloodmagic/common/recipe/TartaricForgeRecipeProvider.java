@@ -60,7 +60,7 @@ public class TartaricForgeRecipeProvider implements ISubRecipeProvider
 		TartaricForgeRecipeBuilder.tartaricForge(stack, 60, 1, Ingredient.fromItems(BloodMagicItems.DEFORESTER_CHARGE_ITEM.get())).build(consumer, BloodMagic.rl(basePath + "deforester_charge_smelting"));
 
 		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.THROWING_DAGGER.get(), 16), 32, 5, Ingredient.fromTag(Tags.Items.INGOTS_IRON), Ingredient.fromTag(Tags.Items.INGOTS_IRON), Ingredient.fromTag(Tags.Items.STRING)).build(consumer, BloodMagic.rl(basePath + "throwing_dagger"));
-		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.THROWING_DAGGER_SYRINGE.get(), 16), 10, 2, Ingredient.fromTag(Tags.Items.STONE), Ingredient.fromTag(Tags.Items.GLASS)).build(consumer, BloodMagic.rl(basePath + "throwing_dagger_syringe"));
+		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.THROWING_DAGGER_SYRINGE.get(), 8), 10, 2, Ingredient.fromTag(Tags.Items.STONE), Ingredient.fromTag(Tags.Items.GLASS)).build(consumer, BloodMagic.rl(basePath + "throwing_dagger_syringe"));
 
 		// Changed Recipes
 		{
