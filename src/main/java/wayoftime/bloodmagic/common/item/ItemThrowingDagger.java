@@ -12,18 +12,20 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
+import wayoftime.bloodmagic.entity.projectile.AbstractEntityThrowingDagger;
 import wayoftime.bloodmagic.entity.projectile.EntityThrowingDagger;
 import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
 
 public class ItemThrowingDagger extends Item
 {
-	public static int[] soulBracket = new int[] { 16, 60, 200, 400, 1000, 2000, 4000 };
+	public static int[] soulBracket = new int[] { 1, 60, 200, 400, 1000, 2000, 4000 };
 
 	public static double[] soulDrop = new double[] { 2, 4, 7, 10, 13, 15, 18 };
 	public static double[] staticDrop = new double[] { 1, 1, 2, 3, 3, 4, 4 };
@@ -61,9 +63,7 @@ public class ItemThrowingDagger extends Item
 
 			ItemStack copyStack = stack.copy();
 			copyStack.setCount(1);
-			EntityThrowingDagger dagger = new EntityThrowingDagger(copyStack, worldIn, playerIn);
-			dagger.func_234612_a_(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 3F, 0.5F);
-			dagger.setDamage(10);
+			AbstractEntityThrowingDagger dagger = getDagger(copyStack, worldIn, playerIn);
 
 			int level = getLevel(souls);
 			if (level >= 0)
@@ -84,6 +84,14 @@ public class ItemThrowingDagger extends Item
 		return new ActionResult<>(ActionResultType.SUCCESS, stack);
 	}
 
+	public AbstractEntityThrowingDagger getDagger(ItemStack stack, World world, PlayerEntity player)
+	{
+		AbstractEntityThrowingDagger dagger = new EntityThrowingDagger(stack, world, player);
+		dagger.func_234612_a_(player, player.rotationPitch, player.rotationYaw, 0.0F, 3F, 0.5F);
+		dagger.setDamage(10);
+		return dagger;
+	}
+
 	private int getLevel(double soulsRemaining)
 	{
 		int lvl = -1;
@@ -102,7 +110,7 @@ public class ItemThrowingDagger extends Item
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.throwing_dagger.desc"));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.throwing_dagger.desc").mergeStyle(TextFormatting.ITALIC));
 
 		super.addInformation(stack, world, tooltip, flag);
 	}

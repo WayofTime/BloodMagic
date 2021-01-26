@@ -354,6 +354,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.livingarmour.extraExtraInfo", "&9-Hold shift + M for progress info-");
 
 		add("tooltip.bloodmagic.slate_vial", "A glass vial infused with a simple slate");
+		add("tooltip.bloodmagic.blood_provider.slate.desc", "A simple ampoule containing 500LP");
 
 		add("chat.bloodmagic.living_upgrade_level_increase", "%s has leveled up to %d");
 
@@ -556,6 +557,8 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.LIVING_TOME, "Living Armour Upgrade Tome");
 
 		addItem(BloodMagicItems.THROWING_DAGGER, "Iron Throwing Dagger");
+		addItem(BloodMagicItems.THROWING_DAGGER_SYRINGE, "Syringe Throwing Dagger");
+		addItem(BloodMagicItems.SLATE_AMPOULE, "Slate Ampoule");
 
 		// Anointment Items
 		addItem(BloodMagicItems.SLATE_VIAL, "Slate-infused Vial");

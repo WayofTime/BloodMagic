@@ -13,9 +13,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
-import wayoftime.bloodmagic.entity.projectile.EntityThrowingDagger;
+import wayoftime.bloodmagic.entity.projectile.AbstractEntityThrowingDagger;
 
-public class EntityThrowingDaggerRenderer<T extends EntityThrowingDagger> extends EntityRenderer<T>
+public class EntityThrowingDaggerRenderer<T extends AbstractEntityThrowingDagger> extends EntityRenderer<T>
 {
 	private final net.minecraft.client.renderer.ItemRenderer itemRenderer;
 	private final float scale;
@@ -47,12 +47,9 @@ public class EntityThrowingDaggerRenderer<T extends EntityThrowingDagger> extend
 //			ArrowRenderer<?> d;
 			matrixStackIn.push();
 			matrixStackIn.scale(this.scale, this.scale, this.scale);
-//			matrixStackIn.rotate(this.renderManager.getCameraOrientation());
 			matrixStackIn.rotate(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entityIn.prevRotationYaw, entityIn.rotationYaw) - 90.0F));
 			matrixStackIn.rotate(Vector3f.ZP.rotationDegrees(MathHelper.lerp(partialTicks, entityIn.prevRotationPitch, entityIn.rotationPitch) - 45F));
 
-//			matrixStackIn.rotate(Vector3f.ZP.rotationDegrees(45F));
-//			matrixStackIn.rotate(Vector3f.YP.rotationDegrees(180.0F));
 			this.itemRenderer.renderItem(entityIn.getItem(), ItemCameraTransforms.TransformType.GROUND, packedLightIn, OverlayTexture.NO_OVERLAY, matrixStackIn, bufferIn);
 			matrixStackIn.pop();
 			super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
