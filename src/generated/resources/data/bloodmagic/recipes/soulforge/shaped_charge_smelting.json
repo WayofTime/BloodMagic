@@ -1,7 +1,7 @@
 {
   "type": "bloodmagic:soulforge",
   "input0": {
-    "item": "bloodmagic:deforester_charge"
+    "item": "bloodmagic:shaped_charge"
   },
   "input1": {
     "tag": "forge:crops/nether_wart"
@@ -18,7 +18,7 @@
     }
   ],
   "output": {
-    "item": "bloodmagic:deforester_charge",
+    "item": "bloodmagic:shaped_charge",
     "nbt": "{anointment_holder:{anointments:[{damage:1,max_damage:1,level:1,key:\"bloodmagic:smelting\"}]}}"
   },
   "minimumDrain": 60.0,
