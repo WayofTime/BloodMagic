@@ -15,6 +15,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -43,7 +44,7 @@ public class ItemSacrificialDagger extends Item
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
 //		tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.sacrificialDagger.desc"))));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sacrificialdagger.desc"));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sacrificialdagger.desc").mergeStyle(TextFormatting.GRAY));
 
 //		if (stack.getItemDamage() == 1)
 //			list.add(TextHelper.localizeEffect("tooltip.bloodmagic.sacrificialDagger.creative"));

@@ -28,6 +28,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
@@ -302,8 +303,8 @@ public class ItemSentientAxe extends AxeItem implements IDemonWillWeapon, IMulti
 		if (!stack.hasTag())
 			return;
 
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sentientAxe.desc"));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase()));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sentientAxe.desc").mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase()).mergeStyle(TextFormatting.GRAY));
 	}
 
 	@Override

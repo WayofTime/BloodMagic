@@ -21,6 +21,7 @@ import net.minecraft.util.math.RayTraceContext.FluidMode;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -58,7 +59,7 @@ public class ItemRitualReader extends Item
 			return;
 
 		EnumRitualReaderState state = this.getState(stack);
-		tooltip.add(new TranslationTextComponent(tooltipBase + "currentState", TextHelper.localizeEffect(tooltipBase + state.toString().toLowerCase())));
+		tooltip.add(new TranslationTextComponent(tooltipBase + "currentState", TextHelper.localizeEffect(tooltipBase + state.toString().toLowerCase())).mergeStyle(TextFormatting.GRAY));
 
 		tooltip.add(new StringTextComponent(""));
 
@@ -66,10 +67,10 @@ public class ItemRitualReader extends Item
 
 		if (sneaking)
 		{
-			tooltip.add(new TranslationTextComponent(tooltipBase + "desc." + state.toString().toLowerCase()));
+			tooltip.add(new TranslationTextComponent(tooltipBase + "desc." + state.toString().toLowerCase()).mergeStyle(TextFormatting.GRAY));
 		} else
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.extraInfo"));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.extraInfo").mergeStyle(TextFormatting.GRAY));
 		}
 
 		super.addInformation(stack, world, tooltip, flag);
