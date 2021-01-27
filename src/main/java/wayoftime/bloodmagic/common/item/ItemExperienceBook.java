@@ -12,6 +12,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -38,15 +39,15 @@ public class ItemExperienceBook extends Item
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.experienceTome"));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.experienceTome").mergeStyle(TextFormatting.GRAY));
 
 		if (!stack.hasTag())
 			return;
 
 		double storedExp = getStoredExperience(stack);
 
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.experienceTome.exp", (int) storedExp));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.experienceTome.expLevel", (int) getLevelForExperience(storedExp)));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.experienceTome.exp", (int) storedExp).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.experienceTome.expLevel", getLevelForExperience(storedExp)).mergeStyle(TextFormatting.GRAY));
 	}
 
 	@Override

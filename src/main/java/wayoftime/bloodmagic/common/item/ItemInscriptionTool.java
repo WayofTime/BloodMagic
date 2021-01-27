@@ -12,6 +12,7 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -61,6 +62,6 @@ public class ItemInscriptionTool extends Item
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent(TextHelper.localizeEffect("tooltip.bloodmagic.inscriber.desc")));
+		tooltip.add(new TranslationTextComponent(TextHelper.localizeEffect("tooltip.bloodmagic.inscriber.desc")).mergeStyle(TextFormatting.GRAY));
 	}
 }

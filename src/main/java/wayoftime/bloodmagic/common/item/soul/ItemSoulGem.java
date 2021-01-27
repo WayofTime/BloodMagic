@@ -15,6 +15,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -77,9 +78,9 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 			return;
 
 		EnumDemonWillType type = this.getCurrentType(stack);
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.soulGem." + name));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.will", ChatUtil.DECIMAL_FORMAT.format(getWill(type, stack))));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase()));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.soulGem." + name).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.will", ChatUtil.DECIMAL_FORMAT.format(getWill(type, stack))).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase()).mergeStyle(TextFormatting.GRAY));
 
 		super.addInformation(stack, world, tooltip, flag);
 	}

@@ -110,7 +110,7 @@ public class ItemThrowingDagger extends Item
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.throwing_dagger.desc").mergeStyle(TextFormatting.ITALIC));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.throwing_dagger.desc").mergeStyle(TextFormatting.ITALIC).mergeStyle(TextFormatting.GRAY));
 
 		super.addInformation(stack, world, tooltip, flag);
 	}
