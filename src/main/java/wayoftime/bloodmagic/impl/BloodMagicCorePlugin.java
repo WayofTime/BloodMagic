@@ -11,7 +11,6 @@ import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.incense.EnumTranquilityType;
 import wayoftime.bloodmagic.incense.IncenseTranquilityRegistry;
 import wayoftime.bloodmagic.incense.TranquilityStack;
-import wayoftime.bloodmagic.incense.IncenseTranquilityRegistry;
 
 public class BloodMagicCorePlugin
 {
