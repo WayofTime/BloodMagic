@@ -17,18 +17,18 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ObjectHolder;
-import wayoftime.bloodmagic.api.event.BloodMagicCraftedEvent;
-import wayoftime.bloodmagic.impl.BloodMagicAPI;
-import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
-import wayoftime.bloodmagic.tile.container.ContainerSoulForge;
-import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.api.compat.IDemonWill;
 import wayoftime.bloodmagic.api.compat.IDemonWillConduit;
 import wayoftime.bloodmagic.api.compat.IDemonWillGem;
+import wayoftime.bloodmagic.api.event.BloodMagicCraftedEvent;
+import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
+import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
+import wayoftime.bloodmagic.tile.container.ContainerSoulForge;
+import wayoftime.bloodmagic.util.Constants;
 
-public class TileSoulForge extends TileInventory
-		implements ITickableTileEntity, INamedContainerProvider, IDemonWillConduit
+public class TileSoulForge extends TileInventory implements ITickableTileEntity, INamedContainerProvider, IDemonWillConduit
 {
 	@ObjectHolder("bloodmagic:soulforge")
 	public static TileEntityType<TileSoulForge> TYPE;
@@ -108,6 +108,27 @@ public class TileSoulForge extends TileInventory
 		{
 			burnTime = 0;
 			return;
+		}
+
+		if (!getWorld().isRemote)
+		{
+			for (EnumDemonWillType type : EnumDemonWillType.values())
+			{
+				double willInWorld = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, type);
+				double filled = Math.min(willInWorld, worldWillTransferRate);
+
+				if (filled > 0)
+				{
+					filled = this.fillDemonWill(type, filled, false);
+					filled = WorldDemonWillHandler.drainWill(getWorld(), pos, type, filled, false);
+
+					if (filled > 0)
+					{
+						this.fillDemonWill(type, filled, true);
+						WorldDemonWillHandler.drainWill(getWorld(), pos, type, filled, true);
+					}
+				}
+			}
 		}
 
 		double soulsInGem = getWill(EnumDemonWillType.DEFAULT);
@@ -194,6 +215,8 @@ public class TileSoulForge extends TileInventory
 				currentOutputStack.grow(event.getOutput().getCount());
 			}
 
+			moveRemainingWillInConsumedInv();
+
 			consumeInventory();
 		}
 	}
@@ -213,13 +236,16 @@ public class TileSoulForge extends TileInventory
 
 	public boolean hasSoulGemOrSoul()
 	{
-		ItemStack soulStack = getStackInSlot(soulSlot);
-
-		if (!soulStack.isEmpty())
+		for (int i = 0; i <= 4; i++)
 		{
-			if (soulStack.getItem() instanceof IDemonWill || soulStack.getItem() instanceof IDemonWillGem)
+			ItemStack soulStack = getStackInSlot(i);
+
+			if (!soulStack.isEmpty())
 			{
-				return true;
+				if (soulStack.getItem() instanceof IDemonWill || soulStack.getItem() instanceof IDemonWillGem)
+				{
+					return true;
+				}
 			}
 		}
 
@@ -233,53 +259,96 @@ public class TileSoulForge extends TileInventory
 
 	public double getWill(EnumDemonWillType type)
 	{
-		ItemStack soulStack = getStackInSlot(soulSlot);
-
-		if (soulStack != null)
+		double will = 0;
+		for (int i = 0; i <= 4; i++)
 		{
-			if (soulStack.getItem() instanceof IDemonWill
-					&& ((IDemonWill) soulStack.getItem()).getType(soulStack) == type)
-			{
-				IDemonWill soul = (IDemonWill) soulStack.getItem();
-				return soul.getWill(type, soulStack);
-			}
+			ItemStack soulStack = getStackInSlot(i);
 
-			if (soulStack.getItem() instanceof IDemonWillGem)
+			if (soulStack != null)
 			{
-				IDemonWillGem soul = (IDemonWillGem) soulStack.getItem();
-				return soul.getWill(type, soulStack);
+				if (soulStack.getItem() instanceof IDemonWill && ((IDemonWill) soulStack.getItem()).getType(soulStack) == type)
+				{
+					IDemonWill soul = (IDemonWill) soulStack.getItem();
+					will += soul.getWill(type, soulStack);
+				}
+
+				if (soulStack.getItem() instanceof IDemonWillGem)
+				{
+					IDemonWillGem soul = (IDemonWillGem) soulStack.getItem();
+					will += soul.getWill(type, soulStack);
+				}
 			}
 		}
 
-		return 0;
+		return will;
+	}
+
+	public void moveRemainingWillInConsumedInv()
+	{
+		ItemStack outputStack = getStackInSlot(outputSlot);
+		if (outputStack != null)
+		{
+			if (outputStack.getItem() instanceof IDemonWillGem)
+			{
+				IDemonWillGem filledGem = (IDemonWillGem) outputStack.getItem();
+				for (int i = 0; i < 4; i++)
+				{
+					ItemStack soulStack = getStackInSlot(i);
+					if (soulStack != null && soulStack.getItem() instanceof IDemonWillGem)
+					{
+						IDemonWillGem syphonedGem = (IDemonWillGem) soulStack.getItem();
+						for (EnumDemonWillType type : EnumDemonWillType.values())
+						{
+							// Skipped a few possibly redundant checks. Also could blow up in my face rooVV
+							double willInGem = syphonedGem.getWill(type, soulStack);
+							if (willInGem > 0)
+							{
+								filledGem.fillWill(type, outputStack, willInGem, true);
+							}
+						}
+					}
+
+				}
+			}
+		}
 	}
 
 	public double consumeSouls(EnumDemonWillType type, double requested)
 	{
-		ItemStack soulStack = getStackInSlot(soulSlot);
+		double consumed = 0;
 
-		if (soulStack != null)
+		for (int i = 0; i <= 4; i++)
 		{
-			if (soulStack.getItem() instanceof IDemonWill
-					&& ((IDemonWill) soulStack.getItem()).getType(soulStack) == type)
+			ItemStack soulStack = getStackInSlot(i);
+			if (soulStack != null)
 			{
-				IDemonWill soul = (IDemonWill) soulStack.getItem();
-				double souls = soul.drainWill(type, soulStack, requested);
-				if (soul.getWill(type, soulStack) <= 0)
+				if (soulStack.getItem() instanceof IDemonWill && ((IDemonWill) soulStack.getItem()).getType(soulStack) == type)
 				{
-					setInventorySlotContents(soulSlot, ItemStack.EMPTY);
+					IDemonWill soul = (IDemonWill) soulStack.getItem();
+					double souls = soul.drainWill(type, soulStack, requested - consumed);
+					if (soul.getWill(type, soulStack) <= 0)
+					{
+						setInventorySlotContents(i, ItemStack.EMPTY);
+					}
+					consumed += souls;
+//					return souls;
 				}
-				return souls;
+
+				if (soulStack.getItem() instanceof IDemonWillGem)
+				{
+					IDemonWillGem soul = (IDemonWillGem) soulStack.getItem();
+					double souls = soul.drainWill(type, soulStack, requested - consumed, true);
+					consumed += souls;
+				}
 			}
 
-			if (soulStack.getItem() instanceof IDemonWillGem)
+			if (consumed >= requested)
 			{
-				IDemonWillGem soul = (IDemonWillGem) soulStack.getItem();
-				return soul.drainWill(type, soulStack, requested, true);
+				return consumed;
 			}
 		}
 
-		return 0;
+		return consumed;
 	}
 
 	public void consumeInventory()

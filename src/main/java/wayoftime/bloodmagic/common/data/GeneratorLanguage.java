@@ -59,6 +59,13 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.sigil.seer.currentTranquility", "Current Tranquility: %d");
 		add("tooltip.bloodmagic.sigil.seer.currentBonus", "Current Bonus: +%d%%");
 
+		add("tooltip.bloodmagic.sigil.holding.press", "Press %s to modify");
+		add("tooltip.bloodmagic.sigil.holding.desc", "Sigil-ception");
+		add("tooltip.bloodmagic.sigil.holding.sigilInSlot", "Slot %d: %s");
+
+		add("tooltip.bloodmagic.activated", "Activated");
+		add("tooltip.bloodmagic.deactivated", "Deactivated");
+
 		add("tooltip.bloodmagic.decoration.safe", "Safe for decoration");
 		add("tooltip.bloodmagic.decoration.notSafe", "Dangerous for decoration");
 
@@ -113,6 +120,10 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.experienceTome.exp", "Exp: %0.3f");
 		add("tooltip.bloodmagic.experienceTome.expLevel", "Level: %d");
 
+		add("tooltip.bloodmagic.throwing_dagger.desc", "Not to be used in the kitchen");
+
+		add("key.bloodmagic.category", "Blood Magic");
+
 		// Ritual info
 		add("tooltip.bloodmagic.diviner.currentRitual", "Current Ritual: %s");
 		add("tooltip.bloodmagic.diviner.blankRune", "Blank Runes: %d");
@@ -159,6 +170,10 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.upgradeRemoveRitual", "Sound of the Cleansing Soul");
 		add("ritual.bloodmagic.armourEvolveRitual", "Ritual of Living Evolution");
 		add("ritual.bloodmagic.animalGrowthRitual", "Ritual of the Shepherd");
+		add("ritual.bloodmagic.crystalHarvestRitual", "Crack of the Fractured Crystal");
+		add("ritual.bloodmagic.forsakenSoulRitual", "Gathering of the Forsaken Souls");
+		add("ritual.bloodmagic.crystalSplitRitual", "Resonance of the Faceted Crystal");
+		add("ritual.bloodmagic.ellipseRitual", "Focus of the Ellipsoid");
 
 		add("ritual.bloodmagic.cobblestoneRitual", "Le Vulcanos Frigius");
 		add("ritual.bloodmagic.placerRitual", "The Filler");
@@ -294,9 +309,74 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.ritualReader.desc.information", "Right click on an active Master Ritual Stone to gather basic information about the ritual.");
 		add("tooltip.bloodmagic.ritualReader.desc.set_will_types", "Set the types of demon will that the ritual will consume from the aura by right clicking on the MRS with the same types of crystals on your hotbar.");
 
+		// Living Armour - the 'u' is important, TehNut!
+		add("living_upgrade.bloodmagic.arrow_protect", "Pin Cushion");
+		add("living_upgrade.bloodmagic.speed", "Quick Feet");
+		add("living_upgrade.bloodmagic.digging", "Dwarven Might");
+		add("living_upgrade.bloodmagic.poison_resist", "Poison Resistance");
+		add("living_upgrade.bloodmagic.fire_resist", "Gift of Ignis");
+		add("living_upgrade.bloodmagic.self_sacrifice", "Tough Palms");
+		add("living_upgrade.bloodmagic.knockback_resist", "Body Builder");
+		add("living_upgrade.bloodmagic.physical_protect", "Tough");
+		add("living_upgrade.bloodmagic.health", "Healthy");
+		add("living_upgrade.bloodmagic.melee_damage", "Fierce Strike");
+		add("living_upgrade.bloodmagic.arrow_shot", "Trick Shot");
+		add("living_upgrade.bloodmagic.step_assist", "Step Assist");
+		add("living_upgrade.bloodmagic.grim_reaper", "Grim Reaper's Sprint");
+		add("living_upgrade.bloodmagic.solar_powered", "Solar Powered");
+		add("living_upgrade.bloodmagic.thaumRunicShielding", "Runic Shielding");
+		add("living_upgrade.bloodmagic.revealing", "Revealing");
+		add("living_upgrade.bloodmagic.experienced", "Experienced");
+		add("living_upgrade.bloodmagic.jump", "Strong Legs");
+		add("living_upgrade.bloodmagic.fall_protect", "Soft Fall");
+		add("living_upgrade.bloodmagic.grave_digger", "Grave Digger");
+		add("living_upgrade.bloodmagic.sprint_attack", "Charging Strike");
+		add("living_upgrade.bloodmagic.critical_strike", "True Strike");
+		add("living_upgrade.bloodmagic.elytra", "Elytra");
+		add("living_upgrade.bloodmagic.night_sight", "Nocturnal Prowess");
+		add("living_upgrade.bloodmagic.repair", "Repairing");
+
+		add("living_upgrade.bloodmagic.slowness", "Limp Leg");
+		add("living_upgrade.bloodmagic.crippledArm", "Crippled Arm");
+		add("living_upgrade.bloodmagic.slippery", "Loose Traction");
+		add("living_upgrade.bloodmagic.battleHunger", "Battle Hungry");
+		add("living_upgrade.bloodmagic.quenched", "Quenched");
+		add("living_upgrade.bloodmagic.meleeDecrease", "Dulled Blade");
+		add("living_upgrade.bloodmagic.digSlowdown", "Weakened Pick");
+		add("living_upgrade.bloodmagic.stormTrooper", "Storm Trooper");
+		add("living_upgrade.bloodmagic.slowHeal", "Diseased");
+		add("living_upgrade.bloodmagic.disoriented", "Disoriented");
+
+		add("tooltip.bloodmagic.livingarmour.upgrade.level", "%s (Level %d)");
+		add("tooltip.bloodmagic.livingarmour.upgrade.progress", "%s (%d/100)");
+		add("tooltip.bloodmagic.livingarmour.upgrade.points", "Upgrade points: %s / %s");
+
+		add("tooltip.bloodmagic.livingarmour.extraExtraInfo", "&9-Hold shift + M for progress info-");
+
+		add("tooltip.bloodmagic.slate_vial", "A glass vial infused with a simple slate");
+		add("tooltip.bloodmagic.blood_provider.slate.desc", "A simple ampoule containing 500LP");
+
+		add("chat.bloodmagic.living_upgrade_level_increase", "%s has leveled up to %d");
+
+		// Anointments. Doesn't have any spelling to be pedantic about.
+		add("anointment.bloodmagic.melee_damage", "Whetstone");
+		add("anointment.bloodmagic.silk_touch", "Soft Touch");
+		add("anointment.bloodmagic.fortune", "Fortunate");
+		add("anointment.bloodmagic.holy_water", "Holy Light");
+		add("anointment.bloodmagic.hidden_knowledge", "Miner's Secrets");
+		add("anointment.bloodmagic.quick_draw", "Deft Hands");
+		add("anointment.bloodmagic.bow_power", "Heavy Shot");
+		add("anointment.bloodmagic.looting", "Plundering");
+		add("anointment.bloodmagic.smelting", "Heated Tool");
+
 		// Guide
 		add("guide.bloodmagic.name", "Sanguine Scientiem");
 		add("guide.bloodmagic.landing_text", "\"It is my dear hope that by holding this tome in your hands, I may impart the knowledge of the lost art that is Blood Magic\"$(br)$(o)- Magus Arcana$()");
+
+		// Keybinds
+		add("bloodmagic.keybind.open_holding", "Open Sigil of Holding");
+		add("bloodmagic.keybind.cycle_holding_pos", "Cycle Sigil (+)");
+		add("bloodmagic.keybind.cycle_holding_neg", "Cycle Sigil (-)");
 
 		// Block names
 		addBlock(BloodMagicBlocks.BLANK_RUNE, "Blank Rune");
@@ -372,6 +452,11 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addBlock(BloodMagicBlocks.DUNGEON_ORE, "Demonite");
 
+		addBlock(BloodMagicBlocks.SHAPED_CHARGE, "Shaped Charge");
+		addBlock(BloodMagicBlocks.DEFORESTER_CHARGE, "Deforester Charge");
+		addBlock(BloodMagicBlocks.VEINMINE_CHARGE, "Controlled Charge");
+		addBlock(BloodMagicBlocks.FUNGAL_CHARGE, "Fungal Charge");
+
 		// Item names
 		addItem(BloodMagicItems.WEAK_BLOOD_ORB, "Weak Blood Orb");
 		addItem(BloodMagicItems.APPRENTICE_BLOOD_ORB, "Apprentice Blood Orb");
@@ -388,6 +473,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.AIR_SIGIL, "Air Sigil");
 		addItem(BloodMagicItems.BLOOD_LIGHT_SIGIL, "Sigil of the Blood Lamp");
 		addItem(BloodMagicItems.SEER_SIGIL, "Seer's Sigil");
+		addItem(BloodMagicItems.HOLDING_SIGIL, "Sigil of Holding");
 
 		addItem(BloodMagicBlocks.LIFE_ESSENCE_BUCKET, "Bucket of Life");
 		addItem(BloodMagicItems.ARCANE_ASHES, "Arcane Ashes");
@@ -410,6 +496,8 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.REAGENT_AIR, "Air Reagent");
 		addItem(BloodMagicItems.REAGENT_BLOOD_LIGHT, "Blood Lamp Reagent");
 		addItem(BloodMagicItems.REAGENT_SIGHT, "Sight Reagent");
+		addItem(BloodMagicItems.REAGENT_BINDING, "Binding Reagent");
+		addItem(BloodMagicItems.REAGENT_HOLDING, "Holding Reagent");
 
 		addItem(BloodMagicItems.PETTY_GEM, "Petty Tartaric Gem");
 		addItem(BloodMagicItems.LESSER_GEM, "Lesser Tartaric Gem");
@@ -425,6 +513,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.SENTIENT_AXE, "Sentient Axe");
 		addItem(BloodMagicItems.SENTIENT_PICKAXE, "Sentient Pickaxe");
 		addItem(BloodMagicItems.SENTIENT_SHOVEL, "Sentient Shovel");
+		addItem(BloodMagicItems.SENTIENT_SCYTHE, "Sentient Scythe");
 
 		addItem(BloodMagicItems.WEAK_ACTIVATION_CRYSTAL, "Weak Activation Crystal");
 		addItem(BloodMagicItems.AWAKENED_ACTIVATION_CRYSTAL, "Awakened Activation Crystal");
@@ -460,6 +549,29 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addItem(BloodMagicItems.EXPERIENCE_TOME, "Tome of Peritia");
 
+		addItem(BloodMagicItems.LIVING_HELMET, "Living Helmet");
+		addItem(BloodMagicItems.LIVING_PLATE, "Living Chestplate");
+		addItem(BloodMagicItems.LIVING_LEGGINGS, "Living Leggings");
+		addItem(BloodMagicItems.LIVING_BOOTS, "Living Boots");
+
+		addItem(BloodMagicItems.LIVING_TOME, "Living Armour Upgrade Tome");
+
+		addItem(BloodMagicItems.THROWING_DAGGER, "Iron Throwing Dagger");
+		addItem(BloodMagicItems.THROWING_DAGGER_SYRINGE, "Syringe Throwing Dagger");
+		addItem(BloodMagicItems.SLATE_AMPOULE, "Slate Ampoule");
+
+		// Anointment Items
+		addItem(BloodMagicItems.SLATE_VIAL, "Slate-infused Vial");
+		addItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT, "Honing Oil");
+		addItem(BloodMagicItems.SILK_TOUCH_ANOINTMENT, "Soft Coating");
+		addItem(BloodMagicItems.FORTUNE_ANOINTMENT, "Fortuna Extract");
+		addItem(BloodMagicItems.HOLY_WATER_ANOINTMENT, "Holy Water");
+		addItem(BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT, "Miner's Secrets");
+		addItem(BloodMagicItems.QUICK_DRAW_ANOINTMENT, "Dexterity Alkahest");
+		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT, "Iron Tip");
+		addItem(BloodMagicItems.LOOTING_ANOINTMENT, "Plunderer's Glint");
+		addItem(BloodMagicItems.SMELTING_ANOINTMENT, "Slow-burning Oil");
+
 		// Alchemy Items
 		addItem(BloodMagicItems.PLANT_OIL, "Plant Oil");
 
@@ -490,6 +602,9 @@ public class GeneratorLanguage extends LanguageProvider
 		add("jei.bloodmagic.recipe.requiredtier", "Tier: %d");
 		add("jei.bloodmagic.recipe.consumptionrate", "Consumption: %s LP/t");
 		add("jei.bloodmagic.recipe.drainrate", "Drain: %s LP/t");
+
+		add("jei.bloodmagic.recipe.lpDrained", "Drained: %s LP");
+		add("jei.bloodmagic.recipe.ticksRequired", "Time: %sTicks");
 
 		add("jei.bloodmagic.recipe.altar", "Blood Altar");
 		add("jei.bloodmagic.recipe.soulforge", "Hellfire Forge");

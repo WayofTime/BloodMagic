@@ -53,6 +53,9 @@ public class GeneratorItemTags extends ItemTagsProvider
 		this.getOrCreateBuilder(BloodMagicTags.CRYSTAL_DEMON).add(BloodMagicItems.VENGEFUL_CRYSTAL.get());
 		this.getOrCreateBuilder(BloodMagicTags.CRYSTAL_DEMON).add(BloodMagicItems.STEADFAST_CRYSTAL.get());
 
+		this.copy(BloodMagicTags.Blocks.MUSHROOM_STEM, BloodMagicTags.MUSHROOM_STEM);
+		this.copy(BloodMagicTags.Blocks.MUSHROOM_HYPHAE, BloodMagicTags.MUSHROOM_HYPHAE);
+
 //		this.getOrCreateBuilder(GOORESISTANT).addTag(BlockTags.DOORS);
 //		this.getOrCreateBuilder(GOORESISTANT).addTag(BlockTags.BEDS);
 //		this.getOrCreateBuilder(GOORESISTANT).add(Blocks.PISTON, Blocks.PISTON_HEAD, Blocks.STICKY_PISTON, Blocks.MOVING_PISTON);

@@ -6,12 +6,12 @@
     ]
   },
   "criteria": {
-    "has_will": {
+    "has_gold": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "bloodmagic:basemonstersoul"
+            "item": "minecraft:gold_ingot"
           }
         ]
       }
@@ -25,7 +25,7 @@
   },
   "requirements": [
     [
-      "has_will",
+      "has_gold",
       "has_the_recipe"
     ]
   ]

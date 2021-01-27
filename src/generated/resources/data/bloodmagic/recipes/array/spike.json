@@ -1,0 +1,13 @@
+{
+  "type": "bloodmagic:array",
+  "texture": "bloodmagic:textures/models/alchemyarrays/spikearray.png",
+  "baseinput": {
+    "item": "minecraft:cobblestone"
+  },
+  "addedinput": {
+    "tag": "forge:ingots/iron"
+  },
+  "output": {
+    "item": "minecraft:air"
+  }
+}

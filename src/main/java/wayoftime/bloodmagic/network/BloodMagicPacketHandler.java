@@ -16,6 +16,11 @@ public class BloodMagicPacketHandler extends BasePacketHandler
 		registerServerToClient(ChatUtil.PacketNoSpamChat.class, ChatUtil.PacketNoSpamChat::encode, ChatUtil.PacketNoSpamChat::decode, ChatUtil.PacketNoSpamChat::handle);
 		registerServerToClient(ARCTanksPacket.class, ARCTanksPacket::encode, ARCTanksPacket::decode, ARCTanksPacket::handle);
 		registerServerToClient(DemonAuraClientPacket.class, DemonAuraClientPacket::encode, DemonAuraClientPacket::decode, DemonAuraClientPacket::handle);
+		registerServerToClient(SetClientHealthPacket.class, SetClientHealthPacket::encode, SetClientHealthPacket::decode, SetClientHealthPacket::handle);
+
+		registerClientToServer(KeyProcessorPacket.class, KeyProcessorPacket::encode, KeyProcessorPacket::decode, KeyProcessorPacket::handle);
+		registerClientToServer(SigilHoldingPacket.class, SigilHoldingPacket::encode, SigilHoldingPacket::decode, SigilHoldingPacket::handle);
+		registerClientToServer(AlchemyTableButtonPacket.class, AlchemyTableButtonPacket::encode, AlchemyTableButtonPacket::decode, AlchemyTableButtonPacket::handle);
 //		INSTANCE.registerMessage(id, messageType, encoder, decoder, messageConsumer);
 //		INSTANCE.registerMessage(ChatUtil.PacketNoSpamChat.Handler.class, ChatUtil.PacketNoSpamChat.class, 0, Side.CLIENT);
 //		INSTANCE.registerMessage(ItemRouterButtonPacketProcessor.class, ItemRouterButtonPacketProcessor.class, 1, Side.SERVER);

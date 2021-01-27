@@ -1,0 +1,10 @@
+{
+  "id": "bloodmagic:hidden_knowledge",
+  "bonuses": {
+    "exp": [
+      2,
+      4,
+      6
+    ]
+  }
+}

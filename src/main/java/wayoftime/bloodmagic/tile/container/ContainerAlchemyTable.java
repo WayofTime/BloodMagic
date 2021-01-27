@@ -44,7 +44,7 @@ public class ContainerAlchemyTable extends Container
 		this.addSlot(new Slot(tileTable, 3, 26, 87));
 		this.addSlot(new Slot(tileTable, 4, 8, 51));
 		this.addSlot(new Slot(tileTable, 5, 26, 15));
-		this.addSlot(new SlotOrb(tileTable, TileAlchemyTable.orbSlot, 152, 51));
+		this.addSlot(new SlotOrb(tileTable, TileAlchemyTable.orbSlot, 143, 24));
 		this.addSlot(new SlotOutput(tileTable, TileAlchemyTable.outputSlot, 44, 51));
 
 		for (int i = 0; i < 3; i++)
@@ -66,12 +66,19 @@ public class ContainerAlchemyTable extends Container
 	{
 		PlayerInventory inventoryPlayer = player.inventory;
 
-		if (slotId < 6 && slotId >= 0)
+		if (slotId <= TileAlchemyTable.outputSlot && slotId >= 0)
 		{
 			Slot slot = this.getSlot(slotId);
 			if (!slot.getHasStack() && inventoryPlayer.getItemStack().isEmpty())
 			{
-				((TileAlchemyTable) tileTable).toggleInputSlotAccessible(slotId);
+//				((TileAlchemyTable) tileTable).toggleInputSlotAccessible(slotId);
+				if (tileTable.activeSlot == slotId)
+				{
+					tileTable.activeSlot = -1;
+				} else
+				{
+					tileTable.activeSlot = slotId;
+				}
 			}
 		}
 

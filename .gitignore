@@ -28,12 +28,10 @@ crash-reports/
 *.iws
 *.classpath
 *.project
+*.launch
 
 # Specific files
 Thumbs.db
 usernamecache.json
 options.txt
-BloodMagic_Client.launch
-BloodMagic_Server.launch
-
 usercache.json

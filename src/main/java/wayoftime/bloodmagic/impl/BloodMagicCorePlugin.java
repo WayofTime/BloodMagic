@@ -9,6 +9,7 @@ import wayoftime.bloodmagic.altar.ComponentType;
 import wayoftime.bloodmagic.api.IBloodMagicAPI;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.incense.EnumTranquilityType;
+import wayoftime.bloodmagic.incense.IncenseTranquilityRegistry;
 import wayoftime.bloodmagic.incense.TranquilityStack;
 import wayoftime.bloodmagic.incense.IncenseTranquilityRegistry;
 
@@ -43,6 +44,7 @@ public class BloodMagicCorePlugin
 		apiInterface.registerAltarComponent(Blocks.GLOWSTONE.getDefaultState(), ComponentType.GLOWSTONE.name());
 		apiInterface.registerAltarComponent(Blocks.SEA_LANTERN.getDefaultState(), ComponentType.GLOWSTONE.name());
 		apiInterface.registerAltarComponent(BloodMagicBlocks.BLOODSTONE.get().getDefaultState(), ComponentType.BLOODSTONE.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.BLOODSTONE_BRICK.get().getDefaultState(), ComponentType.BLOODSTONE.name());
 		apiInterface.registerAltarComponent(Blocks.BEACON.getDefaultState(), ComponentType.BEACON.name());
 
 		apiInterface.registerAltarComponent(BloodMagicBlocks.BLANK_RUNE.get().getDefaultState(), ComponentType.BLOODRUNE.name());

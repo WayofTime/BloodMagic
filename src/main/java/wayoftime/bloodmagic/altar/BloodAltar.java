@@ -19,14 +19,14 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.ItemHandlerHelper;
 import wayoftime.bloodmagic.api.event.BloodMagicCraftedEvent;
-import wayoftime.bloodmagic.impl.BloodMagicAPI;
-import wayoftime.bloodmagic.recipe.RecipeBloodAltar;
 import wayoftime.bloodmagic.block.enums.BloodRuneType;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
-import wayoftime.bloodmagic.core.data.Binding;
-import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.BloodOrb;
+import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.IBloodOrb;
+import wayoftime.bloodmagic.core.data.Binding;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
+import wayoftime.bloodmagic.recipe.RecipeBloodAltar;
 import wayoftime.bloodmagic.tile.TileAltar;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
@@ -237,6 +237,10 @@ public class BloodAltar// implements IFluidHandler
 //
 //		System.out.println("There are currently " + altarRecipes.size() + " Altar Recipes loaded.");
 //
+//		this.fluidInput = new FluidStack(BloodMagicBlocks.LIFE_ESSENCE_FLUID.get(), 1000);
+
+//		System.out.println(this.fluidOutput.getAmount());
+
 		World world = tileAltar.getWorld();
 		BlockPos pos = tileAltar.getPos();
 
@@ -453,7 +457,9 @@ public class BloodAltar// implements IFluidHandler
 			this.efficiencyMultiplier = (float) Math.pow(0.85, upgrade.getLevel(BloodRuneType.EFFICIENCY));
 			this.sacrificeEfficiencyMultiplier = (float) (0.10 * upgrade.getLevel(BloodRuneType.SACRIFICE));
 			this.selfSacrificeEfficiencyMultiplier = (float) (0.10 * upgrade.getLevel(BloodRuneType.SELF_SACRIFICE));
-			this.capacityMultiplier = (float) ((1 + 0.20 * upgrade.getLevel(BloodRuneType.CAPACITY) * Math.pow(1.075, upgrade.getLevel(BloodRuneType.AUGMENTED_CAPACITY))));
+			int cap = upgrade.getLevel(BloodRuneType.CAPACITY);
+			int cap_aug = upgrade.getLevel(BloodRuneType.AUGMENTED_CAPACITY);
+			this.capacityMultiplier = (float) ((1 + 0.20 * cap) * Math.pow(1.1, cap_aug * Math.pow(0.99, Math.abs(cap_aug - cap))));
 			this.dislocationMultiplier = (float) (Math.pow(1.2, upgrade.getLevel(BloodRuneType.DISPLACEMENT)));
 			this.orbCapacityMultiplier = (float) (1 + 0.02 * upgrade.getLevel(BloodRuneType.ORB));
 			this.chargingFrequency = Math.max(20 - accelerationUpgrades, 1);
@@ -669,7 +675,7 @@ public class BloodAltar// implements IFluidHandler
 
 		if (!doFill)
 		{
-			if (fluidInput == null)
+			if (fluidInput == null || fluidInput.isEmpty())
 			{
 				return Math.min(bufferCapacity, resource.getAmount());
 			}
@@ -682,7 +688,7 @@ public class BloodAltar// implements IFluidHandler
 			return Math.min(bufferCapacity - fluidInput.getAmount(), resource.getAmount());
 		}
 
-		if (fluidInput == null)
+		if (fluidInput == null || fluidInput.isEmpty())
 		{
 			fluidInput = new FluidStack(resource, Math.min(bufferCapacity, resource.getAmount()));
 
@@ -711,7 +717,7 @@ public class BloodAltar// implements IFluidHandler
 	{
 		if (resource == null || !resource.isFluidEqual(fluidOutput))
 		{
-			return null;
+			return FluidStack.EMPTY;
 		}
 		return drain(resource.getAmount(), doDrain);
 	}
@@ -720,7 +726,7 @@ public class BloodAltar// implements IFluidHandler
 	{
 		if (fluidOutput == null)
 		{
-			return null;
+			return FluidStack.EMPTY;
 		}
 
 		int drained = maxDrain;

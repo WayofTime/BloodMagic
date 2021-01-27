@@ -1,0 +1,13 @@
+{
+  "type": "bloodmagic:array",
+  "texture": "bloodmagic:textures/models/alchemyarrays/sunarray.png",
+  "baseinput": {
+    "item": "minecraft:coal"
+  },
+  "addedinput": {
+    "item": "minecraft:coal"
+  },
+  "output": {
+    "item": "minecraft:air"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "item": "bloodmagic:fungal_charge"
+  },
+  "input1": {
+    "tag": "forge:crops/nether_wart"
+  },
+  "input2": {
+    "item": "minecraft:furnace"
+  },
+  "input3": [
+    {
+      "item": "minecraft:charcoal"
+    },
+    {
+      "item": "minecraft:coal"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:fungal_charge",
+    "nbt": "{anointment_holder:{anointments:[{damage:1,max_damage:1,level:1,key:\"bloodmagic:smelting\"}]}}"
+  },
+  "minimumDrain": 60.0,
+  "drain": 1.0
+}

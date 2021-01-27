@@ -1,5 +1,7 @@
 package wayoftime.bloodmagic.tile;
 
+import java.util.Locale;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
@@ -7,11 +9,12 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraftforge.registries.ObjectHolder;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.block.BlockDemonCrystal;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.tile.base.TileTicking;
+import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.will.DemonWillHolder;
-import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
 public class TileDemonCrystal extends TileTicking
 {
@@ -70,16 +73,14 @@ public class TileDemonCrystal extends TileTicking
 					if (value >= 0.5)
 					{
 						double nextProgress = getCrystalGrowthPerSecond(value);
-						progressToNextCrystal += WorldDemonWillHandler.drainWill(getWorld(), getPos(), type, nextProgress
-								* sameWillConversionRate, true) / sameWillConversionRate;
+						progressToNextCrystal += WorldDemonWillHandler.drainWill(getWorld(), getPos(), type, nextProgress * sameWillConversionRate, true) / sameWillConversionRate;
 					} else
 					{
 						value = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, EnumDemonWillType.DEFAULT);
 						if (value > 0.5)
 						{
 							double nextProgress = getCrystalGrowthPerSecond(value) * timeDelayForWrongWill;
-							progressToNextCrystal += WorldDemonWillHandler.drainWill(getWorld(), getPos(), EnumDemonWillType.DEFAULT, nextProgress
-									* defaultWillConversionRate, true) / defaultWillConversionRate;
+							progressToNextCrystal += WorldDemonWillHandler.drainWill(getWorld(), getPos(), EnumDemonWillType.DEFAULT, nextProgress * defaultWillConversionRate, true) / defaultWillConversionRate;
 						}
 					}
 				} else
@@ -88,8 +89,7 @@ public class TileDemonCrystal extends TileTicking
 					{
 
 						double nextProgress = getCrystalGrowthPerSecond(value);
-						progressToNextCrystal += WorldDemonWillHandler.drainWill(getWorld(), getPos(), type, nextProgress
-								* sameWillConversionRate, true) / sameWillConversionRate;
+						progressToNextCrystal += WorldDemonWillHandler.drainWill(getWorld(), getPos(), type, nextProgress * sameWillConversionRate, true) / sameWillConversionRate;
 					}
 				}
 
@@ -190,6 +190,14 @@ public class TileDemonCrystal extends TileTicking
 		holder.readFromNBT(tag, "Will");
 		placement = Direction.byIndex(tag.getInt("placement"));
 		progressToNextCrystal = tag.getDouble("progress");
+
+		if (!tag.contains(Constants.NBT.WILL_TYPE))
+		{
+			this.willType = EnumDemonWillType.DEFAULT;
+		} else
+		{
+			this.willType = EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ENGLISH));
+		}
 	}
 
 	@Override
@@ -198,6 +206,19 @@ public class TileDemonCrystal extends TileTicking
 		holder.writeToNBT(tag, "Will");
 		tag.putInt("placement", placement.getIndex());
 		tag.putDouble("progress", progressToNextCrystal);
+
+		if (willType == EnumDemonWillType.DEFAULT)
+		{
+			if (tag.contains(Constants.NBT.WILL_TYPE))
+			{
+				tag.remove(Constants.NBT.WILL_TYPE);
+			}
+
+		} else
+		{
+			tag.putString(Constants.NBT.WILL_TYPE, willType.toString());
+		}
+
 		return tag;
 	}
 

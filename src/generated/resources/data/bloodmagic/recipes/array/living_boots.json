@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:array",
+  "texture": "bloodmagic:textures/models/alchemyarrays/bindingarray.png",
+  "baseinput": {
+    "item": "bloodmagic:reagentbinding"
+  },
+  "addedinput": {
+    "item": "minecraft:iron_boots"
+  },
+  "output": {
+    "item": "bloodmagic:livingboots",
+    "nbt": "{Damage:0}"
+  }
+}

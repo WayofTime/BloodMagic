@@ -6,12 +6,12 @@
     ]
   },
   "criteria": {
-    "has_gold": {
+    "has_blank_slate": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:gold_ingot"
+            "item": "bloodmagic:blankslate"
           }
         ]
       }
@@ -25,7 +25,7 @@
   },
   "requirements": [
     [
-      "has_gold",
+      "has_blank_slate",
       "has_the_recipe"
     ]
   ]

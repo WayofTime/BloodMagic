@@ -1,0 +1,10 @@
+{
+  "id": "bloodmagic:melee_damage",
+  "bonuses": {
+    "damage": [
+      3,
+      6,
+      9
+    ]
+  }
+}

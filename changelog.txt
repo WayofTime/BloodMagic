@@ -1,4 +1,101 @@
 ------------------------------------------------------
+Version 3.1.0
+------------------------------------------------------
+- Fixed Plunderer's Glint
+- Fixed the Blood Altar not being able to input fluids. About time, Way!
+- Added new Shaped Charges
+-> Fungal Charge, which is very useful for giant mushrooms and nether mushrooms
+-> Controlled Charge, which will destroy only blocks that match the block it is placed on.
+
+
+------------------------------------------------------
+Version 3.0.6
+------------------------------------------------------
+- Reimplemented the Well of Suffering.
+- Added several new items, called "Anointments"! These are items that provide temporary buffs to your tools and weapons, such as silk touch, higher damage, and more! Look them up in the Utility section of the book. These include: 
+	- Honing Oil
+	- Soft Coating
+	- Fortuna Extract
+	- Holy Water
+	- Miner's Secrets
+	- Dexterity Alkahest
+	- Iron Tip
+	- Plunderer's Glint
+	- Slow-burning Oil
+
+------------------------------------------------------
+Version 3.0.5
+------------------------------------------------------
+- Fixed a crash with the Blood Altar because I am dumb.
+- Also fixed the recipe for the Day array. Now you don't need to clean your clocks!
+
+------------------------------------------------------
+Version 3.0.4
+------------------------------------------------------
+
+- Added two new explosives:
+	- The Shaped Charge, which will break a 5x5x5 volume when placed
+	- The Deforester Charge, which can chop down a tree up to a maximum of 128 logs.
+	- (Both explosives drop all blocks affected, and do not cause further environmental nor entity damage.)
+	
+- Added new alchemy arrays:
+	- Two arrays, which changes the current daylight cycle to day and night. Recipes are temp.
+
+- Fixed the following Living Armour upgrades so that they are now obtainable:
+	- Experienced
+	- Body Builder
+	
+- Fixed Living Armour not upgrading under certain conditions.
+	
+- Fixed the two rituals involving Living Armour so that they are properly activatable using a Weak Activation Crystal.
+	
+- Fixed NPE in Blood Altar when trying to interact with the contained Fluids
+- Also fixed bug that prevented the Altar from accepting fluids piped in as inputs.
+- Fixed a client-side crash when right clicking the ground with a Lava Crystal when on a server - now properly makes a fire without consuming the client.
+ 
+- Fixed the JEI so that it no longer ouputs an error when loading Alchemy Array recipes without a crafting output.
+- Fixed crash with Actually Additions
+
+
+------------------------------------------------------
+Version 3.0.3
+------------------------------------------------------
+
+- Updated the Sanguine Scientiem - it's very well written! Special thanks to both VT-14 and Wrince for their long hours of effort to make this book better than I could have done!
+- Fixed a crash with the Living Armour when crafted and worn right after enchanting. 
+
+
+
+------------------------------------------------------
+Version 3.0.2
+------------------------------------------------------
+
+Readded the Living Armour. Currently only with a few upgrades, and no downgrades.
+	- Pin Cushion
+	- Soft Fall
+	- Tough
+	- Strong Legs (Now can be temporarily deactivated when jumping by sneaking)
+	- Healthy
+	- Experienced
+	- Charging Strike
+	- Tough Palms
+	- Quick Feet
+	- Poison Resistance
+	- Gift of Ignis
+	- Dwarven Might
+	- Body Builder
+
+Reimplemented the following rituals:
+	- Resonance of the Faceted Crystal
+	- Crack of the Fractured Crystal
+	- Reap of the Harvest Moon
+	- Ritual of the Shepherd
+	- Ritual of the Green Grove
+	- Focus of the Ellipsoid
+	- Sound of the Cleansing Soul
+	- Ritual of Living Evolution
+
+------------------------------------------------------
 Version 3.0.1
 ------------------------------------------------------
 

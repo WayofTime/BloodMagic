@@ -1,0 +1,15 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "minecraft:gilded_blackstone"
+    }
+  ],
+  "output": {
+    "item": "minecraft:gold_nugget",
+    "count": 9
+  },
+  "syphon": 200,
+  "ticks": 100,
+  "upgradeLevel": 2
+}

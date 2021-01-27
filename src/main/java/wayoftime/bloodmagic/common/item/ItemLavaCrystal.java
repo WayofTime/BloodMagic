@@ -108,6 +108,12 @@ public class ItemLavaCrystal extends ItemBindableBase
 		if (!player.canPlayerEdit(pos, facing, itemstack))
 			return ActionResultType.FAIL;
 
+		if (context.getWorld().isAirBlock(pos) && context.getWorld().isRemote)
+		{
+			context.getWorld().playSound(player, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0F, random.nextFloat() * 0.4F + 0.8F);
+			return ActionResultType.SUCCESS;
+		}
+
 		if (context.getWorld().isAirBlock(pos) && NetworkHelper.getSoulNetwork(binding).syphonAndDamage(player, SoulTicket.item(player.getHeldItem(hand), 100)).isSuccess())
 		{
 			context.getWorld().playSound(player, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0F, random.nextFloat() * 0.4F + 0.8F);

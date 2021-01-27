@@ -1,0 +1,21 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "item": "bloodmagic:deforester_charge"
+  },
+  "input1": {
+    "tag": "forge:crops/nether_wart"
+  },
+  "input2": {
+    "item": "minecraft:cobweb"
+  },
+  "input3": {
+    "tag": "forge:nuggets/gold"
+  },
+  "output": {
+    "item": "bloodmagic:deforester_charge",
+    "nbt": "{anointment_holder:{anointments:[{damage:1,max_damage:1,level:1,key:\"bloodmagic:silk_touch\"}]}}"
+  },
+  "minimumDrain": 60.0,
+  "drain": 1.0
+}

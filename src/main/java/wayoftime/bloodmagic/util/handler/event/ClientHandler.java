@@ -38,7 +38,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -60,7 +59,7 @@ import wayoftime.bloodmagic.tile.TileMasterRitualStone;
 import wayoftime.bloodmagic.will.DemonWillHolder;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID, value = Dist.CLIENT)
-@OnlyIn(Dist.CLIENT)
+//@OnlyIn(Dist.CLIENT)
 public class ClientHandler
 {
 	public static final boolean SUPPRESS_ASSET_ERRORS = true;

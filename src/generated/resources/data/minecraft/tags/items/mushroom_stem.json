@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:mushroom_stem",
+    "minecraft:crimson_stem",
+    "minecraft:warped_stem"
+  ]
+}

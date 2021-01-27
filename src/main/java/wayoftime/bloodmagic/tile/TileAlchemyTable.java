@@ -26,14 +26,14 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.api.event.BloodMagicCraftedEvent;
-import wayoftime.bloodmagic.impl.BloodMagicAPI;
-import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
+import wayoftime.bloodmagic.common.item.BloodOrb;
+import wayoftime.bloodmagic.common.item.IBindable;
+import wayoftime.bloodmagic.common.item.IBloodOrb;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.core.data.SoulTicket;
-import wayoftime.bloodmagic.common.item.IBindable;
-import wayoftime.bloodmagic.common.item.BloodOrb;
-import wayoftime.bloodmagic.common.item.IBloodOrb;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
+import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.tile.container.ContainerAlchemyTable;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
@@ -53,6 +53,16 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
 	public BlockPos connectedPos = BlockPos.ZERO;
 	public boolean[] blockedSlots = new boolean[] { false, false, false, false, false, false };
+	public boolean[] allowedDirectionsSlot0 = new boolean[] { false, false, true, true, true, true };
+	public boolean[] allowedDirectionsSlot1 = new boolean[] { false, false, true, true, true, true };
+	public boolean[] allowedDirectionsSlot2 = new boolean[] { false, false, true, true, true, true };
+	public boolean[] allowedDirectionsSlot3 = new boolean[] { false, false, true, true, true, true };
+	public boolean[] allowedDirectionsSlot4 = new boolean[] { false, false, true, true, true, true };
+	public boolean[] allowedDirectionsSlot5 = new boolean[] { false, false, true, true, true, true };
+	public boolean[] allowedDirectionsOrb = new boolean[] { false, true, false, false, false, false };
+	public boolean[] allowedDirectionsOutput = new boolean[] { true, false, false, false, false, false };
+
+	public int activeSlot = -1;
 
 	public TileAlchemyTable(TileEntityType<?> type)
 	{
@@ -91,6 +101,62 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 			blockedSlots[slot] = !blockedSlots[slot];
 	}
 
+	public boolean isSlotEnabled(int slot, Direction dir)
+	{
+		switch (slot)
+		{
+		case 0:
+			return allowedDirectionsSlot0[dir.ordinal()];
+		case 1:
+			return allowedDirectionsSlot1[dir.ordinal()];
+		case 2:
+			return allowedDirectionsSlot2[dir.ordinal()];
+		case 3:
+			return allowedDirectionsSlot3[dir.ordinal()];
+		case 4:
+			return allowedDirectionsSlot4[dir.ordinal()];
+		case 5:
+			return allowedDirectionsSlot5[dir.ordinal()];
+		case 6:
+			return allowedDirectionsOrb[dir.ordinal()];
+		case 7:
+			return allowedDirectionsOutput[dir.ordinal()];
+		}
+
+		return false;
+	}
+
+	public void setSlotEnabled(boolean enabled, int slot, Direction dir)
+	{
+		switch (slot)
+		{
+		case 0:
+			allowedDirectionsSlot0[dir.ordinal()] = enabled;
+			break;
+		case 1:
+			allowedDirectionsSlot1[dir.ordinal()] = enabled;
+			break;
+		case 2:
+			allowedDirectionsSlot2[dir.ordinal()] = enabled;
+			break;
+		case 3:
+			allowedDirectionsSlot3[dir.ordinal()] = enabled;
+			break;
+		case 4:
+			allowedDirectionsSlot4[dir.ordinal()] = enabled;
+			break;
+		case 5:
+			allowedDirectionsSlot5[dir.ordinal()] = enabled;
+			break;
+		case 6:
+			allowedDirectionsOrb[dir.ordinal()] = enabled;
+			break;
+		case 7:
+			allowedDirectionsOutput[dir.ordinal()] = enabled;
+			break;
+		}
+	}
+
 	@Override
 	public void deserialize(CompoundNBT tag)
 	{
@@ -105,6 +171,16 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
 		byte[] array = tag.getByteArray("blockedSlots");
 		for (int i = 0; i < array.length; i++) blockedSlots[i] = array[i] != 0;
+
+		for (int i = 0; i <= outputSlot; i++)
+		{
+			byte[] allowedSlotArray = tag.getByteArray("allowedDirections" + i);
+			for (int j = 0; j < Math.min(allowedSlotArray.length, Direction.values().length); j++)
+			{
+				this.setSlotEnabled(allowedSlotArray[j] == 1 ? true : false, i, Direction.values()[j]);
+			}
+//			tag.putByteArray("allowedDirections" + i, allowedSlotArray);
+		}
 	}
 
 	@Override
@@ -125,6 +201,17 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 		for (int i = 0; i < blockedSlots.length; i++) blockedSlotArray[i] = (byte) (blockedSlots[i] ? 1 : 0);
 
 		tag.putByteArray("blockedSlots", blockedSlotArray);
+
+		for (int i = 0; i <= outputSlot; i++)
+		{
+			byte[] allowedSlotArray = new byte[Direction.values().length];
+			for (int j = 0; j < Direction.values().length; j++)
+			{
+				allowedSlotArray[j] = (byte) (this.isSlotEnabled(i, Direction.values()[j]) ? 1 : 0);
+			}
+			tag.putByteArray("allowedDirections" + i, allowedSlotArray);
+		}
+
 		return tag;
 	}
 
@@ -152,43 +239,68 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 	@Override
 	public int[] getSlotsForFace(Direction side)
 	{
-		switch (side)
+		List<Integer> integerList = new ArrayList<Integer>();
+		for (int i = 0; i <= outputSlot; i++)
 		{
-		case DOWN:
-			return new int[] { outputSlot };
-		case UP:
-			return new int[] { orbSlot };
-		default:
-			return new int[] { 0, 1, 2, 3, 4, 5 };
+			if (this.isSlotEnabled(i, side))
+			{
+				integerList.add(i);
+			}
 		}
+
+		int[] intArray = new int[integerList.size()];
+		for (int i = 0; i < intArray.length; i++)
+		{
+			intArray[i] = integerList.get(i);
+		}
+
+		return intArray;
+//		switch (side)
+//		{
+//		case DOWN:
+//			return new int[] { outputSlot };
+//		case UP:
+//			return new int[] { orbSlot };
+//		default:
+//			return new int[] { 0, 1, 2, 3, 4, 5 };
+//		}
 	}
 
 	@Override
 	public boolean canInsertItem(int index, ItemStack stack, Direction direction)
 	{
-		switch (direction)
+		switch (index)
 		{
-		case DOWN:
-			return index != outputSlot && index != orbSlot;
-		case UP:
-			if (index == orbSlot && !stack.isEmpty() && stack.getItem() instanceof IBloodOrb)
-			{
-				return true;
-			} else
-			{
-				return true;
-			}
+		case outputSlot:
+			return false;
+		case orbSlot:
+			return !stack.isEmpty() && stack.getItem() instanceof IBloodOrb;
 		default:
-			if (this.isSlave)
-			{
-				TileEntity tile = getWorld().getTileEntity(connectedPos);
-				if (tile instanceof TileAlchemyTable && !((TileAlchemyTable) tile).isSlave)
-				{
-					return ((TileAlchemyTable) tile).canInsertItem(index, stack, direction);
-				}
-			}
-			return getAccessibleInputSlots(direction).contains(index);
+			return this.isSlotEnabled(index, direction);
 		}
+//		switch (direction)
+//		{
+//		case DOWN:
+//			return index != outputSlot && index != orbSlot;
+//		case UP:
+//			if (index == orbSlot && !stack.isEmpty() && stack.getItem() instanceof IBloodOrb)
+//			{
+//				return true;
+//			} else
+//			{
+//				return true;
+//			}
+//		default:
+//			if (this.isSlave)
+//			{
+//				TileEntity tile = getWorld().getTileEntity(connectedPos);
+//				if (tile instanceof TileAlchemyTable && !((TileAlchemyTable) tile).isSlave)
+//				{
+//					return ((TileAlchemyTable) tile).canInsertItem(index, stack, direction);
+//				}
+//			}
+//			return getAccessibleInputSlots(direction).contains(index);
+//		}
 	}
 
 	@Override
@@ -196,26 +308,8 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 	{
 		switch (direction)
 		{
-		case DOWN:
-			return index == outputSlot;
-		case UP:
-			if (index == orbSlot && !stack.isEmpty() && stack.getItem() instanceof IBloodOrb)
-			{
-				return true;
-			} else
-			{
-				return true;
-			}
 		default:
-			if (this.isSlave)
-			{
-				TileEntity tile = getWorld().getTileEntity(connectedPos);
-				if (tile instanceof TileAlchemyTable && !((TileAlchemyTable) tile).isSlave)
-				{
-					return ((TileAlchemyTable) tile).canExtractItem(index, stack, direction);
-				}
-			}
-			return getAccessibleInputSlots(direction).contains(index);
+			return this.isSlotEnabled(index, direction);
 		}
 	}
 
@@ -256,8 +350,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
 		// Simple recipes
 		RecipeAlchemyTable recipeAlchemyTable = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyTable(world, inputList);
-		if (recipeAlchemyTable != null && (burnTime > 0 || (!getWorld().isRemote
-				&& tier >= recipeAlchemyTable.getMinimumTier() && getContainedLp() >= recipeAlchemyTable.getSyphon())))
+		if (recipeAlchemyTable != null && (burnTime > 0 || (!getWorld().isRemote && tier >= recipeAlchemyTable.getMinimumTier() && getContainedLp() >= recipeAlchemyTable.getSyphon())))
 		{
 			if (burnTime == 1)
 				notifyUpdate();
@@ -417,10 +510,19 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 				{
 					setInventorySlotContents(i, inputStack.getItem().getContainerItem(inputStack));
 					continue;
-				} else if (inputStack.isDamageable())
+				} else if (inputStack.getMaxDamage() > 0)
 				{
-					inputStack.setDamage(inputStack.getDamage() + 1);
-					if (inputStack.getDamage() >= inputStack.getMaxDamage())
+//					inputStack.setDamage(inputStack.getDamage() + 1);
+//					if (inputStack.getDamage() >= inputStack.getMaxDamage())
+//					{
+//						
+//					}
+
+					if (!inputStack.isDamageable())
+					{
+						continue;
+					}
+					if (inputStack.attemptDamageItem(1, world.rand, null))
 					{
 						setInventorySlotContents(i, ItemStack.EMPTY);
 					}

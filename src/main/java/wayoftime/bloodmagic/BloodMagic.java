@@ -14,6 +14,7 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
@@ -35,6 +36,8 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import wayoftime.bloodmagic.client.ClientEvents;
 import wayoftime.bloodmagic.client.hud.Elements;
+import wayoftime.bloodmagic.client.key.BloodMagicKeyHandler;
+import wayoftime.bloodmagic.client.key.KeyBindings;
 import wayoftime.bloodmagic.client.model.MimicModelLoader;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.GeneratorBaseRecipes;
@@ -49,25 +52,34 @@ import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeProvider;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
+import wayoftime.bloodmagic.core.AnointmentRegistrar;
+import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.recipe.IngredientBloodOrb;
+import wayoftime.bloodmagic.core.registry.AlchemyArrayRegistry;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.impl.BloodMagicCorePlugin;
+import wayoftime.bloodmagic.loot.GlobalLootModifier;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
+import wayoftime.bloodmagic.ritual.ModRituals;
 import wayoftime.bloodmagic.ritual.RitualManager;
 import wayoftime.bloodmagic.structures.ModDungeons;
 import wayoftime.bloodmagic.tile.TileAlchemicalReactionChamber;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 import wayoftime.bloodmagic.tile.TileAlchemyTable;
 import wayoftime.bloodmagic.tile.TileAltar;
+import wayoftime.bloodmagic.tile.TileDeforesterCharge;
 import wayoftime.bloodmagic.tile.TileDemonCrucible;
 import wayoftime.bloodmagic.tile.TileDemonCrystal;
 import wayoftime.bloodmagic.tile.TileDemonCrystallizer;
+import wayoftime.bloodmagic.tile.TileFungalCharge;
 import wayoftime.bloodmagic.tile.TileIncenseAltar;
 import wayoftime.bloodmagic.tile.TileMasterRitualStone;
 import wayoftime.bloodmagic.tile.TileMimic;
+import wayoftime.bloodmagic.tile.TileShapedExplosive;
 import wayoftime.bloodmagic.tile.TileSoulForge;
+import wayoftime.bloodmagic.tile.TileVeinMineCharge;
 import wayoftime.bloodmagic.util.handler.event.GenericHandler;
 import wayoftime.bloodmagic.util.handler.event.WillHandler;
 
@@ -95,12 +107,16 @@ public class BloodMagic
 		BloodMagicItems.ITEMS.register(modBus);
 //		RegistrarBloodMagic.BLOOD_ORBS.createAndRegister(modBus, "bloodorbs");
 		BloodMagicItems.BLOOD_ORBS.createAndRegister(modBus, "bloodorbs");
+		LivingArmorRegistrar.UPGRADES.createAndRegister(modBus, "upgrades");
+		AnointmentRegistrar.ANOINTMENTS.createAndRegister(modBus, "anointments");
 		BloodMagicItems.BASICITEMS.register(modBus);
 		BloodMagicBlocks.BASICBLOCKS.register(modBus);
 		BloodMagicBlocks.DUNGEONBLOCKS.register(modBus);
 		BloodMagicBlocks.FLUIDS.register(modBus);
 		BloodMagicBlocks.CONTAINERS.register(modBus);
 		BloodMagicEntityTypes.ENTITY_TYPES.register(modBus);
+
+		GlobalLootModifier.GLM.register(modBus);
 
 		BloodMagicRecipeSerializers.RECIPE_SERIALIZERS.register(modBus);
 
@@ -121,6 +137,8 @@ public class BloodMagic
 		modBus.addGenericListener(Effect.class, BloodMagicPotions::registerPotions);
 
 		MinecraftForge.EVENT_BUS.register(new GenericHandler());
+//		MinecraftForge.EVENT_BUS.register(new ClientHandler());
+		modBus.addListener(this::registerColors);
 
 		MinecraftForge.EVENT_BUS.register(new WillHandler());
 //		MinecraftForge.EVENT_BUS.register(new BloodMagicBlocks());
@@ -163,6 +181,10 @@ public class BloodMagic
 		OrbRegistry.tierMap.put(BloodMagicItems.ORB_MASTER.get().getTier(), new ItemStack(BloodMagicItems.MASTER_BLOOD_ORB.get()));
 		BloodMagicCorePlugin.INSTANCE.register(BloodMagicAPI.INSTANCE);
 		RITUAL_MANAGER.discover();
+		ModRituals.initHarvestHandlers();
+		LivingArmorRegistrar.register();
+		AnointmentRegistrar.register();
+		AlchemyArrayRegistry.registerBaseArrays();
 	}
 
 	public void registerTileEntityTypes(RegistryEvent.Register<TileEntityType<?>> event)
@@ -179,6 +201,11 @@ public class BloodMagic
 		event.getRegistry().register(TileEntityType.Builder.create(TileDemonCrystallizer::new, BloodMagicBlocks.DEMON_CRYSTALLIZER.get()).build(null).setRegistryName("demoncrystallizer"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileIncenseAltar::new, BloodMagicBlocks.INCENSE_ALTAR.get()).build(null).setRegistryName("incensealtar"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileMimic::new, BloodMagicBlocks.MIMIC.get(), BloodMagicBlocks.ETHEREAL_MIMIC.get()).build(null).setRegistryName("mimic"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileShapedExplosive::new, BloodMagicBlocks.SHAPED_CHARGE.get()).build(null).setRegistryName("shaped_explosive"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileDeforesterCharge::new, BloodMagicBlocks.DEFORESTER_CHARGE.get()).build(null).setRegistryName("deforester_charge"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileVeinMineCharge::new, BloodMagicBlocks.VEINMINE_CHARGE.get()).build(null).setRegistryName("veinmine_charge"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileFungalCharge::new, BloodMagicBlocks.FUNGAL_CHARGE.get()).build(null).setRegistryName("fungal_charge"));
+
 	}
 
 	@SubscribeEvent
@@ -228,6 +255,18 @@ public class BloodMagic
 
 		ClientEvents.initClientEvents(event);
 		Elements.registerElements();
+		MinecraftForge.EVENT_BUS.register(new ClientEvents());
+		KeyBindings.initializeKeys();
+		new BloodMagicKeyHandler();
+//		IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+//		
+
+	}
+
+	private void registerColors(final ColorHandlerEvent event)
+	{
+		if (event instanceof ColorHandlerEvent.Item)
+			ClientEvents.colorHandlerEvent((ColorHandlerEvent.Item) event);
 	}
 
 	private void enqueueIMC(final InterModEnqueueEvent event)
@@ -276,4 +315,5 @@ public class BloodMagic
 			return new ItemStack(BloodMagicBlocks.BLOOD_ALTAR.get());
 		}
 	};
+	public static final String NAME = "Blood Magic: Alchemical Wizardry";
 }

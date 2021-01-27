@@ -17,10 +17,13 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
+import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
+import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.TextHelper;
 
@@ -51,19 +54,26 @@ public class AlchemyTableRecipeCategory implements IRecipeCategory<RecipeAlchemy
 		return UID;
 	}
 
-//	@Override
-//	public List<ITextComponent> getTooltipStrings(RecipeBloodAltar recipe, double mouseX, double mouseY)
-//	{
-//		List<ITextComponent> tooltip = Lists.newArrayList();
-//
+	@Override
+	public List<ITextComponent> getTooltipStrings(RecipeAlchemyTable recipe, double mouseX, double mouseY)
+	{
+		List<ITextComponent> tooltip = Lists.newArrayList();
+
 //		if (mouseX >= 13 && mouseX <= 64 && mouseY >= 27 && mouseY <= 58)
 //		{
 //			tooltip.add(new TranslationTextComponent("jei.bloodmagic.recipe.consumptionrate", ChatUtil.DECIMAL_FORMAT.format(recipe.getConsumeRate())));
 //			tooltip.add(new TranslationTextComponent("jei.bloodmagic.recipe.drainrate", ChatUtil.DECIMAL_FORMAT.format(recipe.getDrainRate())));
 //		}
-//
-//		return tooltip;
-//	}
+
+		if (mouseX >= 58 && mouseX <= 78 && mouseY >= 21 && mouseY <= 34)
+		{
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.tier", ChatUtil.DECIMAL_FORMAT.format(recipe.getMinimumTier())));
+			tooltip.add(new TranslationTextComponent("jei.bloodmagic.recipe.lpDrained", ChatUtil.DECIMAL_FORMAT.format(recipe.getSyphon())));
+			tooltip.add(new TranslationTextComponent("jei.bloodmagic.recipe.ticksRequired", ChatUtil.DECIMAL_FORMAT.format(recipe.getTicks())));
+		}
+
+		return tooltip;
+	}
 
 	@Nonnull
 	@Override

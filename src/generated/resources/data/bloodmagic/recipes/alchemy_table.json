@@ -7,7 +7,7 @@
   ],
   "key": {
     "b": {
-      "tag": "forge:rods/blaze"
+      "tag": "forge:ingots/iron"
     },
     "s": {
       "tag": "forge:stone"
@@ -19,8 +19,7 @@
       "tag": "forge:ingots/gold"
     },
     "o": {
-      "type": "bloodmagic:bloodorb",
-      "orb_tier": 1
+      "item": "bloodmagic:blankslate"
     }
   },
   "result": {

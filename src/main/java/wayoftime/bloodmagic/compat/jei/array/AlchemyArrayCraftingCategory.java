@@ -13,8 +13,8 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
+import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.TextHelper;
 
@@ -88,6 +88,14 @@ public class AlchemyArrayCraftingCategory implements IRecipeCategory<RecipeAlche
 	public void setIngredients(RecipeAlchemyArray recipe, IIngredients ingredients)
 	{
 		ingredients.setInputIngredients(recipe.getIngredients());
-		ingredients.setOutput(VanillaTypes.ITEM, recipe.getOutput());
+		if (recipe.getOutput().isEmpty())
+		{
+			ingredients.setOutput(VanillaTypes.ITEM, new ItemStack(BloodMagicItems.ARCANE_ASHES.get()));
+//			ingredients.setOutput(VanillaTypes.ITEM, new ItemStack(BloodMagicBlocks.ALCHEMY_ARRAY.get()));
+		} else
+		{
+			ingredients.setOutput(VanillaTypes.ITEM, recipe.getOutput());
+		}
+
 	}
 }

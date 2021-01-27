@@ -1,7 +1,9 @@
 package wayoftime.bloodmagic.common.tags;
 
+import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
@@ -19,7 +21,10 @@ public class BloodMagicTags
 
 	public static final ITag.INamedTag<Item> CRYSTAL_DEMON = ItemTags.makeWrapperTag("bloodmagic:crystals/demon");
 
-	public static final ITag.INamedTag<Fluid> LIFE_ESSENCE = FluidTags.makeWrapperTag("life");
+	public static final ITag.INamedTag<Fluid> LIFE_ESSENCE = FluidTags.makeWrapperTag("forge:life");
+
+	public static final ITag.INamedTag<Item> MUSHROOM_STEM = ItemTags.makeWrapperTag("minecraft:mushroom_stem");
+	public static final ITag.INamedTag<Item> MUSHROOM_HYPHAE = ItemTags.makeWrapperTag("minecraft:mushroom_hyphae");
 
 	// Ores
 	public static final ITag.INamedTag<Item> ORE_COPPER = getForgeOreTag("copper");
@@ -51,6 +56,12 @@ public class BloodMagicTags
 	public static final ITag.INamedTag<Item> GRAVEL_IRON = getGravelTag("iron");
 	public static final ITag.INamedTag<Item> GRAVEL_GOLD = getGravelTag("gold");
 	public static final ITag.INamedTag<Item> GRAVEL_NETHERITE_SCRAP = getGravelTag("netherite_scrap");
+
+	public static class Blocks
+	{
+		public static final ITag.INamedTag<Block> MUSHROOM_STEM = BlockTags.makeWrapperTag("minecraft:mushroom_stem");
+		public static final ITag.INamedTag<Block> MUSHROOM_HYPHAE = BlockTags.makeWrapperTag("minecraft:mushroom_hyphae");
+	}
 
 	public static ITag.INamedTag<Item> getForgeOreTag(String name)
 	{

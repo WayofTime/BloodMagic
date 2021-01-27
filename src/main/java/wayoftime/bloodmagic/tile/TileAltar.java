@@ -22,6 +22,8 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickableTi
 	public static TileEntityType<TileAltar> TYPE;
 	private BloodAltar bloodAltar;
 
+	private LazyOptional fluidOptional;
+
 	public TileAltar(TileEntityType<?> type)
 	{
 		super(type, 1, "altar");
@@ -220,13 +222,29 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickableTi
 //		return super.hasCapability(capability, facing);
 //	}
 
+	@Override
+	protected void invalidateCaps()
+	{
+		super.invalidateCaps();
+		if (fluidOptional != null)
+		{
+			fluidOptional.invalidate();
+			fluidOptional = null;
+		}
+
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing)
 	{
 		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
 		{
-			return LazyOptional.of(() -> new BloodAltar.VariableSizeFluidHandler(bloodAltar)).cast();
+			if (fluidOptional == null)
+			{
+				fluidOptional = LazyOptional.of(() -> new BloodAltar.VariableSizeFluidHandler(bloodAltar));
+			}
+			return fluidOptional.cast();
 //			return (T) bloodAltar;
 		}
 

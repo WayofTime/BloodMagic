@@ -1,0 +1,30 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:blankslate"
+    },
+    {
+      "tag": "forge:glass"
+    },
+    {
+      "tag": "forge:glass"
+    },
+    {
+      "tag": "forge:glass"
+    },
+    {
+      "tag": "forge:glass"
+    },
+    {
+      "tag": "forge:glass"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:slate_vial",
+    "count": 8
+  },
+  "syphon": 500,
+  "ticks": 200,
+  "upgradeLevel": 1
+}

@@ -1,6 +1,8 @@
 package wayoftime.bloodmagic.tile;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -36,6 +38,14 @@ public class TileAlchemyArray extends TileInventory implements ITickableTileEnti
 		this(TYPE);
 	}
 
+	public void onEntityCollidedWithBlock(BlockState state, Entity entity)
+	{
+		if (arrayEffect != null)
+		{
+			arrayEffect.onEntityCollidedWithBlock(this, getWorld(), pos, state, entity);
+		}
+	}
+
 	@Override
 	public void deserialize(CompoundNBT tagCompound)
 	{
@@ -58,6 +68,11 @@ public class TileAlchemyArray extends TileInventory implements ITickableTileEnti
 		{
 			arrayEffect.readFromNBT(arrayTag);
 		}
+	}
+
+	public void doDropIngredients(boolean drop)
+	{
+		this.doDropIngredients = drop;
 	}
 
 	@Override
@@ -108,6 +123,7 @@ public class TileAlchemyArray extends TileInventory implements ITickableTileEnti
 		} else
 		{
 			AlchemyArrayEffect effect = AlchemyArrayRegistry.getEffect(world, this.getStackInSlot(0), this.getStackInSlot(1));
+//			System.out.println("Effect: " + effect);
 			if (effect == null)
 			{
 //				key = effect.i

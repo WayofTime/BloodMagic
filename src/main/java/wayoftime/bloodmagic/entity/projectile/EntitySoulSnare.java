@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.entity.projectile;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -39,6 +40,7 @@ public class EntitySoulSnare extends ProjectileItemEntity
 
 	protected Item getDefaultItem()
 	{
+		ArrowEntity d;
 		return BloodMagicItems.SOUL_SNARE.get();
 	}
 
@@ -89,6 +91,5 @@ public class EntitySoulSnare extends ProjectileItemEntity
 				this.world.addParticle(iparticledata, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
 			}
 		}
-
 	}
 }

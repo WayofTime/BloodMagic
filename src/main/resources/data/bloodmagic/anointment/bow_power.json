@@ -1,0 +1,10 @@
+{
+  "id": "bloodmagic:bow_power",
+  "bonuses": {
+    "damage": [
+      1.25,
+      1.5,
+      1.75
+    ]
+  }
+}

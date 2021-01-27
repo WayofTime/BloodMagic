@@ -3,15 +3,16 @@ package wayoftime.bloodmagic.common.data;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.fml.RegistryObject;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
-import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
 public class GeneratorItemModels extends ItemModelProvider
 {
@@ -81,11 +82,30 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerDemonTool(BloodMagicItems.SENTIENT_AXE.get());
 		registerDemonTool(BloodMagicItems.SENTIENT_PICKAXE.get());
 		registerDemonTool(BloodMagicItems.SENTIENT_SHOVEL.get());
+		registerDemonTool(BloodMagicItems.SENTIENT_SCYTHE.get());
 		registerSacrificialKnife(BloodMagicItems.SACRIFICIAL_DAGGER.get());
 
 		registerCustomFullTexture(BloodMagicBlocks.MIMIC.get(), "solidopaquemimic");
 		registerCustomFullTexture(BloodMagicBlocks.ETHEREAL_MIMIC.get(), "etherealopaquemimic");
 		this.crop(BloodMagicBlocks.GROWING_DOUBT.get().getRegistryName().getPath(), modLoc("block/creeping_doubt_8"));
+
+		registerBlockModel(BloodMagicBlocks.SHAPED_CHARGE.get());
+		registerBlockModel(BloodMagicBlocks.DEFORESTER_CHARGE.get());
+		registerBlockModel(BloodMagicBlocks.VEINMINE_CHARGE.get());
+		registerBlockModel(BloodMagicBlocks.FUNGAL_CHARGE.get());
+
+		registerMultiLayerItem(BloodMagicItems.SLATE_VIAL.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.SILK_TOUCH_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.FORTUNE_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.HOLY_WATER_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.QUICK_DRAW_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.LOOTING_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.BOW_POWER_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.WILL_POWER_ANOINTMENT.get(), modLoc("item/alchemic_vial_will"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon_will"));
+		registerMultiLayerItem(BloodMagicItems.SMELTING_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
+
 	}
 
 	private void registerCustomFullTexture(Block block, String texturePath)
@@ -109,7 +129,21 @@ public class GeneratorItemModels extends ItemModelProvider
 	private void registerBasicItem(Item item)
 	{
 		String path = item.getRegistryName().getPath();
-		singleTexture(path, mcLoc("item/handheld"), "layer0", modLoc("item/" + path));
+		singleTexture(path, mcLoc("item/generated"), "layer0", modLoc("item/" + path));
+	}
+
+	private void registerMultiLayerItem(Item item, ResourceLocation... locations)
+	{
+		String path = item.getRegistryName().getPath();
+		ItemModelBuilder builder = getBuilder(path).parent(getExistingFile(mcLoc("item/generated")));
+//		ModelFile model = withExistingParent(path, mcLoc("item/handheld"));
+
+		for (int i = 0; i < locations.length; i++)
+		{
+			builder.texture("layer" + i, locations[i]);
+		}
+
+		builder.assertExistence();
 	}
 
 	private void registerToggleableItem(Item item)

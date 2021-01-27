@@ -1,0 +1,10 @@
+{
+  "id": "bloodmagic:holy_water",
+  "bonuses": {
+    "damage": [
+      5,
+      10,
+      15
+    ]
+  }
+}

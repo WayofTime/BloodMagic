@@ -16,7 +16,7 @@
       "tag": "forge:ingots/gold"
     },
     "d": {
-      "item": "bloodmagic:basemonstersoul"
+      "item": "minecraft:gold_ingot"
     }
   },
   "result": {
