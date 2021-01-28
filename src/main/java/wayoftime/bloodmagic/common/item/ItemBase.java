@@ -6,6 +6,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -42,7 +43,7 @@ public class ItemBase extends Item
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
 		if (!desc.isEmpty())
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic." + desc));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic." + desc).mergeStyle(TextFormatting.GRAY));
 
 	}
 }

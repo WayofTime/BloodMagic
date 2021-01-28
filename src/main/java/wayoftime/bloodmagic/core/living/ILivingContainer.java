@@ -51,9 +51,9 @@ public interface ILivingContainer
 				boolean sneaking = Screen.hasShiftDown();
 //				if (!InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), 340) || k.getNextRequirement(v) == 0)
 				if (!sneaking || k.getNextRequirement(v.intValue()) == 0)
-					tooltip.add(new TranslationTextComponent("%s %s", new TranslationTextComponent(k.getTranslationKey()), new TranslationTextComponent("enchantment.level." + k.getLevel(v.intValue()))));
+					tooltip.add(new TranslationTextComponent("%s %s", new TranslationTextComponent(k.getTranslationKey()), new TranslationTextComponent("enchantment.level." + k.getLevel(v.intValue()))).mergeStyle(TextFormatting.GRAY));
 				else
-					tooltip.add(new TranslationTextComponent("%s %s", new TranslationTextComponent(k.getTranslationKey()), (": " + v.intValue() + "/" + k.getNextRequirement(v.intValue()))));
+					tooltip.add(new TranslationTextComponent("%s %s", new TranslationTextComponent(k.getTranslationKey()), (": " + v.intValue() + "/" + k.getNextRequirement(v.intValue()))).mergeStyle(TextFormatting.GRAY));
 			});
 		}
 	}

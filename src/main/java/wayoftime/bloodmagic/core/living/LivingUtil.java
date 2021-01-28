@@ -3,6 +3,8 @@ package wayoftime.bloodmagic.core.living;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.google.common.collect.Multimap;
 
 import net.minecraft.entity.LivingEntity;
@@ -21,20 +23,22 @@ import wayoftime.bloodmagic.event.LivingEquipmentEvent;
 
 public class LivingUtil
 {
-	public static LivingStats applyNewExperience(PlayerEntity player, LivingUpgrade upgrade, double experience)
+	// @return Pair containing the LivingStats of the player, and if the LivingStats
+	// upgraded due to the applied EXP.
+	public static Pair<LivingStats, Boolean> applyNewExperience(PlayerEntity player, LivingUpgrade upgrade, double experience)
 	{
 		LivingStats stats = LivingStats.fromPlayer(player, true);
 		if (stats == null)
-			return null;
+			return Pair.of(null, false);
 
 		if (!canTrain(player, upgrade, upgrade.getLevel((int) experience)))
-			return stats;
+			return Pair.of(stats, false);
 
 		LivingEquipmentEvent.GainExperience event = new LivingEquipmentEvent.GainExperience(player, stats, upgrade, experience);
 //		EventResult result = LivingEquipmentEvent.EXPERIENCE_GAIN.invoker().gainExperience(event);
 		MinecraftForge.EVENT_BUS.post(event);
 		if (event.isCanceled())
-			return stats;
+			return Pair.of(stats, false);
 
 		experience = event.getExperience();
 
@@ -48,34 +52,36 @@ public class LivingUtil
 			// If we're already capped or somehow over the cap, we don't want to add
 			// experience
 			if (currentPoints >= stats.getMaxPoints())
-				return stats;
+				return Pair.of(stats, false);
 
 			int currentPointCost = upgrade.getLevelCost(upgrade.getLevel((int) currentExperience));
-			int nextPointCost = upgrade.getLevelCost(upgrade.getLevel((int) currentExperience) + 1);
+			int nextPointCost = upgrade.getLevelCost(upgrade.getLevel((int) (currentExperience + experience)));
 
 //			System.out.println("Current point cost: " + currentPointCost + ", Next point cost: " + nextPointCost);
 			// If there's no more levels in this upgrade, we don't want to add experience
 			if (nextPointCost == -1)
-				return stats;
+				return Pair.of(stats, false);
 
 			int pointDif = nextPointCost - currentPointCost;
 			if (pointDif < 0)
 			{
-				return stats;
+				return Pair.of(stats, false);
 			}
 
 			// If applying this new level will go over our cap, we don't want to add
 			// experience
 			if (currentPoints + pointDif > stats.getMaxPoints())
-				return stats;
+				return Pair.of(stats, false);
 		}
 
 		int newLevel = upgrade.getLevel((int) (currentExperience + experience));
+		boolean didUpgrade = false;
 		if (upgrade.getLevel((int) currentExperience) != newLevel)
 		{
 			LivingEquipmentEvent.LevelUp levelUpEvent = new LivingEquipmentEvent.LevelUp(player, stats, upgrade);
 //			LivingEquipmentEvent.LEVEL_UP.invoker().levelUp(levelUpEvent);
 			MinecraftForge.EVENT_BUS.post(levelUpEvent);
+			didUpgrade = true;
 
 			player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.living_upgrade_level_increase", new TranslationTextComponent(upgrade.getTranslationKey()), newLevel), true);
 		}
@@ -84,7 +90,7 @@ public class LivingUtil
 
 		stats.addExperience(upgrade.getKey(), experience);
 		LivingStats.toPlayer(player, stats);
-		return stats;
+		return Pair.of(stats, didUpgrade);
 	}
 
 	public static double getDamageReceivedForArmour(PlayerEntity player, DamageSource source, double damage)

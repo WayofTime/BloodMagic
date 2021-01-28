@@ -37,7 +37,7 @@ public class ItemSigilBase extends ItemSigil
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent(tooltipBase + "desc").mergeStyle(TextFormatting.ITALIC));
+		tooltip.add(new TranslationTextComponent(tooltipBase + "desc").mergeStyle(TextFormatting.ITALIC).mergeStyle(TextFormatting.GRAY));
 //		if (TextHelper.canTranslate(tooltipBase + "desc"))
 //			tooltip.addAll(Arrays.asList(WordUtils.wrap(TextHelper.localizeEffect(tooltipBase
 //					+ "desc"), 30, "/cut", false).split("/cut")));

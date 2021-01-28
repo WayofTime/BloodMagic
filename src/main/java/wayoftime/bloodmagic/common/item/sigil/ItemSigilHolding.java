@@ -83,7 +83,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
 		super.addInformation(stack, world, tooltip, flag);
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sigil.holding.press", new TranslationTextComponent(KeyBindings.OPEN_HOLDING.getKey().getTranslationKey()).mergeStyle(TextFormatting.ITALIC)));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sigil.holding.press", new TranslationTextComponent(KeyBindings.OPEN_HOLDING.getKey().getTranslationKey()).mergeStyle(TextFormatting.ITALIC)).mergeStyle(TextFormatting.GRAY));
 
 		if (!stack.hasTag())
 			return;

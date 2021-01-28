@@ -13,6 +13,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -80,11 +81,11 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IForgeI
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.orb.desc"));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.orb.desc").mergeStyle(TextFormatting.GRAY));
 
 		BloodOrb orb = getOrb(stack);
 		if (flag.isAdvanced() && orb != null)
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.orb.owner", stack.getItem().getRegistryName()));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.orb.owner", stack.getItem().getRegistryName()).mergeStyle(TextFormatting.GRAY));
 
 		super.addInformation(stack, world, tooltip, flag);
 	}
