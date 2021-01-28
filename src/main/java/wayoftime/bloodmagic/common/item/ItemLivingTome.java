@@ -3,6 +3,8 @@ package wayoftime.bloodmagic.common.item;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -49,8 +51,10 @@ public class ItemLivingTome extends Item implements ILivingContainer
 			if (armorStats.getLevel(k.getKey()) >= tomeStats.getLevel(k.getKey()))
 				return;
 
-			LivingUtil.applyNewExperience(player, k, v); // FIXME set levels directly, don't add experience
-			flag[0] = true;
+			Pair<LivingStats, Boolean> upgraded = LivingUtil.applyNewExperience(player, k, v); // FIXME set levels
+																								// directly, don't add
+																								// experience
+			flag[0] = flag[0] || upgraded.getRight();
 		});
 //        LivingStats.toPlayer(player, armorStats);
 		if (flag[0])

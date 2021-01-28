@@ -1,11 +1,37 @@
 ------------------------------------------------------
 Version 3.1.0
 ------------------------------------------------------
-- Fixed Plunderer's Glint
+- Majorly refactored the progression of the mod. Instead of starting with a Snare, you instead start by crafting the Blood Altar. The changes are documented in the guide, and you can follow its "Getting Started" entry!
+
+- Changed the tooltips so that they are gray, more easily differentiating them from the name of the item.
+- Added the Sigil of Holding
+- Changed the crafting of Tartaric Gems so that you no longer need to use the previous tier gem in the gem slot.
+-> The Hellfire Forge will now syphon from the gem in the crafting table first, and all unused will from the consumed gem will be placed in the crafted gem.
+
+- Fixed the Blood Altar so that it can now properly receive Fluids inputted into it.
+- Changed the GUI for the Alchemy Table
+-> You can now select which sides that an input/output slot is accessible from. Click on the slot you wish to change, then click on the directional toggle buttons.
+
+- Fixed Plunderer's Glint not properly applying the Looting level.
+- Also fixed a NPE crash due to the bow anointments. Fixes some crashes due to mods using the ItemUsedFinish event.
+
 - Fixed the Blood Altar not being able to input fluids. About time, Way!
 - Added new Shaped Charges
 -> Fungal Charge, which is very useful for giant mushrooms and nether mushrooms
 -> Controlled Charge, which will destroy only blocks that match the block it is placed on.
+- Added the ability to apply a few select Anointments to the charges. Only one can be applied to a charge at a time.
+-> Soft Touch, Fortuna, and Smelting
+
+- Fixed the Living Armour so that you cannot use an upgrade tom to usurp the point cap.
+-> Also fixed the "Melee Damage" upgrade not working. Oops.json.
+-> Fixed "Strong Legs" so that it no longer runs the program "CrunchyLegs.exe" - as a result, you no longer suffer fall damage from jumping on the same level. 
+-> Removed the direct fall damage mitigation from "Strong Legs"
+
+- Added two types of Throwing Daggers to the Blood Mage's offensive kit.
+-> Iron Throwing Dagger
+-> Syringe Throwing Dagger
+
+- Refactored the guide so that it provides +2 to awesomeness.
 
 
 ------------------------------------------------------
