@@ -8,6 +8,31 @@
       "type": "text",
       "text": "All the changelogs of $(6)Blood Magic$() to date, from most recent to oldest."
     },
+    {
+      "type": "text",
+      "title": "3.1.0-15",
+      "text": "$(li)Majorly refactored the progression of the mod. Instead of starting with a $(l:bloodmagic:demon_will/soul_snare)Snare$(), you instead start by crafting the $(l:bloodmagic:altar/blood_altar)Blood Altar$(). The changes are documented in the guide, and you can follow its $(l:bloodmagic:utility/getting_started)Getting Started$() entry!$(li)Changed the tooltips so that they are gray, more easily differentiating them from the name of the item."
+    },
+    {
+      "type": "text",
+      "text": "$(li)Added the $(l:bloodmagic:alchemy_array/holding)Sigil of Holding$().$(li)Changed the crafting of $(l:bloodmagic:demon_will/soul_gem)Tartaric Gems$() so that you no longer need to use the previous tier gem in the gem slot.$(li2)The $(l:bloodmagic:demon_will/soul_forge)Hellfire Forge$() will now syphon from the gem in the crafting table first, and all unused will from the consumed gem will be placed in the crafted gem."
+    },
+    {
+      "type": "text",
+      "text": "$(li)Changed the GUI for the $(l:bloodmagic:alchemy_table/alchemy_table)Alchemy Table$(). See the updated section.$(li)Fixed $(l:bloodmagic:alchemy_table/anointments/looting_anointment)Plunderer's Glint$() not properly applying the Looting level.$(li)Also fixed a NPE crash due to $(l:bloodmagic:alchemy_table/anointments/bow_power_anointment)Iron Tip$(). Fixes some crashes due to mods using the ItemUsedFinish event.$(li)Fixed the $(l:bloodmagic:blood_altar/blood_altar)Blood Altar$() not being able to input fluids. About time, Way!"
+    },
+    {
+      "type": "text",
+      "text": "$(li)Added new $(l:bloodmagic:demon_will/explosive_charges)Explosive Charges.$()$(li2)$(item)Fungal Charge$(), which is very useful for giant mushrooms and nether mushrooms.$(li2)$(item)Controlled Charge$(), which will destroy only blocks that match the block it is placed on.$(li)Added the ability to apply a few select Anointments to the charges. Only one can be applied to a charge at a time.$(li2)$(l:bloodmagic:alchemy_table/anointments/silk_touch_anointment)Soft Coating$()$(li2)$(l:bloodmagic:alchemy_table/anointments/fortune_anointment)Fortuna Extract$()"
+    },
+    {
+      "type": "text",
+      "text": "$(li2)$(l:bloodmagic:alchemy_table/anointments/smelting_anointment)Slow-burning Oil$()$(li)Fixed the $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$() so that you cannot use an upgrade tome to usurp the point cap.$(li2)Fixed $(l:bloodmagic:alchemy_array/living_equipment/armor_upgrades/strong_legs)Strong Legs$()so that it no longer runs the program \"CrunchyLegs.exe\" - as a result, you no longer suffer fall damage from jumping on the same level. Removed the direct fall damage mitigation from Strong Legs."
+    },
+    {
+      "type": "text",
+      "text": "$(li)Added two types of $(l:bloodmagic:demon_will/throwing_daggers)Throwing Daggers$() to the Blood Mage's offensive kit.$(li2)$(item)Iron Throwing Dagger$()$(li2)$(item)Syringe Throwing Dagger$()$(li)Refactored the guide so that it provides +2 to awesomeness.$()"
+    },
 	{
       "type": "text",
 	  "title": "3.0.6-11",
