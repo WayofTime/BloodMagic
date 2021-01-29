@@ -672,7 +672,12 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onCheckLooting(LootingLevelEvent event)
 	{
-		Entity entity = event.getDamageSource().getTrueSource();
+		DamageSource source = event.getDamageSource();
+		if (source == null)
+		{
+			return;
+		}
+		Entity entity = source.getTrueSource();
 		if (entity instanceof PlayerEntity)
 		{
 			ItemStack heldStack = ((PlayerEntity) entity).getHeldItemMainhand();
