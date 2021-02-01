@@ -206,6 +206,9 @@ public class GenericHandler
 //					LivingStats stats = LivingStats.fromPlayer(player);
 //					stats.addExperience(LivingArmorRegistrar.TEST_UPGRADE.get().getKey(), 10);
 					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_ARROW_PROTECT.get(), event.getAmount());
+				} else
+				{
+					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_PHYSICAL_PROTECT.get(), event.getAmount());
 				}
 
 				if (event.getSource() == DamageSource.FALL)
