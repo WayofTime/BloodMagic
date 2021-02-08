@@ -13,6 +13,7 @@ import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
 import WayofTime.bloodmagic.entity.projectile.EntityMeteor;
 import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
+import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.types.AlchemicVialType;
 import WayofTime.bloodmagic.soul.DemonWillHolder;
 import WayofTime.bloodmagic.tile.*;
@@ -30,12 +31,15 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.client.model.animation.AnimationTESR;
 import net.minecraftforge.client.model.obj.OBJLoader;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.animation.Event;
 import net.minecraftforge.common.animation.ITimeValue;
 import net.minecraftforge.common.model.animation.IAnimationStateMachine;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 
 import java.awt.Color;
 import java.util.Map;
@@ -66,6 +70,8 @@ public class ClientProxy extends CommonProxy {
         // Initialize key-binds during startup so they load correctly
         for (KeyBindings key : KeyBindings.values())
             key.getKey();
+
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @Override
@@ -141,5 +147,11 @@ public class ClientProxy extends CommonProxy {
     @Override
     public IAnimationStateMachine load(ResourceLocation location, ImmutableMap<String, ITimeValue> parameters) {
         return ModelLoaderRegistry.loadASM(location, parameters);
+    }
+
+    @SubscribeEvent
+    public void onClientDisconnected(FMLNetworkEvent.ClientDisconnectionFromServerEvent event) {
+        // clean up the living armour's cache
+        ItemLivingArmour.armourMap.clear();
     }
 }
