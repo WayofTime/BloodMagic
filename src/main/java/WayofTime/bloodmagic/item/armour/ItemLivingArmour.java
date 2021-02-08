@@ -281,6 +281,8 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
         super.onArmorTick(world, player, stack);
 
         if (world.isRemote && this == RegistrarBloodMagicItems.LIVING_ARMOUR_CHEST) {
+            setLivingArmour(stack, getLivingArmourFromStack(stack)); // updates the living armor
+
             if (player instanceof EntityPlayerSP) //Sanity check
             {
                 EntityPlayerSP spPlayer = (EntityPlayerSP) player;
@@ -328,7 +330,8 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                 armour.onTick(world, player);
             }
 
-            setLivingArmour(stack, armour, false);
+            if (!world.isRemote) // client shouldn't change the nbt data
+                setLivingArmour(stack, armour, false);
         }
     }
 
