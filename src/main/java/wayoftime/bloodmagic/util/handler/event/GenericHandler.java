@@ -206,6 +206,9 @@ public class GenericHandler
 //					LivingStats stats = LivingStats.fromPlayer(player);
 //					stats.addExperience(LivingArmorRegistrar.TEST_UPGRADE.get().getKey(), 10);
 					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_ARROW_PROTECT.get(), event.getAmount());
+				} else
+				{
+					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_PHYSICAL_PROTECT.get(), event.getAmount());
 				}
 
 				if (event.getSource() == DamageSource.FALL)
@@ -672,7 +675,12 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onCheckLooting(LootingLevelEvent event)
 	{
-		Entity entity = event.getDamageSource().getTrueSource();
+		DamageSource source = event.getDamageSource();
+		if (source == null)
+		{
+			return;
+		}
+		Entity entity = source.getTrueSource();
 		if (entity instanceof PlayerEntity)
 		{
 			ItemStack heldStack = ((PlayerEntity) entity).getHeldItemMainhand();
