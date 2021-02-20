@@ -373,6 +373,10 @@ public class GeneratorLanguage extends LanguageProvider
 		add("guide.bloodmagic.name", "Sanguine Scientiem");
 		add("guide.bloodmagic.landing_text", "\"It is my dear hope that by holding this tome in your hands, I may impart the knowledge of the lost art that is Blood Magic\"$(br)$(o)- Magus Arcana$()");
 
+		// Patchouli Guidebook
+		add("patchouli.bloodmagic.living_armour_upgrade_table.level", "Level");
+		add("patchouli.bloodmagic.living_armour_upgrade_table.upgrade_points", "Upgrade Points");
+
 		// Keybinds
 		add("bloodmagic.keybind.open_holding", "Open Sigil of Holding");
 		add("bloodmagic.keybind.cycle_holding_pos", "Cycle Sigil (+)");
