@@ -57,37 +57,8 @@ public class LivingArmourUpgradeInfoTable implements IComponentProcessor
 						int level = upgrade.getLevel(exp);
 						int upgradePoints = upgrade.getLevelCost(level);
 
-						switch (maxLevelLength)
-						{
-						case 1:
-							switch (maxUpgradePointsLength)
-							{
-							case 1:
-								output += String.format("%s %1d: %1d %s$(br)", i18nLevel, level, upgradePoints, i18nUpgradePoints);
-								break;
-							case 2:
-								output += String.format("%s %1d: %2d %s$(br)", i18nLevel, level, upgradePoints, i18nUpgradePoints);
-								break;
-							case 3:
-								output += String.format("%s %1d: %3d %s$(br)", i18nLevel, level, upgradePoints, i18nUpgradePoints);
-								break;
-							}
-							break;
-						case 2:
-							switch (maxUpgradePointsLength)
-							{
-							case 1:
-								output += String.format("%s %2d: %1d %s$(br)", i18nLevel, level, upgradePoints, i18nUpgradePoints);
-								break;
-							case 2:
-								output += String.format("%s %2d: %2d %s$(br)", i18nLevel, level, upgradePoints, i18nUpgradePoints);
-								break;
-							case 3:
-								output += String.format("%s %2d: %3d %s$(br)", i18nLevel, level, upgradePoints, i18nUpgradePoints);
-								break;
-							}
-							break;
-						}
+						String formatStr = String.format("%s %%%dd: %%%dd %s$(br)", i18nLevel, maxLevelLength, maxUpgradePointsLength, i18nUpgradePoints);
+						output += String.format(formatStr, level, upgradePoints);
 					}
 				}
 			}
