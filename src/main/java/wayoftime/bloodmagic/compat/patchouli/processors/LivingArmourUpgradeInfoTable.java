@@ -38,7 +38,7 @@ public class LivingArmourUpgradeInfoTable implements IComponentProcessor
 		}
 		if (key.equals("table"))
 		{
-			String output = "";
+			StringBuilder output = new StringBuilder();
 			String i18nLevel = TextHelper.localize("patchouli.bloodmagic.living_armour_upgrade_table.level");
 			String i18nUpgradePoints = TextHelper.localize("patchouli.bloodmagic.living_armour_upgrade_table.upgrade_points");
 
@@ -58,11 +58,11 @@ public class LivingArmourUpgradeInfoTable implements IComponentProcessor
 						int upgradePoints = upgrade.getLevelCost(level);
 
 						String formatStr = String.format("%s %%%dd: %%%dd %s$(br)", i18nLevel, maxLevelLength, maxUpgradePointsLength, i18nUpgradePoints);
-						output += String.format(formatStr, level, upgradePoints);
+						output.append(String.format(formatStr, level, upgradePoints));
 					}
 				}
 			}
-			return IVariable.wrap(output);
+			return IVariable.wrap(output.toString());
 		}
 		return null;
 	}
