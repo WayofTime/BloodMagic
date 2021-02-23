@@ -246,6 +246,8 @@
   "living_upgrade.bloodmagic.step_assist": "Step Assist",
   "living_upgrade.bloodmagic.stormTrooper": "Storm Trooper",
   "living_upgrade.bloodmagic.thaumRunicShielding": "Runic Shielding",
+  "patchouli.bloodmagic.arc_processor.fluid": "%dmb of %s",
+  "patchouli.bloodmagic.arc_processor.no_fluid": "None",
   "patchouli.bloodmagic.living_armour_upgrade_table.level": "Level",
   "patchouli.bloodmagic.living_armour_upgrade_table.upgrade_points": "Upgrade Points",
   "ritual.bloodmagic.altarBuilderRitual": "The Assembly of the High Altar",

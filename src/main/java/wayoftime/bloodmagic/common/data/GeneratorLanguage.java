@@ -374,6 +374,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("guide.bloodmagic.landing_text", "\"It is my dear hope that by holding this tome in your hands, I may impart the knowledge of the lost art that is Blood Magic\"$(br)$(o)- Magus Arcana$()");
 
 		// Patchouli Guidebook
+		add("patchouli.bloodmagic.arc_processor.fluid", "%dmb of %s");
+		add("patchouli.bloodmagic.arc_processor.no_fluid", "None");
 		add("patchouli.bloodmagic.living_armour_upgrade_table.level", "Level");
 		add("patchouli.bloodmagic.living_armour_upgrade_table.upgrade_points", "Upgrade Points");
 
