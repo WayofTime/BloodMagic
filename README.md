@@ -88,12 +88,7 @@ This mod requires "Minecraft Forge" in order to operate. It is incredibly easy t
 
 **Q**: Where is x? When I watched spotlight "w," it had an item called x. Don't you need x to make y, before you can create z?
 
-**A**: It might be wise to look at an updated spotlight, or check the changelogs, either on github or in the Patchouli Guidebook, the Sanguine Scientum. I'm not evil, so I do document everything that I can. There was most likely some issues with balance with the item, so it may have been removed for those reasons. Or you just grabbed the item from NEI without seeing it was a test item, in which case: shame on you!
-
-**Q**: Isn't that armour ...
-
-**A**: Yes, the old Bound Armour texture is from the mod EE2. Pahimar and I are good friends, and I decided to use it for the armour and tools. He has given me his express permission for it, so need not worry!
-[Proof](https://twitter.com/Pahimar/status/453590600689139712).
+**A**: A lot of 1.12 and 1.7.10 Blood Magic stuff either hasn't been implemented yet in 1.16, or it's been dropped entirely for reasons of balance or by being superseded by something else. Your best bet is probably to check out the [Patchouli](https://www.curseforge.com/minecraft/mc-mods/patchouli) Guidebook, the Sanguine Scientum. Everything that's currently in Blood Magic has an entry somewhere in there! Failing that, keep an eye on the changelogs. 
 
 **Q**: Way, I've just had an amazing idea! Why not add an in-game book just like the Thaumonomicon?
 
