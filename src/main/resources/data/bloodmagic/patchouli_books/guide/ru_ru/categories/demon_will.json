@@ -1,0 +1,6 @@
+{
+  "name": "Демоническая энергия",
+  "description": "$(item)Демоническая Энергия$() одна из первых вещей, которую вы можете создать с помощью $(6)Blood Magic$(). Как только вы соберете их с помощью $(l:bloodmagic:demon_will/soul_snare)Ловушек души$(), вы сможете создатьa $(l:bloodmagic:demon_will/soul_gem)Мелкий камень души$() и $(l:bloodmagic:demon_will/sentient_sword)Разумный меч$(/l)$().",
+  "icon": "bloodmagic:basemonstersoul",
+  "sortnum": 3
+}
