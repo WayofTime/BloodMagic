@@ -1,4 +1,7 @@
 {
+  "guide.bloodmagic.name": "Кровавый Том",
+  "guide.bloodmagic.subtitle": "Магия Алхимии", 
+  "guide.bloodmagic.landing": "Добро пожаловать в $(6)Blood Magic$()! $(br2)$(l:bloodmagic:utility/nyi)Многие вещи$() ещё не реализованы, так что прошу прощения. $(br2)Нажмите $(l:bloodmagic:utility/getting_started)СЮДА$() чтобы начать. Если вы обнаружите какие-либо ошибки, сообщите о них на нашем $(l:https://github.com/WayofTime/BloodMagic/issues)Github$().",
   "anointment.bloodmagic.bow_power": "Тяжёлый выстрел",
   "anointment.bloodmagic.fortune": "Удачливый",
   "anointment.bloodmagic.hidden_knowledge": "Секреты шахтёра",
@@ -82,8 +85,6 @@
   "chat.bloodmagic.ritual.prevent": "Ритуал активно сопротивляется вам!",
   "chat.bloodmagic.ritual.weak": "Вы чувствуете толчок, но слишком слабы, чтобы выполнить этот ритуал.",
   "gui.bloodmagic.empty": "Пусто",
-  "guide.bloodmagic.landing_text": "\"Я очень надеюсь, что, держа этот фолиант в ваших руках, я смогу поделиться знаниями о потерянном искусстве, которым является Кровавая Магия.\"$(br)$(o)- Маг Арканы$()",
-  "guide.bloodmagic.name": "Sanguine Scientiem",
   "hud.bloodmagic.inactive": "Неактивный",
   "item.bloodmagic.activationcrystalawakened": "Пробуждённый кристалл активации",
   "item.bloodmagic.activationcrystalcreative": "Креативный кристалл активации",
