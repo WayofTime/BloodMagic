@@ -1,0 +1,14 @@
+{
+  "name": "Сигил зимнего дыхания",
+  "icon": "bloodmagic:icesigil",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "extra_recipe_mappings":[
+    ["bloodmagic:icesigil", 0]
+  ],
+  "pages": [
+    {
+      "type": "text",
+      "text": "[Заметки WIP] $(br)[Еще не реализовано] $(br2) Зачарование Ледоход в виде сигила."
+    }
+  ]
+}

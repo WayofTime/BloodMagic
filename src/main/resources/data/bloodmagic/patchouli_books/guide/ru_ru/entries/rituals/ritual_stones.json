@@ -1,0 +1,23 @@
+{
+  "name": "Ритуальные камни",
+  "icon": "bloodmagic:waterritualstone",
+  "category": "bloodmagic:rituals",
+  "extra_recipe_mappings":[
+    ["bloodmagic:airritualstone", 0],
+    ["bloodmagic:fireritualstone", 0],
+    ["bloodmagic:waterritualstone", 0],
+    ["bloodmagic:earthritualstone", 0],
+    ["bloodmagic:duskritualstone", 0]
+  ],
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(item)Ритуальные камни$() являются холстом, на котором вы будете рисовать свои $(item)ритуалы$(). Они также выглядят довольно изящно, и их можно вручную раскрасить с помощью различных $(l:bloodmagic:rituals/ritual_diviner)инструментов для начертания элементов$()." 
+    },
+    {
+      "type": "crafting",
+      "recipe": "bloodmagic:ritual_stone_blank",
+      "recipe2": "bloodmagic:ritual_stone_master"
+    }
+  ]
+}

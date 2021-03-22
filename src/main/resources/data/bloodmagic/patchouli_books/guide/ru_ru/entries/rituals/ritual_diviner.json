@@ -1,0 +1,51 @@
+{
+  "name": "Предсказатель ритуала",
+  "icon": "bloodmagic:ritualdiviner",
+  "category": "bloodmagic:rituals",
+  "extra_recipe_mappings":[
+    ["bloodmagic:airscribetool", 4],
+    ["bloodmagic:firescribetool", 4],
+    ["bloodmagic:waterscribetool", 5],
+    ["bloodmagic:earthscribetool", 5],
+    ["bloodmagic:duskscribetool", 6]
+  ],
+  "pages": [
+    {
+      "type": "text",
+      "text": "Создание ритуалов - дело сложное; Даже если у вас есть правильные $(item)инструменты начертания$(), yвы не можете просто набросать рунические надписи каким-либо старым способом и ожидать, что что-то произойдет. К счастью, $(item)предсказатель ритуалов$() поможет вам." 
+    },
+    {
+      "type": "crafting",
+      "recipe": "bloodmagic:ritual_diviner_0"
+    },
+    {
+      "type": "text",
+      "text": "Базовый предсказатель ритуалов требует по одному из каждого $(item)инструмента начертания элемента$() для своего строительства, и, следовательно, 3 уровня $(l:bloodmagic:altar/blood_altar)кровавого алтаря$(/l). Четыре основных инструмента начертания стихий могут быть созданы на вашем алтаре по 1 000LP каждый, как написано на следующих страницах. Вы также можете использовать эти инструменты для начертания рун вручную, но это следует серьезно использовать только в декоративных целях, так как это и медленно, и неточно."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bloodmagic:ritual_diviner_1",
+      "anchor": "dusk",
+      "text": "Существует также расширенная версия предсказателя ритуала для создания более мощных ритуалов."
+    },
+    {
+      "type": "2x_crafting_altar",
+      "a.heading": "Инструмент начертания элемента: воздух",
+      "a.recipe": "bloodmagic:altar/air_tool",
+      "b.heading": "Инструмент начертания элемента: огонь",
+      "b.recipe": "bloodmagic:altar/fire_tool"
+    },
+    {
+      "type": "2x_crafting_altar",
+      "a.heading": "Инструмент начертания элемента: вода",
+      "a.recipe": "bloodmagic:altar/water_tool",
+      "b.heading": "Инструмент начертания элемента: земля",
+      "b.recipe": "bloodmagic:altar/earth_tool"
+    },
+    {
+      "type": "crafting_altar",
+      "heading": "Инструмент начертания элемента: сумерки",
+      "recipe": "bloodmagic:altar/dusk_tool"
+    }
+  ]
+}

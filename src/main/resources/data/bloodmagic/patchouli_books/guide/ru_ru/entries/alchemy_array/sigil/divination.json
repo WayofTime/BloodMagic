@@ -1,0 +1,33 @@
+{
+  "name": "Сигил предсказания",
+  "icon": "bloodmagic:divinationsigil",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "extra_recipe_mappings":[
+    ["bloodmagic:divinationsigil", 1]
+  ],
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(item)Сигил предсказания$() вероятно, является первым из множества символов, которые вы хотели бы создать в Blood Magic. Чтобы создать сигил, вам нужно создать $(l:bloodmagic:alchemy_array/functional_arrays/arcane_ash)Алхимический массив$(/l) и использовать $(item)красную пыль$() и $(item)Чистый шифер$() в качестве базы и катализатора соответственно ."
+    },
+    {
+      "type": "crafting_array",
+      "heading": "Сигил предсказания",
+      "recipe": "bloodmagic:array/divinationsigil",
+      "text": " $(italic)Вглядеться в душу."
+    },
+    {
+      "type": "image",
+      "images": [
+        "bloodmagic:images/entries/sigil/divination_sigil.png"
+      ],
+      "title": "Массив сигила гадания",
+      "border": true,
+      "text": "Сигил предсказания, рядом с его массивом создания."
+    },
+    {
+      "type": "text",
+      "text": "Сигил предсказания имеет два основных назначения: $(br)$(li)Когда игрок щелкает правой кнопкой мыши в воздухе сигилом, он отображает количество LP, которое находится в его $(l:bloodmagic:altar/soul_network)сети душ.$(/l)$(li)При нажатии на $(l:bloodmagic:altar/blood_altar)кровавый алтарь$(/l), он сообщит игроку текущий уровень алтаря, количество сохраненных LP в алтаре, а также его текущую максимальную вместимость. Наличие $(item) сигила предсказания$() также может быть полезно для других блочных приложений, но это будет рассмотрено позже."
+    }
+  ]
+}

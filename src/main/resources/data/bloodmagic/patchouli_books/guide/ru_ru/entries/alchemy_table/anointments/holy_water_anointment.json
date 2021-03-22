@@ -1,0 +1,14 @@
+{
+  "name": "Святая вода",
+  "icon": "bloodmagic:holy_water_anointment",
+  "category": "bloodmagic:alchemy_table/anointments",
+  "extra_recipe_mappings":[["bloodmagic:holy_water_anointment", 0]],
+  "pages": [
+    {
+      "type": "crafting_alchemy_table",
+      "heading": "Святая вода",
+      "recipe": "bloodmagic:alchemytable/holy_water_anointment",
+      "text": "Временно увеличивает урон в ближнем бою по нежити на +5. $(br2)Допустимые предметы: Инструменты, Мечи. $(br2)Применяет: Святой Свет I (256 ударов)"
+    }
+  ]
+}

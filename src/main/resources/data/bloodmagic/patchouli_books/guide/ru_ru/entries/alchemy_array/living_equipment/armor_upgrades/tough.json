@@ -1,0 +1,11 @@
+{
+  "name": "Жесткий",
+  "icon": "minecraft:shield",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Эффект: защищает вас от повреждений, не связанных со снарядами. $(br2) Изучается во время получения урона от чего угодно, кроме снарядов. $(br2) Максимальный уровень: 10"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "name": "Кристаллизованная энергия",
+  "icon": "bloodmagic:defaultcrystal",
+  "category": "bloodmagic:demon_will",
+  "extra_recipe_mappings":[
+    ["bloodmagic:demoncrucible", 1],
+    ["bloodmagic:demoncrystallizer", 4],
+    ["bloodmagic:rawdemoncrystal", 4],
+    ["bloodmagic:defaultcrystal", 4]
+  ],
+  "pages": [
+    {
+      "type": "text",
+      "text": "Теперь, когда у вас много $(l:bloodmagic:demon_will/demon_will)демонической энергии$() в ваших $(l:bloodmagic:demon_will/soul_gem)камнях душ$(), пришло время исследовать, что происходит в мире, когда вы используете её. $(br)Прежде всего, вам нужно создать $(item)демонический котёл$(), и затем наполнить его $(l:bloodmagic:demon_will/demon_will)демонической энергией$()."
+    },
+    {
+      "type": "crafting_soulforge",
+      "heading": "Демонический Котёл",
+      "recipe": "bloodmagic:soulforge/demon_crucible",
+      "text": "Он сожжет  $(l:bloodmagic:demon_will/demon_will)демоническую энергию$() и выпустит её в атмосферу. Поместите заряженный $(l:bloodmagic:demon_will/soul_gem)камень дущ$() или любой аспект $(item)демонического кристалла$() в него и запустите его."
+    },
+    {
+      "type": "image",
+      "images": [
+        "bloodmagic:images/entries/demon_will/demon_crucible.png"
+      ],
+      "title": "Демонический котёл",
+      "border": true,
+      "text": "$(item)Демонический котёл$() с $(l:bloodmagic:demon_will/soul_gem)камнем душ$() внутри."
+    },
+    {
+      "type": "text",
+      "text": "Теперь у нас есть $(raw)сырая энергия$() в атмосфере. Отлично, что теперь? $(br2)Некоторые $(l:bloodmagic:rituals/ritual_tinkerer)ритаулы$() работают от $(raw)сырой энергии$(), но главное преимущество от этого - возможность создавать $(item)кристалл демонической энергии$()  и разделить его на их $(l:bloodmagic:demon_will/aspected_will)аспекты$(). $(br2)Как только у вас будет несколько этих кристаллов, вы можете сжечь их в тигле, чтобы выпустить энергию в атмосферу для ваших ритуалов."
+    },
+    {
+      "type": "crafting_soulforge",
+      "heading": "Демонический кристаллизатор",
+      "recipe": "bloodmagic:soulforge/demon_crystallizer",
+      "text": "Он будет медленно поглощать $(l:bloodmagic:demon_will/demon_will)демоническую энергию$() из атмосферы чтобы сделать $(item)кристаллы энергии$(). Первый шпиль будет стоить около 100 энергии, а все последующие стоят по 40 каждый, но их можно сжечь за 50 в $(item)демоническом котле$(). Наибольший $(item)кристальный кластер$() может хранить в себе до 7 шпилей."
+    },
+    {
+      "type": "text",
+      "text": "Если в вашем инвентаре есть не менее 1 000 единиц энергии (на любое количество $(l:bloodmagic:demon_will/soul_gem)камней дущ$()), вы можете собрать эти кристаллы, щелкнув правой кнопкой мыши пустой рукой по шпилю. Это удалит всё, кроме центрального шпиля. $(br2)Однако, если у вас нет достаточного количества энергии, $(italic)действительно$() нужен этот центральный шпиль, или просто очень поторопитесь, вы можете собрать всё киркой."
+    },
+    {
+      "type": "relations",
+      "title": "Ссылки по теме",
+        "entries": [
+            "rituals/ritual_tinkerer",
+            "rituals/rituals_list/ritual_crystal_split",
+            "rituals/rituals_list/ritual_crystal_harvest",
+            "demon_will/aspected_will"
+        ],
+      "text": "Я могу сделать больше, я чувствую это..."
+    }
+  ]
+}

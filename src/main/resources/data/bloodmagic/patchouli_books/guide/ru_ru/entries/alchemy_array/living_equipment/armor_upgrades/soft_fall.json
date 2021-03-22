@@ -1,0 +1,11 @@
+{
+  "name": "Мягкое падение",
+  "icon": "minecraft:feather",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Эффект: Снижает урон от падения, вплоть до полной невосприимчивости. $(br2) Изучается получением урона от падения. $(br2) Максимальный уровень: 5"
+    }
+  ]
+}

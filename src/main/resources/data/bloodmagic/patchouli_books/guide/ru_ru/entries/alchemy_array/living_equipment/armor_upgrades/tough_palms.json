@@ -1,0 +1,11 @@
+{
+  "name": "Жесткие ладони",
+  "icon": "bloodmagic:sacrificialdagger",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Эффект: дает бонус к самопожертвованию до 150%. $(br2) Обучено: Жертвоприношение крови жертвенным ножом. $(br2) Максимальный уровень: 10"
+    }
+  ]
+}

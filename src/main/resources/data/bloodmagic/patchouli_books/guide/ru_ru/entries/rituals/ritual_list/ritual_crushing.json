@@ -1,0 +1,72 @@
+{
+  "name": "Ритуал Сокрушителя",
+  "icon": "minecraft:iron_pickaxe",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "Ритуал Сокрушителя",
+      "multiblock":{
+        "pattern":[
+          ["__A__", "_____", "A___A", "_____", "__A__"],
+          ["D_F_D", "__E__", "FE0EF", "__E__", "D_F_D"]
+        ],
+        "mapping":{
+          "0": "bloodmagic:masterritualstone",
+          "A": "bloodmagic:airritualstone",
+          "F": "bloodmagic:fireritualstone",
+          "E": "bloodmagic:earthritualstone",
+          "D": "bloodmagic:duskritualstone"
+        },
+        "symetrical": true
+      },
+      "text": "Используй $(l:bloodmagic:rituals/ritual_diviner#dusk)предсказатель ритуала [Dusk]$(/l) для облегчения строительства."
+    },
+    {
+      "type": "text",
+      "text": "Ломает блоки в $(item)радиусе поражения$() и складывает их в привязанный $(item)сундук$().$(br2)$(air)Руны воздуха: 4$(br)$(fire)Руны огня: 4$(br)$(earth)Руны земли: 4$(br)$()Сумеречные руны: 4$(br2)$()Всего рун: 16" 
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:defaultcrystal",
+      "title": "Сырой",
+      "text": "Увеличивает скорость ритуала в зависимости от $(raw)сырой энергии$() в ауре."
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:corrosivecrystal",
+      "title": "Коррозийный",
+      "text": "Все блоки разбиваются для обработки их $(l:bloodmagic:alchemy_table/alchemy_table#cutting_fluid)режущей жидкостью$(). Применяет $(item)шёлковое касание$() если применимо."
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:vengefulcrystal",
+      "title": "Мстительный",
+      "text": "Сжимает инвентарь при успешной операции (например, уголь в угольные блоки, красный камень в блоки красного камня и т.д.). В настоящее время выполняется только одно сжатие за операцию."
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:destructivecrystal",
+      "title": "Разрушительный",
+      "text": "Блоки разбиваются силой: на все сломанный блоки применяется $(item)удача III.$()"
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:steadfastcrystal",
+      "title": "Стойкий",
+      "text": "Заставляет все сломанные блоки подбираться $(item)шёлковым касанием$(). Применяет $(item)удачу$() если возможно."
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:ritualtinkerer",
+      "title": "Классификация",
+      "text": "(Сундук) Местоположение инвентаря, в которое ритуал поместит сломанные блоки. $(br) $(li)Максимальный объем: 1 $(li)Горизонтальный радиус: 3 $(li)Вертикальный радиус: 3"
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:ritualtinkerer",
+      "title": "Классификация",
+      "text": "(Дробление) Блоки, которые сломают ритуал. $(br) $(li)Максимальный объем: 50 $(li)Горизонтальный радиус: 10 $(li)Вертикальный радиус: 10"
+    }
+  ]
+}

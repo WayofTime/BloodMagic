@@ -1,0 +1,14 @@
+{
+  "name": "Медленногорючее масло",
+  "icon": "bloodmagic:smelting_anointment",
+  "category": "bloodmagic:alchemy_table/anointments",
+  "extra_recipe_mappings":[["bloodmagic:smelting_anointment", 0]],
+  "pages": [
+    {
+      "type": "crafting_alchemy_table",
+      "heading": "Медленногорючее масло",
+      "recipe": "bloodmagic:alchemytable/smelting_anointment",
+      "text": "Использует жар для плавки копаемых блоков. $(br2) Допустимые предметы: инструменты, мечи, заряды. $(br2)Применяет: Инструмент с подогревом I (256 блоков)"
+    }
+  ]
+}

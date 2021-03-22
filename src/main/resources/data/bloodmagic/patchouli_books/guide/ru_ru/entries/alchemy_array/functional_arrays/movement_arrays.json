@@ -1,0 +1,20 @@
+{
+  "name": "Массив движения",
+  "icon": "minecraft:feather",
+  "category": "bloodmagic:alchemy_array/functional_array",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Массивы движения - это пара массивов, которые показывают игроков, мобов, предметы и т.д. в определенном направлении. Один будет бросать предметы по горизонтали, а другой - по вертикали.."
+    },
+    {
+      "type": "2x_functional_array",
+      "a.heading": "Массив Скорости",
+      "a.recipe": "bloodmagic:array/movement",
+      "a.image": "movementarray.png",
+      "b.heading": "Массив Апдрафт",
+      "b.recipe": "bloodmagic:array/updraft",
+      "b.image": "updraftarray.png"
+    }
+  ]
+}

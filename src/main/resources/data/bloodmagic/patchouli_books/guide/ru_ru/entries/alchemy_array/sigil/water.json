@@ -1,0 +1,33 @@
+{
+  "name": "Сигил воды",
+  "icon": "bloodmagic:watersigil",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "extra_recipe_mappings":[
+    ["bloodmagic:reagentwater", 1],
+    ["bloodmagic:watersigil", 1]
+  ],
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(item)Сигил воды$() это довольно простой сигил. Щелкнув правой кнопкой мыши по блоку, вы можете истощить 100LP из вашей $(l:bloodmagic:altar/soul_network)сети душ$(/l) тобы разместить источник воды в мире. Если LP недостаточно, это приведет к потере вашего здоровья. Создается с использованием $(item)реагента воды$() и $(item)чистого шифера.$()"
+    },
+    {
+      "type": "crafting_2-step_sigil",
+      "alchemy_table.heading": "Реагент воды",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_water",
+      "array.heading": "Сигил воды",
+      "array.recipe": "bloodmagic:array/watersigil",
+      "array.text": "$(italic)Бесконечная вода, для кого?"
+    },
+    {
+      "type": "image",
+      "images": [
+        "bloodmagic:images/entries/sigil/water_sigil1.png",
+        "bloodmagic:images/entries/sigil/water_sigil2.png"
+      ],
+      "title": "Массив сигила воды",
+      "border": true,
+      "text": "Сигил воды, возле его массива создания, а также его основное использование."
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "name": "Фокус эллипсоида",
+  "icon": "minecraft:bucket",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "Фокус эллипсоида",
+      "multiblock":{
+        "pattern":[
+          ["_____AAA___",
+           "_____A_____",
+           "__WWW__EE__",
+           "F_W_____E__",
+           "F___D_D_E__",
+           "FF___0___FF",
+           "__E_D_D___F",
+           "__E_____W_F",
+           "__EE__WWW__",
+           "_____A_____",
+           "___AAA_____"]
+        ],
+        "mapping":{
+          "0": "bloodmagic:masterritualstone",
+          "W": "#bloodmagic:ritual_stones/water_or_earth",
+          "A": "#bloodmagic:ritual_stones/air_or_fire",
+          "F": "#bloodmagic:ritual_stones/fire_or_air",
+          "E": "#bloodmagic:ritual_stones/earth_or_water",
+          "D": "bloodmagic:duskritualstone"
+        },
+        "symetrical": false
+      },
+      "text": "Используй $(l:bloodmagic:rituals/ritual_diviner#dusk)предсказатель ритуала [Dusk]$(/l) для облегчения строительства."
+    },
+    {
+      "type": "text",
+      "text": "Создает полый сфероид вокруг ритуала, используя блоки в прикрепленном сундуке. Подходит для создания сложных форм, таких как огромный золотой купол над вашим логовом зла. ... У тебя есть один из них, верно? $(br2)$(water)Руны воды: 8$(br)$(air)Руны воздуха: 8$(br)$(fire)Руны огня: 8$(br)$(earth)Руны земли: 8$(br)$()Сумеречные руны: 4$(br2)$()Всего рун: 36" 
+    },
+	{
+	  "type": "spotlight",
+      "item": "bloodmagic:ritualtinkerer",
+      "title": "Классификация",
+      "text": "(Сундук) Расположение инвентаря, с которого ритуал будет собирать блоки чтобы расставить их. $(br) $(li)Максимальный объем: 1 $(li)Горизонтальный радиус: 3 $(li)Вертикальный радиус: 3"
+	},
+	{
+	  "type": "spotlight",
+      "item": "bloodmagic:ritualtinkerer",
+      "title": "Классификация",
+      "text": "(Размещение) Диапазон, в который ритуал помещает свои блоки. Сфероид центрируется на ритуале - если одна сторона короче, чем противоположная, сфероид усекается. $(br) $(li)Максимальный объем: Полный диапазон. $(li)Горизонтальный радиус: 32 $(li)Вертикальный радиус: 32"
+	}
+  ]
+}

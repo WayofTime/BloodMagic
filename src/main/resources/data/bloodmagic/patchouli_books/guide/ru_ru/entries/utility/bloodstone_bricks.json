@@ -1,0 +1,16 @@
+{
+  "name": "Кирпичи кровавого камня",
+  "icon": "bloodmagic:largebloodstonebrick",
+  "category": "bloodmagic:utility",
+  "pages":[
+    {
+      "type": "text",
+      "text": "Кирпичи кровавого камня являются декоративным блоком и используются как основание для кровавого алтаря 4-го уровня."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bloodmagic:largebloodstonebrick",
+      "recipe2": "bloodmagic:bloodstonebrick"
+    }
+  ]
+}

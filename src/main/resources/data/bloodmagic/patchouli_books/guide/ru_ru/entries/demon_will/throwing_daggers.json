@@ -1,0 +1,36 @@
+{
+  "name": "Метательные кинжалы",
+  "icon": "bloodmagic:throwing_dagger",
+  "category": "bloodmagic:demon_will",
+  "extra_recipe_mappings":[
+    ["bloodmagic:throwing_dagger", 1],
+    ["bloodmagic:throwing_dagger_syringe", 2],
+    ["bloodmagic:slate_ampoule", 3]
+  ],
+  "pages":[
+    {
+      "type": "text",
+      "text": "$(item)Луки$() и $(item)арбалеты$() по-своему хороши, но просеивать $(item)гравий$() для поиска $(item)крменя$() и убивать куриц чтобы получить $(item)перья$() честно говоря, очень низко для вас. Эти блестящие (и очень острые) $(item)метательные кинжалы$() также имеют довольно коварный эффект, если так можно назвать."
+    },
+    {
+      "type": "crafting_soulforge",
+      "heading": "Железный метательный кинжал",
+      "recipe": "bloodmagic:soulforge/throwing_dagger",
+	  "anchor":"iron_throwing_dagger",
+	  "text": "$(item)Железный метательный кинжал$() это быстрая атака, наносящая 10 урона с приличным временем восстановления. Не только это, но и если у вас есть немного $(l:bloodmagic:demon_will/demon_will)демонической энергии$()  на вас (будь то в необработанном виде или хранящийся в $(l:bloodmagic:demon_will/soul_gem)камне душ$(), он будет добывать $(raw)энергию$() так же как и $(l:bloodmagic:demon_will/sentient_sword)разумный меч$()."
+    },
+    {
+      "type": "crafting_soulforge",
+      "heading": "Кинжал для метания шприца",
+      "recipe": "bloodmagic:soulforge/throwing_dagger_syringe",
+	  "anchor":"syringe_throwing_dagger",
+	  "text": "$(item)Кинжал для метания шприца$() для Кровожадных больше интересна $(blood)кровь$() чем $(raw)энергия$(). Хотя он наносит немного меньше урона, он заметно дешевле, и враги, убитые этим оружием, имеют шанс дропнуть $(item)шиферную ампулу$() - или больше, если у них много здоровья."
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:slate_ampoule",
+      "title": "Шиферная ампула",
+      "text": "Эти восхитительные маленькие пузырьки можно раздавить, находясь рядом с $(l:bloodmagic:altar/blood_altar)кровавым алтарём$() чтобы перелить в него $(blood)500 LP$(), уничтожение $(item)ампул$() в процессе. На это не влияют никакие $(item)руны$()."
+    }
+  ]
+}

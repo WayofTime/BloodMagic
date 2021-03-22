@@ -1,0 +1,14 @@
+{
+  "name": "Экстракт удачи",
+  "icon": "bloodmagic:fortune_anointment",
+  "category": "bloodmagic:alchemy_table/anointments",
+  "extra_recipe_mappings":[["bloodmagic:fortune_anointment", 0]],
+  "pages": [
+    {
+      "type": "crafting_alchemy_table",
+      "heading": "Экстракт удачи",
+      "recipe": "bloodmagic:alchemytable/fortune_anointment",
+      "text": "Повышает дроп с некоторых ломаемых блоков. Также суммируется с чарами удачи. $(br2)Допустимые предметы: инструменты, мечи, заряды. $(br2)Применяет: Удачливый I (256 блоков)"
+    }
+  ]
+}

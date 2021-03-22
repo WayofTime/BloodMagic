@@ -1,0 +1,14 @@
+{
+  "name": "Секреты шахтёра",
+  "icon": "bloodmagic:hidden_knowledge_anointment",
+  "category": "bloodmagic:alchemy_table/anointments",
+  "extra_recipe_mappings":[["bloodmagic:hidden_knowledge_anointment", 0]],
+  "pages": [
+    {
+      "type": "crafting_alchemy_table",
+      "heading": "Секреты шахтёра",
+      "recipe": "bloodmagic:alchemytable/hidden_knowledge_anointment",
+      "text": "Блоки дают опыт при успешном их вскапывании. Выпадает +2 опыта за блок. $(br2)Допустимые предметы: инструменты, мечи, заряды$(br2)Применяет: Секреты Шахтёра I (256 blocks)"
+    }
+  ]
+}

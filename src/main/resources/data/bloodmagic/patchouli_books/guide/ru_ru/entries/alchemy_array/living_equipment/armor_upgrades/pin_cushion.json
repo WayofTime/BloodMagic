@@ -1,0 +1,11 @@
+{
+  "name": "Подушка для булавок",
+  "icon": "minecraft:arrow",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Эффект: Обеспечивает защиту от стрел. $(br2) Обучается во время получение урона от снарядов. $(br2) Максимальный уровень: 10"
+    }
+  ]
+}

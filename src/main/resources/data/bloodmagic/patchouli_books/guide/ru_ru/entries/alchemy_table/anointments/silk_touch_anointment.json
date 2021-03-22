@@ -1,0 +1,14 @@
+{
+  "name": "Мягкое покрытие",
+  "icon": "bloodmagic:silk_touch_anointment",
+  "category": "bloodmagic:alchemy_table/anointments",
+  "extra_recipe_mappings":[["bloodmagic:silk_touch_anointment", 0]],
+  "pages": [
+    {
+      "type": "crafting_alchemy_table",
+      "heading": "Мягкое покрытие",
+      "recipe": "bloodmagic:alchemytable/silk_touch_anointment",
+      "text": "Применяет Шёлковое Касание к копаемым блокам. Не складывается с ванильными чарами.$(br2)Допустимые предметы: Инструменты, Мечи, Заряды. $(br2)Применяет: Мягкое Касание I (256 блоков)"
+    }
+  ]
+}

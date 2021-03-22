@@ -1,0 +1,11 @@
+{
+  "name": "Здоровый",
+  "icon": "minecraft:golden_apple",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Эффект: дает дополнительное здоровье до 25 сердцец. $(br2) Изучается во время восстановления здоровья (Обычное исцеление или с помощью $(item)Зелья Здоровья$() или $(item)Зелья Регенерации$().) $(br2) Максимальный уровень: 10"
+    }
+  ]
+}

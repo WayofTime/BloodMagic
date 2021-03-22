@@ -1,0 +1,40 @@
+{
+  "name": "Ритуал Полной Весны",
+  "icon": "minecraft:water_bucket",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "Ритуал Полной Весны",
+      "multiblock":{
+        "pattern":[
+          ["W_W",
+           "_0_",
+           "W_W"]
+        ],
+        "mapping":{
+          "0": "bloodmagic:masterritualstone",
+          "W": "bloodmagic:waterritualstone"
+        },
+        "symetrical": true
+      },
+      "text": "Используй $(l:bloodmagic:rituals/ritual_diviner#dusk)предсказатель ритуала [Dusk]$(/l) для облегчения строительства."
+    },
+    {
+      "type": "text",
+      "text": "Создает источник воды из главного ритуального камня.$(br2)$(water)Руны воды: 4$()$(br2)Всего рун: 4" 
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:defaultcrystal",
+      "title": "Сырой",
+      "text": "позволяет напрямую помещать воду в резервуар или другой блок для обработки жидкости."
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:ritualtinkerer",
+      "title": "Классификация",
+      "text": "(Вода) Область, в которой ритуал разместит блоки источника воды. $(br2)$(li)Максимальный объем: 9 $(li)Горизонтальный радиус: 3 $(li)Вертикальный радиус: 3 "
+    }
+  ]
+}

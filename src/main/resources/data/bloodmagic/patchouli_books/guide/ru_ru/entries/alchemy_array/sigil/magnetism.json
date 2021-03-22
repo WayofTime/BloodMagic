@@ -1,0 +1,22 @@
+{
+  "name": "Сигил притяжения",
+  "icon": "bloodmagic:sigilofmagnetism",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "extra_recipe_mappings":[
+    ["bloodmagic:reagentmagnetism", 1],
+    ["bloodmagic:sigilofmagnetism", 1]
+  ],
+  "pages": [
+    {
+      "type": "text",
+      "text": "[Заметка WIP] $(br) [Еще не реализовано] $(br2) Притягивает предметы к держателю."
+    },
+    {
+      "type": "crafting_2-step_sigil",
+      "alchemy_table.heading": "Реагент притяжения",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_magnetism",
+      "array.heading": "Сигил притяжения",
+      "array.recipe": "bloodmagic:array/magnetismsigil"
+    }
+  ]
+}

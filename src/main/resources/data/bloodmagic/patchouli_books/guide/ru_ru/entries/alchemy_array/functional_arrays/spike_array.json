@@ -1,0 +1,17 @@
+{
+  "name": "Шипованный массив",
+  "icon": "minecraft:iron_ingot",
+  "category": "bloodmagic:alchemy_array/functional_array",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Шипованный массив - это довольно простой массив с единственной целью. Когда живое существо входит в массив, оно получает урон. Это хорошо для ловушек мобов или для того, чтобы сделать вашу базу немного опаснее для игроков.."
+    },
+    {
+      "type": "functional_array",
+      "heading": "Шипованный массив",
+      "recipe": "bloodmagic:array/spike",
+      "image": "spikearray.png"
+    }
+  ]
+}

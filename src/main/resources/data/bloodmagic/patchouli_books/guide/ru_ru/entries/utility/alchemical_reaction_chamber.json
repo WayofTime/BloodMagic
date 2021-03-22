@@ -1,0 +1,125 @@
+{
+  "name": "Камера алхимической реакции (КАР)",
+  "icon": "bloodmagic:alchemicalreactionchamber",
+  "category": "bloodmagic:utility",
+  "extra_recipe_mappings":[
+    ["bloodmagic:sanguinereverter", 2],
+    ["bloodmagic:weakbloodshard", 3],
+    ["bloodmagic:explosivepowder", 6],
+    ["bloodmagic:ironfragment", 7],
+    ["bloodmagic:goldfragment", 7],
+    ["bloodmagic:fragment_netherite_scrap", 7],
+    ["bloodmagic:irongravel", 9],
+    ["bloodmagic:goldgravel", 9],
+    ["bloodmagic:gravel_netherite_scrap", 9],
+    ["bloodmagic:ironsand", 7],
+    ["bloodmagic:goldsand", 7],
+    ["bloodmagic:sand_netherite", 7],
+    ["bloodmagic:sulfur", 7],
+    ["bloodmagic:primitive_crystalline_resonator", 8],
+    ["bloodmagic:basiccuttingfluid", 10]
+  ],
+  "pages": [
+     {
+      "type": "text",
+      "text": "$(item)Камера алхимической реакции$() еще не реализована полностью, но, помимо прочего, она может функционировать как печь, способную утроить руду, возвращать сферы крови и в настоящее время является единственным способом получить $(item)слабые кровавые осколки$(), в частности из $(l:bloodmagic:altar/slates)шиферов$()."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bloodmagic:arc"
+    },
+    {
+      "type": "crafting_soulforge",
+      "heading": "Sanguine Reverter",
+      "recipe": "bloodmagic:soulforge/sanguine_reverter",
+	  "anchor": "blood_shard",
+      "text": "Sanguine Reverter используется для создания слабых кровавых осколков и ревертивных шаров крови для крафта."
+    },
+    {
+      "type": "3x_crafting_arc",
+      "a.heading": "Слабый кровавый осколок",
+      "a.recipe": "bloodmagic:arc/weakbloodshard",
+      "b.heading": "Ревертивный слабый кровавый шар",
+      "b.recipe": "bloodmagic:arc/reversion/weak_blood_orb",
+      "c.heading": "Ревертивный кровавый шар ученика",
+      "c.recipe": "bloodmagic:arc/reversion/apprentice_blood_orb"
+    },
+    {
+      "type": "2x_crafting_arc",
+      "a.heading": "Ревертивный кровавый шар мага",
+      "a.recipe": "bloodmagic:arc/reversion/magician_blood_orb",
+      "b.heading": "Ревертивный кровавый шар мастера",
+      "b.recipe": "bloodmagic:arc/reversion/master_blood_orb",
+      "b.text": "Переверните страницу, чтобы узнать больше об использовании камеры алхимической реакции."
+    },
+    {
+      "type": "empty"
+    },
+    {
+      "type": "crafting_alchemy_table",
+      "heading": "Взрывной порошок",
+	  "anchor": "ore_processing",
+      "recipe": "bloodmagic:alchemytable/explosive_powder",
+      "text": "Взрывной порошок в камере алхимической реакции используется для превращения руды в фрагменты руды для 3-кратной обработки руды или превращения слитков в их пыль. Он также может превратить адский камень в сульфур и 5mb лавы."
+    },
+    {
+      "type": "3x_crafting_arc",
+      "a.heading": "1 руда в 3 фрагмента руды",
+      "a.recipe": "bloodmagic:arc/fragmentsiron",
+      "b.heading": "Слитки в металлический песок",
+      "b.recipe": "bloodmagic:arc/dustsfrom_ingot_iron",
+      "c.heading": "Сульфур и лава",
+      "c.recipe": "bloodmagic:arc/netherrack_to_sulfer",
+      "c.fluid_output": "minecraft:lava_bucket"
+    },
+    {
+      "type": "crafting_soulforge",
+      "heading": "Резонатор",
+      "recipe": "bloodmagic:soulforge/primitive_crystalline_resonator",
+      "text": "Резонатор используется для превращения фрагментов руды в соответствующий гравий для продолжения обработки руды и создает небольшую пыль, которая ещё в разработке."
+    },
+    {
+      "type": "crafting_arc",
+      "heading": "Фрагмент руды в металлический гравий",
+      "recipe": "bloodmagic:arc/gravelsiron"
+    },
+    {
+      "type": "crafting_alchemy_table",
+      "heading": "Базовая режущая жидкость",
+      "recipe": "bloodmagic:alchemytable/basic_cutting_fluid",
+      "text": "Режущая жидкость превращает металлический гравий в металлический песок для продолжительной 3-кратной обработки руды. Он также может превратить руду непосредственно в два металлических песка для 2-кратной обработки руды. Та же самая 2-кратная обработка руды возможна в алхимическом столе, но ее изготовление в КАР сэкономит вам немного LP."
+    },
+    {
+      "type": "2x_crafting_arc",
+      "a.heading": "Металлический гравий в металлический песок",
+      "a.recipe": "bloodmagic:arc/dustsfrom_gravel_iron",
+      "b.heading": "Руда в два металлических песка",
+      "b.recipe": "bloodmagic:arc/dustsfrom_ore_iron"
+    },
+    {
+      "type": "crafting",
+      "heading": "Топливный элемент (печь)",
+      "recipe": "bloodmagic:primitive_furnace_cell",
+      "text": "КАР также функционирует как печь, но единственными источниками топлива, которые она принимает, является $(item)примитивный топливный элемент$() или $(l:bloodmagic:utility/lava_crystal)лавовый кристалл$(/l)."
+    },
+    {
+      "type": "text",
+      "text": "Примитивный топливный элемент рассчитан на 128 применений. Он больше, чем угольный блок, использованный для его создания (60 предметов), и, поскольку он теряет прочность только после завершения изготовления, топливо не расходуется."
+    },
+    {
+      "type": "crafting",
+      "heading": "Гидратационная ячейка",
+      "recipe": "bloodmagic:primitive_hydration_cell",
+      "text": "Гидратационная ячейка используется для изготовления глины."
+    },
+    {
+      "type": "2x_crafting_arc",
+      "a.heading": "Глина из песка",
+      "a.recipe": "bloodmagic:arc/clay_from_sand",
+      "a.fluid_input": "minecraft:water_bucket",
+      "b.heading": "Глина из терракоты",
+      "b.recipe": "bloodmagic:arc/clay_from_terracotta",
+      "b.fluid_input": "minecraft:water_bucket"
+    }
+  ]
+}

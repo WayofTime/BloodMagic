@@ -1,0 +1,18 @@
+{
+  "name": "Разумный меч",
+  "icon": "bloodmagic:soulsword",
+  "category": "bloodmagic:demon_will",
+  "extra_recipe_mappings":[["bloodmagic:soulsword", 1]],
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(item)Разумный меч$() это гораздо более эффективный инструмент для сбора $(l:bloodmagic:demon_will/demon_will)демонической энергии$(), чем $(l:bloodmagic:demon_will/soul_snare)ловушка для душ$(), на которую можно надеяться. Сначала он может показаться слабым, но он питается энергией, которую вы имеете в данный момент, поэтому создание$(l:bloodmagic:demon_will/soul_gem)камня душ$() обязательно. $(br2) Обратите внимание, что меч, как и все $(l:bloodmagic:demon_will/sentient_tools)разумные инструменты$(), можно отремонтировать с помощью $(l:bloodmagic:demon_will/crystallized_will)кристаллизированной энергии$() в наковальне."
+    },
+    {
+      "type": "crafting_soulforge",
+      "heading": "Разумный меч",
+      "recipe": "bloodmagic:soulforge/sentientsword",
+      "text": "Этот меч сослужит вам хорошую службу."
+    }
+  ]
+}

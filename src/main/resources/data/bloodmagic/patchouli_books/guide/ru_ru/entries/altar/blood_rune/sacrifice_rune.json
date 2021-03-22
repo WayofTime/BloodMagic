@@ -1,0 +1,15 @@
+{
+  "name": "Руна жертвоприношения",
+  "icon": "bloodmagic:sacrificerune",
+  "category": "bloodmagic:altar/blood_rune",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(item)Руна жертвоприношения$() увеличивает количество LP, получаемое на кровавом алтаре посредством кражи здоровья у сущностей, не являющихся игроками. Каждая руна дает дополнительный бонус + 10% за руну."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bloodmagic:blood_rune_sacrifice"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "Защита от яда",
+  "icon": "minecraft:milk_bucket",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Эффект: лечит яд. Имеет время восстановления, которое сокращается с дополнительными уровнями. $(br2) Обучается во время отравления. $(br2) Максимальный уровень: 5"
+    }
+  ]
+}

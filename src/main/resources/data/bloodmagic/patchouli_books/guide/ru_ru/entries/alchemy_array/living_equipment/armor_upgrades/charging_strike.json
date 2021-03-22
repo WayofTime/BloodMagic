@@ -1,0 +1,11 @@
+{
+  "name": "Заряженный удар",
+  "icon": "minecraft:golden_axe",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Эффект: увеличивает урон и отбрасывание от спринтерских атак до + 50%. $(br2) Изучается нанося урон во время бега. $(br2) Максимальный уровень: 5"
+    }
+  ]
+}

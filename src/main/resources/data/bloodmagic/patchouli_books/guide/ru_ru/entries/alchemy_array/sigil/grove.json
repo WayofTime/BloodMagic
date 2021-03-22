@@ -1,0 +1,37 @@
+{
+  "name": "Сигил зелёной рощи",
+  "icon": "bloodmagic:growthsigil",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "extra_recipe_mappings":[
+    ["bloodmagic:reagentgrowth", 1],
+    ["bloodmagic:growthsigil", 1]
+  ],
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(item)Сигил зелёной рощи$() это предмет, который имеет несколько применений. Созданный в виде массива с $(item)реагентом роста$(item) и $(item)укреплённым шифером$(), сигил может использовать силу вашей сохраненной жизненной силы для питания и выращивания близлежащих растений ."
+    },
+    {
+      "type": "crafting_2-step_sigil",
+      "alchemy_table.heading": "Реагент роста",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_growth",
+      "array.heading": "Сигил зелёной рощи",
+      "array.recipe": "bloodmagic:array/growthsigil"
+    },
+    {
+      "type": "image",
+      "images": [
+        "bloodmagic:images/entries/sigil/grove_sigil1.png",
+        "bloodmagic:images/entries/sigil/grove_sigil2.png",
+        "bloodmagic:images/entries/sigil/grove_sigil3.png"
+      ],
+      "title": "Массив сигила зелёной рощи",
+      "border": true,
+      "text": "Массив сигила Зеленой Рощи, а также его основные области применения."
+    },
+    {
+      "type": "text",
+      "text": "Если вы щелкните правой кнопкой мыши блок, который является $(2)IGrowable$(), он применит эффект костной муки, потребляя 150LP. $(br2)Однако, если вы щелкните правой кнопкой мыши сигилом в воздухе, удерживая клавишу Shift, сигил загорится, чтобы указать, что он активирован, и будет потреблять 150LP каждые 10 секунд. К каждому блоку в радиусе 7x7x5, центрированном вокруг игрока, будет применена отметка роста. Хорошо подходит для выращивания этих росточков!"
+    }
+  ]
+}
