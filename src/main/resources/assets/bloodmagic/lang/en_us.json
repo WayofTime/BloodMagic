@@ -1,6 +1,6 @@
 {
-  "guide.bloodmagic.name": "Sanguine Scientiem",
-  "guide.bloodmagic.subtitle": "Alchemical Wizardry",
+  "guide.bloodmagic.name": "§4§lSanguine Scientiem",
+  "guide.bloodmagic.subtitle": "§9§oAlchemical Wizardry",
   "guide.bloodmagic.landing": "Welcome to $(6)Blood Magic$()! $(br2)$(l:bloodmagic:utility/nyi)A lot of stuff$() isn't yet implemented, so please excuse our dust. $(br2)Click $(l:bloodmagic:utility/getting_started)HERE$() to get started. If you find any bugs, please report them on our $(l:https://github.com/WayofTime/BloodMagic/issues)Github$().)",
   "anointment.bloodmagic.bow_power": "Heavy Shot",
   "anointment.bloodmagic.fortune": "Fortunate",
