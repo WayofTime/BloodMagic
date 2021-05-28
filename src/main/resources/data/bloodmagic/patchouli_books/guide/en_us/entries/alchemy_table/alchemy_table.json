@@ -14,7 +14,7 @@
     {
       "type": "crafting",
       "recipe": "bloodmagic:alchemy_table",
-      "text": "When looking at $(item)Alchemy Table$() recipes in this book (or $(thing)JEI$()), please hover over the arrow with an \"LP\" label to view Time, $(blood)LP$() drain, and Tier information."
+      "text": "When looking at $(item)Alchemy Table$() recipes in this book (or in $(thing)JEI$()), please hover over the arrow with an \"LP\" label to view Time, $(blood)LP$() drain, and Tier information."
     },
     {
       "type": "image",
@@ -23,11 +23,11 @@
       ],
       "title": "Alchemy Table GUI",
       "border": true,
-      "text": "The Alchemy Table can be inserted into or extracted from. This is how it's configured."
+      "text": "The Alchemy Table can be inserted into or extracted from using these buttons."
     },
     {
       "type": "text",
-      "text": "The $(item)Alchemy Table$() has a number of buttons on its right hand side. These are, in order, $(underline)D$()own, $(underline)U$()p, $(underline)N$()orth, $(underline)S$()outh, $(underline)W$()est, and $(underline)e$()ast. To use them, first click on any slot in the Alchemy Table. (Here, we have selected the central 'finished item' slot, for demonstration.) Next, click on one of these six buttons to toggle whether or not the $(item)Alchemy Table$() should allow $(item)Hoppers$(), pipes, or other such external interference from this face. To return to the table's normal function,"
+      "text": "The $(item)Alchemy Table$() has a number of buttons on its right hand side. These are, in order, $(bold)D$()own, $(bold)U$()p, $(bold)N$()orth, $(bold)S$()outh, $(bold)W$()est, and $(bold)E$()ast. To use them, first click on any slot in the Alchemy Table. (Here, we have selected the central 'finished item' slot, for demonstration.) Next, click on one of these six buttons to toggle whether or not the $(item)Alchemy Table$() should allow $(item)Hoppers$(), pipes, or other such external interference from this face. To return to the table's normal function,"
     },
     {
       "type": "text",
