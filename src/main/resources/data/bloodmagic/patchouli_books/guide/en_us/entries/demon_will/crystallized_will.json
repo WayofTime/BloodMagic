@@ -36,11 +36,11 @@
       "type": "crafting_soulforge",
       "heading": "Demon Crystallizer",
       "recipe": "bloodmagic:soulforge/demon_crystallizer",
-      "text": "This will slowly consume $(l:bloodmagic:demon_will/demon_will)Demon Will$() from the atmosphere to produce $(item)Will Crystals$(). The first spire costs about 100 will to form, and all subsequent spires cost 40 each, but can be burned for 50 in the $(item)Demon Crucible$(). The largest $(item)Crystal Cluster$() can be up to 7 spires."
+      "text": "This will slowly consume $(l:bloodmagic:demon_will/demon_will)Demon Will$() from the atmosphere to produce $(item)Will Crystals$(). The first spire costs about 100 $(raw)Will$() to form, and all subsequent spires cost 40 each, but can be burned for 50 in the $(item)Demon Crucible$(). The largest $(item)Crystal Cluster$() can be up to 7 spires."
     },
     {
       "type": "text",
-      "text": "If you have at least 1,000 total Will in your inventory (Across any number of $(l:bloodmagic:demon_will/soul_gem)Tartaric Gems$()), you can harvest these crystals by right-clicking the spire with an empty hand. This will remove all but the central spire. $(br2)However, if you have not got this much will, $(italic)really$() need that central spire, or are just in a hurry, you can harvest the whole lot with a pickaxe."
+      "text": "If you have more than 1,024 total $(raw)Will$() in your inventory (Across any number of $(l:bloodmagic:demon_will/soul_gem)Tartaric Gems$()), you can harvest these crystals by right-clicking the spire with an empty hand. This will remove all but the central spire. $(br2)However, if you do not have enough $(raw)will$(), $(italic)really$() need that central spire, or are just in a hurry, you can harvest the whole lot with a pickaxe."
     },
     {
       "type": "relations",
