@@ -1,0 +1,11 @@
+{
+  "name": "Боди-билдер",
+  "icon": "minecraft:cooked_beef",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Эффект: дает сопротивление отбрасыванию и дополнительное здоровье. Максимум 100% сопротивления и 5 сердец здоровья. $(br2) Изучается когда игрок поедает пищу. $(br2) Максимальный уровень: 5"
+    }
+  ]
+}

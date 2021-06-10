@@ -1,0 +1,43 @@
+{
+  "name": "Резонанс граненого кристалла",
+  "icon": "bloodmagic:vengefulcrystal",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "Резонанс граненого кристалла",
+      "multiblock":{
+        "pattern":[
+          ["__D__", "_BFB_", "DE0AD", "_BWB_", "__D__"],
+          ["_D_D_", "D___D", "_____", "D___D", "_D_D_"]
+        ],
+        "mapping":{
+          "0": "bloodmagic:masterritualstone",
+          "B": "bloodmagic:ritualstone",
+          "W": "#bloodmagic:ritual_stones/water_earth_fire_air",
+          "A": "#bloodmagic:ritual_stones/air_water_earth_fire",
+          "F": "#bloodmagic:ritual_stones/fire_air_water_earth",
+          "E": "#bloodmagic:ritual_stones/earth_fire_air_water",
+          "D": "bloodmagic:duskritualstone"
+        },
+        "symetrical": false
+      },
+      "text": "Используй $(l:bloodmagic:rituals/ritual_diviner#dusk)предсказатель ритуала [Dusk]$(/l) для облегчения строительства."
+    },
+    {
+      "type": "text",
+      "text": "Разделяет хорошо выращенный $(raw)сырой кристальный кластер$() на отдельные кристаллические кластеры. Дополнительную информацию о настройке смотрите на следующей странице. Для получения дополнительной информации о аспектной энергии смотрите $(l:bloodmagic:demon_will/aspected_will)аспектная энергия$(). $(br2)$(blank)Пустые руны: 4 $(br)$(water)Руны воды: 1 $(br)$(air)Руны воздуха: 1 $(br)$(fire)Руны огня: 1 $(br)$(earth)Руны земли: 1 $(br)$()Сумеречных рун: 12 $(br2)$()Всего рун: 20" 
+	},
+    {
+      "type": "image",
+      "title": "Настройка ритуала",
+      "images": ["bloodmagic:images/entries/demon_will/will_splitting.png"],
+      "border": true,
+      "text": "Рекомендуемая установка для ритуала 'Резонанс граненого кристалла'."
+    },
+    {
+      "type": "text",
+      "text": "Этот ритуал берет хорошо выращенный (5 шпилей) $(l:bloodmagic:demon_will/crystallized_will)сырой кристальный кластер$(/l) расположенный на 2 блока выше $(item)главного рутуального камня$(), и разделяет его на новые одиночные шпили каждой $(l:bloodmagic:demon_will/aspected_will)аспектной энергии$(/l) кристальны кластеров, расположенных непосредственно над 4 элементами ритаульных камней. Этот интервал предназначен для размещения $(item)демонических кристализаторов$() поверх $(item)главного ритуального камня$().$(br2)Для получения информации о выращивании кристаллов демонической энергии, смотрите $(l:bloodmagic:demon_will/crystallized_will)кристализированная энергия$(/l)."
+    }
+  ]
+}

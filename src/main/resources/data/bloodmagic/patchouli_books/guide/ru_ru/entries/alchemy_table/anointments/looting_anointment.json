@@ -1,0 +1,14 @@
+{
+  "name": "Отблеск Грабителя",
+  "icon": "bloodmagic:looting_anointment",
+  "category": "bloodmagic:alchemy_table/anointments",
+  "extra_recipe_mappings":[["bloodmagic:looting_anointment", 0]],
+  "pages": [
+    {
+      "type": "crafting_alchemy_table",
+      "heading": "Отблеск Грабителя",
+      "recipe": "bloodmagic:alchemytable/looting_anointment",
+      "text": "Увеличивает дроп с убитых мобов. Также складывается с зачарованием Добычи.$(br2)Допустимые предметы: инструменты, мечи. $(br2)Применяет: Грабёж I (256 ударов)"
+    }
+  ]
+}

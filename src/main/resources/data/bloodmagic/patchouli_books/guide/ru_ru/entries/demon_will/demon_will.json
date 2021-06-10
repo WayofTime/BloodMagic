@@ -1,0 +1,26 @@
+{
+  "name": "Демоническая Энергия",
+  "icon": "bloodmagic:basemonstersoul",
+  "category": "bloodmagic:demon_will",
+  "extra_recipe_mappings":[["bloodmagic:basemonstersoul", 0]],
+  "pages": [
+    {
+      "type": "text",
+      "text": "Когда у вас есть  $(l:bloodmagic:altar/blood_altar)кровавый алтарь$(), вам нужно собрать немного $(item)демонической энергии$(). Есть два способа получить демоническую энергию:$(br)$(li)Убить моба, который находится под действием $(l:bloodmagic:demon_will/soul_snare)ловушки для души$(/l) и убивается, когда появляются эффекты белых частиц.$(li)Убив враждебного моба с помощью $(l:bloodmagic:demon_will/sentient_sword)разумного меча$().$(br)Поскольку вы только начинаете изучать мод, у вас еще не будет $(l:bloodmagic:demon_will/sentient_sword)разумного меча$(),"
+    },
+    {
+      "type": "text",
+      "text": "и, следовательно, потребуется использовать $(l:bloodmagic:demon_will/soul_snare)ловушку для души$(). $(br2)$(item)Демоническая энергия$()- это повторяющийся ресурс в $(6)Blood Magic$(), который используется для питания $(l:bloodmagic:demon_will/soul_forge)Кузницы Адского Пламени$(). $(br2)Согласно преданиям $(6)Blood Magic$(), $(raw)демоническая энергия$() - это остаточный эффект от того, когда демон насыщает своей энергией тела мертвых."
+    },
+    {
+      "type": "image",
+      "images": ["bloodmagic:images/entries/demon_will/demon_will.png"],
+      "title": "Демоническая Энергия",
+      "border": true
+    },
+    {
+      "type": "text",
+      "text": "Когда у вас есть немного $(raw)энергии$(), вы можете использовать её для создания полезных инструментов в $(l:bloodmagic:demon_will/soul_forge)Кузнице Адского Пламени,$(). Если вы обнаруживаете, что они загромождают ваш инвентарь, возможно, поможет $(l:bloodmagic:demon_will/soul_gem)камень душ$()."
+    }
+  ]
+}

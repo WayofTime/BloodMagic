@@ -1,0 +1,77 @@
+{
+  "name": "Ритуал Зеленой рощи",
+  "icon": "minecraft:bone_meal",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "Ритуал Зеленой рощи",
+      "multiblock":{
+        "pattern":[
+          ["EWE",
+           "W0W",
+           "EWE"]
+        ],
+        "mapping":{
+          "0": "bloodmagic:masterritualstone",
+          "E": "bloodmagic:earthritualstone",
+          "W": "bloodmagic:waterritualstone"
+        },
+        "symetrical": true
+      },
+      "text": "Используй $(l:bloodmagic:rituals/ritual_diviner#dusk)предсказатель ритуала [Dusk]$(/l) для облегчения строительства."
+    },
+    {
+      "type": "text",
+      "text": "Выращивает урожай на определённой территории.$(br2)$(water)Руны воды: 4$() $(br)$(earth)Руны земли: 4$() $(br2)Всего рун: 8" 
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:defaultcrystal",
+      "title": "Сырой",
+      "text": "Увеличивает скорость всех ритуальных операций в зависимости от $(raw)сырой энергии$() в ауре."
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:corrosivecrystal",
+      "title": "Коррозийный",
+      "text": "ущества в пределах досягаемости атакуются ближайшими растениями, восстанавливая свою жизнь."
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:vengefulcrystal",
+      "title": "Мстительный",
+      "text": "Увеличивает скорость успешного роста за тик."
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:destructivecrystal",
+      "title": "Разрушительный",
+      "text": "Диапазон роста увеличивается в зависимости от $(destructive)разрушительной энергии$() в ауре."
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:steadfastcrystal",
+      "title": "Стойкий",
+      "text": "Семена пересаживаются, а блоки гидратируются в пределах действия."
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:ritualtinkerer",
+      "title": "Классификация",
+      "text": "(Рост) Область, в которой в ходе ритуала будут выращиваться растения. $(br) $(li)Максимальный объем: 81 $(li)Горизонтальный радиус: 4 $(li)Вертикальный радиус: 4"
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:ritualtinkerer",
+      "title": "Классификация",
+      "text": "(Стойкий) Блоки в этом диапазоне регидратируются в сельхозугодья, а семена в этом районе высаживаются заново. $(br) $(li)Максимальный объем: Полный диапазон. $(li)Горизонтальный радиус: 15 $(li)Вертикальный радиус: 15"
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:ritualtinkerer",
+      "title": "Классификация",
+      "text": "(Коррозийный) Существа в этой области лишаются жизни, чтобы выращивать близлежащие растения. $(br) $(li)Максимальный объем: Полный диапазон. $(li)Горизонтальный радиус: 15 $(li)Вертикальный радиус: 15"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "Кузница Адского Пламени",
+  "icon": "bloodmagic:soulforge",
+  "category": "bloodmagic:demon_will",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(item)Кузница Адского Пламени$() является одной из основных механик крафта $(6)Blood Magic$(), наряду с самим $(l:bloodmagic:altar/blood_altar)кровавым алтарём$(/l). Здесь вы можете работать с $(l:bloodmagic:demon_will/demon_will)демонической энергией$() собранной с мобов, чтобы вы могли создавать $(l:bloodmagic:demon_will/sentient_tools)разумные инструменты$(), включая $(l:bloodmagic:demon_will/sentient_sword)разумный меч$(), $(l:bloodmagic:demon_will/soul_gem)камень душ$(), различные $(item)реагенты$(), $(l:bloodmagic:alchemy_array/functional_arrays/arcane_ash)чародейский пепел$(), и многое другое."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bloodmagic:soul_forge"
+    }
+  ]
+}

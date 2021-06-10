@@ -1,0 +1,23 @@
+{
+  "name": "Сигил кровавой лампы",
+  "icon": "bloodmagic:bloodlightsigil",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "extra_recipe_mappings":[
+    ["bloodmagic:reagentbloodlight", 1],
+    ["bloodmagic:bloodlightsigil", 1]
+  ],
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(item)Сигил кровавой лампы$() удобный инструмент для любого шахтера, исследователя подземелий или просто любого Кровавого Мага, который не любит темные места и чувствует, что факелы и блоки светящегося камня мешают. При использовании этот символ запускает Кровавый Свет в том направлении, куда вы смотрите. Когда он попадает в блок, он порождает почти невидимый источник света стоимостью 10LP."
+    },
+    {
+      "type": "crafting_2-step_sigil",
+      "alchemy_table.heading": "Реагент кровавой лампы",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_blood_light",
+      "array.heading": "Сигил кровавой лампы",
+      "array.recipe": "bloodmagic:array/bloodlightsigil",
+      "array.text": "$(italic)Я вижу свет!"
+    }
+  ]
+}

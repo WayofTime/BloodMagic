@@ -1,0 +1,6 @@
+{
+  "name": "Кровавые руны",
+  "description": "Есть много разных рун. Они делают крутые штуки! Сделайте ваш выбор.",
+  "icon": "bloodmagic:blankrune",
+  "parent": "bloodmagic:altar"
+}

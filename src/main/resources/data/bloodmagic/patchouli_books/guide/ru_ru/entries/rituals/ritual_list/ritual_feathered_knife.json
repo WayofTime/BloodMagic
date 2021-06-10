@@ -1,0 +1,77 @@
+{
+  "name": "Ритуал перьевого ножа",
+  "icon": "bloodmagic:sacrificialdagger",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "Ритуал перьевого ножа",
+      "multiblock":{
+        "pattern":[
+          ["_EE___EE_", "EA_____AE", "E_______E", "____D____", "___D0D___", "____D____", "E_______E", "EA_____AE", "_EE___EE_"],
+          ["__F___F__", "_________", "F___W___F", "___A_A___", "__W___W__", "___A_A___", "F___W___F", "_________", "__F___F__"]
+        ],
+        "mapping":{
+          "0": "bloodmagic:masterritualstone",
+          "W": "bloodmagic:waterritualstone",
+          "A": "bloodmagic:airritualstone",
+          "F": "bloodmagic:fireritualstone",
+          "E": "bloodmagic:earthritualstone",
+          "D": "bloodmagic:duskritualstone"
+        },
+        "symetrical": true
+      },
+      "text": "Используй $(l:bloodmagic:rituals/ritual_diviner#dusk)предсказатель ритуала [Dusk]$(/l) для облегчения строительства."
+    },
+    {
+      "type": "text",
+      "text": "Вытягивает здоровье у игроков в своей области и помещает LP в ближайший кровавый алтарь. Прирост LP зависит от $(l:bloodmagic:altar/blood_rune/self_sacrifice_rune)Рун самопожертвования.$() $(br2)$(water)Руны воды: 4$() $(br)$(air)Руны воздуха: 8$() $(br)$(fire)Руны огня: 8$() $(br)$(earth)Руны земли: 16$() $(br)Сумеречные руны: 4 $(br2)Всего рун: 40" 
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:defaultcrystal",
+      "title": "Сырой",
+      "text": "величивает скорость ритуала в зависимости от $(raw)сырой энергии$() в ауре."
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:corrosivecrystal",
+      "title": "Коррозийный",
+      "text": "Использует текущий бонус благовоний игрока (если есть) для увеличения LP. Встаньте рядом с $(l:bloodmagic:utility/incense_altar)алтарём благовоний$() чтобы сохранить этот бонус."
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:vengefulcrystal",
+      "title": "Мстительный",
+      "text": "Устанавливает минимальное здоровье для жертвоприношения на 10%. Заменяется на $(steadfast)стойкую$() для владельца, если он активен."
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:destructivecrystal",
+      "title": "Разрушительный",
+      "text": "Увеличивает результативность ритуала в зависимости от общего количества $(destructive)разрушительной энергии$() в ауре."
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:steadfastcrystal",
+      "title": "Стойкий",
+      "text": "Устанавливает минимальное здоровье для жертвоприношения с 30% до 70%."
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:ritualtinkerer",
+      "title": "Классификация",
+      "text": "(Алтарь) Этот диапазон определяет область, в которой ритуал ищет $(l:bloodmagic:altar/blood_altar)кровавый алтарь$(/l). Изменение этого параметра либо расширит, либо ограничит диапазон определенным регионом. $(br) $(li)Максимальный объем: Полный диапазон. $(li)Горизонтальный радиус: 10 $(li)Вертикальный радиус: 15"
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:ritualtinkerer",
+      "title": "Классификация",
+      "text": "(Урон) Это определяет, где ритуал будет бить игроков. Игроки в пределах этого диапазона будут получать постепенный урон до указанного лимита. $(br) $(li)Максимальный объем: Полный диапазон. $(li)Горизонтальный радиус: 25 $(li)Вертикальный радиус: 15"
+    }
+  ]
+}
+
+
+
+

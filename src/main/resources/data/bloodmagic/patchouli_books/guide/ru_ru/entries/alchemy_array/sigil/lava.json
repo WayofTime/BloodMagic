@@ -1,0 +1,33 @@
+{
+  "name": "Сигил лавы",
+  "icon": "bloodmagic:lavasigil",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "extra_recipe_mappings":[
+    ["bloodmagic:reagentlava", 1],
+    ["bloodmagic:lavasigil", 1]
+  ],
+  "pages": [
+    {
+      "type": "text",
+      "text": "Сигил схож с $(l:bloodmagic:alchemy_array/sigil/water)Сигилом воды,$(/l) $(item)Сигил лавы$() создает источник лавы, там где вы щелкаете по земле, стоимость 1000LP. Создаётся в $(l:bloodmagic:alchemy_array/functional_arrays/arcane_ash)алхимическом массиве$(/l) с использованием $(item)реагента лавы$() и $(item)чистого шифера,$() он истощит 5 ваших сердец, если у вас недостаточно LP в вашей $(l:bloodmagic:altar/soul_network)сети душ.$(/l)"
+    },
+    {
+      "type": "crafting_2-step_sigil",
+      "alchemy_table.heading": "Реагент лавы",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_lava",
+      "array.heading": "Сигил лавыl",
+      "array.recipe": "bloodmagic:array/lavasigil",
+      "array.text": "$(italic)ГОРЯЧЕЙ! НЕ ЕШЬ"
+    },
+    {
+      "type": "image",
+      "images": [
+        "bloodmagic:images/entries/sigil/lava_sigil1.png",
+        "bloodmagic:images/entries/sigil/lava_sigil2.png"
+      ],
+      "title": "Массив сигила лавы",
+      "border": true,
+      "text": "Сигил лавы, возле его массива создания, а также его основное использование."
+    }
+  ]
+}

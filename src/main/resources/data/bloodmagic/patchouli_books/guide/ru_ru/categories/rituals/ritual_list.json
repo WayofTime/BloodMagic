@@ -1,0 +1,6 @@
+{
+  "name": "Список ритуалов",
+  "description": "Некоторые более простые $(item)Ритуалы$() будут доступны вам, когда у вас будет третий уровень $(l:bloodmagic:altar/blood_altar) Кровавого Алтаря$(), но более продвинутые потребуют Сумеречных Рун и, следовательно, Алтарь 4 уровня. $(br2) Используйте $(l:bloodmagic:rituals/ritual_diviner) Ритуальный Предсказатель$() чтобы собрать ритуалы, и не забывайте, чтобы ваша $(l:bloodmagic:altar/soul_network) Сеть Душ$() завершена!",
+  "icon": "bloodmagic:masterritualstone",
+  "parent": "bloodmagic:rituals"
+}

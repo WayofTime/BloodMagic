@@ -1,0 +1,15 @@
+{
+  "name": "Руна скорости",
+  "icon": "bloodmagic:speedrune",
+  "category": "bloodmagic:altar/blood_rune",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(item)Руна скорости$() увеличивает все операции по изготовлению на кровавом алтаре. Скорость крафта (и скорость, при которой прогресс убывает, когда алтарь пустой) увеличивается на +20% за руну."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bloodmagic:blood_rune_speed"
+    }
+  ]
+}

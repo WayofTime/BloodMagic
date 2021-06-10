@@ -1,0 +1,33 @@
+{
+  "name": "Уровни шиферов",
+  "icon": "bloodmagic:blankslate",
+  "category": "bloodmagic:altar",
+  "extra_recipe_mappings":[
+    ["bloodmagic:blankslate", 1],
+    ["bloodmagic:reinforcedslate", 1],
+    ["bloodmagic:infusedslate", 2],
+    ["bloodmagic:demonslate", 2]
+  ],
+  "pages": [
+    {
+      "type": "text",
+      "text": "Основное использование $(l:bloodmagic:altar/blood_altar)кровавого алтаря$(/l) - это производство $(item)Шиферов$(). Каждый уровень шифера требует предыдущего уровня и более мощного алтаря, чем последний. $(br2)Обратите внимание, что $(item)эфирный шифер$() в настоящее время не реализован, но может быть вы играете в модпаке; проверьте информацию в JEI." 
+    },
+    {
+      "type": "2x_crafting_altar",
+      "a.heading": "Чистый шифер",
+      "a.recipe": "bloodmagic:altar/slate",
+      "b.heading": "Укреплённый шифер",
+      "b.recipe": "bloodmagic:altar/reinforcedslate"
+    },
+    {
+      "type": "2x_crafting_altar",
+      "a.heading": "Прочный шифер",
+      "a.recipe": "bloodmagic:altar/imbuedslate",
+      "b.heading": "Демонический шифер",
+      "b.recipe": "bloodmagic:altar/demonicslate"
+    }
+  ]
+}
+
+

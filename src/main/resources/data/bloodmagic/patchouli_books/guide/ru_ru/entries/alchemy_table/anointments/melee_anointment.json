@@ -1,0 +1,14 @@
+{
+  "name": "Точильное масло",
+  "icon": "bloodmagic:melee_anointment",
+  "category": "bloodmagic:alchemy_table/anointments",
+  "extra_recipe_mappings":[["bloodmagic:melee_anointment", 0]],
+  "pages": [
+    {
+      "type": "crafting_alchemy_table",
+      "heading": "Точильное масло",
+      "recipe": "bloodmagic:alchemytable/melee_damage_anointment",
+      "text": "Временно увеличивает наносимый урон в ближнем бою на +3. $(br2)Допустимые предметы: Инструменты, Мечи. $(br2)Применяет: Точильный камень I (256 ударов)"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Железный наконечник",
+  "icon": "bloodmagic:bow_power_anointment",
+  "category": "bloodmagic:alchemy_table/anointments",
+  "extra_recipe_mappings":[["bloodmagic:bow_power_anointment", 0]],
+  "pages": [
+    {
+      "type": "crafting_alchemy_table",
+      "heading": "Железный наконечник",
+      "recipe": "bloodmagic:alchemytable/bow_power_anointment",
+      "text": "Увеличивает урон выпущенных стрел на 25%. Также складывается с ванильными чарами. $(br2) Допустимые предметы: луки, арбалеты. $(br2) Применяет: Тяжёлый выстрел I (256 выстрелов)"
+    }
+  ]
+}

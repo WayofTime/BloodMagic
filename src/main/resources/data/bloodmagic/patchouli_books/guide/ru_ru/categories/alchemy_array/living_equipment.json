@@ -1,0 +1,7 @@
+{
+  "name": "Живая экипировка",
+  "description": "немного $(item)Чародейского пороха$() и горсткой этого нового $(item)Связывающего реагента$(), и перед вами открывается целый мир защиты и полезности .",
+  "icon": "bloodmagic:livinghelmet",
+  "parent": "bloodmagic:alchemy_array",
+  "sortnum": 2
+}

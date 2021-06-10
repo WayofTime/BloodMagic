@@ -1,0 +1,20 @@
+{
+  "name": "Дневной/ночной массив",
+  "icon": "minecraft:clock",
+  "category": "bloodmagic:alchemy_array/functional_array",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Основанные на времени массивы - это простые массивы, которые контролируют время дня. Элементы будут израсходованы, как только массив начнет изменять время. Эти рецепты временные и будут изменены в будущем. $(Br2)Дневной массив изменит время дня до следующего восхода солнца. Ночной массив изменит время дня до следующего заката."
+    },
+    {
+      "type": "2x_functional_array",
+      "a.heading": "Новый рассвет",
+      "a.recipe": "bloodmagic:array/day",
+      "a.image": "sunarray.png",
+      "b.heading": "Настоящие сумерки",
+      "b.recipe": "bloodmagic:array/night",
+      "b.image": "moonarray.png"
+    }
+  ]
+}

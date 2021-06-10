@@ -1,0 +1,41 @@
+{
+  "name": "Жатва Урожая Луны",
+  "icon": "minecraft:wheat",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "Жатва Урожая Луны",
+      "multiblock":{
+        "pattern":[
+          ["_WE_EW_",
+           "W__E__W",
+           "E_D_D_E",
+           "_E_0_E_",
+           "E_D_D_E",
+           "W__E__W",
+           "_WE_EW_"]
+        ],
+        "mapping":{
+          "0": "bloodmagic:masterritualstone",
+          "W": "bloodmagic:waterritualstone",
+          "E": "bloodmagic:earthritualstone",
+          "D": "bloodmagic:duskritualstone"
+        },
+        "symetrical": true
+      },
+      "text": "Используй $(l:bloodmagic:rituals/ritual_diviner#dusk)предсказатель ритуала [Dusk]$(/l) для облегчения строительства."
+    },
+    {
+      "type": "text",
+      "text": "Собирает урожай в диапазоне, оставляя результаты на земле.$(br2)$(water)Руны воды: 8$(br)$(earth)Руны земли: 12$(br)$()Сумеречные руны: 4$(br2)$()Всего рун: 24" 
+    },
+    {
+      "type": "spotlight",
+      "item": "bloodmagic:ritualtinkerer",
+      "title": "Классификация",
+      "text": "(Сбор урожая) Растения в этом диапазоне будут собраны. $(br) $(li)Максимальный объем: Полный диапазон. $(li)Горизонтальный радиус: 15 $(li)Вертикальный радиус: 15"
+    }
+  ]
+}
+

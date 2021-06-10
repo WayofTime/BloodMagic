@@ -1,0 +1,95 @@
+{
+  "name": "Алхимический стол",
+  "icon": "bloodmagic:alchemytable",
+  "category": "bloodmagic:alchemy_table",
+  "extra_recipe_mappings":[
+    ["bloodmagic:plantoil", 8],
+    ["bloodmagic:coalsand", 9]
+  ],
+  "pages": [
+    {
+      "type": "text",
+      "text": "Алхимический стол требует небольшого количества LP и нескольких ингредиентов, чтобы творить чудеса! $ (Br2) Большая часть его содержимого - это NYI. $ (br2) Наведите указатель мыши на стрелку LP для получения дополнительной информации."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bloodmagic:alchemy_table"
+    },
+    {
+      "type": "image",
+      "images": [
+        "bloodmagic:images/entries/alchemy_table/alchemy_table_gui.png"
+      ],
+      "title": "Графический интерфейт алхимического стола",
+      "border": true,
+      "text": "Алхимический стол может быть вставлен или извлечён. Вот как это работает."
+    },
+    {
+      "type": "text",
+      "text": "$(item)Алхимический стол$() имеет несколько кнопок с правой стороны. Вот они, по порядку: $(underline)В$()низ, $(underline)В$()верх, $(underline)На$()север, $(underline)На$()юг, $(underline)На$()запад, и $(underline)на$()восток. Чтобы использовать их, сначала нажмите на любой слот в алхимическом столе. (Здесь мы выбрали центральный слот «готового предмета» для демонстрации.) Затем нажмите одну из этих шести кнопок, чтобы переключить, должен ли $(item)алхимический стол$() разрешить $(item)воронки$(), трубы, или другие подобные внешние вмешательства от этой стороны. Чтобы вернуться к нормальной работе стола,"
+    },
+    {
+      "type": "text",
+      "text": "просто щелкните слот еще раз, чтобы отменить выбор. Значок, отображаемый в слоте, показывает, принимает ли стол входы или предоставляет выходы. На изображении в качестве примера мы разрешаем трубам извлекать элементы из нашего центрального слота только в $(underline)Н$()ижний слот, и любые попытки извлечь элементы с других сторон не увенчаются успехом. $(br2)На следующих страницах документа номера рецептов, доступных в настоящее время для алхимического стола."
+    },
+
+    {
+      "type": "crafting_alchemy_table",
+      "heading": "Базовая режущая жидкость",
+	  "anchor": "cutting_fluid",
+      "recipe": "bloodmagic:alchemytable/basic_cutting_fluid",
+      "text": "Базовая режущая жидкость используется для двукратной обработки руды.  Она также используется в $(l:bloodmagic:utility/alchemical_reaction_chamber)Камере алхимических реакций$(/l) и в $(l:bloodmagic:rituals/ritual_list/ritual_crushing)Ритуале Сокрушителя$() с той же целью." 
+    },
+    {
+      "type": "2x_crafting_alchemy_table",
+      "a.heading": "Железный песок",
+      "a.recipe": "bloodmagic:alchemytable/sand_iron",
+      "b.heading": "Золотой песок",
+      "b.recipe": "bloodmagic:alchemytable/sand_gold"
+    },
+    {
+      "type": "text",
+      "text": "Алхимический стол предлагает несколько способов получить ванильные предметы."
+    },
+    {
+      "type": "3x_crafting_alchemy_table",
+      "a.heading": "Трава",
+      "a.recipe": "bloodmagic:alchemytable/grass_block",
+      "b.heading": "Кожа",
+      "b.recipe": "bloodmagic:alchemytable/leather_from_flesh",
+      "c.heading": "Хлеб",
+      "c.recipe": "bloodmagic:alchemytable/bread"
+    },
+    {
+      "type": "2x_crafting_alchemy_table",
+      "a.heading": "Глина",
+      "a.recipe": "bloodmagic:alchemytable/clay_from_sand",
+      "b.heading": "Нить",
+      "b.recipe": "bloodmagic:alchemytable/string"
+    },
+    {
+      "type": "2x_crafting_alchemy_table",
+      "a.heading": "Кремень",
+      "a.recipe": "bloodmagic:alchemytable/flint_from_gravel",
+      "b.heading": "Порох",
+      "b.recipe": "bloodmagic:alchemytable/gunpowder",
+      "b.text": "Селитра NYI в Blood Magic."
+    },
+    {
+      "type": "3x_crafting_alchemy_table",
+      "a.heading": "Растительное масло",
+      "a.recipe": "bloodmagic:alchemytable/plantoil_from_wheat",
+      "b.recipe": "bloodmagic:alchemytable/plantoil_from_carrots",
+      "c.recipe": "bloodmagic:alchemytable/plantoil_from_taters"
+    },
+    {
+      "type": "3x_crafting_alchemy_table",
+      "a.heading": "Растительное масло продолжение.",
+      "a.recipe": "bloodmagic:alchemytable/plantoil_from_beets",
+      "b.heading": "Угольный песок",
+      "b.recipe": "bloodmagic:alchemytable/sand_coal",
+      "c.heading": "Взрывной порошок",
+      "c.recipe": "bloodmagic:alchemytable/explosive_powder"
+    }
+  ]
+}

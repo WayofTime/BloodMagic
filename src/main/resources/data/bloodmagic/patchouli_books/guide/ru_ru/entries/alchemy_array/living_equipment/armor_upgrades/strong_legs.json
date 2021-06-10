@@ -1,0 +1,11 @@
+{
+  "name": "Сильные ногм",
+  "icon": "minecraft:diamond_leggings",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Эффект: увеличивает высоту прыжка и снижает урон от падения до максимум 7,5 дополнительных блоков и 83% сопротивления падению. $(br2) Обучается во время прыжков. $(br2) Максимальный уровень: 10"
+    }
+  ]
+}

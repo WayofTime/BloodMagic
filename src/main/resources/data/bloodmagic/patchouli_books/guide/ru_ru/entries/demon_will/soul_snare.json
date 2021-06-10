@@ -1,0 +1,30 @@
+{
+  "name": "Ваша первая энергия",
+  "icon": "bloodmagic:soulsnare",
+  "category": "bloodmagic:demon_will",
+  "priority": "true",
+  "pages": [
+    {
+      "type": "crafting_altar",
+      "heading": "Ловушка для душ",
+      "recipe": "bloodmagic:altar/soul_snare",
+      "text": "$(item)Ловушки для душ$() являются вашими воротами в мир $(l:bloodmagic:demon_will/demon_will)демонической энергии$(), части $(6)Blood Magic$()."
+    },
+    {
+      "type": "text",
+      "text": "Использовать ловушки достаточно просто - создайте их внушительное количество, найдите враждебных мобов и бросайте в них ловушки, пока не появятся белые частицы. Убейте их быстро, и вы получите $(l:bloodmagic:demon_will/demon_will)демоническую энергию$(). Прежде чем вы спросите, да, енчант Добычи улучшат ваши шансы. Собрав пару, вы можете приступить к созданию  $(l:bloodmagic:demon_will/sentient_sword)разумного меча$() и $(l:bloodmagic:demon_will/soul_gem)камня душ$() - это значительно упростит сбор $(l:bloodmagic:demon_will/demon_will)демонической энергии$()."
+    },
+    {
+      "type": "image",
+      "images": [
+        "bloodmagic:images/entries/demon_will/snare_particles.png"
+      ],
+      "title": "Ловушка на скелете",
+      "border": true,
+      "text": "Скелет с белыми частицами после попадания ловушкой."
+    }
+  ]
+}
+
+
+

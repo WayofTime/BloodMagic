@@ -1,0 +1,23 @@
+{
+  "name": "Сигил удержания",
+  "icon": "bloodmagic:sigilofholding",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "extra_recipe_mappings":[
+    ["bloodmagic:reagentholding", 1],
+    ["bloodmagic:sigilofholding", 1]
+  ],
+  "pages": [
+    {
+      "type": "text",
+      "text": "[Требуется передача содержимого от Wrince или WayofTime]$(br2)Нажмите \"$(k:bloodmagic.keybind.open_holding)\" wудерживая символ, чтобы открыть его инвентарь.$()$(br)Нажмите \"$(k:bloodmagic.keybind.cycle_holding_pos)\" для перехода вперед,$() или \"$(k:bloodmagic.keybind.cycle_holding_neg)\" для перехода назад.$() Шифт и использование колеса мыши также работают. $(br2) Если вы не видите никаких привязок клавиш, значит, у вас их еще нет."
+    },
+    {
+      "type": "crafting_2-step_sigil",
+      "alchemy_table.heading": "Реагент удержания",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_holding",
+      "array.heading": "Сигил удержания",
+      "array.recipe": "bloodmagic:array/holdingsigil",
+      "array.text": "$(italic)Сигил-приёма"
+    }
+  ]
+}

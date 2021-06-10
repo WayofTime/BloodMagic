@@ -1,0 +1,85 @@
+{
+  "name": "Взывные заряды",
+  "icon": "bloodmagic:shaped_charge",
+  "category": "bloodmagic:demon_will",
+  "extra_recipe_mappings":[
+    ["bloodmagic:shaped_charge", 2],
+    ["bloodmagic:deforester_charge", 4],
+    ["bloodmagic:vein_charge", 6],
+    ["bloodmagic:fungal_charge", 8]
+  ],
+  "pages":[
+    {
+      "type": "text",
+      "text": "Добыча ископаемых и лесоводство хорошо для тех, кто не мечтает о большем, но какой уважающий себя Кровожадный когда-либо опустится до этого? $(br2)Помня об этом, вы изобрели несколько хитрых маленьких устройств. Просто бросьте их в какие-то надоедливые деревья, камни или ещё куда-либо, что вы хотите уничтожить, и подождите, пока они самовозгораются."
+    },
+    {
+      "type": "text",
+      "text": "Мало того, вы можете улучшить их функциональность с помощью $(item)помазания$() их определенными ингредиентами и взяв немного $(raw)энергии$(), aкак описано после каждой записи. $(br2)В настоящее время доступны следующие помазания: $(li)Удачливый - на сломанные блоки применяется $(item)Удача I$(). $(li)Раскалёный инструмент - сломанные блоки $(item)плавятся$(). $(li)Мягкое касание - на сломанные блоки применяется эффеки $(item)шёлкового касания$()."
+    },
+    {
+      "type": "crafting_soulforge",
+      "heading": "Кумулятивный заряд",
+      "recipe": "bloodmagic:soulforge/shaped_charge",
+	  "anchor":"shaped_charge",
+	  "text": "$(item)Кумулятивный заряд$() уничтожит куб 5x5x5, обращенный к той стороне блока, на которую он приземлится, дропая все блоки, как если бы они были вскопаны киркой. Он унитожает даже обсидиан, и делает очень даже прикольное $(o)KABOOM$() во время использовния."
+    },
+    {
+      "type": "3x_crafting_soulforge",
+      "a.heading": "Удачливый",
+      "a.recipe": "bloodmagic:soulforge/shaped_charge_fortune_1",
+      "b.heading": "Раскалённый инструмент",
+      "b.recipe": "bloodmagic:soulforge/shaped_charge_smelting",
+      "c.heading": "Мягкое касание",
+      "c.recipe": "bloodmagic:soulforge/shaped_charge_silk_touch"
+    },
+    {
+      "type": "crafting_soulforge",
+      "heading": "Антилесной заряд",
+      "recipe": "bloodmagic:soulforge/deforester_charge",
+	  "anchor":"deforester_charge",
+	  "text": "$(item)Антилесной заряд$() предназначен для валки деревьев. Его можно использовать на бревнах или листьях, и он повалит всё, ломая до $(item)двух стаков$() бревён за раз (и аккуратно удаляет любые листья, с которыми он сталкивается в процессе!). Даже гигантские деревья джунглей упадут за считанные секунды."
+    },
+    {
+      "type": "3x_crafting_soulforge",
+      "a.heading": "Удачливый",
+      "a.recipe": "bloodmagic:soulforge/deforester_charge_fortune_1",
+      "b.heading": "Раскалённый инструмент",
+      "b.recipe": "bloodmagic:soulforge/deforester_charge_smelting",
+      "c.heading": "Мягкое касание",
+      "c.recipe": "bloodmagic:soulforge/deforester_charge_silk_touch"
+    },
+    {
+      "type": "crafting_soulforge",
+      "heading": "Контролируемый заряд",
+      "recipe": "bloodmagic:soulforge/vein_charge",
+      "anchor":"controlled_charge",
+      "text": "$(item)Контролируемый заряд$(), уничтожает только те блоки $(underline)идентичные блоку, на который он был направлен$(). Он уничтожит до $(item)трёх стаков$() блоков от исходной точки. Как и в случае с другими зарядами, все добытые блоки выпадают."
+    },
+    {
+      "type": "3x_crafting_soulforge",
+      "a.heading": "Удачливый",
+      "a.recipe": "bloodmagic:soulforge/vein_charge_fortune_1",
+      "b.heading": "Раскалённый инструмент",
+      "b.recipe": "bloodmagic:soulforge/vein_charge_smelting",
+      "c.heading": "Мягкое касание",
+      "c.recipe": "bloodmagic:soulforge/vein_charge_silk_touch"
+    },
+    {
+      "type": "crafting_soulforge",
+      "heading": "Грибной заряд",
+      "recipe": "bloodmagic:soulforge/fungal_charge",
+      "anchor":"fungal_charge",
+      "text": "$(item)Грибной заряд$() предназначен для рубки гигантских грибов как в обычном мире, так и в аду. Хотя сомнительно, что вы когда-нибудь достигнете этого за один заряд, он может разбить до $(item)трёх стаков блоков$()."
+    },
+    {
+      "type": "3x_crafting_soulforge",
+      "a.heading": "Удачливый",
+      "a.recipe": "bloodmagic:soulforge/fungal_charge_fortune_1",
+      "b.heading": "Раскалённый инструмент",
+      "b.recipe": "bloodmagic:soulforge/fungal_charge_smelting",
+      "c.heading": "Мягкое касание",
+      "c.recipe": "bloodmagic:soulforge/fungal_charge_silk_touch"
+    }
+  ]
+}
