@@ -7,23 +7,23 @@ import net.minecraft.util.text.TextFormatting;
 
 public enum EnumRuneType implements IStringSerializable
 {
-	BLANK(TextFormatting.GRAY, "blankRune", "$(blank)"),
-	WATER(TextFormatting.AQUA, "waterRune", "$(water)"),
-	FIRE(TextFormatting.RED, "fireRune", "$(fire)"),
-	EARTH(TextFormatting.GREEN, "earthRune", "$(earth)"),
-	AIR(TextFormatting.WHITE, "airRune", "$(air)"),
-	DUSK(TextFormatting.DARK_GRAY, "duskRune", "$(dusk)"),
-	DAWN(TextFormatting.GOLD, "dawnRune", "$(dawn)");
+	BLANK(TextFormatting.GRAY),
+	WATER(TextFormatting.AQUA),
+	FIRE(TextFormatting.RED),
+	EARTH(TextFormatting.GREEN),
+	AIR(TextFormatting.WHITE),
+	DUSK(TextFormatting.DARK_GRAY),
+	DAWN(TextFormatting.GOLD);
 
 	public final TextFormatting colorCode; // Ritual Diviner's tooltip Color
-	public final String translationKey; // Suffix for translation.
-	public final String patchouliColor; // Patchouli Guidebook's color code (set in book.json).
+	public final String translationKey = this.name().toLowerCase(Locale.ROOT) + "Rune"; // Suffix for translation.
+	public final String patchouliColor = "$(" + this.name().toLowerCase(Locale.ROOT) + ")"; // Patchouli Guidebook's
+																							// color code
+	// (set in book.json).
 
-	EnumRuneType(TextFormatting colorCode, String translationKey, String patchouliColor)
+	EnumRuneType(TextFormatting colorCode)
 	{
 		this.colorCode = colorCode;
-		this.translationKey = translationKey;
-		this.patchouliColor = patchouliColor;
 	}
 
 	@Override

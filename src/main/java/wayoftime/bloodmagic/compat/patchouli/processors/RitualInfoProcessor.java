@@ -48,7 +48,7 @@ public class RitualInfoProcessor implements IComponentProcessor
 			Map<EnumRuneType, Integer> runeMap = runeCount.getB();
 			for (EnumRuneType type : EnumRuneType.values())
 			{
-				int count = runeMap.get(type);
+				int count = runeMap.getOrDefault(type, 0);
 				if (count > 0)
 				{
 					output += type.patchouliColor + TextHelper.localize(TEXT_BASE + type.translationKey, count) + "$()$(br)";

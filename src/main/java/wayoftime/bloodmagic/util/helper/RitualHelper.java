@@ -265,50 +265,11 @@ public class RitualHelper
 		Map<EnumRuneType, Integer> runeMap = new EnumMap<>(EnumRuneType.class);
 		List<RitualComponent> components = Lists.newArrayList();
 		ritual.gatherComponents(components::add);
-		int blankRunes = 0;
-		int waterRunes = 0;
-		int earthRunes = 0;
-		int fireRunes = 0;
-		int airRunes = 0;
-		int duskRunes = 0;
-		int dawnRunes = 0;
 		int totalRunes = components.size();
-
 		for (RitualComponent component : components)
 		{
-			switch (component.getRuneType())
-			{
-			case BLANK:
-				blankRunes++;
-				break;
-			case WATER:
-				waterRunes++;
-				break;
-			case EARTH:
-				earthRunes++;
-				break;
-			case FIRE:
-				fireRunes++;
-				break;
-			case AIR:
-				airRunes++;
-				break;
-			case DUSK:
-				duskRunes++;
-				break;
-			case DAWN:
-				dawnRunes++;
-				break;
-			}
+			runeMap.compute(component.getRuneType(), (k, v) -> v == null ? 1 : v + 1);
 		}
-		runeMap.put(EnumRuneType.BLANK, blankRunes);
-		runeMap.put(EnumRuneType.WATER, waterRunes);
-		runeMap.put(EnumRuneType.EARTH, earthRunes);
-		runeMap.put(EnumRuneType.FIRE, fireRunes);
-		runeMap.put(EnumRuneType.AIR, airRunes);
-		runeMap.put(EnumRuneType.DUSK, duskRunes);
-		runeMap.put(EnumRuneType.DAWN, dawnRunes);
-
 		return new Tuple<Integer, Map<EnumRuneType, Integer>>(totalRunes, runeMap);
 	}
 }

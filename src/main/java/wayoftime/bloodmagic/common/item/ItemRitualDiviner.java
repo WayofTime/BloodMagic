@@ -257,7 +257,7 @@ public class ItemRitualDiviner extends Item
 				Map<EnumRuneType, Integer> runeMap = runeCount.getB();
 				for (EnumRuneType type : EnumRuneType.values())
 				{
-					int count = runeMap.get(type);
+					int count = runeMap.getOrDefault(type, 0);
 					if (count > 0)
 					{
 						tooltip.add(new TranslationTextComponent(tooltipBase + type.translationKey, count).mergeStyle(type.colorCode));
