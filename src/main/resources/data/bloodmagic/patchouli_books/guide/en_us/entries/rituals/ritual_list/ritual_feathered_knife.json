@@ -24,8 +24,12 @@
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "feathered_knife"
+    },
+    {
       "type": "text",
-      "text": "Drains health from players in its area and puts the LP into a nearby blood altar. LP Gains are affected by $(l:bloodmagic:altar/blood_rune/self_sacrifice_rune)Runes of Self Sacrifice.$() $(br2)$(water)Water Runes: 4$() $(br)$(air)Air Runes: 8$() $(br)$(fire)Fire Runes: 8$() $(br)$(earth)Earth Runes: 16$() $(br)Dusk Runes: 4 $(br2)Total Runes: 40" 
+      "text": "Drains health from players in its area and puts the LP into a nearby blood altar. LP Gains are affected by $(l:bloodmagic:altar/blood_rune/self_sacrifice_rune)Runes of Self Sacrifice.$()" 
     },
     {
       "type": "spotlight",

@@ -23,8 +23,12 @@
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "crushing"
+    },
+    {
       "type": "text",
-      "text": "Breaks blocks within its $(item)Crushing Range$() and places the items into the linked $(item)Chest$().$(br2)$(air)Air Runes: 4$(br)$(fire)Fire Runes: 4$(br)$(earth)Earth Runes: 4$(br)$()Dusk Runes: 4$(br2)$()Total Runes: 16" 
+      "text": "Breaks blocks within its $(item)Crushing Range$() and places the items into the linked $(item)Chest$()." 
     },
     {
       "type": "spotlight",

@@ -26,8 +26,12 @@
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "well_of_suffering"
+    },
+    {
       "type": "text",
-      "text": "This ritual attacks mobs within its damage zone and puts the harvested $(blood)Blood$() into a nearby $(l:bloodmagic:altar/blood_altar)Blood Altar$(). Put a $(l:bloodmagic:altar/soul_network)Blood Orb$() in the Altar, maybe add a few $(l:bloodmagic:altar/blood_rune/sacrifice_rune)Runes of Sacrifice$() for good measure and you'll never have to worry about your LP supplies again... As long as you can supply enough mobs.$(br)$(water)Water Runes: 16$(br)$(air)Air Runes: 4$(br)$(fire)Fire Runes: 8$(br)$(earth)Earth Runes: 4$(br)$()Dusk Runes: 4$(br2)$()Total Runes: 36" 
+      "text": "This ritual attacks mobs within its damage zone and puts the harvested $(blood)Blood$() into a nearby $(l:bloodmagic:altar/blood_altar)Blood Altar$(). Put a $(l:bloodmagic:altar/soul_network)Blood Orb$() in the Altar, maybe add a few $(l:bloodmagic:altar/blood_rune/sacrifice_rune)Runes of Sacrifice$() for good measure and you'll never have to worry about your LP supplies again... As long as you can supply enough mobs." 
     },
     {
       "type": "spotlight",

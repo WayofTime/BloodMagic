@@ -27,8 +27,12 @@
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "harvest"
+    },
+    {
       "type": "text",
-      "text": "Harvests plants within its range, dropping the results on the ground.$(br2)$(water)Water Runes: 8$(br)$(earth)Earth Runes: 12$(br)$()Dusk Runes: 4$(br2)$()Total Runes: 24" 
+      "text": "Harvests plants within its range, dropping the results on the ground." 
     },
     {
       "type": "spotlight",

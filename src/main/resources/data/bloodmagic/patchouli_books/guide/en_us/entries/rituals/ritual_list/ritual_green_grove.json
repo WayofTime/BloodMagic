@@ -22,8 +22,12 @@
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$(/l) for easier construction."
     },
     {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "green_grove"
+    },
+    {
       "type": "text",
-      "text": "Grows crops within its area.$(br2)$(water)Water Runes: 4$() $(br)$(earth)Earth Runes: 4$() $(br2)Total Runes: 8" 
+      "text": "Grows crops within its area." 
     },
     {
       "type": "spotlight",

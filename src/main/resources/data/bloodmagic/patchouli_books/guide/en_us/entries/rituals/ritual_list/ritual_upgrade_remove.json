@@ -27,8 +27,12 @@
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "upgrade_remove"
+    },
+    {
       "type": "text",
-      "text": "Removes all upgrades (and downgrades) from your $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$() and gives you the corresponding Upgrade (and Downgrade) $(l:bloodmagic:alchemy_array/living_equipment/living_upgrades)Tomes$(). You can right click while holding one of these $(item)Tomes$() to re-apply them to your $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$() again.$(br2)$(water)Water Runes: 8 $(br)$(air)Air Runes: 4 $(br)$(fire)Fire Runes: 12 $(br)$(earth)Earth Runes: 20 $(br)$()Dusk Runes: 4 $(br2)$()Total Runes: 48"
+      "text": "Removes all upgrades (and downgrades) from your $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$() and gives you the corresponding Upgrade (and Downgrade) $(l:bloodmagic:alchemy_array/living_equipment/living_upgrades)Tomes$(). You can right click while holding one of these $(item)Tomes$() to re-apply them to your $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$() again."
     }
   ]
 }

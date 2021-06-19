@@ -24,8 +24,12 @@
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "regeneration"
+    },
+    {
       "type": "text",
-      "text": "Casts regeneration on entities within its range if they are missing health. $(br2)$(water)Water Runes: 8 $(br)$(air)Air Runes: 6 $(br)$(fire)Fire Runes: 6 $(br)$(earth)Earth Runes: 20 $(br)$()Dusk Runes: 4$(br2)$()Total Runes: 44" 
+      "text": "Casts regeneration on entities within its range if they are missing health." 
     },
     {
       "type": "spotlight",

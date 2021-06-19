@@ -25,8 +25,12 @@
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "crystal_split"
+    },
+    {
       "type": "text",
-      "text": "Splits apart a well-grown $(raw)Raw Crystal Cluster$() into several aspected crystal clusters. For additional setup information, see the next page. For more information on Aspected Will, see $(l:bloodmagic:demon_will/aspected_will)Aspected Will$(). $(br2)$(blank)Blank Runes: 4 $(br)$(water)Water Runes: 1 $(br)$(air)Air Runes: 1 $(br)$(fire)Fire Runes: 1 $(br)$(earth)Earth Runes: 1 $(br)$()Dusk Runes: 12 $(br2)$()Total Runes: 20" 
+      "text": "Splits apart a well-grown $(raw)Raw Crystal Cluster$() into several aspected crystal clusters. For additional setup information, see the next page. For more information on Aspected Will, see $(l:bloodmagic:demon_will/aspected_will)Aspected Will$()." 
 	},
     {
       "type": "image",

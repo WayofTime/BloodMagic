@@ -23,8 +23,12 @@
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$(/l) for easier construction."
     },
     {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "magnetism"
+    },
+    {
       "type": "text",
-      "text": "Pulls up ores from the ground below and puts them into its placement range.$(br2)$(air)Air Runes: 4$(br)$(fire)Fire Runes: 4$(br)$(earth)Earth Runes: 8$(br2)$()Total Runes: 16" 
+      "text": "Pulls up ores from the ground below and puts them into its placement range." 
     },
     {
       "type": "text",

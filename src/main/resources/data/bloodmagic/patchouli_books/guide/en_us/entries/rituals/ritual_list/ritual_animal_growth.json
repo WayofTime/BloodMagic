@@ -26,8 +26,12 @@
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "animal_growth"
+    },
+    {
       "type": "text",
-      "text": "Increases the maturity rate of baby animals within its range.$(br2)$(water)Water Runes: 4$(br)$(air)Air Runes: 4$(br)$(br)$(earth)Earth Runes: 4$(br)$()Dusk Runes: 4$(br2)$()Total Runes: 16" 
+      "text": "Increases the maturity rate of baby animals within its range." 
     },
     {
       "type": "spotlight",

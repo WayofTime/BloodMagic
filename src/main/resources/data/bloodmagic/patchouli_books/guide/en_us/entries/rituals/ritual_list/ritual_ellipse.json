@@ -33,8 +33,12 @@
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "ellipsoid"
+    },
+    {
       "type": "text",
-      "text": "Creates a hollow spheroid around the ritual using the blocks in the attached chest. Good for building complicated shapes, such as the mighty gold dome above your Evil Lair. ... You do have one of those, right? $(br2)$(water)Water Runes: 8$(br)$(air)Air Runes: 8$(br)$(fire)Fire Runes: 8$(br)$(earth)Earth Runes: 8$(br)$()Dusk Runes: 4$(br2)$()Total Runes: 36" 
+      "text": "Creates a hollow spheroid around the ritual using the blocks in the attached chest. Good for building complicated shapes, such as the mighty gold dome above your Evil Lair. ... You do have one of those, right?" 
     },
 	{
 	  "type": "spotlight",

@@ -24,8 +24,12 @@
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "crystal_harvest"
+    },
+    {
       "type": "text",
-      "text": "Breaks $(raw)Demon Will$() Crystal Clusters of all aspects within its range, dropping the results on top of the crystals. $(br2)$(air)Air Runes: 4 $(br)$(fire)Fire Runes: 20 $(br)$(earth)Earth Runes: 8 $(br)$()Dusk Runes: 12 $(br2)$()Total Runes: 44" 
+      "text": "Breaks $(raw)Demon Will$() Crystal Clusters of all aspects within its range, dropping the results on top of the crystals." 
     },
     {
       "type": "spotlight",
