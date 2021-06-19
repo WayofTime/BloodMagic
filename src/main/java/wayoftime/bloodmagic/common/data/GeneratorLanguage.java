@@ -380,8 +380,10 @@ public class GeneratorLanguage extends LanguageProvider
 		add("patchouli.bloodmagic.living_armour_upgrade_table.upgrade_points", "Upgrade Points");
 		add("patchouli.bloodmagic.ritual_info.activation_cost", "Activation Cost: $(blood)%d LP$()$(br)");
 		add("patchouli.bloodmagic.ritual_info.upkeep_cost", "Base Usage Cost: $(blood)%d LP$()$(br)Base Interval: %d Ticks$(br)");
-		add("patchouli.bloodmagic.ritual_info.weak_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#weak)%s$(/l)$(br)");
-		add("patchouli.bloodmagic.ritual_info.awakened_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#awakened)%s$(/l)$(br)");
+		add("patchouli.bloodmagic.ritual_info.weak_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#weak)%s$(/l)");
+		add("patchouli.bloodmagic.ritual_info.awakened_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#awakened)%s$(/l)");
+		add("patchouli.bloodmagic.ritual_info.counter_formatter", "%s%s$()$(br)");
+		add("patchouli.bloodmagic.ritual_info.output", "%s$(br2)%s$(br2)%s$(br)%s$(br)%s$(br)%s");
 
 		// Keybinds
 		add("bloodmagic.keybind.open_holding", "Open Sigil of Holding");

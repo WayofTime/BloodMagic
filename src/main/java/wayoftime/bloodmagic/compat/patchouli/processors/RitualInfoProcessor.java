@@ -39,41 +39,48 @@ public class RitualInfoProcessor implements IComponentProcessor
 		}
 		if (key.equals("auto_text"))
 		{
-			final String TEXT_BASE = ItemRitualDiviner.tooltipBase; // Use the Ritual Diviner's text.
+			final String LANGUAGE_BASE = "patchouli.bloodmagic.ritual_info.";
+			final String DIVINER_BASE = ItemRitualDiviner.tooltipBase; // Use the Ritual Diviner's text.
 
-			String output = TextHelper.localize(ritual.getTranslationKey() + ".info") + "$(br2)";
+			String infoBlurb = TextHelper.localize(ritual.getTranslationKey() + ".info");
 
-			Tuple<Integer, Map<EnumRuneType, Integer>> runeCount = RitualHelper.countRunes(ritual);
-			int totalRunes = runeCount.getA();
-			Map<EnumRuneType, Integer> runeMap = runeCount.getB();
+			String runeCounts = "";
+			Tuple<Integer, Map<EnumRuneType, Integer>> runeCounter = RitualHelper.countRunes(ritual);
+			int totalRunes = runeCounter.getA();
+			Map<EnumRuneType, Integer> runeMap = runeCounter.getB();
 			for (EnumRuneType type : EnumRuneType.values())
 			{
 				int count = runeMap.getOrDefault(type, 0);
 				if (count > 0)
 				{
-					output += type.patchouliColor + TextHelper.localize(TEXT_BASE + type.translationKey, count) + "$()$(br)";
+					runeCounts += TextHelper.localize(LANGUAGE_BASE + "counter_formatter", type.patchouliColor, TextHelper.localize(DIVINER_BASE + type.translationKey, count));
 				}
 			}
 
-			output += "$(br2)" + TextHelper.localize(TEXT_BASE + "totalRune", totalRunes) + "$(br)";
+			String totalRuneCount = TextHelper.localize(DIVINER_BASE + "totalRune", totalRunes);
+
+			String crystalLevel;
 			switch (ritual.getCrystalLevel())
 			{
 			case 0:
-				output += TextHelper.localize("patchouli.bloodmagic.ritual_info.weak_activation_crystal_link", TextHelper.localize("item.bloodmagic.activationcrystalweak"));
+				crystalLevel = TextHelper.localize(LANGUAGE_BASE + "weak_activation_crystal_link", TextHelper.localize("item.bloodmagic.activationcrystalweak"));
 				break;
 			case 1:
-				output += TextHelper.localize("patchouli.bloodmagic.ritual_info.awakened_activation_crystal_link", TextHelper.localize("item.bloodmagic.activationcrystalawakened"));
+				crystalLevel = TextHelper.localize(LANGUAGE_BASE + "awakened_activation_crystal_link", TextHelper.localize("item.bloodmagic.activationcrystalawakened"));
 				break;
 			default:
-				output += TextHelper.localize("item.bloodmagic.activationcrystalcreative") + "$(br)";
-			}
-			output += TextHelper.localize("patchouli.bloodmagic.ritual_info.activation_cost", ritual.getActivationCost());
-			if (ritual.getRefreshCost() != 0)
-			{
-				output += TextHelper.localize("patchouli.bloodmagic.ritual_info.upkeep_cost", ritual.getRefreshCost(), ritual.getRefreshTime());
+				crystalLevel = TextHelper.localize("item.bloodmagic.activationcrystalcreative");
 			}
 
-			return IVariable.wrap(output);
+			String activationCost = TextHelper.localize(LANGUAGE_BASE + "activation_cost", ritual.getActivationCost());
+
+			String upkeepCost = "";
+			if (ritual.getRefreshCost() != 0)
+			{
+				upkeepCost = TextHelper.localize(LANGUAGE_BASE + "upkeep_cost", ritual.getRefreshCost(), ritual.getRefreshTime());
+			}
+
+			return IVariable.wrap(TextHelper.localize(LANGUAGE_BASE + "output", infoBlurb, runeCounts, totalRuneCount, crystalLevel, activationCost, upkeepCost));
 		}
 		return null;
 	}
