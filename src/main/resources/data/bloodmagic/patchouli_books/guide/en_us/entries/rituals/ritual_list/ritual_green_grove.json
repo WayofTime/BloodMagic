@@ -17,17 +17,13 @@
           "E": "bloodmagic:earthritualstone",
           "W": "bloodmagic:waterritualstone"
         },
-        "symetrical": true
+        "symmetrical": true
       },
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$(/l) for easier construction."
     },
     {
       "type": "bloodmagic:ritual_info",
       "ritual": "green_grove"
-    },
-    {
-      "type": "text",
-      "text": "Grows crops within its area." 
     },
     {
       "type": "spotlight",

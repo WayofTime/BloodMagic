@@ -18,17 +18,13 @@
           "E": "bloodmagic:earthritualstone",
           "D": "bloodmagic:duskritualstone"
         },
-        "symetrical": true
+        "symmetrical": true
       },
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {
       "type": "bloodmagic:ritual_info",
       "ritual": "crushing"
-    },
-    {
-      "type": "text",
-      "text": "Breaks blocks within its $(item)Crushing Range$() and places the items into the linked $(item)Chest$()." 
     },
     {
       "type": "spotlight",

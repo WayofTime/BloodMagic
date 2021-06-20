@@ -22,17 +22,13 @@
           "E": "bloodmagic:earthritualstone",
           "D": "bloodmagic:duskritualstone"
         },
-        "symetrical": true
+        "symmetrical": true
       },
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {
       "type": "bloodmagic:ritual_info",
       "ritual": "harvest"
-    },
-    {
-      "type": "text",
-      "text": "Harvests plants within its range, dropping the results on the ground." 
     },
     {
       "type": "spotlight",
@@ -42,4 +38,3 @@
     }
   ]
 }
-

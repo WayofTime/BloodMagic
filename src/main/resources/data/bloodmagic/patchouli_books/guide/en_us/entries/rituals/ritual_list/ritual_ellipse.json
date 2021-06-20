@@ -28,7 +28,7 @@
           "E": "#bloodmagic:ritual_stones/earth_or_water",
           "D": "bloodmagic:duskritualstone"
         },
-        "symetrical": false
+        "symmetrical": false
       },
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
@@ -38,7 +38,7 @@
     },
     {
       "type": "text",
-      "text": "Creates a hollow spheroid around the ritual using the blocks in the attached chest. Good for building complicated shapes, such as the mighty gold dome above your Evil Lair. ... You do have one of those, right?" 
+      "text": "This ritual is purely aesthetic in nature, designed for the budding, yet lazy, builder that resides in all of us. It's particularly good for building complicated shapes, such as the mighty gold dome above your Evil Lair. ... You do have one of those, right?"
     },
 	{
 	  "type": "spotlight",

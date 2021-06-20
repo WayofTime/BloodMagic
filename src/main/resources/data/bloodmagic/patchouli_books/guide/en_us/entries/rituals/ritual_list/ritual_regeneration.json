@@ -19,7 +19,7 @@
           "E": "bloodmagic:earthritualstone",
           "D": "bloodmagic:duskritualstone"
         },
-        "symetrical": true
+        "symmetrical": true
       },
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
@@ -28,14 +28,10 @@
       "ritual": "regeneration"
     },
     {
-      "type": "text",
-      "text": "Casts regeneration on entities within its range if they are missing health." 
-    },
-    {
       "type": "spotlight",
       "item": "bloodmagic:corrosivecrystal",
       "title": "Corrosive",
-      "text": "Steals health from non-players inside of its Vampirism range and directly heals players."
+      "text": "Steals health from non-players inside of its Vampirism range (See overleaf) and directly heals players."
     },
     {
       "type": "spotlight",

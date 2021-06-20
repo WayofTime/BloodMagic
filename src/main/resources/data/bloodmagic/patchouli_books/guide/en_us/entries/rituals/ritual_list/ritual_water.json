@@ -16,17 +16,13 @@
           "0": "bloodmagic:masterritualstone",
           "W": "bloodmagic:waterritualstone"
         },
-        "symetrical": true
+        "symmetrical": true
       },
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$(/l) for easier construction."
     },
     {
       "type": "bloodmagic:ritual_info",
       "ritual": "water"
-    },
-    {
-      "type": "text",
-      "text": "Generates a source of water from the master ritual stone." 
     },
     {
       "type": "spotlight",
