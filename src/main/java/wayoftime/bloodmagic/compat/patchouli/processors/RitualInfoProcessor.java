@@ -1,5 +1,7 @@
 package wayoftime.bloodmagic.compat.patchouli.processors;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -21,14 +23,24 @@ import wayoftime.bloodmagic.util.helper.TextHelper;
  * {
  *   "type": "bloodmagic:ritual_info",    // Corresponding Template.
  *   "ritual": "ritual_id",    // Ritual ID set in-code by: @RitualRegister("ritual_id")
+ *   "text_overrides": [    // <See note below.>
+ *     ["text 1" , "formatting_code_1"],
+ *     ["text 2" , "formatting_code_2"]
+ *   ],
  *   "text": "Extra text."    // (Optional) Adds extra text below rest of entry.
  * },
+ * 
+ * Text overrides is used to add Patchouli formatting codes to the Ritual Diviner's text.
+ * Enter the Text to be formatted in the first entry.  The entire entry must be full word or words.
+ * The formatting codes will have the Patchouli formatting code symbols, $(code), are added automatically.
  */
 
 public class RitualInfoProcessor implements IComponentProcessor
 {
 	private Ritual ritual; // Ritual ID.
 	private String extraText = ""; // (Optional) Text to insert at the end of the entry.
+	private List<List<String>> overrideTable = new ArrayList<List<String>>();
+	// (Optional) list of text formatting overrides.
 
 	@Override
 	public void setup(IVariableProvider variables)
@@ -38,6 +50,17 @@ public class RitualInfoProcessor implements IComponentProcessor
 		if (ritual == null)
 		{
 			LogManager.getLogger().warn("Guidebook given invalid Ritual ID {}", id);
+		}
+
+		if (variables.has("text_overrides"))
+		{
+			List<IVariable> varOverridePairs = variables.get("text_overrides").asList();
+			for (IVariable varPair : varOverridePairs)
+			{
+				List<String> pair = new ArrayList<String>();
+				varPair.asStream().forEach(p -> pair.add(p.asString()));
+				overrideTable.add(pair);
+			}
 		}
 
 		if (variables.has("text"))
@@ -59,6 +82,15 @@ public class RitualInfoProcessor implements IComponentProcessor
 			final String DIVINER_BASE = ItemRitualDiviner.tooltipBase; // Use the Ritual Diviner's text.
 
 			String infoBlurb = TextHelper.localize(ritual.getTranslationKey() + ".info");
+			if (!overrideTable.isEmpty())
+			{
+				for (List<String> pair : overrideTable)
+				{
+					String text = pair.get(0);
+					String code = pair.get(1);
+					infoBlurb = infoBlurb.replaceAll(String.format("\\b%s\\b", text), TextHelper.localize("patchouli.bloodmagic.ritual_info.text_override_formatter", code, text));
+				}
+			}
 
 			StringBuilder runeCounts = new StringBuilder();
 			Tuple<Integer, Map<EnumRuneType, Integer>> runeCounter = RitualHelper.countRunes(ritual);

@@ -383,6 +383,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("patchouli.bloodmagic.ritual_info.weak_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#weak)%s$(/l)");
 		add("patchouli.bloodmagic.ritual_info.awakened_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#awakened)%s$(/l)");
 		add("patchouli.bloodmagic.ritual_info.counter_formatter", "%s%s$()$(br)");
+		add("patchouli.bloodmagic.ritual_info.text_override_formatter", "\\$(%s)%s\\$()");
 		add("patchouli.bloodmagic.ritual_info.output_formatter", "%s$(br2)%s$(br2)%s$(br)%s$(br)%s$(br)%s$(br2)%s");
 
 		// Keybinds

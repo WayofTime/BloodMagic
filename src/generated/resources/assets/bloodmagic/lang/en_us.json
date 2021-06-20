@@ -254,6 +254,7 @@
   "patchouli.bloodmagic.ritual_info.awakened_activation_crystal_link": "$(l:bloodmagic:rituals/activation_crystals#awakened)%s$(/l)",
   "patchouli.bloodmagic.ritual_info.counter_formatter": "%s%s$()$(br)",
   "patchouli.bloodmagic.ritual_info.output_formatter": "%s$(br2)%s$(br2)%s$(br)%s$(br)%s$(br)%s$(br2)%s",
+  "patchouli.bloodmagic.ritual_info.text_override_formatter": "\\$(%s)%s\\$()",
   "patchouli.bloodmagic.ritual_info.upkeep_cost": "Base Usage Cost: $(blood)%d LP$()$(br)Base Interval: %d Ticks$(br)",
   "patchouli.bloodmagic.ritual_info.weak_activation_crystal_link": "$(l:bloodmagic:rituals/activation_crystals#weak)%s$(/l)",
   "ritual.bloodmagic.altarBuilderRitual": "The Assembly of the High Altar",

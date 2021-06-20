@@ -25,7 +25,10 @@
     },
     {
       "type": "bloodmagic:ritual_info",
-      "ritual": "crystal_harvest"
+      "ritual": "crystal_harvest",
+      "text_overrides": [
+        ["Demon Will Crystal Clusters", "raw"]
+      ]
     },
     {
       "type": "spotlight",
