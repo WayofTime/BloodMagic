@@ -18,17 +18,13 @@
           "F": "bloodmagic:fireritualstone",
           "E": "bloodmagic:earthritualstone"
         },
-        "symetrical": true
+        "symmetrical": true
       },
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$(/l) for easier construction."
     },
     {
       "type": "bloodmagic:ritual_info",
       "ritual": "magnetism"
-    },
-    {
-      "type": "text",
-      "text": "Pulls up ores from the ground below and puts them into its placement range." 
     },
     {
       "type": "text",

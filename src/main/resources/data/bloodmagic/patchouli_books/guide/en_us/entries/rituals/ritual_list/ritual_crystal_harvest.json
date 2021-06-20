@@ -19,17 +19,13 @@
           "E": "bloodmagic:earthritualstone",
           "D": "bloodmagic:duskritualstone"
         },
-        "symetrical": true
+        "symmetrical": true
       },
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {
       "type": "bloodmagic:ritual_info",
       "ritual": "crystal_harvest"
-    },
-    {
-      "type": "text",
-      "text": "Breaks $(raw)Demon Will$() Crystal Clusters of all aspects within its range, dropping the results on top of the crystals." 
     },
     {
       "type": "spotlight",

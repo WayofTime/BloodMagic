@@ -21,17 +21,13 @@
           "E": "#bloodmagic:ritual_stones/earth_or_air",
           "D": "bloodmagic:duskritualstone"
         },
-        "symetrical": true
+        "symmetrical": true
       },
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {
       "type": "bloodmagic:ritual_info",
       "ritual": "animal_growth"
-    },
-    {
-      "type": "text",
-      "text": "Increases the maturity rate of baby animals within its range." 
     },
     {
       "type": "spotlight",
@@ -71,5 +67,3 @@
     }
   ]
 }
-
-
