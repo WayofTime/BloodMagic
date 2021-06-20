@@ -100,7 +100,7 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("tooltip.bloodmagic.sigil.water.desc", "Infinite water, anyone?");
 		add("tooltip.bloodmagic.sigil.lava.desc", "HOT! DO NOT EAT");
-		add("tooltip.bloodmagic.sigil.void.desc", "Better than a Swiffer®!");
+		add("tooltip.bloodmagic.sigil.void.desc", "Better than a Swiffer\u00AE!");
 		add("tooltip.bloodmagic.sigil.greengrove.desc", "Environmentally friendly");
 		add("tooltip.bloodmagic.sigil.magnetism.desc", "I have a very magnetic personality");
 		add("tooltip.bloodmagic.sigil.fastminer.desc", "Keep mining, and mining...");
@@ -193,7 +193,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.greenGroveRitual.info", "Grows crops within its area.");
 		add("ritual.bloodmagic.jumpRitual.info", "Causes entities to leap up into the air.");
 		add("ritual.bloodmagic.wellOfSufferingRitual.info", "Attacks mobs within its damage zone and puts the LP into a nearby blood altar.");
-		add("ritual.bloodmagic.featheredKnifeRitual.info", "Drains health from players in its area and puts the LP into a nearby blood altar.");
+		add("ritual.bloodmagic.featheredKnifeRitual.info", "Drains health from players in its area and puts the LP into a nearby blood altar. LP Gains are affected by Runes of Self Sacrifice.");
 		add("ritual.bloodmagic.regenerationRitual.info", "Casts regeneration on entities within its range if they are missing health.");
 		add("ritual.bloodmagic.regenerationRitual.default.info", "(Raw)");
 		add("ritual.bloodmagic.regenerationRitual.corrosive.info", "(Corrosive) Steals health from non-players inside of its Vampirism range and directly heals players.");
@@ -243,11 +243,11 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.suppressionRitual.info", "Suppresses fluids within its range - deactivating the ritual returns the fluids back to the world.");
 		add("ritual.bloodmagic.expulsionRitual.info", "Expels players from its range that are neither the owner nor have a bound blood orb in the chest on top of the master ritual stone.");
 		add("ritual.bloodmagic.zephyrRitual.info", "Picks up items within its range and places them into the linked chest.");
-		add("ritual.bloodmagic.upgradeRemoveRitual.info", "Removes all upgrades (and downgrades) from your Living Armor and gives you the corresponding Upgrade (and Downgrade) Tomes. These Tomes can be used to be applied to your Living Armor again.");
+		add("ritual.bloodmagic.upgradeRemoveRitual.info", "Removes all upgrades from your Living Armor and gives you the corresponding Upgrade Tomes. These Tomes can be used to re-apply them to your Living Armor.");
 		add("ritual.bloodmagic.armourEvolveRitual.info", "Increases the amount of maximum Upgrade Points on your Living Armor to 300.");
 		add("ritual.bloodmagic.animalGrowthRitual.info", "Increases the maturity rate of baby animals within its range.");
 		add("ritual.bloodmagic.forsakenSoulRitual.info", "Damages mobs within its damage range and when the mob dies a demon crystal within its crystal range will be grown.");
-		add("ritual.bloodmagic.crystalHarvestRitual.info", "Breaks Demon Will crystal clusters within its range, dropping the results on top of the crystals.");
+		add("ritual.bloodmagic.crystalHarvestRitual.info", "Breaks Demon Will Crystal Clusters of all aspects within its range, dropping the results on top of the crystals.");
 		add("ritual.bloodmagic.placerRitual.info", "Grabs blocks that are inside of the connected inventory and places them into the world.");
 		add("ritual.bloodmagic.fellingRitual.info", "A standard tree-cutting machine, this ritual will cut down all trees and leaves within its area and collect the drops.");
 		add("ritual.bloodmagic.pumpRitual.info", "Looks around the world and grabs fluids from the defined area. Will only remove and put the fluid into the connected tank if the tank has at least a bucket's worth of the same fluid.");
@@ -383,7 +383,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("patchouli.bloodmagic.ritual_info.weak_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#weak)%s$(/l)");
 		add("patchouli.bloodmagic.ritual_info.awakened_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#awakened)%s$(/l)");
 		add("patchouli.bloodmagic.ritual_info.counter_formatter", "%s%s$()$(br)");
-		add("patchouli.bloodmagic.ritual_info.output", "%s$(br2)%s$(br2)%s$(br)%s$(br)%s$(br)%s");
+		add("patchouli.bloodmagic.ritual_info.output_formatter", "%s$(br2)%s$(br2)%s$(br)%s$(br)%s$(br)%s$(br2)%s");
 
 		// Keybinds
 		add("bloodmagic.keybind.open_holding", "Open Sigil of Holding");
