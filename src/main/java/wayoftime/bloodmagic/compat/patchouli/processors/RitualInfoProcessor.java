@@ -15,9 +15,20 @@ import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.util.helper.RitualHelper;
 import wayoftime.bloodmagic.util.helper.TextHelper;
 
+/*
+ * Example Page:
+ * 
+ * {
+ *   "type": "bloodmagic:ritual_info",    // Corresponding Template.
+ *   "ritual": "ritual_id",    // Ritual ID set in-code by: @RitualRegister("ritual_id")
+ *   "text": "Extra text."    // (Optional) Adds extra text below rest of entry.
+ * },
+ */
+
 public class RitualInfoProcessor implements IComponentProcessor
 {
-	private Ritual ritual;
+	private Ritual ritual; // Ritual ID.
+	private String extraText = ""; // (Optional) Text to insert at the end of the entry.
 
 	@Override
 	public void setup(IVariableProvider variables)
@@ -27,6 +38,11 @@ public class RitualInfoProcessor implements IComponentProcessor
 		if (ritual == null)
 		{
 			LogManager.getLogger().warn("Guidebook given invalid Ritual ID {}", id);
+		}
+
+		if (variables.has("text"))
+		{
+			extraText = variables.get("text").asString();
 		}
 	}
 
@@ -44,7 +60,7 @@ public class RitualInfoProcessor implements IComponentProcessor
 
 			String infoBlurb = TextHelper.localize(ritual.getTranslationKey() + ".info");
 
-			String runeCounts = "";
+			StringBuilder runeCounts = new StringBuilder();
 			Tuple<Integer, Map<EnumRuneType, Integer>> runeCounter = RitualHelper.countRunes(ritual);
 			int totalRunes = runeCounter.getA();
 			Map<EnumRuneType, Integer> runeMap = runeCounter.getB();
@@ -53,7 +69,7 @@ public class RitualInfoProcessor implements IComponentProcessor
 				int count = runeMap.getOrDefault(type, 0);
 				if (count > 0)
 				{
-					runeCounts += TextHelper.localize(LANGUAGE_BASE + "counter_formatter", type.patchouliColor, TextHelper.localize(DIVINER_BASE + type.translationKey, count));
+					runeCounts.append(TextHelper.localize(LANGUAGE_BASE + "counter_formatter", type.patchouliColor, TextHelper.localize(DIVINER_BASE + type.translationKey, count)));
 				}
 			}
 
@@ -80,7 +96,7 @@ public class RitualInfoProcessor implements IComponentProcessor
 				upkeepCost = TextHelper.localize(LANGUAGE_BASE + "upkeep_cost", ritual.getRefreshCost(), ritual.getRefreshTime());
 			}
 
-			return IVariable.wrap(TextHelper.localize(LANGUAGE_BASE + "output", infoBlurb, runeCounts, totalRuneCount, crystalLevel, activationCost, upkeepCost));
+			return IVariable.wrap(TextHelper.localize(LANGUAGE_BASE + "output_formatter", infoBlurb, runeCounts.toString(), totalRuneCount, crystalLevel, activationCost, upkeepCost, extraText));
 		}
 		return null;
 	}
