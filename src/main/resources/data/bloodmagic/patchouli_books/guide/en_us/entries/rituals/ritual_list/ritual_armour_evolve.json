@@ -26,7 +26,10 @@
     },
     {
       "type": "bloodmagic:ritual_info",
-      "ritual": "armour_evolve"
+      "ritual": "armour_evolve",
+      "text_overrides": [
+        ["Living Armor", "l:bloodmagic:alchemy_array/living_equipment/living_basics"]
+      ]
     }
   ]
 }

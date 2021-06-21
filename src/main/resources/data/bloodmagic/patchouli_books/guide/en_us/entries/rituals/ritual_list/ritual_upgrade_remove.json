@@ -28,7 +28,11 @@
     },
     {
       "type": "bloodmagic:ritual_info",
-      "ritual": "upgrade_remove"
+      "ritual": "upgrade_remove",
+      "text_overrides": [
+        ["Living Armor", "l:bloodmagic:alchemy_array/living_equipment/living_basics"],
+        ["Upgrade Tomes", "l:bloodmagic:alchemy_array/living_equipment/living_tomes"]
+      ]
     }
   ]
 }

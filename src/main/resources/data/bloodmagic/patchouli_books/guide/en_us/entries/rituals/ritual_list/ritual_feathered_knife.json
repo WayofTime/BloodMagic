@@ -25,7 +25,12 @@
     },
     {
       "type": "bloodmagic:ritual_info",
-      "ritual": "feathered_knife"
+      "ritual": "feathered_knife",
+      "text_overrides": [
+        ["LP", "blood"],
+        ["blood altar", "l:bloodmagic:altar/blood_altar"],
+        ["Runes of Self Sacrifice", "l:bloodmagic:altar/blood_rune/self_sacrifice_rune"]
+      ]
     },
     {
       "type": "spotlight",

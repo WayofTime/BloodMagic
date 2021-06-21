@@ -27,7 +27,11 @@
     },
     {
       "type": "bloodmagic:ritual_info",
-      "ritual": "well_of_suffering"
+      "ritual": "well_of_suffering",
+      "text_overrides": [
+        ["LP", "blood"],
+        ["blood altar", "l:bloodmagic:altar/blood_altar"]
+      ]
     },
     {
       "type": "text",

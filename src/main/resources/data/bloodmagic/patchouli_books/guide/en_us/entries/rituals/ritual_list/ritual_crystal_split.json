@@ -26,7 +26,11 @@
     },
     {
       "type": "bloodmagic:ritual_info",
-      "ritual": "crystal_split"
+      "ritual": "crystal_split",
+      "text_overrides": [
+        ["Raw crystal cluster", "l:bloodmagic:demon_will/crystallized_will"],
+        ["aspected crystal clusters", "l:bloodmagic:demon_will/aspected_will"]
+      ]
     },
     {
       "type": "text",

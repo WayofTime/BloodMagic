@@ -22,7 +22,10 @@
     },
     {
       "type": "bloodmagic:ritual_info",
-      "ritual": "water"
+      "ritual": "water",
+      "text_overrides": [
+        ["master ritual stone", "l:bloodmagic:rituals/ritual_stones"]
+      ]
     },
     {
       "type": "spotlight",

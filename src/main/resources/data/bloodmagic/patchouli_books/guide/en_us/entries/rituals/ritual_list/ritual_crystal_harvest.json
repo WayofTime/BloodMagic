@@ -27,7 +27,8 @@
       "type": "bloodmagic:ritual_info",
       "ritual": "crystal_harvest",
       "text_overrides": [
-        ["Demon Will Crystal Clusters", "raw"]
+        ["Demon Will Crystal Clusters", "l:bloodmagic:demon_will/crystallized_will"],
+        ["aspects", "l:bloodmagic:demon_will/aspected_will"]
       ]
     },
     {
