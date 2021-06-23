@@ -47,6 +47,16 @@
       "text": "(Chest) The location of the inventory that the ritual will grab blocks from to place in the world. $(br) $(li)Maximum Volume: 1 $(li)Horizontal Radius: 3 $(li)Vertical Radius: 3"
 	},
 	{
+	  "type": "bloodmagic:ritual_data",
+	  "ritual": "ellipsoid",
+	  "page_type": "chest"
+	},
+	{
+	  "type": "bloodmagic:ritual_data",
+	  "ritual": "ellipsoid",
+	  "page_type": "spheroidRange"
+	},
+	{
 	  "type": "spotlight",
       "item": "bloodmagic:ritualtinkerer",
       "title": "Range",

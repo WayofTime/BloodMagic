@@ -384,7 +384,9 @@ public class GeneratorLanguage extends LanguageProvider
 		add("patchouli.bloodmagic.ritual_info.awakened_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#awakened)%s$(/l)");
 		add("patchouli.bloodmagic.ritual_info.counter_formatter", "%s%s$()$(br)");
 		add("patchouli.bloodmagic.ritual_info.text_override_formatter", "\\$(%s)%s\\$()");
-		add("patchouli.bloodmagic.ritual_info.output_formatter", "%s$(br2)%s$(br2)%s$(br)%s$(br)%s$(br)%s$(br2)%s");
+		add("patchouli.bloodmagic.ritual_info.info_formatter", "%s$(br2)%s$(br2)%s$(br)%s$(br)%s$(br)%s");
+		add("patchouli.bloodmagic.ritual_info.range_formatter", "$(br) $(li)Max Volume: %s$(li)Horizontal Radius: %s$(li)Vertical Radius: %s");
+		add("patchouli.bloodmagic.ritual_info.full_range", "Full Range");
 
 		// Keybinds
 		add("bloodmagic.keybind.open_holding", "Open Sigil of Holding");
