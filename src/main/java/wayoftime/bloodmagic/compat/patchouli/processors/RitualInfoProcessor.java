@@ -71,7 +71,7 @@ public class RitualInfoProcessor implements IComponentProcessor
 	private Ritual ritual; // Ritual ID.
 	private String pageType; // page type selector key.
 	private String extraText = ""; // (Optional) Text to insert at the end of the entry.
-	private String heading = ""; // heading (Spotlight Page).
+	private String heading; // heading (Spotlight Page).
 	private ItemStack item = new ItemStack(BloodMagicItems.RITUAL_READER.get()); // Item (Spotlight page).
 	private String infoBlurb = ""; // Information text from the language files.
 	private final String LANGUAGE_BASE = "patchouli.bloodmagic.ritual_info."; // This Processor's language base.
@@ -94,11 +94,6 @@ public class RitualInfoProcessor implements IComponentProcessor
 		} else
 		{
 			pageType = "info"; // if page_type is missing, assume it's an info page.
-		}
-
-		if (variables.has("text"))
-		{
-			extraText = variables.get("text").asString();
 		}
 
 		// Get, Format, and Set Info Blurb.
@@ -170,12 +165,17 @@ public class RitualInfoProcessor implements IComponentProcessor
 		{
 			item = variables.get("item_override").as(ItemStack.class);
 		}
+
+		if (variables.has("text"))
+		{
+			extraText = variables.get("text").asString();
+		}
 	}
 
 	@Override
 	public IVariable process(String key)
 	{
-		if (ritual == null || pageType == null)
+		if (ritual == null)
 		{
 			return null;
 		}
@@ -184,22 +184,14 @@ public class RitualInfoProcessor implements IComponentProcessor
 		{
 		case "auto_text":
 			StringBuilder outputText = new StringBuilder();
-			switch (pageType)
+			if (pageType.equals("info"))
 			{
-			case "info":
 				outputText.append(infoPageSetup());
-				break;
-			case "raw":
-			case "corrosive":
-			case "destructive":
-			case "steadfast":
-			case "vengeful":
+			} else
+			{
 				outputText.append(infoBlurb);
-				break;
-			default:
-				outputText.append(infoBlurb); // This should be some kind of range info.
 			}
-			outputText.append("$(br2)" + extraText);
+			outputText.append(TextHelper.localize("patchouli.bloodmagic.common.double_new_line", extraText));
 			return IVariable.wrap(outputText.toString());
 
 		case "heading":

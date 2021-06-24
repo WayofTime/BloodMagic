@@ -248,6 +248,7 @@
   "living_upgrade.bloodmagic.thaumRunicShielding": "Runic Shielding",
   "patchouli.bloodmagic.arc_processor.fluid": "%dmb of %s",
   "patchouli.bloodmagic.arc_processor.no_fluid": "None",
+  "patchouli.bloodmagic.common.double_new_line": "$(br2)%s",
   "patchouli.bloodmagic.living_armour_upgrade_table.level": "Level",
   "patchouli.bloodmagic.living_armour_upgrade_table.upgrade_points": "Upgrade Points",
   "patchouli.bloodmagic.ritual_info.activation_cost": "Activation Cost: $(blood)%d LP$()$(br)",
