@@ -12,12 +12,14 @@ import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
 import vazkii.patchouli.api.IVariableProvider;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.item.ItemRitualDiviner;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.util.helper.RitualHelper;
 import wayoftime.bloodmagic.util.helper.TextHelper;
+import wayoftime.bloodmagic.will.DemonWillHolder;
 
 /*
  * Example Page: Info Page
@@ -125,9 +127,11 @@ public class RitualInfoProcessor implements IComponentProcessor
 			item = new ItemStack(BloodMagicItems.VENGEFUL_CRYSTAL.get());
 			break;
 		default:
-			int volume = ritual.getMaxVolumeForRange(pageType, null, null);
-			int horizontal = ritual.getMaxHorizontalRadiusForRange(pageType, null, null);
-			int vertical = ritual.getMaxVerticalRadiusForRange(pageType, null, null);
+			List<EnumDemonWillType> emptyList = new ArrayList<EnumDemonWillType>();
+			DemonWillHolder emptyHolder = new DemonWillHolder();
+			int volume = ritual.getMaxVolumeForRange(pageType, emptyList, emptyHolder);
+			int horizontal = ritual.getMaxHorizontalRadiusForRange(pageType, emptyList, emptyHolder);
+			int vertical = ritual.getMaxVerticalRadiusForRange(pageType, emptyList, emptyHolder);
 			rangeInfo = TextHelper.localize("patchouli.bloodmagic.ritual_info.range_formatter", volume == 0
 					? TextHelper.localize("patchouli.bloodmagic.ritual_info.full_range")
 					: volume, horizontal, vertical);
