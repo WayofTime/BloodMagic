@@ -182,13 +182,13 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.altarBuilderRitual", "The Assembly of the High Altar");
 		add("ritual.bloodmagic.portalRitual", "The Gate of the Fold");
 
-		add("ritual.bloodmagic.waterRitual.info", "Generates a source of water from the master ritual stone.");
+		add("ritual.bloodmagic.waterRitual.info", "Generates a source of water from the Master Ritual Stone.");
 		add("ritual.bloodmagic.lavaRitual.info", "Generates a source of lava from the master ritual stone.");
-		add("ritual.bloodmagic.lavaRitual.default.info", "(Raw) Decreases the LP cost of placing lava and allows lava to be placed insided of a linked container.");
+		add("ritual.bloodmagic.lavaRitual.default.info", "(Raw) Decreases the LP cost of placing lava and allows the lava to be directly placed into a tank or other fluid-handling block.");
 		add("ritual.bloodmagic.lavaRitual.corrosive.info", "(Corrosive) Entities within range that are immune to fire are damaged severely.");
-		add("ritual.bloodmagic.lavaRitual.destructive.info", "(Destructive) Lava placement range is increased based on total Will.");
+		add("ritual.bloodmagic.lavaRitual.destructive.info", "(Destructive) Lava placement range is increased based on the total amount of Destructive Will in the Aura.");
 		add("ritual.bloodmagic.lavaRitual.vengeful.info", "(Vengeful) Entities within range have Fire Fuse applied to them.");
-		add("ritual.bloodmagic.lavaRitual.steadfast.info", "(Steadfast) Players within a designated range have Fire Resistance applied to them.");
+		add("ritual.bloodmagic.lavaRitual.steadfast.info", "(Steadfast) Players within this range have Fire Resistance applied to them.");
 
 		add("ritual.bloodmagic.greenGroveRitual.info", "Grows crops within its area.");
 		add("ritual.bloodmagic.jumpRitual.info", "Causes entities to leap up into the air.");
@@ -204,26 +204,26 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.magneticRitual.info", "Pulls up ores from the ground and puts them into its placement range.");
 		add("ritual.bloodmagic.crushingRitual.info", "Breaks blocks within its crushing range and places the items into the linked chest.");
 		add("ritual.bloodmagic.crushingRitual.destructive.info", "(Destructive) Blocks are broken down forcefully: all blocks broken are affected by Fortune III.");
-		add("ritual.bloodmagic.crushingRitual.steadfast.info", "(Steadfast) Causes all blocks that are broken to be picked up with silk touch. Overrides Fortune where applicable.");
-		add("ritual.bloodmagic.crushingRitual.corrosive.info", "(Corrosive) All blocks are broken to be processed with a form of cutting fluid. Overrides Silk Touch where applicable.");
+		add("ritual.bloodmagic.crushingRitual.steadfast.info", "(Steadfast) Causes all blocks that are broken to be picked up with Silk Touch. Overrides Fortune where applicable.");
+		add("ritual.bloodmagic.crushingRitual.corrosive.info", "(Corrosive) All blocks are broken to be processed with a form of Cutting Fluid. Overrides Silk Touch where applicable.");
 		add("ritual.bloodmagic.crushingRitual.vengeful.info", "(Vengeful) Compresses the inventory on successful operation. Currently only does one compression per operation.");
-		add("ritual.bloodmagic.crushingRitual.default.info", "(Raw) Increases the speed of the ritual based on total Will.");
-		add("ritual.bloodmagic.greenGroveRitual.corrosive.info", "(Corrosive) Entities within range are attacked by nearby plants, leeching away their life.");
-		add("ritual.bloodmagic.greenGroveRitual.default.info", "(Raw) Increases the speed of all of the ritual operations depending on the total Will in the Aura.");
+		add("ritual.bloodmagic.crushingRitual.default.info", "(Raw) Increases the speed of the ritual based on the total amount of Raw Will in the Aura.");
+		add("ritual.bloodmagic.greenGroveRitual.corrosive.info", "(Corrosive) Entities within range are attacked by nearby plants, leeching away their life to feed their own growth.");
+		add("ritual.bloodmagic.greenGroveRitual.default.info", "(Raw) Increases the speed of all ritual operations based on the total amount of Raw Will in the Aura.");
 		add("ritual.bloodmagic.greenGroveRitual.vengeful.info", "(Vengeful) Increases the rate that a growth tick is successful.");
 		add("ritual.bloodmagic.greenGroveRitual.steadfast.info", "(Steadfast) Seeds are replanted and blocks are hydrated within the Hydration range.");
-		add("ritual.bloodmagic.greenGroveRitual.destructive.info", "(Destructive) Growing range is increased based on total Will.");
-		add("ritual.bloodmagic.featheredKnifeRitual.default.info", "(Raw) Increases the speed of the ritual based on the total Will in the Aura.");
-		add("ritual.bloodmagic.featheredKnifeRitual.destructive.info", "(Destructive) Increases the yield of the ritual based on total Will.");
+		add("ritual.bloodmagic.greenGroveRitual.destructive.info", "(Destructive) Increases the maximum growth range of the ritual based on the total amount of Destructive Will in the Aura.");
+		add("ritual.bloodmagic.featheredKnifeRitual.default.info", "(Raw) Increases the speed of the ritual based on the total amount of Raw Will in the Aura.");
+		add("ritual.bloodmagic.featheredKnifeRitual.destructive.info", "(Destructive) Increases the yield of the ritual based on the total amount of Destructive Will in the Aura.");
 		add("ritual.bloodmagic.featheredKnifeRitual.vengeful.info", "(Vengeful) Sets the minimum health for sacrificing to 10%%. Overridden by Steadfast for the Owner if active.");
-		add("ritual.bloodmagic.featheredKnifeRitual.corrosive.info", "(Corrosive) Uses the player's Incense to increase the yield.");
+		add("ritual.bloodmagic.featheredKnifeRitual.corrosive.info", "(Corrosive) Uses the player's current Incense Bonus (if any) to increase the yield. Stand near an Incense Altar to maintain this bonus.");
 		add("ritual.bloodmagic.featheredKnifeRitual.steadfast.info", "(Steadfast) Sets the minimum health for sacrificing from 30%% to 70%%.");
 		add("ritual.bloodmagic.speedRitual.default.info", "(Raw) Increases the velocity caused by the ritual based on total Will.");
 		add("ritual.bloodmagic.speedRitual.vengeful.info", "(Vengeful) Prevents adult mobs and players from being transported. Players are transported if paired with Destructive.");
 		add("ritual.bloodmagic.speedRitual.destructive.info", "(Destructive) Prevents child mobs and players from being transported. Players are transported if paired with Vengeful.");
 		add("ritual.bloodmagic.animalGrowthRitual.vengeful.info", "(Vengeful) Decreases the time it takes for adults to breed again.");
 		add("ritual.bloodmagic.animalGrowthRitual.steadfast.info", "(Steadfast) Automatically breeds adults within its area using items in the connected chest.");
-		add("ritual.bloodmagic.animalGrowthRitual.default.info", "(Raw) Increases the speed of the ritual based on the total Will in the Aura.");
+		add("ritual.bloodmagic.animalGrowthRitual.default.info", "(Raw) Increases the speed of the ritual based on the total amount of Raw Will in the Aura.");
 		add("ritual.bloodmagic.animalGrowthRitual.destructive.info", "(Destructive) Causes adults that have not bred lately to run at mobs and explode.");
 		add("ritual.bloodmagic.animalGrowthRitual.corrosive.info", "(Corrosive) Unimplemented.");
 		add("ritual.bloodmagic.groundingRitual.info", "Forces entities on the ground and prevents jumping.");
@@ -235,7 +235,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.condorRitual.info", "Provides flight in an area around the ritual.");
 		add("ritual.bloodmagic.eternalSoulRitual.info", "Capable of transferring Life Essence from a Network back into an Altar at a cost.");
 
-		add("ritual.bloodmagic.crystalSplitRitual.info", "Splits apart a well-grown Raw crystal cluster into seperal aspected crystal clusters.");
+		add("ritual.bloodmagic.crystalSplitRitual.info", "Splits apart a well-grown Raw crystal cluster into separately aspected crystal clusters.");
 		add("ritual.bloodmagic.fullStomachRitual.info", "Takes food from the linked chest and fills the player's saturation with it.");
 		add("ritual.bloodmagic.interdictionRitual.info", "Pushes all mobs within its area away from the master ritual stone.");
 		add("ritual.bloodmagic.containmentRitual.info", "Pulls all mobs within its area towards the master ritual stone.");
@@ -255,25 +255,25 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.portalRitual.info", "Creates a portal network based on the activator and the immediately surrounding blocks. Blocks can be changed after activation without changing the network of portals, and portals with the same \"key\" will link together.");
 		add("ritual.bloodmagic.meteorRitual.info", "Consumes an item inside of its item range to summon a meteor full of resources from the sky, aimed directly at the ritual.");
 
-		add("ritual.bloodmagic.waterRitual.waterRange.info", "(Water) The area that the ritual will place water source blocks.");
+		add("ritual.bloodmagic.waterRitual.waterRange.info", "(Water) The area within which the Ritual will place Water Source Blocks.");
 		add("ritual.bloodmagic.waterRitual.waterTank.info", "(Raw) The tank that the ritual will place water into.");
-		add("ritual.bloodmagic.lavaRitual.lavaRange.info", "(Lava) The area that the ritual will place lava source blocks.");
+		add("ritual.bloodmagic.lavaRitual.lavaRange.info", "(Lava) The area within which the Ritual will place Lava Source Blocks.");
 		add("ritual.bloodmagic.lavaRitual.lavaTank.info", "(Raw) The tank that the ritual will place lava into.");
 		add("ritual.bloodmagic.lavaRitual.fireFuse.info", "(Vengeful) Entities in this range are afflicted by Fire Fuse.");
-		add("ritual.bloodmagic.lavaRitual.fireResist.info", "(Steadfast) Players in this range have Fire Resist applied.");
-		add("ritual.bloodmagic.lavaRitual.fireDamage.info", "(Corrosive) Entities within this range that are immune to fire damage are hurt proportional to the Will.");
+		add("ritual.bloodmagic.lavaRitual.fireResist.info", "(Steadfast) Players within this range have Fire Resistance applied to them.");
+		add("ritual.bloodmagic.lavaRitual.fireDamage.info", "(Corrosive) Entities within this range that are immune to fire damage are hurt proportionally to the amount of Corrosive Will in the Aura.");
 		add("ritual.bloodmagic.greenGroveRitual.growing.info", "(Growth) The area that the ritual will grow plants in.");
 		add("ritual.bloodmagic.greenGroveRitual.leech.info", "(Corrosive) Entities in this area have their life drained to grow nearby crops.");
 		add("ritual.bloodmagic.greenGroveRitual.hydrate.info", "(Steadfast) Blocks within this range are rehydrated into farmland, and seeds within the area are planted nearby.");
 		add("ritual.bloodmagic.jumpRitual.jumpRange.info", "(Jumping) Entities in this range will be launched in the air.");
-		add("ritual.bloodmagic.wellOfSufferingRitual.altar.info", "(Altar) This range defines the area that the ritual searches for the blood altar. Changing this will either expand or limit the range to a certain region.");
-		add("ritual.bloodmagic.wellOfSufferingRitual.damage.info", "(Damage) This defines where the ritual will damage a mob. All mobs inside of this range (except for players) will receive damage over time.");
-		add("ritual.bloodmagic.featheredKnifeRitual.altar.info", "(Altar) This range defines the area that the ritual searches for the blood altar. Changing this will either expand or limit the range to a certain region.");
+		add("ritual.bloodmagic.wellOfSufferingRitual.altar.info", "(Altar) The area that the ritual searches for a Blood Altar to deposit its Blood into.");
+		add("ritual.bloodmagic.wellOfSufferingRitual.damage.info", "(Damage) All mobs within this area will take damage every second or so until they die. This does not include players, fortunately. ");
+		add("ritual.bloodmagic.featheredKnifeRitual.altar.info", "(Altar) This range defines the area that the ritual searches for the Blood Altar. Changing this will either expand or limit the range to a certain region.");
 		add("ritual.bloodmagic.featheredKnifeRitual.damage.info", "(Damage) This defines where the ritual will damage a player. Players inside of this range will receive damage over time up to the specified limit.");
 		add("ritual.bloodmagic.regenerationRitual.heal.info", "(Healing) Entities within this range will receive a regeneration buff.");
 		add("ritual.bloodmagic.regenerationRitual.vampire.info", "(Vampirism) Mobs within this range have their health syphoned to heal players in the Healing range.");
 		add("ritual.bloodmagic.harvestRitual.harvestRange.info", "(Harvesting) Plants within this range will be harvested.");
-		add("ritual.bloodmagic.magneticRitual.placementRange.info", "(Placement) The range that the ritual will place the grabbed ores into.");
+		add("ritual.bloodmagic.magneticRitual.placementRange.info", "(Placement) The area that the ritual will place the grabbed ores into.");
 		add("ritual.bloodmagic.crushingRitual.crushingRange.info", "(Crushing) The blocks that the ritual will break.");
 		add("ritual.bloodmagic.crushingRitual.chest.info", "(Chest) The location of the inventory that the ritual will place the broken blocks into.");
 		add("ritual.bloodmagic.fullStomachRitual.fillRange.info", "(Feeding) The range that the ritual will look at to feed players.");
@@ -292,7 +292,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.crystalHarvestRitual.crystal.info", "(Crystal) All Demon Will crystal clusters have a single crystal broken off, spawning the crystal into the world. If there is only one crystal on the cluster, it will not break it.");
 
 		add("ritual.bloodmagic.ellipseRitual.info", "Creates a hollow spheroid around the ritual using the blocks in the attached chest.");
-		add("ritual.bloodmagic.ellipseRitual.spheroidRange.info", "(Placement) The range that the ritual will place its blocks in. Spheroid is centered on the ritual - if one side is shorter than the side opposite the spheroid is truncated.");
+		add("ritual.bloodmagic.ellipseRitual.spheroidRange.info", "(Placement) The range that the ritual will place its blocks in. Note that the Spheroid is centered on the ritual - if one side is shorter than the side opposite, the spheroid will be truncated.");
 		add("ritual.bloodmagic.ellipseRitual.chest.info", "(Chest) The location of the inventory that the ritual will grab blocks from to place in the world.");
 
 		add("ritual.bloodmagic.placerRitual.placerRange.info", "(Placement) The range that the ritual will place its blocks in.");
