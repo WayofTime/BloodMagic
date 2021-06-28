@@ -32,10 +32,12 @@
       ]
     },
     {
-      "type": "spotlight",
-      "item": "bloodmagic:ritualtinkerer",
-      "title": "Range",
-      "text": "(Crystal) All $(raw)Demon Will$() crystal clusters have a single crystal broken off, spawning the crystal into the world. If there is only one crystal on the cluster, it will not break it. $(br) $(li)Maximum Volume: 250 $(li)Horizontal Radius: 5 $(li)Vertical Radius: 7"
+      "type": "bloodmagic:ritual_data",
+      "ritual": "crystal_harvest",
+      "page_type": "crystal",
+      "text_overrides": [
+        ["Demon Will", "raw"]
+      ]
     }
   ]
 }

@@ -24,20 +24,13 @@
       "type": "bloodmagic:ritual_info",
       "ritual": "water",
       "text_overrides": [
-        ["master ritual stone", "l:bloodmagic:rituals/ritual_stones"]
+        ["Master Ritual Stone", "l:bloodmagic:rituals/ritual_stones"]
       ]
     },
     {
-      "type": "spotlight",
-      "item": "bloodmagic:defaultcrystal",
-      "title": "Raw",
-      "text": "allows the water to be directly placed into a Tank or other fluid-handling block."
-    },
-    {
-      "type": "spotlight",
-      "item": "bloodmagic:ritualtinkerer",
-      "title": "Range",
-      "text": "(Water) The area within which the Ritual will place Source Blocks. $(br2)$(li)Maximum Volume: 9 $(li)Horizontal Radius: 3 $(li)Vertical Radius: 3 "
+      "type": "bloodmagic:ritual_data",
+      "ritual": "water",
+      "page_type": "waterRange"
     }
   ]
 }

@@ -31,10 +31,9 @@
       "ritual": "harvest"
     },
     {
-      "type": "spotlight",
-      "item": "bloodmagic:ritualtinkerer",
-      "title": "Range",
-      "text": "(Harvesting) Plants within this range will be harvested. $(br) $(li)Maximum Volume: Full Range. $(li)Horizontal Radius: 15 $(li)Vertical Radius: 15"
+      "type": "bloodmagic:ritual_data",
+      "ritual": "harvest",
+      "page_type": "harvestRange"
     }
   ]
 }
