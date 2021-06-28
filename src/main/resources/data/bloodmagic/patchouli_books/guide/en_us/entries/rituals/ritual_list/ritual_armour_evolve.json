@@ -29,7 +29,8 @@
       "ritual": "armour_evolve",
       "text_overrides": [
         ["Living Armor", "l:bloodmagic:alchemy_array/living_equipment/living_basics"]
-      ]
+      ],
+      "text": "Stand on the $(l:bloodmagic:rituals/ritual_stones)Master Ritual Stone$() while wearing $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armor$() to use this $(thing)ritual$()."
     }
   ]
 }

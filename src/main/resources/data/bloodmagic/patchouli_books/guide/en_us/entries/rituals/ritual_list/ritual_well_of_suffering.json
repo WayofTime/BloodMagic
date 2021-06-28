@@ -41,16 +41,17 @@
       "type": "bloodmagic:ritual_data",
       "ritual": "well_of_suffering",
       "page_type": "altar",
-      "text": "Note, the Ritual can only link to one altar at a time.",
+      "text": "The Ritual can only link to one altar at a time.",
       "text_overrides": [
-        ["Blood Altar", "l:bloodmagic:altar/blood_altar"]
+        ["Blood Altar", "l:bloodmagic:altar/blood_altar"],
+        [" Blood", "blood"]
       ]
     },
     {
       "type": "bloodmagic:ritual_data",
       "ritual": "well_of_suffering",
       "page_type": "damage",
-      "text": "Mobs will drop $(item)Items$(), so be sure to set up something to clean up the mess."
+      "text": "Mobs will still drop non-Player Kill mob drops."
     }
   ]
 }

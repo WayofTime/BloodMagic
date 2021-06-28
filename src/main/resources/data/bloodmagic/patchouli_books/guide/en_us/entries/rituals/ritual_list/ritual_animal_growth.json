@@ -64,7 +64,7 @@
       "type": "bloodmagic:ritual_data",
       "ritual": "animal_growth",
       "page_type": "chest",
-      "text": "N.B.: Requires $(steadfast)Steadfast Will$() to function."
+      "text": "Requires $(steadfast)Steadfast Will$()."
     }
   ]
 }

@@ -30,8 +30,7 @@
     {
       "type": "bloodmagic:ritual_data",
       "ritual": "regeneration",
-      "page_type": "corrosive",
-      "text": "See overleaf for more info on Vampirism."
+      "page_type": "corrosive"
     },
     {
       "type": "bloodmagic:ritual_data",
@@ -41,7 +40,8 @@
     {
       "type": "bloodmagic:ritual_data",
       "ritual": "regeneration",
-      "page_type": "vampire"
+      "page_type": "vampire",
+      "text": "Requires $(corrosive)Corrosive Will$()."
     }
   ]
 }
