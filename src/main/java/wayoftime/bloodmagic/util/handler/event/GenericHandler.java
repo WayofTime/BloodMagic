@@ -61,6 +61,7 @@ import wayoftime.bloodmagic.network.DemonAuraClientPacket;
 import wayoftime.bloodmagic.potion.BMPotionUtils;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.util.helper.BindableHelper;
+import wayoftime.bloodmagic.util.helper.InventoryHelper;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 import wayoftime.bloodmagic.will.DemonWillHolder;
@@ -272,7 +273,7 @@ public class GenericHandler
 
 		if (!player.getEntityWorld().isRemote)
 		{
-			for (ItemStack stack : player.inventory.mainInventory)
+			for (ItemStack stack : InventoryHelper.getAllInventories(player))
 			{
 				if (stack.getItem() instanceof ItemExperienceBook)
 				{
