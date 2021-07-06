@@ -155,9 +155,8 @@ public class ItemRitualDiviner extends Item
 						return true;
 					} else
 					{
-						notifyBlockedBuild(player, newPos);
-						return false;
-						// TODO: Possibly replace the block with a ritual stone
+						return false; // TODO: Possibly replace the block with a
+						// ritual stone
 					}
 				}
 			}
@@ -547,10 +546,5 @@ public class ItemRitualDiviner extends Item
 				worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, (double) ((float) pos.getX() + random.nextFloat()), (double) pos.getY() + (double) random.nextFloat() * 1.0f, (double) ((float) pos.getZ() + random.nextFloat()), d0, d1, d2);
 			}
 		}
-	}
-
-	public void notifyBlockedBuild(PlayerEntity player, BlockPos pos)
-	{
-		player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.diviner.blockedBuild", pos.getX(), pos.getY(), pos.getZ()), true);
 	}
 }
