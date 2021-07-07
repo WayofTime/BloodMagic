@@ -379,13 +379,13 @@ public class GeneratorLanguage extends LanguageProvider
 		add("patchouli.bloodmagic.arc_processor.no_fluid", "None");
 		add("patchouli.bloodmagic.living_armour_upgrade_table.level", "Level");
 		add("patchouli.bloodmagic.living_armour_upgrade_table.upgrade_points", "Upgrade Points");
-		add("patchouli.bloodmagic.ritual_info.activation_cost", "Activation Cost: $(blood)%d LP$()$(br)");
-		add("patchouli.bloodmagic.ritual_info.upkeep_cost", "Base Usage Cost: $(blood)%d LP$()$(br)Base Interval: %d Ticks$(br)");
+		add("patchouli.bloodmagic.ritual_info.activation_cost", "$(br)Activation Cost: $(blood)%d LP$()");
+		add("patchouli.bloodmagic.ritual_info.upkeep_cost", "$(br)Base Usage Cost: $(blood)%d LP$()$(br)Base Interval: %d Ticks");
 		add("patchouli.bloodmagic.ritual_info.weak_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#weak)%s$(/l)");
 		add("patchouli.bloodmagic.ritual_info.awakened_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#awakened)%s$(/l)");
-		add("patchouli.bloodmagic.ritual_info.counter_formatter", "%s%s$()$(br)");
+		add("patchouli.bloodmagic.ritual_info.counter_formatter", "$(br)%s%s$()");
 		add("patchouli.bloodmagic.ritual_info.text_override_formatter", "\\$(%s)%s\\$()");
-		add("patchouli.bloodmagic.ritual_info.info_formatter", "%s$(br2)%s$(br2)%s$(br)%s$(br)%s$(br)%s");
+		add("patchouli.bloodmagic.ritual_info.info_formatter", "%s$(br)%s$(br2)%s$(br)%s%s%s");
 		add("patchouli.bloodmagic.ritual_info.range_formatter", "$(br) $(li)Max Volume: %s$(li)Horizontal Radius: %s$(li)Vertical Radius: %s");
 		add("patchouli.bloodmagic.ritual_info.full_range", "Full Range");
 
