@@ -15,6 +15,7 @@
       "type": "crafting_altar",
       "heading": "Weak Activation Crystal",
       "recipe": "bloodmagic:weak_activation_crystal",
+      "anchor": "weak",
       "text": "This crystal should do for now."
     },
     {
@@ -24,6 +25,7 @@
     {
       "type": "text",
       "title": "Awakened Activation Crystal",
+      "anchor": "awakened",
       "text": "Not Yet Implemented."
     }
   ]
