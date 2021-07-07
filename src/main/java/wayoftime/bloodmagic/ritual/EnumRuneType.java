@@ -15,11 +15,7 @@ public enum EnumRuneType implements IStringSerializable
 	DUSK(TextFormatting.DARK_GRAY),
 	DAWN(TextFormatting.GOLD);
 
-	public final TextFormatting colorCode; // Ritual Diviner's tooltip Color
-	public final String translationKey = this.name().toLowerCase(Locale.ROOT) + "Rune"; // Suffix for translation.
-	public final String patchouliColor = "$(" + this.name().toLowerCase(Locale.ROOT) + ")"; // Patchouli Guidebook's
-																							// color code
-	// (set in book.json).
+	public final TextFormatting colorCode;
 
 	EnumRuneType(TextFormatting colorCode)
 	{

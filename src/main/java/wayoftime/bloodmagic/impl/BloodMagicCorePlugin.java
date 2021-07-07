@@ -56,9 +56,5 @@ public class BloodMagicCorePlugin
 		apiInterface.registerAltarComponent(BloodMagicBlocks.ORB_RUNE.get().getDefaultState(), ComponentType.BLOODRUNE.name());
 		apiInterface.registerAltarComponent(BloodMagicBlocks.ACCELERATION_RUNE.get().getDefaultState(), ComponentType.BLOODRUNE.name());
 		apiInterface.registerAltarComponent(BloodMagicBlocks.CHARGING_RUNE.get().getDefaultState(), ComponentType.BLOODRUNE.name());
-
-		apiInterface.registerInventoryProvider("mainInventory", player -> player.inventory.mainInventory);
-		apiInterface.registerInventoryProvider("armorInventory", player -> player.inventory.armorInventory);
-		apiInterface.registerInventoryProvider("offHandInventory", player -> player.inventory.offHandInventory);
 	}
 }

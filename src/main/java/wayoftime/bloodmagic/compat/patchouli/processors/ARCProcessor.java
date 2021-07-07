@@ -17,17 +17,6 @@ import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.recipe.RecipeARC;
 import wayoftime.bloodmagic.util.helper.TextHelper;
 
-/*
- * Example Page:
- * 
- * {
- *   "type": "crafting_arc",    // Corresponding Template.
- *   "heading": "Title",    // (Optional) Title.
- *   "recipe": "recipe_id",    // Recipe ID.
- *   "text": "Extra text."    // (Optional) Extra text to go under the entry.
- * },
- */
-
 public class ARCProcessor implements IComponentProcessor
 {
 	private RecipeARC recipe;

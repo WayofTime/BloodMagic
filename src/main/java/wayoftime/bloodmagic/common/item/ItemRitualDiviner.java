@@ -2,7 +2,6 @@ package wayoftime.bloodmagic.common.item;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import com.google.common.collect.Lists;
 
@@ -24,7 +23,6 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
@@ -252,18 +250,61 @@ public class ItemRitualDiviner extends Item
 			{
 				tooltip.add(new TranslationTextComponent(tooltipBase + "currentDirection", Utils.toFancyCasing(getDirection(stack).name())));
 				tooltip.add(new StringTextComponent(""));
+				List<RitualComponent> components = Lists.newArrayList();
+				ritual.gatherComponents(components::add);
 
-				Tuple<Integer, Map<EnumRuneType, Integer>> runeCount = RitualHelper.countRunes(ritual);
-				int totalRunes = runeCount.getA();
-				Map<EnumRuneType, Integer> runeMap = runeCount.getB();
-				for (EnumRuneType type : EnumRuneType.values())
+				int blankRunes = 0;
+				int airRunes = 0;
+				int waterRunes = 0;
+				int fireRunes = 0;
+				int earthRunes = 0;
+				int duskRunes = 0;
+				int dawnRunes = 0;
+				int totalRunes = components.size();
+
+				for (RitualComponent component : components)
 				{
-					int count = runeMap.getOrDefault(type, 0);
-					if (count > 0)
+					switch (component.getRuneType())
 					{
-						tooltip.add(new TranslationTextComponent(tooltipBase + type.translationKey, count).mergeStyle(type.colorCode));
+					case BLANK:
+						blankRunes++;
+						break;
+					case AIR:
+						airRunes++;
+						break;
+					case EARTH:
+						earthRunes++;
+						break;
+					case FIRE:
+						fireRunes++;
+						break;
+					case WATER:
+						waterRunes++;
+						break;
+					case DUSK:
+						duskRunes++;
+						break;
+					case DAWN:
+						dawnRunes++;
+						break;
 					}
 				}
+
+				if (blankRunes > 0)
+					tooltip.add(new TranslationTextComponent(tooltipBase + "blankRune", blankRunes).mergeStyle(EnumRuneType.BLANK.colorCode));
+				if (waterRunes > 0)
+					tooltip.add(new TranslationTextComponent(tooltipBase + "waterRune", waterRunes).mergeStyle(EnumRuneType.WATER.colorCode));
+				if (airRunes > 0)
+					tooltip.add(new TranslationTextComponent(tooltipBase + "airRune", airRunes).mergeStyle(EnumRuneType.AIR.colorCode));
+				if (fireRunes > 0)
+					tooltip.add(new TranslationTextComponent(tooltipBase + "fireRune", fireRunes).mergeStyle(EnumRuneType.FIRE.colorCode));
+				if (earthRunes > 0)
+					tooltip.add(new TranslationTextComponent(tooltipBase + "earthRune", earthRunes).mergeStyle(EnumRuneType.EARTH.colorCode));
+				if (duskRunes > 0)
+					tooltip.add(new TranslationTextComponent(tooltipBase + "duskRune", duskRunes).mergeStyle(EnumRuneType.DUSK.colorCode));
+				if (dawnRunes > 0)
+					tooltip.add(new TranslationTextComponent(tooltipBase + "dawnRune", dawnRunes).mergeStyle(EnumRuneType.DAWN.colorCode));
+
 				tooltip.add(new StringTextComponent(""));
 				tooltip.add(new TranslationTextComponent(tooltipBase + "totalRune", totalRunes));
 			} else

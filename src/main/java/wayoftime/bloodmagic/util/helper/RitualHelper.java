@@ -1,8 +1,6 @@
 package wayoftime.bloodmagic.util.helper;
 
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -12,7 +10,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -35,7 +32,8 @@ public class RitualHelper
 
 	public static boolean canCrystalActivate(Ritual ritual, int crystalLevel)
 	{
-		return ritual.getCrystalLevel() <= crystalLevel && BloodMagic.RITUAL_MANAGER.enabled(BloodMagic.RITUAL_MANAGER.getId(ritual), false);
+		return ritual.getCrystalLevel() <= crystalLevel
+				&& BloodMagic.RITUAL_MANAGER.enabled(BloodMagic.RITUAL_MANAGER.getId(ritual), false);
 	}
 
 	/**
@@ -251,25 +249,5 @@ public class RitualHelper
 
 			}
 		return Pair.of(possibleRitual, possibleDirection);
-	}
-
-	/**
-	 * Counts the number of each type of Ritual Stone.
-	 * 
-	 * @param ritual - ritual ID to count.
-	 * @return Tuple(A, B). A = Total number of Ritual Stones. B = a Map of
-	 *         EnumRuneType with that type's count.
-	 */
-	public static Tuple<Integer, Map<EnumRuneType, Integer>> countRunes(Ritual ritual)
-	{
-		Map<EnumRuneType, Integer> runeMap = new EnumMap<>(EnumRuneType.class);
-		List<RitualComponent> components = Lists.newArrayList();
-		ritual.gatherComponents(components::add);
-		int totalRunes = components.size();
-		for (RitualComponent component : components)
-		{
-			runeMap.compute(component.getRuneType(), (k, v) -> v == null ? 1 : v + 1);
-		}
-		return new Tuple<Integer, Map<EnumRuneType, Integer>>(totalRunes, runeMap);
 	}
 }

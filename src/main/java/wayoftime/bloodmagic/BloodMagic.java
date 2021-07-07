@@ -23,7 +23,6 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -53,7 +52,6 @@ import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeProvider;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
-import wayoftime.bloodmagic.compat.CuriosCompat;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.recipe.IngredientBloodOrb;
@@ -97,9 +95,6 @@ public class BloodMagic
 
 	public static final BloodMagicPacketHandler packetHandler = new BloodMagicPacketHandler();
 	public static final RitualManager RITUAL_MANAGER = new RitualManager();
-
-	public static Boolean curiosLoaded;
-	public static final CuriosCompat curiosCompat = new CuriosCompat();
 
 	public BloodMagic()
 	{
@@ -190,11 +185,6 @@ public class BloodMagic
 		LivingArmorRegistrar.register();
 		AnointmentRegistrar.register();
 		AlchemyArrayRegistry.registerBaseArrays();
-
-		if (curiosLoaded)
-		{
-			curiosCompat.registerInventory();
-		}
 	}
 
 	public void registerTileEntityTypes(RegistryEvent.Register<TileEntityType<?>> event)
@@ -255,8 +245,6 @@ public class BloodMagic
 //		LOGGER.info("HELLO FROM PREINIT");
 //		LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
 		packetHandler.initialize();
-
-		curiosLoaded = ModList.get().isLoaded("curios");
 	}
 
 //	@OnlyIn(Dist.CLIENT)
@@ -288,11 +276,6 @@ public class BloodMagic
 //			LOGGER.info("Hello world from the MDK");
 //			return "Hello world";
 //		});
-
-		if (curiosLoaded)
-		{
-			curiosCompat.setupSlots(event);
-		}
 	}
 
 	private void processIMC(final InterModProcessEvent event)
