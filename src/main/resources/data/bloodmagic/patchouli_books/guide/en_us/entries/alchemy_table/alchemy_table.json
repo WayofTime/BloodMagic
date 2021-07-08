@@ -31,7 +31,7 @@
     },
     {
       "type": "text",
-      "text": "simply click the slot again to deselect it. The icon displayed in the slot shows whether it is accepting inputs or providing outputs. In the example picture, we are allowing pipes to take from our central slot only on the $(underline)D$()own slot, and any attempts to extract items from other sides will not succeed. $(br2)The following pages document a number of recipes currently available for the Alchemy Table."
+      "text": "simply click the slot again to deselect it. The icon displayed in the slot shows whether it is accepting inputs or providing outputs. In the example picture, we are allowing pipes to take from our central slot only on the $(bold)D$()own slot, and any attempts to extract items from other sides will not succeed. $(br2)The following pages document a number of recipes currently available for the Alchemy Table."
     },
 
     {
