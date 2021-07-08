@@ -15,6 +15,7 @@ import vazkii.patchouli.api.IVariable;
 import vazkii.patchouli.api.IVariableProvider;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.recipe.RecipeARC;
+import wayoftime.bloodmagic.util.helper.TextHelper;
 
 public class ARCProcessor implements IComponentProcessor
 {
@@ -78,32 +79,43 @@ public class ARCProcessor implements IComponentProcessor
 		switch (key)
 		{
 		case "show_fluid_tooltip":
+		{
 			if (recipe.getFluidIngredient() != null || recipe.getFluidOutput() != FluidStack.EMPTY)
 			{
 				return IVariable.wrap(true);
 			}
 			return IVariable.wrap(false);
+		}
 		case "input":
 			return IVariable.wrapList(Arrays.stream(recipe.getInput().getMatchingStacks()).map(IVariable::from).collect(Collectors.toList()));
 		case "tool":
 			return IVariable.wrapList(Arrays.stream(recipe.getTool().getMatchingStacks()).map(IVariable::from).collect(Collectors.toList()));
 		case "tooltip_fluid_input":
+		{
 			if (recipe.getFluidIngredient() != null)
 			{
 				FluidStack fluid = recipe.getFluidIngredient().getRepresentations().get(0);
-				return IVariable.wrap(fluid.getAmount() + "mb of " + fluid.getTranslationKey());
+				String i18nFluidName = TextHelper.localize(fluid.getTranslationKey());
+				return IVariable.wrap(TextHelper.localize("patchouli.bloodmagic.arc_processor.fluid", fluid.getAmount(), i18nFluidName));
+			} else
+			{
+				return IVariable.wrap(TextHelper.localize("patchouli.bloodmagic.arc_processor.no_fluid"));
 			}
-			return IVariable.wrap("None");
+		}
 		case "tooltip_fluid_output":
+		{
 			if (recipe.getFluidOutput() != FluidStack.EMPTY)
 			{
 				FluidStack fluid = recipe.getFluidOutput();
-				return IVariable.wrap(fluid.getAmount() + "mb of " + fluid.getTranslationKey());
+				String i18nFluidName = TextHelper.localize(fluid.getTranslationKey());
+				return IVariable.wrap(TextHelper.localize("patchouli.bloodmagic.arc_processor.fluid", fluid.getAmount(), i18nFluidName));
+			} else
+			{
+				return IVariable.wrap(TextHelper.localize("patchouli.bloodmagic.arc_processor.no_fluid"));
 			}
-			return IVariable.wrap("None");
+		}
 		default:
 			return null;
 		}
 	}
-
 }

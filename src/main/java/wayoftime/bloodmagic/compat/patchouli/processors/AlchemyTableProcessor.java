@@ -66,6 +66,8 @@ public class AlchemyTableProcessor implements IComponentProcessor
 			return IVariable.wrap(recipe.getSyphon());
 		case "time":
 			return IVariable.wrap(recipe.getTicks());
+		case "tier":
+			return IVariable.wrap(recipe.getMinimumTier());
 		case "orb":
 			switch (recipe.getMinimumTier())
 			{
