@@ -14,7 +14,8 @@
       "type": "crafting_altar",
       "heading": "Weak Activation Crystal",
       "recipe": "bloodmagic:weak_activation_crystal",
-      "text": "Simply press [$(k:use)] with a bound Activation Crystal on a Master Ritual Stone to activate the ritual it's part of - assuming it's suitably assembled, that is."
+      "text": "Simply press [$(k:use)] with a bound Activation Crystal on a Master Ritual Stone to activate the ritual it's part of - assuming it's suitably assembled, that is.",
+      "anchor": "weak"
     }
   ]
 }
