@@ -34,6 +34,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.block.BlockRitualStone;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
@@ -45,14 +46,12 @@ import wayoftime.bloodmagic.util.Utils;
 import wayoftime.bloodmagic.util.handler.event.ClientHandler;
 import wayoftime.bloodmagic.util.helper.RitualHelper;
 import wayoftime.bloodmagic.util.helper.TextHelper;
-import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
 public class ItemRitualDiviner extends Item
 {
 	final int type;
 	public static final String tooltipBase = "tooltip.bloodmagic.diviner.";
-	public static String[] names =
-	{ "normal", "dusk", "dawn" };
+	public static String[] names = { "normal", "dusk", "dawn" };
 
 	public ItemRitualDiviner(int type)
 	{
@@ -154,8 +153,9 @@ public class ItemRitualDiviner extends Item
 						return true;
 					} else
 					{
-						return false; // TODO: Possibly replace the block with a
-						// ritual stone
+						notifyBlockedBuild(player, newPos);
+						return false;
+						// TODO: Possibly replace the block with a ritual stone
 					}
 				}
 			}
@@ -576,10 +576,7 @@ public class ItemRitualDiviner extends Item
 				double d0 = random.nextGaussian() * 0.02D;
 				double d1 = random.nextGaussian() * 0.02D;
 				double d2 = random.nextGaussian() * 0.02D;
-				worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, (double) ((float) pos.getX()
-						+ random.nextFloat()), (double) pos.getY()
-								+ (double) random.nextFloat(), (double) ((float) pos.getZ()
-										+ random.nextFloat()), d0, d1, d2);
+				worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, (double) ((float) pos.getX() + random.nextFloat()), (double) pos.getY() + (double) random.nextFloat(), (double) ((float) pos.getZ() + random.nextFloat()), d0, d1, d2);
 			}
 		} else
 		{
@@ -588,11 +585,13 @@ public class ItemRitualDiviner extends Item
 				double d0 = random.nextGaussian() * 0.02D;
 				double d1 = random.nextGaussian() * 0.02D;
 				double d2 = random.nextGaussian() * 0.02D;
-				worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, (double) ((float) pos.getX()
-						+ random.nextFloat()), (double) pos.getY()
-								+ (double) random.nextFloat()
-										* 1.0f, (double) ((float) pos.getZ() + random.nextFloat()), d0, d1, d2);
+				worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, (double) ((float) pos.getX() + random.nextFloat()), (double) pos.getY() + (double) random.nextFloat() * 1.0f, (double) ((float) pos.getZ() + random.nextFloat()), d0, d1, d2);
 			}
 		}
+	}
+
+	public void notifyBlockedBuild(PlayerEntity player, BlockPos pos)
+	{
+		player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.diviner.blockedBuild", pos.getX(), pos.getY(), pos.getZ()), true);
 	}
 }

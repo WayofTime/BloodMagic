@@ -624,6 +624,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("chat.bloodmagic.ritual.prevent", "The ritual is actively resisting you!");
 		add("chat.bloodmagic.ritual.activate", "A rush of energy flows through the ritual!");
 		add("chat.bloodmagic.ritual.notValid", "You feel that these runes are not configured correctly...");
+		add("chat.bloodmagic.diviner.blockedBuild", "Unable to replace block at %d, %d, %d.");
 
 		// GUI
 		add("gui.bloodmagic.empty", "Empty");

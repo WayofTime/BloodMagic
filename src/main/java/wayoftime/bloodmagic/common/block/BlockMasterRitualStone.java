@@ -19,8 +19,8 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.common.item.ItemActivationCrystal;
 import wayoftime.bloodmagic.common.item.IBindable;
+import wayoftime.bloodmagic.common.item.ItemActivationCrystal;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.tile.TileMasterRitualStone;
 import wayoftime.bloodmagic.util.helper.RitualHelper;
@@ -66,15 +66,15 @@ public class BlockMasterRitualStone extends Block
 							}
 						} else
 						{
-							player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notvalid"), true);
+							player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
 						}
 					} else
 					{
-						player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notvalid"), true);
+						player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
 					}
 				} else
 				{
-					player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notvalid"), true);
+					player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
 				}
 			}
 		}
