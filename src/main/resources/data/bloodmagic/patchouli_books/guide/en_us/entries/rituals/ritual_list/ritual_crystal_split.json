@@ -6,22 +6,7 @@
     {
       "type": "multiblock",
       "name": "Resonance of the Faceted Crystal",
-      "multiblock":{
-        "pattern":[
-          ["__D__", "_BFB_", "DE0AD", "_BWB_", "__D__"],
-          ["_D_D_", "D___D", "_____", "D___D", "_D_D_"]
-        ],
-        "mapping":{
-          "0": "bloodmagic:masterritualstone",
-          "B": "bloodmagic:ritualstone",
-          "W": "#bloodmagic:ritual_stones/water_earth_fire_air",
-          "A": "#bloodmagic:ritual_stones/air_water_earth_fire",
-          "F": "#bloodmagic:ritual_stones/fire_air_water_earth",
-          "E": "#bloodmagic:ritual_stones/earth_fire_air_water",
-          "D": "bloodmagic:duskritualstone"
-        },
-        "symmetrical": false
-      },
+      "multiblock_id": "bloodmagic:crystal_split",
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {
