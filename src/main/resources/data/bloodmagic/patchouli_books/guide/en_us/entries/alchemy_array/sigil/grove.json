@@ -31,7 +31,7 @@
     },
     {
       "type": "text",
-      "text": "If you press [$(k:use)] on a block that is $(2)IGrowable$(), it will apply the bonemeal effect while consuming $(blood)150 LP$(). $(br2)However, if you hold [$(k:sneak)] and [$(k:use)] while aiming at the air, it will light up to indicate that it is activated, and will consume $(blood)150 LP$() every 10 seconds until deactivated. Every block in a 7x7x5 high volume centered on the player will have a growth tick applied to it. Good for farming those taters!"
+      "text": "If you press [$(k:use)] on a block that is $(2)IGrowable$(), it will apply the bonemeal effect while consuming $(blood)150 LP$(). $(br2)However, if you hold [$(k:sneak)] and [$(k:use)] while aiming at the air, it will light up to indicate that it is activated, and will consume $(blood)150 LP$() every 5 seconds until deactivated. Every block in a 7x7x5 high volume centered on the player will have a growth tick applied to it. Good for farming those taters!"
     }
   ]
 }
