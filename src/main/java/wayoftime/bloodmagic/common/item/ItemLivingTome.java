@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.common.item;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -46,20 +47,65 @@ public class ItemLivingTome extends Item implements ILivingContainer
 		if (tomeStats == null)
 			return ActionResult.resultPass(held);
 
-		boolean[] flag = new boolean[] { false };
-		tomeStats.getUpgrades().forEach((k, v) -> {
-			if (armorStats.getLevel(k.getKey()) >= tomeStats.getLevel(k.getKey()))
-				return;
+		Map<LivingUpgrade, Double> upgradeMap = tomeStats.getUpgrades();
 
-			Pair<LivingStats, Boolean> upgraded = LivingUtil.applyNewExperience(player, k, v); // FIXME set levels
-																								// directly, don't add
-																								// experience
-			flag[0] = flag[0] || upgraded.getRight();
+		boolean[] flag = new boolean[] { false };
+		double[] expUsedArray = new double[upgradeMap.size()];
+		int[] i = new int[] { 0 };
+		upgradeMap.forEach((k, v) -> {
+//			if (armorStats.getLevel(k.getKey()) >= tomeStats.getLevel(k.getKey()))
+//				return;
+
+			Pair<LivingStats, Double> upgraded = LivingUtil.applyExperienceToUpgradeCap(player, k, v);
+			// applyExperienceToUpgradeCap
+			flag[0] = flag[0] || upgraded.getRight() > 0;
+			expUsedArray[i[0]] = upgraded.getRight();
+			i[0] = i[0] + 1;
 		});
 //        LivingStats.toPlayer(player, armorStats);
 		if (flag[0])
 		{
-			held.shrink(1);
+			Object[] upgradeArray = upgradeMap.entrySet().toArray();
+//			tomeStats.addExperience(key, experience)
+			for (int j = 0; j < expUsedArray.length; j++)
+			{
+				double expUsed = expUsedArray[j];
+				if (expUsed > 0)
+				{
+					ResourceLocation registryName = ((Entry<LivingUpgrade, Double>) upgradeArray[j]).getKey().getRegistryName();
+//					if (((Entry<LivingUpgrade, Double>) upgradeArray[j]).getValue() < expUsed)
+//					{
+//						tomeStats.resetExperience(registryName);
+//					} else
+					{
+						tomeStats.addExperience(registryName, -expUsed);
+					}
+
+					updateLivingStats(held, tomeStats);
+				}
+			}
+
+			if (!player.isCreative())
+			{
+				boolean doShrink = true;
+				for (Entry<LivingUpgrade, Double> entry : tomeStats.getUpgrades().entrySet())
+				{
+					LivingUpgrade upgrade = entry.getKey();
+					int level = upgrade.getLevel(entry.getValue().intValue());
+					if (level > 0)
+					{
+						doShrink = false;
+					}
+				}
+
+				// Shrink the stack if the tome is empty
+				if (doShrink)
+				{
+					held.shrink(1);
+				}
+			}
+
+//			held.shrink(1);
 			return ActionResult.resultSuccess(held);
 		} else
 			return ActionResult.resultPass(held);

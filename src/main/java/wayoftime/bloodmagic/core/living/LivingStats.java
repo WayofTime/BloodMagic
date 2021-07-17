@@ -44,7 +44,7 @@ public class LivingStats
 
 //		System.out.println("Upgrade: " + upgrade);
 
-		if (upgrade.getNextRequirement((int) current) == 0)
+		if (experience > 0 && upgrade.getNextRequirement((int) current) == 0)
 			return this;
 
 		upgrades.put(upgrade, current + experience);

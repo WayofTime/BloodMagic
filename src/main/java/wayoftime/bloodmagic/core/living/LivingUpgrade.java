@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.UUID;
@@ -160,6 +161,19 @@ public class LivingUpgrade extends ForgeRegistryEntry<LivingUpgrade>
 	public int getLevelCost(int level)
 	{
 		return levelToCost.getOrDefault(level, 0);
+	}
+
+	public int getLevelExp(int level)
+	{
+		for (Entry<Integer, Integer> entry : experienceToLevel.entrySet())
+		{
+			if (entry.getValue() == level)
+			{
+				return entry.getKey();
+			}
+		}
+
+		return 0;
 	}
 
 	public ResourceLocation getKey()
