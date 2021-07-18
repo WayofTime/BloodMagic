@@ -6,6 +6,7 @@ import net.minecraft.util.NonNullList;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.api.compat.IDemonWill;
 import wayoftime.bloodmagic.api.compat.IDemonWillGem;
+import wayoftime.bloodmagic.util.helper.InventoryHelper;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 
 /**
@@ -25,7 +26,8 @@ public class PlayerDemonWillHandler
 	 */
 	public static double getTotalDemonWill(EnumDemonWillType type, PlayerEntity player)
 	{
-		NonNullList<ItemStack> inventory = player.inventory.mainInventory;
+
+		NonNullList<ItemStack> inventory = InventoryHelper.getAllInventories(player);
 		double souls = 0;
 
 		for (ItemStack stack : inventory)
@@ -68,7 +70,7 @@ public class PlayerDemonWillHandler
 	 */
 	public static boolean isDemonWillFull(EnumDemonWillType type, PlayerEntity player)
 	{
-		NonNullList<ItemStack> inventory = player.inventory.mainInventory;
+		NonNullList<ItemStack> inventory = InventoryHelper.getAllInventories(player);
 
 		boolean hasGem = false;
 		for (ItemStack stack : inventory)
@@ -95,7 +97,7 @@ public class PlayerDemonWillHandler
 	{
 		double consumed = 0;
 
-		NonNullList<ItemStack> inventory = player.inventory.mainInventory;
+		NonNullList<ItemStack> inventory = InventoryHelper.getAllInventories(player);
 
 		for (int i = 0; i < inventory.size(); i++)
 		{
@@ -130,7 +132,7 @@ public class PlayerDemonWillHandler
 		if (willStack.isEmpty())
 			return ItemStack.EMPTY;
 
-		NonNullList<ItemStack> inventory = player.inventory.mainInventory;
+		NonNullList<ItemStack> inventory = InventoryHelper.getAllInventories(player);
 
 		for (ItemStack stack : inventory)
 		{
@@ -156,7 +158,7 @@ public class PlayerDemonWillHandler
 	 */
 	public static double addDemonWill(EnumDemonWillType type, PlayerEntity player, double amount)
 	{
-		NonNullList<ItemStack> inventory = player.inventory.mainInventory;
+		NonNullList<ItemStack> inventory = InventoryHelper.getAllInventories(player);
 		double remaining = amount;
 
 		for (ItemStack stack : inventory)
@@ -184,7 +186,7 @@ public class PlayerDemonWillHandler
 	 */
 	public static double addDemonWill(EnumDemonWillType type, PlayerEntity player, double amount, ItemStack ignored)
 	{
-		NonNullList<ItemStack> inventory = player.inventory.mainInventory;
+		NonNullList<ItemStack> inventory = InventoryHelper.getAllInventories(player);
 		double remaining = amount;
 
 		for (ItemStack stack : inventory)

@@ -1,5 +1,6 @@
 package wayoftime.bloodmagic.api;
 
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
@@ -8,7 +9,9 @@ import org.apache.logging.log4j.LogManager;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.LazyValue;
+import net.minecraft.util.NonNullList;
 
 /**
  * The main interface between a plugin and Blood Magic's internals.
@@ -121,6 +124,18 @@ public interface IBloodMagicAPI
 	 * @param value           The amount of tranquility that the handler has
 	 */
 	default void registerTranquilityHandler(Predicate<BlockState> predicate, String tranquilityType, double value)
+	{
+	}
+
+	/**
+	 * Registers a {@link Function<PlayerEntity, NonNullList<ItemStack>>} for
+	 * inventory handling.
+	 * 
+	 * @param inventoryIdentifier String identifier for the inventory.
+	 * @param function            Function which inputs a Player Entity and outputs
+	 *                            a NonNullList of ItemStacks.
+	 */
+	default void registerInventoryProvider(String inventoryIdentifier, Function<PlayerEntity, NonNullList<ItemStack>> provider)
 	{
 	}
 
