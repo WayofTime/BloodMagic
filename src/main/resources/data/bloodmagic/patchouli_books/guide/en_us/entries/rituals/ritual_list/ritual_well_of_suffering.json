@@ -6,23 +6,7 @@
     {
       "type": "multiblock",
       "name": "Well Of Suffering",
-      "multiblock":{
-        "pattern":[
-          ["____A____", "_________", "_________", "_________", "A_______A", "_________", "_________", "_________", "____A____"],
-          ["___W_W___", "_________", "_________", "W__F_F__W", "____0____", "W__F_F__W", "_________", "_________", "___W_W___"],
-          ["__W___W__", "_D_____D_", "W_F_E_F_W", "_________", "__E___E__", "_________", "W_F_E_F_W", "_D_____D_", "__W___W__"]
-          
-        ],
-        "mapping":{
-          "0": "bloodmagic:masterritualstone",
-          "W": "bloodmagic:waterritualstone",
-          "A": "bloodmagic:airritualstone",
-          "F": "bloodmagic:fireritualstone",
-          "E": "bloodmagic:earthritualstone",
-          "D": "bloodmagic:duskritualstone"
-        },
-        "symmetrical": true
-      },
+      "multiblock_id": "bloodmagic:well_of_suffering",
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {

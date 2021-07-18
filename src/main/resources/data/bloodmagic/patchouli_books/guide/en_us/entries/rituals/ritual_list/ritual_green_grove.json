@@ -6,19 +6,7 @@
     {
       "type": "multiblock",
       "name": "Ritual of the Green Grove",
-      "multiblock":{
-        "pattern":[
-          ["EWE",
-           "W0W",
-           "EWE"]
-        ],
-        "mapping":{
-          "0": "bloodmagic:masterritualstone",
-          "E": "bloodmagic:earthritualstone",
-          "W": "bloodmagic:waterritualstone"
-        },
-        "symmetrical": true
-      },
+      "multiblock_id": "bloodmagic:green_grove",
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$(/l) for easier construction."
     },
     {

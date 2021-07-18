@@ -6,24 +6,7 @@
     {
       "type": "multiblock",
       "name": "Sound of the Cleansing Soul",
-      "multiblock":{
-        "pattern":[
-          ["_________", "_________", "_________", "____A____", "___A_A___", "____A____", "_________", "_________", "_________"],
-          ["_________", "_E_____E_", "_________", "___W_W___", "_________", "___W_W___", "_________", "_E_____E_", "_________"],
-          ["_________", "_E_____E_", "_________", "_________", "_________", "_________", "_________", "_E_____E_", "_________"],
-          ["_________", "_E_____E_", "_________", "___W_W___", "_________", "___W_W___", "_________", "_E_____E_", "_________"],
-          ["____E____", "_E_____E_", "__FF_FF__", "__FD_DF__", "E___0___E", "__FD_DF__", "__FF_FF__", "_E_____E_", "____E____"]
-        ],
-        "mapping":{
-          "0": "bloodmagic:masterritualstone",
-          "W": "bloodmagic:waterritualstone",
-          "A": "bloodmagic:airritualstone",
-          "F": "bloodmagic:fireritualstone",
-          "E": "bloodmagic:earthritualstone",
-          "D": "bloodmagic:duskritualstone"
-        },
-        "symmetrical": true
-      },
+      "multiblock_id": "bloodmagic:upgrade_remove",
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {

@@ -6,23 +6,7 @@
     {
       "type": "multiblock",
       "name": "Ritual of the Shepherd",
-      "multiblock":{
-        "pattern":[
-          ["_EDE_",
-           "A_W_A",
-           "DW0WD",
-           "A_W_A",
-           "_EDE_"]
-        ],
-        "mapping":{
-          "0": "bloodmagic:masterritualstone",
-          "W": "bloodmagic:waterritualstone",
-          "A": "#bloodmagic:ritual_stones/air_or_earth",
-          "E": "#bloodmagic:ritual_stones/earth_or_air",
-          "D": "bloodmagic:duskritualstone"
-        },
-        "symmetrical": true
-      },
+      "multiblock_id": "bloodmagic:animal_growth",
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {

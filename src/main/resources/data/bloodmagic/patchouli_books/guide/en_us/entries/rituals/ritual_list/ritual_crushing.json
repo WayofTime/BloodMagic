@@ -6,20 +6,7 @@
     {
       "type": "multiblock",
       "name": "Ritual of the Crusher",
-      "multiblock":{
-        "pattern":[
-          ["__A__", "_____", "A___A", "_____", "__A__"],
-          ["D_F_D", "__E__", "FE0EF", "__E__", "D_F_D"]
-        ],
-        "mapping":{
-          "0": "bloodmagic:masterritualstone",
-          "A": "bloodmagic:airritualstone",
-          "F": "bloodmagic:fireritualstone",
-          "E": "bloodmagic:earthritualstone",
-          "D": "bloodmagic:duskritualstone"
-        },
-        "symmetrical": true
-      },
+      "multiblock_id": "bloodmagic:crushing",
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {

@@ -6,21 +6,7 @@
     {
       "type": "multiblock",
       "name": "Ritual of Regeneration",
-      "multiblock":{
-        "pattern":[
-          ["EEW_F_F_WEE", "E____F____E", "W_D_____D_W", "___________", "A_________A", "_A___0___A_", "A_________A", "___________", "W_D_____D_W", "E____F____E", "EEW_F_F_WEE"],
-          ["_E_______E_", "E_________E", "___________", "___________", "___________", "___________", "___________", "___________", "___________", "E_________E", "_E_______E_"]
-        ],
-        "mapping":{
-          "0": "bloodmagic:masterritualstone",
-          "W": "bloodmagic:waterritualstone",
-          "A": "#bloodmagic:ritual_stones/air_or_fire",
-          "F": "#bloodmagic:ritual_stones/fire_or_air",
-          "E": "bloodmagic:earthritualstone",
-          "D": "bloodmagic:duskritualstone"
-        },
-        "symmetrical": true
-      },
+      "multiblock_id": "bloodmagic:regeneration",
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {
