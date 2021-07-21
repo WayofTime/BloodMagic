@@ -79,7 +79,7 @@
     },
     {
       "type": "text",
-      "text": "This means that for later-game setups, it is best to have many different types of $(thing)Tranquility$(). Although other mods may add their own, and more will be added later, the blocks that contribute to $(thing)Tranquility$() are: Lava, Water, Life Essence, Netherrack, Dirt, Farmland, Potatoes, Carrots, Wheat, Nether Wart, Beetroots, Leaves, Logs, Fire, and Grass."
+      "text": "This means that for later-game setups, it is best to have many different types of $(thing)Tranquility$(). Although other mods may add their own, and more will be added later, the blocks that contribute to $(thing)Tranquility$() are: Lava, Water (including most Waterlogged blocks), Life Essence, Netherrack, Dirt, Farmland, Potatoes, Carrots, Wheat, Nether Wart, Beetroots, Leaves, Logs, Fire, and Grass."
     },
     {
       "type": "image",
