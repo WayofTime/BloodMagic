@@ -1,0 +1,17 @@
+{
+  "name": "Demon Will Aura",
+  "icon": "bloodmagic:demoncrucible",
+  "category": "bloodmagic:demon_will",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(blood)[Wrince, please pretty up these notes and remove duplicate info from Crystallized Will.]$() $(li)Chunk-based. $(li)Holds up to 100 of each Will Aspect. $(li)Demon Crucible removes Will from Tartaric Gems, or consumes Demon Will Crsytals (50 Will per crystal) and puts it into the Aura. $(li)Hellfire Forge takes Will from Aura and puts it into the contained Tartaric Gem."
+    },
+    {
+      "type": "crafting_soulforge",
+      "heading": "Demon Crucible",
+      "recipe": "bloodmagic:soulforge/demon_crucible",
+      "text": "$(li)This Hellfire Forge mechanic is how you get Aspected Tartaric Gems. $(li)Ritual Augments use Will from the Aura."
+    }
+  ]
+}

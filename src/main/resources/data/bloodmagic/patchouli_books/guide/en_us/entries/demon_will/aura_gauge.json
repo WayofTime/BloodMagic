@@ -1,0 +1,16 @@
+{
+  "name": "Demon Will Aura Gauge",
+  "icon": "bloodmagic:demonwillgauge",
+  "category": "bloodmagic:demon_will",
+  "pages": [
+    {
+      "type": "text",
+      "text": "While in the player's inventory, the $(thing)Demon Will Aura Gauge$() will display a HUD element to show how much $(raw)Demon Will$() is in the local $(l:bloodmagic:demon_will/aura)Aura$(). You can hold [$(k:sneak)] to get a numerical value for each $(l:bloodmagic:demon_will/aspected_will)Will Aspect$()."
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "recipe": "bloodmagic:soulforge/demon_will_gauge",
+      "heading": "Demon Will Aura Gauge"
+    }
+  ]
+}
