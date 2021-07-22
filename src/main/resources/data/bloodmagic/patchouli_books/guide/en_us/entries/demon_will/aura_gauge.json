@@ -23,7 +23,7 @@
     },
     {
       "type": "text",
-      "text": "This gauge will appear in the top right of your screen. The coloured bars will give you a good estimate of how much of each $(l:bloodmagic:demon_will/aspected_will)Will Aspect$() is in the current chunk. $(br2)You can hold [$(k:sneak)] to get a numerical value for each Aspect, between 1 and 100 $(raw)Will$() for each. 100 is the maximum amount of any one aspect of $(raw)Will$() that a chunk can have in it."
+      "text": "This gauge will appear in the top left of your screen. The coloured bars will give you a good estimate of how much of each $(l:bloodmagic:demon_will/aspected_will)Will Aspect$() is in the current chunk. $(br2)You can hold [$(k:sneak)] to get a numerical value for each Aspect, between 1 and 100 $(raw)Will$() for each. 100 is the maximum amount of any one aspect of $(raw)Will$() that a chunk can have in it."
     }
   ]
 }
