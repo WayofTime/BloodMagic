@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "Speaking of the $(l:bloodmagic:demon_will/soul_gem)Tartaric Gem$(), placing one inside a $(l:bloodmagic:demon_will/soul_forge)Hellfire Forge$() will cause it to rapidly absorb $(raw)Will$() from the chunk it's in. $(br2)With an Aspect of $(raw)Will$() in the chunk, such as $(steadfast)Steadfast$() or $(corrosive)Corrosive$(), and an empty $(item)Tartaric Gem$(), it's possible to fill the Gem with that Aspect. $(br2)This lets you modify your $(l:bloodmagic:demon_will/sentient_tools)Sentient Tools$() and $(l:bloodmagic:demon_will/sentient_sword)Sword$() accordingly. The effects are defined $(l:bloodmagic:demon_will/aspected_will#sentient_aspects)here$()."
+      "text": "Speaking of the $(l:bloodmagic:demon_will/soul_gem)Tartaric Gem$(), placing one inside a $(l:bloodmagic:demon_will/soul_forge)Hellfire Forge$() will cause it to rapidly absorb $(raw)Will$() from the chunk it's in. $(br2)With an Aspect of $(raw)Will$() in the chunk, such as $(raw)Raw$() or $(corrosive)Corrosive$(), and an empty $(item)Tartaric Gem$(), it's possible to fill the Gem with that Aspect. $(br2)This lets you modify your $(l:bloodmagic:demon_will/sentient_tools)Sentient Tools$() and $(l:bloodmagic:demon_will/sentient_sword)Sword$() accordingly. The effects are defined $(l:bloodmagic:demon_will/aspected_will#sentient_aspects)here$()."
     },
     {
       "type": "relations",
