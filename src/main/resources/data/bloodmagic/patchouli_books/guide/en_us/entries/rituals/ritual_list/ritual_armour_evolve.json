@@ -6,22 +6,7 @@
     {
       "type": "multiblock",
       "name": "Ritual of Living Evolution",
-      "multiblock":{
-        "pattern":[
-          ["_________", "_________", "_________", "____E____", "___E_E___", "____E____", "_________", "_________", "_________"],
-          ["_________", "_E_____E_", "_________", "___D_D___", "_________", "___D_D___", "_________", "_E_____E_", "_________"],
-          ["_________", "_E_____E_", "_________", "_________", "_________", "_________", "_________", "_E_____E_", "_________"],
-          ["_________", "_E_____E_", "_________", "___D_D___", "_________", "___D_D___", "_________", "_E_____E_", "_________"],
-          ["____E____", "_E_____E_", "__FF_FF__", "__FD_DF__", "E___0___E", "__FD_DF__", "__FF_FF__", "_E_____E_", "____E____"]
-        ],
-        "mapping":{
-          "0": "bloodmagic:masterritualstone",
-          "F": "bloodmagic:fireritualstone",
-          "E": "bloodmagic:earthritualstone",
-          "D": "bloodmagic:duskritualstone"
-        },
-        "symmetrical": true
-      },
+      "multiblock_id": "bloodmagic:armour_evolve",
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {

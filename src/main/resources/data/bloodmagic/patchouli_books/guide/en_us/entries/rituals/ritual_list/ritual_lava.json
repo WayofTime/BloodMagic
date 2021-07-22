@@ -6,18 +6,7 @@
     {
       "type": "multiblock",
       "name": "Serenade of the Nether",
-      "multiblock":{
-        "pattern":[
-          ["_F_",
-           "F0F",
-           "_F_"]
-        ],
-        "mapping":{
-          "0": "bloodmagic:masterritualstone",
-          "F": "bloodmagic:fireritualstone"
-        },
-        "symmetrical": true
-      },
+      "multiblock_id": "bloodmagic:lava",
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$(/l) for easier construction."
     },
     {

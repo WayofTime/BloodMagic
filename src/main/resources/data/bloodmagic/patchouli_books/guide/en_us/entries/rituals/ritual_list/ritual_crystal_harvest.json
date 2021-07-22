@@ -6,21 +6,7 @@
     {
       "type": "multiblock",
       "name": "Crack of the Fractured Crystal",
-      "multiblock":{
-        "pattern":[
-          ["_______", "_______", "___D___", "__D_D__", "___D___", "_______", "_______"],
-          ["ED___DE", "D_____D", "__A_A__", "___0___", "__A_A__", "D_____D", "ED___DE"],
-          ["E_FFF_E", "___F___", "F__F__F", "FFF_FFF", "F__F__F", "___F___", "E_FFF_E"]
-        ],
-        "mapping":{
-          "0": "bloodmagic:masterritualstone",
-          "A": "bloodmagic:airritualstone",
-          "F": "bloodmagic:fireritualstone",
-          "E": "bloodmagic:earthritualstone",
-          "D": "bloodmagic:duskritualstone"
-        },
-        "symmetrical": true
-      },
+      "multiblock_id": "bloodmagic:crystal_harvest",
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {
