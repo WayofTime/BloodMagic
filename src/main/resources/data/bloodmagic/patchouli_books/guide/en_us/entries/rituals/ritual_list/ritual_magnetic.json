@@ -6,20 +6,7 @@
     {
       "type": "multiblock",
       "name": "Ritual of Magnetism",
-      "multiblock":{
-        "pattern":[
-          ["__F__", "_____", "F___F", "_____", "__F__"],
-          ["A_E_A", "_____", "E___E", "_____", "A_E_A"],
-          ["_____", "_E_E_", "__0__", "_E_E_", "_____"]
-        ],
-        "mapping":{
-          "0": "bloodmagic:masterritualstone",
-          "A": "bloodmagic:airritualstone",
-          "F": "bloodmagic:fireritualstone",
-          "E": "bloodmagic:earthritualstone"
-        },
-        "symmetrical": true
-      },
+      "multiblock_id": "bloodmagic:magnetism",
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$(/l) for easier construction."
     },
     {
