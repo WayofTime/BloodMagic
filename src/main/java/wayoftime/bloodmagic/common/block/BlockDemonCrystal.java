@@ -29,10 +29,10 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.item.ItemDemonCrystal;
 import wayoftime.bloodmagic.tile.TileDemonCrystal;
-import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
 
 public class BlockDemonCrystal extends Block
@@ -45,36 +45,30 @@ public class BlockDemonCrystal extends Block
 	public final EnumDemonWillType type;
 
 	// Bounding / Collision boxes
-	private static final VoxelShape[] UP =
-	{ Block.makeCuboidShape(6, 0, 5, 10, 13, 9), Block.makeCuboidShape(7, 0, 0, 13, 6, 5),
-			Block.makeCuboidShape(9, 0, 9, 13, 5, 14), Block.makeCuboidShape(2, 0, 1, 7, 6, 7),
-			Block.makeCuboidShape(5, 0, 9, 9, 7, 15), Block.makeCuboidShape(0, 0, 7, 6, 6, 10),
-			Block.makeCuboidShape(10, 0, 6, 15, 6, 9) };
-	private static final VoxelShape[] DOWN =
-	{ Block.makeCuboidShape(6, 3, 7, 10, 16, 11), Block.makeCuboidShape(7, 10, 11, 13, 16, 16),
-			Block.makeCuboidShape(9, 11, 2, 13, 16, 7), Block.makeCuboidShape(2, 9, 11, 7, 16, 15),
-			Block.makeCuboidShape(5, 9, 1, 9, 16, 7), Block.makeCuboidShape(0, 10, 6, 6, 16, 9),
-			Block.makeCuboidShape(10, 11, 7, 15, 16, 10) };
-	private static final VoxelShape[] NORTH =
-	{ Block.makeCuboidShape(6, 5, 3, 10, 9, 16), Block.makeCuboidShape(9, 0, 6, 13, 5, 16),
-			Block.makeCuboidShape(8, 9, 11, 13, 14, 16), Block.makeCuboidShape(2, 1, 9, 7, 7, 16),
-			Block.makeCuboidShape(5, 9, 9, 9, 15, 16), Block.makeCuboidShape(0, 7, 10, 6, 10, 16),
-			Block.makeCuboidShape(10, 7, 10, 15, 9, 15), };
-	private static final VoxelShape[] SOUTH =
-	{ Block.makeCuboidShape(6, 7, 0, 10, 11, 13), Block.makeCuboidShape(7, 11, 0, 13, 16, 6),
-			Block.makeCuboidShape(8, 2, 9, 13, 7, 14), Block.makeCuboidShape(2, 9, 1, 7, 14, 7),
-			Block.makeCuboidShape(5, 1, 9, 9, 7, 9), Block.makeCuboidShape(0, 6, 1, 6, 9, 7),
-			Block.makeCuboidShape(10, 8, 1, 15, 10, 6) };
-	private static final VoxelShape[] EAST =
-	{ Block.makeCuboidShape(0, 6, 5, 13, 10, 9), Block.makeCuboidShape(0, 3, 0, 6, 9, 5),
-			Block.makeCuboidShape(0, 3, 9, 5, 8, 14), Block.makeCuboidShape(1, 9, 1, 7, 13, 7),
-			Block.makeCuboidShape(1, 0, 9, 7, 11, 15), Block.makeCuboidShape(0, 10, 7, 6, 16, 10),
-			Block.makeCuboidShape(0, 1, 6, 5, 6, 9) };
-	private static final VoxelShape[] WEST =
-	{ Block.makeCuboidShape(3, 6, 5, 16, 10, 9), Block.makeCuboidShape(9, 7, 0, 16, 12, 5),
-			Block.makeCuboidShape(11, 4, 9, 16, 13, 14), Block.makeCuboidShape(9, 3, 1, 16, 8, 7),
-			Block.makeCuboidShape(9, 6, 9, 16, 8, 15), Block.makeCuboidShape(10, 1, 7, 16, 6, 10),
-			Block.makeCuboidShape(10, 6, 6, 15, 15, 9) };
+	private static final VoxelShape[] UP = { Block.makeCuboidShape(6, 0, 5, 10, 13, 9),
+			Block.makeCuboidShape(7, 0, 0, 13, 6, 5), Block.makeCuboidShape(9, 0, 9, 13, 5, 14),
+			Block.makeCuboidShape(2, 0, 1, 7, 6, 7), Block.makeCuboidShape(5, 0, 9, 9, 7, 15),
+			Block.makeCuboidShape(0, 0, 7, 6, 6, 10), Block.makeCuboidShape(10, 0, 6, 15, 6, 9) };
+	private static final VoxelShape[] DOWN = { Block.makeCuboidShape(6, 3, 7, 10, 16, 11),
+			Block.makeCuboidShape(7, 10, 11, 13, 16, 16), Block.makeCuboidShape(9, 11, 2, 13, 16, 7),
+			Block.makeCuboidShape(2, 9, 11, 7, 16, 15), Block.makeCuboidShape(5, 9, 1, 9, 16, 7),
+			Block.makeCuboidShape(0, 10, 6, 6, 16, 9), Block.makeCuboidShape(10, 11, 7, 15, 16, 10) };
+	private static final VoxelShape[] NORTH = { Block.makeCuboidShape(6, 5, 3, 10, 9, 16),
+			Block.makeCuboidShape(9, 0, 6, 13, 5, 16), Block.makeCuboidShape(8, 9, 11, 13, 14, 16),
+			Block.makeCuboidShape(2, 1, 9, 7, 7, 16), Block.makeCuboidShape(5, 9, 9, 9, 15, 16),
+			Block.makeCuboidShape(0, 7, 10, 6, 10, 16), Block.makeCuboidShape(10, 7, 10, 15, 9, 15), };
+	private static final VoxelShape[] SOUTH = { Block.makeCuboidShape(6, 7, 0, 10, 11, 13),
+			Block.makeCuboidShape(7, 11, 0, 13, 16, 6), Block.makeCuboidShape(8, 2, 9, 13, 7, 14),
+			Block.makeCuboidShape(2, 9, 1, 7, 14, 7), Block.makeCuboidShape(5, 1, 9, 9, 7, 9),
+			Block.makeCuboidShape(0, 6, 1, 6, 9, 7), Block.makeCuboidShape(10, 8, 1, 15, 10, 6) };
+	private static final VoxelShape[] EAST = { Block.makeCuboidShape(0, 6, 5, 13, 10, 9),
+			Block.makeCuboidShape(0, 3, 0, 6, 9, 5), Block.makeCuboidShape(0, 3, 9, 5, 8, 14),
+			Block.makeCuboidShape(1, 9, 1, 7, 13, 7), Block.makeCuboidShape(1, 0, 9, 7, 11, 15),
+			Block.makeCuboidShape(0, 10, 7, 6, 16, 10), Block.makeCuboidShape(0, 1, 6, 5, 6, 9) };
+	private static final VoxelShape[] WEST = { Block.makeCuboidShape(3, 6, 5, 16, 10, 9),
+			Block.makeCuboidShape(9, 7, 0, 16, 12, 5), Block.makeCuboidShape(11, 4, 9, 16, 13, 14),
+			Block.makeCuboidShape(9, 3, 1, 16, 8, 7), Block.makeCuboidShape(9, 6, 9, 16, 8, 15),
+			Block.makeCuboidShape(10, 1, 7, 16, 6, 10), Block.makeCuboidShape(10, 6, 6, 15, 15, 9) };
 
 	public BlockDemonCrystal(EnumDemonWillType type)
 	{
@@ -96,21 +90,21 @@ public class BlockDemonCrystal extends Block
 		ItemStack stack = ItemStack.EMPTY;
 		switch (type)
 		{
-			case CORROSIVE:
-				stack =  new ItemStack(BloodMagicItems.CORROSIVE_CRYSTAL.get());
-				break;
-			case DEFAULT:
-				stack =  new ItemStack(BloodMagicItems.RAW_CRYSTAL.get());
-				break;
-			case DESTRUCTIVE:
-				stack = new ItemStack(BloodMagicItems.DESTRUCTIVE_CRYSTAL.get());
-				break;
-			case STEADFAST:
-				stack =  new ItemStack(BloodMagicItems.STEADFAST_CRYSTAL.get());
-				break;
-			case VENGEFUL:
-				stack =  new ItemStack(BloodMagicItems.VENGEFUL_CRYSTAL.get());
-				break;
+		case CORROSIVE:
+			stack = new ItemStack(BloodMagicItems.CORROSIVE_CRYSTAL.get());
+			break;
+		case DEFAULT:
+			stack = new ItemStack(BloodMagicItems.RAW_CRYSTAL.get());
+			break;
+		case DESTRUCTIVE:
+			stack = new ItemStack(BloodMagicItems.DESTRUCTIVE_CRYSTAL.get());
+			break;
+		case STEADFAST:
+			stack = new ItemStack(BloodMagicItems.STEADFAST_CRYSTAL.get());
+			break;
+		case VENGEFUL:
+			stack = new ItemStack(BloodMagicItems.VENGEFUL_CRYSTAL.get());
+			break;
 		}
 
 		stack.setCount(crystalNumber);
@@ -150,8 +144,7 @@ public class BlockDemonCrystal extends Block
 				boolean isCreative = player.isCreative();
 				boolean holdsCrystal = player.getHeldItem(hand).getItem() instanceof ItemDemonCrystal;
 
-				if (PlayerDemonWillHandler.getTotalDemonWill(EnumDemonWillType.DEFAULT, player) > 1024
-						&& !(holdsCrystal && isCreative))
+				if (PlayerDemonWillHandler.getTotalDemonWill(PlayerDemonWillHandler.getLargestWillType(player), player) > 1024 && !(holdsCrystal && isCreative))
 				{
 					crystal.dropSingleCrystal();
 

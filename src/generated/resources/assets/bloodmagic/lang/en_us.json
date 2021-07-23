@@ -107,6 +107,7 @@
   "item.bloodmagic.daggerofsacrifice": "Dagger of Sacrifice",
   "item.bloodmagic.defaultcrystal": "Demon Will Crystal",
   "item.bloodmagic.demonslate": "Demonic Slate",
+  "item.bloodmagic.demonwillgauge": "Demon Will Aura Gauge",
   "item.bloodmagic.destructivecrystal": "Destructive Will Crystal",
   "item.bloodmagic.divinationsigil": "Divination Sigil",
   "item.bloodmagic.duskscribetool": "Inscription Tool: Dusk",
@@ -513,5 +514,6 @@
   "tooltip.bloodmagic.soulSnare.desc": "Throw at a monster and then kill them to obtain their demonic will",
   "tooltip.bloodmagic.throwing_dagger.desc": "Not to be used in the kitchen",
   "tooltip.bloodmagic.tier": "Tier %d",
-  "tooltip.bloodmagic.will": "Will Quality: %s"
+  "tooltip.bloodmagic.will": "Will Quality: %s",
+  "tooltip.bloodmagic.willGauge": "A strange device that can measure the Demon Will in the Aura."
 }

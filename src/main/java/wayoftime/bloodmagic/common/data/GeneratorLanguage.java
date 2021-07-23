@@ -82,6 +82,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.soulGem.greater", "A gem used to contain a greater amount of will");
 		add("tooltip.bloodmagic.soulGem.grand", "A gem used to contain a large amount of will");
 		add("tooltip.bloodmagic.soulSnare.desc", "Throw at a monster and then kill them to obtain their demonic will");
+		add("tooltip.bloodmagic.willGauge", "A strange device that can measure the Demon Will in the Aura.");
 
 		add("tooltip.bloodmagic.currentType.default", "Contains: Raw Will");
 		add("tooltip.bloodmagic.currentType.corrosive", "Contains: Corrosive Will");
@@ -525,6 +526,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.MONSTER_SOUL_STEADFAST, "Demon Will");
 		addItem(BloodMagicItems.MONSTER_SOUL_VENGEFUL, "Demon Will");
 		addItem(BloodMagicItems.SOUL_SNARE, "Soul Snare");
+		addItem(BloodMagicItems.DEMON_WILL_GAUGE, "Demon Will Aura Gauge");
 		addItem(BloodMagicItems.SENTIENT_SWORD, "Sentient Sword");
 		addItem(BloodMagicItems.SENTIENT_AXE, "Sentient Axe");
 		addItem(BloodMagicItems.SENTIENT_PICKAXE, "Sentient Pickaxe");

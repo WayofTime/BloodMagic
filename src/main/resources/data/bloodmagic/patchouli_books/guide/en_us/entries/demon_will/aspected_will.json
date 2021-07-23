@@ -36,6 +36,7 @@
     },
     {
       "type": "text",
+      "anchor": "sentient_aspects",
       "text": "However, they also change how your Sentient Tools behave, making them more powerful.$(br) $(li)$(raw)Raw Will$(): Increases damage and attack speed. $(corrosive)$(li)Corrosive Will$(): Attacks have a chance to apply poison or wither to your foes, otherwise same as $(raw)Raw$(). $(vengeful)$(li)Vengeful Will$(): increases damage, but not as much as $(raw)Raw$(). Increases attack speed more than any other type. Gives a movement speed buff that increases with higher amounts of Will."
     },
     {
