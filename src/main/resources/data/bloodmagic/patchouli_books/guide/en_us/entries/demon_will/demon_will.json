@@ -20,7 +20,7 @@
     },
     {
       "type": "text",
-      "text": "Once you have some $(raw)Will$(), you can use it to craft useful tools in the $(l:bloodmagic:demon_will/soul_forge)Hellfire Forge,$(). If you find them cluttering up your inventory, perhaps a $(l:bloodmagic:demon_will/soul_gem)Tartaric Gem$() may help."
+      "text": "Once you have some $(raw)Will$(), you can use it to craft useful tools in the $(l:bloodmagic:demon_will/soul_forge)Hellfire Forge$(). If you find them cluttering up your inventory, perhaps a $(l:bloodmagic:demon_will/soul_gem)Tartaric Gem$() may help."
     }
   ]
 }

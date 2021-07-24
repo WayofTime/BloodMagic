@@ -54,7 +54,7 @@
       "heading": "Controlled Charge",
       "recipe": "bloodmagic:soulforge/vein_charge",
       "anchor":"controlled_charge",
-      "text": "The $(item)Controlled Charge$(), only destroys blocks $(underline)identical to the block it lands on$(). It will destroy up to $(item)Three stacks$() of blocks, seeking out from the original point. As with other charges, all mined blocks will be dropped."
+      "text": "The $(item)Controlled Charge$(), only destroys blocks $(thing)identical to the block it lands on$(). It will destroy up to $(item)Three stacks$() of blocks, seeking out from the original point. As with other charges, all mined blocks will be dropped."
     },
     {
       "type": "3x_crafting_soulforge",

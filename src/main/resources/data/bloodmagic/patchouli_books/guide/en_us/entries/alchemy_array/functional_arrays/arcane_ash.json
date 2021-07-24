@@ -34,7 +34,7 @@
     },
     {
       "type": "text",
-      "text": "Although only a few arrays are currently implemented, eventually you will have arrays that range from simple $(l:bloodmagic:alchemy_array/functional_array/crafting_array)crafting arrays$(/l) to even teleportation arrays."
+      "text": "Although only a few arrays are currently implemented, eventually you will have arrays that range from simple $(l:bloodmagic:alchemy_array/functional_arrays/crafting_array)crafting arrays$(/l) to even teleportation arrays."
     }
   ]
 }
