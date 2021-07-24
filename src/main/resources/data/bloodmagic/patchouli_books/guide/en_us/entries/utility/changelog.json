@@ -23,6 +23,10 @@
     },
     {
       "type": "text",
+      "text": "$(li)Fixed duplication glitch for the $(l:bloodmagic:utility/alchemical_reaction_chamber)Alchemical Reaction Chamber$()."
+    },
+    {
+      "type": "text",
       "title": "3.1.0-15",
       "text": "$(li)Majorly refactored the progression of the mod. Instead of starting with a $(l:bloodmagic:demon_will/soul_snare)Snare$(), you instead start by crafting the $(l:bloodmagic:altar/blood_altar)Blood Altar$(). The changes are documented in the guide, and you can follow its $(l:bloodmagic:utility/getting_started)Getting Started$() entry!$(li)Changed the tooltips so that they are gray, more easily differentiating them from the name of the item."
     },

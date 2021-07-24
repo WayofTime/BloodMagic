@@ -13,6 +13,7 @@ Version 3.1.1
 - Waterlogged blocks now count as "water" for the Incense Altar.
 - Added the recipe for the Demon Will Aura Gauge.
 - Reverted capacity formula for the Blood Altar.
+- Fixed duplication glitch for the Alchemical Reaction Chamber.
 
 
 ------------------------------------------------------
