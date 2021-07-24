@@ -12,6 +12,7 @@ Version 3.1.1
 -> If the remaining exp on the Living Upgrade tome is below the amount required for at least one level of its respective upgrade, the tome is destroyed.
 - Waterlogged blocks now count as "water" for the Incense Altar.
 - Added the recipe for the Demon Will Aura Gauge.
+- Reverted capacity formula for the Blood Altar.
 
 
 ------------------------------------------------------
