@@ -6,12 +6,13 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.common.item.sigil.ISigil;
+import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 
@@ -58,6 +59,6 @@ public class ItemSigil extends Item implements IBindable, ISigil
 
 		Binding binding = getBinding(stack);
 		if (binding != null)
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentOwner", binding.getOwnerName()));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentOwner", binding.getOwnerName()).mergeStyle(TextFormatting.GRAY));
 	}
 }

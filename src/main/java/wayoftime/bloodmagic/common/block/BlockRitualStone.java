@@ -12,6 +12,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -32,7 +33,7 @@ public class BlockRitualStone extends Block implements IRitualStone
 	@Override
 	public void addInformation(ItemStack stack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.decoration.safe"));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.decoration.safe").mergeStyle(TextFormatting.GRAY));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 
