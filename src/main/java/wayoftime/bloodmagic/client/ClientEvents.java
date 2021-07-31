@@ -13,6 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.InputEvent;
@@ -43,6 +44,7 @@ import wayoftime.bloodmagic.client.render.entity.EntityThrowingDaggerRenderer;
 import wayoftime.bloodmagic.client.render.entity.SoulSnareRenderer;
 import wayoftime.bloodmagic.client.screens.ScreenAlchemicalReactionChamber;
 import wayoftime.bloodmagic.client.screens.ScreenAlchemyTable;
+import wayoftime.bloodmagic.client.screens.ScreenFilter;
 import wayoftime.bloodmagic.client.screens.ScreenHolding;
 import wayoftime.bloodmagic.client.screens.ScreenSoulForge;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
@@ -58,6 +60,7 @@ import wayoftime.bloodmagic.network.SigilHoldingPacket;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 import wayoftime.bloodmagic.tile.TileAltar;
 import wayoftime.bloodmagic.tile.TileDemonCrucible;
+import wayoftime.bloodmagic.util.GhostItemHelper;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = BloodMagic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientEvents
@@ -77,6 +80,7 @@ public class ClientEvents
 		ScreenManager.registerFactory(BloodMagicBlocks.ARC_CONTAINER.get(), ScreenAlchemicalReactionChamber::new);
 		ScreenManager.registerFactory(BloodMagicBlocks.ALCHEMY_TABLE_CONTAINER.get(), ScreenAlchemyTable::new);
 		ScreenManager.registerFactory(BloodMagicBlocks.HOLDING_CONTAINER.get(), ScreenHolding::new);
+		ScreenManager.registerFactory(BloodMagicBlocks.FILTER_CONTAINER.get(), ScreenFilter::new);
 	}
 
 	public static void colorHandlerEvent(ColorHandlerEvent.Item event)
@@ -127,6 +131,17 @@ public class ClientEvents
 		ItemStack stack = event.getItemStack();
 		AnointmentHolder holder = AnointmentHolder.fromItemStack(stack);
 		AnointmentHolder.appendAnointmentTooltip(holder, event.getToolTip());
+		if (GhostItemHelper.hasGhostAmount(stack))
+		{
+			int amount = GhostItemHelper.getItemGhostAmount(stack);
+			if (amount == 0)
+			{
+				event.getToolTip().add(new TranslationTextComponent("tooltip.bloodmagic.ghost.everything"));
+			} else
+			{
+				event.getToolTip().add(new TranslationTextComponent("tooltip.bloodmagic.ghost.amount", amount));
+			}
+		}
 	}
 
 	@SuppressWarnings("deprecation")
@@ -142,6 +157,7 @@ public class ClientEvents
 			RenderType rendertype = RenderType.getCutoutMipped();
 			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.ALCHEMY_TABLE.get(), rendertype);
 			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.GROWING_DOUBT.get(), rendertype);
+			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.ROUTING_NODE_BLOCK.get(), RenderType.getTranslucent());
 
 			ClientEvents.registerContainerScreens();
 

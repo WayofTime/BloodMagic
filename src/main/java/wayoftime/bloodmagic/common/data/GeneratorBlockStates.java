@@ -7,6 +7,7 @@ import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.block.WallBlock;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -25,6 +26,7 @@ import net.minecraftforge.fml.RegistryObject;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BlockAlchemicalReactionChamber;
 import wayoftime.bloodmagic.common.block.BlockDemonCrystal;
+import wayoftime.bloodmagic.common.block.BlockRoutingNode;
 import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.block.base.BlockPillarCap;
@@ -69,6 +71,8 @@ public class GeneratorBlockStates extends BlockStateProvider
 		buildCrystal(BloodMagicBlocks.DESTRUCTIVE_CRYSTAL_BLOCK.get(), "destructivecrystal");
 		buildCrystal(BloodMagicBlocks.VENGEFUL_CRYSTAL_BLOCK.get(), "vengefulcrystal");
 		buildCrystal(BloodMagicBlocks.STEADFAST_CRYSTAL_BLOCK.get(), "steadfastcrystal");
+
+		buildRoutingNode(BloodMagicBlocks.ROUTING_NODE_BLOCK.get(), "routingnode");
 
 		buildRandomStone(BloodMagicBlocks.DUNGEON_STONE.get(), BloodMagic.rl("block/dungeon/dungeon_stone"));
 		stairsBlock((StairsBlock) BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get(), BloodMagic.rl("block/dungeon/dungeon_brick1"));
@@ -332,6 +336,50 @@ public class GeneratorBlockStates extends BlockStateProvider
 
 				partBuilder.addModel().condition(BlockDemonCrystal.AGE, intArray).condition(BlockDemonCrystal.ATTACHED, direction).end();
 			}
+		}
+	}
+
+	private void buildRoutingNode(Block block, String name)
+	{
+		MultiPartBlockStateBuilder builder = getMultipartBuilder(block);
+
+		ModelFile nodeModel = models().withExistingParent("block/routing/" + "modelroutingnodecore", modLoc("routingnodecore")).texture("core", modLoc("models/model" + name));
+		ModelFile baseModel = models().withExistingParent("block/routing/" + "modelroutingnodebase", modLoc("routingnodebase")).texture("base", modLoc("models/model" + name));
+
+		builder.part().modelFile(nodeModel).addModel().end();
+		for (Direction direction : Direction.values())
+		{
+			Builder<PartBuilder> partBuilder = builder.part().modelFile(baseModel);
+			BooleanProperty prop = BlockRoutingNode.UP;
+
+			switch (direction)
+			{
+			case UP:
+				prop = BlockRoutingNode.UP;
+				partBuilder = partBuilder.rotationX(180);
+				break;
+			case DOWN:
+				prop = BlockRoutingNode.DOWN;
+				break;
+			case EAST:
+				prop = BlockRoutingNode.EAST;
+				partBuilder = partBuilder.rotationX(90).rotationY(270);
+				break;
+			case WEST:
+				prop = BlockRoutingNode.WEST;
+				partBuilder = partBuilder.rotationX(90).rotationY(90);
+				break;
+			case NORTH:
+				prop = BlockRoutingNode.NORTH;
+				partBuilder = partBuilder.rotationX(270);
+				break;
+			case SOUTH:
+				prop = BlockRoutingNode.SOUTH;
+				partBuilder = partBuilder.rotationX(90);
+				break;
+			}
+
+			partBuilder.addModel().condition(prop, true).end();
 		}
 	}
 

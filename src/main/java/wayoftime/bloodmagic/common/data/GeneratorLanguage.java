@@ -125,6 +125,9 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("key.bloodmagic.category", "Blood Magic");
 
+		add("tooltip.bloodmagic.ghost.everything", "Everything");
+		add("tooltip.bloodmagic.ghost.amount", "Ghost item amount: %d");
+
 		// Ritual info
 		add("tooltip.bloodmagic.diviner.currentRitual", "Current Ritual: %s");
 		add("tooltip.bloodmagic.diviner.blankRune", "Blank Runes: %d");

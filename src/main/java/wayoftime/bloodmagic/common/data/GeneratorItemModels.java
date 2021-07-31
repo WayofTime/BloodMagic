@@ -58,6 +58,8 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerCustomBlockPath(BloodMagicBlocks.VENGEFUL_CRYSTAL_BLOCK.get(), "crystal/vengefulcrystal1");
 		registerCustomBlockPath(BloodMagicBlocks.STEADFAST_CRYSTAL_BLOCK.get(), "crystal/steadfastcrystal1");
 
+		registerCustomBlockPath(BloodMagicBlocks.ROUTING_NODE_BLOCK.get(), "routing/modelroutingnodecore");
+
 		registerCustomBlockPath(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get(), "dungeon_brick1");
 		registerBlockModel(BloodMagicBlocks.DUNGEON_STONE.get());
 		registerBlockModel(BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get());
@@ -217,5 +219,10 @@ public class GeneratorItemModels extends ItemModelProvider
 		ModelFile baseKnifeFile = singleTexture("item/variants/" + path, mcLoc("item/handheld"), "layer0", modLoc("item/" + path));
 		ModelFile ceremonialKnifeFile = singleTexture("item/variants/" + path + "_ceremonial", mcLoc("item/handheld"), "layer0", modLoc("item/" + path + "_ceremonial"));
 		builder = builder.override().predicate(BloodMagic.rl("incense"), 0).model(baseKnifeFile).end().override().predicate(BloodMagic.rl("incense"), 1).model(ceremonialKnifeFile).end();
+	}
+
+	private void registerRoutingNode(Block block)
+	{
+
 	}
 }

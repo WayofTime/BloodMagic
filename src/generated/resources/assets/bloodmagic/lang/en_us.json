@@ -456,6 +456,8 @@
   "tooltip.bloodmagic.experienceTome.exp": "Exp: %0.3f",
   "tooltip.bloodmagic.experienceTome.expLevel": "Level: %d",
   "tooltip.bloodmagic.extraInfo": "&9-Hold shift for more info-",
+  "tooltip.bloodmagic.ghost.amount": "Ghost item amount: %d",
+  "tooltip.bloodmagic.ghost.everything": "Everything",
   "tooltip.bloodmagic.holdShiftForInfo": "Press shift for extra info",
   "tooltip.bloodmagic.inscriber.desc": "The writing is on the wall...",
   "tooltip.bloodmagic.livingarmour.extraExtraInfo": "&9-Hold shift + M for progress info-",
