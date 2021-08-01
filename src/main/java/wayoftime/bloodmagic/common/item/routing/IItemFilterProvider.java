@@ -10,4 +10,6 @@ public interface IItemFilterProvider extends IRoutingFilterProvider
 	IItemFilter getInputItemFilter(ItemStack stack, TileEntity tile, IItemHandler handler);
 
 	IItemFilter getOutputItemFilter(ItemStack stack, TileEntity tile, IItemHandler handler);
+
+	void setGhostItemAmount(ItemStack filterStack, int ghostItemSlot, int amount);
 }

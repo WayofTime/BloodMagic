@@ -17,6 +17,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.inventory.ContainerFilter;
+import wayoftime.bloodmagic.network.RouterFilterPacket;
 import wayoftime.bloodmagic.util.GhostItemHelper;
 
 public class ScreenFilter extends ScreenBase<ContainerFilter>
@@ -160,7 +161,13 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 
 	private void setValueOfGhostItemInSlot(int ghostItemSlot, int amount)
 	{
-//        BloodMagicPacketHandler.INSTANCE.sendToServer(new ItemRouterAmountPacketProcessor(ghostItemSlot, amount, inventory.getPos(), inventory.getWorld()));
+		ItemStack ghostStack = filterInventory.getStackInSlot(ghostItemSlot);
+		if (!ghostStack.isEmpty())
+		{
+			GhostItemHelper.setItemGhostAmount(ghostStack, amount);
+		}
+
+		BloodMagic.packetHandler.sendToServer(new RouterFilterPacket(player.inventory.currentItem, ghostItemSlot, amount));
 	}
 
 	/**

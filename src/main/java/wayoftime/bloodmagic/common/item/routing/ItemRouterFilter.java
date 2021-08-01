@@ -152,4 +152,17 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 		testFilter.initializeFilter(filteredList, tile, handler, true);
 		return testFilter;
 	}
+
+	@Override
+	public void setGhostItemAmount(ItemStack filterStack, int ghostItemSlot, int amount)
+	{
+		ItemInventory inv = new ItemInventory(filterStack, 9, "");
+		ItemStack stack = inv.getStackInSlot(ghostItemSlot);
+		if (!stack.isEmpty())
+		{
+			GhostItemHelper.setItemGhostAmount(stack, amount);
+
+			inv.writeToStack(filterStack);
+		}
+	}
 }
