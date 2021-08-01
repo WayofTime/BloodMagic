@@ -19,20 +19,22 @@ public class ContainerFilter extends Container
 	private final int PLAYER_INVENTORY_ROWS = 3;
 	private final int PLAYER_INVENTORY_COLUMNS = 9;
 	private final PlayerEntity player;
+	public final ItemStack filterStack;
 
 	public int lastGhostSlotClicked = -1;
 	private int slotsOccupied = 9;
 
 	public ContainerFilter(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
 	{
-		this(windowId, playerInventory.player, playerInventory, new InventoryFilter(extraData.readItemStack()));
+		this(windowId, playerInventory.player, playerInventory, extraData.readItemStack());
 	}
 
-	public ContainerFilter(int windowId, PlayerEntity player, PlayerInventory playerInventory, InventoryFilter inventoryFilter)
+	public ContainerFilter(int windowId, PlayerEntity player, PlayerInventory playerInventory, ItemStack filterStack)
 	{
 		super(BloodMagicBlocks.FILTER_CONTAINER.get(), windowId);
 		this.player = player;
-		this.inventoryFilter = inventoryFilter;
+		this.filterStack = filterStack;
+		this.inventoryFilter = new InventoryFilter(filterStack);
 		int currentSlotHeldIn = player.inventory.currentItem;
 		this.setup(playerInventory, currentSlotHeldIn);
 	}
@@ -98,6 +100,8 @@ public class ContainerFilter extends Container
 								if (heldStack.isEmpty() && !slotStack.isEmpty())
 								{
 									// I clicked on the slot with an empty hand. Selecting!
+									// Return here to not save the server-side inventory
+									return ItemStack.EMPTY;
 								} else if (!heldStack.isEmpty() && slotStack.isEmpty())
 								{
 									if (!((SlotGhostItem) slot).canBeAccessed())
@@ -110,7 +114,7 @@ public class ContainerFilter extends Container
 									copyStack.setCount(1);
 									slot.putStack(copyStack);
 
-									ItemStack filterStack = this.inventorySlots.get(0).getStack();
+//									ItemStack filterStack = this.filterStack;
 									if (filterStack.getItem() instanceof IRoutingFilterProvider)
 									{
 										ItemStack filterCopy = ((IRoutingFilterProvider) filterStack.getItem()).getContainedStackForItem(filterStack, heldStack);
@@ -225,6 +229,7 @@ public class ContainerFilter extends Container
 		public void onSlotChanged()
 		{
 			super.onSlotChanged();
+//			System.out.println("Slot changed");
 
 			if (EffectiveSide.get().isServer())
 			{

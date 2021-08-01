@@ -17,6 +17,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.inventory.ContainerFilter;
+import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
 import wayoftime.bloodmagic.network.RouterFilterPacket;
 import wayoftime.bloodmagic.util.GhostItemHelper;
 
@@ -128,7 +129,6 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	@Override
 	public boolean charTyped(char typedChar, int keyCode)
 	{
-		System.out.println(typedChar);
 		if (this.textBox.charTyped(typedChar, keyCode))
 		{
 			if (container.lastGhostSlotClicked != -1)
@@ -161,10 +161,18 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 
 	private void setValueOfGhostItemInSlot(int ghostItemSlot, int amount)
 	{
-		ItemStack ghostStack = filterInventory.getStackInSlot(ghostItemSlot);
+		Slot slot = container.getSlot(ghostItemSlot);
+		ItemStack ghostStack = slot.getStack();
+//		ItemStack ghostStack = container.inventoryFilter.getStackInSlot(ghostItemSlot);
 		if (!ghostStack.isEmpty())
 		{
 			GhostItemHelper.setItemGhostAmount(ghostStack, amount);
+			GhostItemHelper.setItemGhostAmount(container.inventoryFilter.getStackInSlot(ghostItemSlot), amount);
+			if (container.filterStack.getItem() instanceof IItemFilterProvider)
+			{
+				((IItemFilterProvider) container.filterStack.getItem()).setGhostItemAmount(container.filterStack, ghostItemSlot, amount);
+
+			}
 		}
 
 		BloodMagic.packetHandler.sendToServer(new RouterFilterPacket(player.inventory.currentItem, ghostItemSlot, amount));
@@ -190,7 +198,13 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 			if (!stack.isEmpty())
 			{
 				int amount = GhostItemHelper.getItemGhostAmount(stack);
-				this.textBox.setText("" + amount);
+				if (amount == 0)
+				{
+					this.textBox.setText("");
+				} else
+				{
+					this.textBox.setText("" + amount);
+				}
 			} else
 			{
 				this.textBox.setText("");

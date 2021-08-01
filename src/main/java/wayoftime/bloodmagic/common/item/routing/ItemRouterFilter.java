@@ -21,7 +21,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.inventory.ContainerFilter;
-import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
 import wayoftime.bloodmagic.common.item.inventory.ItemInventory;
 import wayoftime.bloodmagic.common.routing.BasicItemFilter;
 import wayoftime.bloodmagic.common.routing.IItemFilter;
@@ -81,7 +80,7 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 	{
 		// TODO Auto-generated method stub
 		assert player.getEntityWorld() != null;
-		return new ContainerFilter(p_createMenu_1_, player, p_createMenu_2_, new InventoryFilter(player.getHeldItemMainhand()));
+		return new ContainerFilter(p_createMenu_1_, player, p_createMenu_2_, player.getHeldItemMainhand());
 	}
 
 	@Override
