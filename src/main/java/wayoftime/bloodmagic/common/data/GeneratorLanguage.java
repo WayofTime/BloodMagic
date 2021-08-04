@@ -362,6 +362,13 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("chat.bloodmagic.living_upgrade_level_increase", "%s has leveled up to %d");
 
+		add("chat.bloodmagic.routing.remove", "Removing contained location");
+		add("chat.bloodmagic.routing.set", "Setting node location");
+		add("chat.bloodmagic.routing.link.master", "Linked node to master!");
+		add("chat.bloodmagic.routing.link", "Linked nodes together");
+
+		add("tooltip.bloodmagic.telepositionfocus.coords", "Current coordinates: (%d, %d, %d)");
+
 		// Anointments. Doesn't have any spelling to be pedantic about.
 		add("anointment.bloodmagic.melee_damage", "Whetstone");
 		add("anointment.bloodmagic.silk_touch", "Soft Touch");
@@ -477,6 +484,11 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.VEINMINE_CHARGE, "Controlled Charge");
 		addBlock(BloodMagicBlocks.FUNGAL_CHARGE, "Fungal Charge");
 
+		addBlock(BloodMagicBlocks.ROUTING_NODE_BLOCK, "Routing Node");
+		addBlock(BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK, "Input Routing Node");
+		addBlock(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK, "Output Routing Node");
+		addBlock(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK, "Master Routing Node");
+
 		// Item names
 		addItem(BloodMagicItems.WEAK_BLOOD_ORB, "Weak Blood Orb");
 		addItem(BloodMagicItems.APPRENTICE_BLOOD_ORB, "Apprentice Blood Orb");
@@ -580,6 +592,9 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.THROWING_DAGGER, "Iron Throwing Dagger");
 		addItem(BloodMagicItems.THROWING_DAGGER_SYRINGE, "Syringe Throwing Dagger");
 		addItem(BloodMagicItems.SLATE_AMPOULE, "Slate Ampoule");
+
+		addItem(BloodMagicItems.NODE_ROUTER, "Node Router");
+		addItem(BloodMagicItems.ITEM_ROUTER_FILTER, "Standard Item Filter");
 
 		// Anointment Items
 		addItem(BloodMagicItems.SLATE_VIAL, "Slate-infused Vial");

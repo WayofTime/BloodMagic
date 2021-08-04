@@ -14,6 +14,7 @@ import wayoftime.bloodmagic.common.item.arc.ItemARCToolBase;
 import wayoftime.bloodmagic.common.item.block.ItemBlockAlchemyTable;
 import wayoftime.bloodmagic.common.item.block.ItemBlockMimic;
 import wayoftime.bloodmagic.common.item.block.ItemBlockShapedCharge;
+import wayoftime.bloodmagic.common.item.routing.ItemNodeRouter;
 import wayoftime.bloodmagic.common.item.routing.ItemRouterFilter;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilAir;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilBloodLight;
@@ -201,6 +202,9 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> STEADFAST_CRYSTAL_BLOCK_ITEM = ITEMS.register("steadfastdemoncrystal", () -> new BlockItem(BloodMagicBlocks.STEADFAST_CRYSTAL_BLOCK.get(), new Item.Properties().group(BloodMagic.TAB)));
 
 	public static final RegistryObject<Item> ROUTING_NODE_BLOCK_ITEM = ITEMS.register("itemroutingnode", () -> new BlockItem(BloodMagicBlocks.ROUTING_NODE_BLOCK.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> INPUT_ROUTING_NODE_BLOCK_ITEM = ITEMS.register("inputroutingnode", () -> new BlockItem(BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> OUTPUT_ROUTING_NODE_BLOCK_ITEM = ITEMS.register("outputroutingnode", () -> new BlockItem(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> MASTER_ROUTING_NODE_BLOCK_ITEM = ITEMS.register("masterroutingnode", () -> new BlockItem(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get(), new Item.Properties().group(BloodMagic.TAB)));
 
 	public static final RegistryObject<Item> RAW_CRYSTAL = BASICITEMS.register("defaultcrystal", () -> new ItemDemonCrystal(EnumDemonWillType.DEFAULT));
 	public static final RegistryObject<Item> CORROSIVE_CRYSTAL = BASICITEMS.register("corrosivecrystal", () -> new ItemDemonCrystal(EnumDemonWillType.CORROSIVE));
@@ -210,6 +214,7 @@ public class BloodMagicItems
 
 	public static final RegistryObject<Item> DEMON_WILL_GAUGE = BASICITEMS.register("demonwillgauge", ItemDemonWillGauge::new);
 	public static final RegistryObject<Item> ITEM_ROUTER_FILTER = BASICITEMS.register("itemrouterfilterexact", ItemRouterFilter::new);
+	public static final RegistryObject<Item> NODE_ROUTER = BASICITEMS.register("noderouter", ItemNodeRouter::new);
 
 	// ARC Tools
 	public static final RegistryObject<Item> SANGUINE_REVERTER = BASICITEMS.register("sanguinereverter", () -> new ItemARCToolBase(32, 2));

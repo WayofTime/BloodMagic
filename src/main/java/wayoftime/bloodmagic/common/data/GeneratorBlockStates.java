@@ -73,6 +73,9 @@ public class GeneratorBlockStates extends BlockStateProvider
 		buildCrystal(BloodMagicBlocks.STEADFAST_CRYSTAL_BLOCK.get(), "steadfastcrystal");
 
 		buildRoutingNode(BloodMagicBlocks.ROUTING_NODE_BLOCK.get(), "routingnode");
+		buildRoutingNode(BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get(), "inputroutingnode");
+		buildRoutingNode(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get(), "outputroutingnode");
+		buildMasterRoutingNode(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get());
 
 		buildRandomStone(BloodMagicBlocks.DUNGEON_STONE.get(), BloodMagic.rl("block/dungeon/dungeon_stone"));
 		stairsBlock((StairsBlock) BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get(), BloodMagic.rl("block/dungeon/dungeon_brick1"));
@@ -343,8 +346,52 @@ public class GeneratorBlockStates extends BlockStateProvider
 	{
 		MultiPartBlockStateBuilder builder = getMultipartBuilder(block);
 
-		ModelFile nodeModel = models().withExistingParent("block/routing/" + "modelroutingnodecore", modLoc("routingnodecore")).texture("core", modLoc("models/model" + name));
-		ModelFile baseModel = models().withExistingParent("block/routing/" + "modelroutingnodebase", modLoc("routingnodebase")).texture("base", modLoc("models/model" + name));
+		ModelFile nodeModel = models().withExistingParent("block/routing/" + name + "core", modLoc("routingnodecore")).texture("core", modLoc("models/model" + name));
+		ModelFile baseModel = models().withExistingParent("block/routing/" + name + "base", modLoc("routingnodebase")).texture("base", modLoc("models/model" + name));
+
+		builder.part().modelFile(nodeModel).addModel().end();
+		for (Direction direction : Direction.values())
+		{
+			Builder<PartBuilder> partBuilder = builder.part().modelFile(baseModel);
+			BooleanProperty prop = BlockRoutingNode.UP;
+
+			switch (direction)
+			{
+			case UP:
+				prop = BlockRoutingNode.UP;
+				partBuilder = partBuilder.rotationX(180);
+				break;
+			case DOWN:
+				prop = BlockRoutingNode.DOWN;
+				break;
+			case EAST:
+				prop = BlockRoutingNode.EAST;
+				partBuilder = partBuilder.rotationX(90).rotationY(270);
+				break;
+			case WEST:
+				prop = BlockRoutingNode.WEST;
+				partBuilder = partBuilder.rotationX(90).rotationY(90);
+				break;
+			case NORTH:
+				prop = BlockRoutingNode.NORTH;
+				partBuilder = partBuilder.rotationX(270);
+				break;
+			case SOUTH:
+				prop = BlockRoutingNode.SOUTH;
+				partBuilder = partBuilder.rotationX(90);
+				break;
+			}
+
+			partBuilder.addModel().condition(prop, true).end();
+		}
+	}
+
+	private void buildMasterRoutingNode(Block block)
+	{
+		MultiPartBlockStateBuilder builder = getMultipartBuilder(block);
+
+		ModelFile nodeModel = models().withExistingParent("block/routing/" + "modelmasterroutingnodecore", modLoc("masterroutingnodecore"));
+		ModelFile baseModel = models().withExistingParent("block/routing/" + "modelmasterroutingnodebase", modLoc("masterroutingnodebase"));
 
 		builder.part().modelFile(nodeModel).addModel().end();
 		for (Direction direction : Direction.values())

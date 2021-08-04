@@ -116,6 +116,9 @@ public class GeneratorLootTable extends LootTableProvider
 			registerDropCrystalsLootTable(BloodMagicBlocks.STEADFAST_CRYSTAL_BLOCK.get(), BloodMagicItems.STEADFAST_CRYSTAL.get());
 
 			registerDropSelfLootTable(BloodMagicBlocks.ROUTING_NODE_BLOCK.get());
+			registerDropSelfLootTable(BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get());
+			registerDropSelfLootTable(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get());
+			registerDropSelfLootTable(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get());
 
 			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get());
 			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_STONE.get());

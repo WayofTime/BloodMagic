@@ -2,7 +2,7 @@
   "multipart": [
     {
       "apply": {
-        "model": "bloodmagic:block/routing/routingnodecore"
+        "model": "bloodmagic:block/routing/inputroutingnodecore"
       }
     },
     {
@@ -10,7 +10,7 @@
         "down": "true"
       },
       "apply": {
-        "model": "bloodmagic:block/routing/routingnodebase"
+        "model": "bloodmagic:block/routing/inputroutingnodebase"
       }
     },
     {
@@ -18,7 +18,7 @@
         "up": "true"
       },
       "apply": {
-        "model": "bloodmagic:block/routing/routingnodebase",
+        "model": "bloodmagic:block/routing/inputroutingnodebase",
         "x": 180
       }
     },
@@ -27,7 +27,7 @@
         "north": "true"
       },
       "apply": {
-        "model": "bloodmagic:block/routing/routingnodebase",
+        "model": "bloodmagic:block/routing/inputroutingnodebase",
         "x": 270
       }
     },
@@ -36,7 +36,7 @@
         "south": "true"
       },
       "apply": {
-        "model": "bloodmagic:block/routing/routingnodebase",
+        "model": "bloodmagic:block/routing/inputroutingnodebase",
         "x": 90
       }
     },
@@ -45,7 +45,7 @@
         "west": "true"
       },
       "apply": {
-        "model": "bloodmagic:block/routing/routingnodebase",
+        "model": "bloodmagic:block/routing/inputroutingnodebase",
         "x": 90,
         "y": 90
       }
@@ -55,7 +55,7 @@
         "east": "true"
       },
       "apply": {
-        "model": "bloodmagic:block/routing/routingnodebase",
+        "model": "bloodmagic:block/routing/inputroutingnodebase",
         "x": 90,
         "y": 270
       }

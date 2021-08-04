@@ -58,7 +58,10 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerCustomBlockPath(BloodMagicBlocks.VENGEFUL_CRYSTAL_BLOCK.get(), "crystal/vengefulcrystal1");
 		registerCustomBlockPath(BloodMagicBlocks.STEADFAST_CRYSTAL_BLOCK.get(), "crystal/steadfastcrystal1");
 
-		registerCustomBlockPath(BloodMagicBlocks.ROUTING_NODE_BLOCK.get(), "routing/modelroutingnodecore");
+		registerCustomBlockPath(BloodMagicBlocks.ROUTING_NODE_BLOCK.get(), "routingnodecombined");
+		registerCustomBlockPathWithTextures(BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get(), "routingnodecombined", "core", "bloodmagic:models/modelinputroutingnode", "base", "bloodmagic:models/modelinputroutingnode");
+		registerCustomBlockPathWithTextures(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get(), "routingnodecombined", "core", "bloodmagic:models/modeloutputroutingnode", "base", "bloodmagic:models/modeloutputroutingnode");
+		registerCustomBlockPathWithTextures(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get(), "routingnodecombined", "core", "bloodmagic:models/modeloutputroutingnode", "base", "bloodmagic:models/modeloutputroutingnode");
 
 		registerCustomBlockPath(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get(), "dungeon_brick1");
 		registerBlockModel(BloodMagicBlocks.DUNGEON_STONE.get());
@@ -120,6 +123,17 @@ public class GeneratorItemModels extends ItemModelProvider
 	{
 		String path = block.getRegistryName().getPath();
 		getBuilder(path).parent(new ModelFile.UncheckedModelFile(modLoc("block/" + newPath)));
+	}
+
+	private void registerCustomBlockPathWithTextures(Block block, String newPath, String... textures)
+	{
+		String path = block.getRegistryName().getPath();
+		ItemModelBuilder builder = getBuilder(path).parent(new ModelFile.UncheckedModelFile(modLoc("block/" + newPath)));
+		int length = textures.length / 2;
+		for (int i = 1; i < length; i++)
+		{
+			builder.texture(textures[i * 2], textures[i * 2 + 1]);
+		}
 	}
 
 	private void registerBlockModel(Block block)
