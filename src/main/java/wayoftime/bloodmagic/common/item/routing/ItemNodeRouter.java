@@ -154,7 +154,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 						}
 						pastNode.addConnection(pos);
 						node.addConnection(containedPos);
-						player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.link.master"), true);
+						player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.link"), true);
 						this.setBlockPos(stack, BlockPos.ZERO);
 						return ActionResultType.SUCCESS;
 					} else if (pastNode.getMasterPos().equals(BlockPos.ZERO)) // pastNode is not connected to a
