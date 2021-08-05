@@ -210,7 +210,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 					{
 						int amountTransfered = inputFilter.transferThroughInputFilter(outputFilter, maxTransfer);
 						maxTransfer -= amountTransfered;
-//						System.out.println("Trying to add through the filters: " + amountTransfered);
+
 						if (maxTransfer <= 0)
 						{
 							return;

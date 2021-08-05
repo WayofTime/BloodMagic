@@ -167,6 +167,7 @@ public class BasicItemFilter implements IItemFilter
 	@Override
 	public int transferThroughInputFilter(IItemFilter outputFilter, int maxTransfer)
 	{
+		int totalChange = 0;
 		for (int slot = 0; slot < itemHandler.getSlots(); slot++)
 		{
 			ItemStack inputStack = itemHandler.getStackInSlot(slot);
@@ -228,10 +229,15 @@ public class BasicItemFilter implements IItemFilter
 			BlockPos pos = accessedTile.getPos();
 			world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 
-			return changeAmount;
+			maxTransfer -= changeAmount;
+			totalChange += changeAmount;
+			if (maxTransfer <= 0)
+			{
+				return totalChange;
+			}
 		}
 
-		return 0;
+		return totalChange;
 	}
 
 	@Override
