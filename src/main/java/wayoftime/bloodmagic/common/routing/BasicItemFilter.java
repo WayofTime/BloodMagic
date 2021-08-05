@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
+import wayoftime.bloodmagic.common.item.routing.IFilterKey;
 import wayoftime.bloodmagic.util.Utils;
 
 /**
@@ -25,7 +26,7 @@ public class BasicItemFilter implements IItemFilter
 	 * inserted in the inventory to finish its request. For the case of an input
 	 * filter, it keeps track of how many can be removed.
 	 */
-	protected List<ItemStack> requestList;
+	protected List<IFilterKey> requestList;
 	protected TileEntity accessedTile;
 	protected IItemHandler itemHandler;
 
@@ -41,7 +42,7 @@ public class BasicItemFilter implements IItemFilter
 	 *                       should be initialized as an input filter.
 	 */
 	@Override
-	public void initializeFilter(List<ItemStack> filteredList, TileEntity tile, IItemHandler itemHandler, boolean isFilterOutput)
+	public void initializeFilter(List<IFilterKey> filteredList, TileEntity tile, IItemHandler itemHandler, boolean isFilterOutput)
 	{
 		this.accessedTile = tile;
 		this.itemHandler = itemHandler;
@@ -59,7 +60,7 @@ public class BasicItemFilter implements IItemFilter
 
 				int stackSize = checkedStack.getCount();
 
-				for (ItemStack filterStack : requestList)
+				for (IFilterKey filterStack : requestList)
 				{
 					if (filterStack.getCount() == 0)
 					{
@@ -75,7 +76,7 @@ public class BasicItemFilter implements IItemFilter
 		} else
 		{
 			requestList = filteredList;
-			for (ItemStack filterStack : requestList)
+			for (IFilterKey filterStack : requestList)
 			{
 				filterStack.setCount(filterStack.getCount() * -1); // Invert the stack size so that
 			}
@@ -90,7 +91,7 @@ public class BasicItemFilter implements IItemFilter
 
 				int stackSize = checkedStack.getCount();
 
-				for (ItemStack filterStack : filteredList)
+				for (IFilterKey filterStack : filteredList)
 				{
 					if (doStacksMatch(filterStack, checkedStack))
 					{
@@ -100,7 +101,7 @@ public class BasicItemFilter implements IItemFilter
 			}
 		}
 
-		requestList.removeIf(ItemStack::isEmpty);
+		requestList.removeIf(IFilterKey::isEmpty);
 	}
 
 	/**
@@ -116,7 +117,7 @@ public class BasicItemFilter implements IItemFilter
 	public ItemStack transferStackThroughOutputFilter(ItemStack inputStack)
 	{
 		int allowedAmount = 0;
-		for (ItemStack filterStack : requestList)
+		for (IFilterKey filterStack : requestList)
 		{
 			if (doStacksMatch(filterStack, inputStack))
 			{
@@ -138,10 +139,10 @@ public class BasicItemFilter implements IItemFilter
 		testStack = inputStack.copy();
 		testStack.shrink(changeAmount);
 
-		Iterator<ItemStack> itr = requestList.iterator();
+		Iterator<IFilterKey> itr = requestList.iterator();
 		while (itr.hasNext())
 		{
-			ItemStack filterStack = itr.next();
+			IFilterKey filterStack = itr.next();
 			if (doStacksMatch(filterStack, inputStack))
 			{
 				filterStack.shrink(changeAmount);
@@ -182,7 +183,7 @@ public class BasicItemFilter implements IItemFilter
 			}
 
 			int allowedAmount = 0;
-			for (ItemStack filterStack : requestList)
+			for (IFilterKey filterStack : requestList)
 			{
 				if (doStacksMatch(filterStack, inputStack))
 				{
@@ -209,10 +210,10 @@ public class BasicItemFilter implements IItemFilter
 
 			itemHandler.extractItem(slot, changeAmount, false);
 
-			Iterator<ItemStack> itr = requestList.iterator();
+			Iterator<IFilterKey> itr = requestList.iterator();
 			while (itr.hasNext())
 			{
-				ItemStack filterStack = itr.next();
+				IFilterKey filterStack = itr.next();
 				if (doStacksMatch(filterStack, inputStack))
 				{
 					filterStack.shrink(changeAmount);
@@ -236,7 +237,7 @@ public class BasicItemFilter implements IItemFilter
 	@Override
 	public boolean doesStackMatchFilter(ItemStack testStack)
 	{
-		for (ItemStack filterStack : requestList)
+		for (IFilterKey filterStack : requestList)
 		{
 			if (doStacksMatch(filterStack, testStack))
 			{
@@ -248,8 +249,16 @@ public class BasicItemFilter implements IItemFilter
 	}
 
 	@Override
-	public boolean doStacksMatch(ItemStack filterStack, ItemStack testStack)
+	public boolean doStacksMatch(IFilterKey filterStack, ItemStack testStack)
 	{
-		return filterStack != null && testStack != null && filterStack.getItem() == testStack.getItem();
+//		boolean test = filterStack != null && testStack != null && filterStack.getItem() == testStack.getItem();
+//		System.out.println("Do these match? " + test);
+//		if (!test)
+//		{
+//			System.out.println("Filter item: " + filterStack.getItem() + "; test item: " + testStack.getItem());
+//		}
+		boolean test = filterStack.doesStackMatch(testStack);
+
+		return test;
 	}
 }

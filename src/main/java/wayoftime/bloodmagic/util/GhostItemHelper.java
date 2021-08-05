@@ -62,4 +62,19 @@ public class GhostItemHelper
 
 		return newStack;
 	}
+
+	public static ItemStack getSingleStackFromGhost(ItemStack ghostStack)
+	{
+		ItemStack newStack = ghostStack.copy();
+		NBTHelper.checkNBT(newStack);
+		CompoundNBT tag = newStack.getTag();
+		tag.remove(Constants.NBT.GHOST_STACK_SIZE);
+		if (tag.isEmpty())
+		{
+			newStack.setTag(null);
+		}
+		newStack.setCount(1);
+
+		return newStack;
+	}
 }

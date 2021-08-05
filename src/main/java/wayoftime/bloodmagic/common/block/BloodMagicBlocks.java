@@ -38,6 +38,7 @@ import wayoftime.bloodmagic.common.item.inventory.ContainerHolding;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.tile.container.ContainerAlchemicalReactionChamber;
 import wayoftime.bloodmagic.tile.container.ContainerAlchemyTable;
+import wayoftime.bloodmagic.tile.container.ContainerItemRoutingNode;
 import wayoftime.bloodmagic.tile.container.ContainerSoulForge;
 
 public class BloodMagicBlocks
@@ -140,6 +141,7 @@ public class BloodMagicBlocks
 	public static final RegistryObject<ContainerType<ContainerAlchemyTable>> ALCHEMY_TABLE_CONTAINER = CONTAINERS.register("alchemy_table_container", () -> IForgeContainerType.create(ContainerAlchemyTable::new));
 	public static final RegistryObject<ContainerType<ContainerHolding>> HOLDING_CONTAINER = CONTAINERS.register("holding_container", () -> IForgeContainerType.create(ContainerHolding::new));
 	public static final RegistryObject<ContainerType<ContainerFilter>> FILTER_CONTAINER = CONTAINERS.register("filter_container", () -> IForgeContainerType.create(ContainerFilter::new));
+	public static final RegistryObject<ContainerType<ContainerItemRoutingNode>> ROUTING_NODE_CONTAINER = CONTAINERS.register("routing_node_container", () -> IForgeContainerType.create(ContainerItemRoutingNode::new));
 
 	// Dungeon Blocks
 	public static final RegistryObject<Block> DUNGEON_BRICK_1 = DUNGEONBLOCKS.register("dungeon_brick1", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));

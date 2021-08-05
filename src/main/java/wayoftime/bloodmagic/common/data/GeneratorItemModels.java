@@ -61,7 +61,7 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerCustomBlockPath(BloodMagicBlocks.ROUTING_NODE_BLOCK.get(), "routingnodecombined");
 		registerCustomBlockPathWithTextures(BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get(), "routingnodecombined", "core", "bloodmagic:models/modelinputroutingnode", "base", "bloodmagic:models/modelinputroutingnode");
 		registerCustomBlockPathWithTextures(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get(), "routingnodecombined", "core", "bloodmagic:models/modeloutputroutingnode", "base", "bloodmagic:models/modeloutputroutingnode");
-		registerCustomBlockPathWithTextures(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get(), "routingnodecombined", "core", "bloodmagic:models/modeloutputroutingnode", "base", "bloodmagic:models/modeloutputroutingnode");
+		registerCustomBlockPath(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get(), "masterroutingnodecombined");
 
 		registerCustomBlockPath(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get(), "dungeon_brick1");
 		registerBlockModel(BloodMagicBlocks.DUNGEON_STONE.get());

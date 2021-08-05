@@ -211,7 +211,6 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 			}
 		}
 
-		System.out.println(testBool);
 		return true;
 	}
 

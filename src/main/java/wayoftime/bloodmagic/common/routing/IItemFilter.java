@@ -5,10 +5,11 @@ import java.util.List;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.items.IItemHandler;
+import wayoftime.bloodmagic.common.item.routing.IFilterKey;
 
 public interface IItemFilter extends IRoutingFilter
 {
-	void initializeFilter(List<ItemStack> filteredList, TileEntity tile, IItemHandler itemHandler, boolean isFilterOutput);
+	void initializeFilter(List<IFilterKey> filteredList, TileEntity tile, IItemHandler itemHandler, boolean isFilterOutput);
 
 	/**
 	 * This method is only called when the output inventory this filter is managing
@@ -29,5 +30,5 @@ public interface IItemFilter extends IRoutingFilter
 
 	boolean doesStackMatchFilter(ItemStack testStack);
 
-	boolean doStacksMatch(ItemStack filterStack, ItemStack testStack);
+	boolean doStacksMatch(IFilterKey filterStack, ItemStack testStack);
 }

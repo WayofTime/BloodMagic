@@ -61,16 +61,4 @@ public class AlchemyTableButtonPacket
 		});
 		context.get().setPacketHandled(true);
 	}
-
-//	@OnlyIn(Dist.CLIENT)
-//	public static void updateTanks(BlockPos pos, CompoundNBT inputNBT, CompoundNBT outputNBT)
-//	{
-//		World world = Minecraft.getInstance().world;
-//		TileEntity tile = world.getTileEntity(pos);
-//		if (tile instanceof TileAlchemicalReactionChamber)
-//		{
-//			((TileAlchemicalReactionChamber) tile).inputTank.readFromNBT(inputNBT);
-//			((TileAlchemicalReactionChamber) tile).outputTank.readFromNBT(outputNBT);
-//		}
-//	}
 }

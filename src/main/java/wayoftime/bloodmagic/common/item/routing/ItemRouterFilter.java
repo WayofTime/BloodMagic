@@ -104,7 +104,7 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 	{
 		IItemFilter testFilter = new BasicItemFilter();
 
-		List<ItemStack> filteredList = new ArrayList<>();
+		List<IFilterKey> filteredList = new ArrayList<>();
 		ItemInventory inv = new ItemInventory(filterStack, 9, "");
 		for (int i = 0; i < inv.getSizeInventory(); i++)
 		{
@@ -114,9 +114,10 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 				continue;
 			}
 
-			ItemStack ghostStack = GhostItemHelper.getStackFromGhost(stack);
+			int amount = GhostItemHelper.getItemGhostAmount(stack);
+			ItemStack ghostStack = GhostItemHelper.getSingleStackFromGhost(stack);
 
-			filteredList.add(ghostStack);
+			filteredList.add(new BasicFilterKey(ghostStack, amount));
 		}
 
 		testFilter.initializeFilter(filteredList, tile, handler, false);
@@ -128,7 +129,7 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 	{
 		IItemFilter testFilter = new BasicItemFilter();
 
-		List<ItemStack> filteredList = new ArrayList<>();
+		List<IFilterKey> filteredList = new ArrayList<>();
 		ItemInventory inv = new ItemInventory(filterStack, 9, ""); // TODO: Change to grab the filter from the Item
 																	// later.
 		for (int i = 0; i < inv.getSizeInventory(); i++)
@@ -139,13 +140,14 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 				continue;
 			}
 
-			ItemStack ghostStack = GhostItemHelper.getStackFromGhost(stack);
-			if (ghostStack.isEmpty())
+			int amount = GhostItemHelper.getItemGhostAmount(stack);
+			ItemStack ghostStack = GhostItemHelper.getSingleStackFromGhost(stack);
+			if (amount == 0)
 			{
-				ghostStack.setCount(Integer.MAX_VALUE);
+				amount = Integer.MAX_VALUE;
 			}
 
-			filteredList.add(ghostStack);
+			filteredList.add(new BasicFilterKey(ghostStack, amount));
 		}
 
 		testFilter.initializeFilter(filteredList, tile, handler, true);

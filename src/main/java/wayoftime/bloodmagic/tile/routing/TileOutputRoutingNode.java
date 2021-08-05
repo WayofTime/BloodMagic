@@ -1,21 +1,27 @@
 package wayoftime.bloodmagic.tile.routing;
 
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
-import wayoftime.bloodmagic.common.routing.BasicItemFilter;
 import wayoftime.bloodmagic.common.routing.IItemFilter;
 import wayoftime.bloodmagic.common.routing.IOutputItemRoutingNode;
+import wayoftime.bloodmagic.tile.container.ContainerItemRoutingNode;
 import wayoftime.bloodmagic.util.Utils;
 
-public class TileOutputRoutingNode extends TileFilteredRoutingNode implements IOutputItemRoutingNode
+public class TileOutputRoutingNode extends TileFilteredRoutingNode implements IOutputItemRoutingNode, INamedContainerProvider
 {
 	@ObjectHolder("bloodmagic:outputroutingnode")
-	public static TileEntityType<TileInputRoutingNode> TYPE;
+	public static TileEntityType<TileOutputRoutingNode> TYPE;
 
 	public TileOutputRoutingNode(TileEntityType<?> type)
 	{
@@ -44,12 +50,7 @@ public class TileOutputRoutingNode extends TileFilteredRoutingNode implements IO
 			{
 				ItemStack filterStack = this.getFilterStack(side);
 
-				if (filterStack.isEmpty())
-				{
-					IItemFilter filter = new BasicItemFilter();
-					filter.initializeFilter(null, tile, handler, true);
-					return filter;
-				} else if (!(filterStack.getItem() instanceof IItemFilterProvider))
+				if (filterStack.isEmpty() || !(filterStack.getItem() instanceof IItemFilterProvider))
 				{
 					return null;
 				}
@@ -60,6 +61,19 @@ public class TileOutputRoutingNode extends TileFilteredRoutingNode implements IO
 		}
 
 		return null;
+	}
+
+	@Override
+	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_)
+	{
+		assert world != null;
+		return new ContainerItemRoutingNode(this, p_createMenu_1_, p_createMenu_2_);
+	}
+
+	@Override
+	public ITextComponent getDisplayName()
+	{
+		return new StringTextComponent("Output Routing Node");
 	}
 
 //	@Override

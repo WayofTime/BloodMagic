@@ -47,6 +47,7 @@ import wayoftime.bloodmagic.client.screens.ScreenAlchemicalReactionChamber;
 import wayoftime.bloodmagic.client.screens.ScreenAlchemyTable;
 import wayoftime.bloodmagic.client.screens.ScreenFilter;
 import wayoftime.bloodmagic.client.screens.ScreenHolding;
+import wayoftime.bloodmagic.client.screens.ScreenItemRoutingNode;
 import wayoftime.bloodmagic.client.screens.ScreenSoulForge;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
@@ -90,6 +91,8 @@ public class ClientEvents
 		ScreenManager.registerFactory(BloodMagicBlocks.ALCHEMY_TABLE_CONTAINER.get(), ScreenAlchemyTable::new);
 		ScreenManager.registerFactory(BloodMagicBlocks.HOLDING_CONTAINER.get(), ScreenHolding::new);
 		ScreenManager.registerFactory(BloodMagicBlocks.FILTER_CONTAINER.get(), ScreenFilter::new);
+		ScreenManager.registerFactory(BloodMagicBlocks.ROUTING_NODE_CONTAINER.get(), ScreenItemRoutingNode::new);
+
 	}
 
 	public static void colorHandlerEvent(ColorHandlerEvent.Item event)

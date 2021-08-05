@@ -1,39 +1,17 @@
 package wayoftime.bloodmagic.common.block;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
 import wayoftime.bloodmagic.tile.routing.TileMasterRoutingNode;
 
-public class BlockMasterRoutingNode extends BlockRoutingNode
+public class BlockMasterRoutingNode extends BlockItemRoutingNode
 {
-	protected static final VoxelShape SHAPE = Block.makeCuboidShape(5.0D, 5.0D, 5.0D, 11.0D, 11.0D, 11.0D);
-
 	public BlockMasterRoutingNode()
 	{
 		super();
-	}
-
-	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
-	{
-		return SHAPE;
-	}
-
-	@Override
-	public void onPlayerDestroy(IWorld world, BlockPos blockPos, BlockState blockState)
-	{
-		TileEntity tile = world.getTileEntity(blockPos);
-		if (tile instanceof TileMasterRoutingNode)
-		{
-			((TileMasterRoutingNode) tile).removeAllConnections();
-		}
-		super.onPlayerDestroy(world, blockPos, blockState);
 	}
 
 //
@@ -45,7 +23,23 @@ public class BlockMasterRoutingNode extends BlockRoutingNode
 //
 //        return true;
 //    }
-//
+
+	@Override
+	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	{
+		if (!state.isIn(newState.getBlock()))
+		{
+			TileEntity tile = worldIn.getTileEntity(pos);
+			if (tile instanceof TileMasterRoutingNode)
+			{
+				((TileMasterRoutingNode) tile).removeAllConnections();
+				((TileMasterRoutingNode) tile).dropItems();
+			}
+
+			super.onReplaced(state, worldIn, pos, newState, isMoving);
+		}
+	}
+
 	@Override
 	public boolean hasTileEntity(BlockState state)
 	{

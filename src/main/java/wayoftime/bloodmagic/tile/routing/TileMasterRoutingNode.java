@@ -7,9 +7,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import net.minecraft.client.renderer.texture.ITickable;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
@@ -27,7 +27,7 @@ import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.tile.TileInventory;
 import wayoftime.bloodmagic.util.Constants;
 
-public class TileMasterRoutingNode extends TileInventory implements IMasterRoutingNode, ITickable
+public class TileMasterRoutingNode extends TileInventory implements IMasterRoutingNode, ITickableTileEntity
 {
 	@ObjectHolder("bloodmagic:masterroutingnode")
 	public static TileEntityType<TileMasterRoutingNode> TYPE;
@@ -53,6 +53,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 	@Override
 	public void tick()
 	{
+
 		// TODO: Want to cache the filters and detect if a filter changes. Could have a
 		// changed inventory cause the Master to recheck?
 		if (!getWorld().isRemote)
@@ -68,6 +69,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 			return;
 		}
 
+//		System.out.println("Size of input list: " + inputNodeList.size());
 		Map<Integer, List<IItemFilter>> outputMap = new TreeMap<>();
 //      Map<Integer, List<IFluidFilter>> outputFluidMap = new TreeMap<>();
 
@@ -181,7 +183,9 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 					List<IItemFilter> inputList = inputEntry.getValue();
 					for (IItemFilter inputFilter : inputList)
 					{
-						maxTransfer -= inputFilter.transferThroughInputFilter(outputFilter, maxTransfer);
+						int amountTransfered = inputFilter.transferThroughInputFilter(outputFilter, maxTransfer);
+						maxTransfer -= amountTransfered;
+//						System.out.println("Trying to add through the filters: " + amountTransfered);
 						if (maxTransfer <= 0)
 						{
 							return;
