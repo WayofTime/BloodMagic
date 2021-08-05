@@ -39,6 +39,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 	private List<BlockPos> generalNodeList = new LinkedList<>();
 	private List<BlockPos> outputNodeList = new LinkedList<>();
 	private List<BlockPos> inputNodeList = new LinkedList<>();
+	private static final int TREE_OFFSET = 10;
 
 	public TileMasterRoutingNode(TileEntityType<?> type)
 	{
@@ -93,14 +94,14 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 						if (filter != null)
 						{
 							int priority = outputNode.getPriority(facing);
-							if (outputMap.containsKey(priority))
+							if (outputMap.containsKey(TREE_OFFSET - priority))
 							{
-								outputMap.get(priority).add(filter);
+								outputMap.get(TREE_OFFSET - priority).add(filter);
 							} else
 							{
 								List<IItemFilter> filterList = new LinkedList<>();
 								filterList.add(filter);
-								outputMap.put(priority, filterList);
+								outputMap.put(TREE_OFFSET - priority, filterList);
 							}
 						}
 					}
@@ -153,14 +154,14 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 						if (filter != null)
 						{
 							int priority = inputNode.getPriority(facing);
-							if (inputMap.containsKey(priority))
+							if (inputMap.containsKey(TREE_OFFSET - priority))
 							{
-								inputMap.get(priority).add(filter);
+								inputMap.get(TREE_OFFSET - priority).add(filter);
 							} else
 							{
 								List<IItemFilter> filterList = new LinkedList<>();
 								filterList.add(filter);
-								inputMap.put(priority, filterList);
+								inputMap.put(TREE_OFFSET - priority, filterList);
 							}
 						}
 					}
@@ -172,6 +173,30 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 
 		int maxTransfer = this.getMaxTransferForDemonWill(WorldDemonWillHandler.getCurrentWill(getWorld(), pos, EnumDemonWillType.DEFAULT));
 		int maxFluidTransfer = 1000;
+
+//		Set<Entry<Integer, List<IItemFilter>>> outputSet = outputMap.entrySet();
+//		for(int i = outputSet.size()-1; i == 0; i--)
+//		{
+//			Entry<Integer, List<IItemFilter>> outputEntry = outputSet.
+//			List<IItemFilter> outputList = outputEntry.getValue();
+//			for (IItemFilter outputFilter : outputList)
+//			{
+//				for (Entry<Integer, List<IItemFilter>> inputEntry : inputMap.entrySet())
+//				{
+//					List<IItemFilter> inputList = inputEntry.getValue();
+//					for (IItemFilter inputFilter : inputList)
+//					{
+//						int amountTransfered = inputFilter.transferThroughInputFilter(outputFilter, maxTransfer);
+//						maxTransfer -= amountTransfered;
+////						System.out.println("Trying to add through the filters: " + amountTransfered);
+//						if (maxTransfer <= 0)
+//						{
+//							return;
+//						}
+//					}
+//				}
+//			}
+//		}
 
 		for (Entry<Integer, List<IItemFilter>> outputEntry : outputMap.entrySet())
 		{

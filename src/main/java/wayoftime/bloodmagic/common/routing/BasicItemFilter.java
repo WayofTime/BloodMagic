@@ -251,14 +251,6 @@ public class BasicItemFilter implements IItemFilter
 	@Override
 	public boolean doStacksMatch(IFilterKey filterStack, ItemStack testStack)
 	{
-//		boolean test = filterStack != null && testStack != null && filterStack.getItem() == testStack.getItem();
-//		System.out.println("Do these match? " + test);
-//		if (!test)
-//		{
-//			System.out.println("Filter item: " + filterStack.getItem() + "; test item: " + testStack.getItem());
-//		}
-		boolean test = filterStack.doesStackMatch(testStack);
-
-		return test;
+		return filterStack.doesStackMatch(testStack);
 	}
 }

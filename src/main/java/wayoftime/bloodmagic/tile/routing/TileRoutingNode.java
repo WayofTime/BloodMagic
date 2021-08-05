@@ -9,6 +9,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -28,6 +29,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 	private int currentInput;
 	private BlockPos masterPos = BlockPos.ZERO;
 	private List<BlockPos> connectionList = new LinkedList<>();
+	private AxisAlignedBB boundingBox;
 
 	public TileRoutingNode(TileEntityType<?> type, int size, String name)
 	{
@@ -212,5 +214,15 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 	public double getMaxRenderDistanceSquared()
 	{
 		return 10000;
+	}
+
+	@Override
+	public AxisAlignedBB getRenderBoundingBox()
+	{
+		if (boundingBox == null)
+		{
+			boundingBox = super.getRenderBoundingBox().grow(5);
+		}
+		return boundingBox;
 	}
 }

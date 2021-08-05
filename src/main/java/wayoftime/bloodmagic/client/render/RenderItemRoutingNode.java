@@ -192,9 +192,14 @@ public class RenderItemRoutingNode extends TileEntityRenderer<TileRoutingNode>
 		bufferIn.pos(matrixPos, x, (float) y, z).color(red, green, blue, alpha).tex(texU, texV).overlay(OverlayTexture.NO_OVERLAY).lightmap(15728880).normal(matrixNormal, 0.0F, 1.0F, 0.0F).endVertex();
 	}
 
+	@Override
+	public boolean isGlobalRenderer(TileRoutingNode te)
+	{
+		return true;
+	}
+
 //	@Override
-//	public boolean isGlobalRenderer(TileRoutingNode te)
-//	{
-//		return true;
-//	}
+//    public boolean shouldRenderOffScreen(TileEntity p_188185_1_) {
+//        return true;
+//    }
 }
