@@ -382,7 +382,8 @@ public class GeneratorLanguage extends LanguageProvider
 
 		// Guide
 		add("guide.bloodmagic.name", "Sanguine Scientiem");
-		add("guide.bloodmagic.landing_text", "\"It is my dear hope that by holding this tome in your hands, I may impart the knowledge of the lost art that is Blood Magic\"$(br)$(o)- Magus Arcana$()");
+		add("guide.bloodmagic.landing_text", "Welcome to $(6)Blood Magic$()! $(br2)$(l:bloodmagic:utility/nyi)A lot of stuff$() isn't yet implemented, so please excuse our dust. $(br2)Click $(l:bloodmagic:utility/getting_started)HERE$() to get started. If you find any bugs, please report them on our $(l:https://github.com/WayofTime/BloodMagic/issues)Github$().");
+		add("guide.bloodmagic.subtitle", "Alchemical Wizardry");
 
 		// Patchouli Guidebook
 		add("patchouli.bloodmagic.common.double_new_line", "$(br2)%s");
