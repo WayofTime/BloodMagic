@@ -384,22 +384,20 @@ public class GeneratorLanguage extends LanguageProvider
 		add("guide.bloodmagic.name", "Sanguine Scientiem");
 		add("guide.bloodmagic.landing_text", "Welcome to $(6)Blood Magic$()! $(br2)$(l:bloodmagic:utility/nyi)A lot of stuff$() isn't yet implemented, so please excuse our dust. $(br2)Click $(l:bloodmagic:utility/getting_started)HERE$() to get started. If you find any bugs, please report them on our $(l:https://github.com/WayofTime/BloodMagic/issues)Github$().");
 		add("guide.bloodmagic.subtitle", "Alchemical Wizardry");
-
-		// Patchouli Guidebook
-		add("patchouli.bloodmagic.common.double_new_line", "$(br2)%s");
-		add("patchouli.bloodmagic.arc_processor.fluid", "%dmb of %s");
-		add("patchouli.bloodmagic.arc_processor.no_fluid", "None");
-		add("patchouli.bloodmagic.living_armour_upgrade_table.level", "Level");
-		add("patchouli.bloodmagic.living_armour_upgrade_table.upgrade_points", "Upgrade Points");
-		add("patchouli.bloodmagic.ritual_info.activation_cost", "$(br)Activation Cost: $(blood)%d LP$()");
-		add("patchouli.bloodmagic.ritual_info.upkeep_cost", "$(br)Base Usage Cost: $(blood)%d LP$()$(br)Base Interval: %d Ticks");
-		add("patchouli.bloodmagic.ritual_info.weak_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#weak)%s$(/l)");
-		add("patchouli.bloodmagic.ritual_info.awakened_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#awakened)%s$(/l)");
-		add("patchouli.bloodmagic.ritual_info.counter_formatter", "$(br)%s%s$()");
-		add("patchouli.bloodmagic.ritual_info.text_override_formatter", "\\$(%s)%s\\$()");
-		add("patchouli.bloodmagic.ritual_info.info_formatter", "%s$(br)%s$(br2)%s$(br)%s%s%s");
-		add("patchouli.bloodmagic.ritual_info.range_formatter", "$(br) $(li)Max Volume: %s$(li)Horizontal Radius: %s$(li)Vertical Radius: %s");
-		add("patchouli.bloodmagic.ritual_info.full_range", "Full Range");
+		add("guide.patchouli.bloodmagic.common.double_new_line", "$(br2)%s");
+		add("guide.patchouli.bloodmagic.arc_processor.fluid", "%dmb of %s");
+		add("guide.patchouli.bloodmagic.arc_processor.no_fluid", "None");
+		add("guide.patchouli.bloodmagic.living_armour_upgrade_table.level", "Level");
+		add("guide.patchouli.bloodmagic.living_armour_upgrade_table.upgrade_points", "Upgrade Points");
+		add("guide.patchouli.bloodmagic.ritual_info.activation_cost", "$(br)Activation Cost: $(blood)%d LP$()");
+		add("guide.patchouli.bloodmagic.ritual_info.upkeep_cost", "$(br)Base Usage Cost: $(blood)%d LP$()$(br)Base Interval: %d Ticks");
+		add("guide.patchouli.bloodmagic.ritual_info.weak_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#weak)%s$(/l)");
+		add("guide.patchouli.bloodmagic.ritual_info.awakened_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#awakened)%s$(/l)");
+		add("guide.patchouli.bloodmagic.ritual_info.counter_formatter", "$(br)%s%s$()");
+		add("guide.patchouli.bloodmagic.ritual_info.text_override_formatter", "\\$(%s)%s\\$()");
+		add("guide.patchouli.bloodmagic.ritual_info.info_formatter", "%s$(br)%s$(br2)%s$(br)%s%s%s");
+		add("guide.patchouli.bloodmagic.ritual_info.range_formatter", "$(br) $(li)Max Volume: %s$(li)Horizontal Radius: %s$(li)Vertical Radius: %s");
+		add("guide.patchouli.bloodmagic.ritual_info.full_range", "Full Range");
 
 		// Keybinds
 		add("bloodmagic.keybind.open_holding", "Open Sigil of Holding");
