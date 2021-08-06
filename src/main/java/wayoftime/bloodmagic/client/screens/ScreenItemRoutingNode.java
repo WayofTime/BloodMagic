@@ -62,7 +62,7 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 			Pair<Integer, Integer> buttonLocation = getButtonLocation(i);
 			this.addButton(new Button(left + buttonLocation.getLeft(), top + buttonLocation.getRight(), 20, 20, new StringTextComponent(getStringForDirection(dir)), new DirectionalPress(this, tileNode, i, dir)));
 
-			if (dir.ordinal() == tileNode.currentActiveSlot)
+			if (dir.ordinal() == tileNode.getCurrentActiveSlot())
 			{
 				disableDirectionalButton(i);
 			}
@@ -209,7 +209,7 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 
 	private int getCurrentActiveSlotPriority()
 	{
-		Direction direction = Direction.byIndex(tileNode.currentActiveSlot);
+		Direction direction = Direction.byIndex(tileNode.getCurrentActiveSlot());
 		if (direction != null)
 		{
 			return tileNode.getPriority(direction);
@@ -298,7 +298,7 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 
 				if (id < 6)
 				{
-					tileNode.currentActiveSlot = direction.ordinal();
+					tileNode.setCurrentActiveSlot(direction.ordinal());
 					this.screen.enableAllDirectionalButtons();
 					this.screen.disableDirectionalButton(id);
 				}

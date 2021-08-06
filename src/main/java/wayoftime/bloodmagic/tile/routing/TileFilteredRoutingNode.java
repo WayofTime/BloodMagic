@@ -4,13 +4,18 @@ import net.minecraft.block.BlockState;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.util.Constants;
 
 public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedInventory
 {
-	public int currentActiveSlot = 0;
+	private int currentActiveSlot = -1;
 	public int[] priorities = new int[6];
 
 //	public ItemInventory itemInventory = new ItemInventory(ItemStack.EMPTY, 9, "");
@@ -37,6 +42,35 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
 //
 //		this.markDirty();
 //	}
+
+	public int getCurrentActiveSlot()
+	{
+		if (currentActiveSlot == -1)
+		{
+			currentActiveSlot = 0;
+			for (Direction dir : Direction.values())
+			{
+				BlockPos offsetPos = this.getBlockPos().offset(dir);
+				TileEntity tile = world.getTileEntity(offsetPos);
+				if (tile != null)
+				{
+					LazyOptional<IItemHandler> opt = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir.getOpposite());
+					if (opt != null && opt.isPresent())
+					{
+						currentActiveSlot = dir.ordinal();
+						break;
+					}
+				}
+			}
+		}
+
+		return currentActiveSlot;
+	}
+
+	public void setCurrentActiveSlot(int slot)
+	{
+		this.currentActiveSlot = slot;
+	}
 
 	@Override
 	public boolean isInventoryConnectedToSide(Direction side)

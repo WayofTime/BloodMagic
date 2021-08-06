@@ -182,7 +182,7 @@ public class ContainerItemRoutingNode extends Container
 
 		public int getActiveSlot()
 		{
-			return inventory.currentActiveSlot;
+			return inventory.getCurrentActiveSlot();
 		}
 	}
 }
