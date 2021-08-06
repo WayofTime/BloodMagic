@@ -1,0 +1,62 @@
+{
+  "name": "Routing Nodes",
+  "icon": "bloodmagic:masterroutingnode",
+  "category": "bloodmagic:demon_will",
+  "extra_recipe_mappings":[
+  ],
+  "pages":[
+    {
+      "type": "text",
+      "text": "Hauling items around by hand may be all right for some people, but we are a sanguimancer. What's more, we have access to $(raw)Demon Will$()! Surely there's a better way to go about things. $(br2)As such, you've managed to come up with $(thing)Routing Nodes$(). These offer a powerful way to transport, sort, and filter items, sending them magically through the air as you decree."
+    },
+    {
+      "type": "text",
+      "text": "$(thing)Routing Node Networks$() have 3 main components: $(item)Input Nodes$(), $(item)Output Nodes$(), and the $(item)Master Routing Node$(). $(br2)Every network requires exactly 1 $(item)Master Routing Node$(), and every other Node in the network must be able to trace a route back to the Master, whether directly, or via other Nodes. $(br2)Input and Output nodes can withdraw or insert items from any block with an accessible inventory, respectively."
+    },
+    {
+      "type": "text",
+      "text": "Master Routing Node Recipe Goes Here. $(br2)The Master Node will be able to accept upgrades in the future, but for now it only serves to control and direct the network, acting as its 'Brain'."
+    },
+    {
+      "type": "text",
+      "text": "A Master Routing Node is all well and good, but without the other two node types, it's not particularly useful on its own, so let's get on to those next. $(br2)Input Routing Nodes draw items in to the network, Output Routing Nodes export them out again, and plain old Routing Nodes serve to extend the reach of your network. As Input and Output nodes are currently otherwise identical, we will be focusing on the Input Routing Node unless otherwise specified."
+    },
+    {
+      "type": "text",
+      "text": "When you place an Input or Output Node down, it will automatically connect to all adjacent inventories, but it won't do anything without a $(item)Filter$() of some kind in at least one of its side's slots. For this example, we'll use an [LINK]Item Filter$() set to $(item)Bread$(), attached to a $(item)Furnace$()."
+    },
+    {
+      "type": "text",
+      "text": "Photo of node in-world next to a furnace and a chest?"
+    },
+    {
+      "type": "text",
+      "text": "Picture of right hand side of GUI. $(br2)Once we've got our nodes set up, let's open up the Node GUI."
+    },
+    {
+      "type": "text",
+      "text": "Over on the right, we have our cardinal directions - Up, Down, North, South, East, and West. You'll notice that a little picture of a block appears on some buttons, representing what's on that side of the node. It'll start off facing an attached inventory, or Down if no inventory is present. The buttons themselves follow the direction the player is facing, so the top button is 'forwards', the left button is 'left', etcetera."
+    },
+
+    {
+      "type": "text",
+      "text": "Picture of left hand side of GUI."
+    },
+    {
+      "type": "text",
+      "text": "Over on the left, you'll see a space for us to insert a Filter for the selected side, and a Priority. bigger numbers = more important. $(br2)Nodes can have one filter per side - so we'll select the side we want, and put our filter in it. (For more information on Filters, see 'A Primer On Filters')"
+    },
+    {
+      "type": "text",
+      "text": "Now that your nodes are placed, we need to link them together. We can accomplish this with a Node Linker. [recipe goes here] The Node Linker can store up to 1 node at a time. When you click a second node, it will tell it to link to the first node, and then reset itself, ready to re-link again. [subject to change]"
+    },
+    {
+      "type": "text",
+      "text": "Place down your nodes, then shift-right-click them with the Node Router one at a time to link them. You should get a confirmation message [check wording] if successful. [describe possible mistakes here]. Make sure you don't accidentally link a node to itself. "
+    },
+    {
+      "type": "text",
+      "text": "Once your Input and Output have been set up, and both have item filters inserted to the correct sides, you should be good to go! Items will be routed according to filters and priorities."
+    }
+  ]
+}
