@@ -1,7 +1,7 @@
 {
   "name": "Routing Nodes",
   "icon": "bloodmagic:masterroutingnode",
-  "category": "bloodmagic:demon_will",
+  "category": "bloodmagic:demon_will/item_routing",
   "extra_recipe_mappings":[
   ],
   "pages":[
