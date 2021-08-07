@@ -3,6 +3,11 @@ package wayoftime.bloodmagic.tile.routing;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
+
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -14,6 +19,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.routing.IItemRoutingNode;
 import wayoftime.bloodmagic.common.routing.IMasterRoutingNode;
@@ -141,6 +149,89 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 		master.addConnections(this.getBlockPos(), connectedList);
 	}
 
+	// Returns true if the node is connected to the contained IMasterRoutingNode,
+	// and false if no connection. Returns a list of all IRoutingNodes that have
+	// been checked, for use in purging the connection to IMasterRoutingNode. It is
+	// up to the Node to add themselves to the nodeList.
+	@Override
+	public Triple<Boolean, List<BlockPos>, List<IRoutingNode>> recheckConnectionToMaster(List<BlockPos> alreadyChecked, List<IRoutingNode> nodeList)
+	{
+		if (this.masterPos.equals(BlockPos.ZERO))
+		{
+			// Node already is not connected to a Master, therefore return false;
+			return Triple.of(false, alreadyChecked, nodeList);
+		}
+
+		List<BlockPos> connectedList = this.getConnected();
+		for (BlockPos testPos : connectedList)
+		{
+			if (alreadyChecked.contains(testPos))
+			{
+				continue;
+			}
+			alreadyChecked.add(testPos);
+			TileEntity tile = world.getTileEntity(testPos);
+			if (!(tile instanceof IRoutingNode))
+			{
+				continue;
+			}
+			IRoutingNode node = (IRoutingNode) tile;
+
+			if (node instanceof IMasterRoutingNode)
+			{
+				// Do not need to check any other connections because an IMasterRoutingNode is
+				// found.
+				return Triple.of(true, alreadyChecked, nodeList);
+			}
+
+			Triple<Boolean, List<BlockPos>, List<IRoutingNode>> checkResult = node.recheckConnectionToMaster(alreadyChecked, nodeList);
+
+			if (checkResult.getLeft())
+			{
+				// Found a Master!
+				return checkResult;
+			}
+
+//			alreadyChecked.addAll(checkResult.getMiddle());
+//			nodeList.addAll(checkResult.getRight());
+		}
+
+		nodeList.add(this);
+		return Triple.of(false, alreadyChecked, nodeList);
+	}
+
+	// Returns true if the node is connected to the contained IMasterRoutingNode,
+	// and false if no connection. If false, removes the reference to the original
+	// IMasterRoutingNode of all connected nodes.
+	@Override
+	public List<BlockPos> checkAndPurgeConnectionToMaster(BlockPos ignorePos)
+	{
+		List<BlockPos> posList = new LinkedList<BlockPos>();
+		posList.add(ignorePos);
+		Triple<Boolean, List<BlockPos>, List<IRoutingNode>> recheckResult = recheckConnectionToMaster(posList, new LinkedList<IRoutingNode>());
+		if (!recheckResult.getLeft())
+		{
+			TileEntity testTile = world.getTileEntity(masterPos);
+			IMasterRoutingNode masterNode = null;
+			if (testTile instanceof IMasterRoutingNode)
+			{
+				masterNode = (IMasterRoutingNode) testTile;
+				masterNode.removeConnection(getBlockPos());
+			}
+			for (IRoutingNode node : recheckResult.getRight())
+			{
+				BlockPos masterPos = node.getMasterPos();
+				node.removeConnection(masterPos);
+				if (masterNode != null)
+					masterNode.removeConnection(node.getBlockPos());
+			}
+
+			return recheckResult.getMiddle();
+		}
+
+		return recheckResult.getMiddle();
+	}
+
 	@Override
 	public BlockPos getBlockPos()
 	{
@@ -224,5 +315,17 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 			boundingBox = super.getRenderBoundingBox().grow(5);
 		}
 		return boundingBox;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing)
+	{
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		{
+			return LazyOptional.empty();
+		}
+
+		return super.getCapability(capability, facing);
 	}
 }

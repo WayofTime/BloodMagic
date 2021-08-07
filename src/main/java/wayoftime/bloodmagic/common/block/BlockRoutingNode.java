@@ -138,7 +138,7 @@ public class BlockRoutingNode extends Block
 //		      boolean flag1 = block instanceof FenceGateBlock && FenceGateBlock.isParallel(state, direction);
 //		      return !cannotAttach(block) && isSideSolid || flag || flag1;
 
-		return state.getMaterial().isOpaque() && state.isSolid();
+		return state.getMaterial().isOpaque() && isSideSolid;
 	}
 
 	@Override

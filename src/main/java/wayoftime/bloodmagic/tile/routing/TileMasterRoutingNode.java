@@ -7,6 +7,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
+
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -15,6 +20,9 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.routing.IInputItemRoutingNode;
@@ -499,5 +507,30 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 			inputNodeList.remove(testPos);
 			outputNodeList.remove(testPos);
 		}
+	}
+
+	@Override
+	public Triple<Boolean, List<BlockPos>, List<IRoutingNode>> recheckConnectionToMaster(List<BlockPos> alreadyChecked, List<IRoutingNode> nodeList)
+	{
+		return Triple.of(true, alreadyChecked, nodeList);
+	}
+
+	@Override
+	public List<BlockPos> checkAndPurgeConnectionToMaster(BlockPos ignorePos)
+	{
+		// This is a Master node... Of course we're connected...
+		return new LinkedList<BlockPos>();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing)
+	{
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		{
+			return LazyOptional.empty();
+		}
+
+		return super.getCapability(capability, facing);
 	}
 }
