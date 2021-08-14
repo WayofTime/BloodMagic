@@ -161,12 +161,6 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 //		this.font.func_243248_b(stack, new TranslationTextComponent("tile.bloodmagic.routingnode.name"), 8, 5, 4210752);
 //		this.font.func_243248_b(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
 
-//		Direction topD = getFilterDirectionForButton(0);
-//		Direction leftD = getFilterDirectionForButton(1);
-//		Direction centerD = getFilterDirectionForButton(2);
-//		Direction rightD = getFilterDirectionForButton(3);
-//		Direction bottomD = getFilterDirectionForButton(4);
-//		Direction backD = getFilterDirectionForButton(5);
 		BlockPos tilePos = tileNode.getBlockPos();
 		World world = tileNode.getWorld();
 
@@ -183,7 +177,6 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 				this.drawItemStack(itemStack, buttonLocation.getLeft() + 2, buttonLocation.getRight() + 2, getStringForDirection(dir));
 			}
 		}
-
 	}
 
 	public Pair<Integer, Integer> getButtonLocation(int button)
@@ -302,7 +295,6 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 					this.screen.enableAllDirectionalButtons();
 					this.screen.disableDirectionalButton(id);
 				}
-
 			}
 		}
 	}

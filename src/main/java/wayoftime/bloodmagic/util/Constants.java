@@ -132,6 +132,13 @@ public class Constants
 		public static final String BREATH = "breath";
 
 		public static final String ANOINTMENTS = "anointment_holder";
+
+		public static final String BLACKWHITELIST = "button:blackwhitelist";
+	}
+
+	public static class BUTTONID
+	{
+		public static final String BLACKWHITELIST = "blackwhitelist";
 	}
 
 	public static class JSON

@@ -1,10 +1,17 @@
 package wayoftime.bloodmagic.client.screens;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
@@ -15,6 +22,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.inventory.ContainerFilter;
 import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
@@ -29,6 +37,9 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	private int left, top;
 
 	private TextFieldWidget textBox;
+
+	private int numberOfAddedButtons = 0;
+	private List<String> buttonKeyList = new ArrayList<String>();
 
 	public ScreenFilter(ContainerFilter container, PlayerInventory playerInventory, ITextComponent title)
 	{
@@ -54,6 +65,32 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		this.textBox.setTextColor(16777215);
 		this.textBox.setText("");
 
+		numberOfAddedButtons = 0;
+		buttonKeyList.clear();
+
+		ItemStack filterStack = this.container.filterStack;
+
+		if (filterStack.getItem() instanceof IItemFilterProvider)
+		{
+			IItemFilterProvider provider = (IItemFilterProvider) filterStack.getItem();
+			List<Pair<String, Button.IPressable>> buttonActionList = provider.getButtonAction(this.container);
+
+			for (Pair<String, Button.IPressable> pair : buttonActionList)
+			{
+				buttonKeyList.add(pair.getKey());
+				Pair<Integer, Integer> buttonLocation = getButtonLocation(numberOfAddedButtons);
+				Button addedButton = new Button(left + buttonLocation.getLeft(), top + buttonLocation.getRight(), 20, 20, new StringTextComponent(""), pair.getRight());
+
+				if (!provider.isButtonGlobal(filterStack, pair.getKey()))
+				{
+					addedButton.active = false;
+				}
+
+				this.addButton(addedButton);
+				numberOfAddedButtons++;
+			}
+		}
+
 //        new TextFieldWidget(this.mc.fontRenderer, i + 25, j + 14, 80, 9 + 5, new TranslationTextComponent("itemGroup.search"));
 
 //		this.buttons.clear();
@@ -64,6 +101,16 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 //		this.addButton(new Button(left + 153, top + 70, 14, 14, new StringTextComponent("S"), new DirectionalPress(tileTable, Direction.SOUTH)));
 //		this.addButton(new Button(left + 135, top + 88, 14, 14, new StringTextComponent("W"), new DirectionalPress(tileTable, Direction.WEST)));
 //		this.addButton(new Button(left + 153, top + 88, 14, 14, new StringTextComponent("E"), new DirectionalPress(tileTable, Direction.EAST)));
+	}
+
+	public Pair<Integer, Integer> getButtonLocation(int addedButton)
+	{
+		int x = 7;
+		int y = 32;
+
+		x = x + addedButton * 20;
+
+		return Pair.of(x, y);
 	}
 
 //	public boolean charTyped(char codePoint, int modifiers) {
@@ -193,6 +240,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 
 		if (container.lastGhostSlotClicked != -1)
 		{
+			enableAllButtons();
 			Slot slot = container.getSlot(container.lastGhostSlotClicked);
 			ItemStack stack = slot.getStack();
 			if (!stack.isEmpty())
@@ -214,6 +262,14 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		return true;
 	}
 
+	private void enableAllButtons()
+	{
+		for (Widget button : this.buttons)
+		{
+			button.active = true;
+		}
+	}
+
 	@Override
 	public ResourceLocation getBackground()
 	{
@@ -226,6 +282,26 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 //		this.font.func_243248_b(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
 //		this.font.func_243248_b(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
 		this.font.func_243248_b(stack, new TranslationTextComponent("item.bloodmagic.sigilofholding"), 53, 4, 4210752);
+
+		if (container.filterStack.getItem() instanceof IItemFilterProvider)
+		{
+			for (int i = 0; i < numberOfAddedButtons; i++)
+			{
+				int currentButtonState = ((IItemFilterProvider) container.filterStack.getItem()).getCurrentButtonState(container.filterStack, buttonKeyList.get(i), container.lastGhostSlotClicked);
+				Pair<Integer, Integer> buttonLocation = getButtonLocation(i);
+				Pair<Integer, Integer> textureLocation = ((IItemFilterProvider) container.filterStack.getItem()).getTexturePositionForState(buttonKeyList.get(i), currentButtonState);
+
+				int w = 20;
+				int h = 20;
+
+				int xl = buttonLocation.getLeft();
+				int yl = buttonLocation.getRight();
+
+				RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+				getMinecraft().getTextureManager().bindTexture(background);
+				this.blit(stack, +xl, +yl, textureLocation.getLeft(), textureLocation.getRight(), w, h);
+			}
+		}
 	}
 
 	@Override
@@ -274,8 +350,30 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 			this.textBox.render(matrixStack, mouseX, mouseY, partialTicks);
 		}
 
-	}
+		List<ITextComponent> tooltip = new ArrayList<>();
 
-//
+		if (container.filterStack.getItem() instanceof IItemFilterProvider)
+		{
+			for (int i = 0; i < numberOfAddedButtons; i++)
+			{
+				Pair<Integer, Integer> buttonLocation = getButtonLocation(i);
+				int w = 20;
+				int h = 20;
+
+				int x = this.guiLeft + buttonLocation.getLeft();
+				int y = this.guiTop + buttonLocation.getRight();
+
+				if (mouseX >= x && mouseX < x + w && mouseY >= y && mouseY < y + h)
+				{
+					ITextComponent component = ((IItemFilterProvider) container.filterStack.getItem()).getTextForHoverItem(container.filterStack, buttonKeyList.get(i), container.lastGhostSlotClicked);
+					if (component != null)
+						tooltip.add(component);
+				}
+			}
+		}
+
+		if (!tooltip.isEmpty())
+			GuiUtils.drawHoveringText(matrixStack, tooltip, mouseX, mouseY, width, height, -1, font);
+	}
 
 }

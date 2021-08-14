@@ -18,7 +18,7 @@ public class ContainerFilter extends Container
 	public final InventoryFilter inventoryFilter;
 	private final int PLAYER_INVENTORY_ROWS = 3;
 	private final int PLAYER_INVENTORY_COLUMNS = 9;
-	private final PlayerEntity player;
+	public final PlayerEntity player;
 	public final ItemStack filterStack;
 
 	public int lastGhostSlotClicked = -1;
