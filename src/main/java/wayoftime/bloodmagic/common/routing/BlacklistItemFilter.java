@@ -18,7 +18,7 @@ import wayoftime.bloodmagic.util.Utils;
  *
  * @author WayofTime
  */
-public class BasicItemFilter implements IItemFilter
+public class BlacklistItemFilter implements IItemFilter
 {
 	/*
 	 * This list acts as the way the filter keeps track of its contents. For the
@@ -103,7 +103,9 @@ public class BasicItemFilter implements IItemFilter
 			}
 		}
 
-		requestList.removeIf(IFilterKey::isEmpty);
+		// Might not want to remove items from the "ignore list" if their item needs are
+		// met.
+//		requestList.removeIf(IFilterKey::isEmpty);
 	}
 
 	/**
@@ -118,11 +120,16 @@ public class BasicItemFilter implements IItemFilter
 	@Override
 	public ItemStack transferStackThroughOutputFilter(ItemStack inputStack)
 	{
-		int allowedAmount = 0;
+		int allowedAmount = inputStack.getCount();
 		for (IFilterKey filterStack : requestList)
 		{
 			if (doStacksMatch(filterStack, inputStack))
 			{
+				// If the stacks match, then we don't want to pull this item at all.
+				return inputStack;
+			} else
+			{
+				// Check to see if any item limits have been reached
 				allowedAmount = Math.min(filterStack.getCount(), inputStack.getCount());
 				break;
 			}
@@ -145,7 +152,7 @@ public class BasicItemFilter implements IItemFilter
 		while (itr.hasNext())
 		{
 			IFilterKey filterStack = itr.next();
-			if (doStacksMatch(filterStack, inputStack))
+			if (!doStacksMatch(filterStack, inputStack))
 			{
 				filterStack.shrink(changeAmount);
 				if (filterStack.isEmpty())
@@ -185,15 +192,29 @@ public class BasicItemFilter implements IItemFilter
 				continue;
 			}
 
-			int allowedAmount = 0;
+			int allowedAmount = Math.min(inputStack.getCount(), maxTransfer);
 			for (IFilterKey filterStack : requestList)
 			{
 				if (doStacksMatch(filterStack, inputStack))
 				{
-					allowedAmount = Math.min(maxTransfer, Math.min(filterStack.getCount(), itemHandler.extractItem(slot, inputStack.getCount(), true).getCount()));
-					break;
+					// They matched. That is not good. Bail!
+					allowedAmount = 0;
+					continue;
+				} else
+				{
+					// Check to see if any item limits have been reached
+					allowedAmount = Math.min(filterStack.getCount(), allowedAmount);
 				}
 			}
+
+//			for (IFilterKey filterStack : requestList)
+//			{
+//				if (doStacksMatch(filterStack, inputStack))
+//				{
+//					allowedAmount = Math.min(maxTransfer, Math.min(filterStack.getCount(), itemHandler.extractItem(slot, inputStack.getCount(), true).getCount()));
+//					break;
+//				}
+//			}
 
 			if (allowedAmount <= 0)
 			{
@@ -217,13 +238,13 @@ public class BasicItemFilter implements IItemFilter
 			while (itr.hasNext())
 			{
 				IFilterKey filterStack = itr.next();
-				if (doStacksMatch(filterStack, inputStack))
+				if (!doStacksMatch(filterStack, inputStack))
 				{
 					filterStack.shrink(changeAmount);
-					if (filterStack.isEmpty())
-					{
-						itr.remove();
-					}
+//					if (filterStack.isEmpty())
+//					{
+//						itr.remove();
+//					}
 				}
 			}
 

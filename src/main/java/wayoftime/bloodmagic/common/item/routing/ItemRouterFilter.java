@@ -31,6 +31,7 @@ import wayoftime.bloodmagic.client.button.BlackWhitelistTogglePress;
 import wayoftime.bloodmagic.common.item.inventory.ContainerFilter;
 import wayoftime.bloodmagic.common.item.inventory.ItemInventory;
 import wayoftime.bloodmagic.common.routing.BasicItemFilter;
+import wayoftime.bloodmagic.common.routing.BlacklistItemFilter;
 import wayoftime.bloodmagic.common.routing.IItemFilter;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.GhostItemHelper;
@@ -108,10 +109,21 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 		return copyStack;
 	}
 
+	protected IItemFilter getFilterTypeFromConfig(ItemStack filterStack)
+	{
+		int state = getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
+		if (state == 1)
+		{
+			return new BlacklistItemFilter();
+		}
+
+		return new BasicItemFilter();
+	}
+
 	@Override
 	public IItemFilter getInputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler)
 	{
-		IItemFilter testFilter = new BasicItemFilter();
+		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
 
 		List<IFilterKey> filteredList = new ArrayList<>();
 		ItemInventory inv = new ItemInventory(filterStack, 9, "");
@@ -136,7 +148,7 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 	@Override
 	public IItemFilter getOutputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler)
 	{
-		IItemFilter testFilter = new BasicItemFilter();
+		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
 
 		List<IFilterKey> filteredList = new ArrayList<>();
 		ItemInventory inv = new ItemInventory(filterStack, 9, ""); // TODO: Change to grab the filter from the Item
@@ -186,7 +198,6 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 			filterStack.setTag(new CompoundNBT());
 			tag = filterStack.getTag();
 		}
-		System.out.println("Button pressed: " + buttonKey);
 
 		if (buttonKey.equals(Constants.BUTTONID.BLACKWHITELIST))
 		{
@@ -201,7 +212,6 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 			}
 
 			tag.putInt(Constants.NBT.BLACKWHITELIST, nextState);
-			System.out.println("Setting next state as: " + nextState);
 
 			return nextState;
 		}

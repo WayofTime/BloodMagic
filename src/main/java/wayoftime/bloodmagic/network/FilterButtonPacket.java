@@ -59,7 +59,6 @@ public class FilterButtonPacket
 
 		if (!itemStack.isEmpty() && itemStack.getItem() instanceof IItemFilterProvider)
 		{
-			System.out.println("Received button press. Processing... Current state: " + msg.currentButtonState);
 			((IItemFilterProvider) itemStack.getItem()).receiveButtonPress(itemStack, msg.buttonKey, msg.ghostSlot, msg.currentButtonState);
 		}
 	}
