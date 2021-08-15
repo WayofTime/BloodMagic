@@ -64,7 +64,7 @@ e6d9cf699667aaa47efff37b2b033895dee29c15 assets/bloodmagic/blockstates/waterritu
 42f26f715bddd16c069f9b51e3767b36477c8908 assets/bloodmagic/blockstates/woodtilepath.json
 3c6ce233dae6c1307d9016406c324bbe844b4e1e assets/bloodmagic/blockstates/wornstonebrickpath.json
 d59655f12d1724b73b77c373fb6864fcff69db12 assets/bloodmagic/blockstates/wornstonetilepath.json
-3931222f39a6d7bec16b31a6d2b907c446dce8bc assets/bloodmagic/lang/en_us.json
+19ffc5e715ba325cbcf3dab726f2ad3f384ca8d8 assets/bloodmagic/lang/en_us.json
 34445195b9f2459475cde53454bc8e37d32865d7 assets/bloodmagic/models/block/accelerationrune.json
 bcdbccc49d4509571be6988762ab87126275a4c8 assets/bloodmagic/models/block/airritualstone.json
 adf6c0b1e25451609486dc8c8cfbd9cf0f8c67f4 assets/bloodmagic/models/block/alchemicalreactionchamber.json
@@ -293,6 +293,7 @@ f68825f667ca73b4373fd5068a47f0d1ca9b2aad assets/bloodmagic/models/item/icesigil.
 4b803c1c838284d78474bab0f8ced938985dd958 assets/bloodmagic/models/item/irongravel.json
 d83040a473f44ff2fd9d290f3fd6ef0d8b9f3114 assets/bloodmagic/models/item/ironsand.json
 0a759a570fcee8ff81706c44efa79fb3f68d5870 assets/bloodmagic/models/item/itemrouterfilterexact.json
+aabe8bbb1d97d631af5ff9828ce692edb8e653ec assets/bloodmagic/models/item/itemrouterfilteroredict.json
 74ad976400cf3d55886e927b079fc1c529523661 assets/bloodmagic/models/item/itemroutingnode.json
 9b9fc4a11a187257d30334cd3faa949790b6ca29 assets/bloodmagic/models/item/largebloodstonebrick.json
 ffc3da1cbb86adc5aec7dfd503d23af319aec529 assets/bloodmagic/models/item/lavacrystal.json
@@ -760,6 +761,7 @@ af9b1a9ba1b16a85e3e1cf84b99e4cc9e12f9886 data/bloodmagic/tags/items/gravels/gold
 3597daeddb742612d0b7fe2d0f711251a2781ac2 data/bloodmagic/tags/items/gravels/netherite_scrap.json
 04fdfff381183672d6d7b3e55ded42a0a5b89f16 data/bloodmagic/tags/items/tiny_dusts/corrupted.json
 b7b3ffae086763317f5ed70a4f857e9634932972 data/forge/tags/fluids/life.json
+c9a50f0fe339c9ad2cb0176699e32eeee9110c4e data/forge/tags/items/axes.json
 4f8f46a7e30fe81d36790d3ffed37efef7c87d06 data/forge/tags/items/dusts/coal.json
 82f2679934e550a1188658350e52cfac7c450c4d data/forge/tags/items/dusts/gold.json
 205d57b4f622a13fceda5e8062d9bba80d619e92 data/forge/tags/items/dusts/hellforged.json
@@ -767,12 +769,16 @@ b7b3ffae086763317f5ed70a4f857e9634932972 data/forge/tags/fluids/life.json
 05fbe38ee5bdb3d912a5980254886ad64399e062 data/forge/tags/items/dusts/netherite_scrap.json
 9380fe45b06787ba776af4a7d542a047c1441031 data/forge/tags/items/dusts/saltpeter.json
 5c709b6444acb94ca784c33618547ba535e15db2 data/forge/tags/items/dusts/sulfur.json
+09f7c302ad1223cc18cbcab9aaa4969f716ffcf7 data/forge/tags/items/hoes.json
 ca758f49ba878f8e498fe156d4916c1e332d552c data/forge/tags/items/ingots/hellforged.json
 74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/items/ores/copper.json
 74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/items/ores/lead.json
 74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/items/ores/osmium.json
 74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/items/ores/silver.json
 74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/items/ores/tin.json
+4f84e4469650316777482889b269aad432a06d45 data/forge/tags/items/pickaxes.json
+4e3965798f4b18aab0edd5856646ace81780f131 data/forge/tags/items/shovels.json
+8464f5918830fa341ea9d2b31183e7272aa6f347 data/forge/tags/items/swords.json
 d348e6ef5f30db7c6c6ef2aac89c45e9c4c6fef7 data/minecraft/tags/blocks/mushroom_hyphae.json
 95fd3a7b178a92c5aecdd097fec5359f14a06c13 data/minecraft/tags/blocks/mushroom_stem.json
 2ba6f93ee0567360afa3ae9999027b839ed06532 data/minecraft/tags/blocks/walls.json

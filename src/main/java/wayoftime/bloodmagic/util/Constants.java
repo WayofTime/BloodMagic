@@ -134,11 +134,13 @@ public class Constants
 		public static final String ANOINTMENTS = "anointment_holder";
 
 		public static final String BLACKWHITELIST = "button:blackwhitelist";
+		public static final String ITEMTAG = "button:itemtag";
 	}
 
 	public static class BUTTONID
 	{
 		public static final String BLACKWHITELIST = "blackwhitelist";
+		public static final String ITEMTAG = "itemtag";
 	}
 
 	public static class JSON

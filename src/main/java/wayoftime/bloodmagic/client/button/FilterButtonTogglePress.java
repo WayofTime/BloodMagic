@@ -6,12 +6,12 @@ import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
 import wayoftime.bloodmagic.network.FilterButtonPacket;
 
-public class BlackWhitelistTogglePress implements Button.IPressable
+public class FilterButtonTogglePress implements Button.IPressable
 {
 	private final String buttonKey;
 	private final ContainerFilter container;
 
-	public BlackWhitelistTogglePress(String key, ContainerFilter container)
+	public FilterButtonTogglePress(String key, ContainerFilter container)
 	{
 		this.buttonKey = key;
 		this.container = container;

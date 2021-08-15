@@ -7,6 +7,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.widget.button.Button.IPressable;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -21,13 +22,15 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.client.button.BlackWhitelistTogglePress;
+import wayoftime.bloodmagic.client.button.FilterButtonTogglePress;
 import wayoftime.bloodmagic.common.item.inventory.ContainerFilter;
 import wayoftime.bloodmagic.common.item.inventory.ItemInventory;
 import wayoftime.bloodmagic.common.routing.BasicItemFilter;
@@ -46,27 +49,50 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB));
 	}
 
-//	@Override
-//	@OnlyIn(Dist.CLIENT)
-//	public boolean hasEffect(ItemStack stack)
-//	{
-//		return true;
-//	}
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public void addInformation(ItemStack filterStack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	{
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.basicfilter.desc").mergeStyle(TextFormatting.ITALIC).mergeStyle(TextFormatting.GRAY));
 
-//	@Override
-//	@OnlyIn(Dist.CLIENT)
-//	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
-//	{
-//		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.experienceTome").mergeStyle(TextFormatting.GRAY));
-//
-//		if (!stack.hasTag())
-//			return;
-//
-//		double storedExp = getStoredExperience(stack);
-//
-//		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.experienceTome.exp", (int) storedExp).mergeStyle(TextFormatting.GRAY));
-//		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.experienceTome.expLevel", getLevelForExperience(storedExp)).mergeStyle(TextFormatting.GRAY));
-//	}
+		int whitelistState = this.getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
+		boolean isWhitelist = whitelistState == 0;
+
+		if (isWhitelist)
+		{
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist"));
+		} else
+		{
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist"));
+		}
+
+		ItemInventory inv = new ItemInventory(filterStack, 9, "");
+		for (int i = 0; i < inv.getSizeInventory(); i++)
+		{
+			ItemStack stack = inv.getStackInSlot(i);
+			if (stack.isEmpty())
+			{
+				continue;
+			}
+
+			if (isWhitelist)
+			{
+				int amount = GhostItemHelper.getItemGhostAmount(stack);
+				if (amount > 0)
+				{
+					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.count", amount, stack.getDisplayName()));
+				} else
+				{
+					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.all", stack.getDisplayName()));
+				}
+			} else
+			{
+				tooltip.add(stack.getDisplayName());
+			}
+		}
+
+		super.addInformation(filterStack, world, tooltip, flag);
+	}
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
@@ -236,28 +262,30 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 	}
 
 	@Override
-	public ITextComponent getTextForHoverItem(ItemStack filterStack, String buttonKey, int ghostItemSlot)
+	public List<ITextComponent> getTextForHoverItem(ItemStack filterStack, String buttonKey, int ghostItemSlot)
 	{
+		List<ITextComponent> componentList = new ArrayList<ITextComponent>();
 		int currentState = getCurrentButtonState(filterStack, buttonKey, ghostItemSlot);
 		if (buttonKey.equals(Constants.BUTTONID.BLACKWHITELIST))
 		{
 			switch (currentState)
 			{
 			case 1:
-				return new StringTextComponent("Blacklist");
+				componentList.add(new TranslationTextComponent("filter.bloodmagic.blacklist"));
+				break;
 			default:
-				return new StringTextComponent("Whitelist");
+				componentList.add(new TranslationTextComponent("filter.bloodmagic.whitelist"));
 			}
 		}
 
-		return new StringTextComponent("ERROR");
+		return componentList;
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	public List<Pair<String, Button.IPressable>> getButtonAction(ContainerFilter container)
 	{
 		List<Pair<String, Button.IPressable>> buttonList = new ArrayList<Pair<String, IPressable>>();
-		buttonList.add(Pair.of(Constants.BUTTONID.BLACKWHITELIST, new BlackWhitelistTogglePress(Constants.BUTTONID.BLACKWHITELIST, container)));
+		buttonList.add(Pair.of(Constants.BUTTONID.BLACKWHITELIST, new FilterButtonTogglePress(Constants.BUTTONID.BLACKWHITELIST, container)));
 		return buttonList;
 	}
 

@@ -22,7 +22,7 @@ public interface IItemFilterProvider extends IRoutingFilterProvider
 
 	void setGhostItemAmount(ItemStack filterStack, int ghostItemSlot, int amount);
 
-	ITextComponent getTextForHoverItem(ItemStack filterStack, String buttonKey, int ghostItemSlot);
+	List<ITextComponent> getTextForHoverItem(ItemStack filterStack, String buttonKey, int ghostItemSlot);
 
 	int getCurrentButtonState(ItemStack filterStack, String buttonKey, int ghostItemSlot);
 

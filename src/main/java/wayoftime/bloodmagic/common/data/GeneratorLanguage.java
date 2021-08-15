@@ -128,6 +128,22 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.ghost.everything", "Everything");
 		add("tooltip.bloodmagic.ghost.amount", "Ghost item amount: %d");
 
+		add("tooltip.bloodmagic.basicfilter.desc", "Will make sure the items match");
+		add("tooltip.bloodmagic.tagfilter.desc", "Filters based off of an item's ItemTags");
+
+		add("filter.bloodmagic.whitelist", "Allow");
+		add("filter.bloodmagic.blacklist", "Deny");
+		add("filter.bloodmagic.specifiedtag", "Valid Tag:");
+		add("filter.bloodmagic.novalidtag", "Specified Item");
+		add("filter.bloodmagic.anytag", "Any Tag:");
+
+		add("tooltip.bloodmagic.filter.whitelist", "Allow:");
+		add("tooltip.bloodmagic.filter.blacklist", "Deny:");
+		add("tooltip.bloodmagic.filter.all", "All: %s");
+		add("tooltip.bloodmagic.filter.count", "%sx %s");
+
+		add("tooltip.bloodmagic.filter.anytag", "Any Tag of %s");
+
 		// Ritual info
 		add("tooltip.bloodmagic.diviner.currentRitual", "Current Ritual: %s");
 		add("tooltip.bloodmagic.diviner.blankRune", "Blank Runes: %d");
@@ -594,6 +610,7 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addItem(BloodMagicItems.NODE_ROUTER, "Node Router");
 		addItem(BloodMagicItems.ITEM_ROUTER_FILTER, "Standard Item Filter");
+		addItem(BloodMagicItems.ITEM_TAG_FILTER, "Tag Item Filter");
 
 		// Anointment Items
 		addItem(BloodMagicItems.SLATE_VIAL, "Slate-infused Vial");
