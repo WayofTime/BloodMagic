@@ -1,0 +1,95 @@
+package wayoftime.bloodmagic.recipe;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.ResourceLocation;
+import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
+import wayoftime.bloodmagic.common.item.routing.INestableItemFilterProvider;
+import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
+
+public class RecipeFilterMergeAlchemyTable extends RecipeAlchemyTable
+{
+	final Ingredient filterIngredient;
+
+	public RecipeFilterMergeAlchemyTable(ResourceLocation id, Ingredient filterIngredient, List<Ingredient> input, ItemStack output, int syphon, int ticks, int minimumTier)
+	{
+		super(id, input, output, syphon, ticks, minimumTier);
+		this.filterIngredient = filterIngredient;
+	}
+
+	@Nonnull
+	@Override
+	public ItemStack getOutput(List<ItemStack> inputs)
+	{
+		int index = -1;
+		for (int i = 0; i < inputs.size(); i++)
+		{
+			if (filterIngredient.test(inputs.get(i)))
+			{
+				index = i;
+			}
+		}
+
+		if (index == -1)
+		{
+			return ItemStack.EMPTY;
+		}
+
+		ItemStack filterStack = inputs.get(index);
+		if (!(filterStack.getItem() instanceof IItemFilterProvider))
+		{
+			return ItemStack.EMPTY;
+		}
+
+//		filterStack = filterStack.copy();
+		// TODO: Add logic for combining.
+		for (int i = 0; i < inputs.size(); i++)
+		{
+			if (i == index || inputs.get(i).isEmpty())
+			{
+				continue;
+			}
+
+			ItemStack inputStack = inputs.get(i);
+			if (!(inputStack.getItem() instanceof INestableItemFilterProvider))
+			{
+				continue;
+			}
+
+			if (((IItemFilterProvider) filterStack.getItem()).canReceiveNestedFilter(filterStack, inputStack))
+			{
+				filterStack = ((IItemFilterProvider) filterStack.getItem()).nestFilter(filterStack, inputStack);
+			}
+		}
+
+		return filterStack;
+	}
+
+	@Override
+	public List<Ingredient> getInput()
+	{
+		List<Ingredient> returnInputs = new ArrayList<Ingredient>(input);
+		returnInputs.add(filterIngredient);
+		return returnInputs;
+	}
+
+	@Override
+	public void write(PacketBuffer buffer)
+	{
+		filterIngredient.write(buffer);
+		super.write(buffer);
+	}
+
+	@Override
+	public IRecipeSerializer<RecipeFilterMergeAlchemyTable> getSerializer()
+	{
+		return BloodMagicRecipeSerializers.FILTERALCHEMYTABLE.getRecipeSerializer();
+	}
+}

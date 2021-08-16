@@ -9,6 +9,7 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
@@ -29,6 +30,7 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 	@Override
 	protected void registerRecipes(Consumer<IFinishedRecipe> consumer)
 	{
+		IRecipeSerializer d;
 		addVanillaRecipes(consumer);
 		addVanillaSmithingRecipes(consumer);
 		addBloodOrbRecipes(consumer);

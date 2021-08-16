@@ -130,12 +130,20 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("tooltip.bloodmagic.basicfilter.desc", "Will make sure the items match");
 		add("tooltip.bloodmagic.tagfilter.desc", "Filters based off of an item's ItemTags");
+		add("tooltip.bloodmagic.enchantfilter.desc", "Filters based off of enchantments");
 
 		add("filter.bloodmagic.whitelist", "Allow");
 		add("filter.bloodmagic.blacklist", "Deny");
 		add("filter.bloodmagic.specifiedtag", "Valid Tag:");
 		add("filter.bloodmagic.novalidtag", "Specified Item");
 		add("filter.bloodmagic.anytag", "Any Tag:");
+
+		add("filter.bloodmagic.anyenchant", "Any Enchantment:");
+		add("filter.bloodmagic.noenchant", "No Enchantments");
+		add("filter.bloodmagic.allenchant", "Every Enchantment");
+		add("filter.bloodmagic.enchantfuzzy", "Any Level");
+		add("filter.bloodmagic.enchantnotfuzzy", "Exact Level");
+//		add("filter.bloodmagic.specifiedenchant", "Valid Tag:");
 
 		add("tooltip.bloodmagic.filter.whitelist", "Allow:");
 		add("tooltip.bloodmagic.filter.blacklist", "Deny:");
@@ -611,6 +619,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.NODE_ROUTER, "Node Router");
 		addItem(BloodMagicItems.ITEM_ROUTER_FILTER, "Standard Item Filter");
 		addItem(BloodMagicItems.ITEM_TAG_FILTER, "Tag Item Filter");
+		addItem(BloodMagicItems.ITEM_ENCHANT_FILTER, "Enchantments Item Filter");
 
 		// Anointment Items
 		addItem(BloodMagicItems.SLATE_VIAL, "Slate-infused Vial");

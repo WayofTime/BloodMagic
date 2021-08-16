@@ -32,6 +32,7 @@ import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.client.button.FilterButtonTogglePress;
 import wayoftime.bloodmagic.common.item.inventory.ContainerFilter;
+import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
 import wayoftime.bloodmagic.common.item.inventory.ItemInventory;
 import wayoftime.bloodmagic.common.routing.BasicItemFilter;
 import wayoftime.bloodmagic.common.routing.BlacklistItemFilter;
@@ -43,6 +44,9 @@ import wayoftime.bloodmagic.util.Utils;
 public class ItemRouterFilter extends Item implements INamedContainerProvider, IItemFilterProvider
 {
 	public static final int inventorySize = 9;
+	public static final int maxUpgrades = 9;
+
+	public static final String FILTER_INV = "filterInventory";
 
 	public ItemRouterFilter()
 	{
@@ -66,7 +70,7 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist"));
 		}
 
-		ItemInventory inv = new ItemInventory(filterStack, 9, "");
+		ItemInventory inv = new InventoryFilter(filterStack);
 		for (int i = 0; i < inv.getSizeInventory(); i++)
 		{
 			ItemStack stack = inv.getStackInSlot(i);
@@ -147,12 +151,20 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 	}
 
 	@Override
+	public IFilterKey getFilterKey(ItemStack filterStack, int slot, ItemStack ghostStack, int amount)
+	{
+		return new BasicFilterKey(ghostStack, amount);
+	}
+
+	@Override
 	public IItemFilter getInputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler)
 	{
 		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
 
 		List<IFilterKey> filteredList = new ArrayList<>();
-		ItemInventory inv = new ItemInventory(filterStack, 9, "");
+		ItemInventory inv = new InventoryFilter(filterStack);
+
+		List<ItemStack> nestedList = getNestedFilters(filterStack);
 		for (int i = 0; i < inv.getSizeInventory(); i++)
 		{
 			ItemStack stack = inv.getStackInSlot(i);
@@ -164,7 +176,19 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 			int amount = GhostItemHelper.getItemGhostAmount(stack);
 			ItemStack ghostStack = GhostItemHelper.getSingleStackFromGhost(stack);
 
-			filteredList.add(new BasicFilterKey(ghostStack, amount));
+			if (nestedList.size() > 0)
+			{
+				CompositeFilterKey compositeKey = new CompositeFilterKey(amount);
+				filteredList.add(getFilterKey(filterStack, i, ghostStack, amount));
+				for (ItemStack nestedStack : nestedList)
+				{
+					compositeKey.addFilterKey(((INestableItemFilterProvider) nestedStack.getItem()).getFilterKey(filterStack, i, ghostStack, amount));
+					filteredList.add(compositeKey);
+				}
+			} else
+			{
+				filteredList.add(getFilterKey(filterStack, i, ghostStack, amount));
+			}
 		}
 
 		testFilter.initializeFilter(filteredList, tile, handler, false);
@@ -177,8 +201,10 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
 
 		List<IFilterKey> filteredList = new ArrayList<>();
-		ItemInventory inv = new ItemInventory(filterStack, 9, ""); // TODO: Change to grab the filter from the Item
-																	// later.
+		ItemInventory inv = new InventoryFilter(filterStack); // TODO: Change to grab the filter from the Item
+
+		List<ItemStack> nestedList = getNestedFilters(filterStack);
+		// later.
 		for (int i = 0; i < inv.getSizeInventory(); i++)
 		{
 			ItemStack stack = inv.getStackInSlot(i);
@@ -194,17 +220,30 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 				amount = Integer.MAX_VALUE;
 			}
 
-			filteredList.add(new BasicFilterKey(ghostStack, amount));
+			if (nestedList.size() > 0)
+			{
+				CompositeFilterKey compositeKey = new CompositeFilterKey(amount);
+				filteredList.add(getFilterKey(filterStack, i, ghostStack, amount));
+				for (ItemStack nestedStack : nestedList)
+				{
+					compositeKey.addFilterKey(((INestableItemFilterProvider) nestedStack.getItem()).getFilterKey(filterStack, i, ghostStack, amount));
+					filteredList.add(compositeKey);
+				}
+			} else
+			{
+				filteredList.add(getFilterKey(filterStack, i, ghostStack, amount));
+			}
 		}
 
 		testFilter.initializeFilter(filteredList, tile, handler, true);
+
 		return testFilter;
 	}
 
 	@Override
 	public void setGhostItemAmount(ItemStack filterStack, int ghostItemSlot, int amount)
 	{
-		ItemInventory inv = new ItemInventory(filterStack, 9, "");
+		ItemInventory inv = new InventoryFilter(filterStack);
 		ItemStack stack = inv.getStackInSlot(ghostItemSlot);
 		if (!stack.isEmpty())
 		{
@@ -242,6 +281,21 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 			return nextState;
 		}
 
+		if (this instanceof INestableItemFilterProvider)
+		{
+			return -1;
+		}
+
+		List<ItemStack> nestedList = getNestedFilters(filterStack);
+		for (ItemStack nestedStack : nestedList)
+		{
+			int nextState = ((INestableItemFilterProvider) nestedStack.getItem()).receiveButtonPress(filterStack, buttonKey, ghostItemSlot, currentButtonState);
+			if (nextState != -1)
+			{
+				return nextState;
+			}
+		}
+
 		return -1;
 	}
 
@@ -258,13 +312,29 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 			}
 		}
 
-		return 0;
+		if (this instanceof INestableItemFilterProvider)
+		{
+			return -1;
+		}
+
+		List<ItemStack> nestedList = getNestedFilters(filterStack);
+		for (ItemStack nestedStack : nestedList)
+		{
+			int currentState = ((INestableItemFilterProvider) nestedStack.getItem()).getCurrentButtonState(filterStack, buttonKey, ghostItemSlot);
+			if (currentState != -1)
+			{
+				return currentState;
+			}
+		}
+
+		return -1;
 	}
 
 	@Override
 	public List<ITextComponent> getTextForHoverItem(ItemStack filterStack, String buttonKey, int ghostItemSlot)
 	{
 		List<ITextComponent> componentList = new ArrayList<ITextComponent>();
+
 		int currentState = getCurrentButtonState(filterStack, buttonKey, ghostItemSlot);
 		if (buttonKey.equals(Constants.BUTTONID.BLACKWHITELIST))
 		{
@@ -278,6 +348,17 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 			}
 		}
 
+		if (this instanceof INestableItemFilterProvider)
+		{
+			return componentList;
+		}
+
+		List<ItemStack> nestedList = getNestedFilters(filterStack);
+		for (ItemStack nestedStack : nestedList)
+		{
+			componentList.addAll(((INestableItemFilterProvider) nestedStack.getItem()).getTextForHoverItem(filterStack, buttonKey, ghostItemSlot));
+		}
+
 		return componentList;
 	}
 
@@ -285,12 +366,26 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 	public List<Pair<String, Button.IPressable>> getButtonAction(ContainerFilter container)
 	{
 		List<Pair<String, Button.IPressable>> buttonList = new ArrayList<Pair<String, IPressable>>();
+
 		buttonList.add(Pair.of(Constants.BUTTONID.BLACKWHITELIST, new FilterButtonTogglePress(Constants.BUTTONID.BLACKWHITELIST, container)));
+
+		if (this instanceof INestableItemFilterProvider)
+		{
+			return buttonList;
+		}
+
+		List<ItemStack> nestedList = getNestedFilters(container.filterStack);
+		for (ItemStack nestedStack : nestedList)
+		{
+			List<Pair<String, Button.IPressable>> nestedButtonList = ((INestableItemFilterProvider) nestedStack.getItem()).getButtonAction(container);
+			buttonList.addAll(nestedButtonList);
+		}
+
 		return buttonList;
 	}
 
 	@Override
-	public Pair<Integer, Integer> getTexturePositionForState(String buttonKey, int currentButtonState)
+	public Pair<Integer, Integer> getTexturePositionForState(ItemStack filterStack, String buttonKey, int currentButtonState)
 	{
 		if (buttonKey.equals(Constants.BUTTONID.BLACKWHITELIST))
 		{
@@ -302,12 +397,106 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 				return Pair.of(176, 0);
 			}
 		}
-		return Pair.of(176, 0);
+
+		if (this instanceof INestableItemFilterProvider)
+		{
+			return Pair.of(0, 0);
+		}
+
+		List<ItemStack> nestedList = getNestedFilters(filterStack);
+		for (ItemStack nestedStack : nestedList)
+		{
+			Pair<Integer, Integer> pair = ((INestableItemFilterProvider) nestedStack.getItem()).getTexturePositionForState(filterStack, buttonKey, currentButtonState);
+			if (pair.getLeft() < 0 || pair.getRight() < 0)
+			{
+				continue;
+			}
+
+			return pair;
+		}
+
+		return Pair.of(0, 0);
 	}
 
 	@Override
 	public boolean isButtonGlobal(ItemStack filterStack, String buttonKey)
 	{
 		return buttonKey.equals(Constants.BUTTONID.BLACKWHITELIST);
+	}
+
+	public List<ItemStack> getNestedFilters(ItemStack mainFilterStack)
+	{
+		List<ItemStack> nestedFilters = new ArrayList<ItemStack>();
+		ItemInventory inv = new ItemInventory(mainFilterStack, maxUpgrades, FILTER_INV);
+		for (int i = 0; i < maxUpgrades; i++)
+		{
+			ItemStack testStack = inv.getStackInSlot(i);
+			if (testStack.isEmpty())
+			{
+				continue;
+			}
+
+			if (testStack.getItem() instanceof INestableItemFilterProvider)
+			{
+				nestedFilters.add(testStack);
+			}
+		}
+
+		return nestedFilters;
+	}
+
+	@Override
+	public boolean canReceiveNestedFilter(ItemStack mainFilterStack, ItemStack nestedFilterStack)
+	{
+		if (nestedFilterStack.isEmpty())
+		{
+			return false;
+		} else if (!(nestedFilterStack.getItem() instanceof INestableItemFilterProvider))
+		{
+			return false;
+		}
+
+		boolean hasEmpty = false;
+
+		ItemInventory inv = new ItemInventory(mainFilterStack, maxUpgrades, FILTER_INV);
+		for (int i = 0; i < maxUpgrades; i++)
+		{
+			ItemStack testStack = inv.getStackInSlot(i);
+			if (testStack.isEmpty())
+			{
+				hasEmpty = true;
+				continue;
+			}
+
+			if (testStack.getItem().equals(nestedFilterStack.getItem()))
+			{
+				return false;
+			}
+		}
+
+		return hasEmpty;
+	}
+
+	@Override
+	public ItemStack nestFilter(ItemStack mainFilterStack, ItemStack nestedFilterStack)
+	{
+		if (canReceiveNestedFilter(mainFilterStack, nestedFilterStack))
+		{
+			ItemStack copyStack = mainFilterStack.copy();
+
+			ItemInventory inv = new ItemInventory(copyStack, maxUpgrades, FILTER_INV);
+			for (int i = 0; i < maxUpgrades; i++)
+			{
+				ItemStack testStack = inv.getStackInSlot(i);
+				if (testStack.isEmpty())
+				{
+					inv.setInventorySlotContents(i, nestedFilterStack);
+					inv.markDirty();
+					return copyStack;
+				}
+			}
+		}
+
+		return ItemStack.EMPTY;
 	}
 }

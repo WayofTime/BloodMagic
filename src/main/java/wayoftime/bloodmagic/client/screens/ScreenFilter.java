@@ -77,6 +77,10 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 
 			for (Pair<String, Button.IPressable> pair : buttonActionList)
 			{
+				if (buttonKeyList.contains(pair.getKey()))
+				{
+					continue;
+				}
 				buttonKeyList.add(pair.getKey());
 				Pair<Integer, Integer> buttonLocation = getButtonLocation(numberOfAddedButtons);
 				Button addedButton = new Button(left + buttonLocation.getLeft(), top + buttonLocation.getRight(), 20, 20, new StringTextComponent(""), pair.getRight());
@@ -289,7 +293,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 			{
 				int currentButtonState = ((IItemFilterProvider) container.filterStack.getItem()).getCurrentButtonState(container.filterStack, buttonKeyList.get(i), container.lastGhostSlotClicked);
 				Pair<Integer, Integer> buttonLocation = getButtonLocation(i);
-				Pair<Integer, Integer> textureLocation = ((IItemFilterProvider) container.filterStack.getItem()).getTexturePositionForState(buttonKeyList.get(i), currentButtonState);
+				Pair<Integer, Integer> textureLocation = ((IItemFilterProvider) container.filterStack.getItem()).getTexturePositionForState(container.filterStack, buttonKeyList.get(i), currentButtonState);
 
 				int w = 20;
 				int h = 20;

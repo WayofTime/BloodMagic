@@ -80,7 +80,7 @@ public class ItemInventory implements IInventory
 		{
 			NBTHelper.checkNBT(masterStack);
 			CompoundNBT tag = masterStack.getTag();
-			readFromNBT(tag.getCompound(Constants.NBT.ITEM_INVENTORY));
+			readFromNBT(tag.getCompound(Constants.NBT.ITEM_INVENTORY + name));
 		}
 	}
 
@@ -92,7 +92,7 @@ public class ItemInventory implements IInventory
 			CompoundNBT tag = masterStack.getTag();
 			CompoundNBT invTag = new CompoundNBT();
 			writeToNBT(invTag);
-			tag.put(Constants.NBT.ITEM_INVENTORY, invTag);
+			tag.put(Constants.NBT.ITEM_INVENTORY + name, invTag);
 		}
 	}
 

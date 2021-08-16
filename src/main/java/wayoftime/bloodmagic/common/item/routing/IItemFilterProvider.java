@@ -24,14 +24,22 @@ public interface IItemFilterProvider extends IRoutingFilterProvider
 
 	List<ITextComponent> getTextForHoverItem(ItemStack filterStack, String buttonKey, int ghostItemSlot);
 
+	// -1 equals an invalid button input;
 	int getCurrentButtonState(ItemStack filterStack, String buttonKey, int ghostItemSlot);
 
 	@OnlyIn(Dist.CLIENT)
 	List<Pair<String, Button.IPressable>> getButtonAction(ContainerFilter container);
 
-	Pair<Integer, Integer> getTexturePositionForState(String buttonKey, int currentButtonState);
+	Pair<Integer, Integer> getTexturePositionForState(ItemStack filterStack, String buttonKey, int currentButtonState);
 
+	// -1 equals an invalid button input;
 	int receiveButtonPress(ItemStack filterStack, String buttonKey, int ghostItemSlot, int currentButtonState);
 
 	boolean isButtonGlobal(ItemStack filterStack, String buttonKey);
+
+	boolean canReceiveNestedFilter(ItemStack mainFilterStack, ItemStack nestedFilterStack);
+
+	ItemStack nestFilter(ItemStack mainFilterStack, ItemStack nestedFilterStack);
+
+	IFilterKey getFilterKey(ItemStack filterStack, int slot, ItemStack ghostStack, int amount);
 }

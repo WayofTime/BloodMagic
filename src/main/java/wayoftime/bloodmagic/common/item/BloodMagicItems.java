@@ -14,6 +14,7 @@ import wayoftime.bloodmagic.common.item.arc.ItemARCToolBase;
 import wayoftime.bloodmagic.common.item.block.ItemBlockAlchemyTable;
 import wayoftime.bloodmagic.common.item.block.ItemBlockMimic;
 import wayoftime.bloodmagic.common.item.block.ItemBlockShapedCharge;
+import wayoftime.bloodmagic.common.item.routing.ItemEnchantFilterCore;
 import wayoftime.bloodmagic.common.item.routing.ItemNodeRouter;
 import wayoftime.bloodmagic.common.item.routing.ItemRouterFilter;
 import wayoftime.bloodmagic.common.item.routing.ItemTagFilter;
@@ -216,6 +217,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> DEMON_WILL_GAUGE = BASICITEMS.register("demonwillgauge", ItemDemonWillGauge::new);
 	public static final RegistryObject<Item> ITEM_ROUTER_FILTER = BASICITEMS.register("itemrouterfilterexact", ItemRouterFilter::new);
 	public static final RegistryObject<Item> ITEM_TAG_FILTER = BASICITEMS.register("itemrouterfilteroredict", ItemTagFilter::new);
+	public static final RegistryObject<Item> ITEM_ENCHANT_FILTER = BASICITEMS.register("itemrouterfilterenchant", ItemEnchantFilterCore::new);
 	public static final RegistryObject<Item> NODE_ROUTER = BASICITEMS.register("noderouter", ItemNodeRouter::new);
 
 	// ARC Tools

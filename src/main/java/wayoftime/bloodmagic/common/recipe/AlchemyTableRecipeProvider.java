@@ -11,6 +11,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.data.recipe.builder.AlchemyTableRecipeBuilder;
+import wayoftime.bloodmagic.common.data.recipe.builder.FilterMergeAlchemyTableRecipeBuilder;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 
@@ -72,5 +73,9 @@ public class AlchemyTableRecipeProvider implements ISubRecipeProvider
 			AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.REAGENT_BINDING.get()), 1000, 200, 3).addIngredient(Ingredient.fromTag(Tags.Items.DUSTS_GLOWSTONE)).addIngredient(Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE)).addIngredient(Ingredient.fromTag(Tags.Items.GUNPOWDER)).addIngredient(Ingredient.fromTag(Tags.Items.NUGGETS_GOLD)).build(consumer, BloodMagic.rl(basePath + "reagent_binding"));
 			AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.REAGENT_HOLDING.get()), 2000, 200, 2).addIngredient(Ingredient.fromTag(Tags.Items.CHESTS)).addIngredient(Ingredient.fromTag(Tags.Items.LEATHER)).addIngredient(Ingredient.fromTag(Tags.Items.STRING)).addIngredient(Ingredient.fromTag(Tags.Items.STRING)).build(consumer, BloodMagic.rl(basePath + "reagent_holding"));
 		}
+
+		String filterPath = "alchemytable/filter/";
+		// Filter combination recipes
+		FilterMergeAlchemyTableRecipeBuilder.alchemyTable(Ingredient.fromItems(BloodMagicItems.ITEM_ROUTER_FILTER.get(), BloodMagicItems.ITEM_TAG_FILTER.get()), 100, 100, 0).addIngredient(Ingredient.fromItems(BloodMagicItems.ITEM_ENCHANT_FILTER.get())).build(consumer, BloodMagic.rl(filterPath + "test"));
 	}
 }

@@ -13,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.TagCollectionManager;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -22,9 +21,9 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.client.button.FilterButtonTogglePress;
 import wayoftime.bloodmagic.common.item.inventory.ContainerFilter;
+import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
 import wayoftime.bloodmagic.common.item.inventory.ItemInventory;
 import wayoftime.bloodmagic.common.routing.BasicItemFilter;
 import wayoftime.bloodmagic.common.routing.BlacklistItemFilter;
@@ -34,7 +33,6 @@ import wayoftime.bloodmagic.util.GhostItemHelper;
 
 public class ItemTagFilter extends ItemRouterFilter
 {
-
 	protected IItemFilter getFilterTypeFromConfig(ItemStack filterStack)
 	{
 		int state = getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
@@ -63,7 +61,7 @@ public class ItemTagFilter extends ItemRouterFilter
 			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist"));
 		}
 
-		ItemInventory inv = new ItemInventory(filterStack, 9, "");
+		ItemInventory inv = new InventoryFilter(filterStack);
 		for (int i = 0; i < inv.getSizeInventory(); i++)
 		{
 			ItemStack stack = inv.getStackInSlot(i);
@@ -101,61 +99,6 @@ public class ItemTagFilter extends ItemRouterFilter
 	}
 
 	@Override
-	public IItemFilter getInputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler)
-	{
-		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
-
-		List<IFilterKey> filteredList = new ArrayList<>();
-		ItemInventory inv = new ItemInventory(filterStack, 9, "");
-		for (int i = 0; i < inv.getSizeInventory(); i++)
-		{
-			ItemStack stack = inv.getStackInSlot(i);
-			if (stack.isEmpty())
-			{
-				continue;
-			}
-
-			int amount = GhostItemHelper.getItemGhostAmount(stack);
-			ItemStack ghostStack = GhostItemHelper.getSingleStackFromGhost(stack);
-
-			filteredList.add(getFilterKey(filterStack, i, ghostStack, amount));
-		}
-
-		testFilter.initializeFilter(filteredList, tile, handler, false);
-		return testFilter;
-	}
-
-	@Override
-	public IItemFilter getOutputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler)
-	{
-		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
-
-		List<IFilterKey> filteredList = new ArrayList<>();
-		ItemInventory inv = new ItemInventory(filterStack, 9, ""); // TODO: Change to grab the filter from the Item
-																	// later.
-		for (int i = 0; i < inv.getSizeInventory(); i++)
-		{
-			ItemStack stack = inv.getStackInSlot(i);
-			if (stack.isEmpty())
-			{
-				continue;
-			}
-
-			int amount = GhostItemHelper.getItemGhostAmount(stack);
-			ItemStack ghostStack = GhostItemHelper.getSingleStackFromGhost(stack);
-			if (amount == 0)
-			{
-				amount = Integer.MAX_VALUE;
-			}
-
-			filteredList.add(getFilterKey(filterStack, i, ghostStack, amount));
-		}
-
-		testFilter.initializeFilter(filteredList, tile, handler, true);
-
-		return testFilter;
-	}
-
 	public IFilterKey getFilterKey(ItemStack filterStack, int slot, ItemStack ghostStack, int amount)
 	{
 		int index = getItemTagIndex(filterStack, slot);
@@ -204,7 +147,7 @@ public class ItemTagFilter extends ItemRouterFilter
 
 	public void cycleToNextTag(ItemStack filterStack, int slot)
 	{
-		ItemInventory inv = new ItemInventory(filterStack, 9, "");
+		ItemInventory inv = new InventoryFilter(filterStack);
 
 		ItemStack ghostStack = inv.getStackInSlot(slot);
 		if (ghostStack.isEmpty())
@@ -245,7 +188,7 @@ public class ItemTagFilter extends ItemRouterFilter
 
 		index--;
 
-		ItemInventory inv = new ItemInventory(filterStack, 9, "");
+		ItemInventory inv = new InventoryFilter(filterStack);
 
 		ItemStack ghostStack = inv.getStackInSlot(slot);
 		if (ghostStack.isEmpty())
@@ -267,7 +210,7 @@ public class ItemTagFilter extends ItemRouterFilter
 
 	public List<ITag<Item>> getAllItemTags(ItemStack filterStack, int slot)
 	{
-		ItemInventory inv = new ItemInventory(filterStack, 9, "");
+		ItemInventory inv = new InventoryFilter(filterStack);
 
 		ItemStack ghostStack = inv.getStackInSlot(slot);
 		if (ghostStack.isEmpty())
@@ -335,7 +278,7 @@ public class ItemTagFilter extends ItemRouterFilter
 		{
 			if (currentState == 0)
 			{
-				ItemInventory inv = new ItemInventory(filterStack, 9, "");
+				ItemInventory inv = new InventoryFilter(filterStack);
 
 				ItemStack ghostStack = inv.getStackInSlot(ghostItemSlot);
 				if (ghostStack.isEmpty())
@@ -381,7 +324,7 @@ public class ItemTagFilter extends ItemRouterFilter
 	}
 
 	@Override
-	public Pair<Integer, Integer> getTexturePositionForState(String buttonKey, int currentButtonState)
+	public Pair<Integer, Integer> getTexturePositionForState(ItemStack filterStack, String buttonKey, int currentButtonState)
 	{
 		if (buttonKey.equals(Constants.BUTTONID.ITEMTAG))
 		{
@@ -395,6 +338,6 @@ public class ItemTagFilter extends ItemRouterFilter
 
 		}
 
-		return super.getTexturePositionForState(buttonKey, currentButtonState);
+		return super.getTexturePositionForState(filterStack, buttonKey, currentButtonState);
 	}
 }

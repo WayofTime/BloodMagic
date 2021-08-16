@@ -11,6 +11,7 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.SpecialRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
@@ -51,6 +52,7 @@ import wayoftime.bloodmagic.common.data.GeneratorLanguage;
 import wayoftime.bloodmagic.common.data.GeneratorLootTable;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeProvider;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
+import wayoftime.bloodmagic.common.recipe.serializer.TestSpecialRecipe;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 import wayoftime.bloodmagic.compat.patchouli.RegisterPatchouliMultiblocks;
@@ -163,6 +165,11 @@ public class BloodMagic
 	{
 //		System.out.println("Registering IngredientBloodOrb Serializer.");
 		CraftingHelper.register(IngredientBloodOrb.NAME, IngredientBloodOrb.Serializer.INSTANCE);
+
+//		System.out.println("Testing after IngredientBloodOrb");
+
+		SpecialRecipeSerializer<?> d;
+		event.getRegistry().registerAll(new SpecialRecipeSerializer<>(TestSpecialRecipe::new).setRegistryName("test"));
 
 //        event.getRegistry().registerAll(
 //                new SewingRecipe.Serializer().setRegistryName("sewing")

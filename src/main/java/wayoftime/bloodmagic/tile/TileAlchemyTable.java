@@ -355,7 +355,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 			if (burnTime == 1)
 				notifyUpdate();
 
-			if (canCraft(recipeAlchemyTable.getOutput()))
+			if (canCraft(recipeAlchemyTable.getOutput(inputList)))
 			{
 				ticksRequired = recipeAlchemyTable.getTicks();
 				burnTime++;
@@ -377,7 +377,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 						ItemStack[] inputs = new ItemStack[0];
 						for (ItemStack stack : inputList) ArrayUtils.add(inputs, stack.copy());
 
-						BloodMagicCraftedEvent.AlchemyTable event = new BloodMagicCraftedEvent.AlchemyTable(recipeAlchemyTable.getOutput().copy(), inputs);
+						BloodMagicCraftedEvent.AlchemyTable event = new BloodMagicCraftedEvent.AlchemyTable(recipeAlchemyTable.getOutput(inputList).copy(), inputs);
 						MinecraftForge.EVENT_BUS.post(event);
 
 						ItemStack outputSlotStack = getStackInSlot(outputSlot);
@@ -457,7 +457,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
 	public void craftItem(List<ItemStack> inputList, RecipeAlchemyTable recipe)
 	{
-		ItemStack outputStack = recipe.getOutput();
+		ItemStack outputStack = recipe.getOutput(inputList);
 		if (this.canCraft(outputStack))
 		{
 			ItemStack currentOutputStack = getStackInSlot(outputSlot);
