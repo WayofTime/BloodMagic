@@ -65,39 +65,6 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 		return new BasicItemFilter();
 	}
 
-//	@Override
-//	public IItemFilter getInputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler)
-//	{
-//		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
-//		List<IFilterKey> filteredList = new ArrayList<>();
-//
-//		testFilter.initializeFilter(filteredList, tile, handler, false);
-//		return testFilter;
-//	}
-//
-//	@Override
-//	public IItemFilter getOutputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler)
-//	{
-//		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
-//		List<IFilterKey> filteredList = new ArrayList<>();
-//
-//		testFilter.initializeFilter(filteredList, tile, handler, true);
-//		return testFilter;
-//	}
-
-//	@Override
-//	public void setGhostItemAmount(ItemStack filterStack, int ghostItemSlot, int amount)
-//	{
-//		ItemInventory inv = new InventoryFilter(filterStack);
-//		ItemStack stack = inv.getStackInSlot(ghostItemSlot);
-//		if (!stack.isEmpty())
-//		{
-//			GhostItemHelper.setItemGhostAmount(stack, amount);
-//
-//			inv.writeToStack(filterStack);
-//		}
-//	}
-
 	@Override
 	public IFilterKey getFilterKey(ItemStack filterStack, int slot, ItemStack ghostStack, int amount)
 	{
@@ -114,11 +81,6 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 				boolean matchAll = index == 1;
 				return new CollectionEnchantFilterKey(enchants, isFuzzy, matchAll, amount);
 			}
-//			List<ITag<Item>> tagList = getAllItemTags(filterStack, slot);
-//			if (tagList != null && !tagList.isEmpty())
-//			{
-//				return new CollectionTagFilterKey(tagList, amount);
-//			}
 		} else
 		{
 			Pair<Enchantment, Integer> enchant = getEnchantment(filterStack, slot);
@@ -169,7 +131,6 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 		int index = getEnchantmentIndex(filterStack, slot);
 		Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(ghostStack);
 
-//		Set<ResourceLocation> tagRLs = ghostStack.getItem().getTags();
 		index++;
 
 		if (index >= enchants.size() + 2 || enchants.size() == 0)
@@ -184,17 +145,6 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 
 		setEnchantmentIndex(filterStack, slot, index);
 	}
-
-//	public ITag<Item> getItemTag(ItemStack filterStack, int slot)
-//	{
-//		ResourceLocation rl = getItemTagResource(filterStack, slot);
-//		if (rl == null)
-//		{
-//			return null;
-//		}
-//
-//		return TagCollectionManager.getManager().getItemTags().get(rl);
-//	}
 
 	public Pair<Enchantment, Integer> getEnchantment(ItemStack filterStack, int slot)
 	{
@@ -214,9 +164,7 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 			return null;
 		}
 
-//		List<ResourceLocation> tagRLs = new ArrayList<ResourceLocation>(ghostStack.getItem().getTags());
 		Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(ghostStack);
-//		enchants.entrySet()
 
 		if (enchants.size() < index)
 		{
@@ -342,7 +290,6 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 				Pair<Enchantment, Integer> enchant = getEnchantment(filterStack, ghostItemSlot);
 				if (enchant != null)
 				{
-//					componentList.add(new TranslationTextComponent("filter.bloodmagic.specifiedtag"));
 					componentList.add(enchant.getLeft().getDisplayName(enchant.getRight()));
 				}
 			}
@@ -394,7 +341,6 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 			default:
 				return Pair.of(236, 20);
 			}
-
 		}
 
 		return super.getTexturePositionForState(filterStack, buttonKey, currentButtonState);
