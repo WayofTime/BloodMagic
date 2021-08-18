@@ -27,6 +27,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.api.event.BloodMagicCraftedEvent;
 import wayoftime.bloodmagic.common.item.BloodOrb;
+import wayoftime.bloodmagic.common.item.IAlchemyItem;
 import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.IBloodOrb;
 import wayoftime.bloodmagic.core.data.Binding;
@@ -506,7 +507,15 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 			ItemStack inputStack = getStackInSlot(i);
 			if (!inputStack.isEmpty())
 			{
-				if (inputStack.getItem().hasContainerItem(inputStack))
+				if (inputStack.getItem() instanceof IAlchemyItem)
+				{
+					if (((IAlchemyItem) inputStack.getItem()).isStackChangedOnUse(inputStack))
+					{
+						setInventorySlotContents(i, ((IAlchemyItem) inputStack.getItem()).onConsumeInput(inputStack));
+					}
+
+					continue;
+				} else if (inputStack.getItem().hasContainerItem(inputStack))
 				{
 					setInventorySlotContents(i, inputStack.getItem().getContainerItem(inputStack));
 					continue;

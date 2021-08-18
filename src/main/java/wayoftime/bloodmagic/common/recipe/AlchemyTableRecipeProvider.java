@@ -7,6 +7,8 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.potion.PotionUtils;
+import net.minecraft.potion.Potions;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
@@ -20,6 +22,8 @@ public class AlchemyTableRecipeProvider implements ISubRecipeProvider
 	@Override
 	public void addRecipes(Consumer<IFinishedRecipe> consumer)
 	{
+		ItemStack waterbottleStack = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER);
+
 		String basePath = "alchemytable/";
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(Items.STRING, 4), 100, 100, 0).addIngredient(Ingredient.fromTag(ItemTags.WOOL)).addIngredient(Ingredient.fromItems(Items.FLINT)).build(consumer, BloodMagic.rl(basePath + "string"));
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(Items.FLINT, 2), 50, 20, 0).addIngredient(Ingredient.fromItems(Items.GRAVEL)).addIngredient(Ingredient.fromItems(Items.FLINT)).build(consumer, BloodMagic.rl(basePath + "flint_from_gravel"));
@@ -42,7 +46,7 @@ public class AlchemyTableRecipeProvider implements ISubRecipeProvider
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.GOLD_SAND.get(), 2), 400, 200, 1).addIngredient(Ingredient.fromTag(Tags.Items.ORES_GOLD)).addIngredient(Ingredient.fromTag(BloodMagicTags.ARC_TOOL_CUTTINGFLUID)).build(consumer, BloodMagic.rl(basePath + "sand_gold"));
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.COAL_SAND.get(), 4), 400, 200, 1).addIngredient(Ingredient.fromItems(Items.COAL)).addIngredient(Ingredient.fromItems(Items.COAL)).addIngredient(Ingredient.fromItems(Items.FLINT)).build(consumer, BloodMagic.rl(basePath + "sand_coal"));
 
-		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.BASIC_CUTTING_FLUID.get()), 1000, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.PLANT_OIL.get())).addIngredient(Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE)).addIngredient(Ingredient.fromTag(Tags.Items.GUNPOWDER)).addIngredient(Ingredient.fromItems(Items.SUGAR)).addIngredient(Ingredient.fromTag(BloodMagicTags.DUST_COAL)).addIngredient(Ingredient.fromStacks(new ItemStack(Items.POTION))).build(consumer, BloodMagic.rl(basePath + "basic_cutting_fluid"));
+		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.BASIC_CUTTING_FLUID.get()), 1000, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.PLANT_OIL.get())).addIngredient(Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE)).addIngredient(Ingredient.fromTag(Tags.Items.GUNPOWDER)).addIngredient(Ingredient.fromItems(Items.SUGAR)).addIngredient(Ingredient.fromTag(BloodMagicTags.DUST_COAL)).addIngredient(Ingredient.fromStacks(waterbottleStack)).build(consumer, BloodMagic.rl(basePath + "basic_cutting_fluid"));
 
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.SLATE_VIAL.get(), 8), 500, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SLATE.get())).addIngredient(Ingredient.fromTag(Tags.Items.GLASS)).addIngredient(Ingredient.fromTag(Tags.Items.GLASS)).addIngredient(Ingredient.fromTag(Tags.Items.GLASS)).addIngredient(Ingredient.fromTag(Tags.Items.GLASS)).addIngredient(Ingredient.fromTag(Tags.Items.GLASS)).build(consumer, BloodMagic.rl(basePath + "slate_vial"));
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.FORTUNE_ANOINTMENT.get()), 500, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SLATE_VIAL.get())).addIngredient(Ingredient.fromTag(Tags.Items.CROPS_NETHER_WART)).addIngredient(Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE)).addIngredient(Ingredient.fromTag(BloodMagicTags.DUST_COAL)).build(consumer, BloodMagic.rl(basePath + "fortune_anointment"));
@@ -54,6 +58,10 @@ public class AlchemyTableRecipeProvider implements ISubRecipeProvider
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.LOOTING_ANOINTMENT.get()), 500, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SLATE_VIAL.get())).addIngredient(Ingredient.fromTag(Tags.Items.CROPS_NETHER_WART)).addIngredient(Ingredient.fromTag(Tags.Items.GEMS_LAPIS)).addIngredient(Ingredient.fromTag(Tags.Items.BONES)).build(consumer, BloodMagic.rl(basePath + "looting_anointment"));
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.BOW_POWER_ANOINTMENT.get()), 500, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SLATE_VIAL.get())).addIngredient(Ingredient.fromTag(Tags.Items.CROPS_NETHER_WART)).addIngredient(Ingredient.fromTag(Tags.Items.INGOTS_IRON)).addIngredient(Ingredient.fromItems(Items.BOW)).build(consumer, BloodMagic.rl(basePath + "bow_power_anointment"));
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.SMELTING_ANOINTMENT.get()), 500, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SLATE_VIAL.get())).addIngredient(Ingredient.fromTag(Tags.Items.CROPS_NETHER_WART)).addIngredient(Ingredient.fromItems(Items.FURNACE)).addIngredient(Ingredient.fromItems(Items.CHARCOAL, Items.COAL)).build(consumer, BloodMagic.rl(basePath + "smelting_anointment"));
+
+		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(Items.WATER_BUCKET), 300, 60, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.WATER_SIGIL.get())).addIngredient(Ingredient.fromItems(Items.BUCKET)).build(consumer, BloodMagic.rl(basePath + "sigil_water_bucket"));
+		AlchemyTableRecipeBuilder.alchemyTable(waterbottleStack, 100, 60, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.WATER_SIGIL.get())).addIngredient(Ingredient.fromItems(Items.GLASS_BOTTLE)).build(consumer, BloodMagic.rl(basePath + "sigil_water_bottle"));
+		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(Items.LAVA_BUCKET), 1000, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.LAVA_SIGIL.get())).addIngredient(Ingredient.fromItems(Items.BUCKET)).build(consumer, BloodMagic.rl(basePath + "sigil_lava_bucket"));
 
 		// Changed Recipes
 		{
