@@ -132,6 +132,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.tagfilter.desc", "Filters based off of an item's ItemTags");
 		add("tooltip.bloodmagic.enchantfilter.desc", "Filters based off of enchantments");
 		add("tooltip.bloodmagic.modfilter.desc", "Filters based off of the source mod");
+		add("tooltip.bloodmagic.compositefilter.desc", "Filters based off of contained filters");
 
 		add("filter.bloodmagic.whitelist", "Allow");
 		add("filter.bloodmagic.blacklist", "Deny");
@@ -622,6 +623,9 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.ITEM_TAG_FILTER, "Tag Item Filter");
 		addItem(BloodMagicItems.ITEM_ENCHANT_FILTER, "Enchantments Item Filter");
 		addItem(BloodMagicItems.ITEM_MOD_FILTER, "Mod Item Filter");
+		addItem(BloodMagicItems.ITEM_COMPOSITE_FILTER, "Composite Item Filter");
+
+		addItem(BloodMagicItems.FRAME_PARTS, "Filter Parts");
 
 		addItem(BloodMagicItems.HELLFORGED_SAND, "Hellforged Dust");
 		addItem(BloodMagicItems.CORRUPTED_DUST_TINY, "Tiny Corrupted Dust");

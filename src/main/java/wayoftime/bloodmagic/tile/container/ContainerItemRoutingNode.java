@@ -150,6 +150,12 @@ public class ContainerItemRoutingNode extends Container
 		}
 
 		@Override
+		public int getSlotStackLimit()
+		{
+			return 1;
+		}
+
+		@Override
 		public void onSlotChanged()
 		{
 			super.onSlotChanged();

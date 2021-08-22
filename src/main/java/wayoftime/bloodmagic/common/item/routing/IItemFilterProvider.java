@@ -37,9 +37,5 @@ public interface IItemFilterProvider extends IRoutingFilterProvider
 
 	boolean isButtonGlobal(ItemStack filterStack, String buttonKey);
 
-	boolean canReceiveNestedFilter(ItemStack mainFilterStack, ItemStack nestedFilterStack);
-
-	ItemStack nestFilter(ItemStack mainFilterStack, ItemStack nestedFilterStack);
-
 	IFilterKey getFilterKey(ItemStack filterStack, int slot, ItemStack ghostStack, int amount);
 }

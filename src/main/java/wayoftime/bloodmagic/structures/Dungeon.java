@@ -23,10 +23,16 @@ public class Dungeon
 {
 	public static boolean placeStructureAtPosition(Random rand, ServerWorld world, BlockPos pos)
 	{
+		String initialDoorName = "default";
+
 		long startTime = System.nanoTime();
 
-		Map<Direction, List<BlockPos>> availableDoorMap = new HashMap<>(); // Map of doors. The EnumFacing indicates
-																			// what way this door faces.
+		// TODO: Change this
+		Map<String, Map<Direction, List<BlockPos>>> availableDoorMasterMap = new HashMap<>(); // Map of doors. The
+																								// EnumFacing indicates
+		// what way this door faces.
+//		Map<Direction, List<BlockPos>> availableDoorMap = new HashMap<>(); // Map of doors. The EnumFacing indicates
+		// what way this door faces.
 		List<AreaDescriptor> descriptorList = new ArrayList<>();
 		Map<BlockPos, Pair<DungeonRoom, PlacementSettings>> roomMap = new HashMap<>(); // Placement positions in terms
 //																						// of actual positions
@@ -44,7 +50,7 @@ public class Dungeon
 		settings.setIgnoreEntities(true);
 		settings.setChunk(null);
 
-		settings.addProcessor(new StoneToOreProcessor(0.2f));
+		settings.addProcessor(new StoneToOreProcessor(0.0f));
 
 //		settings.setReplacedBlock(null);
 
@@ -66,15 +72,18 @@ public class Dungeon
 		roomMap.put(pos, Pair.of(room, settings.copy()));
 //		roomList.add(Pair.of(pos, Pair.of(room, settings.copy())));
 		descriptorList.addAll(room.getAreaDescriptors(settings, pos));
+
+		Map<Direction, List<BlockPos>> availableDoorMap = new HashMap<>();
+		availableDoorMasterMap.put(initialDoorName, availableDoorMap);
 		for (Direction facing : Direction.values())
 		{
 			if (availableDoorMap.containsKey(facing))
 			{
 				List<BlockPos> doorList = availableDoorMap.get(facing);
-				doorList.addAll(room.getDoorOffsetsForFacing(settings, facing, pos));
+				doorList.addAll(room.getDoorOffsetsForFacing(settings, initialDoorName, facing, pos));
 			} else
 			{
-				List<BlockPos> doorList = room.getDoorOffsetsForFacing(settings, facing, pos);
+				List<BlockPos> doorList = room.getDoorOffsetsForFacing(settings, initialDoorName, facing, pos);
 				availableDoorMap.put(facing, doorList);
 			}
 		}
@@ -84,6 +93,19 @@ public class Dungeon
 		// Initial AreaDescriptors and door positions are initialized. Time for fun!
 		for (int i = 0; i < 100; i++)
 		{
+			List<String> typeList = new ArrayList<>(availableDoorMasterMap.keySet());
+			String doorName = typeList.get(rand.nextInt(typeList.size()));
+			availableDoorMap = null;
+
+			if (availableDoorMasterMap.containsKey(doorName))
+			{
+				availableDoorMap = availableDoorMasterMap.get(doorName);
+			} else
+			{
+				availableDoorMap = new HashMap<>();
+				availableDoorMasterMap.put(doorName, availableDoorMap);
+			}
+
 			// Get which facing of doors are available.
 			List<Direction> facingList = new ArrayList<>();
 			for (Entry<Direction, List<BlockPos>> entry : availableDoorMap.entrySet())
@@ -111,7 +133,9 @@ public class Dungeon
 				settings.setRotation(randRotation); // Same for the Mirror
 				DungeonRoom testingRoom = getRandomRoom(rand);
 
-				List<BlockPos> otherDoorList = testingRoom.getDoorOffsetsForFacing(settings, oppositeDoorFacing, BlockPos.ZERO);
+//				String doorType = testingRoom.getRandomDoorType(rand);
+
+				List<BlockPos> otherDoorList = testingRoom.getDoorOffsetsForFacing(settings, doorName, oppositeDoorFacing, BlockPos.ZERO);
 				if (otherDoorList != null && !otherDoorList.isEmpty())
 				{
 					// See if one of these doors works.
@@ -133,6 +157,9 @@ public class Dungeon
 								}
 							}
 						}
+
+						settings.clearProcessors();
+						settings.addProcessor(new StoneToOreProcessor(testingRoom.oreDensity));
 
 						roomMap.put(roomLocation, Pair.of(testingRoom, settings.copy()));
 //						roomList.add(Pair.of(roomLocation, Pair.of(testingRoom, settings.copy())));
@@ -162,32 +189,50 @@ public class Dungeon
 
 			if (removedDoor1 != null)
 			{
-				for (Direction facing : Direction.values())
+				for (String doorType : room.doorMap.keySet())
 				{
-					if (availableDoorMap.containsKey(facing))
+					availableDoorMap = null;
+
+					if (availableDoorMasterMap.containsKey(doorType))
 					{
-						List<BlockPos> doorList = availableDoorMap.get(facing);
-						doorList.addAll(room.getDoorOffsetsForFacing(settings, facing, roomLocation));
+						availableDoorMap = availableDoorMasterMap.get(doorType);
 					} else
 					{
-						List<BlockPos> doorList = room.getDoorOffsetsForFacing(settings, facing, roomLocation);
-						availableDoorMap.put(facing, doorList);
+						availableDoorMap = new HashMap<>();
+						availableDoorMasterMap.put(doorType, availableDoorMap);
 					}
-				}
 
-				Direction face = removedDoor1.getKey();
-				if (availableDoorMap.containsKey(face))
-				{
-					availableDoorMap.get(face).remove(removedDoor1.getRight());
+					for (Direction facing : Direction.values())
+					{
+						if (availableDoorMap.containsKey(facing))
+						{
+							List<BlockPos> doorList = availableDoorMap.get(facing);
+							doorList.addAll(room.getDoorOffsetsForFacing(settings, doorType, facing, roomLocation));
+						} else
+						{
+							List<BlockPos> doorList = room.getDoorOffsetsForFacing(settings, doorType, facing, roomLocation);
+							availableDoorMap.put(facing, doorList);
+						}
+					}
+
+					Direction face = removedDoor1.getKey();
+					if (availableDoorMap.containsKey(face))
+					{
+						availableDoorMap.get(face).remove(removedDoor1.getRight());
+					}
 				}
 			}
 
 			if (removedDoor2 != null)
 			{
 				Direction face = removedDoor2.getKey();
-				if (availableDoorMap.containsKey(face))
+				for (Entry<String, Map<Direction, List<BlockPos>>> entry : availableDoorMasterMap.entrySet())
 				{
-					availableDoorMap.get(face).remove(removedDoor2.getRight());
+					availableDoorMap = entry.getValue();
+					if (availableDoorMap.containsKey(face))
+					{
+						availableDoorMap.get(face).remove(removedDoor2.getRight());
+					}
 				}
 			}
 		}

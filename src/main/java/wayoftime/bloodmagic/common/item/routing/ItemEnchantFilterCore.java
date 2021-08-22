@@ -23,11 +23,7 @@ import wayoftime.bloodmagic.client.button.FilterButtonTogglePress;
 import wayoftime.bloodmagic.common.item.inventory.ContainerFilter;
 import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
 import wayoftime.bloodmagic.common.item.inventory.ItemInventory;
-import wayoftime.bloodmagic.common.routing.BasicItemFilter;
-import wayoftime.bloodmagic.common.routing.BlacklistItemFilter;
-import wayoftime.bloodmagic.common.routing.IItemFilter;
 import wayoftime.bloodmagic.util.Constants;
-import wayoftime.bloodmagic.util.GhostItemHelper;
 
 public class ItemEnchantFilterCore extends ItemRouterFilter implements INestableItemFilterProvider
 {
@@ -40,29 +36,8 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack filterStack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.enchantfilter.desc").mergeStyle(TextFormatting.ITALIC).mergeStyle(TextFormatting.GRAY));
-
 //		super.addInformation(filterStack, world, tooltip, flag);
-	}
-
-	@Override
-	public ItemStack getContainedStackForItem(ItemStack filterStack, ItemStack keyStack)
-	{
-		ItemStack copyStack = keyStack.copy();
-		GhostItemHelper.setItemGhostAmount(copyStack, 0);
-		copyStack.setCount(1);
-		return copyStack;
-	}
-
-	protected IItemFilter getFilterTypeFromConfig(ItemStack filterStack)
-	{
-		int state = getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
-		if (state == 1)
-		{
-			return new BlacklistItemFilter();
-		}
-
-		return new BasicItemFilter();
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.enchantfilter.desc").mergeStyle(TextFormatting.ITALIC).mergeStyle(TextFormatting.GRAY));
 	}
 
 	@Override
@@ -350,17 +325,5 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 	public boolean isButtonGlobal(ItemStack filterStack, String buttonKey)
 	{
 		return super.isButtonGlobal(filterStack, buttonKey);
-	}
-
-	@Override
-	public boolean canReceiveNestedFilter(ItemStack mainFilterStack, ItemStack nestedFilterStack)
-	{
-		return false;
-	}
-
-	@Override
-	public ItemStack nestFilter(ItemStack mainFilterStack, ItemStack nestedFilterStack)
-	{
-		return ItemStack.EMPTY;
 	}
 }

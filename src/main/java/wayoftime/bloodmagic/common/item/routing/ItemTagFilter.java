@@ -50,6 +50,11 @@ public class ItemTagFilter extends ItemRouterFilter
 	{
 		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.tagfilter.desc").mergeStyle(TextFormatting.ITALIC).mergeStyle(TextFormatting.GRAY));
 
+		if (filterStack.getTag() == null)
+		{
+			return;
+		}
+
 		int whitelistState = this.getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
 		boolean isWhitelist = whitelistState == 0;
 

@@ -12,7 +12,7 @@
     "item": "minecraft:potion",
     "nbt": "{Potion:\"minecraft:water\"}"
   },
-  "syphon": 300,
+  "syphon": 100,
   "ticks": 60,
   "upgradeLevel": 1
 }

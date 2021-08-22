@@ -7,27 +7,18 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.widget.button.Button.IPressable;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.IItemHandler;
-import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.client.button.FilterButtonTogglePress;
 import wayoftime.bloodmagic.common.item.inventory.ContainerFilter;
 import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
@@ -37,104 +28,21 @@ import wayoftime.bloodmagic.common.routing.BlacklistItemFilter;
 import wayoftime.bloodmagic.common.routing.IItemFilter;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.GhostItemHelper;
-import wayoftime.bloodmagic.util.Utils;
 
-public class ItemRouterFilter extends Item implements INamedContainerProvider, IItemFilterProvider
+public class ItemCompositeFilter extends ItemRouterFilter implements INamedContainerProvider, ICompositeItemFilterProvider
 {
-	public static final int inventorySize = 9;
-	public static final int maxUpgrades = 9;
-
-	public static final String FILTER_INV = "filterInventory";
-
-	public ItemRouterFilter()
+	public ItemCompositeFilter()
 	{
-		super(new Item.Properties().maxStackSize(16).group(BloodMagic.TAB));
-	}
-
-//	@Override
-//	@OnlyIn(Dist.CLIENT)
-//	public void addInformation(ItemStack filterStack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
-//	{
-//		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.basicfilter.desc").mergeStyle(TextFormatting.ITALIC).mergeStyle(TextFormatting.GRAY));
-//
-//		int whitelistState = this.getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
-//		boolean isWhitelist = whitelistState == 0;
-//
-//		if (isWhitelist)
-//		{
-//			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist"));
-//		} else
-//		{
-//			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist"));
-//		}
-//
-//		ItemInventory inv = new InventoryFilter(filterStack);
-//		for (int i = 0; i < inv.getSizeInventory(); i++)
-//		{
-//			ItemStack stack = inv.getStackInSlot(i);
-//			if (stack.isEmpty())
-//			{
-//				continue;
-//			}
-//
-//			if (isWhitelist)
-//			{
-//				int amount = GhostItemHelper.getItemGhostAmount(stack);
-//				if (amount > 0)
-//				{
-//					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.count", amount, stack.getDisplayName()));
-//				} else
-//				{
-//					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.all", stack.getDisplayName()));
-//				}
-//			} else
-//			{
-//				tooltip.add(stack.getDisplayName());
-//			}
-//		}
-//
-//		super.addInformation(filterStack, world, tooltip, flag);
-//	}
-
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
-	{
-		ItemStack stack = player.getHeldItem(hand);
-		if (!world.isRemote)
-		{
-			Utils.setUUID(stack);
-
-			if (player instanceof ServerPlayerEntity)
-			{
-				NetworkHooks.openGui((ServerPlayerEntity) player, this, buf -> buf.writeItemStack(stack, false));
-			}
-		}
-
-		return new ActionResult<>(ActionResultType.SUCCESS, stack);
+		super();
 	}
 
 	@Override
-	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity player)
+	@OnlyIn(Dist.CLIENT)
+	public void addInformation(ItemStack filterStack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		// TODO Auto-generated method stub
-		assert player.getEntityWorld() != null;
-		return new ContainerFilter(p_createMenu_1_, player, p_createMenu_2_, player.getHeldItemMainhand());
-	}
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.compositefilter.desc").mergeStyle(TextFormatting.ITALIC).mergeStyle(TextFormatting.GRAY));
 
-	@Override
-	public ITextComponent getDisplayName()
-	{
-		// TODO Auto-generated method stub
-		return new StringTextComponent("Filter");
-	}
-
-	@Override
-	public ItemStack getContainedStackForItem(ItemStack filterStack, ItemStack keyStack)
-	{
-		ItemStack copyStack = keyStack.copy();
-		GhostItemHelper.setItemGhostAmount(copyStack, 0);
-		copyStack.setCount(1);
-		return copyStack;
+		super.addInformation(filterStack, world, tooltip, flag);
 	}
 
 	protected IItemFilter getFilterTypeFromConfig(ItemStack filterStack)
@@ -151,7 +59,7 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 	@Override
 	public IFilterKey getFilterKey(ItemStack filterStack, int slot, ItemStack ghostStack, int amount)
 	{
-		return new BasicFilterKey(ghostStack, amount);
+		return null;
 	}
 
 	@Override
@@ -162,6 +70,7 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 		List<IFilterKey> filteredList = new ArrayList<>();
 		ItemInventory inv = new InventoryFilter(filterStack);
 
+		List<ItemStack> nestedList = getNestedFilters(filterStack);
 		for (int i = 0; i < inv.getSizeInventory(); i++)
 		{
 			ItemStack stack = inv.getStackInSlot(i);
@@ -173,9 +82,26 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 			int amount = GhostItemHelper.getItemGhostAmount(stack);
 			ItemStack ghostStack = GhostItemHelper.getSingleStackFromGhost(stack);
 
-			IFilterKey key = getFilterKey(filterStack, i, ghostStack, amount);
+			IFilterKey mainKey = getFilterKey(filterStack, i, ghostStack, amount);
 
-			filteredList.add(key);
+			if (nestedList.size() > 0)
+			{
+				CompositeFilterKey compositeKey = new CompositeFilterKey(amount);
+				if (mainKey != null)
+				{
+					compositeKey.addFilterKey(mainKey);
+				}
+
+				for (ItemStack nestedStack : nestedList)
+				{
+					compositeKey.addFilterKey(((INestableItemFilterProvider) nestedStack.getItem()).getFilterKey(filterStack, i, ghostStack, amount));
+				}
+
+				filteredList.add(compositeKey);
+			} else if (mainKey != null)
+			{
+				filteredList.add(mainKey);
+			}
 		}
 
 		testFilter.initializeFilter(filteredList, tile, handler, false);
@@ -190,6 +116,8 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 		List<IFilterKey> filteredList = new ArrayList<>();
 		ItemInventory inv = new InventoryFilter(filterStack); // TODO: Change to grab the filter from the Item
 
+		List<ItemStack> nestedList = getNestedFilters(filterStack);
+		// later.
 		for (int i = 0; i < inv.getSizeInventory(); i++)
 		{
 			ItemStack stack = inv.getStackInSlot(i);
@@ -205,27 +133,31 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 				amount = Integer.MAX_VALUE;
 			}
 
-			IFilterKey key = getFilterKey(filterStack, i, ghostStack, amount);
+			IFilterKey mainKey = getFilterKey(filterStack, i, ghostStack, amount);
 
-			filteredList.add(key);
+			if (nestedList.size() > 0)
+			{
+				CompositeFilterKey compositeKey = new CompositeFilterKey(amount);
+				if (mainKey != null)
+				{
+					compositeKey.addFilterKey(mainKey);
+				}
+
+				for (ItemStack nestedStack : nestedList)
+				{
+					compositeKey.addFilterKey(((INestableItemFilterProvider) nestedStack.getItem()).getFilterKey(filterStack, i, ghostStack, amount));
+				}
+
+				filteredList.add(compositeKey);
+			} else if (mainKey != null)
+			{
+				filteredList.add(mainKey);
+			}
 		}
 
 		testFilter.initializeFilter(filteredList, tile, handler, true);
 
 		return testFilter;
-	}
-
-	@Override
-	public void setGhostItemAmount(ItemStack filterStack, int ghostItemSlot, int amount)
-	{
-		ItemInventory inv = new InventoryFilter(filterStack);
-		ItemStack stack = inv.getStackInSlot(ghostItemSlot);
-		if (!stack.isEmpty())
-		{
-			GhostItemHelper.setItemGhostAmount(stack, amount);
-
-			inv.writeToStack(filterStack);
-		}
 	}
 
 	@Override
@@ -256,6 +188,16 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 			return nextState;
 		}
 
+		List<ItemStack> nestedList = getNestedFilters(filterStack);
+		for (ItemStack nestedStack : nestedList)
+		{
+			int nextState = ((INestableItemFilterProvider) nestedStack.getItem()).receiveButtonPress(filterStack, buttonKey, ghostItemSlot, currentButtonState);
+			if (nextState != -1)
+			{
+				return nextState;
+			}
+		}
+
 		return -1;
 	}
 
@@ -269,6 +211,16 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 			{
 				int state = tag.getInt(Constants.NBT.BLACKWHITELIST);
 				return state;
+			}
+		}
+
+		List<ItemStack> nestedList = getNestedFilters(filterStack);
+		for (ItemStack nestedStack : nestedList)
+		{
+			int currentState = ((INestableItemFilterProvider) nestedStack.getItem()).getCurrentButtonState(filterStack, buttonKey, ghostItemSlot);
+			if (currentState != -1)
+			{
+				return currentState;
 			}
 		}
 
@@ -293,6 +245,12 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 			}
 		}
 
+		List<ItemStack> nestedList = getNestedFilters(filterStack);
+		for (ItemStack nestedStack : nestedList)
+		{
+			componentList.addAll(((INestableItemFilterProvider) nestedStack.getItem()).getTextForHoverItem(filterStack, buttonKey, ghostItemSlot));
+		}
+
 		return componentList;
 	}
 
@@ -302,6 +260,13 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 		List<Pair<String, Button.IPressable>> buttonList = new ArrayList<Pair<String, IPressable>>();
 
 		buttonList.add(Pair.of(Constants.BUTTONID.BLACKWHITELIST, new FilterButtonTogglePress(Constants.BUTTONID.BLACKWHITELIST, container)));
+
+		List<ItemStack> nestedList = getNestedFilters(container.filterStack);
+		for (ItemStack nestedStack : nestedList)
+		{
+			List<Pair<String, Button.IPressable>> nestedButtonList = ((INestableItemFilterProvider) nestedStack.getItem()).getButtonAction(container);
+			buttonList.addAll(nestedButtonList);
+		}
 
 		return buttonList;
 	}
@@ -320,6 +285,18 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 			}
 		}
 
+		List<ItemStack> nestedList = getNestedFilters(filterStack);
+		for (ItemStack nestedStack : nestedList)
+		{
+			Pair<Integer, Integer> pair = ((INestableItemFilterProvider) nestedStack.getItem()).getTexturePositionForState(filterStack, buttonKey, currentButtonState);
+			if (pair.getLeft() < 0 || pair.getRight() < 0)
+			{
+				continue;
+			}
+
+			return pair;
+		}
+
 		return Pair.of(0, 0);
 	}
 
@@ -327,5 +304,81 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 	public boolean isButtonGlobal(ItemStack filterStack, String buttonKey)
 	{
 		return buttonKey.equals(Constants.BUTTONID.BLACKWHITELIST);
+	}
+
+	public List<ItemStack> getNestedFilters(ItemStack mainFilterStack)
+	{
+		List<ItemStack> nestedFilters = new ArrayList<ItemStack>();
+		ItemInventory inv = new ItemInventory(mainFilterStack, maxUpgrades, FILTER_INV);
+		for (int i = 0; i < maxUpgrades; i++)
+		{
+			ItemStack testStack = inv.getStackInSlot(i);
+			if (testStack.isEmpty())
+			{
+				continue;
+			}
+
+			if (testStack.getItem() instanceof INestableItemFilterProvider)
+			{
+				nestedFilters.add(testStack);
+			}
+		}
+
+		return nestedFilters;
+	}
+
+	@Override
+	public boolean canReceiveNestedFilter(ItemStack mainFilterStack, ItemStack nestedFilterStack)
+	{
+		if (nestedFilterStack.isEmpty())
+		{
+			return false;
+		} else if (!(nestedFilterStack.getItem() instanceof INestableItemFilterProvider))
+		{
+			return false;
+		}
+
+		boolean hasEmpty = false;
+
+		ItemInventory inv = new ItemInventory(mainFilterStack, maxUpgrades, FILTER_INV);
+		for (int i = 0; i < maxUpgrades; i++)
+		{
+			ItemStack testStack = inv.getStackInSlot(i);
+			if (testStack.isEmpty())
+			{
+				hasEmpty = true;
+				continue;
+			}
+
+			if (testStack.getItem().equals(nestedFilterStack.getItem()))
+			{
+				return false;
+			}
+		}
+
+		return hasEmpty;
+	}
+
+	@Override
+	public ItemStack nestFilter(ItemStack mainFilterStack, ItemStack nestedFilterStack)
+	{
+		if (canReceiveNestedFilter(mainFilterStack, nestedFilterStack))
+		{
+			ItemStack copyStack = mainFilterStack.copy();
+
+			ItemInventory inv = new ItemInventory(copyStack, maxUpgrades, FILTER_INV);
+			for (int i = 0; i < maxUpgrades; i++)
+			{
+				ItemStack testStack = inv.getStackInSlot(i);
+				if (testStack.isEmpty())
+				{
+					inv.setInventorySlotContents(i, nestedFilterStack);
+					inv.markDirty();
+					return copyStack;
+				}
+			}
+		}
+
+		return ItemStack.EMPTY;
 	}
 }

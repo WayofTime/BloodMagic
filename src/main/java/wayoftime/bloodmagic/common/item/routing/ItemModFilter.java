@@ -34,16 +34,4 @@ public class ItemModFilter extends ItemRouterFilter implements INestableItemFilt
 
 		return new ModFilterKey(namespace, amount);
 	}
-
-	@Override
-	public boolean canReceiveNestedFilter(ItemStack mainFilterStack, ItemStack nestedFilterStack)
-	{
-		return false;
-	}
-
-	@Override
-	public ItemStack nestFilter(ItemStack mainFilterStack, ItemStack nestedFilterStack)
-	{
-		return ItemStack.EMPTY;
-	}
 }

@@ -10,7 +10,7 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
-import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
+import wayoftime.bloodmagic.common.item.routing.ICompositeItemFilterProvider;
 import wayoftime.bloodmagic.common.item.routing.INestableItemFilterProvider;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 
@@ -43,7 +43,7 @@ public class RecipeFilterMergeAlchemyTable extends RecipeAlchemyTable
 		}
 
 		ItemStack filterStack = inputs.get(index);
-		if (!(filterStack.getItem() instanceof IItemFilterProvider))
+		if (!(filterStack.getItem() instanceof ICompositeItemFilterProvider))
 		{
 			return ItemStack.EMPTY;
 		}
@@ -63,9 +63,9 @@ public class RecipeFilterMergeAlchemyTable extends RecipeAlchemyTable
 				continue;
 			}
 
-			if (((IItemFilterProvider) filterStack.getItem()).canReceiveNestedFilter(filterStack, inputStack))
+			if (((ICompositeItemFilterProvider) filterStack.getItem()).canReceiveNestedFilter(filterStack, inputStack))
 			{
-				filterStack = ((IItemFilterProvider) filterStack.getItem()).nestFilter(filterStack, inputStack);
+				filterStack = ((ICompositeItemFilterProvider) filterStack.getItem()).nestFilter(filterStack, inputStack);
 			}
 		}
 

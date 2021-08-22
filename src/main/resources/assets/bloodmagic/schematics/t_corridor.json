@@ -1,5 +1,6 @@
 {
   "dungeonWeight": 2,
+  "oreDensity": 0,
   "structureMap": {
     "bloodmagic:t_corridor": {
       "x": 0,
@@ -8,6 +9,7 @@
     }
   },
   "doorMap": {
+  "default": {
     "north": [
       {
         "x": 5,
@@ -29,6 +31,7 @@
         "z": 5
       }
     ]
+    }
   },
   "descriptorList": [
     {

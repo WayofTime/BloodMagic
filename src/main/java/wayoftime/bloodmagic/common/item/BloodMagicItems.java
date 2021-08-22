@@ -14,10 +14,11 @@ import wayoftime.bloodmagic.common.item.arc.ItemARCToolBase;
 import wayoftime.bloodmagic.common.item.block.ItemBlockAlchemyTable;
 import wayoftime.bloodmagic.common.item.block.ItemBlockMimic;
 import wayoftime.bloodmagic.common.item.block.ItemBlockShapedCharge;
+import wayoftime.bloodmagic.common.item.routing.ItemCompositeFilter;
 import wayoftime.bloodmagic.common.item.routing.ItemEnchantFilterCore;
 import wayoftime.bloodmagic.common.item.routing.ItemModFilter;
 import wayoftime.bloodmagic.common.item.routing.ItemNodeRouter;
-import wayoftime.bloodmagic.common.item.routing.ItemRouterFilter;
+import wayoftime.bloodmagic.common.item.routing.ItemStandardFilter;
 import wayoftime.bloodmagic.common.item.routing.ItemTagFilter;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilAir;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilBloodLight;
@@ -216,11 +217,14 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> STEADFAST_CRYSTAL = BASICITEMS.register("steadfastcrystal", () -> new ItemDemonCrystal(EnumDemonWillType.STEADFAST));
 
 	public static final RegistryObject<Item> DEMON_WILL_GAUGE = BASICITEMS.register("demonwillgauge", ItemDemonWillGauge::new);
-	public static final RegistryObject<Item> ITEM_ROUTER_FILTER = BASICITEMS.register("itemrouterfilterexact", ItemRouterFilter::new);
+	public static final RegistryObject<Item> ITEM_ROUTER_FILTER = BASICITEMS.register("itemrouterfilterexact", ItemStandardFilter::new);
 	public static final RegistryObject<Item> ITEM_TAG_FILTER = BASICITEMS.register("itemrouterfilteroredict", ItemTagFilter::new);
 	public static final RegistryObject<Item> ITEM_ENCHANT_FILTER = BASICITEMS.register("itemrouterfilterenchant", ItemEnchantFilterCore::new);
 	public static final RegistryObject<Item> ITEM_MOD_FILTER = BASICITEMS.register("itemrouterfiltermoditems", ItemModFilter::new);
+	public static final RegistryObject<Item> ITEM_COMPOSITE_FILTER = BASICITEMS.register("itemrouterfiltercomposite", ItemCompositeFilter::new);
 	public static final RegistryObject<Item> NODE_ROUTER = BASICITEMS.register("noderouter", ItemNodeRouter::new);
+
+	public static final RegistryObject<Item> FRAME_PARTS = BASICITEMS.register("componentframeparts", ItemBase::new);
 
 	// ARC Tools
 	public static final RegistryObject<Item> SANGUINE_REVERTER = BASICITEMS.register("sanguinereverter", () -> new ItemARCToolBase(32, 2));
