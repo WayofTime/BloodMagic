@@ -436,10 +436,26 @@ public class GenericHandler
 //					System.out.println("Player's motion: " + player.getMotion().getY() + ", Player's fall reduction multiplier: " + fallDistanceMultiplier + ", Player's final fall distance: " + player.fallDistance);
 				}
 
+				int fireLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_FIRE_RESIST.get().getKey());
+				if (fireLevel > 0)
+				{
+					boolean hasChanged = false;
+					int fireCooldown = chestStack.getTag().getInt("fire_cooldown");
+					if (fireCooldown > 0)
+					{
+						fireCooldown--;
+						hasChanged = true;
+					}
+
+					if (hasChanged)
+					{
+						chestStack.getTag().putInt("fire_cooldown", fireCooldown);
+					}
+				}
+
 				if (player.getFireTimer() > 0)
 				{
 					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_FIRE_RESIST.get(), 1);
-					int fireLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_FIRE_RESIST.get().getKey());
 					if (fireLevel > 0)
 					{
 						boolean hasChanged = false;

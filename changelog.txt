@@ -1,4 +1,11 @@
 ------------------------------------------------------
+Version 3.1.2
+------------------------------------------------------
+- Reimplemented Routing Nodes
+-> Has a complete UI overhaul
+- Fixed Gift of Ignis not lowering its cooldown when not on fire.
+
+------------------------------------------------------
 Version 3.1.1
 ------------------------------------------------------
 - Fixed the Throwing Daggers so that they act as the appropriate type.
