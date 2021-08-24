@@ -460,11 +460,6 @@ public class GenericHandler
 					{
 						boolean hasChanged = false;
 						int fireCooldown = chestStack.getTag().getInt("fire_cooldown");
-						if (fireCooldown > 0)
-						{
-							fireCooldown--;
-							hasChanged = true;
-						}
 
 						if (player.getFireTimer() > 0 && fireCooldown <= 0)
 						{

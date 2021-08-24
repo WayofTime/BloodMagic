@@ -60,7 +60,12 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 		{
 			Direction dir = getFilterDirectionForButton(i);
 			Pair<Integer, Integer> buttonLocation = getButtonLocation(i);
-			this.addButton(new Button(left + buttonLocation.getLeft(), top + buttonLocation.getRight(), 20, 20, new StringTextComponent(getStringForDirection(dir)), new DirectionalPress(this, tileNode, i, dir)));
+			String dirName = getStringForDirection(dir);
+			if (!tileNode.getWorld().isAirBlock(tileNode.getBlockPos().offset(dir)))
+			{
+				dirName = "";
+			}
+			this.addButton(new Button(left + buttonLocation.getLeft(), top + buttonLocation.getRight(), 20, 20, new StringTextComponent(dirName), new DirectionalPress(this, tileNode, i, dir)));
 
 			if (dir.ordinal() == tileNode.getCurrentActiveSlot())
 			{
