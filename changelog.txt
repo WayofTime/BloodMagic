@@ -4,6 +4,7 @@ Version 3.1.2
 - Reimplemented Routing Nodes
 -> Has a complete UI overhaul
 - Fixed Gift of Ignis not lowering its cooldown when not on fire.
+- Allowed the Divination Sigil and the Seer Sigil's HUD element to work in both the offhand and the Sigil of Holding. Also allows the Demon Aura Gauge to work in the offhand (why you'd have it in your offhand, I can't say).
 
 ------------------------------------------------------
 Version 3.1.1

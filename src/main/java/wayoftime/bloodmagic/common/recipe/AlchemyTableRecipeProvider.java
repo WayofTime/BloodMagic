@@ -13,7 +13,6 @@ import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.data.recipe.builder.AlchemyTableRecipeBuilder;
-import wayoftime.bloodmagic.common.data.recipe.builder.FilterMergeAlchemyTableRecipeBuilder;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 
@@ -94,6 +93,6 @@ public class AlchemyTableRecipeProvider implements ISubRecipeProvider
 
 		String filterPath = "alchemytable/filter/";
 		// Filter combination recipes
-		FilterMergeAlchemyTableRecipeBuilder.alchemyTable(Ingredient.fromItems(BloodMagicItems.ITEM_ROUTER_FILTER.get(), BloodMagicItems.ITEM_TAG_FILTER.get()), 100, 100, 0).addIngredient(Ingredient.fromItems(BloodMagicItems.ITEM_ENCHANT_FILTER.get())).build(consumer, BloodMagic.rl(filterPath + "test"));
+//		FilterMergeAlchemyTableRecipeBuilder.alchemyTable(Ingredient.fromItems(BloodMagicItems.ITEM_ROUTER_FILTER.get()), 100, 100, 0).addIngredient(Ingredient.fromItems(BloodMagicItems.ITEM_ENCHANT_FILTER.get())).build(consumer, BloodMagic.rl(filterPath + "test"));
 	}
 }
