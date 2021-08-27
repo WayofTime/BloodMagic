@@ -55,6 +55,7 @@ import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.recipe.serializer.TestSpecialRecipe;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
+import wayoftime.bloodmagic.compat.CuriosCompat;
 import wayoftime.bloodmagic.compat.patchouli.RegisterPatchouliMultiblocks;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
@@ -103,6 +104,9 @@ public class BloodMagic
 
 	public static final BloodMagicPacketHandler packetHandler = new BloodMagicPacketHandler();
 	public static final RitualManager RITUAL_MANAGER = new RitualManager();
+
+	public static Boolean curiosLoaded;
+	public static final CuriosCompat curiosCompat = new CuriosCompat();
 
 	public BloodMagic()
 	{
@@ -198,6 +202,11 @@ public class BloodMagic
 		LivingArmorRegistrar.register();
 		AnointmentRegistrar.register();
 		AlchemyArrayRegistry.registerBaseArrays();
+
+    if (curiosLoaded)
+		{
+			curiosCompat.registerInventory();
+    }
 		if (ModList.get().isLoaded("patchouli"))
 		{
 			new RegisterPatchouliMultiblocks();
@@ -266,6 +275,8 @@ public class BloodMagic
 //		LOGGER.info("HELLO FROM PREINIT");
 //		LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
 		packetHandler.initialize();
+
+		curiosLoaded = ModList.get().isLoaded("curios");
 	}
 
 //	@OnlyIn(Dist.CLIENT)
@@ -297,6 +308,11 @@ public class BloodMagic
 //			LOGGER.info("Hello world from the MDK");
 //			return "Hello world";
 //		});
+
+		if (curiosLoaded)
+		{
+			curiosCompat.setupSlots(event);
+		}
 	}
 
 	private void processIMC(final InterModProcessEvent event)
