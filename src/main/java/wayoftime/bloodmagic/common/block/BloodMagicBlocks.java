@@ -33,10 +33,12 @@ import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.block.enums.BloodRuneType;
 import wayoftime.bloodmagic.common.block.base.BlockPillarCap;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
+import wayoftime.bloodmagic.common.item.inventory.ContainerFilter;
 import wayoftime.bloodmagic.common.item.inventory.ContainerHolding;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.tile.container.ContainerAlchemicalReactionChamber;
 import wayoftime.bloodmagic.tile.container.ContainerAlchemyTable;
+import wayoftime.bloodmagic.tile.container.ContainerItemRoutingNode;
 import wayoftime.bloodmagic.tile.container.ContainerSoulForge;
 
 public class BloodMagicBlocks
@@ -94,6 +96,11 @@ public class BloodMagicBlocks
 	public static final RegistryObject<Block> VENGEFUL_CRYSTAL_BLOCK = BLOCKS.register("vengefuldemoncrystal", () -> new BlockDemonCrystal(EnumDemonWillType.VENGEFUL));
 	public static final RegistryObject<Block> STEADFAST_CRYSTAL_BLOCK = BLOCKS.register("steadfastdemoncrystal", () -> new BlockDemonCrystal(EnumDemonWillType.STEADFAST));
 
+	public static final RegistryObject<Block> ROUTING_NODE_BLOCK = BLOCKS.register("itemroutingnode", () -> new BlockItemRoutingNode());
+	public static final RegistryObject<Block> INPUT_ROUTING_NODE_BLOCK = BLOCKS.register("inputroutingnode", () -> new BlockInputRoutingNode());
+	public static final RegistryObject<Block> OUTPUT_ROUTING_NODE_BLOCK = BLOCKS.register("outputroutingnode", () -> new BlockOutputRoutingNode());
+	public static final RegistryObject<Block> MASTER_ROUTING_NODE_BLOCK = BLOCKS.register("masterroutingnode", () -> new BlockMasterRoutingNode());
+
 	public static final RegistryObject<Block> WOOD_PATH = BASICBLOCKS.register("woodbrickpath", () -> new BlockPath(2, AbstractBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.AXE).harvestLevel(0)));
 	public static final RegistryObject<Block> WOOD_TILE_PATH = BASICBLOCKS.register("woodtilepath", () -> new BlockPath(2, AbstractBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.AXE).harvestLevel(0)));
 	public static final RegistryObject<Block> STONE_PATH = BASICBLOCKS.register("stonebrickpath", () -> new BlockPath(4, AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0)));
@@ -133,6 +140,8 @@ public class BloodMagicBlocks
 	public static final RegistryObject<ContainerType<ContainerAlchemicalReactionChamber>> ARC_CONTAINER = CONTAINERS.register("arc_container", () -> IForgeContainerType.create(ContainerAlchemicalReactionChamber::new));
 	public static final RegistryObject<ContainerType<ContainerAlchemyTable>> ALCHEMY_TABLE_CONTAINER = CONTAINERS.register("alchemy_table_container", () -> IForgeContainerType.create(ContainerAlchemyTable::new));
 	public static final RegistryObject<ContainerType<ContainerHolding>> HOLDING_CONTAINER = CONTAINERS.register("holding_container", () -> IForgeContainerType.create(ContainerHolding::new));
+	public static final RegistryObject<ContainerType<ContainerFilter>> FILTER_CONTAINER = CONTAINERS.register("filter_container", () -> IForgeContainerType.create(ContainerFilter::new));
+	public static final RegistryObject<ContainerType<ContainerItemRoutingNode>> ROUTING_NODE_CONTAINER = CONTAINERS.register("routing_node_container", () -> IForgeContainerType.create(ContainerItemRoutingNode::new));
 
 	// Dungeon Blocks
 	public static final RegistryObject<Block> DUNGEON_BRICK_1 = DUNGEONBLOCKS.register("dungeon_brick1", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));

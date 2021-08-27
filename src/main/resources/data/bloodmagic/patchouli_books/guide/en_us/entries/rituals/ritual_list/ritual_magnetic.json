@@ -6,20 +6,7 @@
     {
       "type": "multiblock",
       "name": "Ritual of Magnetism",
-      "multiblock":{
-        "pattern":[
-          ["__F__", "_____", "F___F", "_____", "__F__"],
-          ["A_E_A", "_____", "E___E", "_____", "A_E_A"],
-          ["_____", "_E_E_", "__0__", "_E_E_", "_____"]
-        ],
-        "mapping":{
-          "0": "bloodmagic:masterritualstone",
-          "A": "bloodmagic:airritualstone",
-          "F": "bloodmagic:fireritualstone",
-          "E": "bloodmagic:earthritualstone"
-        },
-        "symmetrical": true
-      },
+      "multiblock_id": "bloodmagic:magnetism",
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$(/l) for easier construction."
     },
     {
@@ -28,7 +15,7 @@
     },
     {
       "type": "text",
-      "text": "By default, the $()Ritual of Magnetism$() searches down to bedrock in a radius of 3 blocks out from the $(item)Master Ritual Stone$() for ores to collect. This can be augmented by placing an expensive block directly underneath the MRS, as follows: $(br2)$(li)$(item)Block of Iron$() - 7 blocks. $(li)$(item)Block of Gold$() - 15 blocks. $(li)$(item)Block of Diamond$() - 31 blocks."
+      "text": "By default, the $()Ritual of Magnetism$() searches down to bedrock in a radius of 3 blocks out from the $(item)Master Ritual Stone$() for ores to collect. This can be augmented by placing an expensive block directly underneath the MRS, as follows: $(br)$(li)$(item)Block of Iron$() - 7 blocks. $(li)$(item)Block of Gold$() - 15 blocks. $(li)$(item)Block of Diamond$() - 31 blocks."
     },
     {
       "type": "bloodmagic:ritual_data",

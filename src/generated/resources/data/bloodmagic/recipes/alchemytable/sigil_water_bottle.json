@@ -1,0 +1,18 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:watersigil"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "output": {
+    "item": "minecraft:potion",
+    "nbt": "{Potion:\"minecraft:water\"}"
+  },
+  "syphon": 100,
+  "ticks": 60,
+  "upgradeLevel": 1
+}

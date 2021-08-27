@@ -1,6 +1,6 @@
 # Blender v2.76 (sub 0) OBJ File: ''
 # www.blender.org
-mtllib ModelRoutingNodeBase.mtl
+mtllib modelroutingnodebase.mtl
 o ModelRoutingNode
 v 0.312500 0.062500 0.687500
 v 0.312500 -0.000000 0.687500

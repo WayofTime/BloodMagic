@@ -33,13 +33,13 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.recipe.helper.FluidStackIngredient;
-import wayoftime.bloodmagic.impl.BloodMagicAPI;
-import wayoftime.bloodmagic.recipe.RecipeARC;
 import wayoftime.bloodmagic.common.item.arc.IARCTool;
 import wayoftime.bloodmagic.common.item.inventory.InventoryWrapper;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.network.ARCTanksPacket;
+import wayoftime.bloodmagic.recipe.RecipeARC;
+import wayoftime.bloodmagic.recipe.helper.FluidStackIngredient;
 import wayoftime.bloodmagic.tile.container.ContainerAlchemicalReactionChamber;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.MultiSlotItemHandler;
@@ -61,6 +61,8 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 
 	public double currentProgress = 0;
 	public static final double DEFAULT_SPEED = 0.005;
+
+	private LazyOptional fluidOptional;
 
 	public TileAlchemicalReactionChamber(TileEntityType<?> type)
 	{
@@ -418,16 +420,32 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 		return index >= OUTPUT_SLOT && index < OUTPUT_SLOT + NUM_OUTPUTS;
 	}
 
+	protected void initializeFluidCapabilities()
+	{
+		this.fluidOptional = LazyOptional.of(() -> this);
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing)
 	{
 		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
 		{
-			return LazyOptional.of(() -> this).cast();
+			return fluidOptional.cast();
 		}
 
 		return super.getCapability(capability, facing);
+	}
+
+	@Override
+	protected void invalidateCaps()
+	{
+		super.invalidateCaps();
+		if (fluidOptional != null)
+		{
+			fluidOptional.invalidate();
+			fluidOptional = null;
+		}
 	}
 
 	@Override

@@ -309,6 +309,29 @@ public class TileInventory extends TileBase implements IInventory
 		return super.getCapability(capability, facing);
 	}
 
+	@Override
+	protected void invalidateCaps()
+	{
+		super.invalidateCaps();
+		if (handlerDown != null)
+			handlerDown.invalidate();
+
+		if (handlerEast != null)
+			handlerEast.invalidate();
+
+		if (handlerNorth != null)
+			handlerNorth.invalidate();
+
+		if (handlerSouth != null)
+			handlerSouth.invalidate();
+
+		if (handlerUp != null)
+			handlerUp.invalidate();
+
+		if (handlerUp != null)
+			handlerUp.invalidate();
+	}
+
 //	@Override
 //	public boolean hasCapability(Capability<?> capability, Direction facing)
 //	{

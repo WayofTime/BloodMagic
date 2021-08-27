@@ -28,12 +28,8 @@ public class ItemSigilMagnetism extends ItemSigilToggleableBase
 		float posX = Math.round(player.getPosX());
 		float posY = (float) (player.getPosY() - player.getEyeHeight());
 		float posZ = Math.round(player.getPosZ());
-		List<ItemEntity> entities = player.getEntityWorld().getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(posX
-				- 0.5f, posY - 0.5f, posZ
-						- 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).expand(range, verticalRange, range));
-		List<ExperienceOrbEntity> xpOrbs = player.getEntityWorld().getEntitiesWithinAABB(ExperienceOrbEntity.class, new AxisAlignedBB(posX
-				- 0.5f, posY - 0.5f, posZ
-						- 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).expand(range, verticalRange, range));
+		List<ItemEntity> entities = player.getEntityWorld().getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).grow(range, verticalRange, range));
+		List<ExperienceOrbEntity> xpOrbs = player.getEntityWorld().getEntitiesWithinAABB(ExperienceOrbEntity.class, new AxisAlignedBB(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).grow(range, verticalRange, range));
 
 		for (ItemEntity entity : entities)
 		{

@@ -33,7 +33,7 @@
       "heading": "Sanguine Reverter",
       "recipe": "bloodmagic:soulforge/sanguine_reverter",
 	  "anchor": "blood_shard",
-      "text": "The $(item)Sanguine Reverter$() is used to create $(blood)Weak Blood Shards$(), and revert $(l:bloodmagic/altar/soul_network)Blood Orbs$() to their input crafting item."
+      "text": "The $(item)Sanguine Reverter$() is used to create $(blood)Weak Blood Shards$(), and revert $(l:bloodmagic:altar/soul_network)Blood Orbs$() to their input crafting item."
     },
     {
       "type": "3x_crafting_arc",
@@ -87,7 +87,7 @@
       "type": "crafting_alchemy_table",
       "heading": "Basic Cutting Fluid",
       "recipe": "bloodmagic:alchemytable/basic_cutting_fluid",
-      "text": "$(item)Cutting Fluid$() turns a metal's $(item)Gravel$() into that metal's $(item)Sand$() for continued $(thing)3x ore processing$(). It can also turn an $(item)ore$() directly into two metal Sands for $(thing)2x Ore Processing$(). The same $(thing)2x Ore Processing$() is possible in the $(l:bloodmagic/alchemy_table/alchemy_table)Alchemy Table$(), but doing it in the $(item)ARC$() will save you some $(blood)LP$()."
+      "text": "$(item)Cutting Fluid$() turns a metal's $(item)Gravel$() into that metal's $(item)Sand$() for continued $(thing)3x ore processing$(). It can also turn an $(item)ore$() directly into two metal Sands for $(thing)2x Ore Processing$(). The same $(thing)2x Ore Processing$() is possible in the $(l:bloodmagic:alchemy_table/alchemy_table)Alchemy Table$(), but doing it in the $(item)ARC$() will save you some $(blood)LP$()."
     },
     {
       "type": "2x_crafting_arc",

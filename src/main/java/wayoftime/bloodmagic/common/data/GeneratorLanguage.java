@@ -82,6 +82,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.soulGem.greater", "A gem used to contain a greater amount of will");
 		add("tooltip.bloodmagic.soulGem.grand", "A gem used to contain a large amount of will");
 		add("tooltip.bloodmagic.soulSnare.desc", "Throw at a monster and then kill them to obtain their demonic will");
+		add("tooltip.bloodmagic.willGauge", "A strange device that can measure the Demon Will in the Aura.");
 
 		add("tooltip.bloodmagic.currentType.default", "Contains: Raw Will");
 		add("tooltip.bloodmagic.currentType.corrosive", "Contains: Corrosive Will");
@@ -123,6 +124,35 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.throwing_dagger.desc", "Not to be used in the kitchen");
 
 		add("key.bloodmagic.category", "Blood Magic");
+
+		add("tooltip.bloodmagic.ghost.everything", "Everything");
+		add("tooltip.bloodmagic.ghost.amount", "Ghost item amount: %d");
+
+		add("tooltip.bloodmagic.basicfilter.desc", "Will make sure the items match");
+		add("tooltip.bloodmagic.tagfilter.desc", "Filters based off of an item's ItemTags");
+		add("tooltip.bloodmagic.enchantfilter.desc", "Filters based off of enchantments");
+		add("tooltip.bloodmagic.modfilter.desc", "Filters based off of the source mod");
+		add("tooltip.bloodmagic.compositefilter.desc", "Filters based off of contained filters");
+
+		add("filter.bloodmagic.whitelist", "Allow");
+		add("filter.bloodmagic.blacklist", "Deny");
+		add("filter.bloodmagic.specifiedtag", "Valid Tag:");
+		add("filter.bloodmagic.novalidtag", "Specified Item");
+		add("filter.bloodmagic.anytag", "Any Tag:");
+
+		add("filter.bloodmagic.anyenchant", "Any Enchantment:");
+		add("filter.bloodmagic.noenchant", "No Enchantments");
+		add("filter.bloodmagic.allenchant", "Every Enchantment");
+		add("filter.bloodmagic.enchantfuzzy", "Any Level");
+		add("filter.bloodmagic.enchantnotfuzzy", "Exact Level");
+//		add("filter.bloodmagic.specifiedenchant", "Valid Tag:");
+
+		add("tooltip.bloodmagic.filter.whitelist", "Allow:");
+		add("tooltip.bloodmagic.filter.blacklist", "Deny:");
+		add("tooltip.bloodmagic.filter.all", "All: %s");
+		add("tooltip.bloodmagic.filter.count", "%sx %s");
+
+		add("tooltip.bloodmagic.filter.anytag", "Any Tag of %s");
 
 		// Ritual info
 		add("tooltip.bloodmagic.diviner.currentRitual", "Current Ritual: %s");
@@ -358,6 +388,13 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("chat.bloodmagic.living_upgrade_level_increase", "%s has leveled up to %d");
 
+		add("chat.bloodmagic.routing.remove", "Removing contained location");
+		add("chat.bloodmagic.routing.set", "Setting node location");
+		add("chat.bloodmagic.routing.link.master", "Linked node to master!");
+		add("chat.bloodmagic.routing.link", "Linked nodes together");
+
+		add("tooltip.bloodmagic.telepositionfocus.coords", "Current coordinates: (%d, %d, %d)");
+
 		// Anointments. Doesn't have any spelling to be pedantic about.
 		add("anointment.bloodmagic.melee_damage", "Whetstone");
 		add("anointment.bloodmagic.silk_touch", "Soft Touch");
@@ -371,23 +408,22 @@ public class GeneratorLanguage extends LanguageProvider
 
 		// Guide
 		add("guide.bloodmagic.name", "Sanguine Scientiem");
-		add("guide.bloodmagic.landing_text", "\"It is my dear hope that by holding this tome in your hands, I may impart the knowledge of the lost art that is Blood Magic\"$(br)$(o)- Magus Arcana$()");
-
-		// Patchouli Guidebook
-		add("patchouli.bloodmagic.common.double_new_line", "$(br2)%s");
-		add("patchouli.bloodmagic.arc_processor.fluid", "%dmb of %s");
-		add("patchouli.bloodmagic.arc_processor.no_fluid", "None");
-		add("patchouli.bloodmagic.living_armour_upgrade_table.level", "Level");
-		add("patchouli.bloodmagic.living_armour_upgrade_table.upgrade_points", "Upgrade Points");
-		add("patchouli.bloodmagic.ritual_info.activation_cost", "$(br)Activation Cost: $(blood)%d LP$()");
-		add("patchouli.bloodmagic.ritual_info.upkeep_cost", "$(br)Base Usage Cost: $(blood)%d LP$()$(br)Base Interval: %d Ticks");
-		add("patchouli.bloodmagic.ritual_info.weak_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#weak)%s$(/l)");
-		add("patchouli.bloodmagic.ritual_info.awakened_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#awakened)%s$(/l)");
-		add("patchouli.bloodmagic.ritual_info.counter_formatter", "$(br)%s%s$()");
-		add("patchouli.bloodmagic.ritual_info.text_override_formatter", "\\$(%s)%s\\$()");
-		add("patchouli.bloodmagic.ritual_info.info_formatter", "%s$(br)%s$(br2)%s$(br)%s%s%s");
-		add("patchouli.bloodmagic.ritual_info.range_formatter", "$(br) $(li)Max Volume: %s$(li)Horizontal Radius: %s$(li)Vertical Radius: %s");
-		add("patchouli.bloodmagic.ritual_info.full_range", "Full Range");
+		add("guide.bloodmagic.landing_text", "Welcome to $(6)Blood Magic$()! $(br2)$(l:bloodmagic:utility/nyi)A lot of stuff$() isn't yet implemented, so please excuse our dust. $(br2)Click $(l:bloodmagic:utility/getting_started)HERE$() to get started. If you find any bugs, please report them on our $(l:https://github.com/WayofTime/BloodMagic/issues)Github$().");
+		add("guide.bloodmagic.subtitle", "Alchemical Wizardry");
+		add("guide.patchouli.bloodmagic.common.double_new_line", "$(br2)%s");
+		add("guide.patchouli.bloodmagic.arc_processor.fluid", "%dmb of %s");
+		add("guide.patchouli.bloodmagic.arc_processor.no_fluid", "None");
+		add("guide.patchouli.bloodmagic.living_armour_upgrade_table.level", "Level");
+		add("guide.patchouli.bloodmagic.living_armour_upgrade_table.upgrade_points", "Upgrade Points");
+		add("guide.patchouli.bloodmagic.ritual_info.activation_cost", "$(br)Activation Cost: $(blood)%d LP$()");
+		add("guide.patchouli.bloodmagic.ritual_info.upkeep_cost", "$(br)Base Usage Cost: $(blood)%d LP$()$(br)Base Interval: %d Ticks");
+		add("guide.patchouli.bloodmagic.ritual_info.weak_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#weak)%s$(/l)");
+		add("guide.patchouli.bloodmagic.ritual_info.awakened_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#awakened)%s$(/l)");
+		add("guide.patchouli.bloodmagic.ritual_info.counter_formatter", "$(br)%s%s$()");
+		add("guide.patchouli.bloodmagic.ritual_info.text_override_formatter", "\\$(%s)%s\\$()");
+		add("guide.patchouli.bloodmagic.ritual_info.info_formatter", "%s$(br)%s$(br2)%s$(br)%s%s%s");
+		add("guide.patchouli.bloodmagic.ritual_info.range_formatter", "$(br) $(li)Max Volume: %s$(li)Horizontal Radius: %s$(li)Vertical Radius: %s");
+		add("guide.patchouli.bloodmagic.ritual_info.full_range", "Full Range");
 
 		// Keybinds
 		add("bloodmagic.keybind.open_holding", "Open Sigil of Holding");
@@ -473,6 +509,11 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.VEINMINE_CHARGE, "Controlled Charge");
 		addBlock(BloodMagicBlocks.FUNGAL_CHARGE, "Fungal Charge");
 
+		addBlock(BloodMagicBlocks.ROUTING_NODE_BLOCK, "Routing Node");
+		addBlock(BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK, "Input Routing Node");
+		addBlock(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK, "Output Routing Node");
+		addBlock(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK, "Master Routing Node");
+
 		// Item names
 		addItem(BloodMagicItems.WEAK_BLOOD_ORB, "Weak Blood Orb");
 		addItem(BloodMagicItems.APPRENTICE_BLOOD_ORB, "Apprentice Blood Orb");
@@ -525,6 +566,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.MONSTER_SOUL_STEADFAST, "Demon Will");
 		addItem(BloodMagicItems.MONSTER_SOUL_VENGEFUL, "Demon Will");
 		addItem(BloodMagicItems.SOUL_SNARE, "Soul Snare");
+		addItem(BloodMagicItems.DEMON_WILL_GAUGE, "Demon Will Aura Gauge");
 		addItem(BloodMagicItems.SENTIENT_SWORD, "Sentient Sword");
 		addItem(BloodMagicItems.SENTIENT_AXE, "Sentient Axe");
 		addItem(BloodMagicItems.SENTIENT_PICKAXE, "Sentient Pickaxe");
@@ -575,6 +617,21 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.THROWING_DAGGER, "Iron Throwing Dagger");
 		addItem(BloodMagicItems.THROWING_DAGGER_SYRINGE, "Syringe Throwing Dagger");
 		addItem(BloodMagicItems.SLATE_AMPOULE, "Slate Ampoule");
+
+		addItem(BloodMagicItems.NODE_ROUTER, "Node Router");
+		addItem(BloodMagicItems.ITEM_ROUTER_FILTER, "Standard Item Filter");
+		addItem(BloodMagicItems.ITEM_TAG_FILTER, "Tag Item Filter");
+		addItem(BloodMagicItems.ITEM_ENCHANT_FILTER, "Enchantments Item Filter");
+		addItem(BloodMagicItems.ITEM_MOD_FILTER, "Mod Item Filter");
+		addItem(BloodMagicItems.ITEM_COMPOSITE_FILTER, "Composite Item Filter");
+
+		addItem(BloodMagicItems.FRAME_PARTS, "Filter Parts");
+
+		addItem(BloodMagicItems.HELLFORGED_SAND, "Hellforged Dust");
+		addItem(BloodMagicItems.CORRUPTED_DUST_TINY, "Tiny Corrupted Dust");
+		addItem(BloodMagicItems.CORRUPTED_DUST, "Corrupted Dust");
+		addItem(BloodMagicItems.HELLFORGED_INGOT, "Hellforged Ingot");
+		addItem(BloodMagicItems.HELLFORGED_BLOCK, "Hellforged Block");
 
 		// Anointment Items
 		addItem(BloodMagicItems.SLATE_VIAL, "Slate-infused Vial");

@@ -86,7 +86,7 @@ public class ContainerAlchemicalReactionChamber extends Container
 				}
 
 				slot.onSlotChange(itemstack1, itemstack);
-			} else if (index > 9) // Attempting to transfer from main inventory
+			} else if (index >= 9) // Attempting to transfer from main inventory
 			{
 				if (itemstack1.getItem().isIn(BloodMagicTags.ARC_TOOL)) // Try the tool slot first
 				{
@@ -169,8 +169,7 @@ public class ContainerAlchemicalReactionChamber extends Container
 		{
 			Optional<FluidStack> fluidStackOptional = FluidUtil.getFluidContained(itemStack);
 
-			return fluidStackOptional.isPresent() && ((needsFullBucket && !fluidStackOptional.get().isEmpty())
-					|| (!needsFullBucket && fluidStackOptional.get().isEmpty()));
+			return fluidStackOptional.isPresent() && ((needsFullBucket && !fluidStackOptional.get().isEmpty()) || (!needsFullBucket && fluidStackOptional.get().isEmpty()));
 		}
 	}
 
@@ -178,8 +177,7 @@ public class ContainerAlchemicalReactionChamber extends Container
 	{
 		Optional<FluidStack> fluidStackOptional = FluidUtil.getFluidContained(stack);
 
-		return fluidStackOptional.isPresent() && ((requiredFull && !fluidStackOptional.get().isEmpty())
-				|| (!requiredFull && fluidStackOptional.get().isEmpty()));
+		return fluidStackOptional.isPresent() && ((requiredFull && !fluidStackOptional.get().isEmpty()) || (!requiredFull && fluidStackOptional.get().isEmpty()));
 	}
 
 	private class SlotOutput extends Slot

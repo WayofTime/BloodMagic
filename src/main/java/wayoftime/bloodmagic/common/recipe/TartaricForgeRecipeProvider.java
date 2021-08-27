@@ -38,6 +38,8 @@ public class TartaricForgeRecipeProvider implements ISubRecipeProvider
 		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicBlocks.DEMON_CRUCIBLE.get()), 400, 100, Ingredient.fromItems(Items.CAULDRON), Ingredient.fromTag(Tags.Items.STONE), Ingredient.fromTag(Tags.Items.GEMS_LAPIS), Ingredient.fromTag(Tags.Items.GEMS_DIAMOND)).build(consumer, BloodMagic.rl(basePath + "demon_crucible"));
 		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicBlocks.DEMON_CRYSTALLIZER.get()), 500, 100, Ingredient.fromItems(BloodMagicBlocks.SOUL_FORGE.get()), Ingredient.fromTag(Tags.Items.STONE), Ingredient.fromTag(Tags.Items.GEMS_LAPIS), Ingredient.fromTag(Tags.Items.GLASS)).build(consumer, BloodMagic.rl(basePath + "demon_crystallizer"));
 
+		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.DEMON_WILL_GAUGE.get()), 400, 50, Ingredient.fromTag(Tags.Items.INGOTS_GOLD), Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE), Ingredient.fromTag(Tags.Items.GLASS), Ingredient.fromTag(BloodMagicTags.CRYSTAL_DEMON)).build(consumer, BloodMagic.rl(basePath + "demon_will_gauge"));
+
 		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.SANGUINE_REVERTER.get()), 350, 30, Ingredient.fromItems(Items.SHEARS), Ingredient.fromTag(Tags.Items.STONE), Ingredient.fromItems(BloodMagicItems.IMBUED_SLATE.get()), Ingredient.fromTag(Tags.Items.INGOTS_IRON)).build(consumer, BloodMagic.rl(basePath + "sanguine_reverter"));
 		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.PRIMITIVE_CRYSTALLINE_RESONATOR.get()), 1200, 200, Ingredient.fromTag(Tags.Items.STONE), Ingredient.fromTag(Tags.Items.INGOTS), Ingredient.fromItems(BloodMagicItems.RAW_CRYSTAL.get()), Ingredient.fromItems(BloodMagicItems.RAW_CRYSTAL.get())).build(consumer, BloodMagic.rl(basePath + "primitive_crystalline_resonator"));
 
@@ -95,6 +97,13 @@ public class TartaricForgeRecipeProvider implements ISubRecipeProvider
 
 		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.THROWING_DAGGER.get(), 16), 32, 5, Ingredient.fromTag(Tags.Items.INGOTS_IRON), Ingredient.fromTag(Tags.Items.INGOTS_IRON), Ingredient.fromTag(Tags.Items.STRING)).build(consumer, BloodMagic.rl(basePath + "throwing_dagger"));
 		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.THROWING_DAGGER_SYRINGE.get(), 8), 10, 2, Ingredient.fromTag(Tags.Items.STONE), Ingredient.fromTag(Tags.Items.GLASS)).build(consumer, BloodMagic.rl(basePath + "throwing_dagger_syringe"));
+
+		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.NODE_ROUTER.get()), 400, 5, Ingredient.fromTag(Tags.Items.RODS_WOODEN), Ingredient.fromItems(BloodMagicItems.REINFORCED_SLATE.get()), Ingredient.fromTag(Tags.Items.GEMS_LAPIS), Ingredient.fromTag(Tags.Items.GEMS_LAPIS)).build(consumer, BloodMagic.rl(basePath + "node_router"));
+
+		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicBlocks.ROUTING_NODE_BLOCK.get()), 400, 5, Ingredient.fromTag(Tags.Items.STONE), Ingredient.fromTag(Tags.Items.GLASS), Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE), Ingredient.fromTag(Tags.Items.DUSTS_GLOWSTONE)).build(consumer, BloodMagic.rl(basePath + "routing_node"));
+		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get()), 400, 25, Ingredient.fromTag(Tags.Items.INGOTS_GOLD), Ingredient.fromItems(BloodMagicBlocks.ROUTING_NODE_BLOCK.get()), Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE), Ingredient.fromTag(Tags.Items.DUSTS_GLOWSTONE)).build(consumer, BloodMagic.rl(basePath + "input_routing_node"));
+		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get()), 400, 25, Ingredient.fromTag(Tags.Items.INGOTS_IRON), Ingredient.fromItems(BloodMagicBlocks.ROUTING_NODE_BLOCK.get()), Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE), Ingredient.fromTag(Tags.Items.DUSTS_GLOWSTONE)).build(consumer, BloodMagic.rl(basePath + "output_routing_node"));
+		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get()), 400, 200, Ingredient.fromTag(Tags.Items.STORAGE_BLOCKS_IRON), Ingredient.fromTag(Tags.Items.GEMS_DIAMOND), Ingredient.fromItems(BloodMagicItems.IMBUED_SLATE.get())).build(consumer, BloodMagic.rl(basePath + "master_routing_node"));
 
 		// Changed Recipes
 		{

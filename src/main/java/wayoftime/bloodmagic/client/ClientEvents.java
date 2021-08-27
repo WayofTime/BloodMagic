@@ -13,6 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.InputEvent;
@@ -29,6 +30,7 @@ import wayoftime.bloodmagic.anointment.AnointmentColor;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.api.compat.IMultiWillTool;
 import wayoftime.bloodmagic.client.model.MimicColor;
+import wayoftime.bloodmagic.client.render.RenderItemRoutingNode;
 import wayoftime.bloodmagic.client.render.alchemyarray.BeaconAlchemyCircleRenderer;
 import wayoftime.bloodmagic.client.render.alchemyarray.DayAlchemyCircleRenderer;
 import wayoftime.bloodmagic.client.render.alchemyarray.LowStaticAlchemyCircleRenderer;
@@ -43,7 +45,9 @@ import wayoftime.bloodmagic.client.render.entity.EntityThrowingDaggerRenderer;
 import wayoftime.bloodmagic.client.render.entity.SoulSnareRenderer;
 import wayoftime.bloodmagic.client.screens.ScreenAlchemicalReactionChamber;
 import wayoftime.bloodmagic.client.screens.ScreenAlchemyTable;
+import wayoftime.bloodmagic.client.screens.ScreenFilter;
 import wayoftime.bloodmagic.client.screens.ScreenHolding;
+import wayoftime.bloodmagic.client.screens.ScreenItemRoutingNode;
 import wayoftime.bloodmagic.client.screens.ScreenSoulForge;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
@@ -58,6 +62,10 @@ import wayoftime.bloodmagic.network.SigilHoldingPacket;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 import wayoftime.bloodmagic.tile.TileAltar;
 import wayoftime.bloodmagic.tile.TileDemonCrucible;
+import wayoftime.bloodmagic.tile.routing.TileInputRoutingNode;
+import wayoftime.bloodmagic.tile.routing.TileOutputRoutingNode;
+import wayoftime.bloodmagic.tile.routing.TileRoutingNode;
+import wayoftime.bloodmagic.util.GhostItemHelper;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = BloodMagic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientEvents
@@ -68,6 +76,11 @@ public class ClientEvents
 		ClientRegistry.bindTileEntityRenderer(TileAltar.TYPE, RenderAltar::new);
 		ClientRegistry.bindTileEntityRenderer(TileAlchemyArray.TYPE, RenderAlchemyArray::new);
 		ClientRegistry.bindTileEntityRenderer(TileDemonCrucible.TYPE, RenderDemonCrucible::new);
+
+		ClientRegistry.bindTileEntityRenderer(TileRoutingNode.TYPE, RenderItemRoutingNode::new);
+		ClientRegistry.bindTileEntityRenderer(TileInputRoutingNode.TYPE, RenderItemRoutingNode::new);
+		ClientRegistry.bindTileEntityRenderer(TileOutputRoutingNode.TYPE, RenderItemRoutingNode::new);
+
 //		ClientRegistry.bindTileEntityRenderer(TileSoulForge.TYPE, RenderAlchemyArray::new);
 	}
 
@@ -77,6 +90,9 @@ public class ClientEvents
 		ScreenManager.registerFactory(BloodMagicBlocks.ARC_CONTAINER.get(), ScreenAlchemicalReactionChamber::new);
 		ScreenManager.registerFactory(BloodMagicBlocks.ALCHEMY_TABLE_CONTAINER.get(), ScreenAlchemyTable::new);
 		ScreenManager.registerFactory(BloodMagicBlocks.HOLDING_CONTAINER.get(), ScreenHolding::new);
+		ScreenManager.registerFactory(BloodMagicBlocks.FILTER_CONTAINER.get(), ScreenFilter::new);
+		ScreenManager.registerFactory(BloodMagicBlocks.ROUTING_NODE_CONTAINER.get(), ScreenItemRoutingNode::new);
+
 	}
 
 	public static void colorHandlerEvent(ColorHandlerEvent.Item event)
@@ -127,6 +143,17 @@ public class ClientEvents
 		ItemStack stack = event.getItemStack();
 		AnointmentHolder holder = AnointmentHolder.fromItemStack(stack);
 		AnointmentHolder.appendAnointmentTooltip(holder, event.getToolTip());
+		if (GhostItemHelper.hasGhostAmount(stack))
+		{
+			int amount = GhostItemHelper.getItemGhostAmount(stack);
+			if (amount == 0)
+			{
+				event.getToolTip().add(new TranslationTextComponent("tooltip.bloodmagic.ghost.everything"));
+			} else
+			{
+				event.getToolTip().add(new TranslationTextComponent("tooltip.bloodmagic.ghost.amount", amount));
+			}
+		}
 	}
 
 	@SuppressWarnings("deprecation")
@@ -142,6 +169,10 @@ public class ClientEvents
 			RenderType rendertype = RenderType.getCutoutMipped();
 			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.ALCHEMY_TABLE.get(), rendertype);
 			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.GROWING_DOUBT.get(), rendertype);
+			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.ROUTING_NODE_BLOCK.get(), RenderType.getTranslucent());
+			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get(), RenderType.getTranslucent());
+			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get(), RenderType.getTranslucent());
+			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get(), RenderType.getTranslucent());
 
 			ClientEvents.registerContainerScreens();
 

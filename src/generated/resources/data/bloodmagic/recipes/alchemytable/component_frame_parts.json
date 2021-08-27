@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "forge:glass"
+    },
+    {
+      "tag": "forge:stone"
+    },
+    {
+      "item": "bloodmagic:blankslate"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:componentframeparts"
+  },
+  "syphon": 1000,
+  "ticks": 200,
+  "upgradeLevel": 3
+}

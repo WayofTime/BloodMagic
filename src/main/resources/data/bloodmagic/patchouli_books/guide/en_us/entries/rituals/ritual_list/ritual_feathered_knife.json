@@ -6,21 +6,7 @@
     {
       "type": "multiblock",
       "name": "Ritual of the Feathered Knife",
-      "multiblock":{
-        "pattern":[
-          ["_EE___EE_", "EA_____AE", "E_______E", "____D____", "___D0D___", "____D____", "E_______E", "EA_____AE", "_EE___EE_"],
-          ["__F___F__", "_________", "F___W___F", "___A_A___", "__W___W__", "___A_A___", "F___W___F", "_________", "__F___F__"]
-        ],
-        "mapping":{
-          "0": "bloodmagic:masterritualstone",
-          "W": "bloodmagic:waterritualstone",
-          "A": "bloodmagic:airritualstone",
-          "F": "bloodmagic:fireritualstone",
-          "E": "bloodmagic:earthritualstone",
-          "D": "bloodmagic:duskritualstone"
-        },
-        "symmetrical": true
-      },
+      "multiblock_id": "bloodmagic:feathered_knife",
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
     },
     {

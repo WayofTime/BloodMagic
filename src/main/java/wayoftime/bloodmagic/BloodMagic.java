@@ -11,6 +11,7 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.SpecialRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
@@ -51,9 +52,11 @@ import wayoftime.bloodmagic.common.data.GeneratorLanguage;
 import wayoftime.bloodmagic.common.data.GeneratorLootTable;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeProvider;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
+import wayoftime.bloodmagic.common.recipe.serializer.TestSpecialRecipe;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 import wayoftime.bloodmagic.compat.CuriosCompat;
+import wayoftime.bloodmagic.compat.patchouli.RegisterPatchouliMultiblocks;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.recipe.IngredientBloodOrb;
@@ -82,6 +85,10 @@ import wayoftime.bloodmagic.tile.TileMimic;
 import wayoftime.bloodmagic.tile.TileShapedExplosive;
 import wayoftime.bloodmagic.tile.TileSoulForge;
 import wayoftime.bloodmagic.tile.TileVeinMineCharge;
+import wayoftime.bloodmagic.tile.routing.TileInputRoutingNode;
+import wayoftime.bloodmagic.tile.routing.TileMasterRoutingNode;
+import wayoftime.bloodmagic.tile.routing.TileOutputRoutingNode;
+import wayoftime.bloodmagic.tile.routing.TileRoutingNode;
 import wayoftime.bloodmagic.util.handler.event.GenericHandler;
 import wayoftime.bloodmagic.util.handler.event.WillHandler;
 
@@ -163,6 +170,11 @@ public class BloodMagic
 //		System.out.println("Registering IngredientBloodOrb Serializer.");
 		CraftingHelper.register(IngredientBloodOrb.NAME, IngredientBloodOrb.Serializer.INSTANCE);
 
+//		System.out.println("Testing after IngredientBloodOrb");
+
+		SpecialRecipeSerializer<?> d;
+		event.getRegistry().registerAll(new SpecialRecipeSerializer<>(TestSpecialRecipe::new).setRegistryName("test"));
+
 //        event.getRegistry().registerAll(
 //                new SewingRecipe.Serializer().setRegistryName("sewing")
 //        );
@@ -191,9 +203,13 @@ public class BloodMagic
 		AnointmentRegistrar.register();
 		AlchemyArrayRegistry.registerBaseArrays();
 
-		if (curiosLoaded)
+    if (curiosLoaded)
 		{
 			curiosCompat.registerInventory();
+    }
+		if (ModList.get().isLoaded("patchouli"))
+		{
+			new RegisterPatchouliMultiblocks();
 		}
 	}
 
@@ -216,6 +232,10 @@ public class BloodMagic
 		event.getRegistry().register(TileEntityType.Builder.create(TileVeinMineCharge::new, BloodMagicBlocks.VEINMINE_CHARGE.get()).build(null).setRegistryName("veinmine_charge"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileFungalCharge::new, BloodMagicBlocks.FUNGAL_CHARGE.get()).build(null).setRegistryName("fungal_charge"));
 
+		event.getRegistry().register(TileEntityType.Builder.create(TileRoutingNode::new, BloodMagicBlocks.ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("itemroutingnode"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileInputRoutingNode::new, BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("inputroutingnode"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileOutputRoutingNode::new, BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("outputroutingnode"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileMasterRoutingNode::new, BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("masterroutingnode"));
 	}
 
 	@SubscribeEvent

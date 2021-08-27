@@ -14,6 +14,12 @@ import wayoftime.bloodmagic.common.item.arc.ItemARCToolBase;
 import wayoftime.bloodmagic.common.item.block.ItemBlockAlchemyTable;
 import wayoftime.bloodmagic.common.item.block.ItemBlockMimic;
 import wayoftime.bloodmagic.common.item.block.ItemBlockShapedCharge;
+import wayoftime.bloodmagic.common.item.routing.ItemCompositeFilter;
+import wayoftime.bloodmagic.common.item.routing.ItemEnchantFilterCore;
+import wayoftime.bloodmagic.common.item.routing.ItemModFilter;
+import wayoftime.bloodmagic.common.item.routing.ItemNodeRouter;
+import wayoftime.bloodmagic.common.item.routing.ItemStandardFilter;
+import wayoftime.bloodmagic.common.item.routing.ItemTagFilter;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilAir;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilBloodLight;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilDivination;
@@ -199,6 +205,11 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> VENGEFUL_CRYSTAL_BLOCK_ITEM = ITEMS.register("vengefuldemoncrystal", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_CRYSTAL_BLOCK.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> STEADFAST_CRYSTAL_BLOCK_ITEM = ITEMS.register("steadfastdemoncrystal", () -> new BlockItem(BloodMagicBlocks.STEADFAST_CRYSTAL_BLOCK.get(), new Item.Properties().group(BloodMagic.TAB)));
 
+	public static final RegistryObject<Item> ROUTING_NODE_BLOCK_ITEM = ITEMS.register("itemroutingnode", () -> new BlockItem(BloodMagicBlocks.ROUTING_NODE_BLOCK.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> INPUT_ROUTING_NODE_BLOCK_ITEM = ITEMS.register("inputroutingnode", () -> new BlockItem(BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> OUTPUT_ROUTING_NODE_BLOCK_ITEM = ITEMS.register("outputroutingnode", () -> new BlockItem(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> MASTER_ROUTING_NODE_BLOCK_ITEM = ITEMS.register("masterroutingnode", () -> new BlockItem(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get(), new Item.Properties().group(BloodMagic.TAB)));
+
 	public static final RegistryObject<Item> RAW_CRYSTAL = BASICITEMS.register("defaultcrystal", () -> new ItemDemonCrystal(EnumDemonWillType.DEFAULT));
 	public static final RegistryObject<Item> CORROSIVE_CRYSTAL = BASICITEMS.register("corrosivecrystal", () -> new ItemDemonCrystal(EnumDemonWillType.CORROSIVE));
 	public static final RegistryObject<Item> VENGEFUL_CRYSTAL = BASICITEMS.register("vengefulcrystal", () -> new ItemDemonCrystal(EnumDemonWillType.VENGEFUL));
@@ -206,6 +217,14 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> STEADFAST_CRYSTAL = BASICITEMS.register("steadfastcrystal", () -> new ItemDemonCrystal(EnumDemonWillType.STEADFAST));
 
 	public static final RegistryObject<Item> DEMON_WILL_GAUGE = BASICITEMS.register("demonwillgauge", ItemDemonWillGauge::new);
+	public static final RegistryObject<Item> ITEM_ROUTER_FILTER = BASICITEMS.register("itemrouterfilterexact", ItemStandardFilter::new);
+	public static final RegistryObject<Item> ITEM_TAG_FILTER = BASICITEMS.register("itemrouterfilteroredict", ItemTagFilter::new);
+	public static final RegistryObject<Item> ITEM_ENCHANT_FILTER = BASICITEMS.register("itemrouterfilterenchant", ItemEnchantFilterCore::new);
+	public static final RegistryObject<Item> ITEM_MOD_FILTER = BASICITEMS.register("itemrouterfiltermoditems", ItemModFilter::new);
+	public static final RegistryObject<Item> ITEM_COMPOSITE_FILTER = BASICITEMS.register("itemrouterfiltercomposite", ItemCompositeFilter::new);
+	public static final RegistryObject<Item> NODE_ROUTER = BASICITEMS.register("noderouter", ItemNodeRouter::new);
+
+	public static final RegistryObject<Item> FRAME_PARTS = BASICITEMS.register("componentframeparts", ItemBase::new);
 
 	// ARC Tools
 	public static final RegistryObject<Item> SANGUINE_REVERTER = BASICITEMS.register("sanguinereverter", () -> new ItemARCToolBase(32, 2));

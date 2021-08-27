@@ -469,6 +469,12 @@ public class Utils
 			}
 		}
 
+		ItemStack offhandStack = player.getHeldItemOffhand();
+		if (!offhandStack.isEmpty() && offhandStack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) offhandStack.getItem()).canSeeDemonWillAura(player.getEntityWorld(), offhandStack, player))
+		{
+			return true;
+		}
+
 		return false;
 	}
 
@@ -488,6 +494,12 @@ public class Utils
 			{
 				return ((IDemonWillViewer) stack.getItem()).getDemonWillAuraResolution(player.getEntityWorld(), stack, player);
 			}
+		}
+
+		ItemStack offhandStack = player.getHeldItemOffhand();
+		if (!offhandStack.isEmpty() && offhandStack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) offhandStack.getItem()).canSeeDemonWillAura(player.getEntityWorld(), offhandStack, player))
+		{
+			return ((IDemonWillViewer) offhandStack.getItem()).getDemonWillAuraResolution(player.getEntityWorld(), offhandStack, player);
 		}
 
 		return 100;

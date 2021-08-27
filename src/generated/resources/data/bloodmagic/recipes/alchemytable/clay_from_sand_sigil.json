@@ -1,0 +1,21 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "forge:sand"
+    },
+    {
+      "tag": "forge:sand"
+    },
+    {
+      "item": "bloodmagic:watersigil"
+    }
+  ],
+  "output": {
+    "item": "minecraft:clay_ball",
+    "count": 2
+  },
+  "syphon": 350,
+  "ticks": 100,
+  "upgradeLevel": 2
+}

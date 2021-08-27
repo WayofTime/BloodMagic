@@ -19,7 +19,7 @@ import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 public class RecipeAlchemyTable extends BloodMagicRecipe
 {
 	@Nonnull
-	private final List<Ingredient> input;
+	protected final List<Ingredient> input;
 	@Nonnull
 	private final ItemStack output;
 	@Nonnegative
@@ -48,9 +48,15 @@ public class RecipeAlchemyTable extends BloodMagicRecipe
 	}
 
 	@Nonnull
-	public final List<Ingredient> getInput()
+	public List<Ingredient> getInput()
 	{
 		return input;
+	}
+
+	@Nonnull
+	public ItemStack getOutput(List<ItemStack> inputs)
+	{
+		return output;
 	}
 
 	@Nonnull
@@ -89,7 +95,7 @@ public class RecipeAlchemyTable extends BloodMagicRecipe
 	}
 
 	@Override
-	public IRecipeSerializer<RecipeAlchemyTable> getSerializer()
+	public IRecipeSerializer<? extends RecipeAlchemyTable> getSerializer()
 	{
 		return BloodMagicRecipeSerializers.ALCHEMYTABLE.getRecipeSerializer();
 	}

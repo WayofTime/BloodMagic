@@ -6,6 +6,7 @@ import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.ItemTagsProvider;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.tags.ITag.INamedTag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -36,6 +37,8 @@ public class GeneratorItemTags extends ItemTagsProvider
 		registerHydration();
 		registerResonators();
 		registerCuttingFluids();
+
+		registerVanillaTools();
 
 		this.getOrCreateBuilder(BloodMagicTags.DUST_SULFUR).add(BloodMagicItems.SULFUR.get());
 		this.getOrCreateBuilder(BloodMagicTags.DUST_SALTPETER).add(BloodMagicItems.SALTPETER.get());
@@ -142,6 +145,15 @@ public class GeneratorItemTags extends ItemTagsProvider
 	public void registerTool(Item item, INamedTag<Item> tag)
 	{
 		this.getOrCreateBuilder(tag).add(item);
+	}
+
+	private void registerVanillaTools()
+	{
+		getOrCreateBuilder(BloodMagicTags.SWORDS).add(Items.DIAMOND_SWORD, Items.GOLDEN_SWORD, Items.IRON_SWORD, Items.NETHERITE_SWORD, Items.STONE_SWORD, Items.WOODEN_SWORD, BloodMagicItems.SENTIENT_SWORD.get());
+		getOrCreateBuilder(BloodMagicTags.AXES).add(Items.DIAMOND_AXE, Items.GOLDEN_AXE, Items.IRON_AXE, Items.NETHERITE_AXE, Items.STONE_AXE, Items.WOODEN_AXE, BloodMagicItems.SENTIENT_AXE.get());
+		getOrCreateBuilder(BloodMagicTags.SHOVELS).add(Items.DIAMOND_SHOVEL, Items.GOLDEN_SHOVEL, Items.IRON_SHOVEL, Items.NETHERITE_SHOVEL, Items.STONE_SHOVEL, Items.WOODEN_SHOVEL, BloodMagicItems.SENTIENT_SHOVEL.get());
+		getOrCreateBuilder(BloodMagicTags.PICKAXES).add(Items.DIAMOND_PICKAXE, Items.GOLDEN_PICKAXE, Items.IRON_PICKAXE, Items.NETHERITE_PICKAXE, Items.STONE_PICKAXE, Items.WOODEN_PICKAXE, BloodMagicItems.SENTIENT_PICKAXE.get());
+		getOrCreateBuilder(BloodMagicTags.HOES).add(Items.DIAMOND_HOE, Items.GOLDEN_HOE, Items.IRON_HOE, Items.NETHERITE_HOE, Items.STONE_HOE, Items.WOODEN_HOE, BloodMagicItems.SENTIENT_SCYTHE.get());
 	}
 
 	/**

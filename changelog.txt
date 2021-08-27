@@ -1,4 +1,30 @@
 ------------------------------------------------------
+Version 3.1.2
+------------------------------------------------------
+- Reimplemented Routing Nodes
+-> Has a complete UI overhaul
+- Fixed Gift of Ignis not lowering its cooldown when not on fire.
+- Allowed the Divination Sigil and the Seer Sigil's HUD element to work in both the offhand and the Sigil of Holding. Also allows the Demon Aura Gauge to work in the offhand (why you'd have it in your offhand, I can't say).
+
+------------------------------------------------------
+Version 3.1.1
+------------------------------------------------------
+- Fixed the Throwing Daggers so that they act as the appropriate type.
+- Fixed the Sigil of Magnetism's range so that it is centered on the player.
+- Fixed the Living Armour upgrade "Tough" so that it is now obtainable. Now you can get hurt for an actual cause!
+- Fixed an NPE crash due to the Ritual of Living Evolution. Crash occurred if a player equipped a newly crafted Living Armour set while on the activated ritual.
+- Changed the behaviour of the Living Upgrade Tomes. 
+-> Tomes now will attempt to apply their contained EXP (not levels) regardless of current or tome levels. 
+-> If exp from tome would put you pass the armour's point cap, exp is instead added up to the maximum possible for said Living Upgrade minus one. 
+-> Exp applied to the Living Armour is syphoned from the tome, and the remaining exp is not lost.
+-> If the remaining exp on the Living Upgrade tome is below the amount required for at least one level of its respective upgrade, the tome is destroyed.
+- Waterlogged blocks now count as "water" for the Incense Altar.
+- Added the recipe for the Demon Will Aura Gauge.
+- Reverted capacity formula for the Blood Altar.
+- Fixed duplication glitch for the Alchemical Reaction Chamber.
+
+
+------------------------------------------------------
 Version 3.1.0
 ------------------------------------------------------
 - Majorly refactored the progression of the mod. Instead of starting with a Snare, you instead start by crafting the Blood Altar. The changes are documented in the guide, and you can follow its "Getting Started" entry!
