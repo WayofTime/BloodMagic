@@ -127,11 +127,6 @@ public class BlacklistItemFilter implements IItemFilter
 			{
 				// If the stacks match, then we don't want to pull this item at all.
 				return inputStack;
-			} else
-			{
-				// Check to see if any item limits have been reached
-				allowedAmount = Math.min(filterStack.getCount(), inputStack.getCount());
-				break;
 			}
 		}
 
@@ -177,7 +172,7 @@ public class BlacklistItemFilter implements IItemFilter
 	public int transferThroughInputFilter(IItemFilter outputFilter, int maxTransfer)
 	{
 		int totalChange = 0;
-		for (int slot = 0; slot < itemHandler.getSlots(); slot++)
+		slots: for (int slot = 0; slot < itemHandler.getSlots(); slot++)
 		{
 			ItemStack inputStack = itemHandler.getStackInSlot(slot);
 			if (inputStack.isEmpty() || itemHandler.extractItem(slot, inputStack.getCount(), true).isEmpty())// (accessedInventory
@@ -198,12 +193,7 @@ public class BlacklistItemFilter implements IItemFilter
 				if (doStacksMatch(filterStack, inputStack))
 				{
 					// They matched. That is not good. Bail!
-					allowedAmount = 0;
-					continue;
-				} else
-				{
-					// Check to see if any item limits have been reached
-					allowedAmount = Math.min(filterStack.getCount(), allowedAmount);
+					continue slots;
 				}
 			}
 

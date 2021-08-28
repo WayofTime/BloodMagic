@@ -92,7 +92,10 @@ public class GeneratorItemModels extends ItemModelProvider
 
 		registerCustomFullTexture(BloodMagicBlocks.MIMIC.get(), "solidopaquemimic");
 		registerCustomFullTexture(BloodMagicBlocks.ETHEREAL_MIMIC.get(), "etherealopaquemimic");
-		this.crop(BloodMagicBlocks.GROWING_DOUBT.get().getRegistryName().getPath(), modLoc("block/creeping_doubt_8"));
+//		this.crop(BloodMagicBlocks.GROWING_DOUBT.get().getRegistryName().getPath(), modLoc("block/creeping_doubt_8"));
+		registerBasicItem(BloodMagicItems.GROWING_DOUBT_ITEM.get(), modLoc("item/doubt_seed"));
+		registerBasicItem(BloodMagicItems.WEAK_TAU_ITEM.get(), modLoc("item/weak_tau"));
+		registerBasicItem(BloodMagicItems.STRONG_TAU_ITEM.get(), modLoc("item/strong_tau"));
 
 		registerBlockModel(BloodMagicBlocks.SHAPED_CHARGE.get());
 		registerBlockModel(BloodMagicBlocks.DEFORESTER_CHARGE.get());
@@ -146,6 +149,12 @@ public class GeneratorItemModels extends ItemModelProvider
 	{
 		String path = item.getRegistryName().getPath();
 		singleTexture(path, mcLoc("item/generated"), "layer0", modLoc("item/" + path));
+	}
+
+	private void registerBasicItem(Item item, ResourceLocation separateLocation)
+	{
+		String path = item.getRegistryName().getPath();
+		singleTexture(path, mcLoc("item/generated"), "layer0", separateLocation);
 	}
 
 	private void registerMultiLayerItem(Item item, ResourceLocation... locations)

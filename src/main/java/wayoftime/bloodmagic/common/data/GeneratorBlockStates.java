@@ -98,6 +98,8 @@ public class GeneratorBlockStates extends BlockStateProvider
 		buildCubeAllWithTextureName("solidopaquemimic");
 
 		buildCrop(BloodMagicBlocks.GROWING_DOUBT.get(), CropsBlock.AGE, 7, BloodMagic.rl("block/creeping_doubt_1"), BloodMagic.rl("block/creeping_doubt_2"), BloodMagic.rl("block/creeping_doubt_3"), BloodMagic.rl("block/creeping_doubt_4"), BloodMagic.rl("block/creeping_doubt_5"), BloodMagic.rl("block/creeping_doubt_6"), BloodMagic.rl("block/creeping_doubt_7"), BloodMagic.rl("block/creeping_doubt_8"));
+		buildCrossCrop(BloodMagicBlocks.WEAK_TAU.get(), CropsBlock.AGE, 7, modLoc("block/weak_tau_1"), modLoc("block/weak_tau_2"), modLoc("block/weak_tau_3"), modLoc("block/weak_tau_4"), modLoc("block/weak_tau_5"), modLoc("block/weak_tau_6"), modLoc("block/weak_tau_7"), modLoc("block/weak_tau_8"));
+		buildCrossCrop(BloodMagicBlocks.STRONG_TAU.get(), CropsBlock.AGE, 7, modLoc("block/weak_tau_1"), modLoc("block/strong_tau_2"), modLoc("block/strong_tau_3"), modLoc("block/strong_tau_4"), modLoc("block/strong_tau_5"), modLoc("block/strong_tau_6"), modLoc("block/strong_tau_7"), modLoc("block/strong_tau_8"));
 
 		buildOrientable(BloodMagicBlocks.SHAPED_CHARGE.get(), "shaped_charge", modLoc("block/sub/shaped_charge"), modLoc("block/dungeon/dungeon_stone"), modLoc("block/dungeon/dungeon_tile"), modLoc("block/blankrune"), modLoc("block/largebloodstonebrick"), modLoc("models/defaultcrystal"));
 		buildOrientable(BloodMagicBlocks.DEFORESTER_CHARGE.get(), "deforester_charge", modLoc("block/sub/shaped_charge"), new ResourceLocation("block/oak_log_top"), new ResourceLocation("block/oak_log_top"), modLoc("block/blankrune"), new ResourceLocation("block/oak_planks"), modLoc("models/defaultcrystal"));
@@ -129,6 +131,18 @@ public class GeneratorBlockStates extends BlockStateProvider
 		for (int i = 0; i <= maxAge; i++)
 		{
 			ModelFile modelFile = models().crop(basePath + "_" + (i + 1), textures[i]);
+			builder.partialState().with(prop, i).modelForState().modelFile(modelFile).addModel();
+		}
+	}
+
+	private void buildCrossCrop(Block block, IntegerProperty prop, int maxAge, ResourceLocation... textures)
+	{
+		String basePath = block.getRegistryName().getPath();
+		VariantBlockStateBuilder builder = getVariantBuilder(block);
+
+		for (int i = 0; i <= maxAge; i++)
+		{
+			ModelFile modelFile = models().cross(basePath + "_" + (i + 1), textures[i]);
 			builder.partialState().with(prop, i).modelForState().modelFile(modelFile).addModel();
 		}
 	}

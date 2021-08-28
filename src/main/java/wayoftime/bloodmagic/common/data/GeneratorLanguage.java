@@ -514,6 +514,10 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK, "Output Routing Node");
 		addBlock(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK, "Master Routing Node");
 
+		addBlock(BloodMagicBlocks.WEAK_TAU, "Taue Fruit");
+		addBlock(BloodMagicBlocks.STRONG_TAU, "Saturated Taue");
+		addBlock(BloodMagicBlocks.GROWING_DOUBT, "Seeds of Doubt");
+
 		// Item names
 		addItem(BloodMagicItems.WEAK_BLOOD_ORB, "Weak Blood Orb");
 		addItem(BloodMagicItems.APPRENTICE_BLOOD_ORB, "Apprentice Blood Orb");

@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "bloodmagic:growing_doubt"
+          "name": "bloodmagic:weak_tau"
         }
       ]
     },
@@ -26,13 +26,13 @@
               }
             }
           ],
-          "name": "bloodmagic:growing_doubt"
+          "name": "bloodmagic:weak_tau"
         }
       ],
       "conditions": [
         {
           "condition": "minecraft:block_state_property",
-          "block": "bloodmagic:creeping_doubt",
+          "block": "bloodmagic:weak_tau",
           "properties": {
             "age": "7"
           }
