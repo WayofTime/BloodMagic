@@ -48,6 +48,19 @@ public class BlockAltar extends Block
 	}
 
 	@Override
+	public boolean hasComparatorInputOverride(BlockState state)
+	{
+		return true;
+	}
+
+	@Override
+	public int getComparatorInputOverride(BlockState state, World world, BlockPos pos)
+	{
+		TileAltar altar = (TileAltar) world.getTileEntity(pos);
+		return altar.getAnalogSignalStrength();
+	}
+
+	@Override
 	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
 	{
 		TileAltar altar = (TileAltar) world.getTileEntity(pos);

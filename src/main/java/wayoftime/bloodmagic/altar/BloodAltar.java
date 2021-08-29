@@ -756,6 +756,11 @@ public class BloodAltar// implements IFluidHandler
 		return currentTierDisplayed;
 	}
 
+	public int getAnalogSignalStrenght()
+	{
+		return getCurrentBlood() * 15 / getCapacity();
+	}
+
 	public static class VariableSizeFluidHandler implements IFluidHandler
 	{
 		BloodAltar altar;

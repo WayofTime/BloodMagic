@@ -210,6 +210,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickableTi
 	{
 		return bloodAltar.setCurrentTierDisplayed(altarTier);
 	}
+
 //
 //	@Override
 //	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing)
@@ -221,6 +222,10 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickableTi
 //
 //		return super.hasCapability(capability, facing);
 //	}
+	public int getAnalogSignalStrength()
+	{
+		return bloodAltar.getCurrentBlood() * 15 / bloodAltar.getCapacity();
+	}
 
 	@Override
 	protected void invalidateCaps()
