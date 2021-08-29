@@ -79,8 +79,8 @@ public class BloodMagicBlocks
 	public static final RegistryObject<Block> DUSK_RITUAL_STONE = BLOCKS.register("duskritualstone", () -> new BlockRitualStone(EnumRuneType.DUSK));
 	public static final RegistryObject<Block> DAWN_RITUAL_STONE = BLOCKS.register("lightritualstone", () -> new BlockRitualStone(EnumRuneType.DAWN));
 
-	public static final RegistryObject<Block> BLOODSTONE = BASICBLOCKS.register("largebloodstonebrick", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(1)));
-	public static final RegistryObject<Block> BLOODSTONE_BRICK = BASICBLOCKS.register("bloodstonebrick", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(1)));
+	public static final RegistryObject<Block> BLOODSTONE = BASICBLOCKS.register("largebloodstonebrick", () -> new BloodstoneBlock());
+	public static final RegistryObject<Block> BLOODSTONE_BRICK = BASICBLOCKS.register("bloodstonebrick", () -> new BloodstoneBlock());
 
 	public static final RegistryObject<Block> MASTER_RITUAL_STONE = BASICBLOCKS.register("masterritualstone", () -> new BlockMasterRitualStone(false));
 
