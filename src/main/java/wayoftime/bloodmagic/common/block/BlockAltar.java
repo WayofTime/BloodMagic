@@ -25,7 +25,7 @@ import wayoftime.bloodmagic.util.Utils;
 public class BlockAltar extends Block
 {
 	protected static final VoxelShape BODY = Block.makeCuboidShape(0, 0, 0, 16, 12, 16);
-	private boolean isRedstoneActive = false;
+	public boolean isRedstoneActive = false;
 
 	public BlockAltar()
 	{
@@ -59,7 +59,7 @@ public class BlockAltar extends Block
 	@Override
 	public int getComparatorInputOverride(BlockState state, World world, BlockPos pos)
 	{
-		isRedstoneActive = false;
+		this.isRedstoneActive = false;
 		TileAltar altar = (TileAltar) world.getTileEntity(pos);
 		Block blockdown = world.getBlockState(pos.down()).getBlock();
 		int redstoneMode = 0;
@@ -70,7 +70,7 @@ public class BlockAltar extends Block
 		if (blockdown instanceof RedstoneLampBlock)
 		{
 			redstoneMode = 2;
-			isRedstoneActive = true;
+			this.isRedstoneActive = true;
 		}
 
 		return altar.getAnalogSignalStrength(redstoneMode);
@@ -79,7 +79,7 @@ public class BlockAltar extends Block
 	@Override
 	public boolean canProvidePower(BlockState iBlockState)
 	{
-		return true;
+		return isRedstoneActive;
 	}
 
 	@Override

@@ -45,8 +45,13 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickableTi
 
 	public void setOutputState(boolean state)
 	{
+		BlockAltar altar = (BlockAltar) this.getWorld().getBlockState(pos).getBlock();
+
+		if (state && !(altar.isRedstoneActive))
+			state = false;
+
 		this.isOutputOn = state;
-		this.world.notifyNeighborsOfStateChange(pos, (BlockAltar) this.getWorld().getBlockState(pos).getBlock());
+		this.world.notifyNeighborsOfStateChange(pos, altar);
 	}
 
 	@Override
