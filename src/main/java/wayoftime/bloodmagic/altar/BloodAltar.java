@@ -290,6 +290,10 @@ public class BloodAltar// implements IFluidHandler
 		if (internalCounter % 100 == 0 && (this.isActive || this.cooldownAfterCrafting <= 0))
 			startCycle();
 
+		// add dedicated counter if the timing should be more precise
+		if (internalCounter % 100 == 0 && tileAltar.getOutputState())
+			tileAltar.setOutputState(false);
+
 		updateAltar();
 	}
 
@@ -377,6 +381,8 @@ public class BloodAltar// implements IFluidHandler
 					BloodMagicCraftedEvent.Altar event = new BloodMagicCraftedEvent.Altar(result, input.copy());
 					MinecraftForge.EVENT_BUS.post(event);
 					tileAltar.setInventorySlotContents(0, event.getOutput());
+					tileAltar.setOutputState(true);
+
 					progress = 0;
 
 					if (world instanceof ServerWorld)
@@ -389,6 +395,7 @@ public class BloodAltar// implements IFluidHandler
 					this.isActive = false;
 				}
 			}
+
 		} else
 		{
 			ItemStack contained = tileAltar.getStackInSlot(0);
@@ -756,9 +763,30 @@ public class BloodAltar// implements IFluidHandler
 		return currentTierDisplayed;
 	}
 
-	public int getAnalogSignalStrenght()
+	public int getAnalogSignalStrenght(int redstone_mode)
 	{
-		return getCurrentBlood() * 15 / getCapacity();
+		switch (redstone_mode)
+		{
+		case 0:
+			return getCurrentBlood() * 15 / getCapacity();
+
+		case 1:
+			ItemStack contained = tileAltar.getStackInSlot(0);
+
+			if (contained.isEmpty() || !(contained.getItem() instanceof IBloodOrb) || !(contained.getItem() instanceof IBindable))
+				return 0;
+
+			BloodOrb orb = ((IBloodOrb) contained.getItem()).getOrb(contained);
+			Binding binding = ((IBindable) contained.getItem()).getBinding(contained);
+
+			if (binding == null || orb == null)
+				return 0;
+
+			return NetworkHelper.getSoulNetwork(binding).getCurrentEssence() * 15 / orb.getCapacity();
+
+		default:
+			return 0;
+		}
 	}
 
 	public static class VariableSizeFluidHandler implements IFluidHandler

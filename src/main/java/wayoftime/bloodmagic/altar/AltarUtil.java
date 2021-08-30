@@ -12,8 +12,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.common.block.BlockBloodRune;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.tile.TileAltar;
 
 public class AltarUtil
@@ -34,8 +34,7 @@ public class AltarUtil
 				BlockPos componentPos = pos.add(component.getOffset());
 				BlockState worldState = world.getBlockState(componentPos);
 
-				if (component.getComponent() == ComponentType.NOTAIR && worldState.getMaterial() != Material.AIR
-						&& !worldState.getMaterial().isLiquid())
+				if (component.getComponent() == ComponentType.NOTAIR && worldState.getMaterial() != Material.AIR && !worldState.getMaterial().isLiquid())
 					continue;
 
 				List<BlockState> validStates = BloodMagicAPI.INSTANCE.getComponentStates(component.getComponent());
@@ -80,8 +79,7 @@ public class AltarUtil
 			{
 				BlockPos componentPos = pos.add(component.getOffset());
 				BlockState worldState = world.getBlockState(componentPos);
-				if (component.getComponent() == ComponentType.NOTAIR && worldState.getMaterial() != Material.AIR
-						&& !worldState.getMaterial().isLiquid())
+				if (component.getComponent() == ComponentType.NOTAIR && worldState.getMaterial() != Material.AIR && !worldState.getMaterial().isLiquid())
 					continue;
 
 				List<BlockState> validStates = BloodMagicAPI.INSTANCE.getComponentStates(component.getComponent());

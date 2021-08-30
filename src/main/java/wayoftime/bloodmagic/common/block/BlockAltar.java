@@ -2,11 +2,13 @@ package wayoftime.bloodmagic.common.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.RedstoneLampBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -23,6 +25,7 @@ import wayoftime.bloodmagic.util.Utils;
 public class BlockAltar extends Block
 {
 	protected static final VoxelShape BODY = Block.makeCuboidShape(0, 0, 0, 16, 12, 16);
+	private boolean isRedstoneActive = false;
 
 	public BlockAltar()
 	{
@@ -56,8 +59,48 @@ public class BlockAltar extends Block
 	@Override
 	public int getComparatorInputOverride(BlockState state, World world, BlockPos pos)
 	{
+		isRedstoneActive = false;
 		TileAltar altar = (TileAltar) world.getTileEntity(pos);
-		return altar.getAnalogSignalStrength();
+		Block blockdown = world.getBlockState(pos.down()).getBlock();
+		int redstoneMode = 0;
+
+		if (blockdown instanceof BloodstoneBlock)
+			redstoneMode = 1;
+
+		if (blockdown instanceof RedstoneLampBlock)
+		{
+			redstoneMode = 2;
+			isRedstoneActive = true;
+		}
+
+		return altar.getAnalogSignalStrength(redstoneMode);
+	}
+
+	@Override
+	public boolean canProvidePower(BlockState iBlockState)
+	{
+		return true;
+	}
+
+	@Override
+	public int getWeakPower(BlockState blockState, IBlockReader blockReader, BlockPos pos, Direction dir)
+	{
+		boolean isOutputOn = false;
+		TileEntity tileentity = blockReader.getTileEntity(pos);
+		if (tileentity instanceof TileAltar)
+		{
+			TileAltar altar = (TileAltar) tileentity;
+			isOutputOn = altar.getOutputState();
+		}
+
+		final int OUTPUT_POWER_WHEN_ON = 15;
+		return isOutputOn ? OUTPUT_POWER_WHEN_ON : 0;
+	}
+
+	@Override
+	public int getStrongPower(BlockState blockState, IBlockReader blockReader, BlockPos pos, Direction dir)
+	{
+		return 0;
 	}
 
 	@Override
