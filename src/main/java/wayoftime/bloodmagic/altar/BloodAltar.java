@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.altar;
 import com.google.common.base.Enums;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.RedstoneLampBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
@@ -290,16 +291,15 @@ public class BloodAltar// implements IFluidHandler
 		if (internalCounter % 100 == 0 && (this.isActive || this.cooldownAfterCrafting <= 0))
 			startCycle();
 
-		// add dedicated counter if the timing should be more precise
-		if (internalCounter % 100 == 0 && tileAltar.getOutputState())
-			tileAltar.setOutputState(false);
-
 		updateAltar();
 	}
 
 	private void updateAltar()
 	{
 //		System.out.println("Updating altar.");
+		if (tileAltar.getOutputState())
+			tileAltar.setOutputState(false);
+
 		if (!isActive)
 		{
 			if (cooldownAfterCrafting > 0)
@@ -381,7 +381,8 @@ public class BloodAltar// implements IFluidHandler
 					BloodMagicCraftedEvent.Altar event = new BloodMagicCraftedEvent.Altar(result, input.copy());
 					MinecraftForge.EVENT_BUS.post(event);
 					tileAltar.setInventorySlotContents(0, event.getOutput());
-					tileAltar.setOutputState(true);
+					if (tileAltar.getWorld().getBlockState(tileAltar.getPos().down()).getBlock() instanceof RedstoneLampBlock)
+						tileAltar.setOutputState(true);
 
 					progress = 0;
 

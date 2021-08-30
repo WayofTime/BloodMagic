@@ -79,7 +79,7 @@ public class BlockAltar extends Block
 	@Override
 	public boolean canProvidePower(BlockState iBlockState)
 	{
-		return isRedstoneActive;
+		return true;
 	}
 
 	@Override
