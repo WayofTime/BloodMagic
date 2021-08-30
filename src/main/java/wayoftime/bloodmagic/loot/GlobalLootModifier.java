@@ -49,7 +49,6 @@ public class GlobalLootModifier
 		@Override
 		public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context)
 		{
-//			System.out.println("Testing to see if we gotta check it~");
 			ItemStack ctxTool = context.get(LootParameters.TOOL);
 			// return early if silk-touch is already applied (otherwise we'll get stuck in
 			// an infinite loop).

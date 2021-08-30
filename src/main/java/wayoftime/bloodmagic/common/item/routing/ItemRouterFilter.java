@@ -51,51 +51,6 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 		super(new Item.Properties().maxStackSize(16).group(BloodMagic.TAB));
 	}
 
-//	@Override
-//	@OnlyIn(Dist.CLIENT)
-//	public void addInformation(ItemStack filterStack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
-//	{
-//		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.basicfilter.desc").mergeStyle(TextFormatting.ITALIC).mergeStyle(TextFormatting.GRAY));
-//
-//		int whitelistState = this.getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
-//		boolean isWhitelist = whitelistState == 0;
-//
-//		if (isWhitelist)
-//		{
-//			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist"));
-//		} else
-//		{
-//			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist"));
-//		}
-//
-//		ItemInventory inv = new InventoryFilter(filterStack);
-//		for (int i = 0; i < inv.getSizeInventory(); i++)
-//		{
-//			ItemStack stack = inv.getStackInSlot(i);
-//			if (stack.isEmpty())
-//			{
-//				continue;
-//			}
-//
-//			if (isWhitelist)
-//			{
-//				int amount = GhostItemHelper.getItemGhostAmount(stack);
-//				if (amount > 0)
-//				{
-//					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.count", amount, stack.getDisplayName()));
-//				} else
-//				{
-//					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.all", stack.getDisplayName()));
-//				}
-//			} else
-//			{
-//				tooltip.add(stack.getDisplayName());
-//			}
-//		}
-//
-//		super.addInformation(filterStack, world, tooltip, flag);
-//	}
-
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
 	{
