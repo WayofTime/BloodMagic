@@ -55,7 +55,7 @@ public class RitualRegeneration extends Ritual
 			return;
 		}
 
-		BlockPos pos = masterRitualStone.getBlockPos();
+		BlockPos pos = masterRitualStone.getMasterBlockPos();
 
 		int maxEffects = currentEssence / getRefreshCost();
 		int totalEffects = 0;

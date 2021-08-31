@@ -102,6 +102,8 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerBlockModel(BloodMagicBlocks.VEINMINE_CHARGE.get());
 		registerBlockModel(BloodMagicBlocks.FUNGAL_CHARGE.get());
 
+//		registerBlockModel(BloodMagicBlocks.INVERSION_PILLAR.get());
+
 		registerMultiLayerItem(BloodMagicItems.SLATE_VIAL.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
 		registerMultiLayerItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
 		registerMultiLayerItem(BloodMagicItems.SILK_TOUCH_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));

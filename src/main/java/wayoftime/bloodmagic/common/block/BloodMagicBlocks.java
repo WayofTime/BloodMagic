@@ -180,6 +180,8 @@ public class BloodMagicBlocks
 	public static final RegistryObject<Block> WEAK_TAU = BLOCKS.register("weak_tau", () -> new BlockTau(Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().zeroHardnessAndResistance().sound(SoundType.CROP), false));
 	public static final RegistryObject<Block> STRONG_TAU = BLOCKS.register("strong_tau", () -> new BlockTau(Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().zeroHardnessAndResistance().sound(SoundType.CROP), true));
 
+	public static final RegistryObject<Block> INVERSION_PILLAR = BLOCKS.register("inversion_pillar", () -> new BlockInversionPillar(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool().setBlocksVision(BloodMagicBlocks::isntSolid).notSolid().setOpaque(BloodMagicBlocks::isntSolid)));
+
 	private static boolean isntSolid(BlockState state, IBlockReader reader, BlockPos pos)
 	{
 		return false;

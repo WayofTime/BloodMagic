@@ -38,6 +38,7 @@ import net.minecraft.loot.functions.ApplyBonus;
 import net.minecraft.loot.functions.EnchantWithLevels;
 import net.minecraft.loot.functions.ILootFunction.IBuilder;
 import net.minecraft.loot.functions.SetCount;
+import net.minecraft.loot.functions.SetDamage;
 import net.minecraft.loot.functions.SetNBT;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.Property;
@@ -80,27 +81,30 @@ public class GeneratorLootTable extends LootTableProvider
 
 			LootPool.Builder potionChest = LootPool.builder().rolls(RandomValueRange.of(5, 7)).addEntry(ItemLootEntry.builder(Items.NETHER_WART).weight(40).acceptFunction(SetCount.builder(RandomValueRange.of(3, 7)))).addEntry(ItemLootEntry.builder(Items.BLAZE_POWDER).weight(10).acceptFunction(SetCount.builder(RandomValueRange.of(7, 10)))).addEntry(ItemLootEntry.builder(Items.BLAZE_POWDER).weight(5).acceptFunction(SetCount.builder(RandomValueRange.of(3, 7)))).addEntry(ItemLootEntry.builder(Items.POTION).weight(3).acceptFunction(SetNBT.builder(Util.make(new CompoundNBT(), (nbt) -> {
 				nbt.putString("Potion", "minecraft:water");
-			})))).addEntry(ItemLootEntry.builder(Items.SLIME_BALL).weight(10).acceptFunction(SetCount.builder(RandomValueRange.of(10, 15)))).addEntry(ItemLootEntry.builder(Items.MAGMA_CREAM).weight(5).acceptFunction(SetCount.builder(RandomValueRange.of(6, 10)))).addEntry(ItemLootEntry.builder(Items.GUNPOWDER).weight(10).acceptFunction(SetCount.builder(RandomValueRange.of(6, 10))));
+			})))).addEntry(ItemLootEntry.builder(Items.SLIME_BALL).weight(10).acceptFunction(SetCount.builder(RandomValueRange.of(10, 15)))).addEntry(ItemLootEntry.builder(Items.MAGMA_CREAM).weight(5).acceptFunction(SetCount.builder(RandomValueRange.of(6, 10)))).addEntry(ItemLootEntry.builder(Items.GUNPOWDER).weight(10).acceptFunction(SetCount.builder(RandomValueRange.of(6, 10)))).addEntry(ItemLootEntry.builder(Items.REDSTONE).weight(10).acceptFunction(SetCount.builder(RandomValueRange.of(10, 20)))).addEntry(ItemLootEntry.builder(Items.GLOWSTONE_DUST).weight(3).acceptFunction(SetCount.builder(RandomValueRange.of(20, 30))));
 			potionChest = addMultipleItemsWithSameParams(potionChest, baseAnointments, 1, RandomValueRange.of(1, 3));
 
 			LootPool.Builder armory_pool = LootPool.builder().rolls(RandomValueRange.of(5, 7)).addEntry(ItemLootEntry.builder(Items.IRON_INGOT).weight(6).acceptFunction(SetCount.builder(RandomValueRange.of(7, 20)))).addEntry(ItemLootEntry.builder(Items.IRON_NUGGET).weight(3).acceptFunction(SetCount.builder(RandomValueRange.of(30, 50)))).addEntry(ItemLootEntry.builder(Items.DIAMOND).weight(1).acceptFunction(SetCount.builder(RandomValueRange.of(2, 5)))).addEntry(ItemLootEntry.builder(Items.LEATHER).weight(10).acceptFunction(SetCount.builder(RandomValueRange.of(10, 20))));
 
 			armory_pool = addMultipleItemsWithSameParams(armory_pool, new Item[] { Items.LEATHER_BOOTS,
 					Items.LEATHER_CHESTPLATE, Items.LEATHER_HELMET,
-					Items.LEATHER_LEGGINGS }, 3, ConstantRange.of(1), EnchantWithLevels.func_215895_a(RandomValueRange.of(30, 35)).func_216059_e());
+					Items.LEATHER_LEGGINGS }, 3, ConstantRange.of(1), EnchantWithLevels.func_215895_a(RandomValueRange.of(30, 35)).func_216059_e(), SetDamage.func_215931_a(RandomValueRange.of(0.3F, 0.9F)));
 			armory_pool = addMultipleItemsWithSameParams(armory_pool, new Item[] { Items.LEATHER_BOOTS,
-					Items.LEATHER_CHESTPLATE, Items.LEATHER_HELMET, Items.LEATHER_LEGGINGS }, 5, ConstantRange.of(1));
+					Items.LEATHER_CHESTPLATE, Items.LEATHER_HELMET,
+					Items.LEATHER_LEGGINGS }, 5, ConstantRange.of(1), SetDamage.func_215931_a(RandomValueRange.of(0.8F, 1.0F)));
 			armory_pool = addMultipleItemsWithSameParams(armory_pool, new Item[] { Items.IRON_BOOTS,
-					Items.IRON_CHESTPLATE, Items.IRON_HELMET, Items.IRON_LEGGINGS }, 3, ConstantRange.of(1));
+					Items.IRON_CHESTPLATE, Items.IRON_HELMET,
+					Items.IRON_LEGGINGS }, 3, ConstantRange.of(1), SetDamage.func_215931_a(RandomValueRange.of(0.8F, 1.0F)));
 
 			LootPool.Builder enchanted_armory_pool = addMultipleItemsWithSameParams(LootPool.builder().rolls(RandomValueRange.of(1, 2)), new Item[] {
 					Items.IRON_BOOTS, Items.IRON_CHESTPLATE, Items.IRON_LEGGINGS,
-					Items.IRON_HELMET }, 1, ConstantRange.of(1), EnchantWithLevels.func_215895_a(RandomValueRange.of(25, 35)).func_216059_e());
-			enchanted_armory_pool = addMultipleItemsWithSameParams(armory_pool, new Item[] { Items.DIAMOND_BOOTS,
-					Items.DIAMOND_CHESTPLATE, Items.DIAMOND_HELMET, Items.DIAMOND_LEGGINGS }, 1, ConstantRange.of(1));
+					Items.IRON_HELMET }, 1, ConstantRange.of(1), EnchantWithLevels.func_215895_a(RandomValueRange.of(25, 35)).func_216059_e(), SetDamage.func_215931_a(RandomValueRange.of(0.9F, 1.0F)));
 			enchanted_armory_pool = addMultipleItemsWithSameParams(armory_pool, new Item[] { Items.DIAMOND_BOOTS,
 					Items.DIAMOND_CHESTPLATE, Items.DIAMOND_HELMET,
-					Items.DIAMOND_LEGGINGS }, 1, ConstantRange.of(1), EnchantWithLevels.func_215895_a(RandomValueRange.of(20, 25)).func_216059_e());
+					Items.DIAMOND_LEGGINGS }, 1, ConstantRange.of(1), SetDamage.func_215931_a(RandomValueRange.of(0.6F, 0.8F)));
+			enchanted_armory_pool = addMultipleItemsWithSameParams(armory_pool, new Item[] { Items.DIAMOND_BOOTS,
+					Items.DIAMOND_CHESTPLATE, Items.DIAMOND_HELMET,
+					Items.DIAMOND_LEGGINGS }, 1, ConstantRange.of(1), EnchantWithLevels.func_215895_a(RandomValueRange.of(20, 25)).func_216059_e(), SetDamage.func_215931_a(RandomValueRange.of(0.4F, 1.0F)));
 
 //			acceptor.accept(BloodMagic.rl("test"), testLootTableGeneration());
 			acceptor.accept(BloodMagic.rl("chests/dungeon/library"), LootTable.builder().addLootPool(stronghold_library_pool).addLootPool(extraLibraryItems));
@@ -231,6 +235,8 @@ public class GeneratorLootTable extends LootTableProvider
 			registerNoDropLootTable(BloodMagicBlocks.DEFORESTER_CHARGE.get());
 			registerNoDropLootTable(BloodMagicBlocks.VEINMINE_CHARGE.get());
 			registerNoDropLootTable(BloodMagicBlocks.FUNGAL_CHARGE.get());
+
+			registerDropSelfLootTable(BloodMagicBlocks.INVERSION_PILLAR.get());
 		}
 
 		private void registerNoDropLootTable(Block block)

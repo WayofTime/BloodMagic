@@ -83,6 +83,13 @@
                 "type": "minecraft:uniform"
               },
               "treasure": true
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.3,
+                "max": 0.9
+              }
             }
           ],
           "name": "minecraft:leather_boots"
@@ -103,6 +110,13 @@
                 "type": "minecraft:uniform"
               },
               "treasure": true
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.3,
+                "max": 0.9
+              }
             }
           ],
           "name": "minecraft:leather_chestplate"
@@ -123,6 +137,13 @@
                 "type": "minecraft:uniform"
               },
               "treasure": true
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.3,
+                "max": 0.9
+              }
             }
           ],
           "name": "minecraft:leather_helmet"
@@ -143,6 +164,13 @@
                 "type": "minecraft:uniform"
               },
               "treasure": true
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.3,
+                "max": 0.9
+              }
             }
           ],
           "name": "minecraft:leather_leggings"
@@ -154,6 +182,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.8,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:leather_boots"
@@ -165,6 +200,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.8,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:leather_chestplate"
@@ -176,6 +218,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.8,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:leather_helmet"
@@ -187,6 +236,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.8,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:leather_leggings"
@@ -198,6 +254,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.8,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:iron_boots"
@@ -209,6 +272,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.8,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:iron_chestplate"
@@ -220,6 +290,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.8,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:iron_helmet"
@@ -231,6 +308,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.8,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:iron_leggings"
@@ -241,6 +325,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.6,
+                "max": 0.8
+              }
             }
           ],
           "name": "minecraft:diamond_boots"
@@ -251,6 +342,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.6,
+                "max": 0.8
+              }
             }
           ],
           "name": "minecraft:diamond_chestplate"
@@ -261,6 +359,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.6,
+                "max": 0.8
+              }
             }
           ],
           "name": "minecraft:diamond_helmet"
@@ -271,6 +376,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.6,
+                "max": 0.8
+              }
             }
           ],
           "name": "minecraft:diamond_leggings"
@@ -290,6 +402,13 @@
                 "type": "minecraft:uniform"
               },
               "treasure": true
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.4,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:diamond_boots"
@@ -309,6 +428,13 @@
                 "type": "minecraft:uniform"
               },
               "treasure": true
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.4,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:diamond_chestplate"
@@ -328,6 +454,13 @@
                 "type": "minecraft:uniform"
               },
               "treasure": true
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.4,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:diamond_helmet"
@@ -347,6 +480,13 @@
                 "type": "minecraft:uniform"
               },
               "treasure": true
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.4,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:diamond_leggings"
@@ -435,6 +575,13 @@
                 "type": "minecraft:uniform"
               },
               "treasure": true
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.3,
+                "max": 0.9
+              }
             }
           ],
           "name": "minecraft:leather_boots"
@@ -455,6 +602,13 @@
                 "type": "minecraft:uniform"
               },
               "treasure": true
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.3,
+                "max": 0.9
+              }
             }
           ],
           "name": "minecraft:leather_chestplate"
@@ -475,6 +629,13 @@
                 "type": "minecraft:uniform"
               },
               "treasure": true
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.3,
+                "max": 0.9
+              }
             }
           ],
           "name": "minecraft:leather_helmet"
@@ -495,6 +656,13 @@
                 "type": "minecraft:uniform"
               },
               "treasure": true
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.3,
+                "max": 0.9
+              }
             }
           ],
           "name": "minecraft:leather_leggings"
@@ -506,6 +674,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.8,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:leather_boots"
@@ -517,6 +692,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.8,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:leather_chestplate"
@@ -528,6 +710,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.8,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:leather_helmet"
@@ -539,6 +728,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.8,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:leather_leggings"
@@ -550,6 +746,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.8,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:iron_boots"
@@ -561,6 +764,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.8,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:iron_chestplate"
@@ -572,6 +782,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.8,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:iron_helmet"
@@ -583,6 +800,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.8,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:iron_leggings"
@@ -593,6 +817,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.6,
+                "max": 0.8
+              }
             }
           ],
           "name": "minecraft:diamond_boots"
@@ -603,6 +834,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.6,
+                "max": 0.8
+              }
             }
           ],
           "name": "minecraft:diamond_chestplate"
@@ -613,6 +851,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.6,
+                "max": 0.8
+              }
             }
           ],
           "name": "minecraft:diamond_helmet"
@@ -623,6 +868,13 @@
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.6,
+                "max": 0.8
+              }
             }
           ],
           "name": "minecraft:diamond_leggings"
@@ -642,6 +894,13 @@
                 "type": "minecraft:uniform"
               },
               "treasure": true
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.4,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:diamond_boots"
@@ -661,6 +920,13 @@
                 "type": "minecraft:uniform"
               },
               "treasure": true
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.4,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:diamond_chestplate"
@@ -680,6 +946,13 @@
                 "type": "minecraft:uniform"
               },
               "treasure": true
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.4,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:diamond_helmet"
@@ -699,6 +972,13 @@
                 "type": "minecraft:uniform"
               },
               "treasure": true
+            },
+            {
+              "function": "minecraft:set_damage",
+              "damage": {
+                "min": 0.4,
+                "max": 1.0
+              }
             }
           ],
           "name": "minecraft:diamond_leggings"

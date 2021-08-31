@@ -71,7 +71,7 @@ public class RitualGreenGrove extends Ritual
 		}
 
 		ServerWorld serverWorld = (ServerWorld) world;
-		BlockPos pos = masterRitualStone.getBlockPos();
+		BlockPos pos = masterRitualStone.getMasterBlockPos();
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
 		if (currentEssence < getRefreshCost())

@@ -105,6 +105,13 @@ public class GeneratorBlockStates extends BlockStateProvider
 		buildOrientable(BloodMagicBlocks.DEFORESTER_CHARGE.get(), "deforester_charge", modLoc("block/sub/shaped_charge"), new ResourceLocation("block/oak_log_top"), new ResourceLocation("block/oak_log_top"), modLoc("block/blankrune"), new ResourceLocation("block/oak_planks"), modLoc("models/defaultcrystal"));
 		buildOrientable(BloodMagicBlocks.VEINMINE_CHARGE.get(), "veinmine_charge", modLoc("block/sub/shaped_charge"), new ResourceLocation("block/sandstone_bottom"), new ResourceLocation("block/sandstone_bottom"), modLoc("block/blankrune"), new ResourceLocation("block/sand"), modLoc("models/defaultcrystal"));
 		buildOrientable(BloodMagicBlocks.FUNGAL_CHARGE.get(), "fungal_charge", modLoc("block/sub/shaped_charge"), new ResourceLocation("block/nether_wart_block"), new ResourceLocation("block/crimson_planks"), modLoc("block/blankrune"), new ResourceLocation("block/crimson_stem"), modLoc("models/defaultcrystal"));
+
+		getVariantBuilder(BloodMagicBlocks.INVERSION_PILLAR.get()).forAllStates(state -> {
+			Builder builder = ConfiguredModel.builder();
+			ModelFile model = models().withExistingParent("inversion_pillar", modLoc("pillar_mid")).texture("texture", modLoc("models/pillar_mid"));
+
+			return builder.modelFile(model).build();
+		});
 	}
 
 	private void buildOrientable(Block block, String name, ResourceLocation modelPath, ResourceLocation base, ResourceLocation edges, ResourceLocation centerCap, ResourceLocation binding, ResourceLocation core)

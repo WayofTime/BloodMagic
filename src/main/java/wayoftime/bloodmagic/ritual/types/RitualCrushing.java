@@ -88,7 +88,7 @@ public class RitualCrushing extends Ritual
 			return;
 		}
 
-		BlockPos pos = masterRitualStone.getBlockPos();
+		BlockPos pos = masterRitualStone.getMasterBlockPos();
 		AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
 		TileEntity tile = world.getTileEntity(chestRange.getContainedPositions(pos).get(0));
 

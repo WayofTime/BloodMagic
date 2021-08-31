@@ -111,6 +111,36 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 10.0,
+                "max": 20.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "minecraft:redstone"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 20.0,
+                "max": 30.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "minecraft:glowstone_dust"
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:set_count",
