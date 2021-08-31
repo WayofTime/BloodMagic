@@ -1,0 +1,10 @@
+{
+  "parent": "bloodmagic:block/inversion_pillar",
+  "display": {
+    "gui": {
+            "rotation": [ 30, 225, 0 ],
+            "translation": [ -2.5, -1, 0 ],
+            "scale":[ 0.4, 0.4, 0.4 ]
+        }
+  }
+}

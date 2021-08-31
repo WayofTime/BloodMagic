@@ -21,8 +21,17 @@ public class ItemDungeonTester extends Item
 	{
 		if (!world.isRemote && world instanceof ServerWorld)
 		{
-			System.out.println("Test");
-			DungeonTester.testDungeonElementWithOutput((ServerWorld) world, player.getPosition());
+//			System.out.println("Test");
+//			DungeonTester.testDungeonElementWithOutput((ServerWorld) world, player.getPosition());
+			DungeonSynthesizer dungeon = new DungeonSynthesizer();
+			dungeon.generateInitialRoom(world.rand, (ServerWorld) world, player.getPosition());
+
+//			List<Pair<String, Integer>> roomPool = new ArrayList<>();
+//			roomPool.add(Pair.of("bloodmagic:schematics/ore_hold_1", 1));
+//			roomPool.add(Pair.of("bloodmagic:schematics/spiral_staircase", 5));
+//			roomPool.add(Pair.of("bloodmagic:schematics/straight_corridor", 3));
+//
+//			DungeonRoomLoader.writeTestPool(roomPool);
 		}
 		return super.onItemRightClick(world, player, hand);
 	}

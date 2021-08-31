@@ -6,10 +6,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
@@ -48,8 +50,93 @@ public class DungeonRoomLoader
 		}
 	}
 
+	public static void writeTestPool(List<Pair<String, Integer>> roomPool)
+	{
+		List<String> reducedRoomPool = new ArrayList<>();
+		for (Pair<String, Integer> entry : roomPool)
+		{
+			reducedRoomPool.add(entry.getRight() + ";" + entry.getLeft());
+		}
+
+		String json = Serializers.GSON.toJson(roomPool);
+
+		Writer writer;
+		try
+		{
+			File file = new File("config/BloodMagic/schematics");
+			file.mkdirs();
+
+			writer = new FileWriter("config/BloodMagic/schematics/" + Math.abs(new Random().nextInt()) + ".json");
+			writer.write(json);
+			writer.close();
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	public static void loadRoomPools()
+	{
+		try
+		{
+//			System.out.println("LOADING DEMON DUNGEONS");
+
+			URL schematicURL = DungeonRoomLoader.class.getResource(resLocToResourcePath(new ResourceLocation("bloodmagic:room_pools")));
+			List<String> schematics = Serializers.GSON.fromJson(Resources.toString(schematicURL, Charsets.UTF_8), new TypeToken<List<String>>()
+			{
+			}.getType());
+			for (String schematicKey : schematics)
+			{
+				ResourceLocation schematic = new ResourceLocation(schematicKey);
+				URL roomPoolURL = DungeonRoomLoader.class.getResource(resLocToResourcePath(schematic));
+				List<String> roomPoolList = Serializers.GSON.fromJson(Resources.toString(roomPoolURL, Charsets.UTF_8), new TypeToken<List<String>>()
+				{
+				}.getType());
+//				System.out.println("Number of entries: " + roomPoolList.size());
+
+				List<Pair<ResourceLocation, Integer>> roomPool = new ArrayList<>();
+				for (String roomEntryString : roomPoolList)
+				{
+					Pair<ResourceLocation, Integer> roomEntry = parseRoomEntryString(roomEntryString);
+					if (roomEntry != null)
+					{
+						roomPool.add(roomEntry);
+					}
+				}
+
+				DungeonRoomRegistry.registerDungeomRoomPool(schematic, roomPool);
+			}
+
+//			System.out.println("# room pools: " + schematics.size());
+
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	public static Pair<ResourceLocation, Integer> parseRoomEntryString(String str)
+	{
+		String[] splitString = str.split(";");
+		if (splitString.length == 2)
+		{
+			try
+			{
+				Integer weight = Integer.parseInt(splitString[0]);
+				ResourceLocation resLoc = new ResourceLocation(splitString[1]);
+				return Pair.of(resLoc, weight);
+			} catch (NumberFormatException ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+
+		return null;
+	}
+
 	public static void loadDungeons()
 	{
+		loadRoomPools();
 //		Map<String, BlockPos> structureMap = new HashMap<>();
 //
 //		Map<String, Map<Direction, List<BlockPos>>> doorMap = new HashMap<>(); // Map of doors. The EnumFacing
@@ -85,7 +172,7 @@ public class DungeonRoomLoader
 				ResourceLocation schematic = new ResourceLocation(schematicKey);
 				URL dungeonURL = DungeonRoomLoader.class.getResource(resLocToResourcePath(schematic));
 				DungeonRoom dungeonRoom = Serializers.GSON.fromJson(Resources.toString(dungeonURL, Charsets.UTF_8), DungeonRoom.class);
-				DungeonRoomRegistry.registerDungeonRoom(dungeonRoom, Math.max(1, dungeonRoom.dungeonWeight));
+				DungeonRoomRegistry.registerDungeonRoom(schematic, dungeonRoom, Math.max(1, dungeonRoom.dungeonWeight));
 			}
 
 			System.out.println("# schematics: " + schematics.size());
