@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -36,8 +34,6 @@ public class DungeonRoom
 	public Map<BlockPos, Integer> doorToIndexMap = new HashMap<>();
 	public Map<Integer, List<String>> indexToRoomTypeMap = new HashMap<>();
 
-	public String type = "base";
-
 	public DungeonRoom(Map<String, BlockPos> structureMap, Map<String, Map<Direction, List<BlockPos>>> doorMap, List<AreaDescriptor.Rectangle> descriptorList)
 	{
 		this.structureMap = structureMap;
@@ -46,18 +42,16 @@ public class DungeonRoom
 	}
 
 	// REEEEEEEEEEEEEEEEE
-	public Map<Pair<Direction, BlockPos>, List<String>> getPotentialConnectedRoomTypes(PlacementSettings settings, BlockPos offset)
+	public List<DungeonDoor> getPotentialConnectedRoomTypes(PlacementSettings settings, BlockPos offset)
 	{
-		// This String list is stored in the door block.
-		Map<Pair<Direction, BlockPos>, List<String>> offsetMap = new HashMap<>();
+		// This DungeonDoor is stored in the door block.
+		List<DungeonDoor> dungeonDoorList = new ArrayList<>();
 
 		for (Entry<String, Map<Direction, List<BlockPos>>> entry : doorMap.entrySet())
 		{
 
 			Map<Direction, List<BlockPos>> doorDirMap = entry.getValue();
-//				Direction originalFacing = DungeonUtil.rotate(settings.getMirror(), settings.getRotation(), facing);
-//			Direction originalFacing = DungeonUtil.reverseRotate(settings.getMirror(), settings.getRotation(), facing);
-//				Direction originalFacing = facing;
+			String doorType = entry.getKey();
 
 			for (int i = 0; i < 4; i++)
 			{
@@ -71,18 +65,25 @@ public class DungeonRoom
 						int roomTypeIndex = doorToIndexMap == null ? -1 : doorToIndexMap.get(doorPos);
 						if (roomTypeIndex == -1)
 						{
-							offsetMap.put(Pair.of(rotatedFacing, Template.transformedBlockPos(settings, doorPos).add(offset)), new ArrayList<>());
+							dungeonDoorList.add(new DungeonDoor(Template.transformedBlockPos(settings, doorPos).add(offset), rotatedFacing, doorType, new ArrayList<>()));
+//							offsetMap.put(Pair.of(rotatedFacing, Template.transformedBlockPos(settings, doorPos).add(offset)), new ArrayList<>());
 							continue;
 						}
 						List<String> roomTypeList = indexToRoomTypeMap.get(roomTypeIndex);
-						offsetMap.put(Pair.of(rotatedFacing, Template.transformedBlockPos(settings, doorPos).add(offset)), roomTypeList);
+//						offsetMap.put(Pair.of(rotatedFacing, Template.transformedBlockPos(settings, doorPos).add(offset)), roomTypeList);
+						dungeonDoorList.add(new DungeonDoor(Template.transformedBlockPos(settings, doorPos).add(offset), rotatedFacing, doorType, roomTypeList));
 					}
 				}
 			}
 		}
 
-		return offsetMap;
+		return dungeonDoorList;
 	}
+
+//	public Pair<Rotation, DungeonDoor> getRandomDoor(BlockPos doorPos, Direction doorDir, String doorType)
+//	{
+//
+//	}
 
 	public List<AreaDescriptor> getAreaDescriptors(PlacementSettings settings, BlockPos offset)
 	{
@@ -128,7 +129,7 @@ public class DungeonRoom
 	{
 		Map<String, List<BlockPos>> offsetMap = new HashMap<>();
 
-		for (String type : offsetMap.keySet())
+		for (String type : doorMap.keySet())
 		{
 			offsetMap.put(type, getDoorOffsetsForFacing(settings, type, facing, offset));
 		}
