@@ -174,6 +174,9 @@ public class BloodMagicBlocks
 
 	public static final RegistryObject<Block> HELLFORGED_BLOCK = DUNGEONBLOCKS.register("dungeon_metal", () -> new Block(Properties.create(Material.IRON).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
 
+	public static final RegistryObject<Block> DUNGEON_CONTROLLER = BLOCKS.register("dungeon_controller", () -> new BlockDungeonController());
+	public static final RegistryObject<Block> DUNGEON_SEAL = BLOCKS.register("dungeon_seal", () -> new BlockDungeonSeal());
+
 	public static final RegistryObject<Block> NETHER_SOIL = BLOCKS.register("nether_soil", () -> new BlockNetherrackSoil(Properties.create(Material.EARTH).hardnessAndResistance(0.4F, 0.4F).sound(SoundType.NETHERRACK).harvestTool(ToolType.PICKAXE).tickRandomly()));
 
 	public static final RegistryObject<Block> GROWING_DOUBT = BLOCKS.register("creeping_doubt", () -> new BlockGrowingDoubt(Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().zeroHardnessAndResistance().sound(SoundType.CROP)));

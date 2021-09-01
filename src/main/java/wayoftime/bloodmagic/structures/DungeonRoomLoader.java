@@ -23,6 +23,63 @@ import wayoftime.bloodmagic.gson.Serializers;
 
 public class DungeonRoomLoader
 {
+	public static List<String> lootPoolRoomSchematics = new ArrayList<>();
+
+	public static void saveNewDungeons()
+	{
+//		Map<String, BlockPos> structureMap = new HashMap<>();
+//
+//		Map<String, Map<Direction, List<BlockPos>>> doorMap = new HashMap<>(); // Map of doors. The EnumFacing
+//																				// indicates what way
+//		// this door faces.
+//		List<AreaDescriptor.Rectangle> descriptorList = new ArrayList<>();
+//		descriptorList.add(new AreaDescriptor.Rectangle(new BlockPos(0, 0, 0), new BlockPos(17, 8, 17)));
+//
+//		structureMap.put("bloodmagic:t3_entrance", new BlockPos(0, 0, 0));
+//
+//		Map<Direction, List<BlockPos>> defaultList = new HashMap<>();
+//		List<BlockPos> northList = new ArrayList<>();
+//		northList.add(new BlockPos(8, 1, 0));
+//
+//		List<BlockPos> southList = new ArrayList<>();
+//		southList.add(new BlockPos(8, 1, 16));
+//
+//		List<BlockPos> eastList = new ArrayList<>();
+//		eastList.add(new BlockPos(16, 1, 8));
+//
+//		List<BlockPos> westList = new ArrayList<>();
+//		westList.add(new BlockPos(0, 1, 8));
+//
+//		defaultList.put(Direction.NORTH, northList);
+//		defaultList.put(Direction.SOUTH, southList);
+//		defaultList.put(Direction.EAST, eastList);
+//		defaultList.put(Direction.WEST, westList);
+//
+//		doorMap.put("default", defaultList);
+//
+//		DungeonRoom testRoom = new DungeonRoom(structureMap, doorMap, descriptorList);
+//		testRoom.controllerOffset = new BlockPos(8, 4, 8);
+//		testRoom.spawnLocation = new BlockPos(8, 1, 6);
+//
+//		HashMap<Integer, List<BlockPos>> indexToDoorMap = new HashMap<>();
+//		List<BlockPos> doorList = new ArrayList<>();
+//		doorList.add(new BlockPos(8, 1, 0));
+//		doorList.add(new BlockPos(8, 1, 16));
+//		doorList.add(new BlockPos(16, 1, 8));
+//		doorList.add(new BlockPos(0, 1, 8));
+//		indexToDoorMap.put(1, doorList);
+//
+//		Map<Integer, List<String>> indexToRoomTypeMap = new HashMap<>();
+//		List<String> roomTypes = new ArrayList<>();
+//		roomTypes.add("bloodmagic:room_pools/tier1/mini_dungeon");
+//		indexToRoomTypeMap.put(1, roomTypes);
+//
+//		testRoom.indexToDoorMap = indexToDoorMap;
+//		testRoom.indexToRoomTypeMap = indexToRoomTypeMap;
+//
+//		DungeonRoomLoader.saveSingleDungeon(testRoom);
+	}
+
 	public static void saveDungeons()
 	{
 		for (DungeonRoom room : DungeonRoomRegistry.dungeonWeightMap.keySet())
@@ -171,7 +228,9 @@ public class DungeonRoomLoader
 			{
 				ResourceLocation schematic = new ResourceLocation(schematicKey);
 				URL dungeonURL = DungeonRoomLoader.class.getResource(resLocToResourcePath(schematic));
+				System.out.println("Loading schematic: " + schematic);
 				DungeonRoom dungeonRoom = Serializers.GSON.fromJson(Resources.toString(dungeonURL, Charsets.UTF_8), DungeonRoom.class);
+				System.out.println("Resulting dungeon: " + dungeonRoom);
 				DungeonRoomRegistry.registerDungeonRoom(schematic, dungeonRoom, Math.max(1, dungeonRoom.dungeonWeight));
 			}
 
@@ -201,6 +260,8 @@ public class DungeonRoomLoader
 		{
 			e.printStackTrace();
 		}
+
+		saveNewDungeons();
 	}
 
 	public static void test()

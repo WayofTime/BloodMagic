@@ -97,6 +97,9 @@ public class GeneratorBlockStates extends BlockStateProvider
 		buildCubeAllWithTextureName("solidlightmimic");
 		buildCubeAllWithTextureName("solidopaquemimic");
 
+		buildCubeAll(BloodMagicBlocks.DUNGEON_CONTROLLER.get());
+		buildCubeAll(BloodMagicBlocks.DUNGEON_SEAL.get());
+
 		buildCrop(BloodMagicBlocks.GROWING_DOUBT.get(), CropsBlock.AGE, 7, BloodMagic.rl("block/creeping_doubt_1"), BloodMagic.rl("block/creeping_doubt_2"), BloodMagic.rl("block/creeping_doubt_3"), BloodMagic.rl("block/creeping_doubt_4"), BloodMagic.rl("block/creeping_doubt_5"), BloodMagic.rl("block/creeping_doubt_6"), BloodMagic.rl("block/creeping_doubt_7"), BloodMagic.rl("block/creeping_doubt_8"));
 		buildCrossCrop(BloodMagicBlocks.WEAK_TAU.get(), CropsBlock.AGE, 7, modLoc("block/weak_tau_1"), modLoc("block/weak_tau_2"), modLoc("block/weak_tau_3"), modLoc("block/weak_tau_4"), modLoc("block/weak_tau_5"), modLoc("block/weak_tau_6"), modLoc("block/weak_tau_7"), modLoc("block/weak_tau_8"));
 		buildCrossCrop(BloodMagicBlocks.STRONG_TAU.get(), CropsBlock.AGE, 7, modLoc("block/weak_tau_1"), modLoc("block/strong_tau_2"), modLoc("block/strong_tau_3"), modLoc("block/strong_tau_4"), modLoc("block/strong_tau_5"), modLoc("block/strong_tau_6"), modLoc("block/strong_tau_7"), modLoc("block/strong_tau_8"));

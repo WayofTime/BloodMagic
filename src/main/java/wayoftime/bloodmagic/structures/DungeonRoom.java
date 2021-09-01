@@ -27,11 +27,13 @@ public class DungeonRoom
 
 	public float oreDensity = 0;
 	public BlockPos spawnLocation = BlockPos.ZERO;
+	public BlockPos controllerOffset = BlockPos.ZERO;
 
 	// Set of maps that contain the types of rooms that a given door (defined by its
 	// BlockPos) can link to. Defined in this manner to reduce the file size of the
 	// DungeonRoom.
-	public Map<BlockPos, Integer> doorToIndexMap = new HashMap<>();
+//	public Map<BlockPos, Integer> doorToIndexMap = new TreeMap<>();
+	public Map<Integer, List<BlockPos>> indexToDoorMap = new HashMap<>();
 	public Map<Integer, List<String>> indexToRoomTypeMap = new HashMap<>();
 
 	public DungeonRoom(Map<String, BlockPos> structureMap, Map<String, Map<Direction, List<BlockPos>>> doorMap, List<AreaDescriptor.Rectangle> descriptorList)
@@ -47,6 +49,13 @@ public class DungeonRoom
 		// This DungeonDoor is stored in the door block.
 		List<DungeonDoor> dungeonDoorList = new ArrayList<>();
 
+//		Map<Integer, List<BlockPos>> rotatedIndexToDoorMap = new HashMap<>();
+//		for (Entry<Integer, List<BlockPos>> entry : indexToDoorMap.entrySet())
+//		{
+//			List<BlockPos> rotatedBlockPosList = new ArrayList<>();
+//			
+//		}
+
 		for (Entry<String, Map<Direction, List<BlockPos>>> entry : doorMap.entrySet())
 		{
 
@@ -60,19 +69,43 @@ public class DungeonRoom
 				{
 					Direction rotatedFacing = DungeonUtil.getFacingForSettings(settings, originalFacing);
 					List<BlockPos> doorList = doorDirMap.get(originalFacing);
-					for (BlockPos doorPos : doorList)
+					if (indexToDoorMap == null || indexToDoorMap.isEmpty())
 					{
-						int roomTypeIndex = doorToIndexMap == null ? -1 : doorToIndexMap.get(doorPos);
-						if (roomTypeIndex == -1)
+						List<String> roomTypeList = new ArrayList<String>();
+						for (BlockPos doorPos : doorList)
 						{
-							dungeonDoorList.add(new DungeonDoor(Template.transformedBlockPos(settings, doorPos).add(offset), rotatedFacing, doorType, new ArrayList<>()));
-//							offsetMap.put(Pair.of(rotatedFacing, Template.transformedBlockPos(settings, doorPos).add(offset)), new ArrayList<>());
-							continue;
+							dungeonDoorList.add(new DungeonDoor(Template.transformedBlockPos(settings, doorPos).add(offset), rotatedFacing, doorType, roomTypeList));
 						}
-						List<String> roomTypeList = indexToRoomTypeMap.get(roomTypeIndex);
-//						offsetMap.put(Pair.of(rotatedFacing, Template.transformedBlockPos(settings, doorPos).add(offset)), roomTypeList);
-						dungeonDoorList.add(new DungeonDoor(Template.transformedBlockPos(settings, doorPos).add(offset), rotatedFacing, doorType, roomTypeList));
+
+						continue;
 					}
+					for (Entry<Integer, List<BlockPos>> rotatedIndexEntry : indexToDoorMap.entrySet())
+					{
+						int index = rotatedIndexEntry.getKey();
+						List<String> roomTypeList = indexToRoomTypeMap.get(index);
+						List<BlockPos> indexedDoorList = rotatedIndexEntry.getValue();
+						for (BlockPos indexPos : indexedDoorList)
+						{
+							if (doorList.contains(indexPos))
+							{
+								dungeonDoorList.add(new DungeonDoor(Template.transformedBlockPos(settings, indexPos).add(offset), rotatedFacing, doorType, roomTypeList));
+							}
+						}
+					}
+
+//					for (BlockPos doorPos : doorList)
+//					{
+//						int roomTypeIndex = doorToIndexMap == null ? -1 : doorToIndexMap.get(doorPos);
+//						if (roomTypeIndex == -1)
+//						{
+//							dungeonDoorList.add(new DungeonDoor(Template.transformedBlockPos(settings, doorPos).add(offset), rotatedFacing, doorType, new ArrayList<>()));
+////							offsetMap.put(Pair.of(rotatedFacing, Template.transformedBlockPos(settings, doorPos).add(offset)), new ArrayList<>());
+//							continue;
+//						}
+//						List<String> roomTypeList = indexToRoomTypeMap.get(roomTypeIndex);
+////						offsetMap.put(Pair.of(rotatedFacing, Template.transformedBlockPos(settings, doorPos).add(offset)), roomTypeList);
+//						dungeonDoorList.add(new DungeonDoor(Template.transformedBlockPos(settings, doorPos).add(offset), rotatedFacing, doorType, roomTypeList));
+//					}
 				}
 			}
 		}
@@ -100,6 +133,16 @@ public class DungeonRoom
 	public BlockPos getPlayerSpawnLocationForPlacement(PlacementSettings settings, BlockPos offset)
 	{
 		return Template.transformedBlockPos(settings, spawnLocation).add(offset);
+	}
+
+	public BlockPos getInitialSpawnOffsetForControllerPos(PlacementSettings settings, BlockPos controllerPos)
+	{
+		if (controllerOffset == null)
+		{
+			return controllerPos;
+		}
+
+		return controllerPos.subtract(Template.transformedBlockPos(settings, controllerOffset));
 	}
 
 	public List<BlockPos> getDoorOffsetsForFacing(PlacementSettings settings, String doorType, Direction facing, BlockPos offset)

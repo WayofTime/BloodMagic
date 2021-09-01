@@ -31,7 +31,8 @@ public class ItemDungeonTester extends Item
 //			System.out.println("Test");
 //			DungeonTester.testDungeonElementWithOutput((ServerWorld) world, player.getPosition());
 			DungeonSynthesizer dungeon = new DungeonSynthesizer();
-			ResourceLocation initialType = new ResourceLocation("bloodmagic:room_pools/test_pool_1");
+//			ResourceLocation initialType = new ResourceLocation("bloodmagic:room_pools/test_pool_1");
+			ResourceLocation initialType = new ResourceLocation("bloodmagic:room_pools/entrances/mini_dungeon_entrances");
 			dungeon.generateInitialRoom(initialType, world.rand, (ServerWorld) world, player.getPosition());
 
 			List<String> doorTypes = new ArrayList<>(dungeon.availableDoorMasterMap.keySet());
@@ -61,7 +62,7 @@ public class ItemDungeonTester extends Item
 				List<ResourceLocation> passList = new ArrayList<>();
 				passList.add(roomType);
 
-				dungeon.addNewRoomToExistingDungeon((ServerWorld) world, roomType, world.rand, activatedDoorPos, doorFacing, activatedDoorType, passList);
+				dungeon.addNewRoomToExistingDungeon((ServerWorld) world, player.getPosition(), roomType, world.rand, activatedDoorPos, doorFacing, activatedDoorType, passList);
 				break;
 			}
 

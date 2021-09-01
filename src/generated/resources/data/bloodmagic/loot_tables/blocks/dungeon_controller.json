@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "name": "bloodmagic:dungeon_controller",
+      "rolls": 1.0,
+      "entries": []
+    }
+  ]
+}

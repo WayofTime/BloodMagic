@@ -78,6 +78,8 @@ import wayoftime.bloodmagic.tile.TileDeforesterCharge;
 import wayoftime.bloodmagic.tile.TileDemonCrucible;
 import wayoftime.bloodmagic.tile.TileDemonCrystal;
 import wayoftime.bloodmagic.tile.TileDemonCrystallizer;
+import wayoftime.bloodmagic.tile.TileDungeonController;
+import wayoftime.bloodmagic.tile.TileDungeonSeal;
 import wayoftime.bloodmagic.tile.TileFungalCharge;
 import wayoftime.bloodmagic.tile.TileIncenseAltar;
 import wayoftime.bloodmagic.tile.TileMasterRitualStone;
@@ -203,10 +205,10 @@ public class BloodMagic
 		AnointmentRegistrar.register();
 		AlchemyArrayRegistry.registerBaseArrays();
 
-    if (curiosLoaded)
+		if (curiosLoaded)
 		{
 			curiosCompat.registerInventory();
-    }
+		}
 		if (ModList.get().isLoaded("patchouli"))
 		{
 			new RegisterPatchouliMultiblocks();
@@ -236,6 +238,9 @@ public class BloodMagic
 		event.getRegistry().register(TileEntityType.Builder.create(TileInputRoutingNode::new, BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("inputroutingnode"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileOutputRoutingNode::new, BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("outputroutingnode"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileMasterRoutingNode::new, BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("masterroutingnode"));
+
+		event.getRegistry().register(TileEntityType.Builder.create(TileDungeonController::new, BloodMagicBlocks.DUNGEON_CONTROLLER.get()).build(null).setRegistryName("dungeon_controller"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileDungeonSeal::new, BloodMagicBlocks.DUNGEON_SEAL.get()).build(null).setRegistryName("dungeon_seal"));
 	}
 
 	@SubscribeEvent
