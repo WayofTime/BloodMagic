@@ -112,8 +112,8 @@ public class Constants
 		public static final String ROUTING_MASTER_INPUT = "inputList";
 		public static final String ROUTING_MASTER_OUTPUT = "outputList";
 
-		public static final String DUNGEON_CONTROLLER = "master";
-		public static final String DUNGEON_DOOR = "door";
+		public static final String DUNGEON_CONTROLLER = "dungeon_controller";
+		public static final String DUNGEON_DOOR = "dungeon_door";
 
 		public static final String GHOST_STACK_SIZE = "stackSize";
 
@@ -145,6 +145,7 @@ public class Constants
 		public static final String AREA_DESCRIPTORS = "area_descriptors";
 		public static final String DOOR_TYPES = "door_types";
 		public static final String DOOR = "door";
+		public static final String TYPE = "type";
 	}
 
 	public static class BUTTONID

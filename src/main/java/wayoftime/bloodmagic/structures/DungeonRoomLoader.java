@@ -33,27 +33,15 @@ public class DungeonRoomLoader
 //																				// indicates what way
 //		// this door faces.
 //		List<AreaDescriptor.Rectangle> descriptorList = new ArrayList<>();
-//		descriptorList.add(new AreaDescriptor.Rectangle(new BlockPos(0, 0, 0), new BlockPos(17, 8, 17)));
+//		descriptorList.add(new AreaDescriptor.Rectangle(new BlockPos(0, 0, 0), new BlockPos(17, 7, 18)));
 //
-//		structureMap.put("bloodmagic:t3_entrance", new BlockPos(0, 0, 0));
+//		structureMap.put("bloodmagic:mini_dungeon/library", new BlockPos(0, 0, 0));
 //
 //		Map<Direction, List<BlockPos>> defaultList = new HashMap<>();
 //		List<BlockPos> northList = new ArrayList<>();
 //		northList.add(new BlockPos(8, 1, 0));
 //
-//		List<BlockPos> southList = new ArrayList<>();
-//		southList.add(new BlockPos(8, 1, 16));
-//
-//		List<BlockPos> eastList = new ArrayList<>();
-//		eastList.add(new BlockPos(16, 1, 8));
-//
-//		List<BlockPos> westList = new ArrayList<>();
-//		westList.add(new BlockPos(0, 1, 8));
-//
 //		defaultList.put(Direction.NORTH, northList);
-//		defaultList.put(Direction.SOUTH, southList);
-//		defaultList.put(Direction.EAST, eastList);
-//		defaultList.put(Direction.WEST, westList);
 //
 //		doorMap.put("default", defaultList);
 //
@@ -64,9 +52,7 @@ public class DungeonRoomLoader
 //		HashMap<Integer, List<BlockPos>> indexToDoorMap = new HashMap<>();
 //		List<BlockPos> doorList = new ArrayList<>();
 //		doorList.add(new BlockPos(8, 1, 0));
-//		doorList.add(new BlockPos(8, 1, 16));
-//		doorList.add(new BlockPos(16, 1, 8));
-//		doorList.add(new BlockPos(0, 1, 8));
+//
 //		indexToDoorMap.put(1, doorList);
 //
 //		Map<Integer, List<String>> indexToRoomTypeMap = new HashMap<>();

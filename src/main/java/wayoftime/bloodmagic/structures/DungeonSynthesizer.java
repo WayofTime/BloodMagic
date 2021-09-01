@@ -11,9 +11,9 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.reflect.TypeToken;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
@@ -21,8 +21,11 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.server.ServerWorld;
+import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.gson.Serializers;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
+import wayoftime.bloodmagic.tile.TileDungeonController;
+import wayoftime.bloodmagic.tile.TileDungeonSeal;
 import wayoftime.bloodmagic.util.Constants;
 
 public class DungeonSynthesizer
@@ -147,13 +150,40 @@ public class DungeonSynthesizer
 
 	public void addNewControllerBlock(ServerWorld world, BlockPos controllerPos)
 	{
-		world.setBlockState(controllerPos, Blocks.LAPIS_BLOCK.getDefaultState(), 3);
+//		world.setBlockState(controllerPos, Blocks.LAPIS_BLOCK.getDefaultState(), 3);
+		world.setBlockState(controllerPos, BloodMagicBlocks.DUNGEON_CONTROLLER.get().getDefaultState(), 3);
+		TileEntity tile = world.getTileEntity(controllerPos);
+		if (tile instanceof TileDungeonController)
+		{
+			((TileDungeonController) tile).setDungeonSynthesizer(this);
+//			((TileDungeonSeal) tile).acceptDoorInformation(controllerPos, doorBlockPos, doorFacing, doorType, potentialRoomTypes);
+		}
 	}
 
 	public void addNewDoorBlock(ServerWorld world, BlockPos controllerPos, BlockPos doorBlockPos, Direction doorFacing, String doorType, List<ResourceLocation> potentialRoomTypes)
 	{
 		BlockPos doorBlockOffsetPos = doorBlockPos.offset(doorFacing).offset(Direction.UP, 2);
-		world.setBlockState(doorBlockOffsetPos, Blocks.REDSTONE_BLOCK.getDefaultState(), 3);
+//		world.setBlockState(doorBlockOffsetPos, Blocks.REDSTONE_BLOCK.getDefaultState(), 3);
+		Direction rightDirection = doorFacing.rotateY();
+		for (int i = -1; i <= 1; i++)
+		{
+			for (int j = -1; j <= 1; j++)
+			{
+				if (i == 0 && j == 0)
+				{
+					continue;
+				}
+
+				world.setBlockState(doorBlockOffsetPos.offset(rightDirection, i).offset(Direction.UP, j), BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get().getDefaultState());
+			}
+		}
+
+		world.setBlockState(doorBlockOffsetPos, BloodMagicBlocks.DUNGEON_SEAL.get().getDefaultState(), 3);
+		TileEntity tile = world.getTileEntity(doorBlockOffsetPos);
+		if (tile instanceof TileDungeonSeal)
+		{
+			((TileDungeonSeal) tile).acceptDoorInformation(controllerPos, doorBlockPos, doorFacing, doorType, potentialRoomTypes);
+		}
 	}
 
 	// Returns how successful the placement of the
@@ -323,6 +353,7 @@ public class DungeonSynthesizer
 
 		Direction oppositeDoorFacing = doorFacing.getOpposite();
 		DungeonRoom testingRoom = getRandomRoom(roomType, rand);
+//		System.out.println("Room type: " + roomType);
 
 		List<Rotation> rotationList = Rotation.shuffledRotations(rand);
 
@@ -370,6 +401,8 @@ public class DungeonSynthesizer
 			// Did not manage to place the room.
 			return false;
 		}
+
+		System.out.println("Room spawn location: " + roomLocation);
 
 		placedRoom.placeStructureAtPosition(rand, settings, world, roomLocation);
 		for (String doorType : placedRoom.doorMap.keySet())

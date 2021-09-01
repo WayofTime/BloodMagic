@@ -3,8 +3,10 @@ package wayoftime.bloodmagic.tile;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -21,6 +23,7 @@ public class TileDungeonSeal extends TileBase
 	public BlockPos controllerPos = BlockPos.ZERO;
 	public BlockPos doorPos = BlockPos.ZERO;
 	public Direction doorDirection = Direction.NORTH;
+	public String doorType = "";
 
 	public List<ResourceLocation> potentialRoomTypes = new ArrayList<>();
 
@@ -34,11 +37,27 @@ public class TileDungeonSeal extends TileBase
 		this(TYPE);
 	}
 
-	public void acceptDoorInformation(BlockPos controllerPos, BlockPos doorPos, Direction doorDirection, List<ResourceLocation> potentialRoomTypes)
+	public int requestRoomFromController(ItemStack heldStack)
+	{
+		if (!world.isRemote && !potentialRoomTypes.isEmpty())
+		{
+			TileEntity tile = world.getTileEntity(controllerPos);
+			if (tile instanceof TileDungeonController)
+			{
+				TileDungeonController tileController = (TileDungeonController) tile;
+				tileController.handleRequestForRoomPlacement(doorPos, doorDirection, doorType, potentialRoomTypes);
+			}
+		}
+
+		return 3;
+	}
+
+	public void acceptDoorInformation(BlockPos controllerPos, BlockPos doorPos, Direction doorDirection, String doorType, List<ResourceLocation> potentialRoomTypes)
 	{
 		this.controllerPos = controllerPos;
 		this.doorPos = doorPos;
 		this.doorDirection = doorDirection;
+		this.doorType = doorType;
 		this.potentialRoomTypes = potentialRoomTypes;
 	}
 
@@ -49,7 +68,7 @@ public class TileDungeonSeal extends TileBase
 		controllerPos = new BlockPos(masterTag.getInt(Constants.NBT.X_COORD), masterTag.getInt(Constants.NBT.Y_COORD), masterTag.getInt(Constants.NBT.Z_COORD));
 
 		CompoundNBT doorTag = tag.getCompound(Constants.NBT.DUNGEON_DOOR);
-		controllerPos = new BlockPos(doorTag.getInt(Constants.NBT.X_COORD), doorTag.getInt(Constants.NBT.Y_COORD), doorTag.getInt(Constants.NBT.Z_COORD));
+		doorPos = new BlockPos(doorTag.getInt(Constants.NBT.X_COORD), doorTag.getInt(Constants.NBT.Y_COORD), doorTag.getInt(Constants.NBT.Z_COORD));
 
 		int dir = tag.getInt(Constants.NBT.DIRECTION);
 		if (dir == 0)
@@ -67,6 +86,8 @@ public class TileDungeonSeal extends TileBase
 			String str = compoundnbt.getString(Constants.NBT.DOOR);
 			potentialRoomTypes.add(new ResourceLocation(str));
 		}
+
+		this.doorType = tag.getString(Constants.NBT.TYPE);
 	}
 
 	@Override
@@ -79,10 +100,10 @@ public class TileDungeonSeal extends TileBase
 		tag.put(Constants.NBT.DUNGEON_CONTROLLER, masterTag);
 
 		CompoundNBT doorTag = new CompoundNBT();
-		doorTag.putInt(Constants.NBT.X_COORD, controllerPos.getX());
-		doorTag.putInt(Constants.NBT.Y_COORD, controllerPos.getY());
-		doorTag.putInt(Constants.NBT.Z_COORD, controllerPos.getZ());
-		tag.put(Constants.NBT.DUNGEON_DOOR, masterTag);
+		doorTag.putInt(Constants.NBT.X_COORD, doorPos.getX());
+		doorTag.putInt(Constants.NBT.Y_COORD, doorPos.getY());
+		doorTag.putInt(Constants.NBT.Z_COORD, doorPos.getZ());
+		tag.put(Constants.NBT.DUNGEON_DOOR, doorTag);
 
 		tag.putInt(Constants.NBT.DIRECTION, doorDirection.getIndex());
 
@@ -99,6 +120,8 @@ public class TileDungeonSeal extends TileBase
 		{
 			tag.put(Constants.NBT.DOOR_TYPES, listnbt);
 		}
+
+		tag.putString(Constants.NBT.TYPE, doorType);
 
 		return tag;
 	}
