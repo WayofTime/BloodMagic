@@ -15,6 +15,7 @@ import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.altar.AltarTier;
 import wayoftime.bloodmagic.altar.BloodAltar;
 import wayoftime.bloodmagic.altar.IBloodAltar;
+import wayoftime.bloodmagic.common.block.BlockAltar;
 
 public class TileAltar extends TileInventory implements IBloodAltar, ITickableTileEntity
 {
@@ -23,16 +24,31 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickableTi
 	private BloodAltar bloodAltar;
 
 	private LazyOptional fluidOptional;
+	private boolean isOutputOn;
 
 	public TileAltar(TileEntityType<?> type)
 	{
 		super(type, 1, "altar");
 		this.bloodAltar = new BloodAltar(this);
+		this.isOutputOn = false;
 	}
 
 	public TileAltar()
 	{
 		this(TYPE);
+	}
+
+	public boolean getOutputState()
+	{
+		return this.isOutputOn;
+	}
+
+	public void setOutputState(boolean state)
+	{
+		BlockAltar altar = (BlockAltar) this.getWorld().getBlockState(pos).getBlock();
+
+		this.isOutputOn = state;
+		this.world.notifyNeighborsOfStateChange(pos, altar);
 	}
 
 	@Override
@@ -210,6 +226,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickableTi
 	{
 		return bloodAltar.setCurrentTierDisplayed(altarTier);
 	}
+
 //
 //	@Override
 //	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing)
@@ -221,6 +238,10 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickableTi
 //
 //		return super.hasCapability(capability, facing);
 //	}
+	public int getAnalogSignalStrength(int redstoneMode)
+	{
+		return bloodAltar.getAnalogSignalStrenght(redstoneMode);
+	}
 
 	@Override
 	protected void invalidateCaps()
