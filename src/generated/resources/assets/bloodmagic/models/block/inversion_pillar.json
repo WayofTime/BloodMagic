@@ -1,0 +1,6 @@
+{
+  "parent": "bloodmagic:block/pillar_mid",
+  "textures": {
+    "texture": "bloodmagic:models/pillar_mid"
+  }
+}

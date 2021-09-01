@@ -61,6 +61,7 @@ import wayoftime.bloodmagic.network.DemonAuraClientPacket;
 import wayoftime.bloodmagic.potion.BMPotionUtils;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.util.helper.BindableHelper;
+import wayoftime.bloodmagic.util.helper.InventoryHelper;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 import wayoftime.bloodmagic.will.DemonWillHolder;
@@ -272,7 +273,7 @@ public class GenericHandler
 
 		if (!player.getEntityWorld().isRemote)
 		{
-			for (ItemStack stack : player.inventory.mainInventory)
+			for (ItemStack stack : InventoryHelper.getAllInventories(player))
 			{
 				if (stack.getItem() instanceof ItemExperienceBook)
 				{
@@ -436,19 +437,30 @@ public class GenericHandler
 //					System.out.println("Player's motion: " + player.getMotion().getY() + ", Player's fall reduction multiplier: " + fallDistanceMultiplier + ", Player's final fall distance: " + player.fallDistance);
 				}
 
+				int fireLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_FIRE_RESIST.get().getKey());
+				if (fireLevel > 0)
+				{
+					boolean hasChanged = false;
+					int fireCooldown = chestStack.getTag().getInt("fire_cooldown");
+					if (fireCooldown > 0)
+					{
+						fireCooldown--;
+						hasChanged = true;
+					}
+
+					if (hasChanged)
+					{
+						chestStack.getTag().putInt("fire_cooldown", fireCooldown);
+					}
+				}
+
 				if (player.getFireTimer() > 0)
 				{
 					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_FIRE_RESIST.get(), 1);
-					int fireLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_FIRE_RESIST.get().getKey());
 					if (fireLevel > 0)
 					{
 						boolean hasChanged = false;
 						int fireCooldown = chestStack.getTag().getInt("fire_cooldown");
-						if (fireCooldown > 0)
-						{
-							fireCooldown--;
-							hasChanged = true;
-						}
 
 						if (player.getFireTimer() > 0 && fireCooldown <= 0)
 						{

@@ -70,6 +70,7 @@ public class BasicItemFilter implements IItemFilter
 					if (doStacksMatch(filterStack, checkedStack))
 					{
 						filterStack.setCount(Math.max(filterStack.getCount() - stackSize, 0));
+						continue;
 					}
 				}
 			}
@@ -96,6 +97,7 @@ public class BasicItemFilter implements IItemFilter
 					if (doStacksMatch(filterStack, checkedStack))
 					{
 						filterStack.grow(stackSize);
+						continue;
 					}
 				}
 			}

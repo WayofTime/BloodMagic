@@ -23,6 +23,7 @@ public class BloodMagicPacketHandler extends BasePacketHandler
 		registerClientToServer(AlchemyTableButtonPacket.class, AlchemyTableButtonPacket::encode, AlchemyTableButtonPacket::decode, AlchemyTableButtonPacket::handle);
 		registerClientToServer(RouterFilterPacket.class, RouterFilterPacket::encode, RouterFilterPacket::decode, RouterFilterPacket::handle);
 		registerClientToServer(ItemRoutingNodeButtonPacket.class, ItemRoutingNodeButtonPacket::encode, ItemRoutingNodeButtonPacket::decode, ItemRoutingNodeButtonPacket::handle);
+		registerClientToServer(FilterButtonPacket.class, FilterButtonPacket::encode, FilterButtonPacket::decode, FilterButtonPacket::handle);
 
 //		INSTANCE.registerMessage(id, messageType, encoder, decoder, messageConsumer);
 //		INSTANCE.registerMessage(ChatUtil.PacketNoSpamChat.Handler.class, ChatUtil.PacketNoSpamChat.class, 0, Side.CLIENT);

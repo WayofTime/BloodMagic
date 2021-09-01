@@ -68,7 +68,7 @@ public class RitualFeatheredKnife extends Ritual
 			return;
 		}
 
-		BlockPos pos = masterRitualStone.getBlockPos();
+		BlockPos pos = masterRitualStone.getMasterBlockPos();
 
 		List<EnumDemonWillType> willConfig = masterRitualStone.getActiveWillConfig();
 

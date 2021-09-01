@@ -357,7 +357,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 	}
 
 	@Override
-	public BlockPos getBlockPos()
+	public BlockPos getMasterBlockPos()
 	{
 		return getPos();
 	}
@@ -401,7 +401,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 	public EnumReaderBoundaries setBlockRangeByBounds(PlayerEntity player, String range, BlockPos offset1, BlockPos offset2)
 	{
 		AreaDescriptor descriptor = this.getBlockRange(range);
-		DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(world, getBlockPos());
+		DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(world, getMasterBlockPos());
 
 		EnumReaderBoundaries modificationType = currentRitual.canBlockRangeBeModified(range, descriptor, this, offset1, offset2, holder);
 		if (modificationType == EnumReaderBoundaries.SUCCESS)

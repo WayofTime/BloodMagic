@@ -42,7 +42,7 @@ public class RitualWater extends Ritual
 
 		AreaDescriptor waterRange = masterRitualStone.getBlockRange(WATER_RANGE);
 
-		for (BlockPos newPos : waterRange.getContainedPositions(masterRitualStone.getBlockPos()))
+		for (BlockPos newPos : waterRange.getContainedPositions(masterRitualStone.getMasterBlockPos()))
 		{
 			if (world.isAirBlock(newPos))
 			{

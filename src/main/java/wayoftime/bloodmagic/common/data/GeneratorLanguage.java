@@ -30,7 +30,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tile.bloodmagic.alchemytable.name", "Alchemy Table");
 
 		// Blood Orb tooltips
-		add("tooltip.bloodmagic.extraInfo", "&9-Hold shift for more info-");
+		add("tooltip.bloodmagic.extraInfo", "-Hold shift for more info-");
 		add("tooltip.bloodmagic.orb.desc", "Stores raw Life Essence");
 		add("tooltip.bloodmagic.orb.owner", "Added by: %s");
 		add("tooltip.bloodmagic.currentOwner", "Current owner: %s");
@@ -127,6 +127,33 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("tooltip.bloodmagic.ghost.everything", "Everything");
 		add("tooltip.bloodmagic.ghost.amount", "Ghost item amount: %d");
+
+		add("tooltip.bloodmagic.basicfilter.desc", "Will make sure the items match");
+		add("tooltip.bloodmagic.tagfilter.desc", "Filters based off of an item's ItemTags");
+		add("tooltip.bloodmagic.enchantfilter.desc", "Filters based off of enchantments");
+		add("tooltip.bloodmagic.modfilter.desc", "Filters based off of the source mod");
+		add("tooltip.bloodmagic.compositefilter.desc", "Filters based off of contained filters");
+
+		add("filter.bloodmagic.whitelist", "Allow");
+		add("filter.bloodmagic.blacklist", "Deny");
+		add("filter.bloodmagic.specifiedtag", "Valid Tag:");
+		add("filter.bloodmagic.novalidtag", "Specified Item");
+		add("filter.bloodmagic.anytag", "Any Tag:");
+
+		add("filter.bloodmagic.anyenchant", "Any Enchantment:");
+		add("filter.bloodmagic.noenchant", "No Enchantments");
+		add("filter.bloodmagic.allenchant", "Every Enchantment");
+		add("filter.bloodmagic.enchantfuzzy", "Any Level");
+		add("filter.bloodmagic.enchantnotfuzzy", "Exact Level");
+//		add("filter.bloodmagic.specifiedenchant", "Valid Tag:");
+
+		add("tooltip.bloodmagic.filter.whitelist", "Allow:");
+		add("tooltip.bloodmagic.filter.blacklist", "Deny:");
+		add("tooltip.bloodmagic.filter.all", "All: %s");
+		add("tooltip.bloodmagic.filter.count", "%sx %s");
+
+		add("tooltip.bloodmagic.filter.anytag", "Any Tag of %s");
+		add("tooltip.bloodmagic.contained_filters", "Contained Filters:");
 
 		// Ritual info
 		add("tooltip.bloodmagic.diviner.currentRitual", "Current Ritual: %s");
@@ -382,23 +409,22 @@ public class GeneratorLanguage extends LanguageProvider
 
 		// Guide
 		add("guide.bloodmagic.name", "Sanguine Scientiem");
-		add("guide.bloodmagic.landing_text", "\"It is my dear hope that by holding this tome in your hands, I may impart the knowledge of the lost art that is Blood Magic\"$(br)$(o)- Magus Arcana$()");
-
-		// Patchouli Guidebook
-		add("patchouli.bloodmagic.common.double_new_line", "$(br2)%s");
-		add("patchouli.bloodmagic.arc_processor.fluid", "%dmb of %s");
-		add("patchouli.bloodmagic.arc_processor.no_fluid", "None");
-		add("patchouli.bloodmagic.living_armour_upgrade_table.level", "Level");
-		add("patchouli.bloodmagic.living_armour_upgrade_table.upgrade_points", "Upgrade Points");
-		add("patchouli.bloodmagic.ritual_info.activation_cost", "$(br)Activation Cost: $(blood)%d LP$()");
-		add("patchouli.bloodmagic.ritual_info.upkeep_cost", "$(br)Base Usage Cost: $(blood)%d LP$()$(br)Base Interval: %d Ticks");
-		add("patchouli.bloodmagic.ritual_info.weak_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#weak)%s$(/l)");
-		add("patchouli.bloodmagic.ritual_info.awakened_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#awakened)%s$(/l)");
-		add("patchouli.bloodmagic.ritual_info.counter_formatter", "$(br)%s%s$()");
-		add("patchouli.bloodmagic.ritual_info.text_override_formatter", "\\$(%s)%s\\$()");
-		add("patchouli.bloodmagic.ritual_info.info_formatter", "%s$(br)%s$(br2)%s$(br)%s%s%s");
-		add("patchouli.bloodmagic.ritual_info.range_formatter", "$(br) $(li)Max Volume: %s$(li)Horizontal Radius: %s$(li)Vertical Radius: %s");
-		add("patchouli.bloodmagic.ritual_info.full_range", "Full Range");
+		add("guide.bloodmagic.landing_text", "Welcome to $(6)Blood Magic$()! $(br2)$(l:bloodmagic:utility/nyi)A lot of stuff$() isn't yet implemented, so please excuse our dust. $(br2)Click $(l:bloodmagic:utility/getting_started)HERE$() to get started. If you find any bugs, please report them on our $(l:https://github.com/WayofTime/BloodMagic/issues)Github$().");
+		add("guide.bloodmagic.subtitle", "Alchemical Wizardry");
+		add("guide.patchouli.bloodmagic.common.double_new_line", "$(br2)%s");
+		add("guide.patchouli.bloodmagic.arc_processor.fluid", "%dmb of %s");
+		add("guide.patchouli.bloodmagic.arc_processor.no_fluid", "None");
+		add("guide.patchouli.bloodmagic.living_armour_upgrade_table.level", "Level");
+		add("guide.patchouli.bloodmagic.living_armour_upgrade_table.upgrade_points", "Upgrade Points");
+		add("guide.patchouli.bloodmagic.ritual_info.activation_cost", "$(br)Activation Cost: $(blood)%d LP$()");
+		add("guide.patchouli.bloodmagic.ritual_info.upkeep_cost", "$(br)Base Usage Cost: $(blood)%d LP$()$(br)Base Interval: %d Ticks");
+		add("guide.patchouli.bloodmagic.ritual_info.weak_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#weak)%s$(/l)");
+		add("guide.patchouli.bloodmagic.ritual_info.awakened_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#awakened)%s$(/l)");
+		add("guide.patchouli.bloodmagic.ritual_info.counter_formatter", "$(br)%s%s$()");
+		add("guide.patchouli.bloodmagic.ritual_info.text_override_formatter", "\\$(%s)%s\\$()");
+		add("guide.patchouli.bloodmagic.ritual_info.info_formatter", "%s$(br)%s$(br2)%s$(br)%s%s%s");
+		add("guide.patchouli.bloodmagic.ritual_info.range_formatter", "$(br) $(li)Max Volume: %s$(li)Horizontal Radius: %s$(li)Vertical Radius: %s");
+		add("guide.patchouli.bloodmagic.ritual_info.full_range", "Full Range");
 
 		// Keybinds
 		add("bloodmagic.keybind.open_holding", "Open Sigil of Holding");
@@ -488,6 +514,10 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK, "Input Routing Node");
 		addBlock(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK, "Output Routing Node");
 		addBlock(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK, "Master Routing Node");
+
+		addBlock(BloodMagicBlocks.WEAK_TAU, "Taue Fruit");
+		addBlock(BloodMagicBlocks.STRONG_TAU, "Saturated Taue");
+		addBlock(BloodMagicBlocks.GROWING_DOUBT, "Seeds of Doubt");
 
 		// Item names
 		addItem(BloodMagicItems.WEAK_BLOOD_ORB, "Weak Blood Orb");
@@ -595,6 +625,18 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addItem(BloodMagicItems.NODE_ROUTER, "Node Router");
 		addItem(BloodMagicItems.ITEM_ROUTER_FILTER, "Standard Item Filter");
+		addItem(BloodMagicItems.ITEM_TAG_FILTER, "Tag Item Filter");
+		addItem(BloodMagicItems.ITEM_ENCHANT_FILTER, "Enchantments Item Filter");
+		addItem(BloodMagicItems.ITEM_MOD_FILTER, "Mod Item Filter");
+		addItem(BloodMagicItems.ITEM_COMPOSITE_FILTER, "Composite Item Filter");
+
+		addItem(BloodMagicItems.FRAME_PARTS, "Filter Parts");
+
+		addItem(BloodMagicItems.HELLFORGED_SAND, "Hellforged Dust");
+		addItem(BloodMagicItems.CORRUPTED_DUST_TINY, "Tiny Corrupted Dust");
+		addItem(BloodMagicItems.CORRUPTED_DUST, "Corrupted Dust");
+		addItem(BloodMagicItems.HELLFORGED_INGOT, "Hellforged Ingot");
+		addItem(BloodMagicItems.HELLFORGED_BLOCK, "Hellforged Block");
 
 		// Anointment Items
 		addItem(BloodMagicItems.SLATE_VIAL, "Slate-infused Vial");
@@ -607,6 +649,8 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT, "Iron Tip");
 		addItem(BloodMagicItems.LOOTING_ANOINTMENT, "Plunderer's Glint");
 		addItem(BloodMagicItems.SMELTING_ANOINTMENT, "Slow-burning Oil");
+
+		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT_STRONG, "Iron Tip II");
 
 		// Alchemy Items
 		addItem(BloodMagicItems.PLANT_OIL, "Plant Oil");

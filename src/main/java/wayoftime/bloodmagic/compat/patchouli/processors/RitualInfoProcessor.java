@@ -76,7 +76,7 @@ public class RitualInfoProcessor implements IComponentProcessor
 	private String heading; // heading (Spotlight Page).
 	private ItemStack item = new ItemStack(BloodMagicItems.RITUAL_READER.get()); // Item (Spotlight page).
 	private String infoBlurb = ""; // Information text from the language files.
-	private final String LANGUAGE_BASE = "patchouli.bloodmagic.ritual_info."; // This Processor's language base.
+	private final String LANGUAGE_BASE = "guide.patchouli.bloodmagic.ritual_info."; // This Processor's language base.
 	private final String DIVINER_BASE = ItemRitualDiviner.tooltipBase; // Ritual Diviner language base.
 
 	@Override
@@ -131,8 +131,8 @@ public class RitualInfoProcessor implements IComponentProcessor
 			int volume = ritual.getMaxVolumeForRange(pageType, Collections.emptyList(), emptyHolder);
 			int horizontal = ritual.getMaxHorizontalRadiusForRange(pageType, Collections.emptyList(), emptyHolder);
 			int vertical = ritual.getMaxVerticalRadiusForRange(pageType, Collections.emptyList(), emptyHolder);
-			rangeInfo = TextHelper.localize("patchouli.bloodmagic.ritual_info.range_formatter", volume == 0
-					? TextHelper.localize("patchouli.bloodmagic.ritual_info.full_range")
+			rangeInfo = TextHelper.localize("guide.patchouli.bloodmagic.ritual_info.range_formatter", volume == 0
+					? TextHelper.localize("guide.patchouli.bloodmagic.ritual_info.full_range")
 					: volume, horizontal, vertical);
 		}
 		if (!infoAlreadySet)
@@ -155,7 +155,7 @@ public class RitualInfoProcessor implements IComponentProcessor
 			{
 				String text = pair.get(0);
 				String code = pair.get(1);
-				infoBlurb = infoBlurb.replaceAll(String.format("\\b%s\\b", text), TextHelper.localize("patchouli.bloodmagic.ritual_info.text_override_formatter", code, text));
+				infoBlurb = infoBlurb.replaceAll(String.format("\\b%s\\b", text), TextHelper.localize("guide.patchouli.bloodmagic.ritual_info.text_override_formatter", code, text));
 			}
 		}
 
@@ -194,7 +194,7 @@ public class RitualInfoProcessor implements IComponentProcessor
 			{
 				outputText.append(infoBlurb);
 			}
-			outputText.append(TextHelper.localize("patchouli.bloodmagic.common.double_new_line", extraText));
+			outputText.append(TextHelper.localize("guide.patchouli.bloodmagic.common.double_new_line", extraText));
 			return IVariable.wrap(outputText.toString());
 
 		case "heading":

@@ -265,7 +265,7 @@ public abstract class Ritual
 		}
 
 		List<EnumDemonWillType> willConfig = master.getActiveWillConfig();
-		DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(master.getWorldObj(), master.getBlockPos());
+		DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(master.getWorldObj(), master.getMasterBlockPos());
 
 		int maxVolume = this.getMaxVolumeForRange(range, willConfig, holder);
 		int maxVertical = this.getMaxVerticalRadiusForRange(range, willConfig, holder);

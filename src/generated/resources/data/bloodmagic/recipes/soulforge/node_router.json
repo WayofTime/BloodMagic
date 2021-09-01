@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "tag": "forge:rods/wooden"
+  },
+  "input1": {
+    "item": "bloodmagic:reinforcedslate"
+  },
+  "input2": {
+    "tag": "forge:gems/lapis"
+  },
+  "input3": {
+    "tag": "forge:gems/lapis"
+  },
+  "output": {
+    "item": "bloodmagic:noderouter"
+  },
+  "minimumDrain": 400.0,
+  "drain": 5.0
+}

@@ -60,7 +60,12 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 		{
 			Direction dir = getFilterDirectionForButton(i);
 			Pair<Integer, Integer> buttonLocation = getButtonLocation(i);
-			this.addButton(new Button(left + buttonLocation.getLeft(), top + buttonLocation.getRight(), 20, 20, new StringTextComponent(getStringForDirection(dir)), new DirectionalPress(this, tileNode, i, dir)));
+			String dirName = getStringForDirection(dir);
+			if (!tileNode.getWorld().isAirBlock(tileNode.getBlockPos().offset(dir)))
+			{
+				dirName = "";
+			}
+			this.addButton(new Button(left + buttonLocation.getLeft(), top + buttonLocation.getRight(), 20, 20, new StringTextComponent(dirName), new DirectionalPress(this, tileNode, i, dir)));
 
 			if (dir.ordinal() == tileNode.getCurrentActiveSlot())
 			{
@@ -161,12 +166,6 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 //		this.font.func_243248_b(stack, new TranslationTextComponent("tile.bloodmagic.routingnode.name"), 8, 5, 4210752);
 //		this.font.func_243248_b(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
 
-//		Direction topD = getFilterDirectionForButton(0);
-//		Direction leftD = getFilterDirectionForButton(1);
-//		Direction centerD = getFilterDirectionForButton(2);
-//		Direction rightD = getFilterDirectionForButton(3);
-//		Direction bottomD = getFilterDirectionForButton(4);
-//		Direction backD = getFilterDirectionForButton(5);
 		BlockPos tilePos = tileNode.getBlockPos();
 		World world = tileNode.getWorld();
 
@@ -183,7 +182,6 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 				this.drawItemStack(itemStack, buttonLocation.getLeft() + 2, buttonLocation.getRight() + 2, getStringForDirection(dir));
 			}
 		}
-
 	}
 
 	public Pair<Integer, Integer> getButtonLocation(int button)
@@ -302,7 +300,6 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 					this.screen.enableAllDirectionalButtons();
 					this.screen.disableDirectionalButton(id);
 				}
-
 			}
 		}
 	}

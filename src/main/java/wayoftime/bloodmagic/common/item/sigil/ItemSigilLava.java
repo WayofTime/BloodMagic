@@ -13,11 +13,12 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import wayoftime.bloodmagic.common.item.IAlchemyItem;
 import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 
-public class ItemSigilLava extends ItemSigilFluidBase
+public class ItemSigilLava extends ItemSigilFluidBase implements IAlchemyItem
 {
 	public ItemSigilLava()
 	{
@@ -53,8 +54,7 @@ public class ItemSigilLava extends ItemSigilFluidBase
 				// Case for if block at blockPos is a fluid handler like a tank
 				// Try to put fluid into tank
 				IFluidHandler destination = getFluidHandler(world, blockPos, null);
-				if (destination != null && tryInsertSigilFluid(destination, false)
-						&& NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess())
+				if (destination != null && tryInsertSigilFluid(destination, false) && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess())
 				{
 					boolean result = tryInsertSigilFluid(destination, true);
 					if (result)
@@ -62,8 +62,7 @@ public class ItemSigilLava extends ItemSigilFluidBase
 				}
 				// Do the same as above, but use sidedness to interact with the fluid handler.
 				IFluidHandler destinationSide = getFluidHandler(world, blockPos, sideHit);
-				if (destinationSide != null && tryInsertSigilFluid(destinationSide, false)
-						&& NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess())
+				if (destinationSide != null && tryInsertSigilFluid(destinationSide, false) && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess())
 				{
 					boolean result = tryInsertSigilFluid(destinationSide, true);
 					if (result)
@@ -75,8 +74,7 @@ public class ItemSigilLava extends ItemSigilFluidBase
 				if (destination == null && destinationSide == null)
 				{
 					BlockPos targetPos = blockPos.offset(sideHit);
-					if (tryPlaceSigilFluid(player, world, targetPos)
-							&& NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess())
+					if (tryPlaceSigilFluid(player, world, targetPos) && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess())
 					{
 						return ActionResult.resultSuccess(stack);
 					}
@@ -85,5 +83,17 @@ public class ItemSigilLava extends ItemSigilFluidBase
 		}
 
 		return super.onItemRightClick(world, player, hand);
+	}
+
+	@Override
+	public ItemStack onConsumeInput(ItemStack stack)
+	{
+		return stack;
+	}
+
+	@Override
+	public boolean isStackChangedOnUse(ItemStack stack)
+	{
+		return false;
 	}
 }

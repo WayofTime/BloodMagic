@@ -132,6 +132,22 @@ public class Constants
 		public static final String BREATH = "breath";
 
 		public static final String ANOINTMENTS = "anointment_holder";
+
+		public static final String BLACKWHITELIST = "button:blackwhitelist";
+		public static final String ITEMTAG = "button:itemtag";
+		public static final String ENCHANT = "button:enchant";
+		public static final String ENCHANT_LVL = "button:enchant_fuzzy";
+
+		public static final String DOOR_MAP = "dungeon_door_map";
+		public static final String AREA_DESCRIPTORS = "area_descriptors";
+	}
+
+	public static class BUTTONID
+	{
+		public static final String BLACKWHITELIST = "blackwhitelist";
+		public static final String ITEMTAG = "itemtag";
+		public static final String ENCHANT = "enchant";
+		public static final String ENCHANT_LVL = "enchant_lvl";
 	}
 
 	public static class JSON
@@ -154,6 +170,7 @@ public class Constants
 		public static final String AMOUNT = "amount";
 		public static final String INPUT_FLUID = "inputfluid";
 		public static final String OUTPUT_FLUID = "outputfluid";
+		public static final String FILTER = "filter";
 
 		public static final String SYPHON = "syphon";
 		public static final String TICKS = "ticks";

@@ -98,6 +98,7 @@ public class ClientEvents
 	public static void colorHandlerEvent(ColorHandlerEvent.Item event)
 	{
 		event.getItemColors().register(new AnointmentColor(), BloodMagicItems.MELEE_DAMAGE_ANOINTMENT.get(), BloodMagicItems.SILK_TOUCH_ANOINTMENT.get(), BloodMagicItems.FORTUNE_ANOINTMENT.get(), BloodMagicItems.HOLY_WATER_ANOINTMENT.get(), BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT.get(), BloodMagicItems.QUICK_DRAW_ANOINTMENT.get(), BloodMagicItems.LOOTING_ANOINTMENT.get(), BloodMagicItems.BOW_POWER_ANOINTMENT.get(), BloodMagicItems.WILL_POWER_ANOINTMENT.get(), BloodMagicItems.SMELTING_ANOINTMENT.get());
+		event.getItemColors().register(new AnointmentColor(), BloodMagicItems.BOW_POWER_ANOINTMENT_STRONG.get());
 	}
 
 	public static void cycleSigil(ItemStack stack, PlayerEntity player, int dWheel)
@@ -169,6 +170,8 @@ public class ClientEvents
 			RenderType rendertype = RenderType.getCutoutMipped();
 			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.ALCHEMY_TABLE.get(), rendertype);
 			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.GROWING_DOUBT.get(), rendertype);
+			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.WEAK_TAU.get(), rendertype);
+			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.STRONG_TAU.get(), rendertype);
 			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.ROUTING_NODE_BLOCK.get(), RenderType.getTranslucent());
 			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get(), RenderType.getTranslucent());
 			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get(), RenderType.getTranslucent());

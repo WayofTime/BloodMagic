@@ -18,7 +18,7 @@ public class ContainerFilter extends Container
 	public final InventoryFilter inventoryFilter;
 	private final int PLAYER_INVENTORY_ROWS = 3;
 	private final int PLAYER_INVENTORY_COLUMNS = 9;
-	private final PlayerEntity player;
+	public final PlayerEntity player;
 	public final ItemStack filterStack;
 
 	public int lastGhostSlotClicked = -1;
@@ -50,7 +50,7 @@ public class ContainerFilter extends Container
 		{
 			for (int j = 0; j < 3; j++)
 			{
-				this.addSlot(new SlotGhostItem(this, inventoryFilter, player, j + i * 3, 116 + j * 18, 15 + i * 18));
+				this.addSlot(new SlotGhostItem(this, inventoryFilter, player, j + i * 3, 110 + j * 21, 15 + i * 21));
 //				addSlot(new SlotGhostItem(itemInventory, j + i * 3, 26 + j * 18, 15 + i * 18));
 			}
 		}

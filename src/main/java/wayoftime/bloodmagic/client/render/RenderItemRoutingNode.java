@@ -112,6 +112,11 @@ public class RenderItemRoutingNode extends TileEntityRenderer<TileRoutingNode>
 				int j = 0;
 
 				float[] colors = new float[] { 0, 1, 1 };
+				// TODO: Re-enable once you've confirmed that all nodes are updated client-side.
+//				if (masterPos.equals(BlockPos.ZERO))
+//				{
+//					colors = new float[] { 1, 1, 1 };
+//				}
 
 				float height = (float) distance;
 

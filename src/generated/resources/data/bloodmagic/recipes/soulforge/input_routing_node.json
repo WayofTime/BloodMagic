@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "tag": "forge:ingots/gold"
+  },
+  "input1": {
+    "item": "bloodmagic:itemroutingnode"
+  },
+  "input2": {
+    "tag": "forge:dusts/redstone"
+  },
+  "input3": {
+    "tag": "forge:dusts/glowstone"
+  },
+  "output": {
+    "item": "bloodmagic:inputroutingnode"
+  },
+  "minimumDrain": 400.0,
+  "drain": 25.0
+}

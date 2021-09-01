@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "bloodmagic:block/strong_tau_1"
+    },
+    "age=1": {
+      "model": "bloodmagic:block/strong_tau_2"
+    },
+    "age=2": {
+      "model": "bloodmagic:block/strong_tau_3"
+    },
+    "age=3": {
+      "model": "bloodmagic:block/strong_tau_4"
+    },
+    "age=4": {
+      "model": "bloodmagic:block/strong_tau_5"
+    },
+    "age=5": {
+      "model": "bloodmagic:block/strong_tau_6"
+    },
+    "age=6": {
+      "model": "bloodmagic:block/strong_tau_7"
+    },
+    "age=7": {
+      "model": "bloodmagic:block/strong_tau_8"
+    }
+  }
+}

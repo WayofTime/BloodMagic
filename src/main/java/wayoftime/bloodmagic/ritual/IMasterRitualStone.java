@@ -9,9 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.core.data.SoulTicket;
-import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
 /**
  * This interface is for internal implementation only.
@@ -46,7 +46,7 @@ public interface IMasterRitualStone
 
 	World getWorldObj();
 
-	BlockPos getBlockPos();
+	BlockPos getMasterBlockPos();
 
 	String getNextBlockRange(String range);
 
@@ -64,7 +64,7 @@ public interface IMasterRitualStone
 
 	default SoulTicket ticket(int amount)
 	{
-		return SoulTicket.block(getWorldObj(), getBlockPos(), amount);
+		return SoulTicket.block(getWorldObj(), getMasterBlockPos(), amount);
 	}
 
 	AreaDescriptor getBlockRange(String range);
