@@ -764,9 +764,9 @@ public class BloodAltar// implements IFluidHandler
 		return currentTierDisplayed;
 	}
 
-	public int getAnalogSignalStrenght(int redstone_mode)
+	public int getAnalogSignalStrength(int redstoneMode)
 	{
-		switch (redstone_mode)
+		switch (redstoneMode)
 		{
 		case 0:
 			return getCurrentBlood() * 15 / getCapacity();

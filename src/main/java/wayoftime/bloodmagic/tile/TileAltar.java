@@ -240,7 +240,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickableTi
 //	}
 	public int getAnalogSignalStrength(int redstoneMode)
 	{
-		return bloodAltar.getAnalogSignalStrenght(redstoneMode);
+		return bloodAltar.getAnalogSignalStrength(redstoneMode);
 	}
 
 	@Override
