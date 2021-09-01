@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.common.item.routing;
 
 import java.util.List;
 
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
@@ -27,15 +28,32 @@ public class ItemStandardFilter extends ItemCompositeFilter
 			return;
 		}
 
+		List<ItemStack> nestedFilters = getNestedFilters(filterStack);
+		if (nestedFilters.size() > 0)
+		{
+			boolean sneaking = Screen.hasShiftDown();
+			if (!sneaking)
+			{
+				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.extraInfo").mergeStyle(TextFormatting.BLUE));
+			} else
+			{
+				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.contained_filters").mergeStyle(TextFormatting.BLUE));
+				for (ItemStack nestedStack : nestedFilters)
+				{
+					tooltip.add(nestedStack.getDisplayName());
+				}
+			}
+		}
+
 		int whitelistState = this.getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
 		boolean isWhitelist = whitelistState == 0;
 
 		if (isWhitelist)
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist"));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist").mergeStyle(TextFormatting.GRAY));
 		} else
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist"));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist").mergeStyle(TextFormatting.GRAY));
 		}
 
 		ItemInventory inv = new InventoryFilter(filterStack);

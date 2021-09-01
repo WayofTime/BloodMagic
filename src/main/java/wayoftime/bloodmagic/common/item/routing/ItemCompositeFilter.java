@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.widget.button.Button.IPressable;
 import net.minecraft.client.util.ITooltipFlag;
@@ -42,7 +43,65 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 	{
 		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.compositefilter.desc").mergeStyle(TextFormatting.ITALIC).mergeStyle(TextFormatting.GRAY));
 
-		super.addInformation(filterStack, world, tooltip, flag);
+		if (filterStack.getTag() == null)
+		{
+			return;
+		}
+
+		List<ItemStack> nestedFilters = getNestedFilters(filterStack);
+		if (nestedFilters.size() > 0)
+		{
+			boolean sneaking = Screen.hasShiftDown();
+			if (!sneaking)
+			{
+				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.extraInfo").mergeStyle(TextFormatting.BLUE));
+			} else
+			{
+				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.contained_filters").mergeStyle(TextFormatting.BLUE));
+				for (ItemStack nestedStack : nestedFilters)
+				{
+					tooltip.add(nestedStack.getDisplayName());
+				}
+			}
+		}
+
+		int whitelistState = this.getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
+		boolean isWhitelist = whitelistState == 0;
+
+		if (isWhitelist)
+		{
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist").mergeStyle(TextFormatting.GRAY));
+		} else
+		{
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist").mergeStyle(TextFormatting.GRAY));
+		}
+
+		ItemInventory inv = new InventoryFilter(filterStack);
+		for (int i = 0; i < inv.getSizeInventory(); i++)
+		{
+			ItemStack stack = inv.getStackInSlot(i);
+			if (stack.isEmpty())
+			{
+				continue;
+			}
+
+			if (isWhitelist)
+			{
+				int amount = GhostItemHelper.getItemGhostAmount(stack);
+				if (amount > 0)
+				{
+					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.count", amount, stack.getDisplayName()));
+				} else
+				{
+					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.all", stack.getDisplayName()));
+				}
+			} else
+			{
+				tooltip.add(stack.getDisplayName());
+			}
+		}
+
+//		super.addInformation(filterStack, world, tooltip, flag);
 	}
 
 	protected IItemFilter getFilterTypeFromConfig(ItemStack filterStack)
@@ -243,6 +302,7 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 			default:
 				componentList.add(new TranslationTextComponent("filter.bloodmagic.whitelist"));
 			}
+			return componentList;
 		}
 
 		List<ItemStack> nestedList = getNestedFilters(filterStack);
@@ -289,7 +349,7 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 		for (ItemStack nestedStack : nestedList)
 		{
 			Pair<Integer, Integer> pair = ((INestableItemFilterProvider) nestedStack.getItem()).getTexturePositionForState(filterStack, buttonKey, currentButtonState);
-			if (pair.getLeft() < 0 || pair.getRight() < 0)
+			if (pair.getLeft() <= 0 && pair.getRight() <= 0)
 			{
 				continue;
 			}

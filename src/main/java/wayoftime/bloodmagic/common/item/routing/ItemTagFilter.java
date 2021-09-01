@@ -31,7 +31,7 @@ import wayoftime.bloodmagic.common.routing.IItemFilter;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.GhostItemHelper;
 
-public class ItemTagFilter extends ItemRouterFilter
+public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilterProvider
 {
 	protected IItemFilter getFilterTypeFromConfig(ItemStack filterStack)
 	{
@@ -60,10 +60,10 @@ public class ItemTagFilter extends ItemRouterFilter
 
 		if (isWhitelist)
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist"));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist").mergeStyle(TextFormatting.GRAY));
 		} else
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist"));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist").mergeStyle(TextFormatting.GRAY));
 		}
 
 		ItemInventory inv = new InventoryFilter(filterStack);

@@ -13,7 +13,10 @@ import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.data.recipe.builder.AlchemyTableRecipeBuilder;
+import wayoftime.bloodmagic.common.data.recipe.builder.FilterMergeAlchemyTableRecipeBuilder;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
+import wayoftime.bloodmagic.common.item.routing.ItemCompositeFilter;
+import wayoftime.bloodmagic.common.item.routing.ItemStandardFilter;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 
 public class AlchemyTableRecipeProvider implements ISubRecipeProvider
@@ -92,7 +95,23 @@ public class AlchemyTableRecipeProvider implements ISubRecipeProvider
 		}
 
 		String filterPath = "alchemytable/filter/";
+
+		ItemStack enchantStack = new ItemStack(BloodMagicItems.ITEM_ENCHANT_FILTER.get());
+		ItemStack tagStack = new ItemStack(BloodMagicItems.ITEM_TAG_FILTER.get());
+		ItemStack modStack = new ItemStack(BloodMagicItems.ITEM_MOD_FILTER.get());
 		// Filter combination recipes
-//		FilterMergeAlchemyTableRecipeBuilder.alchemyTable(Ingredient.fromItems(BloodMagicItems.ITEM_ROUTER_FILTER.get()), 100, 100, 0).addIngredient(Ingredient.fromItems(BloodMagicItems.ITEM_ENCHANT_FILTER.get())).build(consumer, BloodMagic.rl(filterPath + "test"));
+		ItemStack itemPlusEnchantStack = new ItemStack(BloodMagicItems.ITEM_ROUTER_FILTER.get());
+		((ItemStandardFilter) BloodMagicItems.ITEM_ROUTER_FILTER.get()).nestFilter(itemPlusEnchantStack, enchantStack);
+
+		ItemStack compositePlusEnchant = new ItemStack(BloodMagicItems.ITEM_COMPOSITE_FILTER.get());
+		ItemStack compositePlusTag = new ItemStack(BloodMagicItems.ITEM_COMPOSITE_FILTER.get());
+		ItemStack compositePlusMod = new ItemStack(BloodMagicItems.ITEM_COMPOSITE_FILTER.get());
+		((ItemCompositeFilter) BloodMagicItems.ITEM_COMPOSITE_FILTER.get()).nestFilter(compositePlusEnchant, enchantStack);
+		((ItemCompositeFilter) BloodMagicItems.ITEM_COMPOSITE_FILTER.get()).nestFilter(compositePlusTag, tagStack);
+		((ItemCompositeFilter) BloodMagicItems.ITEM_COMPOSITE_FILTER.get()).nestFilter(compositePlusMod, modStack);
+
+		FilterMergeAlchemyTableRecipeBuilder.alchemyTable(Ingredient.fromItems(BloodMagicItems.ITEM_COMPOSITE_FILTER.get()), 500, 100, 0).addOptionalOutputStack(compositePlusEnchant).addIngredient(Ingredient.fromItems(BloodMagicItems.ITEM_ENCHANT_FILTER.get())).addIngredient(Ingredient.fromTag(Tags.Items.SLIMEBALLS)).build(consumer, BloodMagic.rl(filterPath + "composite_enchant_filter"));
+		FilterMergeAlchemyTableRecipeBuilder.alchemyTable(Ingredient.fromItems(BloodMagicItems.ITEM_COMPOSITE_FILTER.get()), 500, 100, 0).addOptionalOutputStack(compositePlusTag).addIngredient(Ingredient.fromItems(BloodMagicItems.ITEM_TAG_FILTER.get())).addIngredient(Ingredient.fromTag(Tags.Items.SLIMEBALLS)).build(consumer, BloodMagic.rl(filterPath + "composite_tag_filter"));
+		FilterMergeAlchemyTableRecipeBuilder.alchemyTable(Ingredient.fromItems(BloodMagicItems.ITEM_COMPOSITE_FILTER.get()), 500, 100, 0).addOptionalOutputStack(compositePlusMod).addIngredient(Ingredient.fromItems(BloodMagicItems.ITEM_MOD_FILTER.get())).addIngredient(Ingredient.fromTag(Tags.Items.SLIMEBALLS)).build(consumer, BloodMagic.rl(filterPath + "composite_mod_filter"));
 	}
 }

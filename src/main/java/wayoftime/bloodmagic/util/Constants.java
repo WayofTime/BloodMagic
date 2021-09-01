@@ -137,6 +137,9 @@ public class Constants
 		public static final String ITEMTAG = "button:itemtag";
 		public static final String ENCHANT = "button:enchant";
 		public static final String ENCHANT_LVL = "button:enchant_fuzzy";
+
+		public static final String DOOR_MAP = "dungeon_door_map";
+		public static final String AREA_DESCRIPTORS = "area_descriptors";
 	}
 
 	public static class BUTTONID

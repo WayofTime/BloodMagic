@@ -9,7 +9,11 @@ import java.util.Random;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.google.common.reflect.TypeToken;
+
 import net.minecraft.block.Blocks;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
@@ -17,7 +21,9 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.server.ServerWorld;
+import wayoftime.bloodmagic.gson.Serializers;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
+import wayoftime.bloodmagic.util.Constants;
 
 public class DungeonSynthesizer
 {
@@ -28,6 +34,48 @@ public class DungeonSynthesizer
 																									// door faces.
 
 	public List<AreaDescriptor> descriptorList = new ArrayList<>();
+
+	public void writeToNBT(CompoundNBT tag)
+	{
+		String json = Serializers.GSON.toJson(availableDoorMasterMap);
+		tag.putString(Constants.NBT.DOOR_MAP, json);
+
+		ListNBT listnbt = new ListNBT();
+		for (int i = 0; i < descriptorList.size(); ++i)
+		{
+			AreaDescriptor desc = descriptorList.get(i);
+			CompoundNBT compoundnbt = new CompoundNBT();
+			desc.writeToNBT(compoundnbt);
+			listnbt.add(compoundnbt);
+
+		}
+
+		if (!listnbt.isEmpty())
+		{
+			tag.put(Constants.NBT.AREA_DESCRIPTORS, listnbt);
+		}
+	}
+
+	public void readFromNBT(CompoundNBT tag)
+	{
+		String testJson = tag.getString(Constants.NBT.DOOR_MAP);
+		if (!testJson.isEmpty())
+		{
+			availableDoorMasterMap = Serializers.GSON.fromJson(testJson, new TypeToken<Map<String, Map<Direction, List<BlockPos>>>>()
+			{
+			}.getType());
+		}
+
+		ListNBT listnbt = tag.getList(Constants.NBT.AREA_DESCRIPTORS, 10);
+
+		for (int i = 0; i < listnbt.size(); ++i)
+		{
+			CompoundNBT compoundnbt = listnbt.getCompound(i);
+			AreaDescriptor.Rectangle rec = new AreaDescriptor.Rectangle(BlockPos.ZERO, 0);
+			rec.readFromNBT(compoundnbt);
+			descriptorList.add(rec);
+		}
+	}
 
 	public boolean generateInitialRoom(ResourceLocation initialType, Random rand, ServerWorld world, BlockPos spawningPosition)
 	{

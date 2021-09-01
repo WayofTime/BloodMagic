@@ -30,7 +30,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tile.bloodmagic.alchemytable.name", "Alchemy Table");
 
 		// Blood Orb tooltips
-		add("tooltip.bloodmagic.extraInfo", "&9-Hold shift for more info-");
+		add("tooltip.bloodmagic.extraInfo", "-Hold shift for more info-");
 		add("tooltip.bloodmagic.orb.desc", "Stores raw Life Essence");
 		add("tooltip.bloodmagic.orb.owner", "Added by: %s");
 		add("tooltip.bloodmagic.currentOwner", "Current owner: %s");
@@ -153,6 +153,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.filter.count", "%sx %s");
 
 		add("tooltip.bloodmagic.filter.anytag", "Any Tag of %s");
+		add("tooltip.bloodmagic.contained_filters", "Contained Filters:");
 
 		// Ritual info
 		add("tooltip.bloodmagic.diviner.currentRitual", "Current Ritual: %s");

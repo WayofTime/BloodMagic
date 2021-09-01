@@ -25,6 +25,7 @@ public class FilterMergeAlchemyTableRecipeBuilder extends BloodMagicRecipeBuilde
 	private final int syphon;
 	private final int ticks;
 	private final int minimumTier;
+	private ItemStack outputStack = new ItemStack(BloodMagicItems.ITEM_ROUTER_FILTER.get());
 
 	protected FilterMergeAlchemyTableRecipeBuilder(Ingredient filter, List<Ingredient> input, int syphon, int ticks, int minimumTier)
 	{
@@ -50,6 +51,12 @@ public class FilterMergeAlchemyTableRecipeBuilder extends BloodMagicRecipeBuilde
 			input.add(ing);
 		}
 
+		return this;
+	}
+
+	public FilterMergeAlchemyTableRecipeBuilder addOptionalOutputStack(ItemStack outputStack)
+	{
+		this.outputStack = outputStack;
 		return this;
 	}
 
@@ -84,7 +91,7 @@ public class FilterMergeAlchemyTableRecipeBuilder extends BloodMagicRecipeBuilde
 				json.add(Constants.JSON.INPUT, mainArray);
 			}
 
-			json.add(Constants.JSON.OUTPUT, SerializerHelper.serializeItemStack(new ItemStack(BloodMagicItems.ITEM_ROUTER_FILTER.get())));
+			json.add(Constants.JSON.OUTPUT, SerializerHelper.serializeItemStack(outputStack));
 			json.addProperty(Constants.JSON.SYPHON, syphon);
 			json.addProperty(Constants.JSON.TICKS, ticks);
 			json.addProperty(Constants.JSON.ALTAR_TIER, minimumTier);
