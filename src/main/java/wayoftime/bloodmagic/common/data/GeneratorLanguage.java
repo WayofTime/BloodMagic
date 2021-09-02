@@ -373,7 +373,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("living_upgrade.bloodmagic.crippledArm", "Crippled Arm");
 		add("living_upgrade.bloodmagic.slippery", "Loose Traction");
 		add("living_upgrade.bloodmagic.battleHunger", "Battle Hungry");
-		add("living_upgrade.bloodmagic.quenched", "Quenched");
+		add("living_upgrade.bloodmagic.downgrade.quenched", "Quenched");
 		add("living_upgrade.bloodmagic.meleeDecrease", "Dulled Blade");
 		add("living_upgrade.bloodmagic.digSlowdown", "Weakened Pick");
 		add("living_upgrade.bloodmagic.stormTrooper", "Storm Trooper");

@@ -83,11 +83,7 @@ public class SetLivingUpgrade extends LootFunction
 				JsonArray mainArray = new JsonArray();
 				for (ResourceLocation ing : p_230424_2_.livingUpgrades)
 				{
-//					JsonObject jsonObj = new JsonObject();
-//					jsonObj.addProperty(Constants.JSON.RESOURCE, );
 					mainArray.add(ing.toString());
-
-//					mainArray.add(jsonObj);
 				}
 
 				json.add(Constants.JSON.UPGRADES, mainArray);

@@ -1,0 +1,8 @@
+{
+  "id": "bloodmagic:downgrade/quenched",
+  "levels": [
+    { "xp": 1, "cost": -100 }
+  ],
+  "bonuses": {
+  }
+}

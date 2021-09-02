@@ -55,6 +55,7 @@ public class LivingArmorRegistrar
 		def.put("sprint_attack", BloodMagic.rl("sprint_attack"));
 		def.put("speed", BloodMagic.rl("speed"));
 		def.put("self_sacrifice", BloodMagic.rl("self_sacrifice"));
+		def.put("downgrade/quenched", BloodMagic.rl("downgrade/quenched"));
 		return def;
 	}).get();
 	// private static final Map<String, Path> DEFINITIONS =
@@ -117,6 +118,8 @@ public class LivingArmorRegistrar
 		attributeMap.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, "KB Modifier", upgrade.getBonusValue("kb", level).doubleValue(), AttributeModifier.Operation.ADDITION));
 		attributeMap.put(Attributes.MAX_HEALTH, new AttributeModifier(uuid, "Health Modifier 2", upgrade.getBonusValue("hp", level).intValue(), AttributeModifier.Operation.ADDITION));
 	}));
+	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_QUENCHED = UPGRADES.register("downgrade/quenched", () -> parseDefinition("downgrade/quenched").asDowngrade());
+
 //	public static final LivingUpgrade UPGRADE_ARROW_PROTECT = parseDefinition("arrow_protect").withArmorProvider((player, stats, source, upgrade, level) -> {
 //		if (source.isProjectile())
 //		{
@@ -147,6 +150,7 @@ public class LivingArmorRegistrar
 		registerUpgrade(UPGRADE_JUMP.get());
 		registerUpgrade(UPGRADE_KNOCKBACK_RESIST.get());
 		registerUpgrade(UPGRADE_FIRE_RESIST.get());
+		registerUpgrade(DOWNGRADE_QUENCHED.get());
 //		Registry.register(UPGRADES, UPGRADE_ARROW_PROTECT.getKey(), UPGRADE_ARROW_PROTECT);
 //		Registry.register(UPGRADES, UPGRADE_ARROW_SHOT.getKey(), UPGRADE_ARROW_SHOT);
 //		Registry.register(UPGRADES, UPGRADE_CRITICAL_STRIKE.getKey(), UPGRADE_CRITICAL_STRIKE);
