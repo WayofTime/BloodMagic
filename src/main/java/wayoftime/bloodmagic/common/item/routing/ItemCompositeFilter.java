@@ -9,10 +9,14 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.widget.button.Button.IPressable;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -102,6 +106,19 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 		}
 
 //		super.addInformation(filterStack, world, tooltip, flag);
+	}
+
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	{
+		ItemStack stack = player.getHeldItem(hand);
+		List<ItemStack> nestedFilters = getNestedFilters(stack);
+		if (nestedFilters.size() > 0)
+		{
+			return super.onItemRightClick(world, player, hand);
+		}
+
+		return new ActionResult<>(ActionResultType.SUCCESS, stack);
 	}
 
 	protected IItemFilter getFilterTypeFromConfig(ItemStack filterStack)
