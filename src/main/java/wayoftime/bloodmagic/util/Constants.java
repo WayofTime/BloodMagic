@@ -188,6 +188,9 @@ public class Constants
 
 		public static final String TARTARIC_DRAIN = "drain";
 		public static final String TARTARIC_MINIMUM = "minimumDrain";
+
+		public static final String UPGRADES = "upgrades";
+		public static final String RESOURCE = "resource";
 	}
 
 	public static class Compat

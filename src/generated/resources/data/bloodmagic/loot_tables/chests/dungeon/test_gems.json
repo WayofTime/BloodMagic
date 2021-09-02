@@ -46,6 +46,32 @@
           "name": "bloodmagic:basemonstersoul"
         }
       ]
+    },
+    {
+      "rolls": {
+        "min": 1.0,
+        "max": 2.0,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "bloodmagic:set_living_upgrade",
+              "upgrades": [
+                "bloodmagic:health"
+              ],
+              "points": {
+                "min": 300.0,
+                "max": 600.0
+              }
+            }
+          ],
+          "name": "bloodmagic:upgradetome"
+        }
+      ]
     }
   ]
 }

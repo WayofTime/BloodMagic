@@ -34,23 +34,22 @@ public class ItemModFilter extends ItemRouterFilter implements INestableItemFilt
 			return;
 		}
 
-		int whitelistState = this.getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
-		boolean isWhitelist = whitelistState == 0;
-
-		if (isWhitelist)
-		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist").mergeStyle(TextFormatting.GRAY));
-		} else
-		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist").mergeStyle(TextFormatting.GRAY));
-		}
-
 		boolean sneaking = Screen.hasShiftDown();
 		if (!sneaking)
 		{
 			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.extraInfo").mergeStyle(TextFormatting.BLUE));
 		} else
 		{
+			int whitelistState = this.getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
+			boolean isWhitelist = whitelistState == 0;
+
+			if (isWhitelist)
+			{
+				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist").mergeStyle(TextFormatting.GRAY));
+			} else
+			{
+				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist").mergeStyle(TextFormatting.GRAY));
+			}
 			ItemInventory inv = new InventoryFilter(filterStack);
 			for (int i = 0; i < inv.getSizeInventory(); i++)
 			{
