@@ -499,6 +499,8 @@
   "tooltip.bloodmagic.filter.anytag": "Any Tag of %s",
   "tooltip.bloodmagic.filter.blacklist": "Deny:",
   "tooltip.bloodmagic.filter.count": "%sx %s",
+  "tooltip.bloodmagic.filter.enchant_combination": "%s: %s",
+  "tooltip.bloodmagic.filter.from_mod": "From: %s",
   "tooltip.bloodmagic.filter.whitelist": "Allow:",
   "tooltip.bloodmagic.ghost.amount": "Ghost item amount: %d",
   "tooltip.bloodmagic.ghost.everything": "Everything",

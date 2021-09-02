@@ -151,6 +151,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.filter.blacklist", "Deny:");
 		add("tooltip.bloodmagic.filter.all", "All: %s");
 		add("tooltip.bloodmagic.filter.count", "%sx %s");
+		add("tooltip.bloodmagic.filter.enchant_combination", "%s: %s");
+		add("tooltip.bloodmagic.filter.from_mod", "From: %s");
 
 		add("tooltip.bloodmagic.filter.anytag", "Any Tag of %s");
 		add("tooltip.bloodmagic.contained_filters", "Contained Filters:");

@@ -1,0 +1,51 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": {
+        "min": 1.0,
+        "max": 2.0,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "functions": [
+            {
+              "function": "bloodmagic:set_will_fraction",
+              "damage": {
+                "min": 0.5,
+                "max": 0.7
+              }
+            }
+          ],
+          "name": "bloodmagic:soulgempetty"
+        }
+      ]
+    },
+    {
+      "rolls": {
+        "min": 1.0,
+        "max": 2.0,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "functions": [
+            {
+              "function": "bloodmagic:set_will_range",
+              "damage": {
+                "min": 20.0,
+                "max": 50.0
+              }
+            }
+          ],
+          "name": "bloodmagic:basemonstersoul"
+        }
+      ]
+    }
+  ]
+}

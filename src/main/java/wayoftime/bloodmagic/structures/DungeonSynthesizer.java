@@ -137,7 +137,7 @@ public class DungeonSynthesizer
 		// TODO: Generate door blocks based off of room's doors.
 //		Map<Pair<Direction, BlockPos>, List<String>> doorTypeMap = room.getPotentialConnectedRoomTypes(settings, pos);
 		List<DungeonDoor> doorTypeMap = initialRoom.getPotentialConnectedRoomTypes(settings, roomPlacementPosition);
-		System.out.println("Size of doorTypeMap: " + doorTypeMap.size());
+//		System.out.println("Size of doorTypeMap: " + doorTypeMap.size());
 		for (DungeonDoor dungeonDoor : doorTypeMap)
 		{
 			this.addNewDoorBlock(world, spawningPosition, dungeonDoor.doorPos, dungeonDoor.doorDir, dungeonDoor.doorType, dungeonDoor.getRoomList());
