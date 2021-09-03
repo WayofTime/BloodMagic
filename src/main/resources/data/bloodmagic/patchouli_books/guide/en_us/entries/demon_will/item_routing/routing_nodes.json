@@ -2,6 +2,7 @@
   "name": "Routing Nodes",
   "icon": "bloodmagic:masterroutingnode",
   "category": "bloodmagic:demon_will/item_routing",
+  "priority": "true",
   "extra_recipe_mappings":[
   ],
   "pages":[
@@ -21,13 +22,13 @@
     },
     {
       "type": "text",
-      "text": "A Master Routing Node is all well and good, but without the other two node types, it's not particularly useful on its own, so let's get on to those next. $(br2)Input Routing Nodes draw items in to the network, Output Routing Nodes export them out again, and plain old Routing Nodes serve to extend the reach of your network. As Input and Output nodes are currently otherwise identical, we will be focusing on the Input Routing Node unless otherwise specified."
+      "text": "A $(item)Master Routing Node$() is all well and good, but without the other two node types, it's not particularly useful on its own, so let's get on to those next. $(br2)$(item)Input Routing Nodes$() draw items in to the network, $(item)Output Routing Nodes$() export them out again, and plain old $(item)Routing Nodes$() serve to extend the reach of your network. As Input and Output nodes are currently otherwise identical, we will be focusing on the Input Routing Node unless otherwise specified."
     },
     {
       "type": "crafting_soulforge",
       "heading": "Routing Node",
       "recipe": "bloodmagic:soulforge/routing_node",
-      "text": "Doesn't do a whole lot on its own, but can be used to extend Routing Networks beyond the 16-block reach of a single connection"
+      "text": "Doesn't do a whole lot on its own, but can be used to extend $(thing)Routing Networks$() beyond the 16-block reach of a single connection."
     },
     {
       "type": "2x_crafting_soulforge",
@@ -38,7 +39,7 @@
     },
     {
       "type": "text",
-      "text": "When you place an Input or Output Node down, it will automatically connect to all adjacent inventories, but it won't do anything without a $(item)Filter$() of some kind in at least one of its side's slots. For this example, we'll use a $(l:bloodmagic/demon_will/item_routing/standard_item_filter)Standard Item Filter$() set to $(item)Bread$(), attached to a $(item)Furnace$()."
+      "text": "When you place an Input or Output Node down, it will automatically connect to $(thing)all adjacent inventories$(), but it won't do anything without a $(item)Filter$() of some kind in at least one of its side's slots. For this example, we'll use a $(l:bloodmagic:demon_will/item_routing/standard_item_filter)Standard Item Filter$() set to $(item)Iron Ore(), attached to a $(item)Furnace$()."
     },
     {
       "type": "text",
@@ -50,7 +51,7 @@
     },
     {
       "type": "text",
-      "text": "Over on the right, we have our cardinal directions - Up, Down, North, South, East, and West. You'll notice that a little picture of a block appears on some buttons, representing what's on that side of the node. It'll start off facing an attached inventory, or Down if no inventory is present. The buttons themselves follow the direction the player is facing, so the top button is 'forwards', the left button is 'left', etcetera."
+      "text": "Over on the right, we have our cardinal directions - $(bold)D$()own, $(bold)U$()p, $(bold)N$()orth, $(bold)S$()outh, $(bold)W$()est, and $(bold)E$()ast. You'll notice that a little picture of a block appears on some buttons, representing what's on that side of the node. The GUI will open up on the side facing an attached inventory, or Down if no inventory is present. The buttons themselves follow the direction the player is facing, so the top button is 'forwards', the left button is 'left', etcetera."
     },
 
     {
@@ -63,7 +64,7 @@
     },
     {
       "type": "text",
-      "text": "Once your Input and Output Nodes have been set up, have been linked together via a $(item)Master Routing Node$() and both have item filters inserted to the correct sides, you should be good to go! Items will be routed according to filters and priorities."
+      "text": "Once your Input and Output Nodes have been set up, have been linked together with the help of a $(l:bloodmagic:demon_will/item_routing/node_router)Node Router$() in a network that includes exactly one a $(item)Master Routing Node$(),  and both have item filters inserted to the correct sides, you should be good to go! Items will be routed according to the priorities and the rules contained within your filters."
     },
     {
       "type": "text",
