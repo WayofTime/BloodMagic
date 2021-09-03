@@ -46,10 +46,10 @@ public class LivingUtil
 		double requiredForLevel = upgrade.getNextRequirement((int) currentExperience) - currentExperience;
 
 		// If we're going to level up from this, check points
-		System.out.println("Required for level: " + requiredForLevel);
+//		System.out.println("Required for level: " + requiredForLevel);
 		if (requiredForLevel <= experience)
 		{
-			System.out.println("Attempting to level up");
+//			System.out.println("Attempting to level up");
 			int currentPoints = stats.getUsedPoints();
 			// If we're already capped or somehow over the cap, we don't want to add
 			// experience
@@ -99,7 +99,7 @@ public class LivingUtil
 	// effective amount of exp that was applied.
 	public static Pair<LivingStats, Double> applyExperienceToUpgradeCap(PlayerEntity player, LivingUpgrade upgrade, double experience)
 	{
-		System.out.println("Initial exp added: " + experience);
+//		System.out.println("Initial exp added: " + experience);
 		LivingStats stats = LivingStats.fromPlayer(player, true);
 		if (stats == null)
 			return Pair.of(null, 0d);

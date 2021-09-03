@@ -246,7 +246,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 
 	public int getMaxTransferForDemonWill(double will)
 	{
-		return 64;
+		return 16;
 	}
 
 	@Override

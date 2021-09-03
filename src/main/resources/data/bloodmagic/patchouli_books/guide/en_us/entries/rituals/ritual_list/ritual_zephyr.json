@@ -7,7 +7,7 @@
       "type": "multiblock",
       "name": "Call of the Zephyr",
       "multiblock_id": "bloodmagic:zephyr",
-      "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
+      "text": "Use a $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$(/l) for easier construction."
     },
     {
       "type": "bloodmagic:ritual_info",

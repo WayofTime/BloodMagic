@@ -37,7 +37,7 @@ public class FilterButtonPacket
 
 	public static FilterButtonPacket decode(PacketBuffer buf)
 	{
-		FilterButtonPacket pkt = new FilterButtonPacket(buf.readInt(), buf.readInt(), buf.readString(), buf.readInt());
+		FilterButtonPacket pkt = new FilterButtonPacket(buf.readInt(), buf.readInt(), buf.readString(32767), buf.readInt());
 
 		return pkt;
 	}
