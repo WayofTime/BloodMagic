@@ -38,7 +38,7 @@ public class Elements
 						? 0
 						: altar.getCurrentBlood(), altar == null ? 10000 : altar.getCapacity())));
 			}
-		}, new Vector2f(0.01F, 0.01F));
+		}, new Vector2f(ConfigManager.CLIENT.bloodAltarGaugeX.get().floatValue(), ConfigManager.CLIENT.bloodAltarGaugeY.get().floatValue()));
 
 		ElementRegistry.registerHandler(new ResourceLocation(BloodMagic.MODID, "blood_altar_adv"), new ElementDivinedInformation<TileAltar>(5, false, TileAltar.class)
 		{
@@ -70,7 +70,7 @@ public class Elements
 						? "0"
 						: String.valueOf(altar.getTotalCharge())));
 			}
-		}, new Vector2f(0.01F, 0.01F));
+		}, new Vector2f(ConfigManager.CLIENT.bloodAltarAdvGaugeX.get().floatValue(), ConfigManager.CLIENT.bloodAltarAdvGaugeY.get().floatValue()));
 
 		ElementRegistry.registerHandler(new ResourceLocation(BloodMagic.MODID, "incense_altar"), new ElementDivinedInformation<TileIncenseAltar>(2, true, TileIncenseAltar.class)
 		{
@@ -86,7 +86,7 @@ public class Elements
 						? "0"
 						: String.valueOf((int) (100 * incense.incenseAddition))));
 			}
-		}, new Vector2f(0.01F, 0.01F));
+		}, new Vector2f(ConfigManager.CLIENT.incenseGaugeX.get().floatValue(), ConfigManager.CLIENT.incenseGaugeY.get().floatValue()));
 
 		ElementRegistry.registerHandler(new ResourceLocation(BloodMagic.MODID, "holding"), new ElementHolding(), new Vector2f(0.72F, 1.0F));
 	}

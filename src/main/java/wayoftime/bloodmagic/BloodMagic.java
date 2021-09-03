@@ -150,6 +150,7 @@ public class BloodMagic
 		modBus.addGenericListener(TileEntityType.class, this::registerTileEntityTypes);
 		modBus.addGenericListener(IRecipeSerializer.class, this::registerRecipes);
 		modBus.addGenericListener(Effect.class, BloodMagicPotions::registerPotions);
+		modBus.addListener(ConfigManager::onCommonReload);
 
 		MinecraftForge.EVENT_BUS.register(new GenericHandler());
 //		MinecraftForge.EVENT_BUS.register(new ClientHandler());
@@ -164,6 +165,7 @@ public class BloodMagic
 
 		ModLoadingContext context = ModLoadingContext.get();
 		context.registerConfig(ModConfig.Type.CLIENT, ConfigManager.CLIENT_SPEC);
+		context.registerConfig(ModConfig.Type.COMMON, ConfigManager.COMMON_SPEC);
 
 		BloodMagicLootFunctionManager.register();
 
@@ -207,6 +209,7 @@ public class BloodMagic
 		LivingArmorRegistrar.register();
 		AnointmentRegistrar.register();
 		AlchemyArrayRegistry.registerBaseArrays();
+		handleConfigValues(BloodMagicAPI.INSTANCE);
 
 		if (curiosLoaded)
 		{
@@ -215,6 +218,23 @@ public class BloodMagic
 		if (ModList.get().isLoaded("patchouli"))
 		{
 			new RegisterPatchouliMultiblocks();
+		}
+	}
+
+	public static void handleConfigValues(BloodMagicAPI api)
+	{
+		for (String value : ConfigManager.COMMON.sacrificialValues.get())
+		{
+			String[] split = value.split(";");
+			if (split.length != 2) // Not valid format
+				continue;
+
+			api.getValueManager().setSacrificialValue(new ResourceLocation(split[0]), Integer.parseInt(split[1]));
+		}
+
+		for (String value : ConfigManager.COMMON.wellOfSuffering.get())
+		{
+			api.getBlacklist().addWellOfSuffering(new ResourceLocation(value));
 		}
 	}
 

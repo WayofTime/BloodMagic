@@ -20,6 +20,7 @@ import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3f;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.ConfigManager;
 import wayoftime.bloodmagic.common.routing.INodeRenderer;
 import wayoftime.bloodmagic.tile.routing.TileRoutingNode;
 
@@ -71,7 +72,7 @@ public class RenderItemRoutingNode extends TileEntityRenderer<TileRoutingNode>
 //		matrixStack.pop();
 //		matrixStack.pop();
 
-		if (mc.player.getHeldItemMainhand().getItem() instanceof INodeRenderer)// ||
+		if (mc.player.getHeldItemMainhand().getItem() instanceof INodeRenderer || ConfigManager.CLIENT.alwaysRenderRoutingLines.get())
 		// ConfigHandler.client.alwaysRenderRoutingLines)
 		{
 
