@@ -82,7 +82,7 @@
         "bloodmagic:images/entries/routing/network_demo.png"
       ],
       "border": true,
-      "text": "It's important to note that nodes do not have to be linked directly to the Master Routing Node, merely to any node on the network."
+      "text": "Nodes do not have to be linked directly to the $(item)Master Routing Node$(), merely to any node on the network."
     }
   ]
 }
