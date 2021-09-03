@@ -151,6 +151,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.filter.blacklist", "Deny:");
 		add("tooltip.bloodmagic.filter.all", "All: %s");
 		add("tooltip.bloodmagic.filter.count", "%sx %s");
+		add("tooltip.bloodmagic.filter.enchant_combination", "%s: %s");
+		add("tooltip.bloodmagic.filter.from_mod", "From: %s");
 
 		add("tooltip.bloodmagic.filter.anytag", "Any Tag of %s");
 		add("tooltip.bloodmagic.contained_filters", "Contained Filters:");
@@ -371,7 +373,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("living_upgrade.bloodmagic.crippledArm", "Crippled Arm");
 		add("living_upgrade.bloodmagic.slippery", "Loose Traction");
 		add("living_upgrade.bloodmagic.battleHunger", "Battle Hungry");
-		add("living_upgrade.bloodmagic.quenched", "Quenched");
+		add("living_upgrade.bloodmagic.downgrade.quenched", "Quenched");
 		add("living_upgrade.bloodmagic.meleeDecrease", "Dulled Blade");
 		add("living_upgrade.bloodmagic.digSlowdown", "Weakened Pick");
 		add("living_upgrade.bloodmagic.stormTrooper", "Storm Trooper");

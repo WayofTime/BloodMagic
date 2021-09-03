@@ -312,6 +312,9 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> HELLFORGED_BLOCK = ITEMS.register("dungeon_metal", () -> new BlockItem(BloodMagicBlocks.HELLFORGED_BLOCK.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> INVERSION_PILLAR_BLOCK = ITEMS.register("inversion_pillar", () -> new BlockItem(BloodMagicBlocks.INVERSION_PILLAR.get(), new Item.Properties().group(BloodMagic.TAB)));
 
+	public static final RegistryObject<Item> DUNGEON_CONTROLLER_BLOCK = ITEMS.register("dungeon_controller", () -> new BlockItem(BloodMagicBlocks.DUNGEON_CONTROLLER.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> DUNGEON_SEAL_BLOCK = ITEMS.register("dungeon_seal", () -> new BlockItem(BloodMagicBlocks.DUNGEON_SEAL.get(), new Item.Properties().group(BloodMagic.TAB)));
+
 	public static final RegistryObject<Item> DUNGEON_TESTER = BASICITEMS.register("dungeon_tester", ItemDungeonTester::new);
 
 }

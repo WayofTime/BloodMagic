@@ -74,6 +74,8 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerCustomBlockPath(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get(), "dungeon_polished_wall_inventory");
 		registerBlockModel(BloodMagicBlocks.DUNGEON_BRICK_GATE.get());
 		registerBlockModel(BloodMagicBlocks.DUNGEON_POLISHED_GATE.get());
+		registerBlockModel(BloodMagicBlocks.DUNGEON_CONTROLLER.get());
+		registerBlockModel(BloodMagicBlocks.DUNGEON_SEAL.get());
 
 		registerToggleableItem(BloodMagicItems.GREEN_GROVE_SIGIL.get());
 		registerToggleableItem(BloodMagicItems.FAST_MINER_SIGIL.get());

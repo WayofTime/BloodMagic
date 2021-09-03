@@ -46,8 +46,10 @@ public class LivingUtil
 		double requiredForLevel = upgrade.getNextRequirement((int) currentExperience) - currentExperience;
 
 		// If we're going to level up from this, check points
+		System.out.println("Required for level: " + requiredForLevel);
 		if (requiredForLevel <= experience)
 		{
+			System.out.println("Attempting to level up");
 			int currentPoints = stats.getUsedPoints();
 			// If we're already capped or somehow over the cap, we don't want to add
 			// experience
@@ -63,7 +65,7 @@ public class LivingUtil
 				return Pair.of(stats, false);
 
 			int pointDif = nextPointCost - currentPointCost;
-			if (pointDif < 0)
+			if (pointDif < 0 && !upgrade.isNegative())
 			{
 				return Pair.of(stats, false);
 			}
@@ -147,7 +149,7 @@ public class LivingUtil
 					return Pair.of(stats, 0d);
 
 				int pointDif = nextPointCost - currentPointCost;
-				if (pointDif < 0)
+				if (pointDif < 0 && !upgrade.isNegative())
 				{
 					return Pair.of(stats, 0d);
 				}

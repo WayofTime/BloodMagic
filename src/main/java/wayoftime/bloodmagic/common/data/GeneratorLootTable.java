@@ -51,6 +51,10 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BlockDemonCrystal;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
+import wayoftime.bloodmagic.common.loot.SetLivingUpgrade;
+import wayoftime.bloodmagic.common.loot.SetWillFraction;
+import wayoftime.bloodmagic.common.loot.SetWillRange;
+import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 
 public class GeneratorLootTable extends LootTableProvider
 {
@@ -111,6 +115,11 @@ public class GeneratorLootTable extends LootTableProvider
 			acceptor.accept(BloodMagic.rl("chests/dungeon/potion_ingredients"), LootTable.builder().addLootPool(potionChest).addLootPool(addMultipleItemsWithSameParams(LootPool.builder(), baseAnointments, 1, RandomValueRange.of(2, 4))));
 //			acceptor.accept(BloodMagic.rl("existing_library"), testExistingGeneration());
 			acceptor.accept(BloodMagic.rl("chests/dungeon/simple_armoury"), LootTable.builder().addLootPool(armory_pool).addLootPool(enchanted_armory_pool));
+
+			LootPool.Builder tartaricGemPool = LootPool.builder().rolls(RandomValueRange.of(1, 2)).addEntry(ItemLootEntry.builder(BloodMagicItems.PETTY_GEM.get()).weight(5).acceptFunction(SetWillFraction.withRange(RandomValueRange.of(0.5F, 0.7F))));
+			LootPool.Builder tartaricSoulPool = LootPool.builder().rolls(RandomValueRange.of(1, 2)).addEntry(ItemLootEntry.builder(BloodMagicItems.MONSTER_SOUL_RAW.get()).weight(5).acceptFunction(SetWillRange.withRange(RandomValueRange.of(20, 50))));
+			LootPool.Builder upgradePool = LootPool.builder().rolls(RandomValueRange.of(1, 2)).addEntry(ItemLootEntry.builder(BloodMagicItems.LIVING_TOME.get()).weight(3).acceptFunction(SetLivingUpgrade.withRange(RandomValueRange.of(300, 600), LivingArmorRegistrar.UPGRADE_HEALTH.get().getKey())));
+			acceptor.accept(BloodMagic.rl("chests/dungeon/test_gems"), LootTable.builder().addLootPool(tartaricGemPool).addLootPool(tartaricSoulPool).addLootPool(upgradePool));
 		}
 
 		private LootPool.Builder addMultipleItemsWithSameParams(LootPool.Builder pool, Item[] items, int basicWeight, IRandomRange basicRange, IBuilder... functions)
@@ -223,6 +232,9 @@ public class GeneratorLootTable extends LootTableProvider
 			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get());
 			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_BRICK_GATE.get());
 			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_POLISHED_GATE.get());
+
+			registerNoDropLootTable(BloodMagicBlocks.DUNGEON_CONTROLLER.get());
+			registerNoDropLootTable(BloodMagicBlocks.DUNGEON_SEAL.get());
 
 			registerDropSelfLootTable(BloodMagicBlocks.MIMIC.get());
 			registerDropSelfLootTable(BloodMagicBlocks.ETHEREAL_MIMIC.get());

@@ -37,12 +37,15 @@ public class DungeonRoomRegistry
 			totalWeightOfPool += room.getValue();
 		}
 		totalWeightMap.put(poolRes, totalWeightOfPool);
+
+//		System.out.println("Registering dungeon pool: " + poolRes);
 	}
 
 	public static DungeonRoom getRandomDungeonRoom(ResourceLocation roomPoolName, Random rand)
 	{
-		System.out.println(totalWeightMap);
+//		System.out.println(totalWeightMap);
 		Integer maxWeight = totalWeightMap.get(roomPoolName);
+//		System.out.println("Pool name: " + roomPoolName);
 
 		int wantedWeight = 0;
 		if (maxWeight != null)
@@ -52,6 +55,7 @@ public class DungeonRoomRegistry
 		List<Pair<ResourceLocation, Integer>> roomPool = roomPoolTable.get(roomPoolName);
 		if (roomPool == null)
 		{
+//			System.out.println("There's nothing here...");
 			return null;
 		}
 		for (Pair<ResourceLocation, Integer> entry : roomPool)
@@ -60,6 +64,8 @@ public class DungeonRoomRegistry
 			if (wantedWeight <= 0)
 			{
 				ResourceLocation dungeonName = entry.getKey();
+//				System.out.println("Dungeon name: " + dungeonName);
+//				System.out.println("All dungeons: " + dungeonRoomMap);
 				return dungeonRoomMap.get(dungeonName);
 			}
 		}

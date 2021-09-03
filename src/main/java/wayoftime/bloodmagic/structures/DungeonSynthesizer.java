@@ -11,9 +11,9 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.reflect.TypeToken;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
@@ -21,8 +21,11 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.server.ServerWorld;
+import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.gson.Serializers;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
+import wayoftime.bloodmagic.tile.TileDungeonController;
+import wayoftime.bloodmagic.tile.TileDungeonSeal;
 import wayoftime.bloodmagic.util.Constants;
 
 public class DungeonSynthesizer
@@ -77,9 +80,8 @@ public class DungeonSynthesizer
 		}
 	}
 
-	public boolean generateInitialRoom(ResourceLocation initialType, Random rand, ServerWorld world, BlockPos spawningPosition)
+	public BlockPos generateInitialRoom(ResourceLocation initialType, Random rand, ServerWorld world, BlockPos spawningPosition)
 	{
-		BlockPos roomPlacementPosition = spawningPosition;
 
 //		String initialDoorName = "default";
 		PlacementSettings settings = new PlacementSettings();
@@ -97,6 +99,7 @@ public class DungeonSynthesizer
 
 //		ResourceLocation initialType = new ResourceLocation("bloodmagic:room_pools/test_pool_1");
 		DungeonRoom initialRoom = DungeonRoomRegistry.getRandomDungeonRoom(initialType, rand);
+		BlockPos roomPlacementPosition = initialRoom.getInitialSpawnOffsetForControllerPos(settings, spawningPosition);
 
 //		DungeonRoom room = getRandomRoom(rand);
 //		roomMap.put(pos, Pair.of(room, settings.copy()));
@@ -129,30 +132,66 @@ public class DungeonSynthesizer
 
 		initialRoom.placeStructureAtPosition(rand, settings, world, roomPlacementPosition);
 
+		addNewControllerBlock(world, spawningPosition);
+
 		// TODO: Generate door blocks based off of room's doors.
 //		Map<Pair<Direction, BlockPos>, List<String>> doorTypeMap = room.getPotentialConnectedRoomTypes(settings, pos);
 		List<DungeonDoor> doorTypeMap = initialRoom.getPotentialConnectedRoomTypes(settings, roomPlacementPosition);
-		System.out.println("Size of doorTypeMap: " + doorTypeMap.size());
+//		System.out.println("Size of doorTypeMap: " + doorTypeMap.size());
 		for (DungeonDoor dungeonDoor : doorTypeMap)
 		{
-			this.addNewDoorBlock(world, dungeonDoor.doorPos, dungeonDoor.doorDir, dungeonDoor.doorType, dungeonDoor.getRoomList());
+			this.addNewDoorBlock(world, spawningPosition, dungeonDoor.doorPos, dungeonDoor.doorDir, dungeonDoor.doorType, dungeonDoor.getRoomList());
 		}
 
-		return true;
+		BlockPos playerPos = initialRoom.getPlayerSpawnLocationForPlacement(settings, roomPlacementPosition);
+
+		return playerPos;
 	}
 
-	public void addNewDoorBlock(ServerWorld world, BlockPos doorBlockPos, Direction doorFacing, String doorType, List<ResourceLocation> potentialRoomTypes)
+	public void addNewControllerBlock(ServerWorld world, BlockPos controllerPos)
+	{
+//		world.setBlockState(controllerPos, Blocks.LAPIS_BLOCK.getDefaultState(), 3);
+		world.setBlockState(controllerPos, BloodMagicBlocks.DUNGEON_CONTROLLER.get().getDefaultState(), 3);
+		TileEntity tile = world.getTileEntity(controllerPos);
+		if (tile instanceof TileDungeonController)
+		{
+			((TileDungeonController) tile).setDungeonSynthesizer(this);
+//			((TileDungeonSeal) tile).acceptDoorInformation(controllerPos, doorBlockPos, doorFacing, doorType, potentialRoomTypes);
+		}
+	}
+
+	public void addNewDoorBlock(ServerWorld world, BlockPos controllerPos, BlockPos doorBlockPos, Direction doorFacing, String doorType, List<ResourceLocation> potentialRoomTypes)
 	{
 		BlockPos doorBlockOffsetPos = doorBlockPos.offset(doorFacing).offset(Direction.UP, 2);
-		world.setBlockState(doorBlockOffsetPos, Blocks.REDSTONE_BLOCK.getDefaultState(), 3);
+//		world.setBlockState(doorBlockOffsetPos, Blocks.REDSTONE_BLOCK.getDefaultState(), 3);
+		Direction rightDirection = doorFacing.rotateY();
+		for (int i = -1; i <= 1; i++)
+		{
+			for (int j = -1; j <= 1; j++)
+			{
+				if (i == 0 && j == 0)
+				{
+					continue;
+				}
+
+				world.setBlockState(doorBlockOffsetPos.offset(rightDirection, i).offset(Direction.UP, j), BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get().getDefaultState());
+			}
+		}
+
+		world.setBlockState(doorBlockOffsetPos, BloodMagicBlocks.DUNGEON_SEAL.get().getDefaultState(), 3);
+		TileEntity tile = world.getTileEntity(doorBlockOffsetPos);
+		if (tile instanceof TileDungeonSeal)
+		{
+			((TileDungeonSeal) tile).acceptDoorInformation(controllerPos, doorBlockPos, doorFacing, doorType, potentialRoomTypes);
+		}
 	}
 
 	// Returns how successful the placement of the
-	public int addNewRoomToExistingDungeon(ServerWorld world, ResourceLocation roomType, Random rand, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, List<ResourceLocation> potentialRooms)
+	public int addNewRoomToExistingDungeon(ServerWorld world, BlockPos controllerPos, ResourceLocation roomType, Random rand, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, List<ResourceLocation> potentialRooms)
 	{
 		for (int i = 0; i < 10; i++)
 		{
-			boolean testPlacement = attemptPlacementOfRandomRoom(world, roomType, rand, activatedDoorPos, doorFacing, activatedDoorType, potentialRooms, false);
+			boolean testPlacement = attemptPlacementOfRandomRoom(world, controllerPos, roomType, rand, activatedDoorPos, doorFacing, activatedDoorType, potentialRooms, false);
 			if (testPlacement)
 			{
 				return 0;
@@ -160,7 +199,7 @@ public class DungeonSynthesizer
 		}
 
 		ResourceLocation pathPool = new ResourceLocation("bloodmagic:room_pools/connective_corridors");
-		if (attemptPlacementOfRandomRoom(world, pathPool, rand, activatedDoorPos, doorFacing, activatedDoorType, potentialRooms, true))
+		if (attemptPlacementOfRandomRoom(world, controllerPos, pathPool, rand, activatedDoorPos, doorFacing, activatedDoorType, potentialRooms, true))
 		{
 			return 1;
 		}
@@ -292,7 +331,7 @@ public class DungeonSynthesizer
 //		}
 //	}
 
-	public boolean attemptPlacementOfRandomRoom(ServerWorld world, ResourceLocation roomType, Random rand, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, List<ResourceLocation> potentialRooms, boolean extendCorriDoors)
+	public boolean attemptPlacementOfRandomRoom(ServerWorld world, BlockPos controllerPos, ResourceLocation roomType, Random rand, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, List<ResourceLocation> potentialRooms, boolean extendCorriDoors)
 	{
 		PlacementSettings settings = new PlacementSettings();
 		Mirror mir = Mirror.NONE;
@@ -314,6 +353,7 @@ public class DungeonSynthesizer
 
 		Direction oppositeDoorFacing = doorFacing.getOpposite();
 		DungeonRoom testingRoom = getRandomRoom(roomType, rand);
+//		System.out.println("Room type: " + roomType);
 
 		List<Rotation> rotationList = Rotation.shuffledRotations(rand);
 
@@ -362,6 +402,8 @@ public class DungeonSynthesizer
 			return false;
 		}
 
+		System.out.println("Room spawn location: " + roomLocation);
+
 		placedRoom.placeStructureAtPosition(rand, settings, world, roomLocation);
 		for (String doorType : placedRoom.doorMap.keySet())
 		{
@@ -409,10 +451,10 @@ public class DungeonSynthesizer
 
 			if (extendCorriDoors)
 			{
-				this.addNewDoorBlock(world, dungeonDoor.doorPos, dungeonDoor.doorDir, activatedDoorType, potentialRooms);
+				this.addNewDoorBlock(world, controllerPos, dungeonDoor.doorPos, dungeonDoor.doorDir, activatedDoorType, potentialRooms);
 			} else
 			{
-				this.addNewDoorBlock(world, dungeonDoor.doorPos, dungeonDoor.doorDir, dungeonDoor.doorType, dungeonDoor.getRoomList());
+				this.addNewDoorBlock(world, controllerPos, dungeonDoor.doorPos, dungeonDoor.doorDir, dungeonDoor.doorType, dungeonDoor.getRoomList());
 			}
 		}
 
