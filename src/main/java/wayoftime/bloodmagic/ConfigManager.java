@@ -87,11 +87,15 @@ public class ConfigManager
 		public final ForgeConfigSpec.DoubleValue holdingY;
 
 		public final ForgeConfigSpec.BooleanValue alwaysRenderRoutingLines;
+		public final ForgeConfigSpec.BooleanValue sigilHoldingSkipsEmptySlots;
 
 		ClientConfig(ForgeConfigSpec.Builder builder)
 		{
-			builder.comment("Always render the beams between routing nodes.", "If disabled, the beams will only render while the Node Router is held.").push("rendering");
+			builder.comment("Always render the beams between routing nodes.", "If disabled, the beams will only render while the Node Router is held.").push("client");
 			alwaysRenderRoutingLines = builder.define("alwaysRenderRoutingLines", false);
+
+			builder.comment("When cycling through slots, the Sigil of Holding will skip over empty slots and move to the next occupied one.", "If disabled, it will behave identically to the default hotbar.");
+			sigilHoldingSkipsEmptySlots = builder.define("sigilHoldingSkipsEmptySlots", false);
 			builder.pop();
 
 			builder.comment("Settings for the position of the Demon Will Gauge HUD element.").push("hud");

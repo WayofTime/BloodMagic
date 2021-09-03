@@ -26,6 +26,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.ConfigManager;
 import wayoftime.bloodmagic.anointment.AnointmentColor;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.api.compat.IMultiWillTool;
@@ -104,7 +105,7 @@ public class ClientEvents
 	public static void cycleSigil(ItemStack stack, PlayerEntity player, int dWheel)
 	{
 		int mode = dWheel;
-		if (true)
+		if (!ConfigManager.CLIENT.sigilHoldingSkipsEmptySlots.get())
 		{
 			mode = ItemSigilHolding.getCurrentItemOrdinal(stack);
 			mode = dWheel < 0 ? ItemSigilHolding.next(mode) : ItemSigilHolding.prev(mode);
