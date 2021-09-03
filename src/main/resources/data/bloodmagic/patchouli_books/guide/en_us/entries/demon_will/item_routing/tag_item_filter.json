@@ -14,6 +14,16 @@
       "heading": "Tag Item Filter",
       "recipe": "bloodmagic:alchemytable/tag_router_filter",
       "text": "This allows you to deny/permit categories of items, so you can specify that all items with the tag $(thing)forge:ores$() get sent to your furnace, for example."
+    },
+    {
+      "type": "image",
+      "images": [
+        "bloodmagic:images/entries/routing/tag_item_filter_gui.png",
+        "bloodmagic:images/entries/routing/tag_item_filter_mouseover.png"
+      ],
+      "title": "Tag Item Filter GUI",
+      "border": true,
+      "text": "The GUI and the mouseover text of a configured filter."
     }
   ]
 }
