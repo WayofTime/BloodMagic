@@ -395,6 +395,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("chat.bloodmagic.routing.set", "Setting node location");
 		add("chat.bloodmagic.routing.link.master", "Linked node to master!");
 		add("chat.bloodmagic.routing.link", "Linked nodes together");
+		add("chat.bloodmagic.routing.distance", "Invalid - link distance greater than 16 blocks!");
+		add("chat.bloodmagic.routing.same", "Invalid - cannot link a node with itself");
 
 		add("tooltip.bloodmagic.telepositionfocus.coords", "Current coordinates: (%d, %d, %d)");
 

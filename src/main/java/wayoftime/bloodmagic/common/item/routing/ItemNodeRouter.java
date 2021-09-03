@@ -84,6 +84,15 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 			return ActionResultType.SUCCESS;
 		} else
 		{
+			if (containedPos.distanceSq(pos) > 16 * 16)
+			{
+				player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.distance"), true);
+				return ActionResultType.SUCCESS;
+			} else if (containedPos.equals(pos))
+			{
+				player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.same"), true);
+				return ActionResultType.SUCCESS;
+			}
 			TileEntity pastTile = world.getTileEntity(containedPos);
 			if (pastTile instanceof IRoutingNode)
 			{
