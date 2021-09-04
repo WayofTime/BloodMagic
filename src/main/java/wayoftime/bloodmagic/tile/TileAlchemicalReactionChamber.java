@@ -7,6 +7,8 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -67,6 +69,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 	public TileAlchemicalReactionChamber(TileEntityType<?> type)
 	{
 		super(type, 9, "alchemicalreactionchamber");
+		this.initializeFluidCapabilities();
 	}
 
 	public TileAlchemicalReactionChamber()
@@ -340,10 +343,14 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 		{
 			if (toolStack.isDamageable())
 			{
-				toolStack.setDamage(toolStack.getDamage() + 1);
-				if (toolStack.getDamage() >= toolStack.getMaxDamage())
+				int unbreakingLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, toolStack);
+				if (unbreakingLevel == 0 || world.rand.nextInt(unbreakingLevel + 1) == 0)
 				{
-					setInventorySlotContents(ARC_TOOL_SLOT, ItemStack.EMPTY);
+					toolStack.setDamage(toolStack.getDamage() + 1);
+					if (toolStack.getDamage() >= toolStack.getMaxDamage())
+					{
+						setInventorySlotContents(ARC_TOOL_SLOT, ItemStack.EMPTY);
+					}
 				}
 			} else if (toolStack.getItem().hasContainerItem(toolStack))
 			{

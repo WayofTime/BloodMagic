@@ -68,8 +68,7 @@
       "a.heading": "Flint",
       "a.recipe": "bloodmagic:alchemytable/flint_from_gravel",
       "b.heading": "Gunpowder",
-      "b.recipe": "bloodmagic:alchemytable/gunpowder",
-      "b.text": "Saltpeter NYI in Blood Magic."
+      "b.recipe": "bloodmagic:alchemytable/gunpowder"
     },
     {
       "type": "3x_crafting_alchemy_table",

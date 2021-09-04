@@ -113,6 +113,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.activationcrystal.creative", "Creative Only - Activates any ritual");
 
 		add("tooltip.bloodmagic.arctool.additionaldrops", "Increases chance of additional outputs by: x%s");
+		add("tooltip.bloodmagic.arctool.craftspeed", "Increases crafting speed by: x%s");
 		add("tooltip.bloodmagic.arctool.uses", "Uses remaining: %s");
 
 		add("itemGroup.bloodmagictab", "Blood Magic");
@@ -519,8 +520,8 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK, "Output Routing Node");
 		addBlock(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK, "Master Routing Node");
 
-		addBlock(BloodMagicBlocks.WEAK_TAU, "Taue Fruit");
-		addBlock(BloodMagicBlocks.STRONG_TAU, "Saturated Taue");
+		addBlock(BloodMagicBlocks.WEAK_TAU, "Tau Fruit");
+		addBlock(BloodMagicBlocks.STRONG_TAU, "Saturated Tau");
 		addBlock(BloodMagicBlocks.GROWING_DOUBT, "Seeds of Doubt");
 
 		// Item names
@@ -613,6 +614,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.EXPLOSIVE_POWDER, "Explosive Powder");
 
 		addItem(BloodMagicItems.BASIC_CUTTING_FLUID, "Basic Cutting Fluid");
+		addItem(BloodMagicItems.INTERMEDIATE_CUTTING_FLUID, "Intermediate Cutting Fluid");
 
 		addItem(BloodMagicItems.EXPERIENCE_TOME, "Tome of Peritia");
 
@@ -658,6 +660,7 @@ public class GeneratorLanguage extends LanguageProvider
 
 		// Alchemy Items
 		addItem(BloodMagicItems.PLANT_OIL, "Plant Oil");
+		addItem(BloodMagicItems.TAU_OIL, "Tau Oil");
 
 		// Sands
 		addItem(BloodMagicItems.COAL_SAND, "Coal Sand");

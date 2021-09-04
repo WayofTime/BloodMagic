@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "bloodmagic:basiccuttingfluid"
+    "bloodmagic:basiccuttingfluid",
+    "bloodmagic:intermediatecuttingfluid"
   ]
 }

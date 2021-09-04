@@ -16,10 +16,10 @@ import net.minecraftforge.common.crafting.conditions.NotCondition;
 import net.minecraftforge.common.crafting.conditions.TagEmptyCondition;
 import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.recipe.helper.FluidStackIngredient;
 import wayoftime.bloodmagic.common.data.recipe.builder.ARCRecipeBuilder;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
+import wayoftime.bloodmagic.recipe.helper.FluidStackIngredient;
 
 public class ARCRecipeProvider implements ISubRecipeProvider
 {
@@ -35,7 +35,7 @@ public class ARCRecipeProvider implements ISubRecipeProvider
 		ARCRecipeBuilder.arc(Ingredient.fromItems(BloodMagicItems.IMBUED_SLATE.get()), Ingredient.fromTag(BloodMagicTags.ARC_TOOL_REVERTER), null, new ItemStack(BloodMagicItems.WEAK_BLOOD_SHARD.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.WEAK_BLOOD_SHARD.get()), 0.2).build(consumer, BloodMagic.rl(basePath + "weakbloodshard"));
 		ARCRecipeBuilder.arc(Ingredient.fromItems(Items.IRON_ORE), Ingredient.fromTag(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.IRON_SAND.get(), 2), null).build(consumer, BloodMagic.rl(basePath + "ore/dustiron"));
 		ARCRecipeBuilder.arc(Ingredient.fromItems(Items.GOLD_ORE), Ingredient.fromTag(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.GOLD_SAND.get(), 2), null).build(consumer, BloodMagic.rl(basePath + "ore/dustgold"));
-		ARCRecipeBuilder.arc(Ingredient.fromTag(Tags.Items.NETHERRACK), Ingredient.fromTag(BloodMagicTags.ARC_TOOL_EXPLOSIVE), null, new ItemStack(BloodMagicItems.SULFUR.get()), new FluidStack(Fluids.LAVA, 5)).build(consumer, BloodMagic.rl(basePath + "netherrack_to_sulfer"));
+		ARCRecipeBuilder.arc(Ingredient.fromTag(Tags.Items.NETHERRACK), Ingredient.fromTag(BloodMagicTags.ARC_TOOL_EXPLOSIVE), null, new ItemStack(BloodMagicItems.SULFUR.get()), new FluidStack(Fluids.LAVA, 50)).build(consumer, BloodMagic.rl(basePath + "netherrack_to_sulfer"));
 		ARCRecipeBuilder.arc(Ingredient.fromItems(Items.TERRACOTTA), Ingredient.fromTag(BloodMagicTags.ARC_TOOL_HYDRATE), FluidStackIngredient.from(Fluids.WATER, 200), new ItemStack(Blocks.CLAY), null).build(consumer, BloodMagic.rl(basePath + "clay_from_terracotta"));
 		ARCRecipeBuilder.arc(Ingredient.fromTag(Tags.Items.SAND), Ingredient.fromTag(BloodMagicTags.ARC_TOOL_HYDRATE), FluidStackIngredient.from(Fluids.WATER, 200), new ItemStack(Items.CLAY_BALL), null).addRandomOutput(new ItemStack(Items.CLAY_BALL), 0.5).build(consumer, BloodMagic.rl(basePath + "clay_from_sand"));
 

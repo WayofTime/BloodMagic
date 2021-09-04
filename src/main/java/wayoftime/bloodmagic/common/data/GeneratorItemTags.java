@@ -140,6 +140,7 @@ public class GeneratorItemTags extends ItemTagsProvider
 	private void registerCuttingFluids()
 	{
 		this.registerTool(BloodMagicItems.BASIC_CUTTING_FLUID.get(), BloodMagicTags.ARC_TOOL_CUTTINGFLUID);
+		this.registerTool(BloodMagicItems.INTERMEDIATE_CUTTING_FLUID.get(), BloodMagicTags.ARC_TOOL_CUTTINGFLUID);
 	}
 
 	public void registerTool(Item item, INamedTag<Item> tag)

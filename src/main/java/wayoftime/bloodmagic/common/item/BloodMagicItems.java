@@ -239,11 +239,13 @@ public class BloodMagicItems
 
 	// Alchemy Table items
 	public static final RegistryObject<Item> BASIC_CUTTING_FLUID = BASICITEMS.register("basiccuttingfluid", () -> new ItemARCToolBase(64, 1));
+	public static final RegistryObject<Item> INTERMEDIATE_CUTTING_FLUID = BASICITEMS.register("intermediatecuttingfluid", () -> new ItemARCToolBase(512, 1.25));
 	public static final RegistryObject<Item> EXPLOSIVE_POWDER = BASICITEMS.register("explosivepowder", () -> new ItemARCToolBase(64, 1));
 
 	public static final RegistryObject<Item> SULFUR = BASICITEMS.register("sulfur", () -> new ItemBase());
 	public static final RegistryObject<Item> SALTPETER = BASICITEMS.register("saltpeter", () -> new ItemBase());
 	public static final RegistryObject<Item> PLANT_OIL = BASICITEMS.register("plantoil", () -> new ItemBase());
+	public static final RegistryObject<Item> TAU_OIL = BASICITEMS.register("tauoil", () -> new ItemBase());
 
 	public static final RegistryObject<Item> THROWING_DAGGER_SYRINGE = BASICITEMS.register("throwing_dagger_syringe", ItemThrowingDaggerSyringe::new);
 	public static final RegistryObject<Item> THROWING_DAGGER = BASICITEMS.register("throwing_dagger", ItemThrowingDagger::new);
