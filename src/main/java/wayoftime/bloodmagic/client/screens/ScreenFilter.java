@@ -1,5 +1,6 @@
 package wayoftime.bloodmagic.client.screens;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -140,14 +141,12 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 
 	}
 
-	int backSpaceKey = 259;
-
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers)
 	{
 		if (this.textBox.isFocused())
 		{
-			if (keyCode == backSpaceKey && container.lastGhostSlotClicked != -1)
+			if ((keyCode == KeyEvent.VK_BACK_SPACE || keyCode == KeyEvent.VK_DELETE) && container.lastGhostSlotClicked != -1)
 			{
 				String str = this.textBox.getText();
 
