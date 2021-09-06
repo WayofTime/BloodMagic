@@ -1,6 +1,5 @@
 package wayoftime.bloodmagic.client.screens;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,7 +145,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	{
 		if (this.textBox.isFocused())
 		{
-			if ((keyCode == KeyEvent.VK_BACK_SPACE || keyCode == KeyEvent.VK_DELETE) && container.lastGhostSlotClicked != -1)
+			if ((keyCode == 259 || keyCode == 261) && container.lastGhostSlotClicked != -1)
 			{
 				String str = this.textBox.getText();
 
@@ -173,40 +172,44 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 				}
 			}
 		}
+
 		return super.keyPressed(keyCode, scanCode, modifiers);
 	}
 
 	@Override
 	public boolean charTyped(char typedChar, int keyCode)
 	{
-		if (this.textBox.charTyped(typedChar, keyCode))
+		try
 		{
-			if (container.lastGhostSlotClicked != -1)
+			Integer charVal = Integer.decode("" + typedChar);
+			if (charVal != null)
 			{
-				String str = this.textBox.getText();
-				int amount = 0;
-
-				if (!str.isEmpty())
+				if (this.textBox.charTyped(typedChar, keyCode))
 				{
-					try
+					if (container.lastGhostSlotClicked != -1)
 					{
-						Integer testVal = Integer.decode(str);
-						if (testVal != null)
-						{
-							amount = testVal;
-						}
-					} catch (NumberFormatException d)
-					{
-					}
-				}
+						String str = this.textBox.getText();
+						int amount = 0;
 
-				setValueOfGhostItemInSlot(container.lastGhostSlotClicked, amount);
+						if (!str.isEmpty())
+						{
+
+						}
+
+						setValueOfGhostItemInSlot(container.lastGhostSlotClicked, amount);
+					}
+					return true;
+				} else
+				{
+					return super.charTyped(typedChar, keyCode);
+				}
 			}
-			return true;
-		} else
+
+		} catch (NumberFormatException d)
 		{
-			return super.charTyped(typedChar, keyCode);
 		}
+
+		return super.charTyped(typedChar, keyCode);
 	}
 
 	private void setValueOfGhostItemInSlot(int ghostItemSlot, int amount)
