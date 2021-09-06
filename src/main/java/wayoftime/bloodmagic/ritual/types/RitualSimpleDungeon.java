@@ -5,12 +5,15 @@ import java.util.UUID;
 import java.util.function.Consumer;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.ConfigManager;
+import wayoftime.bloodmagic.common.item.ItemActivationCrystal;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.ritual.IMasterRitualStone;
 import wayoftime.bloodmagic.ritual.Ritual;
@@ -27,9 +30,19 @@ public class RitualSimpleDungeon extends Ritual
 		super("ritualSimpleDungeon", 0, 80000, "ritual." + BloodMagic.MODID + ".simpleDungeonRitual");
 	}
 
-	// TODO: Change this so it depends on the config + activation crystal.
 	public boolean activateRitual(IMasterRitualStone masterRitualStone, PlayerEntity player, UUID owner)
 	{
+		if (ConfigManager.COMMON.makeDungeonRitualCreativeOnly.get())
+		{
+			ItemStack heldStack = player.getActiveItemStack();
+			if (heldStack.getItem() instanceof ItemActivationCrystal)
+			{
+				int crystalLevel = ((ItemActivationCrystal) heldStack.getItem()).getCrystalLevel(heldStack);
+				return crystalLevel == Integer.MAX_VALUE;
+			}
+
+			return false;
+		}
 		return true;
 	}
 
