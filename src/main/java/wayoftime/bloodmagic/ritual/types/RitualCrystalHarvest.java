@@ -33,7 +33,7 @@ public class RitualCrystalHarvest extends Ritual
 	{
 		World world = masterRitualStone.getWorldObj();
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
-		BlockPos pos = masterRitualStone.getBlockPos();
+		BlockPos pos = masterRitualStone.getMasterBlockPos();
 
 		if (currentEssence < getRefreshCost())
 		{

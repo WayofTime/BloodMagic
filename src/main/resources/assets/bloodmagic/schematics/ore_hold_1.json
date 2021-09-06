@@ -1,5 +1,6 @@
 {
   "dungeonWeight": 4,
+  "oreDensity": 0.2,
   "structureMap": {
     "bloodmagic:ore_hold_1": {
       "x": 0,
@@ -8,6 +9,7 @@
     }
   },
   "doorMap": {
+  "default": {
     "north": [
       {
         "x": 5,
@@ -49,6 +51,7 @@
         "z": 7
       }
     ]
+    }
   },
   "descriptorList": [
     {

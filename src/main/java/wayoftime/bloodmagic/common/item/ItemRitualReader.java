@@ -209,7 +209,7 @@ public class ItemRitualReader extends Item
 								}
 								Ritual ritual = master.getCurrentRitual();
 								List<EnumDemonWillType> willConfig = master.getActiveWillConfig();
-								DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(master.getWorldObj(), master.getBlockPos());
+								DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(master.getWorldObj(), master.getMasterBlockPos());
 
 								int maxHorizontalRange = ritual.getMaxHorizontalRadiusForRange(range, willConfig, holder);
 								int maxVerticalRange = ritual.getMaxVerticalRadiusForRange(range, willConfig, holder);

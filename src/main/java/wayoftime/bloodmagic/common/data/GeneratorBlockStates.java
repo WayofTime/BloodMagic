@@ -4,9 +4,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.block.FenceGateBlock;
 import net.minecraft.block.RotatedPillarBlock;
+import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.block.WallBlock;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -25,6 +27,7 @@ import net.minecraftforge.fml.RegistryObject;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BlockAlchemicalReactionChamber;
 import wayoftime.bloodmagic.common.block.BlockDemonCrystal;
+import wayoftime.bloodmagic.common.block.BlockRoutingNode;
 import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.block.base.BlockPillarCap;
@@ -70,6 +73,11 @@ public class GeneratorBlockStates extends BlockStateProvider
 		buildCrystal(BloodMagicBlocks.VENGEFUL_CRYSTAL_BLOCK.get(), "vengefulcrystal");
 		buildCrystal(BloodMagicBlocks.STEADFAST_CRYSTAL_BLOCK.get(), "steadfastcrystal");
 
+		buildRoutingNode(BloodMagicBlocks.ROUTING_NODE_BLOCK.get(), "routingnode");
+		buildRoutingNode(BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get(), "inputroutingnode");
+		buildRoutingNode(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get(), "outputroutingnode");
+		buildMasterRoutingNode(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get());
+
 		buildRandomStone(BloodMagicBlocks.DUNGEON_STONE.get(), BloodMagic.rl("block/dungeon/dungeon_stone"));
 		stairsBlock((StairsBlock) BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get(), BloodMagic.rl("block/dungeon/dungeon_brick1"));
 		stairsBlock((StairsBlock) BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get(), BloodMagic.rl("block/dungeon/dungeon_polished"));
@@ -79,6 +87,9 @@ public class GeneratorBlockStates extends BlockStateProvider
 		buildWallInventory((WallBlock) BloodMagicBlocks.DUNGEON_POLISHED_WALL.get(), BloodMagic.rl("block/dungeon/dungeon_polished"));
 		fenceGateBlock((FenceGateBlock) BloodMagicBlocks.DUNGEON_BRICK_GATE.get(), BloodMagic.rl("block/dungeon/dungeon_brick1"));
 		fenceGateBlock((FenceGateBlock) BloodMagicBlocks.DUNGEON_POLISHED_GATE.get(), BloodMagic.rl("block/dungeon/dungeon_polished"));
+
+		slabBlock((SlabBlock) BloodMagicBlocks.DUNGEON_BRICK_SLAB.get(), BloodMagic.rl("dungeon_brick1"), BloodMagic.rl("block/dungeon/dungeon_brick1"));
+		slabBlock((SlabBlock) BloodMagicBlocks.DUNGEON_TILE_SLAB.get(), BloodMagic.rl("dungeon_tile"), BloodMagic.rl("block/dungeon/dungeon_tile"));
 
 		buildPillarCap(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get(), BloodMagic.rl("block/dungeon/dungeon_pillarheart"), BloodMagic.rl("block/dungeon/dungeon_pillarbottom"), BloodMagic.rl("block/dungeon/dungeon_pillartop"));
 
@@ -90,12 +101,24 @@ public class GeneratorBlockStates extends BlockStateProvider
 		buildCubeAllWithTextureName("solidlightmimic");
 		buildCubeAllWithTextureName("solidopaquemimic");
 
+		buildCubeAll(BloodMagicBlocks.DUNGEON_CONTROLLER.get());
+		buildCubeAll(BloodMagicBlocks.DUNGEON_SEAL.get());
+
 		buildCrop(BloodMagicBlocks.GROWING_DOUBT.get(), CropsBlock.AGE, 7, BloodMagic.rl("block/creeping_doubt_1"), BloodMagic.rl("block/creeping_doubt_2"), BloodMagic.rl("block/creeping_doubt_3"), BloodMagic.rl("block/creeping_doubt_4"), BloodMagic.rl("block/creeping_doubt_5"), BloodMagic.rl("block/creeping_doubt_6"), BloodMagic.rl("block/creeping_doubt_7"), BloodMagic.rl("block/creeping_doubt_8"));
+		buildCrossCrop(BloodMagicBlocks.WEAK_TAU.get(), CropsBlock.AGE, 7, modLoc("block/weak_tau_1"), modLoc("block/weak_tau_2"), modLoc("block/weak_tau_3"), modLoc("block/weak_tau_4"), modLoc("block/weak_tau_5"), modLoc("block/weak_tau_6"), modLoc("block/weak_tau_7"), modLoc("block/weak_tau_8"));
+		buildCrossCrop(BloodMagicBlocks.STRONG_TAU.get(), CropsBlock.AGE, 7, modLoc("block/weak_tau_1"), modLoc("block/strong_tau_2"), modLoc("block/strong_tau_3"), modLoc("block/strong_tau_4"), modLoc("block/strong_tau_5"), modLoc("block/strong_tau_6"), modLoc("block/strong_tau_7"), modLoc("block/strong_tau_8"));
 
 		buildOrientable(BloodMagicBlocks.SHAPED_CHARGE.get(), "shaped_charge", modLoc("block/sub/shaped_charge"), modLoc("block/dungeon/dungeon_stone"), modLoc("block/dungeon/dungeon_tile"), modLoc("block/blankrune"), modLoc("block/largebloodstonebrick"), modLoc("models/defaultcrystal"));
 		buildOrientable(BloodMagicBlocks.DEFORESTER_CHARGE.get(), "deforester_charge", modLoc("block/sub/shaped_charge"), new ResourceLocation("block/oak_log_top"), new ResourceLocation("block/oak_log_top"), modLoc("block/blankrune"), new ResourceLocation("block/oak_planks"), modLoc("models/defaultcrystal"));
 		buildOrientable(BloodMagicBlocks.VEINMINE_CHARGE.get(), "veinmine_charge", modLoc("block/sub/shaped_charge"), new ResourceLocation("block/sandstone_bottom"), new ResourceLocation("block/sandstone_bottom"), modLoc("block/blankrune"), new ResourceLocation("block/sand"), modLoc("models/defaultcrystal"));
 		buildOrientable(BloodMagicBlocks.FUNGAL_CHARGE.get(), "fungal_charge", modLoc("block/sub/shaped_charge"), new ResourceLocation("block/nether_wart_block"), new ResourceLocation("block/crimson_planks"), modLoc("block/blankrune"), new ResourceLocation("block/crimson_stem"), modLoc("models/defaultcrystal"));
+
+		getVariantBuilder(BloodMagicBlocks.INVERSION_PILLAR.get()).forAllStates(state -> {
+			Builder builder = ConfiguredModel.builder();
+			ModelFile model = models().withExistingParent("inversion_pillar", modLoc("pillar_mid")).texture("texture", modLoc("models/pillar_mid"));
+
+			return builder.modelFile(model).build();
+		});
 	}
 
 	private void buildOrientable(Block block, String name, ResourceLocation modelPath, ResourceLocation base, ResourceLocation edges, ResourceLocation centerCap, ResourceLocation binding, ResourceLocation core)
@@ -122,6 +145,18 @@ public class GeneratorBlockStates extends BlockStateProvider
 		for (int i = 0; i <= maxAge; i++)
 		{
 			ModelFile modelFile = models().crop(basePath + "_" + (i + 1), textures[i]);
+			builder.partialState().with(prop, i).modelForState().modelFile(modelFile).addModel();
+		}
+	}
+
+	private void buildCrossCrop(Block block, IntegerProperty prop, int maxAge, ResourceLocation... textures)
+	{
+		String basePath = block.getRegistryName().getPath();
+		VariantBlockStateBuilder builder = getVariantBuilder(block);
+
+		for (int i = 0; i <= maxAge; i++)
+		{
+			ModelFile modelFile = models().cross(basePath + "_" + (i + 1), textures[i]);
 			builder.partialState().with(prop, i).modelForState().modelFile(modelFile).addModel();
 		}
 	}
@@ -332,6 +367,94 @@ public class GeneratorBlockStates extends BlockStateProvider
 
 				partBuilder.addModel().condition(BlockDemonCrystal.AGE, intArray).condition(BlockDemonCrystal.ATTACHED, direction).end();
 			}
+		}
+	}
+
+	private void buildRoutingNode(Block block, String name)
+	{
+		MultiPartBlockStateBuilder builder = getMultipartBuilder(block);
+
+		ModelFile nodeModel = models().withExistingParent("block/routing/" + name + "core", modLoc("routingnodecore")).texture("core", modLoc("models/model" + name));
+		ModelFile baseModel = models().withExistingParent("block/routing/" + name + "base", modLoc("routingnodebase")).texture("base", modLoc("models/model" + name));
+
+		builder.part().modelFile(nodeModel).addModel().end();
+		for (Direction direction : Direction.values())
+		{
+			Builder<PartBuilder> partBuilder = builder.part().modelFile(baseModel);
+			BooleanProperty prop = BlockRoutingNode.UP;
+
+			switch (direction)
+			{
+			case UP:
+				prop = BlockRoutingNode.UP;
+				partBuilder = partBuilder.rotationX(180);
+				break;
+			case DOWN:
+				prop = BlockRoutingNode.DOWN;
+				break;
+			case EAST:
+				prop = BlockRoutingNode.EAST;
+				partBuilder = partBuilder.rotationX(90).rotationY(270);
+				break;
+			case WEST:
+				prop = BlockRoutingNode.WEST;
+				partBuilder = partBuilder.rotationX(90).rotationY(90);
+				break;
+			case NORTH:
+				prop = BlockRoutingNode.NORTH;
+				partBuilder = partBuilder.rotationX(270);
+				break;
+			case SOUTH:
+				prop = BlockRoutingNode.SOUTH;
+				partBuilder = partBuilder.rotationX(90);
+				break;
+			}
+
+			partBuilder.addModel().condition(prop, true).end();
+		}
+	}
+
+	private void buildMasterRoutingNode(Block block)
+	{
+		MultiPartBlockStateBuilder builder = getMultipartBuilder(block);
+
+		ModelFile nodeModel = models().withExistingParent("block/routing/" + "modelmasterroutingnodecore", modLoc("masterroutingnodecore"));
+		ModelFile baseModel = models().withExistingParent("block/routing/" + "modelmasterroutingnodebase", modLoc("masterroutingnodebase"));
+
+		builder.part().modelFile(nodeModel).addModel().end();
+		for (Direction direction : Direction.values())
+		{
+			Builder<PartBuilder> partBuilder = builder.part().modelFile(baseModel);
+			BooleanProperty prop = BlockRoutingNode.UP;
+
+			switch (direction)
+			{
+			case UP:
+				prop = BlockRoutingNode.UP;
+				partBuilder = partBuilder.rotationX(180);
+				break;
+			case DOWN:
+				prop = BlockRoutingNode.DOWN;
+				break;
+			case EAST:
+				prop = BlockRoutingNode.EAST;
+				partBuilder = partBuilder.rotationX(90).rotationY(270);
+				break;
+			case WEST:
+				prop = BlockRoutingNode.WEST;
+				partBuilder = partBuilder.rotationX(90).rotationY(90);
+				break;
+			case NORTH:
+				prop = BlockRoutingNode.NORTH;
+				partBuilder = partBuilder.rotationX(270);
+				break;
+			case SOUTH:
+				prop = BlockRoutingNode.SOUTH;
+				partBuilder = partBuilder.rotationX(90);
+				break;
+			}
+
+			partBuilder.addModel().condition(prop, true).end();
 		}
 	}
 

@@ -15,6 +15,17 @@ import vazkii.patchouli.api.IVariableProvider;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.recipe.RecipeBloodAltar;
 
+/*
+ * Example Page:
+ * 
+ * {
+ *   "type": "crafting_altar",    // Corresponding Template.
+ *   "heading": "Title",    // (Optional) Title.
+ *   "recipe": "recipe_id",    // Recipe ID.
+ *   "text": "Extra text."    // (Optional) Extra text to go under the entry.
+ * },
+ */
+
 public class BloodAltarProcessor implements IComponentProcessor
 {
 	private RecipeBloodAltar recipe;

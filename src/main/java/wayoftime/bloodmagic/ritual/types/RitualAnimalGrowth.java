@@ -63,7 +63,7 @@ public class RitualAnimalGrowth extends Ritual
 
 		int maxGrowths = currentEssence / getRefreshCost();
 		int totalGrowths = 0;
-		BlockPos pos = masterRitualStone.getBlockPos();
+		BlockPos pos = masterRitualStone.getMasterBlockPos();
 
 		AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
 		TileEntity chest = world.getTileEntity(chestRange.getContainedPositions(pos).get(0));
@@ -94,7 +94,7 @@ public class RitualAnimalGrowth extends Ritual
 		boolean kamikaze = destructiveWill >= destructiveWillDrain;
 
 		AreaDescriptor growingRange = masterRitualStone.getBlockRange(GROWTH_RANGE);
-		AxisAlignedBB axis = growingRange.getAABB(masterRitualStone.getBlockPos());
+		AxisAlignedBB axis = growingRange.getAABB(masterRitualStone.getMasterBlockPos());
 		List<AnimalEntity> animalList = world.getEntitiesWithinAABB(AnimalEntity.class, axis);
 
 		boolean performedEffect = false;

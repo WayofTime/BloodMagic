@@ -58,6 +58,11 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerCustomBlockPath(BloodMagicBlocks.VENGEFUL_CRYSTAL_BLOCK.get(), "crystal/vengefulcrystal1");
 		registerCustomBlockPath(BloodMagicBlocks.STEADFAST_CRYSTAL_BLOCK.get(), "crystal/steadfastcrystal1");
 
+		registerCustomBlockPath(BloodMagicBlocks.ROUTING_NODE_BLOCK.get(), "routingnodecombined");
+		registerCustomBlockPathWithTextures(BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get(), "routingnodecombined", "core", "bloodmagic:models/modelinputroutingnode", "base", "bloodmagic:models/modelinputroutingnode");
+		registerCustomBlockPathWithTextures(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get(), "routingnodecombined", "core", "bloodmagic:models/modeloutputroutingnode", "base", "bloodmagic:models/modeloutputroutingnode");
+		registerCustomBlockPath(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get(), "masterroutingnodecombined");
+
 		registerCustomBlockPath(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get(), "dungeon_brick1");
 		registerBlockModel(BloodMagicBlocks.DUNGEON_STONE.get());
 		registerBlockModel(BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get());
@@ -69,6 +74,11 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerCustomBlockPath(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get(), "dungeon_polished_wall_inventory");
 		registerBlockModel(BloodMagicBlocks.DUNGEON_BRICK_GATE.get());
 		registerBlockModel(BloodMagicBlocks.DUNGEON_POLISHED_GATE.get());
+		registerBlockModel(BloodMagicBlocks.DUNGEON_BRICK_SLAB.get());
+		registerBlockModel(BloodMagicBlocks.DUNGEON_TILE_SLAB.get());
+
+		registerBlockModel(BloodMagicBlocks.DUNGEON_CONTROLLER.get());
+		registerBlockModel(BloodMagicBlocks.DUNGEON_SEAL.get());
 
 		registerToggleableItem(BloodMagicItems.GREEN_GROVE_SIGIL.get());
 		registerToggleableItem(BloodMagicItems.FAST_MINER_SIGIL.get());
@@ -87,25 +97,32 @@ public class GeneratorItemModels extends ItemModelProvider
 
 		registerCustomFullTexture(BloodMagicBlocks.MIMIC.get(), "solidopaquemimic");
 		registerCustomFullTexture(BloodMagicBlocks.ETHEREAL_MIMIC.get(), "etherealopaquemimic");
-		this.crop(BloodMagicBlocks.GROWING_DOUBT.get().getRegistryName().getPath(), modLoc("block/creeping_doubt_8"));
+//		this.crop(BloodMagicBlocks.GROWING_DOUBT.get().getRegistryName().getPath(), modLoc("block/creeping_doubt_8"));
+		registerBasicItem(BloodMagicItems.GROWING_DOUBT_ITEM.get(), modLoc("item/doubt_seed"));
+		registerBasicItem(BloodMagicItems.WEAK_TAU_ITEM.get(), modLoc("item/weak_tau"));
+		registerBasicItem(BloodMagicItems.STRONG_TAU_ITEM.get(), modLoc("item/strong_tau"));
 
 		registerBlockModel(BloodMagicBlocks.SHAPED_CHARGE.get());
 		registerBlockModel(BloodMagicBlocks.DEFORESTER_CHARGE.get());
 		registerBlockModel(BloodMagicBlocks.VEINMINE_CHARGE.get());
 		registerBlockModel(BloodMagicBlocks.FUNGAL_CHARGE.get());
 
-		registerMultiLayerItem(BloodMagicItems.SLATE_VIAL.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
-		registerMultiLayerItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
-		registerMultiLayerItem(BloodMagicItems.SILK_TOUCH_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
-		registerMultiLayerItem(BloodMagicItems.FORTUNE_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
-		registerMultiLayerItem(BloodMagicItems.HOLY_WATER_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
-		registerMultiLayerItem(BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
-		registerMultiLayerItem(BloodMagicItems.QUICK_DRAW_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
-		registerMultiLayerItem(BloodMagicItems.LOOTING_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
-		registerMultiLayerItem(BloodMagicItems.BOW_POWER_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
-		registerMultiLayerItem(BloodMagicItems.WILL_POWER_ANOINTMENT.get(), modLoc("item/alchemic_vial_will"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon_will"));
-		registerMultiLayerItem(BloodMagicItems.SMELTING_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
+//		registerBlockModel(BloodMagicBlocks.INVERSION_PILLAR.get());
 
+		registerMultiLayerItem(BloodMagicItems.SLATE_VIAL.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.SILK_TOUCH_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.FORTUNE_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.HOLY_WATER_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.QUICK_DRAW_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.LOOTING_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.BOW_POWER_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.WILL_POWER_ANOINTMENT.get(), modLoc("item/alchemic_vial_will"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon_will"));
+		registerMultiLayerItem(BloodMagicItems.SMELTING_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+
+		registerMultiLayerItem(BloodMagicItems.BOW_POWER_ANOINTMENT_STRONG.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_two"));
 	}
 
 	private void registerCustomFullTexture(Block block, String texturePath)
@@ -120,6 +137,17 @@ public class GeneratorItemModels extends ItemModelProvider
 		getBuilder(path).parent(new ModelFile.UncheckedModelFile(modLoc("block/" + newPath)));
 	}
 
+	private void registerCustomBlockPathWithTextures(Block block, String newPath, String... textures)
+	{
+		String path = block.getRegistryName().getPath();
+		ItemModelBuilder builder = getBuilder(path).parent(new ModelFile.UncheckedModelFile(modLoc("block/" + newPath)));
+		int length = textures.length / 2;
+		for (int i = 1; i < length; i++)
+		{
+			builder.texture(textures[i * 2], textures[i * 2 + 1]);
+		}
+	}
+
 	private void registerBlockModel(Block block)
 	{
 		String path = block.getRegistryName().getPath();
@@ -130,6 +158,12 @@ public class GeneratorItemModels extends ItemModelProvider
 	{
 		String path = item.getRegistryName().getPath();
 		singleTexture(path, mcLoc("item/generated"), "layer0", modLoc("item/" + path));
+	}
+
+	private void registerBasicItem(Item item, ResourceLocation separateLocation)
+	{
+		String path = item.getRegistryName().getPath();
+		singleTexture(path, mcLoc("item/generated"), "layer0", separateLocation);
 	}
 
 	private void registerMultiLayerItem(Item item, ResourceLocation... locations)
@@ -217,5 +251,10 @@ public class GeneratorItemModels extends ItemModelProvider
 		ModelFile baseKnifeFile = singleTexture("item/variants/" + path, mcLoc("item/handheld"), "layer0", modLoc("item/" + path));
 		ModelFile ceremonialKnifeFile = singleTexture("item/variants/" + path + "_ceremonial", mcLoc("item/handheld"), "layer0", modLoc("item/" + path + "_ceremonial"));
 		builder = builder.override().predicate(BloodMagic.rl("incense"), 0).model(baseKnifeFile).end().override().predicate(BloodMagic.rl("incense"), 1).model(ceremonialKnifeFile).end();
+	}
+
+	private void registerRoutingNode(Block block)
+	{
+
 	}
 }

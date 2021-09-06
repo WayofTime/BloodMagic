@@ -16,7 +16,7 @@ public class InventoryHolding extends ItemInventory
 
 	public InventoryHolding(ItemStack itemStack)
 	{
-		super(itemStack, ItemSigilHolding.inventorySize, "SigilOfHolding");
+		super(itemStack, ItemSigilHolding.inventorySize, "");
 	}
 
 	public void onGuiSaved(PlayerEntity entityPlayer)

@@ -80,7 +80,7 @@ public class RitualLava extends Ritual
 			return;
 		}
 
-		BlockPos pos = masterRitualStone.getBlockPos();
+		BlockPos pos = masterRitualStone.getMasterBlockPos();
 		List<EnumDemonWillType> willConfig = masterRitualStone.getActiveWillConfig();
 
 		double rawWill = this.getWillRespectingConfig(world, pos, EnumDemonWillType.DEFAULT, willConfig);

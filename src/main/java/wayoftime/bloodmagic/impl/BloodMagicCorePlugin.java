@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.impl;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
 import net.minecraft.block.GrassBlock;
+import net.minecraft.block.IWaterLoggable;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.tags.BlockTags;
 import wayoftime.bloodmagic.altar.ComponentType;
@@ -37,6 +38,7 @@ public class BloodMagicCorePlugin
 		apiInterface.registerTranquilityHandler(state -> state.getBlock() instanceof FireBlock, EnumTranquilityType.FIRE.name(), 1.0D);
 		apiInterface.registerTranquilityHandler(state -> state.getBlock() instanceof GrassBlock, EnumTranquilityType.EARTHEN.name(), 0.5D);
 		apiInterface.registerTranquilityHandler(state -> BlockTags.LOGS.contains(state.getBlock()), EnumTranquilityType.TREE.name(), 1.0D);
+		apiInterface.registerTranquilityHandler(state -> state.getBlock() instanceof IWaterLoggable && state.getFluidState().isSource(), EnumTranquilityType.WATER.name(), 1.0D);
 
 		IncenseTranquilityRegistry.registerTranquilityHandler((world, pos, block, state) -> BloodMagicAPI.INSTANCE.getValueManager().getTranquility().get(state));
 
@@ -56,5 +58,9 @@ public class BloodMagicCorePlugin
 		apiInterface.registerAltarComponent(BloodMagicBlocks.ORB_RUNE.get().getDefaultState(), ComponentType.BLOODRUNE.name());
 		apiInterface.registerAltarComponent(BloodMagicBlocks.ACCELERATION_RUNE.get().getDefaultState(), ComponentType.BLOODRUNE.name());
 		apiInterface.registerAltarComponent(BloodMagicBlocks.CHARGING_RUNE.get().getDefaultState(), ComponentType.BLOODRUNE.name());
+
+		apiInterface.registerInventoryProvider("mainInventory", player -> player.inventory.mainInventory);
+		apiInterface.registerInventoryProvider("armorInventory", player -> player.inventory.armorInventory);
+		apiInterface.registerInventoryProvider("offHandInventory", player -> player.inventory.offHandInventory);
 	}
 }

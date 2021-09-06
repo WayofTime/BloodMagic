@@ -7,6 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.FenceGateBlock;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.RotatedPillarBlock;
+import net.minecraft.block.SlabBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.block.WallBlock;
@@ -33,10 +34,12 @@ import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.block.enums.BloodRuneType;
 import wayoftime.bloodmagic.common.block.base.BlockPillarCap;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
+import wayoftime.bloodmagic.common.item.inventory.ContainerFilter;
 import wayoftime.bloodmagic.common.item.inventory.ContainerHolding;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.tile.container.ContainerAlchemicalReactionChamber;
 import wayoftime.bloodmagic.tile.container.ContainerAlchemyTable;
+import wayoftime.bloodmagic.tile.container.ContainerItemRoutingNode;
 import wayoftime.bloodmagic.tile.container.ContainerSoulForge;
 
 public class BloodMagicBlocks
@@ -77,8 +80,8 @@ public class BloodMagicBlocks
 	public static final RegistryObject<Block> DUSK_RITUAL_STONE = BLOCKS.register("duskritualstone", () -> new BlockRitualStone(EnumRuneType.DUSK));
 	public static final RegistryObject<Block> DAWN_RITUAL_STONE = BLOCKS.register("lightritualstone", () -> new BlockRitualStone(EnumRuneType.DAWN));
 
-	public static final RegistryObject<Block> BLOODSTONE = BASICBLOCKS.register("largebloodstonebrick", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(1)));
-	public static final RegistryObject<Block> BLOODSTONE_BRICK = BASICBLOCKS.register("bloodstonebrick", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(1)));
+	public static final RegistryObject<Block> BLOODSTONE = BASICBLOCKS.register("largebloodstonebrick", () -> new BloodstoneBlock());
+	public static final RegistryObject<Block> BLOODSTONE_BRICK = BASICBLOCKS.register("bloodstonebrick", () -> new BloodstoneBlock());
 
 	public static final RegistryObject<Block> MASTER_RITUAL_STONE = BASICBLOCKS.register("masterritualstone", () -> new BlockMasterRitualStone(false));
 
@@ -93,6 +96,11 @@ public class BloodMagicBlocks
 	public static final RegistryObject<Block> DESTRUCTIVE_CRYSTAL_BLOCK = BLOCKS.register("destructivedemoncrystal", () -> new BlockDemonCrystal(EnumDemonWillType.DESTRUCTIVE));
 	public static final RegistryObject<Block> VENGEFUL_CRYSTAL_BLOCK = BLOCKS.register("vengefuldemoncrystal", () -> new BlockDemonCrystal(EnumDemonWillType.VENGEFUL));
 	public static final RegistryObject<Block> STEADFAST_CRYSTAL_BLOCK = BLOCKS.register("steadfastdemoncrystal", () -> new BlockDemonCrystal(EnumDemonWillType.STEADFAST));
+
+	public static final RegistryObject<Block> ROUTING_NODE_BLOCK = BLOCKS.register("itemroutingnode", () -> new BlockItemRoutingNode());
+	public static final RegistryObject<Block> INPUT_ROUTING_NODE_BLOCK = BLOCKS.register("inputroutingnode", () -> new BlockInputRoutingNode());
+	public static final RegistryObject<Block> OUTPUT_ROUTING_NODE_BLOCK = BLOCKS.register("outputroutingnode", () -> new BlockOutputRoutingNode());
+	public static final RegistryObject<Block> MASTER_ROUTING_NODE_BLOCK = BLOCKS.register("masterroutingnode", () -> new BlockMasterRoutingNode());
 
 	public static final RegistryObject<Block> WOOD_PATH = BASICBLOCKS.register("woodbrickpath", () -> new BlockPath(2, AbstractBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.AXE).harvestLevel(0)));
 	public static final RegistryObject<Block> WOOD_TILE_PATH = BASICBLOCKS.register("woodtilepath", () -> new BlockPath(2, AbstractBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.AXE).harvestLevel(0)));
@@ -133,6 +141,8 @@ public class BloodMagicBlocks
 	public static final RegistryObject<ContainerType<ContainerAlchemicalReactionChamber>> ARC_CONTAINER = CONTAINERS.register("arc_container", () -> IForgeContainerType.create(ContainerAlchemicalReactionChamber::new));
 	public static final RegistryObject<ContainerType<ContainerAlchemyTable>> ALCHEMY_TABLE_CONTAINER = CONTAINERS.register("alchemy_table_container", () -> IForgeContainerType.create(ContainerAlchemyTable::new));
 	public static final RegistryObject<ContainerType<ContainerHolding>> HOLDING_CONTAINER = CONTAINERS.register("holding_container", () -> IForgeContainerType.create(ContainerHolding::new));
+	public static final RegistryObject<ContainerType<ContainerFilter>> FILTER_CONTAINER = CONTAINERS.register("filter_container", () -> IForgeContainerType.create(ContainerFilter::new));
+	public static final RegistryObject<ContainerType<ContainerItemRoutingNode>> ROUTING_NODE_CONTAINER = CONTAINERS.register("routing_node_container", () -> IForgeContainerType.create(ContainerItemRoutingNode::new));
 
 	// Dungeon Blocks
 	public static final RegistryObject<Block> DUNGEON_BRICK_1 = DUNGEONBLOCKS.register("dungeon_brick1", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
@@ -163,11 +173,21 @@ public class BloodMagicBlocks
 	public static final RegistryObject<Block> DUNGEON_BRICK_GATE = BLOCKS.register("dungeon_brick_gate", () -> new FenceGateBlock(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
 	public static final RegistryObject<Block> DUNGEON_POLISHED_GATE = BLOCKS.register("dungeon_polished_gate", () -> new FenceGateBlock(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
 
+	public static final RegistryObject<Block> DUNGEON_BRICK_SLAB = BLOCKS.register("dungeon_brick_slab", () -> new SlabBlock(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_TILE_SLAB = BLOCKS.register("dungeon_tile_slab", () -> new SlabBlock(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+
 	public static final RegistryObject<Block> HELLFORGED_BLOCK = DUNGEONBLOCKS.register("dungeon_metal", () -> new Block(Properties.create(Material.IRON).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+
+	public static final RegistryObject<Block> DUNGEON_CONTROLLER = BLOCKS.register("dungeon_controller", () -> new BlockDungeonController());
+	public static final RegistryObject<Block> DUNGEON_SEAL = BLOCKS.register("dungeon_seal", () -> new BlockDungeonSeal());
 
 	public static final RegistryObject<Block> NETHER_SOIL = BLOCKS.register("nether_soil", () -> new BlockNetherrackSoil(Properties.create(Material.EARTH).hardnessAndResistance(0.4F, 0.4F).sound(SoundType.NETHERRACK).harvestTool(ToolType.PICKAXE).tickRandomly()));
 
 	public static final RegistryObject<Block> GROWING_DOUBT = BLOCKS.register("creeping_doubt", () -> new BlockGrowingDoubt(Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().zeroHardnessAndResistance().sound(SoundType.CROP)));
+	public static final RegistryObject<Block> WEAK_TAU = BLOCKS.register("weak_tau", () -> new BlockTau(Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().zeroHardnessAndResistance().sound(SoundType.CROP), false));
+	public static final RegistryObject<Block> STRONG_TAU = BLOCKS.register("strong_tau", () -> new BlockTau(Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().zeroHardnessAndResistance().sound(SoundType.CROP), true));
+
+	public static final RegistryObject<Block> INVERSION_PILLAR = BLOCKS.register("inversion_pillar", () -> new BlockInversionPillar(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool().setBlocksVision(BloodMagicBlocks::isntSolid).notSolid().setOpaque(BloodMagicBlocks::isntSolid)));
 
 	private static boolean isntSolid(BlockState state, IBlockReader reader, BlockPos pos)
 	{

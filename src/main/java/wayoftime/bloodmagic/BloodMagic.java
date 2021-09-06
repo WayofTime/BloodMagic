@@ -11,6 +11,7 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.SpecialRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
@@ -23,6 +24,7 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -50,8 +52,13 @@ import wayoftime.bloodmagic.common.data.GeneratorLanguage;
 import wayoftime.bloodmagic.common.data.GeneratorLootTable;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeProvider;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
+import wayoftime.bloodmagic.common.loot.BloodMagicLootFunctionManager;
+import wayoftime.bloodmagic.common.loot.BloodMagicLootTypeManager;
+import wayoftime.bloodmagic.common.recipe.serializer.TestSpecialRecipe;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
+import wayoftime.bloodmagic.compat.CuriosCompat;
+import wayoftime.bloodmagic.compat.patchouli.RegisterPatchouliMultiblocks;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.recipe.IngredientBloodOrb;
@@ -73,6 +80,8 @@ import wayoftime.bloodmagic.tile.TileDeforesterCharge;
 import wayoftime.bloodmagic.tile.TileDemonCrucible;
 import wayoftime.bloodmagic.tile.TileDemonCrystal;
 import wayoftime.bloodmagic.tile.TileDemonCrystallizer;
+import wayoftime.bloodmagic.tile.TileDungeonController;
+import wayoftime.bloodmagic.tile.TileDungeonSeal;
 import wayoftime.bloodmagic.tile.TileFungalCharge;
 import wayoftime.bloodmagic.tile.TileIncenseAltar;
 import wayoftime.bloodmagic.tile.TileMasterRitualStone;
@@ -80,6 +89,10 @@ import wayoftime.bloodmagic.tile.TileMimic;
 import wayoftime.bloodmagic.tile.TileShapedExplosive;
 import wayoftime.bloodmagic.tile.TileSoulForge;
 import wayoftime.bloodmagic.tile.TileVeinMineCharge;
+import wayoftime.bloodmagic.tile.routing.TileInputRoutingNode;
+import wayoftime.bloodmagic.tile.routing.TileMasterRoutingNode;
+import wayoftime.bloodmagic.tile.routing.TileOutputRoutingNode;
+import wayoftime.bloodmagic.tile.routing.TileRoutingNode;
 import wayoftime.bloodmagic.util.handler.event.GenericHandler;
 import wayoftime.bloodmagic.util.handler.event.WillHandler;
 
@@ -95,6 +108,9 @@ public class BloodMagic
 
 	public static final BloodMagicPacketHandler packetHandler = new BloodMagicPacketHandler();
 	public static final RitualManager RITUAL_MANAGER = new RitualManager();
+
+	public static Boolean curiosLoaded;
+	public static final CuriosCompat curiosCompat = new CuriosCompat();
 
 	public BloodMagic()
 	{
@@ -135,6 +151,7 @@ public class BloodMagic
 		modBus.addGenericListener(TileEntityType.class, this::registerTileEntityTypes);
 		modBus.addGenericListener(IRecipeSerializer.class, this::registerRecipes);
 		modBus.addGenericListener(Effect.class, BloodMagicPotions::registerPotions);
+		modBus.addListener(ConfigManager::onCommonReload);
 
 		MinecraftForge.EVENT_BUS.register(new GenericHandler());
 //		MinecraftForge.EVENT_BUS.register(new ClientHandler());
@@ -149,6 +166,10 @@ public class BloodMagic
 
 		ModLoadingContext context = ModLoadingContext.get();
 		context.registerConfig(ModConfig.Type.CLIENT, ConfigManager.CLIENT_SPEC);
+		context.registerConfig(ModConfig.Type.COMMON, ConfigManager.COMMON_SPEC);
+
+		BloodMagicLootFunctionManager.register();
+		BloodMagicLootTypeManager.register();
 
 		ModDungeons.init();
 	}
@@ -157,6 +178,11 @@ public class BloodMagic
 	{
 //		System.out.println("Registering IngredientBloodOrb Serializer.");
 		CraftingHelper.register(IngredientBloodOrb.NAME, IngredientBloodOrb.Serializer.INSTANCE);
+
+//		System.out.println("Testing after IngredientBloodOrb");
+
+		SpecialRecipeSerializer<?> d;
+		event.getRegistry().registerAll(new SpecialRecipeSerializer<>(TestSpecialRecipe::new).setRegistryName("test"));
 
 //        event.getRegistry().registerAll(
 //                new SewingRecipe.Serializer().setRegistryName("sewing")
@@ -185,6 +211,33 @@ public class BloodMagic
 		LivingArmorRegistrar.register();
 		AnointmentRegistrar.register();
 		AlchemyArrayRegistry.registerBaseArrays();
+		handleConfigValues(BloodMagicAPI.INSTANCE);
+
+		if (curiosLoaded)
+		{
+			curiosCompat.registerInventory();
+		}
+		if (ModList.get().isLoaded("patchouli"))
+		{
+			new RegisterPatchouliMultiblocks();
+		}
+	}
+
+	public static void handleConfigValues(BloodMagicAPI api)
+	{
+		for (String value : ConfigManager.COMMON.sacrificialValues.get())
+		{
+			String[] split = value.split(";");
+			if (split.length != 2) // Not valid format
+				continue;
+
+			api.getValueManager().setSacrificialValue(new ResourceLocation(split[0]), Integer.parseInt(split[1]));
+		}
+
+		for (String value : ConfigManager.COMMON.wellOfSuffering.get())
+		{
+			api.getBlacklist().addWellOfSuffering(new ResourceLocation(value));
+		}
 	}
 
 	public void registerTileEntityTypes(RegistryEvent.Register<TileEntityType<?>> event)
@@ -206,6 +259,13 @@ public class BloodMagic
 		event.getRegistry().register(TileEntityType.Builder.create(TileVeinMineCharge::new, BloodMagicBlocks.VEINMINE_CHARGE.get()).build(null).setRegistryName("veinmine_charge"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileFungalCharge::new, BloodMagicBlocks.FUNGAL_CHARGE.get()).build(null).setRegistryName("fungal_charge"));
 
+		event.getRegistry().register(TileEntityType.Builder.create(TileRoutingNode::new, BloodMagicBlocks.ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("itemroutingnode"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileInputRoutingNode::new, BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("inputroutingnode"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileOutputRoutingNode::new, BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("outputroutingnode"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileMasterRoutingNode::new, BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("masterroutingnode"));
+
+		event.getRegistry().register(TileEntityType.Builder.create(TileDungeonController::new, BloodMagicBlocks.DUNGEON_CONTROLLER.get()).build(null).setRegistryName("dungeon_controller"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileDungeonSeal::new, BloodMagicBlocks.DUNGEON_SEAL.get()).build(null).setRegistryName("dungeon_seal"));
 	}
 
 	@SubscribeEvent
@@ -245,6 +305,8 @@ public class BloodMagic
 //		LOGGER.info("HELLO FROM PREINIT");
 //		LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
 		packetHandler.initialize();
+
+		curiosLoaded = ModList.get().isLoaded("curios");
 	}
 
 //	@OnlyIn(Dist.CLIENT)
@@ -276,6 +338,11 @@ public class BloodMagic
 //			LOGGER.info("Hello world from the MDK");
 //			return "Hello world";
 //		});
+
+		if (curiosLoaded)
+		{
+			curiosCompat.setupSlots(event);
+		}
 	}
 
 	private void processIMC(final InterModProcessEvent event)

@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
+import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.util.BMLog;
 
 /**
@@ -41,6 +42,9 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 		HarvestRegistry.registerStandardCrop(Blocks.POTATOES, 7);
 		HarvestRegistry.registerStandardCrop(Blocks.BEETROOTS, 3);
 		HarvestRegistry.registerStandardCrop(Blocks.NETHER_WART, 3);
+		HarvestRegistry.registerStandardCrop(BloodMagicBlocks.GROWING_DOUBT.get(), 7);
+		HarvestRegistry.registerStandardCrop(BloodMagicBlocks.WEAK_TAU.get(), 7);
+		HarvestRegistry.registerStandardCrop(BloodMagicBlocks.STRONG_TAU.get(), 7);
 
 		addThirdPartyCrop("actuallyadditions", "flax_block", 7);
 		addThirdPartyCrop("actuallyadditions", "canola_block", 7);

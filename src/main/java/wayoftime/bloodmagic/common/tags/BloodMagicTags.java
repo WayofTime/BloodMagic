@@ -57,6 +57,13 @@ public class BloodMagicTags
 	public static final ITag.INamedTag<Item> GRAVEL_GOLD = getGravelTag("gold");
 	public static final ITag.INamedTag<Item> GRAVEL_NETHERITE_SCRAP = getGravelTag("netherite_scrap");
 
+	// Vanilla
+	public static final ITag.INamedTag<Item> SWORDS = ItemTags.makeWrapperTag("forge:swords");
+	public static final ITag.INamedTag<Item> AXES = ItemTags.makeWrapperTag("forge:axes");
+	public static final ITag.INamedTag<Item> SHOVELS = ItemTags.makeWrapperTag("forge:shovels");
+	public static final ITag.INamedTag<Item> PICKAXES = ItemTags.makeWrapperTag("forge:pickaxes");
+	public static final ITag.INamedTag<Item> HOES = ItemTags.makeWrapperTag("forge:hoes");
+
 	public static class Blocks
 	{
 		public static final ITag.INamedTag<Block> MUSHROOM_STEM = BlockTags.makeWrapperTag("minecraft:mushroom_stem");

@@ -41,7 +41,7 @@ public class RitualArmourEvolve extends Ritual
 			return;
 		}
 
-		BlockPos pos = masterRitualStone.getBlockPos();
+		BlockPos pos = masterRitualStone.getMasterBlockPos();
 
 		AreaDescriptor checkRange = masterRitualStone.getBlockRange(CHECK_RANGE);
 
@@ -54,7 +54,7 @@ public class RitualArmourEvolve extends Ritual
 				ItemStack chestStack = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
 				LivingStats stats = LivingStats.fromPlayer(player);
 
-				if (stats.getMaxPoints() < 300)
+				if (stats != null && stats.getMaxPoints() < 300)
 				{
 					stats.setMaxPoints(300);
 					LivingStats.toPlayer(player, stats);

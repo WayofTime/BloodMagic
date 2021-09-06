@@ -76,11 +76,11 @@ This mod requires "Minecraft Forge" in order to operate. It is incredibly easy t
 
 **Q**: My weak blood orb doesn't show my current LP! Fix it please.
 
-**A**: The mechanic for viewing the player's essence has changed due to some issues with mechanics. You now need a Divination Sigil to view a player's essence. It does other things, too, so it is worth it!
+**A**: The mechanic for viewing the player's essence has changed due to some issues with mechanics. You now need a Divination Sigil or a Seer's Sigil to view a player's essence. It does other things, too, so it is worth it!
 
 **Q**: Why am I dying so much?
 
-**A**: It might be a good idea to make sure that you have enough essence to do a task. If you don't have enough essence for, say, an imperfect ritual, it will take it out of your health. If your health reaches 0... Well, you don't have to be a genius to see what would happen.
+**A**: It might be a good idea to make sure that you have enough essence to do a task. If you don't have enough essence to use one of your sigils, for example, it will take it out of your health. If your health reaches 0... Well, you don't have to be a genius to see what would happen. Note that Rituals will only stop working and give you nausea, not kill you, so you don't have to worry about them quite as much.
 
 **Q**: Waffles?
 
@@ -88,33 +88,12 @@ This mod requires "Minecraft Forge" in order to operate. It is incredibly easy t
 
 **Q**: Where is x? When I watched spotlight "w," it had an item called x. Don't you need x to make y, before you can create z?
 
-**A**: It might be wise to look at an updated spotlight, or check the changelogs. I'm not evil, so I do document everything that I can. There was most likely some issues with balance with the item, so it may have been removed for those reasons. Or you just grabbed the item from NEI without seeing it was a test item, in which case: shame on you!
-
-**Q**: Isn't that armour ...
-
-**A**: Yes, the armour texture is from the mod EE2. Pahimar and I are good friends, and I decided to use it for the armour and tools. He has given me his express permission for it, so need not worry!
-[Proof](https://twitter.com/Pahimar/status/453590600689139712).
-
-**Q**: My game is crashing with the latest TC4!
-
-**A**: To help stop this, remove the TC4 API from my Blood Magic zip file (if it is there). It should solve things.
-
-**Q**: But, my Thaumcraft aspects are messed up!
-
-**A**: Once again, remove the TC4 API from the Blood Magic zip file to solve this. Azanor changed some aspect combinations.
-
-**Q**: When will 1.7.2 be released?
-
-**A**: It's out! Go get it!
+**A**: A lot of 1.12 and 1.7.10 Blood Magic stuff either hasn't been implemented yet in 1.16, or it's been dropped entirely for reasons of balance or by being superseded by something else. Your best bet is probably to check out the [Patchouli](https://www.curseforge.com/minecraft/mc-mods/patchouli) Guidebook, the Sanguine Scientum. Everything that's currently in Blood Magic has an entry somewhere in there! Failing that, keep an eye on the changelogs. 
 
 **Q**: Way, I've just had an amazing idea! Why not add an in-game book just like the Thaumonomicon?
 
-**A**: This has been suggested several times. It I being worked on, and is proceeding quite well. Some framework needs to be completed, but it isn't a priority - ALL of the information you need is on this post, or online.
+**A**: We've beaten you to it! Blood Magic now has a fully detailed in-game guide, courtesy of [Patchouli](https://www.curseforge.com/minecraft/mc-mods/patchouli). Craft yourself a Sanguine Scientum today! 
 
-**Q**: Why do I not have a Sacrificial Orb? It's only showing up as a knife!
+**Q**: When I respawn, I'm not getting nearly as much LP from sacrificing! What gives? (AKA: What's this 'Soul Fray' effect I've got going on?)
 
-**A**: This is a config option. The person you saw with an orb had a config that changed the knife to an orb. The orb and knife function exactly the same way, but you can change it in the configs by looking for the "Idontlikefun" option.
-
-**Q**: When I respawn, I appear to only come back with 3 hearts. What's happening?
-
-**A**: This is due to another config option in the "WhimpySettings," which is due to my attempt to combat Zerg Rushing. You can disable this if you really want to, but it shouldn't hurt unduly.
+**A**: This is due to my attempt to combat Zerg Rushing. When you die, you get a debuff called Soul Fray that, while active, significantly reduces the worth of your LP. Instead of dying and respawning again and again, why not look into making an Incense Altar? It's much more fun! 

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:smelting/saltpeter"
+    ]
+  },
+  "criteria": {
+    "has_plant_oil": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "bloodmagic:plantoil"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:smelting/saltpeter"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_plant_oil",
+      "has_the_recipe"
+    ]
+  ]
+}

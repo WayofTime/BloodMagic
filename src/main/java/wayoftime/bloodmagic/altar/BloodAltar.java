@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.altar;
 import com.google.common.base.Enums;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.RedstoneLampBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
@@ -296,6 +297,9 @@ public class BloodAltar// implements IFluidHandler
 	private void updateAltar()
 	{
 //		System.out.println("Updating altar.");
+		if (tileAltar.getOutputState())
+			tileAltar.setOutputState(false);
+
 		if (!isActive)
 		{
 			if (cooldownAfterCrafting > 0)
@@ -377,6 +381,9 @@ public class BloodAltar// implements IFluidHandler
 					BloodMagicCraftedEvent.Altar event = new BloodMagicCraftedEvent.Altar(result, input.copy());
 					MinecraftForge.EVENT_BUS.post(event);
 					tileAltar.setInventorySlotContents(0, event.getOutput());
+					if (tileAltar.getWorld().getBlockState(tileAltar.getPos().down()).getBlock() instanceof RedstoneLampBlock)
+						tileAltar.setOutputState(true);
+
 					progress = 0;
 
 					if (world instanceof ServerWorld)
@@ -389,6 +396,7 @@ public class BloodAltar// implements IFluidHandler
 					this.isActive = false;
 				}
 			}
+
 		} else
 		{
 			ItemStack contained = tileAltar.getStackInSlot(0);
@@ -459,7 +467,8 @@ public class BloodAltar// implements IFluidHandler
 			this.selfSacrificeEfficiencyMultiplier = (float) (0.10 * upgrade.getLevel(BloodRuneType.SELF_SACRIFICE));
 			int cap = upgrade.getLevel(BloodRuneType.CAPACITY);
 			int cap_aug = upgrade.getLevel(BloodRuneType.AUGMENTED_CAPACITY);
-			this.capacityMultiplier = (float) ((1 + 0.20 * cap) * Math.pow(1.1, cap_aug * Math.pow(0.99, Math.abs(cap_aug - cap))));
+//			this.capacityMultiplier = (float) ((1 + 0.20 * cap) * Math.pow(1.1, cap_aug * Math.pow(0.99, Math.abs(cap_aug - cap))));
+			this.capacityMultiplier = (float) ((1 + 0.20 * cap) * Math.pow(1.075, cap_aug));
 			this.dislocationMultiplier = (float) (Math.pow(1.2, upgrade.getLevel(BloodRuneType.DISPLACEMENT)));
 			this.orbCapacityMultiplier = (float) (1 + 0.02 * upgrade.getLevel(BloodRuneType.ORB));
 			this.chargingFrequency = Math.max(20 - accelerationUpgrades, 1);
@@ -753,6 +762,32 @@ public class BloodAltar// implements IFluidHandler
 	public AltarTier getCurrentTierDisplayed()
 	{
 		return currentTierDisplayed;
+	}
+
+	public int getAnalogSignalStrength(int redstoneMode)
+	{
+		switch (redstoneMode)
+		{
+		case 0:
+			return getCurrentBlood() * 15 / getCapacity();
+
+		case 1:
+			ItemStack contained = tileAltar.getStackInSlot(0);
+
+			if (contained.isEmpty() || !(contained.getItem() instanceof IBloodOrb) || !(contained.getItem() instanceof IBindable))
+				return 0;
+
+			BloodOrb orb = ((IBloodOrb) contained.getItem()).getOrb(contained);
+			Binding binding = ((IBindable) contained.getItem()).getBinding(contained);
+
+			if (binding == null || orb == null)
+				return 0;
+
+			return NetworkHelper.getSoulNetwork(binding).getCurrentEssence() * 15 / orb.getCapacity();
+
+		default:
+			return 0;
+		}
 	}
 
 	public static class VariableSizeFluidHandler implements IFluidHandler

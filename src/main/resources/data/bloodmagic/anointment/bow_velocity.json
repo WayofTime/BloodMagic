@@ -1,0 +1,10 @@
+{
+  "id": "bloodmagic:bow_velocity",
+  "bonuses": {
+    "multiplier": [
+      1.5,
+      2,
+      3
+    ]
+  }
+}

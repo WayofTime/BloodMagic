@@ -1,6 +1,9 @@
 package wayoftime.bloodmagic.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
@@ -10,6 +13,8 @@ import com.google.common.collect.Multimap;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import wayoftime.bloodmagic.altar.ComponentType;
 import wayoftime.bloodmagic.api.IBloodMagicAPI;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
@@ -28,6 +33,7 @@ public class BloodMagicAPI implements IBloodMagicAPI
 	private final BloodMagicRecipeRegistrar recipeRegistrar;
 	private final BloodMagicValueManager valueManager;
 	private final Multimap<ComponentType, BlockState> altarComponents;
+	private final Map<String, Function<PlayerEntity, NonNullList<ItemStack>>> inventoryProvider;
 
 	public BloodMagicAPI()
 	{
@@ -35,6 +41,7 @@ public class BloodMagicAPI implements IBloodMagicAPI
 		this.recipeRegistrar = new BloodMagicRecipeRegistrar();
 		this.valueManager = new BloodMagicValueManager();
 		this.altarComponents = ArrayListMultimap.create();
+		this.inventoryProvider = new HashMap<String, Function<PlayerEntity, NonNullList<ItemStack>>>();
 	}
 
 	@Nonnull
@@ -56,6 +63,12 @@ public class BloodMagicAPI implements IBloodMagicAPI
 	public BloodMagicValueManager getValueManager()
 	{
 		return valueManager;
+	}
+
+	@Nonnull
+	public Map<String, Function<PlayerEntity, NonNullList<ItemStack>>> getInventoryProvider()
+	{
+		return inventoryProvider;
 	}
 
 	@Override
@@ -98,6 +111,12 @@ public class BloodMagicAPI implements IBloodMagicAPI
 		{
 			BMLog.API.warn("Invalid Tranquility type: {}.", tranquilityType);
 		}
+	}
+
+	@Override
+	public void registerInventoryProvider(String inventoryIdentifier, Function<PlayerEntity, NonNullList<ItemStack>> provider)
+	{
+		inventoryProvider.put(inventoryIdentifier, provider);
 	}
 
 	@Override

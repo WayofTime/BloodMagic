@@ -1,0 +1,64 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "bloodmagic:block/routing/inputroutingnodecore"
+      }
+    },
+    {
+      "when": {
+        "down": "true"
+      },
+      "apply": {
+        "model": "bloodmagic:block/routing/inputroutingnodebase"
+      }
+    },
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": {
+        "model": "bloodmagic:block/routing/inputroutingnodebase",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": {
+        "model": "bloodmagic:block/routing/inputroutingnodebase",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": {
+        "model": "bloodmagic:block/routing/inputroutingnodebase",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": {
+        "model": "bloodmagic:block/routing/inputroutingnodebase",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": {
+        "model": "bloodmagic:block/routing/inputroutingnodebase",
+        "x": 90,
+        "y": 270
+      }
+    }
+  ]
+}

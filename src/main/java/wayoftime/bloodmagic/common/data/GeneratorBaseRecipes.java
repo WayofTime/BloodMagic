@@ -9,6 +9,7 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
@@ -29,6 +30,7 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 	@Override
 	protected void registerRecipes(Consumer<IFinishedRecipe> consumer)
 	{
+		IRecipeSerializer d;
 		addVanillaRecipes(consumer);
 		addVanillaSmithingRecipes(consumer);
 		addBloodOrbRecipes(consumer);
@@ -69,6 +71,7 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(BloodMagicTags.DUST_GOLD), Items.GOLD_INGOT, 0, 200).addCriterion("has_gold_sand", hasItem(BloodMagicItems.GOLD_SAND.get())).build(consumer, BloodMagic.rl(basePath + "ingot_gold"));
 		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(BloodMagicTags.DUST_NETHERITE_SCRAP), Items.NETHERITE_SCRAP, 0, 200).addCriterion("has_netherite_dust", hasItem(BloodMagicItems.NETHERITE_SCRAP_SAND.get())).build(consumer, BloodMagic.rl(basePath + "ingot_netherite_scrap"));
 		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(BloodMagicTags.DUST_HELLFORGED), BloodMagicItems.HELLFORGED_INGOT.get(), 0, 200).addCriterion("has_hellforged_dust", hasItem(BloodMagicItems.HELLFORGED_SAND.get())).build(consumer, BloodMagic.rl(basePath + "ingot_hellforged"));
+		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(BloodMagicItems.PLANT_OIL.get()), BloodMagicItems.SALTPETER.get(), 0, 200).addCriterion("has_plant_oil", hasItem(BloodMagicItems.PLANT_OIL.get())).build(consumer, BloodMagic.rl(basePath + "saltpeter"));
 	}
 
 	private void addBloodOrbRecipes(Consumer<IFinishedRecipe> consumer)

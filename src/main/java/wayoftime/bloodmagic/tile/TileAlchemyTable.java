@@ -27,6 +27,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.api.event.BloodMagicCraftedEvent;
 import wayoftime.bloodmagic.common.item.BloodOrb;
+import wayoftime.bloodmagic.common.item.IAlchemyItem;
 import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.IBloodOrb;
 import wayoftime.bloodmagic.core.data.Binding;
@@ -355,7 +356,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 			if (burnTime == 1)
 				notifyUpdate();
 
-			if (canCraft(recipeAlchemyTable.getOutput()))
+			if (canCraft(recipeAlchemyTable.getOutput(inputList)))
 			{
 				ticksRequired = recipeAlchemyTable.getTicks();
 				burnTime++;
@@ -377,7 +378,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 						ItemStack[] inputs = new ItemStack[0];
 						for (ItemStack stack : inputList) ArrayUtils.add(inputs, stack.copy());
 
-						BloodMagicCraftedEvent.AlchemyTable event = new BloodMagicCraftedEvent.AlchemyTable(recipeAlchemyTable.getOutput().copy(), inputs);
+						BloodMagicCraftedEvent.AlchemyTable event = new BloodMagicCraftedEvent.AlchemyTable(recipeAlchemyTable.getOutput(inputList).copy(), inputs);
 						MinecraftForge.EVENT_BUS.post(event);
 
 						ItemStack outputSlotStack = getStackInSlot(outputSlot);
@@ -457,7 +458,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
 	public void craftItem(List<ItemStack> inputList, RecipeAlchemyTable recipe)
 	{
-		ItemStack outputStack = recipe.getOutput();
+		ItemStack outputStack = recipe.getOutput(inputList);
 		if (this.canCraft(outputStack))
 		{
 			ItemStack currentOutputStack = getStackInSlot(outputSlot);
@@ -506,7 +507,15 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 			ItemStack inputStack = getStackInSlot(i);
 			if (!inputStack.isEmpty())
 			{
-				if (inputStack.getItem().hasContainerItem(inputStack))
+				if (inputStack.getItem() instanceof IAlchemyItem)
+				{
+					if (((IAlchemyItem) inputStack.getItem()).isStackChangedOnUse(inputStack))
+					{
+						setInventorySlotContents(i, ((IAlchemyItem) inputStack.getItem()).onConsumeInput(inputStack));
+					}
+
+					continue;
+				} else if (inputStack.getItem().hasContainerItem(inputStack))
 				{
 					setInventorySlotContents(i, inputStack.getItem().getContainerItem(inputStack));
 					continue;

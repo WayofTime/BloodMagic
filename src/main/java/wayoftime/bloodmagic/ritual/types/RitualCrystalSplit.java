@@ -40,7 +40,7 @@ public class RitualCrystalSplit extends Ritual
 			return;
 		}
 
-		BlockPos pos = masterRitualStone.getBlockPos();
+		BlockPos pos = masterRitualStone.getMasterBlockPos();
 		Direction direction = masterRitualStone.getDirection();
 		BlockPos rawPos = pos.up(2);
 

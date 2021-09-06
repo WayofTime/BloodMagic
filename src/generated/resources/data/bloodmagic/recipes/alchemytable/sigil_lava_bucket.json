@@ -1,0 +1,17 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:lavasigil"
+    },
+    {
+      "item": "minecraft:bucket"
+    }
+  ],
+  "output": {
+    "item": "minecraft:lava_bucket"
+  },
+  "syphon": 1000,
+  "ticks": 100,
+  "upgradeLevel": 1
+}

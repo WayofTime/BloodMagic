@@ -19,13 +19,13 @@ public class EntityThrowingDaggerSyringe extends AbstractEntityThrowingDagger
 
 	public EntityThrowingDaggerSyringe(ItemStack stack, World worldIn, LivingEntity throwerIn)
 	{
-		super(BloodMagicEntityTypes.THROWING_DAGGER.get(), stack, worldIn, throwerIn);
+		super(BloodMagicEntityTypes.THROWING_DAGGER_SYRINGE.get(), stack, worldIn, throwerIn);
 
 	}
 
 	public EntityThrowingDaggerSyringe(ItemStack stack, World worldIn, double x, double y, double z)
 	{
-		super(BloodMagicEntityTypes.THROWING_DAGGER.get(), stack, worldIn, x, y, z);
+		super(BloodMagicEntityTypes.THROWING_DAGGER_SYRINGE.get(), stack, worldIn, x, y, z);
 	}
 
 	@Override

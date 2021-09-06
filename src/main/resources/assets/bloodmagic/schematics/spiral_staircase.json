@@ -1,5 +1,6 @@
 {
   "dungeonWeight": 4,
+  "oreDensity": 0,
   "structureMap": {
     "bloodmagic:spiral_staircase": {
       "x": 0,
@@ -8,6 +9,7 @@
     }
   },
   "doorMap": {
+  "default": {
     "north": [
       {
         "x": 5,
@@ -61,6 +63,7 @@
         "z": 5
       }
     ]
+    }
   },
   "descriptorList": [
     {

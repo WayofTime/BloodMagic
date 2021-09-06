@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:weak_tau"
+    },
+    {
+      "item": "bloodmagic:weak_tau"
+    },
+    {
+      "item": "bloodmagic:weak_tau"
+    },
+    {
+      "item": "minecraft:bone_meal"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:tauoil"
+  },
+  "syphon": 500,
+  "ticks": 200,
+  "upgradeLevel": 3
+}

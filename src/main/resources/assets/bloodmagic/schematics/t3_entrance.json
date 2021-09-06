@@ -1,0 +1,100 @@
+{
+  "dungeonWeight": 1,
+  "structureMap": {
+    "bloodmagic:t3_entrance": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  },
+  "doorMap": {
+    "default": {
+      "north": [
+        {
+          "x": 8,
+          "y": 1,
+          "z": 0
+        }
+      ],
+      "east": [
+        {
+          "x": 16,
+          "y": 1,
+          "z": 8
+        }
+      ],
+      "west": [
+        {
+          "x": 0,
+          "y": 1,
+          "z": 8
+        }
+      ],
+      "south": [
+        {
+          "x": 8,
+          "y": 1,
+          "z": 16
+        }
+      ]
+    }
+  },
+  "descriptorList": [
+    {
+      "minimumOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "maximumOffset": {
+        "x": 17,
+        "y": 8,
+        "z": 17
+      },
+      "currentPosition": null,
+      "blockPosCache": [],
+      "cachedPosition": null,
+      "cache": true
+    }
+  ],
+  "oreDensity": 0.0,
+  "spawnLocation": {
+    "x": 8,
+    "y": 1,
+    "z": 4
+  },
+  "controllerOffset": {
+    "x": 8,
+    "y": 4,
+    "z": 8
+  },
+  "indexToDoorMap": {
+    "1": [
+      {
+        "x": 8,
+        "y": 1,
+        "z": 0
+      },
+      {
+        "x": 8,
+        "y": 1,
+        "z": 16
+      },
+      {
+        "x": 16,
+        "y": 1,
+        "z": 8
+      },
+      {
+        "x": 0,
+        "y": 1,
+        "z": 8
+      }
+    ]
+  },
+  "indexToRoomTypeMap": {
+    "1": [
+      "bloodmagic:room_pools/tier1/mini_dungeon"
+    ]
+  }
+}

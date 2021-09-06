@@ -12,9 +12,20 @@ import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.living.LivingUpgrade;
 import wayoftime.bloodmagic.util.helper.TextHelper;
 
+/*
+ * Example Page:
+ * 
+ * {
+ *   "type": "bloodmagic:living_armour_upgrade_table",    // Corresponding Template.
+ *   "upgrade": "bloodmagic:upgrade_id",    // Upgrade ID set in ????
+ *   "text": "Extra text."    // (Optional) Adds extra text below rest of entry.
+ * },
+ */
+
 public class LivingArmourUpgradeInfoTable implements IComponentProcessor
 {
 	private ResourceLocation upgradeID;
+	private String extraText = ""; // (Optional) Text to insert at the end of the entry.
 
 	@Override
 	public void setup(IVariableProvider variables)
@@ -26,6 +37,11 @@ public class LivingArmourUpgradeInfoTable implements IComponentProcessor
 		} else
 		{
 			LogManager.getLogger().warn("Guidebook given invalid Living Armour Upgrade ID {}", id);
+		}
+
+		if (variables.has("text"))
+		{
+			extraText = variables.get("text").asString();
 		}
 	}
 
@@ -39,8 +55,8 @@ public class LivingArmourUpgradeInfoTable implements IComponentProcessor
 		if (key.equals("table"))
 		{
 			StringBuilder output = new StringBuilder();
-			String i18nLevel = TextHelper.localize("patchouli.bloodmagic.living_armour_upgrade_table.level");
-			String i18nUpgradePoints = TextHelper.localize("patchouli.bloodmagic.living_armour_upgrade_table.upgrade_points");
+			String i18nLevel = TextHelper.localize("guide.patchouli.bloodmagic.living_armour_upgrade_table.level");
+			String i18nUpgradePoints = TextHelper.localize("guide.patchouli.bloodmagic.living_armour_upgrade_table.upgrade_points");
 
 			for (Entry<ResourceLocation, LivingUpgrade> entry : LivingArmorRegistrar.UPGRADE_MAP.entrySet())
 			{
@@ -62,6 +78,9 @@ public class LivingArmourUpgradeInfoTable implements IComponentProcessor
 					}
 				}
 			}
+
+			output.append(String.format("%s%s", "$(br2)", extraText));
+
 			return IVariable.wrap(output.toString());
 		}
 		return null;

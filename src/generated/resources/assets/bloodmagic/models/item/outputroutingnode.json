@@ -1,0 +1,6 @@
+{
+  "parent": "bloodmagic:block/routingnodecombined",
+  "textures": {
+    "base": "bloodmagic:models/modeloutputroutingnode"
+  }
+}

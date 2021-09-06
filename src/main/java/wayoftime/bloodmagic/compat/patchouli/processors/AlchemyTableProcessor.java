@@ -18,6 +18,17 @@ import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
 
+/*
+ * Example Page:
+ * 
+ * {
+ *   "type": "crafting_alchemy_table",    // Corresponding Template.
+ *   "heading": "Title",    // (Optional) Title.
+ *   "recipe": "recipe_id",    // Recipe ID.
+ *   "text": "Extra text."    // (Optional) Extra text to go under the entry.
+ * },
+ */
+
 public class AlchemyTableProcessor implements IComponentProcessor
 {
 	private RecipeAlchemyTable recipe;

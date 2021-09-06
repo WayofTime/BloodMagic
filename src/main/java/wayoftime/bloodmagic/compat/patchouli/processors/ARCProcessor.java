@@ -17,6 +17,17 @@ import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.recipe.RecipeARC;
 import wayoftime.bloodmagic.util.helper.TextHelper;
 
+/*
+ * Example Page:
+ * 
+ * {
+ *   "type": "crafting_arc",    // Corresponding Template.
+ *   "heading": "Title",    // (Optional) Title.
+ *   "recipe": "recipe_id",    // Recipe ID.
+ *   "text": "Extra text."    // (Optional) Extra text to go under the entry.
+ * },
+ */
+
 public class ARCProcessor implements IComponentProcessor
 {
 	private RecipeARC recipe;
@@ -96,10 +107,10 @@ public class ARCProcessor implements IComponentProcessor
 			{
 				FluidStack fluid = recipe.getFluidIngredient().getRepresentations().get(0);
 				String i18nFluidName = TextHelper.localize(fluid.getTranslationKey());
-				return IVariable.wrap(TextHelper.localize("patchouli.bloodmagic.arc_processor.fluid", fluid.getAmount(), i18nFluidName));
+				return IVariable.wrap(TextHelper.localize("guide.patchouli.bloodmagic.arc_processor.fluid", fluid.getAmount(), i18nFluidName));
 			} else
 			{
-				return IVariable.wrap(TextHelper.localize("patchouli.bloodmagic.arc_processor.no_fluid"));
+				return IVariable.wrap(TextHelper.localize("guide.patchouli.bloodmagic.arc_processor.no_fluid"));
 			}
 		}
 		case "tooltip_fluid_output":
@@ -108,10 +119,10 @@ public class ARCProcessor implements IComponentProcessor
 			{
 				FluidStack fluid = recipe.getFluidOutput();
 				String i18nFluidName = TextHelper.localize(fluid.getTranslationKey());
-				return IVariable.wrap(TextHelper.localize("patchouli.bloodmagic.arc_processor.fluid", fluid.getAmount(), i18nFluidName));
+				return IVariable.wrap(TextHelper.localize("guide.patchouli.bloodmagic.arc_processor.fluid", fluid.getAmount(), i18nFluidName));
 			} else
 			{
-				return IVariable.wrap(TextHelper.localize("patchouli.bloodmagic.arc_processor.no_fluid"));
+				return IVariable.wrap(TextHelper.localize("guide.patchouli.bloodmagic.arc_processor.no_fluid"));
 			}
 		}
 		default:

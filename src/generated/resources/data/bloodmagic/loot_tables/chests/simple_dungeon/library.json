@@ -1,0 +1,71 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "name": "vanilla_library",
+      "rolls": 2,
+      "entries": [
+        {
+          "type": "bloodmagic:loot_table",
+          "name": "minecraft:chests/stronghold_library"
+        }
+      ]
+    },
+    {
+      "name": "extra",
+      "rolls": {
+        "min": 2.0,
+        "max": 3.0,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2.0,
+                "max": 5.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "bloodmagic:weak_tau"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "bloodmagic:set_will_range",
+              "damage": {
+                "min": 15.0,
+                "max": 30.0
+              }
+            }
+          ],
+          "name": "bloodmagic:basemonstersoul"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "functions": [
+            {
+              "function": "bloodmagic:set_living_upgrade",
+              "upgrades": [
+                "bloodmagic:experienced"
+              ],
+              "points": {
+                "min": 200.0,
+                "max": 400.0
+              }
+            }
+          ],
+          "name": "bloodmagic:upgradetome"
+        }
+      ]
+    }
+  ]
+}

@@ -8,7 +8,7 @@
   },
   "outputfluid": {
     "fluid": "minecraft:lava",
-    "amount": 5
+    "amount": 50
   },
   "output": {
     "item": "bloodmagic:sulfur"

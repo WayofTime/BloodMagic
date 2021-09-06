@@ -43,7 +43,7 @@ public class RitualMagnetic extends Ritual
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
 		World world = masterRitualStone.getWorldObj();
-		Vector3d MRSpos = new Vector3d(masterRitualStone.getBlockPos().getX(), masterRitualStone.getBlockPos().getY(), masterRitualStone.getBlockPos().getZ());
+		Vector3d MRSpos = new Vector3d(masterRitualStone.getMasterBlockPos().getX(), masterRitualStone.getMasterBlockPos().getY(), masterRitualStone.getMasterBlockPos().getZ());
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
 		if (currentEssence < getRefreshCost())
@@ -52,7 +52,7 @@ public class RitualMagnetic extends Ritual
 			return;
 		}
 
-		BlockPos pos = masterRitualStone.getBlockPos();
+		BlockPos pos = masterRitualStone.getMasterBlockPos();
 
 		AreaDescriptor placementRange = masterRitualStone.getBlockRange(PLACEMENT_RANGE);
 

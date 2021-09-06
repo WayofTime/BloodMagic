@@ -30,7 +30,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tile.bloodmagic.alchemytable.name", "Alchemy Table");
 
 		// Blood Orb tooltips
-		add("tooltip.bloodmagic.extraInfo", "&9-Hold shift for more info-");
+		add("tooltip.bloodmagic.extraInfo", "-Hold shift for more info-");
 		add("tooltip.bloodmagic.orb.desc", "Stores raw Life Essence");
 		add("tooltip.bloodmagic.orb.owner", "Added by: %s");
 		add("tooltip.bloodmagic.currentOwner", "Current owner: %s");
@@ -82,6 +82,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.soulGem.greater", "A gem used to contain a greater amount of will");
 		add("tooltip.bloodmagic.soulGem.grand", "A gem used to contain a large amount of will");
 		add("tooltip.bloodmagic.soulSnare.desc", "Throw at a monster and then kill them to obtain their demonic will");
+		add("tooltip.bloodmagic.willGauge", "A strange device that can measure the Demon Will in the Aura.");
 
 		add("tooltip.bloodmagic.currentType.default", "Contains: Raw Will");
 		add("tooltip.bloodmagic.currentType.corrosive", "Contains: Corrosive Will");
@@ -100,7 +101,7 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("tooltip.bloodmagic.sigil.water.desc", "Infinite water, anyone?");
 		add("tooltip.bloodmagic.sigil.lava.desc", "HOT! DO NOT EAT");
-		add("tooltip.bloodmagic.sigil.void.desc", "Better than a Swiffer®!");
+		add("tooltip.bloodmagic.sigil.void.desc", "Better than a Swiffer\u00AE!");
 		add("tooltip.bloodmagic.sigil.greengrove.desc", "Environmentally friendly");
 		add("tooltip.bloodmagic.sigil.magnetism.desc", "I have a very magnetic personality");
 		add("tooltip.bloodmagic.sigil.fastminer.desc", "Keep mining, and mining...");
@@ -112,6 +113,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.activationcrystal.creative", "Creative Only - Activates any ritual");
 
 		add("tooltip.bloodmagic.arctool.additionaldrops", "Increases chance of additional outputs by: x%s");
+		add("tooltip.bloodmagic.arctool.craftspeed", "Increases crafting speed by: x%s");
 		add("tooltip.bloodmagic.arctool.uses", "Uses remaining: %s");
 
 		add("itemGroup.bloodmagictab", "Blood Magic");
@@ -123,6 +125,40 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.throwing_dagger.desc", "Not to be used in the kitchen");
 
 		add("key.bloodmagic.category", "Blood Magic");
+
+		add("tooltip.bloodmagic.ghost.everything", "Everything");
+		add("tooltip.bloodmagic.ghost.amount", "Ghost item amount: %d");
+
+		add("tooltip.bloodmagic.basicfilter.desc", "Will make sure the items match");
+		add("tooltip.bloodmagic.tagfilter.desc", "Filters based off of an item's ItemTags");
+		add("tooltip.bloodmagic.enchantfilter.desc", "Filters based off of enchantments");
+		add("tooltip.bloodmagic.modfilter.desc", "Filters based off of the source mod");
+		add("tooltip.bloodmagic.compositefilter.desc", "Filters based off of contained filters");
+
+		add("filter.bloodmagic.whitelist", "Allow");
+		add("filter.bloodmagic.blacklist", "Deny");
+		add("filter.bloodmagic.specifiedtag", "Valid Tag:");
+		add("filter.bloodmagic.novalidtag", "Specified Item");
+		add("filter.bloodmagic.anytag", "Any Tag:");
+
+		add("filter.bloodmagic.anyenchant", "Any Enchantment:");
+		add("filter.bloodmagic.noenchant", "No Enchantments");
+		add("filter.bloodmagic.allenchant", "Every Enchantment");
+		add("filter.bloodmagic.enchantfuzzy", "Any Level");
+		add("filter.bloodmagic.enchantnotfuzzy", "Exact Level");
+//		add("filter.bloodmagic.specifiedenchant", "Valid Tag:");
+
+		add("tooltip.bloodmagic.filter.whitelist", "Allow:");
+		add("tooltip.bloodmagic.filter.blacklist", "Deny:");
+		add("tooltip.bloodmagic.filter.all", "All: %s");
+		add("tooltip.bloodmagic.filter.count", "%sx %s");
+		add("tooltip.bloodmagic.filter.enchant_combination", "%s: %s");
+		add("tooltip.bloodmagic.filter.from_mod", "From: %s");
+
+		add("tooltip.bloodmagic.filter.anytag", "Any Tag of %s");
+		add("tooltip.bloodmagic.contained_filters", "Contained Filters:");
+
+		add("tooltip.bloodmagic.simplekey", "A simple key that can open dungeon doors");
 
 		// Ritual info
 		add("tooltip.bloodmagic.diviner.currentRitual", "Current Ritual: %s");
@@ -182,18 +218,18 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.altarBuilderRitual", "The Assembly of the High Altar");
 		add("ritual.bloodmagic.portalRitual", "The Gate of the Fold");
 
-		add("ritual.bloodmagic.waterRitual.info", "Generates a source of water from the master ritual stone.");
+		add("ritual.bloodmagic.waterRitual.info", "Generates a source of water from the Master Ritual Stone.");
 		add("ritual.bloodmagic.lavaRitual.info", "Generates a source of lava from the master ritual stone.");
-		add("ritual.bloodmagic.lavaRitual.default.info", "(Raw) Decreases the LP cost of placing lava and allows lava to be placed insided of a linked container.");
+		add("ritual.bloodmagic.lavaRitual.default.info", "(Raw) Decreases the LP cost of placing lava and allows the lava to be directly placed into a tank or other fluid-handling block.");
 		add("ritual.bloodmagic.lavaRitual.corrosive.info", "(Corrosive) Entities within range that are immune to fire are damaged severely.");
-		add("ritual.bloodmagic.lavaRitual.destructive.info", "(Destructive) Lava placement range is increased based on total Will.");
+		add("ritual.bloodmagic.lavaRitual.destructive.info", "(Destructive) Lava placement range is increased based on the total amount of Destructive Will in the Aura.");
 		add("ritual.bloodmagic.lavaRitual.vengeful.info", "(Vengeful) Entities within range have Fire Fuse applied to them.");
-		add("ritual.bloodmagic.lavaRitual.steadfast.info", "(Steadfast) Players within a designated range have Fire Resistance applied to them.");
+		add("ritual.bloodmagic.lavaRitual.steadfast.info", "(Steadfast) Players within this range have Fire Resistance applied to them.");
 
 		add("ritual.bloodmagic.greenGroveRitual.info", "Grows crops within its area.");
 		add("ritual.bloodmagic.jumpRitual.info", "Causes entities to leap up into the air.");
 		add("ritual.bloodmagic.wellOfSufferingRitual.info", "Attacks mobs within its damage zone and puts the LP into a nearby blood altar.");
-		add("ritual.bloodmagic.featheredKnifeRitual.info", "Drains health from players in its area and puts the LP into a nearby blood altar.");
+		add("ritual.bloodmagic.featheredKnifeRitual.info", "Drains health from players in its area and puts the LP into a nearby blood altar. LP Gains are affected by Runes of Self Sacrifice.");
 		add("ritual.bloodmagic.regenerationRitual.info", "Casts regeneration on entities within its range if they are missing health.");
 		add("ritual.bloodmagic.regenerationRitual.default.info", "(Raw)");
 		add("ritual.bloodmagic.regenerationRitual.corrosive.info", "(Corrosive) Steals health from non-players inside of its Vampirism range and directly heals players.");
@@ -204,26 +240,26 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.magneticRitual.info", "Pulls up ores from the ground and puts them into its placement range.");
 		add("ritual.bloodmagic.crushingRitual.info", "Breaks blocks within its crushing range and places the items into the linked chest.");
 		add("ritual.bloodmagic.crushingRitual.destructive.info", "(Destructive) Blocks are broken down forcefully: all blocks broken are affected by Fortune III.");
-		add("ritual.bloodmagic.crushingRitual.steadfast.info", "(Steadfast) Causes all blocks that are broken to be picked up with silk touch. Overrides Fortune where applicable.");
-		add("ritual.bloodmagic.crushingRitual.corrosive.info", "(Corrosive) All blocks are broken to be processed with a form of cutting fluid. Overrides Silk Touch where applicable.");
+		add("ritual.bloodmagic.crushingRitual.steadfast.info", "(Steadfast) Causes all blocks that are broken to be picked up with Silk Touch. Overrides Fortune where applicable.");
+		add("ritual.bloodmagic.crushingRitual.corrosive.info", "(Corrosive) All blocks are broken to be processed with a form of Cutting Fluid. Overrides Silk Touch where applicable.");
 		add("ritual.bloodmagic.crushingRitual.vengeful.info", "(Vengeful) Compresses the inventory on successful operation. Currently only does one compression per operation.");
-		add("ritual.bloodmagic.crushingRitual.default.info", "(Raw) Increases the speed of the ritual based on total Will.");
-		add("ritual.bloodmagic.greenGroveRitual.corrosive.info", "(Corrosive) Entities within range are attacked by nearby plants, leeching away their life.");
-		add("ritual.bloodmagic.greenGroveRitual.default.info", "(Raw) Increases the speed of all of the ritual operations depending on the total Will in the Aura.");
+		add("ritual.bloodmagic.crushingRitual.default.info", "(Raw) Increases the speed of the ritual based on the total amount of Raw Will in the Aura.");
+		add("ritual.bloodmagic.greenGroveRitual.corrosive.info", "(Corrosive) Entities within range are attacked by nearby plants, leeching away their life to feed their own growth.");
+		add("ritual.bloodmagic.greenGroveRitual.default.info", "(Raw) Increases the speed of all ritual operations based on the total amount of Raw Will in the Aura.");
 		add("ritual.bloodmagic.greenGroveRitual.vengeful.info", "(Vengeful) Increases the rate that a growth tick is successful.");
 		add("ritual.bloodmagic.greenGroveRitual.steadfast.info", "(Steadfast) Seeds are replanted and blocks are hydrated within the Hydration range.");
-		add("ritual.bloodmagic.greenGroveRitual.destructive.info", "(Destructive) Growing range is increased based on total Will.");
-		add("ritual.bloodmagic.featheredKnifeRitual.default.info", "(Raw) Increases the speed of the ritual based on the total Will in the Aura.");
-		add("ritual.bloodmagic.featheredKnifeRitual.destructive.info", "(Destructive) Increases the yield of the ritual based on total Will.");
+		add("ritual.bloodmagic.greenGroveRitual.destructive.info", "(Destructive) Increases the maximum growth range of the ritual based on the total amount of Destructive Will in the Aura.");
+		add("ritual.bloodmagic.featheredKnifeRitual.default.info", "(Raw) Increases the speed of the ritual based on the total amount of Raw Will in the Aura.");
+		add("ritual.bloodmagic.featheredKnifeRitual.destructive.info", "(Destructive) Increases the yield of the ritual based on the total amount of Destructive Will in the Aura.");
 		add("ritual.bloodmagic.featheredKnifeRitual.vengeful.info", "(Vengeful) Sets the minimum health for sacrificing to 10%%. Overridden by Steadfast for the Owner if active.");
-		add("ritual.bloodmagic.featheredKnifeRitual.corrosive.info", "(Corrosive) Uses the player's Incense to increase the yield.");
+		add("ritual.bloodmagic.featheredKnifeRitual.corrosive.info", "(Corrosive) Uses the player's current Incense Bonus (if any) to increase the yield. Stand near an Incense Altar to maintain this bonus.");
 		add("ritual.bloodmagic.featheredKnifeRitual.steadfast.info", "(Steadfast) Sets the minimum health for sacrificing from 30%% to 70%%.");
 		add("ritual.bloodmagic.speedRitual.default.info", "(Raw) Increases the velocity caused by the ritual based on total Will.");
 		add("ritual.bloodmagic.speedRitual.vengeful.info", "(Vengeful) Prevents adult mobs and players from being transported. Players are transported if paired with Destructive.");
 		add("ritual.bloodmagic.speedRitual.destructive.info", "(Destructive) Prevents child mobs and players from being transported. Players are transported if paired with Vengeful.");
 		add("ritual.bloodmagic.animalGrowthRitual.vengeful.info", "(Vengeful) Decreases the time it takes for adults to breed again.");
 		add("ritual.bloodmagic.animalGrowthRitual.steadfast.info", "(Steadfast) Automatically breeds adults within its area using items in the connected chest.");
-		add("ritual.bloodmagic.animalGrowthRitual.default.info", "(Raw) Increases the speed of the ritual based on the total Will in the Aura.");
+		add("ritual.bloodmagic.animalGrowthRitual.default.info", "(Raw) Increases the speed of the ritual based on the total amount of Raw Will in the Aura.");
 		add("ritual.bloodmagic.animalGrowthRitual.destructive.info", "(Destructive) Causes adults that have not bred lately to run at mobs and explode.");
 		add("ritual.bloodmagic.animalGrowthRitual.corrosive.info", "(Corrosive) Unimplemented.");
 		add("ritual.bloodmagic.groundingRitual.info", "Forces entities on the ground and prevents jumping.");
@@ -235,7 +271,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.condorRitual.info", "Provides flight in an area around the ritual.");
 		add("ritual.bloodmagic.eternalSoulRitual.info", "Capable of transferring Life Essence from a Network back into an Altar at a cost.");
 
-		add("ritual.bloodmagic.crystalSplitRitual.info", "Splits apart a well-grown Raw crystal cluster into seperal aspected crystal clusters.");
+		add("ritual.bloodmagic.crystalSplitRitual.info", "Splits apart a well-grown Raw crystal cluster into separately aspected crystal clusters.");
 		add("ritual.bloodmagic.fullStomachRitual.info", "Takes food from the linked chest and fills the player's saturation with it.");
 		add("ritual.bloodmagic.interdictionRitual.info", "Pushes all mobs within its area away from the master ritual stone.");
 		add("ritual.bloodmagic.containmentRitual.info", "Pulls all mobs within its area towards the master ritual stone.");
@@ -243,11 +279,11 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.suppressionRitual.info", "Suppresses fluids within its range - deactivating the ritual returns the fluids back to the world.");
 		add("ritual.bloodmagic.expulsionRitual.info", "Expels players from its range that are neither the owner nor have a bound blood orb in the chest on top of the master ritual stone.");
 		add("ritual.bloodmagic.zephyrRitual.info", "Picks up items within its range and places them into the linked chest.");
-		add("ritual.bloodmagic.upgradeRemoveRitual.info", "Removes all upgrades (and downgrades) from your Living Armor and gives you the corresponding Upgrade (and Downgrade) Tomes. These Tomes can be used to be applied to your Living Armor again.");
+		add("ritual.bloodmagic.upgradeRemoveRitual.info", "Removes all upgrades from your Living Armor and gives you the corresponding Upgrade Tomes. These Tomes can be used to re-apply them to your Living Armor.");
 		add("ritual.bloodmagic.armourEvolveRitual.info", "Increases the amount of maximum Upgrade Points on your Living Armor to 300.");
 		add("ritual.bloodmagic.animalGrowthRitual.info", "Increases the maturity rate of baby animals within its range.");
 		add("ritual.bloodmagic.forsakenSoulRitual.info", "Damages mobs within its damage range and when the mob dies a demon crystal within its crystal range will be grown.");
-		add("ritual.bloodmagic.crystalHarvestRitual.info", "Breaks Demon Will crystal clusters within its range, dropping the results on top of the crystals.");
+		add("ritual.bloodmagic.crystalHarvestRitual.info", "Breaks Demon Will Crystal Clusters of all aspects within its range, dropping the results on top of the crystals.");
 		add("ritual.bloodmagic.placerRitual.info", "Grabs blocks that are inside of the connected inventory and places them into the world.");
 		add("ritual.bloodmagic.fellingRitual.info", "A standard tree-cutting machine, this ritual will cut down all trees and leaves within its area and collect the drops.");
 		add("ritual.bloodmagic.pumpRitual.info", "Looks around the world and grabs fluids from the defined area. Will only remove and put the fluid into the connected tank if the tank has at least a bucket's worth of the same fluid.");
@@ -255,25 +291,25 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.portalRitual.info", "Creates a portal network based on the activator and the immediately surrounding blocks. Blocks can be changed after activation without changing the network of portals, and portals with the same \"key\" will link together.");
 		add("ritual.bloodmagic.meteorRitual.info", "Consumes an item inside of its item range to summon a meteor full of resources from the sky, aimed directly at the ritual.");
 
-		add("ritual.bloodmagic.waterRitual.waterRange.info", "(Water) The area that the ritual will place water source blocks.");
+		add("ritual.bloodmagic.waterRitual.waterRange.info", "(Water) The area within which the Ritual will place Water Source Blocks.");
 		add("ritual.bloodmagic.waterRitual.waterTank.info", "(Raw) The tank that the ritual will place water into.");
-		add("ritual.bloodmagic.lavaRitual.lavaRange.info", "(Lava) The area that the ritual will place lava source blocks.");
+		add("ritual.bloodmagic.lavaRitual.lavaRange.info", "(Lava) The area within which the Ritual will place Lava Source Blocks.");
 		add("ritual.bloodmagic.lavaRitual.lavaTank.info", "(Raw) The tank that the ritual will place lava into.");
 		add("ritual.bloodmagic.lavaRitual.fireFuse.info", "(Vengeful) Entities in this range are afflicted by Fire Fuse.");
-		add("ritual.bloodmagic.lavaRitual.fireResist.info", "(Steadfast) Players in this range have Fire Resist applied.");
-		add("ritual.bloodmagic.lavaRitual.fireDamage.info", "(Corrosive) Entities within this range that are immune to fire damage are hurt proportional to the Will.");
+		add("ritual.bloodmagic.lavaRitual.fireResist.info", "(Steadfast) Players within this range have Fire Resistance applied to them.");
+		add("ritual.bloodmagic.lavaRitual.fireDamage.info", "(Corrosive) Entities within this range that are immune to fire damage are hurt proportionally to the amount of Corrosive Will in the Aura.");
 		add("ritual.bloodmagic.greenGroveRitual.growing.info", "(Growth) The area that the ritual will grow plants in.");
 		add("ritual.bloodmagic.greenGroveRitual.leech.info", "(Corrosive) Entities in this area have their life drained to grow nearby crops.");
 		add("ritual.bloodmagic.greenGroveRitual.hydrate.info", "(Steadfast) Blocks within this range are rehydrated into farmland, and seeds within the area are planted nearby.");
 		add("ritual.bloodmagic.jumpRitual.jumpRange.info", "(Jumping) Entities in this range will be launched in the air.");
-		add("ritual.bloodmagic.wellOfSufferingRitual.altar.info", "(Altar) This range defines the area that the ritual searches for the blood altar. Changing this will either expand or limit the range to a certain region.");
-		add("ritual.bloodmagic.wellOfSufferingRitual.damage.info", "(Damage) This defines where the ritual will damage a mob. All mobs inside of this range (except for players) will receive damage over time.");
-		add("ritual.bloodmagic.featheredKnifeRitual.altar.info", "(Altar) This range defines the area that the ritual searches for the blood altar. Changing this will either expand or limit the range to a certain region.");
+		add("ritual.bloodmagic.wellOfSufferingRitual.altar.info", "(Altar) The area that the ritual searches for a Blood Altar to deposit its Blood into.");
+		add("ritual.bloodmagic.wellOfSufferingRitual.damage.info", "(Damage) All mobs within this area will take damage every second or so until they die. This does not include players, fortunately. ");
+		add("ritual.bloodmagic.featheredKnifeRitual.altar.info", "(Altar) This range defines the area that the ritual searches for the Blood Altar. Changing this will either expand or limit the range to a certain region.");
 		add("ritual.bloodmagic.featheredKnifeRitual.damage.info", "(Damage) This defines where the ritual will damage a player. Players inside of this range will receive damage over time up to the specified limit.");
 		add("ritual.bloodmagic.regenerationRitual.heal.info", "(Healing) Entities within this range will receive a regeneration buff.");
 		add("ritual.bloodmagic.regenerationRitual.vampire.info", "(Vampirism) Mobs within this range have their health syphoned to heal players in the Healing range.");
 		add("ritual.bloodmagic.harvestRitual.harvestRange.info", "(Harvesting) Plants within this range will be harvested.");
-		add("ritual.bloodmagic.magneticRitual.placementRange.info", "(Placement) The range that the ritual will place the grabbed ores into.");
+		add("ritual.bloodmagic.magneticRitual.placementRange.info", "(Placement) The area that the ritual will place the grabbed ores into.");
 		add("ritual.bloodmagic.crushingRitual.crushingRange.info", "(Crushing) The blocks that the ritual will break.");
 		add("ritual.bloodmagic.crushingRitual.chest.info", "(Chest) The location of the inventory that the ritual will place the broken blocks into.");
 		add("ritual.bloodmagic.fullStomachRitual.fillRange.info", "(Feeding) The range that the ritual will look at to feed players.");
@@ -292,7 +328,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.crystalHarvestRitual.crystal.info", "(Crystal) All Demon Will crystal clusters have a single crystal broken off, spawning the crystal into the world. If there is only one crystal on the cluster, it will not break it.");
 
 		add("ritual.bloodmagic.ellipseRitual.info", "Creates a hollow spheroid around the ritual using the blocks in the attached chest.");
-		add("ritual.bloodmagic.ellipseRitual.spheroidRange.info", "(Placement) The range that the ritual will place its blocks in. Spheroid is centered on the ritual - if one side is shorter than the side opposite the spheroid is truncated.");
+		add("ritual.bloodmagic.ellipseRitual.spheroidRange.info", "(Placement) The range that the ritual will place its blocks in. Note that the Spheroid is centered on the ritual - if one side is shorter than the side opposite, the spheroid will be truncated.");
 		add("ritual.bloodmagic.ellipseRitual.chest.info", "(Chest) The location of the inventory that the ritual will grab blocks from to place in the world.");
 
 		add("ritual.bloodmagic.placerRitual.placerRange.info", "(Placement) The range that the ritual will place its blocks in.");
@@ -340,7 +376,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("living_upgrade.bloodmagic.crippledArm", "Crippled Arm");
 		add("living_upgrade.bloodmagic.slippery", "Loose Traction");
 		add("living_upgrade.bloodmagic.battleHunger", "Battle Hungry");
-		add("living_upgrade.bloodmagic.quenched", "Quenched");
+		add("living_upgrade.bloodmagic.downgrade.quenched", "Quenched");
 		add("living_upgrade.bloodmagic.meleeDecrease", "Dulled Blade");
 		add("living_upgrade.bloodmagic.digSlowdown", "Weakened Pick");
 		add("living_upgrade.bloodmagic.stormTrooper", "Storm Trooper");
@@ -358,6 +394,15 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("chat.bloodmagic.living_upgrade_level_increase", "%s has leveled up to %d");
 
+		add("chat.bloodmagic.routing.remove", "Removing contained location");
+		add("chat.bloodmagic.routing.set", "Setting node location");
+		add("chat.bloodmagic.routing.link.master", "Linked node to master!");
+		add("chat.bloodmagic.routing.link", "Linked nodes together");
+		add("chat.bloodmagic.routing.distance", "Invalid - link distance greater than 16 blocks!");
+		add("chat.bloodmagic.routing.same", "Invalid - cannot link a node with itself");
+
+		add("tooltip.bloodmagic.telepositionfocus.coords", "Current coordinates: (%d, %d, %d)");
+
 		// Anointments. Doesn't have any spelling to be pedantic about.
 		add("anointment.bloodmagic.melee_damage", "Whetstone");
 		add("anointment.bloodmagic.silk_touch", "Soft Touch");
@@ -366,18 +411,28 @@ public class GeneratorLanguage extends LanguageProvider
 		add("anointment.bloodmagic.hidden_knowledge", "Miner's Secrets");
 		add("anointment.bloodmagic.quick_draw", "Deft Hands");
 		add("anointment.bloodmagic.bow_power", "Heavy Shot");
+		add("anointment.bloodmagic.bow_velocity", "Sniping");
 		add("anointment.bloodmagic.looting", "Plundering");
 		add("anointment.bloodmagic.smelting", "Heated Tool");
 
 		// Guide
 		add("guide.bloodmagic.name", "Sanguine Scientiem");
-		add("guide.bloodmagic.landing_text", "\"It is my dear hope that by holding this tome in your hands, I may impart the knowledge of the lost art that is Blood Magic\"$(br)$(o)- Magus Arcana$()");
-
-		// Patchouli Guidebook
-		add("patchouli.bloodmagic.arc_processor.fluid", "%dmb of %s");
-		add("patchouli.bloodmagic.arc_processor.no_fluid", "None");
-		add("patchouli.bloodmagic.living_armour_upgrade_table.level", "Level");
-		add("patchouli.bloodmagic.living_armour_upgrade_table.upgrade_points", "Upgrade Points");
+		add("guide.bloodmagic.landing_text", "Welcome to $(6)Blood Magic$()! $(br2)$(l:bloodmagic:utility/nyi)A lot of stuff$() isn't yet implemented, so please excuse our dust. $(br2)Click $(l:bloodmagic:utility/getting_started)HERE$() to get started. If you find any bugs, please report them on our $(l:https://github.com/WayofTime/BloodMagic/issues)Github$().");
+		add("guide.bloodmagic.subtitle", "Alchemical Wizardry");
+		add("guide.patchouli.bloodmagic.common.double_new_line", "$(br2)%s");
+		add("guide.patchouli.bloodmagic.arc_processor.fluid", "%dmb of %s");
+		add("guide.patchouli.bloodmagic.arc_processor.no_fluid", "None");
+		add("guide.patchouli.bloodmagic.living_armour_upgrade_table.level", "Level");
+		add("guide.patchouli.bloodmagic.living_armour_upgrade_table.upgrade_points", "Upgrade Points");
+		add("guide.patchouli.bloodmagic.ritual_info.activation_cost", "$(br)Activation Cost: $(blood)%d LP$()");
+		add("guide.patchouli.bloodmagic.ritual_info.upkeep_cost", "$(br)Base Usage Cost: $(blood)%d LP$()$(br)Base Interval: %d Ticks");
+		add("guide.patchouli.bloodmagic.ritual_info.weak_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#weak)%s$(/l)");
+		add("guide.patchouli.bloodmagic.ritual_info.awakened_activation_crystal_link", "$(l:bloodmagic:rituals/activation_crystals#awakened)%s$(/l)");
+		add("guide.patchouli.bloodmagic.ritual_info.counter_formatter", "$(br)%s%s$()");
+		add("guide.patchouli.bloodmagic.ritual_info.text_override_formatter", "\\$(%s)%s\\$()");
+		add("guide.patchouli.bloodmagic.ritual_info.info_formatter", "%s$(br)%s$(br2)%s$(br)%s%s%s");
+		add("guide.patchouli.bloodmagic.ritual_info.range_formatter", "$(br) $(li)Max Volume: %s$(li)Horizontal Radius: %s$(li)Vertical Radius: %s");
+		add("guide.patchouli.bloodmagic.ritual_info.full_range", "Full Range");
 
 		// Keybinds
 		add("bloodmagic.keybind.open_holding", "Open Sigil of Holding");
@@ -458,10 +513,22 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addBlock(BloodMagicBlocks.DUNGEON_ORE, "Demonite");
 
+		addBlock(BloodMagicBlocks.DUNGEON_BRICK_SLAB, "Demon Brick Slab");
+		addBlock(BloodMagicBlocks.DUNGEON_TILE_SLAB, "Demon Stone Tile Slab");
+
 		addBlock(BloodMagicBlocks.SHAPED_CHARGE, "Shaped Charge");
 		addBlock(BloodMagicBlocks.DEFORESTER_CHARGE, "Deforester Charge");
 		addBlock(BloodMagicBlocks.VEINMINE_CHARGE, "Controlled Charge");
 		addBlock(BloodMagicBlocks.FUNGAL_CHARGE, "Fungal Charge");
+
+		addBlock(BloodMagicBlocks.ROUTING_NODE_BLOCK, "Routing Node");
+		addBlock(BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK, "Input Routing Node");
+		addBlock(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK, "Output Routing Node");
+		addBlock(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK, "Master Routing Node");
+
+		addBlock(BloodMagicBlocks.WEAK_TAU, "Tau Fruit");
+		addBlock(BloodMagicBlocks.STRONG_TAU, "Saturated Tau");
+		addBlock(BloodMagicBlocks.GROWING_DOUBT, "Seeds of Doubt");
 
 		// Item names
 		addItem(BloodMagicItems.WEAK_BLOOD_ORB, "Weak Blood Orb");
@@ -515,6 +582,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.MONSTER_SOUL_STEADFAST, "Demon Will");
 		addItem(BloodMagicItems.MONSTER_SOUL_VENGEFUL, "Demon Will");
 		addItem(BloodMagicItems.SOUL_SNARE, "Soul Snare");
+		addItem(BloodMagicItems.DEMON_WILL_GAUGE, "Demon Will Aura Gauge");
 		addItem(BloodMagicItems.SENTIENT_SWORD, "Sentient Sword");
 		addItem(BloodMagicItems.SENTIENT_AXE, "Sentient Axe");
 		addItem(BloodMagicItems.SENTIENT_PICKAXE, "Sentient Pickaxe");
@@ -552,6 +620,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.EXPLOSIVE_POWDER, "Explosive Powder");
 
 		addItem(BloodMagicItems.BASIC_CUTTING_FLUID, "Basic Cutting Fluid");
+		addItem(BloodMagicItems.INTERMEDIATE_CUTTING_FLUID, "Intermediate Cutting Fluid");
 
 		addItem(BloodMagicItems.EXPERIENCE_TOME, "Tome of Peritia");
 
@@ -566,6 +635,22 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.THROWING_DAGGER_SYRINGE, "Syringe Throwing Dagger");
 		addItem(BloodMagicItems.SLATE_AMPOULE, "Slate Ampoule");
 
+		addItem(BloodMagicItems.NODE_ROUTER, "Node Router");
+		addItem(BloodMagicItems.ITEM_ROUTER_FILTER, "Standard Item Filter");
+		addItem(BloodMagicItems.ITEM_TAG_FILTER, "Tag Item Filter");
+		addItem(BloodMagicItems.ITEM_ENCHANT_FILTER, "Enchantments Item Filter");
+		addItem(BloodMagicItems.ITEM_MOD_FILTER, "Mod Item Filter");
+		addItem(BloodMagicItems.ITEM_COMPOSITE_FILTER, "Composite Item Filter");
+
+		addItem(BloodMagicItems.FRAME_PARTS, "Filter Parts");
+
+		addItem(BloodMagicItems.HELLFORGED_SAND, "Hellforged Dust");
+		addItem(BloodMagicItems.CORRUPTED_DUST_TINY, "Tiny Corrupted Dust");
+		addItem(BloodMagicItems.CORRUPTED_DUST, "Corrupted Dust");
+		addItem(BloodMagicItems.HELLFORGED_INGOT, "Hellforged Ingot");
+		addItem(BloodMagicItems.HELLFORGED_BLOCK, "Hellforged Block");
+		addItem(BloodMagicItems.DUNGEON_SIMPLE_KEY, "Iron Key");
+
 		// Anointment Items
 		addItem(BloodMagicItems.SLATE_VIAL, "Slate-infused Vial");
 		addItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT, "Honing Oil");
@@ -577,9 +662,13 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT, "Iron Tip");
 		addItem(BloodMagicItems.LOOTING_ANOINTMENT, "Plunderer's Glint");
 		addItem(BloodMagicItems.SMELTING_ANOINTMENT, "Slow-burning Oil");
+		addItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT, "Archer's Polish");
+
+		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT_STRONG, "Iron Tip II");
 
 		// Alchemy Items
 		addItem(BloodMagicItems.PLANT_OIL, "Plant Oil");
+		addItem(BloodMagicItems.TAU_OIL, "Tau Oil");
 
 		// Sands
 		addItem(BloodMagicItems.COAL_SAND, "Coal Sand");
