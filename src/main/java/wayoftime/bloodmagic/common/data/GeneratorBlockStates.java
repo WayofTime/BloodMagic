@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.block.FenceGateBlock;
 import net.minecraft.block.RotatedPillarBlock;
+import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.block.WallBlock;
 import net.minecraft.data.DataGenerator;
@@ -86,6 +87,9 @@ public class GeneratorBlockStates extends BlockStateProvider
 		buildWallInventory((WallBlock) BloodMagicBlocks.DUNGEON_POLISHED_WALL.get(), BloodMagic.rl("block/dungeon/dungeon_polished"));
 		fenceGateBlock((FenceGateBlock) BloodMagicBlocks.DUNGEON_BRICK_GATE.get(), BloodMagic.rl("block/dungeon/dungeon_brick1"));
 		fenceGateBlock((FenceGateBlock) BloodMagicBlocks.DUNGEON_POLISHED_GATE.get(), BloodMagic.rl("block/dungeon/dungeon_polished"));
+
+		slabBlock((SlabBlock) BloodMagicBlocks.DUNGEON_BRICK_SLAB.get(), BloodMagic.rl("dungeon_brick1"), BloodMagic.rl("block/dungeon/dungeon_brick1"));
+		slabBlock((SlabBlock) BloodMagicBlocks.DUNGEON_TILE_SLAB.get(), BloodMagic.rl("dungeon_tile"), BloodMagic.rl("block/dungeon/dungeon_tile"));
 
 		buildPillarCap(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get(), BloodMagic.rl("block/dungeon/dungeon_pillarheart"), BloodMagic.rl("block/dungeon/dungeon_pillarbottom"), BloodMagic.rl("block/dungeon/dungeon_pillartop"));
 

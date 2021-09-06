@@ -53,6 +53,7 @@ import wayoftime.bloodmagic.common.data.GeneratorLootTable;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeProvider;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.loot.BloodMagicLootFunctionManager;
+import wayoftime.bloodmagic.common.loot.BloodMagicLootTypeManager;
 import wayoftime.bloodmagic.common.recipe.serializer.TestSpecialRecipe;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
@@ -168,6 +169,7 @@ public class BloodMagic
 		context.registerConfig(ModConfig.Type.COMMON, ConfigManager.COMMON_SPEC);
 
 		BloodMagicLootFunctionManager.register();
+		BloodMagicLootTypeManager.register();
 
 		ModDungeons.init();
 	}

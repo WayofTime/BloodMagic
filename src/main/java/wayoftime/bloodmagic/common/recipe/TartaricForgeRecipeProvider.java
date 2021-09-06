@@ -105,6 +105,8 @@ public class TartaricForgeRecipeProvider implements ISubRecipeProvider
 		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get()), 400, 25, Ingredient.fromTag(Tags.Items.INGOTS_IRON), Ingredient.fromItems(BloodMagicBlocks.ROUTING_NODE_BLOCK.get()), Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE), Ingredient.fromTag(Tags.Items.DUSTS_GLOWSTONE)).build(consumer, BloodMagic.rl(basePath + "output_routing_node"));
 		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get()), 400, 200, Ingredient.fromTag(Tags.Items.STORAGE_BLOCKS_IRON), Ingredient.fromTag(Tags.Items.GEMS_DIAMOND), Ingredient.fromItems(BloodMagicItems.IMBUED_SLATE.get())).build(consumer, BloodMagic.rl(basePath + "master_routing_node"));
 
+		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.DUNGEON_SIMPLE_KEY.get()), 300, 50, Ingredient.fromTag(Tags.Items.STORAGE_BLOCKS_REDSTONE), Ingredient.fromTag(Tags.Items.INGOTS_IRON), Ingredient.fromTag(Tags.Items.INGOTS_IRON), Ingredient.fromItems(BloodMagicItems.IMBUED_SLATE.get())).build(consumer, BloodMagic.rl(basePath + "simple_key"));
+
 		// Changed Recipes
 		{
 //			TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.ARCANE_ASHES.get()), 0, 0, Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE), Ingredient.fromTag(Tags.Items.DYES_WHITE), Ingredient.fromTag(Tags.Items.GUNPOWDER), Ingredient.fromTag(ItemTags.COALS)).build(consumer, BloodMagic.rl(basePath + "arcaneashes"));

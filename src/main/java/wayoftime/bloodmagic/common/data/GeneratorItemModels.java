@@ -74,6 +74,9 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerCustomBlockPath(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get(), "dungeon_polished_wall_inventory");
 		registerBlockModel(BloodMagicBlocks.DUNGEON_BRICK_GATE.get());
 		registerBlockModel(BloodMagicBlocks.DUNGEON_POLISHED_GATE.get());
+		registerBlockModel(BloodMagicBlocks.DUNGEON_BRICK_SLAB.get());
+		registerBlockModel(BloodMagicBlocks.DUNGEON_TILE_SLAB.get());
+
 		registerBlockModel(BloodMagicBlocks.DUNGEON_CONTROLLER.get());
 		registerBlockModel(BloodMagicBlocks.DUNGEON_SEAL.get());
 
@@ -107,18 +110,19 @@ public class GeneratorItemModels extends ItemModelProvider
 //		registerBlockModel(BloodMagicBlocks.INVERSION_PILLAR.get());
 
 		registerMultiLayerItem(BloodMagicItems.SLATE_VIAL.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
-		registerMultiLayerItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
-		registerMultiLayerItem(BloodMagicItems.SILK_TOUCH_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
-		registerMultiLayerItem(BloodMagicItems.FORTUNE_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
-		registerMultiLayerItem(BloodMagicItems.HOLY_WATER_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
-		registerMultiLayerItem(BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
-		registerMultiLayerItem(BloodMagicItems.QUICK_DRAW_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
-		registerMultiLayerItem(BloodMagicItems.LOOTING_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
-		registerMultiLayerItem(BloodMagicItems.BOW_POWER_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.SILK_TOUCH_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.FORTUNE_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.HOLY_WATER_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.QUICK_DRAW_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.LOOTING_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.BOW_POWER_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
 		registerMultiLayerItem(BloodMagicItems.WILL_POWER_ANOINTMENT.get(), modLoc("item/alchemic_vial_will"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon_will"));
-		registerMultiLayerItem(BloodMagicItems.SMELTING_ANOINTMENT.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.SMELTING_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
 
-		registerMultiLayerItem(BloodMagicItems.BOW_POWER_ANOINTMENT_STRONG.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon_two"));
+		registerMultiLayerItem(BloodMagicItems.BOW_POWER_ANOINTMENT_STRONG.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_two"));
 	}
 
 	private void registerCustomFullTexture(Block block, String texturePath)

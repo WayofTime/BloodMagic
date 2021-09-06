@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.ritual.types;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,6 +25,12 @@ public class RitualSimpleDungeon extends Ritual
 	public RitualSimpleDungeon()
 	{
 		super("ritualSimpleDungeon", 0, 80000, "ritual." + BloodMagic.MODID + ".simpleDungeonRitual");
+	}
+
+	// TODO: Change this so it depends on the config + activation crystal.
+	public boolean activateRitual(IMasterRitualStone masterRitualStone, PlayerEntity player, UUID owner)
+	{
+		return true;
 	}
 
 	@Override

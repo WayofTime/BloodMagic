@@ -14,6 +14,7 @@ import wayoftime.bloodmagic.common.item.arc.ItemARCToolBase;
 import wayoftime.bloodmagic.common.item.block.ItemBlockAlchemyTable;
 import wayoftime.bloodmagic.common.item.block.ItemBlockMimic;
 import wayoftime.bloodmagic.common.item.block.ItemBlockShapedCharge;
+import wayoftime.bloodmagic.common.item.dungeon.ItemDungeonKey;
 import wayoftime.bloodmagic.common.item.routing.ItemCompositeFilter;
 import wayoftime.bloodmagic.common.item.routing.ItemEnchantFilterCore;
 import wayoftime.bloodmagic.common.item.routing.ItemModFilter;
@@ -263,6 +264,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> BOW_POWER_ANOINTMENT = ITEMS.register("bow_power_anointment", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_power"), 0xD8D8D8, 1, 256, true));
 	public static final RegistryObject<Item> WILL_POWER_ANOINTMENT = ITEMS.register("will_power_anointment", () -> new ItemAnointmentProvider(BloodMagic.rl("will_power"), 0xD8D8D8, 1, 256));
 	public static final RegistryObject<Item> SMELTING_ANOINTMENT = ITEMS.register("smelting_anointment", () -> new ItemAnointmentProvider(BloodMagic.rl("smelting"), 0xCE2029, 1, 256));
+	public static final RegistryObject<Item> BOW_VELOCITY_ANOINTMENT = ITEMS.register("bow_velocity_anointment", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_velocity"), 0xFFBE00, 1, 256, true));
 
 	public static final RegistryObject<Item> BOW_POWER_ANOINTMENT_STRONG = ITEMS.register("bow_power_anointment_strong", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_power"), 0xD8D8D8, 2, 1024, true));
 
@@ -308,6 +310,8 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> DUNGEON_POLISHED_WALL_BLOCK = ITEMS.register("dungeon_polished_wall", () -> new BlockItem(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> DUNGEON_BRICK_GATE_BLOCK = ITEMS.register("dungeon_brick_gate", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_GATE.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> DUNGEON_POLISHED_GATE_BLOCK = ITEMS.register("dungeon_polished_gate", () -> new BlockItem(BloodMagicBlocks.DUNGEON_POLISHED_GATE.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> DUNGEON_BRICK_SLAB_BLOCK = ITEMS.register("dungeon_brick_slab", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_SLAB.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> DUNGEON_TILE_SLAB_BLOCK = ITEMS.register("dungeon_tile_slab", () -> new BlockItem(BloodMagicBlocks.DUNGEON_TILE_SLAB.get(), new Item.Properties().group(BloodMagic.TAB)));
 
 	public static final RegistryObject<Item> DUNGEON_ORE_BLOCK = ITEMS.register("dungeon_ore", () -> new BlockItem(BloodMagicBlocks.DUNGEON_ORE.get(), new Item.Properties().group(BloodMagic.TAB)));
 
@@ -318,5 +322,6 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> DUNGEON_SEAL_BLOCK = ITEMS.register("dungeon_seal", () -> new BlockItem(BloodMagicBlocks.DUNGEON_SEAL.get(), new Item.Properties().group(BloodMagic.TAB)));
 
 	public static final RegistryObject<Item> DUNGEON_TESTER = BASICITEMS.register("dungeon_tester", ItemDungeonTester::new);
+	public static final RegistryObject<Item> DUNGEON_SIMPLE_KEY = BASICITEMS.register("simplekey", () -> new ItemDungeonKey("simplekey", "tier1"));
 
 }

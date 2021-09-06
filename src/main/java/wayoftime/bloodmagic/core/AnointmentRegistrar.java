@@ -28,6 +28,7 @@ public class AnointmentRegistrar
 		def.put("hidden_knowledge", BloodMagic.rl("hidden_knowledge"));
 		def.put("quick_draw", BloodMagic.rl("quick_draw"));
 		def.put("bow_power", BloodMagic.rl("bow_power"));
+		def.put("bow_velocity", BloodMagic.rl("bow_velocity"));
 //		def.put("arrow_shot", BloodMagic.rl("arrow_shot"));
 //		def.put("critical_strike", BloodMagic.rl("critical_strike"));
 //		def.put("digging", BloodMagic.rl("digging"));
@@ -78,6 +79,8 @@ public class AnointmentRegistrar
 
 	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_SMELTING = ANOINTMENTS.register("smelting", () -> new Anointment(BloodMagic.rl("smelting")).setConsumeOnHarvest());
 
+	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_BOW_VELOCITY = ANOINTMENTS.register("bow_velocity", () -> parseDefinition("bow_velocity").setConsumeOnUseFinish());
+
 	public static void register()
 	{
 		registerAnointment(ANOINTMENT_MELEE_DAMAGE.get());
@@ -90,6 +93,7 @@ public class AnointmentRegistrar
 		registerAnointment(ANOINTMENT_BOW_POWER.get());
 		registerAnointment(ANOINTMENT_WILL_POWER.get());
 		registerAnointment(ANOINTMENT_SMELTING.get());
+		registerAnointment(ANOINTMENT_BOW_VELOCITY.get());
 
 //		Registry.register(UPGRADES, UPGRADE_ARROW_PROTECT.getKey(), UPGRADE_ARROW_PROTECT);
 //		Registry.register(UPGRADES, UPGRADE_ARROW_SHOT.getKey(), UPGRADE_ARROW_SHOT);

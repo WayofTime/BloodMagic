@@ -45,7 +45,12 @@ public class TileDungeonSeal extends TileBase
 			if (tile instanceof TileDungeonController)
 			{
 				TileDungeonController tileController = (TileDungeonController) tile;
-				tileController.handleRequestForRoomPlacement(doorPos, doorDirection, doorType, potentialRoomTypes);
+				int state = tileController.handleRequestForRoomPlacement(heldStack, doorPos, doorDirection, doorType, potentialRoomTypes);
+
+				if (state == -1)
+				{
+					// TODO: Spawn smoke particles, since the used item does not work.
+				}
 			}
 		}
 

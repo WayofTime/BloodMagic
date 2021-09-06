@@ -9,7 +9,7 @@ public class AnointmentColor implements IItemColor
 	@Override
 	public int getColor(ItemStack stack, int layer)
 	{
-		if (layer == 1 && stack.getItem() instanceof ItemAnointmentProvider)
+		if (layer == 0 && stack.getItem() instanceof ItemAnointmentProvider)
 		{
 			return ((ItemAnointmentProvider) stack.getItem()).getColor();
 		}

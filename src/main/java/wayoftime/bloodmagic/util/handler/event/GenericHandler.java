@@ -21,6 +21,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolType;
@@ -660,6 +661,7 @@ public class GenericHandler
 				if (shooter instanceof PlayerEntity)
 				{
 					PlayerEntity playerShooter = (PlayerEntity) shooter;
+
 					for (Hand hand : Hand.values())
 					{
 						ItemStack heldStack = playerShooter.getHeldItem(hand);
@@ -676,6 +678,46 @@ public class GenericHandler
 
 //							System.out.println("Arrow damage is now: " + arrowEntity.getDamage());
 						}
+
+						int velocityLevel = holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_BOW_VELOCITY.get());
+						if (velocityLevel > 0)
+						{
+							Vector3d motion = arrowEntity.getMotion();
+
+							double multiplier = (float) AnointmentRegistrar.ANOINTMENT_BOW_VELOCITY.get().getBonusValue("multiplier", velocityLevel).doubleValue();
+
+							arrowEntity.setMotion(motion.scale(multiplier));
+							arrowEntity.setDamage(arrowEntity.getDamage() / multiplier);
+//
+//							arrowEntity.shoot(f, f1, f2, (float) velocity, 0);
+						}
+
+//						int accuracyLevel = holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_BOW_VELOCITY.get());
+//						if (accuracyLevel > 0)
+//						{
+//							Vector2f arrowPitchYaw = arrowEntity.getPitchYaw();
+//							Vector2f playerPitchYaw = playerShooter.getPitchYaw();
+//
+//							float velocity = (float) arrowEntity.getMotion().length();
+//
+//							float accuracy = (float) AnointmentRegistrar.ANOINTMENT_BOW_VELOCITY.get().getBonusValue("accuracy", accuracyLevel).doubleValue();
+//
+//							float pitch = playerPitchYaw.x;
+//							float yaw = playerPitchYaw.y;
+//							float perfectX = -MathHelper.sin(yaw * ((float) Math.PI / 180F)) * MathHelper.cos(pitch * ((float) Math.PI / 180F));
+//							float perfectY = -MathHelper.sin((pitch) * ((float) Math.PI / 180F));
+//							float perfectZ = MathHelper.cos(yaw * ((float) Math.PI / 180F)) * MathHelper.cos(pitch * ((float) Math.PI / 180F));
+//
+//							double difX = perfectX - arrowEntity.getMotion().getX() / velocity;
+//							double difY = perfectY - arrowEntity.getMotion().getY() / velocity;
+//							double difZ = perfectZ - arrowEntity.getMotion().getZ() / velocity;
+//
+//							Vector3d newMotion = new Vector3d(perfectX - (1 - accuracy) * difX, perfectY - (1 - accuracy) * difY, perfectZ - (1 - accuracy) * difZ).scale(velocity);
+//
+//							arrowEntity.setMotion(newMotion);
+////
+////							arrowEntity.shoot(f, f1, f2, (float) velocity, 0);
+//						}
 
 						break;
 					}

@@ -158,6 +158,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.filter.anytag", "Any Tag of %s");
 		add("tooltip.bloodmagic.contained_filters", "Contained Filters:");
 
+		add("tooltip.bloodmagic.simplekey", "A simple key that can open dungeon doors");
+
 		// Ritual info
 		add("tooltip.bloodmagic.diviner.currentRitual", "Current Ritual: %s");
 		add("tooltip.bloodmagic.diviner.blankRune", "Blank Runes: %d");
@@ -409,6 +411,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("anointment.bloodmagic.hidden_knowledge", "Miner's Secrets");
 		add("anointment.bloodmagic.quick_draw", "Deft Hands");
 		add("anointment.bloodmagic.bow_power", "Heavy Shot");
+		add("anointment.bloodmagic.bow_velocity", "Sniping");
 		add("anointment.bloodmagic.looting", "Plundering");
 		add("anointment.bloodmagic.smelting", "Heated Tool");
 
@@ -509,6 +512,9 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.DUNGEON_EYE, "Demon Eye");
 
 		addBlock(BloodMagicBlocks.DUNGEON_ORE, "Demonite");
+
+		addBlock(BloodMagicBlocks.DUNGEON_BRICK_SLAB, "Demon Brick Slab");
+		addBlock(BloodMagicBlocks.DUNGEON_TILE_SLAB, "Demon Stone Tile Slab");
 
 		addBlock(BloodMagicBlocks.SHAPED_CHARGE, "Shaped Charge");
 		addBlock(BloodMagicBlocks.DEFORESTER_CHARGE, "Deforester Charge");
@@ -643,6 +649,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.CORRUPTED_DUST, "Corrupted Dust");
 		addItem(BloodMagicItems.HELLFORGED_INGOT, "Hellforged Ingot");
 		addItem(BloodMagicItems.HELLFORGED_BLOCK, "Hellforged Block");
+		addItem(BloodMagicItems.DUNGEON_SIMPLE_KEY, "Iron Key");
 
 		// Anointment Items
 		addItem(BloodMagicItems.SLATE_VIAL, "Slate-infused Vial");
@@ -655,6 +662,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT, "Iron Tip");
 		addItem(BloodMagicItems.LOOTING_ANOINTMENT, "Plunderer's Glint");
 		addItem(BloodMagicItems.SMELTING_ANOINTMENT, "Slow-burning Oil");
+		addItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT, "Archer's Polish");
 
 		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT_STRONG, "Iron Tip II");
 
