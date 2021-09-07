@@ -77,7 +77,11 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 	@Override
 	public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken)
 	{
-		return Math.min((stack.getMaxDamage() - 1) - stack.getDamage() - amount, 0);
+		int durRemaining = (stack.getMaxDamage() - 1 - stack.getDamage());
+		int value = Math.max(Math.min(durRemaining, amount), 0);
+
+		System.out.println("value: " + value + ", damage of stack: " + stack.getDamage() + ", max damage of stack: " + stack.getMaxDamage());
+		return value;
 	}
 
 	@Override
