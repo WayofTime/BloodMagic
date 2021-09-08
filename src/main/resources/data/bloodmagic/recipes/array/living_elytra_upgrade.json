@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:array",
+  "texture": "bloodmagic:textures/models/alchemyarrays/bindingarray.png",
+  "baseinput": {
+    "item": "bloodmagic:reagentbinding"
+  },
+  "addedinput": {
+    "item": "minecraft:elytra"
+  },
+  "output": {
+    "item": "bloodmagic:upgradetome",
+    "nbt": "{livingStats: {maxPoints: 15, upgrades: [{exp: 1.0d, key: \"bloodmagic:elytra\"}]}}"
+  }
+}
