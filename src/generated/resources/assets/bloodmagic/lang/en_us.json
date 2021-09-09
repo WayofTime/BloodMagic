@@ -99,6 +99,7 @@
   "chat.bloodmagic.routing.remove": "Removing contained location",
   "chat.bloodmagic.routing.same": "Invalid - cannot link a node with itself",
   "chat.bloodmagic.routing.set": "Setting node location",
+  "curios.identifier.living_armour_socket": "Living Armour Socket",
   "filter.bloodmagic.allenchant": "Every Enchantment",
   "filter.bloodmagic.anyenchant": "Any Enchantment:",
   "filter.bloodmagic.anytag": "Any Tag:",

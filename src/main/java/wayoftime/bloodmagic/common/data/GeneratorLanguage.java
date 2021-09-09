@@ -708,6 +708,9 @@ public class GeneratorLanguage extends LanguageProvider
 		add("jei.bloodmagic.recipe.arcfurnace", "ARC Furnace Recipe");
 		add("jei.bloodmagic.recipe.alchemytable", "Alchemy Table");
 
+		// Curios
+		add("curios.identifier.living_armour_socket", "Living Armour Socket");
+
 		// Chat
 		add("chat.bloodmagic.ritual.weak", "You feel a push, but are too weak to perform this ritual.");
 		add("chat.bloodmagic.ritual.prevent", "The ritual is actively resisting you!");

@@ -56,6 +56,7 @@ public class LivingArmorRegistrar
 		def.put("speed", BloodMagic.rl("speed"));
 		def.put("self_sacrifice", BloodMagic.rl("self_sacrifice"));
 		def.put("elytra", BloodMagic.rl("elytra"));
+		def.put("curios_socket", BloodMagic.rl("curios_socket"));
 		def.put("downgrade/quenched", BloodMagic.rl("downgrade/quenched"));
 		return def;
 	}).get();
@@ -120,6 +121,7 @@ public class LivingArmorRegistrar
 		attributeMap.put(Attributes.MAX_HEALTH, new AttributeModifier(uuid, "Health Modifier 2", upgrade.getBonusValue("hp", level).intValue(), AttributeModifier.Operation.ADDITION));
 	}));
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_ELYTRA = UPGRADES.register("elytra", () -> parseDefinition("elytra"));
+	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_CURIOS_SOCKET = UPGRADES.register("curios_socket", () -> parseDefinition("curios_socket"));
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_QUENCHED = UPGRADES.register("downgrade/quenched", () -> parseDefinition("downgrade/quenched").asDowngrade());
 
 //	public static final LivingUpgrade UPGRADE_ARROW_PROTECT = parseDefinition("arrow_protect").withArmorProvider((player, stats, source, upgrade, level) -> {
@@ -153,6 +155,8 @@ public class LivingArmorRegistrar
 		registerUpgrade(UPGRADE_KNOCKBACK_RESIST.get());
 		registerUpgrade(UPGRADE_FIRE_RESIST.get());
 		registerUpgrade(UPGRADE_ELYTRA.get());
+		if (BloodMagic.curiosLoaded)
+			registerUpgrade(UPGRADE_CURIOS_SOCKET.get());
 		registerUpgrade(DOWNGRADE_QUENCHED.get());
 //		Registry.register(UPGRADES, UPGRADE_ARROW_PROTECT.getKey(), UPGRADE_ARROW_PROTECT);
 //		Registry.register(UPGRADES, UPGRADE_ARROW_SHOT.getKey(), UPGRADE_ARROW_SHOT);

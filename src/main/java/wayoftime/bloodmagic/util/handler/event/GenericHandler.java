@@ -28,6 +28,7 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -49,6 +50,7 @@ import wayoftime.bloodmagic.common.item.BloodOrb;
 import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.IBloodOrb;
 import wayoftime.bloodmagic.common.item.ItemExperienceBook;
+import wayoftime.bloodmagic.common.item.ItemLivingArmor;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.data.Binding;
@@ -57,6 +59,7 @@ import wayoftime.bloodmagic.core.living.LivingStats;
 import wayoftime.bloodmagic.core.living.LivingUtil;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.event.ItemBindEvent;
+import wayoftime.bloodmagic.event.LivingEquipmentEvent;
 import wayoftime.bloodmagic.event.SacrificeKnifeUsedEvent;
 import wayoftime.bloodmagic.network.DemonAuraClientPacket;
 import wayoftime.bloodmagic.potion.BMPotionUtils;
@@ -750,6 +753,28 @@ public class GenericHandler
 				event.setLootingLevel(event.getLootingLevel() + plunderLevel);
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public void onLivingEquipmentChange(LivingEquipmentChangeEvent event)
+	{
+		if (BloodMagic.curiosLoaded)
+		{
+			if (event.getFrom().getItem() instanceof ItemLivingArmor || event.getTo().getItem() instanceof ItemLivingArmor)
+			{
+				LivingEntity entity = event.getEntityLiving();
+				if (entity instanceof PlayerEntity)
+					BloodMagic.curiosCompat.recalculateCuriosSlots((PlayerEntity) entity);
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onLivingArmorLevelUp(LivingEquipmentEvent.LevelUp event)
+	{
+		if (BloodMagic.curiosLoaded)
+			if (event.getUpgrade() == LivingArmorRegistrar.UPGRADE_CURIOS_SOCKET.get())
+				BloodMagic.curiosCompat.recalculateCuriosSlots(event.getPlayer());
 	}
 
 	private static float getCharge(int useTime, ItemStack stack)
