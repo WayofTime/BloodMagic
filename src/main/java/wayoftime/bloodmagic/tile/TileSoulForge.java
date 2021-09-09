@@ -135,7 +135,7 @@ public class TileSoulForge extends TileInventory implements ITickableTileEntity,
 		EnumDemonWillType typeInGem = EnumDemonWillType.DEFAULT;
 		for (EnumDemonWillType type : EnumDemonWillType.values())
 		{
-			soulsInGem += getWill(type);
+			soulsInGem = getWill(type);
 			if (soulsInGem > 0)
 			{
 				typeInGem = type;
