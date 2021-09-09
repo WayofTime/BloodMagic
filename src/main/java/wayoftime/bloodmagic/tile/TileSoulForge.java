@@ -131,7 +131,17 @@ public class TileSoulForge extends TileInventory implements ITickableTileEntity,
 			}
 		}
 
-		double soulsInGem = getWill(EnumDemonWillType.DEFAULT);
+		double soulsInGem = 0;
+		EnumDemonWillType typeInGem = EnumDemonWillType.DEFAULT;
+		for (EnumDemonWillType type : EnumDemonWillType.values())
+		{
+			soulsInGem += getWill(type);
+			if (soulsInGem > 0)
+			{
+				typeInGem = type;
+				break;
+			}
+		}
 
 		List<ItemStack> inputList = new ArrayList<>();
 
@@ -154,7 +164,7 @@ public class TileSoulForge extends TileInventory implements ITickableTileEntity,
 						{
 							if (!getWorld().isRemote && soulsInGem >= recipe.getMinimumSouls())
 							{
-								consumeSouls(EnumDemonWillType.DEFAULT, requiredSouls);
+								consumeSouls(typeInGem, requiredSouls);
 							}
 						}
 
