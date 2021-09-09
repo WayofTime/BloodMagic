@@ -131,49 +131,54 @@ public class TileSoulForge extends TileInventory implements ITickableTileEntity,
 			}
 		}
 
-		double soulsInGem = 0;
-		EnumDemonWillType typeInGem = EnumDemonWillType.DEFAULT;
-		for (EnumDemonWillType type : EnumDemonWillType.values())
-		{
-			soulsInGem = getWill(type);
-			if (soulsInGem > 0)
-			{
-				typeInGem = type;
-				break;
-			}
-		}
-
 		List<ItemStack> inputList = new ArrayList<>();
 
 		for (int i = 0; i < 4; i++) if (!getStackInSlot(i).isEmpty())
 			inputList.add(getStackInSlot(i));
 
 		RecipeTartaricForge recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getTartaricForge(world, inputList);
-		if (recipe != null && (soulsInGem >= recipe.getMinimumSouls() || burnTime > 0))
+		if (recipe != null)
 		{
-			if (canCraft(recipe))
+			double soulsInGem = 0;
+			EnumDemonWillType typeInGem = EnumDemonWillType.DEFAULT;
+			for (EnumDemonWillType type : EnumDemonWillType.values())
 			{
-				burnTime++;
-
-				if (burnTime == ticksRequired)
+				double quantityOfType = getWill(type);
+				if (quantityOfType > soulsInGem)
 				{
-					if (!getWorld().isRemote)
+					soulsInGem = quantityOfType;
+					typeInGem = type;
+				}
+			}
+			if (soulsInGem >= recipe.getMinimumSouls() || burnTime > 0)
+			{
+				if (canCraft(recipe))
+				{
+					burnTime++;
+
+					if (burnTime == ticksRequired)
 					{
-						double requiredSouls = recipe.getSoulDrain();
-						if (requiredSouls > 0)
+						if (!getWorld().isRemote)
 						{
-							if (!getWorld().isRemote && soulsInGem >= recipe.getMinimumSouls())
+							double requiredSouls = recipe.getSoulDrain();
+							if (requiredSouls > 0)
 							{
-								consumeSouls(typeInGem, requiredSouls);
+								if (!getWorld().isRemote && soulsInGem >= recipe.getMinimumSouls())
+								{
+									consumeSouls(typeInGem, requiredSouls);
+								}
 							}
+
+							if (!getWorld().isRemote && soulsInGem >= recipe.getMinimumSouls())
+								craftItem(recipe);
 						}
 
-						if (!getWorld().isRemote && soulsInGem >= recipe.getMinimumSouls())
-							craftItem(recipe);
+						burnTime = 0;
+					} else if (burnTime > ticksRequired + 10)
+					{
+						burnTime = 0;
 					}
-
-					burnTime = 0;
-				} else if (burnTime > ticksRequired + 10)
+				} else
 				{
 					burnTime = 0;
 				}
