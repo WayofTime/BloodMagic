@@ -313,6 +313,9 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> DUNGEON_BRICK_SLAB_BLOCK = ITEMS.register("dungeon_brick_slab", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_SLAB.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> DUNGEON_TILE_SLAB_BLOCK = ITEMS.register("dungeon_tile_slab", () -> new BlockItem(BloodMagicBlocks.DUNGEON_TILE_SLAB.get(), new Item.Properties().group(BloodMagic.TAB)));
 
+	public static final RegistryObject<Item> DUNGEON_CRACKED_BRICK_1_BLOCK = ITEMS.register("dungeon_regular_cracked_brick1", () -> new BlockItem(BloodMagicBlocks.DUNGEON_CRACKED_BRICK_1.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> DUNGEON_GLOWING_CRACKED_BRICK_1_BLOCK = ITEMS.register("dungeon_cracked_brick1", () -> new BlockItem(BloodMagicBlocks.DUNGEON_GLOWING_CRACKED_BRICK_1.get(), new Item.Properties().group(BloodMagic.TAB)));
+
 	public static final RegistryObject<Item> DUNGEON_ORE_BLOCK = ITEMS.register("dungeon_ore", () -> new BlockItem(BloodMagicBlocks.DUNGEON_ORE.get(), new Item.Properties().group(BloodMagic.TAB)));
 
 	public static final RegistryObject<Item> HELLFORGED_BLOCK = ITEMS.register("dungeon_metal", () -> new BlockItem(BloodMagicBlocks.HELLFORGED_BLOCK.get(), new Item.Properties().group(BloodMagic.TAB)));

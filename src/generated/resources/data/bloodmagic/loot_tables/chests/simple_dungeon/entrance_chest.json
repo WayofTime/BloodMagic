@@ -2,7 +2,7 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "name": "vanilla_dungeon",
+      "name": "keys",
       "rolls": 1,
       "entries": [
         {
