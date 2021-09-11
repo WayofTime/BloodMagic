@@ -198,14 +198,38 @@ public class GeneratorLootTable extends LootTableProvider
 
 			LootPool.Builder farmAnimalProductPool = LootPool.builder().rolls(RandomValueRange.of(3, 5));
 			addMultipleItemsWithSameParams(farmAnimalProductPool, new Item[] { Items.BEEF, Items.PORKCHOP,
-					Items.CHICKEN, Items.EGG, Items.MUTTON }, 10, RandomValueRange.of(5, 10));
+					Items.CHICKEN, Items.EGG, Items.MUTTON, Items.RABBIT }, 10, RandomValueRange.of(5, 10));
 			addMultipleItemsWithSameParams(farmAnimalProductPool, new Item[] { Items.FEATHER, Items.LEATHER,
-					Items.WHITE_WOOL, Items.BLACK_WOOL }, 5, RandomValueRange.of(4, 15));
+					Items.WHITE_WOOL, Items.BLACK_WOOL, Items.RABBIT_HIDE }, 5, RandomValueRange.of(4, 15));
 			farmAnimalProductPool.addEntry(ItemLootEntry.builder(Items.LEAD).weight(6).acceptFunction(SetCount.builder(RandomValueRange.of(2, 5))));
+			farmAnimalProductPool.addEntry(ItemLootEntry.builder(Items.RABBIT_FOOT).weight(2).quality(3).acceptFunction(SetCount.builder(RandomValueRange.of(1, 3))));
 			farmAnimalProductPool.addEntry(ItemLootEntry.builder(Items.NAME_TAG).weight(3).acceptFunction(SetCount.builder(ConstantRange.of(1))));
 
 			acceptor.accept(BloodMagic.rl("chests/simple_dungeon/farm_tools"), LootTable.builder().addLootPool(suppliesPool).addLootPool(filledTauPool).addLootPool(farmingToolPool));
 			acceptor.accept(BloodMagic.rl("chests/simple_dungeon/farm_parts"), LootTable.builder().addLootPool(suppliesPool).addLootPool(filledTauPool).addLootPool(farmAnimalProductPool));
+
+//			LootPool.Builder basicBastionPool = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(BMTableLootEntry.builder(LootTables.BASTION_BRIDGE));
+			LootPool.Builder basicBastionPool = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(BMTableLootEntry.builder(LootTables.BASTION_OTHER));
+
+			LootPool.Builder extraBastionItems = LootPool.builder().name("extra").rolls(RandomValueRange.of(2, 5)).addEntry(ItemLootEntry.builder(BloodMagicItems.WEAK_TAU_ITEM.get()).weight(20).acceptFunction(SetCount.builder(RandomValueRange.of(2, 5))));
+			extraBastionItems.addEntry(ItemLootEntry.builder(BloodMagicItems.MONSTER_SOUL_RAW.get()).weight(10).acceptFunction(SetWillRange.withRange(RandomValueRange.of(15, 30))));
+			extraBastionItems.addEntry(ItemLootEntry.builder(BloodMagicItems.LIVING_TOME.get()).weight(5).acceptFunction(SetLivingUpgrade.withRange(RandomValueRange.of(200, 400), LivingArmorRegistrar.UPGRADE_PHYSICAL_PROTECT.get().getKey())));
+			extraBastionItems.addEntry(ItemLootEntry.builder(Items.GOLD_INGOT).weight(15).acceptFunction(SetCount.builder(RandomValueRange.of(7, 15))));
+			extraBastionItems.addEntry(ItemLootEntry.builder(Items.GOLD_BLOCK).weight(3).acceptFunction(SetCount.builder(RandomValueRange.of(1, 3))));
+			extraBastionItems.addEntry(ItemLootEntry.builder(Items.COOKED_PORKCHOP).weight(7).acceptFunction(SetCount.builder(RandomValueRange.of(4, 7))));
+
+			LootPool.Builder basicNetherPool = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(BMTableLootEntry.builder(LootTables.CHESTS_NETHER_BRIDGE));
+
+			LootPool.Builder extraNetherItems = LootPool.builder().name("extra").rolls(RandomValueRange.of(2, 5)).addEntry(ItemLootEntry.builder(BloodMagicItems.WEAK_TAU_ITEM.get()).weight(20).acceptFunction(SetCount.builder(RandomValueRange.of(2, 5))));
+			extraNetherItems.addEntry(ItemLootEntry.builder(BloodMagicItems.MONSTER_SOUL_RAW.get()).weight(10).acceptFunction(SetWillRange.withRange(RandomValueRange.of(15, 30))));
+			extraNetherItems.addEntry(ItemLootEntry.builder(BloodMagicItems.LIVING_TOME.get()).weight(5).acceptFunction(SetLivingUpgrade.withRange(RandomValueRange.of(50, 200), LivingArmorRegistrar.UPGRADE_FALL_PROTECT.get().getKey())));
+			extraNetherItems.addEntry(ItemLootEntry.builder(Items.GOLD_INGOT).weight(15).acceptFunction(SetCount.builder(RandomValueRange.of(7, 15))));
+			extraNetherItems.addEntry(ItemLootEntry.builder(Items.GOLD_BLOCK).weight(3).acceptFunction(SetCount.builder(RandomValueRange.of(1, 3))));
+			extraNetherItems.addEntry(ItemLootEntry.builder(Items.DIAMOND).weight(2).acceptFunction(SetCount.builder(RandomValueRange.of(3, 5))));
+			extraNetherItems.addEntry(ItemLootEntry.builder(Items.BLAZE_ROD).weight(4).acceptFunction(SetCount.builder(RandomValueRange.of(4, 7))));
+
+			acceptor.accept(BloodMagic.rl("chests/simple_dungeon/bastion"), LootTable.builder().addLootPool(basicBastionPool).addLootPool(extraBastionItems));
+			acceptor.accept(BloodMagic.rl("chests/simple_dungeon/nether"), LootTable.builder().addLootPool(basicNetherPool).addLootPool(extraNetherItems));
 		}
 
 		private LootPool.Builder addMultipleItemsWithSameParams(LootPool.Builder pool, Item[] items, int basicWeight, IRandomRange basicRange, IBuilder... functions)
