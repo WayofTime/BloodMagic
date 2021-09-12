@@ -19,6 +19,8 @@ import net.minecraft.item.crafting.SpecialRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
@@ -327,7 +329,12 @@ public class BloodMagic
 		new BloodMagicKeyHandler();
 //		IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 //		
+		bloodElytraRender();
+	}
 
+	@OnlyIn(Dist.CLIENT)
+	private void bloodElytraRender()
+	{
 		Map<String, PlayerRenderer> skinMap = Minecraft.getInstance().getRenderManager().getSkinMap();
 		PlayerRenderer render;
 		render = skinMap.get("default");
