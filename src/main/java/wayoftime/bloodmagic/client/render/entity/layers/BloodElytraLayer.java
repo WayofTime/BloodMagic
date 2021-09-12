@@ -25,7 +25,7 @@ public class BloodElytraLayer<T extends LivingEntity, M extends EntityModel<T>> 
 	public boolean shouldRender(ItemStack stack, T entity)
 	{
 		if (stack.getItem() instanceof ItemLivingArmor && entity instanceof PlayerEntity && LivingUtil.hasFullSet((PlayerEntity) entity))
-			return LivingStats.fromPlayer((PlayerEntity) entity).getLevel(LivingArmorRegistrar.UPGRADE_ELYTRA.get().getKey()) > 0;
+			return LivingStats.fromPlayer((PlayerEntity) entity, true).getLevel(LivingArmorRegistrar.UPGRADE_ELYTRA.get().getKey()) > 0;
 		return false;
 	}
 

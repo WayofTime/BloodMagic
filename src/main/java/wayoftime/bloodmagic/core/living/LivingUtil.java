@@ -33,7 +33,7 @@ public class LivingUtil
 
 		double curExp = stats.getUpgrades().containsKey(upgrade) ? stats.getUpgrades().get(upgrade).doubleValue() : 0;
 
-		if (!canTrain(player, upgrade, upgrade.getLevel((int) (curExp + experience))))
+		if (!canTrain(player, upgrade, upgrade.getLevel((int) curExp), upgrade.getLevel((int) (curExp + experience))))
 			return Pair.of(stats, false);
 
 		LivingEquipmentEvent.GainExperience event = new LivingEquipmentEvent.GainExperience(player, stats, upgrade, experience);
@@ -108,7 +108,7 @@ public class LivingUtil
 
 		double curExp = stats.getUpgrades().containsKey(upgrade) ? stats.getUpgrades().get(upgrade).doubleValue() : 0;
 
-		if (!canTrain(player, upgrade, upgrade.getLevel((int) (curExp + experience))))
+		if (!canTrain(player, upgrade, upgrade.getLevel((int) curExp), upgrade.getLevel((int) (curExp + experience))))
 			return Pair.of(stats, 0d);
 
 		LivingEquipmentEvent.GainExperience event = new LivingEquipmentEvent.GainExperience(player, stats, upgrade, experience);
@@ -268,9 +268,10 @@ public class LivingUtil
 		return additionalDamage;
 	}
 
-	public static boolean canTrain(PlayerEntity player, LivingUpgrade upgrade, int currentLevel)
+	public static boolean canTrain(PlayerEntity player, LivingUpgrade upgrade, int currentLevel, int nextLevel)
 	{
 		ItemStack trainer = PlayerUtil.findItem(player, stack -> stack.getItem() instanceof ItemLivingTrainer && stack.hasTag() && stack.getTag().contains("livingStats"));
+
 		if (trainer.isEmpty())
 			return true;
 
@@ -280,16 +281,14 @@ public class LivingUtil
 
 		int levelLimit = stats.getLevel(upgrade.getKey());
 
-//		System.out.println("Attempting to train " + upgrade.getKey() + "; current lvl = " + currentLevel + ", level limit = " + levelLimit);
-
 		if (isWhitelist)
 		{
-			return levelLimit != 0 && levelLimit > currentLevel;
+			return levelLimit != 0 && (levelLimit > currentLevel || (nextLevel != currentLevel && levelLimit >= nextLevel));
 		} else
 		{
 			Map<LivingUpgrade, Double> upgradeMap = stats.getUpgrades();
 
-			return (levelLimit == 0 && !upgradeMap.containsKey(upgrade)) || (levelLimit != 0 && levelLimit > currentLevel);
+			return (levelLimit == 0 && !upgradeMap.containsKey(upgrade)) || (levelLimit != 0 && (levelLimit > currentLevel || (nextLevel != currentLevel && levelLimit >= nextLevel)));
 		}
 
 //		return true;
