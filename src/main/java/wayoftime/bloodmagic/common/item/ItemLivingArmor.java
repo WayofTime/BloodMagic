@@ -193,7 +193,7 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		ILivingContainer.appendLivingTooltip(getLivingStats(stack), tooltip, true);
+		ILivingContainer.appendLivingTooltip(stack, getLivingStats(stack), tooltip, true);
 	}
 
 	@Override

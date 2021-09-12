@@ -13,7 +13,7 @@ public class ItemInventory implements IInventory
 {
 	protected int[] syncedSlots = new int[0];
 	protected ItemStack masterStack;
-	private NonNullList<ItemStack> inventory;
+	protected NonNullList<ItemStack> inventory;
 	private int size;
 	private String name;
 

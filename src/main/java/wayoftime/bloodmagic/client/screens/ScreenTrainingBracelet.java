@@ -11,7 +11,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
@@ -24,15 +23,14 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.common.item.inventory.ContainerFilter;
+import wayoftime.bloodmagic.common.item.inventory.ContainerTrainingBracelet;
 import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
-import wayoftime.bloodmagic.network.RouterFilterPacket;
 import wayoftime.bloodmagic.util.GhostItemHelper;
 
-public class ScreenFilter extends ScreenBase<ContainerFilter>
+public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet>
 {
 	private static final ResourceLocation background = BloodMagic.rl("textures/gui/routingfilter.png");
-	public IInventory filterInventory;
+	public IInventory trainerInventory;
 	private PlayerEntity player;
 	private int left, top;
 
@@ -41,10 +39,10 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	private int numberOfAddedButtons = 0;
 	private List<String> buttonKeyList = new ArrayList<String>();
 
-	public ScreenFilter(ContainerFilter container, PlayerInventory playerInventory, ITextComponent title)
+	public ScreenTrainingBracelet(ContainerTrainingBracelet container, PlayerInventory playerInventory, ITextComponent title)
 	{
 		super(container, playerInventory, title);
-		filterInventory = container.inventoryFilter;
+		trainerInventory = container.inventoryTrainer;
 		xSize = 176;
 		ySize = 187;
 		this.player = playerInventory.player;
@@ -68,32 +66,32 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		numberOfAddedButtons = 0;
 		buttonKeyList.clear();
 
-		ItemStack filterStack = this.container.filterStack;
+		ItemStack filterStack = this.container.trainerStack;
 
-		if (filterStack.getItem() instanceof IItemFilterProvider)
-		{
-			IItemFilterProvider provider = (IItemFilterProvider) filterStack.getItem();
-			List<Pair<String, Button.IPressable>> buttonActionList = provider.getButtonAction(this.container);
-
-			for (Pair<String, Button.IPressable> pair : buttonActionList)
-			{
-				if (buttonKeyList.contains(pair.getKey()))
-				{
-					continue;
-				}
-				buttonKeyList.add(pair.getKey());
-				Pair<Integer, Integer> buttonLocation = getButtonLocation(numberOfAddedButtons);
-				Button addedButton = new Button(left + buttonLocation.getLeft(), top + buttonLocation.getRight(), 20, 20, new StringTextComponent(""), pair.getRight());
-
-				if (!provider.isButtonGlobal(filterStack, pair.getKey()))
-				{
-					addedButton.active = false;
-				}
-
-				this.addButton(addedButton);
-				numberOfAddedButtons++;
-			}
-		}
+//		if (filterStack.getItem() instanceof IItemFilterProvider)
+//		{
+//			IItemFilterProvider provider = (IItemFilterProvider) filterStack.getItem();
+//			List<Pair<String, Button.IPressable>> buttonActionList = provider.getButtonAction(this.container);
+//
+//			for (Pair<String, Button.IPressable> pair : buttonActionList)
+//			{
+//				if (buttonKeyList.contains(pair.getKey()))
+//				{
+//					continue;
+//				}
+//				buttonKeyList.add(pair.getKey());
+//				Pair<Integer, Integer> buttonLocation = getButtonLocation(numberOfAddedButtons);
+//				Button addedButton = new Button(left + buttonLocation.getLeft(), top + buttonLocation.getRight(), 20, 20, new StringTextComponent(""), pair.getRight());
+//
+//				if (!provider.isButtonGlobal(filterStack, pair.getKey()))
+//				{
+//					addedButton.active = false;
+//				}
+//
+//				this.addButton(addedButton);
+//				numberOfAddedButtons++;
+//			}
+//		}
 	}
 
 	public Pair<Integer, Integer> getButtonLocation(int addedButton)
@@ -113,96 +111,96 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		this.textBox.tick();
 	}
 
-	@Override
-	public boolean keyPressed(int keyCode, int scanCode, int modifiers)
-	{
-		if (this.textBox.isFocused())
-		{
-			if ((keyCode == 259 || keyCode == 261) && container.lastGhostSlotClicked != -1)
-			{
-				String str = this.textBox.getText();
+//	@Override
+//	public boolean keyPressed(int keyCode, int scanCode, int modifiers)
+//	{
+//		if (this.textBox.isFocused())
+//		{
+//			if ((keyCode == 259 || keyCode == 261) && container.lastGhostSlotClicked != -1)
+//			{
+//				String str = this.textBox.getText();
+//
+//				if (str != null && str.length() > 0)
+//				{
+//					str = str.substring(0, str.length() - 1);
+//					this.textBox.setText(str);
+//					int amount = 0;
+//					if (str.length() > 0)
+//					{
+//						try
+//						{
+//							Integer testVal = Integer.decode(str);
+//							if (testVal != null)
+//							{
+//								amount = testVal;
+//							}
+//						} catch (NumberFormatException d)
+//						{
+//						}
+//					}
+//
+//					setValueOfGhostItemInSlot(container.lastGhostSlotClicked, amount);
+//				}
+//			}
+//		}
+//
+//		return super.keyPressed(keyCode, scanCode, modifiers);
+//	}
 
-				if (str != null && str.length() > 0)
-				{
-					str = str.substring(0, str.length() - 1);
-					this.textBox.setText(str);
-					int amount = 0;
-					if (str.length() > 0)
-					{
-						try
-						{
-							Integer testVal = Integer.decode(str);
-							if (testVal != null)
-							{
-								amount = testVal;
-							}
-						} catch (NumberFormatException d)
-						{
-						}
-					}
+//	@Override
+//	public boolean charTyped(char typedChar, int keyCode)
+//	{
+//		try
+//		{
+//			Integer charVal = Integer.decode("" + typedChar);
+//			if (charVal != null)
+//			{
+//				if (this.textBox.charTyped(typedChar, keyCode))
+//				{
+//					if (container.lastGhostSlotClicked != -1)
+//					{
+//						String str = this.textBox.getText();
+//						int amount = 0;
+//
+//						if (!str.isEmpty())
+//						{
+//
+//						}
+//
+//						setValueOfGhostItemInSlot(container.lastGhostSlotClicked, amount);
+//					}
+//					return true;
+//				} else
+//				{
+//					return super.charTyped(typedChar, keyCode);
+//				}
+//			}
+//
+//		} catch (NumberFormatException d)
+//		{
+//		}
+//
+//		return super.charTyped(typedChar, keyCode);
+//	}
 
-					setValueOfGhostItemInSlot(container.lastGhostSlotClicked, amount);
-				}
-			}
-		}
-
-		return super.keyPressed(keyCode, scanCode, modifiers);
-	}
-
-	@Override
-	public boolean charTyped(char typedChar, int keyCode)
-	{
-		try
-		{
-			Integer charVal = Integer.decode("" + typedChar);
-			if (charVal != null)
-			{
-				if (this.textBox.charTyped(typedChar, keyCode))
-				{
-					if (container.lastGhostSlotClicked != -1)
-					{
-						String str = this.textBox.getText();
-						int amount = 0;
-
-						if (!str.isEmpty())
-						{
-
-						}
-
-						setValueOfGhostItemInSlot(container.lastGhostSlotClicked, amount);
-					}
-					return true;
-				} else
-				{
-					return super.charTyped(typedChar, keyCode);
-				}
-			}
-
-		} catch (NumberFormatException d)
-		{
-		}
-
-		return super.charTyped(typedChar, keyCode);
-	}
-
-	private void setValueOfGhostItemInSlot(int ghostItemSlot, int amount)
-	{
-		Slot slot = container.getSlot(ghostItemSlot);
-		ItemStack ghostStack = slot.getStack();
-//		ItemStack ghostStack = container.inventoryFilter.getStackInSlot(ghostItemSlot);
-		if (!ghostStack.isEmpty())
-		{
-			GhostItemHelper.setItemGhostAmount(ghostStack, amount);
-			GhostItemHelper.setItemGhostAmount(container.inventoryFilter.getStackInSlot(ghostItemSlot), amount);
-			if (container.filterStack.getItem() instanceof IItemFilterProvider)
-			{
-				((IItemFilterProvider) container.filterStack.getItem()).setGhostItemAmount(container.filterStack, ghostItemSlot, amount);
-
-			}
-		}
-
-		BloodMagic.packetHandler.sendToServer(new RouterFilterPacket(player.inventory.currentItem, ghostItemSlot, amount));
-	}
+//	private void setValueOfGhostItemInSlot(int ghostItemSlot, int amount)
+//	{
+//		Slot slot = container.getSlot(ghostItemSlot);
+//		ItemStack ghostStack = slot.getStack();
+////		ItemStack ghostStack = container.inventoryFilter.getStackInSlot(ghostItemSlot);
+//		if (!ghostStack.isEmpty())
+//		{
+//			GhostItemHelper.setItemGhostAmount(ghostStack, amount);
+//			GhostItemHelper.setItemGhostAmount(container.inventoryTrainer.getStackInSlot(ghostItemSlot), amount);
+//			if (container.trainerStack.getItem() instanceof IItemFilterProvider)
+//			{
+//				((IItemFilterProvider) container.trainerStack.getItem()).setGhostItemAmount(container.trainerStack, ghostItemSlot, amount);
+//
+//			}
+//		}
+//
+//		BloodMagic.packetHandler.sendToServer(new RouterFilterPacket(player.inventory.currentItem, ghostItemSlot, amount));
+//	}
 
 	/**
 	 * Called when the mouse is clicked. Args : mouseX, mouseY, clickedButton
@@ -260,15 +258,15 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	{
 //		this.font.func_243248_b(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
 		this.font.func_243248_b(stack, new TranslationTextComponent("container.inventory"), 8, 93, 4210752);
-		this.font.func_243248_b(stack, container.filterStack.getDisplayName(), 8, 4, 4210752);
+		this.font.func_243248_b(stack, container.trainerStack.getDisplayName(), 8, 4, 4210752);
 
-		if (container.filterStack.getItem() instanceof IItemFilterProvider)
+		if (container.trainerStack.getItem() instanceof IItemFilterProvider)
 		{
 			for (int i = 0; i < numberOfAddedButtons; i++)
 			{
-				int currentButtonState = ((IItemFilterProvider) container.filterStack.getItem()).getCurrentButtonState(container.filterStack, buttonKeyList.get(i), container.lastGhostSlotClicked);
+				int currentButtonState = ((IItemFilterProvider) container.trainerStack.getItem()).getCurrentButtonState(container.trainerStack, buttonKeyList.get(i), container.lastGhostSlotClicked);
 				Pair<Integer, Integer> buttonLocation = getButtonLocation(i);
-				Pair<Integer, Integer> textureLocation = ((IItemFilterProvider) container.filterStack.getItem()).getTexturePositionForState(container.filterStack, buttonKeyList.get(i), currentButtonState);
+				Pair<Integer, Integer> textureLocation = ((IItemFilterProvider) container.trainerStack.getItem()).getTexturePositionForState(container.trainerStack, buttonKeyList.get(i), currentButtonState);
 
 				int w = 20;
 				int h = 20;
@@ -331,7 +329,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 
 		List<ITextComponent> tooltip = new ArrayList<>();
 
-		if (container.filterStack.getItem() instanceof IItemFilterProvider)
+		if (container.trainerStack.getItem() instanceof IItemFilterProvider)
 		{
 			for (int i = 0; i < numberOfAddedButtons; i++)
 			{
@@ -344,7 +342,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 
 				if (mouseX >= x && mouseX < x + w && mouseY >= y && mouseY < y + h)
 				{
-					List<ITextComponent> components = ((IItemFilterProvider) container.filterStack.getItem()).getTextForHoverItem(container.filterStack, buttonKeyList.get(i), container.lastGhostSlotClicked);
+					List<ITextComponent> components = ((IItemFilterProvider) container.trainerStack.getItem()).getTextForHoverItem(container.trainerStack, buttonKeyList.get(i), container.lastGhostSlotClicked);
 					if (components != null && !components.isEmpty())
 						tooltip.addAll(components);
 				}
