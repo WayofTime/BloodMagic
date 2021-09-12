@@ -37,6 +37,8 @@ public class ItemLivingTome extends Item implements ILivingContainer
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
 	{
+		boolean oneLevel = !player.isSneaking();
+
 		ItemStack held = player.getHeldItem(hand);
 
 		LivingStats armorStats = LivingStats.fromPlayer(player, true);
@@ -55,6 +57,13 @@ public class ItemLivingTome extends Item implements ILivingContainer
 		upgradeMap.forEach((k, v) -> {
 //			if (armorStats.getLevel(k.getKey()) >= tomeStats.getLevel(k.getKey()))
 //				return;
+			if (oneLevel)
+			{
+				double curExp = armorStats.getUpgrades().getOrDefault(k, 0d);
+				double expToNextLevel = k.getNextRequirement((int) curExp) - curExp;
+
+				v = Math.min(expToNextLevel, v);
+			}
 
 			Pair<LivingStats, Double> upgraded = LivingUtil.applyExperienceToUpgradeCap(player, k, v);
 			// applyExperienceToUpgradeCap

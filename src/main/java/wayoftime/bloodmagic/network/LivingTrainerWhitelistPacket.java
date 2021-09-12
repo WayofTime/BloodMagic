@@ -54,7 +54,6 @@ public class LivingTrainerWhitelistPacket
 		if (!itemStack.isEmpty() && itemStack.getItem() instanceof ItemLivingTrainer)
 		{
 //			((IItemFilterProvider) itemStack.getItem()).setGhostItemAmount(itemStack, msg.ghostSlot, msg.level);
-			System.out.println("Receiving packet for the trainer. Wanted whitelist is: " + msg.isWhitelist);
 			((ItemLivingTrainer) itemStack.getItem()).setIsWhitelist(itemStack, msg.isWhitelist);
 		}
 	}
