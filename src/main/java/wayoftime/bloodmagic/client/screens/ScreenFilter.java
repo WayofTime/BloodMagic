@@ -94,17 +94,6 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 				numberOfAddedButtons++;
 			}
 		}
-
-//        new TextFieldWidget(this.mc.fontRenderer, i + 25, j + 14, 80, 9 + 5, new TranslationTextComponent("itemGroup.search"));
-
-//		this.buttons.clear();
-////		this.buttons.add();
-//		this.addButton(new Button(left + 135, top + 52, 14, 14, new StringTextComponent("D"), new DirectionalPress(tileTable, Direction.DOWN)));
-//		this.addButton(new Button(left + 153, top + 52, 14, 14, new StringTextComponent("U"), new DirectionalPress(tileTable, Direction.UP)));
-//		this.addButton(new Button(left + 135, top + 70, 14, 14, new StringTextComponent("N"), new DirectionalPress(tileTable, Direction.NORTH)));
-//		this.addButton(new Button(left + 153, top + 70, 14, 14, new StringTextComponent("S"), new DirectionalPress(tileTable, Direction.SOUTH)));
-//		this.addButton(new Button(left + 135, top + 88, 14, 14, new StringTextComponent("W"), new DirectionalPress(tileTable, Direction.WEST)));
-//		this.addButton(new Button(left + 153, top + 88, 14, 14, new StringTextComponent("E"), new DirectionalPress(tileTable, Direction.EAST)));
 	}
 
 	public Pair<Integer, Integer> getButtonLocation(int addedButton)
@@ -117,27 +106,11 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		return Pair.of(x, y);
 	}
 
-//	public boolean charTyped(char codePoint, int modifiers) {
-//	      if (this.field_199738_u) {
-//	         return false;
-//	      } else if (this.isVisible() && !this.mc.player.isSpectator()) {
-//	         if (this.searchBar.charTyped(codePoint, modifiers)) {
-//	            this.updateSearch();
-//	            return true;
-//	         } else {
-//	            return IGuiEventListener.super.charTyped(codePoint, modifiers);
-//	         }
-//	      } else {
-//	         return false;
-//	      }
-//	   }
-
 	@Override
 	public void tick()
 	{
 		super.tick();
 		this.textBox.tick();
-
 	}
 
 	@Override

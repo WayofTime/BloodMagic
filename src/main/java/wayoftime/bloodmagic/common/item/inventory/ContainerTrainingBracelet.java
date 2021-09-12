@@ -10,31 +10,31 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.thread.EffectiveSide;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
-import wayoftime.bloodmagic.common.item.routing.IRoutingFilterProvider;
-import wayoftime.bloodmagic.util.GhostItemHelper;
+import wayoftime.bloodmagic.common.item.ItemLivingTome;
+import wayoftime.bloodmagic.common.item.ItemLivingTrainer;
 
-public class ContainerFilter extends Container
+public class ContainerTrainingBracelet extends Container
 {
-	public final InventoryFilter inventoryFilter;
+	public final InventoryTrainingBracelet inventoryTrainer;
 	private final int PLAYER_INVENTORY_ROWS = 3;
 	private final int PLAYER_INVENTORY_COLUMNS = 9;
 	public final PlayerEntity player;
-	public final ItemStack filterStack;
+	public final ItemStack trainerStack;
 
 	public int lastGhostSlotClicked = -1;
-	private int slotsOccupied = 9;
+	private int slotsOccupied = 16;
 
-	public ContainerFilter(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
+	public ContainerTrainingBracelet(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
 	{
 		this(windowId, playerInventory.player, playerInventory, extraData.readItemStack());
 	}
 
-	public ContainerFilter(int windowId, PlayerEntity player, PlayerInventory playerInventory, ItemStack filterStack)
+	public ContainerTrainingBracelet(int windowId, PlayerEntity player, PlayerInventory playerInventory, ItemStack filterStack)
 	{
-		super(BloodMagicBlocks.FILTER_CONTAINER.get(), windowId);
+		super(BloodMagicBlocks.TRAINING_BRACELET_CONTAINER.get(), windowId);
 		this.player = player;
-		this.filterStack = filterStack;
-		this.inventoryFilter = new InventoryFilter(filterStack);
+		this.trainerStack = filterStack;
+		this.inventoryTrainer = ((ItemLivingTrainer) filterStack.getItem()).toInventory(filterStack);
 		int currentSlotHeldIn = player.inventory.currentItem;
 		this.setup(playerInventory, currentSlotHeldIn);
 	}
@@ -43,14 +43,14 @@ public class ContainerFilter extends Container
 	{
 //		for (int columnIndex = 0; columnIndex < ItemRouterFilter.inventorySize; ++columnIndex)
 //		{
-//			this.addSlot(new SlotGhostItem(this, inventoryFilter, player, columnIndex, 8 + columnIndex * 36, 17));
+//			this.addSlot(new SlotGhostItem(this, InventoryTrainingBracelet, player, columnIndex, 8 + columnIndex * 36, 17));
 //		}
 
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 4; i++)
 		{
-			for (int j = 0; j < 3; j++)
+			for (int j = 0; j < 4; j++)
 			{
-				this.addSlot(new SlotGhostItem(this, inventoryFilter, player, j + i * 3, 110 + j * 21, 15 + i * 21));
+				this.addSlot(new SlotTomeItem(this, inventoryTrainer, player, j + i * 4, 110 + j * 21 - 21, 15 + i * 21));
 //				addSlot(new SlotGhostItem(itemInventory, j + i * 3, 26 + j * 18, 15 + i * 18));
 			}
 		}
@@ -86,7 +86,7 @@ public class ContainerFilter extends Container
 			{
 				Slot slot = this.inventorySlots.get(slotId);
 
-				if (slot instanceof SlotGhostItem) // TODO: make the slot clicking work!
+				if (slot instanceof SlotTomeItem) // TODO: make the slot clicking work!
 				{
 					lastGhostSlotClicked = slot.getSlotIndex();
 					if ((dragType == 0 || dragType == 1))
@@ -102,24 +102,24 @@ public class ContainerFilter extends Container
 									// I clicked on the slot with an empty hand. Selecting!
 									// Return here to not save the server-side inventory
 									return ItemStack.EMPTY;
-								} else if (!heldStack.isEmpty() && slotStack.isEmpty())
+								} else if (!heldStack.isEmpty() && slotStack.isEmpty() && heldStack.getItem() instanceof ItemLivingTome)
 								{
-									if (!((SlotGhostItem) slot).canBeAccessed())
+									if (!((SlotTomeItem) slot).canBeAccessed())
 									{
 										return super.slotClick(slotId, dragType, clickTypeIn, player);
 									}
 
 									ItemStack copyStack = heldStack.copy();
-									GhostItemHelper.setItemGhostAmount(copyStack, 0);
+//									GhostItemHelper.setItemGhostAmount(copyStack, 0);
 									copyStack.setCount(1);
 									slot.putStack(copyStack);
 
 //									ItemStack filterStack = this.filterStack;
-									if (filterStack.getItem() instanceof IRoutingFilterProvider)
-									{
-										ItemStack filterCopy = ((IRoutingFilterProvider) filterStack.getItem()).getContainedStackForItem(filterStack, heldStack);
-										slot.putStack(filterCopy);
-									}
+//									if (trainerStack.getItem() instanceof IRoutingFilterProvider)
+//									{
+//										ItemStack filterCopy = ((IRoutingFilterProvider) trainerStack.getItem()).getContainedStackForItem(trainerStack, heldStack);
+//										slot.putStack(filterCopy);
+//									}
 								}
 							}
 						} else
@@ -141,27 +141,27 @@ public class ContainerFilter extends Container
 		return true;
 	}
 
-	@Override
-	public void onContainerClosed(PlayerEntity entityPlayer)
-	{
-		super.onContainerClosed(entityPlayer);
-
-		if (!entityPlayer.getEntityWorld().isRemote)
-		{
-			saveInventory(entityPlayer);
-		}
-	}
-
-	@Override
-	public void detectAndSendChanges()
-	{
-		super.detectAndSendChanges();
-
-		if (!player.getEntityWorld().isRemote)
-		{
-			saveInventory(player);
-		}
-	}
+//	@Override
+//	public void onContainerClosed(PlayerEntity entityPlayer)
+//	{
+//		super.onContainerClosed(entityPlayer);
+//
+//		if (!entityPlayer.getEntityWorld().isRemote)
+//		{
+//			saveInventory(entityPlayer);
+//		}
+//	}
+//
+//	@Override
+//	public void detectAndSendChanges()
+//	{
+//		super.detectAndSendChanges();
+//
+//		if (!player.getEntityWorld().isRemote)
+//		{
+//			saveInventory(player);
+//		}
+//	}
 
 	@Override
 	public ItemStack transferStackInSlot(PlayerEntity entityPlayer, int slotIndex)
@@ -177,13 +177,13 @@ public class ContainerFilter extends Container
 			if (slotIndex >= 0)
 			{
 //                return null;
-				if (itemstack1.getItem() instanceof IRoutingFilterProvider) // Change to check item is a filter
-				{
-					if (!this.mergeItemStack(itemstack1, 0, 1, false))
-					{
-						return ItemStack.EMPTY;
-					}
-				}
+//				if (itemstack1.getItem() instanceof IRoutingFilterProvider) // Change to check item is a filter
+//				{
+//					if (!this.mergeItemStack(itemstack1, 0, 1, false))
+//					{
+//						return ItemStack.EMPTY;
+//					}
+//				}
 			} else if (!this.mergeItemStack(itemstack1, slotsOccupied, 36 + slotsOccupied, false))
 			{
 				return ItemStack.EMPTY;
@@ -208,17 +208,26 @@ public class ContainerFilter extends Container
 		return itemstack;
 	}
 
-	public void saveInventory(PlayerEntity entityPlayer)
+//	public void saveInventory(PlayerEntity entityPlayer)
+//	{
+////		inventoryTrainer.onGuiSaved(entityPlayer);
+//
+//	}
+
+	public void saveInventory(PlayerEntity player, int slot)
 	{
-		inventoryFilter.onGuiSaved(entityPlayer);
+		ItemStack masterStack = inventoryTrainer.findParentStack(player);
+		InventoryTrainingBracelet storedInv = new InventoryTrainingBracelet(masterStack);
+		storedInv.setInventorySlotContents(slot, getSlot(slot).getStack());
+		storedInv.save();
 	}
 
-	private class SlotGhostItem extends Slot
+	private class SlotTomeItem extends Slot
 	{
 		private final PlayerEntity player;
-		private ContainerFilter containerHolding;
+		private ContainerTrainingBracelet containerHolding;
 
-		public SlotGhostItem(ContainerFilter containerHolding, IInventory inventory, PlayerEntity player, int slotIndex, int x, int y)
+		public SlotTomeItem(ContainerTrainingBracelet containerHolding, IInventory inventory, PlayerEntity player, int slotIndex, int x, int y)
 		{
 			super(inventory, slotIndex, x, y);
 			this.player = player;
@@ -232,7 +241,7 @@ public class ContainerFilter extends Container
 
 			if (EffectiveSide.get().isServer())
 			{
-				containerHolding.saveInventory(player);
+				containerHolding.saveInventory(player, slotNumber);
 			}
 		}
 
@@ -250,7 +259,7 @@ public class ContainerFilter extends Container
 
 		public boolean canBeAccessed()
 		{
-			return containerHolding.inventoryFilter.canInventoryBeManipulated();
+			return containerHolding.inventoryTrainer.canInventoryBeManipulated();
 		}
 	}
 

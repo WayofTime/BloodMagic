@@ -1,0 +1,64 @@
+{
+  "dungeonWeight": 1,
+  "structureMap": {
+    "bloodmagic:mini_dungeon/portal_nether": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  },
+  "doorMap": {
+    "default": {
+      "north": [
+        {
+          "x": 8,
+          "y": 5,
+          "z": 0
+        }
+      ]
+    }
+  },
+  "descriptorList": [
+    {
+      "minimumOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "maximumOffset": {
+        "x": 17,
+        "y": 15,
+        "z": 17
+      },
+      "currentPosition": null,
+      "blockPosCache": [],
+      "cachedPosition": null,
+      "cache": true
+    }
+  ],
+  "oreDensity": 0.0,
+  "spawnLocation": {
+    "x": 8,
+    "y": 1,
+    "z": 6
+  },
+  "controllerOffset": {
+    "x": 8,
+    "y": 4,
+    "z": 8
+  },
+  "indexToDoorMap": {
+    "1": [
+      {
+        "x": 8,
+        "y": 5,
+        "z": 0
+      }
+    ]
+  },
+  "indexToRoomTypeMap": {
+    "1": [
+      "bloodmagic:room_pools/tier1/mini_dungeon"
+    ]
+  }
+}

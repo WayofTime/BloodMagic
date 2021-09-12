@@ -36,6 +36,7 @@ import net.minecraft.loot.ValidationTracker;
 import net.minecraft.loot.conditions.BlockStateProperty;
 import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.loot.functions.ApplyBonus;
+import net.minecraft.loot.functions.EnchantRandomly;
 import net.minecraft.loot.functions.EnchantWithLevels;
 import net.minecraft.loot.functions.ILootFunction.IBuilder;
 import net.minecraft.loot.functions.SetCount;
@@ -82,7 +83,7 @@ public class GeneratorLootTable extends LootTableProvider
 		private void generateSimpleDungeonLoot(BiConsumer<ResourceLocation, LootTable.Builder> acceptor)
 		{
 			LootPool.Builder vanillaDungeon = LootPool.builder().name("vanilla_dungeon").rolls(ConstantRange.of(1)).addEntry(BMTableLootEntry.builder(LootTables.CHESTS_SIMPLE_DUNGEON).weight(1));
-			LootPool.Builder key_pool = LootPool.builder().name("vanilla_dungeon").rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(BloodMagicItems.DUNGEON_SIMPLE_KEY.get()).weight(1).acceptFunction(SetCount.builder(RandomValueRange.of(1, 3))));
+			LootPool.Builder key_pool = LootPool.builder().name("keys").rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(BloodMagicItems.DUNGEON_SIMPLE_KEY.get()).weight(1).acceptFunction(SetCount.builder(RandomValueRange.of(1, 3))));
 
 			acceptor.accept(BloodMagic.rl("chests/simple_dungeon/entrance_chest"), LootTable.builder().addLootPool(key_pool).addLootPool(vanillaDungeon));
 
@@ -183,6 +184,52 @@ public class GeneratorLootTable extends LootTableProvider
 			acceptor.accept(BloodMagic.rl("chests/simple_dungeon/test_gems"), LootTable.builder().addLootPool(tartaricGemPool).addLootPool(tartaricSoulPool).addLootPool(upgradePool));
 //			potionChest.addEntry(TableLootEntry.builder(EntityType.SHEEP.getLootTable()));
 
+			LootPool.Builder suppliesPool = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(BMTableLootEntry.builder(LootTables.CHESTS_SHIPWRECK_SUPPLY).weight(1));
+			LootPool.Builder filledTauPool = LootPool.builder().rolls(RandomValueRange.of(2, 3)).addEntry(ItemLootEntry.builder(BloodMagicItems.WEAK_TAU_ITEM.get()).weight(15).acceptFunction(SetCount.builder(RandomValueRange.of(2, 5)))).addEntry(ItemLootEntry.builder(BloodMagicItems.TAU_OIL.get()).weight(10).acceptFunction(SetCount.builder(RandomValueRange.of(3, 7)))).addEntry(ItemLootEntry.builder(BloodMagicItems.STRONG_TAU_ITEM.get()).weight(5).acceptFunction(SetCount.builder(RandomValueRange.of(2, 5))));
+
+			acceptor.accept(BloodMagic.rl("chests/simple_dungeon/food"), LootTable.builder().addLootPool(suppliesPool).addLootPool(filledTauPool));
+
+			LootPool.Builder farmingToolPool = LootPool.builder().rolls(RandomValueRange.of(1, 3));
+			farmingToolPool.addEntry(ItemLootEntry.builder(Items.IRON_AXE).weight(20).quality(-3).acceptFunction(SetDamage.func_215931_a(RandomValueRange.of(0.4f, 0.6f))).acceptFunction(EnchantRandomly.func_215900_c()));
+			farmingToolPool.addEntry(ItemLootEntry.builder(Items.IRON_HOE).weight(20).quality(-3).acceptFunction(SetDamage.func_215931_a(RandomValueRange.of(0.6f, 0.8f))).acceptFunction(EnchantRandomly.func_215900_c()));
+			farmingToolPool.addEntry(ItemLootEntry.builder(Items.DIAMOND_AXE).weight(5).quality(2).acceptFunction(SetDamage.func_215931_a(RandomValueRange.of(0.2f, 0.4f))).acceptFunction(EnchantRandomly.func_215900_c()));
+			farmingToolPool.addEntry(ItemLootEntry.builder(Items.DIAMOND_HOE).weight(5).quality(2).acceptFunction(SetDamage.func_215931_a(RandomValueRange.of(0.3f, 0.6f))).acceptFunction(EnchantWithLevels.func_215895_a(RandomValueRange.of(20F, 30F))));
+			farmingToolPool.addEntry(ItemLootEntry.builder(Items.NETHERITE_HOE).weight(2).quality(3).acceptFunction(SetDamage.func_215931_a(RandomValueRange.of(0.2f, 0.4f))).acceptFunction(EnchantWithLevels.func_215895_a(RandomValueRange.of(30F, 40F))));
+
+			LootPool.Builder farmAnimalProductPool = LootPool.builder().rolls(RandomValueRange.of(3, 5));
+			addMultipleItemsWithSameParams(farmAnimalProductPool, new Item[] { Items.BEEF, Items.PORKCHOP,
+					Items.CHICKEN, Items.EGG, Items.MUTTON, Items.RABBIT }, 10, RandomValueRange.of(5, 10));
+			addMultipleItemsWithSameParams(farmAnimalProductPool, new Item[] { Items.FEATHER, Items.LEATHER,
+					Items.WHITE_WOOL, Items.BLACK_WOOL, Items.RABBIT_HIDE }, 5, RandomValueRange.of(4, 15));
+			farmAnimalProductPool.addEntry(ItemLootEntry.builder(Items.LEAD).weight(6).acceptFunction(SetCount.builder(RandomValueRange.of(2, 5))));
+			farmAnimalProductPool.addEntry(ItemLootEntry.builder(Items.RABBIT_FOOT).weight(2).quality(3).acceptFunction(SetCount.builder(RandomValueRange.of(1, 3))));
+			farmAnimalProductPool.addEntry(ItemLootEntry.builder(Items.NAME_TAG).weight(3).acceptFunction(SetCount.builder(ConstantRange.of(1))));
+
+			acceptor.accept(BloodMagic.rl("chests/simple_dungeon/farm_tools"), LootTable.builder().addLootPool(suppliesPool).addLootPool(filledTauPool).addLootPool(farmingToolPool));
+			acceptor.accept(BloodMagic.rl("chests/simple_dungeon/farm_parts"), LootTable.builder().addLootPool(suppliesPool).addLootPool(filledTauPool).addLootPool(farmAnimalProductPool));
+
+//			LootPool.Builder basicBastionPool = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(BMTableLootEntry.builder(LootTables.BASTION_BRIDGE));
+			LootPool.Builder basicBastionPool = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(BMTableLootEntry.builder(LootTables.BASTION_OTHER));
+
+			LootPool.Builder extraBastionItems = LootPool.builder().name("extra").rolls(RandomValueRange.of(2, 5)).addEntry(ItemLootEntry.builder(BloodMagicItems.WEAK_TAU_ITEM.get()).weight(20).acceptFunction(SetCount.builder(RandomValueRange.of(2, 5))));
+			extraBastionItems.addEntry(ItemLootEntry.builder(BloodMagicItems.MONSTER_SOUL_RAW.get()).weight(10).acceptFunction(SetWillRange.withRange(RandomValueRange.of(15, 30))));
+			extraBastionItems.addEntry(ItemLootEntry.builder(BloodMagicItems.LIVING_TOME.get()).weight(5).acceptFunction(SetLivingUpgrade.withRange(RandomValueRange.of(200, 400), LivingArmorRegistrar.UPGRADE_PHYSICAL_PROTECT.get().getKey())));
+			extraBastionItems.addEntry(ItemLootEntry.builder(Items.GOLD_INGOT).weight(15).acceptFunction(SetCount.builder(RandomValueRange.of(7, 15))));
+			extraBastionItems.addEntry(ItemLootEntry.builder(Items.GOLD_BLOCK).weight(3).acceptFunction(SetCount.builder(RandomValueRange.of(1, 3))));
+			extraBastionItems.addEntry(ItemLootEntry.builder(Items.COOKED_PORKCHOP).weight(7).acceptFunction(SetCount.builder(RandomValueRange.of(4, 7))));
+
+			LootPool.Builder basicNetherPool = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(BMTableLootEntry.builder(LootTables.CHESTS_NETHER_BRIDGE));
+
+			LootPool.Builder extraNetherItems = LootPool.builder().name("extra").rolls(RandomValueRange.of(2, 5)).addEntry(ItemLootEntry.builder(BloodMagicItems.WEAK_TAU_ITEM.get()).weight(20).acceptFunction(SetCount.builder(RandomValueRange.of(2, 5))));
+			extraNetherItems.addEntry(ItemLootEntry.builder(BloodMagicItems.MONSTER_SOUL_RAW.get()).weight(10).acceptFunction(SetWillRange.withRange(RandomValueRange.of(15, 30))));
+			extraNetherItems.addEntry(ItemLootEntry.builder(BloodMagicItems.LIVING_TOME.get()).weight(5).acceptFunction(SetLivingUpgrade.withRange(RandomValueRange.of(50, 200), LivingArmorRegistrar.UPGRADE_FALL_PROTECT.get().getKey())));
+			extraNetherItems.addEntry(ItemLootEntry.builder(Items.GOLD_INGOT).weight(15).acceptFunction(SetCount.builder(RandomValueRange.of(7, 15))));
+			extraNetherItems.addEntry(ItemLootEntry.builder(Items.GOLD_BLOCK).weight(3).acceptFunction(SetCount.builder(RandomValueRange.of(1, 3))));
+			extraNetherItems.addEntry(ItemLootEntry.builder(Items.DIAMOND).weight(2).acceptFunction(SetCount.builder(RandomValueRange.of(3, 5))));
+			extraNetherItems.addEntry(ItemLootEntry.builder(Items.BLAZE_ROD).weight(4).acceptFunction(SetCount.builder(RandomValueRange.of(4, 7))));
+
+			acceptor.accept(BloodMagic.rl("chests/simple_dungeon/bastion"), LootTable.builder().addLootPool(basicBastionPool).addLootPool(extraBastionItems));
+			acceptor.accept(BloodMagic.rl("chests/simple_dungeon/nether"), LootTable.builder().addLootPool(basicNetherPool).addLootPool(extraNetherItems));
 		}
 
 		private LootPool.Builder addMultipleItemsWithSameParams(LootPool.Builder pool, Item[] items, int basicWeight, IRandomRange basicRange, IBuilder... functions)

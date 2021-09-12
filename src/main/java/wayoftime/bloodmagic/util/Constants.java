@@ -82,6 +82,7 @@ public class Constants
 		public static final String PREVIOUS_INPUT = "previousInput";
 
 		public static final String LIVING_ARMOUR = "livingArmour";
+		public static final String UPGRADE_ZERO_DISPLAY = "displayIfLevelZero";
 
 		public static final String CHARGE_TIME = "chargeTime";
 		public static final String HELD_DOWN = "heldDown";

@@ -37,6 +37,8 @@ public class AlchemyArrayRecipeProvider implements ISubRecipeProvider
 		AlchemyArrayRecipeBuilder.array(AlchemyArrayRegistry.BINDING_ARRAY, Ingredient.fromItems(BloodMagicItems.REAGENT_BINDING.get()), Ingredient.fromItems(Items.IRON_LEGGINGS), new ItemStack(BloodMagicItems.LIVING_LEGGINGS.get())).build(consumer, BloodMagic.rl(basePath + "living_leggings"));
 		AlchemyArrayRecipeBuilder.array(AlchemyArrayRegistry.BINDING_ARRAY, Ingredient.fromItems(BloodMagicItems.REAGENT_BINDING.get()), Ingredient.fromItems(Items.IRON_BOOTS), new ItemStack(BloodMagicItems.LIVING_BOOTS.get())).build(consumer, BloodMagic.rl(basePath + "living_boots"));
 
+		AlchemyArrayRecipeBuilder.array(AlchemyArrayRegistry.BINDING_ARRAY, Ingredient.fromItems(BloodMagicItems.REAGENT_BINDING.get()), Ingredient.fromItems(Items.DIAMOND), new ItemStack(BloodMagicItems.LIVING_TRAINER.get())).build(consumer, BloodMagic.rl(basePath + "living_trainer"));
+
 		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/movementarray.png"), Ingredient.fromItems(Items.FEATHER), Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE), ItemStack.EMPTY).build(consumer, BloodMagic.rl(basePath + "movement"));
 		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/updraftarray.png"), Ingredient.fromItems(Items.FEATHER), Ingredient.fromTag(Tags.Items.DUSTS_GLOWSTONE), ItemStack.EMPTY).build(consumer, BloodMagic.rl(basePath + "updraft"));
 		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/spikearray.png"), Ingredient.fromItems(Items.COBBLESTONE), Ingredient.fromTag(Tags.Items.INGOTS_IRON), ItemStack.EMPTY).build(consumer, BloodMagic.rl(basePath + "spike"));

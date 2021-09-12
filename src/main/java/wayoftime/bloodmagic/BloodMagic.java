@@ -1,15 +1,11 @@
 package wayoftime.bloodmagic;
 
-import java.util.Map;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.PlayerRenderer;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemGroup;
@@ -46,7 +42,6 @@ import wayoftime.bloodmagic.client.hud.Elements;
 import wayoftime.bloodmagic.client.key.BloodMagicKeyHandler;
 import wayoftime.bloodmagic.client.key.KeyBindings;
 import wayoftime.bloodmagic.client.model.MimicModelLoader;
-import wayoftime.bloodmagic.client.render.entity.layers.BloodElytraLayer;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.GeneratorBaseRecipes;
 import wayoftime.bloodmagic.common.data.GeneratorBlockStates;
@@ -329,13 +324,6 @@ public class BloodMagic
 		new BloodMagicKeyHandler();
 //		IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 //		
-
-		Map<String, PlayerRenderer> skinMap = Minecraft.getInstance().getRenderManager().getSkinMap();
-		PlayerRenderer render;
-		render = skinMap.get("default");
-		render.addLayer(new BloodElytraLayer(render));
-		render = skinMap.get("slim");
-		render.addLayer(new BloodElytraLayer(render));
 	}
 
 	private void registerColors(final ColorHandlerEvent event)
