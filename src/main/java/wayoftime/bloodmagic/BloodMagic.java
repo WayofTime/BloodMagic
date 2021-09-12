@@ -400,7 +400,6 @@ public class BloodMagic
 	@SubscribeEvent
 	public void onTextureStitchEvent(TextureStitchEvent.Pre event)
 	{
-		if (curiosLoaded)
-			event.addSprite(this.rl("item/curios_empty_living_armour_socket"));
+		event.addSprite(this.rl("item/curios_empty_living_armour_socket"));
 	}
 }
