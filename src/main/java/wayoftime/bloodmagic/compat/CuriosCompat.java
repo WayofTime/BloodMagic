@@ -21,7 +21,7 @@ public class CuriosCompat
 	{
 		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.NECKLACE.getMessageBuilder().build());
 		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.CHARM.getMessageBuilder().build());
-		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("living_armour_socket").lock().build());
+		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("living_armour_socket").size(0).build());
 	}
 
 	public void registerInventory()
@@ -41,7 +41,7 @@ public class CuriosCompat
 		return inventory;
 	}
 
-	public void recalculateCuriosSlots(PlayerEntity player)
+	public int recalculateCuriosSlots(PlayerEntity player)
 	{
 		ISlotHelper slotHelper = CuriosApi.getSlotHelper();
 		if (LivingUtil.hasFullSet(player))
@@ -50,14 +50,17 @@ public class CuriosCompat
 
 			if (curiosLevel == 0)
 			{
-				slotHelper.lockSlotType("living_armour_socket", player);
+				slotHelper.setSlotsForType("living_armour_socket", player, 0);
 			} else
 			{
 				int slotCount = LivingArmorRegistrar.UPGRADE_CURIOS_SOCKET.get().getBonusValue("slots", curiosLevel).intValue();
-				slotHelper.unlockSlotType("living_armour_socket", player);
-				slotHelper.setSlotsForType("living_armour_socket", player, slotCount); // why this no work?
+				slotHelper.setSlotsForType("living_armour_socket", player, slotCount);
 			}
+			return curiosLevel;
 		} else
-			slotHelper.lockSlotType("living_armour_socket", player);
+		{
+			slotHelper.setSlotsForType("living_armour_socket", player, 0);
+			return 0;
+		}
 	}
 }

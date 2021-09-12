@@ -59,7 +59,6 @@ import wayoftime.bloodmagic.core.living.LivingStats;
 import wayoftime.bloodmagic.core.living.LivingUtil;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.event.ItemBindEvent;
-import wayoftime.bloodmagic.event.LivingEquipmentEvent;
 import wayoftime.bloodmagic.event.SacrificeKnifeUsedEvent;
 import wayoftime.bloodmagic.network.DemonAuraClientPacket;
 import wayoftime.bloodmagic.potion.BMPotionUtils;
@@ -755,26 +754,35 @@ public class GenericHandler
 		}
 	}
 
+	public static Map<UUID, Integer> curiosLevelMap = new HashMap<>();
+
 	@SubscribeEvent
 	public void onLivingEquipmentChange(LivingEquipmentChangeEvent event)
 	{
+
 		if (BloodMagic.curiosLoaded)
-		{
+		{ // Without Curios, there is nothing this cares about.
 			if (event.getFrom().getItem() instanceof ItemLivingArmor || event.getTo().getItem() instanceof ItemLivingArmor)
-			{
+			{ // Armor change involves Living Armor
 				LivingEntity entity = event.getEntityLiving();
 				if (entity instanceof PlayerEntity)
-					BloodMagic.curiosCompat.recalculateCuriosSlots((PlayerEntity) entity);
+				{ // is a player
+					PlayerEntity player = (PlayerEntity) entity;
+					UUID uuid = player.getUniqueID();
+					if (LivingUtil.hasFullSet(player))
+					{ // Player has a full set
+						int curiosLevel = LivingStats.fromPlayer(player).getLevel(LivingArmorRegistrar.UPGRADE_CURIOS_SOCKET.get().getKey());
+						if (curiosLevelMap.getOrDefault(uuid, 0) != curiosLevel)
+						{ // Cache level does not match new level
+							curiosLevelMap.put(uuid, BloodMagic.curiosCompat.recalculateCuriosSlots(player));
+						}
+					} else if (curiosLevelMap.getOrDefault(uuid, 0) != 0)
+					{ // cache has an upgrade that needs to be removed
+						curiosLevelMap.put(uuid, BloodMagic.curiosCompat.recalculateCuriosSlots(player));
+					}
+				}
 			}
 		}
-	}
-
-	@SubscribeEvent
-	public void onLivingArmorLevelUp(LivingEquipmentEvent.LevelUp event)
-	{
-		if (BloodMagic.curiosLoaded)
-			if (event.getUpgrade() == LivingArmorRegistrar.UPGRADE_CURIOS_SOCKET.get())
-				BloodMagic.curiosCompat.recalculateCuriosSlots(event.getPlayer());
 	}
 
 	private static float getCharge(int useTime, ItemStack stack)

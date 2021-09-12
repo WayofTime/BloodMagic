@@ -371,6 +371,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("living_upgrade.bloodmagic.elytra", "Elytra");
 		add("living_upgrade.bloodmagic.night_sight", "Nocturnal Prowess");
 		add("living_upgrade.bloodmagic.repair", "Repairing");
+		add("living_upgrade.bloodmagic.curios_socket", "Socketed");
 
 		add("living_upgrade.bloodmagic.slowness", "Limp Leg");
 		add("living_upgrade.bloodmagic.crippledArm", "Crippled Arm");
