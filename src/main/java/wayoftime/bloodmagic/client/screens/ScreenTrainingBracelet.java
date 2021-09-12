@@ -2,19 +2,15 @@ package wayoftime.bloodmagic.client.screens;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.lang3.tuple.Pair;
+import java.util.Map.Entry;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
@@ -23,21 +19,27 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.item.ItemLivingTrainer;
 import wayoftime.bloodmagic.common.item.inventory.ContainerTrainingBracelet;
-import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
-import wayoftime.bloodmagic.util.GhostItemHelper;
+import wayoftime.bloodmagic.core.living.ILivingContainer;
+import wayoftime.bloodmagic.core.living.LivingStats;
+import wayoftime.bloodmagic.core.living.LivingUpgrade;
+import wayoftime.bloodmagic.network.LivingTrainerPacket;
+import wayoftime.bloodmagic.network.LivingTrainerWhitelistPacket;
 
 public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet>
 {
-	private static final ResourceLocation background = BloodMagic.rl("textures/gui/routingfilter.png");
+	private static final ResourceLocation background = BloodMagic.rl("textures/gui/trainingbracelet.png");
 	public IInventory trainerInventory;
 	private PlayerEntity player;
 	private int left, top;
 
-	private TextFieldWidget textBox;
-
-	private int numberOfAddedButtons = 0;
 	private List<String> buttonKeyList = new ArrayList<String>();
+
+	private int whitelistButtonPosX = 24;
+	private int whitelistButtonPosY = 55;
+
+	protected boolean isWhitelist = false;
 
 	public ScreenTrainingBracelet(ContainerTrainingBracelet container, PlayerInventory playerInventory, ITextComponent title)
 	{
@@ -46,6 +48,7 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 		xSize = 176;
 		ySize = 187;
 		this.player = playerInventory.player;
+		this.isWhitelist = ((ItemLivingTrainer) container.trainerStack.getItem()).getIsWhitelist(container.trainerStack);
 	}
 
 	@Override
@@ -55,18 +58,14 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 		left = (this.width - this.xSize) / 2;
 		top = (this.height - this.ySize) / 2;
 
-		this.textBox = new TextFieldWidget(Minecraft.getInstance().fontRenderer, left + 23, top + 19, 70, 12, new StringTextComponent("itemGroup.search"));
-		this.textBox.setEnableBackgroundDrawing(false);
-//		this.textBox.setText("");
-		this.textBox.setMaxStringLength(50);
-		this.textBox.setVisible(true);
-		this.textBox.setTextColor(16777215);
-		this.textBox.setText("");
-
-		numberOfAddedButtons = 0;
 		buttonKeyList.clear();
 
 		ItemStack filterStack = this.container.trainerStack;
+
+		this.addButton(new Button(left + 62 - 18, top + 34, 8, 20, new StringTextComponent(">"), new IncrementPress(this, 0)));
+		this.addButton(new Button(left + 34 - 18, top + 34, 8, 20, new StringTextComponent("<"), new IncrementPress(this, 1)));
+
+		this.addButton(new Button(left + whitelistButtonPosX, top + whitelistButtonPosY, 20, 20, new StringTextComponent(""), new WhitelistTogglePress(this)));
 
 //		if (filterStack.getItem() instanceof IItemFilterProvider)
 //		{
@@ -94,157 +93,89 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 //		}
 	}
 
-	public Pair<Integer, Integer> getButtonLocation(int addedButton)
+	private int getCurrentActiveSlotUpgradeLevel()
 	{
-		int x = 7;
-		int y = 32;
-
-		x = x + addedButton * 20;
-
-		return Pair.of(x, y);
-	}
-
-	@Override
-	public void tick()
-	{
-		super.tick();
-		this.textBox.tick();
-	}
-
-//	@Override
-//	public boolean keyPressed(int keyCode, int scanCode, int modifiers)
-//	{
-//		if (this.textBox.isFocused())
-//		{
-//			if ((keyCode == 259 || keyCode == 261) && container.lastGhostSlotClicked != -1)
-//			{
-//				String str = this.textBox.getText();
-//
-//				if (str != null && str.length() > 0)
-//				{
-//					str = str.substring(0, str.length() - 1);
-//					this.textBox.setText(str);
-//					int amount = 0;
-//					if (str.length() > 0)
-//					{
-//						try
-//						{
-//							Integer testVal = Integer.decode(str);
-//							if (testVal != null)
-//							{
-//								amount = testVal;
-//							}
-//						} catch (NumberFormatException d)
-//						{
-//						}
-//					}
-//
-//					setValueOfGhostItemInSlot(container.lastGhostSlotClicked, amount);
-//				}
-//			}
-//		}
-//
-//		return super.keyPressed(keyCode, scanCode, modifiers);
-//	}
-
-//	@Override
-//	public boolean charTyped(char typedChar, int keyCode)
-//	{
-//		try
-//		{
-//			Integer charVal = Integer.decode("" + typedChar);
-//			if (charVal != null)
-//			{
-//				if (this.textBox.charTyped(typedChar, keyCode))
-//				{
-//					if (container.lastGhostSlotClicked != -1)
-//					{
-//						String str = this.textBox.getText();
-//						int amount = 0;
-//
-//						if (!str.isEmpty())
-//						{
-//
-//						}
-//
-//						setValueOfGhostItemInSlot(container.lastGhostSlotClicked, amount);
-//					}
-//					return true;
-//				} else
-//				{
-//					return super.charTyped(typedChar, keyCode);
-//				}
-//			}
-//
-//		} catch (NumberFormatException d)
-//		{
-//		}
-//
-//		return super.charTyped(typedChar, keyCode);
-//	}
-
-//	private void setValueOfGhostItemInSlot(int ghostItemSlot, int amount)
-//	{
-//		Slot slot = container.getSlot(ghostItemSlot);
-//		ItemStack ghostStack = slot.getStack();
-////		ItemStack ghostStack = container.inventoryFilter.getStackInSlot(ghostItemSlot);
-//		if (!ghostStack.isEmpty())
-//		{
-//			GhostItemHelper.setItemGhostAmount(ghostStack, amount);
-//			GhostItemHelper.setItemGhostAmount(container.inventoryTrainer.getStackInSlot(ghostItemSlot), amount);
-//			if (container.trainerStack.getItem() instanceof IItemFilterProvider)
-//			{
-//				((IItemFilterProvider) container.trainerStack.getItem()).setGhostItemAmount(container.trainerStack, ghostItemSlot, amount);
-//
-//			}
-//		}
-//
-//		BloodMagic.packetHandler.sendToServer(new RouterFilterPacket(player.inventory.currentItem, ghostItemSlot, amount));
-//	}
-
-	/**
-	 * Called when the mouse is clicked. Args : mouseX, mouseY, clickedButton
-	 */
-	@Override
-	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton)
-	{
-		boolean testBool = super.mouseClicked(mouseX, mouseY, mouseButton);
-
-		if (this.textBox.mouseClicked(mouseX, mouseY, mouseButton))
+		if (this.container.lastGhostSlotClicked == -1)
 		{
-			return true;
+			return 0;
 		}
 
-		if (container.lastGhostSlotClicked != -1)
+		ItemStack stack = this.container.getSlot(container.lastGhostSlotClicked).getStack();
+		return getStackUpgradeLevel(stack);
+	}
+
+	private int setCurrentActiveSlotUpgradeLevel(int level)
+	{
+		if (this.container.lastGhostSlotClicked == -1)
 		{
-			enableAllButtons();
-			Slot slot = container.getSlot(container.lastGhostSlotClicked);
-			ItemStack stack = slot.getStack();
-			if (!stack.isEmpty())
+			return 0;
+		}
+
+		int slotClicked = container.lastGhostSlotClicked;
+		ItemStack stack = container.getSlot(slotClicked).getStack();
+		level = Math.max(0, Math.min(level, getMaxUpgradeLevel(stack)));
+
+		if (stack.getItem() instanceof ILivingContainer)
+		{
+			LivingStats stats = ((ILivingContainer) stack.getItem()).getLivingStats(stack);
+			if (stats != null)
 			{
-				int amount = GhostItemHelper.getItemGhostAmount(stack);
-				if (amount == 0)
+				LivingStats newStats = new LivingStats();
+				for (Entry<LivingUpgrade, Double> entry : stats.getUpgrades().entrySet())
 				{
-					this.textBox.setText("");
-				} else
-				{
-					this.textBox.setText("" + amount);
+					double exp = level == 0 ? 0.01 : entry.getKey().getLevelExp(level);
+
+					newStats.addExperience(entry.getKey().getKey(), exp);
+//					return entry.getKey().getLevel(entry.getValue().intValue());
 				}
-			} else
-			{
-				this.textBox.setText("");
+
+				((ILivingContainer) stack.getItem()).updateLivingStats(stack, newStats);
+				container.getSlot(slotClicked).putStack(stack);
+				container.inventoryTrainer.setInventorySlotContents(slotClicked, stack);
+				((ItemLivingTrainer) container.trainerStack.getItem()).setTomeLevel(container.trainerStack, slotClicked, level);
+
+//				System.out.println("Changing level on client side");
+//				((ILivingContainer) stack.getItem())
+
+				return level;
 			}
 		}
 
-		return true;
+		return 0;
 	}
 
-	private void enableAllButtons()
+	private int getStackUpgradeLevel(ItemStack stack)
 	{
-		for (Widget button : this.buttons)
+		if (stack.getItem() instanceof ILivingContainer)
 		{
-			button.active = true;
+			LivingStats stats = ((ILivingContainer) stack.getItem()).getLivingStats(stack);
+			if (stats != null)
+			{
+				for (Entry<LivingUpgrade, Double> entry : stats.getUpgrades().entrySet())
+				{
+					return entry.getKey().getLevel(entry.getValue().intValue());
+				}
+			}
 		}
+
+		return 0;
+	}
+
+	private int getMaxUpgradeLevel(ItemStack stack)
+	{
+		if (stack.getItem() instanceof ILivingContainer)
+		{
+			LivingStats stats = ((ILivingContainer) stack.getItem()).getLivingStats(stack);
+			if (stats != null)
+			{
+				for (Entry<LivingUpgrade, Double> entry : stats.getUpgrades().entrySet())
+				{
+					return entry.getKey().getLevel(Integer.MAX_VALUE);
+				}
+			}
+		}
+
+		return 0;
 	}
 
 	@Override
@@ -256,29 +187,22 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 	@Override
 	protected void drawGuiContainerForegroundLayer(MatrixStack stack, int mouseX, int mouseY)
 	{
+		String textEntry = "" + getCurrentActiveSlotUpgradeLevel();
+		int offset = -3 * textEntry.length();
+		this.font.func_243248_b(stack, new StringTextComponent(textEntry), 45 - 18 + offset + 7.5f, 37 + 3, 0xFFFFFF);
 //		this.font.func_243248_b(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
 		this.font.func_243248_b(stack, new TranslationTextComponent("container.inventory"), 8, 93, 4210752);
 		this.font.func_243248_b(stack, container.trainerStack.getDisplayName(), 8, 4, 4210752);
 
-		if (container.trainerStack.getItem() instanceof IItemFilterProvider)
-		{
-			for (int i = 0; i < numberOfAddedButtons; i++)
-			{
-				int currentButtonState = ((IItemFilterProvider) container.trainerStack.getItem()).getCurrentButtonState(container.trainerStack, buttonKeyList.get(i), container.lastGhostSlotClicked);
-				Pair<Integer, Integer> buttonLocation = getButtonLocation(i);
-				Pair<Integer, Integer> textureLocation = ((IItemFilterProvider) container.trainerStack.getItem()).getTexturePositionForState(container.trainerStack, buttonKeyList.get(i), currentButtonState);
+		int w = 20;
+		int h = 20;
 
-				int w = 20;
-				int h = 20;
+		int xl = whitelistButtonPosX;
+		int yl = whitelistButtonPosY;
 
-				int xl = buttonLocation.getLeft();
-				int yl = buttonLocation.getRight();
-
-				RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-				getMinecraft().getTextureManager().bindTexture(background);
-				this.blit(stack, +xl, +yl, textureLocation.getLeft(), textureLocation.getRight(), w, h);
-			}
-		}
+		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+		getMinecraft().getTextureManager().bindTexture(background);
+		this.blit(stack, +xl, +yl, 176, isWhitelist ? 0 : 20, w, h);
 	}
 
 	@Override
@@ -314,7 +238,7 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 		{
 //            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 			RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-			this.blit(stack, 106 + x + 21 * (container.lastGhostSlotClicked % 3), y + 11 + 21 * (container.lastGhostSlotClicked / 3), 0, 187, 24, 24);
+			this.blit(stack, 85 + x + 21 * (container.lastGhostSlotClicked % 4), y + 11 + 21 * (container.lastGhostSlotClicked / 4), 0, 187, 24, 24);
 		}
 
 	}
@@ -323,34 +247,104 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks)
 	{
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
-		{
-			this.textBox.render(matrixStack, mouseX, mouseY, partialTicks);
-		}
 
 		List<ITextComponent> tooltip = new ArrayList<>();
 
-		if (container.trainerStack.getItem() instanceof IItemFilterProvider)
+		// TODO: Add hover text for button
+
+		int w = 20;
+		int h = 20;
+
+		int x = this.guiLeft + whitelistButtonPosX;
+		int y = this.guiTop + whitelistButtonPosY;
+
+		if (mouseX >= x && mouseX < x + w && mouseY >= y && mouseY < y + h)
 		{
-			for (int i = 0; i < numberOfAddedButtons; i++)
-			{
-				Pair<Integer, Integer> buttonLocation = getButtonLocation(i);
-				int w = 20;
-				int h = 20;
-
-				int x = this.guiLeft + buttonLocation.getLeft();
-				int y = this.guiTop + buttonLocation.getRight();
-
-				if (mouseX >= x && mouseX < x + w && mouseY >= y && mouseY < y + h)
-				{
-					List<ITextComponent> components = ((IItemFilterProvider) container.trainerStack.getItem()).getTextForHoverItem(container.trainerStack, buttonKeyList.get(i), container.lastGhostSlotClicked);
-					if (components != null && !components.isEmpty())
-						tooltip.addAll(components);
-				}
-			}
+			List<ITextComponent> components = getHoverTextForWhitelistButton();
+			if (components != null && !components.isEmpty())
+				tooltip.addAll(components);
 		}
+
+//		if (container.trainerStack.getItem() instanceof IItemFilterProvider)
+//		{
+//			for (int i = 0; i < numberOfAddedButtons; i++)
+//			{
+//				Pair<Integer, Integer> buttonLocation = getButtonLocation(i);
+
+//			}
+//		}
 
 		if (!tooltip.isEmpty())
 			GuiUtils.drawHoveringText(matrixStack, tooltip, mouseX, mouseY, width, height, -1, font);
 	}
 
+	private List<ITextComponent> getHoverTextForWhitelistButton()
+	{
+		List<ITextComponent> components = new ArrayList<>();
+
+		if (isWhitelist)
+		{
+			components.add(new TranslationTextComponent("trainer.bloodmagic.whitelist"));
+		} else
+		{
+			components.add(new TranslationTextComponent("trainer.bloodmagic.blacklist"));
+		}
+
+		return components;
+	}
+
+	public class IncrementPress implements Button.IPressable
+	{
+		private final ScreenTrainingBracelet screen;
+		private final int id;
+
+		public IncrementPress(ScreenTrainingBracelet screen, int id)
+		{
+			this.screen = screen;
+			this.id = id;
+		}
+
+		@Override
+		public void onPress(Button button)
+		{
+			if (screen.container.lastGhostSlotClicked == -1)
+			{
+				return;
+			}
+			if (id == 0)
+			{
+				// Increment
+				int currentLevel = getCurrentActiveSlotUpgradeLevel();
+				int newLevel = setCurrentActiveSlotUpgradeLevel(currentLevel + 1);
+//				System.out.println("Sending incrementation packet with new level of: " + newLevel);
+				BloodMagic.packetHandler.sendToServer(new LivingTrainerPacket(player.inventory.currentItem, screen.container.lastGhostSlotClicked, newLevel));
+			} else if (id == 1)
+			{
+				int currentLevel = getCurrentActiveSlotUpgradeLevel();
+				int newLevel = setCurrentActiveSlotUpgradeLevel(currentLevel - 1);
+				BloodMagic.packetHandler.sendToServer(new LivingTrainerPacket(player.inventory.currentItem, screen.container.lastGhostSlotClicked, newLevel));
+			}
+		}
+	}
+
+	public class WhitelistTogglePress implements Button.IPressable
+	{
+		private final ScreenTrainingBracelet screen;
+
+		public WhitelistTogglePress(ScreenTrainingBracelet screen)
+		{
+			this.screen = screen;
+		}
+
+		@Override
+		public void onPress(Button button)
+		{
+			boolean newWhitelistState = !screen.isWhitelist;
+
+			screen.isWhitelist = newWhitelistState;
+			((ItemLivingTrainer) screen.container.trainerStack.getItem()).setIsWhitelist(screen.container.trainerStack, newWhitelistState);
+			BloodMagic.packetHandler.sendToServer(new LivingTrainerWhitelistPacket(player.inventory.currentItem, newWhitelistState));
+
+		}
+	}
 }

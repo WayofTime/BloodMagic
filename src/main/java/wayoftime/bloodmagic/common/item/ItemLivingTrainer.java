@@ -13,11 +13,13 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -28,11 +30,12 @@ import wayoftime.bloodmagic.common.item.inventory.InventoryTrainingBracelet;
 import wayoftime.bloodmagic.core.living.ILivingContainer;
 import wayoftime.bloodmagic.core.living.LivingStats;
 import wayoftime.bloodmagic.core.living.LivingUpgrade;
+import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.Utils;
 
 public class ItemLivingTrainer extends Item implements ILivingContainer, INamedContainerProvider
 {
-	public static final int MAX_SIZE = 9;
+	public static final int MAX_SIZE = 16;
 
 	public ItemLivingTrainer()
 	{
@@ -60,7 +63,38 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		ILivingContainer.appendLivingTooltip(stack, getLivingStats(stack), tooltip, false);
+		if (stack.getTag() != null)
+		{
+			boolean isWhitelist = getIsWhitelist(stack);
+			if (isWhitelist)
+			{
+				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.trainer.whitelist"));
+			} else
+			{
+				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.trainer.blacklist"));
+			}
+			ILivingContainer.appendLivingTooltip(stack, getLivingStats(stack), tooltip, false);
+		}
+	}
+
+	public void setIsWhitelist(ItemStack trainerStack, boolean isWhitelist)
+	{
+		if (trainerStack.getTag() == null)
+		{
+			trainerStack.setTag(new CompoundNBT());
+		}
+
+		trainerStack.getTag().putBoolean(Constants.NBT.BLACKWHITELIST, isWhitelist);
+	}
+
+	public boolean getIsWhitelist(ItemStack trainerStack)
+	{
+		if (trainerStack.getTag() == null)
+		{
+			trainerStack.setTag(new CompoundNBT());
+		}
+
+		return trainerStack.getTag().getBoolean(Constants.NBT.BLACKWHITELIST);
 	}
 
 	@Override
@@ -80,6 +114,7 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 
 	public void setTomeLevel(ItemStack trainerStack, int slot, int desiredLevel)
 	{
+//		System.out.println("Called!");
 		InventoryTrainingBracelet inv = new InventoryTrainingBracelet(trainerStack);
 		ItemStack tomeStack = inv.getStackInSlot(slot);
 		if (!tomeStack.isEmpty() && tomeStack.getItem() instanceof ILivingContainer)
@@ -100,12 +135,31 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 				((ILivingContainer) tomeStack.getItem()).updateLivingStats(tomeStack, newStats);
 
 				inv.setInventorySlotContents(slot, tomeStack);
+				inv.save();
+				fromInventory(trainerStack, inv);
+			} else
+			{
+				System.out.println("Stats are null");
 			}
+		} else
+		{
+			System.out.println("Something went wrong when setting tomeLevel");
 		}
+	}
+
+	public void fromInventory(ItemStack trainerStack, InventoryTrainingBracelet inv)
+	{
+		List<ItemStack> invList = new ArrayList<>();
+		for (int i = 0; i < inv.getSizeInventory(); i++)
+		{
+			invList.add(inv.getStackInSlot(i));
+		}
+		fromItemStackList(trainerStack, invList);
 	}
 
 	public void fromItemStackList(ItemStack trainerStack, List<ItemStack> tomeList)
 	{
+//		System.out.println("Saving trainer information on server: " + EffectiveSide.get().isServer());
 		LivingStats stats = new LivingStats();
 
 		int n = 0;

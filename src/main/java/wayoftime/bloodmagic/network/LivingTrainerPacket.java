@@ -54,10 +54,11 @@ public class LivingTrainerPacket
 			itemStack = playerEntity.inventory.getStackInSlot(msg.slot);
 		}
 
-		if (!itemStack.isEmpty() && itemStack.getItem() instanceof ItemLivingTrainer)
+		if (!itemStack.isEmpty() && itemStack.getItem() instanceof ItemLivingTrainer && msg.ghostSlot != -1)
 		{
 //			((IItemFilterProvider) itemStack.getItem()).setGhostItemAmount(itemStack, msg.ghostSlot, msg.level);
-			((ItemLivingTrainer) itemStack.getItem()).setTomeLevel(itemStack, msg.slot, msg.level);
+//			System.out.println("Receiving packet for the trainer. Wanted level is: " + msg.level);
+			((ItemLivingTrainer) itemStack.getItem()).setTomeLevel(itemStack, msg.ghostSlot, msg.level);
 		}
 	}
 }

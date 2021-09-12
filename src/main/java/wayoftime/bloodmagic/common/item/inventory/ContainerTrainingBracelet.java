@@ -22,7 +22,7 @@ public class ContainerTrainingBracelet extends Container
 	public final ItemStack trainerStack;
 
 	public int lastGhostSlotClicked = -1;
-	private int slotsOccupied = 9;
+	private int slotsOccupied = 16;
 
 	public ContainerTrainingBracelet(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
 	{
@@ -46,11 +46,11 @@ public class ContainerTrainingBracelet extends Container
 //			this.addSlot(new SlotGhostItem(this, InventoryTrainingBracelet, player, columnIndex, 8 + columnIndex * 36, 17));
 //		}
 
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 4; i++)
 		{
-			for (int j = 0; j < 3; j++)
+			for (int j = 0; j < 4; j++)
 			{
-				this.addSlot(new SlotTomeItem(this, inventoryTrainer, player, j + i * 3, 110 + j * 21, 15 + i * 21));
+				this.addSlot(new SlotTomeItem(this, inventoryTrainer, player, j + i * 4, 110 + j * 21 - 21, 15 + i * 21));
 //				addSlot(new SlotGhostItem(itemInventory, j + i * 3, 26 + j * 18, 15 + i * 18));
 			}
 		}
@@ -141,27 +141,27 @@ public class ContainerTrainingBracelet extends Container
 		return true;
 	}
 
-	@Override
-	public void onContainerClosed(PlayerEntity entityPlayer)
-	{
-		super.onContainerClosed(entityPlayer);
-
-		if (!entityPlayer.getEntityWorld().isRemote)
-		{
-			saveInventory(entityPlayer);
-		}
-	}
-
-	@Override
-	public void detectAndSendChanges()
-	{
-		super.detectAndSendChanges();
-
-		if (!player.getEntityWorld().isRemote)
-		{
-			saveInventory(player);
-		}
-	}
+//	@Override
+//	public void onContainerClosed(PlayerEntity entityPlayer)
+//	{
+//		super.onContainerClosed(entityPlayer);
+//
+//		if (!entityPlayer.getEntityWorld().isRemote)
+//		{
+//			saveInventory(entityPlayer);
+//		}
+//	}
+//
+//	@Override
+//	public void detectAndSendChanges()
+//	{
+//		super.detectAndSendChanges();
+//
+//		if (!player.getEntityWorld().isRemote)
+//		{
+//			saveInventory(player);
+//		}
+//	}
 
 	@Override
 	public ItemStack transferStackInSlot(PlayerEntity entityPlayer, int slotIndex)
@@ -208,9 +208,18 @@ public class ContainerTrainingBracelet extends Container
 		return itemstack;
 	}
 
-	public void saveInventory(PlayerEntity entityPlayer)
+//	public void saveInventory(PlayerEntity entityPlayer)
+//	{
+////		inventoryTrainer.onGuiSaved(entityPlayer);
+//
+//	}
+
+	public void saveInventory(PlayerEntity player, int slot)
 	{
-		inventoryTrainer.onGuiSaved(entityPlayer);
+		ItemStack masterStack = inventoryTrainer.findParentStack(player);
+		InventoryTrainingBracelet storedInv = new InventoryTrainingBracelet(masterStack);
+		storedInv.setInventorySlotContents(slot, getSlot(slot).getStack());
+		storedInv.save();
 	}
 
 	private class SlotTomeItem extends Slot
@@ -232,7 +241,7 @@ public class ContainerTrainingBracelet extends Container
 
 			if (EffectiveSide.get().isServer())
 			{
-				containerHolding.saveInventory(player);
+				containerHolding.saveInventory(player, slotNumber);
 			}
 		}
 

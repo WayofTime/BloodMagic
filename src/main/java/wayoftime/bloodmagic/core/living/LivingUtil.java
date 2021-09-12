@@ -31,7 +31,9 @@ public class LivingUtil
 		if (stats == null)
 			return Pair.of(null, false);
 
-		if (!canTrain(player, upgrade, upgrade.getLevel((int) experience)))
+		double curExp = stats.getUpgrades().containsKey(upgrade) ? stats.getUpgrades().get(upgrade).doubleValue() : 0;
+
+		if (!canTrain(player, upgrade, upgrade.getLevel((int) (curExp + experience))))
 			return Pair.of(stats, false);
 
 		LivingEquipmentEvent.GainExperience event = new LivingEquipmentEvent.GainExperience(player, stats, upgrade, experience);
@@ -104,7 +106,9 @@ public class LivingUtil
 		if (stats == null)
 			return Pair.of(null, 0d);
 
-		if (!canTrain(player, upgrade, upgrade.getLevel((int) experience)))
+		double curExp = stats.getUpgrades().containsKey(upgrade) ? stats.getUpgrades().get(upgrade).doubleValue() : 0;
+
+		if (!canTrain(player, upgrade, upgrade.getLevel((int) (curExp + experience))))
 			return Pair.of(stats, 0d);
 
 		LivingEquipmentEvent.GainExperience event = new LivingEquipmentEvent.GainExperience(player, stats, upgrade, experience);
@@ -270,19 +274,25 @@ public class LivingUtil
 		if (trainer.isEmpty())
 			return true;
 
-		String mode = trainer.getTag().getString("livingLock");
+//		String mode = trainer.getTag().getString("livingLock");
 		LivingStats stats = ((ILivingContainer) trainer.getItem()).getLivingStats(trainer);
+		boolean isWhitelist = ((ItemLivingTrainer) trainer.getItem()).getIsWhitelist(trainer);
 
 		int levelLimit = stats.getLevel(upgrade.getKey());
-		if (mode.equalsIgnoreCase("whitelist"))
+
+//		System.out.println("Attempting to train " + upgrade.getKey() + "; current lvl = " + currentLevel + ", level limit = " + levelLimit);
+
+		if (isWhitelist)
 		{
 			return levelLimit != 0 && levelLimit > currentLevel;
-		} else if (mode.equalsIgnoreCase("blacklist"))
+		} else
 		{
-			return levelLimit == 0;
+			Map<LivingUpgrade, Double> upgradeMap = stats.getUpgrades();
+
+			return (levelLimit == 0 && !upgradeMap.containsKey(upgrade)) || (levelLimit != 0 && levelLimit > currentLevel);
 		}
 
-		return true;
+//		return true;
 	}
 
 	public static boolean hasFullSet(PlayerEntity player)

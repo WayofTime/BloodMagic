@@ -248,6 +248,7 @@
   "item.bloodmagic.throwing_dagger": "Iron Throwing Dagger",
   "item.bloodmagic.throwing_dagger_syringe": "Syringe Throwing Dagger",
   "item.bloodmagic.upgradetome": "Living Armour Upgrade Tome",
+  "item.bloodmagic.upgradetrainer": "Living Armour Training Bracelet",
   "item.bloodmagic.vengefulcrystal": "Vengeful Will Crystal",
   "item.bloodmagic.voidsigil": "Void Sigil",
   "item.bloodmagic.waterscribetool": "Inscription Tool: Water",
@@ -577,6 +578,10 @@
   "tooltip.bloodmagic.telepositionfocus.coords": "Current coordinates: (%d, %d, %d)",
   "tooltip.bloodmagic.throwing_dagger.desc": "Not to be used in the kitchen",
   "tooltip.bloodmagic.tier": "Tier %d",
+  "tooltip.bloodmagic.trainer.blacklist": "Deny after:",
+  "tooltip.bloodmagic.trainer.whitelist": "Allow up to:",
   "tooltip.bloodmagic.will": "Will Quality: %s",
-  "tooltip.bloodmagic.willGauge": "A strange device that can measure the Demon Will in the Aura."
+  "tooltip.bloodmagic.willGauge": "A strange device that can measure the Demon Will in the Aura.",
+  "trainer.bloodmagic.blacklist": "Prevents selected upgrades from leveling past threshold",
+  "trainer.bloodmagic.whitelist": "Only allow selected upgrades to level"
 }

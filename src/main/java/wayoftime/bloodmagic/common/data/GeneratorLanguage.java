@@ -148,12 +148,18 @@ public class GeneratorLanguage extends LanguageProvider
 		add("filter.bloodmagic.enchantnotfuzzy", "Exact Level");
 //		add("filter.bloodmagic.specifiedenchant", "Valid Tag:");
 
+		add("trainer.bloodmagic.whitelist", "Only allow selected upgrades to level");
+		add("trainer.bloodmagic.blacklist", "Prevents selected upgrades from leveling past threshold");
+
 		add("tooltip.bloodmagic.filter.whitelist", "Allow:");
 		add("tooltip.bloodmagic.filter.blacklist", "Deny:");
 		add("tooltip.bloodmagic.filter.all", "All: %s");
 		add("tooltip.bloodmagic.filter.count", "%sx %s");
 		add("tooltip.bloodmagic.filter.enchant_combination", "%s: %s");
 		add("tooltip.bloodmagic.filter.from_mod", "From: %s");
+
+		add("tooltip.bloodmagic.trainer.whitelist", "Allow up to:");
+		add("tooltip.bloodmagic.trainer.blacklist", "Deny after:");
 
 		add("tooltip.bloodmagic.filter.anytag", "Any Tag of %s");
 		add("tooltip.bloodmagic.contained_filters", "Contained Filters:");
@@ -630,6 +636,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.LIVING_BOOTS, "Living Boots");
 
 		addItem(BloodMagicItems.LIVING_TOME, "Living Armour Upgrade Tome");
+		addItem(BloodMagicItems.LIVING_TRAINER, "Living Armour Training Bracelet");
 
 		addItem(BloodMagicItems.THROWING_DAGGER, "Iron Throwing Dagger");
 		addItem(BloodMagicItems.THROWING_DAGGER_SYRINGE, "Syringe Throwing Dagger");
