@@ -10,6 +10,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 import top.theillusivec4.curios.api.SlotTypePreset;
 import top.theillusivec4.curios.api.type.util.ISlotHelper;
+import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.living.LivingStats;
 import wayoftime.bloodmagic.core.living.LivingUtil;
@@ -21,7 +22,7 @@ public class CuriosCompat
 	{
 		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.NECKLACE.getMessageBuilder().build());
 		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.CHARM.getMessageBuilder().build());
-		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("living_armour_socket").size(0).build());
+		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("living_armour_socket").size(0).icon(BloodMagic.rl("item/curios_empty_living_armour_socket")).build());
 	}
 
 	public void registerInventory()
