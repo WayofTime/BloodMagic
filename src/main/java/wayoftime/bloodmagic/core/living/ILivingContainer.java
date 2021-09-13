@@ -77,7 +77,7 @@ public interface ILivingContainer
 					if (level > 0)
 						tooltip.add(new TranslationTextComponent("%s %s", new TranslationTextComponent(k.getTranslationKey()), new TranslationTextComponent("enchantment.level." + level)).mergeStyle(TextFormatting.GRAY));
 					else
-						tooltip.add(new TranslationTextComponent(k.getTranslationKey()));
+						tooltip.add(new TranslationTextComponent(k.getTranslationKey()).mergeStyle(TextFormatting.GRAY));
 				} else
 					tooltip.add(new TranslationTextComponent("%s %s", new TranslationTextComponent(k.getTranslationKey()), (": " + v.intValue() + "/" + k.getNextRequirement(v.intValue()))).mergeStyle(TextFormatting.GRAY));
 			});

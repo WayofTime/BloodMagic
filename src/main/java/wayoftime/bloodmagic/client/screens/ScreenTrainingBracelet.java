@@ -39,6 +39,11 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 	private int whitelistButtonPosX = 24;
 	private int whitelistButtonPosY = 55;
 
+	private int numberHoverPosX = 16;
+	private int numberHoverPosY = 34;
+	private int numberHoverWidth = 36;
+	private int numberHoverHeight = 20;
+
 	protected boolean isWhitelist = false;
 
 	public ScreenTrainingBracelet(ContainerTrainingBracelet container, PlayerInventory playerInventory, ITextComponent title)
@@ -265,6 +270,19 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 				tooltip.addAll(components);
 		}
 
+		w = +numberHoverWidth;
+		h = numberHoverHeight;
+
+		x = this.guiLeft + numberHoverPosX;
+		y = this.guiTop + numberHoverPosY;
+
+		if (mouseX >= x && mouseX < x + w && mouseY >= y && mouseY < y + h)
+		{
+			List<ITextComponent> components = getHoverTextForNumber();
+			if (components != null && !components.isEmpty())
+				tooltip.addAll(components);
+		}
+
 //		if (container.trainerStack.getItem() instanceof IItemFilterProvider)
 //		{
 //			for (int i = 0; i < numberOfAddedButtons; i++)
@@ -288,6 +306,38 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 		} else
 		{
 			components.add(new TranslationTextComponent("trainer.bloodmagic.blacklist"));
+		}
+
+		return components;
+	}
+
+	private List<ITextComponent> getHoverTextForNumber()
+	{
+		List<ITextComponent> components = new ArrayList<>();
+
+		if (this.container.lastGhostSlotClicked == -1)
+		{
+			return components;
+		}
+
+		int slotClicked = container.lastGhostSlotClicked;
+		ItemStack stack = container.getSlot(slotClicked).getStack();
+
+		if (stack.getItem() instanceof ILivingContainer)
+		{
+			LivingStats stats = ((ILivingContainer) stack.getItem()).getLivingStats(stack);
+			if (stats != null)
+			{
+				for (Entry<LivingUpgrade, Double> entry : stats.getUpgrades().entrySet())
+				{
+					int level = entry.getKey().getLevel(entry.getValue().intValue());
+
+					if (level > 0)
+						components.add(new TranslationTextComponent("trainer.bloodmagic.allowupgrade", new TranslationTextComponent(entry.getKey().getTranslationKey()), new TranslationTextComponent("enchantment.level." + level)));
+					else
+						components.add(new TranslationTextComponent("trainer.bloodmagic.blockupgrade", new TranslationTextComponent(entry.getKey().getTranslationKey())));
+				}
+			}
 		}
 
 		return components;

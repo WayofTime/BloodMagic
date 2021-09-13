@@ -148,8 +148,10 @@ public class GeneratorLanguage extends LanguageProvider
 		add("filter.bloodmagic.enchantnotfuzzy", "Exact Level");
 //		add("filter.bloodmagic.specifiedenchant", "Valid Tag:");
 
-		add("trainer.bloodmagic.whitelist", "Only allow selected upgrades to level");
-		add("trainer.bloodmagic.blacklist", "Prevents selected upgrades from leveling past threshold");
+		add("trainer.bloodmagic.whitelist", "Deny other upgrades");
+		add("trainer.bloodmagic.blacklist", "Allow other upgrades");
+		add("trainer.bloodmagic.allowupgrade", "Allow up to: %s %s");
+		add("trainer.bloodmagic.blockupgrade", "Deny: %s");
 
 		add("tooltip.bloodmagic.filter.whitelist", "Allow:");
 		add("tooltip.bloodmagic.filter.blacklist", "Deny:");
@@ -158,8 +160,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.filter.enchant_combination", "%s: %s");
 		add("tooltip.bloodmagic.filter.from_mod", "From: %s");
 
-		add("tooltip.bloodmagic.trainer.whitelist", "Allow up to:");
-		add("tooltip.bloodmagic.trainer.blacklist", "Deny after:");
+		add("tooltip.bloodmagic.trainer.whitelist", "Block other upgrades");
+		add("tooltip.bloodmagic.trainer.blacklist", "Allow other upgrades");
 
 		add("tooltip.bloodmagic.filter.anytag", "Any Tag of %s");
 		add("tooltip.bloodmagic.contained_filters", "Contained Filters:");

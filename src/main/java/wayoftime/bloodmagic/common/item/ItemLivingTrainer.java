@@ -49,6 +49,7 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 		if (!world.isRemote)
 		{
 			Utils.setUUID(stack);
+			ILivingContainer.setDisplayIfZero(stack, true);
 
 			if (player instanceof ServerPlayerEntity)
 			{

@@ -578,10 +578,12 @@
   "tooltip.bloodmagic.telepositionfocus.coords": "Current coordinates: (%d, %d, %d)",
   "tooltip.bloodmagic.throwing_dagger.desc": "Not to be used in the kitchen",
   "tooltip.bloodmagic.tier": "Tier %d",
-  "tooltip.bloodmagic.trainer.blacklist": "Deny after:",
-  "tooltip.bloodmagic.trainer.whitelist": "Allow up to:",
+  "tooltip.bloodmagic.trainer.blacklist": "Allow other upgrades",
+  "tooltip.bloodmagic.trainer.whitelist": "Block other upgrades",
   "tooltip.bloodmagic.will": "Will Quality: %s",
   "tooltip.bloodmagic.willGauge": "A strange device that can measure the Demon Will in the Aura.",
-  "trainer.bloodmagic.blacklist": "Prevents selected upgrades from leveling past threshold",
-  "trainer.bloodmagic.whitelist": "Only allow selected upgrades to level"
+  "trainer.bloodmagic.allowupgrade": "Allow up to: %s %s",
+  "trainer.bloodmagic.blacklist": "Allow other upgrades",
+  "trainer.bloodmagic.blockupgrade": "Deny: %s",
+  "trainer.bloodmagic.whitelist": "Deny other upgrades"
 }
