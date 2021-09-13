@@ -101,6 +101,8 @@ public class DungeonSynthesizer
 		DungeonRoom initialRoom = DungeonRoomRegistry.getRandomDungeonRoom(initialType, rand);
 		BlockPos roomPlacementPosition = initialRoom.getInitialSpawnOffsetForControllerPos(settings, spawningPosition);
 
+//		System.out.println("Initial room offset: " + roomPlacementPosition);
+
 //		DungeonRoom room = getRandomRoom(rand);
 //		roomMap.put(pos, Pair.of(room, settings.copy()));
 //		roomList.add(Pair.of(pos, Pair.of(room, settings.copy())));
@@ -131,6 +133,8 @@ public class DungeonSynthesizer
 		}
 
 		initialRoom.placeStructureAtPosition(rand, settings, world, roomPlacementPosition);
+
+//		System.out.println("Available door master map: " + availableDoorMasterMap);
 
 		addNewControllerBlock(world, spawningPosition);
 
@@ -401,8 +405,6 @@ public class DungeonSynthesizer
 			// Did not manage to place the room.
 			return false;
 		}
-
-		System.out.println("Room spawn location: " + roomLocation);
 
 		placedRoom.placeStructureAtPosition(rand, settings, world, roomLocation);
 		for (String doorType : placedRoom.doorMap.keySet())
