@@ -162,6 +162,7 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("tooltip.bloodmagic.trainer.whitelist", "Block other upgrades");
 		add("tooltip.bloodmagic.trainer.blacklist", "Allow other upgrades");
+		add("tooltip.bloodmagic.trainer.deny", "Deny:");
 
 		add("tooltip.bloodmagic.filter.anytag", "Any Tag of %s");
 		add("tooltip.bloodmagic.contained_filters", "Contained Filters:");
@@ -394,6 +395,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.livingarmour.upgrade.level", "%s (Level %d)");
 		add("tooltip.bloodmagic.livingarmour.upgrade.progress", "%s (%d/100)");
 		add("tooltip.bloodmagic.livingarmour.upgrade.points", "Upgrade points: %s / %s");
+		add("tooltip.bloodmagic.livingtrainer.upgrade.points", "Upgrade points: %s");
 
 		add("tooltip.bloodmagic.livingarmour.extraExtraInfo", "&9-Hold shift + M for progress info-");
 

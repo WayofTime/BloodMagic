@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.common.item;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -19,6 +20,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -66,6 +68,15 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 	{
 		if (stack.getTag() != null)
 		{
+			LivingStats stats = getLivingStats(stack);
+
+			if (stats == null)
+			{
+				return;
+			}
+
+//			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.livingtrainer.upgrade.points", stats.getUsedPoints()).mergeStyle(TextFormatting.GOLD));
+
 			boolean isWhitelist = getIsWhitelist(stack);
 			if (isWhitelist)
 			{
@@ -74,7 +85,30 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 			{
 				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.trainer.blacklist"));
 			}
-			ILivingContainer.appendLivingTooltip(stack, getLivingStats(stack), tooltip, false);
+
+			Map<LivingUpgrade, Integer> positiveUpgradeMap = new HashMap<>();
+			List<LivingUpgrade> zeroUpgradeList = new ArrayList<>();
+
+			stats.getUpgrades().forEach((k, v) -> {
+				int level = k.getLevel(v.intValue());
+				if (level > 0)
+					positiveUpgradeMap.put(k, level);
+				else
+					zeroUpgradeList.add(k);
+			});
+
+			positiveUpgradeMap.forEach((k, v) -> {
+				tooltip.add(new TranslationTextComponent("%s %s", new TranslationTextComponent(k.getTranslationKey()), new TranslationTextComponent("enchantment.level." + v)).mergeStyle(TextFormatting.GRAY));
+			});
+
+			if (!zeroUpgradeList.isEmpty() && !isWhitelist)
+			{
+				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.trainer.deny"));
+				for (LivingUpgrade upgrade : zeroUpgradeList)
+				{
+					tooltip.add(new TranslationTextComponent(upgrade.getTranslationKey()).mergeStyle(TextFormatting.GRAY));
+				}
+			}
 		}
 	}
 

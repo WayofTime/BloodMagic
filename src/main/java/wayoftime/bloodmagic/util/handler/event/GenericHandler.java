@@ -192,7 +192,7 @@ public class GenericHandler
 //			AnointmentHolder holder = AnointmentHolder.fromPlayer(sourcePlayer, Hand.MAIN_HAND);
 
 //			System.out.println("Checking consumption. Holder is: " + holder);
-			if (holder != null && holder.consumeAnointmentDurabilityOnHit(heldStack, EquipmentSlotType.MAINHAND))
+			if (holder != null && holder.consumeAnointmentDurabilityOnHit(heldStack, EquipmentSlotType.MAINHAND, sourcePlayer))
 			{
 				holder.toItemStack(heldStack);
 			}
@@ -568,7 +568,7 @@ public class GenericHandler
 					event.setExpToDrop(event.getExpToDrop() + expAdded);
 				}
 
-				if (holder.consumeAnointmentDurabilityOnHarvest(heldStack, EquipmentSlotType.MAINHAND))
+				if (holder.consumeAnointmentDurabilityOnHarvest(heldStack, EquipmentSlotType.MAINHAND, player))
 					holder.toItemStack(heldStack);
 			}
 		}
@@ -639,7 +639,7 @@ public class GenericHandler
 		AnointmentHolder holder = AnointmentHolder.fromItemStack(stack);
 		if (holder != null)
 		{
-			if (holder.consumeAnointmentDurabilityOnUseFinish(stack, EquipmentSlotType.MAINHAND))
+			if (holder.consumeAnointmentDurabilityOnUseFinish(stack, EquipmentSlotType.MAINHAND, event.getEntityLiving()))
 			{
 
 				holder.toItemStack(stack);
