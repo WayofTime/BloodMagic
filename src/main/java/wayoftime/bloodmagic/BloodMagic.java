@@ -17,7 +17,6 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.MinecraftForge;
@@ -155,8 +154,7 @@ public class BloodMagic
 		modBus.addListener(ConfigManager::onCommonReload);
 
 		MinecraftForge.EVENT_BUS.register(new GenericHandler());
-//		MinecraftForge.EVENT_BUS.register(new ClientHandler()); // onTextureStitchEvent added because this is commented out.
-		modBus.addListener(this::onTextureStitchEvent);
+//		MinecraftForge.EVENT_BUS.register(new ClientHandler());
 		modBus.addListener(this::registerColors);
 
 		MinecraftForge.EVENT_BUS.register(new WillHandler());
@@ -384,10 +382,4 @@ public class BloodMagic
 		}
 	};
 	public static final String NAME = "Blood Magic: Alchemical Wizardry";
-
-	@SubscribeEvent
-	public void onTextureStitchEvent(TextureStitchEvent.Pre event)
-	{
-		event.addSprite(this.rl("item/curios_empty_living_armour_socket"));
-	}
 }

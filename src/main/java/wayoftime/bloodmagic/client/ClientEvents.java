@@ -21,6 +21,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DeferredWorkQueue;
@@ -284,5 +285,11 @@ public class ClientEvents
 				return 0;
 			}
 		});
+	}
+
+	@SubscribeEvent
+	public static void onTextureStitchEvent(TextureStitchEvent.Pre event)
+	{
+		event.addSprite(BloodMagic.rl("item/curios_empty_living_armour_socket"));
 	}
 }
