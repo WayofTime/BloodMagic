@@ -2,7 +2,6 @@ package wayoftime.bloodmagic.common.item;
 
 import java.util.List;
 
-import net.minecraft.block.BushBlock;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -44,7 +43,6 @@ public class ItemThrowingDagger extends Item
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand hand)
 	{
-		BushBlock d;
 		ItemStack stack = playerIn.getHeldItem(hand);
 		if (!playerIn.isCreative())
 		{

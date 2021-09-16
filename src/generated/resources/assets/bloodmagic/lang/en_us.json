@@ -433,6 +433,7 @@
   "ritual.bloodmagic.regenerationRitual.steadfast.info": "(Steadfast)",
   "ritual.bloodmagic.regenerationRitual.vampire.info": "(Vampirism) Mobs within this range have their health syphoned to heal players in the Healing range.",
   "ritual.bloodmagic.regenerationRitual.vengeful.info": "(Vengeful)",
+  "ritual.bloodmagic.simpleDungeon": "Edge of the Hidden Realm",
   "ritual.bloodmagic.speedRitual": "Ritual of Speed",
   "ritual.bloodmagic.speedRitual.default.info": "(Raw) Increases the velocity caused by the ritual based on total Will.",
   "ritual.bloodmagic.speedRitual.destructive.info": "(Destructive) Prevents child mobs and players from being transported. Players are transported if paired with Vengeful.",

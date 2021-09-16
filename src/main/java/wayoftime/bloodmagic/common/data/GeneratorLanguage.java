@@ -219,6 +219,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.forsakenSoulRitual", "Gathering of the Forsaken Souls");
 		add("ritual.bloodmagic.crystalSplitRitual", "Resonance of the Faceted Crystal");
 		add("ritual.bloodmagic.ellipseRitual", "Focus of the Ellipsoid");
+		add("ritual.bloodmagic.simpleDungeonRitual", "Edge of the Hidden Realm");
 
 		add("ritual.bloodmagic.cobblestoneRitual", "Le Vulcanos Frigius");
 		add("ritual.bloodmagic.placerRitual", "The Filler");
