@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "bloodmagic:dungeon_emitter"
+          "name": "bloodmagic:spikes"
         }
       ],
       "conditions": [

@@ -180,6 +180,7 @@ public class BloodMagicBlocks
 
 	public static final RegistryObject<Block> DUNGEON_CONTROLLER = BLOCKS.register("dungeon_controller", () -> new BlockDungeonController());
 	public static final RegistryObject<Block> DUNGEON_SEAL = BLOCKS.register("dungeon_seal", () -> new BlockDungeonSeal());
+	public static final RegistryObject<Block> SPIKES = DUNGEONBLOCKS.register("spikes", () -> new BlockPillarCap(Properties.create(Material.IRON).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.CHAIN).notSolid().doesNotBlockMovement().harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
 
 	public static final RegistryObject<Block> NETHER_SOIL = BLOCKS.register("nether_soil", () -> new BlockNetherrackSoil(Properties.create(Material.EARTH).hardnessAndResistance(0.4F, 0.4F).sound(SoundType.NETHERRACK).harvestTool(ToolType.PICKAXE).tickRandomly()));
 

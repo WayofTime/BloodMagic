@@ -321,6 +321,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> DUNGEON_GLOWING_CRACKED_BRICK_1_BLOCK = ITEMS.register("dungeon_cracked_brick1", () -> new BlockItem(BloodMagicBlocks.DUNGEON_GLOWING_CRACKED_BRICK_1.get(), new Item.Properties().group(BloodMagic.TAB)));
 
 	public static final RegistryObject<Item> DUNGEON_ORE_BLOCK = ITEMS.register("dungeon_ore", () -> new BlockItem(BloodMagicBlocks.DUNGEON_ORE.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> SPIKES = ITEMS.register("spikes", () -> new BlockItem(BloodMagicBlocks.SPIKES.get(), new Item.Properties().group(BloodMagic.TAB)));
 
 	public static final RegistryObject<Item> HELLFORGED_BLOCK = ITEMS.register("dungeon_metal", () -> new BlockItem(BloodMagicBlocks.HELLFORGED_BLOCK.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> INVERSION_PILLAR_BLOCK = ITEMS.register("inversion_pillar", () -> new BlockItem(BloodMagicBlocks.INVERSION_PILLAR.get(), new Item.Properties().group(BloodMagic.TAB)));
