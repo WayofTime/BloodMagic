@@ -77,6 +77,8 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerBlockModel(BloodMagicBlocks.DUNGEON_BRICK_SLAB.get());
 		registerBlockModel(BloodMagicBlocks.DUNGEON_TILE_SLAB.get());
 
+//		registerBlockModel(BloodMagicBlocks.INVERSION_PILLAR_CAP.get());
+
 		registerBlockModel(BloodMagicBlocks.DUNGEON_CONTROLLER.get());
 		registerBlockModel(BloodMagicBlocks.DUNGEON_SEAL.get());
 

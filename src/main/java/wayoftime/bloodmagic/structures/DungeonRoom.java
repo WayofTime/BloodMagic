@@ -28,6 +28,7 @@ public class DungeonRoom
 	public float oreDensity = 0;
 	public BlockPos spawnLocation = BlockPos.ZERO;
 	public BlockPos controllerOffset = BlockPos.ZERO;
+	public BlockPos portalOffset = BlockPos.ZERO;
 
 	// Set of maps that contain the types of rooms that a given door (defined by its
 	// BlockPos) can link to. Defined in this manner to reduce the file size of the
@@ -133,6 +134,11 @@ public class DungeonRoom
 	public BlockPos getPlayerSpawnLocationForPlacement(PlacementSettings settings, BlockPos offset)
 	{
 		return Template.transformedBlockPos(settings, spawnLocation).add(offset);
+	}
+
+	public BlockPos getPortalOffsetLocationForPlacement(PlacementSettings settings, BlockPos offset)
+	{
+		return Template.transformedBlockPos(settings, portalOffset).add(offset);
 	}
 
 	public BlockPos getInitialSpawnOffsetForControllerPos(PlacementSettings settings, BlockPos controllerPos)

@@ -84,6 +84,7 @@ import wayoftime.bloodmagic.tile.TileDungeonController;
 import wayoftime.bloodmagic.tile.TileDungeonSeal;
 import wayoftime.bloodmagic.tile.TileFungalCharge;
 import wayoftime.bloodmagic.tile.TileIncenseAltar;
+import wayoftime.bloodmagic.tile.TileInversionPillar;
 import wayoftime.bloodmagic.tile.TileMasterRitualStone;
 import wayoftime.bloodmagic.tile.TileMimic;
 import wayoftime.bloodmagic.tile.TileShapedExplosive;
@@ -266,6 +267,8 @@ public class BloodMagic
 
 		event.getRegistry().register(TileEntityType.Builder.create(TileDungeonController::new, BloodMagicBlocks.DUNGEON_CONTROLLER.get()).build(null).setRegistryName("dungeon_controller"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileDungeonSeal::new, BloodMagicBlocks.DUNGEON_SEAL.get()).build(null).setRegistryName("dungeon_seal"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileInversionPillar::new, BloodMagicBlocks.INVERSION_PILLAR.get()).build(null).setRegistryName("inversion_pillar"));
+
 	}
 
 	@SubscribeEvent

@@ -332,6 +332,7 @@ public class GeneratorLootTable extends LootTableProvider
 			registerNoDropLootTable(BloodMagicBlocks.FUNGAL_CHARGE.get());
 
 			registerDropSelfLootTable(BloodMagicBlocks.INVERSION_PILLAR.get());
+			registerDropSelfLootTable(BloodMagicBlocks.INVERSION_PILLAR_CAP.get());
 		}
 
 		private void registerNoDropLootTable(Block block)
