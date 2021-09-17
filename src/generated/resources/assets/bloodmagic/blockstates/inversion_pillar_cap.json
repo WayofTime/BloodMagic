@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "bloodmagic:block/inversion_pillar_top"
+    },
+    "type=bottom": {
+      "model": "bloodmagic:block/inversion_pillar_bottom"
+    }
+  }
+}

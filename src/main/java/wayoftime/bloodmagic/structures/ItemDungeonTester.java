@@ -6,7 +6,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import wayoftime.bloodmagic.BloodMagic;
@@ -28,9 +27,9 @@ public class ItemDungeonTester extends Item
 			DungeonSynthesizer dungeon = new DungeonSynthesizer();
 //			ResourceLocation initialType = new ResourceLocation("bloodmagic:room_pools/test_pool_1");
 			ResourceLocation initialType = new ResourceLocation("bloodmagic:room_pools/entrances/mini_dungeon_entrances");
-			BlockPos safePlayerPosition = dungeon.generateInitialRoom(initialType, world.rand, (ServerWorld) world, player.getPosition().offset(player.getAdjustedHorizontalFacing(), 2));
+//			BlockPos safePlayerPosition = dungeon.generateInitialRoom(initialType, world.rand, (ServerWorld) world, player.getPosition().offset(player.getAdjustedHorizontalFacing(), 2));
 
-			player.setPosition(safePlayerPosition.getX(), safePlayerPosition.getY(), safePlayerPosition.getZ());
+//			player.setPosition(safePlayerPosition.getX(), safePlayerPosition.getY(), safePlayerPosition.getZ());
 		}
 		return super.onItemRightClick(world, player, hand);
 	}

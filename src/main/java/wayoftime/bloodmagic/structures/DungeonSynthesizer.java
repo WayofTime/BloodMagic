@@ -80,7 +80,7 @@ public class DungeonSynthesizer
 		}
 	}
 
-	public BlockPos generateInitialRoom(ResourceLocation initialType, Random rand, ServerWorld world, BlockPos spawningPosition)
+	public BlockPos[] generateInitialRoom(ResourceLocation initialType, Random rand, ServerWorld world, BlockPos spawningPosition)
 	{
 
 //		String initialDoorName = "default";
@@ -148,8 +148,9 @@ public class DungeonSynthesizer
 		}
 
 		BlockPos playerPos = initialRoom.getPlayerSpawnLocationForPlacement(settings, roomPlacementPosition);
+		BlockPos portalLocation = initialRoom.getPortalOffsetLocationForPlacement(settings, roomPlacementPosition);
 
-		return playerPos;
+		return new BlockPos[] { playerPos, portalLocation };
 	}
 
 	public void addNewControllerBlock(ServerWorld world, BlockPos controllerPos)

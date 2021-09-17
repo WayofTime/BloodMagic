@@ -115,6 +115,9 @@ public class Constants
 
 		public static final String DUNGEON_CONTROLLER = "dungeon_controller";
 		public static final String DUNGEON_DOOR = "dungeon_door";
+		public static final String DUNGEON_TELEPORT_POS = "dungeon_teleport_pos";
+
+		public static final String DUNGEON_TELEPORT_KEY = "dungeon_teleport_key";
 
 		public static final String GHOST_STACK_SIZE = "stackSize";
 

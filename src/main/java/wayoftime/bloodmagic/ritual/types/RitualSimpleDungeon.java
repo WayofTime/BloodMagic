@@ -1,18 +1,21 @@
 package wayoftime.bloodmagic.ritual.types;
 
-import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ConfigManager;
+import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.common.dimension.DungeonDimensionHelper;
 import wayoftime.bloodmagic.common.item.ItemActivationCrystal;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.ritual.IMasterRitualStone;
@@ -20,6 +23,7 @@ import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.ritual.RitualRegister;
 import wayoftime.bloodmagic.structures.DungeonSynthesizer;
+import wayoftime.bloodmagic.tile.TileInversionPillar;
 
 @RitualRegister("simple_dungeon")
 public class RitualSimpleDungeon extends Ritual
@@ -55,21 +59,54 @@ public class RitualSimpleDungeon extends Ritual
 
 		if (!world.isRemote && world instanceof ServerWorld)
 		{
-//			System.out.println("Test");
-//			DungeonTester.testDungeonElementWithOutput((ServerWorld) world, player.getPosition());
-			DungeonSynthesizer dungeon = new DungeonSynthesizer();
-//			ResourceLocation initialType = new ResourceLocation("bloodmagic:room_pools/test_pool_1");
-			ResourceLocation initialType = new ResourceLocation("bloodmagic:room_pools/entrances/mini_dungeon_entrances");
-			BlockPos safePlayerPosition = dungeon.generateInitialRoom(initialType, world.rand, (ServerWorld) world, masterPos);
-
-			AxisAlignedBB bb = new AxisAlignedBB(masterPos).expand(5, 5, 5);
-
-			List<PlayerEntity> players = world.getEntitiesWithinAABB(PlayerEntity.class, bb);
-
-			for (PlayerEntity player : players)
+			DungeonDimensionHelper.test(world);
+			ServerWorld dungeonWorld = DungeonDimensionHelper.getDungeonWorld(world);
+			if (dungeonWorld != null)
 			{
-				player.setPositionAndUpdate(safePlayerPosition.getX(), safePlayerPosition.getY(), safePlayerPosition.getZ());
+				BlockPos dungeonSpawnLocation = masterPos;
+				DungeonSynthesizer dungeon = new DungeonSynthesizer();
+////			ResourceLocation initialType = new ResourceLocation("bloodmagic:room_pools/test_pool_1");
+				ResourceLocation initialType = new ResourceLocation("bloodmagic:room_pools/entrances/mini_dungeon_entrances");
+				BlockPos[] positions = dungeon.generateInitialRoom(initialType, world.rand, dungeonWorld, dungeonSpawnLocation);
+
+				BlockPos pillarPos = masterPos.offset(Direction.UP, 2);
+				BlockPos safePlayerPosition = positions[0];
+
+				BlockPos dungeonPortalPos = positions[1];
+				BlockPos overworldPlayerPos = masterPos.offset(Direction.UP).offset(masterRitualStone.getDirection(), 2);
+
+				world.setBlockState(pillarPos, BloodMagicBlocks.INVERSION_PILLAR.get().getDefaultState());
+				TileEntity tile = world.getTileEntity(pillarPos);
+				if (tile instanceof TileInversionPillar)
+				{
+					TileInversionPillar tileInversion = (TileInversionPillar) tile;
+					tileInversion.setDestination(dungeonWorld, safePlayerPosition);
+				}
+
+				dungeonWorld.setBlockState(dungeonPortalPos, BloodMagicBlocks.INVERSION_PILLAR.get().getDefaultState());
+				tile = dungeonWorld.getTileEntity(dungeonPortalPos);
+				if (tile instanceof TileInversionPillar)
+				{
+					TileInversionPillar tileInversion = (TileInversionPillar) tile;
+					tileInversion.setDestination(world, overworldPlayerPos);
+				}
 			}
+			world.setBlockState(masterPos, Blocks.AIR.getDefaultState());
+////			System.out.println("Test");
+////			DungeonTester.testDungeonElementWithOutput((ServerWorld) world, player.getPosition());
+//			DungeonSynthesizer dungeon = new DungeonSynthesizer();
+////			ResourceLocation initialType = new ResourceLocation("bloodmagic:room_pools/test_pool_1");
+//			ResourceLocation initialType = new ResourceLocation("bloodmagic:room_pools/entrances/mini_dungeon_entrances");
+//			BlockPos safePlayerPosition = dungeon.generateInitialRoom(initialType, world.rand, (ServerWorld) world, masterPos);
+//
+//			AxisAlignedBB bb = new AxisAlignedBB(masterPos).expand(5, 5, 5);
+//
+//			List<PlayerEntity> players = world.getEntitiesWithinAABB(PlayerEntity.class, bb);
+//
+//			for (PlayerEntity player : players)
+//			{
+//				player.setPositionAndUpdate(safePlayerPosition.getX(), safePlayerPosition.getY(), safePlayerPosition.getZ());
+//			}
 		}
 	}
 

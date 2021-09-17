@@ -27,10 +27,12 @@ import net.minecraftforge.fml.RegistryObject;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BlockAlchemicalReactionChamber;
 import wayoftime.bloodmagic.common.block.BlockDemonCrystal;
+import wayoftime.bloodmagic.common.block.BlockInversionPillarEnd;
 import wayoftime.bloodmagic.common.block.BlockRoutingNode;
 import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.block.base.BlockPillarCap;
+import wayoftime.bloodmagic.common.block.type.PillarCapType;
 
 public class GeneratorBlockStates extends BlockStateProvider
 {
@@ -119,6 +121,18 @@ public class GeneratorBlockStates extends BlockStateProvider
 
 			return builder.modelFile(model).build();
 		});
+
+		buildInversionPillarCap(BloodMagicBlocks.INVERSION_PILLAR_CAP.get());
+	}
+
+	private void buildInversionPillarCap(Block block)
+	{
+		VariantBlockStateBuilder builder = getVariantBuilder(block);
+
+		ModelFile bottomModel = models().withExistingParent("inversion_pillar_bottom", modLoc("pillar_bottom")).texture("texture", modLoc("models/pillar_base"));
+		ModelFile topModel = models().withExistingParent("inversion_pillar_top", modLoc("pillar_top")).texture("texture", modLoc("models/pillar_base"));
+		builder.partialState().with(BlockInversionPillarEnd.TYPE, PillarCapType.BOTTOM).modelForState().modelFile(bottomModel).addModel();
+		builder.partialState().with(BlockInversionPillarEnd.TYPE, PillarCapType.TOP).modelForState().modelFile(topModel).addModel();
 	}
 
 	private void buildOrientable(Block block, String name, ResourceLocation modelPath, ResourceLocation base, ResourceLocation edges, ResourceLocation centerCap, ResourceLocation binding, ResourceLocation core)
