@@ -181,7 +181,7 @@ public class BloodMagicBlocks
 	public static final RegistryObject<Block> DUNGEON_CONTROLLER = BLOCKS.register("dungeon_controller", () -> new BlockDungeonController());
 	public static final RegistryObject<Block> DUNGEON_SEAL = BLOCKS.register("dungeon_seal", () -> new BlockDungeonSeal());
 	public static final RegistryObject<Block> SPIKES = DUNGEONBLOCKS.register("spikes", () -> new BlockSpikes(Properties.create(Material.IRON).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.CHAIN).notSolid().noDrops().doesNotBlockMovement().harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
-	public static final RegistryObject<Block> SPIKE_TRAP = DUNGEONBLOCKS.register("spike_trap", () -> new Block(Properties.create(Material.IRON).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.CHAIN).notSolid().noDrops().doesNotBlockMovement().harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_SPIKE_TRAP = DUNGEONBLOCKS.register("dungeon_spike_trap", () -> new BlockSpikeTrap(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
 
 
 	public static final RegistryObject<Block> NETHER_SOIL = BLOCKS.register("nether_soil", () -> new BlockNetherrackSoil(Properties.create(Material.EARTH).hardnessAndResistance(0.4F, 0.4F).sound(SoundType.NETHERRACK).harvestTool(ToolType.PICKAXE).tickRandomly()));
