@@ -51,6 +51,8 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 	public boolean isSlave = false;
 	public int burnTime = 0;
 	public int ticksRequired = 1;
+	public boolean orbFlag = false;
+	public boolean lpFlag = false;
 
 	public BlockPos connectedPos = BlockPos.ZERO;
 	public boolean[] blockedSlots = new boolean[] { false, false, false, false, false, false };
@@ -353,6 +355,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 		RecipeAlchemyTable recipeAlchemyTable = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyTable(world, inputList);
 		if (recipeAlchemyTable != null && (burnTime > 0 || (!getWorld().isRemote && tier >= recipeAlchemyTable.getMinimumTier() && getContainedLp() >= recipeAlchemyTable.getSyphon())))
 		{
+			orbFlag = lpFlag = false;
 			if (burnTime == 1)
 				notifyUpdate();
 
@@ -397,6 +400,14 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 		} else
 		{
 			burnTime = 0;
+			if (recipeAlchemyTable != null)
+			{
+				orbFlag = tier < recipeAlchemyTable.getMinimumTier() ? true : false;
+				lpFlag = (!orbFlag && (getContainedLp() < recipeAlchemyTable.getSyphon())) ? true : false;
+			} else
+			{
+				orbFlag = lpFlag = false;
+			}
 		}
 
 	}
@@ -404,6 +415,16 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 	public double getProgressForGui()
 	{
 		return ((double) burnTime) / ticksRequired;
+	}
+
+	public boolean getOrbFlagForGui()
+	{
+		return orbFlag;
+	}
+
+	public boolean getLPFlagforGui()
+	{
+		return lpFlag;
 	}
 
 	private boolean canCraft(ItemStack output)
