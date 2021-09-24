@@ -9,6 +9,7 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -18,6 +19,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import wayoftime.bloodmagic.tile.TileDungeonAlternator;
 
 import javax.annotation.Nullable;
 
@@ -44,28 +46,18 @@ public class BlockAlternator extends Block {
             worldIn.getPendingBlockTicks().scheduleTick(pos, this, 1);
 
     }
-
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if(!worldIn.isRemote) {
-            tick(state, (ServerWorld) worldIn, pos);
-        }
-        return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+    
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
     }
-
-    public void tick(BlockState state, ServerWorld world, BlockPos pos){
-        if (world.isRemote){
-            return;
-        }
-
-        if(state.get(ACTIVE)){
-            world.setBlockState(pos, state.with(ACTIVE, false));
-        }
-        else {
-            world.setBlockState(pos, state.with(ACTIVE, true));
-        }
-        world.getPendingBlockTicks().scheduleTick(pos, this, 20);
+    
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+        return new TileDungeonAlternator();
     }
-
+    
     @Override
     public boolean canProvidePower(BlockState state) {
         return true;
@@ -74,7 +66,12 @@ public class BlockAlternator extends Block {
     public int getStrongPower(BlockState state, IBlockReader blockAccess, BlockPos pos, Direction side) {
         return state.get(ACTIVE) ? 15 : 0;
     }
-
+    
+    @Override
+    public int getWeakPower(BlockState state, IBlockReader blockAccess, BlockPos pos, Direction side) {
+        return state.get(ACTIVE) ? 15 : 0;
+    }
+    
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(ACTIVE);
     }

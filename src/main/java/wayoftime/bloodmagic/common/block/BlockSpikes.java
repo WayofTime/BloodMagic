@@ -2,7 +2,9 @@ package wayoftime.bloodmagic.common.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
@@ -14,6 +16,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
@@ -65,7 +68,18 @@ public class BlockSpikes extends Block {
 
 
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        entityIn.setMotionMultiplier(state, new Vector3d(0.55D, (double)0.20F, 0.55D));
-        entityIn.attackEntityFrom(DamageSource.GENERIC, 2.0F);
+        if (entityIn.getType() != EntityType.ITEM){
+            entityIn.setMotionMultiplier(state, new Vector3d(0.55D, (double) 0.20F, 0.55D));
+            entityIn.attackEntityFrom(DamageSource.GENERIC, 2.0F);
+        }
+    }
+    
+
+    @Override
+    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+        super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
+        if (worldIn.getBlockState(pos.offset(state.get(FACING).getOpposite())).isAir()){
+            worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
+        }
     }
 }
