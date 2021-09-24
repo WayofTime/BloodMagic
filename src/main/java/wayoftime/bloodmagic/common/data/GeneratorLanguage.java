@@ -169,6 +169,11 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("tooltip.bloodmagic.simplekey", "A simple key that can open dungeon doors");
 
+		add("tooltip.bloodmagic.alchemytable.orberror.title", "Orb Error");
+		add("tooltip.bloodmagic.alchemytable.orberror.text", "Orb's Tier is not high enough for this recipe.");
+		add("tooltip.bloodmagic.alchemytable.lperror.title", "Soul Network Error");
+		add("tooltip.bloodmagic.alchemytable.lperror.text", "Insufficient LP in Soul Network, or Blood Orb is not Bound.");
+
 		// Ritual info
 		add("tooltip.bloodmagic.diviner.currentRitual", "Current Ritual: %s");
 		add("tooltip.bloodmagic.diviner.blankRune", "Blank Runes: %d");

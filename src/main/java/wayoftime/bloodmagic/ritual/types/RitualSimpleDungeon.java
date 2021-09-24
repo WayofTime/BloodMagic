@@ -1,9 +1,14 @@
 package wayoftime.bloodmagic.ritual.types;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
 
+import com.google.common.collect.Lists;
+
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -14,7 +19,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ConfigManager;
+import wayoftime.bloodmagic.common.block.BlockInversionPillarEnd;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.common.block.type.PillarCapType;
 import wayoftime.bloodmagic.common.dimension.DungeonDimensionHelper;
 import wayoftime.bloodmagic.common.item.ItemActivationCrystal;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
@@ -24,6 +31,7 @@ import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.ritual.RitualRegister;
 import wayoftime.bloodmagic.structures.DungeonSynthesizer;
 import wayoftime.bloodmagic.tile.TileInversionPillar;
+import wayoftime.bloodmagic.util.helper.NetworkHelper;
 
 @RitualRegister("simple_dungeon")
 public class RitualSimpleDungeon extends Ritual
@@ -59,11 +67,11 @@ public class RitualSimpleDungeon extends Ritual
 
 		if (!world.isRemote && world instanceof ServerWorld)
 		{
-			DungeonDimensionHelper.test(world);
+//			DungeonDimensionHelper.test(world);
 			ServerWorld dungeonWorld = DungeonDimensionHelper.getDungeonWorld(world);
 			if (dungeonWorld != null)
 			{
-				BlockPos dungeonSpawnLocation = masterPos;
+				BlockPos dungeonSpawnLocation = NetworkHelper.getSpawnPositionOfDungeon();
 				DungeonSynthesizer dungeon = new DungeonSynthesizer();
 ////			ResourceLocation initialType = new ResourceLocation("bloodmagic:room_pools/test_pool_1");
 				ResourceLocation initialType = new ResourceLocation("bloodmagic:room_pools/entrances/mini_dungeon_entrances");
@@ -75,21 +83,41 @@ public class RitualSimpleDungeon extends Ritual
 				BlockPos dungeonPortalPos = positions[1];
 				BlockPos overworldPlayerPos = masterPos.offset(Direction.UP).offset(masterRitualStone.getDirection(), 2);
 
-				world.setBlockState(pillarPos, BloodMagicBlocks.INVERSION_PILLAR.get().getDefaultState());
-				TileEntity tile = world.getTileEntity(pillarPos);
-				if (tile instanceof TileInversionPillar)
+				spawnPortalPillar(world, dungeonWorld, pillarPos, safePlayerPosition);
+				spawnPortalPillar(dungeonWorld, world, dungeonPortalPos, overworldPlayerPos);
+
+				LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
+//				LightningBoltEntity lightning = new LightningBoltEntity(world, pos.getX() + dispX, pos.getY(), pos.getZ() + dispZ);
+				lightningboltentity.setPosition(masterPos.getX(), masterPos.getY() + 1, masterPos.getZ());
+				lightningboltentity.setEffectOnly(true);
+				world.addEntity(lightningboltentity);
+
+				List<RitualComponent> components = Lists.newArrayList();
+				gatherComponents(components::add);
+
+				for (RitualComponent component : components)
 				{
-					TileInversionPillar tileInversion = (TileInversionPillar) tile;
-					tileInversion.setDestination(dungeonWorld, safePlayerPosition);
+					BlockPos newPos = masterPos.add(component.getOffset(masterRitualStone.getDirection()));
+					world.setBlockState(newPos, Blocks.SMOOTH_STONE.getDefaultState());
 				}
 
-				dungeonWorld.setBlockState(dungeonPortalPos, BloodMagicBlocks.INVERSION_PILLAR.get().getDefaultState());
-				tile = dungeonWorld.getTileEntity(dungeonPortalPos);
-				if (tile instanceof TileInversionPillar)
-				{
-					TileInversionPillar tileInversion = (TileInversionPillar) tile;
-					tileInversion.setDestination(world, overworldPlayerPos);
-				}
+				NetworkHelper.incrementDungeonCounter();
+
+//				world.setBlockState(pillarPos, BloodMagicBlocks.INVERSION_PILLAR.get().getDefaultState());
+//				TileEntity tile = world.getTileEntity(pillarPos);
+//				if (tile instanceof TileInversionPillar)
+//				{
+//					TileInversionPillar tileInversion = (TileInversionPillar) tile;
+//					tileInversion.setDestination(dungeonWorld, safePlayerPosition);
+//				}
+//
+//				dungeonWorld.setBlockState(dungeonPortalPos, BloodMagicBlocks.INVERSION_PILLAR.get().getDefaultState());
+//				tile = dungeonWorld.getTileEntity(dungeonPortalPos);
+//				if (tile instanceof TileInversionPillar)
+//				{
+//					TileInversionPillar tileInversion = (TileInversionPillar) tile;
+//					tileInversion.setDestination(world, overworldPlayerPos);
+//				}
 			}
 			world.setBlockState(masterPos, Blocks.AIR.getDefaultState());
 ////			System.out.println("Test");
@@ -107,6 +135,19 @@ public class RitualSimpleDungeon extends Ritual
 //			{
 //				player.setPositionAndUpdate(safePlayerPosition.getX(), safePlayerPosition.getY(), safePlayerPosition.getZ());
 //			}
+		}
+	}
+
+	public void spawnPortalPillar(World spawnWorld, World destinationWorld, BlockPos pillarPos, BlockPos safePlayerPos)
+	{
+		spawnWorld.setBlockState(pillarPos, BloodMagicBlocks.INVERSION_PILLAR.get().getDefaultState());
+		TileEntity tile = spawnWorld.getTileEntity(pillarPos);
+		if (tile instanceof TileInversionPillar)
+		{
+			TileInversionPillar tileInversion = (TileInversionPillar) tile;
+			tileInversion.setDestination(destinationWorld, safePlayerPos);
+			spawnWorld.setBlockState(pillarPos.offset(Direction.DOWN), BloodMagicBlocks.INVERSION_PILLAR_CAP.get().getDefaultState().with(BlockInversionPillarEnd.TYPE, PillarCapType.BOTTOM));
+			spawnWorld.setBlockState(pillarPos.offset(Direction.UP), BloodMagicBlocks.INVERSION_PILLAR_CAP.get().getDefaultState().with(BlockInversionPillarEnd.TYPE, PillarCapType.TOP));
 		}
 	}
 

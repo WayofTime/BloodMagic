@@ -46,6 +46,7 @@ public class DungeonRoomRegistry
 //		System.out.println(totalWeightMap);
 		Integer maxWeight = totalWeightMap.get(roomPoolName);
 //		System.out.println("Pool name: " + roomPoolName);
+		System.out.println("Max weight: " + maxWeight);
 
 		int wantedWeight = 0;
 		if (maxWeight != null)
