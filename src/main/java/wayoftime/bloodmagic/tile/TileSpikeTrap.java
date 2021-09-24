@@ -2,6 +2,8 @@ package wayoftime.bloodmagic.tile;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
@@ -36,9 +38,14 @@ public class TileSpikeTrap extends TileTicking {
 				world.setBlockState(pos, getBlockState().func_235896_a_(ACTIVE), 2);
 			}
 			if(flag){
-				if (world.getBlockState(newPos).isAir())
-					world.setBlockState(newPos, BloodMagicBlocks.SPIKES.get().getDefaultState().with(FACING,getBlockState().get(FACING)));
-			} else if (world.getBlockState(newPos).getBlock() == BloodMagicBlocks.SPIKES.get()) world.setBlockState(newPos, Blocks.AIR.getDefaultState());
+				if (world.getBlockState(newPos).isAir()) {
+					world.setBlockState(newPos, BloodMagicBlocks.SPIKES.get().getDefaultState().with(FACING, getBlockState().get(FACING)));
+					world.playSound(null, pos, SoundEvents.BLOCK_PISTON_EXTEND, SoundCategory.BLOCKS, 0.3f, 0.6f);
+				}
+			} else if (world.getBlockState(newPos).getBlock() == BloodMagicBlocks.SPIKES.get()){
+				world.setBlockState(newPos, Blocks.AIR.getDefaultState());
+				world.playSound(null, pos, SoundEvents.BLOCK_PISTON_CONTRACT, SoundCategory.BLOCKS, 0.3f, 0.6f);
+			}
 		}
 	}
 }
