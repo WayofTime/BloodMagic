@@ -1,5 +1,8 @@
 package wayoftime.bloodmagic.client.screens;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
 import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
@@ -14,6 +17,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.network.AlchemyTableButtonPacket;
@@ -24,6 +28,8 @@ import wayoftime.bloodmagic.tile.container.ContainerAlchemyTable;
 public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 {
 	private static final ResourceLocation background = new ResourceLocation(BloodMagic.MODID, "textures/gui/alchemytable.png");
+	private static final List<ITextComponent> orbError = new ArrayList<ITextComponent>();
+	private static final List<ITextComponent> lpError = new ArrayList<ITextComponent>();
 	public TileAlchemyTable tileTable;
 
 	private int left, top;
@@ -34,6 +40,13 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 		tileTable = container.tileTable;
 		this.xSize = 176;
 		this.ySize = 205;
+
+		orbError.clear();
+		orbError.add(new TranslationTextComponent("tooltip.bloodmagic.alchemytable.orberror.title").mergeStyle(TextFormatting.RED));
+		orbError.add(new TranslationTextComponent("tooltip.bloodmagic.alchemytable.orberror.text").mergeStyle(TextFormatting.GRAY));
+		lpError.clear();
+		lpError.add(new TranslationTextComponent("tooltip.bloodmagic.alchemytable.lperror.title").mergeStyle(TextFormatting.RED));
+		lpError.add(new TranslationTextComponent("tooltip.bloodmagic.alchemytable.lperror.text").mergeStyle(TextFormatting.GRAY));
 	}
 
 	@Override
@@ -77,6 +90,18 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 
 		int l = this.getCookProgressScaled(90);
 		this.blit(stack, i + 106, j + 14 + 90 - l, 176, 90 - l, 18, l);
+
+		if (this.getOrbFlag())
+		{
+			this.blit(stack, i + 106, j + 24, 194, 55, 18, 18);
+			if (mouseX >= i + 106 && mouseX < i + 106 + 18 && mouseY >= j + 24 && mouseY < j + 24 + 18)
+				this.renderWrappedToolTip(stack, orbError, mouseX, mouseY, font);
+		} else if (this.getLPFlag())
+		{
+			this.blit(stack, i + 106, j + 24, 194, 73, 18, 18);
+			if (mouseX >= i + 106 && mouseX < i + 106 + 18 && mouseY >= j + 24 && mouseY < j + 24 + 18)
+				this.renderWrappedToolTip(stack, lpError, mouseX, mouseY, font);
+		}
 
 		int slotId = tileTable.activeSlot;
 		if (slotId != -1)
@@ -135,6 +160,16 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 //		double progress = ((float) this.container.data.get(0)) / ((float) this.container.data.get(1));
 //		System.out.println(this.container.data.get(0));
 		return (int) (progress * scale);
+	}
+
+	public boolean getOrbFlag()
+	{
+		return ((TileAlchemyTable) tileTable).getOrbFlagForGui();
+	}
+
+	public boolean getLPFlag()
+	{
+		return ((TileAlchemyTable) tileTable).getLPFlagforGui();
 	}
 
 	public class DirectionalButton extends Button

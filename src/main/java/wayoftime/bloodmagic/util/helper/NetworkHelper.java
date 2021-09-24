@@ -6,18 +6,19 @@ import javax.annotation.Nullable;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.storage.DimensionSavedDataManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
+import wayoftime.bloodmagic.common.item.BloodOrb;
+import wayoftime.bloodmagic.common.item.IBindable;
+import wayoftime.bloodmagic.common.item.IBloodOrb;
 import wayoftime.bloodmagic.core.data.BMWorldSavedData;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
 import wayoftime.bloodmagic.event.SoulNetworkEvent;
-import wayoftime.bloodmagic.common.item.IBindable;
-import wayoftime.bloodmagic.common.item.BloodOrb;
-import wayoftime.bloodmagic.common.item.IBloodOrb;
 
 public class NetworkHelper
 {
@@ -179,5 +180,72 @@ public class NetworkHelper
 	public static void setMaxOrb(SoulNetwork soulNetwork, int maxOrb)
 	{
 		soulNetwork.setOrbTier(Math.max(maxOrb, soulNetwork.getOrbTier()));
+	}
+
+	public static BlockPos getSpawnPositionOfDungeon()
+	{
+		if (dataHandler == null)
+		{
+			if (ServerLifecycleHooks.getCurrentServer() == null)
+				return null;
+
+			DimensionSavedDataManager savedData = ServerLifecycleHooks.getCurrentServer().func_241755_D_().getSavedData();
+			dataHandler = savedData.getOrCreate(() -> new BMWorldSavedData(), BMWorldSavedData.ID);
+		}
+
+//		currentNumberOfDungeons = curNumVec(n);
+//	    dungeonIndex = currentNumberOfDungeons + 1;
+//	    gridIndexSize = ceil((sqrt(dungeonIndex) - 1)/2);
+//	    ringPlacementIndex = currentNumberOfDungeons;
+//	    if(gridIndexSize > 0)
+//	        ringPlacementIndex = ringPlacementIndex - (2*(gridIndexSize - 1) + 1)*(2*(gridIndexSize - 1) + 1);
+//	    end
+//
+//	    for( i = -gridIndexSize : gridIndexSize)
+//	        for( j = -gridIndexSize : gridIndexSize)
+//	            if (abs(i) ~= gridIndexSize && abs(j) ~= gridIndexSize)
+//	                continue;
+//	            end
+//
+//	            if(ringPlacementIndex == 0)
+//	                disp(['Position for dungeon index ' num2str(dungeonIndex) ': ' num2str(i) ', ' num2str(j)]);
+//	            end
+//	            ringPlacementIndex = ringPlacementIndex - 1;
+//	        end
+//	    end
+
+		int currentNumberOfDungeons = dataHandler.getNumberOfDungeons();
+		double dungeonIndex = currentNumberOfDungeons + 1;
+		int gridIndexSize = (int) Math.ceil((Math.sqrt(dungeonIndex) - 1) / 2);
+		int ringPlacementIndex = currentNumberOfDungeons;
+		if (gridIndexSize > 0)
+		{
+			ringPlacementIndex -= (2 * (gridIndexSize - 1) + 1) * (2 * (gridIndexSize - 1) + 1);
+		}
+
+		for (int i = -gridIndexSize; i <= gridIndexSize; i++)
+		{
+			for (int j = -gridIndexSize; j <= gridIndexSize; j++)
+			{
+				if (Math.abs(i) == gridIndexSize || Math.abs(j) == gridIndexSize)
+				{
+					if (ringPlacementIndex == 0)
+					{
+						return new BlockPos(i * BMWorldSavedData.DUNGEON_DISPLACEMENT, 128, j * BMWorldSavedData.DUNGEON_DISPLACEMENT);
+					}
+
+					ringPlacementIndex -= 1;
+				}
+			}
+		}
+
+		return BlockPos.ZERO;
+	}
+
+	public static void incrementDungeonCounter()
+	{
+		int currentNumberOfDungeons = dataHandler.getNumberOfDungeons();
+		dataHandler.setNumberOfDungeons(currentNumberOfDungeons + 1);
+		dataHandler.markDirty();
 	}
 }

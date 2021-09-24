@@ -16,7 +16,7 @@ import wayoftime.bloodmagic.tile.TileInversionPillar;
 
 public class BlockInversionPillar extends Block
 {
-	protected static final VoxelShape BODY = Block.makeCuboidShape(2, 0.001, 2, 14, 15.999, 14);
+	protected static final VoxelShape BODY = Block.makeCuboidShape(2, 1, 2, 14, 15, 14);
 
 	public BlockInversionPillar(Properties properties)
 	{
