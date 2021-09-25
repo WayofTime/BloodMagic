@@ -1,0 +1,28 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:smelting_anointment"
+    },
+    {
+      "item": "bloodmagic:tauoil"
+    },
+    {
+      "item": "minecraft:furnace"
+    },
+    [
+      {
+        "item": "minecraft:charcoal"
+      },
+      {
+        "item": "minecraft:coal"
+      }
+    ]
+  ],
+  "output": {
+    "item": "bloodmagic:smelting_anointment_l"
+  },
+  "syphon": 1000,
+  "ticks": 100,
+  "upgradeLevel": 3
+}

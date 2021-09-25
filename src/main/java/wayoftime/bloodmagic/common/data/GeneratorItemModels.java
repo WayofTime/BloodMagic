@@ -125,6 +125,17 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerMultiLayerItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
 
 		registerMultiLayerItem(BloodMagicItems.BOW_POWER_ANOINTMENT_STRONG.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_two"));
+
+		registerMultiLayerItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_L.get(), modLoc("item/alchemic_liquid"), modLoc("item/labeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.SILK_TOUCH_ANOINTMENT_L.get(), modLoc("item/alchemic_liquid"), modLoc("item/labeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.FORTUNE_ANOINTMENT_L.get(), modLoc("item/alchemic_liquid"), modLoc("item/labeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.HOLY_WATER_ANOINTMENT_L.get(), modLoc("item/alchemic_liquid"), modLoc("item/labeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT_L.get(), modLoc("item/alchemic_liquid"), modLoc("item/labeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.QUICK_DRAW_ANOINTMENT_L.get(), modLoc("item/alchemic_liquid"), modLoc("item/labeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.LOOTING_ANOINTMENT_L.get(), modLoc("item/alchemic_liquid"), modLoc("item/labeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.BOW_POWER_ANOINTMENT_L.get(), modLoc("item/alchemic_liquid"), modLoc("item/labeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.SMELTING_ANOINTMENT_L.get(), modLoc("item/alchemic_liquid"), modLoc("item/labeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT_L.get(), modLoc("item/alchemic_liquid"), modLoc("item/labeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
 	}
 
 	private void registerCustomFullTexture(Block block, String texturePath)

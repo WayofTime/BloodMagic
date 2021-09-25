@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:fortune_anointment"
+    },
+    {
+      "item": "bloodmagic:tauoil"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    },
+    {
+      "tag": "forge:dusts/coal"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:fortune_anointment_l"
+  },
+  "syphon": 1000,
+  "ticks": 100,
+  "upgradeLevel": 3
+}
