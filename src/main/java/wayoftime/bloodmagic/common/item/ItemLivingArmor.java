@@ -81,10 +81,15 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 	@Override
 	public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken)
 	{
+		if (this != BloodMagicItems.LIVING_PLATE.get())
+		{
+			return super.damageItem(stack, amount, entity, onBroken);
+		}
+
 		int durRemaining = (stack.getMaxDamage() - 1 - stack.getDamage());
 		int value = Math.max(Math.min(durRemaining, amount), 0);
 
-		System.out.println("value: " + value + ", damage of stack: " + stack.getDamage() + ", max damage of stack: " + stack.getMaxDamage());
+//		System.out.println("value: " + value + ", damage of stack: " + stack.getDamage() + ", max damage of stack: " + stack.getMaxDamage());
 		return value;
 	}
 
@@ -95,6 +100,9 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 		Multimap<Attribute, AttributeModifier> modifiers = HashMultimap.create();
 		modifiers.putAll(super.getAttributeModifiers(slot, stack));
 		if (slot != EquipmentSlotType.CHEST)
+			return modifiers;
+
+		if (this.getMaxDamage(stack) - this.getDamage(stack) <= 1)
 			return modifiers;
 
 		LivingStats stats = getLivingStats(stack);

@@ -1,4 +1,13 @@
 ------------------------------------------------------
+Version 3.1.4
+------------------------------------------------------
+- Fixed a bug when removing max level upgrades from Living Armour
+- Added the Elytra Living Armour upgrade! Elytra not included.
+- Added the Training Bracelet
+
+
+
+------------------------------------------------------
 Version 3.1.3
 ------------------------------------------------------
 - ARC now will consume less durability for tools with Unbreaking. Durability is consumed at (1/(unbreakingLevel+1)) chance.
@@ -17,6 +26,7 @@ Version 3.1.2
 - Allowed the Divination Sigil and the Seer Sigil's HUD element to work in both the offhand and the Sigil of Holding. Also allows the Demon Aura Gauge to work in the offhand (why you'd have it in your offhand, I can't say).
 - Added the configs! Yay!
 - Added the Ritual "Call of the Zephyr".
+
 
 ------------------------------------------------------
 Version 3.1.1

@@ -12,7 +12,7 @@ public class ArmorMaterialLiving implements IArmorMaterial
 	@Override
 	public int getDurability(EquipmentSlotType slot)
 	{
-		return ArmorMaterial.IRON.getDurability(slot);
+		return ArmorMaterial.DIAMOND.getDurability(slot);
 	}
 
 	@Override
