@@ -529,6 +529,9 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.DUNGEON_EMITTER, "Demon Emitter");
 		addBlock(BloodMagicBlocks.DUNGEON_ALTERNATOR, "Demon Alternator");
 
+		addBlock(BloodMagicBlocks.SPIKES, "Spikes");
+		addBlock(BloodMagicBlocks.DUNGEON_SPIKE_TRAP, "Demon Spike Trap");
+
 		addBlock(BloodMagicBlocks.DUNGEON_ORE, "Demonite");
 
 		addBlock(BloodMagicBlocks.DUNGEON_BRICK_SLAB, "Demon Brick Slab");
