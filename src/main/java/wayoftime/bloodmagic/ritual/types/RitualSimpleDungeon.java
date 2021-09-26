@@ -36,7 +36,6 @@ import wayoftime.bloodmagic.util.helper.NetworkHelper;
 @RitualRegister("simple_dungeon")
 public class RitualSimpleDungeon extends Ritual
 {
-
 	public RitualSimpleDungeon()
 	{
 		super("ritualSimpleDungeon", 10, 80000, "ritual." + BloodMagic.MODID + ".simpleDungeonRitual");
@@ -71,6 +70,15 @@ public class RitualSimpleDungeon extends Ritual
 			ServerWorld dungeonWorld = DungeonDimensionHelper.getDungeonWorld(world);
 			if (dungeonWorld != null)
 			{
+				List<RitualComponent> components = Lists.newArrayList();
+				gatherComponents(components::add);
+
+				for (RitualComponent component : components)
+				{
+					BlockPos newPos = masterPos.add(component.getOffset(masterRitualStone.getDirection()));
+					world.setBlockState(newPos, Blocks.SMOOTH_STONE.getDefaultState());
+				}
+
 				BlockPos dungeonSpawnLocation = NetworkHelper.getSpawnPositionOfDungeon();
 				DungeonSynthesizer dungeon = new DungeonSynthesizer();
 ////			ResourceLocation initialType = new ResourceLocation("bloodmagic:room_pools/test_pool_1");
@@ -91,15 +99,6 @@ public class RitualSimpleDungeon extends Ritual
 				lightningboltentity.setPosition(masterPos.getX(), masterPos.getY() + 1, masterPos.getZ());
 				lightningboltentity.setEffectOnly(true);
 				world.addEntity(lightningboltentity);
-
-				List<RitualComponent> components = Lists.newArrayList();
-				gatherComponents(components::add);
-
-				for (RitualComponent component : components)
-				{
-					BlockPos newPos = masterPos.add(component.getOffset(masterRitualStone.getDirection()));
-					world.setBlockState(newPos, Blocks.SMOOTH_STONE.getDefaultState());
-				}
 
 				NetworkHelper.incrementDungeonCounter();
 
@@ -166,7 +165,8 @@ public class RitualSimpleDungeon extends Ritual
 	@Override
 	public void gatherComponents(Consumer<RitualComponent> components)
 	{
-		addParallelRunes(components, 1, 0, EnumRuneType.AIR);
+		addParallelRunes(components, 1, 4, EnumRuneType.AIR);
+		addParallelRunes(components, 2, 4, EnumRuneType.EARTH);
 		addCornerRunes(components, 1, 0, EnumRuneType.EARTH);
 		addParallelRunes(components, 2, 0, EnumRuneType.EARTH);
 		addCornerRunes(components, 2, 0, EnumRuneType.FIRE);
@@ -176,6 +176,11 @@ public class RitualSimpleDungeon extends Ritual
 			addRune(components, i, 0, -3, EnumRuneType.WATER);
 			addRune(components, 3, 0, i, EnumRuneType.FIRE);
 			addRune(components, -3, 0, i, EnumRuneType.FIRE);
+		}
+
+		for (int j = 1; j <= 4; j++)
+		{
+			addRune(components, 0, j, 0, EnumRuneType.EARTH);
 		}
 	}
 

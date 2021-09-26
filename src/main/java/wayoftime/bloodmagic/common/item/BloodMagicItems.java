@@ -46,6 +46,7 @@ import wayoftime.bloodmagic.structures.ItemDungeonTester;
 
 public class BloodMagicItems
 {
+
 //	public static Item.ToolMaterial SOUL_TOOL_MATERIAL = EnumHelper.addToolMaterial("demonic", 4, 520, 7, 8, 50);
 //	public static final BloodOrb WEAK_ORB_INSTANCE = new BloodOrb(new ResourceLocation(BloodMagic.MODID, "weakbloodorb"), 0, 5000, 10);
 	public static final BloodOrbDeferredRegister BLOOD_ORBS = new BloodOrbDeferredRegister(BloodMagic.MODID);
@@ -268,6 +269,17 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> BOW_VELOCITY_ANOINTMENT = ITEMS.register("bow_velocity_anointment", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_velocity"), 0xFFBE00, 1, 256, true));
 
 	public static final RegistryObject<Item> BOW_POWER_ANOINTMENT_STRONG = ITEMS.register("bow_power_anointment_strong", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_power"), 0xD8D8D8, 2, 1024, true));
+
+	public static final RegistryObject<Item> MELEE_DAMAGE_ANOINTMENT_L = ITEMS.register("melee_anointment_l", () -> new ItemAnointmentProvider(BloodMagic.rl("melee_damage"), 0xFF0000, 1, 1024));
+	public static final RegistryObject<Item> SILK_TOUCH_ANOINTMENT_L = ITEMS.register("silk_touch_anointment_l", () -> new ItemAnointmentProvider(BloodMagic.rl("silk_touch"), 0x00B0FF, 1, 1024));
+	public static final RegistryObject<Item> FORTUNE_ANOINTMENT_L = ITEMS.register("fortune_anointment_l", () -> new ItemAnointmentProvider(BloodMagic.rl("fortune"), 3381504, 1, 1024));
+	public static final RegistryObject<Item> HOLY_WATER_ANOINTMENT_L = ITEMS.register("holy_water_anointment_l", () -> new ItemAnointmentProvider(BloodMagic.rl("holy_water"), 0xC6E6FB, 1, 1024));
+	public static final RegistryObject<Item> HIDDEN_KNOWLEDGE_ANOINTMENT_L = ITEMS.register("hidden_knowledge_anointment_l", () -> new ItemAnointmentProvider(BloodMagic.rl("hidden_knowledge"), 0xC8F902, 1, 1024));
+	public static final RegistryObject<Item> QUICK_DRAW_ANOINTMENT_L = ITEMS.register("quick_draw_anointment_l", () -> new ItemBowAnointmentProvider(BloodMagic.rl("quick_draw"), 0xF0E130, 1, 1024, true));
+	public static final RegistryObject<Item> LOOTING_ANOINTMENT_L = ITEMS.register("looting_anointment_l", () -> new ItemAnointmentProvider(BloodMagic.rl("looting"), 0x6D2AFF, 1, 1024));
+	public static final RegistryObject<Item> BOW_POWER_ANOINTMENT_L = ITEMS.register("bow_power_anointment_l", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_power"), 0xD8D8D8, 1, 1024, true));
+	public static final RegistryObject<Item> SMELTING_ANOINTMENT_L = ITEMS.register("smelting_anointment_l", () -> new ItemAnointmentProvider(BloodMagic.rl("smelting"), 0xCE2029, 1, 1024));
+	public static final RegistryObject<Item> BOW_VELOCITY_ANOINTMENT_L = ITEMS.register("bow_velocity_anointment_l", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_velocity"), 0xFFBE00, 1, 1024, true));
 
 	// Fragments
 	public static final RegistryObject<Item> IRON_FRAGMENT = BASICITEMS.register("ironfragment", () -> new ItemBase());

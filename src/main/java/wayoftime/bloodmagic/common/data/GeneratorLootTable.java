@@ -162,7 +162,7 @@ public class GeneratorLootTable extends LootTableProvider
 			addMultipleItemsWithSameParams(blacksmith_pool, new Item[] { Items.IRON_PICKAXE, Items.IRON_AXE,
 					Items.IRON_SWORD, Items.IRON_SHOVEL,
 					Items.IRON_HOE }, 6, ConstantRange.of(1), SetDamage.func_215931_a(RandomValueRange.of(0.4F, 7F)));
-			addMultipleItemsWithQualitySameParams(armory_pool, new Item[] { Items.IRON_PICKAXE, Items.IRON_AXE,
+			addMultipleItemsWithQualitySameParams(blacksmith_pool, new Item[] { Items.IRON_PICKAXE, Items.IRON_AXE,
 					Items.IRON_SWORD, Items.IRON_SHOVEL,
 					Items.IRON_HOE }, 4, -2, ConstantRange.of(1), EnchantWithLevels.func_215895_a(RandomValueRange.of(10, 20)).func_216059_e(), SetDamage.func_215931_a(RandomValueRange.of(0.9F, 1.0F)));
 			addMultipleItemsWithSameParams(blacksmith_pool, new Item[] { Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE,
@@ -230,6 +230,40 @@ public class GeneratorLootTable extends LootTableProvider
 
 			acceptor.accept(BloodMagic.rl("chests/simple_dungeon/bastion"), LootTable.builder().addLootPool(basicBastionPool).addLootPool(extraBastionItems));
 			acceptor.accept(BloodMagic.rl("chests/simple_dungeon/nether"), LootTable.builder().addLootPool(basicNetherPool).addLootPool(extraNetherItems));
+
+			LootPool.Builder desertPyramidPool = LootPool.builder().rolls(ConstantRange.of(2)).addEntry(BMTableLootEntry.builder(LootTables.CHESTS_DESERT_PYRAMID).weight(1));
+
+			LootPool.Builder crypt_pool = LootPool.builder().rolls(RandomValueRange.of(2, 4));
+//			blacksmith_pool.addEntry(ItemLootEntry.builder(Items.IRON_INGOT).weight(25).quality(1).acceptFunction(SetCount.builder(RandomValueRange.of(7, 15))));
+//			blacksmith_pool.addEntry(ItemLootEntry.builder(Items.IRON_NUGGET).weight(20).quality(-4).acceptFunction(SetCount.builder(RandomValueRange.of(30, 50))));
+//			blacksmith_pool.addEntry(ItemLootEntry.builder(Items.DIAMOND).weight(4).quality(2).acceptFunction(SetCount.builder(RandomValueRange.of(2, 5))));
+//			blacksmith_pool.addEntry(ItemLootEntry.builder(Items.LEATHER).weight(18).quality(-4).acceptFunction(SetCount.builder(RandomValueRange.of(10, 20))));
+//			blacksmith_pool.addEntry(ItemLootEntry.builder(Items.GOLD_INGOT).weight(8).quality(1).acceptFunction(SetCount.builder(RandomValueRange.of(4, 7))));
+
+//			blacksmith_pool.
+			crypt_pool.addEntry(ItemLootEntry.builder(BloodMagicItems.WEAK_TAU_ITEM.get()).weight(15).acceptFunction(SetCount.builder(RandomValueRange.of(4, 7))));
+
+			addMultipleItemsWithSameParams(crypt_pool, weaponAnointments, 3, RandomValueRange.of(2, 5));
+			crypt_pool.addEntry(ItemLootEntry.builder(Items.IRON_INGOT).weight(25).quality(1).acceptFunction(SetCount.builder(RandomValueRange.of(7, 15))));
+			crypt_pool.addEntry(ItemLootEntry.builder(Items.IRON_NUGGET).weight(20).quality(-4).acceptFunction(SetCount.builder(RandomValueRange.of(20, 40))));
+			crypt_pool.addEntry(ItemLootEntry.builder(Items.DIAMOND).weight(4).quality(2).acceptFunction(SetCount.builder(RandomValueRange.of(2, 5))));
+			crypt_pool.addEntry(ItemLootEntry.builder(Items.LEATHER).weight(18).quality(-4).acceptFunction(SetCount.builder(RandomValueRange.of(10, 20))));
+			crypt_pool.addEntry(ItemLootEntry.builder(Items.GOLD_INGOT).weight(8).quality(1).acceptFunction(SetCount.builder(RandomValueRange.of(4, 7))));
+
+			addMultipleItemsWithSameParams(crypt_pool, new Item[] { Items.IRON_PICKAXE, Items.IRON_AXE,
+					Items.IRON_SWORD, Items.IRON_SHOVEL,
+					Items.IRON_HOE }, 6, ConstantRange.of(1), SetDamage.func_215931_a(RandomValueRange.of(0.4F, 7F)));
+			addMultipleItemsWithQualitySameParams(blacksmith_pool, new Item[] { Items.IRON_PICKAXE, Items.IRON_AXE,
+					Items.IRON_SWORD, Items.IRON_SHOVEL,
+					Items.IRON_HOE }, 4, -2, ConstantRange.of(1), EnchantWithLevels.func_215895_a(RandomValueRange.of(10, 20)).func_216059_e(), SetDamage.func_215931_a(RandomValueRange.of(0.9F, 1.0F)));
+			addMultipleItemsWithSameParams(crypt_pool, new Item[] { Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE,
+					Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL,
+					Items.DIAMOND_HOE }, 2, ConstantRange.of(1), SetDamage.func_215931_a(RandomValueRange.of(0.1F, 0.2F)));
+			addMultipleItemsWithQualitySameParams(crypt_pool, new Item[] { Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE,
+					Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL,
+					Items.DIAMOND_HOE }, 1, 2, ConstantRange.of(1), EnchantWithLevels.func_215895_a(RandomValueRange.of(20, 25)).func_216059_e(), SetDamage.func_215931_a(RandomValueRange.of(0.4F, 0.8F)));
+
+			acceptor.accept(BloodMagic.rl("chests/simple_dungeon/crypt"), LootTable.builder().addLootPool(desertPyramidPool).addLootPool(crypt_pool));
 		}
 
 		private LootPool.Builder addMultipleItemsWithSameParams(LootPool.Builder pool, Item[] items, int basicWeight, IRandomRange basicRange, IBuilder... functions)

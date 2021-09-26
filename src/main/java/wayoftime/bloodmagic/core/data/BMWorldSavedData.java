@@ -55,6 +55,7 @@ public class BMWorldSavedData extends WorldSavedData
 		}
 
 		numberOfDungeons = tagCompound.getInt("numberOfDungeons");
+		System.out.println("Reading number of dungeonz: " + numberOfDungeons);
 	}
 
 	@Override
@@ -65,6 +66,8 @@ public class BMWorldSavedData extends WorldSavedData
 
 		tagCompound.put("networkData", networkData);
 		tagCompound.putInt("numberOfDungeons", numberOfDungeons);
+
+		System.out.println("Writing number of dungeonz: " + numberOfDungeons);
 
 		return tagCompound;
 	}

@@ -166,7 +166,16 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 
 						if (!str.isEmpty())
 						{
-
+							try
+							{
+								Integer testVal = Integer.decode(str);
+								if (testVal != null)
+								{
+									amount = testVal;
+								}
+							} catch (NumberFormatException d)
+							{
+							}
 						}
 
 						setValueOfGhostItemInSlot(container.lastGhostSlotClicked, amount);

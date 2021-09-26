@@ -297,8 +297,18 @@ public class LivingUtil
 	public static boolean hasFullSet(PlayerEntity player)
 	{
 		for (ItemStack stack : player.inventory.armorInventory)
+		{
 			if (stack.isEmpty() || !(stack.getItem() instanceof ILivingContainer))
-			return false;
+				return false;
+
+			if (stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot() == EquipmentSlotType.CHEST)
+			{
+				if (stack.getMaxDamage() - stack.getDamage() <= 1)
+				{
+					return false;
+				}
+			}
+		}
 
 		return true;
 	}
