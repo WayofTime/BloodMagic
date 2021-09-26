@@ -61,7 +61,6 @@ public class DungeonRoomRegistry
 		}
 		for (Pair<ResourceLocation, Integer> entry : roomPool)
 		{
-			wantedWeight -= entry.getValue();
 			if (wantedWeight <= 0)
 			{
 				ResourceLocation dungeonName = entry.getKey();
@@ -69,6 +68,8 @@ public class DungeonRoomRegistry
 //				System.out.println("All dungeons: " + dungeonRoomMap);
 				return dungeonRoomMap.get(dungeonName);
 			}
+
+			wantedWeight -= entry.getValue();
 		}
 
 		return null;
