@@ -1,7 +1,7 @@
 {
   "type": "bloodmagic:arc",
   "input": {
-    "item": "bloodmagic:infusedslate"
+    "item": "bloodmagic:strong_tau"
   },
   "tool": {
     "tag": "bloodmagic:arc/reverter"

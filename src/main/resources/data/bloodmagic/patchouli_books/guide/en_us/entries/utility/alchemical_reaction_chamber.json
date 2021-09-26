@@ -22,7 +22,7 @@
   "pages": [
      {
       "type": "text",
-      "text": "The $(item)Alchemical Reaction Chamber$() isn't fully implemented yet, but among other things it can function as a $(thing)Furnace$(), offers a form of $(thing)Ore-Tripling$(), revert $(l:bloodmagic:altar/soul_network)Blood Orbs$(), and is currently the only way to get $(blood)Weak Blood Shards$(), specifically from an $(l:bloodmagic:altar/slates)Imbued Slate$()."
+      "text": "The $(item)Alchemical Reaction Chamber$() isn't fully implemented yet, but among other things it can function as a $(thing)Furnace$(), offers a form of $(thing)Ore-Tripling$(), revert $(l:bloodmagic:altar/soul_network)Blood Orbs$(), and is currently the only way to get $(blood)Weak Blood Shards$(), specifically from a $(l:bloodmagic:dungeons/tau_fruit)Saturated Tau$()."
     },
     {
       "type": "crafting",
@@ -38,7 +38,7 @@
     {
       "type": "3x_crafting_arc",
       "a.heading": "Weak Blood Shard",
-      "a.recipe": "bloodmagic:arc/weakbloodshard",
+      "a.recipe": "bloodmagic:arc/weakbloodshard_tau",
       "b.heading": "Revert Weak Blood Orb",
       "b.recipe": "bloodmagic:arc/reversion/weak_blood_orb",
       "c.heading": "Revert Apprentice Blood Orb",

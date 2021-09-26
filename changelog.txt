@@ -1,8 +1,11 @@
 ------------------------------------------------------
 Version 3.1.4
 ------------------------------------------------------
-- Fixed a bug when removing max level upgrades from Living Armour
-- Fixed a client-server desync with the item filter count
+- Added the Demon Dimension, with Dungeons! To be transported to a dungeon in this dimension, use the ritual "Edge of the Hidden Realm".
+- Added new Tau fruit (and its saturated version), which are found in the new dungeons. These are required to progress to T4.
+- Added new, longer lasting anointments, as well as more powerful versions.
+- Fixed a bug when removing max level upgrades from Living Armour.
+- Fixed a client-server desync with the item filter count.
 - Added an audible and visual indication for when an anointment on a tool runs out.
 - Included warning flags in the Alchemy Table GUI that will state if there is not enough LP or if the orb is unbound/the wrong tier.
 - Added the Elytra Living Armour upgrade! Elytra not included.
