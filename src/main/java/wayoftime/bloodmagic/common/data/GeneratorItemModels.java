@@ -136,6 +136,15 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerMultiLayerItem(BloodMagicItems.BOW_POWER_ANOINTMENT_L.get(), modLoc("item/alchemic_liquid"), modLoc("item/labeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
 		registerMultiLayerItem(BloodMagicItems.SMELTING_ANOINTMENT_L.get(), modLoc("item/alchemic_liquid"), modLoc("item/labeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
 		registerMultiLayerItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT_L.get(), modLoc("item/alchemic_liquid"), modLoc("item/labeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
+
+		registerMultiLayerItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_2.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_two"));
+		registerMultiLayerItem(BloodMagicItems.FORTUNE_ANOINTMENT_2.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_two"));
+		registerMultiLayerItem(BloodMagicItems.HOLY_WATER_ANOINTMENT_2.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_two"));
+		registerMultiLayerItem(BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT_2.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_two"));
+		registerMultiLayerItem(BloodMagicItems.QUICK_DRAW_ANOINTMENT_2.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_two"));
+		registerMultiLayerItem(BloodMagicItems.LOOTING_ANOINTMENT_2.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_two"));
+		registerMultiLayerItem(BloodMagicItems.BOW_POWER_ANOINTMENT_2.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_two"));
+		registerMultiLayerItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT_2.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_two"));
 	}
 
 	private void registerCustomFullTexture(Block block, String texturePath)

@@ -699,6 +699,15 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.SMELTING_ANOINTMENT_L, "Slow-burning Oil L");
 		addItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT_L, "Archer's Polish L");
 
+		addItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_2, "Honing Oil II");
+		addItem(BloodMagicItems.FORTUNE_ANOINTMENT_2, "Fortuna Extract II");
+		addItem(BloodMagicItems.HOLY_WATER_ANOINTMENT_2, "Holy Water II");
+		addItem(BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT_2, "Miner's Secrets II");
+		addItem(BloodMagicItems.QUICK_DRAW_ANOINTMENT_2, "Dexterity Alkahest II");
+		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT_2, "Iron Tip II");
+		addItem(BloodMagicItems.LOOTING_ANOINTMENT_2, "Plunderer's Glint II");
+		addItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT_2, "Archer's Polish II");
+
 		// Alchemy Items
 		addItem(BloodMagicItems.PLANT_OIL, "Plant Oil");
 		addItem(BloodMagicItems.TAU_OIL, "Tau Oil");

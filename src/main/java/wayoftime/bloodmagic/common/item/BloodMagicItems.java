@@ -281,6 +281,15 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> SMELTING_ANOINTMENT_L = ITEMS.register("smelting_anointment_l", () -> new ItemAnointmentProvider(BloodMagic.rl("smelting"), 0xCE2029, 1, 1024));
 	public static final RegistryObject<Item> BOW_VELOCITY_ANOINTMENT_L = ITEMS.register("bow_velocity_anointment_l", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_velocity"), 0xFFBE00, 1, 1024, true));
 
+	public static final RegistryObject<Item> MELEE_DAMAGE_ANOINTMENT_2 = ITEMS.register("melee_anointment_2", () -> new ItemAnointmentProvider(BloodMagic.rl("melee_damage"), 0xFF0000, 2, 256));
+	public static final RegistryObject<Item> FORTUNE_ANOINTMENT_2 = ITEMS.register("fortune_anointment_2", () -> new ItemAnointmentProvider(BloodMagic.rl("fortune"), 3381504, 2, 256));
+	public static final RegistryObject<Item> HOLY_WATER_ANOINTMENT_2 = ITEMS.register("holy_water_anointment_2", () -> new ItemAnointmentProvider(BloodMagic.rl("holy_water"), 0xC6E6FB, 2, 256));
+	public static final RegistryObject<Item> HIDDEN_KNOWLEDGE_ANOINTMENT_2 = ITEMS.register("hidden_knowledge_anointment_2", () -> new ItemAnointmentProvider(BloodMagic.rl("hidden_knowledge"), 0xC8F902, 2, 256));
+	public static final RegistryObject<Item> QUICK_DRAW_ANOINTMENT_2 = ITEMS.register("quick_draw_anointment_2", () -> new ItemBowAnointmentProvider(BloodMagic.rl("quick_draw"), 0xF0E130, 2, 256, true));
+	public static final RegistryObject<Item> LOOTING_ANOINTMENT_2 = ITEMS.register("looting_anointment_2", () -> new ItemAnointmentProvider(BloodMagic.rl("looting"), 0x6D2AFF, 2, 256));
+	public static final RegistryObject<Item> BOW_POWER_ANOINTMENT_2 = ITEMS.register("bow_power_anointment_2", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_power"), 0xD8D8D8, 2, 256, true));
+	public static final RegistryObject<Item> BOW_VELOCITY_ANOINTMENT_2 = ITEMS.register("bow_velocity_anointment_2", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_velocity"), 0xFFBE00, 2, 256, true));
+
 	// Fragments
 	public static final RegistryObject<Item> IRON_FRAGMENT = BASICITEMS.register("ironfragment", () -> new ItemBase());
 	public static final RegistryObject<Item> GOLD_FRAGMENT = BASICITEMS.register("goldfragment", () -> new ItemBase());
@@ -315,7 +324,6 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> DUNGEON_SMALL_BRICK_BLOCK = ITEMS.register("dungeon_smallbrick", () -> new BlockItem(BloodMagicBlocks.DUNGEON_SMALL_BRICK.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> DUNGEON_EMITTER = ITEMS.register("dungeon_emitter", () -> new BlockItem(BloodMagicBlocks.DUNGEON_EMITTER.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> DUNGEON_ALTERNATOR = ITEMS.register("dungeon_alternator", () -> new BlockItem(BloodMagicBlocks.DUNGEON_ALTERNATOR.get(), new Item.Properties().group(BloodMagic.TAB)));
-
 
 	public static final RegistryObject<Item> DUNGEON_BRICK_STAIRS_BLOCK = ITEMS.register("dungeon_brick_stairs", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> DUNGEON_POLISHED_STAIRS_BLOCK = ITEMS.register("dungeon_polished_stairs", () -> new BlockItem(BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get(), new Item.Properties().group(BloodMagic.TAB)));

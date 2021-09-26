@@ -107,6 +107,8 @@ public class ClientEvents
 		event.getItemColors().register(new AnointmentColor(), BloodMagicItems.MELEE_DAMAGE_ANOINTMENT.get(), BloodMagicItems.SILK_TOUCH_ANOINTMENT.get(), BloodMagicItems.FORTUNE_ANOINTMENT.get(), BloodMagicItems.HOLY_WATER_ANOINTMENT.get(), BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT.get(), BloodMagicItems.QUICK_DRAW_ANOINTMENT.get(), BloodMagicItems.LOOTING_ANOINTMENT.get(), BloodMagicItems.BOW_POWER_ANOINTMENT.get(), BloodMagicItems.WILL_POWER_ANOINTMENT.get(), BloodMagicItems.SMELTING_ANOINTMENT.get(), BloodMagicItems.BOW_VELOCITY_ANOINTMENT.get());
 		event.getItemColors().register(new AnointmentColor(), BloodMagicItems.BOW_POWER_ANOINTMENT_STRONG.get());
 		event.getItemColors().register(new AnointmentColor(), BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_L.get(), BloodMagicItems.SILK_TOUCH_ANOINTMENT_L.get(), BloodMagicItems.FORTUNE_ANOINTMENT_L.get(), BloodMagicItems.HOLY_WATER_ANOINTMENT_L.get(), BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT_L.get(), BloodMagicItems.QUICK_DRAW_ANOINTMENT_L.get(), BloodMagicItems.LOOTING_ANOINTMENT_L.get(), BloodMagicItems.BOW_POWER_ANOINTMENT_L.get(), BloodMagicItems.SMELTING_ANOINTMENT_L.get(), BloodMagicItems.BOW_VELOCITY_ANOINTMENT_L.get());
+		event.getItemColors().register(new AnointmentColor(), BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_2.get(), BloodMagicItems.FORTUNE_ANOINTMENT_2.get(), BloodMagicItems.HOLY_WATER_ANOINTMENT_2.get(), BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT_2.get(), BloodMagicItems.QUICK_DRAW_ANOINTMENT_2.get(), BloodMagicItems.LOOTING_ANOINTMENT_2.get(), BloodMagicItems.BOW_POWER_ANOINTMENT_2.get(), BloodMagicItems.BOW_VELOCITY_ANOINTMENT_2.get());
+
 	}
 
 	public static void cycleSigil(ItemStack stack, PlayerEntity player, int dWheel)
