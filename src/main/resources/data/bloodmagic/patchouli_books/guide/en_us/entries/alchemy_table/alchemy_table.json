@@ -31,7 +31,22 @@
     },
     {
       "type": "text",
-      "text": "simply click the slot again to deselect it. The icon displayed in the slot shows whether it is accepting inputs or providing outputs. In the example picture, we are allowing pipes to take from our central slot only on the $(bold)D$()own slot, and any attempts to extract items from other sides will not succeed. $(br2)The following pages document a number of recipes currently available for the Alchemy Table."
+      "text": "simply click the slot again to deselect it. The icon displayed in the slot shows whether it is accepting inputs or providing outputs. In the example picture, we are allowing pipes to take from our central slot only on the $(bold)D$()own slot, and any attempts to extract items from other sides will not succeed."
+    },
+    {
+      "type": "image",
+      "images": [
+        "bloodmagic:images/entries/alchemy_table/alchemy_table_orb_error.png",
+        "bloodmagic:images/entries/alchemy_table/alchemy_table_soul_error.png"
+      ],
+      "title": "Alchemy Table Errors",
+      "anchor": "errors",
+      "border": true,
+      "text": "The Alchemy Table will tell you when something is wrong."
+    },
+    {
+      "type": "text",
+      "text": "The two most common reasons for a recipe to not work in the Alchemy Table are as follows: $(li)$(bold)Orb Error$(): Either there is no Blood Orb present in the relevant slot, or the Orb you are trying to use is not a high enough level for this recipe. $(li)$(bold)Soul Network Error$(): The orb is of a valid level, but either you have not bound it to yourself (right click while holding it), or your Soul Network does not have enough LP in it. $(br2)The following pages document a number of recipes currently available for the Alchemy Table,"
     },
     {
       "type": "crafting_alchemy_table",
