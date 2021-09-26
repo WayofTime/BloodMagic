@@ -184,6 +184,7 @@ public class ClientEvents
 			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get(), RenderType.getTranslucent());
 			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get(), RenderType.getTranslucent());
 			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get(), RenderType.getTranslucent());
+			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.SPIKES.get(), rendertype);
 
 			ClientEvents.registerContainerScreens();
 

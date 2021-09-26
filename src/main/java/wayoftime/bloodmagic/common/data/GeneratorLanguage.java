@@ -526,6 +526,11 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.DUNGEON_PILLAR_CENTER, "Demon Stone Pillar");
 		addBlock(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL, "Accented Demon Stone Pillar");
 		addBlock(BloodMagicBlocks.DUNGEON_EYE, "Demon Eye");
+		addBlock(BloodMagicBlocks.DUNGEON_EMITTER, "Demon Emitter");
+		addBlock(BloodMagicBlocks.DUNGEON_ALTERNATOR, "Demon Alternator");
+
+		addBlock(BloodMagicBlocks.SPIKES, "Spikes");
+		addBlock(BloodMagicBlocks.DUNGEON_SPIKE_TRAP, "Demon Spike Trap");
 
 		addBlock(BloodMagicBlocks.DUNGEON_ORE, "Demonite");
 

@@ -72,24 +72,7 @@ import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.ritual.ModRituals;
 import wayoftime.bloodmagic.ritual.RitualManager;
 import wayoftime.bloodmagic.structures.ModDungeons;
-import wayoftime.bloodmagic.tile.TileAlchemicalReactionChamber;
-import wayoftime.bloodmagic.tile.TileAlchemyArray;
-import wayoftime.bloodmagic.tile.TileAlchemyTable;
-import wayoftime.bloodmagic.tile.TileAltar;
-import wayoftime.bloodmagic.tile.TileDeforesterCharge;
-import wayoftime.bloodmagic.tile.TileDemonCrucible;
-import wayoftime.bloodmagic.tile.TileDemonCrystal;
-import wayoftime.bloodmagic.tile.TileDemonCrystallizer;
-import wayoftime.bloodmagic.tile.TileDungeonController;
-import wayoftime.bloodmagic.tile.TileDungeonSeal;
-import wayoftime.bloodmagic.tile.TileFungalCharge;
-import wayoftime.bloodmagic.tile.TileIncenseAltar;
-import wayoftime.bloodmagic.tile.TileInversionPillar;
-import wayoftime.bloodmagic.tile.TileMasterRitualStone;
-import wayoftime.bloodmagic.tile.TileMimic;
-import wayoftime.bloodmagic.tile.TileShapedExplosive;
-import wayoftime.bloodmagic.tile.TileSoulForge;
-import wayoftime.bloodmagic.tile.TileVeinMineCharge;
+import wayoftime.bloodmagic.tile.*;
 import wayoftime.bloodmagic.tile.routing.TileInputRoutingNode;
 import wayoftime.bloodmagic.tile.routing.TileMasterRoutingNode;
 import wayoftime.bloodmagic.tile.routing.TileOutputRoutingNode;
@@ -240,13 +223,15 @@ public class BloodMagic
 			api.getBlacklist().addWellOfSuffering(new ResourceLocation(value));
 		}
 	}
-
+	
 	public void registerTileEntityTypes(RegistryEvent.Register<TileEntityType<?>> event)
 	{
 		LOGGER.info("Attempting to register Tile Entities");
 		event.getRegistry().register(TileEntityType.Builder.create(TileAltar::new, BloodMagicBlocks.BLOOD_ALTAR.get()).build(null).setRegistryName("altar"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileAlchemyArray::new, BloodMagicBlocks.ALCHEMY_ARRAY.get()).build(null).setRegistryName("alchemyarray"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileSoulForge::new, BloodMagicBlocks.SOUL_FORGE.get()).build(null).setRegistryName("soulforge"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileSpikeTrap::new, BloodMagicBlocks.DUNGEON_SPIKE_TRAP.get()).build(null).setRegistryName("spiketrap"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileDungeonAlternator::new, BloodMagicBlocks.DUNGEON_ALTERNATOR.get()).build(null).setRegistryName("dungeonalternator"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileMasterRitualStone::new, BloodMagicBlocks.MASTER_RITUAL_STONE.get()).build(null).setRegistryName("masterritualstone"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileAlchemicalReactionChamber::new, BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER.get()).build(null).setRegistryName("alchemicalreactionchamber"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileAlchemyTable::new, BloodMagicBlocks.ALCHEMY_TABLE.get()).build(null).setRegistryName("alchemytable"));

@@ -1,0 +1,8 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "top": "bloodmagic:block/dungeon/dungeon_polished",
+        "front": "bloodmagic:block/dungeon/dungeon_spike_trap",
+        "side": "bloodmagic:block/dungeon/dungeon_polished"
+    }
+}
