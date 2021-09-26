@@ -347,6 +347,8 @@ public class GeneratorLootTable extends LootTableProvider
 			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get());
 			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_BRICK_GATE.get());
 			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_POLISHED_GATE.get());
+			registerDropSelfLootTable(BloodMagicBlocks.DUNGEON_SPIKE_TRAP.get());
+			registerNoDropLootTable(BloodMagicBlocks.SPIKES.get());
 			registerLootTable(BloodMagicBlocks.DUNGEON_BRICK_SLAB.get(), BlockLootTables::droppingSlab);
 			registerLootTable(BloodMagicBlocks.DUNGEON_TILE_SLAB.get(), BlockLootTables::droppingSlab);
 

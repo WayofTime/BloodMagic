@@ -1,16 +1,7 @@
 package wayoftime.bloodmagic.common.block;
 
-import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.AbstractBlock.Properties;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FenceGateBlock;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.block.RotatedPillarBlock;
-import net.minecraft.block.SlabBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.StairsBlock;
-import net.minecraft.block.WallBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
@@ -156,6 +147,10 @@ public class BloodMagicBlocks
 	public static final RegistryObject<Block> DUNGEON_EYE = DUNGEONBLOCKS.register("dungeon_eye", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool().setLightLevel((state) -> {
 		return 15;
 	})));
+	public static final RegistryObject<Block> DUNGEON_EMITTER = DUNGEONBLOCKS.register("dungeon_emitter", () -> new RedstoneBlock(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool().setLightLevel((state) -> {
+		return 8;
+	})));
+	public static final RegistryObject<Block> DUNGEON_ALTERNATOR = DUNGEONBLOCKS.register("dungeon_alternator", () -> new BlockAlternator(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
 	public static final RegistryObject<Block> DUNGEON_POLISHED_STONE = DUNGEONBLOCKS.register("dungeon_polished", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
 	public static final RegistryObject<Block> DUNGEON_TILE = DUNGEONBLOCKS.register("dungeon_tile", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
 	public static final RegistryObject<Block> DUNGEON_SMALL_BRICK = DUNGEONBLOCKS.register("dungeon_smallbrick", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
@@ -185,6 +180,9 @@ public class BloodMagicBlocks
 
 	public static final RegistryObject<Block> DUNGEON_CONTROLLER = BLOCKS.register("dungeon_controller", () -> new BlockDungeonController());
 	public static final RegistryObject<Block> DUNGEON_SEAL = BLOCKS.register("dungeon_seal", () -> new BlockDungeonSeal());
+	public static final RegistryObject<Block> SPIKES = BLOCKS.register("spikes", () -> new BlockSpikes(Properties.create(Material.IRON).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.CHAIN).notSolid().doesNotBlockMovement().harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_SPIKE_TRAP = BLOCKS.register("dungeon_spike_trap", () -> new BlockSpikeTrap(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+
 
 	public static final RegistryObject<Block> NETHER_SOIL = BLOCKS.register("nether_soil", () -> new BlockNetherrackSoil(Properties.create(Material.EARTH).hardnessAndResistance(0.4F, 0.4F).sound(SoundType.NETHERRACK).harvestTool(ToolType.PICKAXE).tickRandomly()));
 

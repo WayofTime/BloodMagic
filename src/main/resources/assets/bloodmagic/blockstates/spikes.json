@@ -1,0 +1,59 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "facing": "up"
+      },
+      "apply": {
+        "model": "bloodmagic:block/spikes"
+      }
+    },
+    {
+      "when": {
+        "facing": "down"
+      },
+      "apply": {
+        "model": "bloodmagic:block/spikes",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "bloodmagic:block/spikes",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "bloodmagic:block/spikes",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "bloodmagic:block/spikes",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "bloodmagic:block/spikes",
+        "x": 90,
+        "y": 270
+      }
+    }
+  ]
+}

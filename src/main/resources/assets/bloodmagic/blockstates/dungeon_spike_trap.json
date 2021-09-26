@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=down":  { "model": "bloodmagic:block/dungeon_spike_trap", "x": 90 },
+        "facing=up":    { "model": "bloodmagic:block/dungeon_spike_trap", "x": 270 },
+        "facing=north": { "model": "bloodmagic:block/dungeon_spike_trap" },
+        "facing=south": { "model": "bloodmagic:block/dungeon_spike_trap", "y": 180 },
+        "facing=west":  { "model": "bloodmagic:block/dungeon_spike_trap", "y": 270 },
+        "facing=east":  { "model": "bloodmagic:block/dungeon_spike_trap", "y": 90 }
+    }
+}

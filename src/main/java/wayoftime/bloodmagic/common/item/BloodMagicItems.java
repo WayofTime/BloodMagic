@@ -313,6 +313,9 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> DUNGEON_TILE_BLOCK = ITEMS.register("dungeon_tile", () -> new BlockItem(BloodMagicBlocks.DUNGEON_TILE.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> DUNGEON_TILE_SPECIAL_BLOCK = ITEMS.register("dungeon_tilespecial", () -> new BlockItem(BloodMagicBlocks.DUNGEON_TILE_SPECIAL.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> DUNGEON_SMALL_BRICK_BLOCK = ITEMS.register("dungeon_smallbrick", () -> new BlockItem(BloodMagicBlocks.DUNGEON_SMALL_BRICK.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> DUNGEON_EMITTER = ITEMS.register("dungeon_emitter", () -> new BlockItem(BloodMagicBlocks.DUNGEON_EMITTER.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> DUNGEON_ALTERNATOR = ITEMS.register("dungeon_alternator", () -> new BlockItem(BloodMagicBlocks.DUNGEON_ALTERNATOR.get(), new Item.Properties().group(BloodMagic.TAB)));
+
 
 	public static final RegistryObject<Item> DUNGEON_BRICK_STAIRS_BLOCK = ITEMS.register("dungeon_brick_stairs", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> DUNGEON_POLISHED_STAIRS_BLOCK = ITEMS.register("dungeon_polished_stairs", () -> new BlockItem(BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get(), new Item.Properties().group(BloodMagic.TAB)));
@@ -330,6 +333,8 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> DUNGEON_GLOWING_CRACKED_BRICK_1_BLOCK = ITEMS.register("dungeon_cracked_brick1", () -> new BlockItem(BloodMagicBlocks.DUNGEON_GLOWING_CRACKED_BRICK_1.get(), new Item.Properties().group(BloodMagic.TAB)));
 
 	public static final RegistryObject<Item> DUNGEON_ORE_BLOCK = ITEMS.register("dungeon_ore", () -> new BlockItem(BloodMagicBlocks.DUNGEON_ORE.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> SPIKES = ITEMS.register("spikes", () -> new BlockItem(BloodMagicBlocks.SPIKES.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> DUNGEON_SPIKE_TRAP = ITEMS.register("dungeon_spike_trap", () -> new BlockItem(BloodMagicBlocks.DUNGEON_SPIKE_TRAP.get(), new Item.Properties().group(BloodMagic.TAB)));
 
 	public static final RegistryObject<Item> HELLFORGED_BLOCK = ITEMS.register("dungeon_metal", () -> new BlockItem(BloodMagicBlocks.HELLFORGED_BLOCK.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> INVERSION_PILLAR_BLOCK = ITEMS.register("inversion_pillar", () -> new BlockItem(BloodMagicBlocks.INVERSION_PILLAR.get(), new Item.Properties().group(BloodMagic.TAB)));
