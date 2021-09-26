@@ -15,7 +15,7 @@
     },
     {
       "type": "text",
-      "text": "Tau Oil currently has two main uses. It can extend the duration of any $(l:bloodmagic:alchemy_table/anointments)anointment$() by a factor of four, or it can be used to craft $(item)Intermediate Cutting Fluid$(), which functions similarly to $(l:bloodmagic:utility/alchemical_reaction_chamber#basic_cutting_fluid)Basic Cutting FLuid$(), but lasts eight times longer and provides a 25% speed boost."
+      "text": "Tau Oil currently has two main uses. It can extend the duration of any $(l:bloodmagic:alchemy_table/anointments)anointment$() by a factor of four, or it can be used to craft $(item)Intermediate Cutting Fluid$(), which functions similarly to $(l:bloodmagic:utility/alchemical_reaction_chamber#basic_cutting_fluid)Basic Cutting Fluid$(), but lasts eight times longer and provides a 25% speed boost."
     },
     {
       "type": "spotlight",

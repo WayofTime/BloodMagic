@@ -11,7 +11,7 @@
       "type": "crafting_soulforge",
       "heading": "Simple Key",
       "recipe": "bloodmagic:soulforge/simple_key",
-      "text": "$(italic)if it's so simple, why can't we just pick the lock?$()"
+      "text": "$(italic)If it's so simple, why can't we just pick the lock?$()"
     }
   ]
 }
