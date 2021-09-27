@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 3.1.4-24
+------------------------------------------------------
+- Way forgot to reenable the "Edge of the Hidden Realm" ritual. Now he has to make a new build.
+
+------------------------------------------------------
 Version 3.1.4
 ------------------------------------------------------
 - Added the Demon Dimension, with Dungeons! To be transported to a dungeon in this dimension, use the ritual "Edge of the Hidden Realm".

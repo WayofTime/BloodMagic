@@ -38,7 +38,7 @@ public class RitualSimpleDungeon extends Ritual
 {
 	public RitualSimpleDungeon()
 	{
-		super("ritualSimpleDungeon", 10, 80000, "ritual." + BloodMagic.MODID + ".simpleDungeonRitual");
+		super("ritualSimpleDungeon", 0, 80000, "ritual." + BloodMagic.MODID + ".simpleDungeonRitual");
 	}
 
 	public boolean activateRitual(IMasterRitualStone masterRitualStone, PlayerEntity player, UUID owner)
