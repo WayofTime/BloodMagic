@@ -15,6 +15,12 @@
       "heading": "Dexterity Alkahest L",
       "recipe": "bloodmagic:alchemytable/quick_draw_anointment_l",
       "text": "This upgraded version of the anointment lasts four times longer. $(br2)Applies: Deft Hands I (1024 shots)"
+    },
+    {
+      "type": "crafting_alchemy_table",
+      "heading": "Dexterity Alkahest L",
+      "recipe": "bloodmagic:alchemytable/quick_draw_anointment_l",
+      "text": "This upgraded version of the anointment lowers the draw time of bows and crossbows by 50%. $(br2)Applies: Deft Hands II (256 shots)"
     }
   ]
 }
