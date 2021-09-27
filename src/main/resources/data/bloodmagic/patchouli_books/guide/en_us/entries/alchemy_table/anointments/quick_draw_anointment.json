@@ -18,7 +18,7 @@
     },
     {
       "type": "crafting_alchemy_table",
-      "heading": "Dexterity Alkahest L",
+      "heading": "Dexterity Alkahest II",
       "recipe": "bloodmagic:alchemytable/quick_draw_anointment_2",
       "text": "This upgraded version of the anointment lowers the draw time of bows and crossbows by 50%. $(br2)Applies: Deft Hands II (256 shots)"
     }
