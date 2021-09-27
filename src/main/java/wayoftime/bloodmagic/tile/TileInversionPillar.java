@@ -58,7 +58,7 @@ public class TileInversionPillar extends TileBase implements ICommandSource
 		if (tag.contains(Constants.NBT.DUNGEON_TELEPORT_KEY))
 		{
 			String key = tag.getString(Constants.NBT.DUNGEON_TELEPORT_KEY);
-			System.out.println("Deserialized key: " + key);
+//			System.out.println("Deserialized key: " + key);
 			destinationKey = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, new ResourceLocation(key));
 		}
 	}
@@ -98,7 +98,7 @@ public class TileInversionPillar extends TileBase implements ICommandSource
 
 	public void teleportPlayerToLocation(ServerWorld serverWorld, PlayerEntity player, RegistryKey<World> destination, BlockPos destinationPos)
 	{
-		System.out.println("Key: " + destination.getLocation());
+//		System.out.println("Key: " + destination.getLocation());
 //		String command = "execute in bloodmagic:dungeon run teleport Dev 0 100 0";
 		String command = getTextCommandForTeleport(destination, player, destinationPos.getX() + 0.5, destinationPos.getY(), destinationPos.getZ() + 0.5);
 		MinecraftServer mcServer = serverWorld.getServer();
@@ -108,7 +108,7 @@ public class TileInversionPillar extends TileBase implements ICommandSource
 	public String getTextCommandForTeleport(RegistryKey<World> destination, PlayerEntity player, double posX, double posY, double posZ)
 	{
 		String playerName = player.getName().getString();
-		System.out.println("Potential player name: " + playerName);
+//		System.out.println("Potential player name: " + playerName);
 		return "execute in " + destination.getLocation().toString() + " run teleport " + playerName + " " + posX + " " + posY + " " + posZ;
 	}
 
