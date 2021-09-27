@@ -19,7 +19,7 @@
     {
       "type": "crafting_alchemy_table",
       "heading": "Honing Oil II",
-      "recipe": "bloodmagic:alchemytable/melee_damage_anointment_l",
+      "recipe": "bloodmagic:alchemytable/melee_damage_anointment_2",
       "text": "This upgraded version of the anointment increases melee damage dealt by +6. $(br2)Applies: Whetstone II (256 hits)"
     }
   ]
