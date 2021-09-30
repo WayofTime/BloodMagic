@@ -2,18 +2,9 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "bloodmagic:inversion_pillar_cap"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ]
+      "name": "bloodmagic:inversion_pillar_cap",
+      "rolls": 1.0,
+      "entries": []
     }
   ]
 }

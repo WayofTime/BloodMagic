@@ -25,6 +25,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ObjectHolder;
+import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.event.BloodMagicCraftedEvent;
 import wayoftime.bloodmagic.common.item.BloodOrb;
 import wayoftime.bloodmagic.common.item.IAlchemyItem;
@@ -34,6 +35,7 @@ import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
+import wayoftime.bloodmagic.network.AlchemyTableFlagPacket;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.tile.container.ContainerAlchemyTable;
 import wayoftime.bloodmagic.util.Constants;
@@ -400,16 +402,26 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 		} else
 		{
 			burnTime = 0;
-			if (recipeAlchemyTable != null)
+			if (!world.isRemote)
 			{
-				orbFlag = tier < recipeAlchemyTable.getMinimumTier() ? true : false;
-				lpFlag = (!orbFlag && (getContainedLp() < recipeAlchemyTable.getSyphon())) ? true : false;
-			} else
-			{
-				orbFlag = lpFlag = false;
+				boolean oldOrbFlag = orbFlag;
+				boolean oldLPFlag = lpFlag;
+
+				if (recipeAlchemyTable != null)
+				{
+					orbFlag = tier < recipeAlchemyTable.getMinimumTier() ? true : false;
+					lpFlag = (!orbFlag && (getContainedLp() < recipeAlchemyTable.getSyphon())) ? true : false;
+				} else
+				{
+					orbFlag = lpFlag = false;
+				}
+
+				if (orbFlag != oldOrbFlag || lpFlag != oldLPFlag)
+				{
+					BloodMagic.packetHandler.sendToAllTracking(new AlchemyTableFlagPacket(this), this);
+				}
 			}
 		}
-
 	}
 
 	public double getProgressForGui()
@@ -425,6 +437,16 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 	public boolean getLPFlagforGui()
 	{
 		return lpFlag;
+	}
+
+	public void setOrbFlagForGui(boolean orbFlag)
+	{
+		this.orbFlag = orbFlag;
+	}
+
+	public void setLPFlagForGui(boolean lpFlag)
+	{
+		this.lpFlag = lpFlag;
 	}
 
 	private boolean canCraft(ItemStack output)
