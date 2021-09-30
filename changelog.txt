@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Version 3.1.5
+------------------------------------------------------
+- Fixes client-sided crash for the Alchemy Table when on servers.
+- Made the Water Sigil not work in the nether (still drains LP on use).
+
+------------------------------------------------------
 Version 3.1.4-24
 ------------------------------------------------------
 - Way forgot to reenable the "Edge of the Hidden Realm" ritual. Now he has to make a new build.
