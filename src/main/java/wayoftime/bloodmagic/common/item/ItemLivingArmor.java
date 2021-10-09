@@ -29,7 +29,6 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.living.ILivingContainer;
 import wayoftime.bloodmagic.core.living.LivingStats;
-import wayoftime.bloodmagic.core.living.LivingUtil;
 
 public class ItemLivingArmor extends ArmorItem implements ILivingContainer, ExpandedArmor, IForgeItem
 {
@@ -220,9 +219,14 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 
 	public boolean hasElytraUpgrade(ItemStack stack, LivingEntity entity)
 	{
-		if (stack.getItem() instanceof ItemLivingArmor && entity instanceof PlayerEntity && LivingUtil.hasFullSet((PlayerEntity) entity))
-			return LivingStats.fromPlayer((PlayerEntity) entity).getLevel(LivingArmorRegistrar.UPGRADE_ELYTRA.get().getKey()) > 0;
-		else
-			return false;
+		if (entity instanceof PlayerEntity)
+		{
+			LivingStats playerLivingStats = LivingStats.fromPlayer((PlayerEntity) entity);
+			if (playerLivingStats != null)
+			{
+				return playerLivingStats.getLevel(LivingArmorRegistrar.UPGRADE_ELYTRA.get().getKey()) > 0;
+			}
+		}
+		return false;
 	}
 }
