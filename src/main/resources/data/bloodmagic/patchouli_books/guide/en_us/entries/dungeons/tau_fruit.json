@@ -25,7 +25,7 @@
       "type": "spotlight",
       "item": "bloodmagic:strong_tau",
       "link_recipe": "true",
-      "text": "However, Tau Fuit has an alternate, more challenging route of growth. If the plant matures while a $(thing)Mob$() (a cow, for example) is standing nearby, it will leach health from the entity to satiate its dark hungers. In this way, Saturated Tau can be grown."
+      "text": "However, $(item)Tau Fuit$() has an alternate, more challenging route of growth. If the plant matures while a $(thing)Mob$() (a cow, for example) is standing atop it, it will leach health from the entity to satiate its dark hungers. In this way, $(item)Saturated Tau$() can be grown."
     }
   ]
 }
