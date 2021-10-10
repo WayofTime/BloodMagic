@@ -2,8 +2,6 @@
   "name": "Composite Item Filter",
   "icon": "bloodmagic:itemrouterfiltercomposite",
   "category": "bloodmagic:demon_will/item_routing",
-  "extra_recipe_mappings":[
-  ],
   "pages":[
     {
       "type": "text",

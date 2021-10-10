@@ -2,12 +2,6 @@
   "name": "Sentient Tools",
   "icon": "bloodmagic:soulpickaxe",
   "category": "bloodmagic:demon_will/demonic_items",
-  "extra_recipe_mappings":[
-    ["bloodmagic:soulpickaxe", 1],
-    ["bloodmagic:soulscythe", 3],
-    ["bloodmagic:soulaxe", 5],
-    ["bloodmagic:soulshovel", 7]
-    ],
   "pages": [
     {
       "type": "text",

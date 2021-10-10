@@ -2,8 +2,6 @@
   "name": "Standard Item Filter",
   "icon": "bloodmagic:itemrouterfilterexact",
   "category": "bloodmagic:demon_will/item_routing",
-  "extra_recipe_mappings":[
-  ],
   "pages":[
     {
       "type": "text",

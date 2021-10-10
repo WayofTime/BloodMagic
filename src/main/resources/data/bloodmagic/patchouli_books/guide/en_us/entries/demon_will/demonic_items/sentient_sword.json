@@ -2,7 +2,6 @@
   "name": "Sentient Sword",
   "icon": "bloodmagic:soulsword",
   "category": "bloodmagic:demon_will/demonic_items",
-  "extra_recipe_mappings":[["bloodmagic:soulsword", 1]],
   "pages": [
     {
       "type": "text",

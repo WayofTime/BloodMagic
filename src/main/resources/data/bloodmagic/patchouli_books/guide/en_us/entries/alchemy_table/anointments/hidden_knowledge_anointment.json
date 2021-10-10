@@ -2,11 +2,6 @@
   "name": "Miner's Secrets",
   "icon": "bloodmagic:hidden_knowledge_anointment",
   "category": "bloodmagic:alchemy_table/anointments",
-  "extra_recipe_mappings":[
-    ["bloodmagic:hidden_knowledge_anointment", 0],
-    ["bloodmagic:hidden_knowledge_anointment_l", 1],
-    ["bloodmagic:hidden_knowledge_anointment_2", 2]
-  ],
   "pages": [
     {
       "type": "crafting_alchemy_table",

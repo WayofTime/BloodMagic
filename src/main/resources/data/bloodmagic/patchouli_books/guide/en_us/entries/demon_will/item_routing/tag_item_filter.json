@@ -2,8 +2,6 @@
   "name": "Tag Item Filter",
   "icon": "bloodmagic:itemrouterfilteroredict",
   "category": "bloodmagic:demon_will/item_routing",
-  "extra_recipe_mappings":[
-  ],
   "pages":[
     {
       "type": "text",

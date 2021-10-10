@@ -2,11 +2,6 @@
   "name": "Archer's Polish",
   "icon": "bloodmagic:bow_velocity_anointment",
   "category": "bloodmagic:alchemy_table/anointments",
-  "extra_recipe_mappings":[
-    ["bloodmagic:bow_velocity_anointment", 0],
-    ["bloodmagic:bow_velocity_anointment_l", 1],
-    ["bloodmagic:bow_velocity_anointment_2", 2]
-  ],
   "pages": [
     {
       "type": "crafting_alchemy_table",

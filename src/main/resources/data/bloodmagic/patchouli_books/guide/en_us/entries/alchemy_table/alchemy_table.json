@@ -2,11 +2,6 @@
   "name": "Alchemy Table",
   "icon": "bloodmagic:alchemytable",
   "category": "bloodmagic:alchemy_table",
-  "extra_recipe_mappings":[
-    ["bloodmagic:intermediatecuttingfluid", 9],
-    ["bloodmagic:plantoil", 10],
-    ["bloodmagic:coalsand",11]
-  ],
   "pages": [
     {
       "type": "text",

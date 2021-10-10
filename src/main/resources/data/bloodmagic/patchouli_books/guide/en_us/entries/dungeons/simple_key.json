@@ -2,9 +2,6 @@
   "name": "Simple Keys",
   "icon": "bloodmagic:simplekey",
   "category": "bloodmagic:dungeons",
-  "extra_recipe_mappings":[
-    ["bloodmagic:simplekey", 1]
-  ],
   "pages": [
     {
       "type": "text",
