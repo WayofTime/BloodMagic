@@ -3,6 +3,7 @@
   "icon": "bloodmagic:alchemytable",
   "category": "bloodmagic:alchemy_table",
   "extra_recipe_mappings":[
+    ["bloodmagic:intermediatecuttingfluid", 9],
     ["bloodmagic:plantoil", 10],
     ["bloodmagic:coalsand",11]
   ],
@@ -52,16 +53,23 @@
       "type": "crafting_alchemy_table",
       "heading": "Basic Cutting Fluid",
 	  "anchor": "cutting_fluid",
-      "recipe": "bloodmagic:alchemytable/basic_cutting_fluid",
-      "text": "Basic Cutting Fluid is used for 2x Ore Processing.  It is also used in the $(l:bloodmagic:utility/alchemical_reaction_chamber)Alchemical Reaction Chamber$(/l) for the same purpose." 
+      "recipe": "bloodmagic:alchemytable/basic_cutting_fluid_sigil",
+      "text": "Basic Cutting Fluid is used for 2x Ore Processing.  It is also used in the $(l:bloodmagic:utility/alchemical_reaction_chamber)Alchemical Reaction Chamber$(/l) for the same purpose. While a $(l:bloodmagic:alchemy_array/sigil/water)Water Sigil$() is used in this demonstration, a simple $(water)Bottle of Water$() may be substituted in a pinch, though unlike the sigil, this will be consumed."
     },
-      {
-        "type": "2x_crafting_alchemy_table",
-        "a.heading": "Iron Sand",
-        "a.recipe": "bloodmagic:alchemytable/sand_iron",
-        "b.heading": "Gold Sand",
-        "b.recipe": "bloodmagic:alchemytable/sand_gold"
-      },
+    {
+      "type": "crafting_alchemy_table",
+      "heading": "Intermediate Cutting Fluid",
+      "anchor": "intermediate_cutting_fluid",
+      "recipe": "bloodmagic:alchemytable/intermediate_cutting_fluid_sigil",
+      "text": "Intermediate Cutting Fluid is an improved version that lasts eight times as long and increases crafting speed by 25%. You'll have to go $(l:bloodmagic:dungeons/lobby)Dungeon Delving$() for the $(l:bloodmagic:dungeons/tau_fruit)Tau Oil$(), though."
+    },
+    {
+      "type": "2x_crafting_alchemy_table",
+      "a.heading": "Iron Sand",
+      "a.recipe": "bloodmagic:alchemytable/sand_iron",
+      "b.heading": "Gold Sand",
+      "b.recipe": "bloodmagic:alchemytable/sand_gold"
+    },
     {
       "type": "3x_crafting_alchemy_table",
       "a.heading": "Grass",
