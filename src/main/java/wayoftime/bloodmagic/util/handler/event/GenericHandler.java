@@ -28,6 +28,7 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -49,6 +50,7 @@ import wayoftime.bloodmagic.common.item.BloodOrb;
 import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.IBloodOrb;
 import wayoftime.bloodmagic.common.item.ItemExperienceBook;
+import wayoftime.bloodmagic.common.item.ItemLivingArmor;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.data.Binding;
@@ -748,6 +750,37 @@ public class GenericHandler
 			if (plunderLevel > 0)
 			{
 				event.setLootingLevel(event.getLootingLevel() + plunderLevel);
+			}
+		}
+	}
+
+	public static Map<UUID, Integer> curiosLevelMap = new HashMap<>();
+
+	@SubscribeEvent
+	public void onLivingEquipmentChange(LivingEquipmentChangeEvent event)
+	{
+
+		if (BloodMagic.curiosLoaded)
+		{ // Without Curios, there is nothing this cares about.
+			if (event.getFrom().getItem() instanceof ItemLivingArmor || event.getTo().getItem() instanceof ItemLivingArmor)
+			{ // Armor change involves Living Armor
+				LivingEntity entity = event.getEntityLiving();
+				if (entity instanceof PlayerEntity)
+				{ // is a player
+					PlayerEntity player = (PlayerEntity) entity;
+					UUID uuid = player.getUniqueID();
+					if (LivingUtil.hasFullSet(player))
+					{ // Player has a full set
+						int curiosLevel = LivingStats.fromPlayer(player).getLevel(LivingArmorRegistrar.UPGRADE_CURIOS_SOCKET.get().getKey());
+						if (curiosLevelMap.getOrDefault(uuid, 0) != curiosLevel)
+						{ // Cache level does not match new level
+							curiosLevelMap.put(uuid, BloodMagic.curiosCompat.recalculateCuriosSlots(player));
+						}
+					} else if (curiosLevelMap.getOrDefault(uuid, 0) != 0)
+					{ // cache has an upgrade that needs to be removed
+						curiosLevelMap.put(uuid, BloodMagic.curiosCompat.recalculateCuriosSlots(player));
+					}
+				}
 			}
 		}
 	}
