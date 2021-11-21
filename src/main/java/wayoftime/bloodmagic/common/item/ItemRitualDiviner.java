@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.common.item;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import com.google.common.collect.Lists;
@@ -243,9 +244,9 @@ public class ItemRitualDiviner extends Item
 
 				for (EnumDemonWillType type : EnumDemonWillType.values())
 				{
-					if (TextHelper.canTranslate(ritual.getTranslationKey() + "." + type.name().toLowerCase() + ".info"))
+					if (TextHelper.canTranslate(ritual.getTranslationKey() + "." + type.name().toLowerCase(Locale.ROOT) + ".info"))
 					{
-						tooltip.add(new TranslationTextComponent(ritual.getTranslationKey() + "." + type.name().toLowerCase() + ".info"));
+						tooltip.add(new TranslationTextComponent(ritual.getTranslationKey() + "." + type.name().toLowerCase(Locale.ROOT) + ".info"));
 					}
 				}
 			} else if (sneaking)

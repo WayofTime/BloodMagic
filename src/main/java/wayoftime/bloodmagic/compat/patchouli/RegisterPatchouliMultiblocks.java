@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.compat.patchouli;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import com.google.common.collect.Lists;
@@ -129,7 +130,7 @@ public class RegisterPatchouliMultiblocks
 			// @formatter:on
 			multiblock.offset(0, shiftMultiblock, 0);
 
-			patAPI.registerMultiblock(new ResourceLocation(BloodMagic.MODID, "altar_" + tier.name().toLowerCase()), multiblock);
+			patAPI.registerMultiblock(new ResourceLocation(BloodMagic.MODID, "altar_" + tier.name().toLowerCase(Locale.ROOT)), multiblock);
 		}
 	}
 

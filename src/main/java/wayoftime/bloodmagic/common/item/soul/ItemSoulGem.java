@@ -21,13 +21,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
+import wayoftime.bloodmagic.api.compat.IDemonWill;
+import wayoftime.bloodmagic.api.compat.IDemonWillGem;
 import wayoftime.bloodmagic.api.compat.IMultiWillTool;
 import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
-import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
-import wayoftime.bloodmagic.api.compat.IDemonWill;
-import wayoftime.bloodmagic.api.compat.IDemonWillGem;
 import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
 
 public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
@@ -80,7 +80,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 		EnumDemonWillType type = this.getCurrentType(stack);
 		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.soulGem." + name).mergeStyle(TextFormatting.GRAY));
 		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.will", ChatUtil.DECIMAL_FORMAT.format(getWill(type, stack))).mergeStyle(TextFormatting.GRAY));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase()).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase(Locale.ROOT)).mergeStyle(TextFormatting.GRAY));
 
 		super.addInformation(stack, world, tooltip, flag);
 	}
@@ -212,7 +212,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 			return EnumDemonWillType.DEFAULT;
 		}
 
-		return EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ENGLISH));
+		return EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ROOT));
 	}
 
 	public void setCurrentType(EnumDemonWillType type, ItemStack soulGemStack)

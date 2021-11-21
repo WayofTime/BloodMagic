@@ -256,7 +256,7 @@ public class ItemSentientAxe extends AxeItem implements IDemonWillWeapon, IMulti
 			return EnumDemonWillType.DEFAULT;
 		}
 
-		return EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ENGLISH));
+		return EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ROOT));
 	}
 
 	public void setCurrentType(ItemStack stack, EnumDemonWillType type)
@@ -304,7 +304,7 @@ public class ItemSentientAxe extends AxeItem implements IDemonWillWeapon, IMulti
 			return;
 
 		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sentientAxe.desc").mergeStyle(TextFormatting.GRAY));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase()).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase(Locale.ROOT)).mergeStyle(TextFormatting.GRAY));
 	}
 
 	@Override

@@ -7,14 +7,19 @@ import java.util.Locale;
  */
 public enum ComponentType
 {
-	GLOWSTONE, BLOODSTONE, BEACON, BLOODRUNE, CRYSTAL, NOTAIR;
+	GLOWSTONE,
+	BLOODSTONE,
+	BEACON,
+	BLOODRUNE,
+	CRYSTAL,
+	NOTAIR;
 
 	private static final String BASE = "chat.bloodmagic.altar.comp.";
 	private String key;
 
 	ComponentType()
 	{
-		this.key = BASE + name().toLowerCase(Locale.ENGLISH);
+		this.key = BASE + name().toLowerCase(Locale.ROOT);
 	}
 
 	public String getKey()

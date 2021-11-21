@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.common.item;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
@@ -27,6 +28,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
+import wayoftime.bloodmagic.api.compat.IDiscreteDemonWill;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.ritual.EnumRitualReaderState;
@@ -39,8 +42,6 @@ import wayoftime.bloodmagic.util.handler.event.ClientHandler;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.util.helper.TextHelper;
 import wayoftime.bloodmagic.will.DemonWillHolder;
-import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
-import wayoftime.bloodmagic.api.compat.IDiscreteDemonWill;
 
 public class ItemRitualReader extends Item
 {
@@ -59,7 +60,7 @@ public class ItemRitualReader extends Item
 			return;
 
 		EnumRitualReaderState state = this.getState(stack);
-		tooltip.add(new TranslationTextComponent(tooltipBase + "currentState", TextHelper.localizeEffect(tooltipBase + state.toString().toLowerCase())).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent(tooltipBase + "currentState", TextHelper.localizeEffect(tooltipBase + state.toString().toLowerCase(Locale.ROOT))).mergeStyle(TextFormatting.GRAY));
 
 		tooltip.add(new StringTextComponent(""));
 
@@ -67,7 +68,7 @@ public class ItemRitualReader extends Item
 
 		if (sneaking)
 		{
-			tooltip.add(new TranslationTextComponent(tooltipBase + "desc." + state.toString().toLowerCase()).mergeStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent(tooltipBase + "desc." + state.toString().toLowerCase(Locale.ROOT)).mergeStyle(TextFormatting.GRAY));
 		} else
 		{
 			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.extraInfo").mergeStyle(TextFormatting.GRAY));
@@ -320,7 +321,7 @@ public class ItemRitualReader extends Item
 
 	public void notifyPlayerOfStateChange(EnumRitualReaderState state, PlayerEntity player)
 	{
-		ChatUtil.sendNoSpam(player, new TranslationTextComponent(tooltipBase + "currentState", new TranslationTextComponent(tooltipBase + state.toString().toLowerCase())));
+		ChatUtil.sendNoSpam(player, new TranslationTextComponent(tooltipBase + "currentState", new TranslationTextComponent(tooltipBase + state.toString().toLowerCase(Locale.ROOT))));
 	}
 
 	public void setState(ItemStack stack, EnumRitualReaderState state)

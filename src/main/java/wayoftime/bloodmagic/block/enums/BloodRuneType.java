@@ -21,7 +21,7 @@ public enum BloodRuneType implements IStringSerializable
 	@Override
 	public String toString()
 	{
-		return name().toLowerCase(Locale.ENGLISH);
+		return name().toLowerCase(Locale.ROOT);
 	}
 
 	/**

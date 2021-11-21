@@ -249,7 +249,7 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 			return EnumDemonWillType.DEFAULT;
 		}
 
-		return EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ENGLISH));
+		return EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ROOT));
 	}
 
 	public void setCurrentType(ItemStack stack, EnumDemonWillType type)
@@ -297,7 +297,7 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 
 //		tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.sentientSword.desc"))));
 		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sentientSword.desc").mergeStyle(TextFormatting.GRAY));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase()).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase(Locale.ROOT)).mergeStyle(TextFormatting.GRAY));
 	}
 
 	@Override
