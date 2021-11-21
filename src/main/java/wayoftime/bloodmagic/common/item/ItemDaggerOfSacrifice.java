@@ -67,8 +67,10 @@ public class ItemDaggerOfSacrifice extends Item
 		if (PlayerSacrificeHelper.findAndFillAltar(attacker.getEntityWorld(), target, lifeEssence, true))
 		{
 			target.getEntityWorld().playSound(null, target.getPosX(), target.getPosY(), target.getPosZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (target.getEntityWorld().rand.nextFloat() - target.getEntityWorld().rand.nextFloat()) * 0.8F);
-			target.setHealth(-1);
-			target.onDeath(DamageSourceBloodMagic.INSTANCE);
+			target.setHealth(0.00001f);
+			target.hurtResistantTime = 0;
+			target.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, 10);
+//			target.onDeath(DamageSourceBloodMagic.INSTANCE);
 		}
 
 		return false;
