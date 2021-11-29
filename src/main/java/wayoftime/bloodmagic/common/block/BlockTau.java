@@ -75,7 +75,7 @@ public class BlockTau extends CropsBlock
 					boolean doTransform = false;
 					boolean doGrow = !isStrong;
 
-					AxisAlignedBB boundingBox = new AxisAlignedBB(pos);
+					AxisAlignedBB boundingBox = new AxisAlignedBB(pos).grow(1, 0, 1);
 					List<LivingEntity> list = worldIn.getEntitiesWithinAABB(LivingEntity.class, boundingBox);
 					for (LivingEntity entity : list)
 					{
