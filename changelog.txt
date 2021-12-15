@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Version 3.1.7
+------------------------------------------------------
+- Fixed another crash with the Living Armour. Maybe I got it this time!
+
+
+------------------------------------------------------
 Version 3.1.6
 ------------------------------------------------------
 - Increased range of the Tau plant to a 3x1x3 block range centered on the plant. Thus makes it easier to farm the Saturated version.

@@ -771,11 +771,19 @@ public class GenericHandler
 					UUID uuid = player.getUniqueID();
 					if (LivingUtil.hasFullSet(player))
 					{ // Player has a full set
-						int curiosLevel = LivingStats.fromPlayer(player).getLevel(LivingArmorRegistrar.UPGRADE_CURIOS_SOCKET.get().getKey());
-						if (curiosLevelMap.getOrDefault(uuid, 0) != curiosLevel)
-						{ // Cache level does not match new level
-							curiosLevelMap.put(uuid, BloodMagic.curiosCompat.recalculateCuriosSlots(player));
+						LivingStats stats = LivingStats.fromPlayer(player);
+						if (stats != null)
+						{
+							int curiosLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_CURIOS_SOCKET.get().getKey());
+							if (curiosLevelMap.getOrDefault(uuid, 0) != curiosLevel)
+							{ // Cache level does not match new level
+								curiosLevelMap.put(uuid, BloodMagic.curiosCompat.recalculateCuriosSlots(player));
+							}
+						} else if (curiosLevelMap.getOrDefault(uuid, 0) != 0)
+						{
+							curiosLevelMap.put(uuid, 0);
 						}
+
 					} else if (curiosLevelMap.getOrDefault(uuid, 0) != 0)
 					{ // cache has an upgrade that needs to be removed
 						curiosLevelMap.put(uuid, BloodMagic.curiosCompat.recalculateCuriosSlots(player));

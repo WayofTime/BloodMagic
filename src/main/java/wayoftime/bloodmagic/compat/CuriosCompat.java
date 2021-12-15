@@ -47,7 +47,10 @@ public class CuriosCompat
 		ISlotHelper slotHelper = CuriosApi.getSlotHelper();
 		if (LivingUtil.hasFullSet(player))
 		{
-			int curiosLevel = LivingStats.fromPlayer(player).getLevel(LivingArmorRegistrar.UPGRADE_CURIOS_SOCKET.get().getKey());
+			LivingStats stats = LivingStats.fromPlayer(player);
+
+			int curiosLevel = stats != null ? stats.getLevel(LivingArmorRegistrar.UPGRADE_CURIOS_SOCKET.get().getKey())
+					: 0;
 
 			if (curiosLevel == 0)
 			{
