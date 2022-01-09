@@ -275,7 +275,7 @@ public class TileVeinMineCharge extends TileExplosiveCharge
 
 	public boolean isValidStartingBlock(BlockState originalBlockState)
 	{
-		return true;
+		return originalBlockState.getBlockHardness(world, pos) != -1.0F;
 	}
 
 	public boolean checkDiagonals()
