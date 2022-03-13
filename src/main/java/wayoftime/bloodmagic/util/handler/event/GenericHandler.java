@@ -12,6 +12,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.CrossbowItem;
@@ -652,7 +653,67 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onEntityJoinEvent(EntityJoinWorldEvent event)
 	{
+		// TODO: Need to refactor code so that, in general, the system works for any
+		// launched entity from the player.
+//		if (owner instanceof PlayerEntity) {
+//            Entity projectile = event.getEntity();
+//            PlayerEntity player = (PlayerEntity) owner;
+//            if (LivingArmour.hasFullSet(player)) {
+//                ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+//                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
+//                if (armour != null) {
+//                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.stormTrooper", chestStack);
+//
+//                    if (upgrade instanceof LivingArmourUpgradeStormTrooper) {
+//                        float velocityModifier = (float) (((LivingArmourUpgradeStormTrooper) upgrade).getArrowJiggle(player) * Math.sqrt(projectile.motionX * projectile.motionX + projectile.motionY * projectile.motionY + projectile.motionZ * projectile.motionZ));
+//
+//                        projectile.motionX += 2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier;
+//                        projectile.motionY += 2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier;
+//                        projectile.motionZ += 2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier;
+//                    }
+//                }
+//            }
+//        }
+
+		Entity owner = null;
 		Entity entity = event.getEntity();
+		if (entity instanceof ArrowEntity)
+			owner = ((ArrowEntity) event.getEntity()).func_234616_v_();
+		else if (entity instanceof ThrowableEntity)
+			owner = ((ThrowableEntity) entity).func_234616_v_();
+
+		if (owner instanceof PlayerEntity)
+		{
+			Entity projectile = event.getEntity();
+			PlayerEntity player = (PlayerEntity) owner;
+//			
+//			if (stats != null)
+//			{
+//				int level = stats.getLevel(LivingArmorRegistrar.DOWNGRADE_QUENCHED.get().getKey());
+//			}
+
+			if (LivingUtil.hasFullSet(player))
+			{
+				LivingStats stats = LivingStats.fromPlayer(player, true);
+
+				System.out.println("Firing when I have a full set");
+
+				double arrowJiggle = LivingArmorRegistrar.DOWNGRADE_STORM_TROOPER.get().getBonusValue("inaccuracy", stats.getLevel(LivingArmorRegistrar.DOWNGRADE_STORM_TROOPER.get().getKey())).doubleValue();
+
+				System.out.println("Arrow jiggle: " + arrowJiggle);
+
+				if (arrowJiggle > 0)
+				{
+					Vector3d motion = projectile.getMotion();
+					float velocityModifier = (float) (arrowJiggle * Math.sqrt(motion.x * motion.x + motion.y * motion.y + motion.z * motion.z));
+
+					Vector3d newMotion = motion.add(2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier, 2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier, 2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier);
+
+					projectile.setMotion(newMotion);
+				}
+			}
+		}
+
 		if (entity instanceof ArrowEntity)
 		{
 			if (entity.ticksExisted <= 0)

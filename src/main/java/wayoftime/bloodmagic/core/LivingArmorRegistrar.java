@@ -58,6 +58,7 @@ public class LivingArmorRegistrar
 		def.put("elytra", BloodMagic.rl("elytra"));
 		def.put("curios_socket", BloodMagic.rl("curios_socket"));
 		def.put("downgrade/quenched", BloodMagic.rl("downgrade/quenched"));
+		def.put("downgrade/storm_trooper", BloodMagic.rl("downgrade/storm_trooper"));
 		return def;
 	}).get();
 	// private static final Map<String, Path> DEFINITIONS =
@@ -123,6 +124,7 @@ public class LivingArmorRegistrar
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_ELYTRA = UPGRADES.register("elytra", () -> parseDefinition("elytra"));
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_CURIOS_SOCKET = UPGRADES.register("curios_socket", () -> parseDefinition("curios_socket"));
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_QUENCHED = UPGRADES.register("downgrade/quenched", () -> parseDefinition("downgrade/quenched").asDowngrade());
+	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_STORM_TROOPER = UPGRADES.register("downgrade/storm_trooper", () -> parseDefinition("downgrade/storm_trooper").asDowngrade());
 
 //	public static final LivingUpgrade UPGRADE_ARROW_PROTECT = parseDefinition("arrow_protect").withArmorProvider((player, stats, source, upgrade, level) -> {
 //		if (source.isProjectile())
@@ -158,6 +160,7 @@ public class LivingArmorRegistrar
 		if (BloodMagic.curiosLoaded)
 			registerUpgrade(UPGRADE_CURIOS_SOCKET.get());
 		registerUpgrade(DOWNGRADE_QUENCHED.get());
+		registerUpgrade(DOWNGRADE_STORM_TROOPER.get());
 //		Registry.register(UPGRADES, UPGRADE_ARROW_PROTECT.getKey(), UPGRADE_ARROW_PROTECT);
 //		Registry.register(UPGRADES, UPGRADE_ARROW_SHOT.getKey(), UPGRADE_ARROW_SHOT);
 //		Registry.register(UPGRADES, UPGRADE_CRITICAL_STRIKE.getKey(), UPGRADE_CRITICAL_STRIKE);
