@@ -1,4 +1,11 @@
 ------------------------------------------------------
+Version 3.1.8
+------------------------------------------------------
+- Reimplemented the following Living Armour Downgrades:
+-> Storm Trooper
+-> Battle Hungry
+
+------------------------------------------------------
 Version 3.1.7
 ------------------------------------------------------
 - Fixed another crash with the Living Armour. Maybe I got it this time!

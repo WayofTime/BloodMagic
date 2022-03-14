@@ -184,9 +184,20 @@ public class GenericHandler
 			PlayerEntity sourcePlayer = (PlayerEntity) sourceEntity;
 			if (LivingUtil.hasFullSet(sourcePlayer))
 			{
+				LivingStats stats = LivingStats.fromPlayer(sourcePlayer, true);
+				ItemStack chestStack = sourcePlayer.getItemStackFromSlot(EquipmentSlotType.CHEST);
+
 				if (sourcePlayer.isSprinting())
 				{
 					LivingUtil.applyNewExperience(sourcePlayer, LivingArmorRegistrar.UPGRADE_SPRINT_ATTACK.get(), event.getAmount());
+				}
+
+				int battleHungryLevel = stats.getLevel(LivingArmorRegistrar.DOWNGRADE_BATTLE_HUNGRY.get().getKey());
+				if (battleHungryLevel > 0)
+				{
+					int delay = LivingArmorRegistrar.DOWNGRADE_BATTLE_HUNGRY.get().getBonusValue("delay", battleHungryLevel).intValue();
+
+					chestStack.getTag().putInt("battle_cooldown", delay);
 				}
 			}
 
@@ -507,6 +518,31 @@ public class GenericHandler
 						chestStack.getTag().putInt("poison_cooldown", poisonCooldown);
 					}
 				}
+
+				int battleHungryLevel = stats.getLevel(LivingArmorRegistrar.DOWNGRADE_BATTLE_HUNGRY.get().getKey());
+				if (battleHungryLevel > 0)
+				{
+					boolean hasChanged = false;
+					int battleCooldown = chestStack.getTag().getInt("battle_cooldown");
+					if (battleCooldown > 0)
+					{
+						battleCooldown--;
+						hasChanged = true;
+					}
+
+					if (battleCooldown <= 0)
+					{
+						battleCooldown = 20;
+						float exhaustionAdded = LivingArmorRegistrar.DOWNGRADE_BATTLE_HUNGRY.get().getBonusValue("exhaustion", battleHungryLevel).floatValue();
+						player.addExhaustion(exhaustionAdded);
+						hasChanged = true;
+					}
+
+					if (hasChanged)
+					{
+						chestStack.getTag().putInt("battle_cooldown", battleCooldown);
+					}
+				}
 			}
 
 //			if (percentIncrease > 0 && (player.isOnGround()) && (Math.abs(player.moveForward) > 0 || Math.abs(player.moveStrafing) > 0))
@@ -653,28 +689,6 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onEntityJoinEvent(EntityJoinWorldEvent event)
 	{
-		// TODO: Need to refactor code so that, in general, the system works for any
-		// launched entity from the player.
-//		if (owner instanceof PlayerEntity) {
-//            Entity projectile = event.getEntity();
-//            PlayerEntity player = (PlayerEntity) owner;
-//            if (LivingArmour.hasFullSet(player)) {
-//                ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-//                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
-//                if (armour != null) {
-//                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.stormTrooper", chestStack);
-//
-//                    if (upgrade instanceof LivingArmourUpgradeStormTrooper) {
-//                        float velocityModifier = (float) (((LivingArmourUpgradeStormTrooper) upgrade).getArrowJiggle(player) * Math.sqrt(projectile.motionX * projectile.motionX + projectile.motionY * projectile.motionY + projectile.motionZ * projectile.motionZ));
-//
-//                        projectile.motionX += 2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier;
-//                        projectile.motionY += 2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier;
-//                        projectile.motionZ += 2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier;
-//                    }
-//                }
-//            }
-//        }
-
 		Entity owner = null;
 		Entity entity = event.getEntity();
 		if (entity instanceof ArrowEntity)
@@ -686,21 +700,12 @@ public class GenericHandler
 		{
 			Entity projectile = event.getEntity();
 			PlayerEntity player = (PlayerEntity) owner;
-//			
-//			if (stats != null)
-//			{
-//				int level = stats.getLevel(LivingArmorRegistrar.DOWNGRADE_QUENCHED.get().getKey());
-//			}
 
 			if (LivingUtil.hasFullSet(player))
 			{
 				LivingStats stats = LivingStats.fromPlayer(player, true);
 
-				System.out.println("Firing when I have a full set");
-
 				double arrowJiggle = LivingArmorRegistrar.DOWNGRADE_STORM_TROOPER.get().getBonusValue("inaccuracy", stats.getLevel(LivingArmorRegistrar.DOWNGRADE_STORM_TROOPER.get().getKey())).doubleValue();
-
-				System.out.println("Arrow jiggle: " + arrowJiggle);
 
 				if (arrowJiggle > 0)
 				{
