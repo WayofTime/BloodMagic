@@ -6,6 +6,7 @@ import wayoftime.bloodmagic.common.recipe.serializer.AlchemyArrayRecipeSerialize
 import wayoftime.bloodmagic.common.recipe.serializer.AlchemyTableRecipeSerializer;
 import wayoftime.bloodmagic.common.recipe.serializer.BloodAltarRecipeSerializer;
 import wayoftime.bloodmagic.common.recipe.serializer.FilterMergeAlchemyTableRecipeSerializer;
+import wayoftime.bloodmagic.common.recipe.serializer.LivingDowngradeRecipeSerializer;
 import wayoftime.bloodmagic.common.recipe.serializer.TartaricForgeRecipeSerializer;
 import wayoftime.bloodmagic.common.registration.impl.IRecipeSerializerDeferredRegister;
 import wayoftime.bloodmagic.common.registration.impl.IRecipeSerializerRegistryObject;
@@ -14,6 +15,7 @@ import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.recipe.RecipeBloodAltar;
 import wayoftime.bloodmagic.recipe.RecipeFilterMergeAlchemyTable;
+import wayoftime.bloodmagic.recipe.RecipeLivingDowngrade;
 import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
 
 public class BloodMagicRecipeSerializers
@@ -31,6 +33,7 @@ public class BloodMagicRecipeSerializers
 	public static final IRecipeSerializerRegistryObject<RecipeARC> ARC = RECIPE_SERIALIZERS.register("arc", () -> new ARCRecipeSerializer<>(RecipeARC::new));
 	public static final IRecipeSerializerRegistryObject<RecipeAlchemyTable> ALCHEMYTABLE = RECIPE_SERIALIZERS.register("alchemytable", () -> new AlchemyTableRecipeSerializer<>(RecipeAlchemyTable::new));
 	public static final IRecipeSerializerRegistryObject<RecipeFilterMergeAlchemyTable> FILTERALCHEMYTABLE = RECIPE_SERIALIZERS.register("filteralchemytable", () -> new FilterMergeAlchemyTableRecipeSerializer<>(RecipeFilterMergeAlchemyTable::new));
+	public static final IRecipeSerializerRegistryObject<RecipeLivingDowngrade> LIVINGDOWNGRADE = RECIPE_SERIALIZERS.register("livingdowngrade", () -> new LivingDowngradeRecipeSerializer<>(RecipeLivingDowngrade::new));
 
 //	public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, BloodMagic.MODID);
 

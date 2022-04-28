@@ -1,0 +1,7 @@
+{
+  "type": "bloodmagic:livingdowngrade",
+  "input": {
+    "tag": "forge:gems/diamond"
+  },
+  "resource": "bloodmagic:downgrade/battle_hungry"
+}
