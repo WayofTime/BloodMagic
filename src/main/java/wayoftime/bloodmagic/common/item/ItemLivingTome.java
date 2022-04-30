@@ -26,7 +26,7 @@ import wayoftime.bloodmagic.core.living.LivingStats;
 import wayoftime.bloodmagic.core.living.LivingUpgrade;
 import wayoftime.bloodmagic.core.living.LivingUtil;
 
-public class ItemLivingTome extends Item implements ILivingContainer
+public class ItemLivingTome extends Item implements ILivingContainer, ILivingUpgradePointsProvider
 {
 
 	public ItemLivingTome()
@@ -156,5 +156,39 @@ public class ItemLivingTome extends Item implements ILivingContainer
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
 		ILivingContainer.appendLivingTooltip(stack, getLivingStats(stack), tooltip, false);
+	}
+
+	@Override
+	public int getContainedUpgradePoints(ItemStack stack)
+	{
+		LivingStats tomeStats = getLivingStats(stack);
+		if (tomeStats == null)
+		{
+			return 0;
+		}
+
+		int containedPoints = 0;
+
+		Map<LivingUpgrade, Double> upgradeMap = tomeStats.getUpgrades();
+		for (Entry<LivingUpgrade, Double> entry : upgradeMap.entrySet())
+		{
+			containedPoints += entry.getKey().getLevelCost(entry.getKey().getLevel(entry.getValue().intValue()));
+		}
+
+		return containedPoints;
+	}
+
+	@Override
+	public ItemStack drainUpgradePoints(ItemStack stack, int drain)
+	{
+		// TODO Auto-generated method stub
+		return ItemStack.EMPTY;
+	}
+
+	@Override
+	public int getExcessUpgradePoints(ItemStack stack, int drain)
+	{
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

@@ -22,6 +22,6 @@ public class LivingDowngradeRecipeProvider implements ISubRecipeProvider
 //		BloodAltarRecipeBuilder.altar(Ingredient.fromTag(Tags.Items.STONE), new ItemStack(BloodMagicItems.SLATE.get()), AltarTier.ONE.ordinal(), 1000, 5, 5).build(consumer, new ResourceLocation(BloodMagic.MODID, basePath + "slate"));
 //		BloodAltarRecipeBuilder.altar(Ingredient.fromItems(Items.BUCKET), new ItemStack(BloodMagicBlocks.LIFE_ESSENCE_BUCKET.get()), AltarTier.ONE.ordinal(), 1000, 5, 0).build(consumer, BloodMagic.rl(basePath + "bucket_life"));
 
-		LivingDowngradeRecipeBuilder.downgrade(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND), LivingArmorRegistrar.DOWNGRADE_BATTLE_HUNGRY.get().getRegistryName()).build(consumer, BloodMagic.rl(basePath + "battle_hungry"));
+		LivingDowngradeRecipeBuilder.downgrade(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND), LivingArmorRegistrar.DOWNGRADE_BATTLE_HUNGRY.get().getKey()).build(consumer, BloodMagic.rl(basePath + "battle_hungry"));
 	}
 }

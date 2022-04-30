@@ -5,12 +5,18 @@ import java.util.function.Consumer;
 
 import net.minecraft.entity.item.ItemFrameEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.item.ILivingUpgradePointsProvider;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.living.LivingStats;
 import wayoftime.bloodmagic.core.living.LivingUpgrade;
@@ -56,24 +62,36 @@ public class RitualLivingDowngrade extends Ritual
 
 		if (selectedPlayer == null)
 		{
+
 			return;
 		}
 
 		LivingStats playerStats = LivingStats.fromPlayer(selectedPlayer, true);
 
 		ItemStack focusStack = getStackFromItemFrame(world, masterPos, direction);
+		if (focusStack.isEmpty())
+		{
+			return;
+		}
+
 		RecipeLivingDowngrade downgradeRecipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getLivingDowngrade(world, focusStack);
 		if (downgradeRecipe == null)
 		{
 			return;
 		}
 
-		LivingUpgrade downgrade = LivingArmorRegistrar.UPGRADE_MAP.get(downgradeRecipe.getLivingArmourResource());
-		if (downgrade == null)
+//		LivingUpgrade downgrade = LivingArmorRegistrar.UPGRADE_MAP.get(downgradeRecipe.getLivingArmourResource());
+		LivingUpgrade downgrade = LivingArmorRegistrar.UPGRADE_MAP.getOrDefault(downgradeRecipe.getLivingArmourResource(), LivingUpgrade.DUMMY);
+//		if (upgrade == LivingUpgrade.DUMMY)
+//			return;
+
+		if (downgrade == LivingUpgrade.DUMMY)
 		{
 			// Recipe is broken! No downgrade returned.
 			return;
 		}
+
+		System.out.println("Found a downgrade!");
 
 		BlockPos chestOffsetPos = new BlockPos(0, 1, 0);
 		chestOffsetPos = chestOffsetPos.offset(direction, 2);
@@ -82,10 +100,79 @@ public class RitualLivingDowngrade extends Ritual
 
 		// TODO: Change when chest logic is implemented.
 		int wantedLevel = 3;
+		int playerDowngradeLevel = playerStats.getLevel(downgradeRecipe.getLivingArmourResource());
+
+		if (playerDowngradeLevel >= wantedLevel)
+		{
+			System.out.println("The player's downgrade's level is greater than or equal to the requested level!");
+			return;
+		}
+
+		int playerInitialPoints = 0;
+		if (playerDowngradeLevel > 0)
+		{
+			playerInitialPoints = playerStats.getUpgrades().getOrDefault(downgrade, 0d).intValue();
+		}
 
 		// Cost check logic.
-		int requiredExp = downgrade.getLevelExp(wantedLevel);
+		int totalRequiredPoints = downgrade.getLevelCost(wantedLevel);
 
+		TileEntity tile = world.getTileEntity(chestPos);
+
+		if (tile == null)
+		{
+			return;
+		}
+
+		int availablePoints = 0;
+		Direction accessDir = Direction.DOWN;
+
+		LazyOptional<IItemHandler> capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, accessDir);
+		if (capability.isPresent())
+		{
+			IItemHandler handler = capability.resolve().get();
+
+			for (int i = 0; i < handler.getSlots(); i++)
+			{
+				availablePoints += getAvailablePointsFromStack(handler.getStackInSlot(i));
+			}
+		} else if (tile instanceof IInventory)
+		{
+			for (int i = 0; i < ((IInventory) tile).getSizeInventory(); i++)
+			{
+				availablePoints += getAvailablePointsFromStack(((IInventory) tile).getStackInSlot(i));
+			}
+		}
+
+		System.out.println("Number of available points found: " + availablePoints);
+
+		int requiredPoints = totalRequiredPoints - playerInitialPoints;
+
+		if (availablePoints < requiredPoints)
+		{
+			// Can't upgrade! Not enough points
+			// TODO: Add smoke particles to indicate this?
+
+			return;
+		}
+
+		// Consumption logic
+
+	}
+
+	public int getAvailablePointsFromStack(ItemStack stack)
+	{
+		if (stack.isEmpty())
+		{
+			return 0;
+		}
+
+		if (stack.getItem() instanceof ILivingUpgradePointsProvider)
+		{
+			return ((ILivingUpgradePointsProvider) stack.getItem()).getContainedUpgradePoints(stack);
+		}
+
+		return 0;
 	}
 
 	public ItemStack getStackFromItemFrame(World world, BlockPos masterPos, Direction direction)

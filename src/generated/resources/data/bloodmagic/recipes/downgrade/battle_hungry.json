@@ -3,5 +3,5 @@
   "input": {
     "tag": "forge:gems/diamond"
   },
-  "resource": "bloodmagic:downgrade/battle_hungry"
+  "resource": "bloodmagic:battle_hungry"
 }
