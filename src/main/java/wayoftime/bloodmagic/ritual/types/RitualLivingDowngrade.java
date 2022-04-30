@@ -3,6 +3,8 @@ package wayoftime.bloodmagic.ritual.types;
 import java.util.List;
 import java.util.function.Consumer;
 
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.item.ItemFrameEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
@@ -91,31 +93,12 @@ public class RitualLivingDowngrade extends Ritual
 			return;
 		}
 
-		System.out.println("Found a downgrade!");
+//		System.out.println("Found a downgrade!");
 
 		BlockPos chestOffsetPos = new BlockPos(0, 1, 0);
 		chestOffsetPos = chestOffsetPos.offset(direction, 2);
 
 		BlockPos chestPos = masterPos.add(chestOffsetPos);
-
-		// TODO: Change when chest logic is implemented.
-		int wantedLevel = 3;
-		int playerDowngradeLevel = playerStats.getLevel(downgradeRecipe.getLivingArmourResource());
-
-		if (playerDowngradeLevel >= wantedLevel)
-		{
-			System.out.println("The player's downgrade's level is greater than or equal to the requested level!");
-			return;
-		}
-
-		int playerInitialPoints = 0;
-		if (playerDowngradeLevel > 0)
-		{
-			playerInitialPoints = playerStats.getUpgrades().getOrDefault(downgrade, 0d).intValue();
-		}
-
-		// Cost check logic.
-		int totalRequiredPoints = downgrade.getLevelCost(wantedLevel);
 
 		TileEntity tile = world.getTileEntity(chestPos);
 
@@ -125,6 +108,7 @@ public class RitualLivingDowngrade extends Ritual
 		}
 
 		int availablePoints = 0;
+		int wantedLevel = 0;
 		Direction accessDir = Direction.DOWN;
 
 		LazyOptional<IItemHandler> capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, accessDir);
@@ -134,18 +118,42 @@ public class RitualLivingDowngrade extends Ritual
 
 			for (int i = 0; i < handler.getSlots(); i++)
 			{
-				availablePoints += getAvailablePointsFromStack(handler.getStackInSlot(i));
+				ItemStack invStack = handler.getStackInSlot(i);
+				availablePoints += getAvailablePointsFromStack(invStack);
+				wantedLevel += getLevelFromStack(invStack);
 			}
 		} else if (tile instanceof IInventory)
 		{
 			for (int i = 0; i < ((IInventory) tile).getSizeInventory(); i++)
 			{
-				availablePoints += getAvailablePointsFromStack(((IInventory) tile).getStackInSlot(i));
+				ItemStack invStack = ((IInventory) tile).getStackInSlot(i);
+				availablePoints += getAvailablePointsFromStack(invStack);
+				wantedLevel += getLevelFromStack(invStack);
 			}
 		}
 
-		System.out.println("Number of available points found: " + availablePoints);
+		// TODO: Change when chest logic is implemented.
 
+		int playerDowngradeLevel = playerStats.getLevel(downgradeRecipe.getLivingArmourResource());
+
+		wantedLevel = Math.min(wantedLevel, downgrade.getLevel(Integer.MAX_VALUE));
+
+		if (playerDowngradeLevel >= wantedLevel)
+		{
+//					System.out.println("The player's downgrade's level is greater than or equal to the requested level!");
+			return;
+		}
+
+		int playerInitialPoints = 0;
+		if (playerDowngradeLevel > 0)
+		{
+			playerInitialPoints = playerStats.getUpgrades().getOrDefault(downgrade, 0d).intValue();
+		}
+
+//		System.out.println("Number of available points found: " + availablePoints);
+
+		// Cost check logic.
+		int totalRequiredPoints = Math.abs(downgrade.getLevelCost(wantedLevel));
 		int requiredPoints = totalRequiredPoints - playerInitialPoints;
 
 		if (availablePoints < requiredPoints)
@@ -157,7 +165,83 @@ public class RitualLivingDowngrade extends Ritual
 		}
 
 		// Consumption logic
+		int initialRequiredPoints = requiredPoints;
+		System.out.println("Initial required points: " + requiredPoints);
 
+		if (capability.isPresent())
+		{
+			IItemHandler handler = capability.resolve().get();
+
+			for (int i = 0; i < handler.getSlots(); i++)
+			{
+				ItemStack invStack = handler.getStackInSlot(i);
+				if (!invStack.isEmpty() && invStack.getItem() instanceof ILivingUpgradePointsProvider)
+				{
+					ItemStack simStack = handler.extractItem(i, invStack.getCount(), true);
+
+					int drainPoints = Math.min(((ILivingUpgradePointsProvider) simStack.getItem()).getContainedUpgradePoints(simStack), requiredPoints);
+					int remainingPointsInItem = ((ILivingUpgradePointsProvider) simStack.getItem()).getExcessUpgradePoints(simStack, drainPoints);
+					ItemStack newItemStack = ((ILivingUpgradePointsProvider) simStack.getItem()).drainUpgradePoints(simStack, drainPoints);
+
+					if (newItemStack.isEmpty() || handler.isItemValid(i, newItemStack))
+					{
+						requiredPoints -= (drainPoints - remainingPointsInItem);
+						handler.extractItem(i, simStack.getCount(), false);
+						ItemStack remainingStack = handler.insertItem(i, newItemStack, false);
+
+						if (!remainingStack.isEmpty())
+						{
+							// TODO: Drop stack that cannot be inserted into slot, or add to list to try to
+							// insert into inventory later?
+						}
+
+						if (requiredPoints <= 0)
+						{
+							break;
+						}
+					}
+				}
+			}
+		} else if (tile instanceof IInventory)
+		{
+			for (int i = 0; i < ((IInventory) tile).getSizeInventory(); i++)
+			{
+				ItemStack invStack = ((IInventory) tile).getStackInSlot(i);
+				if (!invStack.isEmpty() && invStack.getItem() instanceof ILivingUpgradePointsProvider)
+				{
+					int drainPoints = Math.min(((ILivingUpgradePointsProvider) invStack.getItem()).getContainedUpgradePoints(invStack), requiredPoints);
+					int remainingPointsInItem = ((ILivingUpgradePointsProvider) invStack.getItem()).getExcessUpgradePoints(invStack, drainPoints);
+					ItemStack newItemStack = ((ILivingUpgradePointsProvider) invStack.getItem()).drainUpgradePoints(invStack, drainPoints);
+
+					requiredPoints -= (drainPoints - remainingPointsInItem);
+					((IInventory) tile).setInventorySlotContents(i, newItemStack);
+
+					if (requiredPoints <= 0)
+					{
+						break;
+					}
+				}
+			}
+		}
+
+		if (requiredPoints < 0)
+		{
+			// TODO: Drop item that contains excess points that were drained.
+		}
+
+		if (requiredPoints <= 0)
+		{
+//			System.out.println("Added points: " + initialRequiredPoints);
+			LivingUtil.applyExperienceToUpgradeCap(selectedPlayer, downgrade, initialRequiredPoints);
+			masterRitualStone.setActive(false);
+
+			LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
+			lightningboltentity.setPosition(masterPos.getX() + 0.5, masterPos.getY(), masterPos.getZ() + 0.5);
+			world.addEntity(lightningboltentity);
+		} else if (requiredPoints < initialRequiredPoints)
+		{
+			// TODO: Drop item that contains wrongfully drained points.
+		}
 	}
 
 	public int getAvailablePointsFromStack(ItemStack stack)
@@ -174,6 +258,36 @@ public class RitualLivingDowngrade extends Ritual
 
 		return 0;
 	}
+
+	public int getLevelFromStack(ItemStack stack)
+	{
+		if (stack.isEmpty())
+		{
+			return 0;
+		}
+
+		if (!(stack.getItem() instanceof ILivingUpgradePointsProvider))
+		{
+			return stack.getCount();
+		}
+
+		return 0;
+	}
+
+//	public int consumeAvailablePointsFromStack(ItemStack stack)
+//	{
+//		if (!stack.isEmpty() && stack.getItem() instanceof ILivingUpgradePointsProvider)
+//		{
+//			return 0;
+//		}
+//
+//		if ()
+//		{
+//			return ((ILivingUpgradePointsProvider) stack.getItem()).
+//		}
+//
+//		return 0;
+//	}
 
 	public ItemStack getStackFromItemFrame(World world, BlockPos masterPos, Direction direction)
 	{

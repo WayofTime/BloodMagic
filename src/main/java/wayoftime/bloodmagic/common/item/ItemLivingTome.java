@@ -172,7 +172,13 @@ public class ItemLivingTome extends Item implements ILivingContainer, ILivingUpg
 		Map<LivingUpgrade, Double> upgradeMap = tomeStats.getUpgrades();
 		for (Entry<LivingUpgrade, Double> entry : upgradeMap.entrySet())
 		{
-			containedPoints += entry.getKey().getLevelCost(entry.getKey().getLevel(entry.getValue().intValue()));
+			if (entry.getKey().isNegative())
+			{
+				containedPoints += entry.getValue().intValue();
+			} else
+			{
+				containedPoints += entry.getKey().getLevelCost(entry.getKey().getLevel(entry.getValue().intValue()));
+			}
 		}
 
 		return containedPoints;
