@@ -4,11 +4,13 @@ import net.minecraft.item.ItemStack;
 
 public interface ILivingUpgradePointsProvider
 {
-	// It is assumed that all contained upgrade points are available to be syphoned,
-	// regardless of how much is actually drained.
-	public int getContainedUpgradePoints(ItemStack stack);
+	public int getTotalUpgradePoints(ItemStack stack);
 
-	public ItemStack drainUpgradePoints(ItemStack stack, int drain);
+	public int getAvailableUpgradePoints(ItemStack stack, int drain);
+
+	public boolean canSyphonPoints(ItemStack stack, int drain);
+
+	public ItemStack getResultingStack(ItemStack stack, int drain);
 
 	// Remaining points in the item after the requested points are drained.
 	public int getExcessUpgradePoints(ItemStack stack, int drain);

@@ -84,6 +84,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.soulSnare.desc", "Throw at a monster and then kill them to obtain their demonic will");
 		add("tooltip.bloodmagic.willGauge", "A strange device that can measure the Demon Will in the Aura.");
 
+		add("tooltip.bloodmagic.syntheticpoint.desc", "A synthetic living armour point. It's... wriggling.");
+
 		add("tooltip.bloodmagic.currentType.default", "Contains: Raw Will");
 		add("tooltip.bloodmagic.currentType.corrosive", "Contains: Corrosive Will");
 		add("tooltip.bloodmagic.currentType.destructive", "Contains: Destructive Will");
@@ -225,6 +227,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.crystalSplitRitual", "Resonance of the Faceted Crystal");
 		add("ritual.bloodmagic.ellipseRitual", "Focus of the Ellipsoid");
 		add("ritual.bloodmagic.simpleDungeonRitual", "Edge of the Hidden Realm");
+		add("ritual.bloodmagic.downgradeRitual", "Penance of the Leadened Soul");
 
 		add("ritual.bloodmagic.cobblestoneRitual", "Le Vulcanos Frigius");
 		add("ritual.bloodmagic.placerRitual", "The Filler");
@@ -391,11 +394,11 @@ public class GeneratorLanguage extends LanguageProvider
 		add("living_upgrade.bloodmagic.slowness", "Limp Leg");
 		add("living_upgrade.bloodmagic.crippledArm", "Crippled Arm");
 		add("living_upgrade.bloodmagic.slippery", "Loose Traction");
-		add("living_upgrade.bloodmagic.battleHunger", "Battle Hungry");
-		add("living_upgrade.bloodmagic.downgrade.quenched", "Quenched");
-		add("living_upgrade.bloodmagic.meleeDecrease", "Dulled Blade");
-		add("living_upgrade.bloodmagic.digSlowdown", "Weakened Pick");
-		add("living_upgrade.bloodmagic.stormTrooper", "Storm Trooper");
+		add("living_upgrade.bloodmagic.battle_hungry", "Battle Hungry");
+		add("living_upgrade.bloodmagic.quenched", "Quenched");
+		add("living_upgrade.bloodmagic.melee_decrease", "Dulled Blade");
+		add("living_upgrade.bloodmagic.dig_slowdown", "Weakened Pick");
+		add("living_upgrade.bloodmagic.storm_trooper", "Storm Trooper");
 		add("living_upgrade.bloodmagic.slowHeal", "Diseased");
 		add("living_upgrade.bloodmagic.disoriented", "Disoriented");
 
@@ -623,6 +626,8 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.BASE_RITUAL_DIVINER, "Ritual Diviner");
 		addItem(BloodMagicItems.DUSK_RITUAL_DIVINER, "Ritual Diviner [Dusk]");
 		addItem(BloodMagicItems.RITUAL_READER, "Ritual Tinkerer");
+
+		addItem(BloodMagicItems.SYNTHETIC_POINT, "Synthetic Upgrade Point");
 
 		addItem(BloodMagicItems.WEAK_BLOOD_SHARD, "Weak Blood Shard");
 		addItem(BloodMagicItems.RAW_CRYSTAL, "Demon Will Crystal");

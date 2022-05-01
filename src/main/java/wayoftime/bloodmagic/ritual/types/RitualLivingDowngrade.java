@@ -179,9 +179,9 @@ public class RitualLivingDowngrade extends Ritual
 				{
 					ItemStack simStack = handler.extractItem(i, invStack.getCount(), true);
 
-					int drainPoints = Math.min(((ILivingUpgradePointsProvider) simStack.getItem()).getContainedUpgradePoints(simStack), requiredPoints);
+					int drainPoints = Math.min(((ILivingUpgradePointsProvider) simStack.getItem()).getAvailableUpgradePoints(simStack, requiredPoints), requiredPoints);
 					int remainingPointsInItem = ((ILivingUpgradePointsProvider) simStack.getItem()).getExcessUpgradePoints(simStack, drainPoints);
-					ItemStack newItemStack = ((ILivingUpgradePointsProvider) simStack.getItem()).drainUpgradePoints(simStack, drainPoints);
+					ItemStack newItemStack = ((ILivingUpgradePointsProvider) simStack.getItem()).getResultingStack(simStack, drainPoints);
 
 					if (newItemStack.isEmpty() || handler.isItemValid(i, newItemStack))
 					{
@@ -209,9 +209,9 @@ public class RitualLivingDowngrade extends Ritual
 				ItemStack invStack = ((IInventory) tile).getStackInSlot(i);
 				if (!invStack.isEmpty() && invStack.getItem() instanceof ILivingUpgradePointsProvider)
 				{
-					int drainPoints = Math.min(((ILivingUpgradePointsProvider) invStack.getItem()).getContainedUpgradePoints(invStack), requiredPoints);
+					int drainPoints = Math.min(((ILivingUpgradePointsProvider) invStack.getItem()).getAvailableUpgradePoints(invStack, requiredPoints), requiredPoints);
 					int remainingPointsInItem = ((ILivingUpgradePointsProvider) invStack.getItem()).getExcessUpgradePoints(invStack, drainPoints);
-					ItemStack newItemStack = ((ILivingUpgradePointsProvider) invStack.getItem()).drainUpgradePoints(invStack, drainPoints);
+					ItemStack newItemStack = ((ILivingUpgradePointsProvider) invStack.getItem()).getResultingStack(invStack, drainPoints);
 
 					requiredPoints -= (drainPoints - remainingPointsInItem);
 					((IInventory) tile).setInventorySlotContents(i, newItemStack);
@@ -253,7 +253,7 @@ public class RitualLivingDowngrade extends Ritual
 
 		if (stack.getItem() instanceof ILivingUpgradePointsProvider)
 		{
-			return ((ILivingUpgradePointsProvider) stack.getItem()).getContainedUpgradePoints(stack);
+			return ((ILivingUpgradePointsProvider) stack.getItem()).getTotalUpgradePoints(stack);
 		}
 
 		return 0;

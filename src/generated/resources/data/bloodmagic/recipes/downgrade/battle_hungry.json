@@ -1,7 +1,7 @@
 {
   "type": "bloodmagic:livingdowngrade",
   "input": {
-    "tag": "forge:gems/diamond"
+    "item": "minecraft:rotten_flesh"
   },
   "resource": "bloodmagic:battle_hungry"
 }

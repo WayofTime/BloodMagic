@@ -159,7 +159,27 @@ public class ItemLivingTome extends Item implements ILivingContainer, ILivingUpg
 	}
 
 	@Override
-	public int getContainedUpgradePoints(ItemStack stack)
+	public int getAvailableUpgradePoints(ItemStack stack, int drain)
+	{
+		return getTotalUpgradePoints(stack);
+	}
+
+	@Override
+	public ItemStack getResultingStack(ItemStack stack, int drain)
+	{
+		// TODO Auto-generated method stub
+		return ItemStack.EMPTY;
+	}
+
+	@Override
+	public int getExcessUpgradePoints(ItemStack stack, int drain)
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getTotalUpgradePoints(ItemStack stack)
 	{
 		LivingStats tomeStats = getLivingStats(stack);
 		if (tomeStats == null)
@@ -185,16 +205,8 @@ public class ItemLivingTome extends Item implements ILivingContainer, ILivingUpg
 	}
 
 	@Override
-	public ItemStack drainUpgradePoints(ItemStack stack, int drain)
+	public boolean canSyphonPoints(ItemStack stack, int drain)
 	{
-		// TODO Auto-generated method stub
-		return ItemStack.EMPTY;
-	}
-
-	@Override
-	public int getExcessUpgradePoints(ItemStack stack, int drain)
-	{
-		// TODO Auto-generated method stub
-		return 0;
+		return true;
 	}
 }

@@ -559,15 +559,16 @@ public class GenericHandler
 	public void onMiningSpeedCheck(PlayerEvent.BreakSpeed event)
 	{
 		PlayerEntity player = event.getPlayer();
-		float percentIncrease = 0;
+		float speedModifier = 1;
 
 		if (LivingUtil.hasFullSet(player))
 		{
 			LivingStats stats = LivingStats.fromPlayer(player, true);
-			percentIncrease += LivingArmorRegistrar.UPGRADE_DIGGING.get().getBonusValue("speed_modifier", stats.getLevel(LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())).doubleValue();
+			speedModifier *= 1 + LivingArmorRegistrar.UPGRADE_DIGGING.get().getBonusValue("speed_modifier", stats.getLevel(LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())).doubleValue();
+			speedModifier *= 1 + LivingArmorRegistrar.DOWNGRADE_DIG_SLOWDOWN.get().getBonusValue("speed_modifier", stats.getLevel(LivingArmorRegistrar.DOWNGRADE_DIG_SLOWDOWN.get().getKey())).doubleValue();
 		}
 
-		event.setNewSpeed((1 + percentIncrease) * event.getNewSpeed());
+		event.setNewSpeed((speedModifier) * event.getNewSpeed());
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)

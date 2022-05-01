@@ -1,0 +1,7 @@
+{
+  "type": "bloodmagic:livingdowngrade",
+  "input": {
+    "item": "minecraft:arrow"
+  },
+  "resource": "bloodmagic:storm_trooper"
+}

@@ -60,6 +60,8 @@ public class LivingArmorRegistrar
 		def.put("downgrade/quenched", BloodMagic.rl("downgrade/quenched"));
 		def.put("downgrade/storm_trooper", BloodMagic.rl("downgrade/storm_trooper"));
 		def.put("downgrade/battle_hungry", BloodMagic.rl("downgrade/battle_hungry"));
+		def.put("downgrade/melee_decrease", BloodMagic.rl("downgrade/melee_decrease"));
+		def.put("downgrade/dig_slowdown", BloodMagic.rl("downgrade/dig_slowdown"));
 		return def;
 	}).get();
 	// private static final Map<String, Path> DEFINITIONS =
@@ -127,6 +129,10 @@ public class LivingArmorRegistrar
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_QUENCHED = UPGRADES.register("downgrade/quenched", () -> parseDefinition("downgrade/quenched").asDowngrade());
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_STORM_TROOPER = UPGRADES.register("downgrade/storm_trooper", () -> parseDefinition("downgrade/storm_trooper").asDowngrade());
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_BATTLE_HUNGRY = UPGRADES.register("downgrade/battle_hungry", () -> parseDefinition("downgrade/battle_hungry").asDowngrade());
+	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_MELEE_DECREASE = UPGRADES.register("downgrade/melee_decrease", () -> parseDefinition("downgrade/melee_decrease").asDowngrade().withAttributeProvider((stats, attributeMap, uuid, upgrade, level) -> {
+		attributeMap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Damage Modifier 2", upgrade.getBonusValue("damage", level).doubleValue(), AttributeModifier.Operation.MULTIPLY_BASE));
+	}));
+	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_DIG_SLOWDOWN = UPGRADES.register("downgrade/dig_slowdown", () -> parseDefinition("downgrade/dig_slowdown").asDowngrade());
 
 //	public static final LivingUpgrade UPGRADE_ARROW_PROTECT = parseDefinition("arrow_protect").withArmorProvider((player, stats, source, upgrade, level) -> {
 //		if (source.isProjectile())
@@ -164,6 +170,8 @@ public class LivingArmorRegistrar
 		registerUpgrade(DOWNGRADE_QUENCHED.get());
 		registerUpgrade(DOWNGRADE_STORM_TROOPER.get());
 		registerUpgrade(DOWNGRADE_BATTLE_HUNGRY.get());
+		registerUpgrade(DOWNGRADE_MELEE_DECREASE.get());
+		registerUpgrade(DOWNGRADE_DIG_SLOWDOWN.get());
 //		Registry.register(UPGRADES, UPGRADE_ARROW_PROTECT.getKey(), UPGRADE_ARROW_PROTECT);
 //		Registry.register(UPGRADES, UPGRADE_ARROW_SHOT.getKey(), UPGRADE_ARROW_SHOT);
 //		Registry.register(UPGRADES, UPGRADE_CRITICAL_STRIKE.getKey(), UPGRADE_CRITICAL_STRIKE);

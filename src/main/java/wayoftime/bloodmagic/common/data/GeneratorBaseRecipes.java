@@ -62,6 +62,8 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 			ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.ALCHEMY_TABLE.get()).key('b', Tags.Items.INGOTS_IRON).key('s', Tags.Items.STONE).key('w', ItemTags.PLANKS).key('g', Tags.Items.INGOTS_GOLD).key('o', BloodMagicItems.SLATE.get()).patternLine("sss").patternLine("wbw").patternLine("gog").addCriterion("has_blank_slate", hasItem(BloodMagicItems.SLATE.get())).build(consumer, BloodMagic.rl("alchemy_table"));
 			ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.SOUL_FORGE.get()).key('s', Tags.Items.STONE).key('S', BloodMagicItems.SLATE.get()).key('i', Tags.Items.INGOTS_IRON).key('o', Tags.Items.STORAGE_BLOCKS_IRON).patternLine("i i").patternLine("sSs").patternLine("sos").addCriterion("has_blank_slate", hasItem(BloodMagicItems.SLATE.get())).build(consumer, BloodMagic.rl("soul_forge"));
 		}
+
+		ShapedRecipeBuilder.shapedRecipe(BloodMagicItems.SYNTHETIC_POINT.get(), 2).patternLine("ifi").patternLine("frf").patternLine("ifi").key('f', Ingredient.fromItems(Items.ROTTEN_FLESH, Items.PORKCHOP, Items.MUTTON, Items.BEEF, Items.TROPICAL_FISH, Items.COD, Items.PUFFERFISH, Items.SALMON, Items.CHICKEN, Items.SPIDER_EYE, Items.RABBIT, BloodMagicItems.STRONG_TAU_ITEM.get())).key('i', Tags.Items.NUGGETS_IRON).key('r', Tags.Items.DUSTS_REDSTONE).addCriterion("has_nugget", hasItem(Items.IRON_NUGGET)).build(consumer, BloodMagic.rl("synthetic_point"));
 	}
 
 	private void addVanillaSmithingRecipes(Consumer<IFinishedRecipe> consumer)

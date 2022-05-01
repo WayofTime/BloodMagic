@@ -13,7 +13,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
 
-public class ItemSyntheticPoint extends Item implements IDowngradePointProvider
+public class ItemSyntheticPoint extends Item implements ILivingUpgradePointsProvider
 {
 	public ItemSyntheticPoint()
 	{
@@ -28,21 +28,14 @@ public class ItemSyntheticPoint extends Item implements IDowngradePointProvider
 	}
 
 	@Override
-	public int getTotalPoints(ItemStack stack)
+	public int getAvailableUpgradePoints(ItemStack stack, int drain)
+	{
+		return Math.min(getTotalUpgradePoints(stack), drain);
+	}
+
+	public int getTotalUpgradePoints(ItemStack stack)
 	{
 		return stack.getCount();
-	}
-
-	@Override
-	public int getAvailablePoints(ItemStack stack, int syphonPoints)
-	{
-		return Math.min(syphonPoints, getTotalPoints(stack));
-	}
-
-	@Override
-	public boolean canSyphonPoints(ItemStack stack, int syphonPoints)
-	{
-		return true;
 	}
 
 	@Override
@@ -57,5 +50,17 @@ public class ItemSyntheticPoint extends Item implements IDowngradePointProvider
 		}
 
 		return stack;
+	}
+
+	@Override
+	public int getExcessUpgradePoints(ItemStack stack, int drain)
+	{
+		return getTotalUpgradePoints(stack) - getAvailableUpgradePoints(stack, drain);
+	}
+
+	@Override
+	public boolean canSyphonPoints(ItemStack stack, int drain)
+	{
+		return true;
 	}
 }
