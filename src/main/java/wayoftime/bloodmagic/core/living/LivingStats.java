@@ -48,6 +48,7 @@ public class LivingStats
 			return this;
 
 		upgrades.put(upgrade, current + experience);
+
 		return this;
 	}
 

@@ -81,13 +81,13 @@ public class ItemLivingTome extends Item implements ILivingContainer, ILivingUpg
 				double expUsed = expUsedArray[j];
 				if (expUsed > 0)
 				{
-					ResourceLocation registryName = ((Entry<LivingUpgrade, Double>) upgradeArray[j]).getKey().getRegistryName();
+					ResourceLocation key = ((Entry<LivingUpgrade, Double>) upgradeArray[j]).getKey().getKey();
 //					if (((Entry<LivingUpgrade, Double>) upgradeArray[j]).getValue() < expUsed)
 //					{
 //						tomeStats.resetExperience(registryName);
 //					} else
 					{
-						tomeStats.addExperience(registryName, -expUsed);
+						tomeStats.addExperience(key, -expUsed);
 					}
 
 					updateLivingStats(held, tomeStats);
