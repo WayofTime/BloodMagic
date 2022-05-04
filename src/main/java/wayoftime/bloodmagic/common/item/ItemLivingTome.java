@@ -209,4 +209,10 @@ public class ItemLivingTome extends Item implements ILivingContainer, ILivingUpg
 	{
 		return true;
 	}
+
+	@Override
+	public int getPriority(ItemStack stack)
+	{
+		return 1;
+	}
 }

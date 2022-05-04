@@ -399,7 +399,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("living_upgrade.bloodmagic.melee_decrease", "Dulled Blade");
 		add("living_upgrade.bloodmagic.dig_slowdown", "Weakened Pick");
 		add("living_upgrade.bloodmagic.storm_trooper", "Storm Trooper");
-		add("living_upgrade.bloodmagic.slowHeal", "Diseased");
+		add("living_upgrade.bloodmagic.slow_heal", "Diseased");
 		add("living_upgrade.bloodmagic.disoriented", "Disoriented");
 
 		add("tooltip.bloodmagic.livingarmour.upgrade.level", "%s (Level %d)");
@@ -408,6 +408,9 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.livingtrainer.upgrade.points", "Upgrade points: %s");
 
 		add("tooltip.bloodmagic.livingarmour.extraExtraInfo", "&9-Hold shift + M for progress info-");
+
+		add("tooltip.bloodmagic.livingtomescrap.points", "Contained upgrade points: %s");
+		add("tooltip.bloodmagic.livingtomescrap.desc", "Fragments of a living tome.");
 
 		add("tooltip.bloodmagic.slate_vial", "A glass vial infused with a simple slate");
 		add("tooltip.bloodmagic.blood_provider.slate.desc", "A simple ampoule containing 500LP");
@@ -658,6 +661,7 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addItem(BloodMagicItems.LIVING_TOME, "Living Armour Upgrade Tome");
 		addItem(BloodMagicItems.LIVING_TRAINER, "Living Armour Training Bracelet");
+		addItem(BloodMagicItems.UPGRADE_SCRAPS, "Living Armour Upgrade Scraps");
 
 		addItem(BloodMagicItems.THROWING_DAGGER, "Iron Throwing Dagger");
 		addItem(BloodMagicItems.THROWING_DAGGER_SYRINGE, "Syringe Throwing Dagger");

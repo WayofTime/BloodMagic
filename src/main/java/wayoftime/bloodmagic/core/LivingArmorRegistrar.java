@@ -62,6 +62,7 @@ public class LivingArmorRegistrar
 		def.put("downgrade/battle_hungry", BloodMagic.rl("downgrade/battle_hungry"));
 		def.put("downgrade/melee_decrease", BloodMagic.rl("downgrade/melee_decrease"));
 		def.put("downgrade/dig_slowdown", BloodMagic.rl("downgrade/dig_slowdown"));
+		def.put("downgrade/slow_heal", BloodMagic.rl("downgrade/slow_heal"));
 		return def;
 	}).get();
 	// private static final Map<String, Path> DEFINITIONS =
@@ -133,6 +134,7 @@ public class LivingArmorRegistrar
 		attributeMap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Damage Modifier 2", upgrade.getBonusValue("damage", level).doubleValue(), AttributeModifier.Operation.MULTIPLY_BASE));
 	}));
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_DIG_SLOWDOWN = UPGRADES.register("downgrade/dig_slowdown", () -> parseDefinition("downgrade/dig_slowdown").asDowngrade());
+	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_SLOW_HEAL = UPGRADES.register("downgrade/slow_heal", () -> parseDefinition("downgrade/slow_heal").asDowngrade());
 
 //	public static final LivingUpgrade UPGRADE_ARROW_PROTECT = parseDefinition("arrow_protect").withArmorProvider((player, stats, source, upgrade, level) -> {
 //		if (source.isProjectile())
@@ -172,6 +174,7 @@ public class LivingArmorRegistrar
 		registerUpgrade(DOWNGRADE_BATTLE_HUNGRY.get());
 		registerUpgrade(DOWNGRADE_MELEE_DECREASE.get());
 		registerUpgrade(DOWNGRADE_DIG_SLOWDOWN.get());
+		registerUpgrade(DOWNGRADE_SLOW_HEAL.get());
 //		Registry.register(UPGRADES, UPGRADE_ARROW_PROTECT.getKey(), UPGRADE_ARROW_PROTECT);
 //		Registry.register(UPGRADES, UPGRADE_ARROW_SHOT.getKey(), UPGRADE_ARROW_SHOT);
 //		Registry.register(UPGRADES, UPGRADE_CRITICAL_STRIKE.getKey(), UPGRADE_CRITICAL_STRIKE);

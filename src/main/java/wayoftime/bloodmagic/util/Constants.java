@@ -39,6 +39,7 @@ public class Constants
 		public static final String RITUAL_READER = "ritualReaderState";
 		public static final String ITEMS = "Items";
 		public static final String SLOT = "Slot";
+		public static final String POINTS = "storedPoints";
 
 		public static final String ALTAR = "bloodAltar";
 		public static final String ALTAR_TIER = "upgradeLevel";
@@ -130,7 +131,7 @@ public class Constants
 		public static final String LEAST_SIG = "leastSig";
 		public static final String COLOR = "color";
 
-		public static final String POTION_AUGMENT_LENGHT = "length:";
+		public static final String POTION_AUGMENT_LENGTH = "length:";
 		public static final String POTION_AUGMENT_STRENGTH = "strength:";
 		public static final String POTION_IMPURITY = "impurity";
 

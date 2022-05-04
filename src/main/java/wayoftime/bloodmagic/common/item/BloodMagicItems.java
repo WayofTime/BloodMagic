@@ -234,6 +234,7 @@ public class BloodMagicItems
 
 	// Misc
 	public static final RegistryObject<Item> SYNTHETIC_POINT = BASICITEMS.register("syntheticpoint", () -> new ItemSyntheticPoint());
+	public static final RegistryObject<Item> UPGRADE_SCRAPS = BASICITEMS.register("upgradescraps", () -> new ItemLivingTomeScrap());
 
 	// ARC Tools
 	public static final RegistryObject<Item> SANGUINE_REVERTER = BASICITEMS.register("sanguinereverter", () -> new ItemARCToolBase(32, 2));

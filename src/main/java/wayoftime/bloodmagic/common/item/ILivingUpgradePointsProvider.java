@@ -14,4 +14,7 @@ public interface ILivingUpgradePointsProvider
 
 	// Remaining points in the item after the requested points are drained.
 	public int getExcessUpgradePoints(ItemStack stack, int drain);
+
+	// Lower numbers are consumed first.
+	public int getPriority(ItemStack stack);
 }

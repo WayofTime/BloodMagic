@@ -354,6 +354,9 @@ public class GenericHandler
 			PlayerEntity player = (PlayerEntity) living;
 			if (LivingUtil.hasFullSet(player))
 			{
+				LivingStats stats = LivingStats.fromPlayer(player, true);
+				float healModifier = 1 + LivingArmorRegistrar.DOWNGRADE_SLOW_HEAL.get().getBonusValue("heal_modifier", stats.getLevel(LivingArmorRegistrar.DOWNGRADE_SLOW_HEAL.get().getKey())).floatValue();
+				event.setAmount(event.getAmount() * healModifier);
 				LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_HEALTH.get(), event.getAmount());
 			}
 		}

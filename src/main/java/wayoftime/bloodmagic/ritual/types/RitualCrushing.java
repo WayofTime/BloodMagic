@@ -9,7 +9,6 @@ import com.mojang.authlib.GameProfile;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -27,6 +26,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.block.BlockMasterRitualStone;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
@@ -37,7 +37,6 @@ import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.ritual.RitualRegister;
 import wayoftime.bloodmagic.util.Utils;
-import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
 @RitualRegister("crushing")
 public class RitualCrushing extends Ritual
@@ -129,8 +128,7 @@ public class RitualCrushing extends Ritual
 			BlockState state = world.getBlockState(newPos);
 			Block block = state.getBlock();
 
-			if (block instanceof BlockMasterRitualStone || block instanceof IRitualStone
-					|| state.getBlockHardness(world, newPos) == -1.0F || Utils.isBlockLiquid(state))
+			if (block instanceof BlockMasterRitualStone || block instanceof IRitualStone || state.getBlockHardness(world, newPos) == -1.0F || Utils.isBlockLiquid(state))
 			{
 				continue;
 			}
@@ -186,7 +184,6 @@ public class RitualCrushing extends Ritual
 //
 //			}
 
-			Blocks d;
 			if (!isBlockClaimed && isSilkTouch)
 			{
 				LootContext.Builder lootBuilder = new LootContext.Builder((ServerWorld) world);
@@ -330,8 +327,7 @@ public class RitualCrushing extends Ritual
 	@Override
 	public ITextComponent[] provideInformationOfRitualToPlayer(PlayerEntity player)
 	{
-		return new ITextComponent[]
-		{ new TranslationTextComponent(this.getTranslationKey() + ".info"),
+		return new ITextComponent[] { new TranslationTextComponent(this.getTranslationKey() + ".info"),
 				new TranslationTextComponent(this.getTranslationKey() + ".default.info"),
 				new TranslationTextComponent(this.getTranslationKey() + ".corrosive.info"),
 				new TranslationTextComponent(this.getTranslationKey() + ".steadfast.info"),

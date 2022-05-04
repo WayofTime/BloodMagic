@@ -1,6 +1,10 @@
 package wayoftime.bloodmagic.ritual.types;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import net.minecraft.entity.EntityType;
@@ -18,7 +22,9 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.item.ILivingUpgradePointsProvider;
+import wayoftime.bloodmagic.common.item.ItemLivingTomeScrap;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.living.LivingStats;
 import wayoftime.bloodmagic.core.living.LivingUpgrade;
@@ -31,6 +37,7 @@ import wayoftime.bloodmagic.ritual.IMasterRitualStone;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.ritual.RitualRegister;
+import wayoftime.bloodmagic.util.Utils;
 
 @RitualRegister("downgrade")
 public class RitualLivingDowngrade extends Ritual
@@ -111,6 +118,8 @@ public class RitualLivingDowngrade extends Ritual
 		int wantedLevel = 0;
 		Direction accessDir = Direction.DOWN;
 
+		Map<Integer, List<Integer>> priorityMap = new HashMap<>();
+
 		LazyOptional<IItemHandler> capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, accessDir);
 		if (capability.isPresent())
 		{
@@ -121,6 +130,19 @@ public class RitualLivingDowngrade extends Ritual
 				ItemStack invStack = handler.getStackInSlot(i);
 				availablePoints += getAvailablePointsFromStack(invStack);
 				wantedLevel += getLevelFromStack(invStack);
+				int priority = getPriorityFromStack(invStack);
+				if (priority >= 0)
+				{
+					if (priorityMap.containsKey(priority))
+					{
+						priorityMap.get(priority).add(i);
+					} else
+					{
+						ArrayList<Integer> priorityList = new ArrayList<Integer>();
+						priorityList.add(i);
+						priorityMap.put(priority, priorityList);
+					}
+				}
 			}
 		} else if (tile instanceof IInventory)
 		{
@@ -129,6 +151,19 @@ public class RitualLivingDowngrade extends Ritual
 				ItemStack invStack = ((IInventory) tile).getStackInSlot(i);
 				availablePoints += getAvailablePointsFromStack(invStack);
 				wantedLevel += getLevelFromStack(invStack);
+				int priority = getPriorityFromStack(invStack);
+				if (priority >= 0)
+				{
+					if (priorityMap.containsKey(priority))
+					{
+						priorityMap.get(priority).add(i);
+					} else
+					{
+						ArrayList<Integer> priorityList = new ArrayList<Integer>();
+						priorityList.add(i);
+						priorityMap.put(priority, priorityList);
+					}
+				}
 			}
 		}
 
@@ -156,7 +191,7 @@ public class RitualLivingDowngrade extends Ritual
 		int totalRequiredPoints = Math.abs(downgrade.getLevelCost(wantedLevel));
 		int requiredPoints = totalRequiredPoints - playerInitialPoints;
 
-		if (availablePoints < requiredPoints)
+		if (availablePoints < requiredPoints || priorityMap.isEmpty())
 		{
 			// Can't upgrade! Not enough points
 			// TODO: Add smoke particles to indicate this?
@@ -164,35 +199,51 @@ public class RitualLivingDowngrade extends Ritual
 			return;
 		}
 
+		List<Integer> slotOrderList = new ArrayList<>();
+
+		List<Integer> priorityList = new ArrayList<>(priorityMap.keySet());
+
+		Collections.sort(priorityList);
+		for (int priority : priorityList)
+		{
+			slotOrderList.addAll(priorityMap.get(priority));
+		}
+
 		// Consumption logic
 		int initialRequiredPoints = requiredPoints;
 		System.out.println("Initial required points: " + requiredPoints);
+
+		List<ItemStack> excessStackList = new ArrayList<>();
 
 		if (capability.isPresent())
 		{
 			IItemHandler handler = capability.resolve().get();
 
-			for (int i = 0; i < handler.getSlots(); i++)
+			for (int i : slotOrderList)
 			{
 				ItemStack invStack = handler.getStackInSlot(i);
 				if (!invStack.isEmpty() && invStack.getItem() instanceof ILivingUpgradePointsProvider)
 				{
 					ItemStack simStack = handler.extractItem(i, invStack.getCount(), true);
 
-					int drainPoints = Math.min(((ILivingUpgradePointsProvider) simStack.getItem()).getAvailableUpgradePoints(simStack, requiredPoints), requiredPoints);
+					int containedPoints = ((ILivingUpgradePointsProvider) simStack.getItem()).getAvailableUpgradePoints(simStack, requiredPoints);
+					int drainPoints = Math.min(containedPoints, requiredPoints);
 					int remainingPointsInItem = ((ILivingUpgradePointsProvider) simStack.getItem()).getExcessUpgradePoints(simStack, drainPoints);
 					ItemStack newItemStack = ((ILivingUpgradePointsProvider) simStack.getItem()).getResultingStack(simStack, drainPoints);
 
 					if (newItemStack.isEmpty() || handler.isItemValid(i, newItemStack))
 					{
-						requiredPoints -= (drainPoints - remainingPointsInItem);
+						// Actual number of points syphoned from the item.
+						int totalPoints = ((ILivingUpgradePointsProvider) simStack.getItem()).getTotalUpgradePoints(simStack);
+						int totalDrainedPoints = (totalPoints - remainingPointsInItem);
+//						System.out.println("Contained points: " + containedPoints + ", remaining points: " + remainingPointsInItem);
+						requiredPoints -= totalDrainedPoints;
 						handler.extractItem(i, simStack.getCount(), false);
 						ItemStack remainingStack = handler.insertItem(i, newItemStack, false);
 
 						if (!remainingStack.isEmpty())
 						{
-							// TODO: Drop stack that cannot be inserted into slot, or add to list to try to
-							// insert into inventory later?
+							excessStackList.add(remainingStack);
 						}
 
 						if (requiredPoints <= 0)
@@ -204,7 +255,7 @@ public class RitualLivingDowngrade extends Ritual
 			}
 		} else if (tile instanceof IInventory)
 		{
-			for (int i = 0; i < ((IInventory) tile).getSizeInventory(); i++)
+			for (int i : slotOrderList)
 			{
 				ItemStack invStack = ((IInventory) tile).getStackInSlot(i);
 				if (!invStack.isEmpty() && invStack.getItem() instanceof ILivingUpgradePointsProvider)
@@ -226,12 +277,13 @@ public class RitualLivingDowngrade extends Ritual
 
 		if (requiredPoints < 0)
 		{
-			// TODO: Drop item that contains excess points that were drained.
+			ItemStack scrapStack = new ItemStack(BloodMagicItems.UPGRADE_SCRAPS.get());
+			((ItemLivingTomeScrap) BloodMagicItems.UPGRADE_SCRAPS.get()).setTotalUpgradePoints(scrapStack, Math.abs(requiredPoints));
+			excessStackList.add(scrapStack);
 		}
 
 		if (requiredPoints <= 0)
 		{
-//			System.out.println("Added points: " + initialRequiredPoints);
 			LivingUtil.applyExperienceToUpgradeCap(selectedPlayer, downgrade, initialRequiredPoints);
 			masterRitualStone.setActive(false);
 
@@ -240,7 +292,27 @@ public class RitualLivingDowngrade extends Ritual
 			world.addEntity(lightningboltentity);
 		} else if (requiredPoints < initialRequiredPoints)
 		{
-			// TODO: Drop item that contains wrongfully drained points.
+			ItemStack scrapStack = new ItemStack(BloodMagicItems.UPGRADE_SCRAPS.get());
+			((ItemLivingTomeScrap) BloodMagicItems.UPGRADE_SCRAPS.get()).setTotalUpgradePoints(scrapStack, Math.abs(initialRequiredPoints - requiredPoints));
+			excessStackList.add(scrapStack);
+		}
+
+		for (ItemStack item : excessStackList)
+		{
+			ItemStack copyStack = item.copy();
+
+			if (tile != null)
+			{
+				copyStack = Utils.insertStackIntoTile(copyStack, tile, Direction.DOWN);
+			} else
+			{
+				Utils.spawnStackAtBlock(world, chestPos, Direction.UP, copyStack);
+				continue;
+			}
+			if (!copyStack.isEmpty())
+			{
+				Utils.spawnStackAtBlock(world, chestPos, Direction.UP, copyStack);
+			}
 		}
 	}
 
@@ -254,6 +326,21 @@ public class RitualLivingDowngrade extends Ritual
 		if (stack.getItem() instanceof ILivingUpgradePointsProvider)
 		{
 			return ((ILivingUpgradePointsProvider) stack.getItem()).getTotalUpgradePoints(stack);
+		}
+
+		return 0;
+	}
+
+	public int getPriorityFromStack(ItemStack stack)
+	{
+		if (stack.isEmpty())
+		{
+			return -1;
+		}
+
+		if (stack.getItem() instanceof ILivingUpgradePointsProvider)
+		{
+			return ((ILivingUpgradePointsProvider) stack.getItem()).getPriority(stack);
 		}
 
 		return 0;

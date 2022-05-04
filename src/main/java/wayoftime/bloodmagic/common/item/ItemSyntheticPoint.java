@@ -63,4 +63,10 @@ public class ItemSyntheticPoint extends Item implements ILivingUpgradePointsProv
 	{
 		return true;
 	}
+
+	@Override
+	public int getPriority(ItemStack stack)
+	{
+		return 5;
+	}
 }
