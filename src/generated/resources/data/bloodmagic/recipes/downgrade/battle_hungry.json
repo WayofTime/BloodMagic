@@ -1,0 +1,7 @@
+{
+  "type": "bloodmagic:livingdowngrade",
+  "input": {
+    "item": "minecraft:rotten_flesh"
+  },
+  "resource": "bloodmagic:battle_hungry"
+}

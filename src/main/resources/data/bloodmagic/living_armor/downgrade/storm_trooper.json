@@ -1,0 +1,19 @@
+{
+  "id": "bloodmagic:storm_trooper",
+  "levels": [
+    { "xp": 10, "cost": -10 },
+    { "xp": 25, "cost": -25 },
+    { "xp": 40, "cost": -40 },
+    { "xp": 65, "cost": -65 },
+    { "xp": 90, "cost": -90 }
+  ],
+  "bonuses": {
+    "inaccuracy": [
+      0.04,
+      0.08,
+      0.12,
+      0.16,
+      0.20
+    ]
+  }
+}

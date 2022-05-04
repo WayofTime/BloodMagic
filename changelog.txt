@@ -1,4 +1,25 @@
 ------------------------------------------------------
+Version 3.1.8
+------------------------------------------------------
+- Reimplemented the following Living Armour Downgrades:
+-> Storm Trooper
+-> Battle Hungry
+
+------------------------------------------------------
+Version 3.1.7
+------------------------------------------------------
+- Fixed another crash with the Living Armour. Maybe I got it this time!
+
+
+------------------------------------------------------
+Version 3.1.6
+------------------------------------------------------
+- Increased range of the Tau plant to a 3x1x3 block range centered on the plant. Thus makes it easier to farm the Saturated version.
+- Fixed crash with the Living Armour under certain conditions.
+- Implemented a fix to the Sacrificial Knife so that it respects gravestone mods and other effects that occur on-death.
+- Fixed the Dagger of sacrifice so that it similarly respects death events.
+
+------------------------------------------------------
 Version 3.1.5
 ------------------------------------------------------
 - Fixes client-sided crash for the Alchemy Table when on servers.

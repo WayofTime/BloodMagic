@@ -22,6 +22,7 @@ import wayoftime.bloodmagic.recipe.RecipeARC;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.recipe.RecipeBloodAltar;
+import wayoftime.bloodmagic.recipe.RecipeLivingDowngrade;
 import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
 
 public class BloodMagicRecipeRegistrar
@@ -186,6 +187,21 @@ public class BloodMagicRecipeRegistrar
 		}
 
 		return Pair.of(false, partialMatch);
+	}
+
+	@Nullable
+	public RecipeLivingDowngrade getLivingDowngrade(World world, @Nonnull ItemStack input)
+	{
+		Preconditions.checkNotNull(input, "input cannot be null.");
+		if (input.isEmpty())
+			return null;
+
+		List<RecipeLivingDowngrade> downgradeRecipes = world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.LIVINGDOWNGRADE);
+
+		for (RecipeLivingDowngrade recipe : downgradeRecipes) if (recipe.getInput().test(input))
+			return recipe;
+
+		return null;
 	}
 
 	public Set<RecipeBloodAltar> getAltarRecipes(World world)

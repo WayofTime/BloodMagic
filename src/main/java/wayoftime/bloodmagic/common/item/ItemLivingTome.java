@@ -26,7 +26,7 @@ import wayoftime.bloodmagic.core.living.LivingStats;
 import wayoftime.bloodmagic.core.living.LivingUpgrade;
 import wayoftime.bloodmagic.core.living.LivingUtil;
 
-public class ItemLivingTome extends Item implements ILivingContainer
+public class ItemLivingTome extends Item implements ILivingContainer, ILivingUpgradePointsProvider
 {
 
 	public ItemLivingTome()
@@ -81,13 +81,13 @@ public class ItemLivingTome extends Item implements ILivingContainer
 				double expUsed = expUsedArray[j];
 				if (expUsed > 0)
 				{
-					ResourceLocation registryName = ((Entry<LivingUpgrade, Double>) upgradeArray[j]).getKey().getRegistryName();
+					ResourceLocation key = ((Entry<LivingUpgrade, Double>) upgradeArray[j]).getKey().getKey();
 //					if (((Entry<LivingUpgrade, Double>) upgradeArray[j]).getValue() < expUsed)
 //					{
 //						tomeStats.resetExperience(registryName);
 //					} else
 					{
-						tomeStats.addExperience(registryName, -expUsed);
+						tomeStats.addExperience(key, -expUsed);
 					}
 
 					updateLivingStats(held, tomeStats);
@@ -156,5 +156,57 @@ public class ItemLivingTome extends Item implements ILivingContainer
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
 		ILivingContainer.appendLivingTooltip(stack, getLivingStats(stack), tooltip, false);
+	}
+
+	@Override
+	public int getAvailableUpgradePoints(ItemStack stack, int drain)
+	{
+		return getTotalUpgradePoints(stack);
+	}
+
+	@Override
+	public ItemStack getResultingStack(ItemStack stack, int drain)
+	{
+		// TODO Auto-generated method stub
+		return ItemStack.EMPTY;
+	}
+
+	@Override
+	public int getExcessUpgradePoints(ItemStack stack, int drain)
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getTotalUpgradePoints(ItemStack stack)
+	{
+		LivingStats tomeStats = getLivingStats(stack);
+		if (tomeStats == null)
+		{
+			return 0;
+		}
+
+		int containedPoints = 0;
+
+		Map<LivingUpgrade, Double> upgradeMap = tomeStats.getUpgrades();
+		for (Entry<LivingUpgrade, Double> entry : upgradeMap.entrySet())
+		{
+			if (entry.getKey().isNegative())
+			{
+				containedPoints += entry.getValue().intValue();
+			} else
+			{
+				containedPoints += entry.getKey().getLevelCost(entry.getKey().getLevel(entry.getValue().intValue()));
+			}
+		}
+
+		return containedPoints;
+	}
+
+	@Override
+	public boolean canSyphonPoints(ItemStack stack, int drain)
+	{
+		return true;
 	}
 }

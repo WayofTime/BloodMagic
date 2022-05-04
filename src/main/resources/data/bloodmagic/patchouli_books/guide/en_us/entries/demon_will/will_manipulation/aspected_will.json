@@ -37,11 +37,11 @@
     {
       "type": "text",
       "anchor": "sentient_aspects",
-      "text": "However, they also change how your Sentient Tools behave, making them more powerful.$(br) $(li)$(raw)Raw Will$(): Increases damage and attack speed. $(corrosive)$(li)Corrosive Will$(): Attacks have a chance to apply poison or wither to your foes, otherwise same as $(raw)Raw$(). $(vengeful)$(li)Vengeful Will$(): increases damage, but not as much as $(raw)Raw$(). Increases attack speed more than any other type. Gives a movement speed buff that increases with higher amounts of Will."
+      "text": "However, they also change how your Sentient Tools behave, making them more powerful.$(br) $(li)$(raw)Raw Will$(): Increases damage. $(corrosive)$(li)Corrosive Will$(): Attacks have a chance to apply poison or wither to your foes, otherwise same as $(raw)Raw$(). $(vengeful)$(li)Vengeful Will$(): increases damage, but not as much as $(raw)Raw$(). Increases attack speed. Gives a movement speed buff that increases with higher amounts of Will."
     },
     {
       "type": "text",
-      "text": "$(steadfast)$(li)Steadfast Will$(): Increases damage (but not as much as $(raw)Raw$()) and grants Absorption after a kill. $(destructive)$(li)Destructive Will$(): Increases damage more than any other will type, but increases attack speed more slowly than any other type. Top Tier is still faster than an unempowered tool / equivalent iron tool, but slower than any other will type."
+      "text": "$(steadfast)$(li)Steadfast Will$(): Increases damage (but not as much as $(raw)Raw$()) and grants Absorption after a kill. $(destructive)$(li)Destructive Will$(): Increases damage more than any other will type, but decreases attack speed."
     },
     {
       "type": "text",

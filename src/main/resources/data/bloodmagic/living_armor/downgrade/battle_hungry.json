@@ -1,0 +1,26 @@
+{
+  "id": "bloodmagic:battle_hungry",
+  "levels": [
+    { "xp": 10, "cost": -10 },
+    { "xp": 20, "cost": -20 },
+    { "xp": 35, "cost": -35 },
+    { "xp": 50, "cost": -50 },
+    { "xp": 75, "cost": -75 }
+  ],
+  "bonuses": {
+    "delay": [
+      600,
+      600,
+      600,
+      500,
+      400
+    ],
+    "exhaustion": [
+	  0.02,
+	  0.04,
+	  0.06,
+	  0.08,
+	  0.1
+    ]
+  }
+}

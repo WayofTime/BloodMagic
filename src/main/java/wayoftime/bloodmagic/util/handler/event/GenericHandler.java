@@ -12,6 +12,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.CrossbowItem;
@@ -183,9 +184,20 @@ public class GenericHandler
 			PlayerEntity sourcePlayer = (PlayerEntity) sourceEntity;
 			if (LivingUtil.hasFullSet(sourcePlayer))
 			{
+				LivingStats stats = LivingStats.fromPlayer(sourcePlayer, true);
+				ItemStack chestStack = sourcePlayer.getItemStackFromSlot(EquipmentSlotType.CHEST);
+
 				if (sourcePlayer.isSprinting())
 				{
 					LivingUtil.applyNewExperience(sourcePlayer, LivingArmorRegistrar.UPGRADE_SPRINT_ATTACK.get(), event.getAmount());
+				}
+
+				int battleHungryLevel = stats.getLevel(LivingArmorRegistrar.DOWNGRADE_BATTLE_HUNGRY.get().getKey());
+				if (battleHungryLevel > 0)
+				{
+					int delay = LivingArmorRegistrar.DOWNGRADE_BATTLE_HUNGRY.get().getBonusValue("delay", battleHungryLevel).intValue();
+
+					chestStack.getTag().putInt("battle_cooldown", delay);
 				}
 			}
 
@@ -506,6 +518,31 @@ public class GenericHandler
 						chestStack.getTag().putInt("poison_cooldown", poisonCooldown);
 					}
 				}
+
+				int battleHungryLevel = stats.getLevel(LivingArmorRegistrar.DOWNGRADE_BATTLE_HUNGRY.get().getKey());
+				if (battleHungryLevel > 0)
+				{
+					boolean hasChanged = false;
+					int battleCooldown = chestStack.getTag().getInt("battle_cooldown");
+					if (battleCooldown > 0)
+					{
+						battleCooldown--;
+						hasChanged = true;
+					}
+
+					if (battleCooldown <= 0)
+					{
+						battleCooldown = 20;
+						float exhaustionAdded = LivingArmorRegistrar.DOWNGRADE_BATTLE_HUNGRY.get().getBonusValue("exhaustion", battleHungryLevel).floatValue();
+						player.addExhaustion(exhaustionAdded);
+						hasChanged = true;
+					}
+
+					if (hasChanged)
+					{
+						chestStack.getTag().putInt("battle_cooldown", battleCooldown);
+					}
+				}
 			}
 
 //			if (percentIncrease > 0 && (player.isOnGround()) && (Math.abs(player.moveForward) > 0 || Math.abs(player.moveStrafing) > 0))
@@ -522,15 +559,16 @@ public class GenericHandler
 	public void onMiningSpeedCheck(PlayerEvent.BreakSpeed event)
 	{
 		PlayerEntity player = event.getPlayer();
-		float percentIncrease = 0;
+		float speedModifier = 1;
 
 		if (LivingUtil.hasFullSet(player))
 		{
 			LivingStats stats = LivingStats.fromPlayer(player, true);
-			percentIncrease += LivingArmorRegistrar.UPGRADE_DIGGING.get().getBonusValue("speed_modifier", stats.getLevel(LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())).doubleValue();
+			speedModifier *= 1 + LivingArmorRegistrar.UPGRADE_DIGGING.get().getBonusValue("speed_modifier", stats.getLevel(LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())).doubleValue();
+			speedModifier *= 1 + LivingArmorRegistrar.DOWNGRADE_DIG_SLOWDOWN.get().getBonusValue("speed_modifier", stats.getLevel(LivingArmorRegistrar.DOWNGRADE_DIG_SLOWDOWN.get().getKey())).doubleValue();
 		}
 
-		event.setNewSpeed((1 + percentIncrease) * event.getNewSpeed());
+		event.setNewSpeed((speedModifier) * event.getNewSpeed());
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -652,7 +690,36 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onEntityJoinEvent(EntityJoinWorldEvent event)
 	{
+		Entity owner = null;
 		Entity entity = event.getEntity();
+		if (entity instanceof ArrowEntity)
+			owner = ((ArrowEntity) event.getEntity()).func_234616_v_();
+		else if (entity instanceof ThrowableEntity)
+			owner = ((ThrowableEntity) entity).func_234616_v_();
+
+		if (owner instanceof PlayerEntity)
+		{
+			Entity projectile = event.getEntity();
+			PlayerEntity player = (PlayerEntity) owner;
+
+			if (LivingUtil.hasFullSet(player))
+			{
+				LivingStats stats = LivingStats.fromPlayer(player, true);
+
+				double arrowJiggle = LivingArmorRegistrar.DOWNGRADE_STORM_TROOPER.get().getBonusValue("inaccuracy", stats.getLevel(LivingArmorRegistrar.DOWNGRADE_STORM_TROOPER.get().getKey())).doubleValue();
+
+				if (arrowJiggle > 0)
+				{
+					Vector3d motion = projectile.getMotion();
+					float velocityModifier = (float) (arrowJiggle * Math.sqrt(motion.x * motion.x + motion.y * motion.y + motion.z * motion.z));
+
+					Vector3d newMotion = motion.add(2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier, 2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier, 2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier);
+
+					projectile.setMotion(newMotion);
+				}
+			}
+		}
+
 		if (entity instanceof ArrowEntity)
 		{
 			if (entity.ticksExisted <= 0)
@@ -771,11 +838,19 @@ public class GenericHandler
 					UUID uuid = player.getUniqueID();
 					if (LivingUtil.hasFullSet(player))
 					{ // Player has a full set
-						int curiosLevel = LivingStats.fromPlayer(player).getLevel(LivingArmorRegistrar.UPGRADE_CURIOS_SOCKET.get().getKey());
-						if (curiosLevelMap.getOrDefault(uuid, 0) != curiosLevel)
-						{ // Cache level does not match new level
-							curiosLevelMap.put(uuid, BloodMagic.curiosCompat.recalculateCuriosSlots(player));
+						LivingStats stats = LivingStats.fromPlayer(player);
+						if (stats != null)
+						{
+							int curiosLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_CURIOS_SOCKET.get().getKey());
+							if (curiosLevelMap.getOrDefault(uuid, 0) != curiosLevel)
+							{ // Cache level does not match new level
+								curiosLevelMap.put(uuid, BloodMagic.curiosCompat.recalculateCuriosSlots(player));
+							}
+						} else if (curiosLevelMap.getOrDefault(uuid, 0) != 0)
+						{
+							curiosLevelMap.put(uuid, 0);
 						}
+
 					} else if (curiosLevelMap.getOrDefault(uuid, 0) != 0)
 					{ // cache has an upgrade that needs to be removed
 						curiosLevelMap.put(uuid, BloodMagic.curiosCompat.recalculateCuriosSlots(player));

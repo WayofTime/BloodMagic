@@ -9,7 +9,7 @@
     },
     {
       "type": "crafting_alchemy_table",
-      "heading": "Standard Item Filter",
+      "heading": "Enchantments Item Filter",
       "recipe": "bloodmagic:alchemytable/enchant_router_filter",
       "text": "Any enchanted book will work for this recipe."
     },

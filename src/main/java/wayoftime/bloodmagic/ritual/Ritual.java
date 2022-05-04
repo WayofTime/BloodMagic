@@ -18,9 +18,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.will.DemonWillHolder;
-import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
 /**
  * Abstract class for creating new rituals. Register your ritual by annotating
@@ -282,8 +282,7 @@ public abstract class Ritual
 
 	public ITextComponent[] provideInformationOfRitualToPlayer(PlayerEntity player)
 	{
-		return new ITextComponent[]
-		{ new TranslationTextComponent(this.getTranslationKey() + ".info") };
+		return new ITextComponent[] { new TranslationTextComponent(this.getTranslationKey() + ".info") };
 	}
 
 	public ITextComponent provideInformationOfRangeToPlayer(PlayerEntity player, String range)
@@ -422,6 +421,11 @@ public abstract class Ritual
 
 	public enum BreakType
 	{
-		REDSTONE, BREAK_MRS, BREAK_STONE, ACTIVATE, DEACTIVATE, EXPLOSION,
+		REDSTONE,
+		BREAK_MRS,
+		BREAK_STONE,
+		ACTIVATE,
+		DEACTIVATE,
+		EXPLOSION,
 	}
 }
