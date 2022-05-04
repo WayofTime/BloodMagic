@@ -87,7 +87,7 @@ public class Utils
 
 	public static String toFancyCasing(String input)
 	{
-		return String.valueOf(input.charAt(0)).toUpperCase(Locale.ENGLISH) + input.substring(1);
+		return String.valueOf(input.charAt(0)).toUpperCase(Locale.ROOT) + input.substring(1);
 	}
 
 	public static boolean isImmuneToFireDamage(LivingEntity entity)

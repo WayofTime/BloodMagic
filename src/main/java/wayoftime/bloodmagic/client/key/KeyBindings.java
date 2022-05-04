@@ -108,7 +108,7 @@ public enum KeyBindings
 
 	public String getDescription()
 	{
-		return BloodMagic.MODID + ".keybind." + name().toLowerCase(Locale.ENGLISH);
+		return BloodMagic.MODID + ".keybind." + name().toLowerCase(Locale.ROOT);
 	}
 
 	public static void initializeKeys()

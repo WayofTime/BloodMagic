@@ -1,5 +1,7 @@
 package wayoftime.bloodmagic.common.data;
 
+import java.util.Locale;
+
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.Item;
@@ -220,7 +222,7 @@ public class GeneratorItemModels extends ItemModelProvider
 			String name = "";
 			if (type.ordinal() != 0)
 			{
-				name = "_" + type.name().toLowerCase();
+				name = "_" + type.name().toLowerCase(Locale.ROOT);
 			}
 			ModelFile willFile = singleTexture("item/variants/" + path + name, mcLoc("item/handheld"), "layer0", modLoc("item/" + path + name));
 			builder = builder.override().predicate(BloodMagic.rl("type"), type.ordinal()).model(willFile).end();
@@ -239,7 +241,7 @@ public class GeneratorItemModels extends ItemModelProvider
 				String name = i == 0 ? "_deactivated" : "_activated";
 				if (type.ordinal() != 0)
 				{
-					name = "_" + type.name().toLowerCase() + name;
+					name = "_" + type.name().toLowerCase(Locale.ROOT) + name;
 				}
 				ModelFile willFile = singleTexture("item/variants/" + path + name, mcLoc("item/handheld"), "layer0", modLoc("item/" + path + name));
 				builder = builder.override().predicate(BloodMagic.rl("type"), type.ordinal()).predicate(BloodMagic.rl("active"), i).model(willFile).end();
@@ -257,7 +259,7 @@ public class GeneratorItemModels extends ItemModelProvider
 			String name = "";
 			if (type.ordinal() != 0)
 			{
-				name = "_" + type.name().toLowerCase() + name;
+				name = "_" + type.name().toLowerCase(Locale.ROOT) + name;
 			}
 			ModelFile willFile = singleTexture("item/variants/" + path + name, mcLoc("item/handheld"), "layer0", modLoc("item/" + path + name));
 			builder = builder.override().predicate(BloodMagic.rl("type"), type.ordinal()).model(willFile).end();

@@ -1,8 +1,8 @@
 package wayoftime.bloodmagic.api.compat;
 
-import net.minecraft.util.IStringSerializable;
-
 import java.util.Locale;
+
+import net.minecraft.util.IStringSerializable;
 
 public enum EnumDemonWillType implements IStringSerializable
 {
@@ -22,7 +22,7 @@ public enum EnumDemonWillType implements IStringSerializable
 	@Override
 	public String toString()
 	{
-		return name().toLowerCase(Locale.ENGLISH);
+		return name().toLowerCase(Locale.ROOT);
 	}
 
 	@Override

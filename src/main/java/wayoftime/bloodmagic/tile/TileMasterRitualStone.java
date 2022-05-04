@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.tile;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
@@ -22,12 +23,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
+import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.ItemActivationCrystal;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.event.RitualEvent;
-import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.ritual.EnumReaderBoundaries;
 import wayoftime.bloodmagic.ritual.IMasterRitualStone;
@@ -41,7 +43,6 @@ import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 import wayoftime.bloodmagic.util.helper.RitualHelper;
 import wayoftime.bloodmagic.will.DemonWillHolder;
-import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
 public class TileMasterRitualStone extends TileTicking implements IMasterRitualStone
 {
@@ -187,8 +188,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 					{
 						SoulNetwork network = NetworkHelper.getSoulNetwork(binding);
 
-						if (!isRedstoned() && network.getCurrentEssence() < ritual.getActivationCost()
-								&& (activator != null && !activator.isCreative()))
+						if (!isRedstoned() && network.getCurrentEssence() < ritual.getActivationCost() && (activator != null && !activator.isCreative()))
 						{
 							activator.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.weak"), true);
 							return false;
@@ -243,8 +243,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 	@Override
 	public void performRitual(World world, BlockPos pos)
 	{
-		if (!world.isRemote && getCurrentRitual() != null
-				&& BloodMagic.RITUAL_MANAGER.enabled(BloodMagic.RITUAL_MANAGER.getId(currentRitual), false))
+		if (!world.isRemote && getCurrentRitual() != null && BloodMagic.RITUAL_MANAGER.enabled(BloodMagic.RITUAL_MANAGER.getId(currentRitual), false))
 		{
 			if (RitualHelper.checkValidRitual(getWorld(), getPos(), currentRitual, getDirection()))
 			{
@@ -434,7 +433,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
 			for (int i = 0; i < typeList.size(); i++)
 			{
-				translations[i] = new TranslationTextComponent("tooltip.bloodmagic.currentBaseType." + typeList.get(i).name.toLowerCase());
+				translations[i] = new TranslationTextComponent("tooltip.bloodmagic.currentBaseType." + typeList.get(i).name.toLowerCase(Locale.ROOT));
 			}
 
 			ChatUtil.sendNoSpam(player, new TranslationTextComponent("ritual.bloodmagic.willConfig.set", new TranslationTextComponent(constructedString.toString(), translations)));
