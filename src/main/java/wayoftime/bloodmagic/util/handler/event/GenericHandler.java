@@ -17,6 +17,8 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.SplashPotionItem;
+import net.minecraft.item.UseAction;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
@@ -167,6 +169,43 @@ public class GenericHandler
 			if (LivingUtil.hasFullSet(player))
 			{
 				event.setAmount((float) LivingUtil.getDamageReceivedForArmour(player, event.getSource(), event.getAmount()));
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onPlayerClick(PlayerInteractEvent event)
+	{
+		if (!event.isCancelable())
+		{
+			return;
+		}
+
+		PlayerEntity sourcePlayer = event.getPlayer();
+		if (LivingUtil.hasFullSet(sourcePlayer))
+		{
+			LivingStats stats = LivingStats.fromPlayer(sourcePlayer, true);
+			if (event.getHand() == Hand.OFF_HAND)
+			{
+				int level = stats.getLevel(LivingArmorRegistrar.DOWNGRADE_CRIPPLED_ARM.get().getKey());
+				if (level > 0)
+				{
+					event.setCanceled(true);
+					return;
+				}
+			}
+
+			if (event.getItemStack().getUseAction() == UseAction.DRINK)
+			{
+				ItemStack drinkStack = event.getItemStack();
+				if (!(drinkStack.getItem() instanceof SplashPotionItem))
+				{
+					int level = stats.getLevel(LivingArmorRegistrar.DOWNGRADE_QUENCHED.get().getKey());
+					if (level > 0)
+					{
+						event.setCanceled(true);
+					}
+				}
 			}
 		}
 	}

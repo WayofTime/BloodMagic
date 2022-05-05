@@ -392,7 +392,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("living_upgrade.bloodmagic.curios_socket", "Socketed");
 
 		add("living_upgrade.bloodmagic.slowness", "Limp Leg");
-		add("living_upgrade.bloodmagic.crippledArm", "Crippled Arm");
+		add("living_upgrade.bloodmagic.crippled_arm", "Crippled Arm");
 		add("living_upgrade.bloodmagic.slippery", "Loose Traction");
 		add("living_upgrade.bloodmagic.battle_hungry", "Battle Hungry");
 		add("living_upgrade.bloodmagic.quenched", "Quenched");
