@@ -1,0 +1,11 @@
+{
+  "id": "bloodmagic:repair",
+  "levels": [
+    { "xp": 500, "cost": 25 }
+  ],
+  "bonuses": {
+    "interval": [
+      100
+    ]
+  }
+}

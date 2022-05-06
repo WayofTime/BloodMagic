@@ -38,6 +38,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
+import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
@@ -421,6 +422,50 @@ public class GenericHandler
 	public static Map<UUID, Double> posXMap = new HashMap<>();
 	public static Map<UUID, Double> posZMap = new HashMap<>();
 	public static Map<UUID, Integer> foodMap = new HashMap<>();
+	public static Map<UUID, Float> prevFlySpeedMap = new HashMap<>();
+
+	@SubscribeEvent
+	public void onPotionAdded(PotionEvent.PotionAddedEvent event)
+	{
+		if (event.getPotionEffect().getPotion() == BloodMagicPotions.FLIGHT && event.getEntityLiving() instanceof PlayerEntity)
+		{
+			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+			player.abilities.allowFlying = true;
+			if (!prevFlySpeedMap.containsKey(player.getUniqueID()))
+			{
+				prevFlySpeedMap.put(player.getUniqueID(), player.abilities.getFlySpeed());
+			}
+			player.abilities.setFlySpeed(getFlySpeedForFlightLevel(event.getPotionEffect().getAmplifier()));
+			player.sendPlayerAbilities();
+		}
+	}
+
+	@SubscribeEvent
+	public void onPotionExpired(PotionEvent.PotionExpiryEvent event)
+	{
+		if (event.getPotionEffect().getPotion() == BloodMagicPotions.FLIGHT && event.getEntityLiving() instanceof PlayerEntity)
+		{
+			((PlayerEntity) event.getEntityLiving()).abilities.allowFlying = ((PlayerEntity) event.getEntityLiving()).isCreative();
+			((PlayerEntity) event.getEntityLiving()).abilities.isFlying = false;
+
+			((PlayerEntity) event.getEntityLiving()).abilities.setFlySpeed(prevFlySpeedMap.getOrDefault((((PlayerEntity) event.getEntityLiving()).getUniqueID()), getFlySpeedForFlightLevel(-1)));
+			prevFlySpeedMap.remove(((PlayerEntity) event.getEntityLiving()).getUniqueID());
+
+			((PlayerEntity) event.getEntityLiving()).sendPlayerAbilities();
+		}
+	}
+
+	private float getFlySpeedForFlightLevel(int level)
+	{
+		if (level >= 0)
+		{
+			return 0.05F * (level + 1);
+		} else
+		{
+			// Default fly speed
+			return 0.05F;
+		}
+	}
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
@@ -446,6 +491,17 @@ public class GenericHandler
 		if (event.getEntityLiving() instanceof PlayerEntity)
 		{
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+			if (player.isPotionActive(BloodMagicPotions.FLIGHT))
+			{
+				if (!player.abilities.allowFlying || !prevFlySpeedMap.containsKey(player.getUniqueID()))
+				{
+					prevFlySpeedMap.put(player.getUniqueID(), player.abilities.getFlySpeed());
+					player.abilities.allowFlying = true;
+					player.abilities.setFlySpeed(getFlySpeedForFlightLevel(player.getActivePotionEffect(BloodMagicPotions.FLIGHT).getAmplifier()));
+					player.sendPlayerAbilities();
+				}
+			}
+
 			float percentIncrease = 0;
 
 //			System.out.println("Player's motion: " + player.getMotion().getY() + ", Player's final fall distance: " + player.fallDistance);

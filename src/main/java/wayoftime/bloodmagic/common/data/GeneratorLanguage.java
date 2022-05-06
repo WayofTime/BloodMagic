@@ -228,6 +228,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.ellipseRitual", "Focus of the Ellipsoid");
 		add("ritual.bloodmagic.simpleDungeonRitual", "Edge of the Hidden Realm");
 		add("ritual.bloodmagic.downgradeRitual", "Penance of the Leadened Soul");
+		add("ritual.bloodmagic.condorRitual", "Reverence of the Condor");
 
 		add("ritual.bloodmagic.cobblestoneRitual", "Le Vulcanos Frigius");
 		add("ritual.bloodmagic.placerRitual", "The Filler");
