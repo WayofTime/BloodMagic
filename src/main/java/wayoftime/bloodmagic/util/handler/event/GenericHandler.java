@@ -231,6 +231,11 @@ public class GenericHandler
 					LivingUtil.applyNewExperience(sourcePlayer, LivingArmorRegistrar.UPGRADE_SPRINT_ATTACK.get(), event.getAmount());
 				}
 
+				if (!event.getSource().isProjectile())
+				{
+					LivingUtil.applyNewExperience(sourcePlayer, LivingArmorRegistrar.UPGRADE_MELEE_DAMAGE.get(), event.getAmount());
+				}
+
 				int battleHungryLevel = stats.getLevel(LivingArmorRegistrar.DOWNGRADE_BATTLE_HUNGRY.get().getKey());
 				if (battleHungryLevel > 0)
 				{
@@ -430,13 +435,11 @@ public class GenericHandler
 					LivingStats stats = LivingStats.fromPlayer(player, true);
 					if (!player.isOnGround() && player.getMotion().getY() < 0)
 					{
-
 						int jumpLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_JUMP.get().getKey());
 						double fallDistanceMultiplier = LivingArmorRegistrar.UPGRADE_JUMP.get().getBonusValue("fall", jumpLevel).doubleValue();
 						player.fallDistance = (float) Math.max(0, player.fallDistance + fallDistanceMultiplier * player.getMotion().getY());
 //				System.out.println("Player's motion: " + player.getMotion().getY() + ", Player's fall reduction multiplier: " + fallDistanceMultiplier + ", Player's final fall distance: " + player.fallDistance);
 					}
-					return;
 				}
 			}
 		}

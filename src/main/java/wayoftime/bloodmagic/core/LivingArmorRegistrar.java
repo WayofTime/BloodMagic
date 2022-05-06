@@ -14,6 +14,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ForgeMod;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.registration.impl.LivingUpgradeDeferredRegister;
 import wayoftime.bloodmagic.common.registration.impl.LivingUpgradeRegistryObject;
@@ -57,6 +58,7 @@ public class LivingArmorRegistrar
 		def.put("self_sacrifice", BloodMagic.rl("self_sacrifice"));
 		def.put("elytra", BloodMagic.rl("elytra"));
 		def.put("curios_socket", BloodMagic.rl("curios_socket"));
+		def.put("diamond_protect", BloodMagic.rl("diamond_protect"));
 		def.put("downgrade/quenched", BloodMagic.rl("downgrade/quenched"));
 		def.put("downgrade/storm_trooper", BloodMagic.rl("downgrade/storm_trooper"));
 		def.put("downgrade/battle_hungry", BloodMagic.rl("downgrade/battle_hungry"));
@@ -64,6 +66,8 @@ public class LivingArmorRegistrar
 		def.put("downgrade/dig_slowdown", BloodMagic.rl("downgrade/dig_slowdown"));
 		def.put("downgrade/slow_heal", BloodMagic.rl("downgrade/slow_heal"));
 		def.put("downgrade/crippled_arm", BloodMagic.rl("downgrade/crippled_arm"));
+		def.put("downgrade/swim_decrease", BloodMagic.rl("downgrade/swim_decrease"));
+		def.put("downgrade/speed_decrease", BloodMagic.rl("downgrade/speed_decrease"));
 		return def;
 	}).get();
 	// private static final Map<String, Path> DEFINITIONS =
@@ -126,8 +130,17 @@ public class LivingArmorRegistrar
 		attributeMap.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, "KB Modifier", upgrade.getBonusValue("kb", level).doubleValue(), AttributeModifier.Operation.ADDITION));
 		attributeMap.put(Attributes.MAX_HEALTH, new AttributeModifier(uuid, "Health Modifier 2", upgrade.getBonusValue("hp", level).intValue(), AttributeModifier.Operation.ADDITION));
 	}));
+	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_DIAMOND = UPGRADES.register("diamond_protect", () -> parseDefinition("diamond_protect").withAttributeProvider((stats, attributeMap, uuid, upgrade, level) -> {
+		attributeMap.put(Attributes.ARMOR, new AttributeModifier(uuid, "Armor Modifier", upgrade.getBonusValue("armor", level).intValue(), AttributeModifier.Operation.ADDITION));
+		attributeMap.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(uuid, "Toughness Modifier", upgrade.getBonusValue("toughness", level).intValue(), AttributeModifier.Operation.ADDITION));
+	}));
+
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_ELYTRA = UPGRADES.register("elytra", () -> parseDefinition("elytra"));
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_CURIOS_SOCKET = UPGRADES.register("curios_socket", () -> parseDefinition("curios_socket"));
+	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_MELEE_DAMAGE = UPGRADES.register("melee_damage", () -> parseDefinition("melee_damage").withAttributeProvider((stats, attributeMap, uuid, upgrade, level) -> {
+		attributeMap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Damage Modifier 3", upgrade.getBonusValue("damage", level).doubleValue(), AttributeModifier.Operation.ADDITION));
+	}));
+
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_QUENCHED = UPGRADES.register("downgrade/quenched", () -> parseDefinition("downgrade/quenched").asDowngrade());
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_STORM_TROOPER = UPGRADES.register("downgrade/storm_trooper", () -> parseDefinition("downgrade/storm_trooper").asDowngrade());
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_BATTLE_HUNGRY = UPGRADES.register("downgrade/battle_hungry", () -> parseDefinition("downgrade/battle_hungry").asDowngrade());
@@ -137,6 +150,12 @@ public class LivingArmorRegistrar
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_DIG_SLOWDOWN = UPGRADES.register("downgrade/dig_slowdown", () -> parseDefinition("downgrade/dig_slowdown").asDowngrade());
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_SLOW_HEAL = UPGRADES.register("downgrade/slow_heal", () -> parseDefinition("downgrade/slow_heal").asDowngrade());
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_CRIPPLED_ARM = UPGRADES.register("downgrade/crippled_arm", () -> parseDefinition("downgrade/crippled_arm").asDowngrade());
+	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_SWIM_DECREASE = UPGRADES.register("downgrade/swim_decrease", () -> parseDefinition("downgrade/swim_decrease").asDowngrade().withAttributeProvider((stats, attributeMap, uuid, upgrade, level) -> {
+		attributeMap.put(ForgeMod.SWIM_SPEED.get(), new AttributeModifier(uuid, "Swim Speed", upgrade.getBonusValue("speed_modifier", level).doubleValue(), AttributeModifier.Operation.MULTIPLY_BASE));
+	}));
+	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_SPEED_DECREASE = UPGRADES.register("downgrade/speed_decrease", () -> parseDefinition("downgrade/speed_decrease").asDowngrade().withAttributeProvider((stats, attributeMap, uuid, upgrade, level) -> {
+		attributeMap.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(uuid, "Movement Modifier 3", upgrade.getBonusValue("speed_modifier", level).doubleValue(), AttributeModifier.Operation.MULTIPLY_BASE));
+	}));
 
 //	public static final LivingUpgrade UPGRADE_ARROW_PROTECT = parseDefinition("arrow_protect").withArmorProvider((player, stats, source, upgrade, level) -> {
 //		if (source.isProjectile())
@@ -171,6 +190,8 @@ public class LivingArmorRegistrar
 		registerUpgrade(UPGRADE_ELYTRA.get());
 		if (BloodMagic.curiosLoaded)
 			registerUpgrade(UPGRADE_CURIOS_SOCKET.get());
+		registerUpgrade(UPGRADE_DIAMOND.get());
+		registerUpgrade(UPGRADE_MELEE_DAMAGE.get());
 		registerUpgrade(DOWNGRADE_QUENCHED.get());
 		registerUpgrade(DOWNGRADE_STORM_TROOPER.get());
 		registerUpgrade(DOWNGRADE_BATTLE_HUNGRY.get());
@@ -178,17 +199,8 @@ public class LivingArmorRegistrar
 		registerUpgrade(DOWNGRADE_DIG_SLOWDOWN.get());
 		registerUpgrade(DOWNGRADE_SLOW_HEAL.get());
 		registerUpgrade(DOWNGRADE_CRIPPLED_ARM.get());
-//		Registry.register(UPGRADES, UPGRADE_ARROW_PROTECT.getKey(), UPGRADE_ARROW_PROTECT);
-//		Registry.register(UPGRADES, UPGRADE_ARROW_SHOT.getKey(), UPGRADE_ARROW_SHOT);
-//		Registry.register(UPGRADES, UPGRADE_CRITICAL_STRIKE.getKey(), UPGRADE_CRITICAL_STRIKE);
-//		Registry.register(UPGRADES, UPGRADE_JUMP.getKey(), UPGRADE_JUMP);
-
-//        Registry.register(Registry.ITEM, new ResourceLocation("livingarmor", "living_helmet"), LIVING_HELMET);
-//        Registry.register(Registry.ITEM, new Identifier("livingarmor", "living_chestplate"), LIVING_CHESTPLATE);
-//        Registry.register(Registry.ITEM, new Identifier("livingarmor", "living_leggings"), LIVING_LEGGINGS);
-//        Registry.register(Registry.ITEM, new Identifier("livingarmor", "living_boots"), LIVING_BOOTS);
-//        Registry.register(Registry.ITEM, new Identifier("livingarmor", "trainer"), TRAINER);
-//        Registry.register(Registry.ITEM, new Identifier("livingarmor", "tome"), TOME);
+		registerUpgrade(DOWNGRADE_SWIM_DECREASE.get());
+		registerUpgrade(DOWNGRADE_SPEED_DECREASE.get());
 	}
 
 	public static void registerUpgrade(LivingUpgrade upgrade)

@@ -232,8 +232,6 @@ public class LivingUtil
 			damage *= 1 - upgrade.getArmorProvider().getProtection(player, stats, source, upgrade, level);
 		}
 
-//		System.out.println("Final damage: " + damage);
-
 		return damage;
 	}
 

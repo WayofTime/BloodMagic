@@ -390,6 +390,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("living_upgrade.bloodmagic.night_sight", "Nocturnal Prowess");
 		add("living_upgrade.bloodmagic.repair", "Repairing");
 		add("living_upgrade.bloodmagic.curios_socket", "Socketed");
+		add("living_upgrade.bloodmagic.diamond_protect", "Brilliance");
 
 		add("living_upgrade.bloodmagic.slowness", "Limp Leg");
 		add("living_upgrade.bloodmagic.crippled_arm", "Crippled Arm");
@@ -401,6 +402,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("living_upgrade.bloodmagic.storm_trooper", "Storm Trooper");
 		add("living_upgrade.bloodmagic.slow_heal", "Diseased");
 		add("living_upgrade.bloodmagic.disoriented", "Disoriented");
+		add("living_upgrade.bloodmagic.swim_decrease", "Concrete Shoes");
 
 		add("tooltip.bloodmagic.livingarmour.upgrade.level", "%s (Level %d)");
 		add("tooltip.bloodmagic.livingarmour.upgrade.progress", "%s (%d/100)");

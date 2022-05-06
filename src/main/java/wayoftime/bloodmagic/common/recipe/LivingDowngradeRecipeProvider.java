@@ -33,5 +33,6 @@ public class LivingDowngradeRecipeProvider implements ISubRecipeProvider
 		LivingDowngradeRecipeBuilder.downgrade(Ingredient.fromItems(Items.ARROW), LivingArmorRegistrar.DOWNGRADE_STORM_TROOPER.get().getKey()).build(consumer, BloodMagic.rl(basePath + "storm_trooper"));
 		LivingDowngradeRecipeBuilder.downgrade(Ingredient.fromItems(Items.STONE_PICKAXE), LivingArmorRegistrar.DOWNGRADE_DIG_SLOWDOWN.get().getKey()).build(consumer, BloodMagic.rl(basePath + "dig_slowdown"));
 		LivingDowngradeRecipeBuilder.downgrade(Ingredient.fromItems(Items.GHAST_TEAR), LivingArmorRegistrar.DOWNGRADE_SLOW_HEAL.get().getKey()).build(consumer, BloodMagic.rl(basePath + "slow_heal"));
+		LivingDowngradeRecipeBuilder.downgrade(Ingredient.fromItems(Items.WATER_BUCKET), LivingArmorRegistrar.DOWNGRADE_SWIM_DECREASE.get().getKey()).build(consumer, BloodMagic.rl(basePath + "swim_decrease"));
 	}
 }
