@@ -49,7 +49,7 @@ public class RitualCondor extends Ritual
 			entityCount = 0;
 			for (PlayerEntity player : PlayerEntitys)
 			{
-				player.addPotionEffect(new EffectInstance(BloodMagicPotions.FLIGHT, 20, 0));
+				player.addPotionEffect(new EffectInstance(BloodMagicPotions.FLIGHT, 20, 0, true, false));
 			}
 		}
 
