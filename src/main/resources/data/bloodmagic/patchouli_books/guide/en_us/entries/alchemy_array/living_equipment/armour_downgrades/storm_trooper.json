@@ -7,14 +7,10 @@
       "type": "text",
       "text": "Makes you wildly inaccurate when shooting bows and crossbows."
     },
-
     {
-      "type": "text",
-      "text": "TODO: Recipe page."
-    },
-    {
-      "type": "bloodmagic:living_armour_upgrade_table",
-      "upgrade": "bloodmagic:storm_trooper"
+      "type": "living_armour_downgrade",
+      "a.recipe": "bloodmagic:downgrade/storm_trooper",
+      "b.upgrade": "bloodmagic:storm_trooper"
     }
   ]
 }
