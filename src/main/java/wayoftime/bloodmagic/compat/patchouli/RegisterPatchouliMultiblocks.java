@@ -49,6 +49,7 @@ public class RegisterPatchouliMultiblocks
 		List<Ritual> rituals = BloodMagic.RITUAL_MANAGER.getSortedRituals();
 		for (Ritual ritual : rituals)
 		{
+			String ritualID = BloodMagic.RITUAL_MANAGER.getId(ritual);
 			Map<BlockPos, EnumRuneType> ritualMap = Maps.newHashMap();
 			List<RitualComponent> components = Lists.newArrayList();
 			ritual.gatherComponents(components::add);
@@ -62,9 +63,17 @@ public class RegisterPatchouliMultiblocks
 
 			String[][] pattern = makePattern(ritualMap, Collections.emptyMap());
 
+			// Manual Overrides (to add things like Chests).
+			// stringDumper(pattern) will dump the current String Array to the log.
+			if (ritualID.equals("downgrade"))
+			{
+				pattern[2][3] = "_FDC______"; // add Chest
+			}
+
 			// @formatter:off
 			IMultiblock multiblock = patAPI.makeMultiblock(
 					pattern,
+					'0', BloodMagicBlocks.MASTER_RITUAL_STONE.get(),
 					'B', BloodMagicBlocks.BLANK_RITUAL_STONE.get(),
 					'W', BloodMagicBlocks.WATER_RITUAL_STONE.get(),
 					'F', BloodMagicBlocks.FIRE_RITUAL_STONE.get(),
@@ -72,11 +81,11 @@ public class RegisterPatchouliMultiblocks
 					'A', BloodMagicBlocks.AIR_RITUAL_STONE.get(),
 					'D', BloodMagicBlocks.DUSK_RITUAL_STONE.get(),
 					'd', BloodMagicBlocks.DAWN_RITUAL_STONE.get(),
-					'0', BloodMagicBlocks.MASTER_RITUAL_STONE.get()
+					'C', Blocks.CHEST
 			); 
 			// @formatter:on
 
-			patAPI.registerMultiblock(new ResourceLocation(BloodMagic.MODID, BloodMagic.RITUAL_MANAGER.getId(ritual)), multiblock);
+			patAPI.registerMultiblock(new ResourceLocation(BloodMagic.MODID, ritualID), multiblock);
 		}
 
 		// Blood Altars
@@ -297,6 +306,20 @@ public class RegisterPatchouliMultiblocks
 		public TriPredicate<IBlockReader, BlockPos, BlockState> getStatePredicate()
 		{
 			return (w, p, s) -> valid.contains(s);
+		}
+	}
+
+	// A quick Dev utility to dump a multiblock's String Array to the log.
+	private void stringDumper(String[][] pattern)
+	{
+		System.out.println("Dev Test: Multiblock String Dumper");
+		for (int i = 0; i < pattern.length; i++)
+		{
+			for (int j = 0; j < pattern[i].length; j++)
+			{
+				System.out.println(String.format("pattern[%d][%d] = \"%s\";", i, j, pattern[i][j]));
+			}
+			System.out.println(""); // blank line to indicate a new Y level.
 		}
 	}
 }
