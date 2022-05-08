@@ -46,7 +46,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis lacinia magn
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
     side="BOTH"
+
 # Here's another dependency
+[[dependencies.bloodmagic]]
+    modId="patchouli"
+    mandatory=true
+    versionRange="[1.16.4-53,)"
+
 [[dependencies.bloodmagic]]
     modId="minecraft"
     mandatory=true

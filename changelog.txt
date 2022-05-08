@@ -1,6 +1,7 @@
 ------------------------------------------------------
 Version 3.1.8
 ------------------------------------------------------
+- Made Patchouli a required library.
 - Reimplemented the following Living Armour Downgrades:
 -> Storm Trooper
 -> Battle Hungry
