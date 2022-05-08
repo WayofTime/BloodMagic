@@ -11,7 +11,7 @@
     },
     {
       "type": "text",
-      "text": "Doing so will consume the $(item)Tome$() and apply all EXP from it to your chestplate - unless there are not enough $(thing)Upgrade Points$() avaliable. $(br2)In this case, the Tome will apply as much EXP as it can and store the remainder - unless there's less than 1 level's worth left, in which case the tome will be destroyed."
+      "text": "Doing so will consume the $(item)Tome$() and apply all EXP from it to your chestplate - unless there are not enough $(thing)Upgrade Points$() available. $(br2)In this case, the Tome will apply as much EXP as it can and store the remainder - unless there's less than 1 level's worth left, in which case the tome will be destroyed."
     },
     {
       "type": "text",

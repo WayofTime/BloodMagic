@@ -1,0 +1,20 @@
+{
+  "name": "Storm Trooper",
+  "icon": "minecraft:arrow",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_downgrades",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Makes you wildly inaccurate when shooting bows and crossbows."
+    },
+
+    {
+      "type": "text",
+      "text": "TODO: Recipe page."
+    },
+    {
+      "type": "bloodmagic:living_armour_upgrade_table",
+      "upgrade": "bloodmagic:storm_trooper"
+    }
+  ]
+}

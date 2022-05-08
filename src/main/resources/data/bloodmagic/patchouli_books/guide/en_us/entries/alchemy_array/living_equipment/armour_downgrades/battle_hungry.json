@@ -1,0 +1,20 @@
+{
+  "name": "Battle Hungry",
+  "icon": "minecraft:rotten_flesh",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_downgrades",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Gives you hunger if you haven't attacked something recently. Higher levels give you a shorter cooldown window and make the hunger worse."
+    },
+
+    {
+      "type": "text",
+      "text": "TODO: Recipe page."
+    },
+    {
+      "type": "bloodmagic:living_armour_upgrade_table",
+      "upgrade": "bloodmagic:battle_hungry"
+    }
+  ]
+}

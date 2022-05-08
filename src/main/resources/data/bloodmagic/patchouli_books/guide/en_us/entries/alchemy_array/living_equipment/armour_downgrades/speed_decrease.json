@@ -1,0 +1,20 @@
+{
+  "name": "Limp Leg",
+  "icon": "minecraft:soul_sand",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_downgrades",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Effect: ??? $(br2)Maximum level: 5"
+    },
+
+    {
+      "type": "text",
+      "text": "TODO: Recipe page."
+    },
+    {
+      "type": "bloodmagic:living_armour_upgrade_table",
+      "upgrade": "bloodmagic:speed_decrease"
+    }
+  ]
+}

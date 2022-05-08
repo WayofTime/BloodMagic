@@ -1,0 +1,15 @@
+{
+  "name": "Brilliance",
+  "icon": "minecraft:diamond",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Effect: Improves your armour defence. Caps out at +5 Armour and +8 Toughness $(br2)Trained by: ?. $(br2)Maximum level: 5"
+    },
+    {
+      "type": "bloodmagic:living_armour_upgrade_table",
+      "upgrade": "bloodmagic:diamond_protect"
+    }
+  ]
+}

@@ -350,11 +350,15 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.ellipseRitual.spheroidRange.info", "(Placement) The range that the ritual will place its blocks in. Note that the Spheroid is centered on the ritual - if one side is shorter than the side opposite, the spheroid will be truncated.");
 		add("ritual.bloodmagic.ellipseRitual.chest.info", "(Chest) The location of the inventory that the ritual will grab blocks from to place in the world.");
 
+		add("ritual.bloodmagic.simpleDungeonRitual.info", "Summons an Inversion Pillar, a tenuous gateway to the Deamon Realm");
+
 		add("ritual.bloodmagic.placerRitual.placerRange.info", "(Placement) The range that the ritual will place its blocks in.");
 		add("ritual.bloodmagic.placerRitual.chest.info", "(Chest) The location of the inventory that the ritual will grab blocks from to place in the world.");
 		add("ritual.bloodmagic.fellingRitual.fellingRange.info", "(Cutting) The range that the ritual will search out logs and leaves in order to cut down.");
 		add("ritual.bloodmagic.fellingRitual.chest.info", "(Chest) The location of the inventory that the ritual will place the results into.");
 		add("ritual.bloodmagic.pumpRitual.pumpRange.info", "(Pump) The region that the ritual will look for fluids to grab from the world.");
+		add("ritual.bloodmagic.condorRitual.flightRange.info", "Players within this range will receive a Flight buff.");
+		add("ritual.bloodmagic.downgradeRitual.info", "Consumes items from a chest above to forcefully downgrade worn armour");
 
 		add("tooltip.bloodmagic.ritualReader.currentState", "Current mode: %s");
 		add("tooltip.bloodmagic.ritualReader.set_area", "Define Area");
@@ -404,6 +408,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("living_upgrade.bloodmagic.slow_heal", "Diseased");
 		add("living_upgrade.bloodmagic.disoriented", "Disoriented");
 		add("living_upgrade.bloodmagic.swim_decrease", "Concrete Shoes");
+		add("living_upgrade.bloodmagic.speed_decrease", "Limp Leg");
 
 		add("tooltip.bloodmagic.livingarmour.upgrade.level", "%s (Level %d)");
 		add("tooltip.bloodmagic.livingarmour.upgrade.progress", "%s (%d/100)");
@@ -775,6 +780,9 @@ public class GeneratorLanguage extends LanguageProvider
 
 		// GUI
 		add("gui.bloodmagic.empty", "Empty");
+
+		// Potion Effects
+		add("effect.bloodmagic.flight", "Flight");
 
 	}
 }

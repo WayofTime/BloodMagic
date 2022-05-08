@@ -1,0 +1,20 @@
+{
+  "name": "Concrete Shoes",
+  "icon": "minecraft:water_bucket",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_downgrades",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Reduces your swim speed significantly. Caps out at an 80% reduction."
+    },
+
+    {
+      "type": "text",
+      "text": "TODO: Recipe page."
+    },
+    {
+      "type": "bloodmagic:living_armour_upgrade_table",
+      "upgrade": "bloodmagic:swim_decrease"
+    }
+  ]
+}

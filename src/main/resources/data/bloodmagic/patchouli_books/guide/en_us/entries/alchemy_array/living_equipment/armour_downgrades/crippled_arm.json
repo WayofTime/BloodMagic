@@ -1,0 +1,20 @@
+{
+  "name": "Crippled Arm",
+  "icon": "minecraft:shield",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_downgrades",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Effect: Prevents you from using your offhand item. This includes placing torches, raising your shield, etc."
+    },
+
+    {
+      "type": "text",
+      "text": "TODO: Recipe page."
+    },
+    {
+      "type": "bloodmagic:living_armour_upgrade_table",
+      "upgrade": "bloodmagic:crippled_arm"
+    }
+  ]
+}
