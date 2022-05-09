@@ -7,14 +7,10 @@
       "type": "text",
       "text": "Effect: Prevents you from using your offhand item. This includes placing torches, raising your shield, etc."
     },
-
     {
-      "type": "text",
-      "text": "TODO: Recipe page."
-    },
-    {
-      "type": "bloodmagic:living_armour_upgrade_table",
-      "upgrade": "bloodmagic:crippled_arm"
+      "type": "living_armour_downgrade",
+      "a.recipe": "bloodmagic:downgrade/crippled_arm",
+      "b.upgrade": "bloodmagic:crippled_arm"
     }
   ]
 }

@@ -7,14 +7,10 @@
       "type": "text",
       "text": "Effect: ??? $(br2)Maximum level: 5"
     },
-
     {
-      "type": "text",
-      "text": "TODO: Recipe page."
-    },
-    {
-      "type": "bloodmagic:living_armour_upgrade_table",
-      "upgrade": "bloodmagic:speed_decrease"
+      "type": "living_armour_downgrade",
+      "a.recipe": "bloodmagic:downgrade/speed_decrease",
+      "b.upgrade": "bloodmagic:speed_decrease"
     }
   ]
 }

@@ -7,14 +7,10 @@
       "type": "text",
       "text": "Effect: Reduces your dig speed. Caps out at an 80% reduction."
     },
-
     {
-      "type": "text",
-      "text": "TODO: Recipe page."
-    },
-    {
-      "type": "bloodmagic:living_armour_upgrade_table",
-      "upgrade": "bloodmagic:dig_slowdown"
+      "type": "living_armour_downgrade",
+      "a.recipe": "bloodmagic:downgrade/dig_slowdown",
+      "b.upgrade": "bloodmagic:dig_slowdown"
     }
   ]
 }
