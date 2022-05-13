@@ -2,9 +2,23 @@
 Version 3.1.8
 ------------------------------------------------------
 - Made Patchouli a required library.
+- Reimplemented the Penance of the Leadened Soul ritual. Operates slightly differently than before.
 - Reimplemented the following Living Armour Downgrades:
 -> Storm Trooper
 -> Battle Hungry
+-> Quenched
+-> Dulled Blade
+-> Weakened Pick
+-> Diseased
+-> Crippled Arm
+-> Limp Leg
+- Reimplemented Repairing
+- Added the following Living Armour Upgrades/Downgrades:
+-> Brilliance (Increases armour and toughness values of Living Armour)
+-> Concrete Shoes (Decreases swim speed)
+
+
+
 
 ------------------------------------------------------
 Version 3.1.7
