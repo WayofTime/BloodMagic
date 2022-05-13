@@ -644,6 +644,61 @@ public class GenericHandler
 						chestStack.getTag().putInt("battle_cooldown", battleCooldown);
 					}
 				}
+
+				int pastArmourDamage = chestStack.getTag().getInt("past_damage");
+				int currentArmourDamage = chestStack.getDamage();
+				if (pastArmourDamage > currentArmourDamage)
+				{
+//					System.out.println("Past damage: " + pastArmourDamage + ", current damage: " + currentArmourDamage);
+					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_REPAIR.get(), pastArmourDamage - currentArmourDamage);
+				}
+
+				if (currentArmourDamage != pastArmourDamage)
+				{
+					chestStack.getTag().putInt("past_damage", currentArmourDamage);
+				}
+
+				if (!player.world.isRemote)
+				{
+					int repairingLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_REPAIR.get().getKey());
+					if (repairingLevel > 0)
+					{
+						boolean hasChanged = false;
+						int repairCooldown = chestStack.getTag().getInt("repair_cooldown");
+						if (repairCooldown > 0)
+						{
+							repairCooldown--;
+							hasChanged = true;
+						}
+
+						if (repairCooldown <= 0)
+						{
+//							System.out.println("Cooldown: " + repairCooldown);
+							repairCooldown = LivingArmorRegistrar.UPGRADE_REPAIR.get().getBonusValue("interval", repairingLevel).intValue();
+							hasChanged = true;
+							EquipmentSlotType randomSlot = EquipmentSlotType.values()[2 + player.world.rand.nextInt(4)];
+							ItemStack repairStack = player.getItemStackFromSlot(randomSlot);
+							if (!repairStack.isEmpty())
+							{
+								if (repairStack.isDamageable() && repairStack.isDamaged())
+								{
+									int maxDurabilityRepaired = LivingArmorRegistrar.UPGRADE_REPAIR.get().getBonusValue("max", repairingLevel).intValue();
+									int toRepair = Math.min(maxDurabilityRepaired, repairStack.getDamage());
+									if (toRepair > 0)
+									{
+//										System.out.println("Repairing " + toRepair + " durability");
+										repairStack.setDamage(repairStack.getDamage() - toRepair);
+									}
+								}
+							}
+						}
+
+						if (hasChanged)
+						{
+							chestStack.getTag().putInt("repair_cooldown", repairCooldown);
+						}
+					}
+				}
 			}
 
 //			if (percentIncrease > 0 && (player.isOnGround()) && (Math.abs(player.moveForward) > 0 || Math.abs(player.moveStrafing) > 0))

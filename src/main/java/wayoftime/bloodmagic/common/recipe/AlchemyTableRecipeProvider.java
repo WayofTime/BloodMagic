@@ -130,7 +130,7 @@ public class AlchemyTableRecipeProvider implements ISubRecipeProvider
 		ItemStack brillianceTome = new ItemStack(BloodMagicItems.LIVING_TOME.get());
 		((ItemLivingTome) BloodMagicItems.LIVING_TOME.get()).updateLivingStats(brillianceTome, new LivingStats().setMaxPoints(LivingArmorRegistrar.UPGRADE_DIAMOND.get().getLevelCost(5)).addExperience(LivingArmorRegistrar.UPGRADE_DIAMOND.get().getKey(), 5));
 
-		AlchemyTableRecipeBuilder.alchemyTable(brillianceTome, 200, 150, 3).addIngredient(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND)).addIngredient(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND)).addIngredient(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND)).addIngredient(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND)).addIngredient(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND)).addIngredient(Ingredient.fromItems(BloodMagicItems.REAGENT_BINDING.get())).build(consumer, BloodMagic.rl(basePath + "upgrade_brilliance"));
+		AlchemyTableRecipeBuilder.alchemyTable(brillianceTome, 2000, 150, 3).addIngredient(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND)).addIngredient(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND)).addIngredient(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND)).addIngredient(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND)).addIngredient(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND)).addIngredient(Ingredient.fromItems(BloodMagicItems.REAGENT_BINDING.get())).build(consumer, BloodMagic.rl(basePath + "upgrade_brilliance"));
 
 		String filterPath = "alchemytable/filter/";
 
