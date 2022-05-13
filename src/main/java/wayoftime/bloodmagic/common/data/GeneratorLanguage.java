@@ -358,7 +358,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.fellingRitual.chest.info", "(Chest) The location of the inventory that the ritual will place the results into.");
 		add("ritual.bloodmagic.pumpRitual.pumpRange.info", "(Pump) The region that the ritual will look for fluids to grab from the world.");
 		add("ritual.bloodmagic.condorRitual.flightRange.info", "Players within this range will receive a Flight buff.");
-		add("ritual.bloodmagic.downgradeRitual.info", "Consumes items from a chest above to forcefully downgrade worn armour");
+		add("ritual.bloodmagic.downgradeRitual.info", "Consumes items from a linked chest to forcefully downgrade worn armour");
 
 		add("tooltip.bloodmagic.ritualReader.currentState", "Current mode: %s");
 		add("tooltip.bloodmagic.ritualReader.set_area", "Define Area");

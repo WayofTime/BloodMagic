@@ -26,13 +26,17 @@
     },
     {
       "type": "text",
-      "text": "To use the ritual, simply place your tomes (or other sources of Upgrade Points) and the required Item(s) for the particular downgrade you have in mind into a chest atop the $(item)Master Ritual Stone$(), while wearing your Living Armour. The ritual will consume the points and items and apply the downgrade to your armour. The order of consumption is $(item)Living Armour Upgrade Scraps$(), then $(item)Living Armour Upgrade Tomes$() and finally $(item)Synthetic Upgrade Points$()."
+      "text": "To use the ritual, simply place your tomes (or other sources of Upgrade Points) and the required Item(s) for the particular downgrade you have in mind into the attached chest (see the previous page), while wearing your Living Armour. The ritual will consume the points and apply the downgrade to your armour. The order of consumption is $(item)Living Armour Upgrade Scraps$(), then $(item)Living Armour Upgrade Tomes$(), and finally $(item)Synthetic Upgrade Points$()."
     },
     {
     "type": "spotlight",
     "item": "bloodmagic:upgradescraps",
-    "title": "Living Armour Upgrade Scraps",
+    "title": "LA Upgrade Scraps",
     "text": "Excess points will be returned in the form of $(item)Living Armour Upgrade Scraps$()."
+    },
+    {
+      "type": "text",
+      "text": "The downgrades applied to your armour depends on what Item(s) you place in the chest. Each item that matches a particular downgrade will increase the desired downgrade's level by one. In this manner, multiple downgrades can be applied at once with a single ritual activation."
     }
   ]
 }

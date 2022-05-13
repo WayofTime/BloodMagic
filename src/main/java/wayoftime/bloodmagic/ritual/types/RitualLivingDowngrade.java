@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Consumer;
 
 import net.minecraft.entity.EntityType;
@@ -47,7 +48,7 @@ public class RitualLivingDowngrade extends Ritual
 	public RitualLivingDowngrade()
 	{
 		super("ritualDowngrade", 0, 10000, "ritual." + BloodMagic.MODID + ".downgradeRitual");
-		addBlockRange(DOWNGRADE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-3, 0, -3), 7));
+		addBlockRange(DOWNGRADE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-1, 0, -1), 3));
 	}
 
 	@Override
@@ -62,7 +63,7 @@ public class RitualLivingDowngrade extends Ritual
 
 		for (PlayerEntity player : world.getEntitiesWithinAABB(PlayerEntity.class, downgradeRange.getAABB(masterRitualStone.getMasterBlockPos())))
 		{
-			if (player.isCrouching() && LivingUtil.hasFullSet(player))
+			if (!player.isCrouching() && LivingUtil.hasFullSet(player))
 			{
 				selectedPlayer = player;
 				break;
@@ -76,29 +77,6 @@ public class RitualLivingDowngrade extends Ritual
 		}
 
 		LivingStats playerStats = LivingStats.fromPlayer(selectedPlayer, true);
-
-		ItemStack focusStack = getStackFromItemFrame(world, masterPos, direction);
-		if (focusStack.isEmpty())
-		{
-			return;
-		}
-
-		RecipeLivingDowngrade downgradeRecipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getLivingDowngrade(world, focusStack);
-		if (downgradeRecipe == null)
-		{
-			return;
-		}
-
-//		LivingUpgrade downgrade = LivingArmorRegistrar.UPGRADE_MAP.get(downgradeRecipe.getLivingArmourResource());
-		LivingUpgrade downgrade = LivingArmorRegistrar.UPGRADE_MAP.getOrDefault(downgradeRecipe.getLivingArmourResource(), LivingUpgrade.DUMMY);
-//		if (upgrade == LivingUpgrade.DUMMY)
-//			return;
-
-		if (downgrade == LivingUpgrade.DUMMY)
-		{
-			// Recipe is broken! No downgrade returned.
-			return;
-		}
 
 //		System.out.println("Found a downgrade!");
 
@@ -114,8 +92,11 @@ public class RitualLivingDowngrade extends Ritual
 			return;
 		}
 
+		// Contains the desired levels for each upgrade.
+		Map<LivingUpgrade, Integer> downgradeMap = new HashMap<>();
+
 		int availablePoints = 0;
-		int wantedLevel = 0;
+//		int wantedLevel = 0;
 		Direction accessDir = Direction.DOWN;
 
 		Map<Integer, List<Integer>> priorityMap = new HashMap<>();
@@ -129,7 +110,13 @@ public class RitualLivingDowngrade extends Ritual
 			{
 				ItemStack invStack = handler.getStackInSlot(i);
 				availablePoints += getAvailablePointsFromStack(invStack);
-				wantedLevel += getLevelFromStack(invStack);
+				LivingUpgrade downgrade = getDowngradeFromStack(world, invStack);
+				if (downgrade != null && downgrade != LivingUpgrade.DUMMY)
+				{
+					int wantedLevel = getLevelFromStack(invStack);
+					downgradeMap.put(downgrade, downgradeMap.getOrDefault(downgrade, 0) + wantedLevel);
+				}
+
 				int priority = getPriorityFromStack(invStack);
 				if (priority >= 0)
 				{
@@ -150,7 +137,13 @@ public class RitualLivingDowngrade extends Ritual
 			{
 				ItemStack invStack = ((IInventory) tile).getStackInSlot(i);
 				availablePoints += getAvailablePointsFromStack(invStack);
-				wantedLevel += getLevelFromStack(invStack);
+				LivingUpgrade downgrade = getDowngradeFromStack(world, invStack);
+				if (downgrade != null && downgrade != LivingUpgrade.DUMMY)
+				{
+					int wantedLevel = getLevelFromStack(invStack);
+					downgradeMap.put(downgrade, downgradeMap.getOrDefault(downgrade, 0) + wantedLevel);
+				}
+
 				int priority = getPriorityFromStack(invStack);
 				if (priority >= 0)
 				{
@@ -167,31 +160,43 @@ public class RitualLivingDowngrade extends Ritual
 			}
 		}
 
-		// TODO: Change when chest logic is implemented.
-
-		int playerDowngradeLevel = playerStats.getLevel(downgradeRecipe.getLivingArmourResource());
-
-		wantedLevel = Math.min(wantedLevel, downgrade.getLevel(Integer.MAX_VALUE));
-
-		if (playerDowngradeLevel >= wantedLevel)
+		if (downgradeMap.isEmpty())
 		{
-//					System.out.println("The player's downgrade's level is greater than or equal to the requested level!");
 			return;
 		}
 
-		int playerInitialPoints = 0;
-		if (playerDowngradeLevel > 0)
+		// TODO: Change when chest logic is implemented.
+
+		// Stores the difference in points between the player's armour and the requested
+		// downgrade. 0 means nothing is added.
+		Map<LivingUpgrade, Integer> pointDifferentialMap = new HashMap<LivingUpgrade, Integer>();
+		int totalDifferentialPoints = 0;
+		for (Entry<LivingUpgrade, Integer> entry : downgradeMap.entrySet())
 		{
-			playerInitialPoints = playerStats.getUpgrades().getOrDefault(downgrade, 0d).intValue();
+			LivingUpgrade downgrade = entry.getKey();
+			int playerDowngradeLevel = playerStats.getLevel(downgrade.getKey());
+			int wantedLevel = Math.min(entry.getValue(), downgrade.getLevel(Integer.MAX_VALUE));
+			if (playerDowngradeLevel >= wantedLevel)
+			{
+				continue;
+			}
+
+			int playerInitialPoints = 0;
+			if (playerDowngradeLevel > 0)
+			{
+				playerInitialPoints = playerStats.getUpgrades().getOrDefault(downgrade, 0d).intValue();
+			}
+
+			int totalRequiredPoints = Math.abs(downgrade.getLevelCost(wantedLevel));
+			int upgradeRequiredPoints = totalRequiredPoints - playerInitialPoints;
+			if (upgradeRequiredPoints > 0)
+			{
+				pointDifferentialMap.put(downgrade, upgradeRequiredPoints);
+				totalDifferentialPoints += upgradeRequiredPoints;
+			}
 		}
 
-//		System.out.println("Number of available points found: " + availablePoints);
-
-		// Cost check logic.
-		int totalRequiredPoints = Math.abs(downgrade.getLevelCost(wantedLevel));
-		int requiredPoints = totalRequiredPoints - playerInitialPoints;
-
-		if (availablePoints < requiredPoints || priorityMap.isEmpty())
+		if (availablePoints < totalDifferentialPoints || priorityMap.isEmpty() || pointDifferentialMap.isEmpty())
 		{
 			// Can't upgrade! Not enough points
 			// TODO: Add smoke particles to indicate this?
@@ -210,8 +215,9 @@ public class RitualLivingDowngrade extends Ritual
 		}
 
 		// Consumption logic
+		int requiredPoints = totalDifferentialPoints;
 		int initialRequiredPoints = requiredPoints;
-		System.out.println("Initial required points: " + requiredPoints);
+//		System.out.println("Initial required points: " + requiredPoints);
 
 		List<ItemStack> excessStackList = new ArrayList<>();
 
@@ -282,9 +288,14 @@ public class RitualLivingDowngrade extends Ritual
 			excessStackList.add(scrapStack);
 		}
 
+		// TODO: Apply ALL upgrades.
 		if (requiredPoints <= 0)
 		{
-			LivingUtil.applyExperienceToUpgradeCap(selectedPlayer, downgrade, initialRequiredPoints);
+			for (Entry<LivingUpgrade, Integer> entry : pointDifferentialMap.entrySet())
+			{
+				LivingUtil.applyExperienceToUpgradeCap(selectedPlayer, entry.getKey(), entry.getValue());
+			}
+
 			masterRitualStone.setActive(false);
 
 			LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
@@ -359,6 +370,28 @@ public class RitualLivingDowngrade extends Ritual
 		}
 
 		return 0;
+	}
+
+	public LivingUpgrade getDowngradeFromStack(World world, ItemStack focusStack)
+	{
+		if (focusStack.isEmpty())
+		{
+			return LivingUpgrade.DUMMY;
+		}
+
+		if (!(focusStack.getItem() instanceof ILivingUpgradePointsProvider))
+		{
+			RecipeLivingDowngrade downgradeRecipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getLivingDowngrade(world, focusStack);
+			if (downgradeRecipe != null)
+			{
+				return LivingArmorRegistrar.UPGRADE_MAP.getOrDefault(downgradeRecipe.getLivingArmourResource(), LivingUpgrade.DUMMY);
+			}
+
+//			LivingUpgrade downgrade = LivingArmorRegistrar.UPGRADE_MAP.get(downgradeRecipe.getLivingArmourResource());
+
+		}
+
+		return LivingUpgrade.DUMMY;
 	}
 
 //	public int consumeAvailablePointsFromStack(ItemStack stack)
