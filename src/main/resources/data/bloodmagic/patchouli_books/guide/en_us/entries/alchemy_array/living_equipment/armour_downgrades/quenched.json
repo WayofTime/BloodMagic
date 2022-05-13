@@ -1,6 +1,6 @@
 {
   "name": "Quenched",
-  "icon": "minecraft:potion",
+  "icon": "minecraft:glass_bottle",
   "category": "bloodmagic:alchemy_array/living_equipment/armor_downgrades",
   "pages": [
     {

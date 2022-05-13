@@ -378,7 +378,7 @@
   "ritual.bloodmagic.crystalSplitRitual": "Resonance of the Faceted Crystal",
   "ritual.bloodmagic.crystalSplitRitual.info": "Splits apart a well-grown Raw crystal cluster into separately aspected crystal clusters.",
   "ritual.bloodmagic.downgradeRitual": "Penance of the Leadened Soul",
-  "ritual.bloodmagic.downgradeRitual.info": "Consumes items from a chest above to forcefully downgrade worn armour",
+  "ritual.bloodmagic.downgradeRitual.info": "Consumes items from a linked chest to forcefully downgrade worn armour",
   "ritual.bloodmagic.ellipseRitual": "Focus of the Ellipsoid",
   "ritual.bloodmagic.ellipseRitual.chest.info": "(Chest) The location of the inventory that the ritual will grab blocks from to place in the world.",
   "ritual.bloodmagic.ellipseRitual.info": "Creates a hollow spheroid around the ritual using the blocks in the attached chest.",

@@ -673,7 +673,7 @@ public class GenericHandler
 
 						if (repairCooldown <= 0)
 						{
-//							System.out.println("Cooldown: " + repairCooldown);
+
 							repairCooldown = LivingArmorRegistrar.UPGRADE_REPAIR.get().getBonusValue("interval", repairingLevel).intValue();
 							hasChanged = true;
 							EquipmentSlotType randomSlot = EquipmentSlotType.values()[2 + player.world.rand.nextInt(4)];
@@ -686,7 +686,6 @@ public class GenericHandler
 									int toRepair = Math.min(maxDurabilityRepaired, repairStack.getDamage());
 									if (toRepair > 0)
 									{
-//										System.out.println("Repairing " + toRepair + " durability");
 										repairStack.setDamage(repairStack.getDamage() - toRepair);
 									}
 								}

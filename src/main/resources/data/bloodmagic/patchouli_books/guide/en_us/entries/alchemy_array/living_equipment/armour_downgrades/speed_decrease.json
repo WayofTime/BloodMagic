@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "Effect: ??? $(br2)Maximum level: 5"
+      "text": "Effect: Reduces your movement speed significantly. Caps out at a 70% reduction. $(br2)Maximum level: 10"
     },
     {
       "type": "living_armour_downgrade",
