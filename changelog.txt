@@ -19,6 +19,9 @@ Version 3.1.8
 
 - Decreased hardness of shaped charges.
 
+Known issue: Desync between the server and client for the Living Armour chestpiece under certain conditions. Occurs when the item is shift-clicked out of the player's chestpiece slot. Does not occur when clicked without shift.
+- Only causes a ghost item to appear in the client's inventory. Does not otherwise affect the performance of the armour.
+
 ------------------------------------------------------
 Version 3.1.7
 ------------------------------------------------------
