@@ -31,12 +31,15 @@ import wayoftime.bloodmagic.common.item.BloodOrb;
 import wayoftime.bloodmagic.common.item.IAlchemyItem;
 import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.IBloodOrb;
+import wayoftime.bloodmagic.common.item.potion.ItemAlchemyFlask;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.network.AlchemyTableFlagPacket;
+import wayoftime.bloodmagic.recipe.EffectHolder;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
+import wayoftime.bloodmagic.recipe.RecipePotionFlaskBase;
 import wayoftime.bloodmagic.tile.container.ContainerAlchemyTable;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
@@ -343,11 +346,23 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
 		List<ItemStack> inputList = new ArrayList<>();
 
+		ItemStack flaskStack = ItemStack.EMPTY;
+		int flaskIndex = 0;
+		int j = 0;
+
 		for (int i = 0; i < 6; i++)
 		{
 			if (!getStackInSlot(i).isEmpty())
 			{
-				inputList.add(getStackInSlot(i));
+				ItemStack slotStack = getStackInSlot(i);
+				inputList.add(slotStack);
+				if (slotStack.getItem() instanceof ItemAlchemyFlask && flaskStack.isEmpty())
+				{
+					flaskStack = slotStack;
+					flaskIndex = j;
+				}
+
+				j++;
 			}
 		}
 
@@ -399,7 +414,75 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 					}
 				}
 			}
-		} else
+			return;
+		}
+
+		if (!flaskStack.isEmpty())
+		{
+//			System.out.println("Haz flask");
+			List<EffectHolder> holderList = ((ItemAlchemyFlask) flaskStack.getItem()).getEffectHoldersOfFlask(flaskStack);
+			inputList.remove(flaskIndex);
+
+			RecipePotionFlaskBase recipePotionFlask = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getPotionFlaskRecipe(world, holderList, inputList);
+			if (recipePotionFlask != null && (burnTime > 0 || (!getWorld().isRemote && tier >= recipePotionFlask.getMinimumTier() && getContainedLp() >= recipePotionFlask.getSyphon())))
+			{
+				orbFlag = lpFlag = false;
+				if (burnTime == 1)
+					notifyUpdate();
+
+				if (getStackInSlot(outputSlot).isEmpty())
+				{
+					ticksRequired = recipePotionFlask.getTicks();
+					burnTime++;
+					System.out.println("Burn time: " + burnTime);
+
+					if (burnTime >= ticksRequired)
+					{
+						if (!getWorld().isRemote)
+						{
+							if (recipePotionFlask.getSyphon() > 0)
+							{
+								if (consumeLp(recipePotionFlask.getSyphon()) < recipePotionFlask.getSyphon())
+								{
+									// There was not enough LP to craft or there was no orb
+									burnTime = 0;
+									notifyUpdate();
+									return;
+								}
+							}
+
+//							ItemStack[] inputs = new ItemStack[0];
+//							for (ItemStack stack : inputList) ArrayUtils.add(inputs, stack.copy());
+//
+//							BloodMagicCraftedEvent.AlchemyTable event = new BloodMagicCraftedEvent.AlchemyTable(recipeAlchemyTable.getOutput(inputList).copy(), inputs);
+//							MinecraftForge.EVENT_BUS.post(event);
+//
+//							ItemStack outputSlotStack = getStackInSlot(outputSlot);
+//							if (outputSlotStack.isEmpty())
+//								setInventorySlotContents(outputSlot, event.getOutput());
+//							else
+//								outputSlotStack.grow(event.getOutput().getCount());
+
+							ItemStack outputStack = recipePotionFlask.getOutput(flaskStack, holderList, inputList);
+							if (outputStack.getItem() instanceof ItemAlchemyFlask)
+							{
+								((ItemAlchemyFlask) outputStack.getItem()).resyncEffectInstances(outputStack);
+							}
+							setInventorySlotContents(outputSlot, outputStack);
+
+							// TODO: Need similar for the potion one, but isolate the flask
+							consumeInventory(recipePotionFlask);
+
+							burnTime = 0;
+							notifyUpdate();
+						}
+					}
+				}
+
+				return;
+			}
+		}
+
 		{
 			burnTime = 0;
 			if (!world.isRemote)
@@ -578,6 +661,36 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 					{
 						setInventorySlotContents(i, ItemStack.EMPTY);
 					}
+					continue;
+				}
+
+				inputStack.shrink(1);
+				if (inputStack.isEmpty())
+				{
+					setInventorySlotContents(i, ItemStack.EMPTY);
+				}
+			}
+		}
+	}
+
+	public void consumeInventory(RecipePotionFlaskBase recipe)
+	{
+		for (int i = 0; i < 6; i++)
+		{
+			ItemStack inputStack = getStackInSlot(i);
+			if (!inputStack.isEmpty())
+			{
+				if (inputStack.getItem() instanceof IAlchemyItem)
+				{
+					if (((IAlchemyItem) inputStack.getItem()).isStackChangedOnUse(inputStack))
+					{
+						setInventorySlotContents(i, ((IAlchemyItem) inputStack.getItem()).onConsumeInput(inputStack));
+					}
+
+					continue;
+				} else if (inputStack.getItem().hasContainerItem(inputStack))
+				{
+					setInventorySlotContents(i, inputStack.getItem().getContainerItem(inputStack));
 					continue;
 				}
 

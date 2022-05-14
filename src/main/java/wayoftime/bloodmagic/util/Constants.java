@@ -196,6 +196,9 @@ public class Constants
 
 		public static final String UPGRADES = "upgrades";
 		public static final String RESOURCE = "resource";
+
+		public static final String EFFECT = "effect";
+		public static final String DURATION = "baseDuration";
 	}
 
 	public static class Compat

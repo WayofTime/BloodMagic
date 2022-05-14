@@ -1,0 +1,13 @@
+{
+  "type": "bloodmagic:flask_potioneffect",
+  "input": [
+    {
+      "item": "minecraft:blaze_powder"
+    }
+  ],
+  "syphon": 200,
+  "ticks": 200,
+  "upgradeLevel": 1,
+  "effect": "minecraft:fire_resistance",
+  "baseDuration": 100
+}

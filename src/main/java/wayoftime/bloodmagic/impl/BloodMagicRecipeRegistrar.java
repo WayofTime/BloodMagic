@@ -18,11 +18,13 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
+import wayoftime.bloodmagic.recipe.EffectHolder;
 import wayoftime.bloodmagic.recipe.RecipeARC;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.recipe.RecipeBloodAltar;
 import wayoftime.bloodmagic.recipe.RecipeLivingDowngrade;
+import wayoftime.bloodmagic.recipe.RecipePotionFlaskBase;
 import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
 
 public class BloodMagicRecipeRegistrar
@@ -110,6 +112,61 @@ public class BloodMagicRecipeRegistrar
 			}
 
 			return recipe;
+		}
+
+		return null;
+	}
+
+	@Nullable
+	public RecipePotionFlaskBase getPotionFlaskRecipe(World world, @Nonnull List<EffectHolder> holderList, @Nonnull List<ItemStack> input)
+	{
+		Preconditions.checkNotNull(input, "input cannot be null.");
+		if (input.isEmpty())
+			return null;
+
+//		List<EffectHolder> holderList = ((ItemAlchemyFlask) flaskStack.getItem()).getEffectHoldersOfFlask(flaskStack);
+//		Collection<EffectInstance> instanceList = PotionUtils.getEffectsFromStack(flaskStack);
+
+		List<RecipePotionFlaskBase> potionRecipes = world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.POTIONFLASK);
+//		System.out.println("Number of recipes: " + potionRecipes.size());
+
+//		RecipePotionFlaskBase validRecipe = null;
+
+		mainLoop: for (RecipePotionFlaskBase recipe : potionRecipes)
+		{
+			if (recipe.getInput().size() != input.size())
+				continue;
+
+			List<Ingredient> recipeInput = new ArrayList<>(recipe.getInput());
+
+			for (int i = 0; i < input.size(); i++)
+			{
+
+				boolean matched = false;
+				for (int j = 0; j < recipeInput.size(); j++)
+				{
+
+					Ingredient ingredient = recipeInput.get(j);
+					if (ingredient.test(input.get(i)))
+					{
+						matched = true;
+						recipeInput.remove(j);
+						break;
+					}
+				}
+
+				if (!matched)
+					continue mainLoop;
+			}
+
+//			System.out.println("Passed ingredient check");
+
+			// Now check if recipe works with flask's current effects.
+			if (recipe.canModifyFlask(holderList))
+			{
+//				System.out.println("This recipe is fully valid.");
+				return recipe;
+			}
 		}
 
 		return null;

@@ -9,23 +9,22 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.potion.Effect;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
-import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
-import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
+import wayoftime.bloodmagic.potion.BloodMagicPotions;
+import wayoftime.bloodmagic.recipe.RecipePotionEffect;
 import wayoftime.bloodmagic.util.Constants;
 
-public class AlchemyTableRecipeSerializer<RECIPE extends RecipeAlchemyTable> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RECIPE>
+public class PotionEffectRecipeSerializer<RECIPE extends RecipePotionEffect> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RECIPE>
 {
-
 	private final IFactory<RECIPE> factory;
 
-	public AlchemyTableRecipeSerializer(IFactory<RECIPE> factory)
+	public PotionEffectRecipeSerializer(IFactory<RECIPE> factory)
 	{
 		this.factory = factory;
 	}
@@ -42,7 +41,7 @@ public class AlchemyTableRecipeSerializer<RECIPE extends RecipeAlchemyTable> ext
 
 			arrayLoop: for (JsonElement element : mainArray)
 			{
-				if (inputList.size() >= RecipeAlchemyTable.MAX_INPUTS)
+				if (inputList.size() >= RecipePotionEffect.MAX_INPUTS)
 				{
 					break arrayLoop;
 				}
@@ -59,13 +58,16 @@ public class AlchemyTableRecipeSerializer<RECIPE extends RecipeAlchemyTable> ext
 			}
 		}
 
-		ItemStack output = SerializerHelper.getItemStack(json, Constants.JSON.OUTPUT);
+//		ItemStack output = SerializerHelper.getItemStack(json, Constants.JSON.OUTPUT);
 
 		int syphon = JSONUtils.getInt(json, Constants.JSON.SYPHON);
 		int ticks = JSONUtils.getInt(json, Constants.JSON.TICKS);
 		int minimumTier = JSONUtils.getInt(json, Constants.JSON.ALTAR_TIER);
 
-		return this.factory.create(recipeId, inputList, output, syphon, ticks, minimumTier);
+		Effect outputEffect = BloodMagicPotions.getEffect(new ResourceLocation(JSONUtils.getString(json, Constants.JSON.EFFECT)));
+		int baseDuration = JSONUtils.getInt(json, Constants.JSON.DURATION);
+
+		return this.factory.create(recipeId, inputList, outputEffect, baseDuration, syphon, ticks, minimumTier);
 	}
 
 	@Override
@@ -81,12 +83,14 @@ public class AlchemyTableRecipeSerializer<RECIPE extends RecipeAlchemyTable> ext
 				input.add(i, Ingredient.read(buffer));
 			}
 
-			ItemStack output = buffer.readItemStack();
 			int syphon = buffer.readInt();
 			int ticks = buffer.readInt();
 			int minimumTier = buffer.readInt();
 
-			return this.factory.create(recipeId, input, output, syphon, ticks, minimumTier);
+			Effect outputEffect = Effect.get(buffer.readInt());
+			int baseDuration = buffer.readInt();
+
+			return this.factory.create(recipeId, input, outputEffect, baseDuration, syphon, ticks, minimumTier);
 		} catch (Exception e)
 		{
 			throw e;
@@ -106,8 +110,8 @@ public class AlchemyTableRecipeSerializer<RECIPE extends RecipeAlchemyTable> ext
 	}
 
 	@FunctionalInterface
-	public interface IFactory<RECIPE extends RecipeAlchemyTable>
+	public interface IFactory<RECIPE extends RecipePotionEffect>
 	{
-		RECIPE create(ResourceLocation id, List<Ingredient> input, ItemStack output, int syphon, int ticks, int minimumTier);
+		RECIPE create(ResourceLocation id, List<Ingredient> input, Effect outputEffect, int baseDuration, int syphon, int ticks, int minimumTier);
 	}
 }

@@ -2,7 +2,9 @@ package wayoftime.bloodmagic.potion;
 
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class BloodMagicPotions
@@ -23,5 +25,15 @@ public class BloodMagicPotions
 		reg.register(PLANT_LEECH.setRegistryName("plantleech"));
 		reg.register(SACRIFICIAL_LAMB.setRegistryName("sacrificiallamb"));
 		reg.register(FLIGHT.setRegistryName("flight"));
+	}
+
+	public static Effect getEffect(ResourceLocation rl)
+	{
+		return ForgeRegistries.POTIONS.getValue(rl);
+	}
+
+	public static ResourceLocation getRegistryName(Effect effect)
+	{
+		return ForgeRegistries.POTIONS.getKey(effect);
 	}
 }

@@ -726,6 +726,8 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.LOOTING_ANOINTMENT_2, "Plunderer's Glint II");
 		addItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT_2, "Archer's Polish II");
 
+		addItem(BloodMagicItems.ALCHEMY_FLASK, "Alchemy Flask");
+
 		// Alchemy Items
 		addItem(BloodMagicItems.PLANT_OIL, "Plant Oil");
 		addItem(BloodMagicItems.TAU_OIL, "Tau Oil");
