@@ -207,10 +207,10 @@ public class BloodMagicBlocks
 		return false;
 	}
 
-	public static final RegistryObject<Block> SHAPED_CHARGE = BLOCKS.register("shaped_charge", () -> new BlockShapedExplosive(3, Properties.create(Material.IRON).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).setRequiresTool()));
-	public static final RegistryObject<Block> DEFORESTER_CHARGE = BLOCKS.register("deforester_charge", () -> new BlockDeforesterCharge(3, Properties.create(Material.IRON).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).setRequiresTool()));
-	public static final RegistryObject<Block> VEINMINE_CHARGE = BLOCKS.register("veinmine_charge", () -> new BlockVeinMineCharge(3, Properties.create(Material.IRON).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).setRequiresTool()));
-	public static final RegistryObject<Block> FUNGAL_CHARGE = BLOCKS.register("fungal_charge", () -> new BlockFungalCharge(3, Properties.create(Material.IRON).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).setRequiresTool()));
+	public static final RegistryObject<Block> SHAPED_CHARGE = BLOCKS.register("shaped_charge", () -> new BlockShapedExplosive(3, Properties.create(Material.IRON).hardnessAndResistance(2.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).setRequiresTool()));
+	public static final RegistryObject<Block> DEFORESTER_CHARGE = BLOCKS.register("deforester_charge", () -> new BlockDeforesterCharge(3, Properties.create(Material.IRON).hardnessAndResistance(2.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).setRequiresTool()));
+	public static final RegistryObject<Block> VEINMINE_CHARGE = BLOCKS.register("veinmine_charge", () -> new BlockVeinMineCharge(3, Properties.create(Material.IRON).hardnessAndResistance(2.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).setRequiresTool()));
+	public static final RegistryObject<Block> FUNGAL_CHARGE = BLOCKS.register("fungal_charge", () -> new BlockFungalCharge(3, Properties.create(Material.IRON).hardnessAndResistance(2.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).setRequiresTool()));
 
 	//
 ////	private static <T extends Block> RegistryObject<T> register(String name, Supplier<? extends T> sup, Function<RegistryObject<T>, Supplier<? extends Item>> itemCreator) 

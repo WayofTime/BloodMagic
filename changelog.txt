@@ -17,6 +17,7 @@ Version 3.1.8
 -> Brilliance (Increases armour and toughness values of Living Armour)
 -> Concrete Shoes (Decreases swim speed)
 
+- Decreased hardness of shaped charges.
 
 ------------------------------------------------------
 Version 3.1.7
