@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.recipe;
+package wayoftime.bloodmagic.recipe.flask;
 
 import java.util.List;
 
@@ -13,6 +13,8 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
+import wayoftime.bloodmagic.recipe.BloodMagicRecipe;
+import wayoftime.bloodmagic.recipe.EffectHolder;
 
 public abstract class RecipePotionFlaskBase extends BloodMagicRecipe
 {
@@ -43,6 +45,9 @@ public abstract class RecipePotionFlaskBase extends BloodMagicRecipe
 	}
 
 	public abstract boolean canModifyFlask(List<EffectHolder> flaskEffectList);
+
+	// Higher priority recipe is preferred.
+	public abstract int getPriority(List<EffectHolder> flaskEffectList);
 
 	@Nonnull
 	public List<Ingredient> getInput()

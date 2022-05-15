@@ -39,7 +39,7 @@ import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.network.AlchemyTableFlagPacket;
 import wayoftime.bloodmagic.recipe.EffectHolder;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
-import wayoftime.bloodmagic.recipe.RecipePotionFlaskBase;
+import wayoftime.bloodmagic.recipe.flask.RecipePotionFlaskBase;
 import wayoftime.bloodmagic.tile.container.ContainerAlchemyTable;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
@@ -434,7 +434,6 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 				{
 					ticksRequired = recipePotionFlask.getTicks();
 					burnTime++;
-					System.out.println("Burn time: " + burnTime);
 
 					if (burnTime >= ticksRequired)
 					{

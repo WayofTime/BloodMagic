@@ -6,8 +6,8 @@
     }
   ],
   "syphon": 200,
-  "ticks": 200,
+  "ticks": 20,
   "upgradeLevel": 1,
   "effect": "minecraft:speed",
-  "baseDuration": 100
+  "baseDuration": 3600
 }

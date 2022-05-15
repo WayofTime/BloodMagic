@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.recipe;
+package wayoftime.bloodmagic.recipe.flask;
 
 import java.util.List;
 
@@ -12,6 +12,7 @@ import net.minecraft.util.ResourceLocation;
 import wayoftime.bloodmagic.common.item.potion.ItemAlchemyFlask;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
+import wayoftime.bloodmagic.recipe.EffectHolder;
 
 public class RecipePotionEffect extends RecipePotionFlaskBase
 {
@@ -64,12 +65,15 @@ public class RecipePotionEffect extends RecipePotionFlaskBase
 	{
 		ItemStack copyStack = flaskStack.copy();
 
-//		Collection<EffectInstance> flaskInstanceList = PotionUtils.getEffectsFromStack(flaskStack);
-//		flaskInstanceList.add(new EffectInstance(outputEffect, baseDuration));
 		flaskEffectList.add(new EffectHolder(outputEffect, baseDuration, 0, 1, 1));
-//		((ItemAlchemyFlask) copyStack.getItem()).setEffectsOfFlask(copyStack, flaskInstanceList);
 		((ItemAlchemyFlask) copyStack.getItem()).setEffectHoldersOfFlask(copyStack, flaskEffectList);
 
 		return copyStack;
+	}
+
+	@Override
+	public int getPriority(List<EffectHolder> flaskEffectList)
+	{
+		return 1;
 	}
 }

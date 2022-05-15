@@ -7,8 +7,8 @@ import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.recipe.RecipeBloodAltar;
 import wayoftime.bloodmagic.recipe.RecipeLivingDowngrade;
-import wayoftime.bloodmagic.recipe.RecipePotionFlaskBase;
 import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
+import wayoftime.bloodmagic.recipe.flask.RecipePotionFlaskBase;
 
 public class BloodMagicRecipeType
 {

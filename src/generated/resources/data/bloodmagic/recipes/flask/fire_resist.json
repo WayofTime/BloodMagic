@@ -6,8 +6,8 @@
     }
   ],
   "syphon": 200,
-  "ticks": 200,
+  "ticks": 20,
   "upgradeLevel": 1,
   "effect": "minecraft:fire_resistance",
-  "baseDuration": 100
+  "baseDuration": 3600
 }

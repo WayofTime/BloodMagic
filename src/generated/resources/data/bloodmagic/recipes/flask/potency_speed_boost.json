@@ -1,0 +1,17 @@
+{
+  "type": "bloodmagic:flask_potionpotency",
+  "input": [
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "syphon": 100,
+  "ticks": 200,
+  "upgradeLevel": 1,
+  "effect": "minecraft:speed",
+  "amplifier": 1,
+  "ampDurMod": 0.5
+}

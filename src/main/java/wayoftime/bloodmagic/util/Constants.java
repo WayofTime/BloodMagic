@@ -199,6 +199,9 @@ public class Constants
 
 		public static final String EFFECT = "effect";
 		public static final String DURATION = "baseDuration";
+		public static final String AMPLIFIER = "amplifier";
+		public static final String AMP_DUR_MOD = "ampDurMod";
+		public static final String LENGTH_DUR_MOD = "lengthDurMod";
 	}
 
 	public static class Compat

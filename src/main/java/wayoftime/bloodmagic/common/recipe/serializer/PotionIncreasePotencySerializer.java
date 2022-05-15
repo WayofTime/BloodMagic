@@ -17,14 +17,14 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
-import wayoftime.bloodmagic.recipe.flask.RecipePotionEffect;
+import wayoftime.bloodmagic.recipe.flask.RecipePotionIncreasePotency;
 import wayoftime.bloodmagic.util.Constants;
 
-public class PotionEffectRecipeSerializer<RECIPE extends RecipePotionEffect> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RECIPE>
+public class PotionIncreasePotencySerializer<RECIPE extends RecipePotionIncreasePotency> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RECIPE>
 {
 	private final IFactory<RECIPE> factory;
 
-	public PotionEffectRecipeSerializer(IFactory<RECIPE> factory)
+	public PotionIncreasePotencySerializer(IFactory<RECIPE> factory)
 	{
 		this.factory = factory;
 	}
@@ -41,7 +41,7 @@ public class PotionEffectRecipeSerializer<RECIPE extends RecipePotionEffect> ext
 
 			arrayLoop: for (JsonElement element : mainArray)
 			{
-				if (inputList.size() >= RecipePotionEffect.MAX_INPUTS)
+				if (inputList.size() >= RecipePotionIncreasePotency.MAX_INPUTS)
 				{
 					break arrayLoop;
 				}
@@ -65,9 +65,10 @@ public class PotionEffectRecipeSerializer<RECIPE extends RecipePotionEffect> ext
 		int minimumTier = JSONUtils.getInt(json, Constants.JSON.ALTAR_TIER);
 
 		Effect outputEffect = BloodMagicPotions.getEffect(new ResourceLocation(JSONUtils.getString(json, Constants.JSON.EFFECT)));
-		int baseDuration = JSONUtils.getInt(json, Constants.JSON.DURATION);
+		int amplified = JSONUtils.getInt(json, Constants.JSON.AMPLIFIER);
+		double ampDurationMod = JSONUtils.getFloat(json, Constants.JSON.AMP_DUR_MOD);
 
-		return this.factory.create(recipeId, inputList, outputEffect, baseDuration, syphon, ticks, minimumTier);
+		return this.factory.create(recipeId, inputList, outputEffect, amplified, ampDurationMod, syphon, ticks, minimumTier);
 	}
 
 	@Override
@@ -88,9 +89,10 @@ public class PotionEffectRecipeSerializer<RECIPE extends RecipePotionEffect> ext
 			int minimumTier = buffer.readInt();
 
 			Effect outputEffect = Effect.get(buffer.readInt());
-			int baseDuration = buffer.readInt();
+			int amplifier = buffer.readInt();
+			double ampDurationMod = buffer.readDouble();
 
-			return this.factory.create(recipeId, input, outputEffect, baseDuration, syphon, ticks, minimumTier);
+			return this.factory.create(recipeId, input, outputEffect, amplifier, ampDurationMod, syphon, ticks, minimumTier);
 		} catch (Exception e)
 		{
 			throw e;
@@ -110,8 +112,8 @@ public class PotionEffectRecipeSerializer<RECIPE extends RecipePotionEffect> ext
 	}
 
 	@FunctionalInterface
-	public interface IFactory<RECIPE extends RecipePotionEffect>
+	public interface IFactory<RECIPE extends RecipePotionIncreasePotency>
 	{
-		RECIPE create(ResourceLocation id, List<Ingredient> input, Effect outputEffect, int baseDuration, int syphon, int ticks, int minimumTier);
+		RECIPE create(ResourceLocation id, List<Ingredient> input, Effect outputEffect, int amplifier, double ampDurationMod, int syphon, int ticks, int minimumTier);
 	}
 }

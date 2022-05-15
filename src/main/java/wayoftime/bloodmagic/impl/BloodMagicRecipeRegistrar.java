@@ -24,8 +24,8 @@ import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.recipe.RecipeBloodAltar;
 import wayoftime.bloodmagic.recipe.RecipeLivingDowngrade;
-import wayoftime.bloodmagic.recipe.RecipePotionFlaskBase;
 import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
+import wayoftime.bloodmagic.recipe.flask.RecipePotionFlaskBase;
 
 public class BloodMagicRecipeRegistrar
 {
@@ -130,7 +130,8 @@ public class BloodMagicRecipeRegistrar
 		List<RecipePotionFlaskBase> potionRecipes = world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.POTIONFLASK);
 //		System.out.println("Number of recipes: " + potionRecipes.size());
 
-//		RecipePotionFlaskBase validRecipe = null;
+		RecipePotionFlaskBase validRecipe = null;
+		int recipePriority = Integer.MIN_VALUE;
 
 		mainLoop: for (RecipePotionFlaskBase recipe : potionRecipes)
 		{
@@ -141,11 +142,9 @@ public class BloodMagicRecipeRegistrar
 
 			for (int i = 0; i < input.size(); i++)
 			{
-
 				boolean matched = false;
 				for (int j = 0; j < recipeInput.size(); j++)
 				{
-
 					Ingredient ingredient = recipeInput.get(j);
 					if (ingredient.test(input.get(i)))
 					{
@@ -164,12 +163,16 @@ public class BloodMagicRecipeRegistrar
 			// Now check if recipe works with flask's current effects.
 			if (recipe.canModifyFlask(holderList))
 			{
-//				System.out.println("This recipe is fully valid.");
-				return recipe;
+				int prio = recipe.getPriority(holderList);
+				if (prio > recipePriority)
+				{
+					validRecipe = recipe;
+					recipePriority = prio;
+				}
 			}
 		}
 
-		return null;
+		return validRecipe;
 	}
 
 	@Nullable

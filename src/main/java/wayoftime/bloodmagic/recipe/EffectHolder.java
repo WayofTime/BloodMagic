@@ -23,6 +23,7 @@ public class EffectHolder
 
 	public EffectInstance getEffectInstance(boolean ambientIn, boolean showParticlesIn)
 	{
+		System.out.println("Initial duration: " + baseDuration + ", Duration modifier: " + ampDurationMod);
 		return new EffectInstance(potion, (int) (baseDuration * ampDurationMod * lengthDurationMod), amplifier, ambientIn, showParticlesIn);
 	}
 
@@ -49,6 +50,21 @@ public class EffectHolder
 	public double getLengthDurationMod()
 	{
 		return lengthDurationMod;
+	}
+
+	public void setAmplifier(int amplifier)
+	{
+		this.amplifier = amplifier;
+	}
+
+	public void setAmpDurationMod(double ampDurationMod)
+	{
+		this.ampDurationMod = ampDurationMod;
+	}
+
+	public void getLengthDurationMod(double lengthDurationMod)
+	{
+		this.lengthDurationMod = lengthDurationMod;
 	}
 
 	public CompoundNBT write(CompoundNBT nbt)
@@ -80,7 +96,7 @@ public class EffectHolder
 		double ampDurationMod = nbt.getDouble("AmpDurationMod");
 		double lengthDurationMod = nbt.getDouble("LengthDurationMod");
 
-		return new EffectHolder(effect, amplifier, baseDuration, ampDurationMod, lengthDurationMod);
+		return new EffectHolder(effect, baseDuration, amplifier, ampDurationMod, lengthDurationMod);
 	}
 
 //	public final void write(PacketBuffer buffer)
