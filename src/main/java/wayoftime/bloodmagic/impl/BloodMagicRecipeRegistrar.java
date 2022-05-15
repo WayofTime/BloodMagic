@@ -128,7 +128,7 @@ public class BloodMagicRecipeRegistrar
 //		Collection<EffectInstance> instanceList = PotionUtils.getEffectsFromStack(flaskStack);
 
 		List<RecipePotionFlaskBase> potionRecipes = world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.POTIONFLASK);
-//		System.out.println("Number of recipes: " + potionRecipes.size());
+		System.out.println("Number of recipes: " + potionRecipes.size());
 
 		RecipePotionFlaskBase validRecipe = null;
 		int recipePriority = Integer.MIN_VALUE;

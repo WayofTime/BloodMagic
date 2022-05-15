@@ -1,0 +1,21 @@
+{
+  "type": "bloodmagic:flask_potiontransform",
+  "input": [
+    {
+      "tag": "forge:feathers"
+    }
+  ],
+  "outputeffect": [
+    {
+      "effect": "bloodmagic:flight",
+      "baseDuration": 2400
+    }
+  ],
+  "inputeffect": [
+    "minecraft:speed",
+    "minecraft:fire_resistance"
+  ],
+  "syphon": 100,
+  "ticks": 20,
+  "upgradeLevel": 2
+}

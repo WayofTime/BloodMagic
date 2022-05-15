@@ -10,6 +10,7 @@ import wayoftime.bloodmagic.common.recipe.serializer.LivingDowngradeRecipeSerial
 import wayoftime.bloodmagic.common.recipe.serializer.PotionEffectRecipeSerializer;
 import wayoftime.bloodmagic.common.recipe.serializer.PotionIncreaseLengthRecipeSerializer;
 import wayoftime.bloodmagic.common.recipe.serializer.PotionIncreasePotencyRecipeSerializer;
+import wayoftime.bloodmagic.common.recipe.serializer.PotionTransformRecipeSerializer;
 import wayoftime.bloodmagic.common.recipe.serializer.TartaricForgeRecipeSerializer;
 import wayoftime.bloodmagic.common.registration.impl.IRecipeSerializerDeferredRegister;
 import wayoftime.bloodmagic.common.registration.impl.IRecipeSerializerRegistryObject;
@@ -23,6 +24,7 @@ import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionEffect;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionIncreaseLength;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionIncreasePotency;
+import wayoftime.bloodmagic.recipe.flask.RecipePotionTransform;
 
 public class BloodMagicRecipeSerializers
 {
@@ -44,6 +46,7 @@ public class BloodMagicRecipeSerializers
 	public static final IRecipeSerializerRegistryObject<RecipePotionEffect> POTIONEFFECT = RECIPE_SERIALIZERS.register("flask_potioneffect", () -> new PotionEffectRecipeSerializer<>(RecipePotionEffect::new));
 	public static final IRecipeSerializerRegistryObject<RecipePotionIncreasePotency> POTIONPOTENCY = RECIPE_SERIALIZERS.register("flask_potionpotency", () -> new PotionIncreasePotencyRecipeSerializer<>(RecipePotionIncreasePotency::new));
 	public static final IRecipeSerializerRegistryObject<RecipePotionIncreaseLength> POTIONLENGTH = RECIPE_SERIALIZERS.register("flask_potionlength", () -> new PotionIncreaseLengthRecipeSerializer<>(RecipePotionIncreaseLength::new));
+	public static final IRecipeSerializerRegistryObject<RecipePotionTransform> POTIONTRANSFORM = RECIPE_SERIALIZERS.register("flask_potiontransform", () -> new PotionTransformRecipeSerializer<>(RecipePotionTransform::new));
 
 //	public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, BloodMagic.MODID);
 

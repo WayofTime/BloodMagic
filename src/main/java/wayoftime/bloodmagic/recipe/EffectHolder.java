@@ -51,6 +51,11 @@ public class EffectHolder
 		return lengthDurationMod;
 	}
 
+	public void setBaseDuration(int baseDuration)
+	{
+		this.baseDuration = baseDuration;
+	}
+
 	public void setAmplifier(int amplifier)
 	{
 		this.amplifier = amplifier;
