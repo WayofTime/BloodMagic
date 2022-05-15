@@ -23,7 +23,6 @@ public class EffectHolder
 
 	public EffectInstance getEffectInstance(boolean ambientIn, boolean showParticlesIn)
 	{
-		System.out.println("Initial duration: " + baseDuration + ", Duration modifier: " + ampDurationMod);
 		return new EffectInstance(potion, (int) (baseDuration * ampDurationMod * lengthDurationMod), amplifier, ambientIn, showParticlesIn);
 	}
 
@@ -62,7 +61,7 @@ public class EffectHolder
 		this.ampDurationMod = ampDurationMod;
 	}
 
-	public void getLengthDurationMod(double lengthDurationMod)
+	public void setLengthDurationMod(double lengthDurationMod)
 	{
 		this.lengthDurationMod = lengthDurationMod;
 	}

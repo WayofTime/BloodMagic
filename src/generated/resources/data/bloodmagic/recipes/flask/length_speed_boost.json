@@ -1,0 +1,16 @@
+{
+  "type": "bloodmagic:flask_potionlength",
+  "input": [
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:apple"
+    }
+  ],
+  "syphon": 100,
+  "ticks": 200,
+  "upgradeLevel": 1,
+  "effect": "minecraft:speed",
+  "lengthDurMod": 2.6667
+}

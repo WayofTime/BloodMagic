@@ -14,24 +14,22 @@ import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 import wayoftime.bloodmagic.recipe.EffectHolder;
 
-public class RecipePotionIncreasePotency extends RecipePotionFlaskBase
+public class RecipePotionIncreaseLength extends RecipePotionFlaskBase
 {
 	public Effect outputEffect;
-	public int amplifier;
-	public double ampDurationMod;
+	public double lengthDurationMod;
 
-	public RecipePotionIncreasePotency(ResourceLocation id, List<Ingredient> input, Effect outputEffect, int amplifier, double ampDurationMod, int syphon, int ticks, int minimumTier)
+	public RecipePotionIncreaseLength(ResourceLocation id, List<Ingredient> input, Effect outputEffect, double lengthDurationMod, int syphon, int ticks, int minimumTier)
 	{
 		super(id, input, syphon, ticks, minimumTier);
 		this.outputEffect = outputEffect;
-		this.amplifier = amplifier;
-		this.ampDurationMod = ampDurationMod;
+		this.lengthDurationMod = lengthDurationMod;
 	}
 
 	@Override
-	public IRecipeSerializer<? extends RecipePotionIncreasePotency> getSerializer()
+	public IRecipeSerializer<? extends RecipePotionIncreaseLength> getSerializer()
 	{
-		return BloodMagicRecipeSerializers.POTIONPOTENCY.getRecipeSerializer();
+		return BloodMagicRecipeSerializers.POTIONLENGTH.getRecipeSerializer();
 	}
 
 	@Override
@@ -47,7 +45,7 @@ public class RecipePotionIncreasePotency extends RecipePotionFlaskBase
 		{
 			if (holder.getPotion().equals(outputEffect))
 			{
-				return holder.getAmplifier() < amplifier || (holder.getAmplifier() == amplifier && holder.getAmpDurationMod() < ampDurationMod);
+				return holder.getAmpDurationMod() < lengthDurationMod;
 			}
 		}
 
@@ -59,8 +57,7 @@ public class RecipePotionIncreasePotency extends RecipePotionFlaskBase
 	{
 		super.write(buffer);
 		buffer.writeInt(Effect.getId(outputEffect));
-		buffer.writeInt(amplifier);
-		buffer.writeDouble(ampDurationMod);
+		buffer.writeDouble(lengthDurationMod);
 	}
 
 	@Override
@@ -72,8 +69,7 @@ public class RecipePotionIncreasePotency extends RecipePotionFlaskBase
 		{
 			if (holder.getPotion().equals(outputEffect))
 			{
-				holder.setAmplifier(amplifier);
-				holder.setAmpDurationMod(ampDurationMod);
+				holder.setLengthDurationMod(lengthDurationMod);
 			}
 		}
 

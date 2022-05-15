@@ -20,11 +20,11 @@ import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionIncreasePotency;
 import wayoftime.bloodmagic.util.Constants;
 
-public class PotionIncreasePotencySerializer<RECIPE extends RecipePotionIncreasePotency> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RECIPE>
+public class PotionIncreasePotencyRecipeSerializer<RECIPE extends RecipePotionIncreasePotency> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RECIPE>
 {
 	private final IFactory<RECIPE> factory;
 
-	public PotionIncreasePotencySerializer(IFactory<RECIPE> factory)
+	public PotionIncreasePotencyRecipeSerializer(IFactory<RECIPE> factory)
 	{
 		this.factory = factory;
 	}
