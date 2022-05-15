@@ -37,7 +37,7 @@ public class PotionEffectRecipeBuilder extends BloodMagicRecipeBuilder<PotionEff
 		this.minimumTier = minimumTier;
 	}
 
-	public static PotionEffectRecipeBuilder PotionEffect(Effect outputEffect, int baseDuration, int syphon, int ticks, int minimumTier)
+	public static PotionEffectRecipeBuilder potionEffect(Effect outputEffect, int baseDuration, int syphon, int ticks, int minimumTier)
 	{
 		List<Ingredient> inputList = new ArrayList<Ingredient>();
 

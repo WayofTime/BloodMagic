@@ -8,7 +8,7 @@
   "syphon": 100,
   "ticks": 500,
   "upgradeLevel": 1,
-  "effect": "minecraft:speed",
+  "effect": "minecraft:slow_falling",
   "amplifier": 1,
   "ampDurMod": 0.5
 }

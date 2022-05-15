@@ -25,6 +25,8 @@ import net.minecraft.util.DrinkHelper;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -41,6 +43,7 @@ public class ItemAlchemyFlask extends Item
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.arctool.uses", getRemainingUses(stack)).mergeStyle(TextFormatting.GOLD));
 		PotionUtils.addPotionTooltip(stack, tooltip, 1.0F);
 	}
 

@@ -5,12 +5,12 @@
       "item": "bloodmagic:simplecatalyst"
     },
     {
-      "item": "minecraft:magma_cream"
+      "item": "minecraft:golden_carrot"
     }
   ],
   "syphon": 200,
   "ticks": 500,
   "upgradeLevel": 1,
-  "effect": "minecraft:fire_resistance",
+  "effect": "minecraft:night_vision",
   "baseDuration": 3600
 }

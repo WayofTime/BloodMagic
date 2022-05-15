@@ -8,6 +8,6 @@
   "syphon": 100,
   "ticks": 500,
   "upgradeLevel": 1,
-  "effect": "minecraft:speed",
+  "effect": "minecraft:regeneration",
   "lengthDurMod": 2.6667
 }

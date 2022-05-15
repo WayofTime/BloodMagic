@@ -6,8 +6,8 @@
     }
   ],
   "syphon": 100,
-  "ticks": 500,
+  "ticks": 200,
   "upgradeLevel": 1,
-  "effect": "minecraft:speed",
+  "effect": "minecraft:fire_resistance",
   "lengthDurMod": 2.6667
 }

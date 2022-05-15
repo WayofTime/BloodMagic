@@ -5,12 +5,12 @@
       "item": "bloodmagic:simplecatalyst"
     },
     {
-      "item": "minecraft:magma_cream"
+      "item": "minecraft:rabbit_foot"
     }
   ],
   "syphon": 200,
   "ticks": 500,
   "upgradeLevel": 1,
-  "effect": "minecraft:fire_resistance",
+  "effect": "minecraft:jump_boost",
   "baseDuration": 3600
 }

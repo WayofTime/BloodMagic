@@ -5,12 +5,12 @@
       "item": "bloodmagic:simplecatalyst"
     },
     {
-      "item": "minecraft:magma_cream"
+      "item": "minecraft:fermented_spider_eye"
     }
   ],
   "syphon": 200,
   "ticks": 500,
   "upgradeLevel": 1,
-  "effect": "minecraft:fire_resistance",
-  "baseDuration": 3600
+  "effect": "minecraft:weakness",
+  "baseDuration": 1800
 }

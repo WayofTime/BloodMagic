@@ -259,6 +259,14 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> THROWING_DAGGER = BASICITEMS.register("throwing_dagger", ItemThrowingDagger::new);
 	public static final RegistryObject<Item> SLATE_AMPOULE = BASICITEMS.register("slate_ampoule", () -> new ItemBloodProvider("slate", 500));
 
+	public static final RegistryObject<Item> SIMPLE_CATALYST = BASICITEMS.register("simplecatalyst", () -> new ItemBase());
+	public static final RegistryObject<Item> MUNDANE_POWER_CATALYST = BASICITEMS.register("mundanepowercatalyst", () -> new ItemBase());
+	public static final RegistryObject<Item> MUNDANE_LENGTHENING_CATALYST = BASICITEMS.register("mundanelengtheningcatalyst", () -> new ItemBase());
+	public static final RegistryObject<Item> COMBINATIONAL_CATALYST = BASICITEMS.register("combinationalcatalyst", () -> new ItemBase());
+
+//	public static final RegistryObject<Item> STRENGTHENED_CATALYST = BASICITEMS.register("strengthenedcatalyst", () -> new ItemBase());
+//	public static final RegistryObject<Item> CONCENTRATED_CATALYST = BASICITEMS.register("concentratedcatalyst", () -> new ItemBase());
+
 	// Anointments
 	public static final RegistryObject<Item> SLATE_VIAL = ITEMS.register("slate_vial", () -> new ItemBase(16, "slate_vial"));
 	public static final RegistryObject<Item> MELEE_DAMAGE_ANOINTMENT = ITEMS.register("melee_anointment", () -> new ItemAnointmentProvider(BloodMagic.rl("melee_damage"), 0xFF0000, 1, 256));

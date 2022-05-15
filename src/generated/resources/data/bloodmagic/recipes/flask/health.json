@@ -5,12 +5,12 @@
       "item": "bloodmagic:simplecatalyst"
     },
     {
-      "item": "minecraft:magma_cream"
+      "item": "minecraft:glistering_melon_slice"
     }
   ],
   "syphon": 200,
   "ticks": 500,
   "upgradeLevel": 1,
-  "effect": "minecraft:fire_resistance",
-  "baseDuration": 3600
+  "effect": "minecraft:instant_health",
+  "baseDuration": 0
 }

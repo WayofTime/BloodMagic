@@ -8,6 +8,6 @@
   "syphon": 100,
   "ticks": 500,
   "upgradeLevel": 1,
-  "effect": "minecraft:speed",
+  "effect": "minecraft:poison",
   "lengthDurMod": 2.6667
 }

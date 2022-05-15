@@ -5,12 +5,12 @@
       "item": "bloodmagic:simplecatalyst"
     },
     {
-      "item": "minecraft:magma_cream"
+      "item": "minecraft:phantom_membrane"
     }
   ],
   "syphon": 200,
   "ticks": 500,
   "upgradeLevel": 1,
-  "effect": "minecraft:fire_resistance",
-  "baseDuration": 3600
+  "effect": "minecraft:slow_falling",
+  "baseDuration": 1800
 }

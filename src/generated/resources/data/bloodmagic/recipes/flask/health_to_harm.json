@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:flask_potiontransform",
+  "input": [
+    {
+      "item": "minecraft:fermented_spider_eye"
+    }
+  ],
+  "outputeffect": [
+    {
+      "effect": "minecraft:instant_damage",
+      "baseDuration": 0
+    }
+  ],
+  "inputeffect": [
+    "minecraft:instant_health"
+  ],
+  "syphon": 200,
+  "ticks": 500,
+  "upgradeLevel": 1
+}
