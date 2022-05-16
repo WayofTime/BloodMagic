@@ -1,4 +1,11 @@
 ------------------------------------------------------
+Version 3.1.9
+------------------------------------------------------
+- Added the missing recipes for a couple of the Living Armour Downgrades.
+-> Yes, Way is indeed blind.
+
+
+------------------------------------------------------
 Version 3.1.8
 ------------------------------------------------------
 - Made Patchouli a required library.
