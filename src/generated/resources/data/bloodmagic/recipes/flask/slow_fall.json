@@ -8,8 +8,8 @@
       "item": "minecraft:phantom_membrane"
     }
   ],
-  "syphon": 200,
-  "ticks": 500,
+  "syphon": 500,
+  "ticks": 200,
   "upgradeLevel": 1,
   "effect": "minecraft:slow_falling",
   "baseDuration": 1800

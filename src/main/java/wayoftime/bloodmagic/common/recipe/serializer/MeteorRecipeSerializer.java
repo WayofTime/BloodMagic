@@ -5,16 +5,22 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import org.apache.commons.lang3.tuple.Pair;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.potion.Effect;
+import net.minecraft.tags.ITag;
+import net.minecraft.tags.TagCollectionManager;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
-import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.recipe.RecipeMeteor;
 import wayoftime.bloodmagic.util.Constants;
 
@@ -32,22 +38,53 @@ public class MeteorRecipeSerializer<RECIPE extends RecipeMeteor> extends ForgeRe
 	public RECIPE read(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
 	{
 
-//		if (json.has(Constants.JSON.INPUT) && JSONUtils.isJsonArray(json, Constants.JSON.INPUT))
-		{
-//			JsonArray mainArray = JSONUtils.getJsonArray(json, Constants.JSON.INPUT);
-			JsonObject obj = JSONUtils.getJsonObject(json, Constants.JSON.INPUT);
-			Ingredient input = Ingredient.deserialize(obj);
+		JsonElement input = JSONUtils.isJsonArray(json, Constants.JSON.INPUT)
+				? JSONUtils.getJsonArray(json, Constants.JSON.INPUT)
+				: JSONUtils.getJsonObject(json, Constants.JSON.INPUT);
 
-		}
+		Ingredient inputIng = Ingredient.deserialize(input);
 
 //		ItemStack output = SerializerHelper.getItemStack(json, Constants.JSON.OUTPUT);
 
 		int syphon = JSONUtils.getInt(json, Constants.JSON.SYPHON);
-		int ticks = JSONUtils.getInt(json, Constants.JSON.TICKS);
-		int minimumTier = JSONUtils.getInt(json, Constants.JSON.ALTAR_TIER);
 
-		Effect outputEffect = BloodMagicPotions.getEffect(new ResourceLocation(JSONUtils.getString(json, Constants.JSON.EFFECT)));
-		int baseDuration = JSONUtils.getInt(json, Constants.JSON.DURATION);
+		List<Pair<ITag<Block>, Integer>> weightList = new ArrayList<>();
+
+		if (json.has(Constants.JSON.OUTPUT_LIST) && JSONUtils.isJsonArray(json, Constants.JSON.OUTPUT_LIST))
+		{
+			JsonArray mainArray = JSONUtils.getJsonArray(json, Constants.JSON.OUTPUT_LIST);
+
+			arrayLoop: for (JsonElement element : mainArray)
+			{
+				JsonObject obj = element.getAsJsonObject();
+//				BlockTags.getCollection().get(new ResourceLocation(name));
+				ITag<Block> itag = TagCollectionManager.getManager().getBlockTags().get(new ResourceLocation(JSONUtils.getString(obj, Constants.JSON.TAG)));
+				int weight = JSONUtils.getInt(obj, Constants.JSON.WEIGHT);
+
+				weightList.add(Pair.of(itag, weight));
+
+//				if (inputList.size() >= RecipeAlchemyTable.MAX_INPUTS)
+//				{
+//					break arrayLoop;
+//				}
+
+//				if (element.isJsonArray())
+//				{
+//					element = element.getAsJsonArray();
+//				} else
+//				{
+//					element.getAsJsonObject();
+//				}
+
+//				inputList.add(Ingredient.deserialize(element));
+			}
+		}
+
+//		int ticks = JSONUtils.getInt(json, Constants.JSON.TICKS);
+//		int minimumTier = JSONUtils.getInt(json, Constants.JSON.ALTAR_TIER);
+//
+//		Effect outputEffect = BloodMagicPotions.getEffect(new ResourceLocation(JSONUtils.getString(json, Constants.JSON.EFFECT)));
+//		int baseDuration = JSONUtils.getInt(json, Constants.JSON.DURATION);
 
 		return null;
 //		return this.factory.create(recipeId, inputList, outputEffect, baseDuration, syphon, ticks, minimumTier);
@@ -73,7 +110,8 @@ public class MeteorRecipeSerializer<RECIPE extends RecipeMeteor> extends ForgeRe
 			Effect outputEffect = Effect.get(buffer.readInt());
 			int baseDuration = buffer.readInt();
 
-			return this.factory.create(recipeId, input, outputEffect, baseDuration, syphon, ticks, minimumTier);
+//			return this.factory.create(recipeId, input, outputEffect, baseDuration, syphon, ticks, minimumTier);
+			return null;
 		} catch (Exception e)
 		{
 			throw e;
@@ -85,6 +123,7 @@ public class MeteorRecipeSerializer<RECIPE extends RecipeMeteor> extends ForgeRe
 	{
 		try
 		{
+//			PotionItem d;
 			recipe.write(buffer);
 		} catch (Exception e)
 		{
@@ -95,6 +134,6 @@ public class MeteorRecipeSerializer<RECIPE extends RecipeMeteor> extends ForgeRe
 	@FunctionalInterface
 	public interface IFactory<RECIPE extends RecipeMeteor>
 	{
-		RECIPE create(ResourceLocation id, List<Ingredient> input, Effect outputEffect, int baseDuration, int syphon, int ticks, int minimumTier);
+		RECIPE create(ResourceLocation id, Ingredient input, int syphon);
 	}
 }

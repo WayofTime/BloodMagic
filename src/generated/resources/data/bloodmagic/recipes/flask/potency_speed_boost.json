@@ -5,8 +5,8 @@
       "item": "bloodmagic:mundanepowercatalyst"
     }
   ],
-  "syphon": 100,
-  "ticks": 500,
+  "syphon": 200,
+  "ticks": 100,
   "upgradeLevel": 1,
   "effect": "minecraft:speed",
   "amplifier": 1,

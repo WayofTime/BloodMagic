@@ -182,6 +182,7 @@ public class Constants
 		public static final String INPUT_FLUID = "inputfluid";
 		public static final String OUTPUT_FLUID = "outputfluid";
 		public static final String FILTER = "filter";
+		public static final String WEIGHT = "weight";
 
 		public static final String SYPHON = "syphon";
 		public static final String TICKS = "ticks";
@@ -205,6 +206,8 @@ public class Constants
 
 		public static final String INPUT_EFFECT = "inputeffect";
 		public static final String OUTPUT_EFFECT = "outputeffect";
+
+		public static final String OUTPUT_LIST = "weightmap";
 	}
 
 	public static class Compat

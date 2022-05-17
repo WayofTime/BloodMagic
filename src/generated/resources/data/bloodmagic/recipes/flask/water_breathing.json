@@ -8,8 +8,8 @@
       "item": "minecraft:pufferfish"
     }
   ],
-  "syphon": 200,
-  "ticks": 500,
+  "syphon": 500,
+  "ticks": 200,
   "upgradeLevel": 1,
   "effect": "minecraft:water_breathing",
   "baseDuration": 3600

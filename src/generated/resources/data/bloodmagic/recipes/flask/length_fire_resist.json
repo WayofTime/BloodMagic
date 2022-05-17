@@ -5,8 +5,8 @@
       "item": "bloodmagic:mundanelengtheningcatalyst"
     }
   ],
-  "syphon": 100,
-  "ticks": 200,
+  "syphon": 200,
+  "ticks": 100,
   "upgradeLevel": 1,
   "effect": "minecraft:fire_resistance",
   "lengthDurMod": 2.6667

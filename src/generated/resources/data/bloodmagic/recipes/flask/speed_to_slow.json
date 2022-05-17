@@ -14,7 +14,7 @@
   "inputeffect": [
     "minecraft:speed"
   ],
-  "syphon": 200,
-  "ticks": 500,
+  "syphon": 500,
+  "ticks": 200,
   "upgradeLevel": 1
 }
