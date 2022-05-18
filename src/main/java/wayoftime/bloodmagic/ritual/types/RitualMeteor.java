@@ -25,7 +25,7 @@ public class RitualMeteor extends Ritual
 
 	public RitualMeteor()
 	{
-		super("ritualMeteor", 0, 25000, "ritual." + BloodMagic.MODID + ".meteorRitual");
+		super("ritualMeteor", 1000000000, 25000, "ritual." + BloodMagic.MODID + ".meteorRitual");
 		addBlockRange(CHECK_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1, 1, 1));
 
 		setMaximumVolumeAndDistanceOfRange(CHECK_RANGE, 27, 10, 10);

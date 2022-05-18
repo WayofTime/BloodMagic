@@ -109,12 +109,17 @@ public class PotionTransformRecipeSerializer<RECIPE extends RecipePotionTransfor
 				input.add(i, Ingredient.read(buffer));
 			}
 
+			int syphon = buffer.readInt();
+			int ticks = buffer.readInt();
+			int minimumTier = buffer.readInt();
+
 			int outputEffectSize = buffer.readInt();
 			List<Pair<Effect, Integer>> outputEffectList = new ArrayList<>(outputEffectSize);
 
 			for (int i = 0; i < outputEffectSize; i++)
 			{
-				outputEffectList.add(i, Pair.of(Effect.get(buffer.readInt()), buffer.readInt()));
+				int effectId = buffer.readInt();
+				outputEffectList.add(i, Pair.of(Effect.get(effectId), buffer.readInt()));
 			}
 
 			int inputEffectSize = buffer.readInt();
@@ -125,9 +130,6 @@ public class PotionTransformRecipeSerializer<RECIPE extends RecipePotionTransfor
 				inputEffectList.add(i, Effect.get(buffer.readInt()));
 			}
 
-			int syphon = buffer.readInt();
-			int ticks = buffer.readInt();
-			int minimumTier = buffer.readInt();
 //
 //			Effect outputEffect = Effect.get(buffer.readInt());
 //			int baseDuration = buffer.readInt();
