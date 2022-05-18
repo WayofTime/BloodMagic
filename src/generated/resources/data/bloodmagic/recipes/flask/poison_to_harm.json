@@ -5,13 +5,13 @@
       "item": "minecraft:fermented_spider_eye"
     }
   ],
-  "outputeffect": [
+  "outputEffect": [
     {
       "effect": "minecraft:instant_damage",
       "baseDuration": 0
     }
   ],
-  "inputeffect": [
+  "inputEffect": [
     "minecraft:poison"
   ],
   "syphon": 500,

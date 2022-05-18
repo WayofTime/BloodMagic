@@ -151,6 +151,9 @@ public class Constants
 		public static final String DOOR_TYPES = "door_types";
 		public static final String DOOR = "door";
 		public static final String TYPE = "type";
+
+		public static final String ITEM = "item";
+
 	}
 
 	public static class BUTTONID
@@ -179,10 +182,12 @@ public class Constants
 		public static final String CHANCE = "chance";
 		public static final String FLUID = "fluid";
 		public static final String AMOUNT = "amount";
-		public static final String INPUT_FLUID = "inputfluid";
-		public static final String OUTPUT_FLUID = "outputfluid";
+		public static final String INPUT_FLUID = "inputFluid";
+		public static final String OUTPUT_FLUID = "outputFluid";
 		public static final String FILTER = "filter";
 		public static final String WEIGHT = "weight";
+		public static final String MAX_WEIGHT = "maxWeight";
+		public static final String RADIUS = "radius";
 
 		public static final String SYPHON = "syphon";
 		public static final String TICKS = "ticks";
@@ -204,10 +209,13 @@ public class Constants
 		public static final String AMP_DUR_MOD = "ampDurMod";
 		public static final String LENGTH_DUR_MOD = "lengthDurMod";
 
-		public static final String INPUT_EFFECT = "inputeffect";
-		public static final String OUTPUT_EFFECT = "outputeffect";
+		public static final String INPUT_EFFECT = "inputEffect";
+		public static final String OUTPUT_EFFECT = "outputEffect";
 
-		public static final String OUTPUT_LIST = "weightmap";
+		public static final String WEIGHT_MAP = "weightMap";
+		public static final String FILL = "fill";
+		public static final String LAYER = "layers";
+
 	}
 
 	public static class Compat

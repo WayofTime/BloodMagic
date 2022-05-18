@@ -11,6 +11,7 @@ import wayoftime.bloodmagic.common.recipe.AlchemyTableRecipeProvider;
 import wayoftime.bloodmagic.common.recipe.BloodAltarRecipeProvider;
 import wayoftime.bloodmagic.common.recipe.ISubRecipeProvider;
 import wayoftime.bloodmagic.common.recipe.LivingDowngradeRecipeProvider;
+import wayoftime.bloodmagic.common.recipe.MeteorRecipeProvider;
 import wayoftime.bloodmagic.common.recipe.PotionRecipeProvider;
 import wayoftime.bloodmagic.common.recipe.TartaricForgeRecipeProvider;
 
@@ -24,6 +25,6 @@ public class BloodMagicRecipeProvider extends BaseRecipeProvider
 	@Override
 	protected List<ISubRecipeProvider> getSubRecipeProviders()
 	{
-		return Arrays.asList(new BloodAltarRecipeProvider(), new AlchemyArrayRecipeProvider(), new TartaricForgeRecipeProvider(), new ARCRecipeProvider(), new AlchemyTableRecipeProvider(), new LivingDowngradeRecipeProvider(), new PotionRecipeProvider());
+		return Arrays.asList(new BloodAltarRecipeProvider(), new AlchemyArrayRecipeProvider(), new TartaricForgeRecipeProvider(), new ARCRecipeProvider(), new AlchemyTableRecipeProvider(), new LivingDowngradeRecipeProvider(), new PotionRecipeProvider(), new MeteorRecipeProvider());
 	}
 }

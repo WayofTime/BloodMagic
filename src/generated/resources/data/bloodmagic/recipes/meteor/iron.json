@@ -1,0 +1,39 @@
+{
+  "type": "bloodmagic:meteor",
+  "input": {
+    "tag": "forge:storage_blocks/iron"
+  },
+  "syphon": 0,
+  "layers": [
+    {
+      "radius": 10,
+      "maxWeight": 100,
+      "weightMap": [
+        {
+          "tag": "forge:ores/iron",
+          "weight": 50
+        },
+        {
+          "tag": "forge:ores/coal",
+          "weight": 35
+        }
+      ],
+      "fill": "minecraft:stone"
+    },
+    {
+      "radius": 4,
+      "maxWeight": 100,
+      "weightMap": [
+        {
+          "tag": "forge:ores/diamond",
+          "weight": 70
+        },
+        {
+          "tag": "forge:ores/coal",
+          "weight": 25
+        }
+      ],
+      "fill": "minecraft:coal_block"
+    }
+  ]
+}

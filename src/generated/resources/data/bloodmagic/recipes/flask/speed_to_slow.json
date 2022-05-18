@@ -5,13 +5,13 @@
       "item": "minecraft:fermented_spider_eye"
     }
   ],
-  "outputeffect": [
+  "outputEffect": [
     {
       "effect": "minecraft:slowness",
       "baseDuration": 1800
     }
   ],
-  "inputeffect": [
+  "inputEffect": [
     "minecraft:speed"
   ],
   "syphon": 500,

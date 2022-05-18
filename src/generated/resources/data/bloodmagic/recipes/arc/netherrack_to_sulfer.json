@@ -6,7 +6,7 @@
   "tool": {
     "tag": "bloodmagic:arc/explosive"
   },
-  "outputfluid": {
+  "outputFluid": {
     "fluid": "minecraft:lava",
     "amount": 50
   },

@@ -45,6 +45,7 @@ import wayoftime.bloodmagic.client.render.block.RenderAlchemyArray;
 import wayoftime.bloodmagic.client.render.block.RenderAltar;
 import wayoftime.bloodmagic.client.render.block.RenderDemonCrucible;
 import wayoftime.bloodmagic.client.render.entity.BloodLightRenderer;
+import wayoftime.bloodmagic.client.render.entity.EntityMeteorRenderer;
 import wayoftime.bloodmagic.client.render.entity.EntityShapedChargeRenderer;
 import wayoftime.bloodmagic.client.render.entity.EntityThrowingDaggerRenderer;
 import wayoftime.bloodmagic.client.render.entity.SoulSnareRenderer;
@@ -177,6 +178,7 @@ public class ClientEvents
 		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.THROWING_DAGGER_SYRINGE.getEntityType(), EntityThrowingDaggerRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.BLOOD_LIGHT.getEntityType(), BloodLightRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.SHAPED_CHARGE.getEntityType(), EntityShapedChargeRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.METEOR.getEntityType(), EntityMeteorRenderer::new);
 
 		DeferredWorkQueue.runLater(() -> {
 			RenderType rendertype = RenderType.getCutoutMipped();

@@ -24,6 +24,7 @@ import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.recipe.RecipeBloodAltar;
 import wayoftime.bloodmagic.recipe.RecipeLivingDowngrade;
+import wayoftime.bloodmagic.recipe.RecipeMeteor;
 import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionFlaskBase;
 
@@ -113,6 +114,22 @@ public class BloodMagicRecipeRegistrar
 
 			return recipe;
 		}
+
+		return null;
+	}
+
+	@Nullable
+	public RecipeMeteor getMeteor(World world, @Nonnull ItemStack input)
+	{
+		Preconditions.checkNotNull(input, "input cannot be null.");
+		if (input.isEmpty())
+			return null;
+
+		List<RecipeMeteor> meteorRecipes = world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.METEOR);
+		System.out.println("Number of recipes: " + meteorRecipes.size());
+
+		for (RecipeMeteor recipe : meteorRecipes) if (recipe.getInput().test(input))
+			return recipe;
 
 		return null;
 	}
