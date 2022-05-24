@@ -12,7 +12,7 @@ public class DungeonDoor
 	public BlockPos doorPos;
 	public Direction doorDir;
 	public String doorType;
-	private List<String> roomList;
+	private List<String> roomList; // List of room pools
 
 	public DungeonDoor(BlockPos doorPos, Direction doorDir, String doorType, List<String> roomList)
 	{

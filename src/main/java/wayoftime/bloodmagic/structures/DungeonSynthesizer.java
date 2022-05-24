@@ -183,12 +183,19 @@ public class DungeonSynthesizer
 			}
 		}
 
+		potentialRoomTypes = modifyPotentialRoomTypes(potentialRoomTypes);
+
 		world.setBlockState(doorBlockOffsetPos, BloodMagicBlocks.DUNGEON_SEAL.get().getDefaultState(), 3);
 		TileEntity tile = world.getTileEntity(doorBlockOffsetPos);
 		if (tile instanceof TileDungeonSeal)
 		{
 			((TileDungeonSeal) tile).acceptDoorInformation(controllerPos, doorBlockPos, doorFacing, doorType, potentialRoomTypes);
 		}
+	}
+
+	public List<ResourceLocation> modifyPotentialRoomTypes(List<ResourceLocation> potentialRoomTypes)
+	{
+		return potentialRoomTypes;
 	}
 
 	// Returns how successful the placement of the
