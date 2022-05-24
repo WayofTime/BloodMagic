@@ -15,12 +15,9 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.data.recipe.builder.AlchemyTableRecipeBuilder;
 import wayoftime.bloodmagic.common.data.recipe.builder.FilterMergeAlchemyTableRecipeBuilder;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
-import wayoftime.bloodmagic.common.item.ItemLivingTome;
 import wayoftime.bloodmagic.common.item.routing.ItemCompositeFilter;
 import wayoftime.bloodmagic.common.item.routing.ItemStandardFilter;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
-import wayoftime.bloodmagic.core.LivingArmorRegistrar;
-import wayoftime.bloodmagic.core.living.LivingStats;
 
 public class AlchemyTableRecipeProvider implements ISubRecipeProvider
 {
@@ -130,11 +127,6 @@ public class AlchemyTableRecipeProvider implements ISubRecipeProvider
 			AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.REAGENT_BINDING.get()), 1000, 200, 3).addIngredient(Ingredient.fromTag(Tags.Items.DUSTS_GLOWSTONE)).addIngredient(Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE)).addIngredient(Ingredient.fromTag(Tags.Items.GUNPOWDER)).addIngredient(Ingredient.fromTag(Tags.Items.NUGGETS_GOLD)).build(consumer, BloodMagic.rl(basePath + "reagent_binding"));
 			AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.REAGENT_HOLDING.get()), 2000, 200, 2).addIngredient(Ingredient.fromTag(Tags.Items.CHESTS)).addIngredient(Ingredient.fromTag(Tags.Items.LEATHER)).addIngredient(Ingredient.fromTag(Tags.Items.STRING)).addIngredient(Ingredient.fromTag(Tags.Items.STRING)).build(consumer, BloodMagic.rl(basePath + "reagent_holding"));
 		}
-
-		ItemStack brillianceTome = new ItemStack(BloodMagicItems.LIVING_TOME.get());
-		((ItemLivingTome) BloodMagicItems.LIVING_TOME.get()).updateLivingStats(brillianceTome, new LivingStats().setMaxPoints(LivingArmorRegistrar.UPGRADE_DIAMOND.get().getLevelCost(5)).addExperience(LivingArmorRegistrar.UPGRADE_DIAMOND.get().getKey(), 5));
-
-		AlchemyTableRecipeBuilder.alchemyTable(brillianceTome, 2000, 150, 3).addIngredient(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND)).addIngredient(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND)).addIngredient(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND)).addIngredient(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND)).addIngredient(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND)).addIngredient(Ingredient.fromItems(BloodMagicItems.REAGENT_BINDING.get())).build(consumer, BloodMagic.rl(basePath + "upgrade_brilliance"));
 
 		String filterPath = "alchemytable/filter/";
 
