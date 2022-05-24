@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 3.1.10-32
+------------------------------------------------------
+- Fixed recipe for the "Brilliance" Living Upgrade.
+
+------------------------------------------------------
 Version 3.1.10
 ------------------------------------------------------
 - Fixed server-sided issue that prevented recipes from loading for certain types.

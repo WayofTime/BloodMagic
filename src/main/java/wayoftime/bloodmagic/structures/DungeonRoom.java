@@ -25,6 +25,8 @@ public class DungeonRoom
 																					// this door faces.
 	public List<AreaDescriptor.Rectangle> descriptorList = new ArrayList<>();
 
+	// Add one-way doors - just needs a "connectTo" map...
+
 	public float oreDensity = 0;
 	public BlockPos spawnLocation = BlockPos.ZERO;
 	public BlockPos controllerOffset = BlockPos.ZERO;
