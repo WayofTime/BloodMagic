@@ -1,0 +1,6 @@
+{
+  "name": "Potion Flasks",
+  "description": "",
+  "icon": "bloodmagic:alchemy_flask",
+  "parent": "bloodmagic:alchemy_table"
+}

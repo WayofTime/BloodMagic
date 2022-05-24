@@ -1,0 +1,20 @@
+{
+  "name": "Speed",
+  "icon": "minecraft:sugar",
+  "category": "bloodmagic:alchemy_table/potion_flasks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "[TEST PAGE]"
+    },
+    {
+      "type": "3x_crafting_flask",
+      "a.heading": "Speed (3:00)",
+      "a.recipe": "bloodmagic:flask/speed_boost",
+      "b.heading": "Speed (8:00)",
+      "b.recipe": "bloodmagic:flask/length_speed_boost",
+      "c.heading": "Speed II (1:30)",
+      "c.recipe": "bloodmagic:flask/potency_speed_boost"
+    }
+  ]
+}
