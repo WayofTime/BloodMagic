@@ -89,7 +89,15 @@ public class RitualCrushing extends Ritual
 
 		BlockPos pos = masterRitualStone.getMasterBlockPos();
 		AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
-		TileEntity tile = world.getTileEntity(chestRange.getContainedPositions(pos).get(0));
+		List<BlockPos> chestList = chestRange.getContainedPositions(pos);
+		if (chestList.size() <= 0)
+		{
+			// TODO: Need to figure out why, in the first place, we have a list with a size
+			// of 0.
+			return;
+		}
+
+		TileEntity tile = world.getTileEntity(chestList.get(0));
 
 		if (tile != null && Utils.getNumberOfFreeSlots(tile, Direction.DOWN) < 1)
 		{

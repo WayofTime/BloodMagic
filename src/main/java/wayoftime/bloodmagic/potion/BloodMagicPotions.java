@@ -15,6 +15,7 @@ public class BloodMagicPotions
 	public static final Effect PLANT_LEECH = new PotionBloodMagic(EffectType.HARMFUL, 0x00FF00FF);
 	public static final Effect SACRIFICIAL_LAMB = new PotionBloodMagic(EffectType.HARMFUL, 0xFFFFFF);
 	public static final Effect FLIGHT = new PotionBloodMagic(EffectType.BENEFICIAL, 0x23DDE1);
+	public static final Effect SPECTRAL_SIGHT = new PotionBloodMagic(EffectType.BENEFICIAL, 0x2FB813);
 
 	public static void registerPotions(RegistryEvent.Register<Effect> evt)
 	{
@@ -25,6 +26,7 @@ public class BloodMagicPotions
 		reg.register(PLANT_LEECH.setRegistryName("plantleech"));
 		reg.register(SACRIFICIAL_LAMB.setRegistryName("sacrificiallamb"));
 		reg.register(FLIGHT.setRegistryName("flight"));
+		reg.register(SPECTRAL_SIGHT.setRegistryName("spectral_sight"));
 	}
 
 	public static Effect getEffect(ResourceLocation rl)

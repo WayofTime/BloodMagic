@@ -462,7 +462,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 //							else
 //								outputSlotStack.grow(event.getOutput().getCount());
 
-							ItemStack outputStack = recipePotionFlask.getOutput(flaskStack, holderList, inputList);
+							ItemStack outputStack = recipePotionFlask.getOutput(flaskStack, holderList);
 							if (outputStack.getItem() instanceof ItemAlchemyFlask)
 							{
 								((ItemAlchemyFlask) outputStack.getItem()).resyncEffectInstances(outputStack);

@@ -12,6 +12,8 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
+import wayoftime.bloodmagic.common.item.BloodMagicItems;
+import wayoftime.bloodmagic.common.item.potion.ItemAlchemyFlask;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.recipe.BloodMagicRecipe;
 import wayoftime.bloodmagic.recipe.EffectHolder;
@@ -56,7 +58,19 @@ public abstract class RecipePotionFlaskBase extends BloodMagicRecipe
 	}
 
 	@Nonnull
-	public abstract ItemStack getOutput(ItemStack flaskStack, List<EffectHolder> flaskEffectList, List<ItemStack> inputs);
+	public abstract ItemStack getOutput(ItemStack flaskStack, List<EffectHolder> flaskEffectList);
+
+	@Nonnull
+	public ItemStack getExamplePotionFlask()
+	{
+		ItemStack flaskStack = new ItemStack(BloodMagicItems.ALCHEMY_FLASK.get());
+		((ItemAlchemyFlask) flaskStack.getItem()).setEffectHoldersOfFlask(flaskStack, getExampleEffectList());
+		((ItemAlchemyFlask) flaskStack.getItem()).resyncEffectInstances(flaskStack);
+
+		return flaskStack;
+	}
+
+	public abstract List<EffectHolder> getExampleEffectList();
 
 	public final int getSyphon()
 	{

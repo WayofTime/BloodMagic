@@ -126,7 +126,7 @@ public class BloodMagicRecipeRegistrar
 			return null;
 
 		List<RecipeMeteor> meteorRecipes = world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.METEOR);
-		System.out.println("Number of recipes: " + meteorRecipes.size());
+//		System.out.println("Number of recipes: " + meteorRecipes.size());
 
 		for (RecipeMeteor recipe : meteorRecipes) if (recipe.getInput().test(input))
 			return recipe;
@@ -145,7 +145,7 @@ public class BloodMagicRecipeRegistrar
 //		Collection<EffectInstance> instanceList = PotionUtils.getEffectsFromStack(flaskStack);
 
 		List<RecipePotionFlaskBase> potionRecipes = world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.POTIONFLASK);
-		System.out.println("Number of recipes: " + potionRecipes.size());
+//		System.out.println("Number of recipes: " + potionRecipes.size());
 
 		RecipePotionFlaskBase validRecipe = null;
 		int recipePriority = Integer.MIN_VALUE;
@@ -304,6 +304,11 @@ public class BloodMagicRecipeRegistrar
 	public Set<RecipeAlchemyTable> getAlchemyTableRecipes(World world)
 	{
 		return ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ALCHEMYTABLE));
+	}
+
+	public Set<RecipePotionFlaskBase> getPotionFlaskRecipes(World world)
+	{
+		return ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.POTIONFLASK));
 	}
 
 	public Set<RecipeAlchemyArray> getCraftingAlchemyArrayRecipes(World world)

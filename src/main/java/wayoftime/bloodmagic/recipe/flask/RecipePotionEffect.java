@@ -1,5 +1,6 @@
 package wayoftime.bloodmagic.recipe.flask;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
@@ -61,7 +62,7 @@ public class RecipePotionEffect extends RecipePotionFlaskBase
 	}
 
 	@Override
-	public ItemStack getOutput(ItemStack flaskStack, List<EffectHolder> flaskEffectList, List<ItemStack> inputs)
+	public ItemStack getOutput(ItemStack flaskStack, List<EffectHolder> flaskEffectList)
 	{
 		ItemStack copyStack = flaskStack.copy();
 
@@ -75,5 +76,12 @@ public class RecipePotionEffect extends RecipePotionFlaskBase
 	public int getPriority(List<EffectHolder> flaskEffectList)
 	{
 		return 1;
+	}
+
+	@Override
+	public List<EffectHolder> getExampleEffectList()
+	{
+		List<EffectHolder> holderList = new ArrayList<>();
+		return holderList;
 	}
 }

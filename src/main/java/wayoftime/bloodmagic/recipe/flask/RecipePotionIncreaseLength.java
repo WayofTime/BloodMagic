@@ -1,5 +1,6 @@
 package wayoftime.bloodmagic.recipe.flask;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
@@ -61,7 +62,7 @@ public class RecipePotionIncreaseLength extends RecipePotionFlaskBase
 	}
 
 	@Override
-	public ItemStack getOutput(ItemStack flaskStack, List<EffectHolder> flaskEffectList, List<ItemStack> inputs)
+	public ItemStack getOutput(ItemStack flaskStack, List<EffectHolder> flaskEffectList)
 	{
 		ItemStack copyStack = flaskStack.copy();
 
@@ -91,5 +92,13 @@ public class RecipePotionIncreaseLength extends RecipePotionFlaskBase
 		}
 
 		return 0;
+	}
+
+	@Override
+	public List<EffectHolder> getExampleEffectList()
+	{
+		List<EffectHolder> holderList = new ArrayList<>();
+		holderList.add(new EffectHolder(outputEffect, 3600, 0, 1, 1));
+		return holderList;
 	}
 }

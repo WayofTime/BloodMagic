@@ -214,7 +214,9 @@ public class Constants
 
 		public static final String WEIGHT_MAP = "weightMap";
 		public static final String FILL = "fill";
+		public static final String SHELL = "shell";
 		public static final String LAYER = "layers";
+		public static final String EXPLOSION = "explosion";
 
 	}
 
@@ -227,6 +229,7 @@ public class Constants
 		public static final String JEI_CATEGORY_ALCHEMYTABLE = "alchemytable";
 		public static final String JEI_CATEGORY_ARMOURDOWNGRADE = "armourdowngrade";
 		public static final String JEI_CATEGORY_ARC = "arc";
+		public static final String JEI_CATEGORY_POTION = "potion";
 
 		public static final String WAILA_CONFIG_ALTAR = BloodMagic.MODID + ".bloodaltar";
 		public static final String WAILA_CONFIG_TELEPOSER = BloodMagic.MODID + ".teleposer";

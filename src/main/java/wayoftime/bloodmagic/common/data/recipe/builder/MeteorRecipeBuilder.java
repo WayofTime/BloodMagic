@@ -19,20 +19,22 @@ public class MeteorRecipeBuilder extends BloodMagicRecipeBuilder<MeteorRecipeBui
 	private final Ingredient input;
 
 	private final int syphon;
+	private final float explosionRadius;
 
 	private final List<MeteorLayer> layerList;
 
-	protected MeteorRecipeBuilder(Ingredient input, int syphon, List<MeteorLayer> layerList)
+	protected MeteorRecipeBuilder(Ingredient input, int syphon, float explosionRadius, List<MeteorLayer> layerList)
 	{
 		super(bmSerializer("meteor"));
 		this.input = input;
 		this.syphon = syphon;
+		this.explosionRadius = explosionRadius;
 		this.layerList = layerList;
 	}
 
-	public static MeteorRecipeBuilder meteor(Ingredient input, int syphon)
+	public static MeteorRecipeBuilder meteor(Ingredient input, int syphon, float explosionRadius)
 	{
-		return new MeteorRecipeBuilder(input, syphon, new ArrayList<>());
+		return new MeteorRecipeBuilder(input, syphon, explosionRadius, new ArrayList<>());
 	}
 
 	public MeteorRecipeBuilder addLayer(MeteorLayer layer)
@@ -59,6 +61,7 @@ public class MeteorRecipeBuilder extends BloodMagicRecipeBuilder<MeteorRecipeBui
 		{
 			json.add(Constants.JSON.INPUT, input.serialize());
 			json.addProperty(Constants.JSON.SYPHON, syphon);
+			json.addProperty(Constants.JSON.EXPLOSION, syphon);
 
 			if (layerList.size() > 0)
 			{

@@ -772,6 +772,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("jei.bloodmagic.recipe.arc", "ARC Recipe");
 		add("jei.bloodmagic.recipe.arcfurnace", "ARC Furnace Recipe");
 		add("jei.bloodmagic.recipe.alchemytable", "Alchemy Table");
+		add("jei.bloodmagic.recipe.potionflask", "Potion Crafting");
 
 		// Curios
 		add("curios.identifier.living_armour_socket", "Living Armour Socket");
@@ -788,6 +789,7 @@ public class GeneratorLanguage extends LanguageProvider
 
 		// Potion Effects
 		add("effect.bloodmagic.flight", "Flight");
+		add("effect.bloodmagic.spectral_sight", "Spectral Sight");
 
 	}
 }

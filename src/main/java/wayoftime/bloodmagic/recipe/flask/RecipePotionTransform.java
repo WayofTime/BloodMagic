@@ -127,7 +127,7 @@ public class RecipePotionTransform extends RecipePotionFlaskBase
 	}
 
 	@Override
-	public ItemStack getOutput(ItemStack flaskStack, List<EffectHolder> flaskEffectList, List<ItemStack> inputs)
+	public ItemStack getOutput(ItemStack flaskStack, List<EffectHolder> flaskEffectList)
 	{
 		ItemStack copyStack = flaskStack.copy();
 
@@ -215,5 +215,17 @@ public class RecipePotionTransform extends RecipePotionFlaskBase
 		}
 
 		return prio;
+	}
+
+	@Override
+	public List<EffectHolder> getExampleEffectList()
+	{
+		List<EffectHolder> holderList = new ArrayList<>();
+		for (Effect inputEffect : inputEffectList)
+		{
+			holderList.add(new EffectHolder(inputEffect, 3600, 0, 1, 1));
+		}
+
+		return holderList;
 	}
 }

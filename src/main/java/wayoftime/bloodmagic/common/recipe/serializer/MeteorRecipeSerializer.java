@@ -40,6 +40,7 @@ public class MeteorRecipeSerializer<RECIPE extends RecipeMeteor> extends ForgeRe
 		Ingredient inputIng = Ingredient.deserialize(input);
 
 		int syphon = JSONUtils.getInt(json, Constants.JSON.SYPHON);
+		float explosionRadius = JSONUtils.getInt(json, Constants.JSON.EXPLOSION);
 
 		List<MeteorLayer> layerList = new ArrayList<>();
 		if (json.has(Constants.JSON.LAYER) && JSONUtils.isJsonArray(json, Constants.JSON.LAYER))
@@ -55,7 +56,7 @@ public class MeteorRecipeSerializer<RECIPE extends RecipeMeteor> extends ForgeRe
 			}
 		}
 
-		return this.factory.create(recipeId, inputIng, syphon, layerList);
+		return this.factory.create(recipeId, inputIng, syphon, explosionRadius, layerList);
 	}
 
 	@Override
@@ -65,6 +66,7 @@ public class MeteorRecipeSerializer<RECIPE extends RecipeMeteor> extends ForgeRe
 		{
 			Ingredient input = Ingredient.read(buffer);
 			int syphon = buffer.readInt();
+			float explosionRadius = buffer.readFloat();
 
 			int listSize = buffer.readInt();
 			List<MeteorLayer> layerList = new ArrayList<>();
@@ -74,7 +76,7 @@ public class MeteorRecipeSerializer<RECIPE extends RecipeMeteor> extends ForgeRe
 				layerList.add(layer);
 			}
 
-			return this.factory.create(recipeId, input, syphon, layerList);
+			return this.factory.create(recipeId, input, syphon, explosionRadius, layerList);
 		} catch (Exception e)
 		{
 			throw e;
@@ -96,6 +98,6 @@ public class MeteorRecipeSerializer<RECIPE extends RecipeMeteor> extends ForgeRe
 	@FunctionalInterface
 	public interface IFactory<RECIPE extends RecipeMeteor>
 	{
-		RECIPE create(ResourceLocation id, Ingredient input, int syphon, List<MeteorLayer> layerList);
+		RECIPE create(ResourceLocation id, Ingredient input, int syphon, float explosionRadius, List<MeteorLayer> layerList);
 	}
 }

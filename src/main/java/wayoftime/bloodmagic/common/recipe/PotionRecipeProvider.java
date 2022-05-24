@@ -16,6 +16,7 @@ import wayoftime.bloodmagic.common.data.recipe.builder.PotionIncreaseLengthRecip
 import wayoftime.bloodmagic.common.data.recipe.builder.PotionIncreasePotencyRecipeBuilder;
 import wayoftime.bloodmagic.common.data.recipe.builder.PotionTransformRecipeBuilder;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
+import wayoftime.bloodmagic.potion.BloodMagicPotions;
 
 public class PotionRecipeProvider implements ISubRecipeProvider
 {
@@ -44,6 +45,7 @@ public class PotionRecipeProvider implements ISubRecipeProvider
 		PotionTransformRecipeBuilder.potionTransform(Effects.INSTANT_DAMAGE, 0, Effects.INSTANT_HEALTH, 500, 200, 1).addIngredient(Ingredient.fromItems(Items.FERMENTED_SPIDER_EYE)).build(consumer, BloodMagic.rl(basePath + "health_to_harm"));
 		PotionTransformRecipeBuilder.potionTransform(Effects.INSTANT_DAMAGE, 0, Effects.POISON, 500, 200, 1).addIngredient(Ingredient.fromItems(Items.FERMENTED_SPIDER_EYE)).build(consumer, BloodMagic.rl(basePath + "poison_to_harm"));
 		PotionTransformRecipeBuilder.potionTransform(Effects.INVISIBILITY, 3600, Effects.NIGHT_VISION, 500, 200, 1).addIngredient(Ingredient.fromItems(Items.FERMENTED_SPIDER_EYE)).build(consumer, BloodMagic.rl(basePath + "night_to_invis"));
+		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.SPECTRAL_SIGHT, 3600, Effects.NIGHT_VISION, 500, 200, 1).addIngredient(Ingredient.fromItems(Items.GLOWSTONE_DUST)).build(consumer, BloodMagic.rl(basePath + "night_to_spectral"));
 
 		addPotionModifiers(consumer, Effects.SPEED, "speed_boost");
 		addPotionModifiers(consumer, Effects.JUMP_BOOST, "jump_boost");

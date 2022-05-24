@@ -61,7 +61,6 @@ public class EntitySoulSnare extends ProjectileItemEntity
 		if (result.getEntity() instanceof LivingEntity)
 		{
 			((LivingEntity) result.getEntity()).addPotionEffect(new EffectInstance(BloodMagicPotions.SOUL_SNARE, 300, 0));
-
 			result.getEntity().attackEntityFrom(DamageSource.causeThrownDamage(this, this.func_234616_v_()), (float) 0);
 		}
 
