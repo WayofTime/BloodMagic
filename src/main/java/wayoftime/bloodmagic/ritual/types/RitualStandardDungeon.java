@@ -28,17 +28,16 @@ import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.ritual.IMasterRitualStone;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
-import wayoftime.bloodmagic.ritual.RitualRegister;
 import wayoftime.bloodmagic.structures.DungeonSynthesizer;
 import wayoftime.bloodmagic.tile.TileInversionPillar;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 
-@RitualRegister("simple_dungeon")
+//@RitualRegister("simple_dungeon")
 public class RitualStandardDungeon extends Ritual
 {
 	public RitualStandardDungeon()
 	{
-		super("ritualSimpleDungeon", 0, 80000, "ritual." + BloodMagic.MODID + ".standardDungeonRitual");
+		super("ritualStandardDungeon", 0, 80000, "ritual." + BloodMagic.MODID + ".standardDungeonRitual");
 	}
 
 	public boolean activateRitual(IMasterRitualStone masterRitualStone, PlayerEntity player, UUID owner)

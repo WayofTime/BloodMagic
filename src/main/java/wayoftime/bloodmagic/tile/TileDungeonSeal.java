@@ -12,6 +12,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.registries.ObjectHolder;
+import wayoftime.bloodmagic.structures.DungeonSynthesizer;
 import wayoftime.bloodmagic.tile.base.TileBase;
 import wayoftime.bloodmagic.util.Constants;
 
@@ -39,7 +40,8 @@ public class TileDungeonSeal extends TileBase
 
 	public int requestRoomFromController(ItemStack heldStack)
 	{
-		System.out.println("Potential rooms: " + potentialRoomTypes);
+		if (DungeonSynthesizer.displayDetailedInformation)
+			System.out.println("Potential rooms: " + potentialRoomTypes);
 		if (!world.isRemote && !potentialRoomTypes.isEmpty())
 		{
 			TileEntity tile = world.getTileEntity(controllerPos);

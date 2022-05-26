@@ -32,6 +32,8 @@ import wayoftime.bloodmagic.util.Constants;
 
 public class DungeonSynthesizer
 {
+	public static boolean displayDetailedInformation = false;
+
 	public Map<String, Map<Direction, List<BlockPos>>> availableDoorMasterMap = new HashMap<>(); // Map of doors. The
 																									// Direction
 																									// indicates what
@@ -204,7 +206,8 @@ public class DungeonSynthesizer
 				}
 			} else
 			{
-				System.out.println("Uh oh.");
+				if (displayDetailedInformation)
+					System.out.println("Uh oh.");
 			}
 		}
 
@@ -267,7 +270,7 @@ public class DungeonSynthesizer
 		Rotation rot = Rotation.NONE;
 
 		settings.setRotation(rot);
-		settings.setIgnoreEntities(true);
+		settings.setIgnoreEntities(false);
 		settings.setChunk(null);
 //		settings.addProcessor(new StoneToOreProcessor(0.0f));
 		settings.func_215223_c(true);
@@ -364,7 +367,8 @@ public class DungeonSynthesizer
 
 	public boolean forcePlacementOfRoom(ServerWorld world, BlockPos controllerPos, Direction doorFacing, BlockPos activatedDoorPos, String activatedDoorType, DungeonRoom room, Rotation rotation, BlockPos roomLocation)
 	{
-		System.out.println("Forcing room! Room is: " + room);
+		if (displayDetailedInformation)
+			System.out.println("Forcing room! Room is: " + room);
 		if (room == null)
 		{
 			return false;
@@ -378,7 +382,7 @@ public class DungeonSynthesizer
 		Rotation rot = Rotation.NONE;
 
 		settings.setRotation(rot);
-		settings.setIgnoreEntities(true);
+		settings.setIgnoreEntities(false);
 		settings.setChunk(null);
 //		settings.addProcessor(new StoneToOreProcessor(0.0f));
 		settings.func_215223_c(true);
@@ -444,7 +448,8 @@ public class DungeonSynthesizer
 			}
 
 			{
-				System.out.println("Room list: " + dungeonDoor.getRoomList());
+				if (displayDetailedInformation)
+					System.out.println("Room list: " + dungeonDoor.getRoomList());
 				this.addNewDoorBlock(world, controllerPos, dungeonDoor.doorPos, dungeonDoor.doorDir, dungeonDoor.doorType, dungeonDoor.getRoomList(), dungeonDoor.getSpecialRoomList());
 			}
 		}
@@ -462,7 +467,7 @@ public class DungeonSynthesizer
 		Rotation rot = Rotation.NONE;
 
 		settings.setRotation(rot);
-		settings.setIgnoreEntities(true);
+		settings.setIgnoreEntities(false);
 		settings.setChunk(null);
 //		settings.addProcessor(new StoneToOreProcessor(0.0f));
 		settings.func_215223_c(true);
@@ -474,7 +479,9 @@ public class DungeonSynthesizer
 
 		Direction oppositeDoorFacing = doorFacing.getOpposite();
 		DungeonRoom testingRoom = getRandomRoom(roomType, rand);
-		System.out.println("Room type: " + roomType);
+
+		if (displayDetailedInformation)
+			System.out.println("Room type: " + roomType);
 
 		List<Rotation> rotationList = Rotation.shuffledRotations(rand);
 
@@ -579,7 +586,8 @@ public class DungeonSynthesizer
 				this.addNewDoorBlock(world, controllerPos, dungeonDoor.doorPos, dungeonDoor.doorDir, activatedDoorType, potentialRooms, new ArrayList<>());
 			} else
 			{
-				System.out.println("Room list: " + dungeonDoor.getRoomList());
+				if (displayDetailedInformation)
+					System.out.println("Room list: " + dungeonDoor.getRoomList());
 				this.addNewDoorBlock(world, controllerPos, dungeonDoor.doorPos, dungeonDoor.doorDir, dungeonDoor.doorType, dungeonDoor.getRoomList(), dungeonDoor.getSpecialRoomList());
 			}
 		}
@@ -589,10 +597,11 @@ public class DungeonSynthesizer
 
 	public void checkSpecialRoomRequirements()
 	{
-		System.out.println("Number of activated doors: " + activatedDoors);
+		if (displayDetailedInformation)
+			System.out.println("Number of activated doors: " + activatedDoors);
 		if (activatedDoors == 3)
 		{
-			specialRoomBuffer.add(specialRoomPool);
+//			specialRoomBuffer.add(specialRoomPool);
 		}
 	}
 

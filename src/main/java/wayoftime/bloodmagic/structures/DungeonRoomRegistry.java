@@ -54,29 +54,36 @@ public class DungeonRoomRegistry
 		if (maxWeight != null)
 		{
 			wantedWeight = rand.nextInt(maxWeight);
-			System.out.println("Wanted weight: " + wantedWeight);
+			if (DungeonSynthesizer.displayDetailedInformation)
+				System.out.println("Wanted weight: " + wantedWeight);
 		}
 		List<Pair<ResourceLocation, Integer>> roomPool = roomPoolTable.get(roomPoolName);
 		if (roomPool == null)
 		{
-			System.out.println("There's nothing here...");
+			if (DungeonSynthesizer.displayDetailedInformation)
+				System.out.println("There's nothing here...");
 			return null;
 		}
 
-		System.out.println("Pool size: " + roomPool.size());
+		if (DungeonSynthesizer.displayDetailedInformation)
+			System.out.println("Pool size: " + roomPool.size());
 
 		for (Pair<ResourceLocation, Integer> entry : roomPool)
 		{
 			wantedWeight -= entry.getValue();
 
-			System.out.println("Room name: " + entry.getLeft());
+			if (DungeonSynthesizer.displayDetailedInformation)
+				System.out.println("Room name: " + entry.getLeft());
 
 			if (wantedWeight <= 0)
 			{
 				ResourceLocation dungeonName = entry.getKey();
-				System.out.println("Dungeon name: " + dungeonName);
-				System.out.println("All dungeons: " + dungeonRoomMap);
-				System.out.println("Size of dungeons: " + dungeonRoomMap.size());
+				if (DungeonSynthesizer.displayDetailedInformation)
+				{
+					System.out.println("Dungeon name: " + dungeonName);
+					System.out.println("All dungeons: " + dungeonRoomMap);
+					System.out.println("Size of dungeons: " + dungeonRoomMap.size());
+				}
 				return dungeonRoomMap.get(dungeonName);
 			}
 
