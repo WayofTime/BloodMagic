@@ -22,6 +22,11 @@ public class RandomBlockTagContainer extends RandomBlockContainer
 	@Override
 	public Block getRandomBlock(Random rand, World world)
 	{
+		if (tag.getAllElements().size() <= 0)
+		{
+			return null;
+		}
+
 		if (index >= 0 && index < tag.getAllElements().size())
 		{
 			return tag.getAllElements().get(index);

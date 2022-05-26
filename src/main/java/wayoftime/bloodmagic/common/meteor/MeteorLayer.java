@@ -104,7 +104,7 @@ public class MeteorLayer
 		int radius = layerRadius;
 		for (int i = -radius; i <= radius; i++)
 		{
-			for (int j = -radius; j <= 0; j++)
+			for (int j = -radius; j <= radius; j++)
 			{
 				for (int k = -radius; k <= radius; k++)
 				{
@@ -144,7 +144,9 @@ public class MeteorLayer
 			randNum -= entry.getValue();
 			if (randNum < 0)
 			{
-				block = entry.getKey().getRandomBlock(rand, world);
+				Block newBlock = entry.getKey().getRandomBlock(rand, world);
+				if (newBlock != null)
+					block = newBlock;
 				break;
 			}
 		}

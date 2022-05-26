@@ -891,7 +891,8 @@ dcb3cb5f5af8d8a8520fabb1dbe0a68c27304e2b data/bloodmagic/recipes/flask/speed_boo
 9a5749465020b32b0147b3367784ce31a0d3b54b data/bloodmagic/recipes/incense_altar.json
 63bca28ba5eebb9c488c819bcb117595eadb877d data/bloodmagic/recipes/largebloodstonebrick.json
 9dedad36e9d2ab6688e069c2e6df3851c395b583 data/bloodmagic/recipes/lava_crystal.json
-0b45af78455b05228871951fef50940ea55331eb data/bloodmagic/recipes/meteor/iron.json
+501dfe9c45b2b2f5f3b034035be4272e17357a48 data/bloodmagic/recipes/meteor/iron.json
+28e0829c60b7dc31f44653f19063a3e47f0b43c2 data/bloodmagic/recipes/meteor/stone.json
 50d84717ac673875e4b52522b583f564a8a75e8e data/bloodmagic/recipes/path/path_stone.json
 2756ff3f29e1231795671c94fdaf9e5abc65bbee data/bloodmagic/recipes/path/path_stonetile.json
 dcb702aeb768bc0ff5d1f05c5ac95066c4082193 data/bloodmagic/recipes/path/path_wood.json
@@ -974,6 +975,11 @@ af9b1a9ba1b16a85e3e1cf84b99e4cc9e12f9886 data/bloodmagic/tags/items/gravels/gold
 19547e1b8859f1e2f1ae858e74b4456fc20be53f data/bloodmagic/tags/items/gravels/iron.json
 3597daeddb742612d0b7fe2d0f711251a2781ac2 data/bloodmagic/tags/items/gravels/netherite_scrap.json
 04fdfff381183672d6d7b3e55ded42a0a5b89f16 data/bloodmagic/tags/items/tiny_dusts/corrupted.json
+74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/blocks/ores/copper.json
+74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/blocks/ores/lead.json
+74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/blocks/ores/osmium.json
+74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/blocks/ores/silver.json
+74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/blocks/ores/tin.json
 b7b3ffae086763317f5ed70a4f857e9634932972 data/forge/tags/fluids/life.json
 c9a50f0fe339c9ad2cb0176699e32eeee9110c4e data/forge/tags/items/axes.json
 4f8f46a7e30fe81d36790d3ffed37efef7c87d06 data/forge/tags/items/dusts/coal.json
@@ -995,6 +1001,7 @@ ca758f49ba878f8e498fe156d4916c1e332d552c data/forge/tags/items/ingots/hellforged
 8464f5918830fa341ea9d2b31183e7272aa6f347 data/forge/tags/items/swords.json
 d348e6ef5f30db7c6c6ef2aac89c45e9c4c6fef7 data/minecraft/tags/blocks/mushroom_hyphae.json
 95fd3a7b178a92c5aecdd097fec5359f14a06c13 data/minecraft/tags/blocks/mushroom_stem.json
+e18d50f782cea90a9de511c5332ee577cf6a9adb data/minecraft/tags/blocks/stone_unpolished.json
 2ba6f93ee0567360afa3ae9999027b839ed06532 data/minecraft/tags/blocks/walls.json
 d348e6ef5f30db7c6c6ef2aac89c45e9c4c6fef7 data/minecraft/tags/items/mushroom_hyphae.json
 95fd3a7b178a92c5aecdd097fec5359f14a06c13 data/minecraft/tags/items/mushroom_stem.json

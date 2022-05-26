@@ -33,6 +33,14 @@ public class BloodMagicTags
 	public static final ITag.INamedTag<Item> ORE_OSMIUM = getForgeOreTag("osmium");
 	public static final ITag.INamedTag<Item> ORE_SILVER = getForgeOreTag("silver");
 
+	public static final ITag.INamedTag<Block> BLOCK_ORE_COPPER = getForgeBlockOreTag("copper");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_TIN = getForgeBlockOreTag("tin");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_LEAD = getForgeBlockOreTag("lead");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_OSMIUM = getForgeBlockOreTag("osmium");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_SILVER = getForgeBlockOreTag("silver");
+
+	public static final ITag.INamedTag<Block> BLOCK_STONE_UNPOLISHED = BlockTags.makeWrapperTag("minecraft:stone_unpolished");
+
 	// Ingots
 	public static final ITag.INamedTag<Item> INGOT_HELLFORGED = getForgeIngotTag("hellforged");
 
@@ -73,6 +81,11 @@ public class BloodMagicTags
 	public static ITag.INamedTag<Item> getForgeOreTag(String name)
 	{
 		return ItemTags.makeWrapperTag("forge:ores/" + name);
+	}
+
+	public static ITag.INamedTag<Block> getForgeBlockOreTag(String name)
+	{
+		return BlockTags.makeWrapperTag("forge:ores/" + name);
 	}
 
 	public static ITag.INamedTag<Item> getForgeIngotTag(String name)

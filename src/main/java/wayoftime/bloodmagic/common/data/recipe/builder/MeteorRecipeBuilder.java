@@ -61,7 +61,7 @@ public class MeteorRecipeBuilder extends BloodMagicRecipeBuilder<MeteorRecipeBui
 		{
 			json.add(Constants.JSON.INPUT, input.serialize());
 			json.addProperty(Constants.JSON.SYPHON, syphon);
-			json.addProperty(Constants.JSON.EXPLOSION, syphon);
+			json.addProperty(Constants.JSON.EXPLOSION, explosionRadius);
 
 			if (layerList.size() > 0)
 			{

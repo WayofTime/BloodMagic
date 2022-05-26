@@ -232,7 +232,7 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("ritual.bloodmagic.cobblestoneRitual", "Le Vulcanos Frigius");
 		add("ritual.bloodmagic.placerRitual", "The Filler");
-		add("ritual.bloodmagic.fellingRitual", "The Timberman");
+		add("ritual.bloodmagic.fellingRitual", "Crash of The Timberman");
 		add("ritual.bloodmagic.pumpRitual", "Hymn of Siphoning");
 		add("ritual.bloodmagic.altarBuilderRitual", "The Assembly of the High Altar");
 		add("ritual.bloodmagic.portalRitual", "The Gate of the Fold");

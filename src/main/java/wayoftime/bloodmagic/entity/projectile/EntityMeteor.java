@@ -111,7 +111,7 @@ public class EntityMeteor extends ThrowableEntity
 			return;
 		}
 
-		System.out.println("Contained item: " + containedStack.toString());
+//		System.out.println("Contained item: " + containedStack.toString());
 
 		RecipeMeteor recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getMeteor(world, containedStack);
 		if (recipe != null)
