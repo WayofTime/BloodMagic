@@ -22,7 +22,7 @@ public class ItemDungeonKey extends ItemDungeonKeyBase
 		List<ResourceLocation> subList = new ArrayList<>();
 		for (ResourceLocation testLocation : list)
 		{
-			if (testLocation.toString().contains(resourceKey))
+//			if (testLocation.toString().contains(resourceKey))
 			{
 				subList.add(testLocation);
 			}

@@ -17,6 +17,7 @@ import wayoftime.bloodmagic.ritual.AreaDescriptor;
 
 public class DungeonRoom
 {
+	public ResourceLocation key;
 	public int dungeonWeight = 1;
 	public Map<String, BlockPos> structureMap = new HashMap<>();
 
@@ -25,8 +26,10 @@ public class DungeonRoom
 																					// this door faces.
 	public List<AreaDescriptor.Rectangle> descriptorList = new ArrayList<>();
 
-	// Add one-way doors - just needs a "connectTo" map...
+	// TODO: Add one-way doors - just needs a "connectTo" map...
 
+	// TODO: Change this to a map with different keys to indicate other types of
+	// post-processes.
 	public float oreDensity = 0;
 	public BlockPos spawnLocation = BlockPos.ZERO;
 	public BlockPos controllerOffset = BlockPos.ZERO;

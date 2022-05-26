@@ -39,6 +39,7 @@ public class TileDungeonSeal extends TileBase
 
 	public int requestRoomFromController(ItemStack heldStack)
 	{
+		System.out.println("Potential rooms: " + potentialRoomTypes);
 		if (!world.isRemote && !potentialRoomTypes.isEmpty())
 		{
 			TileEntity tile = world.getTileEntity(controllerPos);
@@ -47,6 +48,8 @@ public class TileDungeonSeal extends TileBase
 				TileDungeonController tileController = (TileDungeonController) tile;
 				int state = tileController.handleRequestForRoomPlacement(heldStack, doorPos, doorDirection, doorType, potentialRoomTypes);
 
+//				System.out.println("State is: " + state);
+//				System.out.println("")
 				if (state == -1)
 				{
 					// TODO: Spawn smoke particles, since the used item does not work.

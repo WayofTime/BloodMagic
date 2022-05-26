@@ -27,7 +27,23 @@ public class DungeonDoor
 		List<ResourceLocation> rlRoomList = new ArrayList<>();
 		for (String room : roomList)
 		{
-			rlRoomList.add(new ResourceLocation(room));
+			if (!room.startsWith("#"))
+				rlRoomList.add(new ResourceLocation(room));
+		}
+
+		return rlRoomList;
+	}
+
+	public List<ResourceLocation> getSpecialRoomList()
+	{
+		List<ResourceLocation> rlRoomList = new ArrayList<>();
+		for (String room : roomList)
+		{
+			if (room.startsWith("#"))
+			{
+				String[] splitString = room.split("#");
+				rlRoomList.add(new ResourceLocation(splitString[1]));
+			}
 		}
 
 		return rlRoomList;

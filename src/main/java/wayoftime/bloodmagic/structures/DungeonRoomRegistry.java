@@ -23,6 +23,7 @@ public class DungeonRoomRegistry
 
 	public static void registerDungeonRoom(ResourceLocation res, DungeonRoom room, int weight)
 	{
+		room.key = res;
 		dungeonWeightMap.put(room, weight);
 		totalWeight += weight;
 		dungeonRoomMap.put(res, room);
@@ -47,31 +48,47 @@ public class DungeonRoomRegistry
 		Integer maxWeight = totalWeightMap.get(roomPoolName);
 //		System.out.println("Pool name: " + roomPoolName);
 
+//		System.out.println("Max weight: " + maxWeight);
+
 		int wantedWeight = 0;
 		if (maxWeight != null)
 		{
 			wantedWeight = rand.nextInt(maxWeight);
+			System.out.println("Wanted weight: " + wantedWeight);
 		}
 		List<Pair<ResourceLocation, Integer>> roomPool = roomPoolTable.get(roomPoolName);
 		if (roomPool == null)
 		{
-//			System.out.println("There's nothing here...");
+			System.out.println("There's nothing here...");
 			return null;
 		}
+
+		System.out.println("Pool size: " + roomPool.size());
+
 		for (Pair<ResourceLocation, Integer> entry : roomPool)
 		{
+			wantedWeight -= entry.getValue();
+
+			System.out.println("Room name: " + entry.getLeft());
+
 			if (wantedWeight <= 0)
 			{
 				ResourceLocation dungeonName = entry.getKey();
-//				System.out.println("Dungeon name: " + dungeonName);
-//				System.out.println("All dungeons: " + dungeonRoomMap);
+				System.out.println("Dungeon name: " + dungeonName);
+				System.out.println("All dungeons: " + dungeonRoomMap);
+				System.out.println("Size of dungeons: " + dungeonRoomMap.size());
 				return dungeonRoomMap.get(dungeonName);
 			}
 
-			wantedWeight -= entry.getValue();
+//			System.out.println("Weight: " + entry.getValue());
 		}
 
 		return null;
+	}
+
+	public static DungeonRoom getDungeonRoom(ResourceLocation dungeonName)
+	{
+		return dungeonRoomMap.get(dungeonName);
 	}
 
 	public static void registerStarterDungeonRoom(DungeonRoom room, String key)
