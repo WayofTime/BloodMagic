@@ -427,7 +427,7 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onPotionAdded(PotionEvent.PotionAddedEvent event)
 	{
-		if (event.getEntity().world.isRemote && event.getPotionEffect().getPotion() == BloodMagicPotions.FLIGHT && event.getEntityLiving() instanceof PlayerEntity)
+		if (event.getPotionEffect().getPotion() == BloodMagicPotions.FLIGHT && event.getEntityLiving() instanceof PlayerEntity)
 		{
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 			player.abilities.allowFlying = true;
@@ -435,7 +435,9 @@ public class GenericHandler
 			{
 				prevFlySpeedMap.put(player.getUniqueID(), player.abilities.getFlySpeed());
 			}
-			player.abilities.setFlySpeed(getFlySpeedForFlightLevel(event.getPotionEffect().getAmplifier()));
+
+			if (event.getEntity().world.isRemote)
+				player.abilities.setFlySpeed(getFlySpeedForFlightLevel(event.getPotionEffect().getAmplifier()));
 			player.sendPlayerAbilities();
 		}
 	}
@@ -443,13 +445,16 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onPotionExpired(PotionEvent.PotionExpiryEvent event)
 	{
-		if (event.getEntity().world.isRemote && event.getPotionEffect().getPotion() == BloodMagicPotions.FLIGHT && event.getEntityLiving() instanceof PlayerEntity)
+		if (event.getPotionEffect().getPotion() == BloodMagicPotions.FLIGHT && event.getEntityLiving() instanceof PlayerEntity)
 		{
 			((PlayerEntity) event.getEntityLiving()).abilities.allowFlying = ((PlayerEntity) event.getEntityLiving()).isCreative();
 			((PlayerEntity) event.getEntityLiving()).abilities.isFlying = false;
 
-			((PlayerEntity) event.getEntityLiving()).abilities.setFlySpeed(prevFlySpeedMap.getOrDefault((((PlayerEntity) event.getEntityLiving()).getUniqueID()), getFlySpeedForFlightLevel(-1)));
-			prevFlySpeedMap.remove(((PlayerEntity) event.getEntityLiving()).getUniqueID());
+			if (event.getEntity().world.isRemote)
+			{
+				((PlayerEntity) event.getEntityLiving()).abilities.setFlySpeed(prevFlySpeedMap.getOrDefault((((PlayerEntity) event.getEntityLiving()).getUniqueID()), getFlySpeedForFlightLevel(-1)));
+				prevFlySpeedMap.remove(((PlayerEntity) event.getEntityLiving()).getUniqueID());
+			}
 
 			((PlayerEntity) event.getEntityLiving()).sendPlayerAbilities();
 		}
@@ -491,13 +496,15 @@ public class GenericHandler
 		if (event.getEntityLiving() instanceof PlayerEntity)
 		{
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-			if (player.world.isRemote && player.isPotionActive(BloodMagicPotions.FLIGHT))
+			if (player.isPotionActive(BloodMagicPotions.FLIGHT))
 			{
+				player.fallDistance = 0;
 				if (!player.abilities.allowFlying || !prevFlySpeedMap.containsKey(player.getUniqueID()))
 				{
 					prevFlySpeedMap.put(player.getUniqueID(), player.abilities.getFlySpeed());
 					player.abilities.allowFlying = true;
-					player.abilities.setFlySpeed(getFlySpeedForFlightLevel(player.getActivePotionEffect(BloodMagicPotions.FLIGHT).getAmplifier()));
+					if (player.world.isRemote)
+						player.abilities.setFlySpeed(getFlySpeedForFlightLevel(player.getActivePotionEffect(BloodMagicPotions.FLIGHT).getAmplifier()));
 					player.sendPlayerAbilities();
 				}
 			}
