@@ -8,8 +8,13 @@
   "layers": [
     {
       "radius": 16,
-      "maxWeight": 0,
+      "additionalWeight": 0,
+      "minWeight": 400,
       "weightMap": [
+        {
+          "tag": "#forge:ores/apatite#0",
+          "weight": 50
+        },
         {
           "tag": "#forge:ores/coal#0",
           "weight": 150

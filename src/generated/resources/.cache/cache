@@ -891,8 +891,9 @@ dcb3cb5f5af8d8a8520fabb1dbe0a68c27304e2b data/bloodmagic/recipes/flask/speed_boo
 9a5749465020b32b0147b3367784ce31a0d3b54b data/bloodmagic/recipes/incense_altar.json
 63bca28ba5eebb9c488c819bcb117595eadb877d data/bloodmagic/recipes/largebloodstonebrick.json
 9dedad36e9d2ab6688e069c2e6df3851c395b583 data/bloodmagic/recipes/lava_crystal.json
-21452426ec1018a8ee525ef5d4a713f9a0ca8afa data/bloodmagic/recipes/meteor/iron.json
-86bc32c2ae17aad7d7c9027ce7243dfb137940d2 data/bloodmagic/recipes/meteor/stone.json
+29c03af6d7544992849a92a24c98e6ccd8ffda4c data/bloodmagic/recipes/meteor/diamond.json
+285cb2ed4c6247370aee0572e88ddc4ce88fbc28 data/bloodmagic/recipes/meteor/iron.json
+28001c19ce4c7e9d5bcfbf7a19fafaa908ea61f9 data/bloodmagic/recipes/meteor/stone.json
 50d84717ac673875e4b52522b583f564a8a75e8e data/bloodmagic/recipes/path/path_stone.json
 2756ff3f29e1231795671c94fdaf9e5abc65bbee data/bloodmagic/recipes/path/path_stonetile.json
 dcb702aeb768bc0ff5d1f05c5ac95066c4082193 data/bloodmagic/recipes/path/path_wood.json
@@ -975,9 +976,13 @@ af9b1a9ba1b16a85e3e1cf84b99e4cc9e12f9886 data/bloodmagic/tags/items/gravels/gold
 19547e1b8859f1e2f1ae858e74b4456fc20be53f data/bloodmagic/tags/items/gravels/iron.json
 3597daeddb742612d0b7fe2d0f711251a2781ac2 data/bloodmagic/tags/items/gravels/netherite_scrap.json
 04fdfff381183672d6d7b3e55ded42a0a5b89f16 data/bloodmagic/tags/items/tiny_dusts/corrupted.json
+74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/blocks/ores/apatite.json
+74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/blocks/ores/cinnabar.json
 74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/blocks/ores/copper.json
 74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/blocks/ores/lead.json
 74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/blocks/ores/osmium.json
+74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/blocks/ores/ruby.json
+74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/blocks/ores/sapphire.json
 74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/blocks/ores/silver.json
 74700d556ca80c7a1db5fd4efb09c3ddb26cad66 data/forge/tags/blocks/ores/tin.json
 b7b3ffae086763317f5ed70a4f857e9634932972 data/forge/tags/fluids/life.json

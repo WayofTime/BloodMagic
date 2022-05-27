@@ -32,6 +32,10 @@ public class GeneratorBlockTags extends BlockTagsProvider
 		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_OSMIUM);
 		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_SILVER);
 		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_TIN);
+		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_APATITE);
+		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_CINNABAR);
+		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_RUBY);
+		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_SAPPHIRE);
 
 		getOrCreateBuilder(BloodMagicTags.BLOCK_STONE_UNPOLISHED).add(Blocks.STONE, Blocks.ANDESITE, Blocks.DIORITE, Blocks.GRANITE);
 

@@ -38,6 +38,10 @@ public class BloodMagicTags
 	public static final ITag.INamedTag<Block> BLOCK_ORE_LEAD = getForgeBlockOreTag("lead");
 	public static final ITag.INamedTag<Block> BLOCK_ORE_OSMIUM = getForgeBlockOreTag("osmium");
 	public static final ITag.INamedTag<Block> BLOCK_ORE_SILVER = getForgeBlockOreTag("silver");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_APATITE = getForgeBlockOreTag("apatite");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_CINNABAR = getForgeBlockOreTag("cinnabar");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_RUBY = getForgeBlockOreTag("ruby");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_SAPPHIRE = getForgeBlockOreTag("sapphire");
 
 	public static final ITag.INamedTag<Block> BLOCK_STONE_UNPOLISHED = BlockTags.makeWrapperTag("minecraft:stone_unpolished");
 
