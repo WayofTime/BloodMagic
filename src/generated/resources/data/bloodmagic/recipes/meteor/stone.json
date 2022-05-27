@@ -8,7 +8,7 @@
   "layers": [
     {
       "radius": 16,
-      "maxWeight": 200,
+      "maxWeight": 0,
       "weightMap": [
         {
           "tag": "#forge:ores/coal#0",

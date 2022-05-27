@@ -186,7 +186,7 @@ public class Constants
 		public static final String OUTPUT_FLUID = "outputFluid";
 		public static final String FILTER = "filter";
 		public static final String WEIGHT = "weight";
-		public static final String MAX_WEIGHT = "maxWeight";
+		public static final String ADDITIONAL_MAX_WEIGHT = "maxWeight";
 		public static final String RADIUS = "radius";
 
 		public static final String SYPHON = "syphon";

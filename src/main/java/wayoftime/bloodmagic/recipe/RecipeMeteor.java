@@ -52,7 +52,7 @@ public class RecipeMeteor extends BloodMagicRecipe
 	public void spawnMeteorInWorld(World world, BlockPos centerPos)
 	{
 		if (explosionRadius > 0)
-			world.createExplosion(null, centerPos.getX(), centerPos.getY(), centerPos.getZ(), explosionRadius, true, Mode.BREAK);
+			world.createExplosion(null, centerPos.getX(), centerPos.getY(), centerPos.getZ(), explosionRadius, true, Mode.DESTROY);
 
 		Map<Integer, MeteorLayer> layerMap = new HashMap<>();
 		for (MeteorLayer layer : layerList)

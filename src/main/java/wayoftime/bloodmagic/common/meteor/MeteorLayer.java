@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.common.meteor;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -31,34 +32,35 @@ import wayoftime.bloodmagic.util.Constants;
 public class MeteorLayer
 {
 	public int layerRadius;
-	public int maxWeight;
+	public int additionalTotalWeight;
+	public int totalMaxWeight = 0;
 	public List<Pair<RandomBlockContainer, Integer>> weightList;
 	public RandomBlockContainer fillBlock;
 	public RandomBlockContainer shellBlock;
 
 	// TODO: Add option to have a shell at the meteor's layerRadius
 
-	public MeteorLayer(int layerRadius, int maxWeight, List<Pair<RandomBlockContainer, Integer>> weightList, RandomBlockContainer fillBlock)
+	public MeteorLayer(int layerRadius, int additionalMaxWeight, List<Pair<RandomBlockContainer, Integer>> weightList, RandomBlockContainer fillBlock)
 	{
 		this.layerRadius = layerRadius;
-		this.maxWeight = maxWeight;
+		this.additionalTotalWeight = additionalMaxWeight;
 		this.weightList = weightList;
 		this.fillBlock = fillBlock;
 	}
 
-	public MeteorLayer(int layerRadius, int maxWeight, Block fillBlock)
+	public MeteorLayer(int layerRadius, int additionalMaxWeight, Block fillBlock)
 	{
-		this(layerRadius, maxWeight, new ArrayList<>(), new StaticBlockContainer(fillBlock));
+		this(layerRadius, additionalMaxWeight, new ArrayList<>(), new StaticBlockContainer(fillBlock));
 	}
 
-	public MeteorLayer(int layerRadius, int maxWeight, ITag<Block> fillTag)
+	public MeteorLayer(int layerRadius, int additionalMaxWeight, ITag<Block> fillTag)
 	{
-		this(layerRadius, maxWeight, fillTag, -1);
+		this(layerRadius, additionalMaxWeight, fillTag, -1);
 	}
 
-	public MeteorLayer(int layerRadius, int maxWeight, ITag<Block> fillTag, int staticIndex)
+	public MeteorLayer(int layerRadius, int additionalMaxWeight, ITag<Block> fillTag, int staticIndex)
 	{
-		this(layerRadius, maxWeight, new ArrayList<>(), new RandomBlockTagContainer(fillTag, staticIndex));
+		this(layerRadius, additionalMaxWeight, new ArrayList<>(), new RandomBlockTagContainer(fillTag, staticIndex));
 	}
 
 	public MeteorLayer addShellBlock(RandomBlockContainer shellBlock)
@@ -101,6 +103,8 @@ public class MeteorLayer
 
 	public void buildLayer(World world, BlockPos centerPos, int emptyRadius)
 	{
+		recalculateMaxWeight(world.rand, world);
+
 		int radius = layerRadius;
 		for (int i = -radius; i <= radius; i++)
 		{
@@ -127,7 +131,7 @@ public class MeteorLayer
 							world.setBlockState(pos, shellBlock.getRandomBlock(world.rand, world).getDefaultState());
 						} else
 						{
-							world.setBlockState(pos, getRandomState(world.rand, world, this));
+							world.setBlockState(pos, getRandomState(world.rand, world));
 						}
 					}
 				}
@@ -135,11 +139,31 @@ public class MeteorLayer
 		}
 	}
 
-	public BlockState getRandomState(Random rand, World world, MeteorLayer layer)
+	public void recalculateMaxWeight(Random rand, World world)
+	{
+		totalMaxWeight = additionalTotalWeight;
+
+		Iterator<Pair<RandomBlockContainer, Integer>> itr = weightList.iterator();
+		while (itr.hasNext())
+		{
+			Pair<RandomBlockContainer, Integer> entry = itr.next();
+			Block newBlock = entry.getKey().getRandomBlock(rand, world);
+			if (newBlock == null)
+			{
+				itr.remove();
+//				weightList.remove(entry);
+				continue;
+			}
+
+			totalMaxWeight += entry.getRight();
+		}
+	}
+
+	public BlockState getRandomState(Random rand, World world)
 	{
 		Block block = fillBlock.getRandomBlock(rand, world);
-		int randNum = rand.nextInt(layer.maxWeight);
-		for (Pair<RandomBlockContainer, Integer> entry : layer.weightList)
+		int randNum = rand.nextInt(totalMaxWeight);
+		for (Pair<RandomBlockContainer, Integer> entry : weightList)
 		{
 			randNum -= entry.getValue();
 			if (randNum < 0)
@@ -159,6 +183,8 @@ public class MeteorLayer
 			return Blocks.AIR.getDefaultState();
 		}
 	}
+
+//	public void 
 
 	public boolean checkIfSphereShell(int xR, int xOff, int yOff, int zOff)
 	{
@@ -182,7 +208,7 @@ public class MeteorLayer
 		JsonObject json = new JsonObject();
 
 		json.addProperty(Constants.JSON.RADIUS, layerRadius);
-		json.addProperty(Constants.JSON.MAX_WEIGHT, maxWeight);
+		json.addProperty(Constants.JSON.ADDITIONAL_MAX_WEIGHT, additionalTotalWeight);
 
 		if (weightList.size() > 0)
 		{
@@ -216,7 +242,7 @@ public class MeteorLayer
 	public static MeteorLayer deserialize(JsonObject json)
 	{
 		int layerRadius = JSONUtils.getInt(json, Constants.JSON.RADIUS);
-		int maxWeight = JSONUtils.getInt(json, Constants.JSON.MAX_WEIGHT);
+		int maxWeight = JSONUtils.getInt(json, Constants.JSON.ADDITIONAL_MAX_WEIGHT);
 		List<Pair<RandomBlockContainer, Integer>> weightList = new ArrayList<>();
 
 		if (json.has(Constants.JSON.WEIGHT_MAP) && JSONUtils.isJsonArray(json, Constants.JSON.WEIGHT_MAP))
@@ -252,7 +278,7 @@ public class MeteorLayer
 	public void write(PacketBuffer buffer)
 	{
 		buffer.writeInt(layerRadius);
-		buffer.writeInt(maxWeight);
+		buffer.writeInt(additionalTotalWeight);
 		buffer.writeInt(weightList.size());
 		for (int i = 0; i < weightList.size(); i++)
 		{

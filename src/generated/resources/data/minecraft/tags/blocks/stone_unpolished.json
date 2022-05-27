@@ -3,6 +3,7 @@
   "values": [
     "minecraft:stone",
     "minecraft:andesite",
-    "minecraft:diorite"
+    "minecraft:diorite",
+    "minecraft:granite"
   ]
 }

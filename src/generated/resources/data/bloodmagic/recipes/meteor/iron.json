@@ -8,7 +8,7 @@
   "layers": [
     {
       "radius": 4,
-      "maxWeight": 680,
+      "maxWeight": 0,
       "weightMap": [
         {
           "tag": "minecraft:gold_ore",
@@ -44,7 +44,7 @@
     },
     {
       "radius": 7,
-      "maxWeight": 1080,
+      "maxWeight": 100,
       "weightMap": [
         {
           "tag": "minecraft:iron_ore",

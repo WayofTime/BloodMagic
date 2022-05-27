@@ -402,7 +402,7 @@
   "ritual.bloodmagic.featheredKnifeRitual.info": "Drains health from players in its area and puts the LP into a nearby blood altar. LP Gains are affected by Runes of Self Sacrifice.",
   "ritual.bloodmagic.featheredKnifeRitual.steadfast.info": "(Steadfast) Sets the minimum health for sacrificing from 30%% to 70%%.",
   "ritual.bloodmagic.featheredKnifeRitual.vengeful.info": "(Vengeful) Sets the minimum health for sacrificing to 10%%. Overridden by Steadfast for the Owner if active.",
-  "ritual.bloodmagic.fellingRitual": "The Timberman",
+  "ritual.bloodmagic.fellingRitual": "Crash of The Timberman",
   "ritual.bloodmagic.fellingRitual.chest.info": "(Chest) The location of the inventory that the ritual will place the results into.",
   "ritual.bloodmagic.fellingRitual.fellingRange.info": "(Cutting) The range that the ritual will search out logs and leaves in order to cut down.",
   "ritual.bloodmagic.fellingRitual.info": "A standard tree-cutting machine, this ritual will cut down all trees and leaves within its area and collect the drops.",
