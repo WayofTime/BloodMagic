@@ -189,6 +189,7 @@ public class Constants
 		public static final String ADDITIONAL_MAX_WEIGHT = "additionalWeight";
 		public static final String MIN_WEIGHT = "minWeight";
 		public static final String RADIUS = "radius";
+		public static final String MAX = "max";
 
 		public static final String SYPHON = "syphon";
 		public static final String TICKS = "ticks";

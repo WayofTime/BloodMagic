@@ -51,6 +51,8 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 		ShapelessRecipeBuilder.shapelessRecipe(BloodMagicBlocks.STONE_TILE_PATH.get(), 4).addIngredient(BloodMagicBlocks.STONE_PATH.get()).addIngredient(BloodMagicBlocks.STONE_PATH.get()).addIngredient(BloodMagicBlocks.STONE_PATH.get()).addIngredient(BloodMagicBlocks.STONE_PATH.get()).addCriterion("has_magician_orb", hasItem(BloodMagicItems.MAGICIAN_BLOOD_ORB.get())).build(consumer, BloodMagic.rl("path/path_stonetile"));
 		ShapelessRecipeBuilder.shapelessRecipe(BloodMagicBlocks.WORN_STONE_TILE_PATH.get(), 4).addIngredient(BloodMagicBlocks.WORN_STONE_PATH.get()).addIngredient(BloodMagicBlocks.WORN_STONE_PATH.get()).addIngredient(BloodMagicBlocks.WORN_STONE_PATH.get()).addIngredient(BloodMagicBlocks.WORN_STONE_PATH.get()).addCriterion("has_master_orb", hasItem(BloodMagicItems.MASTER_BLOOD_ORB.get())).build(consumer, BloodMagic.rl("path/path_wornstonetile"));
 
+		ShapelessRecipeBuilder.shapelessRecipe(BloodMagicItems.ALCHEMY_FLASK.get()).addIngredient(BloodMagicItems.ALCHEMY_FLASK.get()).addIngredient(Ingredient.fromItems(Items.WATER_BUCKET)).addCriterion("has_flask", hasItem(BloodMagicItems.ALCHEMY_FLASK.get())).build(consumer, BloodMagic.rl("alchemy_flask"));
+
 		// Changed Recipes
 		{
 //			ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.BLOOD_ALTAR.get()).key('a', Tags.Items.STONE).key('b', Items.FURNACE).key('c', Tags.Items.INGOTS_GOLD).key('d', BloodMagicItems.MONSTER_SOUL_RAW.get()).patternLine("a a").patternLine("aba").patternLine("cdc").addCriterion("has_will", hasItem(BloodMagicItems.MONSTER_SOUL_RAW.get())).build(consumer, BloodMagic.rl("blood_altar"));

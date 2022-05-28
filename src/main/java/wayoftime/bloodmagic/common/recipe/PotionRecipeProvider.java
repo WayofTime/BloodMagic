@@ -12,6 +12,7 @@ import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.data.recipe.builder.PotionEffectRecipeBuilder;
+import wayoftime.bloodmagic.common.data.recipe.builder.PotionFillRecipeBuilder;
 import wayoftime.bloodmagic.common.data.recipe.builder.PotionIncreaseLengthRecipeBuilder;
 import wayoftime.bloodmagic.common.data.recipe.builder.PotionIncreasePotencyRecipeBuilder;
 import wayoftime.bloodmagic.common.data.recipe.builder.PotionTransformRecipeBuilder;
@@ -70,8 +71,11 @@ public class PotionRecipeProvider implements ISubRecipeProvider
 		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(Effects.INVISIBILITY, 2.6667, 200, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "invisibility"));
 		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(Effects.SLOW_FALLING, 2.6667, 200, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "slow_fall"));
 
-		String transformPath = "flask/transform_";
+//		String transformPath = "flask/transform_";
 //		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.FLIGHT, 2400, Effects.SPEED, 100, 20, 2).addInputEffect(Effects.FIRE_RESISTANCE).addIngredient(Ingredient.fromTag(Tags.Items.FEATHERS)).build(consumer, BloodMagic.rl(transformPath + "flight"));
+
+		String fillPath = "flask/fill_";
+		PotionFillRecipeBuilder.PotionFill(1, 1000, 200, 0).addIngredient(Ingredient.fromItems(BloodMagicItems.WEAK_FILLING_AGENT.get())).build(consumer, BloodMagic.rl(fillPath + "weak"));
 	}
 
 	private void addPotionModifiers(Consumer<IFinishedRecipe> consumer, Effect effect, String name)

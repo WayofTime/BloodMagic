@@ -32,6 +32,8 @@ public class BloodAltarRecipeProvider implements ISubRecipeProvider
 		BloodAltarRecipeBuilder.altar(Ingredient.fromTag(Tags.Items.STORAGE_BLOCKS_REDSTONE), new ItemStack(BloodMagicItems.APPRENTICE_BLOOD_ORB.get()), AltarTier.TWO.ordinal(), 5000, 5, 5).build(consumer, BloodMagic.rl(basePath + "apprenticebloodorb"));
 		BloodAltarRecipeBuilder.altar(Ingredient.fromItems(Items.IRON_SWORD), new ItemStack(BloodMagicItems.DAGGER_OF_SACRIFICE.get()), AltarTier.TWO.ordinal(), 3000, 5, 5).build(consumer, BloodMagic.rl(basePath + "daggerofsacrifice"));
 
+		BloodAltarRecipeBuilder.altar(Ingredient.fromItems(Items.GLASS_BOTTLE), new ItemStack(BloodMagicItems.ALCHEMY_FLASK.get()), AltarTier.TWO.ordinal(), 4000, 5, 5).build(consumer, BloodMagic.rl(basePath + "alchemy_flask"));
+
 		// THREE
 		BloodAltarRecipeBuilder.altar(Ingredient.fromItems(BloodMagicItems.REINFORCED_SLATE.get()), new ItemStack(BloodMagicItems.IMBUED_SLATE.get()), AltarTier.THREE.ordinal(), 5000, 15, 10).build(consumer, BloodMagic.rl(basePath + "imbuedslate"));
 		BloodAltarRecipeBuilder.altar(Ingredient.fromTag(Tags.Items.STORAGE_BLOCKS_GOLD), new ItemStack(BloodMagicItems.MAGICIAN_BLOOD_ORB.get()), AltarTier.THREE.ordinal(), 25000, 20, 20).build(consumer, BloodMagic.rl(basePath + "magicianbloodorb"));

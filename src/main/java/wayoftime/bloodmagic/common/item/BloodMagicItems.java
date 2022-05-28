@@ -263,6 +263,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> MUNDANE_POWER_CATALYST = BASICITEMS.register("mundanepowercatalyst", () -> new ItemBase());
 	public static final RegistryObject<Item> MUNDANE_LENGTHENING_CATALYST = BASICITEMS.register("mundanelengtheningcatalyst", () -> new ItemBase());
 	public static final RegistryObject<Item> COMBINATIONAL_CATALYST = BASICITEMS.register("combinationalcatalyst", () -> new ItemBase());
+	public static final RegistryObject<Item> WEAK_FILLING_AGENT = BASICITEMS.register("weakfillingagent", () -> new ItemBase());
 
 //	public static final RegistryObject<Item> STRENGTHENED_CATALYST = BASICITEMS.register("strengthenedcatalyst", () -> new ItemBase());
 //	public static final RegistryObject<Item> CONCENTRATED_CATALYST = BASICITEMS.register("concentratedcatalyst", () -> new ItemBase());
