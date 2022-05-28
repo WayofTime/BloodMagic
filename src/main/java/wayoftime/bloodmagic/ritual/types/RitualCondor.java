@@ -37,8 +37,8 @@ public class RitualCondor extends Ritual
 
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-		List<PlayerEntity> PlayerEntitys = world.getEntitiesWithinAABB(PlayerEntity.class, aabb);
-		int entityCount = PlayerEntitys.size();
+		List<PlayerEntity> playerEntitys = world.getEntitiesWithinAABB(PlayerEntity.class, aabb);
+		int entityCount = playerEntitys.size();
 
 		if (currentEssence < getRefreshCost() * entityCount)
 		{
@@ -47,7 +47,7 @@ public class RitualCondor extends Ritual
 		} else
 		{
 			entityCount = 0;
-			for (PlayerEntity player : PlayerEntitys)
+			for (PlayerEntity player : playerEntitys)
 			{
 				player.addPotionEffect(new EffectInstance(BloodMagicPotions.FLIGHT, 20, 0, true, false));
 			}

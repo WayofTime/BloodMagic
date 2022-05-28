@@ -93,6 +93,8 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> ALCHEMY_TABLE_ITEM = ITEMS.register("alchemytable", () -> new ItemBlockAlchemyTable(BloodMagicBlocks.ALCHEMY_TABLE.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> INCENSE_ALTAR_ITEM = ITEMS.register("incensealtar", () -> new BlockItem(BloodMagicBlocks.INCENSE_ALTAR.get(), new Item.Properties().group(BloodMagic.TAB)));
 
+	public static final RegistryObject<Item> TELEPOSER_ITEM = ITEMS.register("teleposer", () -> new BlockItem(BloodMagicBlocks.TELEPOSER.get(), new Item.Properties().group(BloodMagic.TAB)));
+
 	public static final RegistryObject<Item> WOOD_PATH_ITEM = ITEMS.register("woodbrickpath", () -> new BlockItem(BloodMagicBlocks.WOOD_PATH.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> WOOD_TILE_PATH_ITEM = ITEMS.register("woodtilepath", () -> new BlockItem(BloodMagicBlocks.WOOD_TILE_PATH.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> STONE_PATH_ITEM = ITEMS.register("stonebrickpath", () -> new BlockItem(BloodMagicBlocks.STONE_PATH.get(), new Item.Properties().group(BloodMagic.TAB)));
@@ -157,6 +159,8 @@ public class BloodMagicItems
 
 	public static final RegistryObject<Item> LIVING_TOME = BASICITEMS.register("upgradetome", () -> new ItemLivingTome());
 	public static final RegistryObject<Item> LIVING_TRAINER = BASICITEMS.register("upgradetrainer", () -> new ItemLivingTrainer());
+
+	public static final RegistryObject<Item> TELEPOSER_FOCUS = BASICITEMS.register("teleposerfocus", () -> new ItemTeleposerFocus());
 
 	// Ritual stuffs
 	public static final RegistryObject<Item> WEAK_ACTIVATION_CRYSTAL = BASICITEMS.register("activationcrystalweak", () -> new ItemActivationCrystal(ItemActivationCrystal.CrystalType.WEAK));

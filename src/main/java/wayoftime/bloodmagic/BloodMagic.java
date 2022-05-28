@@ -89,6 +89,7 @@ import wayoftime.bloodmagic.tile.TileMimic;
 import wayoftime.bloodmagic.tile.TileShapedExplosive;
 import wayoftime.bloodmagic.tile.TileSoulForge;
 import wayoftime.bloodmagic.tile.TileSpikeTrap;
+import wayoftime.bloodmagic.tile.TileTeleposer;
 import wayoftime.bloodmagic.tile.TileVeinMineCharge;
 import wayoftime.bloodmagic.tile.routing.TileInputRoutingNode;
 import wayoftime.bloodmagic.tile.routing.TileMasterRoutingNode;
@@ -265,6 +266,8 @@ public class BloodMagic
 		event.getRegistry().register(TileEntityType.Builder.create(TileInputRoutingNode::new, BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("inputroutingnode"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileOutputRoutingNode::new, BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("outputroutingnode"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileMasterRoutingNode::new, BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("masterroutingnode"));
+
+		event.getRegistry().register(TileEntityType.Builder.create(TileTeleposer::new, BloodMagicBlocks.TELEPOSER.get()).build(null).setRegistryName("teleposer"));
 
 		event.getRegistry().register(TileEntityType.Builder.create(TileDungeonController::new, BloodMagicBlocks.DUNGEON_CONTROLLER.get()).build(null).setRegistryName("dungeon_controller"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileDungeonSeal::new, BloodMagicBlocks.DUNGEON_SEAL.get()).build(null).setRegistryName("dungeon_seal"));

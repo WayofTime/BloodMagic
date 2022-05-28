@@ -103,6 +103,8 @@ public class GeneratorBlockStates extends BlockStateProvider
 		buildCubeAllWithTextureName("solidlightmimic");
 		buildCubeAllWithTextureName("solidopaquemimic");
 
+		buildCubeTop(BloodMagicBlocks.TELEPOSER.get(), modLoc("block/teleposer_side"), modLoc("block/teleposer_top"));
+
 		buildCubeAll(BloodMagicBlocks.DUNGEON_CONTROLLER.get());
 		buildCubeAll(BloodMagicBlocks.DUNGEON_SEAL.get());
 
@@ -238,6 +240,46 @@ public class GeneratorBlockStates extends BlockStateProvider
 //		ModelFile furnace_off = models().cubeAll(block.getRegistryName().toString(), texture)\
 	}
 
+	private void buildCubeTop(Block block, ResourceLocation side, ResourceLocation top)
+	{
+//		this.top
+//		String basePath = block.getRegistryName().getPath();
+//		models().cubeAll(texture, BloodMagic.rl("block/" + texture)).assertExistence();
+		String basePath = block.getRegistryName().getPath();
+		ModelFile model = models().cubeBottomTop(basePath, side, side, top);
+
+		getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder().modelFile(model).build());
+	}
+
+//	private void buildCubeTop(Block block, ResourceLocation side, ResourceLocation top)
+//	{
+//		String basePath = block.getRegistryName().getPath();
+//		ModelFile yModel = models().cubeBottomTop(basePath, side, side, top);
+//
+//		ElementBuilder xElementBuilder = models().withExistingParent(basePath + "_x", "cube").texture("particle", side).texture("end", pillarEnd).texture("side", side).element();
+//		xElementBuilder.face(Direction.UP).uvs(0, 0, 16, 16).texture("#side").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
+//		xElementBuilder.face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#side").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
+//		xElementBuilder.face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#side").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
+//		xElementBuilder.face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#side").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
+//		xElementBuilder.face(Direction.WEST).uvs(16, 0, 0, 16).texture("#end").end();
+//		xElementBuilder.face(Direction.EAST).uvs(16, 0, 0, 16).texture("#end").end();
+//		ModelFile xModel = xElementBuilder.end();
+//
+//		ElementBuilder zElementBuilder = models().withExistingParent(basePath + "_z", "cube").texture("particle", side).texture("end", pillarEnd).texture("side", side).element();
+//		zElementBuilder.face(Direction.UP).uvs(0, 0, 16, 16).texture("#side").end();
+//		zElementBuilder.face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#side").end();
+//		zElementBuilder.face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#end").end();
+//		zElementBuilder.face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#end").end();
+//		zElementBuilder.face(Direction.WEST).uvs(16, 0, 0, 16).texture("#side").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
+//		zElementBuilder.face(Direction.EAST).uvs(16, 0, 0, 16).texture("#side").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
+//		ModelFile zModel = zElementBuilder.end();
+//
+//		VariantBlockStateBuilder builder = getVariantBuilder(block);
+//		builder.partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.X).modelForState().modelFile(xModel).addModel();
+//		builder.partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.Y).modelForState().modelFile(yModel).addModel();
+//		builder.partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.Z).modelForState().modelFile(zModel).addModel();
+//	}
+
 	private void buildPillarCenter(Block block, ResourceLocation side, ResourceLocation pillarEnd)
 	{
 		String basePath = block.getRegistryName().getPath();
@@ -328,6 +370,11 @@ public class GeneratorBlockStates extends BlockStateProvider
 	}
 
 	private void buildCubeAll(Block block)
+	{
+		getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder().modelFile(cubeAll(block)).build());
+	}
+
+	private void buildCubeTop(Block block)
 	{
 		getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder().modelFile(cubeAll(block)).build());
 	}

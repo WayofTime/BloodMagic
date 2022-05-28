@@ -433,6 +433,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("chat.bloodmagic.routing.same", "Invalid - cannot link a node with itself");
 
 		add("tooltip.bloodmagic.telepositionfocus.coords", "Current coordinates: (%d, %d, %d)");
+		add("tooltip.bloodmagic.telepositionfocus.world", "World: %d");
 
 		// Anointments. Doesn't have any spelling to be pedantic about.
 		add("anointment.bloodmagic.melee_damage", "Whetstone");

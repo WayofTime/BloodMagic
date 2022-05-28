@@ -40,6 +40,7 @@ public class Constants
 		public static final String ITEMS = "Items";
 		public static final String SLOT = "Slot";
 		public static final String POINTS = "storedPoints";
+		public static final String REDSTONE = "redstone";
 
 		public static final String ALTAR = "bloodAltar";
 		public static final String ALTAR_TIER = "upgradeLevel";
@@ -119,6 +120,7 @@ public class Constants
 		public static final String DUNGEON_TELEPORT_POS = "dungeon_teleport_pos";
 
 		public static final String DUNGEON_TELEPORT_KEY = "dungeon_teleport_key";
+		public static final String WORLD = "world";
 
 		public static final String GHOST_STACK_SIZE = "stackSize";
 

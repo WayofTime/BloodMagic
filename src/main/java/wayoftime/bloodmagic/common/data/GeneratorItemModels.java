@@ -84,6 +84,8 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerBlockModel(BloodMagicBlocks.DUNGEON_CONTROLLER.get());
 		registerBlockModel(BloodMagicBlocks.DUNGEON_SEAL.get());
 
+		registerBlockModel(BloodMagicBlocks.TELEPOSER.get());
+
 		registerToggleableItem(BloodMagicItems.GREEN_GROVE_SIGIL.get());
 		registerToggleableItem(BloodMagicItems.FAST_MINER_SIGIL.get());
 		registerToggleableItem(BloodMagicItems.MAGNETISM_SIGIL.get());

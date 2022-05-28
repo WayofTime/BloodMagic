@@ -627,6 +627,7 @@
   "tooltip.bloodmagic.syntheticpoint.desc": "A synthetic living armour point. It's... wriggling.",
   "tooltip.bloodmagic.tagfilter.desc": "Filters based off of an item's ItemTags",
   "tooltip.bloodmagic.telepositionfocus.coords": "Current coordinates: (%d, %d, %d)",
+  "tooltip.bloodmagic.telepositionfocus.world": "World: %d",
   "tooltip.bloodmagic.throwing_dagger.desc": "Not to be used in the kitchen",
   "tooltip.bloodmagic.tier": "Tier %d",
   "tooltip.bloodmagic.trainer.blacklist": "Allow other upgrades",
