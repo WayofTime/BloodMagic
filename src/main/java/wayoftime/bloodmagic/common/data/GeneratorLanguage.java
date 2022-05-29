@@ -368,6 +368,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.ritualReader.desc.information", "Right click on an active Master Ritual Stone to gather basic information about the ritual.");
 		add("tooltip.bloodmagic.ritualReader.desc.set_will_types", "Set the types of demon will that the ritual will consume from the aura by right clicking on the MRS with the same types of crystals on your hotbar.");
 
+		add("tile.bloodmagic.teleposer.name", "Teleposer");
+
 		// Living Armour - the 'u' is important, TehNut!
 		add("living_upgrade.bloodmagic.arrow_protect", "Pin Cushion");
 		add("living_upgrade.bloodmagic.speed", "Quick Feet");
@@ -558,6 +560,8 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.VEINMINE_CHARGE, "Controlled Charge");
 		addBlock(BloodMagicBlocks.FUNGAL_CHARGE, "Fungal Charge");
 
+		addBlock(BloodMagicBlocks.TELEPOSER, "Teleposer");
+
 		addBlock(BloodMagicBlocks.ROUTING_NODE_BLOCK, "Routing Node");
 		addBlock(BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK, "Input Routing Node");
 		addBlock(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK, "Output Routing Node");
@@ -671,6 +675,10 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.LIVING_TOME, "Living Armour Upgrade Tome");
 		addItem(BloodMagicItems.LIVING_TRAINER, "Living Armour Training Bracelet");
 		addItem(BloodMagicItems.UPGRADE_SCRAPS, "Living Armour Upgrade Scraps");
+
+		addItem(BloodMagicItems.TELEPOSER_FOCUS, "Teleposition Focus");
+		addItem(BloodMagicItems.ENHANCED_TELEPOSER_FOCUS, "Enhanced Teleposition Focus");
+		addItem(BloodMagicItems.REINFORCED_TELEPOSER_FOCUS, "Reinforced Teleposition Focus");
 
 		addItem(BloodMagicItems.THROWING_DAGGER, "Iron Throwing Dagger");
 		addItem(BloodMagicItems.THROWING_DAGGER_SYRINGE, "Syringe Throwing Dagger");

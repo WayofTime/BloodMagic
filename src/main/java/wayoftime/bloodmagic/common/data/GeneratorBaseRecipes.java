@@ -53,6 +53,9 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 
 		ShapelessRecipeBuilder.shapelessRecipe(BloodMagicItems.ALCHEMY_FLASK.get()).addIngredient(BloodMagicItems.ALCHEMY_FLASK.get()).addIngredient(Ingredient.fromItems(Items.WATER_BUCKET)).addCriterion("has_flask", hasItem(BloodMagicItems.ALCHEMY_FLASK.get())).build(consumer, BloodMagic.rl("alchemy_flask"));
 
+		ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.TELEPOSER.get()).patternLine("ggg").patternLine("ete").patternLine("ggg").key('g', Ingredient.fromTag(Tags.Items.INGOTS_GOLD)).key('e', Ingredient.fromTag(Tags.Items.ENDER_PEARLS)).key('t', Ingredient.fromItems(BloodMagicItems.TELEPOSER_FOCUS.get())).addCriterion("has_gold", hasItem(BloodMagicItems.TELEPOSER_FOCUS.get())).build(consumer, BloodMagic.rl("teleposer"));
+		ShapelessRecipeBuilder.shapelessRecipe(BloodMagicItems.REINFORCED_TELEPOSER_FOCUS.get()).addIngredient(BloodMagicItems.ENHANCED_TELEPOSER_FOCUS.get()).addIngredient(BloodMagicItems.WEAK_BLOOD_SHARD.get()).addCriterion("has_shard", hasItem(BloodMagicItems.WEAK_BLOOD_SHARD.get())).build(consumer, BloodMagic.rl("enhanced_teleposer_focus"));
+
 		// Changed Recipes
 		{
 //			ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.BLOOD_ALTAR.get()).key('a', Tags.Items.STONE).key('b', Items.FURNACE).key('c', Tags.Items.INGOTS_GOLD).key('d', BloodMagicItems.MONSTER_SOUL_RAW.get()).patternLine("a a").patternLine("aba").patternLine("cdc").addCriterion("has_will", hasItem(BloodMagicItems.MONSTER_SOUL_RAW.get())).build(consumer, BloodMagic.rl("blood_altar"));

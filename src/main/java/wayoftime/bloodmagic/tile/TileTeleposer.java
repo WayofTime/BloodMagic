@@ -30,6 +30,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.item.ITeleposerFocus;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
+import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.tile.container.ContainerTeleposer;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.Utils;
@@ -63,17 +64,16 @@ public class TileTeleposer extends TileInventory implements ITickableTileEntity,
 		}
 
 		int currentInput = getWorld().getStrongPower(pos);
-//		System.out.println("Input: " + currentInput);
 
 		if (previousInput == 0 && currentInput != 0)
 		{
-//            initiateTeleport();
-//			getNetwork().syphon(SoulTicket.block(getWorld(), getPos(), 10));
-//			System.out.println("High edge!");
-			initiateTeleport();
-		}
+			previousInput = currentInput;
 
-		previousInput = currentInput;
+			initiateTeleport();
+		} else
+		{
+			previousInput = currentInput;
+		}
 	}
 
 	public void initiateTeleport()
@@ -111,6 +111,8 @@ public class TileTeleposer extends TileInventory implements ITickableTileEntity,
 				return;
 			}
 
+			double transportCost = 0.5 * Math.sqrt(linkedPos.distanceSq(pos));
+
 //			System.out.println("Area: " + entityRangeOffsetBB);
 
 			// Teleports players from current teleposer
@@ -121,11 +123,24 @@ public class TileTeleposer extends TileInventory implements ITickableTileEntity,
 			List<Entity> originalEntities = world.getEntitiesWithinAABB(Entity.class, originalBB);
 			List<Entity> focusEntities = world.getEntitiesWithinAABB(Entity.class, focusBB);
 
+			List<BlockPos> offsetList = focusItem.getBlockListOffset(world);
+
+			int uses = 0;
+			int maxUses = offsetList.size() + originalEntities.size() + focusEntities.size();
+
+			int maxDrain = (int) (transportCost * maxUses);
+			SoulNetwork network = getNetwork();
+			if (network.getCurrentEssence() < maxDrain)
+			{
+
+				return;
+			}
+
 			for (Entity entity : originalEntities)
 			{
 				Vector3d newPosVec = entity.getPositionVec().subtract(pos.getX(), pos.getY(), pos.getZ()).add(linkedPos.getX(), linkedPos.getY(), linkedPos.getZ());
 
-				if (entity instanceof PlayerEntity)
+				if (entity instanceof PlayerEntity && !(linkedWorld.equals(world)))
 				{
 					teleportPlayerToLocation(serverWorld, (PlayerEntity) entity, linkedKey, newPosVec.x, newPosVec.y, newPosVec.z);
 				} else
@@ -133,13 +148,15 @@ public class TileTeleposer extends TileInventory implements ITickableTileEntity,
 					entity.setPositionAndUpdate(newPosVec.x, newPosVec.y, newPosVec.z);
 					entity.setWorld(linkedWorld);
 				}
+
+				uses++;
 			}
 
 			for (Entity entity : focusEntities)
 			{
 				Vector3d newPosVec = entity.getPositionVec().add(pos.getX(), pos.getY(), pos.getZ()).subtract(linkedPos.getX(), linkedPos.getY(), linkedPos.getZ());
 
-				if (entity instanceof PlayerEntity)
+				if (entity instanceof PlayerEntity && !(linkedWorld.equals(world)))
 				{
 					teleportPlayerToLocation(serverWorld, (PlayerEntity) entity, world.getDimensionKey(), newPosVec.x, newPosVec.y, newPosVec.z);
 				} else
@@ -147,19 +164,25 @@ public class TileTeleposer extends TileInventory implements ITickableTileEntity,
 					entity.setPositionAndUpdate(newPosVec.x, newPosVec.y, newPosVec.z);
 					entity.setWorld(world);
 				}
+
+				uses++;
 			}
 
-			List<BlockPos> offsetList = focusItem.getBlockListOffset(world);
 			for (BlockPos offsetPos : offsetList)
 			{
 				BlockPos originalPos = pos.add(offsetPos);
 				BlockPos focusPos = linkedPos.add(offsetPos);
 
-				Utils.swapLocations(world, originalPos, linkedWorld, focusPos, false);
+				if (Utils.swapLocations(world, originalPos, linkedWorld, focusPos, false))
+				{
+					uses++;
+				}
 			}
 
 			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.BLOCKS, 1, 1);
 			linkedWorld.playSound(null, linkedPos.getX(), linkedPos.getY(), linkedPos.getZ(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.BLOCKS, 1, 1);
+
+			network.syphon(SoulTicket.block(world, pos, (int) (uses * transportCost)));
 		}
 	}
 

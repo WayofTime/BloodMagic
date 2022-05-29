@@ -47,6 +47,8 @@ public class BloodAltarRecipeProvider implements ISubRecipeProvider
 		BloodAltarRecipeBuilder.altar(Ingredient.fromItems(BloodMagicItems.IMBUED_SLATE.get()), new ItemStack(BloodMagicItems.DEMONIC_SLATE.get()), AltarTier.FOUR.ordinal(), 15000, 20, 20).build(consumer, BloodMagic.rl(basePath + "demonicslate"));
 		BloodAltarRecipeBuilder.altar(Ingredient.fromTag(Tags.Items.STORAGE_BLOCKS_COAL), new ItemStack(BloodMagicItems.DUSK_INSCRIPTION_TOOL.get()), AltarTier.FOUR.ordinal(), 2000, 20, 10).build(consumer, BloodMagic.rl(basePath + "dusk_tool"));
 		BloodAltarRecipeBuilder.altar(Ingredient.fromItems(BloodMagicItems.WEAK_BLOOD_SHARD.get()), new ItemStack(BloodMagicItems.MASTER_BLOOD_ORB.get()), AltarTier.FOUR.ordinal(), 40000, 30, 50).build(consumer, BloodMagic.rl(basePath + "masterbloodorb"));
+		BloodAltarRecipeBuilder.altar(Ingredient.fromTag(Tags.Items.ENDER_PEARLS), new ItemStack(BloodMagicItems.TELEPOSER_FOCUS.get()), AltarTier.FOUR.ordinal(), 2000, 10, 10).build(consumer, BloodMagic.rl(basePath + "teleposer_focus"));
+		BloodAltarRecipeBuilder.altar(Ingredient.fromItems(BloodMagicItems.TELEPOSER_FOCUS.get()), new ItemStack(BloodMagicItems.ENHANCED_TELEPOSER_FOCUS.get()), AltarTier.FOUR.ordinal(), 10000, 20, 10).build(consumer, BloodMagic.rl(basePath + "enhanced_teleposer_focus"));
 
 		// Changed Recipes
 		{

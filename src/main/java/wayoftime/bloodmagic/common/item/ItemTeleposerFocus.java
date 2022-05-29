@@ -30,11 +30,12 @@ import wayoftime.bloodmagic.util.helper.TextHelper;
 
 public class ItemTeleposerFocus extends ItemBindableBase implements ITeleposerFocus
 {
-	public int range = 1;
+	public final int range;
 
-	public ItemTeleposerFocus()
+	public ItemTeleposerFocus(int range)
 	{
 		super();
+		this.range = range;
 	}
 
 	@Override
@@ -143,7 +144,6 @@ public class ItemTeleposerFocus extends ItemBindableBase implements ITeleposerFo
 	@Override
 	public AxisAlignedBB getEntityRangeOffset(World world, BlockPos teleposerPos)
 	{
-		// TODO Auto-generated method stub
 		return new AxisAlignedBB(-range, 1, -range, range + 1, 2 * range + 2, range + 1);
 	}
 

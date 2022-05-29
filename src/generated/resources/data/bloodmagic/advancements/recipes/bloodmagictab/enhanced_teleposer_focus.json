@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:enhanced_teleposer_focus"
+    ]
+  },
+  "criteria": {
+    "has_shard": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "bloodmagic:weakbloodshard"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:enhanced_teleposer_focus"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_shard",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "type": "bloodmagic:altar",
+  "input": {
+    "tag": "forge:ender_pearls"
+  },
+  "output": {
+    "item": "bloodmagic:teleposerfocus"
+  },
+  "upgradeLevel": 3,
+  "altarSyphon": 2000,
+  "consumptionRate": 10,
+  "drainRate": 10
+}
