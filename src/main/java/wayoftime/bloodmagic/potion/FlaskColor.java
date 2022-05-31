@@ -14,7 +14,7 @@ public class FlaskColor implements IItemColor
 	@Override
 	public int getColor(ItemStack stack, int layer)
 	{
-		if (layer == 1 && stack.getItem() instanceof ItemAlchemyFlask)
+		if (layer == 0 || layer == 2 && stack.getItem() instanceof ItemAlchemyFlask)
 		{
 			Collection<EffectInstance> instanceList = PotionUtils.getEffectsFromStack(stack);
 			int color = instanceList.isEmpty() ? PotionUtils.getPotionColor(Potions.WATER)

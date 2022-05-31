@@ -102,6 +102,9 @@ public class Constants
 		public static final String SOUL_SWORD_SPEED = "soulSwordSpeed";
 		public static final String SOUL_SWORD_DIG_SPEED = "soulSwordDigSpeed";
 		public static final String WILL_TYPE = "demonWillType";
+		public static final String INJECTED_WILL = "injectedWill";
+		public static final String SPEED_MODIFIER = "speedModifier";
+		public static final String APPLIED_RATE = "appliedConversionRate";
 
 		public static final String SOUL_FORGE_BURN = "burnTime";
 		public static final String SOUL_FORGE_CONSUMED = "consumedSouls";

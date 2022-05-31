@@ -368,6 +368,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.ritualReader.desc.information", "Right click on an active Master Ritual Stone to gather basic information about the ritual.");
 		add("tooltip.bloodmagic.ritualReader.desc.set_will_types", "Set the types of demon will that the ritual will consume from the aura by right clicking on the MRS with the same types of crystals on your hotbar.");
 
+		add("tooltip.bloodmagic.crystalCatalyst", "Accelerates the growth of will.");
+
 		add("tile.bloodmagic.teleposer.name", "Teleposer");
 
 		// Living Armour - the 'u' is important, TehNut!
@@ -651,6 +653,12 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.DESTRUCTIVE_CRYSTAL, "Destructive Will Crystal");
 		addItem(BloodMagicItems.VENGEFUL_CRYSTAL, "Vengeful Will Crystal");
 		addItem(BloodMagicItems.STEADFAST_CRYSTAL, "Steadfast Will Crystal");
+
+		addItem(BloodMagicItems.RAW_CRYSTAL_CATALYST, "Will Catalyst");
+		addItem(BloodMagicItems.CORROSIVE_CRYSTAL_CATALYST, "Corrosive Catalyst");
+		addItem(BloodMagicItems.DESTRUCTIVE_CRYSTAL_CATALYST, "Destructive Catalyst");
+		addItem(BloodMagicItems.VENGEFUL_CRYSTAL_CATALYST, "Vengeful Catalyst");
+		addItem(BloodMagicItems.STEADFAST_CRYSTAL_CATALYST, "Steadfast Catalyst");
 
 		addItem(BloodMagicItems.SANGUINE_REVERTER, "Sanguine Reverter");
 		addItem(BloodMagicItems.PRIMITIVE_FURNACE_CELL, "Primitive Fuel Cell");

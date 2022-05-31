@@ -271,6 +271,12 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> COMBINATIONAL_CATALYST = BASICITEMS.register("combinationalcatalyst", () -> new ItemBase());
 	public static final RegistryObject<Item> WEAK_FILLING_AGENT = BASICITEMS.register("weakfillingagent", () -> new ItemBase());
 
+	public static final RegistryObject<Item> RAW_CRYSTAL_CATALYST = BASICITEMS.register("rawcatalyst", () -> new ItemCrystalCatalyst(EnumDemonWillType.DEFAULT, 200, 10, 25, 400));
+	public static final RegistryObject<Item> CORROSIVE_CRYSTAL_CATALYST = BASICITEMS.register("corrosivecatalyst", () -> new ItemCrystalCatalyst(EnumDemonWillType.CORROSIVE, 200, 10, 25, 400));
+	public static final RegistryObject<Item> DESTRUCTIVE_CRYSTAL_CATALYST = BASICITEMS.register("destructivecatalyst", () -> new ItemCrystalCatalyst(EnumDemonWillType.DESTRUCTIVE, 200, 10, 25, 400));
+	public static final RegistryObject<Item> STEADFAST_CRYSTAL_CATALYST = BASICITEMS.register("steadfastcatalyst", () -> new ItemCrystalCatalyst(EnumDemonWillType.STEADFAST, 200, 10, 25, 400));
+	public static final RegistryObject<Item> VENGEFUL_CRYSTAL_CATALYST = BASICITEMS.register("vengefulcatalyst", () -> new ItemCrystalCatalyst(EnumDemonWillType.VENGEFUL, 200, 10, 25, 400));
+
 //	public static final RegistryObject<Item> STRENGTHENED_CATALYST = BASICITEMS.register("strengthenedcatalyst", () -> new ItemBase());
 //	public static final RegistryObject<Item> CONCENTRATED_CATALYST = BASICITEMS.register("concentratedcatalyst", () -> new ItemBase());
 
