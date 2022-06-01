@@ -532,7 +532,7 @@
   "tooltip.bloodmagic.compositefilter.desc": "Filters based off of contained filters",
   "tooltip.bloodmagic.config.disabled": "Currently disabled in the Config",
   "tooltip.bloodmagic.contained_filters": "Contained Filters:",
-  "tooltip.bloodmagic.crystalCatalyst": "A variety of catalyst that accelerates the growth of will.",
+  "tooltip.bloodmagic.crystalCatalyst": "Accelerates the growth of will.",
   "tooltip.bloodmagic.currentBaseType.corrosive": "Corrosive",
   "tooltip.bloodmagic.currentBaseType.default": "Raw",
   "tooltip.bloodmagic.currentBaseType.destructive": "Destructive",

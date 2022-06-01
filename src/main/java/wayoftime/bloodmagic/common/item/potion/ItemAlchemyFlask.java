@@ -12,7 +12,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.nbt.CompoundNBT;
@@ -23,7 +22,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.DrinkHelper;
 import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -69,19 +67,19 @@ public class ItemAlchemyFlask extends Item
 		return UseAction.DRINK;
 	}
 
-	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items)
-	{
-		if (!isInGroup(group))
-			return;
-
-		ItemStack speedStack = new ItemStack(this);
-		items.add(speedStack);
-//		for (Entry<ResourceLocation, LivingUpgrade> entry : LivingArmorRegistrar.UPGRADE_MAP.entrySet())
-//		{
-
-//		}
-	}
+//	@Override
+//	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items)
+//	{
+//		if (!isInGroup(group))
+//			return;
+//
+//		ItemStack speedStack = new ItemStack(this);
+//		items.add(speedStack);
+////		for (Entry<ResourceLocation, LivingUpgrade> entry : LivingArmorRegistrar.UPGRADE_MAP.entrySet())
+////		{
+//
+////		}
+//	}
 
 	public void resyncEffectInstances(ItemStack stack)
 	{
@@ -201,19 +199,6 @@ public class ItemAlchemyFlask extends Item
 				stack.setDamage(stack.getDamage() + 1);
 			}
 		}
-
-//		if (playerentity == null || !playerentity.abilities.isCreativeMode)
-//		{
-//			if (stack.isEmpty())
-//			{
-//				return new ItemStack(Items.GLASS_BOTTLE);
-//			}
-//
-//			if (playerentity != null)
-//			{
-//				playerentity.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
-//			}
-//		}
 
 		return stack;
 	}

@@ -23,7 +23,12 @@ public class EffectHolder
 
 	public EffectInstance getEffectInstance(boolean ambientIn, boolean showParticlesIn)
 	{
-		return new EffectInstance(potion, (int) (baseDuration * ampDurationMod * lengthDurationMod), amplifier, ambientIn, showParticlesIn);
+		return getEffectInstance(1, ambientIn, showParticlesIn);
+	}
+
+	public EffectInstance getEffectInstance(double durationModifier, boolean ambientIn, boolean showParticlesIn)
+	{
+		return new EffectInstance(potion, (int) (baseDuration * ampDurationMod * lengthDurationMod * durationModifier), amplifier, ambientIn, showParticlesIn);
 	}
 
 	public Effect getPotion()

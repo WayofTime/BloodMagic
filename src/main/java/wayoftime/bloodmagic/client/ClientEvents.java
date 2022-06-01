@@ -114,6 +114,8 @@ public class ClientEvents
 		event.getItemColors().register(new AnointmentColor(), BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_L.get(), BloodMagicItems.SILK_TOUCH_ANOINTMENT_L.get(), BloodMagicItems.FORTUNE_ANOINTMENT_L.get(), BloodMagicItems.HOLY_WATER_ANOINTMENT_L.get(), BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT_L.get(), BloodMagicItems.QUICK_DRAW_ANOINTMENT_L.get(), BloodMagicItems.LOOTING_ANOINTMENT_L.get(), BloodMagicItems.BOW_POWER_ANOINTMENT_L.get(), BloodMagicItems.SMELTING_ANOINTMENT_L.get(), BloodMagicItems.BOW_VELOCITY_ANOINTMENT_L.get());
 		event.getItemColors().register(new AnointmentColor(), BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_2.get(), BloodMagicItems.FORTUNE_ANOINTMENT_2.get(), BloodMagicItems.HOLY_WATER_ANOINTMENT_2.get(), BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT_2.get(), BloodMagicItems.QUICK_DRAW_ANOINTMENT_2.get(), BloodMagicItems.LOOTING_ANOINTMENT_2.get(), BloodMagicItems.BOW_POWER_ANOINTMENT_2.get(), BloodMagicItems.BOW_VELOCITY_ANOINTMENT_2.get());
 		event.getItemColors().register(new FlaskColor(), BloodMagicItems.ALCHEMY_FLASK.get());
+		event.getItemColors().register(new FlaskColor(), BloodMagicItems.ALCHEMY_FLASK_THROWABLE.get());
+		event.getItemColors().register(new FlaskColor(), BloodMagicItems.ALCHEMY_FLASK_LINGERING.get());
 	}
 
 	public static void cycleSigil(ItemStack stack, PlayerEntity player, int dWheel)
@@ -181,6 +183,8 @@ public class ClientEvents
 		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.BLOOD_LIGHT.getEntityType(), BloodLightRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.SHAPED_CHARGE.getEntityType(), EntityShapedChargeRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.METEOR.getEntityType(), EntityMeteorRenderer::new);
+
+		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.FLASK.getEntityType(), SoulSnareRenderer::new);
 
 		DeferredWorkQueue.runLater(() -> {
 			RenderType rendertype = RenderType.getCutoutMipped();

@@ -16,6 +16,8 @@ import wayoftime.bloodmagic.common.item.block.ItemBlockMimic;
 import wayoftime.bloodmagic.common.item.block.ItemBlockShapedCharge;
 import wayoftime.bloodmagic.common.item.dungeon.ItemDungeonKey;
 import wayoftime.bloodmagic.common.item.potion.ItemAlchemyFlask;
+import wayoftime.bloodmagic.common.item.potion.ItemAlchemyFlaskLingering;
+import wayoftime.bloodmagic.common.item.potion.ItemAlchemyFlaskThrowable;
 import wayoftime.bloodmagic.common.item.routing.ItemCompositeFilter;
 import wayoftime.bloodmagic.common.item.routing.ItemEnchantFilterCore;
 import wayoftime.bloodmagic.common.item.routing.ItemModFilter;
@@ -317,6 +319,8 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> BOW_VELOCITY_ANOINTMENT_2 = ITEMS.register("bow_velocity_anointment_2", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_velocity"), 0xFFBE00, 2, 256, true));
 
 	public static final RegistryObject<Item> ALCHEMY_FLASK = ITEMS.register("alchemy_flask", () -> new ItemAlchemyFlask());
+	public static final RegistryObject<Item> ALCHEMY_FLASK_THROWABLE = ITEMS.register("alchemy_flask_throwable", () -> new ItemAlchemyFlaskThrowable());
+	public static final RegistryObject<Item> ALCHEMY_FLASK_LINGERING = ITEMS.register("alchemy_flask_lingering", () -> new ItemAlchemyFlaskLingering());
 
 	// Fragments
 	public static final RegistryObject<Item> IRON_FRAGMENT = BASICITEMS.register("ironfragment", () -> new ItemBase());
