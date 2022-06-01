@@ -9,38 +9,40 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionFill;
+import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
 import wayoftime.bloodmagic.util.Constants;
 
-public class PotionFillRecipeBuilder extends BloodMagicRecipeBuilder<PotionFillRecipeBuilder>
+public class PotionFlaskTransformRecipeBuilder extends BloodMagicRecipeBuilder<PotionFlaskTransformRecipeBuilder>
 {
 	private final List<Ingredient> input;
-	private final int maxEffects;
+	private final ItemStack output;
 	private final int syphon;
 	private final int ticks;
 	private final int minimumTier;
 
-	protected PotionFillRecipeBuilder(List<Ingredient> input, int maxEffects, int syphon, int ticks, int minimumTier)
+	protected PotionFlaskTransformRecipeBuilder(List<Ingredient> input, ItemStack output, int syphon, int ticks, int minimumTier)
 	{
-		super(bmSerializer("flask_potionfill"));
+		super(bmSerializer("flask_potionflasktransform"));
 		this.input = input;
-		this.maxEffects = maxEffects;
+		this.output = output;
 		this.syphon = syphon;
 		this.ticks = ticks;
 		this.minimumTier = minimumTier;
 	}
 
-	public static PotionFillRecipeBuilder potionFill(int maxEffects, int syphon, int ticks, int minimumTier)
+	public static PotionFlaskTransformRecipeBuilder flask(ItemStack output, int syphon, int ticks, int minimumTier)
 	{
 		List<Ingredient> inputList = new ArrayList<Ingredient>();
 
-		return new PotionFillRecipeBuilder(inputList, maxEffects, syphon, ticks, minimumTier);
+		return new PotionFlaskTransformRecipeBuilder(inputList, output, syphon, ticks, minimumTier);
 	}
 
-	public PotionFillRecipeBuilder addIngredient(Ingredient ing)
+	public PotionFlaskTransformRecipeBuilder addIngredient(Ingredient ing)
 	{
 		if (input.size() < RecipePotionFill.MAX_INPUTS)
 		{
@@ -79,7 +81,7 @@ public class PotionFillRecipeBuilder extends BloodMagicRecipeBuilder<PotionFillR
 				json.add(Constants.JSON.INPUT, mainArray);
 			}
 
-			json.addProperty(Constants.JSON.MAX, maxEffects);
+			json.add(Constants.JSON.OUTPUT, SerializerHelper.serializeItemStack(output));
 
 			json.addProperty(Constants.JSON.SYPHON, syphon);
 			json.addProperty(Constants.JSON.TICKS, ticks);

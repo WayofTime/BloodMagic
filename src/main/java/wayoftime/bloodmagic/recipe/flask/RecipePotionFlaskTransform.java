@@ -8,29 +8,26 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.potion.Effect;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
-import wayoftime.bloodmagic.common.item.potion.ItemAlchemyFlask;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 import wayoftime.bloodmagic.recipe.EffectHolder;
 
-public class RecipePotionEffect extends RecipePotionFlaskBase
+public class RecipePotionFlaskTransform extends RecipePotionFlaskBase
 {
-	public Effect outputEffect;
-	public int baseDuration;
+	public ItemStack output;
 
-	public RecipePotionEffect(ResourceLocation id, List<Ingredient> input, Effect outputEffect, int baseDuration, int syphon, int ticks, int minimumTier)
+	public RecipePotionFlaskTransform(ResourceLocation id, List<Ingredient> input, ItemStack output, int syphon, int ticks, int minimumTier)
 	{
 		super(id, input, syphon, ticks, minimumTier);
-		this.outputEffect = outputEffect;
-		this.baseDuration = baseDuration;
+		this.output = output;
 	}
 
 	@Override
-	public IRecipeSerializer<? extends RecipePotionEffect> getSerializer()
+	public IRecipeSerializer<? extends RecipePotionFlaskTransform> getSerializer()
 	{
-		return BloodMagicRecipeSerializers.POTIONEFFECT.getRecipeSerializer();
+		return BloodMagicRecipeSerializers.POTIONFLASKTRANSFORM.getRecipeSerializer();
 	}
 
 	@Override
@@ -42,32 +39,23 @@ public class RecipePotionEffect extends RecipePotionFlaskBase
 	@Override
 	public boolean canModifyFlask(ItemStack flaskStack, List<EffectHolder> flaskEffectList)
 	{
-		for (EffectHolder holder : flaskEffectList)
-		{
-			if (holder.getPotion().equals(outputEffect))
-			{
-				return false;
-			}
-		}
-
-		return true;
+		return flaskStack.getItem() != output.getItem();
 	}
 
 	@Override
 	public void write(PacketBuffer buffer)
 	{
 		super.write(buffer);
-		buffer.writeInt(Effect.getId(outputEffect));
-		buffer.writeInt(baseDuration);
+		buffer.writeItemStack(output);
 	}
 
 	@Override
 	public ItemStack getOutput(ItemStack flaskStack, List<EffectHolder> flaskEffectList)
 	{
-		ItemStack copyStack = flaskStack.copy();
+		ItemStack copyStack = output.copy();
 
-		flaskEffectList.add(new EffectHolder(outputEffect, baseDuration, 0, 1, 1));
-		((ItemAlchemyFlask) copyStack.getItem()).setEffectHoldersOfFlask(copyStack, flaskEffectList);
+		copyStack.setTag(flaskStack.getTag());
+		copyStack.setDamage(flaskStack.getDamage());
 
 		return copyStack;
 	}
@@ -75,13 +63,16 @@ public class RecipePotionEffect extends RecipePotionFlaskBase
 	@Override
 	public int getPriority(List<EffectHolder> flaskEffectList)
 	{
-		return 1;
+		return 0;
 	}
 
 	@Override
 	public List<EffectHolder> getExampleEffectList()
 	{
 		List<EffectHolder> holderList = new ArrayList<>();
+
+		holderList.add(new EffectHolder(Effects.SPEED, 3600, 0, 1, 1));
+
 		return holderList;
 	}
 }

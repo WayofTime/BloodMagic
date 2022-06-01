@@ -744,6 +744,8 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT_2, "Archer's Polish II");
 
 		addItem(BloodMagicItems.ALCHEMY_FLASK, "Alchemy Flask");
+		addItem(BloodMagicItems.ALCHEMY_FLASK_THROWABLE, "Splash Alchemy Flask");
+		addItem(BloodMagicItems.ALCHEMY_FLASK_LINGERING, "Lingering Alchemy Flask");
 		addItem(BloodMagicItems.SIMPLE_CATALYST, "Simple Catalyst");
 		addItem(BloodMagicItems.MUNDANE_POWER_CATALYST, "Small Power Catalyst");
 		addItem(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST, "Small Lengthening Catalyst");

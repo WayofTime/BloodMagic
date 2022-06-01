@@ -39,7 +39,7 @@ public class RecipePotionFill extends RecipePotionFlaskBase
 	}
 
 	@Override
-	public boolean canModifyFlask(List<EffectHolder> flaskEffectList)
+	public boolean canModifyFlask(ItemStack flaskStack, List<EffectHolder> flaskEffectList)
 	{
 		return flaskEffectList.size() > 0;
 	}

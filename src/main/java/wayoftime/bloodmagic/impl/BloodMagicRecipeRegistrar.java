@@ -135,7 +135,7 @@ public class BloodMagicRecipeRegistrar
 	}
 
 	@Nullable
-	public RecipePotionFlaskBase getPotionFlaskRecipe(World world, @Nonnull List<EffectHolder> holderList, @Nonnull List<ItemStack> input)
+	public RecipePotionFlaskBase getPotionFlaskRecipe(World world, ItemStack flaskStack, @Nonnull List<EffectHolder> holderList, @Nonnull List<ItemStack> input)
 	{
 		Preconditions.checkNotNull(input, "input cannot be null.");
 		if (input.isEmpty())
@@ -178,7 +178,7 @@ public class BloodMagicRecipeRegistrar
 //			System.out.println("Passed ingredient check");
 
 			// Now check if recipe works with flask's current effects.
-			if (recipe.canModifyFlask(holderList))
+			if (recipe.canModifyFlask(flaskStack, holderList))
 			{
 				int prio = recipe.getPriority(holderList);
 				if (prio > recipePriority)

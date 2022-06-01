@@ -14,6 +14,7 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
@@ -21,6 +22,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.item.potion.ItemAlchemyFlask;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
 import wayoftime.bloodmagic.recipe.EffectHolder;
@@ -141,29 +143,30 @@ public class PotionRecipeCategory implements IRecipeCategory<RecipePotionFlaskBa
 			validOrbStacks[i] = validOrbs.get(i);
 		}
 
+		Item[] flaskItems = new Item[] { BloodMagicItems.ALCHEMY_FLASK.get(),
+				BloodMagicItems.ALCHEMY_FLASK_THROWABLE.get(), BloodMagicItems.ALCHEMY_FLASK_LINGERING.get() };
+
+		ItemStack[] flaskStacks = new ItemStack[flaskItems.length];
+
 		List<Ingredient> ingList = Lists.newArrayList();
 		ingList.add(Ingredient.fromStacks(validOrbStacks));
 		ingList.addAll(recipe.getInput());
 		ItemStack flaskStack = recipe.getExamplePotionFlask();
-		ingList.add(Ingredient.fromStacks(flaskStack));
+
+		for (int i = 0; i < flaskItems.length; i++)
+		{
+			Item inputFlask = flaskItems[i];
+			ItemStack copyFlaskStack = new ItemStack(inputFlask);
+			copyFlaskStack.setTag(flaskStack.getTag());
+
+			flaskStacks[i] = copyFlaskStack;
+		}
+
+		ingList.add(Ingredient.fromStacks(flaskStacks));
 		List<EffectHolder> holderList = ((ItemAlchemyFlask) flaskStack.getItem()).getEffectHoldersOfFlask(flaskStack);
 		ingredients.setInputIngredients(ingList);
 		ItemStack outputStack = recipe.getOutput(flaskStack, holderList);
 		((ItemAlchemyFlask) flaskStack.getItem()).resyncEffectInstances(outputStack);
 		ingredients.setOutput(VanillaTypes.ITEM, outputStack);
 	}
-
-//	@Override
-//	public void draw(RecipeBloodAltar recipe, MatrixStack matrixStack, double mouseX, double mouseY)
-//	{
-//		Minecraft mc = Minecraft.getInstance();
-//		String[] infoString = new String[]
-//		{ TextHelper.localize("jei.bloodmagic.recipe.requiredtier", NumeralHelper.toRoman(recipe.getMinimumTier().toInt())),
-//				TextHelper.localize("jei.bloodmagic.recipe.requiredlp", recipe.getSyphon()) };
-//		mc.fontRenderer.drawString(matrixStack, infoString[0], 90
-//				- mc.fontRenderer.getStringWidth(infoString[0]) / 2, 0, Color.gray.getRGB());
-//		mc.fontRenderer.drawString(matrixStack, infoString[1], 90
-//				- mc.fontRenderer.getStringWidth(infoString[1]) / 2, 10, Color.gray.getRGB());
-//	}
-
 }

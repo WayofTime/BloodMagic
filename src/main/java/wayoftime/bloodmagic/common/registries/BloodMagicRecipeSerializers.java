@@ -10,6 +10,7 @@ import wayoftime.bloodmagic.common.recipe.serializer.LivingDowngradeRecipeSerial
 import wayoftime.bloodmagic.common.recipe.serializer.MeteorRecipeSerializer;
 import wayoftime.bloodmagic.common.recipe.serializer.PotionEffectRecipeSerializer;
 import wayoftime.bloodmagic.common.recipe.serializer.PotionFillRecipeSerializer;
+import wayoftime.bloodmagic.common.recipe.serializer.PotionFlaskTransformRecipeSerializer;
 import wayoftime.bloodmagic.common.recipe.serializer.PotionIncreaseLengthRecipeSerializer;
 import wayoftime.bloodmagic.common.recipe.serializer.PotionIncreasePotencyRecipeSerializer;
 import wayoftime.bloodmagic.common.recipe.serializer.PotionTransformRecipeSerializer;
@@ -26,6 +27,7 @@ import wayoftime.bloodmagic.recipe.RecipeMeteor;
 import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionEffect;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionFill;
+import wayoftime.bloodmagic.recipe.flask.RecipePotionFlaskTransform;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionIncreaseLength;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionIncreasePotency;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionTransform;
@@ -52,6 +54,7 @@ public class BloodMagicRecipeSerializers
 	public static final IRecipeSerializerRegistryObject<RecipePotionIncreaseLength> POTIONLENGTH = RECIPE_SERIALIZERS.register("flask_potionlength", () -> new PotionIncreaseLengthRecipeSerializer<>(RecipePotionIncreaseLength::new));
 	public static final IRecipeSerializerRegistryObject<RecipePotionTransform> POTIONTRANSFORM = RECIPE_SERIALIZERS.register("flask_potiontransform", () -> new PotionTransformRecipeSerializer<>(RecipePotionTransform::new));
 	public static final IRecipeSerializerRegistryObject<RecipePotionFill> POTIONFILL = RECIPE_SERIALIZERS.register("flask_potionfill", () -> new PotionFillRecipeSerializer<>(RecipePotionFill::new));
+	public static final IRecipeSerializerRegistryObject<RecipePotionFlaskTransform> POTIONFLASKTRANSFORM = RECIPE_SERIALIZERS.register("flask_potionflasktransform", () -> new PotionFlaskTransformRecipeSerializer<>(RecipePotionFlaskTransform::new));
 
 	public static final IRecipeSerializerRegistryObject<RecipeMeteor> METEOR = RECIPE_SERIALIZERS.register("meteor", () -> new MeteorRecipeSerializer<>(RecipeMeteor::new));
 

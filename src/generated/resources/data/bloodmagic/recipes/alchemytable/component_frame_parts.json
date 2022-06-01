@@ -12,9 +12,10 @@
     }
   ],
   "output": {
-    "item": "bloodmagic:componentframeparts"
+    "item": "bloodmagic:componentframeparts",
+    "count": 2
   },
   "syphon": 1000,
-  "ticks": 200,
+  "ticks": 100,
   "upgradeLevel": 3
 }

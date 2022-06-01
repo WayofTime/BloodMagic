@@ -13,6 +13,7 @@ import net.minecraft.potion.Potions;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.data.recipe.builder.PotionEffectRecipeBuilder;
 import wayoftime.bloodmagic.common.data.recipe.builder.PotionFillRecipeBuilder;
+import wayoftime.bloodmagic.common.data.recipe.builder.PotionFlaskTransformRecipeBuilder;
 import wayoftime.bloodmagic.common.data.recipe.builder.PotionIncreaseLengthRecipeBuilder;
 import wayoftime.bloodmagic.common.data.recipe.builder.PotionIncreasePotencyRecipeBuilder;
 import wayoftime.bloodmagic.common.data.recipe.builder.PotionTransformRecipeBuilder;
@@ -75,7 +76,11 @@ public class PotionRecipeProvider implements ISubRecipeProvider
 //		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.FLIGHT, 2400, Effects.SPEED, 100, 20, 2).addInputEffect(Effects.FIRE_RESISTANCE).addIngredient(Ingredient.fromTag(Tags.Items.FEATHERS)).build(consumer, BloodMagic.rl(transformPath + "flight"));
 
 		String fillPath = "flask/fill_";
-		PotionFillRecipeBuilder.PotionFill(1, 1000, 200, 0).addIngredient(Ingredient.fromItems(BloodMagicItems.WEAK_FILLING_AGENT.get())).build(consumer, BloodMagic.rl(fillPath + "weak"));
+		PotionFillRecipeBuilder.potionFill(1, 1000, 200, 0).addIngredient(Ingredient.fromItems(BloodMagicItems.WEAK_FILLING_AGENT.get())).build(consumer, BloodMagic.rl(fillPath + "weak"));
+
+		String flaskPath = "flask/flask_";
+		PotionFlaskTransformRecipeBuilder.flask(new ItemStack(BloodMagicItems.ALCHEMY_FLASK_THROWABLE.get()), 1000, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.fromItems(Items.GUNPOWDER)).build(consumer, BloodMagic.rl(flaskPath + "splash"));
+		PotionFlaskTransformRecipeBuilder.flask(new ItemStack(BloodMagicItems.ALCHEMY_FLASK_LINGERING.get()), 1000, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.fromItems(Items.DRAGON_BREATH)).build(consumer, BloodMagic.rl(flaskPath + "lingering"));
 	}
 
 	private void addPotionModifiers(Consumer<IFinishedRecipe> consumer, Effect effect, String name)

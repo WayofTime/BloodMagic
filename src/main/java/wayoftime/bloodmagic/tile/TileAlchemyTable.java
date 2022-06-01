@@ -423,7 +423,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 			List<EffectHolder> holderList = ((ItemAlchemyFlask) flaskStack.getItem()).getEffectHoldersOfFlask(flaskStack);
 			inputList.remove(flaskIndex);
 
-			RecipePotionFlaskBase recipePotionFlask = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getPotionFlaskRecipe(world, holderList, inputList);
+			RecipePotionFlaskBase recipePotionFlask = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getPotionFlaskRecipe(world, flaskStack, holderList, inputList);
 			if (recipePotionFlask != null && (burnTime > 0 || (!getWorld().isRemote && tier >= recipePotionFlask.getMinimumTier() && getContainedLp() >= recipePotionFlask.getSyphon())))
 			{
 				orbFlag = lpFlag = false;

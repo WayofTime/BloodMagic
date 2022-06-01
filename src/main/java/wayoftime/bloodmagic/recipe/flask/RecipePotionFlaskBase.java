@@ -46,7 +46,7 @@ public abstract class RecipePotionFlaskBase extends BloodMagicRecipe
 		this.minimumTier = minimumTier;
 	}
 
-	public abstract boolean canModifyFlask(List<EffectHolder> flaskEffectList);
+	public abstract boolean canModifyFlask(ItemStack flaskStack, List<EffectHolder> flaskEffectList);
 
 	// Higher priority recipe is preferred.
 	public abstract int getPriority(List<EffectHolder> flaskEffectList);

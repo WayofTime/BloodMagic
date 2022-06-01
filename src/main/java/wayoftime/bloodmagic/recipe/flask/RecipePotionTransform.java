@@ -42,7 +42,7 @@ public class RecipePotionTransform extends RecipePotionFlaskBase
 	}
 
 	@Override
-	public boolean canModifyFlask(List<EffectHolder> flaskEffectList)
+	public boolean canModifyFlask(ItemStack flaskStack, List<EffectHolder> flaskEffectList)
 	{
 //		System.out.println("Passed ingredient check");
 		if (flaskEffectList.size() < inputEffectList.size())

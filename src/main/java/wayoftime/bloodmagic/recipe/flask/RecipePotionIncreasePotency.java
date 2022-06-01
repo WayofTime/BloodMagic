@@ -42,7 +42,7 @@ public class RecipePotionIncreasePotency extends RecipePotionFlaskBase
 	}
 
 	@Override
-	public boolean canModifyFlask(List<EffectHolder> flaskEffectList)
+	public boolean canModifyFlask(ItemStack flaskStack, List<EffectHolder> flaskEffectList)
 	{
 		for (EffectHolder holder : flaskEffectList)
 		{

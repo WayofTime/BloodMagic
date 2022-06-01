@@ -1,0 +1,18 @@
+{
+  "type": "bloodmagic:flask_potionflasktransform",
+  "input": [
+    {
+      "item": "bloodmagic:simplecatalyst"
+    },
+    {
+      "item": "minecraft:dragon_breath"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:alchemy_flask_lingering",
+    "nbt": "{Damage:0}"
+  },
+  "syphon": 1000,
+  "ticks": 200,
+  "upgradeLevel": 1
+}
