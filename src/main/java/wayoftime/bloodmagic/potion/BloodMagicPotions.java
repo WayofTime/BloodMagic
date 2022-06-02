@@ -19,6 +19,9 @@ public class BloodMagicPotions
 	public static final Effect FLIGHT = new PotionBloodMagic(EffectType.BENEFICIAL, 0x23DDE1);
 	public static final Effect SPECTRAL_SIGHT = new PotionBloodMagic(EffectType.BENEFICIAL, 0x2FB813);
 	public static final Effect GRAVITY = new PotionBloodMagic(EffectType.HARMFUL, 0x800080);
+	public static final Effect HEAVY_HEART = new PotionBloodMagic(EffectType.HARMFUL, 0x000000);
+	public static final Effect GROUNDED = new PotionBloodMagic(EffectType.HARMFUL, 0xBA855B);
+	public static final Effect SUSPENDED = new PotionBloodMagic(EffectType.NEUTRAL, 0x23DDE1);
 
 	public static void registerPotions(RegistryEvent.Register<Effect> evt)
 	{
@@ -31,6 +34,9 @@ public class BloodMagicPotions
 		reg.register(FLIGHT.setRegistryName("flight"));
 		reg.register(SPECTRAL_SIGHT.setRegistryName("spectral_sight"));
 		reg.register(GRAVITY.addAttributesModifier(ForgeMod.ENTITY_GRAVITY.get(), "AF8B6E3F-3328-4C0A-AA66-6BA6BB6DBEF6", (double) 0.5F, AttributeModifier.Operation.MULTIPLY_BASE).setRegistryName("gravity"));
+		reg.register(HEAVY_HEART.setRegistryName("heavy_heart"));
+		reg.register(GROUNDED.setRegistryName("grounded"));
+		reg.register(SUSPENDED.setRegistryName("suspended"));
 	}
 
 	public static Effect getEffect(ResourceLocation rl)

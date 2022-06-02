@@ -2,18 +2,18 @@
   "type": "bloodmagic:flask_potiontransform",
   "input": [
     {
-      "item": "minecraft:cobweb"
+      "item": "minecraft:feather"
     }
   ],
   "outputEffect": [
     {
-      "effect": "bloodmagic:gravity",
-      "baseDuration": 1800
+      "effect": "bloodmagic:flight",
+      "baseDuration": 3600
     }
   ],
   "inputEffect": [
-    "bloodmagic:grounded",
-    "minecraft:slow_falling"
+    "bloodmagic:suspended",
+    "minecraft:levitation"
   ],
   "syphon": 1000,
   "ticks": 200,

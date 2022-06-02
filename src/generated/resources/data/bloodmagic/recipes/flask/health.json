@@ -8,8 +8,8 @@
       "item": "minecraft:glistering_melon_slice"
     }
   ],
-  "syphon": 200,
-  "ticks": 500,
+  "syphon": 500,
+  "ticks": 200,
   "upgradeLevel": 1,
   "effect": "minecraft:instant_health",
   "baseDuration": 0

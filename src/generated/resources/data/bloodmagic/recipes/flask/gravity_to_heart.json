@@ -2,18 +2,18 @@
   "type": "bloodmagic:flask_potiontransform",
   "input": [
     {
-      "item": "minecraft:cobweb"
+      "item": "minecraft:melon"
     }
   ],
   "outputEffect": [
     {
-      "effect": "bloodmagic:gravity",
+      "effect": "bloodmagic:heavy_heart",
       "baseDuration": 1800
     }
   ],
   "inputEffect": [
-    "bloodmagic:grounded",
-    "minecraft:slow_falling"
+    "bloodmagic:gravity",
+    "minecraft:instant_health"
   ],
   "syphon": 1000,
   "ticks": 200,

@@ -7,13 +7,12 @@
   ],
   "outputEffect": [
     {
-      "effect": "bloodmagic:gravity",
+      "effect": "bloodmagic:grounded",
       "baseDuration": 1800
     }
   ],
   "inputEffect": [
-    "bloodmagic:grounded",
-    "minecraft:slow_falling"
+    "minecraft:jump_boost"
   ],
   "syphon": 1000,
   "ticks": 200,

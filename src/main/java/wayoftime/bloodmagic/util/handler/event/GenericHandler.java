@@ -1,6 +1,8 @@
 package wayoftime.bloodmagic.util.handler.event;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
@@ -424,6 +426,8 @@ public class GenericHandler
 	public static Map<UUID, Integer> foodMap = new HashMap<>();
 	public static Map<UUID, Float> prevFlySpeedMap = new HashMap<>();
 
+	public static List<LivingEntity> noGravityList = new ArrayList<>();
+
 	@SubscribeEvent
 	public void onPotionAdded(PotionEvent.PotionAddedEvent event)
 	{
@@ -439,6 +443,12 @@ public class GenericHandler
 			if (event.getEntity().world.isRemote)
 				player.abilities.setFlySpeed(getFlySpeedForFlightLevel(event.getPotionEffect().getAmplifier()));
 			player.sendPlayerAbilities();
+		}
+
+		if (event.getPotionEffect().getPotion() == BloodMagicPotions.SUSPENDED && !noGravityList.contains(event.getEntityLiving()))
+		{
+			noGravityList.add(event.getEntityLiving());
+			event.getEntityLiving().setNoGravity(true);
 		}
 	}
 
@@ -458,6 +468,12 @@ public class GenericHandler
 
 			((PlayerEntity) event.getEntityLiving()).sendPlayerAbilities();
 		}
+
+		if (event.getPotionEffect().getPotion() == BloodMagicPotions.SUSPENDED && noGravityList.contains(event.getEntityLiving()))
+		{
+			noGravityList.remove(event.getEntityLiving());
+			event.getEntityLiving().setNoGravity(false);
+		}
 	}
 
 	private float getFlySpeedForFlightLevel(int level)
@@ -475,6 +491,14 @@ public class GenericHandler
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
 	{
+		if (event.getEntityLiving().isPotionActive(BloodMagicPotions.HEAVY_HEART))
+		{
+			double modifier = -0.03 * (event.getEntityLiving().getActivePotionEffect(BloodMagicPotions.HEAVY_HEART).getAmplifier() + 1);
+			Vector3d motion = event.getEntityLiving().getMotion();
+			motion = motion.add(0, modifier, 0);
+			event.getEntityLiving().setMotion(motion);
+		}
+
 		if (event.getEntity().world.isRemote)
 		{
 			if (event.getEntityLiving() instanceof PlayerEntity)
@@ -493,6 +517,13 @@ public class GenericHandler
 				}
 			}
 		}
+
+		if (event.getEntityLiving().isPotionActive(BloodMagicPotions.SUSPENDED) && !noGravityList.contains(event.getEntityLiving()))
+		{
+			noGravityList.add(event.getEntityLiving());
+			event.getEntityLiving().setNoGravity(true);
+		}
+
 		if (event.getEntityLiving() instanceof PlayerEntity)
 		{
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
@@ -779,6 +810,14 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onJump(LivingJumpEvent event)
 	{
+		if (event.getEntityLiving().isPotionActive(BloodMagicPotions.GROUNDED))
+		{
+			Vector3d motion = event.getEntityLiving().getMotion();
+			motion = motion.mul(1, 0, 1);
+			event.getEntityLiving().setMotion(motion);
+			return;
+		}
+
 		if (event.getEntityLiving() instanceof PlayerEntity)
 		{
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();

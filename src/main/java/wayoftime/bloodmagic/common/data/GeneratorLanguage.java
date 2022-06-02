@@ -811,6 +811,9 @@ public class GeneratorLanguage extends LanguageProvider
 		add("effect.bloodmagic.flight", "Flight");
 		add("effect.bloodmagic.spectral_sight", "Spectral Sight");
 		add("effect.bloodmagic.gravity", "Gravity");
+		add("effect.bloodmagic.heavy_heart", "Heavy Heart");
+		add("effect.bloodmagic.grounded", "Grounded");
+		add("effect.bloodmagic.suspended", "Suspended");
 
 	}
 }
