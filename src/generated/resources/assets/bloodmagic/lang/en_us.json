@@ -106,6 +106,7 @@
   "chat.bloodmagic.routing.set": "Setting node location",
   "curios.identifier.living_armour_socket": "Living Armour Socket",
   "effect.bloodmagic.flight": "Flight",
+  "effect.bloodmagic.gravity": "Gravity",
   "effect.bloodmagic.spectral_sight": "Spectral Sight",
   "filter.bloodmagic.allenchant": "Every Enchantment",
   "filter.bloodmagic.anyenchant": "Any Enchantment:",

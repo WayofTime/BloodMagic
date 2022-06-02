@@ -1,0 +1,16 @@
+{
+  "type": "bloodmagic:flask_potioneffect",
+  "input": [
+    {
+      "item": "bloodmagic:simplecatalyst"
+    },
+    {
+      "item": "minecraft:obsidian"
+    }
+  ],
+  "syphon": 500,
+  "ticks": 200,
+  "upgradeLevel": 1,
+  "effect": "bloodmagic:gravity",
+  "baseDuration": 1800
+}
