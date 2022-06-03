@@ -6,6 +6,8 @@ Version 3.1.11
 
 - Reimplemented several rituals:
 -> Crash of the Timberman
+-> Dawn of the New Moon
+-> Ritual of the Satiated Stomach
 
 ------------------------------------------------------
 Version 3.1.10-32
