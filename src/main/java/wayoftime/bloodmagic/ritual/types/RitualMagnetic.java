@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
@@ -22,6 +23,7 @@ import wayoftime.bloodmagic.ritual.IMasterRitualStone;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.ritual.RitualRegister;
+import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.Utils;
 
 @RitualRegister("magnetism")
@@ -78,7 +80,7 @@ public class RitualMagnetic extends Ritual
 			int i = -radius;
 			int k = -radius;
 
-			if (lastPos != null)
+			if (lastPos != null && !lastPos.equals(BlockPos.ZERO))
 			{
 				j = lastPos.getY();
 				i = Math.min(radius, Math.max(-radius, lastPos.getX()));
@@ -122,6 +124,23 @@ public class RitualMagnetic extends Ritual
 			this.lastPos = new BlockPos(i, j, k);
 		}
 
+	}
+
+	public void readFromNBT(CompoundNBT tag)
+	{
+		super.readFromNBT(tag);
+		lastPos = new BlockPos(tag.getInt(Constants.NBT.X_COORD), tag.getInt(Constants.NBT.Y_COORD), tag.getInt(Constants.NBT.Z_COORD));
+	}
+
+	public void writeToNBT(CompoundNBT tag)
+	{
+		super.writeToNBT(tag);
+		if (lastPos != null)
+		{
+			tag.putInt(Constants.NBT.X_COORD, lastPos.getX());
+			tag.putInt(Constants.NBT.Y_COORD, lastPos.getY());
+			tag.putInt(Constants.NBT.Z_COORD, lastPos.getZ());
+		}
 	}
 
 	public int getRadius(Block block)

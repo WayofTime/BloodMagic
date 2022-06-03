@@ -237,6 +237,9 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.altarBuilderRitual", "The Assembly of the High Altar");
 		add("ritual.bloodmagic.portalRitual", "The Gate of the Fold");
 
+		add("ritual.bloodmagic.sphereRitual", "Dawn of the New Moon");
+		add("ritual.bloodmagic.meteorRitual", "Mark of the Falling Tower");
+
 		add("ritual.bloodmagic.waterRitual.info", "Generates a source of water from the Master Ritual Stone.");
 		add("ritual.bloodmagic.lavaRitual.info", "Generates a source of lava from the master ritual stone.");
 		add("ritual.bloodmagic.lavaRitual.default.info", "(Raw) Decreases the LP cost of placing lava and allows the lava to be directly placed into a tank or other fluid-handling block.");
@@ -281,12 +284,12 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.animalGrowthRitual.default.info", "(Raw) Increases the speed of the ritual based on the total amount of Raw Will in the Aura.");
 		add("ritual.bloodmagic.animalGrowthRitual.destructive.info", "(Destructive) Causes adults that have not bred lately to run at mobs and explode.");
 		add("ritual.bloodmagic.animalGrowthRitual.corrosive.info", "(Corrosive) Unimplemented.");
-		add("ritual.bloodmagic.groundingRitual.info", "Forces entities on the ground and prevents jumping.");
+		add("ritual.bloodmagic.groundingRitual.info", "Increases gravity and prevents jumping.");
 		add("ritual.bloodmagic.groundingRitual.default.info", "(Raw) Affects players.");
-		add("ritual.bloodmagic.groundingRitual.corrosive.info", "(Corrosive) Disables gravity (+Vengeful) Applies Levitation.");
-		add("ritual.bloodmagic.groundingRitual.destructive.info", "(Destructive) Applies Heavy Heart (increases fall damage) (+Vengeful) Stronger effect.");
+		add("ritual.bloodmagic.groundingRitual.corrosive.info", "(Corrosive) Disables gravity.");
+		add("ritual.bloodmagic.groundingRitual.destructive.info", "(Destructive) Applies Heavy Heart.");
 		add("ritual.bloodmagic.groundingRitual.steadfast.info", "(Steadfast) Affects Bosses. Doesn't affect bosses that are immune against motion change or immune against potions (except Wither and Ender Dragon).");
-		add("ritual.bloodmagic.groundingRitual.vengeful.info", "(Vengeful) Makes effects stronger. (+Corrosive) Applies Levitation. (+Destructive) Higher Heavy Heart amplifier.");
+		add("ritual.bloodmagic.groundingRitual.vengeful.info", "(Vengeful) Applies Levitation.");
 		add("ritual.bloodmagic.condorRitual.info", "Provides flight in an area around the ritual.");
 		add("ritual.bloodmagic.eternalSoulRitual.info", "Capable of transferring Life Essence from a Network back into an Altar at a cost.");
 
@@ -309,6 +312,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.altarBuilderRitual.info", "Builds an altar out of the components inside of the connected inventory.");
 		add("ritual.bloodmagic.portalRitual.info", "Creates a portal network based on the activator and the immediately surrounding blocks. Blocks can be changed after activation without changing the network of portals, and portals with the same \"key\" will link together.");
 		add("ritual.bloodmagic.meteorRitual.info", "Consumes an item inside of its item range to summon a meteor full of resources from the sky, aimed directly at the ritual.");
+		add("ritual.bloodmagic.sphereRitual.info", "Cracks open the ground, transporting a spheroid from the ground into the air. The shape extracted will be a spheroid of the designated size.");
 
 		add("ritual.bloodmagic.waterRitual.waterRange.info", "(Water) The area within which the Ritual will place Water Source Blocks.");
 		add("ritual.bloodmagic.waterRitual.waterTank.info", "(Raw) The tank that the ritual will place water into.");
@@ -349,6 +353,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.ellipseRitual.info", "Creates a hollow spheroid around the ritual using the blocks in the attached chest.");
 		add("ritual.bloodmagic.ellipseRitual.spheroidRange.info", "(Placement) The range that the ritual will place its blocks in. Note that the Spheroid is centered on the ritual - if one side is shorter than the side opposite, the spheroid will be truncated.");
 		add("ritual.bloodmagic.ellipseRitual.chest.info", "(Chest) The location of the inventory that the ritual will grab blocks from to place in the world.");
+
+		add("ritual.bloodmagic.sphereRitual.spheroidRange.info", "(Extraction) The range that the ritual will extract blocks from. The blocks are placed on the vertical opposite side of the MRS.");
 
 		add("ritual.bloodmagic.simpleDungeonRitual.info", "Summons an Inversion Pillar, a tenuous gateway to the Deamon Realm");
 

@@ -37,6 +37,7 @@ import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
@@ -78,6 +79,19 @@ import wayoftime.bloodmagic.will.DemonWillHolder;
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class GenericHandler
 {
+	@SubscribeEvent
+	public void onLivingFall(LivingFallEvent event)
+	{
+		LivingEntity eventEntityLiving = event.getEntityLiving();
+
+		if (eventEntityLiving.isPotionActive(BloodMagicPotions.HEAVY_HEART))
+		{
+			int i = eventEntityLiving.getActivePotionEffect(BloodMagicPotions.HEAVY_HEART).getAmplifier() + 1;
+			event.setDamageMultiplier(event.getDamageMultiplier() + i);
+			event.setDistance(event.getDistance() + i);
+		}
+	}
+
 	// Handles binding of IBindable's as well as setting a player's highest orb tier
 	@SubscribeEvent
 	public void onInteract(PlayerInteractEvent.RightClickItem event)

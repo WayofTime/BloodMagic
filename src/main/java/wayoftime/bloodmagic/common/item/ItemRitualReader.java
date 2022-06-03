@@ -247,7 +247,7 @@ public class ItemRitualReader extends Item
 				if (tile instanceof TileMasterRitualStone)
 				{
 
-					System.out.println("Setting range holo... I think");
+//					System.out.println("Setting range holo... I think");
 					ClientHandler.setRitualRangeHolo((TileMasterRitualStone) tile, true);
 
 				}
