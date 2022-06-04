@@ -16,5 +16,5 @@
     "item": "bloodmagic:corrosivecatalyst"
   },
   "minimumDrain": 400.0,
-  "drain": 30.0
+  "drain": 20.0
 }

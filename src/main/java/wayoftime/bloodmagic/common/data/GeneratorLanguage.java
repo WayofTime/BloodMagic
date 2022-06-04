@@ -279,6 +279,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.speedRitual.default.info", "(Raw) Increases the velocity caused by the ritual based on total Will.");
 		add("ritual.bloodmagic.speedRitual.vengeful.info", "(Vengeful) Prevents adult mobs and players from being transported. Players are transported if paired with Destructive.");
 		add("ritual.bloodmagic.speedRitual.destructive.info", "(Destructive) Prevents child mobs and players from being transported. Players are transported if paired with Vengeful.");
+		add("ritual.bloodmagic.speedRitual.steadfast.info", "(Steadfast) Applies Feather Falling to mobs and players when transported.");
+		add("ritual.bloodmagic.speedRitual.corrosive.info", "(Corrosive) Further increases horizontal velocity based on total Will.");
 		add("ritual.bloodmagic.animalGrowthRitual.vengeful.info", "(Vengeful) Decreases the time it takes for adults to breed again.");
 		add("ritual.bloodmagic.animalGrowthRitual.steadfast.info", "(Steadfast) Automatically breeds adults within its area using items in the connected chest.");
 		add("ritual.bloodmagic.animalGrowthRitual.default.info", "(Raw) Increases the speed of the ritual based on the total amount of Raw Will in the Aura.");
