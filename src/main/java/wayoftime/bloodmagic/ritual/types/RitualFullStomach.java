@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Food;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.FoodStats;
 import net.minecraft.util.math.BlockPos;
@@ -26,6 +27,9 @@ public class RitualFullStomach extends Ritual
 	public static final String FILL_RANGE = "fillRange";
 	public static final String CHEST_RANGE = "chest";
 
+	public int foodLevel = 0;
+	public float storedSaturation = 0;
+
 	public RitualFullStomach()
 	{
 		super("ritualFullStomach", 0, 100000, "ritual." + BloodMagic.MODID + ".fullStomachRitual");
@@ -44,8 +48,11 @@ public class RitualFullStomach extends Ritual
 
 		BlockPos pos = masterRitualStone.getMasterBlockPos();
 
-		int maxEffects = currentEssence / getRefreshCost();
-		int totalEffects = 0;
+		if (getRefreshCost() > currentEssence)
+		{
+			masterRitualStone.getOwnerNetwork().causeNausea();
+			return;
+		}
 
 		AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
 		TileEntity tile = world.getTileEntity(chestRange.getContainedPositions(pos).get(0));
@@ -60,11 +67,10 @@ public class RitualFullStomach extends Ritual
 		AreaDescriptor fillingRange = masterRitualStone.getBlockRange(FILL_RANGE);
 		List<PlayerEntity> playerList = world.getEntitiesWithinAABB(PlayerEntity.class, fillingRange.getAABB(pos));
 
-		for (PlayerEntity player : playerList)
-		{
-			FoodStats foodStats = player.getFoodStats();
-			float satLevel = foodStats.getSaturationLevel();
+		// Check contained food level. If 0, grab a new food item to restock.
 
+		if (foodLevel <= 0)
+		{
 			for (int i = lastSlot; i < inventory.getSlots(); i++)
 			{
 				ItemStack stack = inventory.extractItem(i, 1, true);
@@ -73,32 +79,53 @@ public class RitualFullStomach extends Ritual
 				{
 					Food food = stack.getItem().getFood();
 
-					int healAmount = food.getHealing();
-					float saturationAmount = food.getSaturation() * healAmount * 2.0f;
+					foodLevel = food.getHealing();
+					storedSaturation = food.getSaturation();
+					inventory.extractItem(i, 1, false);
 
-					// Checks to make sure we're being efficient with the food and not wasting high
-					// value foods
-					// If the food provides more than the max saturation, we just accept it no
-					// matter what if the player is low
-					if (saturationAmount + satLevel <= 20 || satLevel < 5)
-					{
-						foodStats.addStats(healAmount, saturationAmount);
-						inventory.extractItem(i, 1, false);
-						totalEffects++;
-						lastSlot = i;
-						break;
-					}
+					masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
+
+					break;
 				}
 			}
 
-			if (totalEffects >= maxEffects)
+			if (foodLevel <= 0)
 			{
-				masterRitualStone.getOwnerNetwork().causeNausea();
-				break;
+				return;
 			}
 		}
 
-		masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost() * totalEffects));
+		for (PlayerEntity player : playerList)
+		{
+			FoodStats foodStats = player.getFoodStats();
+			float satLevel = foodStats.getSaturationLevel();
+			float saturationAmount = storedSaturation * 1 * 2.0f;
+
+			// Checks to make sure we're being efficient with the food and not wasting high
+			// value foods
+			// If the food provides more than the max saturation, we just accept it no
+			// matter what if the player is low
+			while ((saturationAmount + satLevel <= 20 || satLevel < 5) && foodLevel > 0)
+			{
+				foodStats.addStats(1, storedSaturation);
+				satLevel = foodStats.getSaturationLevel();
+				foodLevel--;
+			}
+		}
+	}
+
+	public void readFromNBT(CompoundNBT tag)
+	{
+		super.readFromNBT(tag);
+		foodLevel = tag.getInt("foodLevel");
+		storedSaturation = tag.getFloat("storedSaturation");
+	}
+
+	public void writeToNBT(CompoundNBT tag)
+	{
+		super.writeToNBT(tag);
+		tag.putInt("foodLevel", foodLevel);
+		tag.putFloat("storedSaturation", storedSaturation);
 	}
 
 	@Override
