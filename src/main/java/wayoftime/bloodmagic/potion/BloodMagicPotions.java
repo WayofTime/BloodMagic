@@ -14,14 +14,15 @@ public class BloodMagicPotions
 	public static final Effect SOUL_SNARE = new PotionSoulSnare();
 	public static final Effect FIRE_FUSE = new PotionFireFuse();
 	public static final Effect SOUL_FRAY = new PotionBloodMagic(EffectType.HARMFUL, 0xFFFFFFFF);
-	public static final Effect PLANT_LEECH = new PotionBloodMagic(EffectType.HARMFUL, 0x00FF00FF);
-	public static final Effect SACRIFICIAL_LAMB = new PotionBloodMagic(EffectType.HARMFUL, 0xFFFFFF);
+	public static final Effect PLANT_LEECH = new PotionPlantLeech();
+	public static final Effect SACRIFICIAL_LAMB = new PotionSacrificialLamb();
 	public static final Effect FLIGHT = new PotionBloodMagic(EffectType.BENEFICIAL, 0x23DDE1);
 	public static final Effect SPECTRAL_SIGHT = new PotionBloodMagic(EffectType.BENEFICIAL, 0x2FB813);
 	public static final Effect GRAVITY = new PotionBloodMagic(EffectType.HARMFUL, 0x800080);
-	public static final Effect HEAVY_HEART = new PotionBloodMagic(EffectType.HARMFUL, 0x000000);
+	public static final Effect HEAVY_HEART = new PotionHeavyHeart();
 	public static final Effect GROUNDED = new PotionBloodMagic(EffectType.HARMFUL, 0xBA855B);
-	public static final Effect SUSPENDED = new PotionBloodMagic(EffectType.NEUTRAL, 0x23DDE1);
+	public static final Effect SUSPENDED = new PotionSuspended();
+	public static final Effect PASSIVITY = new PotionPassivity();
 
 	public static void registerPotions(RegistryEvent.Register<Effect> evt)
 	{
@@ -37,6 +38,7 @@ public class BloodMagicPotions
 		reg.register(HEAVY_HEART.setRegistryName("heavy_heart"));
 		reg.register(GROUNDED.setRegistryName("grounded"));
 		reg.register(SUSPENDED.setRegistryName("suspended"));
+		reg.register(PASSIVITY.setRegistryName("passivity"));
 	}
 
 	public static Effect getEffect(ResourceLocation rl)

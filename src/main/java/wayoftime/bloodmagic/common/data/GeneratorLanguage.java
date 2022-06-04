@@ -822,6 +822,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("effect.bloodmagic.heavy_heart", "Heavy Heart");
 		add("effect.bloodmagic.grounded", "Grounded");
 		add("effect.bloodmagic.suspended", "Suspended");
+		add("effect.bloodmagic.passivity", "Passive");
 
 	}
 }

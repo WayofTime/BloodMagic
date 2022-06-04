@@ -1,0 +1,16 @@
+{
+  "type": "bloodmagic:flask_potioneffect",
+  "input": [
+    {
+      "item": "bloodmagic:simplecatalyst"
+    },
+    {
+      "item": "minecraft:honeycomb"
+    }
+  ],
+  "syphon": 500,
+  "ticks": 200,
+  "upgradeLevel": 1,
+  "effect": "bloodmagic:passivity",
+  "baseDuration": 3600
+}

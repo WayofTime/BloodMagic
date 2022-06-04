@@ -40,6 +40,8 @@ public class PotionRecipeProvider implements ISubRecipeProvider
 		PotionEffectRecipeBuilder.potionEffect(Effects.NIGHT_VISION, 3600, 500, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.fromItems(Items.GOLDEN_CARROT)).build(consumer, BloodMagic.rl(basePath + "night_vision"));
 		PotionEffectRecipeBuilder.potionEffect(Effects.SLOW_FALLING, 1800, 500, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.fromItems(Items.PHANTOM_MEMBRANE)).build(consumer, BloodMagic.rl(basePath + "slow_fall"));
 
+		PotionEffectRecipeBuilder.potionEffect(BloodMagicPotions.PASSIVITY, 3600, 500, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.fromItems(Items.HONEYCOMB)).build(consumer, BloodMagic.rl(basePath + "passivity"));
+
 //		PotionEffectRecipeBuilder.potionEffect(BloodMagicPotions.GRAVITY, 1800, 500, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.fromItems(Items.OBSIDIAN)).build(consumer, BloodMagic.rl(basePath + "gravity"));
 
 		PotionEffectRecipeBuilder.potionEffect(Effects.INSTANT_HEALTH, 0, 500, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.fromItems(Items.GLISTERING_MELON_SLICE)).build(consumer, BloodMagic.rl(basePath + "health"));

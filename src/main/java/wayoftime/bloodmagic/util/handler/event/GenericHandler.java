@@ -1,8 +1,6 @@
 package wayoftime.bloodmagic.util.handler.event;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
@@ -11,11 +9,8 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.TargetGoal;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
@@ -32,7 +27,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.Explosion.Mode;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolType;
@@ -42,7 +36,6 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -71,11 +64,9 @@ import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.core.living.LivingStats;
 import wayoftime.bloodmagic.core.living.LivingUtil;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
-import wayoftime.bloodmagic.entity.goal.FauxMeleeAttackGoal;
 import wayoftime.bloodmagic.event.ItemBindEvent;
 import wayoftime.bloodmagic.event.SacrificeKnifeUsedEvent;
 import wayoftime.bloodmagic.network.DemonAuraClientPacket;
-import wayoftime.bloodmagic.potion.BMPotionUtils;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.util.helper.BindableHelper;
 import wayoftime.bloodmagic.util.helper.InventoryHelper;
@@ -394,62 +385,6 @@ public class GenericHandler
 		}
 	}
 
-	// Handles sending the client the Demon Will Aura updates
-	@SubscribeEvent
-	public void onLivingUpdate(LivingUpdateEvent event)
-	{
-		if (!event.getEntityLiving().getEntityWorld().isRemote)
-		{
-			LivingEntity entity = event.getEntityLiving();
-			if (entity.isPotionActive(BloodMagicPotions.PLANT_LEECH))
-			{
-				int amplifier = entity.getActivePotionEffect(BloodMagicPotions.PLANT_LEECH).getAmplifier();
-				int timeRemaining = entity.getActivePotionEffect(BloodMagicPotions.PLANT_LEECH).getDuration();
-				if (timeRemaining % 10 == 0)
-				{
-					BMPotionUtils.damageMobAndGrowSurroundingPlants(entity, 2 + amplifier, 1, 0.5 * 3 / (amplifier + 3), 25 * (1 + amplifier));
-				}
-			}
-		}
-
-		if (!event.getEntityLiving().getEntityWorld().isRemote && event.getEntityLiving() instanceof AnimalEntity)
-		{
-			AnimalEntity animal = (AnimalEntity) event.getEntityLiving();
-			UUID entityID = animal.getUniqueID();
-			if (animal.isPotionActive(BloodMagicPotions.SACRIFICIAL_LAMB))
-			{
-				if (!goalMap.containsKey(entityID))
-				{
-					TargetGoal goal = new NearestAttackableTargetGoal<>(animal, MobEntity.class, false);
-					MeleeAttackGoal attackGoal = new FauxMeleeAttackGoal(animal, 2.0D, false);
-
-					animal.targetSelector.addGoal(2, goal);
-					animal.goalSelector.addGoal(2, attackGoal);
-
-					System.out.println("Size of map: " + goalMap.size());
-					System.out.println(animal.targetSelector.getRunningGoals().count());
-					goalMap.put(entityID, goal);
-					attackGoalMap.put(entityID, attackGoal);
-					System.out.println("Size of map: " + goalMap.size());
-					System.out.println("Adding Sacrificial Lamb");
-				}
-
-				if (animal.getAttackTarget() != null && animal.getDistanceSq(animal.getAttackTarget()) < 4)
-				{
-					goalMap.remove(entityID);
-					attackGoalMap.remove(entityID);
-					animal.getEntityWorld().createExplosion(null, animal.getPosX(), animal.getPosY() + (double) (animal.getHeight() / 16.0F), animal.getPosZ(), 2 + animal.getActivePotionEffect(BloodMagicPotions.SACRIFICIAL_LAMB).getAmplifier() * 1.5f, false, Mode.NONE);
-				}
-			} else
-			{
-				if (goalMap != null)
-					goalMap.remove(entityID);
-				if (attackGoalMap != null)
-					attackGoalMap.remove(entityID);
-			}
-		}
-	}
-
 	@SubscribeEvent
 	public void onHeal(LivingHealEvent event)
 	{
@@ -484,7 +419,6 @@ public class GenericHandler
 	public static Map<UUID, Integer> foodMap = new HashMap<>();
 	public static Map<UUID, Float> prevFlySpeedMap = new HashMap<>();
 
-	public static List<LivingEntity> noGravityList = new ArrayList<>();
 	Map<UUID, TargetGoal> goalMap = new HashMap<>();
 	Map<UUID, MeleeAttackGoal> attackGoalMap = new HashMap<>();
 
@@ -505,11 +439,6 @@ public class GenericHandler
 			player.sendPlayerAbilities();
 		}
 
-		if (event.getPotionEffect().getPotion() == BloodMagicPotions.SUSPENDED && !noGravityList.contains(event.getEntityLiving()))
-		{
-			noGravityList.add(event.getEntityLiving());
-			event.getEntityLiving().setNoGravity(true);
-		}
 	}
 
 	@SubscribeEvent
@@ -528,12 +457,6 @@ public class GenericHandler
 
 			((PlayerEntity) event.getEntityLiving()).sendPlayerAbilities();
 		}
-
-		if (event.getPotionEffect().getPotion() == BloodMagicPotions.SUSPENDED && noGravityList.contains(event.getEntityLiving()))
-		{
-			noGravityList.remove(event.getEntityLiving());
-			event.getEntityLiving().setNoGravity(false);
-		}
 	}
 
 	private float getFlySpeedForFlightLevel(int level)
@@ -551,14 +474,6 @@ public class GenericHandler
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
 	{
-		if (event.getEntityLiving().isPotionActive(BloodMagicPotions.HEAVY_HEART))
-		{
-			double modifier = -0.03 * (event.getEntityLiving().getActivePotionEffect(BloodMagicPotions.HEAVY_HEART).getAmplifier() + 1);
-			Vector3d motion = event.getEntityLiving().getMotion();
-			motion = motion.add(0, modifier, 0);
-			event.getEntityLiving().setMotion(motion);
-		}
-
 		if (event.getEntity().world.isRemote)
 		{
 			if (event.getEntityLiving() instanceof PlayerEntity)
@@ -576,12 +491,6 @@ public class GenericHandler
 					}
 				}
 			}
-		}
-
-		if (event.getEntityLiving().isPotionActive(BloodMagicPotions.SUSPENDED) && !noGravityList.contains(event.getEntityLiving()))
-		{
-			noGravityList.add(event.getEntityLiving());
-			event.getEntityLiving().setNoGravity(true);
 		}
 
 		if (event.getEntityLiving() instanceof PlayerEntity)
