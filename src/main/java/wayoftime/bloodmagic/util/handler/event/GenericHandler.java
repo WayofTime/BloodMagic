@@ -58,6 +58,7 @@ import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.IBloodOrb;
 import wayoftime.bloodmagic.common.item.ItemExperienceBook;
 import wayoftime.bloodmagic.common.item.ItemLivingArmor;
+import wayoftime.bloodmagic.common.item.ItemRitualDiviner;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.data.Binding;
@@ -67,6 +68,8 @@ import wayoftime.bloodmagic.core.living.LivingUtil;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.event.ItemBindEvent;
 import wayoftime.bloodmagic.event.SacrificeKnifeUsedEvent;
+import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
+import wayoftime.bloodmagic.network.CycleRitualDivinerPacket;
 import wayoftime.bloodmagic.network.DemonAuraClientPacket;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.util.helper.BindableHelper;
@@ -176,10 +179,10 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onPlayerLeftClickAir(PlayerInteractEvent.LeftClickEmpty event)
 	{
-//		if (event.getItemStack().getItem() instanceof ItemSentientScythe)
-//		{
-//			((ItemSentientScythe) event.getItemStack().getItem()).onLeftClickAir(event.getItemStack(), event.getEntityLiving());
-//		}
+		if (event.getItemStack().getItem() instanceof ItemRitualDiviner)
+		{
+			BloodMagicPacketHandler.INSTANCE.sendToServer(new CycleRitualDivinerPacket(event.getPlayer().inventory.currentItem));
+		}
 	}
 
 	@SubscribeEvent

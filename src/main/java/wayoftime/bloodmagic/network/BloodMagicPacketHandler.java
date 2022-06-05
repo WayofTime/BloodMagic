@@ -28,6 +28,7 @@ public class BloodMagicPacketHandler extends BasePacketHandler
 		registerClientToServer(FilterButtonPacket.class, FilterButtonPacket::encode, FilterButtonPacket::decode, FilterButtonPacket::handle);
 		registerClientToServer(LivingTrainerPacket.class, LivingTrainerPacket::encode, LivingTrainerPacket::decode, LivingTrainerPacket::handle);
 		registerClientToServer(LivingTrainerWhitelistPacket.class, LivingTrainerWhitelistPacket::encode, LivingTrainerWhitelistPacket::decode, LivingTrainerWhitelistPacket::handle);
+		registerClientToServer(CycleRitualDivinerPacket.class, CycleRitualDivinerPacket::encode, CycleRitualDivinerPacket::decode, CycleRitualDivinerPacket::handle);
 
 //		INSTANCE.registerMessage(id, messageType, encoder, decoder, messageConsumer);
 //		INSTANCE.registerMessage(ChatUtil.PacketNoSpamChat.Handler.class, ChatUtil.PacketNoSpamChat.class, 0, Side.CLIENT);
