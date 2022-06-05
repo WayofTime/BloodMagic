@@ -2,7 +2,7 @@
   "type": "bloodmagic:flask_potiontransform",
   "input": [
     {
-      "item": "minecraft:melon"
+      "item": "bloodmagic:combinationalcatalyst"
     }
   ],
   "outputEffect": [

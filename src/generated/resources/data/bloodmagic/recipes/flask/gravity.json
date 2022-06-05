@@ -2,7 +2,7 @@
   "type": "bloodmagic:flask_potiontransform",
   "input": [
     {
-      "item": "minecraft:cobweb"
+      "item": "bloodmagic:combinationalcatalyst"
     }
   ],
   "outputEffect": [

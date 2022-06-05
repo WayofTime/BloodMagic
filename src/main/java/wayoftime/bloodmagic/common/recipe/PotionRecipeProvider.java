@@ -41,6 +41,7 @@ public class PotionRecipeProvider implements ISubRecipeProvider
 		PotionEffectRecipeBuilder.potionEffect(Effects.SLOW_FALLING, 1800, 500, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.fromItems(Items.PHANTOM_MEMBRANE)).build(consumer, BloodMagic.rl(basePath + "slow_fall"));
 
 		PotionEffectRecipeBuilder.potionEffect(BloodMagicPotions.PASSIVITY, 3600, 500, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.fromItems(Items.HONEYCOMB)).build(consumer, BloodMagic.rl(basePath + "passivity"));
+		PotionEffectRecipeBuilder.potionEffect(BloodMagicPotions.BOUNCE, 3600, 500, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.fromItems(Items.SLIME_BALL)).build(consumer, BloodMagic.rl(basePath + "bounce"));
 
 //		PotionEffectRecipeBuilder.potionEffect(BloodMagicPotions.GRAVITY, 1800, 500, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.fromItems(Items.OBSIDIAN)).build(consumer, BloodMagic.rl(basePath + "gravity"));
 
@@ -53,12 +54,12 @@ public class PotionRecipeProvider implements ISubRecipeProvider
 		PotionTransformRecipeBuilder.potionTransform(Effects.INVISIBILITY, 3600, Effects.NIGHT_VISION, 500, 200, 1).addIngredient(Ingredient.fromItems(Items.FERMENTED_SPIDER_EYE)).build(consumer, BloodMagic.rl(basePath + "night_to_invis"));
 		PotionTransformRecipeBuilder.potionTransform(Effects.LEVITATION, 3600, Effects.SLOW_FALLING, 500, 200, 1).addIngredient(Ingredient.fromItems(Items.FERMENTED_SPIDER_EYE)).build(consumer, BloodMagic.rl(basePath + "fall_to_levitation"));
 		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.SPECTRAL_SIGHT, 3600, Effects.NIGHT_VISION, 500, 200, 1).addIngredient(Ingredient.fromItems(Items.GLOWSTONE_DUST)).build(consumer, BloodMagic.rl(basePath + "night_to_spectral"));
-		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.HEAVY_HEART, 1800, BloodMagicPotions.GRAVITY, 1000, 200, 1).addInputEffect(Effects.INSTANT_HEALTH).addIngredient(Ingredient.fromItems(Items.MELON)).build(consumer, BloodMagic.rl(basePath + "gravity_to_heart"));
+		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.HEAVY_HEART, 1800, BloodMagicPotions.GRAVITY, 1000, 200, 1).addInputEffect(Effects.INSTANT_HEALTH).addIngredient(Ingredient.fromItems(BloodMagicItems.COMBINATIONAL_CATALYST.get())).build(consumer, BloodMagic.rl(basePath + "gravity_to_heart"));
 
 		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.GROUNDED, 1800, Effects.JUMP_BOOST, 1000, 200, 1).addIngredient(Ingredient.fromItems(Items.COBWEB)).build(consumer, BloodMagic.rl(basePath + "jump_to_grounded"));
-		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.GRAVITY, 1800, BloodMagicPotions.GROUNDED, 1000, 200, 1).addInputEffect(Effects.SLOW_FALLING).addIngredient(Ingredient.fromItems(Items.COBWEB)).build(consumer, BloodMagic.rl(basePath + "gravity"));
+		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.GRAVITY, 1800, BloodMagicPotions.GROUNDED, 1000, 200, 1).addInputEffect(Effects.SLOW_FALLING).addIngredient(Ingredient.fromItems(BloodMagicItems.COMBINATIONAL_CATALYST.get())).build(consumer, BloodMagic.rl(basePath + "gravity"));
 		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.SUSPENDED, 1800, BloodMagicPotions.GRAVITY, 1000, 200, 1).addIngredient(Ingredient.fromItems(Items.FERMENTED_SPIDER_EYE)).build(consumer, BloodMagic.rl(basePath + "gravity_to_suspended"));
-		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.FLIGHT, 3600, BloodMagicPotions.SUSPENDED, 1000, 200, 1).addInputEffect(Effects.LEVITATION).addIngredient(Ingredient.fromItems(Items.FEATHER)).build(consumer, BloodMagic.rl(basePath + "suspended_to_flight"));
+		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.FLIGHT, 3600, BloodMagicPotions.SUSPENDED, 1000, 200, 1).addInputEffect(Effects.LEVITATION).addIngredient(Ingredient.fromItems(BloodMagicItems.COMBINATIONAL_CATALYST.get())).build(consumer, BloodMagic.rl(basePath + "suspended_to_flight"));
 
 		addPotionModifiers(consumer, Effects.SPEED, "speed_boost");
 		addPotionModifiers(consumer, Effects.JUMP_BOOST, "jump_boost");

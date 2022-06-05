@@ -758,6 +758,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.MUNDANE_POWER_CATALYST, "Small Power Catalyst");
 		addItem(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST, "Small Lengthening Catalyst");
 		addItem(BloodMagicItems.WEAK_FILLING_AGENT, "Weak Filling Agent");
+		addItem(BloodMagicItems.COMBINATIONAL_CATALYST, "Combinational Catalyst");
 
 		// Alchemy Items
 		addItem(BloodMagicItems.PLANT_OIL, "Plant Oil");
@@ -823,6 +824,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("effect.bloodmagic.grounded", "Grounded");
 		add("effect.bloodmagic.suspended", "Suspended");
 		add("effect.bloodmagic.passivity", "Passive");
+		add("effect.bloodmagic.bounce", "Bounce");
 
 	}
 }

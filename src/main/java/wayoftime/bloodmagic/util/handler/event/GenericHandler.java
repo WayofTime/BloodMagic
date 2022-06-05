@@ -30,6 +30,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -77,6 +78,8 @@ import wayoftime.bloodmagic.will.DemonWillHolder;
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class GenericHandler
 {
+	public static Map<UUID, Double> bounceMap = new HashMap<>();
+
 	@SubscribeEvent
 	public void onLivingFall(LivingFallEvent event)
 	{
@@ -87,6 +90,36 @@ public class GenericHandler
 			int i = eventEntityLiving.getActivePotionEffect(BloodMagicPotions.HEAVY_HEART).getAmplifier() + 1;
 			event.setDamageMultiplier(event.getDamageMultiplier() + i);
 			event.setDistance(event.getDistance() + i);
+		}
+
+		if (eventEntityLiving.isPotionActive(BloodMagicPotions.BOUNCE))
+		{
+			if (eventEntityLiving instanceof PlayerEntity)
+			{
+				PlayerEntity player = (PlayerEntity) eventEntityLiving;
+				event.setDamageMultiplier(0);
+				if (!player.isSneaking() && event.getDistance() > 1.5)
+				{
+					if (player.world.isRemote)
+					{
+						player.setMotion(player.getMotion().mul(1, -1, 1));
+						bounceMap.put(player.getUniqueID(), player.getMotion().getY());
+					} else
+					{
+						event.setCanceled(true);
+					}
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void playerTickPost(TickEvent.PlayerTickEvent event)
+	{
+		if (event.phase == TickEvent.Phase.END && bounceMap.containsKey(event.player.getUniqueID()))
+		{
+			double motionY = bounceMap.remove(event.player.getUniqueID());
+			event.player.setMotion(event.player.getMotion().mul(1, 0, 1).add(0, motionY, 0));
 		}
 	}
 

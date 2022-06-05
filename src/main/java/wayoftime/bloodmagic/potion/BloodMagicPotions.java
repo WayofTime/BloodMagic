@@ -23,6 +23,7 @@ public class BloodMagicPotions
 	public static final Effect GROUNDED = new PotionBloodMagic(EffectType.HARMFUL, 0xBA855B);
 	public static final Effect SUSPENDED = new PotionSuspended();
 	public static final Effect PASSIVITY = new PotionPassivity();
+	public static final Effect BOUNCE = new PotionBloodMagic(EffectType.BENEFICIAL, 0x57FF2E);
 
 	public static void registerPotions(RegistryEvent.Register<Effect> evt)
 	{
@@ -39,6 +40,7 @@ public class BloodMagicPotions
 		reg.register(GROUNDED.setRegistryName("grounded"));
 		reg.register(SUSPENDED.setRegistryName("suspended"));
 		reg.register(PASSIVITY.setRegistryName("passivity"));
+		reg.register(BOUNCE.setRegistryName("bounce"));
 	}
 
 	public static Effect getEffect(ResourceLocation rl)
