@@ -3,6 +3,7 @@ Version 3.1.11
 ------------------------------------------------------
 - Fixed server crash for the Reverence of the Condor ritual.
 - Reimplemented Teleposers. Hurray! 
+- Modified the Ritual Diviner so that it can cycle through the ritual list backwards by left-clicking in the air.
 
 - Reimplemented several rituals:
 -> Crash of the Timberman

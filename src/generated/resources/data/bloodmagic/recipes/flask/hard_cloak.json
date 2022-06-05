@@ -11,6 +11,6 @@
   "syphon": 500,
   "ticks": 200,
   "upgradeLevel": 1,
-  "effect": "bloodmagic:obsidian_cloak",
+  "effect": "bloodmagic:hard_cloak",
   "baseDuration": 3600
 }

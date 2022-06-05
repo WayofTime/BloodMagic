@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.potion;
 
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
 import net.minecraft.util.ResourceLocation;
@@ -25,6 +26,7 @@ public class BloodMagicPotions
 	public static final Effect PASSIVITY = new PotionPassivity();
 	public static final Effect BOUNCE = new PotionBloodMagic(EffectType.BENEFICIAL, 0x57FF2E);
 	public static final Effect OBSIDIAN_CLOAK = new PotionBloodMagic(EffectType.BENEFICIAL, 0x3C1A8D);
+	public static final Effect HARD_CLOAK = new PotionBloodMagic(EffectType.BENEFICIAL, 0x3C1A8D);
 
 	public static void registerPotions(RegistryEvent.Register<Effect> evt)
 	{
@@ -43,6 +45,8 @@ public class BloodMagicPotions
 		reg.register(PASSIVITY.setRegistryName("passivity"));
 		reg.register(BOUNCE.setRegistryName("bounce"));
 		reg.register(OBSIDIAN_CLOAK.setRegistryName("obsidian_cloak"));
+		reg.register(HARD_CLOAK.addAttributesModifier(Attributes.ARMOR_TOUGHNESS, "BF8B6E3F-3328-4C0A-AA66-3BA6BB6DBEF6", 3, AttributeModifier.Operation.ADDITION).setRegistryName("hard_cloak"));
+
 	}
 
 	public static Effect getEffect(ResourceLocation rl)

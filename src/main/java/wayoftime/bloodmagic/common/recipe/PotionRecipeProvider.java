@@ -10,6 +10,7 @@ import net.minecraft.potion.Effect;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
+import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.data.recipe.builder.PotionEffectRecipeBuilder;
 import wayoftime.bloodmagic.common.data.recipe.builder.PotionFillRecipeBuilder;
@@ -42,7 +43,7 @@ public class PotionRecipeProvider implements ISubRecipeProvider
 
 		PotionEffectRecipeBuilder.potionEffect(BloodMagicPotions.PASSIVITY, 3600, 500, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.fromItems(Items.HONEYCOMB)).build(consumer, BloodMagic.rl(basePath + "passivity"));
 		PotionEffectRecipeBuilder.potionEffect(BloodMagicPotions.BOUNCE, 3600, 500, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.fromItems(Items.SLIME_BALL)).build(consumer, BloodMagic.rl(basePath + "bounce"));
-		PotionEffectRecipeBuilder.potionEffect(BloodMagicPotions.OBSIDIAN_CLOAK, 3600, 500, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.fromItems(Items.OBSIDIAN)).build(consumer, BloodMagic.rl(basePath + "obsidian_cloak"));
+		PotionEffectRecipeBuilder.potionEffect(BloodMagicPotions.HARD_CLOAK, 3600, 500, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.fromItems(Items.OBSIDIAN)).build(consumer, BloodMagic.rl(basePath + "hard_cloak"));
 
 //		PotionEffectRecipeBuilder.potionEffect(BloodMagicPotions.GRAVITY, 1800, 500, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.fromItems(Items.OBSIDIAN)).build(consumer, BloodMagic.rl(basePath + "gravity"));
 
@@ -56,6 +57,7 @@ public class PotionRecipeProvider implements ISubRecipeProvider
 		PotionTransformRecipeBuilder.potionTransform(Effects.LEVITATION, 3600, Effects.SLOW_FALLING, 500, 200, 1).addIngredient(Ingredient.fromItems(Items.FERMENTED_SPIDER_EYE)).build(consumer, BloodMagic.rl(basePath + "fall_to_levitation"));
 		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.SPECTRAL_SIGHT, 3600, Effects.NIGHT_VISION, 500, 200, 1).addIngredient(Ingredient.fromItems(Items.GLOWSTONE_DUST)).build(consumer, BloodMagic.rl(basePath + "night_to_spectral"));
 		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.HEAVY_HEART, 1800, BloodMagicPotions.GRAVITY, 1000, 200, 1).addInputEffect(Effects.INSTANT_HEALTH).addIngredient(Ingredient.fromItems(BloodMagicItems.COMBINATIONAL_CATALYST.get())).build(consumer, BloodMagic.rl(basePath + "gravity_to_heart"));
+		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.OBSIDIAN_CLOAK, 3600, BloodMagicPotions.HARD_CLOAK, 1000, 200, 1).addIngredient(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND)).addIngredient(Ingredient.fromItems(Items.CRYING_OBSIDIAN)).build(consumer, BloodMagic.rl(basePath + "hard_to_obsidian"));
 
 		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.GROUNDED, 1800, Effects.JUMP_BOOST, 1000, 200, 1).addIngredient(Ingredient.fromItems(Items.COBWEB)).build(consumer, BloodMagic.rl(basePath + "jump_to_grounded"));
 		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.GRAVITY, 1800, BloodMagicPotions.GROUNDED, 1000, 200, 1).addInputEffect(Effects.SLOW_FALLING).addIngredient(Ingredient.fromItems(BloodMagicItems.COMBINATIONAL_CATALYST.get())).build(consumer, BloodMagic.rl(basePath + "gravity"));

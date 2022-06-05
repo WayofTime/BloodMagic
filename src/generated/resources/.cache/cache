@@ -883,6 +883,8 @@ d81fe761acbf128db8434dfc086d3e11345fbb3b data/bloodmagic/recipes/flask/flask_lin
 863933b2515e74a5e66987e9e3989ce1af505c02 data/bloodmagic/recipes/flask/gravity.json
 3721c749e7bbfe2c04a87d48ceb6b069e1a92d21 data/bloodmagic/recipes/flask/gravity_to_heart.json
 fdda4fe1a1819fd46a4dbe199b9bca0b8a51f6cc data/bloodmagic/recipes/flask/gravity_to_suspended.json
+ae1f1e7195bc06eea24629e8a29f669fcdb7d90a data/bloodmagic/recipes/flask/hard_cloak.json
+093e5456eb663462fe3226251129ee8d3e53f792 data/bloodmagic/recipes/flask/hard_to_obsidian.json
 c56344ecd71b22e1ebd59eaeb19a7890056fea85 data/bloodmagic/recipes/flask/health.json
 de269abe927407b6f50fa4ea5fcbdbd00c828561 data/bloodmagic/recipes/flask/health_to_harm.json
 ca829cba3350a8be770ca63676491b0540968dda data/bloodmagic/recipes/flask/jump_boost.json
@@ -903,7 +905,6 @@ e199c80a0370670f6dea16f1d09fde009daf7afa data/bloodmagic/recipes/flask/length_sl
 6d73ec4384a6f0ce53483a01a85c689e007ba436 data/bloodmagic/recipes/flask/night_to_invis.json
 8e672b2b70bf9063e207cc84de6fc3e1bd62770b data/bloodmagic/recipes/flask/night_to_spectral.json
 f6d9124a27d6fbfb427a057b0d2d4216873e679d data/bloodmagic/recipes/flask/night_vision.json
-3a8ed18f4467f97033528a881ae265be50c7fe7b data/bloodmagic/recipes/flask/obsidian_cloak.json
 b24b7b58b09f7fd8c447c276069a63312db439a0 data/bloodmagic/recipes/flask/passivity.json
 18c4e975e759681eb30680cc12c52c4a2f2e9450 data/bloodmagic/recipes/flask/poison.json
 fb4b4d910c94515ac5f96c18868429a8a877009c data/bloodmagic/recipes/flask/poison_to_harm.json
