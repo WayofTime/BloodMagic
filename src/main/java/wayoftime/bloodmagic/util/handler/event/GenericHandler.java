@@ -237,6 +237,12 @@ public class GenericHandler
 				}
 			}
 		}
+
+		if (!event.getSource().isMagicDamage() && living.isPotionActive(BloodMagicPotions.OBSIDIAN_CLOAK))
+		{
+			float modifier = (float) (1 - 0.2 * (1 + living.getActivePotionEffect(BloodMagicPotions.OBSIDIAN_CLOAK).getAmplifier()));
+			event.setAmount((float) (event.getAmount() * Math.max(0, modifier)));
+		}
 	}
 
 	@SubscribeEvent
