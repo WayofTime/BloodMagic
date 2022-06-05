@@ -825,6 +825,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("effect.bloodmagic.suspended", "Suspended");
 		add("effect.bloodmagic.passivity", "Passive");
 		add("effect.bloodmagic.bounce", "Bounce");
+		add("effect.bloodmagic.obsidian_cloak", "Obsidian Cloak");
 
 	}
 }

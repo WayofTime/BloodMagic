@@ -217,6 +217,24 @@ public class GenericHandler
 			if (LivingUtil.hasFullSet(player))
 			{
 				event.setAmount((float) LivingUtil.getDamageReceivedForArmour(player, event.getSource(), event.getAmount()));
+
+				// The factor of 1.6 is due to taking into account iron armour's protection at
+				// ~11 damage
+				double factor = 1.6;
+				if (event.getSource().isProjectile())
+				{
+//					LivingStats stats = LivingStats.fromPlayer(player);
+//					stats.addExperience(LivingArmorRegistrar.TEST_UPGRADE.get().getKey(), 10);
+					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_ARROW_PROTECT.get(), event.getAmount() / factor);
+				} else
+				{
+					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_PHYSICAL_PROTECT.get(), event.getAmount() / factor);
+				}
+
+				if (event.getSource() == DamageSource.FALL)
+				{
+					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_FALL_PROTECT.get(), event.getAmount() / factor);
+				}
 			}
 		}
 	}
@@ -304,27 +322,27 @@ public class GenericHandler
 			}
 		}
 
-		if (living instanceof PlayerEntity)
-		{
-			PlayerEntity player = (PlayerEntity) living;
-			if (LivingUtil.hasFullSet(player))
-			{
-				if (event.getSource().isProjectile())
-				{
-//					LivingStats stats = LivingStats.fromPlayer(player);
-//					stats.addExperience(LivingArmorRegistrar.TEST_UPGRADE.get().getKey(), 10);
-					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_ARROW_PROTECT.get(), event.getAmount());
-				} else
-				{
-					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_PHYSICAL_PROTECT.get(), event.getAmount());
-				}
-
-				if (event.getSource() == DamageSource.FALL)
-				{
-					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_FALL_PROTECT.get(), event.getAmount());
-				}
-			}
-		}
+//		if (living instanceof PlayerEntity)
+//		{
+//			PlayerEntity player = (PlayerEntity) living;
+//			if (LivingUtil.hasFullSet(player))
+//			{
+//				if (event.getSource().isProjectile())
+//				{
+////					LivingStats stats = LivingStats.fromPlayer(player);
+////					stats.addExperience(LivingArmorRegistrar.TEST_UPGRADE.get().getKey(), 10);
+//					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_ARROW_PROTECT.get(), event.getAmount());
+//				} else
+//				{
+//					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_PHYSICAL_PROTECT.get(), event.getAmount());
+//				}
+//
+//				if (event.getSource() == DamageSource.FALL)
+//				{
+//					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_FALL_PROTECT.get(), event.getAmount());
+//				}
+//			}
+//		}
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
