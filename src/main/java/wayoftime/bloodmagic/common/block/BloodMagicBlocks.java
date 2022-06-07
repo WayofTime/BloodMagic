@@ -119,6 +119,8 @@ public class BloodMagicBlocks
 	public static final RegistryObject<Block> MIMIC = BLOCKS.register("mimic", () -> new BlockMimic(Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(2.0f).setOpaque(BloodMagicBlocks::isntSolid).setSuffocates(BloodMagicBlocks::isntSolid).setBlocksVision(BloodMagicBlocks::isntSolid).notSolid()));
 	public static final RegistryObject<Block> ETHEREAL_MIMIC = BLOCKS.register("ethereal_mimic", () -> new BlockMimic(Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(2.0f).setOpaque(BloodMagicBlocks::isntSolid).setSuffocates(BloodMagicBlocks::isntSolid).setBlocksVision(BloodMagicBlocks::isntSolid).notSolid().doesNotBlockMovement()));
 
+	public static final RegistryObject<Block> SPECTRAL = BLOCKS.register("spectral", () -> new BlockSpectral(Properties.create(Material.ROCK).sound(SoundType.METAL).hardnessAndResistance(100.0f).setOpaque(BloodMagicBlocks::isntSolid).setSuffocates(BloodMagicBlocks::isntSolid).setBlocksVision(BloodMagicBlocks::isntSolid).notSolid().doesNotBlockMovement()));
+
 	private static ForgeFlowingFluid.Properties makeLifeEssenceProperties()
 	{
 		return new ForgeFlowingFluid.Properties(LIFE_ESSENCE_FLUID, LIFE_ESSENCE_FLUID_FLOWING, FluidAttributes.builder(FLUID_STILL, FLUID_FLOWING).overlay(new ResourceLocation("block/water_overlay")).viscosity(1).sound(SoundEvents.ITEM_BUCKET_FILL, SoundEvents.ITEM_BUCKET_EMPTY)).bucket(LIFE_ESSENCE_BUCKET).block(LIFE_ESSENCE_BLOCK);

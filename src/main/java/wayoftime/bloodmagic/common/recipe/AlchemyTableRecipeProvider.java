@@ -12,6 +12,7 @@ import net.minecraft.potion.Potions;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.recipe.builder.AlchemyTableRecipeBuilder;
 import wayoftime.bloodmagic.common.data.recipe.builder.FilterMergeAlchemyTableRecipeBuilder;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
@@ -133,6 +134,7 @@ public class AlchemyTableRecipeProvider implements ISubRecipeProvider
 			AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.REAGENT_SIGHT.get()), 500, 200, 1).addIngredient(Ingredient.fromTag(Tags.Items.DUSTS_GLOWSTONE)).addIngredient(Ingredient.fromTag(Tags.Items.GLASS)).addIngredient(Ingredient.fromTag(Tags.Items.GLASS)).addIngredient(Ingredient.fromItems(BloodMagicItems.DIVINATION_SIGIL.get())).build(consumer, BloodMagic.rl(basePath + "reagent_sight"));
 			AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.REAGENT_BINDING.get()), 1000, 200, 3).addIngredient(Ingredient.fromTag(Tags.Items.DUSTS_GLOWSTONE)).addIngredient(Ingredient.fromTag(Tags.Items.DUSTS_REDSTONE)).addIngredient(Ingredient.fromTag(Tags.Items.GUNPOWDER)).addIngredient(Ingredient.fromTag(Tags.Items.NUGGETS_GOLD)).build(consumer, BloodMagic.rl(basePath + "reagent_binding"));
 			AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.REAGENT_HOLDING.get()), 2000, 200, 2).addIngredient(Ingredient.fromTag(Tags.Items.CHESTS)).addIngredient(Ingredient.fromTag(Tags.Items.LEATHER)).addIngredient(Ingredient.fromTag(Tags.Items.STRING)).addIngredient(Ingredient.fromTag(Tags.Items.STRING)).build(consumer, BloodMagic.rl(basePath + "reagent_holding"));
+			AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.REAGENT_SUPPRESSION.get()), 10000, 200, 4).addIngredient(Ingredient.fromItems(BloodMagicBlocks.TELEPOSER.get())).addIngredient(Ingredient.fromItems(BloodMagicItems.VOID_SIGIL.get())).addIngredient(Ingredient.fromTag(Tags.Items.INGOTS_GOLD)).addIngredient(Ingredient.fromItems(Items.BUCKET)).build(consumer, BloodMagic.rl(basePath + "reagent_suppression"));
 		}
 
 		ItemStack brillianceTome = new ItemStack(BloodMagicItems.LIVING_TOME.get());

@@ -3,12 +3,15 @@
   "input": [
     {
       "tag": "forge:gems/diamond"
+    },
+    {
+      "item": "minecraft:crying_obsidian"
     }
   ],
   "outputEffect": [
     {
       "effect": "bloodmagic:obsidian_cloak",
-      "baseDuration": 1800
+      "baseDuration": 3600
     }
   ],
   "inputEffect": [

@@ -33,6 +33,7 @@ import wayoftime.bloodmagic.common.item.sigil.ItemSigilGreenGrove;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilHolding;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilLava;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilMagnetism;
+import wayoftime.bloodmagic.common.item.sigil.ItemSigilSuppression;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilVoid;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilWater;
 import wayoftime.bloodmagic.common.item.soul.ItemMonsterSoul;
@@ -109,6 +110,8 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> MIMIC_ITEM = ITEMS.register("mimic", () -> new ItemBlockMimic(BloodMagicBlocks.MIMIC.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> MIMIC_ETHEREAL_ITEM = ITEMS.register("ethereal_mimic", () -> new ItemBlockMimic(BloodMagicBlocks.ETHEREAL_MIMIC.get(), new Item.Properties().group(BloodMagic.TAB)));
 
+	public static final RegistryObject<Item> SPECTRAL_ITEM = ITEMS.register("spectral", () -> new ItemBlockMimic(BloodMagicBlocks.SPECTRAL.get(), new Item.Properties().group(BloodMagic.TAB)));
+
 	public static final RegistryObject<Item> NETHE_SOIL_ITEM = ITEMS.register("nether_soil", () -> new BlockItem(BloodMagicBlocks.NETHER_SOIL.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> GROWING_DOUBT_ITEM = ITEMS.register("growing_doubt", () -> new BlockItem(BloodMagicBlocks.GROWING_DOUBT.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> WEAK_TAU_ITEM = ITEMS.register("weak_tau", () -> new BlockItem(BloodMagicBlocks.WEAK_TAU.get(), new Item.Properties().group(BloodMagic.TAB)));
@@ -147,6 +150,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> AIR_SIGIL = BASICITEMS.register("airsigil", ItemSigilAir::new);
 	public static final RegistryObject<Item> BLOOD_LIGHT_SIGIL = BASICITEMS.register("bloodlightsigil", ItemSigilBloodLight::new);
 	public static final RegistryObject<Item> HOLDING_SIGIL = BASICITEMS.register("sigilofholding", ItemSigilHolding::new);
+	public static final RegistryObject<Item> SUPPRESSION_SIGIL = ITEMS.register("sigilofsuppression", () -> new ItemSigilSuppression());
 
 	public static final RegistryObject<Item> ARCANE_ASHES = BASICITEMS.register("arcaneashes", () -> new ItemArcaneAshes());
 	public static final RegistryObject<Item> DAGGER_OF_SACRIFICE = BASICITEMS.register("daggerofsacrifice", () -> new ItemDaggerOfSacrifice());
@@ -194,6 +198,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> REAGENT_SIGHT = BASICITEMS.register("reagentsight", () -> new ItemBase());
 	public static final RegistryObject<Item> REAGENT_BINDING = BASICITEMS.register("reagentbinding", () -> new ItemBase());
 	public static final RegistryObject<Item> REAGENT_HOLDING = BASICITEMS.register("reagentholding", () -> new ItemBase());
+	public static final RegistryObject<Item> REAGENT_SUPPRESSION = BASICITEMS.register("reagentsuppression", () -> new ItemBase());
 
 	// Tartaric Gems
 	public static final RegistryObject<Item> PETTY_GEM = ITEMS.register("soulgempetty", () -> new ItemSoulGem("petty", 64));

@@ -1,0 +1,13 @@
+{
+  "type": "bloodmagic:array",
+  "texture": "bloodmagic:textures/models/alchemyarrays/suppressionsigil.png",
+  "baseinput": {
+    "item": "bloodmagic:reagentsuppression"
+  },
+  "addedinput": {
+    "item": "bloodmagic:demonslate"
+  },
+  "output": {
+    "item": "bloodmagic:sigilofsuppression"
+  }
+}

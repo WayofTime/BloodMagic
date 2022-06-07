@@ -598,6 +598,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.BLOOD_LIGHT_SIGIL, "Sigil of the Blood Lamp");
 		addItem(BloodMagicItems.SEER_SIGIL, "Seer's Sigil");
 		addItem(BloodMagicItems.HOLDING_SIGIL, "Sigil of Holding");
+		addItem(BloodMagicItems.SUPPRESSION_SIGIL, "Sigil of Suppression");
 
 		addItem(BloodMagicBlocks.LIFE_ESSENCE_BUCKET, "Bucket of Life");
 		addItem(BloodMagicItems.ARCANE_ASHES, "Arcane Ashes");
@@ -622,6 +623,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.REAGENT_SIGHT, "Sight Reagent");
 		addItem(BloodMagicItems.REAGENT_BINDING, "Binding Reagent");
 		addItem(BloodMagicItems.REAGENT_HOLDING, "Holding Reagent");
+		addItem(BloodMagicItems.REAGENT_SUPPRESSION, "Suppression Reagent");
 
 		addItem(BloodMagicItems.PETTY_GEM, "Petty Tartaric Gem");
 		addItem(BloodMagicItems.LESSER_GEM, "Lesser Tartaric Gem");
@@ -826,6 +828,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("effect.bloodmagic.passivity", "Passive");
 		add("effect.bloodmagic.bounce", "Bounce");
 		add("effect.bloodmagic.obsidian_cloak", "Obsidian Cloak");
+		add("effect.bloodmagic.hard_cloak", "Hard Cloak");
 
 	}
 }

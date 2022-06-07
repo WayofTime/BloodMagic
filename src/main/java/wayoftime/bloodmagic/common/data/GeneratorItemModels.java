@@ -60,6 +60,8 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerCustomBlockPath(BloodMagicBlocks.VENGEFUL_CRYSTAL_BLOCK.get(), "crystal/vengefulcrystal1");
 		registerCustomBlockPath(BloodMagicBlocks.STEADFAST_CRYSTAL_BLOCK.get(), "crystal/steadfastcrystal1");
 
+		registerCustomBlockPath(BloodMagicBlocks.SPECTRAL.get(), "spectralblock");
+
 		registerCustomBlockPath(BloodMagicBlocks.ROUTING_NODE_BLOCK.get(), "routingnodecombined");
 		registerCustomBlockPathWithTextures(BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get(), "routingnodecombined", "core", "bloodmagic:models/modelinputroutingnode", "base", "bloodmagic:models/modelinputroutingnode");
 		registerCustomBlockPathWithTextures(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get(), "routingnodecombined", "core", "bloodmagic:models/modeloutputroutingnode", "base", "bloodmagic:models/modeloutputroutingnode");
@@ -90,6 +92,7 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerToggleableItem(BloodMagicItems.FAST_MINER_SIGIL.get());
 		registerToggleableItem(BloodMagicItems.MAGNETISM_SIGIL.get());
 		registerToggleableItem(BloodMagicItems.ICE_SIGIL.get());
+		registerToggleableItem(BloodMagicItems.SUPPRESSION_SIGIL.get());
 		registerDemonWillVariantItem(BloodMagicItems.PETTY_GEM.get());
 		registerDemonWillVariantItem(BloodMagicItems.LESSER_GEM.get());
 		registerDemonWillVariantItem(BloodMagicItems.COMMON_GEM.get());

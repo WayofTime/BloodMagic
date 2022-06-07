@@ -103,6 +103,8 @@ public class GeneratorBlockStates extends BlockStateProvider
 		buildCubeAllWithTextureName("solidlightmimic");
 		buildCubeAllWithTextureName("solidopaquemimic");
 
+		buildCubeAll(BloodMagicBlocks.SPECTRAL.get());
+
 		buildCubeTop(BloodMagicBlocks.TELEPOSER.get(), modLoc("block/teleposer_side"), modLoc("block/teleposer_top"));
 
 		buildCubeAll(BloodMagicBlocks.DUNGEON_CONTROLLER.get());

@@ -197,12 +197,14 @@ public class ClientEvents
 			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get(), RenderType.getTranslucent());
 			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get(), RenderType.getTranslucent());
 			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.SPIKES.get(), rendertype);
+			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.SPECTRAL.get(), RenderType.getTranslucent());
 
 			ClientEvents.registerContainerScreens();
 
 			registerToggleableProperties(BloodMagicItems.GREEN_GROVE_SIGIL.get());
 			registerToggleableProperties(BloodMagicItems.FAST_MINER_SIGIL.get());
 			registerToggleableProperties(BloodMagicItems.MAGNETISM_SIGIL.get());
+			registerToggleableProperties(BloodMagicItems.SUPPRESSION_SIGIL.get());
 			registerToggleableProperties(BloodMagicItems.ICE_SIGIL.get());
 			registerMultiWillTool(BloodMagicItems.SENTIENT_SWORD.get());
 			registerMultiWillTool(BloodMagicItems.SENTIENT_AXE.get());
