@@ -52,7 +52,7 @@ public class RitualHarvest extends Ritual
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
 		World world = masterRitualStone.getWorldObj();
-		BlockPos pos = masterRitualStone.getBlockPos();
+		BlockPos pos = masterRitualStone.getMasterBlockPos();
 
 		if (masterRitualStone.getOwnerNetwork().getCurrentEssence() < getRefreshCost())
 		{
@@ -68,7 +68,7 @@ public class RitualHarvest extends Ritual
 		while (harvestArea.hasNext())
 		{
 			BlockPos nextPos = harvestArea.next().add(pos);
-			if (harvestBlock(world, nextPos, masterRitualStone.getBlockPos()))
+			if (harvestBlock(world, nextPos, masterRitualStone.getMasterBlockPos()))
 			{
 				harvested++;
 			}

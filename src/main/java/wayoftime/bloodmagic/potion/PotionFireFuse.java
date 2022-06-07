@@ -23,9 +23,7 @@ public class PotionFireFuse extends PotionBloodMagic
 		}
 
 		Random random = entity.world.rand;
-		entity.getEntityWorld().addParticle(ParticleTypes.FLAME, entity.getPosX()
-				+ random.nextDouble() * 0.3, entity.getPosY()
-						+ random.nextDouble() * 0.3, entity.getPosZ() + random.nextDouble() * 0.3, 0, 0.06d, 0);
+		entity.getEntityWorld().addParticle(ParticleTypes.FLAME, entity.getPosX() + random.nextDouble() * 0.3, entity.getPosY() + random.nextDouble() * 0.3, entity.getPosZ() + random.nextDouble() * 0.3, 0, 0.06d, 0);
 
 		int radius = amplifier + 1;
 
@@ -36,5 +34,11 @@ public class PotionFireFuse extends PotionBloodMagic
 					: Explosion.Mode.NONE;
 			entity.getEntityWorld().createExplosion(null, entity.getPosX(), entity.getPosY(), entity.getPosZ(), radius, false, explosion$mode);
 		}
+	}
+
+	@Override
+	public boolean isReady(int duration, int amplifier)
+	{
+		return true;
 	}
 }

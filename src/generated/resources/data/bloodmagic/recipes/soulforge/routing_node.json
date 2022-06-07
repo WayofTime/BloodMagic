@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "tag": "forge:stone"
+  },
+  "input1": {
+    "tag": "forge:glass"
+  },
+  "input2": {
+    "tag": "forge:dusts/redstone"
+  },
+  "input3": {
+    "tag": "forge:dusts/glowstone"
+  },
+  "output": {
+    "item": "bloodmagic:itemroutingnode"
+  },
+  "minimumDrain": 400.0,
+  "drain": 5.0
+}

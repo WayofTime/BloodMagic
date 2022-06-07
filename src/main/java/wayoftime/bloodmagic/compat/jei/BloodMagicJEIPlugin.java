@@ -16,15 +16,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.compat.jei.alchemytable.AlchemyTableRecipeCategory;
+import wayoftime.bloodmagic.compat.jei.alchemytable.PotionRecipeCategory;
 import wayoftime.bloodmagic.compat.jei.altar.BloodAltarRecipeCategory;
 import wayoftime.bloodmagic.compat.jei.arc.ARCFurnaceRecipeCategory;
 import wayoftime.bloodmagic.compat.jei.arc.ARCRecipeCategory;
 import wayoftime.bloodmagic.compat.jei.array.AlchemyArrayCraftingCategory;
 import wayoftime.bloodmagic.compat.jei.forge.TartaricForgeRecipeCategory;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
 
 @JeiPlugin
 public class BloodMagicJEIPlugin implements IModPlugin
@@ -42,6 +43,7 @@ public class BloodMagicJEIPlugin implements IModPlugin
 		registration.addRecipeCatalyst(new ItemStack(BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER.get()), ARCRecipeCategory.UID);
 		registration.addRecipeCatalyst(new ItemStack(BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER.get()), ARCFurnaceRecipeCategory.UID);
 		registration.addRecipeCatalyst(new ItemStack(BloodMagicBlocks.ALCHEMY_TABLE.get()), AlchemyTableRecipeCategory.UID);
+		registration.addRecipeCatalyst(new ItemStack(BloodMagicBlocks.ALCHEMY_TABLE.get()), PotionRecipeCategory.UID);
 	}
 
 	@Override
@@ -54,6 +56,7 @@ public class BloodMagicJEIPlugin implements IModPlugin
 		registration.addRecipeCategories(new ARCRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
 		registration.addRecipeCategories(new ARCFurnaceRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
 		registration.addRecipeCategories(new AlchemyTableRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+		registration.addRecipeCategories(new PotionRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
 	}
 
 	@Override
@@ -66,6 +69,7 @@ public class BloodMagicJEIPlugin implements IModPlugin
 		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getARCRecipes(world), ARCRecipeCategory.UID);
 		registration.addRecipes(ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(IRecipeType.SMELTING)), ARCFurnaceRecipeCategory.UID);
 		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyTableRecipes(world), AlchemyTableRecipeCategory.UID);
+		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getPotionFlaskRecipes(world), PotionRecipeCategory.UID);
 	}
 
 	@Override

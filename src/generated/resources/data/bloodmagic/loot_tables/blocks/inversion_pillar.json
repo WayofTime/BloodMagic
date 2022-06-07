@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "name": "bloodmagic:inversion_pillar",
+      "rolls": 1.0,
+      "entries": []
+    }
+  ]
+}

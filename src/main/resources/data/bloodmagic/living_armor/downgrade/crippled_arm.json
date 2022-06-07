@@ -1,0 +1,8 @@
+{
+  "id": "bloodmagic:crippled_arm",
+  "levels": [
+    { "xp": 150, "cost": -150 }
+  ],
+  "bonuses": {
+  }
+}

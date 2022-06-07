@@ -26,6 +26,19 @@ public class GeneratorBlockTags extends BlockTagsProvider
 		this.getOrCreateBuilder(BlockTags.WALLS).add(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get());
 		this.getOrCreateBuilder(BloodMagicTags.Blocks.MUSHROOM_STEM).add(Blocks.MUSHROOM_STEM).add(Blocks.CRIMSON_STEM).add(Blocks.WARPED_STEM);
 		this.getOrCreateBuilder(BloodMagicTags.Blocks.MUSHROOM_HYPHAE).add(Blocks.BROWN_MUSHROOM_BLOCK).add(Blocks.RED_MUSHROOM_BLOCK).add(Blocks.CRIMSON_HYPHAE).add(Blocks.WARPED_HYPHAE).add(Blocks.STRIPPED_CRIMSON_HYPHAE).add(Blocks.STRIPPED_WARPED_HYPHAE).add(Blocks.NETHER_WART_BLOCK).add(Blocks.WARPED_WART_BLOCK).add(Blocks.SHROOMLIGHT);
+
+		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_COPPER);
+		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_LEAD);
+		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_OSMIUM);
+		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_SILVER);
+		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_TIN);
+		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_APATITE);
+		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_CINNABAR);
+		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_RUBY);
+		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_SAPPHIRE);
+
+		getOrCreateBuilder(BloodMagicTags.BLOCK_STONE_UNPOLISHED).add(Blocks.STONE, Blocks.ANDESITE, Blocks.DIORITE, Blocks.GRANITE);
+
 	}
 
 	/**

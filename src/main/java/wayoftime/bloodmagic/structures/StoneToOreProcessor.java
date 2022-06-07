@@ -34,7 +34,7 @@ public class StoneToOreProcessor extends StructureProcessor
 			return p_230386_5_;
 		}
 		Random random = p_230386_6_.getRandom(p_230386_5_.pos);
-		return !(this.integrity >= 1.0F) && !(random.nextFloat() <= this.integrity)
+		return !(this.integrity >= 1.0F) && !(random.nextFloat() >= this.integrity)
 				? new Template.BlockInfo(p_230386_5_.pos, BloodMagicBlocks.DUNGEON_ORE.get().getDefaultState(), p_230386_5_.nbt)
 				: p_230386_5_;
 	}

@@ -25,15 +25,21 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ObjectHolder;
+import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.event.BloodMagicCraftedEvent;
 import wayoftime.bloodmagic.common.item.BloodOrb;
+import wayoftime.bloodmagic.common.item.IAlchemyItem;
 import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.IBloodOrb;
+import wayoftime.bloodmagic.common.item.potion.ItemAlchemyFlask;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
+import wayoftime.bloodmagic.network.AlchemyTableFlagPacket;
+import wayoftime.bloodmagic.recipe.EffectHolder;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
+import wayoftime.bloodmagic.recipe.flask.RecipePotionFlaskBase;
 import wayoftime.bloodmagic.tile.container.ContainerAlchemyTable;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
@@ -50,6 +56,8 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 	public boolean isSlave = false;
 	public int burnTime = 0;
 	public int ticksRequired = 1;
+	public boolean orbFlag = false;
+	public boolean lpFlag = false;
 
 	public BlockPos connectedPos = BlockPos.ZERO;
 	public boolean[] blockedSlots = new boolean[] { false, false, false, false, false, false };
@@ -338,11 +346,23 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
 		List<ItemStack> inputList = new ArrayList<>();
 
+		ItemStack flaskStack = ItemStack.EMPTY;
+		int flaskIndex = 0;
+		int j = 0;
+
 		for (int i = 0; i < 6; i++)
 		{
 			if (!getStackInSlot(i).isEmpty())
 			{
-				inputList.add(getStackInSlot(i));
+				ItemStack slotStack = getStackInSlot(i);
+				inputList.add(slotStack);
+				if (slotStack.getItem() instanceof ItemAlchemyFlask && flaskStack.isEmpty())
+				{
+					flaskStack = slotStack;
+					flaskIndex = j;
+				}
+
+				j++;
 			}
 		}
 
@@ -352,10 +372,11 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 		RecipeAlchemyTable recipeAlchemyTable = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyTable(world, inputList);
 		if (recipeAlchemyTable != null && (burnTime > 0 || (!getWorld().isRemote && tier >= recipeAlchemyTable.getMinimumTier() && getContainedLp() >= recipeAlchemyTable.getSyphon())))
 		{
+			orbFlag = lpFlag = false;
 			if (burnTime == 1)
 				notifyUpdate();
 
-			if (canCraft(recipeAlchemyTable.getOutput()))
+			if (canCraft(recipeAlchemyTable.getOutput(inputList)))
 			{
 				ticksRequired = recipeAlchemyTable.getTicks();
 				burnTime++;
@@ -377,7 +398,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 						ItemStack[] inputs = new ItemStack[0];
 						for (ItemStack stack : inputList) ArrayUtils.add(inputs, stack.copy());
 
-						BloodMagicCraftedEvent.AlchemyTable event = new BloodMagicCraftedEvent.AlchemyTable(recipeAlchemyTable.getOutput().copy(), inputs);
+						BloodMagicCraftedEvent.AlchemyTable event = new BloodMagicCraftedEvent.AlchemyTable(recipeAlchemyTable.getOutput(inputList).copy(), inputs);
 						MinecraftForge.EVENT_BUS.post(event);
 
 						ItemStack outputSlotStack = getStackInSlot(outputSlot);
@@ -393,16 +414,121 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 					}
 				}
 			}
-		} else
-		{
-			burnTime = 0;
+			return;
 		}
 
+		if (!flaskStack.isEmpty())
+		{
+//			System.out.println("Haz flask");
+			List<EffectHolder> holderList = ((ItemAlchemyFlask) flaskStack.getItem()).getEffectHoldersOfFlask(flaskStack);
+			inputList.remove(flaskIndex);
+
+			RecipePotionFlaskBase recipePotionFlask = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getPotionFlaskRecipe(world, flaskStack, holderList, inputList);
+			if (recipePotionFlask != null && (burnTime > 0 || (!getWorld().isRemote && tier >= recipePotionFlask.getMinimumTier() && getContainedLp() >= recipePotionFlask.getSyphon())))
+			{
+				orbFlag = lpFlag = false;
+				if (burnTime == 1)
+					notifyUpdate();
+
+				if (getStackInSlot(outputSlot).isEmpty())
+				{
+					ticksRequired = recipePotionFlask.getTicks();
+					burnTime++;
+
+					if (burnTime >= ticksRequired)
+					{
+						if (!getWorld().isRemote)
+						{
+							if (recipePotionFlask.getSyphon() > 0)
+							{
+								if (consumeLp(recipePotionFlask.getSyphon()) < recipePotionFlask.getSyphon())
+								{
+									// There was not enough LP to craft or there was no orb
+									burnTime = 0;
+									notifyUpdate();
+									return;
+								}
+							}
+
+//							ItemStack[] inputs = new ItemStack[0];
+//							for (ItemStack stack : inputList) ArrayUtils.add(inputs, stack.copy());
+//
+//							BloodMagicCraftedEvent.AlchemyTable event = new BloodMagicCraftedEvent.AlchemyTable(recipeAlchemyTable.getOutput(inputList).copy(), inputs);
+//							MinecraftForge.EVENT_BUS.post(event);
+//
+//							ItemStack outputSlotStack = getStackInSlot(outputSlot);
+//							if (outputSlotStack.isEmpty())
+//								setInventorySlotContents(outputSlot, event.getOutput());
+//							else
+//								outputSlotStack.grow(event.getOutput().getCount());
+
+							ItemStack outputStack = recipePotionFlask.getOutput(flaskStack, holderList);
+							if (outputStack.getItem() instanceof ItemAlchemyFlask)
+							{
+								((ItemAlchemyFlask) outputStack.getItem()).resyncEffectInstances(outputStack);
+							}
+							setInventorySlotContents(outputSlot, outputStack);
+
+							// TODO: Need similar for the potion one, but isolate the flask
+							consumeInventory(recipePotionFlask);
+
+							burnTime = 0;
+							notifyUpdate();
+						}
+					}
+				}
+
+				return;
+			}
+		}
+
+		{
+			burnTime = 0;
+			if (!world.isRemote)
+			{
+				boolean oldOrbFlag = orbFlag;
+				boolean oldLPFlag = lpFlag;
+
+				if (recipeAlchemyTable != null)
+				{
+					orbFlag = tier < recipeAlchemyTable.getMinimumTier() ? true : false;
+					lpFlag = (!orbFlag && (getContainedLp() < recipeAlchemyTable.getSyphon())) ? true : false;
+				} else
+				{
+					orbFlag = lpFlag = false;
+				}
+
+				if (orbFlag != oldOrbFlag || lpFlag != oldLPFlag)
+				{
+					BloodMagic.packetHandler.sendToAllTracking(new AlchemyTableFlagPacket(this), this);
+				}
+			}
+		}
 	}
 
 	public double getProgressForGui()
 	{
 		return ((double) burnTime) / ticksRequired;
+	}
+
+	public boolean getOrbFlagForGui()
+	{
+		return orbFlag;
+	}
+
+	public boolean getLPFlagforGui()
+	{
+		return lpFlag;
+	}
+
+	public void setOrbFlagForGui(boolean orbFlag)
+	{
+		this.orbFlag = orbFlag;
+	}
+
+	public void setLPFlagForGui(boolean lpFlag)
+	{
+		this.lpFlag = lpFlag;
 	}
 
 	private boolean canCraft(ItemStack output)
@@ -457,7 +583,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
 	public void craftItem(List<ItemStack> inputList, RecipeAlchemyTable recipe)
 	{
-		ItemStack outputStack = recipe.getOutput();
+		ItemStack outputStack = recipe.getOutput(inputList);
 		if (this.canCraft(outputStack))
 		{
 			ItemStack currentOutputStack = getStackInSlot(outputSlot);
@@ -506,7 +632,15 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 			ItemStack inputStack = getStackInSlot(i);
 			if (!inputStack.isEmpty())
 			{
-				if (inputStack.getItem().hasContainerItem(inputStack))
+				if (inputStack.getItem() instanceof IAlchemyItem)
+				{
+					if (((IAlchemyItem) inputStack.getItem()).isStackChangedOnUse(inputStack))
+					{
+						setInventorySlotContents(i, ((IAlchemyItem) inputStack.getItem()).onConsumeInput(inputStack));
+					}
+
+					continue;
+				} else if (inputStack.getItem().hasContainerItem(inputStack))
 				{
 					setInventorySlotContents(i, inputStack.getItem().getContainerItem(inputStack));
 					continue;
@@ -526,6 +660,36 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 					{
 						setInventorySlotContents(i, ItemStack.EMPTY);
 					}
+					continue;
+				}
+
+				inputStack.shrink(1);
+				if (inputStack.isEmpty())
+				{
+					setInventorySlotContents(i, ItemStack.EMPTY);
+				}
+			}
+		}
+	}
+
+	public void consumeInventory(RecipePotionFlaskBase recipe)
+	{
+		for (int i = 0; i < 6; i++)
+		{
+			ItemStack inputStack = getStackInSlot(i);
+			if (!inputStack.isEmpty())
+			{
+				if (inputStack.getItem() instanceof IAlchemyItem)
+				{
+					if (((IAlchemyItem) inputStack.getItem()).isStackChangedOnUse(inputStack))
+					{
+						setInventorySlotContents(i, ((IAlchemyItem) inputStack.getItem()).onConsumeInput(inputStack));
+					}
+
+					continue;
+				} else if (inputStack.getItem().hasContainerItem(inputStack))
+				{
+					setInventorySlotContents(i, inputStack.getItem().getContainerItem(inputStack));
 					continue;
 				}
 

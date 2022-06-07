@@ -1,0 +1,17 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "tag": "forge:storage_blocks/iron"
+  },
+  "input1": {
+    "tag": "forge:gems/diamond"
+  },
+  "input2": {
+    "item": "bloodmagic:infusedslate"
+  },
+  "output": {
+    "item": "bloodmagic:masterroutingnode"
+  },
+  "minimumDrain": 400.0,
+  "drain": 200.0
+}

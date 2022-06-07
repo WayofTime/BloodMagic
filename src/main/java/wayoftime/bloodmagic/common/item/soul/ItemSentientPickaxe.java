@@ -255,7 +255,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 			return EnumDemonWillType.DEFAULT;
 		}
 
-		return EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ENGLISH));
+		return EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ROOT));
 	}
 
 	public void setCurrentType(ItemStack stack, EnumDemonWillType type)
@@ -303,7 +303,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 
 //		tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.sentientSword.desc"))));
 		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sentientPickaxe.desc").mergeStyle(TextFormatting.GRAY));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase()).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase(Locale.ROOT)).mergeStyle(TextFormatting.GRAY));
 	}
 
 	@Override

@@ -1,0 +1,31 @@
+{
+  "type": "bloodmagic:meteor",
+  "input": {
+    "tag": "forge:stone"
+  },
+  "syphon": 0,
+  "explosion": 30.0,
+  "layers": [
+    {
+      "radius": 16,
+      "additionalWeight": 0,
+      "minWeight": 400,
+      "weightMap": [
+        {
+          "tag": "#forge:ores/apatite#0",
+          "weight": 50
+        },
+        {
+          "tag": "#forge:ores/coal#0",
+          "weight": 150
+        },
+        {
+          "tag": "minecraft:iron_ore",
+          "weight": 50
+        }
+      ],
+      "fill": "minecraft:stone",
+      "shell": "#minecraft:stone_unpolished"
+    }
+  ]
+}

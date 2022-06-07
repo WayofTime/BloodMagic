@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.common.item;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
@@ -30,7 +31,7 @@ public class ItemActivationCrystal extends Item implements IBindable
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.activationcrystal." + type.name().toLowerCase()).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.activationcrystal." + type.name().toLowerCase(Locale.ROOT)).mergeStyle(TextFormatting.GRAY));
 
 		if (!stack.hasTag())
 			return;
@@ -49,7 +50,9 @@ public class ItemActivationCrystal extends Item implements IBindable
 
 	public enum CrystalType
 	{
-		WEAK, AWAKENED, CREATIVE,;
+		WEAK,
+		AWAKENED,
+		CREATIVE,;
 
 		@Nonnull
 		public static ItemStack getStack(int level)

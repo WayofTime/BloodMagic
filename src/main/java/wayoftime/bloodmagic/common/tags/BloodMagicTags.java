@@ -33,6 +33,18 @@ public class BloodMagicTags
 	public static final ITag.INamedTag<Item> ORE_OSMIUM = getForgeOreTag("osmium");
 	public static final ITag.INamedTag<Item> ORE_SILVER = getForgeOreTag("silver");
 
+	public static final ITag.INamedTag<Block> BLOCK_ORE_COPPER = getForgeBlockOreTag("copper");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_TIN = getForgeBlockOreTag("tin");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_LEAD = getForgeBlockOreTag("lead");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_OSMIUM = getForgeBlockOreTag("osmium");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_SILVER = getForgeBlockOreTag("silver");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_APATITE = getForgeBlockOreTag("apatite");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_CINNABAR = getForgeBlockOreTag("cinnabar");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_RUBY = getForgeBlockOreTag("ruby");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_SAPPHIRE = getForgeBlockOreTag("sapphire");
+
+	public static final ITag.INamedTag<Block> BLOCK_STONE_UNPOLISHED = BlockTags.makeWrapperTag("minecraft:stone_unpolished");
+
 	// Ingots
 	public static final ITag.INamedTag<Item> INGOT_HELLFORGED = getForgeIngotTag("hellforged");
 
@@ -57,6 +69,13 @@ public class BloodMagicTags
 	public static final ITag.INamedTag<Item> GRAVEL_GOLD = getGravelTag("gold");
 	public static final ITag.INamedTag<Item> GRAVEL_NETHERITE_SCRAP = getGravelTag("netherite_scrap");
 
+	// Vanilla
+	public static final ITag.INamedTag<Item> SWORDS = ItemTags.makeWrapperTag("forge:swords");
+	public static final ITag.INamedTag<Item> AXES = ItemTags.makeWrapperTag("forge:axes");
+	public static final ITag.INamedTag<Item> SHOVELS = ItemTags.makeWrapperTag("forge:shovels");
+	public static final ITag.INamedTag<Item> PICKAXES = ItemTags.makeWrapperTag("forge:pickaxes");
+	public static final ITag.INamedTag<Item> HOES = ItemTags.makeWrapperTag("forge:hoes");
+
 	public static class Blocks
 	{
 		public static final ITag.INamedTag<Block> MUSHROOM_STEM = BlockTags.makeWrapperTag("minecraft:mushroom_stem");
@@ -66,6 +85,11 @@ public class BloodMagicTags
 	public static ITag.INamedTag<Item> getForgeOreTag(String name)
 	{
 		return ItemTags.makeWrapperTag("forge:ores/" + name);
+	}
+
+	public static ITag.INamedTag<Block> getForgeBlockOreTag(String name)
+	{
+		return BlockTags.makeWrapperTag("forge:ores/" + name);
 	}
 
 	public static ITag.INamedTag<Item> getForgeIngotTag(String name)

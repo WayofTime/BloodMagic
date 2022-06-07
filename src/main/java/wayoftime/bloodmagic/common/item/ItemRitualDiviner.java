@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.common.item;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import com.google.common.collect.Lists;
@@ -10,6 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
@@ -46,6 +48,7 @@ import wayoftime.bloodmagic.tile.TileMasterRitualStone;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.Utils;
 import wayoftime.bloodmagic.util.handler.event.ClientHandler;
+import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.util.helper.RitualHelper;
 import wayoftime.bloodmagic.util.helper.TextHelper;
 
@@ -59,6 +62,71 @@ public class ItemRitualDiviner extends Item
 	{
 		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB));
 		this.type = type;
+	}
+
+	public boolean getActivated(ItemStack stack)
+	{
+		return !stack.isEmpty() && NBTHelper.checkNBT(stack).getTag().getBoolean(Constants.NBT.ACTIVATED);
+	}
+
+	public ItemStack setActivatedState(ItemStack stack, boolean activated)
+	{
+		if (!stack.isEmpty())
+		{
+			NBTHelper.checkNBT(stack).getTag().putBoolean(Constants.NBT.ACTIVATED, activated);
+			return stack;
+		}
+
+		return stack;
+	}
+
+	public void setStoredPos(ItemStack stack, BlockPos pos)
+	{
+		if (!stack.hasTag())
+		{
+			stack.setTag(new CompoundNBT());
+		}
+
+		CompoundNBT tag = stack.getTag();
+
+		tag.putInt(Constants.NBT.X_COORD, pos.getX());
+		tag.putInt(Constants.NBT.Y_COORD, pos.getY());
+		tag.putInt(Constants.NBT.Z_COORD, pos.getZ());
+	}
+
+	public BlockPos getStoredPos(ItemStack stack)
+	{
+		if (!stack.hasTag())
+		{
+			stack.setTag(new CompoundNBT());
+		}
+
+		CompoundNBT tag = stack.getTag();
+
+		return new BlockPos(tag.getInt(Constants.NBT.X_COORD), tag.getInt(Constants.NBT.Y_COORD), tag.getInt(Constants.NBT.Z_COORD));
+	}
+
+	@Override
+	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
+	{
+		if (entityIn instanceof PlayerEntity && getActivated(stack))
+		{
+			if (entityIn.ticksExisted % 4 == 0)
+			{
+				BlockPos pos = getStoredPos(stack);
+
+				if (!addRuneToRitual(stack, worldIn, pos, (PlayerEntity) entityIn))
+				{
+					setActivatedState(stack, false);
+				} else
+				{
+					if (worldIn.isRemote)
+					{
+						spawnParticles(worldIn, pos, 30);
+					}
+				}
+			}
+		}
 	}
 
 //	@Override
@@ -88,6 +156,9 @@ public class ItemRitualDiviner extends Item
 			return ActionResultType.SUCCESS;
 		} else if (addRuneToRitual(stack, context.getWorld(), context.getPos(), context.getPlayer()))
 		{
+			setStoredPos(stack, context.getPos());
+			setActivatedState(stack, true);
+
 			if (context.getWorld().isRemote)
 			{
 				spawnParticles(context.getWorld(), context.getPos().offset(context.getFace()), 15);
@@ -155,8 +226,9 @@ public class ItemRitualDiviner extends Item
 						return true;
 					} else
 					{
-						return false; // TODO: Possibly replace the block with a
-						// ritual stone
+						notifyBlockedBuild(player, newPos);
+						return false;
+						// TODO: Possibly replace the block with a ritual stone
 					}
 				}
 			}
@@ -242,9 +314,9 @@ public class ItemRitualDiviner extends Item
 
 				for (EnumDemonWillType type : EnumDemonWillType.values())
 				{
-					if (TextHelper.canTranslate(ritual.getTranslationKey() + "." + type.name().toLowerCase() + ".info"))
+					if (TextHelper.canTranslate(ritual.getTranslationKey() + "." + type.name().toLowerCase(Locale.ROOT) + ".info"))
 					{
-						tooltip.add(new TranslationTextComponent(ritual.getTranslationKey() + "." + type.name().toLowerCase() + ".info").mergeStyle(TextFormatting.GRAY));
+						tooltip.add(new TranslationTextComponent(ritual.getTranslationKey() + "." + type.name().toLowerCase(Locale.ROOT) + ".info"));
 					}
 				}
 			} else if (sneaking)
@@ -284,6 +356,7 @@ public class ItemRitualDiviner extends Item
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
 	{
 		ItemStack stack = player.getHeldItem(hand);
+		setActivatedState(stack, false);
 
 		RayTraceResult ray = rayTrace(world, player, RayTraceContext.FluidMode.NONE);
 
@@ -314,6 +387,7 @@ public class ItemRitualDiviner extends Item
 	@Override
 	public void onUse(World worldIn, LivingEntity entityLiving, ItemStack stack, int count)
 	{
+		setActivatedState(stack, false);
 		if (!entityLiving.world.isRemote && entityLiving instanceof PlayerEntity)
 		{
 			PlayerEntity player = (PlayerEntity) entityLiving;
@@ -543,8 +617,13 @@ public class ItemRitualDiviner extends Item
 				double d0 = random.nextGaussian() * 0.02D;
 				double d1 = random.nextGaussian() * 0.02D;
 				double d2 = random.nextGaussian() * 0.02D;
-				worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, (double) ((float) pos.getX() + random.nextFloat()), (double) pos.getY() + (double) random.nextFloat() * 1.0f, (double) ((float) pos.getZ() + random.nextFloat()), d0, d1, d2);
+				worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, (double) ((float) pos.getX() + random.nextFloat() * 3.0f - 1), (double) pos.getY() + (double) random.nextFloat() * 3.0f - 1, (double) ((float) pos.getZ() + random.nextFloat() * 3.0f - 1), d0, d1, d2);
 			}
 		}
+	}
+
+	public void notifyBlockedBuild(PlayerEntity player, BlockPos pos)
+	{
+		player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.diviner.blockedBuild", pos.getX(), pos.getY(), pos.getZ()), true);
 	}
 }

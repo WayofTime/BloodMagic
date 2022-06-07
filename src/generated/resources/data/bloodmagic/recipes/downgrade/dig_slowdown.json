@@ -1,0 +1,7 @@
+{
+  "type": "bloodmagic:livingdowngrade",
+  "input": {
+    "item": "minecraft:stone_pickaxe"
+  },
+  "resource": "bloodmagic:dig_slowdown"
+}

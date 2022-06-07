@@ -1,0 +1,12 @@
+{
+  "type": "bloodmagic:dungeon",
+  "generator": {
+    "type": "minecraft:noise",
+    "seed": 0,
+    "settings": "bloodmagic:none",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "bloodmagic:none"
+    }
+  }
+}

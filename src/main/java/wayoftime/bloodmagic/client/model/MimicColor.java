@@ -15,6 +15,11 @@ public class MimicColor implements IBlockColor
 	@Override
 	public int getColor(BlockState blockState, @Nullable IBlockDisplayReader world, @Nullable BlockPos pos, int tint)
 	{
+		if (world == null)
+		{
+			return -1;
+		}
+
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof TileMimic)
 		{

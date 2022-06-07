@@ -12,6 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
@@ -23,11 +24,14 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.extensions.IForgeItem;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.living.ILivingContainer;
 import wayoftime.bloodmagic.core.living.LivingStats;
+import wayoftime.bloodmagic.core.living.LivingUtil;
 
-public class ItemLivingArmor extends ArmorItem implements ILivingContainer, ExpandedArmor
+public class ItemLivingArmor extends ArmorItem implements ILivingContainer, ExpandedArmor, IForgeItem
 {
 
 	private static final int MAX_ABSORPTION = 100000;
@@ -77,7 +81,16 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 	@Override
 	public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken)
 	{
-		return Math.min((stack.getMaxDamage() - 1) - stack.getDamage() - amount, 0);
+		if (this != BloodMagicItems.LIVING_PLATE.get())
+		{
+			return super.damageItem(stack, amount, entity, onBroken);
+		}
+
+		int durRemaining = (stack.getMaxDamage() - 1 - stack.getDamage());
+		int value = Math.max(Math.min(durRemaining, amount), 0);
+
+//		System.out.println("value: " + value + ", damage of stack: " + stack.getDamage() + ", max damage of stack: " + stack.getMaxDamage());
+		return value;
 	}
 
 	@Override
@@ -87,6 +100,9 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 		Multimap<Attribute, AttributeModifier> modifiers = HashMultimap.create();
 		modifiers.putAll(super.getAttributeModifiers(slot, stack));
 		if (slot != EquipmentSlotType.CHEST)
+			return modifiers;
+
+		if (this.getMaxDamage(stack) - this.getDamage(stack) <= 1)
 			return modifiers;
 
 		LivingStats stats = getLivingStats(stack);
@@ -185,6 +201,28 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		ILivingContainer.appendLivingTooltip(getLivingStats(stack), tooltip, true);
+		ILivingContainer.appendLivingTooltip(stack, getLivingStats(stack), tooltip, true);
+	}
+
+	@Override
+	public boolean canElytraFly(ItemStack stack, LivingEntity entity)
+	{
+		return hasElytraUpgrade(stack, entity) && stack.getDamage() < stack.getMaxDamage() - 1;
+	}
+
+	@Override
+	public boolean elytraFlightTick(ItemStack stack, LivingEntity entity, int flightTicks)
+	{
+		if (!entity.world.isRemote && (flightTicks + 1) % 40 == 0)
+			stack.damageItem(1, entity, e -> e.sendBreakAnimation(net.minecraft.inventory.EquipmentSlotType.CHEST));
+		return true;
+	}
+
+	public boolean hasElytraUpgrade(ItemStack stack, LivingEntity entity)
+	{
+		if (stack.getItem() instanceof ItemLivingArmor && entity instanceof PlayerEntity && LivingUtil.hasFullSet((PlayerEntity) entity))
+			return LivingStats.fromPlayer((PlayerEntity) entity, true).getLevel(LivingArmorRegistrar.UPGRADE_ELYTRA.get().getKey()) > 0;
+		else
+			return false;
 	}
 }

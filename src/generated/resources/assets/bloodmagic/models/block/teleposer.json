@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "bloodmagic:block/teleposer_side",
+    "bottom": "bloodmagic:block/teleposer_side",
+    "top": "bloodmagic:block/teleposer_top"
+  }
+}

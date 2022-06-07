@@ -1,0 +1,21 @@
+{
+  "type": "bloodmagic:flask_potiontransform",
+  "input": [
+    {
+      "item": "bloodmagic:combinationalcatalyst"
+    }
+  ],
+  "outputEffect": [
+    {
+      "effect": "bloodmagic:heavy_heart",
+      "baseDuration": 1800
+    }
+  ],
+  "inputEffect": [
+    "bloodmagic:gravity",
+    "minecraft:instant_health"
+  ],
+  "syphon": 1000,
+  "ticks": 200,
+  "upgradeLevel": 1
+}

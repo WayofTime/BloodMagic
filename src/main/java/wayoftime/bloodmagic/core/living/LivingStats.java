@@ -18,8 +18,8 @@ public class LivingStats
 
 	public static final int DEFAULT_UPGRADE_POINTS = 100;
 
-	private final Map<LivingUpgrade, Double> upgrades;
-	private int maxPoints = DEFAULT_UPGRADE_POINTS;
+	protected final Map<LivingUpgrade, Double> upgrades;
+	protected int maxPoints = DEFAULT_UPGRADE_POINTS;
 
 	public LivingStats(Map<LivingUpgrade, Double> upgrades)
 	{
@@ -42,21 +42,22 @@ public class LivingStats
 		LivingUpgrade upgrade = LivingArmorRegistrar.UPGRADE_MAP.getOrDefault(key, LivingUpgrade.DUMMY);
 		double current = upgrades.getOrDefault(upgrade, 0d);
 
-//		System.out.println("Upgrade: " + upgrade);
+//		System.out.println("Resource key: " + key + ", Upgrade: " + upgrade);
 
 		if (experience > 0 && upgrade.getNextRequirement((int) current) == 0)
 			return this;
 
 		upgrades.put(upgrade, current + experience);
+
 		return this;
 	}
 
 	public LivingStats resetExperience(ResourceLocation key)
 	{
 		LivingUpgrade upgrade = LivingArmorRegistrar.UPGRADE_MAP.getOrDefault(key, LivingUpgrade.DUMMY);
-		double current = upgrades.getOrDefault(upgrade, 0d);
+//		double current = upgrades.getOrDefault(upgrade, 0d);
 
-		if (upgrade.getNextRequirement((int) current) == 0)
+		if (!upgrades.containsKey(upgrade))
 			return this;
 
 		upgrades.put(upgrade, 0d);

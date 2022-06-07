@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:flask_potionpotency",
+  "input": [
+    {
+      "item": "bloodmagic:mundanepowercatalyst"
+    }
+  ],
+  "syphon": 200,
+  "ticks": 100,
+  "upgradeLevel": 1,
+  "effect": "minecraft:regeneration",
+  "amplifier": 1,
+  "ampDurMod": 0.5
+}

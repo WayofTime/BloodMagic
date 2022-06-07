@@ -55,8 +55,8 @@ public class LivingArmourUpgradeInfoTable implements IComponentProcessor
 		if (key.equals("table"))
 		{
 			StringBuilder output = new StringBuilder();
-			String i18nLevel = TextHelper.localize("patchouli.bloodmagic.living_armour_upgrade_table.level");
-			String i18nUpgradePoints = TextHelper.localize("patchouli.bloodmagic.living_armour_upgrade_table.upgrade_points");
+			String i18nLevel = TextHelper.localize("guide.patchouli.bloodmagic.living_armour_upgrade_table.level");
+			String i18nUpgradePoints = TextHelper.localize("guide.patchouli.bloodmagic.living_armour_upgrade_table.upgrade_points");
 
 			for (Entry<ResourceLocation, LivingUpgrade> entry : LivingArmorRegistrar.UPGRADE_MAP.entrySet())
 			{

@@ -107,10 +107,10 @@ public class ARCProcessor implements IComponentProcessor
 			{
 				FluidStack fluid = recipe.getFluidIngredient().getRepresentations().get(0);
 				String i18nFluidName = TextHelper.localize(fluid.getTranslationKey());
-				return IVariable.wrap(TextHelper.localize("patchouli.bloodmagic.arc_processor.fluid", fluid.getAmount(), i18nFluidName));
+				return IVariable.wrap(TextHelper.localize("guide.patchouli.bloodmagic.arc_processor.fluid", fluid.getAmount(), i18nFluidName));
 			} else
 			{
-				return IVariable.wrap(TextHelper.localize("patchouli.bloodmagic.arc_processor.no_fluid"));
+				return IVariable.wrap(TextHelper.localize("guide.patchouli.bloodmagic.arc_processor.no_fluid"));
 			}
 		}
 		case "tooltip_fluid_output":
@@ -119,10 +119,10 @@ public class ARCProcessor implements IComponentProcessor
 			{
 				FluidStack fluid = recipe.getFluidOutput();
 				String i18nFluidName = TextHelper.localize(fluid.getTranslationKey());
-				return IVariable.wrap(TextHelper.localize("patchouli.bloodmagic.arc_processor.fluid", fluid.getAmount(), i18nFluidName));
+				return IVariable.wrap(TextHelper.localize("guide.patchouli.bloodmagic.arc_processor.fluid", fluid.getAmount(), i18nFluidName));
 			} else
 			{
-				return IVariable.wrap(TextHelper.localize("patchouli.bloodmagic.arc_processor.no_fluid"));
+				return IVariable.wrap(TextHelper.localize("guide.patchouli.bloodmagic.arc_processor.no_fluid"));
 			}
 		}
 		default:

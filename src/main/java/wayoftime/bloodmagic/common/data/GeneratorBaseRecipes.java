@@ -9,6 +9,7 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
@@ -29,6 +30,7 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 	@Override
 	protected void registerRecipes(Consumer<IFinishedRecipe> consumer)
 	{
+		IRecipeSerializer d;
 		addVanillaRecipes(consumer);
 		addVanillaSmithingRecipes(consumer);
 		addBloodOrbRecipes(consumer);
@@ -49,6 +51,11 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 		ShapelessRecipeBuilder.shapelessRecipe(BloodMagicBlocks.STONE_TILE_PATH.get(), 4).addIngredient(BloodMagicBlocks.STONE_PATH.get()).addIngredient(BloodMagicBlocks.STONE_PATH.get()).addIngredient(BloodMagicBlocks.STONE_PATH.get()).addIngredient(BloodMagicBlocks.STONE_PATH.get()).addCriterion("has_magician_orb", hasItem(BloodMagicItems.MAGICIAN_BLOOD_ORB.get())).build(consumer, BloodMagic.rl("path/path_stonetile"));
 		ShapelessRecipeBuilder.shapelessRecipe(BloodMagicBlocks.WORN_STONE_TILE_PATH.get(), 4).addIngredient(BloodMagicBlocks.WORN_STONE_PATH.get()).addIngredient(BloodMagicBlocks.WORN_STONE_PATH.get()).addIngredient(BloodMagicBlocks.WORN_STONE_PATH.get()).addIngredient(BloodMagicBlocks.WORN_STONE_PATH.get()).addCriterion("has_master_orb", hasItem(BloodMagicItems.MASTER_BLOOD_ORB.get())).build(consumer, BloodMagic.rl("path/path_wornstonetile"));
 
+		ShapelessRecipeBuilder.shapelessRecipe(BloodMagicItems.ALCHEMY_FLASK.get()).addIngredient(BloodMagicItems.ALCHEMY_FLASK.get()).addIngredient(Ingredient.fromItems(Items.WATER_BUCKET)).addCriterion("has_flask", hasItem(BloodMagicItems.ALCHEMY_FLASK.get())).build(consumer, BloodMagic.rl("alchemy_flask"));
+
+		ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.TELEPOSER.get()).patternLine("ggg").patternLine("ete").patternLine("ggg").key('g', Ingredient.fromTag(Tags.Items.INGOTS_GOLD)).key('e', Ingredient.fromTag(Tags.Items.ENDER_PEARLS)).key('t', Ingredient.fromItems(BloodMagicItems.TELEPOSER_FOCUS.get())).addCriterion("has_gold", hasItem(BloodMagicItems.TELEPOSER_FOCUS.get())).build(consumer, BloodMagic.rl("teleposer"));
+		ShapelessRecipeBuilder.shapelessRecipe(BloodMagicItems.REINFORCED_TELEPOSER_FOCUS.get()).addIngredient(BloodMagicItems.ENHANCED_TELEPOSER_FOCUS.get()).addIngredient(BloodMagicItems.WEAK_BLOOD_SHARD.get()).addCriterion("has_shard", hasItem(BloodMagicItems.WEAK_BLOOD_SHARD.get())).build(consumer, BloodMagic.rl("enhanced_teleposer_focus"));
+
 		// Changed Recipes
 		{
 //			ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.BLOOD_ALTAR.get()).key('a', Tags.Items.STONE).key('b', Items.FURNACE).key('c', Tags.Items.INGOTS_GOLD).key('d', BloodMagicItems.MONSTER_SOUL_RAW.get()).patternLine("a a").patternLine("aba").patternLine("cdc").addCriterion("has_will", hasItem(BloodMagicItems.MONSTER_SOUL_RAW.get())).build(consumer, BloodMagic.rl("blood_altar"));
@@ -60,6 +67,8 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 			ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.ALCHEMY_TABLE.get()).key('b', Tags.Items.INGOTS_IRON).key('s', Tags.Items.STONE).key('w', ItemTags.PLANKS).key('g', Tags.Items.INGOTS_GOLD).key('o', BloodMagicItems.SLATE.get()).patternLine("sss").patternLine("wbw").patternLine("gog").addCriterion("has_blank_slate", hasItem(BloodMagicItems.SLATE.get())).build(consumer, BloodMagic.rl("alchemy_table"));
 			ShapedRecipeBuilder.shapedRecipe(BloodMagicBlocks.SOUL_FORGE.get()).key('s', Tags.Items.STONE).key('S', BloodMagicItems.SLATE.get()).key('i', Tags.Items.INGOTS_IRON).key('o', Tags.Items.STORAGE_BLOCKS_IRON).patternLine("i i").patternLine("sSs").patternLine("sos").addCriterion("has_blank_slate", hasItem(BloodMagicItems.SLATE.get())).build(consumer, BloodMagic.rl("soul_forge"));
 		}
+
+		ShapedRecipeBuilder.shapedRecipe(BloodMagicItems.SYNTHETIC_POINT.get(), 2).patternLine("ifi").patternLine("frf").patternLine("ifi").key('f', Ingredient.fromItems(Items.ROTTEN_FLESH, Items.PORKCHOP, Items.MUTTON, Items.BEEF, Items.TROPICAL_FISH, Items.COD, Items.PUFFERFISH, Items.SALMON, Items.CHICKEN, Items.SPIDER_EYE, Items.RABBIT, BloodMagicItems.STRONG_TAU_ITEM.get())).key('i', Tags.Items.NUGGETS_IRON).key('r', Tags.Items.DUSTS_REDSTONE).addCriterion("has_nugget", hasItem(Items.IRON_NUGGET)).build(consumer, BloodMagic.rl("synthetic_point"));
 	}
 
 	private void addVanillaSmithingRecipes(Consumer<IFinishedRecipe> consumer)
@@ -69,6 +78,7 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(BloodMagicTags.DUST_GOLD), Items.GOLD_INGOT, 0, 200).addCriterion("has_gold_sand", hasItem(BloodMagicItems.GOLD_SAND.get())).build(consumer, BloodMagic.rl(basePath + "ingot_gold"));
 		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(BloodMagicTags.DUST_NETHERITE_SCRAP), Items.NETHERITE_SCRAP, 0, 200).addCriterion("has_netherite_dust", hasItem(BloodMagicItems.NETHERITE_SCRAP_SAND.get())).build(consumer, BloodMagic.rl(basePath + "ingot_netherite_scrap"));
 		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(BloodMagicTags.DUST_HELLFORGED), BloodMagicItems.HELLFORGED_INGOT.get(), 0, 200).addCriterion("has_hellforged_dust", hasItem(BloodMagicItems.HELLFORGED_SAND.get())).build(consumer, BloodMagic.rl(basePath + "ingot_hellforged"));
+		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(BloodMagicItems.PLANT_OIL.get()), BloodMagicItems.SALTPETER.get(), 0, 200).addCriterion("has_plant_oil", hasItem(BloodMagicItems.PLANT_OIL.get())).build(consumer, BloodMagic.rl(basePath + "saltpeter"));
 	}
 
 	private void addBloodOrbRecipes(Consumer<IFinishedRecipe> consumer)

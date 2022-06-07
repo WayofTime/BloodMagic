@@ -18,11 +18,15 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
+import wayoftime.bloodmagic.recipe.EffectHolder;
 import wayoftime.bloodmagic.recipe.RecipeARC;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.recipe.RecipeBloodAltar;
+import wayoftime.bloodmagic.recipe.RecipeLivingDowngrade;
+import wayoftime.bloodmagic.recipe.RecipeMeteor;
 import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
+import wayoftime.bloodmagic.recipe.flask.RecipePotionFlaskBase;
 
 public class BloodMagicRecipeRegistrar
 {
@@ -115,6 +119,80 @@ public class BloodMagicRecipeRegistrar
 	}
 
 	@Nullable
+	public RecipeMeteor getMeteor(World world, @Nonnull ItemStack input)
+	{
+		Preconditions.checkNotNull(input, "input cannot be null.");
+		if (input.isEmpty())
+			return null;
+
+		List<RecipeMeteor> meteorRecipes = world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.METEOR);
+//		System.out.println("Number of recipes: " + meteorRecipes.size());
+
+		for (RecipeMeteor recipe : meteorRecipes) if (recipe.getInput().test(input))
+			return recipe;
+
+		return null;
+	}
+
+	@Nullable
+	public RecipePotionFlaskBase getPotionFlaskRecipe(World world, ItemStack flaskStack, @Nonnull List<EffectHolder> holderList, @Nonnull List<ItemStack> input)
+	{
+		Preconditions.checkNotNull(input, "input cannot be null.");
+		if (input.isEmpty())
+			return null;
+
+//		List<EffectHolder> holderList = ((ItemAlchemyFlask) flaskStack.getItem()).getEffectHoldersOfFlask(flaskStack);
+//		Collection<EffectInstance> instanceList = PotionUtils.getEffectsFromStack(flaskStack);
+
+		List<RecipePotionFlaskBase> potionRecipes = world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.POTIONFLASK);
+//		System.out.println("Number of recipes: " + potionRecipes.size());
+
+		RecipePotionFlaskBase validRecipe = null;
+		int recipePriority = Integer.MIN_VALUE;
+
+		mainLoop: for (RecipePotionFlaskBase recipe : potionRecipes)
+		{
+			if (recipe.getInput().size() != input.size())
+				continue;
+
+			List<Ingredient> recipeInput = new ArrayList<>(recipe.getInput());
+
+			for (int i = 0; i < input.size(); i++)
+			{
+				boolean matched = false;
+				for (int j = 0; j < recipeInput.size(); j++)
+				{
+					Ingredient ingredient = recipeInput.get(j);
+					if (ingredient.test(input.get(i)))
+					{
+						matched = true;
+						recipeInput.remove(j);
+						break;
+					}
+				}
+
+				if (!matched)
+					continue mainLoop;
+			}
+
+//			System.out.println("Passed ingredient check");
+
+			// Now check if recipe works with flask's current effects.
+			if (recipe.canModifyFlask(flaskStack, holderList))
+			{
+				int prio = recipe.getPriority(holderList);
+				if (prio > recipePriority)
+				{
+					validRecipe = recipe;
+					recipePriority = prio;
+				}
+			}
+		}
+
+		return validRecipe;
+	}
+
+	@Nullable
 	public RecipeTartaricForge getTartaricForge(World world, @Nonnull List<ItemStack> input)
 	{
 		Preconditions.checkNotNull(input, "input cannot be null.");
@@ -188,6 +266,21 @@ public class BloodMagicRecipeRegistrar
 		return Pair.of(false, partialMatch);
 	}
 
+	@Nullable
+	public RecipeLivingDowngrade getLivingDowngrade(World world, @Nonnull ItemStack input)
+	{
+		Preconditions.checkNotNull(input, "input cannot be null.");
+		if (input.isEmpty())
+			return null;
+
+		List<RecipeLivingDowngrade> downgradeRecipes = world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.LIVINGDOWNGRADE);
+
+		for (RecipeLivingDowngrade recipe : downgradeRecipes) if (recipe.getInput().test(input))
+			return recipe;
+
+		return null;
+	}
+
 	public Set<RecipeBloodAltar> getAltarRecipes(World world)
 	{
 		return ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ALTAR));
@@ -211,6 +304,11 @@ public class BloodMagicRecipeRegistrar
 	public Set<RecipeAlchemyTable> getAlchemyTableRecipes(World world)
 	{
 		return ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ALCHEMYTABLE));
+	}
+
+	public Set<RecipePotionFlaskBase> getPotionFlaskRecipes(World world)
+	{
+		return ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.POTIONFLASK));
 	}
 
 	public Set<RecipeAlchemyArray> getCraftingAlchemyArrayRecipes(World world)

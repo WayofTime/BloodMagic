@@ -9,30 +9,39 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.SplashPotionItem;
+import net.minecraft.item.UseAction;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
+import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
@@ -48,6 +57,8 @@ import wayoftime.bloodmagic.common.item.BloodOrb;
 import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.IBloodOrb;
 import wayoftime.bloodmagic.common.item.ItemExperienceBook;
+import wayoftime.bloodmagic.common.item.ItemLivingArmor;
+import wayoftime.bloodmagic.common.item.ItemRitualDiviner;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.data.Binding;
@@ -57,10 +68,12 @@ import wayoftime.bloodmagic.core.living.LivingUtil;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.event.ItemBindEvent;
 import wayoftime.bloodmagic.event.SacrificeKnifeUsedEvent;
+import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
+import wayoftime.bloodmagic.network.CycleRitualDivinerPacket;
 import wayoftime.bloodmagic.network.DemonAuraClientPacket;
-import wayoftime.bloodmagic.potion.BMPotionUtils;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.util.helper.BindableHelper;
+import wayoftime.bloodmagic.util.helper.InventoryHelper;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 import wayoftime.bloodmagic.will.DemonWillHolder;
@@ -68,6 +81,51 @@ import wayoftime.bloodmagic.will.DemonWillHolder;
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class GenericHandler
 {
+	public static Map<UUID, Double> bounceMap = new HashMap<>();
+
+	@SubscribeEvent
+	public void onLivingFall(LivingFallEvent event)
+	{
+		LivingEntity eventEntityLiving = event.getEntityLiving();
+
+		if (eventEntityLiving.isPotionActive(BloodMagicPotions.HEAVY_HEART))
+		{
+			int i = eventEntityLiving.getActivePotionEffect(BloodMagicPotions.HEAVY_HEART).getAmplifier() + 1;
+			event.setDamageMultiplier(event.getDamageMultiplier() + i);
+			event.setDistance(event.getDistance() + i);
+		}
+
+		if (eventEntityLiving.isPotionActive(BloodMagicPotions.BOUNCE))
+		{
+			if (eventEntityLiving instanceof PlayerEntity)
+			{
+				PlayerEntity player = (PlayerEntity) eventEntityLiving;
+				event.setDamageMultiplier(0);
+				if (!player.isSneaking() && event.getDistance() > 1.5)
+				{
+					if (player.world.isRemote)
+					{
+						player.setMotion(player.getMotion().mul(1, -1, 1));
+						bounceMap.put(player.getUniqueID(), player.getMotion().getY());
+					} else
+					{
+						event.setCanceled(true);
+					}
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void playerTickPost(TickEvent.PlayerTickEvent event)
+	{
+		if (event.phase == TickEvent.Phase.END && bounceMap.containsKey(event.player.getUniqueID()))
+		{
+			double motionY = bounceMap.remove(event.player.getUniqueID());
+			event.player.setMotion(event.player.getMotion().mul(1, 0, 1).add(0, motionY, 0));
+		}
+	}
+
 	// Handles binding of IBindable's as well as setting a player's highest orb tier
 	@SubscribeEvent
 	public void onInteract(PlayerInteractEvent.RightClickItem event)
@@ -121,10 +179,10 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onPlayerLeftClickAir(PlayerInteractEvent.LeftClickEmpty event)
 	{
-//		if (event.getItemStack().getItem() instanceof ItemSentientScythe)
-//		{
-//			((ItemSentientScythe) event.getItemStack().getItem()).onLeftClickAir(event.getItemStack(), event.getEntityLiving());
-//		}
+		if (event.getItemStack().getItem() instanceof ItemRitualDiviner)
+		{
+			BloodMagicPacketHandler.INSTANCE.sendToServer(new CycleRitualDivinerPacket(event.getPlayer().inventory.currentItem));
+		}
 	}
 
 	@SubscribeEvent
@@ -162,6 +220,67 @@ public class GenericHandler
 			if (LivingUtil.hasFullSet(player))
 			{
 				event.setAmount((float) LivingUtil.getDamageReceivedForArmour(player, event.getSource(), event.getAmount()));
+
+				// The factor of 1.6 is due to taking into account iron armour's protection at
+				// ~11 damage
+				double factor = 1.6;
+				if (event.getSource().isProjectile())
+				{
+//					LivingStats stats = LivingStats.fromPlayer(player);
+//					stats.addExperience(LivingArmorRegistrar.TEST_UPGRADE.get().getKey(), 10);
+					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_ARROW_PROTECT.get(), event.getAmount() / factor);
+				} else
+				{
+					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_PHYSICAL_PROTECT.get(), event.getAmount() / factor);
+				}
+
+				if (event.getSource() == DamageSource.FALL)
+				{
+					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_FALL_PROTECT.get(), event.getAmount() / factor);
+				}
+			}
+		}
+
+		if (!event.getSource().isMagicDamage() && living.isPotionActive(BloodMagicPotions.OBSIDIAN_CLOAK))
+		{
+			float modifier = (float) (1 - 0.2 * (1 + living.getActivePotionEffect(BloodMagicPotions.OBSIDIAN_CLOAK).getAmplifier()));
+			event.setAmount((float) (event.getAmount() * Math.max(0, modifier)));
+		}
+	}
+
+	@SubscribeEvent
+	public void onPlayerClick(PlayerInteractEvent event)
+	{
+		if (!event.isCancelable())
+		{
+			return;
+		}
+
+		PlayerEntity sourcePlayer = event.getPlayer();
+		if (LivingUtil.hasFullSet(sourcePlayer))
+		{
+			LivingStats stats = LivingStats.fromPlayer(sourcePlayer, true);
+			if (event.getHand() == Hand.OFF_HAND)
+			{
+				int level = stats.getLevel(LivingArmorRegistrar.DOWNGRADE_CRIPPLED_ARM.get().getKey());
+				if (level > 0)
+				{
+					event.setCanceled(true);
+					return;
+				}
+			}
+
+			if (event.getItemStack().getUseAction() == UseAction.DRINK)
+			{
+				ItemStack drinkStack = event.getItemStack();
+				if (!(drinkStack.getItem() instanceof SplashPotionItem))
+				{
+					int level = stats.getLevel(LivingArmorRegistrar.DOWNGRADE_QUENCHED.get().getKey());
+					if (level > 0)
+					{
+						event.setCanceled(true);
+					}
+				}
 			}
 		}
 	}
@@ -179,9 +298,25 @@ public class GenericHandler
 			PlayerEntity sourcePlayer = (PlayerEntity) sourceEntity;
 			if (LivingUtil.hasFullSet(sourcePlayer))
 			{
+				LivingStats stats = LivingStats.fromPlayer(sourcePlayer, true);
+				ItemStack chestStack = sourcePlayer.getItemStackFromSlot(EquipmentSlotType.CHEST);
+
 				if (sourcePlayer.isSprinting())
 				{
 					LivingUtil.applyNewExperience(sourcePlayer, LivingArmorRegistrar.UPGRADE_SPRINT_ATTACK.get(), event.getAmount());
+				}
+
+				if (!event.getSource().isProjectile())
+				{
+					LivingUtil.applyNewExperience(sourcePlayer, LivingArmorRegistrar.UPGRADE_MELEE_DAMAGE.get(), event.getAmount());
+				}
+
+				int battleHungryLevel = stats.getLevel(LivingArmorRegistrar.DOWNGRADE_BATTLE_HUNGRY.get().getKey());
+				if (battleHungryLevel > 0)
+				{
+					int delay = LivingArmorRegistrar.DOWNGRADE_BATTLE_HUNGRY.get().getBonusValue("delay", battleHungryLevel).intValue();
+
+					chestStack.getTag().putInt("battle_cooldown", delay);
 				}
 			}
 
@@ -190,33 +325,33 @@ public class GenericHandler
 //			AnointmentHolder holder = AnointmentHolder.fromPlayer(sourcePlayer, Hand.MAIN_HAND);
 
 //			System.out.println("Checking consumption. Holder is: " + holder);
-			if (holder != null && holder.consumeAnointmentDurabilityOnHit(heldStack, EquipmentSlotType.MAINHAND))
+			if (holder != null && holder.consumeAnointmentDurabilityOnHit(heldStack, EquipmentSlotType.MAINHAND, sourcePlayer))
 			{
 				holder.toItemStack(heldStack);
 			}
 		}
 
-		if (living instanceof PlayerEntity)
-		{
-			PlayerEntity player = (PlayerEntity) living;
-			if (LivingUtil.hasFullSet(player))
-			{
-				if (event.getSource().isProjectile())
-				{
-//					LivingStats stats = LivingStats.fromPlayer(player);
-//					stats.addExperience(LivingArmorRegistrar.TEST_UPGRADE.get().getKey(), 10);
-					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_ARROW_PROTECT.get(), event.getAmount());
-				} else
-				{
-					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_PHYSICAL_PROTECT.get(), event.getAmount());
-				}
-
-				if (event.getSource() == DamageSource.FALL)
-				{
-					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_FALL_PROTECT.get(), event.getAmount());
-				}
-			}
-		}
+//		if (living instanceof PlayerEntity)
+//		{
+//			PlayerEntity player = (PlayerEntity) living;
+//			if (LivingUtil.hasFullSet(player))
+//			{
+//				if (event.getSource().isProjectile())
+//				{
+////					LivingStats stats = LivingStats.fromPlayer(player);
+////					stats.addExperience(LivingArmorRegistrar.TEST_UPGRADE.get().getKey(), 10);
+//					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_ARROW_PROTECT.get(), event.getAmount());
+//				} else
+//				{
+//					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_PHYSICAL_PROTECT.get(), event.getAmount());
+//				}
+//
+//				if (event.getSource() == DamageSource.FALL)
+//				{
+//					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_FALL_PROTECT.get(), event.getAmount());
+//				}
+//			}
+//		}
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -272,7 +407,7 @@ public class GenericHandler
 
 		if (!player.getEntityWorld().isRemote)
 		{
-			for (ItemStack stack : player.inventory.mainInventory)
+			for (ItemStack stack : InventoryHelper.getAllInventories(player))
 			{
 				if (stack.getItem() instanceof ItemExperienceBook)
 				{
@@ -310,25 +445,6 @@ public class GenericHandler
 		}
 	}
 
-	// Handles sending the client the Demon Will Aura updates
-	@SubscribeEvent
-	public void onLivingUpdate(LivingUpdateEvent event)
-	{
-		if (!event.getEntityLiving().getEntityWorld().isRemote)
-		{
-			LivingEntity entity = event.getEntityLiving();
-			if (entity.isPotionActive(BloodMagicPotions.PLANT_LEECH))
-			{
-				int amplifier = entity.getActivePotionEffect(BloodMagicPotions.PLANT_LEECH).getAmplifier();
-				int timeRemaining = entity.getActivePotionEffect(BloodMagicPotions.PLANT_LEECH).getDuration();
-				if (timeRemaining % 10 == 0)
-				{
-					BMPotionUtils.damageMobAndGrowSurroundingPlants(entity, 2 + amplifier, 1, 0.5 * 3 / (amplifier + 3), 25 * (1 + amplifier));
-				}
-			}
-		}
-	}
-
 	@SubscribeEvent
 	public void onHeal(LivingHealEvent event)
 	{
@@ -338,6 +454,9 @@ public class GenericHandler
 			PlayerEntity player = (PlayerEntity) living;
 			if (LivingUtil.hasFullSet(player))
 			{
+				LivingStats stats = LivingStats.fromPlayer(player, true);
+				float healModifier = 1 + LivingArmorRegistrar.DOWNGRADE_SLOW_HEAL.get().getBonusValue("heal_modifier", stats.getLevel(LivingArmorRegistrar.DOWNGRADE_SLOW_HEAL.get().getKey())).floatValue();
+				event.setAmount(event.getAmount() * healModifier);
 				LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_HEALTH.get(), event.getAmount());
 			}
 		}
@@ -358,6 +477,59 @@ public class GenericHandler
 	public static Map<UUID, Double> posXMap = new HashMap<>();
 	public static Map<UUID, Double> posZMap = new HashMap<>();
 	public static Map<UUID, Integer> foodMap = new HashMap<>();
+	public static Map<UUID, Float> prevFlySpeedMap = new HashMap<>();
+
+	Map<UUID, TargetGoal> goalMap = new HashMap<>();
+	Map<UUID, MeleeAttackGoal> attackGoalMap = new HashMap<>();
+
+	@SubscribeEvent
+	public void onPotionAdded(PotionEvent.PotionAddedEvent event)
+	{
+		if (event.getPotionEffect().getPotion() == BloodMagicPotions.FLIGHT && event.getEntityLiving() instanceof PlayerEntity)
+		{
+			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+			player.abilities.allowFlying = true;
+			if (!prevFlySpeedMap.containsKey(player.getUniqueID()))
+			{
+				prevFlySpeedMap.put(player.getUniqueID(), player.abilities.getFlySpeed());
+			}
+
+			if (event.getEntity().world.isRemote)
+				player.abilities.setFlySpeed(getFlySpeedForFlightLevel(event.getPotionEffect().getAmplifier()));
+			player.sendPlayerAbilities();
+		}
+
+	}
+
+	@SubscribeEvent
+	public void onPotionExpired(PotionEvent.PotionExpiryEvent event)
+	{
+		if (event.getPotionEffect().getPotion() == BloodMagicPotions.FLIGHT && event.getEntityLiving() instanceof PlayerEntity)
+		{
+			((PlayerEntity) event.getEntityLiving()).abilities.allowFlying = ((PlayerEntity) event.getEntityLiving()).isCreative();
+			((PlayerEntity) event.getEntityLiving()).abilities.isFlying = false;
+
+			if (event.getEntity().world.isRemote)
+			{
+				((PlayerEntity) event.getEntityLiving()).abilities.setFlySpeed(prevFlySpeedMap.getOrDefault((((PlayerEntity) event.getEntityLiving()).getUniqueID()), getFlySpeedForFlightLevel(-1)));
+				prevFlySpeedMap.remove(((PlayerEntity) event.getEntityLiving()).getUniqueID());
+			}
+
+			((PlayerEntity) event.getEntityLiving()).sendPlayerAbilities();
+		}
+	}
+
+	private float getFlySpeedForFlightLevel(int level)
+	{
+		if (level >= 0)
+		{
+			return 0.05F * (level + 1);
+		} else
+		{
+			// Default fly speed
+			return 0.05F;
+		}
+	}
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
@@ -372,19 +544,31 @@ public class GenericHandler
 					LivingStats stats = LivingStats.fromPlayer(player, true);
 					if (!player.isOnGround() && player.getMotion().getY() < 0)
 					{
-
 						int jumpLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_JUMP.get().getKey());
 						double fallDistanceMultiplier = LivingArmorRegistrar.UPGRADE_JUMP.get().getBonusValue("fall", jumpLevel).doubleValue();
 						player.fallDistance = (float) Math.max(0, player.fallDistance + fallDistanceMultiplier * player.getMotion().getY());
 //				System.out.println("Player's motion: " + player.getMotion().getY() + ", Player's fall reduction multiplier: " + fallDistanceMultiplier + ", Player's final fall distance: " + player.fallDistance);
 					}
-					return;
 				}
 			}
 		}
+
 		if (event.getEntityLiving() instanceof PlayerEntity)
 		{
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+			if (player.isPotionActive(BloodMagicPotions.FLIGHT))
+			{
+				player.fallDistance = 0;
+				if (!player.abilities.allowFlying || !prevFlySpeedMap.containsKey(player.getUniqueID()))
+				{
+					prevFlySpeedMap.put(player.getUniqueID(), player.abilities.getFlySpeed());
+					player.abilities.allowFlying = true;
+					if (player.world.isRemote)
+						player.abilities.setFlySpeed(getFlySpeedForFlightLevel(player.getActivePotionEffect(BloodMagicPotions.FLIGHT).getAmplifier()));
+					player.sendPlayerAbilities();
+				}
+			}
+
 			float percentIncrease = 0;
 
 //			System.out.println("Player's motion: " + player.getMotion().getY() + ", Player's final fall distance: " + player.fallDistance);
@@ -436,19 +620,30 @@ public class GenericHandler
 //					System.out.println("Player's motion: " + player.getMotion().getY() + ", Player's fall reduction multiplier: " + fallDistanceMultiplier + ", Player's final fall distance: " + player.fallDistance);
 				}
 
+				int fireLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_FIRE_RESIST.get().getKey());
+				if (fireLevel > 0)
+				{
+					boolean hasChanged = false;
+					int fireCooldown = chestStack.getTag().getInt("fire_cooldown");
+					if (fireCooldown > 0)
+					{
+						fireCooldown--;
+						hasChanged = true;
+					}
+
+					if (hasChanged)
+					{
+						chestStack.getTag().putInt("fire_cooldown", fireCooldown);
+					}
+				}
+
 				if (player.getFireTimer() > 0)
 				{
 					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_FIRE_RESIST.get(), 1);
-					int fireLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_FIRE_RESIST.get().getKey());
 					if (fireLevel > 0)
 					{
 						boolean hasChanged = false;
 						int fireCooldown = chestStack.getTag().getInt("fire_cooldown");
-						if (fireCooldown > 0)
-						{
-							fireCooldown--;
-							hasChanged = true;
-						}
 
 						if (player.getFireTimer() > 0 && fireCooldown <= 0)
 						{
@@ -491,6 +686,85 @@ public class GenericHandler
 						chestStack.getTag().putInt("poison_cooldown", poisonCooldown);
 					}
 				}
+
+				int battleHungryLevel = stats.getLevel(LivingArmorRegistrar.DOWNGRADE_BATTLE_HUNGRY.get().getKey());
+				if (battleHungryLevel > 0)
+				{
+					boolean hasChanged = false;
+					int battleCooldown = chestStack.getTag().getInt("battle_cooldown");
+					if (battleCooldown > 0)
+					{
+						battleCooldown--;
+						hasChanged = true;
+					}
+
+					if (battleCooldown <= 0)
+					{
+						battleCooldown = 20;
+						float exhaustionAdded = LivingArmorRegistrar.DOWNGRADE_BATTLE_HUNGRY.get().getBonusValue("exhaustion", battleHungryLevel).floatValue();
+						player.addExhaustion(exhaustionAdded);
+						hasChanged = true;
+					}
+
+					if (hasChanged)
+					{
+						chestStack.getTag().putInt("battle_cooldown", battleCooldown);
+					}
+				}
+
+				int pastArmourDamage = chestStack.getTag().getInt("past_damage");
+				int currentArmourDamage = chestStack.getDamage();
+				if (pastArmourDamage > currentArmourDamage)
+				{
+//					System.out.println("Past damage: " + pastArmourDamage + ", current damage: " + currentArmourDamage);
+					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_REPAIR.get(), pastArmourDamage - currentArmourDamage);
+				}
+
+				if (currentArmourDamage != pastArmourDamage)
+				{
+					chestStack.getTag().putInt("past_damage", currentArmourDamage);
+				}
+
+				if (!player.world.isRemote)
+				{
+					int repairingLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_REPAIR.get().getKey());
+					if (repairingLevel > 0)
+					{
+						boolean hasChanged = false;
+						int repairCooldown = chestStack.getTag().getInt("repair_cooldown");
+						if (repairCooldown > 0)
+						{
+							repairCooldown--;
+							hasChanged = true;
+						}
+
+						if (repairCooldown <= 0)
+						{
+
+							repairCooldown = LivingArmorRegistrar.UPGRADE_REPAIR.get().getBonusValue("interval", repairingLevel).intValue();
+							hasChanged = true;
+							EquipmentSlotType randomSlot = EquipmentSlotType.values()[2 + player.world.rand.nextInt(4)];
+							ItemStack repairStack = player.getItemStackFromSlot(randomSlot);
+							if (!repairStack.isEmpty())
+							{
+								if (repairStack.isDamageable() && repairStack.isDamaged())
+								{
+									int maxDurabilityRepaired = LivingArmorRegistrar.UPGRADE_REPAIR.get().getBonusValue("max", repairingLevel).intValue();
+									int toRepair = Math.min(maxDurabilityRepaired, repairStack.getDamage());
+									if (toRepair > 0)
+									{
+										repairStack.setDamage(repairStack.getDamage() - toRepair);
+									}
+								}
+							}
+						}
+
+						if (hasChanged)
+						{
+							chestStack.getTag().putInt("repair_cooldown", repairCooldown);
+						}
+					}
+				}
 			}
 
 //			if (percentIncrease > 0 && (player.isOnGround()) && (Math.abs(player.moveForward) > 0 || Math.abs(player.moveStrafing) > 0))
@@ -507,15 +781,16 @@ public class GenericHandler
 	public void onMiningSpeedCheck(PlayerEvent.BreakSpeed event)
 	{
 		PlayerEntity player = event.getPlayer();
-		float percentIncrease = 0;
+		float speedModifier = 1;
 
 		if (LivingUtil.hasFullSet(player))
 		{
 			LivingStats stats = LivingStats.fromPlayer(player, true);
-			percentIncrease += LivingArmorRegistrar.UPGRADE_DIGGING.get().getBonusValue("speed_modifier", stats.getLevel(LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())).doubleValue();
+			speedModifier *= 1 + LivingArmorRegistrar.UPGRADE_DIGGING.get().getBonusValue("speed_modifier", stats.getLevel(LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())).doubleValue();
+			speedModifier *= 1 + LivingArmorRegistrar.DOWNGRADE_DIG_SLOWDOWN.get().getBonusValue("speed_modifier", stats.getLevel(LivingArmorRegistrar.DOWNGRADE_DIG_SLOWDOWN.get().getKey())).doubleValue();
 		}
 
-		event.setNewSpeed((1 + percentIncrease) * event.getNewSpeed());
+		event.setNewSpeed((speedModifier) * event.getNewSpeed());
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -555,7 +830,7 @@ public class GenericHandler
 					event.setExpToDrop(event.getExpToDrop() + expAdded);
 				}
 
-				if (holder.consumeAnointmentDurabilityOnHarvest(heldStack, EquipmentSlotType.MAINHAND))
+				if (holder.consumeAnointmentDurabilityOnHarvest(heldStack, EquipmentSlotType.MAINHAND, player))
 					holder.toItemStack(heldStack);
 			}
 		}
@@ -564,6 +839,14 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onJump(LivingJumpEvent event)
 	{
+		if (event.getEntityLiving().isPotionActive(BloodMagicPotions.GROUNDED))
+		{
+			Vector3d motion = event.getEntityLiving().getMotion();
+			motion = motion.mul(1, 0, 1);
+			event.getEntityLiving().setMotion(motion);
+			return;
+		}
+
 		if (event.getEntityLiving() instanceof PlayerEntity)
 		{
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
@@ -626,7 +909,7 @@ public class GenericHandler
 		AnointmentHolder holder = AnointmentHolder.fromItemStack(stack);
 		if (holder != null)
 		{
-			if (holder.consumeAnointmentDurabilityOnUseFinish(stack, EquipmentSlotType.MAINHAND))
+			if (holder.consumeAnointmentDurabilityOnUseFinish(stack, EquipmentSlotType.MAINHAND, event.getEntityLiving()))
 			{
 
 				holder.toItemStack(stack);
@@ -637,7 +920,36 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onEntityJoinEvent(EntityJoinWorldEvent event)
 	{
+		Entity owner = null;
 		Entity entity = event.getEntity();
+		if (entity instanceof ArrowEntity)
+			owner = ((ArrowEntity) event.getEntity()).func_234616_v_();
+		else if (entity instanceof ThrowableEntity)
+			owner = ((ThrowableEntity) entity).func_234616_v_();
+
+		if (owner instanceof PlayerEntity)
+		{
+			Entity projectile = event.getEntity();
+			PlayerEntity player = (PlayerEntity) owner;
+
+			if (LivingUtil.hasFullSet(player))
+			{
+				LivingStats stats = LivingStats.fromPlayer(player, true);
+
+				double arrowJiggle = LivingArmorRegistrar.DOWNGRADE_STORM_TROOPER.get().getBonusValue("inaccuracy", stats.getLevel(LivingArmorRegistrar.DOWNGRADE_STORM_TROOPER.get().getKey())).doubleValue();
+
+				if (arrowJiggle > 0)
+				{
+					Vector3d motion = projectile.getMotion();
+					float velocityModifier = (float) (arrowJiggle * Math.sqrt(motion.x * motion.x + motion.y * motion.y + motion.z * motion.z));
+
+					Vector3d newMotion = motion.add(2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier, 2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier, 2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier);
+
+					projectile.setMotion(newMotion);
+				}
+			}
+		}
+
 		if (entity instanceof ArrowEntity)
 		{
 			if (entity.ticksExisted <= 0)
@@ -648,6 +960,7 @@ public class GenericHandler
 				if (shooter instanceof PlayerEntity)
 				{
 					PlayerEntity playerShooter = (PlayerEntity) shooter;
+
 					for (Hand hand : Hand.values())
 					{
 						ItemStack heldStack = playerShooter.getHeldItem(hand);
@@ -664,6 +977,46 @@ public class GenericHandler
 
 //							System.out.println("Arrow damage is now: " + arrowEntity.getDamage());
 						}
+
+						int velocityLevel = holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_BOW_VELOCITY.get());
+						if (velocityLevel > 0)
+						{
+							Vector3d motion = arrowEntity.getMotion();
+
+							double multiplier = (float) AnointmentRegistrar.ANOINTMENT_BOW_VELOCITY.get().getBonusValue("multiplier", velocityLevel).doubleValue();
+
+							arrowEntity.setMotion(motion.scale(multiplier));
+							arrowEntity.setDamage(arrowEntity.getDamage() / multiplier);
+//
+//							arrowEntity.shoot(f, f1, f2, (float) velocity, 0);
+						}
+
+//						int accuracyLevel = holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_BOW_VELOCITY.get());
+//						if (accuracyLevel > 0)
+//						{
+//							Vector2f arrowPitchYaw = arrowEntity.getPitchYaw();
+//							Vector2f playerPitchYaw = playerShooter.getPitchYaw();
+//
+//							float velocity = (float) arrowEntity.getMotion().length();
+//
+//							float accuracy = (float) AnointmentRegistrar.ANOINTMENT_BOW_VELOCITY.get().getBonusValue("accuracy", accuracyLevel).doubleValue();
+//
+//							float pitch = playerPitchYaw.x;
+//							float yaw = playerPitchYaw.y;
+//							float perfectX = -MathHelper.sin(yaw * ((float) Math.PI / 180F)) * MathHelper.cos(pitch * ((float) Math.PI / 180F));
+//							float perfectY = -MathHelper.sin((pitch) * ((float) Math.PI / 180F));
+//							float perfectZ = MathHelper.cos(yaw * ((float) Math.PI / 180F)) * MathHelper.cos(pitch * ((float) Math.PI / 180F));
+//
+//							double difX = perfectX - arrowEntity.getMotion().getX() / velocity;
+//							double difY = perfectY - arrowEntity.getMotion().getY() / velocity;
+//							double difZ = perfectZ - arrowEntity.getMotion().getZ() / velocity;
+//
+//							Vector3d newMotion = new Vector3d(perfectX - (1 - accuracy) * difX, perfectY - (1 - accuracy) * difY, perfectZ - (1 - accuracy) * difZ).scale(velocity);
+//
+//							arrowEntity.setMotion(newMotion);
+////
+////							arrowEntity.shoot(f, f1, f2, (float) velocity, 0);
+//						}
 
 						break;
 					}
@@ -694,6 +1047,45 @@ public class GenericHandler
 			if (plunderLevel > 0)
 			{
 				event.setLootingLevel(event.getLootingLevel() + plunderLevel);
+			}
+		}
+	}
+
+	public static Map<UUID, Integer> curiosLevelMap = new HashMap<>();
+
+	@SubscribeEvent
+	public void onLivingEquipmentChange(LivingEquipmentChangeEvent event)
+	{
+
+		if (BloodMagic.curiosLoaded)
+		{ // Without Curios, there is nothing this cares about.
+			if (event.getFrom().getItem() instanceof ItemLivingArmor || event.getTo().getItem() instanceof ItemLivingArmor)
+			{ // Armor change involves Living Armor
+				LivingEntity entity = event.getEntityLiving();
+				if (entity instanceof PlayerEntity)
+				{ // is a player
+					PlayerEntity player = (PlayerEntity) entity;
+					UUID uuid = player.getUniqueID();
+					if (LivingUtil.hasFullSet(player))
+					{ // Player has a full set
+						LivingStats stats = LivingStats.fromPlayer(player);
+						if (stats != null)
+						{
+							int curiosLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_CURIOS_SOCKET.get().getKey());
+							if (curiosLevelMap.getOrDefault(uuid, 0) != curiosLevel)
+							{ // Cache level does not match new level
+								curiosLevelMap.put(uuid, BloodMagic.curiosCompat.recalculateCuriosSlots(player));
+							}
+						} else if (curiosLevelMap.getOrDefault(uuid, 0) != 0)
+						{
+							curiosLevelMap.put(uuid, 0);
+						}
+
+					} else if (curiosLevelMap.getOrDefault(uuid, 0) != 0)
+					{ // cache has an upgrade that needs to be removed
+						curiosLevelMap.put(uuid, BloodMagic.curiosCompat.recalculateCuriosSlots(player));
+					}
+				}
 			}
 		}
 	}

@@ -46,7 +46,7 @@ public class RitualEllipsoid extends Ritual
 		World world = masterRitualStone.getWorldObj();
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-		BlockPos masterPos = masterRitualStone.getBlockPos();
+		BlockPos masterPos = masterRitualStone.getMasterBlockPos();
 		AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
 		TileEntity tileInventory = world.getTileEntity(chestRange.getContainedPositions(masterPos).get(0));
 
@@ -176,25 +176,6 @@ public class RitualEllipsoid extends Ritual
 		}
 
 		return !((checkIfEllipsoid(xR, yR, zR, xOff + 1, yOff, zOff) && checkIfEllipsoid(xR, yR, zR, xOff - 1, yOff, zOff)) && (checkIfEllipsoid(xR, yR, zR, xOff, yOff + 1, zOff) && checkIfEllipsoid(xR, yR, zR, xOff, yOff - 1, zOff)) && (checkIfEllipsoid(xR, yR, zR, xOff, yOff, zOff + 1) && checkIfEllipsoid(xR, yR, zR, xOff, yOff, zOff - 1)));
-//        if (xOff * xOff + yOff * yOff + zOff * zOff >= (xR - 0.5) * (xR - 0.5) && xOff * xOff + yOff * yOff + zOff * zOff <= (xR + 0.5) * (xR + 0.5))
-//        if (checkIfEllipsoid(xR, yR, zR, xOff, yOff, zOff))
-//        {
-//            if (xOff * xOff / ((xR - 0.5) * (xR - 0.5)) + yOff * yOff / ((yR - 0.5) * (yR - 0.5)) >= 1 - zOff * zOff / ((zR + possOffset) * (zR + possOffset)))
-//            {
-//                return true;
-//            }
-//
-//            if (xOff * xOff / ((xR - 0.5) * (xR - 0.5)) + zOff * zOff / ((zR - 0.5) * (zR - 0.5)) >= 1 - yOff * yOff / ((yR + possOffset) * (yR + possOffset)))
-//            {
-//                return true;
-//            }
-//
-//            if (zOff * zOff / ((zR - 0.5) * (zR - 0.5)) + yOff * yOff / ((yR - 0.5) * (yR - 0.5)) >= 1 - xOff * xOff / ((xR + possOffset) * (xR + possOffset)))
-//            {
-//                return true;
-//            }
-//        }
-//        return false;
 	}
 
 	public boolean checkIfEllipsoid(float xR, float yR, float zR, float xOff, float yOff, float zOff)

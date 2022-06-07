@@ -31,7 +31,9 @@ public class LivingUtil
 		if (stats == null)
 			return Pair.of(null, false);
 
-		if (!canTrain(player, upgrade, upgrade.getLevel((int) experience)))
+		double curExp = stats.getUpgrades().containsKey(upgrade) ? stats.getUpgrades().get(upgrade).doubleValue() : 0;
+
+		if (!canTrain(player, upgrade, upgrade.getLevel((int) curExp), upgrade.getLevel((int) (curExp + experience))))
 			return Pair.of(stats, false);
 
 		LivingEquipmentEvent.GainExperience event = new LivingEquipmentEvent.GainExperience(player, stats, upgrade, experience);
@@ -46,8 +48,10 @@ public class LivingUtil
 		double requiredForLevel = upgrade.getNextRequirement((int) currentExperience) - currentExperience;
 
 		// If we're going to level up from this, check points
+//		System.out.println("Required for level: " + requiredForLevel);
 		if (requiredForLevel <= experience)
 		{
+//			System.out.println("Attempting to level up");
 			int currentPoints = stats.getUsedPoints();
 			// If we're already capped or somehow over the cap, we don't want to add
 			// experience
@@ -63,7 +67,7 @@ public class LivingUtil
 				return Pair.of(stats, false);
 
 			int pointDif = nextPointCost - currentPointCost;
-			if (pointDif < 0)
+			if (pointDif < 0 && !upgrade.isNegative())
 			{
 				return Pair.of(stats, false);
 			}
@@ -97,12 +101,14 @@ public class LivingUtil
 	// effective amount of exp that was applied.
 	public static Pair<LivingStats, Double> applyExperienceToUpgradeCap(PlayerEntity player, LivingUpgrade upgrade, double experience)
 	{
-		System.out.println("Initial exp added: " + experience);
+//		System.out.println("Initial exp added: " + experience);
 		LivingStats stats = LivingStats.fromPlayer(player, true);
 		if (stats == null)
 			return Pair.of(null, 0d);
 
-		if (!canTrain(player, upgrade, upgrade.getLevel((int) experience)))
+		double curExp = stats.getUpgrades().containsKey(upgrade) ? stats.getUpgrades().get(upgrade).doubleValue() : 0;
+
+		if (!canTrain(player, upgrade, upgrade.getLevel((int) curExp), upgrade.getLevel((int) (curExp + experience))))
 			return Pair.of(stats, 0d);
 
 		LivingEquipmentEvent.GainExperience event = new LivingEquipmentEvent.GainExperience(player, stats, upgrade, experience);
@@ -147,7 +153,7 @@ public class LivingUtil
 					return Pair.of(stats, 0d);
 
 				int pointDif = nextPointCost - currentPointCost;
-				if (pointDif < 0)
+				if (pointDif < 0 && !upgrade.isNegative())
 				{
 					return Pair.of(stats, 0d);
 				}
@@ -226,8 +232,6 @@ public class LivingUtil
 			damage *= 1 - upgrade.getArmorProvider().getProtection(player, stats, source, upgrade, level);
 		}
 
-//		System.out.println("Final damage: " + damage);
-
 		return damage;
 	}
 
@@ -262,32 +266,47 @@ public class LivingUtil
 		return additionalDamage;
 	}
 
-	public static boolean canTrain(PlayerEntity player, LivingUpgrade upgrade, int currentLevel)
+	public static boolean canTrain(PlayerEntity player, LivingUpgrade upgrade, int currentLevel, int nextLevel)
 	{
 		ItemStack trainer = PlayerUtil.findItem(player, stack -> stack.getItem() instanceof ItemLivingTrainer && stack.hasTag() && stack.getTag().contains("livingStats"));
+
 		if (trainer.isEmpty())
 			return true;
 
-		String mode = trainer.getTag().getString("livingLock");
+//		String mode = trainer.getTag().getString("livingLock");
 		LivingStats stats = ((ILivingContainer) trainer.getItem()).getLivingStats(trainer);
+		boolean isWhitelist = ((ItemLivingTrainer) trainer.getItem()).getIsWhitelist(trainer);
 
 		int levelLimit = stats.getLevel(upgrade.getKey());
-		if (mode.equalsIgnoreCase("whitelist"))
+
+		if (isWhitelist)
 		{
-			return levelLimit != 0 && levelLimit > currentLevel;
-		} else if (mode.equalsIgnoreCase("blacklist"))
+			return levelLimit != 0 && (levelLimit > currentLevel || (nextLevel != currentLevel && levelLimit >= nextLevel));
+		} else
 		{
-			return levelLimit == 0;
+			Map<LivingUpgrade, Double> upgradeMap = stats.getUpgrades();
+
+			return (levelLimit == 0 && !upgradeMap.containsKey(upgrade)) || (levelLimit != 0 && (levelLimit > currentLevel || (nextLevel != currentLevel && levelLimit >= nextLevel)));
 		}
 
-		return true;
+//		return true;
 	}
 
 	public static boolean hasFullSet(PlayerEntity player)
 	{
 		for (ItemStack stack : player.inventory.armorInventory)
+		{
 			if (stack.isEmpty() || !(stack.getItem() instanceof ILivingContainer))
-			return false;
+				return false;
+
+			if (stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot() == EquipmentSlotType.CHEST)
+			{
+				if (stack.getMaxDamage() - stack.getDamage() <= 1)
+				{
+					return false;
+				}
+			}
+		}
 
 		return true;
 	}

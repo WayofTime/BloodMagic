@@ -26,7 +26,7 @@ import wayoftime.bloodmagic.core.living.LivingStats;
 import wayoftime.bloodmagic.core.living.LivingUpgrade;
 import wayoftime.bloodmagic.core.living.LivingUtil;
 
-public class ItemLivingTome extends Item implements ILivingContainer
+public class ItemLivingTome extends Item implements ILivingContainer, ILivingUpgradePointsProvider
 {
 
 	public ItemLivingTome()
@@ -37,6 +37,8 @@ public class ItemLivingTome extends Item implements ILivingContainer
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
 	{
+		boolean oneLevel = !player.isSneaking();
+
 		ItemStack held = player.getHeldItem(hand);
 
 		LivingStats armorStats = LivingStats.fromPlayer(player, true);
@@ -55,6 +57,13 @@ public class ItemLivingTome extends Item implements ILivingContainer
 		upgradeMap.forEach((k, v) -> {
 //			if (armorStats.getLevel(k.getKey()) >= tomeStats.getLevel(k.getKey()))
 //				return;
+			if (oneLevel)
+			{
+				double curExp = armorStats.getUpgrades().getOrDefault(k, 0d);
+				double expToNextLevel = k.getNextRequirement((int) curExp) - curExp;
+
+				v = Math.min(expToNextLevel, v);
+			}
 
 			Pair<LivingStats, Double> upgraded = LivingUtil.applyExperienceToUpgradeCap(player, k, v);
 			// applyExperienceToUpgradeCap
@@ -72,13 +81,13 @@ public class ItemLivingTome extends Item implements ILivingContainer
 				double expUsed = expUsedArray[j];
 				if (expUsed > 0)
 				{
-					ResourceLocation registryName = ((Entry<LivingUpgrade, Double>) upgradeArray[j]).getKey().getRegistryName();
+					ResourceLocation key = ((Entry<LivingUpgrade, Double>) upgradeArray[j]).getKey().getKey();
 //					if (((Entry<LivingUpgrade, Double>) upgradeArray[j]).getValue() < expUsed)
 //					{
 //						tomeStats.resetExperience(registryName);
 //					} else
 					{
-						tomeStats.addExperience(registryName, -expUsed);
+						tomeStats.addExperience(key, -expUsed);
 					}
 
 					updateLivingStats(held, tomeStats);
@@ -146,6 +155,64 @@ public class ItemLivingTome extends Item implements ILivingContainer
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		ILivingContainer.appendLivingTooltip(getLivingStats(stack), tooltip, false);
+		ILivingContainer.appendLivingTooltip(stack, getLivingStats(stack), tooltip, false);
+	}
+
+	@Override
+	public int getAvailableUpgradePoints(ItemStack stack, int drain)
+	{
+		return getTotalUpgradePoints(stack);
+	}
+
+	@Override
+	public ItemStack getResultingStack(ItemStack stack, int drain)
+	{
+		// TODO Auto-generated method stub
+		return ItemStack.EMPTY;
+	}
+
+	@Override
+	public int getExcessUpgradePoints(ItemStack stack, int drain)
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getTotalUpgradePoints(ItemStack stack)
+	{
+		LivingStats tomeStats = getLivingStats(stack);
+		if (tomeStats == null)
+		{
+			return 0;
+		}
+
+		int containedPoints = 0;
+
+		Map<LivingUpgrade, Double> upgradeMap = tomeStats.getUpgrades();
+		for (Entry<LivingUpgrade, Double> entry : upgradeMap.entrySet())
+		{
+			if (entry.getKey().isNegative())
+			{
+				containedPoints += entry.getValue().intValue();
+			} else
+			{
+				containedPoints += entry.getKey().getLevelCost(entry.getKey().getLevel(entry.getValue().intValue()));
+			}
+		}
+
+		return containedPoints;
+	}
+
+	@Override
+	public boolean canSyphonPoints(ItemStack stack, int drain)
+	{
+		return true;
+	}
+
+	@Override
+	public int getPriority(ItemStack stack)
+	{
+		return 1;
 	}
 }

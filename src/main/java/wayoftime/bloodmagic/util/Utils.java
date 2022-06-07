@@ -87,7 +87,7 @@ public class Utils
 
 	public static String toFancyCasing(String input)
 	{
-		return String.valueOf(input.charAt(0)).toUpperCase(Locale.ENGLISH) + input.substring(1);
+		return String.valueOf(input.charAt(0)).toUpperCase(Locale.ROOT) + input.substring(1);
 	}
 
 	public static boolean isImmuneToFireDamage(LivingEntity entity)
@@ -469,6 +469,12 @@ public class Utils
 			}
 		}
 
+		ItemStack offhandStack = player.getHeldItemOffhand();
+		if (!offhandStack.isEmpty() && offhandStack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) offhandStack.getItem()).canSeeDemonWillAura(player.getEntityWorld(), offhandStack, player))
+		{
+			return true;
+		}
+
 		return false;
 	}
 
@@ -488,6 +494,12 @@ public class Utils
 			{
 				return ((IDemonWillViewer) stack.getItem()).getDemonWillAuraResolution(player.getEntityWorld(), stack, player);
 			}
+		}
+
+		ItemStack offhandStack = player.getHeldItemOffhand();
+		if (!offhandStack.isEmpty() && offhandStack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) offhandStack.getItem()).canSeeDemonWillAura(player.getEntityWorld(), offhandStack, player))
+		{
+			return ((IDemonWillViewer) offhandStack.getItem()).getDemonWillAuraResolution(player.getEntityWorld(), offhandStack, player);
 		}
 
 		return 100;

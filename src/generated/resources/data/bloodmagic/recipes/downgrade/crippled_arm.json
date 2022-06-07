@@ -1,0 +1,7 @@
+{
+  "type": "bloodmagic:livingdowngrade",
+  "input": {
+    "item": "minecraft:shield"
+  },
+  "resource": "bloodmagic:crippled_arm"
+}

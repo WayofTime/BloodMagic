@@ -22,7 +22,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.ConfigHandler;
+import wayoftime.bloodmagic.ConfigManager;
 import wayoftime.bloodmagic.event.SacrificeKnifeUsedEvent;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.DamageSourceBloodMagic;
@@ -89,7 +89,7 @@ public class ItemSacrificialDagger extends Item
 			return ActionResult.resultSuccess(stack);
 		}
 
-		int lpAdded = ConfigHandler.values.sacrificialDaggerConversion * 2;
+		int lpAdded = ConfigManager.COMMON.sacrificialDaggerConversion.get() * 2;
 
 //		RayTraceResult rayTrace = rayTrace(world, player, false);
 //		if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.BLOCK)
@@ -109,14 +109,14 @@ public class ItemSacrificialDagger extends Item
 			if (evt.shouldDrainHealth)
 			{
 				player.hurtResistantTime = 0;
+
 				player.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, 0.001F);
 				player.setHealth(Math.max(player.getHealth() - 1.998F, 0.0001f));
 				if (player.getHealth() <= 0.001f && !world.isRemote)
 				{
-					player.onDeath(DamageSourceBloodMagic.INSTANCE);
-					player.setHealth(0);
+					player.hurtResistantTime = 0;
+					player.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, 10);
 				}
-//                player.attackEntityFrom(BloodMagicAPI.getDamageSource(), 2.0F);
 			}
 
 			if (!evt.shouldFillAltar)

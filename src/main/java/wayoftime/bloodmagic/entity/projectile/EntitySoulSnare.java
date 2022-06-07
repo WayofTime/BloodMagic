@@ -2,7 +2,6 @@ package wayoftime.bloodmagic.entity.projectile;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -40,7 +39,6 @@ public class EntitySoulSnare extends ProjectileItemEntity
 
 	protected Item getDefaultItem()
 	{
-		ArrowEntity d;
 		return BloodMagicItems.SOUL_SNARE.get();
 	}
 
@@ -61,7 +59,6 @@ public class EntitySoulSnare extends ProjectileItemEntity
 		if (result.getEntity() instanceof LivingEntity)
 		{
 			((LivingEntity) result.getEntity()).addPotionEffect(new EffectInstance(BloodMagicPotions.SOUL_SNARE, 300, 0));
-
 			result.getEntity().attackEntityFrom(DamageSource.causeThrownDamage(this, this.func_234616_v_()), (float) 0);
 		}
 

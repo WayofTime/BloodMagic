@@ -1,0 +1,26 @@
+{
+  "id": "bloodmagic:diamond_protect",
+  "levels": [
+    { "xp": 5, "cost": 6 },
+    { "xp": 10, "cost": 10 },
+    { "xp": 15, "cost": 18 },
+    { "xp": 20, "cost": 25 },
+    { "xp": 25, "cost": 40 }
+  ],
+  "bonuses": {
+    "armor": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "toughness": [
+      2,
+      4,
+      6,
+      7,
+      8
+    ]
+  }
+}

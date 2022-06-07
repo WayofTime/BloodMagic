@@ -47,7 +47,7 @@ public class RitualUpgradeRemove extends Ritual
 			return;
 		}
 
-		BlockPos pos = masterRitualStone.getBlockPos();
+		BlockPos pos = masterRitualStone.getMasterBlockPos();
 
 		AreaDescriptor checkRange = masterRitualStone.getBlockRange(CHECK_RANGE);
 

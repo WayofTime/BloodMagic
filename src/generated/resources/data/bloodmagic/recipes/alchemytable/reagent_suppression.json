@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:teleposer"
+    },
+    {
+      "item": "bloodmagic:voidsigil"
+    },
+    {
+      "tag": "forge:ingots/gold"
+    },
+    {
+      "item": "minecraft:bucket"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:reagentsuppression"
+  },
+  "syphon": 10000,
+  "ticks": 200,
+  "upgradeLevel": 4
+}

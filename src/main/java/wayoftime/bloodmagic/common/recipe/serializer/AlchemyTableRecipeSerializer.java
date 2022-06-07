@@ -16,12 +16,11 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
-import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
+import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
 import wayoftime.bloodmagic.util.Constants;
 
-public class AlchemyTableRecipeSerializer<RECIPE extends RecipeAlchemyTable>
-		extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RECIPE>
+public class AlchemyTableRecipeSerializer<RECIPE extends RecipeAlchemyTable> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RECIPE>
 {
 
 	private final IFactory<RECIPE> factory;
@@ -90,7 +89,6 @@ public class AlchemyTableRecipeSerializer<RECIPE extends RecipeAlchemyTable>
 			return this.factory.create(recipeId, input, output, syphon, ticks, minimumTier);
 		} catch (Exception e)
 		{
-//Mekanism.logger.error("Error reading electrolysis recipe from packet.", e);
 			throw e;
 		}
 	}
@@ -103,7 +101,6 @@ public class AlchemyTableRecipeSerializer<RECIPE extends RecipeAlchemyTable>
 			recipe.write(buffer);
 		} catch (Exception e)
 		{
-//Mekanism.logger.error("Error writing electrolysis recipe to packet.", e);
 			throw e;
 		}
 	}

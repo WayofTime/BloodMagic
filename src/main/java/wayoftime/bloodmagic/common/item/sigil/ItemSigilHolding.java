@@ -52,7 +52,6 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
 	@Override
 	public void onKeyPressed(ItemStack stack, PlayerEntity player, KeyBindings key, boolean showInChat)
 	{
-		System.out.println("Received key press on server.");
 		if (stack == player.getHeldItemMainhand() && stack.getItem() instanceof ItemSigilHolding && key.equals(KeyBindings.OPEN_HOLDING))
 		{
 			Utils.setUUID(stack);

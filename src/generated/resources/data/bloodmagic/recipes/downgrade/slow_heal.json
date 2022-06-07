@@ -1,0 +1,7 @@
+{
+  "type": "bloodmagic:livingdowngrade",
+  "input": {
+    "item": "minecraft:ghast_tear"
+  },
+  "resource": "bloodmagic:slow_heal"
+}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "active=false": {
+      "model": "bloodmagic:block/dungeon_alternator"
+    },
+    "active=true": {
+      "model": "bloodmagic:block/dungeon_alternator"
+    }
+  }
+}

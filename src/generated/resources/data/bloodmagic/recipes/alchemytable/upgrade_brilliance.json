@@ -1,0 +1,30 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "forge:gems/diamond"
+    },
+    {
+      "tag": "forge:gems/diamond"
+    },
+    {
+      "tag": "forge:gems/diamond"
+    },
+    {
+      "tag": "forge:gems/diamond"
+    },
+    {
+      "tag": "forge:gems/diamond"
+    },
+    {
+      "item": "bloodmagic:reagentbinding"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:upgradetome",
+    "nbt": "{livingStats:{maxPoints:6,upgrades:[{exp:5.0d,key:\"bloodmagic:diamond_protect\"}]}}"
+  },
+  "syphon": 2000,
+  "ticks": 150,
+  "upgradeLevel": 3
+}

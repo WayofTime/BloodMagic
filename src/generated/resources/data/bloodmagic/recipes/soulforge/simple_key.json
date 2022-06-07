@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "tag": "forge:storage_blocks/redstone"
+  },
+  "input1": {
+    "tag": "forge:ingots/iron"
+  },
+  "input2": {
+    "tag": "forge:ingots/iron"
+  },
+  "input3": {
+    "item": "bloodmagic:infusedslate"
+  },
+  "output": {
+    "item": "bloodmagic:simplekey"
+  },
+  "minimumDrain": 300.0,
+  "drain": 50.0
+}

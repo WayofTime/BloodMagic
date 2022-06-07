@@ -1,0 +1,21 @@
+{
+  "type": "bloodmagic:flask_potiontransform",
+  "input": [
+    {
+      "item": "bloodmagic:combinationalcatalyst"
+    }
+  ],
+  "outputEffect": [
+    {
+      "effect": "bloodmagic:flight",
+      "baseDuration": 3600
+    }
+  ],
+  "inputEffect": [
+    "bloodmagic:suspended",
+    "minecraft:levitation"
+  ],
+  "syphon": 1000,
+  "ticks": 200,
+  "upgradeLevel": 1
+}

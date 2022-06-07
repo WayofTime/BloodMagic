@@ -39,6 +39,8 @@ public class Constants
 		public static final String RITUAL_READER = "ritualReaderState";
 		public static final String ITEMS = "Items";
 		public static final String SLOT = "Slot";
+		public static final String POINTS = "storedPoints";
+		public static final String REDSTONE = "redstone";
 
 		public static final String ALTAR = "bloodAltar";
 		public static final String ALTAR_TIER = "upgradeLevel";
@@ -82,6 +84,7 @@ public class Constants
 		public static final String PREVIOUS_INPUT = "previousInput";
 
 		public static final String LIVING_ARMOUR = "livingArmour";
+		public static final String UPGRADE_ZERO_DISPLAY = "displayIfLevelZero";
 
 		public static final String CHARGE_TIME = "chargeTime";
 		public static final String HELD_DOWN = "heldDown";
@@ -99,6 +102,9 @@ public class Constants
 		public static final String SOUL_SWORD_SPEED = "soulSwordSpeed";
 		public static final String SOUL_SWORD_DIG_SPEED = "soulSwordDigSpeed";
 		public static final String WILL_TYPE = "demonWillType";
+		public static final String INJECTED_WILL = "injectedWill";
+		public static final String SPEED_MODIFIER = "speedModifier";
+		public static final String APPLIED_RATE = "appliedConversionRate";
 
 		public static final String SOUL_FORGE_BURN = "burnTime";
 		public static final String SOUL_FORGE_CONSUMED = "consumedSouls";
@@ -112,6 +118,13 @@ public class Constants
 		public static final String ROUTING_MASTER_INPUT = "inputList";
 		public static final String ROUTING_MASTER_OUTPUT = "outputList";
 
+		public static final String DUNGEON_CONTROLLER = "dungeon_controller";
+		public static final String DUNGEON_DOOR = "dungeon_door";
+		public static final String DUNGEON_TELEPORT_POS = "dungeon_teleport_pos";
+
+		public static final String DUNGEON_TELEPORT_KEY = "dungeon_teleport_key";
+		public static final String WORLD = "world";
+
 		public static final String GHOST_STACK_SIZE = "stackSize";
 
 		public static final String ITEM_INVENTORY = "itemInventory";
@@ -123,7 +136,7 @@ public class Constants
 		public static final String LEAST_SIG = "leastSig";
 		public static final String COLOR = "color";
 
-		public static final String POTION_AUGMENT_LENGHT = "length:";
+		public static final String POTION_AUGMENT_LENGTH = "length:";
 		public static final String POTION_AUGMENT_STRENGTH = "strength:";
 		public static final String POTION_IMPURITY = "impurity";
 
@@ -132,6 +145,28 @@ public class Constants
 		public static final String BREATH = "breath";
 
 		public static final String ANOINTMENTS = "anointment_holder";
+
+		public static final String BLACKWHITELIST = "button:blackwhitelist";
+		public static final String ITEMTAG = "button:itemtag";
+		public static final String ENCHANT = "button:enchant";
+		public static final String ENCHANT_LVL = "button:enchant_fuzzy";
+
+		public static final String DOOR_MAP = "dungeon_door_map";
+		public static final String AREA_DESCRIPTORS = "area_descriptors";
+		public static final String DOOR_TYPES = "door_types";
+		public static final String DOOR = "door";
+		public static final String TYPE = "type";
+
+		public static final String ITEM = "item";
+
+	}
+
+	public static class BUTTONID
+	{
+		public static final String BLACKWHITELIST = "blackwhitelist";
+		public static final String ITEMTAG = "itemtag";
+		public static final String ENCHANT = "enchant";
+		public static final String ENCHANT_LVL = "enchant_lvl";
 	}
 
 	public static class JSON
@@ -152,8 +187,14 @@ public class Constants
 		public static final String CHANCE = "chance";
 		public static final String FLUID = "fluid";
 		public static final String AMOUNT = "amount";
-		public static final String INPUT_FLUID = "inputfluid";
-		public static final String OUTPUT_FLUID = "outputfluid";
+		public static final String INPUT_FLUID = "inputFluid";
+		public static final String OUTPUT_FLUID = "outputFluid";
+		public static final String FILTER = "filter";
+		public static final String WEIGHT = "weight";
+		public static final String ADDITIONAL_MAX_WEIGHT = "additionalWeight";
+		public static final String MIN_WEIGHT = "minWeight";
+		public static final String RADIUS = "radius";
+		public static final String MAX = "max";
 
 		public static final String SYPHON = "syphon";
 		public static final String TICKS = "ticks";
@@ -165,6 +206,25 @@ public class Constants
 
 		public static final String TARTARIC_DRAIN = "drain";
 		public static final String TARTARIC_MINIMUM = "minimumDrain";
+
+		public static final String UPGRADES = "upgrades";
+		public static final String RESOURCE = "resource";
+
+		public static final String EFFECT = "effect";
+		public static final String DURATION = "baseDuration";
+		public static final String AMPLIFIER = "amplifier";
+		public static final String AMP_DUR_MOD = "ampDurMod";
+		public static final String LENGTH_DUR_MOD = "lengthDurMod";
+
+		public static final String INPUT_EFFECT = "inputEffect";
+		public static final String OUTPUT_EFFECT = "outputEffect";
+
+		public static final String WEIGHT_MAP = "weightMap";
+		public static final String FILL = "fill";
+		public static final String SHELL = "shell";
+		public static final String LAYER = "layers";
+		public static final String EXPLOSION = "explosion";
+
 	}
 
 	public static class Compat
@@ -176,6 +236,7 @@ public class Constants
 		public static final String JEI_CATEGORY_ALCHEMYTABLE = "alchemytable";
 		public static final String JEI_CATEGORY_ARMOURDOWNGRADE = "armourdowngrade";
 		public static final String JEI_CATEGORY_ARC = "arc";
+		public static final String JEI_CATEGORY_POTION = "potion";
 
 		public static final String WAILA_CONFIG_ALTAR = BloodMagic.MODID + ".bloodaltar";
 		public static final String WAILA_CONFIG_TELEPOSER = BloodMagic.MODID + ".teleposer";

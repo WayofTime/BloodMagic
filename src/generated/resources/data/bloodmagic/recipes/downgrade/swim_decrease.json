@@ -1,0 +1,7 @@
+{
+  "type": "bloodmagic:livingdowngrade",
+  "input": {
+    "item": "minecraft:water_bucket"
+  },
+  "resource": "bloodmagic:swim_decrease"
+}

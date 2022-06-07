@@ -17,6 +17,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.IDataSerializer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
@@ -118,8 +119,36 @@ public class Serializers
 			return jsonObject;
 		}
 	};
+	public static final SerializerBase<BlockPos> BLOCKPOS_SERIALIZER = new SerializerBase<BlockPos>()
+	{
+		@Override
+		public Class<BlockPos> getType()
+		{
+			return BlockPos.class;
+		}
 
-	public static final Gson GSON = new GsonBuilder().serializeNulls().setPrettyPrinting().disableHtmlEscaping().registerTypeAdapter(FACING_SERIALIZER.getType(), FACING_SERIALIZER).registerTypeAdapter(RESOURCELOCATION_SERIALIZER.getType(), RESOURCELOCATION_SERIALIZER).registerTypeAdapter(ITEMMETA_SERIALIZER.getType(), ITEMMETA_SERIALIZER).create();
+		@Override
+		public BlockPos deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+				throws JsonParseException
+		{
+			int x = json.getAsJsonObject().get("x").getAsInt();
+			int y = json.getAsJsonObject().get("y").getAsInt();
+			int z = json.getAsJsonObject().get("z").getAsInt();
+			return new BlockPos(x, y, z);
+		}
+
+		@Override
+		public JsonElement serialize(BlockPos src, Type typeOfSrc, JsonSerializationContext context)
+		{
+			JsonObject object = new JsonObject();
+			object.addProperty("x", src.getX());
+			object.addProperty("y", src.getY());
+			object.addProperty("z", src.getZ());
+			return object;
+		}
+	};
+
+	public static final Gson GSON = new GsonBuilder().serializeNulls().setPrettyPrinting().disableHtmlEscaping().registerTypeAdapter(FACING_SERIALIZER.getType(), FACING_SERIALIZER).registerTypeAdapter(RESOURCELOCATION_SERIALIZER.getType(), RESOURCELOCATION_SERIALIZER).registerTypeAdapter(ITEMMETA_SERIALIZER.getType(), ITEMMETA_SERIALIZER).registerTypeAdapter(BLOCKPOS_SERIALIZER.getType(), BLOCKPOS_SERIALIZER).create();
 
 	static
 	{

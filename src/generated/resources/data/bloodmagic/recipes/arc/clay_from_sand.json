@@ -6,7 +6,7 @@
   "tool": {
     "tag": "bloodmagic:arc/hydrate"
   },
-  "inputfluid": {
+  "inputFluid": {
     "amount": 200,
     "fluid": "minecraft:water"
   },

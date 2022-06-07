@@ -2,6 +2,15 @@
   "bloodmagic:t_corridor",
   "bloodmagic:four_way_corridor_loot",
   "bloodmagic:four_way_corridor",
-  "bloodmagic:ore_hold_1",
-  "bloodmagic:straight_corridor"
+  "bloodmagic:standard/ore_hold_1",
+  "bloodmagic:standard/mine_entrance",
+  "bloodmagic:straight_corridor",
+  "bloodmagic:spiral_staircase",
+  "bloodmagic:t3_entrance",
+  "bloodmagic:standard_entrance",
+  "bloodmagic:mini_dungeon/library",
+  "bloodmagic:mini_dungeon/armoury",
+  "bloodmagic:mini_dungeon/farm",
+  "bloodmagic:mini_dungeon/portal_nether",
+  "bloodmagic:mini_dungeon/crypt"
 ]

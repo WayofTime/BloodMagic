@@ -15,10 +15,15 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.server.ServerWorld;
 import wayoftime.bloodmagic.anointment.Anointment.IDamageProvider;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.util.Constants;
@@ -94,7 +99,7 @@ public class AnointmentHolder
 		return 0;
 	}
 
-	public boolean consumeAnointmentDurabilityOnHit(ItemStack weaponStack, EquipmentSlotType type)
+	public boolean consumeAnointmentDurabilityOnHit(ItemStack weaponStack, EquipmentSlotType type, LivingEntity user)
 	{
 //		System.out.println("Attempting consumption");
 		boolean didConsume = false;
@@ -116,13 +121,13 @@ public class AnointmentHolder
 
 		for (Anointment anointment : removedAnointments)
 		{
-			removeAnointment(weaponStack, type, anointment);
+			removeAnointment(weaponStack, type, anointment, user);
 		}
 
 		return didConsume;
 	}
 
-	public boolean consumeAnointmentDurabilityOnUseFinish(ItemStack weaponStack, EquipmentSlotType type)
+	public boolean consumeAnointmentDurabilityOnUseFinish(ItemStack weaponStack, EquipmentSlotType type, LivingEntity user)
 	{
 		boolean didConsume = false;
 		List<Anointment> removedAnointments = new ArrayList<Anointment>();
@@ -143,13 +148,13 @@ public class AnointmentHolder
 
 		for (Anointment anointment : removedAnointments)
 		{
-			removeAnointment(weaponStack, type, anointment);
+			removeAnointment(weaponStack, type, anointment, user);
 		}
 
 		return didConsume;
 	}
 
-	public boolean consumeAnointmentDurabilityOnHarvest(ItemStack weaponStack, EquipmentSlotType type)
+	public boolean consumeAnointmentDurabilityOnHarvest(ItemStack weaponStack, EquipmentSlotType type, LivingEntity user)
 	{
 		boolean didConsume = false;
 		List<Anointment> removedAnointments = new ArrayList<Anointment>();
@@ -170,7 +175,7 @@ public class AnointmentHolder
 
 		for (Anointment anointment : removedAnointments)
 		{
-			removeAnointment(weaponStack, type, anointment);
+			removeAnointment(weaponStack, type, anointment, user);
 		}
 
 		return didConsume;
@@ -178,10 +183,20 @@ public class AnointmentHolder
 
 	// Called when the specified anointment is to be removed. Occurs if the
 	// anointment runs out of uses or if removed via another source.
-	public boolean removeAnointment(ItemStack weaponStack, EquipmentSlotType type, Anointment anointment)
+	public boolean removeAnointment(ItemStack weaponStack, EquipmentSlotType type, Anointment anointment, LivingEntity user)
 	{
 		anointments.remove(anointment);
 		anointment.removeAnointment(this, weaponStack, type);
+
+		SoundEvent soundevent = SoundEvents.ENTITY_SPLASH_POTION_BREAK;
+		user.world.playSound(null, user.getPosition(), soundevent, SoundCategory.BLOCKS, 1.0F, 1.0F);
+
+		if (user.world instanceof ServerWorld)
+		{
+			ServerWorld server = (ServerWorld) user.world;
+			server.spawnParticle(ParticleTypes.LARGE_SMOKE, user.getPosX(), user.getPosY() + 1, user.getPosZ(), 16, 0.3, 0, 0.3, 0);
+		}
+
 		return true;
 	}
 

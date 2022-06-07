@@ -1,0 +1,11 @@
+[
+  "bloodmagic:room_pools/test_pool_1",
+  "bloodmagic:room_pools/test_pool_2",
+  "bloodmagic:room_pools/connective_corridors",
+  "bloodmagic:room_pools/entrances/mini_dungeon_entrances",
+  "bloodmagic:room_pools/entrances/standard_dungeon_entrances",
+  "bloodmagic:room_pools/tier1/mini_dungeon",
+  "bloodmagic:room_pools/tier1/connective_corridors",
+  "bloodmagic:room_pools/tier2/standard_rooms",
+  "bloodmagic:room_pools/tier2/mine_entrances"
+]

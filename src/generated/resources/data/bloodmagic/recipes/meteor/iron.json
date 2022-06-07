@@ -1,0 +1,87 @@
+{
+  "type": "bloodmagic:meteor",
+  "input": {
+    "tag": "forge:storage_blocks/iron"
+  },
+  "syphon": 0,
+  "explosion": 14.0,
+  "layers": [
+    {
+      "radius": 4,
+      "additionalWeight": 0,
+      "minWeight": 0,
+      "weightMap": [
+        {
+          "tag": "minecraft:gold_ore",
+          "weight": 30
+        },
+        {
+          "tag": "#forge:ores/copper#0",
+          "weight": 200
+        },
+        {
+          "tag": "#forge:ores/tin#0",
+          "weight": 140
+        },
+        {
+          "tag": "#forge:ores/silver#0",
+          "weight": 70
+        },
+        {
+          "tag": "#forge:ores/lead#0",
+          "weight": 80
+        },
+        {
+          "tag": "minecraft:lapis_ore",
+          "weight": 60
+        },
+        {
+          "tag": "minecraft:redstone_ore",
+          "weight": 100
+        }
+      ],
+      "fill": "minecraft:iron_ore",
+      "shell": "#forge:cobblestone"
+    },
+    {
+      "radius": 7,
+      "additionalWeight": 100,
+      "minWeight": 1000,
+      "weightMap": [
+        {
+          "tag": "minecraft:iron_ore",
+          "weight": 400
+        },
+        {
+          "tag": "minecraft:gold_ore",
+          "weight": 30
+        },
+        {
+          "tag": "#forge:ores/copper#0",
+          "weight": 200
+        },
+        {
+          "tag": "#forge:ores/tin#0",
+          "weight": 140
+        },
+        {
+          "tag": "#forge:ores/silver#0",
+          "weight": 70
+        },
+        {
+          "tag": "#forge:ores/lead#0",
+          "weight": 80
+        },
+        {
+          "tag": "minecraft:lapis_ore",
+          "weight": 60
+        },
+        {
+          "tag": "minecraft:redstone_ore",
+          "weight": 100
+        }
+      ],
+      "fill": "minecraft:stone"
+    }
+  ]
+}

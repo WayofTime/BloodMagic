@@ -37,6 +37,9 @@ public class ItemARCToolBase extends Item implements IARCTool
 	{
 		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.arctool.uses", stack.getMaxDamage() - stack.getDamage()).mergeStyle(TextFormatting.GRAY));
 
+		if (getCraftingSpeedMultiplier(stack) != 1)
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.arctool.craftspeed", ChatUtil.DECIMAL_FORMAT.format(getCraftingSpeedMultiplier(stack))).mergeStyle(TextFormatting.GRAY));
+
 		if (getAdditionalOutputChanceMultiplier(stack) != 1)
 			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.arctool.additionaldrops", ChatUtil.DECIMAL_FORMAT.format(getAdditionalOutputChanceMultiplier(stack))).mergeStyle(TextFormatting.GRAY));
 

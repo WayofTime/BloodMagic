@@ -1,0 +1,18 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "minecraft:lava_bucket"
+    },
+    {
+      "tag": "forge:cobblestone"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:sulfur",
+    "count": 4
+  },
+  "syphon": 200,
+  "ticks": 100,
+  "upgradeLevel": 0
+}

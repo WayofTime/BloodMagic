@@ -1,0 +1,19 @@
+{
+  "id": "bloodmagic:curios_socket",
+  "levels": [
+    { "xp": 1, "cost": 10 },
+    { "xp": 2, "cost": 30 },
+    { "xp": 3, "cost": 70 },
+    { "xp": 4, "cost": 150 },
+    { "xp": 5, "cost": 310 }
+  ],
+  "bonuses": {
+    "slots": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  }
+}

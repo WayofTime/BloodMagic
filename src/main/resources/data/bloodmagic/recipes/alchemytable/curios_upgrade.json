@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "bloodmagic:soulsnare"
+    },
+    {
+      "tag": "forge:dusts/iron"
+    },
+    {
+      "tag": "forge:ingots/gold"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:upgradetome",
+    "nbt": "{livingStats: {maxPoints: 10, upgrades: [{exp: 1.0d, key: \"bloodmagic:curios_socket\"}]}}"
+  },
+  "syphon": 2000,
+  "ticks": 200,
+  "upgradeLevel": 3
+}

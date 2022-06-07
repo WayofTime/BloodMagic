@@ -14,6 +14,9 @@ public class BMWorldSavedData extends WorldSavedData
 {
 	public static final String ID = "BloodMagic-SoulNetworks";
 
+	private int numberOfDungeons = 0;
+	public static final int DUNGEON_DISPLACEMENT = 1000;
+
 	private Map<UUID, SoulNetwork> soulNetworks = new HashMap<>();
 
 	public BMWorldSavedData(String id)
@@ -50,17 +53,29 @@ public class BMWorldSavedData extends WorldSavedData
 			network.setParent(this);
 			soulNetworks.put(network.getPlayerId(), network);
 		}
+
+		numberOfDungeons = tagCompound.getInt("numberOfDungeons");
 	}
 
 	@Override
 	public CompoundNBT write(CompoundNBT tagCompound)
 	{
 		ListNBT networkData = new ListNBT();
-		for (SoulNetwork soulNetwork : soulNetworks.values())
-			networkData.add(soulNetwork.serializeNBT());
+		for (SoulNetwork soulNetwork : soulNetworks.values()) networkData.add(soulNetwork.serializeNBT());
 
 		tagCompound.put("networkData", networkData);
+		tagCompound.putInt("numberOfDungeons", numberOfDungeons);
 
 		return tagCompound;
+	}
+
+	public int getNumberOfDungeons()
+	{
+		return numberOfDungeons;
+	}
+
+	public void setNumberOfDungeons(int numberOfDungeons)
+	{
+		this.numberOfDungeons = numberOfDungeons;
 	}
 }

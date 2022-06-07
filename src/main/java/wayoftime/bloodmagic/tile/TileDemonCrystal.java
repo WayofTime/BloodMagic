@@ -22,11 +22,14 @@ public class TileDemonCrystal extends TileTicking
 	public static final double defaultWillConversionRate = 90;
 	public static final double timeDelayForWrongWill = 0.6;
 	public final int maxWill = 100;
-	public final double drainRate = 1;
 	public DemonWillHolder holder = new DemonWillHolder();
 	public double progressToNextCrystal = 0;
 	public int internalCounter = 0;
 	public Direction placement = Direction.UP; // Side that this crystal is placed on.
+
+	public double injectedWill = 0;
+	public double speedModifier = 1;
+	public double appliedConversionRate = 45;
 
 	public EnumDemonWillType willType;
 
@@ -64,39 +67,74 @@ public class TileDemonCrystal extends TileTicking
 			int crystalCount = getCrystalCount();
 			if (crystalCount < 7)
 			{
-//			this.setCrystalCount(crystalCount + 1);
 				EnumDemonWillType type = getWillType();
 
 				double value = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, type);
-				if (type != EnumDemonWillType.DEFAULT)
+
+				if (value >= 0.5)
 				{
-					if (value >= 0.5)
+					double nextProgress = getCrystalGrowthPerSecond(value);
+
+					double bufferDrainRate = (sameWillConversionRate - appliedConversionRate);
+					double conversionRate = Math.min(appliedConversionRate, sameWillConversionRate);
+
+					if (injectedWill > 0 && bufferDrainRate > 0)
 					{
-						double nextProgress = getCrystalGrowthPerSecond(value);
-						progressToNextCrystal += WorldDemonWillHandler.drainWill(getWorld(), getPos(), type, nextProgress * sameWillConversionRate, true) / sameWillConversionRate;
-					} else
+						nextProgress = Math.min(injectedWill / bufferDrainRate, nextProgress);
+					}
+
+					nextProgress = Math.min(WorldDemonWillHandler.drainWill(getWorld(), getPos(), type, nextProgress * conversionRate, true) / conversionRate, nextProgress);
+					progressToNextCrystal += nextProgress;
+
+					if (injectedWill > 0 && bufferDrainRate > 0)
 					{
-						value = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, EnumDemonWillType.DEFAULT);
-						if (value > 0.5)
+						injectedWill = Math.max(0, injectedWill - nextProgress * bufferDrainRate);
+						if (injectedWill <= 0)
 						{
-							double nextProgress = getCrystalGrowthPerSecond(value) * timeDelayForWrongWill;
-							progressToNextCrystal += WorldDemonWillHandler.drainWill(getWorld(), getPos(), EnumDemonWillType.DEFAULT, nextProgress * defaultWillConversionRate, true) / defaultWillConversionRate;
+							appliedConversionRate = sameWillConversionRate;
+							speedModifier = 1;
 						}
 					}
-				} else
+				} else if (type != EnumDemonWillType.DEFAULT)
 				{
+					// Does not use the injectedWill if it's not the same type
+					value = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, EnumDemonWillType.DEFAULT);
 					if (value > 0.5)
 					{
-
-						double nextProgress = getCrystalGrowthPerSecond(value);
-						progressToNextCrystal += WorldDemonWillHandler.drainWill(getWorld(), getPos(), type, nextProgress * sameWillConversionRate, true) / sameWillConversionRate;
+						double nextProgress = getCrystalGrowthPerSecond(value) * timeDelayForWrongWill;
+						progressToNextCrystal += WorldDemonWillHandler.drainWill(getWorld(), getPos(), EnumDemonWillType.DEFAULT, nextProgress * defaultWillConversionRate, true) / defaultWillConversionRate;
 					}
+				}
+
+				if (speedModifier <= 0)
+				{
+					speedModifier = 1;
 				}
 
 				checkAndGrowCrystal();
 			}
 		}
 
+	}
+
+	public double getInjectedWill()
+	{
+		return injectedWill;
+	}
+
+	public void applyCatalyst(double addedInjectedWill, double speedModifier, double conversionRate)
+	{
+		if (this.speedModifier < speedModifier)
+		{
+			this.speedModifier = speedModifier;
+		}
+
+		if (this.appliedConversionRate > conversionRate)
+		{
+			this.appliedConversionRate = conversionRate;
+		}
+
+		injectedWill += addedInjectedWill;
 	}
 
 	/**
@@ -180,8 +218,13 @@ public class TileDemonCrystal extends TileTicking
 
 	public double getCrystalGrowthPerSecond(double will)
 	{
-//		return 0.1;
-		return 1.0 / 200 * Math.sqrt(will / 200);
+		double speed = 1.0 / 200 * Math.sqrt(will / 200);
+		if (speedModifier > 0)
+		{
+			speed *= speedModifier;
+		}
+
+		return speed;
 	}
 
 	@Override
@@ -196,8 +239,12 @@ public class TileDemonCrystal extends TileTicking
 			this.willType = EnumDemonWillType.DEFAULT;
 		} else
 		{
-			this.willType = EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ENGLISH));
+			this.willType = EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE).toUpperCase(Locale.ROOT));
 		}
+
+		injectedWill = tag.getDouble(Constants.NBT.INJECTED_WILL);
+		speedModifier = tag.getDouble(Constants.NBT.SPEED_MODIFIER);
+		appliedConversionRate = tag.getDouble(Constants.NBT.APPLIED_RATE);
 	}
 
 	@Override
@@ -218,6 +265,10 @@ public class TileDemonCrystal extends TileTicking
 		{
 			tag.putString(Constants.NBT.WILL_TYPE, willType.toString());
 		}
+
+		tag.putDouble(Constants.NBT.INJECTED_WILL, injectedWill);
+		tag.putDouble(Constants.NBT.SPEED_MODIFIER, speedModifier);
+		tag.putDouble(Constants.NBT.APPLIED_RATE, appliedConversionRate);
 
 		return tag;
 	}
