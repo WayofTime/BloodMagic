@@ -302,7 +302,7 @@ public class ItemRitualDiviner extends Item
 		Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(this.getCurrentRitual(stack));
 		if (ritual != null)
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.diviner.currentRitual", new TranslationTextComponent(ritual.getTranslationKey())));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.diviner.currentRitual", new TranslationTextComponent(ritual.getTranslationKey())).mergeStyle(TextFormatting.GRAY));
 
 			boolean sneaking = Screen.hasShiftDown();
 //			boolean extraInfo = sneaking && Keyboard.isKeyDown(Keyboard.KEY_M);
@@ -321,7 +321,7 @@ public class ItemRitualDiviner extends Item
 				}
 			} else if (sneaking)
 			{
-				tooltip.add(new TranslationTextComponent(tooltipBase + "currentDirection", Utils.toFancyCasing(getDirection(stack).name())));
+				tooltip.add(new TranslationTextComponent(tooltipBase + "currentDirection", Utils.toFancyCasing(getDirection(stack).name())).mergeStyle(TextFormatting.GRAY));
 				tooltip.add(new StringTextComponent(""));
 
 				Tuple<Integer, Map<EnumRuneType, Integer>> runeCount = RitualHelper.countRunes(ritual);
@@ -336,13 +336,13 @@ public class ItemRitualDiviner extends Item
 					}
 				}
 				tooltip.add(new StringTextComponent(""));
-				tooltip.add(new TranslationTextComponent(tooltipBase + "totalRune", totalRunes));
+				tooltip.add(new TranslationTextComponent(tooltipBase + "totalRune", totalRunes).mergeStyle(TextFormatting.GRAY));
 			} else
 			{
 				tooltip.add(new StringTextComponent(""));
 				if (TextHelper.canTranslate(ritual.getTranslationKey() + ".info"))
 				{
-					tooltip.add(new TranslationTextComponent(ritual.getTranslationKey() + ".info"));
+					tooltip.add(new TranslationTextComponent(ritual.getTranslationKey() + ".info").mergeStyle(TextFormatting.GRAY));
 					tooltip.add(new StringTextComponent(""));
 				}
 
