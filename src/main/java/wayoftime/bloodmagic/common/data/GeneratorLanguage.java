@@ -786,6 +786,9 @@ public class GeneratorLanguage extends LanguageProvider
 
 //		addItem(BloodMagicItems , "");
 
+		add("fluid.bloodmagic.life_essence_fluid", "Life Essence Fluid");
+		add("fluid.bloodmagic.doubt_fluid", "Doubt Fluid");
+
 		// JEI
 		add("jei.bloodmagic.recipe.minimumsouls", "Minimum: %s Will");
 		add("jei.bloodmagic.recipe.soulsdrained", "Drained: %s Will");
