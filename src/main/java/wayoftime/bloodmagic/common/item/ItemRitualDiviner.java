@@ -15,6 +15,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -28,8 +29,10 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -216,19 +219,24 @@ public class ItemRitualDiviner extends Item
 							RitualHelper.setRuneType(world, newPos, component.getRuneType());
 							return true;
 						}
-					} else if (block.isAir(state, world, newPos))// || block.isReplaceable(world, newPos))
-					{
-						if (!consumeStone(stack, world, player))
-						{
-							return false;
-						}
-						((BlockRitualStone) BloodMagicBlocks.BLANK_RITUAL_STONE.get()).setRuneType(world, newPos, component.getRuneType());
-						return true;
 					} else
 					{
-						notifyBlockedBuild(player, newPos);
-						return false;
-						// TODO: Possibly replace the block with a ritual stone
+						BlockItemUseContext ctx = new BlockItemUseContext(world, null, Hand.MAIN_HAND, ItemStack.EMPTY, BlockRayTraceResult.createMiss(new Vector3d(0, 0, 0), Direction.UP, newPos));
+
+						if (state.isReplaceable(ctx))// || block.isReplaceable(world, newPos))
+						{
+							if (!consumeStone(stack, world, player))
+							{
+								return false;
+							}
+							((BlockRitualStone) BloodMagicBlocks.BLANK_RITUAL_STONE.get()).setRuneType(world, newPos, component.getRuneType());
+							return true;
+						} else
+						{
+							notifyBlockedBuild(player, newPos);
+							return false;
+							// TODO: Possibly replace the block with a ritual stone
+						}
 					}
 				}
 			}
