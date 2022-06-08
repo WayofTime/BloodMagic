@@ -1,10 +1,17 @@
 package wayoftime.bloodmagic.common.block;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkHooks;
 import wayoftime.bloodmagic.tile.routing.TileMasterRoutingNode;
 
 public class BlockMasterRoutingNode extends BlockItemRoutingNode
@@ -50,5 +57,21 @@ public class BlockMasterRoutingNode extends BlockItemRoutingNode
 	public TileEntity createTileEntity(BlockState state, IBlockReader world)
 	{
 		return new TileMasterRoutingNode();
+	}
+
+	@Override
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
+	{
+		if (world.isRemote)
+			return ActionResultType.SUCCESS;
+
+		TileEntity tile = world.getTileEntity(pos);
+		if (!(tile instanceof TileMasterRoutingNode))
+			return ActionResultType.FAIL;
+
+		NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tile, pos);
+//			player.openGui(BloodMagic.instance, Constants.Gui.SOUL_FORGE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
+
+		return ActionResultType.SUCCESS;
 	}
 }

@@ -306,7 +306,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.upgradeRemoveRitual.info", "Removes all upgrades from your Living Armor and gives you the corresponding Upgrade Tomes. These Tomes can be used to re-apply them to your Living Armor.");
 		add("ritual.bloodmagic.armourEvolveRitual.info", "Increases the amount of maximum Upgrade Points on your Living Armor to 300.");
 		add("ritual.bloodmagic.animalGrowthRitual.info", "Increases the maturity rate of baby animals within its range.");
-		add("ritual.bloodmagic.forsakenSoulRitual.info", "Damages mobs within its damage range and when the mob dies a demon crystal within its crystal range will be grown.");
+		add("ritual.bloodmagic.forsakenSoulRitual.info", "Applies Will catalysts to crystals within range from the attached inventory.");
 		add("ritual.bloodmagic.crystalHarvestRitual.info", "Breaks Demon Will Crystal Clusters of all aspects within its range, dropping the results on top of the crystals.");
 		add("ritual.bloodmagic.placerRitual.info", "Grabs blocks that are inside of the connected inventory and places them into the world.");
 		add("ritual.bloodmagic.fellingRitual.info", "A standard tree-cutting machine, this ritual will cut down all trees and leaves within its area and collect the drops.");
@@ -348,8 +348,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.zephyrRitual.chest.info", "(Chest) The location of the inventory that the ritual will place the picked up items into.");
 		add("ritual.bloodmagic.animalGrowthRitual.growing.info", "(Growth) Animals within this range will grow much faster.");
 		add("ritual.bloodmagic.animalGrowthRitual.chest.info", "(Chest) Chest for breeding items if properly augmented.");
-		add("ritual.bloodmagic.forsakenSoulRitual.crystal.info", "(Crystal) Demon Crystals in this range receive an increase in growth speed when a mob is killed by the ritual.");
-		add("ritual.bloodmagic.forsakenSoulRitual.damage.info", "(Damage) Mobs within this range will be slowly damaged, and when killed will grow the crystals.");
+		add("ritual.bloodmagic.forsakenSoulRitual.crystal.info", "(Crystal) Will Crystals in this range have catalysts applied to them to increase growth speed.");
+		add("ritual.bloodmagic.forsakenSoulRitual.chest.info", "(Chest) Chest for catalyst items.");
 		add("ritual.bloodmagic.crystalHarvestRitual.crystal.info", "(Crystal) All Demon Will crystal clusters have a single crystal broken off, spawning the crystal into the world. If there is only one crystal on the cluster, it will not break it.");
 
 		add("ritual.bloodmagic.ellipseRitual.info", "Creates a hollow spheroid around the ritual using the blocks in the attached chest.");

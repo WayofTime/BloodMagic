@@ -55,6 +55,7 @@ import wayoftime.bloodmagic.client.screens.ScreenAlchemyTable;
 import wayoftime.bloodmagic.client.screens.ScreenFilter;
 import wayoftime.bloodmagic.client.screens.ScreenHolding;
 import wayoftime.bloodmagic.client.screens.ScreenItemRoutingNode;
+import wayoftime.bloodmagic.client.screens.ScreenMasterRoutingNode;
 import wayoftime.bloodmagic.client.screens.ScreenSoulForge;
 import wayoftime.bloodmagic.client.screens.ScreenTeleposer;
 import wayoftime.bloodmagic.client.screens.ScreenTrainingBracelet;
@@ -104,6 +105,7 @@ public class ClientEvents
 		ScreenManager.registerFactory(BloodMagicBlocks.ROUTING_NODE_CONTAINER.get(), ScreenItemRoutingNode::new);
 		ScreenManager.registerFactory(BloodMagicBlocks.TRAINING_BRACELET_CONTAINER.get(), ScreenTrainingBracelet::new);
 		ScreenManager.registerFactory(BloodMagicBlocks.TELEPOSER_CONTAINER.get(), ScreenTeleposer::new);
+		ScreenManager.registerFactory(BloodMagicBlocks.MASTER_ROUTING_NODE_CONTAINER.get(), ScreenMasterRoutingNode::new);
 
 	}
 

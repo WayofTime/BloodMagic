@@ -42,6 +42,7 @@ import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.tile.container.ContainerAlchemicalReactionChamber;
 import wayoftime.bloodmagic.tile.container.ContainerAlchemyTable;
 import wayoftime.bloodmagic.tile.container.ContainerItemRoutingNode;
+import wayoftime.bloodmagic.tile.container.ContainerMasterRoutingNode;
 import wayoftime.bloodmagic.tile.container.ContainerSoulForge;
 import wayoftime.bloodmagic.tile.container.ContainerTeleposer;
 
@@ -152,6 +153,7 @@ public class BloodMagicBlocks
 	public static final RegistryObject<ContainerType<ContainerFilter>> FILTER_CONTAINER = CONTAINERS.register("filter_container", () -> IForgeContainerType.create(ContainerFilter::new));
 	public static final RegistryObject<ContainerType<ContainerItemRoutingNode>> ROUTING_NODE_CONTAINER = CONTAINERS.register("routing_node_container", () -> IForgeContainerType.create(ContainerItemRoutingNode::new));
 	public static final RegistryObject<ContainerType<ContainerTrainingBracelet>> TRAINING_BRACELET_CONTAINER = CONTAINERS.register("training_bracelet_container", () -> IForgeContainerType.create(ContainerTrainingBracelet::new));
+	public static final RegistryObject<ContainerType<ContainerMasterRoutingNode>> MASTER_ROUTING_NODE_CONTAINER = CONTAINERS.register("master_routing_node_container", () -> IForgeContainerType.create(ContainerMasterRoutingNode::new));
 
 	// Dungeon Blocks
 	public static final RegistryObject<Block> DUNGEON_BRICK_1 = DUNGEONBLOCKS.register("dungeon_brick1", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));

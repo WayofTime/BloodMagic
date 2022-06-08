@@ -11,27 +11,27 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.ITeleposerFocus;
-import wayoftime.bloodmagic.tile.TileTeleposer;
+import wayoftime.bloodmagic.tile.routing.TileMasterRoutingNode;
 
-public class ContainerTeleposer extends Container
+public class ContainerMasterRoutingNode extends Container
 {
-	public final TileTeleposer tileTeleposer;
+	public final TileMasterRoutingNode tileMasterRoutingNode;
 
-	public ContainerTeleposer(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
+	public ContainerMasterRoutingNode(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
 	{
-		this((TileTeleposer) playerInventory.player.world.getTileEntity(extraData.readBlockPos()), windowId, playerInventory);
+		this((TileMasterRoutingNode) playerInventory.player.world.getTileEntity(extraData.readBlockPos()), windowId, playerInventory);
 	}
 
-	public ContainerTeleposer(@Nullable TileTeleposer tile, int windowId, PlayerInventory playerInventory)
+	public ContainerMasterRoutingNode(@Nullable TileMasterRoutingNode tile, int windowId, PlayerInventory playerInventory)
 	{
-		super(BloodMagicBlocks.TELEPOSER_CONTAINER.get(), windowId);
-		this.tileTeleposer = tile;
+		super(BloodMagicBlocks.MASTER_ROUTING_NODE_CONTAINER.get(), windowId);
+		this.tileMasterRoutingNode = tile;
 		this.setup(playerInventory, tile);
 	}
 
 	public void setup(PlayerInventory inventory, IInventory tileARC)
 	{
-		this.addSlot(new SlotFocus(tileARC, TileTeleposer.FOCUS_SLOT, 80, 15));
+		this.addSlot(new SlotFocus(tileARC, tileMasterRoutingNode.SLOT, 80, 15));
 
 		for (int i = 0; i < 3; i++)
 		{
@@ -100,7 +100,7 @@ public class ContainerTeleposer extends Container
 	@Override
 	public boolean canInteractWith(PlayerEntity playerIn)
 	{
-		return this.tileTeleposer.isUsableByPlayer(playerIn);
+		return this.tileMasterRoutingNode.isUsableByPlayer(playerIn);
 	}
 
 	private class SlotFocus extends Slot
