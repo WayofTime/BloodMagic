@@ -11,6 +11,8 @@ public interface IItemFilter extends IRoutingFilter
 {
 	void initializeFilter(List<IFilterKey> filteredList, TileEntity tile, IItemHandler itemHandler, boolean isFilterOutput);
 
+	void initializeFilter(List<IFilterKey> filteredList);
+
 	/**
 	 * This method is only called when the output inventory this filter is managing
 	 * receives an ItemStack. Should only really be called by the Input filter via
@@ -28,7 +30,7 @@ public interface IItemFilter extends IRoutingFilter
 	 */
 	int transferThroughInputFilter(IItemFilter outputFilter, int maxTransfer);
 
-	boolean doesStackMatchFilter(ItemStack testStack);
+	boolean doesStackPassFilter(ItemStack testStack);
 
 	boolean doStacksMatch(IFilterKey filterStack, ItemStack testStack);
 }

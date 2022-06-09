@@ -2,12 +2,11 @@ package wayoftime.bloodmagic.ritual.types;
 
 import java.util.function.Consumer;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -60,34 +59,37 @@ public class RitualPlacer extends Ritual
 
 		if (tileEntity != null)
 		{
+			IItemHandler itemHandler = Utils.getInventory(tileEntity, null);
 
+			if (itemHandler.getSlots() <= 0)
 			{
-				IItemHandler itemHandler = Utils.getInventory(tileEntity, null);
+				return;
+			}
 
-				if (itemHandler.getSlots() <= 0)
-				{
-					return;
-				}
+			posLoop: for (BlockPos blockPos : areaDescriptor.getContainedPositions(masterRitualStone.getMasterBlockPos()))
+			{
+				BlockItemUseContext ctx = new BlockItemUseContext(world, null, Hand.MAIN_HAND, ItemStack.EMPTY, BlockRayTraceResult.createMiss(new Vector3d(0, 0, 0), Direction.UP, blockPos));
+				if (!world.getBlockState(blockPos).isReplaceable(ctx))
+					continue;
 
-				posLoop: for (BlockPos blockPos : areaDescriptor.getContainedPositions(masterRitualStone.getMasterBlockPos()))
+				for (int invSlot = 0; invSlot < itemHandler.getSlots(); invSlot++)
 				{
-					BlockItemUseContext ctx = new BlockItemUseContext(world, null, Hand.MAIN_HAND, ItemStack.EMPTY, BlockRayTraceResult.createMiss(new Vector3d(0, 0, 0), Direction.UP, blockPos));
-					if (!world.getBlockState(blockPos).isReplaceable(ctx))
+					ItemStack stack = itemHandler.extractItem(invSlot, 1, true);
+					if (stack.isEmpty() || !(stack.getItem() instanceof BlockItem))
 						continue;
 
-					for (int invSlot = 0; invSlot < itemHandler.getSlots(); invSlot++)
+					ActionResultType result = ((BlockItem) stack.getItem()).tryPlace(ctx);
+					if (result.isSuccessOrConsume())
 					{
-						ItemStack stack = itemHandler.extractItem(invSlot, 1, true);
-						if (stack.isEmpty() || !(stack.getItem() instanceof BlockItem))
-							continue;
-
-						BlockState placeState = Block.getBlockFromItem(itemHandler.getStackInSlot(invSlot).getItem()).getDefaultState();
-						world.setBlockState(blockPos, placeState);
 						itemHandler.extractItem(invSlot, 1, false);
 						tileEntity.markDirty();
 						masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
 						break posLoop; // Break instead of return in case we add things later
 					}
+
+//					BlockState placeState = Block.getBlockFromItem(itemHandler.getStackInSlot(invSlot).getItem()).getDefaultState();
+//					world.setBlockState(blockPos, placeState);
+
 				}
 			}
 		}
@@ -97,6 +99,12 @@ public class RitualPlacer extends Ritual
 	public int getRefreshCost()
 	{
 		return 50;
+	}
+
+	@Override
+	public int getRefreshTime()
+	{
+		return 5;
 	}
 
 	@Override

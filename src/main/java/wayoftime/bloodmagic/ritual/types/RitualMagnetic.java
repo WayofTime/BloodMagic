@@ -74,6 +74,9 @@ public class RitualMagnetic extends Ritual
 		BlockState downState = world.getBlockState(pos.down());
 		int radius = getRadius(downState.getBlock());
 
+		int maxBlockChecks = 100;
+		int checks = 0;
+
 		if (replace)
 		{
 			int j = -1;
@@ -87,12 +90,18 @@ public class RitualMagnetic extends Ritual
 				k = Math.min(radius, Math.max(-radius, lastPos.getZ()));
 			}
 
-			if (j + pos.getY() >= 0)
+			while (j + pos.getY() >= 0)
 			{
 				while (i <= radius)
 				{
 					while (k <= radius)
 					{
+						if (checks >= maxBlockChecks)
+						{
+							this.lastPos = new BlockPos(i, j, k);
+							return;
+						}
+						checks++;
 						BlockPos newPos = pos.add(i, j, k);
 						Vector3d newPosVector = new Vector3d(newPos.getX(), newPos.getY(), newPos.getZ());
 						BlockState state = world.getBlockState(newPos);
@@ -116,14 +125,11 @@ public class RitualMagnetic extends Ritual
 				}
 				j--;
 				i = -radius;
-				this.lastPos = new BlockPos(i, j, k);
-				return;
 			}
 
 			j = -1;
 			this.lastPos = new BlockPos(i, j, k);
 		}
-
 	}
 
 	public void readFromNBT(CompoundNBT tag)

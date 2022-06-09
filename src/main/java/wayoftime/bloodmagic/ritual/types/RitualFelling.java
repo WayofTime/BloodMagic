@@ -9,15 +9,22 @@ import javax.annotation.Nullable;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.SoundType;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
+import net.minecraft.particles.BlockParticleData;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -68,6 +75,11 @@ public class RitualFelling extends Ritual
 		AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
 		TileEntity tileInventory = world.getTileEntity(chestRange.getContainedPositions(masterPos).get(0));
 
+		if (world.isRemote)
+		{
+			return;
+		}
+
 		if (tileInventory != null && Utils.getNumberOfFreeSlots(tileInventory, Direction.DOWN) < 1)
 		{
 			return;
@@ -99,10 +111,25 @@ public class RitualFelling extends Ritual
 			masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
 			currentPos = blockPosIterator.next();
 			IItemHandler inventory = Utils.getInventory(tileInventory, Direction.DOWN);
-			placeInInventory(world.getBlockState(currentPos), world, currentPos, inventory);
+			BlockState state = world.getBlockState(currentPos);
+			placeInInventory(state, world, currentPos, inventory);
+
+			BlockItemUseContext ctx = new BlockItemUseContext(world, null, Hand.MAIN_HAND, ItemStack.EMPTY, BlockRayTraceResult.createMiss(new Vector3d(0, 0, 0), Direction.UP, currentPos));
+			spawnParticlesAndSound((ServerWorld) world, currentPos, state, ctx);
+
 			world.setBlockState(currentPos, Blocks.AIR.getDefaultState());
 			blockPosIterator.remove();
 		}
+	}
+
+	public void spawnParticlesAndSound(ServerWorld world, BlockPos pos, BlockState state, BlockItemUseContext context)
+	{
+		SoundType soundtype = state.getSoundType(world, pos, context.getPlayer());
+		world.playSound(context.getPlayer(), pos, state.getSoundType(world, pos, context.getPlayer()).getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
+
+		BlockParticleData particleData = new BlockParticleData(ParticleTypes.BLOCK, state);
+
+		world.spawnParticle(particleData, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 8, 0.2, 0.2, 0.2, 0.03);
 	}
 
 	@Override

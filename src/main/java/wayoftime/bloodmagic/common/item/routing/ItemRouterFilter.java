@@ -283,4 +283,33 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 	{
 		return buttonKey.equals(Constants.BUTTONID.BLACKWHITELIST);
 	}
+
+	@Override
+	public IItemFilter getUninitializedItemFilter(ItemStack filterStack)
+	{
+		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
+
+		List<IFilterKey> filteredList = new ArrayList<>();
+		ItemInventory inv = new InventoryFilter(filterStack);
+
+		for (int i = 0; i < inv.getSizeInventory(); i++)
+		{
+			ItemStack stack = inv.getStackInSlot(i);
+			if (stack.isEmpty())
+			{
+				continue;
+			}
+
+			int amount = GhostItemHelper.getItemGhostAmount(stack);
+			ItemStack ghostStack = GhostItemHelper.getSingleStackFromGhost(stack);
+
+			IFilterKey key = getFilterKey(filterStack, i, ghostStack, amount);
+
+			filteredList.add(key);
+		}
+
+		testFilter.initializeFilter(filteredList);
+
+		return testFilter;
+	}
 }

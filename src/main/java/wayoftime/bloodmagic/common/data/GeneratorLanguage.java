@@ -229,9 +229,10 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.simpleDungeonRitual", "Edge of the Hidden Realm");
 		add("ritual.bloodmagic.downgradeRitual", "Penance of the Leadened Soul");
 		add("ritual.bloodmagic.condorRitual", "Reverence of the Condor");
+		add("ritual.bloodmagic.yawningVoidRitual", "Yawning of the Void");
 
 		add("ritual.bloodmagic.cobblestoneRitual", "Le Vulcanos Frigius");
-		add("ritual.bloodmagic.placerRitual", "The Filler");
+		add("ritual.bloodmagic.placerRitual", "Domain of The Filler");
 		add("ritual.bloodmagic.fellingRitual", "Crash of The Timberman");
 		add("ritual.bloodmagic.pumpRitual", "Hymn of Siphoning");
 		add("ritual.bloodmagic.altarBuilderRitual", "The Assembly of the High Altar");
@@ -292,6 +293,10 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.groundingRitual.destructive.info", "(Destructive) Applies Heavy Heart.");
 		add("ritual.bloodmagic.groundingRitual.steadfast.info", "(Steadfast) Affects Bosses. Doesn't affect bosses that are immune against motion change or immune against potions (except Wither and Ender Dragon).");
 		add("ritual.bloodmagic.groundingRitual.vengeful.info", "(Vengeful) Applies Levitation.");
+		add("ritual.bloodmagic.yawningVoidRitual.default.info", "(Raw) Increases the speed of the ritual based on the total amount of Raw Will in the Aura.");
+		add("ritual.bloodmagic.yawningVoidRitual.corrosive.info", "(Corrosive) Destroys blocks that match the filter. Remaining are not destroyed.");
+		add("ritual.bloodmagic.yawningVoidRitual.steadfast.info", "(Steadfast) Non-destroyed blocks are placed in separate region. If no filter applied, all blocks are moved.");
+
 		add("ritual.bloodmagic.condorRitual.info", "Provides flight in an area around the ritual.");
 		add("ritual.bloodmagic.eternalSoulRitual.info", "Capable of transferring Life Essence from a Network back into an Altar at a cost.");
 
@@ -327,6 +332,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.greenGroveRitual.leech.info", "(Corrosive) Entities in this area have their life drained to grow nearby crops.");
 		add("ritual.bloodmagic.greenGroveRitual.hydrate.info", "(Steadfast) Blocks within this range are rehydrated into farmland, and seeds within the area are planted nearby.");
 		add("ritual.bloodmagic.jumpRitual.jumpRange.info", "(Jumping) Entities in this range will be launched in the air.");
+		add("ritual.bloodmagic.jumpRitual.jumpPower.info", "(Power) Overall height of descriptor controls jump height and cost.");
 		add("ritual.bloodmagic.wellOfSufferingRitual.altar.info", "(Altar) The area that the ritual searches for a Blood Altar to deposit its Blood into.");
 		add("ritual.bloodmagic.wellOfSufferingRitual.damage.info", "(Damage) All mobs within this area will take damage every second or so until they die. This does not include players, fortunately. ");
 		add("ritual.bloodmagic.featheredKnifeRitual.altar.info", "(Altar) This range defines the area that the ritual searches for the Blood Altar. Changing this will either expand or limit the range to a certain region.");
@@ -367,6 +373,11 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.pumpRitual.pumpRange.info", "(Pump) The region that the ritual will look for fluids to grab from the world.");
 		add("ritual.bloodmagic.condorRitual.flightRange.info", "Players within this range will receive a Flight buff.");
 		add("ritual.bloodmagic.downgradeRitual.info", "Consumes items from a linked chest to forcefully downgrade worn armour");
+
+		add("ritual.bloodmagic.yawningVoidRitual.info", "Destroys blocks within a large area.");
+		add("ritual.bloodmagic.yawningVoidRitual.chest.info", "(Chest) Choses the first Item Filter to determine which blocks to destroy.");
+		add("ritual.bloodmagic.yawningVoidRitual.quarryRange.info", "(Quarry) Blocks within range are destroyed.");
+		add("ritual.bloodmagic.yawningVoidRitual.placementRange.info", "(Chest) Based on Will config, blocks not destroyed are placed within range.");
 
 		add("tooltip.bloodmagic.ritualReader.currentState", "Current mode: %s");
 		add("tooltip.bloodmagic.ritualReader.set_area", "Define Area");

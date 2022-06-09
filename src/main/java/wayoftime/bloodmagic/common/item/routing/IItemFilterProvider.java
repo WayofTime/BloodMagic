@@ -20,6 +20,10 @@ public interface IItemFilterProvider extends IRoutingFilterProvider
 
 	IItemFilter getOutputItemFilter(ItemStack stack, TileEntity tile, IItemHandler handler);
 
+	// Only used for filters that check ItemStacks and do not transfer items to/from
+	// a connected inventory.
+	IItemFilter getUninitializedItemFilter(ItemStack stack);
+
 	void setGhostItemAmount(ItemStack filterStack, int ghostItemSlot, int amount);
 
 	List<ITextComponent> getTextForHoverItem(ItemStack filterStack, String buttonKey, int ghostItemSlot);

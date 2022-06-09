@@ -254,22 +254,28 @@ public class BlacklistItemFilter implements IItemFilter
 	}
 
 	@Override
-	public boolean doesStackMatchFilter(ItemStack testStack)
+	public boolean doesStackPassFilter(ItemStack testStack)
 	{
 		for (IFilterKey filterStack : requestList)
 		{
 			if (doStacksMatch(filterStack, testStack))
 			{
-				return true;
+				return false;
 			}
 		}
 
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean doStacksMatch(IFilterKey filterStack, ItemStack testStack)
 	{
 		return filterStack.doesStackMatch(testStack);
+	}
+
+	@Override
+	public void initializeFilter(List<IFilterKey> filteredList)
+	{
+		this.requestList = filteredList;
 	}
 }
