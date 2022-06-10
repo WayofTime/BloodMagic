@@ -1,0 +1,34 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": [
+    {
+      "item": "bloodmagic:defaultcrystal"
+    },
+    {
+      "item": "bloodmagic:corrosivecrystal"
+    },
+    {
+      "item": "bloodmagic:vengefulcrystal"
+    },
+    {
+      "item": "bloodmagic:destructivecrystal"
+    },
+    {
+      "item": "bloodmagic:steadfastcrystal"
+    }
+  ],
+  "input1": {
+    "tag": "forge:stone"
+  },
+  "input2": {
+    "tag": "forge:gems/lapis"
+  },
+  "input3": {
+    "tag": "forge:storage_blocks/iron"
+  },
+  "output": {
+    "item": "bloodmagic:demonpylon"
+  },
+  "minimumDrain": 400.0,
+  "drain": 50.0
+}

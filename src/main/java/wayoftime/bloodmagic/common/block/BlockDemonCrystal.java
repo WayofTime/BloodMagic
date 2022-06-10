@@ -148,6 +148,7 @@ public class BlockDemonCrystal extends Block
 				{
 					crystal.dropSingleCrystal();
 
+					return ActionResultType.SUCCESS;
 				}
 				if (!crystal.getWorld().isRemote && isCreative && holdsCrystal)
 				{
@@ -164,7 +165,7 @@ public class BlockDemonCrystal extends Block
 			}
 		}
 
-		return ActionResultType.SUCCESS;
+		return super.onBlockActivated(state, world, pos, player, hand, blockRayTraceResult);
 	}
 
 	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos)

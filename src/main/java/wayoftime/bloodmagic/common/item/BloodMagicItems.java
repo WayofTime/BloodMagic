@@ -86,6 +86,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> ALCHEMICAL_REACTION_CHAMBER_ITEM = ITEMS.register("alchemicalreactionchamber", () -> new BlockItem(BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> DEMON_CRUCIBLE_ITEM = ITEMS.register("demoncrucible", () -> new BlockItem(BloodMagicBlocks.DEMON_CRUCIBLE.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> DEMON_CRYSTALLIZER_ITEM = ITEMS.register("demoncrystallizer", () -> new BlockItem(BloodMagicBlocks.DEMON_CRYSTALLIZER.get(), new Item.Properties().group(BloodMagic.TAB)));
+	public static final RegistryObject<Item> DEMON_PYLON_ITEM = ITEMS.register("demonpylon", () -> new BlockItem(BloodMagicBlocks.DEMON_PYLON.get(), new Item.Properties().group(BloodMagic.TAB)));
 
 	public static final RegistryObject<Item> BLOODSTONE_ITEM = ITEMS.register("largebloodstonebrick", () -> new BlockItem(BloodMagicBlocks.BLOODSTONE.get(), new Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> BLOODSTONE_BRICK_ITEM = ITEMS.register("bloodstonebrick", () -> new BlockItem(BloodMagicBlocks.BLOODSTONE_BRICK.get(), new Item.Properties().group(BloodMagic.TAB)));

@@ -321,6 +321,7 @@ public class GeneratorLootTable extends LootTableProvider
 			registerDropSelfLootTable(BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER.get());
 			registerDropSelfLootTable(BloodMagicBlocks.DEMON_CRUCIBLE.get());
 			registerDropSelfLootTable(BloodMagicBlocks.DEMON_CRYSTALLIZER.get());
+			registerDropSelfLootTable(BloodMagicBlocks.DEMON_PYLON.get());
 			registerDropSelfLootTable(BloodMagicBlocks.INCENSE_ALTAR.get());
 //			registerNoDropLootTable(BloodMagicBlocks.RAW_CRYSTAL_BLOCK.get());
 			registerDropping(BloodMagicBlocks.NETHER_SOIL.get(), Blocks.NETHERRACK);

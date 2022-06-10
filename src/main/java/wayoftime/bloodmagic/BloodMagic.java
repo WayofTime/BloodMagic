@@ -78,6 +78,7 @@ import wayoftime.bloodmagic.tile.TileDeforesterCharge;
 import wayoftime.bloodmagic.tile.TileDemonCrucible;
 import wayoftime.bloodmagic.tile.TileDemonCrystal;
 import wayoftime.bloodmagic.tile.TileDemonCrystallizer;
+import wayoftime.bloodmagic.tile.TileDemonPylon;
 import wayoftime.bloodmagic.tile.TileDungeonAlternator;
 import wayoftime.bloodmagic.tile.TileDungeonController;
 import wayoftime.bloodmagic.tile.TileDungeonSeal;
@@ -256,6 +257,7 @@ public class BloodMagic
 		event.getRegistry().register(TileEntityType.Builder.create(TileDemonCrystal::new, BloodMagicBlocks.RAW_CRYSTAL_BLOCK.get(), BloodMagicBlocks.CORROSIVE_CRYSTAL_BLOCK.get(), BloodMagicBlocks.DESTRUCTIVE_CRYSTAL_BLOCK.get(), BloodMagicBlocks.VENGEFUL_CRYSTAL_BLOCK.get(), BloodMagicBlocks.STEADFAST_CRYSTAL_BLOCK.get()).build(null).setRegistryName("demoncrystal"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileDemonCrucible::new, BloodMagicBlocks.DEMON_CRUCIBLE.get()).build(null).setRegistryName("demoncrucible"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileDemonCrystallizer::new, BloodMagicBlocks.DEMON_CRYSTALLIZER.get()).build(null).setRegistryName("demoncrystallizer"));
+		event.getRegistry().register(TileEntityType.Builder.create(TileDemonPylon::new, BloodMagicBlocks.DEMON_PYLON.get()).build(null).setRegistryName("demonpylon"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileIncenseAltar::new, BloodMagicBlocks.INCENSE_ALTAR.get()).build(null).setRegistryName("incensealtar"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileMimic::new, BloodMagicBlocks.MIMIC.get(), BloodMagicBlocks.ETHEREAL_MIMIC.get()).build(null).setRegistryName("mimic"));
 		event.getRegistry().register(TileEntityType.Builder.create(TileShapedExplosive::new, BloodMagicBlocks.SHAPED_CHARGE.get()).build(null).setRegistryName("shaped_explosive"));

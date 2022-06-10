@@ -531,6 +531,7 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addBlock(BloodMagicBlocks.DEMON_CRUCIBLE, "Demon Crucible");
 		addBlock(BloodMagicBlocks.DEMON_CRYSTALLIZER, "Demon Crystallizer");
+		addBlock(BloodMagicBlocks.DEMON_PYLON, "Demon Pylon");
 
 		addBlock(BloodMagicBlocks.WOOD_PATH, "Wooden Path");
 		addBlock(BloodMagicBlocks.WOOD_TILE_PATH, "Tiled Wooden Path");
