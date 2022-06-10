@@ -46,7 +46,7 @@ public class RecipePotionIncreaseLength extends RecipePotionFlaskBase
 		{
 			if (holder.getPotion().equals(outputEffect))
 			{
-				return holder.getAmpDurationMod() < lengthDurationMod;
+				return holder.getLengthDurationMod() < lengthDurationMod;
 			}
 		}
 
