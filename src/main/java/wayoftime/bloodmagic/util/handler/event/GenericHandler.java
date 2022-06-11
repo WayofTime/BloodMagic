@@ -53,6 +53,7 @@ import net.minecraftforge.fml.common.Mod;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.item.BloodOrb;
 import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.IBloodOrb;
@@ -204,7 +205,15 @@ public class GenericHandler
 			}
 
 			ItemStack heldStack = sourcePlayer.getHeldItemMainhand();
+			
+			if (heldStack.getItem() == BloodMagicItems.DAGGER_OF_SACRIFICE.get())
+			{
+				event.setAmount(0);
+				return;
+			}
+			
 			AnointmentHolder holder = AnointmentHolder.fromItemStack(heldStack);
+
 
 			if (holder != null)
 			{
