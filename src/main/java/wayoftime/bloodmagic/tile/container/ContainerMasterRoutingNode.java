@@ -10,7 +10,7 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
-import wayoftime.bloodmagic.common.item.ITeleposerFocus;
+import wayoftime.bloodmagic.common.item.routing.IRouterUpgrade;
 import wayoftime.bloodmagic.tile.routing.TileMasterRoutingNode;
 
 public class ContainerMasterRoutingNode extends Container
@@ -31,7 +31,7 @@ public class ContainerMasterRoutingNode extends Container
 
 	public void setup(PlayerInventory inventory, IInventory tileARC)
 	{
-		this.addSlot(new SlotFocus(tileARC, tileMasterRoutingNode.SLOT, 80, 15));
+		this.addSlot(new SlotRouterUpgrade(tileARC, tileMasterRoutingNode.SLOT, 80, 15));
 
 		for (int i = 0; i < 3; i++)
 		{
@@ -69,7 +69,7 @@ public class ContainerMasterRoutingNode extends Container
 				slot.onSlotChange(itemstack1, itemstack);
 			} else if (index >= 1) // Attempting to transfer from main inventory
 			{
-				if (itemstack1.getItem() instanceof ITeleposerFocus) // Try the tool slot first
+				if (itemstack1.getItem() instanceof IRouterUpgrade) // Try the tool slot first
 				{
 					if (!this.mergeItemStack(itemstack1, 0, 1, false))
 					{
@@ -103,9 +103,9 @@ public class ContainerMasterRoutingNode extends Container
 		return this.tileMasterRoutingNode.isUsableByPlayer(playerIn);
 	}
 
-	private class SlotFocus extends Slot
+	private class SlotRouterUpgrade extends Slot
 	{
-		public SlotFocus(IInventory inventory, int slotIndex, int x, int y)
+		public SlotRouterUpgrade(IInventory inventory, int slotIndex, int x, int y)
 		{
 			super(inventory, slotIndex, x, y);
 		}
@@ -113,7 +113,7 @@ public class ContainerMasterRoutingNode extends Container
 		@Override
 		public boolean isItemValid(ItemStack itemStack)
 		{
-			return itemStack.getItem() instanceof ITeleposerFocus;
+			return itemStack.getItem() instanceof IRouterUpgrade;
 		}
 	}
 }

@@ -45,6 +45,7 @@ import wayoftime.bloodmagic.common.item.soul.ItemSoulGem;
 import wayoftime.bloodmagic.common.item.soul.ItemSoulSnare;
 import wayoftime.bloodmagic.common.registration.impl.BloodOrbDeferredRegister;
 import wayoftime.bloodmagic.common.registration.impl.BloodOrbRegistryObject;
+import wayoftime.bloodmagic.common.routing.ItemBasicNodeUpgrade;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.structures.ItemDungeonTester;
 
@@ -244,6 +245,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> ITEM_MOD_FILTER = BASICITEMS.register("itemrouterfiltermoditems", ItemModFilter::new);
 	public static final RegistryObject<Item> ITEM_COMPOSITE_FILTER = BASICITEMS.register("itemrouterfiltercomposite", ItemCompositeFilter::new);
 	public static final RegistryObject<Item> NODE_ROUTER = BASICITEMS.register("noderouter", ItemNodeRouter::new);
+	public static final RegistryObject<Item> MASTER_NODE_UPGRADE = BASICITEMS.register("mastercore", ItemBasicNodeUpgrade::new);
 
 	public static final RegistryObject<Item> FRAME_PARTS = BASICITEMS.register("componentframeparts", ItemBase::new);
 

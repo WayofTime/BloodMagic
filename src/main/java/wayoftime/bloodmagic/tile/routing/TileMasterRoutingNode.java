@@ -16,6 +16,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -31,6 +32,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
+import wayoftime.bloodmagic.common.item.routing.IRouterUpgrade;
 import wayoftime.bloodmagic.common.routing.IInputItemRoutingNode;
 import wayoftime.bloodmagic.common.routing.IItemFilter;
 import wayoftime.bloodmagic.common.routing.IMasterRoutingNode;
@@ -255,7 +257,14 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 
 	public int getMaxTransferForDemonWill(double will)
 	{
-		return 16;
+		int rate = 16;
+		ItemStack upgradeStack = getStackInSlot(SLOT);
+		if (!upgradeStack.isEmpty() && upgradeStack.getItem() instanceof IRouterUpgrade)
+		{
+			rate += ((IRouterUpgrade) upgradeStack.getItem()).getMaxTransferIncrease(upgradeStack);
+		}
+
+		return rate;
 	}
 
 	@Override

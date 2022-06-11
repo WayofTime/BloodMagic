@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "tag": "forge:ingots/iron"
+  },
+  "input1": {
+    "tag": "forge:ingots/iron"
+  },
+  "input2": {
+    "tag": "forge:glass"
+  },
+  "input3": {
+    "tag": "forge:storage_blocks/lapis"
+  },
+  "output": {
+    "item": "bloodmagic:mastercore"
+  },
+  "minimumDrain": 400.0,
+  "drain": 50.0
+}

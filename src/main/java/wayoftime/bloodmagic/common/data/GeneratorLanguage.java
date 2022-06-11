@@ -28,6 +28,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tile.bloodmagic.soulforge.name", "Hellfire Forge");
 		add("tile.bloodmagic.arc.name", "Alchemical Reaction Chamber");
 		add("tile.bloodmagic.alchemytable.name", "Alchemy Table");
+		add("tile.bloodmagic.masteroutingnode.name", "Master Routing Node");
 
 		// Blood Orb tooltips
 		add("tooltip.bloodmagic.extraInfo", "-Hold shift for more info-");
@@ -446,6 +447,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.slate_vial", "A glass vial infused with a simple slate");
 		add("tooltip.bloodmagic.blood_provider.slate.desc", "A simple ampoule containing 500LP");
 
+		add("tooltip.bloodmagic.basicnodeupgrade", "Increases a Master Routing Node's speed");
+
 		add("chat.bloodmagic.living_upgrade_level_increase", "%s has leveled up to %d");
 
 		add("chat.bloodmagic.routing.remove", "Removing contained location");
@@ -715,6 +718,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.SLATE_AMPOULE, "Slate Ampoule");
 
 		addItem(BloodMagicItems.NODE_ROUTER, "Node Router");
+		addItem(BloodMagicItems.MASTER_NODE_UPGRADE, "Basic Routing Logic Upgrade");
 		addItem(BloodMagicItems.ITEM_ROUTER_FILTER, "Standard Item Filter");
 		addItem(BloodMagicItems.ITEM_TAG_FILTER, "Tag Item Filter");
 		addItem(BloodMagicItems.ITEM_ENCHANT_FILTER, "Enchantments Item Filter");
