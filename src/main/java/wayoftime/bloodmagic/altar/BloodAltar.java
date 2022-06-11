@@ -1,5 +1,7 @@
 package wayoftime.bloodmagic.altar;
 
+import javax.crypto.spec.IvParameterSpec;
+
 import com.google.common.base.Enums;
 
 import net.minecraft.block.BlockState;
@@ -364,6 +366,9 @@ public class BloodAltar// implements IFluidHandler
 			} else if (!hasOperated && progress > 0)
 			{
 				progress -= (int) (efficiencyMultiplier * drainRate);
+
+				if (progress < 0)
+					progress = 0;
 
 				if (internalCounter % 2 == 0 && world instanceof ServerWorld)
 				{
