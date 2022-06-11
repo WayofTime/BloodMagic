@@ -1,7 +1,5 @@
 package wayoftime.bloodmagic.altar;
 
-import javax.crypto.spec.IvParameterSpec;
-
 import com.google.common.base.Enums;
 
 import net.minecraft.block.BlockState;
