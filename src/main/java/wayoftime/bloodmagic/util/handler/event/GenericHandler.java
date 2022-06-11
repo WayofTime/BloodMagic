@@ -219,7 +219,13 @@ public class GenericHandler
 			PlayerEntity player = (PlayerEntity) living;
 			if (LivingUtil.hasFullSet(player))
 			{
+				
 				event.setAmount((float) LivingUtil.getDamageReceivedForArmour(player, event.getSource(), event.getAmount()));
+
+				float trackedDamage = event.getAmount();
+
+				if (trackedDamage > player.getHealth())
+					trackedDamage = player.getHealth();
 
 				// The factor of 1.6 is due to taking into account iron armour's protection at
 				// ~11 damage
@@ -228,15 +234,15 @@ public class GenericHandler
 				{
 //					LivingStats stats = LivingStats.fromPlayer(player);
 //					stats.addExperience(LivingArmorRegistrar.TEST_UPGRADE.get().getKey(), 10);
-					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_ARROW_PROTECT.get(), event.getAmount() / factor);
+					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_ARROW_PROTECT.get(), trackedDamage / factor);
 				} else
 				{
-					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_PHYSICAL_PROTECT.get(), event.getAmount() / factor);
+					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_PHYSICAL_PROTECT.get(), trackedDamage / factor);
 				}
 
 				if (event.getSource() == DamageSource.FALL)
 				{
-					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_FALL_PROTECT.get(), event.getAmount() / factor);
+					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_FALL_PROTECT.get(), trackedDamage / factor);
 				}
 			}
 		}
