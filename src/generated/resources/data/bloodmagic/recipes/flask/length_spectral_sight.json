@@ -1,0 +1,13 @@
+{
+  "type": "bloodmagic:flask_potionlength",
+  "input": [
+    {
+      "item": "bloodmagic:mundanelengtheningcatalyst"
+    }
+  ],
+  "syphon": 200,
+  "ticks": 100,
+  "upgradeLevel": 1,
+  "effect": "bloodmagic:spectral_sight",
+  "lengthDurMod": 2.6667
+}

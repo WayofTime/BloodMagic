@@ -72,6 +72,12 @@ public class PotionRecipeProvider implements ISubRecipeProvider
 		addPotionModifiers(consumer, Effects.REGENERATION, "regen");
 
 		addPotionModifiers(consumer, Effects.SLOWNESS, "slowness");
+		addPotionModifiers(consumer, BloodMagicPotions.HARD_CLOAK, "hard_cloak");
+		addPotionModifiers(consumer, BloodMagicPotions.HEAVY_HEART, "heavy_heart");
+		addPotionModifiers(consumer, BloodMagicPotions.OBSIDIAN_CLOAK, "obsidian_cloak");
+		addPotionModifiers(consumer, BloodMagicPotions.GRAVITY, "gravity");
+		addPotionModifiers(consumer, BloodMagicPotions.FLIGHT, "flight");
+
 //		addPotionModifiers(consumer, Effects.SLOW_FALLING, "slow_fall");
 
 //		addPotionModifiers(consumer, Effects.FIRE_RESISTANCE, "fire_resist");
@@ -86,6 +92,11 @@ public class PotionRecipeProvider implements ISubRecipeProvider
 		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(Effects.NIGHT_VISION, 2.6667, 200, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "night_vision"));
 		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(Effects.INVISIBILITY, 2.6667, 200, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "invisibility"));
 		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(Effects.SLOW_FALLING, 2.6667, 200, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "slow_fall"));
+		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(BloodMagicPotions.PASSIVITY, 2.6667, 200, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "passivity"));
+		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(BloodMagicPotions.BOUNCE, 2.6667, 200, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "bounce"));
+		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(BloodMagicPotions.SPECTRAL_SIGHT, 2.6667, 200, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "spectral_sight"));
+		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(BloodMagicPotions.GROUNDED, 2.6667, 200, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "grounded"));
+		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(BloodMagicPotions.SUSPENDED, 2.6667, 200, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "suspended"));
 
 //		String transformPath = "flask/transform_";
 //		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.FLIGHT, 2400, Effects.SPEED, 100, 20, 2).addInputEffect(Effects.FIRE_RESISTANCE).addIngredient(Ingredient.fromTag(Tags.Items.FEATHERS)).build(consumer, BloodMagic.rl(transformPath + "flight"));
