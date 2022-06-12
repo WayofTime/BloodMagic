@@ -33,7 +33,7 @@ public class RitualGrounding extends Ritual
 
 	public static final int willRefreshTime = 20;
 	public static final String GROUNDING_RANGE = "groundingRange";
-	public static final double willDrain = 0.5;
+	public static final double willDrain = 0.1;
 
 	public RitualGrounding()
 	{

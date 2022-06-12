@@ -231,6 +231,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.downgradeRitual", "Penance of the Leadened Soul");
 		add("ritual.bloodmagic.condorRitual", "Reverence of the Condor");
 		add("ritual.bloodmagic.yawningVoidRitual", "Yawning of the Void");
+		add("ritual.bloodmagic.groundingRitual", "Force of the Ground");
 
 		add("ritual.bloodmagic.cobblestoneRitual", "Le Vulcanos Frigius");
 		add("ritual.bloodmagic.placerRitual", "Domain of The Filler");
@@ -374,6 +375,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.pumpRitual.pumpRange.info", "(Pump) The region that the ritual will look for fluids to grab from the world.");
 		add("ritual.bloodmagic.condorRitual.flightRange.info", "Players within this range will receive a Flight buff.");
 		add("ritual.bloodmagic.downgradeRitual.info", "Consumes items from a linked chest to forcefully downgrade worn armour");
+		add("ritual.bloodmagic.groundingRitual.groundingRange.info", "(Range) Affects entities within range.");
 
 		add("ritual.bloodmagic.yawningVoidRitual.info", "Destroys blocks within a large area.");
 		add("ritual.bloodmagic.yawningVoidRitual.chest.info", "(Chest) Choses the first Item Filter to determine which blocks to destroy.");

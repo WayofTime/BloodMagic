@@ -1,0 +1,47 @@
+{
+  "name": "Ritual of Grounding",
+  "icon": "minecraft:dirt",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "Ritual of Grounding",
+      "multiblock_id": "bloodmagic:grounding",
+      "text": "Use a $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$(/l) for easier construction."
+    },
+    {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "grounding"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "grounding",
+      "page_type": "raw"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "grounding",
+      "page_type": "corrosive"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "grounding",
+      "page_type": "vengeful"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "grounding",
+      "page_type": "destructive"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "grounding",
+      "page_type": "steadfast"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "grounding",
+      "page_type": "groundingRange"
+    }
+  ]
+}
