@@ -71,6 +71,7 @@ public class PotionRecipeProvider implements ISubRecipeProvider
 		addPotionModifiers(consumer, Effects.WEAKNESS, "weakness");
 		addPotionModifiers(consumer, Effects.POISON, "poison");
 		addPotionModifiers(consumer, Effects.REGENERATION, "regen");
+		addPotionModifiers(consumer, Effects.LEVITATION, "levitation");
 
 		addPotionModifiers(consumer, Effects.SLOWNESS, "slowness");
 		addPotionModifiers(consumer, BloodMagicPotions.HARD_CLOAK, "hard_cloak");
