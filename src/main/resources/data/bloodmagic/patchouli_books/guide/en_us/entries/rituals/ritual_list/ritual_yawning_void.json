@@ -24,7 +24,11 @@
     {
       "type": "bloodmagic:ritual_data",
       "ritual": "yawning_void",
-      "page_type": "corrosive"
+      "page_type": "corrosive",
+      "text_overrides": [
+        ["filter", "item"]
+        ],
+      "text": "To set a filter, place any form of $(item)Item Filter$() into the linked $(item)Chest$(). The ritual will only use the first filter it finds, but will accept $(l:bloodmagic:demon_will/item_routing/standard_item_filter)Standard$(), $(l:bloodmagic:demon_will/item_routing/tag_item_filter)Tag$(), $(l:bloodmagic:demon_will/item_routing/mod_item_filter)Mod$(), and $(l:bloodmagic:demon_will/item_routing/composite_item_filter)Composite Item Filters$(). Blacklisting works too!"
     },
     {
       "type": "bloodmagic:ritual_data",
@@ -39,7 +43,10 @@
     {
       "type": "bloodmagic:ritual_data",
       "ritual": "yawning_void",
-      "page_type": "chest"
+      "page_type": "chest",
+      "text_overrides": [
+        ["Item Filter", "item"]
+        ]
     },
     {
       "type": "bloodmagic:ritual_data",
