@@ -117,6 +117,7 @@ public class AlchemyTableRecipeProvider implements ISubRecipeProvider
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.COMBINATIONAL_CATALYST.get()), 2000, 100, 4).addIngredient(Ingredient.fromItems(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.fromItems(Items.BROWN_MUSHROOM)).addIngredient(Ingredient.fromItems(Items.RED_MUSHROOM)).addIngredient(Ingredient.fromItems(Items.SLIME_BALL)).addIngredient(Ingredient.fromTag(BloodMagicTags.DUST_COAL)).build(consumer, BloodMagic.rl(basePath + "combinational"));
 
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.WEAK_FILLING_AGENT.get()), 2000, 100, 2).addIngredient(Ingredient.fromItems(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.fromItems(Items.SUGAR_CANE)).addIngredient(Ingredient.fromItems(Items.CRIMSON_FUNGUS)).addIngredient(Ingredient.fromItems(Items.WARPED_FUNGUS)).build(consumer, BloodMagic.rl(basePath + "weak_filling"));
+		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.CYCLING_CATALYST.get()), 1000, 100, 2).addIngredient(Ingredient.fromItems(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.fromTag(Tags.Items.GEMS_LAPIS)).addIngredient(Ingredient.fromTag(Tags.Items.GEMS_LAPIS)).addIngredient(Ingredient.fromTag(Tags.Items.DYES_GREEN)).addIngredient(Ingredient.fromTag(Tags.Items.SAND)).build(consumer, BloodMagic.rl(basePath + "cycling_catalyst"));
 		// Changed Recipes
 		{
 

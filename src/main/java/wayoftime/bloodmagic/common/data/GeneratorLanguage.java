@@ -778,6 +778,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.MUNDANE_POWER_CATALYST, "Small Power Catalyst");
 		addItem(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST, "Small Lengthening Catalyst");
 		addItem(BloodMagicItems.WEAK_FILLING_AGENT, "Weak Filling Agent");
+		addItem(BloodMagicItems.CYCLING_CATALYST, "Simple Cycling Catalyst");
 		addItem(BloodMagicItems.COMBINATIONAL_CATALYST, "Combinational Catalyst");
 
 		// Alchemy Items

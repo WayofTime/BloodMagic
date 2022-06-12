@@ -12,6 +12,7 @@ import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.data.recipe.builder.PotionCycleRecipeBuilder;
 import wayoftime.bloodmagic.common.data.recipe.builder.PotionEffectRecipeBuilder;
 import wayoftime.bloodmagic.common.data.recipe.builder.PotionFillRecipeBuilder;
 import wayoftime.bloodmagic.common.data.recipe.builder.PotionFlaskTransformRecipeBuilder;
@@ -107,6 +108,9 @@ public class PotionRecipeProvider implements ISubRecipeProvider
 		String flaskPath = "flask/flask_";
 		PotionFlaskTransformRecipeBuilder.flask(new ItemStack(BloodMagicItems.ALCHEMY_FLASK_THROWABLE.get()), 1000, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.fromItems(Items.GUNPOWDER)).build(consumer, BloodMagic.rl(flaskPath + "splash"));
 		PotionFlaskTransformRecipeBuilder.flask(new ItemStack(BloodMagicItems.ALCHEMY_FLASK_LINGERING.get()), 1000, 200, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.fromItems(Items.DRAGON_BREATH)).build(consumer, BloodMagic.rl(flaskPath + "lingering"));
+
+		String cyclePath = "flask/cycle_";
+		PotionCycleRecipeBuilder.potionCycle(1, 500, 50, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.CYCLING_CATALYST.get())).build(consumer, BloodMagic.rl(cyclePath + "basic"));
 	}
 
 	private void addPotionModifiers(Consumer<IFinishedRecipe> consumer, Effect effect, String name)

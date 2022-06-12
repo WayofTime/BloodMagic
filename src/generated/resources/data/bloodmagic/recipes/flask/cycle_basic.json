@@ -1,0 +1,12 @@
+{
+  "type": "bloodmagic:flask_potioncycle",
+  "input": [
+    {
+      "item": "bloodmagic:cyclingcatalyst"
+    }
+  ],
+  "count": 1,
+  "syphon": 500,
+  "ticks": 50,
+  "upgradeLevel": 1
+}
