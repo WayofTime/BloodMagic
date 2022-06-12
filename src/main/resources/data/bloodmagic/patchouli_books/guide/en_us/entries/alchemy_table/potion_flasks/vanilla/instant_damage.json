@@ -1,0 +1,20 @@
+{
+  "name": "Instant Damage",
+  "icon": "minecraft:iron_sword",
+  "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(thing)Instant Damage$() inflicts three points of $(thing)Magic Damage$() to the target per level. If the target is $(thing)Undead$(), they will be healed for 3 points per level instead."
+    },
+    {
+      "type": "3x_crafting_flask",
+      "a.heading": "Damage from Health",
+      "a.recipe": "bloodmagic:flask/health_to_harm",
+      "b.heading": "Damage from Poison",
+      "b.recipe": "bloodmagic:flask/poison_to_harm",
+      "c.heading": "Instant Damage II",
+      "c.recipe": "bloodmagic:flask/potency_harm"
+    }
+  ]
+}

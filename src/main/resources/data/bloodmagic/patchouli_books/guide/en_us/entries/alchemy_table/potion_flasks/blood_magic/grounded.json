@@ -1,0 +1,18 @@
+{
+  "name": "Grounded",
+  "icon": "minecraft:string",
+  "category": "bloodmagic:alchemy_table/potion_flasks/blood_magic",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(thing)Grounded$() prevents the target from jumping. Swimming is unaffected, however."
+    },
+    {
+      "type": "2x_crafting_flask",
+      "a.heading": "Grounded (3:00)",
+      "a.recipe": "bloodmagic:flask/jump_to_grounded",
+      "b.heading": "Grounded (8:00)",
+      "b.recipe": "bloodmagic:flask/length_grounded"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Instant Health",
+  "icon": "minecraft:glistering_melon_slice",
+  "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(thing)Instant Health$() heals the target for 2 points per level. If the target is $(thing)Undead$(), they will be harmed for 2 points per level instead."
+    },
+    {
+      "type": "2x_crafting_flask",
+      "a.heading": "Instant Health",
+      "a.recipe": "bloodmagic:flask/health",
+      "b.heading": "Instant Health II",
+      "b.recipe": "bloodmagic:flask/potency_health"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Levitation",
+  "icon": "minecraft:shulker_shell",
+  "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(thing)Levitation$() causes the target to float up into the air."
+    },
+    {
+      "type": "2x_crafting_flask",
+      "a.heading": "Levitation (3:00)",
+      "a.recipe": "bloodmagic:flask/fall_to_levitation",
+      "b.heading": "Levitation (8:00)",
+      "b.recipe": "bloodmagic:flask/length_levitation"
+    }
+  ]
+}

@@ -1,11 +1,11 @@
 {
   "name": "Speed",
   "icon": "minecraft:sugar",
-  "category": "bloodmagic:alchemy_table/potion_flasks",
+  "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
   "pages": [
     {
       "type": "text",
-      "text": "[TEST PAGE]"
+      "text": "$(thing)Speed$() increases the target's movement speed by 20% per level."
     },
     {
       "type": "3x_crafting_flask",

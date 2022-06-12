@@ -1,0 +1,20 @@
+{
+  "name": "Strength",
+  "icon": "minecraft:blaze_powder",
+  "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(thing)Strength$() increases the target's attack damage by 3 points per level."
+    },
+    {
+      "type": "3x_crafting_flask",
+      "a.heading": "Strength (3:00)",
+      "a.recipe": "bloodmagic:flask/strength",
+      "b.heading": "Strength (8:00)",
+      "b.recipe": "bloodmagic:flask/length_strength",
+      "c.heading": "Strength II (1:30)",
+      "c.recipe": "bloodmagic:flask/potency_strength"
+    }
+  ]
+}

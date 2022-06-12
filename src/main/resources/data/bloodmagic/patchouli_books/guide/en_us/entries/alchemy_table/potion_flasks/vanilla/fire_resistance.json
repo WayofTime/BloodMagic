@@ -1,0 +1,18 @@
+{
+  "name": "Fire Resistance",
+  "icon": "minecraft:magma_cream",
+  "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(thing)Fire Resistance$() makes the target immune to most fire-based damage."
+    },
+    {
+      "type": "2x_crafting_flask",
+      "a.heading": "Fire Resistance (3:00)",
+      "a.recipe": "bloodmagic:flask/fire_resist",
+      "b.heading": "Fire Resistance (8:00)",
+      "b.recipe": "bloodmagic:flask/length_fire_resist"
+    }
+  ]
+}
