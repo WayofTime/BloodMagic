@@ -78,6 +78,7 @@ public class PotionRecipeProvider implements ISubRecipeProvider
 		addPotionModifiers(consumer, BloodMagicPotions.OBSIDIAN_CLOAK, "obsidian_cloak");
 		addPotionModifiers(consumer, BloodMagicPotions.GRAVITY, "gravity");
 		addPotionModifiers(consumer, BloodMagicPotions.FLIGHT, "flight");
+		addPotionModifiers(consumer, BloodMagicPotions.SPECTRAL_SIGHT, "spectral_sight");
 
 //		addPotionModifiers(consumer, Effects.SLOW_FALLING, "slow_fall");
 
@@ -95,7 +96,6 @@ public class PotionRecipeProvider implements ISubRecipeProvider
 		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(Effects.SLOW_FALLING, 2.6667, 200, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "slow_fall"));
 		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(BloodMagicPotions.PASSIVITY, 2.6667, 200, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "passivity"));
 		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(BloodMagicPotions.BOUNCE, 2.6667, 200, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "bounce"));
-		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(BloodMagicPotions.SPECTRAL_SIGHT, 2.6667, 200, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "spectral_sight"));
 		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(BloodMagicPotions.GROUNDED, 2.6667, 200, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "grounded"));
 		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(BloodMagicPotions.SUSPENDED, 2.6667, 200, 100, 1).addIngredient(Ingredient.fromItems(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "suspended"));
 
