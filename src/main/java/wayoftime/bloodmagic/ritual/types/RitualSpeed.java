@@ -7,7 +7,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
@@ -18,6 +17,7 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.network.SetClientVelocityPacket;
+import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.ritual.IMasterRitualStone;
@@ -163,7 +163,7 @@ public class RitualSpeed extends Ritual
 
 			if (steadfastWill >= steadfastWillDrain)
 			{
-				entity.addPotionEffect(new EffectInstance(Effects.SLOW_FALLING, 100, 0));
+				entity.addPotionEffect(new EffectInstance(BloodMagicPotions.SOFT_FALL, 100, 0));
 				steadfastWill -= steadfastWillDrain;
 				steadfastDrain += steadfastWillDrain;
 			}
