@@ -24,6 +24,9 @@ public class MeteorRecipeProvider implements ISubRecipeProvider
 		MeteorRecipeBuilder.meteor(Ingredient.fromTag(Tags.Items.STONE), 0, 30).addLayer(new MeteorLayer(16, 0, Blocks.STONE).setMinWeight(400).addShellBlock(BloodMagicTags.BLOCK_STONE_UNPOLISHED).addWeightedTag(BloodMagicTags.BLOCK_ORE_APATITE, 50, 0).addWeightedTag(Tags.Blocks.ORES_COAL, 150, 0).addWeightedBlock(Blocks.IRON_ORE, 50)).build(consumer, BloodMagic.rl(basePath + "stone"));
 		MeteorRecipeBuilder.meteor(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND), 0, 8).addLayer(new MeteorLayer(2, 0, Blocks.DIAMOND_ORE)).addLayer(new MeteorLayer(5, 0, Blocks.COBBLESTONE).setMinWeight(1000).addWeightedTag(BloodMagicTags.BLOCK_ORE_SAPPHIRE, 100, 0).addWeightedTag(BloodMagicTags.BLOCK_ORE_RUBY, 100, 0).addWeightedBlock(Blocks.DIAMOND_ORE, 100).addWeightedBlock(Blocks.EMERALD_ORE, 75).addWeightedTag(BloodMagicTags.BLOCK_ORE_CINNABAR, 200, 0)).build(consumer, BloodMagic.rl(basePath + "diamond"));
 //		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.FLIGHT, 2400, Effects.SPEED, 100, 20, 2).addInputEffect(Effects.FIRE_RESISTANCE).addIngredient(Ingredient.fromTag(Tags.Items.FEATHERS)).build(consumer, BloodMagic.rl(transformPath + "flight"));
+
+		MeteorRecipeBuilder.meteor(Ingredient.fromTag(Tags.Items.DUSTS_GLOWSTONE), 0, 12).addLayer(new MeteorLayer(8, 0, Blocks.NETHERRACK).setMinWeight(500).addWeightedBlock(Blocks.GLOWSTONE, 100).addWeightedBlock(Blocks.NETHER_QUARTZ_ORE, 150).addWeightedBlock(Blocks.NETHER_GOLD_ORE, 60)).addLayer(new MeteorLayer(5, 0, Blocks.BLACKSTONE).addShellBlock(Blocks.GLOWSTONE).addWeightedBlock(Blocks.ANCIENT_DEBRIS, 60).setMinWeight(1000).addWeightedBlock(Blocks.CHISELED_POLISHED_BLACKSTONE, 300).addWeightedBlock(Blocks.GILDED_BLACKSTONE, 200).addWeightedBlock(Blocks.POLISHED_BLACKSTONE, 400)).build(consumer, BloodMagic.rl(basePath + "nether"));
+
 	}
 
 }
