@@ -378,9 +378,9 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.groundingRitual.groundingRange.info", "(Range) Affects entities within range.");
 
 		add("ritual.bloodmagic.yawningVoidRitual.info", "Destroys blocks within a large area.");
-		add("ritual.bloodmagic.yawningVoidRitual.chest.info", "(Chest) Choses the first Item Filter to determine which blocks to destroy.");
+		add("ritual.bloodmagic.yawningVoidRitual.chest.info", "(Chest) Chooses the first Item Filter to determine which blocks to destroy.");
 		add("ritual.bloodmagic.yawningVoidRitual.quarryRange.info", "(Quarry) Blocks within range are destroyed.");
-		add("ritual.bloodmagic.yawningVoidRitual.placementRange.info", "(Chest) Based on Will config, blocks not destroyed are placed within range.");
+		add("ritual.bloodmagic.yawningVoidRitual.placementRange.info", "(Placement) Based on Will config, blocks not destroyed are placed within range.");
 
 		add("tooltip.bloodmagic.ritualReader.currentState", "Current mode: %s");
 		add("tooltip.bloodmagic.ritualReader.set_area", "Define Area");
@@ -681,11 +681,11 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.VENGEFUL_CRYSTAL, "Vengeful Will Crystal");
 		addItem(BloodMagicItems.STEADFAST_CRYSTAL, "Steadfast Will Crystal");
 
-		addItem(BloodMagicItems.RAW_CRYSTAL_CATALYST, "Will Catalyst");
-		addItem(BloodMagicItems.CORROSIVE_CRYSTAL_CATALYST, "Corrosive Catalyst");
-		addItem(BloodMagicItems.DESTRUCTIVE_CRYSTAL_CATALYST, "Destructive Catalyst");
-		addItem(BloodMagicItems.VENGEFUL_CRYSTAL_CATALYST, "Vengeful Catalyst");
-		addItem(BloodMagicItems.STEADFAST_CRYSTAL_CATALYST, "Steadfast Catalyst");
+		addItem(BloodMagicItems.RAW_CRYSTAL_CATALYST, "Raw Will Catalyst");
+		addItem(BloodMagicItems.CORROSIVE_CRYSTAL_CATALYST, "Corrosive Will Catalyst");
+		addItem(BloodMagicItems.DESTRUCTIVE_CRYSTAL_CATALYST, "Destructive Will Catalyst");
+		addItem(BloodMagicItems.VENGEFUL_CRYSTAL_CATALYST, "Vengeful Will Catalyst");
+		addItem(BloodMagicItems.STEADFAST_CRYSTAL_CATALYST, "Steadfast Will Catalyst");
 
 		addItem(BloodMagicItems.SANGUINE_REVERTER, "Sanguine Reverter");
 		addItem(BloodMagicItems.PRIMITIVE_FURNACE_CELL, "Primitive Fuel Cell");
