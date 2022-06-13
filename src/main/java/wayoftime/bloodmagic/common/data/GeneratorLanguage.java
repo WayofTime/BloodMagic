@@ -28,7 +28,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tile.bloodmagic.soulforge.name", "Hellfire Forge");
 		add("tile.bloodmagic.arc.name", "Alchemical Reaction Chamber");
 		add("tile.bloodmagic.alchemytable.name", "Alchemy Table");
-		add("tile.bloodmagic.masteroutingnode.name", "Master Routing Node");
+		add("tile.bloodmagic.masterroutingnode.name", "Master Routing Node");
 
 		// Blood Orb tooltips
 		add("tooltip.bloodmagic.extraInfo", "-Hold shift for more info-");

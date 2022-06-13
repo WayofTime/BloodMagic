@@ -549,7 +549,7 @@
   "ritual.bloodmagic.zephyrRitual.zephyrRange.info": "(Suction) Items within this range will be sucked into the linked chest.",
   "tile.bloodmagic.alchemytable.name": "Alchemy Table",
   "tile.bloodmagic.arc.name": "Alchemical Reaction Chamber",
-  "tile.bloodmagic.masteroutingnode.name": "Master Routing Node",
+  "tile.bloodmagic.masterroutingnode.name": "Master Routing Node",
   "tile.bloodmagic.soulforge.name": "Hellfire Forge",
   "tile.bloodmagic.teleposer.name": "Teleposer",
   "tooltip.bloodmagic.activated": "Activated",
