@@ -22,6 +22,19 @@
       "text": "Of course, a bottle, no matter how advanced, is all but useless without something to fill it. $(br2)Alongside all the usual well known $(thing)Effects$() such as Water Breathing, Regeneration, or Night Vision, we have also perfected a variety of other, more specialised recipes, such as Flight, Obsidian Cloak, or even Passive. These potions and many more are documented further on in the book."
     },
     {
+      "type": "crafting",
+      "recipe": "bloodmagic:alchemy_flask",
+      "text": "Once you have used up any kind of alchemy flask, simply wash out and refill it with water, to get a fresh new flask ready for use. $(br2)Flasks also have their equivalent to $(thing)Splash$() and $(thing)Lingering Potions$()."
+    },
+    {
+      "type": "2x_crafting_flask",
+      "a.heading": "Splash Alchemy Flask",
+      "a.recipe": "bloodmagic:flask/flask_splash",
+      "b.heading": "Lingering Alchemy Flask",
+      "b.recipe": "bloodmagic:flask/flask_lingering",
+      "text": "Flasks also have their equivalent to $(thing)Splash$() and $(thing)Lingering Potions$(), as seen overleaf. "
+    },
+    {
       "type": "text",
       "text": "You may recall me mentioning the ability to make multiple effects in a single Flask. Luckily, this process couldn't be easier. Simply brew up a potion, and use the resulting $(item)Flask$() in place of your empty Flask in the second brewing. For example, if you made a Flask of $(thing)Bounce$(), then took that flask and used it as an ingredient in a flask of $(thing)Night Vision$(), you'd end up with an 8-dose Flask that gives you Bounce and Night Vision with every swig!"
     },
