@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "$(thing)Instant Health$() heals the target for 2 hearts per level. If the target is $(thing)Undead$(), they will be harmed for 2 hearts per level instead."
+      "text": "$(thing)Instant Health$() heals the target for 4 points per level. If the target is $(thing)Undead$(), they will be harmed for 4 points per level instead."
     },
     {
       "type": "2x_crafting_flask",

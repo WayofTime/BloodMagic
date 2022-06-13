@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "$(thing)Instant Damage$() inflicts three hearts of $(thing)Magic Damage$() to the target per level. If the target is $(thing)Undead$(), they will be healed for 3 hearts per level instead."
+      "text": "$(thing)Instant Damage$() inflicts 6 points of $(thing)Magic Damage$() to the target per level. If the target is $(thing)Undead$(), they will be healed for 6 points per level instead."
     },
     {
       "type": "3x_crafting_flask",
