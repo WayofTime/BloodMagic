@@ -154,7 +154,7 @@ public class ItemTeleposerFocus extends ItemBindableBase implements ITeleposerFo
 
 		for (int i = -range; i <= range; i++)
 		{
-			for (int j = 1; j <= 2 * range + 2; j++)
+			for (int j = 1; j <= 2 * range + 1; j++)
 			{
 				for (int k = -range; k <= range; k++)
 				{
