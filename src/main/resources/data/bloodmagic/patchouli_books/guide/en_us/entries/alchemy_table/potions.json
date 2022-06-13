@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "The basics of $(thing)Potion Crafting$() are known to all and sundry throughout the land. Even common Clerics and Witches have a firm grasp of the basics of brewing - take a handful of semi-rare ingredients, mix them together in the correct proportions, and consume the result (While holding your nose, if needed)."
+      "text": "The basics of $(thing)Potion Crafting$() are known to all and sundry throughout the land. Even common Clerics and Witches have a firm grasp of the basics of brewing - take a handful of semi-rare ingredients, mix them together in the correct proportions, and consume the result (while holding your nose, if needed)."
     },
     {
       "type": "text",
@@ -27,7 +27,7 @@
     },
     {
       "type": "text",
-      "text": "Next up, we have $(item)Catalysts$(). There are a few kinds of catalyst, with a few different effects, so let's start off with the simplest three - $(item)Simple Catalyst$(), $(item)Small Power Catalyst$(), and $(item)Small Lengthening Catalyst$(). of these, the first is the most straightforward - it provides a base to almost every Alchemical Potion, much as $(item)Nether Wart$() does for standard Potions."
+      "text": "Next up, we have $(item)Catalysts$(). There are a few kinds of catalyst, with a few different effects, so let's start off with the simplest three - $(item)Simple Catalyst$(), $(item)Small Power Catalyst$(), and $(item)Small Lengthening Catalyst$(). Of these, the first is the most straightforward - it provides a base to almost every Alchemical Potion, much as $(item)Nether Wart$() does for standard Potions."
     },
     {
       "type": "crafting_alchemy_table",
@@ -39,19 +39,19 @@
       "type": "crafting_alchemy_table",
       "heading": "Small Power Catalyst",
       "recipe": "bloodmagic:alchemytable/mundane_power",
-      "text": "Power Catalysts increase the potency of the topmost effect inside the Flask, while decreasing the duration of the effect. It is roughly analogous to $(item)Glowstone$() in more standard potions. if the most recently applied effect cannot accept the catalyst, it will attempt to boost the second topmost, and so on."
+      "text": "Power Catalysts increase the potency of the topmost effect inside the Flask, while decreasing the duration of the effect. It is roughly analogous to $(item)Glowstone$() in more standard potions. If the most recently applied effect cannot accept the catalyst, it will attempt to boost the second topmost, and so on."
     },
     {
       "type": "crafting_alchemy_table",
       "heading": "Small Lengthening Catalyst",
       "recipe": "bloodmagic:alchemytable/mundane_lengthening",
-      "text": "Lengthening Catalysts increase the duration of the topmost effect inside the Flask. It is roughly analogous to $(item)Redstone$() in more standard potions. if the most recently applied effect cannot accept the catalyst, it will attempt to boost the second topmost, and so on."
+      "text": "Lengthening Catalysts increase the duration of the topmost effect inside the Flask. It is roughly analogous to $(item)Redstone$() in more standard potions. If the most recently applied effect cannot accept the catalyst, it will attempt to boost the second topmost, and so on."
     },
     {
       "type": "crafting_alchemy_table",
       "heading": "Combinational Catalyst",
       "recipe": "bloodmagic:alchemytable/combinational",
-      "text": "Combinational Catalysts are a little more cniche - they take two defined effects and synthesise a third, related effect from them. For example, a Flask with $(thing)Suspended$() and $(thing)Levitation$() would, when brewed with this catalyst, produce a Flask of $(thing)Flight$()."
+      "text": "Combinational Catalysts are a little more niche - they take two defined effects and synthesise a third, related effect from them. For example, a Flask with $(thing)Suspended$() and $(thing)Levitation$() would, when brewed with this catalyst, produce a Flask of $(thing)Flight$()."
     },
     {
       "type": "crafting_alchemy_table",
@@ -63,7 +63,7 @@
       "type": "crafting_alchemy_table",
       "heading": "Simple Cycling Catalyst",
       "recipe": "bloodmagic:alchemytable/cycling_catalyst",
-      "text": "The Cycling Catalyst can be used to altar the order of effects inside the Flask, and thus change which effect is altered by another Catalyst or Agent."
+      "text": "The Cycling Catalyst can be used to alter the order of effects inside the Flask, and thus change which effect is altered by another Catalyst or Agent."
     }
   ]
 }

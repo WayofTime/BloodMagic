@@ -8,11 +8,13 @@
       "text": "$(thing)Levitation$() causes the target to float up into the air."
     },
     {
-      "type": "2x_crafting_flask",
+      "type": "3x_crafting_flask",
       "a.heading": "Levitation (3:00)",
       "a.recipe": "bloodmagic:flask/fall_to_levitation",
       "b.heading": "Levitation (8:00)",
-      "b.recipe": "bloodmagic:flask/length_levitation"
+      "b.recipe": "bloodmagic:flask/length_levitation",
+      "c.heading": "Levitation II (1:30)",
+      "c.recipe": "bloodmagic:flask/potency_levitation"
     }
   ]
 }

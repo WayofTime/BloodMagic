@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "If the target would take fall damage, $(thing)Bounce$() will instead cause them to spring harmlessly off the ground. Whee!"
+      "text": "If the target would take fall damage, $(thing)Bounce$() will instead cause them to spring harmlessly off the ground. Whee! $(br2)Crouching before impact will prevent you from bouncing."
     },
     {
       "type": "2x_crafting_flask",
