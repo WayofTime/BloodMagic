@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:alchemy_flask_lingering"
+    ]
+  },
+  "criteria": {
+    "has_flask": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "bloodmagic:alchemy_flask"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:alchemy_flask_lingering"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_flask",
+      "has_the_recipe"
+    ]
+  ]
+}
