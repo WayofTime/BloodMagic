@@ -45,6 +45,9 @@ public class TileTeleposer extends TileInventory implements ITickableTileEntity,
 
 	public static final int FOCUS_SLOT = 0;
 
+	public static final int MAX_UNIT_COST = 1000;
+	public static final int MAX_TOTAL_COST = 10000;
+
 	public TileTeleposer(TileEntityType<?> type)
 	{
 		super(type, 1, "teleposer");
@@ -111,7 +114,11 @@ public class TileTeleposer extends TileInventory implements ITickableTileEntity,
 				return;
 			}
 
-			double transportCost = 0.5 * Math.sqrt(linkedPos.distanceSq(pos));
+			double transportCost = Math.min(0.5 * Math.sqrt(linkedPos.distanceSq(pos)), MAX_UNIT_COST);
+			if (!linkedWorld.equals(world))
+			{
+				transportCost = MAX_UNIT_COST;
+			}
 
 //			System.out.println("Area: " + entityRangeOffsetBB);
 
@@ -128,7 +135,7 @@ public class TileTeleposer extends TileInventory implements ITickableTileEntity,
 			int uses = 0;
 			int maxUses = offsetList.size() + originalEntities.size() + focusEntities.size();
 
-			int maxDrain = (int) (transportCost * maxUses);
+			int maxDrain = Math.min((int) (transportCost * maxUses), MAX_TOTAL_COST);
 			SoulNetwork network = getNetwork();
 			if (network.getCurrentEssence() < maxDrain)
 			{
@@ -182,7 +189,7 @@ public class TileTeleposer extends TileInventory implements ITickableTileEntity,
 			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.BLOCKS, 1, 1);
 			linkedWorld.playSound(null, linkedPos.getX(), linkedPos.getY(), linkedPos.getZ(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.BLOCKS, 1, 1);
 
-			network.syphon(SoulTicket.block(world, pos, (int) (uses * transportCost)));
+			network.syphon(SoulTicket.block(world, pos, Math.min((int) (uses * transportCost), MAX_TOTAL_COST)));
 		}
 	}
 
