@@ -28,11 +28,17 @@
     },
     {
       "type": "text",
-      "text": "Some important points to note: Firstly, the $(thing)Aura$() is chunk-based. That is, any $(raw)Will$() you burn will fill up the chunk that you burn it in, up to a total cap of 100 for each type. You can measure this using a $(l:bloodmagic:demon_will/will_manipulation/aura_gauge)Demon Will Aura Gauge$(). $(br2)Currently, there is no way to transfer $(raw)Will$() from one chunk to another, so you're best off transferring it in item form - whether as $(item)Crystallized Will$() or by filling and emptying a $(l:bloodmagic:demon_will/will_manipulation/soul_gem)Tartaric Gem$()."
+      "text": "It's important to mention that the $(thing)Aura$() is chunk-based. That is, any $(raw)Will$() you burn will fill up the chunk that you burn it in, up to a total cap of 100 for each type. You can measure this using a $(l:bloodmagic:demon_will/will_manipulation/aura_gauge)Demon Will Aura Gauge$(). $(br2)To move Demon Will around, simply place a $(item)Demon Pylon$() in any adjacent chunk, and $(raw)Will$() will be drawn towards it."
+    },
+    {
+      "type": "crafting_soulforge",
+      "heading": "Demon Pylon",
+      "recipe": "bloodmagic:soulforge/demon_pylon",
+      "text": "The Pylon will draw in all kinds of will from all adjacent chunks (not including diagnonals). Multiple Pylons can be chained in order to transfer Will over larger distances."
     },
     {
       "type": "text",
-      "text": "Speaking of the $(l:bloodmagic:demon_will/will_manipulation/soul_gem)Tartaric Gem$(), placing one inside a $(l:bloodmagic:demon_will/will_manipulation/soul_forge)Hellfire Forge$() will cause it to rapidly absorb $(raw)Will$() from the chunk it's in. $(br2)With an Aspect of $(raw)Will$() in the chunk, such as $(raw)Raw$() or $(corrosive)Corrosive$(), and an empty $(item)Tartaric Gem$(), it's possible to fill the Gem with that Aspect. $(br2)This lets you modify your $(l:bloodmagic:demon_will/demonic_items/sentient_tools)Sentient Tools$() and $(l:bloodmagic:demon_will/demonic_items/sentient_sword)Sword$() accordingly. The effects are defined $(l:bloodmagic:demon_will/will_manipulation/aspected_will#sentient_aspects)here$()."
+      "text": "If you place a $(l:bloodmagic:demon_will/will_manipulation/soul_gem)Tartaric Gem$(), inside a $(l:bloodmagic:demon_will/will_manipulation/soul_forge)Hellfire Forge$() will cause it to rapidly absorb $(raw)Will$() from the chunk it's in. $(br2)With an Aspect of $(raw)Will$() in the chunk, such as $(raw)Raw$() or $(corrosive)Corrosive$(), and an empty $(item)Tartaric Gem$(), it's possible to fill the Gem with that Aspect. $(br2)This lets you modify your $(l:bloodmagic:demon_will/demonic_items/sentient_tools)Sentient Tools$() and $(l:bloodmagic:demon_will/demonic_items/sentient_sword)Sword$() accordingly. The effects are defined $(l:bloodmagic:demon_will/will_manipulation/aspected_will#sentient_aspects)here$()."
     },
     {
       "type": "relations",
