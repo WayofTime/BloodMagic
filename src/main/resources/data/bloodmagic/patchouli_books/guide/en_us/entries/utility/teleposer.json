@@ -10,7 +10,7 @@
     {
       "type": "crafting",
       "recipe": "bloodmagic:teleposer",
-      "text":"Nothing comes for free, however; transporting blocks or entities via the teleposer will cost $(blood)1 LP$() each for every two blocks traversed. $(br2)If there's not enough $(blood)LP$() in your $(thing)Soul Network$() for the operation, the teleposer will simply fail."
+      "text":"Nothing comes for free, however; transporting blocks or entities via the teleposer will cost $(blood)1 LP$() each for every two blocks traversed, to a maximum of $(blood)1,000 LP$() per block/entity, or $(blood)10,000 LP$() total."
     },
     {
       "type": "crafting_altar",
