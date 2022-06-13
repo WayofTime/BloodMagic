@@ -1,0 +1,21 @@
+{
+  "name": "Mark of the Falling Tower",
+  "icon": "minecraft:fire_charge",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "Mark of the Falling Tower",
+      "multiblock_id": "bloodmagic:meteor",
+      "text": "Use a $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l) for easier construction."
+    },
+    {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "meteor"
+    },
+    {
+      "type": "text",
+      "text": "TODO: automatic(?) entries for meteors, with support for custom meteors added by other mods / modpack makers / etc."
+    }
+  ]
+}
