@@ -228,6 +228,17 @@ public class Utils
 		initialWorld.notifyNeighborsOfStateChange(initialPos, finalState.getBlock());
 		finalWorld.notifyNeighborsOfStateChange(finalPos, initialState.getBlock());
 
+		// Block tick scheduling
+		if (initialWorld.getPendingBlockTicks().isTickScheduled(initialPos, initialState.getBlock()))
+		{
+			finalWorld.getPendingBlockTicks().scheduleTick(finalPos, initialState.getBlock(), 20);
+		}
+
+		if (finalWorld.getPendingBlockTicks().isTickScheduled(finalPos, finalState.getBlock()))
+		{
+			initialWorld.getPendingBlockTicks().scheduleTick(initialPos, finalState.getBlock(), 20);
+		}
+
 		return true;
 	}
 
