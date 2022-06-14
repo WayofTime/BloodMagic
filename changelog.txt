@@ -2,6 +2,17 @@
 Version 3.1.11
 ------------------------------------------------------
 - Reworked and implemented the Potion Flask system! Quite a bit different than previous versions, so make sure to check the guide.
+- New (and old) non-Vanilla potion effects include:
+-> Bounce
+-> Gravity
+-> Grounded
+-> Suspended
+-> Heavy Heart
+-> Passive
+-> Spectral Sight
+-> Hard Cloak
+-> Obsidian Cloak
+-> Flight
 
 - Fixed server crash for the Reverence of the Condor ritual.
 - Reimplemented Teleposers. Hurray! 
