@@ -1,15 +1,32 @@
 ------------------------------------------------------
 Version 3.1.11
 ------------------------------------------------------
+- Reworked and implemented the Potion Flask system! Quite a bit different than previous versions, so make sure to check the guide.
+
 - Fixed server crash for the Reverence of the Condor ritual.
 - Reimplemented Teleposers. Hurray! 
 - Reimplemented the Teleposition Sigil.
+- Reimplemented the Sigil of Suppression.
+- Reimplemented the Demon Pylon.
+- Added Will Catalysts, which can be applied to Demon Will Clusters to dramatically increase their rate of growth.
+- Changed the Hellfire Forge so that it can use Aspected Will in crafting operations.
 - Modified the Ritual Diviner so that it can cycle through the ritual list backwards by left-clicking in the air.
+- Added a new item, "Basic Routing Logic Upgrade", which increases the total throughput of the Master Routing Node's system.
 
 - Reimplemented several rituals:
 -> Crash of the Timberman
 -> Dawn of the New Moon
 -> Ritual of the Satiated Stomach
+-> Speed Ritual
+-> Ritual of the High Jump
+-> Laying of the Filler
+-> Convocation of the Damned (reworked)
+-> Force of the Ground (renamed from "Ritual of Grounding")
+-> Mark of the Falling Tower (New meteor system! Oooh, sparkley~!)
+
+- Added a new ritual, Yawning of the Void. Used to completely clear large areas of blocks.
+
+- Tweaked recipe for Frame Parts to make them cheaper.
 
 ------------------------------------------------------
 Version 3.1.10-32
