@@ -110,6 +110,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.sigil.fastminer.desc", "Keep mining, and mining...");
 		add("tooltip.bloodmagic.sigil.air.desc", "I feel lighter already...");
 		add("tooltip.bloodmagic.sigil.bloodlight.desc", "I see a light!");
+		add("tooltip.bloodmagic.sigil.teleposition.desc", "Now you see me...!");
 
 		add("tooltip.bloodmagic.activationcrystal.weak", "Activates low-level rituals");
 		add("tooltip.bloodmagic.activationcrystal.awakened", "Activates more powerful rituals");
@@ -616,6 +617,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.SEER_SIGIL, "Seer's Sigil");
 		addItem(BloodMagicItems.HOLDING_SIGIL, "Sigil of Holding");
 		addItem(BloodMagicItems.SUPPRESSION_SIGIL, "Sigil of Suppression");
+		addItem(BloodMagicItems.TELEPOSITION_SIGIL, "Teleposition Sigil");
 
 		addItem(BloodMagicBlocks.LIFE_ESSENCE_BUCKET, "Bucket of Life");
 		addItem(BloodMagicItems.ARCANE_ASHES, "Arcane Ashes");

@@ -34,6 +34,7 @@ import wayoftime.bloodmagic.common.item.sigil.ItemSigilHolding;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilLava;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilMagnetism;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilSuppression;
+import wayoftime.bloodmagic.common.item.sigil.ItemSigilTeleposition;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilVoid;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilWater;
 import wayoftime.bloodmagic.common.item.soul.ItemMonsterSoul;
@@ -153,6 +154,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> BLOOD_LIGHT_SIGIL = BASICITEMS.register("bloodlightsigil", ItemSigilBloodLight::new);
 	public static final RegistryObject<Item> HOLDING_SIGIL = BASICITEMS.register("sigilofholding", ItemSigilHolding::new);
 	public static final RegistryObject<Item> SUPPRESSION_SIGIL = ITEMS.register("sigilofsuppression", () -> new ItemSigilSuppression());
+	public static final RegistryObject<Item> TELEPOSITION_SIGIL = BASICITEMS.register("telepositionsigil", () -> new ItemSigilTeleposition());
 
 	public static final RegistryObject<Item> ARCANE_ASHES = BASICITEMS.register("arcaneashes", () -> new ItemArcaneAshes());
 	public static final RegistryObject<Item> DAGGER_OF_SACRIFICE = BASICITEMS.register("daggerofsacrifice", () -> new ItemDaggerOfSacrifice());
