@@ -95,8 +95,8 @@ public class RecipeBloodAltar extends BloodMagicRecipe
 	@Override
 	public void write(PacketBuffer buffer)
 	{
-		input.write(buffer);
-		buffer.writeItemStack(output);
+		input.toNetwork(buffer);
+		buffer.writeItem(output);
 		buffer.writeInt(minimumTier);
 		buffer.writeInt(syphon);
 		buffer.writeInt(consumeRate);

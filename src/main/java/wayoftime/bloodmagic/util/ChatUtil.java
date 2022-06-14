@@ -24,7 +24,7 @@ public class ChatUtil
 
 	private static void sendNoSpamMessages(ITextComponent[] messages)
 	{
-		NewChatGui chat = Minecraft.getInstance().ingameGUI.getChatGUI();
+		NewChatGui chat = Minecraft.getInstance().gui.getChat();
 //		 Minecraft.getMinecraft().ingameGUI.getChatGUI();
 //		for (int i = DELETION_ID + messages.length - 1; i <= lastAdded; i++)
 //		{
@@ -33,7 +33,7 @@ public class ChatUtil
 //		}
 		for (int i = 0; i < messages.length; i++)
 		{
-			chat.printChatMessage(messages[i]);
+			chat.addMessage(messages[i]);
 //			chat.printChatMessageWithOptionalDeletion(messages[i], DELETION_ID + i);
 		}
 		lastAdded = DELETION_ID + messages.length - 1;
@@ -106,7 +106,7 @@ public class ChatUtil
 		for (ITextComponent c : lines)
 		{
 //			BloodMagic.packetHandler.send
-			player.sendMessage(c, Util.DUMMY_UUID);
+			player.sendMessage(c, Util.NIL_UUID);
 //			player.sendMessage(c);
 		}
 	}
@@ -236,7 +236,7 @@ public class ChatUtil
 			for (ITextComponent c : pkt.chatLines)
 			{
 //				ByteBufUtils.writeUTF8String(buf, ITextComponent.Serializer.componentToJson(c));
-				buf.writeString(ITextComponent.Serializer.toJson(c));
+				buf.writeUtf(ITextComponent.Serializer.toJson(c));
 			}
 		}
 
@@ -246,7 +246,7 @@ public class ChatUtil
 			for (int i = 0; i < pkt.chatLines.length; i++)
 			{
 //				pkt.chatLines[i] = ITextComponent.Serializer.jsonToComponent(ByteBufUtils.readUTF8String(buf));
-				pkt.chatLines[i] = ITextComponent.Serializer.getComponentFromJsonLenient(buf.readString());
+				pkt.chatLines[i] = ITextComponent.Serializer.fromJsonLenient(buf.readUtf());
 			}
 			return pkt;
 		}

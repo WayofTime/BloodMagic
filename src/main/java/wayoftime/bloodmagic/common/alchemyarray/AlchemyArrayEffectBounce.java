@@ -25,20 +25,20 @@ public class AlchemyArrayEffectBounce extends AlchemyArrayEffect
 	@Override
 	public void onEntityCollidedWithBlock(TileAlchemyArray array, World world, BlockPos pos, BlockState state, Entity entity)
 	{
-		if (entity.isSneaking())
+		if (entity.isShiftKeyDown())
 		{
 			entity.fallDistance = 0;
-		} else if (entity.getMotion().y < 0.0D)
+		} else if (entity.getDeltaMovement().y < 0.0D)
 		{
-			Vector3d motion = entity.getMotion();
-			motion = motion.mul(1, -1, 1);
+			Vector3d motion = entity.getDeltaMovement();
+			motion = motion.multiply(1, -1, 1);
 
 			if (!(entity instanceof LivingEntity))
 			{
-				motion = motion.mul(1, 0.8, 1);
+				motion = motion.multiply(1, 0.8, 1);
 			}
 
-			entity.setMotion(motion);
+			entity.setDeltaMovement(motion);
 
 			entity.fallDistance = 0;
 		}

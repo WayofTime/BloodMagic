@@ -52,7 +52,7 @@ public class RecipeMeteor extends BloodMagicRecipe
 	public void spawnMeteorInWorld(World world, BlockPos centerPos)
 	{
 		if (explosionRadius > 0)
-			world.createExplosion(null, centerPos.getX(), centerPos.getY(), centerPos.getZ(), explosionRadius, true, Mode.DESTROY);
+			world.explode(null, centerPos.getX(), centerPos.getY(), centerPos.getZ(), explosionRadius, true, Mode.DESTROY);
 
 		Map<Integer, MeteorLayer> layerMap = new HashMap<>();
 		for (MeteorLayer layer : layerList)
@@ -89,7 +89,7 @@ public class RecipeMeteor extends BloodMagicRecipe
 	@Override
 	public void write(PacketBuffer buffer)
 	{
-		input.write(buffer);
+		input.toNetwork(buffer);
 		buffer.writeInt(getSyphon());
 		buffer.writeFloat(explosionRadius);
 

@@ -27,11 +27,11 @@ public class TileDungeonAlternator extends TileTicking {
 	@Override
 	public void onUpdate() {
 		if (cooldown >= 40) {
-			if (getBlockState().get(ACTIVE)) {
-				world.setBlockState(pos, getBlockState().with(ACTIVE, false));
+			if (getBlockState().getValue(ACTIVE)) {
+				level.setBlockAndUpdate(worldPosition, getBlockState().setValue(ACTIVE, false));
 				
 			} else {
-				world.setBlockState(pos, getBlockState().with(ACTIVE, true));
+				level.setBlockAndUpdate(worldPosition, getBlockState().setValue(ACTIVE, true));
 			}
 			cooldown = 0;
 		}

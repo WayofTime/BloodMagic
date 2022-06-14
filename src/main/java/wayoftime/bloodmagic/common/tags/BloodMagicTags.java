@@ -10,21 +10,21 @@ import net.minecraft.tags.ItemTags;
 
 public class BloodMagicTags
 {
-	public static final ITag.INamedTag<Item> ARC_TOOL = ItemTags.makeWrapperTag("bloodmagic:arc/tool");
-	public static final ITag.INamedTag<Item> ARC_TOOL_FURNACE = ItemTags.makeWrapperTag("bloodmagic:arc/furnace");
-	public static final ITag.INamedTag<Item> ARC_TOOL_SIEVE = ItemTags.makeWrapperTag("bloodmagic:arc/sieve");
-	public static final ITag.INamedTag<Item> ARC_TOOL_REVERTER = ItemTags.makeWrapperTag("bloodmagic:arc/reverter");
-	public static final ITag.INamedTag<Item> ARC_TOOL_EXPLOSIVE = ItemTags.makeWrapperTag("bloodmagic:arc/explosive");
-	public static final ITag.INamedTag<Item> ARC_TOOL_HYDRATE = ItemTags.makeWrapperTag("bloodmagic:arc/hydrate");
-	public static final ITag.INamedTag<Item> ARC_TOOL_RESONATOR = ItemTags.makeWrapperTag("bloodmagic:arc/resonator");
-	public static final ITag.INamedTag<Item> ARC_TOOL_CUTTINGFLUID = ItemTags.makeWrapperTag("bloodmagic:arc/cuttingfluid");
+	public static final ITag.INamedTag<Item> ARC_TOOL = ItemTags.bind("bloodmagic:arc/tool");
+	public static final ITag.INamedTag<Item> ARC_TOOL_FURNACE = ItemTags.bind("bloodmagic:arc/furnace");
+	public static final ITag.INamedTag<Item> ARC_TOOL_SIEVE = ItemTags.bind("bloodmagic:arc/sieve");
+	public static final ITag.INamedTag<Item> ARC_TOOL_REVERTER = ItemTags.bind("bloodmagic:arc/reverter");
+	public static final ITag.INamedTag<Item> ARC_TOOL_EXPLOSIVE = ItemTags.bind("bloodmagic:arc/explosive");
+	public static final ITag.INamedTag<Item> ARC_TOOL_HYDRATE = ItemTags.bind("bloodmagic:arc/hydrate");
+	public static final ITag.INamedTag<Item> ARC_TOOL_RESONATOR = ItemTags.bind("bloodmagic:arc/resonator");
+	public static final ITag.INamedTag<Item> ARC_TOOL_CUTTINGFLUID = ItemTags.bind("bloodmagic:arc/cuttingfluid");
 
-	public static final ITag.INamedTag<Item> CRYSTAL_DEMON = ItemTags.makeWrapperTag("bloodmagic:crystals/demon");
+	public static final ITag.INamedTag<Item> CRYSTAL_DEMON = ItemTags.bind("bloodmagic:crystals/demon");
 
-	public static final ITag.INamedTag<Fluid> LIFE_ESSENCE = FluidTags.makeWrapperTag("forge:life");
+	public static final ITag.INamedTag<Fluid> LIFE_ESSENCE = FluidTags.bind("forge:life");
 
-	public static final ITag.INamedTag<Item> MUSHROOM_STEM = ItemTags.makeWrapperTag("minecraft:mushroom_stem");
-	public static final ITag.INamedTag<Item> MUSHROOM_HYPHAE = ItemTags.makeWrapperTag("minecraft:mushroom_hyphae");
+	public static final ITag.INamedTag<Item> MUSHROOM_STEM = ItemTags.bind("minecraft:mushroom_stem");
+	public static final ITag.INamedTag<Item> MUSHROOM_HYPHAE = ItemTags.bind("minecraft:mushroom_hyphae");
 
 	// Ores
 	public static final ITag.INamedTag<Item> ORE_COPPER = getForgeOreTag("copper");
@@ -43,7 +43,7 @@ public class BloodMagicTags
 	public static final ITag.INamedTag<Block> BLOCK_ORE_RUBY = getForgeBlockOreTag("ruby");
 	public static final ITag.INamedTag<Block> BLOCK_ORE_SAPPHIRE = getForgeBlockOreTag("sapphire");
 
-	public static final ITag.INamedTag<Block> BLOCK_STONE_UNPOLISHED = BlockTags.makeWrapperTag("minecraft:stone_unpolished");
+	public static final ITag.INamedTag<Block> BLOCK_STONE_UNPOLISHED = BlockTags.bind("minecraft:stone_unpolished");
 
 	// Ingots
 	public static final ITag.INamedTag<Item> INGOT_HELLFORGED = getForgeIngotTag("hellforged");
@@ -70,55 +70,55 @@ public class BloodMagicTags
 	public static final ITag.INamedTag<Item> GRAVEL_NETHERITE_SCRAP = getGravelTag("netherite_scrap");
 
 	// Vanilla
-	public static final ITag.INamedTag<Item> SWORDS = ItemTags.makeWrapperTag("forge:swords");
-	public static final ITag.INamedTag<Item> AXES = ItemTags.makeWrapperTag("forge:axes");
-	public static final ITag.INamedTag<Item> SHOVELS = ItemTags.makeWrapperTag("forge:shovels");
-	public static final ITag.INamedTag<Item> PICKAXES = ItemTags.makeWrapperTag("forge:pickaxes");
-	public static final ITag.INamedTag<Item> HOES = ItemTags.makeWrapperTag("forge:hoes");
+	public static final ITag.INamedTag<Item> SWORDS = ItemTags.bind("forge:swords");
+	public static final ITag.INamedTag<Item> AXES = ItemTags.bind("forge:axes");
+	public static final ITag.INamedTag<Item> SHOVELS = ItemTags.bind("forge:shovels");
+	public static final ITag.INamedTag<Item> PICKAXES = ItemTags.bind("forge:pickaxes");
+	public static final ITag.INamedTag<Item> HOES = ItemTags.bind("forge:hoes");
 
 	public static class Blocks
 	{
-		public static final ITag.INamedTag<Block> MUSHROOM_STEM = BlockTags.makeWrapperTag("minecraft:mushroom_stem");
-		public static final ITag.INamedTag<Block> MUSHROOM_HYPHAE = BlockTags.makeWrapperTag("minecraft:mushroom_hyphae");
+		public static final ITag.INamedTag<Block> MUSHROOM_STEM = BlockTags.bind("minecraft:mushroom_stem");
+		public static final ITag.INamedTag<Block> MUSHROOM_HYPHAE = BlockTags.bind("minecraft:mushroom_hyphae");
 	}
 
 	public static ITag.INamedTag<Item> getForgeOreTag(String name)
 	{
-		return ItemTags.makeWrapperTag("forge:ores/" + name);
+		return ItemTags.bind("forge:ores/" + name);
 	}
 
 	public static ITag.INamedTag<Block> getForgeBlockOreTag(String name)
 	{
-		return BlockTags.makeWrapperTag("forge:ores/" + name);
+		return BlockTags.bind("forge:ores/" + name);
 	}
 
 	public static ITag.INamedTag<Item> getForgeIngotTag(String name)
 	{
-		return ItemTags.makeWrapperTag("forge:ingots/" + name);
+		return ItemTags.bind("forge:ingots/" + name);
 	}
 
 	public static ITag.INamedTag<Item> getBMDustTag(String name)
 	{
-		return ItemTags.makeWrapperTag("bloodmagic:dusts/" + name);
+		return ItemTags.bind("bloodmagic:dusts/" + name);
 	}
 
 	public static ITag.INamedTag<Item> getBMTinyDustTag(String name)
 	{
-		return ItemTags.makeWrapperTag("bloodmagic:tiny_dusts/" + name);
+		return ItemTags.bind("bloodmagic:tiny_dusts/" + name);
 	}
 
 	public static ITag.INamedTag<Item> getForgeDustTag(String name)
 	{
-		return ItemTags.makeWrapperTag("forge:dusts/" + name);
+		return ItemTags.bind("forge:dusts/" + name);
 	}
 
 	public static ITag.INamedTag<Item> getFragmentTag(String name)
 	{
-		return ItemTags.makeWrapperTag("bloodmagic:fragments/" + name);
+		return ItemTags.bind("bloodmagic:fragments/" + name);
 	}
 
 	public static ITag.INamedTag<Item> getGravelTag(String name)
 	{
-		return ItemTags.makeWrapperTag("bloodmagic:gravels/" + name);
+		return ItemTags.bind("bloodmagic:gravels/" + name);
 	}
 }

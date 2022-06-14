@@ -12,9 +12,9 @@ import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
-import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
-import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder;
+import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
+import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
 import wayoftime.bloodmagic.util.Constants;
 
 public class AlchemyTableRecipeBuilder extends BloodMagicRecipeBuilder<AlchemyTableRecipeBuilder>
@@ -66,14 +66,14 @@ public class AlchemyTableRecipeBuilder extends BloodMagicRecipeBuilder<AlchemyTa
 		}
 
 		@Override
-		public void serialize(@Nonnull JsonObject json)
+		public void serializeRecipeData(@Nonnull JsonObject json)
 		{
 			if (input.size() > 0)
 			{
 				JsonArray mainArray = new JsonArray();
 				for (Ingredient ing : input)
 				{
-					JsonElement jsonObj = ing.serialize();
+					JsonElement jsonObj = ing.toJson();
 
 					mainArray.add(jsonObj);
 				}

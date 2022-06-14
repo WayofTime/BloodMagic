@@ -15,29 +15,29 @@ public class PotionFireFuse extends PotionBloodMagic
 	}
 
 	@Override
-	public void performEffect(LivingEntity entity, int amplifier)
+	public void applyEffectTick(LivingEntity entity, int amplifier)
 	{
-		if (entity.world.isRemote)
+		if (entity.level.isClientSide)
 		{
 			return;
 		}
 
-		Random random = entity.world.rand;
-		entity.getEntityWorld().addParticle(ParticleTypes.FLAME, entity.getPosX() + random.nextDouble() * 0.3, entity.getPosY() + random.nextDouble() * 0.3, entity.getPosZ() + random.nextDouble() * 0.3, 0, 0.06d, 0);
+		Random random = entity.level.random;
+		entity.getCommandSenderWorld().addParticle(ParticleTypes.FLAME, entity.getX() + random.nextDouble() * 0.3, entity.getY() + random.nextDouble() * 0.3, entity.getZ() + random.nextDouble() * 0.3, 0, 0.06d, 0);
 
 		int radius = amplifier + 1;
 
-		if (entity.getActivePotionEffect(BloodMagicPotions.FIRE_FUSE).getDuration() <= 3)
+		if (entity.getEffect(BloodMagicPotions.FIRE_FUSE).getDuration() <= 3)
 		{
-			Explosion.Mode explosion$mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(entity.world, entity)
+			Explosion.Mode explosion$mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(entity.level, entity)
 					? Explosion.Mode.DESTROY
 					: Explosion.Mode.NONE;
-			entity.getEntityWorld().createExplosion(null, entity.getPosX(), entity.getPosY(), entity.getPosZ(), radius, false, explosion$mode);
+			entity.getCommandSenderWorld().explode(null, entity.getX(), entity.getY(), entity.getZ(), radius, false, explosion$mode);
 		}
 	}
 
 	@Override
-	public boolean isReady(int duration, int amplifier)
+	public boolean isDurationEffectTick(int duration, int amplifier)
 	{
 		return true;
 	}

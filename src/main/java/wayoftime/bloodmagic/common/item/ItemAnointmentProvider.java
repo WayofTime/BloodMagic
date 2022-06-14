@@ -27,7 +27,7 @@ public class ItemAnointmentProvider extends Item
 
 	public ItemAnointmentProvider(ResourceLocation anointRL, int colour, int level, int maxDamage)
 	{
-		super(new Item.Properties().maxStackSize(16).group(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(16).tab(BloodMagic.TAB));
 		this.anointRL = anointRL;
 		this.colour = colour;
 		this.level = level;
@@ -36,10 +36,10 @@ public class ItemAnointmentProvider extends Item
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
-		ItemStack weaponStack = player.getHeldItem(hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND);
+		ItemStack stack = player.getItemInHand(hand);
+		ItemStack weaponStack = player.getItemInHand(hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND);
 //		if (world.isRemote && !unusable)
 //		{
 //			Vector3d vec = player.getLookVec();
@@ -58,7 +58,7 @@ public class ItemAnointmentProvider extends Item
 //		world.playSound(player, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat())
 //				* 0.8F);
 
-		if (!world.isRemote)
+		if (!world.isClientSide)
 		{
 			if (!weaponStack.isEmpty() && isItemValidForApplication(weaponStack))
 			{
@@ -72,12 +72,12 @@ public class ItemAnointmentProvider extends Item
 				{
 //					if (world instanceof ServerWorld)
 					{
-						SoundEvent soundevent = SoundEvents.ITEM_BOTTLE_EMPTY;
-						world.playSound(null, player.getPosition(), soundevent, SoundCategory.BLOCKS, 1.0F, 1.0F);
+						SoundEvent soundevent = SoundEvents.BOTTLE_EMPTY;
+						world.playSound(null, player.blockPosition(), soundevent, SoundCategory.BLOCKS, 1.0F, 1.0F);
 					}
 					stack.shrink(1);
 					holder.toItemStack(weaponStack);
-					return ActionResult.resultConsume(stack);
+					return ActionResult.consume(stack);
 				}
 			}
 		} else
@@ -98,15 +98,15 @@ public class ItemAnointmentProvider extends Item
 					for (int i = 0; i < 16; i++)
 					{
 						world.addParticle(flag1 ? ParticleTypes.AMBIENT_ENTITY_EFFECT
-								: ParticleTypes.ENTITY_EFFECT, player.getPosXRandom(0.3D), player.getPosYRandom(), player.getPosZRandom(0.3D), d0, d1, d2);
+								: ParticleTypes.ENTITY_EFFECT, player.getRandomX(0.3D), player.getRandomY(), player.getRandomZ(0.3D), d0, d1, d2);
 					}
 
-					return ActionResult.resultConsume(stack);
+					return ActionResult.consume(stack);
 				}
 			}
 		}
 
-		return super.onItemRightClick(world, player, hand);
+		return super.use(world, player, hand);
 	}
 
 	public boolean isItemValidForApplication(ItemStack stack)

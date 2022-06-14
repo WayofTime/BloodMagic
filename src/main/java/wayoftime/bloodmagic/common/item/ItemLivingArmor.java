@@ -38,7 +38,7 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 
 	public ItemLivingArmor(EquipmentSlotType slot)
 	{
-		super(ArmorMaterialLiving.INSTANCE, slot, new Item.Properties().maxStackSize(1).group(BloodMagic.TAB));
+		super(ArmorMaterialLiving.INSTANCE, slot, new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
 	}
 
 	@Override
@@ -59,9 +59,9 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 	}
 
 	@Override
-	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair)
 	{
-		return repair.getItem() == BloodMagicItems.REAGENT_BINDING.get() || super.getIsRepairable(toRepair, repair);
+		return repair.getItem() == BloodMagicItems.REAGENT_BINDING.get() || super.isValidRepairItem(toRepair, repair);
 	}
 
 //	@Override
@@ -86,7 +86,7 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 			return super.damageItem(stack, amount, entity, onBroken);
 		}
 
-		int durRemaining = (stack.getMaxDamage() - 1 - stack.getDamage());
+		int durRemaining = (stack.getMaxDamage() - 1 - stack.getDamageValue());
 		int value = Math.max(Math.min(durRemaining, amount), 0);
 
 //		System.out.println("value: " + value + ", damage of stack: " + stack.getDamage() + ", max damage of stack: " + stack.getMaxDamage());
@@ -156,9 +156,9 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 //    }
 
 	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items)
+	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items)
 	{
-		if (!isInGroup(group))
+		if (!allowdedIn(group))
 			return;
 
 		ItemStack stack = new ItemStack(this);
@@ -186,11 +186,11 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 	@Override
 	public void damageArmor(LivingEntity livingEntity, ItemStack stack, DamageSource source, float damage, EquipmentSlotType slot)
 	{
-		if (slot == EquipmentSlotType.CHEST && damage > getMaxDamage() - stack.getDamage())
+		if (slot == EquipmentSlotType.CHEST && damage > getMaxDamage() - stack.getDamageValue())
 		{
 //			livingEntity.attackEntityFrom(source, amount)
 //		}
-			livingEntity.attackEntityFrom(DamageSource.MAGIC, 2.0F);
+			livingEntity.hurt(DamageSource.MAGIC, 2.0F);
 			return;
 		}
 
@@ -199,7 +199,7 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
 		ILivingContainer.appendLivingTooltip(stack, getLivingStats(stack), tooltip, true);
 	}
@@ -207,14 +207,14 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 	@Override
 	public boolean canElytraFly(ItemStack stack, LivingEntity entity)
 	{
-		return hasElytraUpgrade(stack, entity) && stack.getDamage() < stack.getMaxDamage() - 1;
+		return hasElytraUpgrade(stack, entity) && stack.getDamageValue() < stack.getMaxDamage() - 1;
 	}
 
 	@Override
 	public boolean elytraFlightTick(ItemStack stack, LivingEntity entity, int flightTicks)
 	{
-		if (!entity.world.isRemote && (flightTicks + 1) % 40 == 0)
-			stack.damageItem(1, entity, e -> e.sendBreakAnimation(net.minecraft.inventory.EquipmentSlotType.CHEST));
+		if (!entity.level.isClientSide && (flightTicks + 1) % 40 == 0)
+			stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(net.minecraft.inventory.EquipmentSlotType.CHEST));
 		return true;
 	}
 

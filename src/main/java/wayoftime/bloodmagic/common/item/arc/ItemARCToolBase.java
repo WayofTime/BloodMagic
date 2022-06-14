@@ -26,24 +26,24 @@ public class ItemARCToolBase extends Item implements IARCTool
 
 	public ItemARCToolBase(int maxDamage, double craftingMultiplier, double additionalOutputChance)
 	{
-		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB).maxDamage(maxDamage));
+		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB).durability(maxDamage));
 		this.craftingMultiplier = craftingMultiplier;
 		this.additionalOutputChance = additionalOutputChance;
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.arctool.uses", stack.getMaxDamage() - stack.getDamage()).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.arctool.uses", stack.getMaxDamage() - stack.getDamageValue()).withStyle(TextFormatting.GRAY));
 
 		if (getCraftingSpeedMultiplier(stack) != 1)
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.arctool.craftspeed", ChatUtil.DECIMAL_FORMAT.format(getCraftingSpeedMultiplier(stack))).mergeStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.arctool.craftspeed", ChatUtil.DECIMAL_FORMAT.format(getCraftingSpeedMultiplier(stack))).withStyle(TextFormatting.GRAY));
 
 		if (getAdditionalOutputChanceMultiplier(stack) != 1)
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.arctool.additionaldrops", ChatUtil.DECIMAL_FORMAT.format(getAdditionalOutputChanceMultiplier(stack))).mergeStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.arctool.additionaldrops", ChatUtil.DECIMAL_FORMAT.format(getAdditionalOutputChanceMultiplier(stack))).withStyle(TextFormatting.GRAY));
 
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 
 	@Override

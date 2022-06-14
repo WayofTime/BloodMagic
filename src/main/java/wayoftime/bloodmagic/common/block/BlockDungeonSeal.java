@@ -15,11 +15,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import wayoftime.bloodmagic.tile.TileDungeonSeal;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockDungeonSeal extends Block
 {
 	public BlockDungeonSeal()
 	{
-		super(Properties.create(Material.ROCK).hardnessAndResistance(20.0F, 50.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1));
+		super(Properties.of(Material.STONE).strength(20.0F, 50.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1));
 	}
 
 	@Override
@@ -35,15 +37,15 @@ public class BlockDungeonSeal extends Block
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
 	{
-		TileDungeonSeal seal = (TileDungeonSeal) world.getTileEntity(pos);
+		TileDungeonSeal seal = (TileDungeonSeal) world.getBlockEntity(pos);
 
-		if (seal == null || player.isSneaking())
+		if (seal == null || player.isShiftKeyDown())
 			return ActionResultType.FAIL;
 
 //
-		ItemStack playerItem = player.getHeldItem(hand);
+		ItemStack playerItem = player.getItemInHand(hand);
 
 		int result = seal.requestRoomFromController(playerItem);
 //

@@ -148,7 +148,7 @@ public class LivingStats
 		if (!LivingUtil.hasFullSet(player))
 			return null;
 
-		ItemStack chest = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
+		ItemStack chest = player.getItemBySlot(EquipmentSlotType.CHEST);
 		LivingStats stats = ((ILivingContainer) chest.getItem()).getLivingStats(chest);
 		return stats == null && createNew ? new LivingStats() : stats;
 	}
@@ -158,7 +158,7 @@ public class LivingStats
 		if (!LivingUtil.hasFullSet(player))
 			return;
 
-		ItemStack chest = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
+		ItemStack chest = player.getItemBySlot(EquipmentSlotType.CHEST);
 		((ILivingContainer) chest.getItem()).updateLivingStats(chest, stats);
 	}
 }

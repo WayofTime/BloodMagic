@@ -30,13 +30,13 @@ public class PotionCycleRecipeSerializer<RECIPE extends RecipePotionCycle> exten
 
 	@Nonnull
 	@Override
-	public RECIPE read(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
+	public RECIPE fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
 	{
 		List<Ingredient> inputList = new ArrayList<Ingredient>();
 
-		if (json.has(Constants.JSON.INPUT) && JSONUtils.isJsonArray(json, Constants.JSON.INPUT))
+		if (json.has(Constants.JSON.INPUT) && JSONUtils.isArrayNode(json, Constants.JSON.INPUT))
 		{
-			JsonArray mainArray = JSONUtils.getJsonArray(json, Constants.JSON.INPUT);
+			JsonArray mainArray = JSONUtils.getAsJsonArray(json, Constants.JSON.INPUT);
 
 			arrayLoop: for (JsonElement element : mainArray)
 			{
@@ -53,21 +53,21 @@ public class PotionCycleRecipeSerializer<RECIPE extends RecipePotionCycle> exten
 					element.getAsJsonObject();
 				}
 
-				inputList.add(Ingredient.deserialize(element));
+				inputList.add(Ingredient.fromJson(element));
 			}
 		}
 
-		int numCycles = JSONUtils.getInt(json, Constants.JSON.COUNT);
+		int numCycles = JSONUtils.getAsInt(json, Constants.JSON.COUNT);
 
-		int syphon = JSONUtils.getInt(json, Constants.JSON.SYPHON);
-		int ticks = JSONUtils.getInt(json, Constants.JSON.TICKS);
-		int minimumTier = JSONUtils.getInt(json, Constants.JSON.ALTAR_TIER);
+		int syphon = JSONUtils.getAsInt(json, Constants.JSON.SYPHON);
+		int ticks = JSONUtils.getAsInt(json, Constants.JSON.TICKS);
+		int minimumTier = JSONUtils.getAsInt(json, Constants.JSON.ALTAR_TIER);
 
 		return this.factory.create(recipeId, inputList, numCycles, syphon, ticks, minimumTier);
 	}
 
 	@Override
-	public RECIPE read(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
+	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
 	{
 		try
 		{
@@ -76,7 +76,7 @@ public class PotionCycleRecipeSerializer<RECIPE extends RecipePotionCycle> exten
 
 			for (int i = 0; i < size; i++)
 			{
-				input.add(i, Ingredient.read(buffer));
+				input.add(i, Ingredient.fromNetwork(buffer));
 			}
 
 			int syphon = buffer.readInt();
@@ -97,7 +97,7 @@ public class PotionCycleRecipeSerializer<RECIPE extends RecipePotionCycle> exten
 	}
 
 	@Override
-	public void write(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
+	public void toNetwork(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
 	{
 		try
 		{

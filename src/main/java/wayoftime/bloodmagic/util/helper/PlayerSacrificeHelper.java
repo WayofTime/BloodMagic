@@ -76,7 +76,7 @@ public class PlayerSacrificeHelper
 				float sacrificedHealth = health - maxHealth / 10.0f;
 				int lpAdded = (int) (sacrificedHealth * ConfigHandler.values.sacrificialDaggerConversion * getModifier(amount));
 
-				IBloodAltar altar = getAltar(player.getEntityWorld(), player.getPosition());
+				IBloodAltar altar = getAltar(player.getCommandSenderWorld(), player.blockPosition());
 				if (altar != null)
 				{
 					SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, (int) sacrificedHealth, lpAdded);
@@ -115,7 +115,7 @@ public class PlayerSacrificeHelper
 	 */
 	public static boolean findAndFillAltar(World world, LivingEntity sacrificingEntity, int amount, boolean isSacrifice)
 	{
-		IBloodAltar altarEntity = getAltar(world, sacrificingEntity.getPosition());
+		IBloodAltar altarEntity = getAltar(world, sacrificingEntity.blockPosition());
 
 		if (altarEntity == null)
 			return false;
@@ -144,7 +144,7 @@ public class PlayerSacrificeHelper
 			{
 				for (int z = -2; z <= 2; z++)
 				{
-					tileEntity = world.getTileEntity(blockPos.add(x, y, z));
+					tileEntity = world.getBlockEntity(blockPos.offset(x, y, z));
 
 					if (tileEntity instanceof IBloodAltar)
 					{

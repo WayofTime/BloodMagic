@@ -9,7 +9,7 @@ import net.minecraft.util.LazyValue;
 public enum BMItemTier implements IItemTier
 {
 	SENTIENT(4, 512, 6.0F, 2.0F, 50, () -> {
-		return Ingredient.fromItems(BloodMagicItems.IMBUED_SLATE.get());
+		return Ingredient.of(BloodMagicItems.IMBUED_SLATE.get());
 	});
 
 	private final int harvestLevel;
@@ -29,34 +29,34 @@ public enum BMItemTier implements IItemTier
 		this.repairMaterial = new LazyValue<>(repairMaterialIn);
 	}
 
-	public int getMaxUses()
+	public int getUses()
 	{
 		return this.maxUses;
 	}
 
-	public float getEfficiency()
+	public float getSpeed()
 	{
 		return this.efficiency;
 	}
 
-	public float getAttackDamage()
+	public float getAttackDamageBonus()
 	{
 		return this.attackDamage;
 	}
 
-	public int getHarvestLevel()
+	public int getLevel()
 	{
 		return this.harvestLevel;
 	}
 
-	public int getEnchantability()
+	public int getEnchantmentValue()
 	{
 		return this.enchantability;
 	}
 
-	public Ingredient getRepairMaterial()
+	public Ingredient getRepairIngredient()
 	{
-		return this.repairMaterial.getValue();
+		return this.repairMaterial.get();
 	}
 
 }

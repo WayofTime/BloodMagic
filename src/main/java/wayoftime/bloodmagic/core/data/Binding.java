@@ -31,7 +31,7 @@ public class Binding implements INBTSerializable<CompoundNBT>
 	{
 		CompoundNBT tag = new CompoundNBT();
 //		tag.put("id", NBTUtil.writeUniqueId(uuid));
-		tag.put("id", NBTUtil.func_240626_a_(uuid));
+		tag.put("id", NBTUtil.createUUID(uuid));
 		tag.putString("name", name);
 		return tag;
 	}
@@ -39,7 +39,7 @@ public class Binding implements INBTSerializable<CompoundNBT>
 	@Override
 	public void deserializeNBT(CompoundNBT nbt)
 	{
-		this.uuid = NBTUtil.readUniqueId(nbt.get("id"));
+		this.uuid = NBTUtil.loadUUID(nbt.get("id"));
 		this.name = nbt.getString("name");
 	}
 

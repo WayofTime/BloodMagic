@@ -73,7 +73,7 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 		boolean foundSeed = false;
 		LootContext.Builder lootBuilder = new LootContext.Builder((ServerWorld) world);
 		Vector3d blockCenter = new Vector3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
-		List<ItemStack> blockDrops = state.getDrops(lootBuilder.withParameter(LootParameters.field_237457_g_, blockCenter).withParameter(LootParameters.TOOL, mockHoe));
+		List<ItemStack> blockDrops = state.getDrops(lootBuilder.withParameter(LootParameters.ORIGIN, blockCenter).withParameter(LootParameters.TOOL, mockHoe));
 
 //		System.out.println("Size of list: " + blockDrops.size());
 
@@ -95,8 +95,8 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 
 		if (foundSeed)
 		{
-			world.setBlockState(pos, state.getBlock().getDefaultState());
-			world.playEvent(2001, pos, Block.getStateId(state));
+			world.setBlockAndUpdate(pos, state.getBlock().defaultBlockState());
+			world.levelEvent(2001, pos, Block.getId(state));
 			for (ItemStack stack : blockDrops)
 			{
 				if (stack.isEmpty())

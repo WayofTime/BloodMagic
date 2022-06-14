@@ -25,7 +25,7 @@ public abstract class ElementDivinedInformation<T extends TileEntity> extends El
 	public boolean shouldRender(Minecraft minecraft)
 	{
 		PlayerEntity player = Minecraft.getInstance().player;
-		ItemStack sigilStack = player.getHeldItem(Hand.MAIN_HAND);
+		ItemStack sigilStack = player.getItemInHand(Hand.MAIN_HAND);
 		boolean flag = false;
 		if (simple)
 		{
@@ -36,7 +36,7 @@ public abstract class ElementDivinedInformation<T extends TileEntity> extends El
 
 			if (!flag)
 			{
-				sigilStack = player.getHeldItem(Hand.OFF_HAND);
+				sigilStack = player.getItemInHand(Hand.OFF_HAND);
 				if (sigilStack.getItem() == BloodMagicItems.DIVINATION_SIGIL.get() || sigilStack.getItem() == BloodMagicItems.SEER_SIGIL.get())
 					flag = true;
 				else
@@ -52,7 +52,7 @@ public abstract class ElementDivinedInformation<T extends TileEntity> extends El
 
 			if (!flag)
 			{
-				sigilStack = player.getHeldItem(Hand.OFF_HAND);
+				sigilStack = player.getItemInHand(Hand.OFF_HAND);
 				if (sigilStack.getItem() == BloodMagicItems.SEER_SIGIL.get())
 					flag = true;
 				else

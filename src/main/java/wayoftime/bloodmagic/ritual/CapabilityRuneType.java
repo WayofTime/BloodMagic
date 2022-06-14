@@ -20,7 +20,7 @@ public final class CapabilityRuneType
 		@Override
 		public void readNBT(Capability<IRitualStone.Tile> capability, IRitualStone.Tile instance, Direction side, INBT nbt)
 		{
-			instance.setRuneType(EnumRuneType.byMetadata(((ByteNBT) nbt).getByte()));
+			instance.setRuneType(EnumRuneType.byMetadata(((ByteNBT) nbt).getAsByte()));
 		}
 	}
 

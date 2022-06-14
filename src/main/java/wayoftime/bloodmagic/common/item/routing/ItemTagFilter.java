@@ -46,9 +46,9 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack filterStack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack filterStack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.tagfilter.desc").mergeStyle(TextFormatting.ITALIC).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.tagfilter.desc").withStyle(TextFormatting.ITALIC).withStyle(TextFormatting.GRAY));
 
 		if (filterStack.getTag() == null)
 		{
@@ -60,16 +60,16 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 
 		if (isWhitelist)
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist").mergeStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist").withStyle(TextFormatting.GRAY));
 		} else
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist").mergeStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist").withStyle(TextFormatting.GRAY));
 		}
 
 		ItemInventory inv = new InventoryFilter(filterStack);
-		for (int i = 0; i < inv.getSizeInventory(); i++)
+		for (int i = 0; i < inv.getContainerSize(); i++)
 		{
-			ItemStack stack = inv.getStackInSlot(i);
+			ItemStack stack = inv.getItem(i);
 			if (stack.isEmpty())
 			{
 				continue;
@@ -77,7 +77,7 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 
 			ResourceLocation tag = getItemTagResource(filterStack, i);
 
-			ITextComponent display = stack.getDisplayName();
+			ITextComponent display = stack.getHoverName();
 			if (tag != null)
 			{
 				display = new StringTextComponent(tag.toString());
@@ -154,7 +154,7 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 	{
 		ItemInventory inv = new InventoryFilter(filterStack);
 
-		ItemStack ghostStack = inv.getStackInSlot(slot);
+		ItemStack ghostStack = inv.getItem(slot);
 		if (ghostStack.isEmpty())
 		{
 			return;
@@ -180,7 +180,7 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 			return null;
 		}
 
-		return TagCollectionManager.getManager().getItemTags().get(rl);
+		return TagCollectionManager.getInstance().getItems().getTag(rl);
 	}
 
 	public ResourceLocation getItemTagResource(ItemStack filterStack, int slot)
@@ -195,7 +195,7 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 
 		ItemInventory inv = new InventoryFilter(filterStack);
 
-		ItemStack ghostStack = inv.getStackInSlot(slot);
+		ItemStack ghostStack = inv.getItem(slot);
 		if (ghostStack.isEmpty())
 		{
 			return null;
@@ -217,7 +217,7 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 	{
 		ItemInventory inv = new InventoryFilter(filterStack);
 
-		ItemStack ghostStack = inv.getStackInSlot(slot);
+		ItemStack ghostStack = inv.getItem(slot);
 		if (ghostStack.isEmpty())
 		{
 			return null;
@@ -228,7 +228,7 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 
 		for (ResourceLocation rl : tagRLs)
 		{
-			tagList.add(TagCollectionManager.getManager().getItemTags().get(rl));
+			tagList.add(TagCollectionManager.getInstance().getItems().getTag(rl));
 		}
 
 		return tagList;
@@ -285,7 +285,7 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 			{
 				ItemInventory inv = new InventoryFilter(filterStack);
 
-				ItemStack ghostStack = inv.getStackInSlot(ghostItemSlot);
+				ItemStack ghostStack = inv.getItem(ghostItemSlot);
 				if (ghostStack.isEmpty())
 				{
 					componentList.add(new TranslationTextComponent("filter.bloodmagic.novalidtag"));

@@ -278,7 +278,7 @@ public class RegisterPatchouliMultiblocks
 		private BMStateMatcher(Block singleBlockRender, List<BlockState> valid)
 		{
 			List<BlockState> render = Lists.newArrayList();
-			render.add(singleBlockRender.getDefaultState());
+			render.add(singleBlockRender.defaultBlockState());
 			this.render = render;
 			this.valid = valid;
 		}
@@ -294,7 +294,7 @@ public class RegisterPatchouliMultiblocks
 		{
 			if (render.isEmpty())
 			{
-				return Blocks.BEDROCK.getDefaultState(); // show something impossible
+				return Blocks.BEDROCK.defaultBlockState(); // show something impossible
 			} else
 			{
 				int idx = (ticks / 20) % render.size();

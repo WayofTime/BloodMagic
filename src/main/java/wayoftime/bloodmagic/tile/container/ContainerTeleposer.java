@@ -19,7 +19,7 @@ public class ContainerTeleposer extends Container
 
 	public ContainerTeleposer(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
 	{
-		this((TileTeleposer) playerInventory.player.world.getTileEntity(extraData.readBlockPos()), windowId, playerInventory);
+		this((TileTeleposer) playerInventory.player.level.getBlockEntity(extraData.readBlockPos()), windowId, playerInventory);
 	}
 
 	public ContainerTeleposer(@Nullable TileTeleposer tile, int windowId, PlayerInventory playerInventory)
@@ -48,30 +48,30 @@ public class ContainerTeleposer extends Container
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index)
+	public ItemStack quickMoveStack(PlayerEntity playerIn, int index)
 	{
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
+		Slot slot = this.slots.get(index);
 
-		if (slot != null && slot.getHasStack())
+		if (slot != null && slot.hasItem())
 		{
-			ItemStack itemstack1 = slot.getStack();
+			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 
 			if (index == 0)// Attempting to transfer from output slots
 							// or bucket slots
 			{
-				if (!this.mergeItemStack(itemstack1, 1, 1 + 36, true))
+				if (!this.moveItemStackTo(itemstack1, 1, 1 + 36, true))
 				{
 					return ItemStack.EMPTY;
 				}
 
-				slot.onSlotChange(itemstack1, itemstack);
+				slot.onQuickCraft(itemstack1, itemstack);
 			} else if (index >= 1) // Attempting to transfer from main inventory
 			{
 				if (itemstack1.getItem() instanceof ITeleposerFocus) // Try the tool slot first
 				{
-					if (!this.mergeItemStack(itemstack1, 0, 1, false))
+					if (!this.moveItemStackTo(itemstack1, 0, 1, false))
 					{
 						return ItemStack.EMPTY;
 					}
@@ -80,10 +80,10 @@ public class ContainerTeleposer extends Container
 
 			if (itemstack1.getCount() == 0)
 			{
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else
 			{
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 
 			if (itemstack1.getCount() == itemstack.getCount())
@@ -98,9 +98,9 @@ public class ContainerTeleposer extends Container
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn)
+	public boolean stillValid(PlayerEntity playerIn)
 	{
-		return this.tileTeleposer.isUsableByPlayer(playerIn);
+		return this.tileTeleposer.stillValid(playerIn);
 	}
 
 	private class SlotFocus extends Slot
@@ -111,7 +111,7 @@ public class ContainerTeleposer extends Container
 		}
 
 		@Override
-		public boolean isItemValid(ItemStack itemStack)
+		public boolean mayPlace(ItemStack itemStack)
 		{
 			return itemStack.getItem() instanceof ITeleposerFocus;
 		}

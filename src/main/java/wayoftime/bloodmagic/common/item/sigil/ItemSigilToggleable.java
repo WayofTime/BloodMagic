@@ -20,6 +20,9 @@ import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 
+import net.minecraft.item.Item.Properties;
+import wayoftime.bloodmagic.common.item.sigil.ISigil.Holding;
+
 /**
  * Base class for all toggleable sigils.
  */
@@ -50,42 +53,42 @@ public class ItemSigilToggleable extends ItemSigil implements IActivatable
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
+		ItemStack stack = player.getItemInHand(hand);
 		if (stack.getItem() instanceof ISigil.Holding)
 			stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
 		if (PlayerHelper.isFakePlayer(player))
-			return ActionResult.resultFail(stack);
+			return ActionResult.fail(stack);
 
-		if (!world.isRemote && !isUnusable(stack))
+		if (!world.isClientSide && !isUnusable(stack))
 		{
-			if (player.isSneaking())
+			if (player.isShiftKeyDown())
 				setActivatedState(stack, !getActivated(stack));
 			if (getActivated(stack))
-				return super.onItemRightClick(world, player, hand);
+				return super.use(world, player, hand);
 		}
 
-		return super.onItemRightClick(world, player, hand);
+		return super.use(world, player, hand);
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context)
+	public ActionResultType useOn(ItemUseContext context)
 	{
-		World world = context.getWorld();
-		BlockPos blockpos = context.getPos();
+		World world = context.getLevel();
+		BlockPos blockpos = context.getClickedPos();
 
 		PlayerEntity player = context.getPlayer();
-		ItemStack stack = context.getItem();
+		ItemStack stack = context.getItemInHand();
 		if (stack.getItem() instanceof ISigil.Holding)
 			stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
 
 		Binding binding = getBinding(stack);
-		if (binding == null || player.isSneaking()) // Make sure Sigils are bound before handling. Also ignores while
+		if (binding == null || player.isShiftKeyDown()) // Make sure Sigils are bound before handling. Also ignores while
 													// toggling state
 			return ActionResultType.PASS;
 
-		return onSigilUse(stack, player, world, blockpos, context.getFace(), context.getHitVec())
+		return onSigilUse(stack, player, world, blockpos, context.getClickedFace(), context.getClickLocation())
 				? ActionResultType.SUCCESS
 				: ActionResultType.FAIL;
 	}
@@ -98,9 +101,9 @@ public class ItemSigilToggleable extends ItemSigil implements IActivatable
 	@Override
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
 	{
-		if (!worldIn.isRemote && entityIn instanceof PlayerEntity && getActivated(stack))
+		if (!worldIn.isClientSide && entityIn instanceof PlayerEntity && getActivated(stack))
 		{
-			if (entityIn.ticksExisted % 100 == 0)
+			if (entityIn.tickCount % 100 == 0)
 			{
 				if (!NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage((PlayerEntity) entityIn, SoulTicket.item(stack, worldIn, entityIn, getLpUsed())).isSuccess())
 				{

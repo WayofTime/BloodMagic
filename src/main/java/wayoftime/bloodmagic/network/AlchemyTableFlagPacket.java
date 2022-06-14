@@ -27,7 +27,7 @@ public class AlchemyTableFlagPacket
 
 	public AlchemyTableFlagPacket(TileAlchemyTable tile)
 	{
-		this(tile.getPos(), tile.getOrbFlagForGui(), tile.getLPFlagforGui());
+		this(tile.getBlockPos(), tile.getOrbFlagForGui(), tile.getLPFlagforGui());
 	}
 
 	public AlchemyTableFlagPacket(BlockPos pos, boolean orbFlag, boolean lpFlag)
@@ -60,8 +60,8 @@ public class AlchemyTableFlagPacket
 	@OnlyIn(Dist.CLIENT)
 	public static void updateTanks(BlockPos pos, boolean orbFlag, boolean lpFlag)
 	{
-		World world = Minecraft.getInstance().world;
-		TileEntity tile = world.getTileEntity(pos);
+		World world = Minecraft.getInstance().level;
+		TileEntity tile = world.getBlockEntity(pos);
 		if (tile instanceof TileAlchemyTable)
 		{
 			((TileAlchemyTable) tile).setOrbFlagForGui(orbFlag);

@@ -36,7 +36,7 @@ public class RitualArmourEvolve extends Ritual
 	{
 		World world = masterRitualStone.getWorldObj();
 
-		if (world.isRemote)
+		if (world.isClientSide)
 		{
 			return;
 		}
@@ -45,13 +45,13 @@ public class RitualArmourEvolve extends Ritual
 
 		AreaDescriptor checkRange = masterRitualStone.getBlockRange(CHECK_RANGE);
 
-		List<PlayerEntity> playerList = world.getEntitiesWithinAABB(PlayerEntity.class, checkRange.getAABB(pos));
+		List<PlayerEntity> playerList = world.getEntitiesOfClass(PlayerEntity.class, checkRange.getAABB(pos));
 
 		for (PlayerEntity player : playerList)
 		{
 			if (LivingUtil.hasFullSet(player))
 			{
-				ItemStack chestStack = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
+				ItemStack chestStack = player.getItemBySlot(EquipmentSlotType.CHEST);
 				LivingStats stats = LivingStats.fromPlayer(player);
 
 				if (stats != null && stats.getMaxPoints() < 300)
@@ -64,9 +64,9 @@ public class RitualArmourEvolve extends Ritual
 
 					LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
 //						LightningBoltEntity lightning = new LightningBoltEntity(world, pos.getX() + dispX, pos.getY(), pos.getZ() + dispZ);
-					lightningboltentity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+					lightningboltentity.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 //					lightningboltentity.setEffectOnly(true);
-					world.addEntity(lightningboltentity);
+					world.addFreshEntity(lightningboltentity);
 				}
 
 			}

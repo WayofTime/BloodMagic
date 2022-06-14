@@ -17,10 +17,10 @@ public class MixinMinecraft
 	public void isEntityGlowing(Entity entity, CallbackInfoReturnable<Boolean> ci)
 	{
 		PlayerEntity player = Minecraft.getInstance().player;
-		if (player.isPotionActive(BloodMagicPotions.SPECTRAL_SIGHT))
+		if (player.hasEffect(BloodMagicPotions.SPECTRAL_SIGHT))
 		{
-			double distance = (player.getActivePotionEffect(BloodMagicPotions.SPECTRAL_SIGHT).getAmplifier() * 32 + 24);
-			if (Minecraft.getInstance().player.getDistanceSq(entity) <= (distance * distance))
+			double distance = (player.getEffect(BloodMagicPotions.SPECTRAL_SIGHT).getAmplifier() * 32 + 24);
+			if (Minecraft.getInstance().player.distanceToSqr(entity) <= (distance * distance))
 				ci.setReturnValue(true);
 		}
 

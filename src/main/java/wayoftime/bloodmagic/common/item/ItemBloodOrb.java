@@ -41,32 +41,32 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IForgeI
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
+		ItemStack stack = player.getItemInHand(hand);
 		BloodOrb orb = getOrb(stack);
 
 		if (orb == null)
-			return ActionResult.resultFail(stack);
+			return ActionResult.fail(stack);
 
 		if (world == null)
-			return super.onItemRightClick(world, player, hand);
+			return super.use(world, player, hand);
 
-		world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F
-				+ (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+		world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F
+				+ (world.random.nextFloat() - world.random.nextFloat()) * 0.8F);
 
 		if (PlayerHelper.isFakePlayer(player))
-			return super.onItemRightClick(world, player, hand);
+			return super.use(world, player, hand);
 
 		if (!stack.hasTag())
-			return super.onItemRightClick(world, player, hand);
+			return super.use(world, player, hand);
 
 		Binding binding = getBinding(stack);
 		if (binding == null)
-			return super.onItemRightClick(world, player, hand);
+			return super.use(world, player, hand);
 
-		if (world.isRemote)
-			return super.onItemRightClick(world, player, hand);
+		if (world.isClientSide)
+			return super.use(world, player, hand);
 
 		SoulNetwork ownerNetwork = NetworkHelper.getSoulNetwork(binding);
 		if (binding.getOwnerId().equals(player.getGameProfile().getId()))
@@ -74,20 +74,20 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IForgeI
 
 		ownerNetwork.add(SoulTicket.item(stack, world, player, 200), orb.getCapacity()); // Add LP to owner's network
 		ownerNetwork.hurtPlayer(player, 200); // Hurt whoever is using it
-		return super.onItemRightClick(world, player, hand);
+		return super.use(world, player, hand);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.orb.desc").mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.orb.desc").withStyle(TextFormatting.GRAY));
 
 		BloodOrb orb = getOrb(stack);
 		if (flag.isAdvanced() && orb != null)
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.orb.owner", stack.getItem().getRegistryName()).mergeStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.orb.owner", stack.getItem().getRegistryName()).withStyle(TextFormatting.GRAY));
 
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 
 //

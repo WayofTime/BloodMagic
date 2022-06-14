@@ -31,9 +31,9 @@ public class InventoryFilter extends ItemInventory
 		if (Utils.hasUUID(masterStack))
 		{
 			UUID parentStackUUID = new UUID(masterStack.getTag().getLong(Constants.NBT.MOST_SIG), masterStack.getTag().getLong(Constants.NBT.LEAST_SIG));
-			for (int i = 0; i < entityPlayer.inventory.getSizeInventory(); i++)
+			for (int i = 0; i < entityPlayer.inventory.getContainerSize(); i++)
 			{
-				ItemStack itemStack = entityPlayer.inventory.getStackInSlot(i);
+				ItemStack itemStack = entityPlayer.inventory.getItem(i);
 
 				if (!itemStack.isEmpty() && Utils.hasUUID(itemStack))
 				{
@@ -66,13 +66,13 @@ public class InventoryFilter extends ItemInventory
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int slotIndex, ItemStack itemStack)
+	public boolean canPlaceItem(int slotIndex, ItemStack itemStack)
 	{
 		return true;
 	}
 
 	@Override
-	public int getInventoryStackLimit()
+	public int getMaxStackSize()
 	{
 		return 1;
 	}

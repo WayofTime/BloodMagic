@@ -21,9 +21,9 @@ public class ItemSigilSuppression extends ItemSigilToggleableBase
 		if (PlayerHelper.isFakePlayer(player))
 			return;
 
-		int x = (int) player.getPosX();
-		int y = (int) player.getPosY();
-		int z = (int) player.getPosZ();
+		int x = (int) player.getX();
+		int y = (int) player.getY();
+		int z = (int) player.getZ();
 		final int radius = 5;
 		final int refresh = 100;
 

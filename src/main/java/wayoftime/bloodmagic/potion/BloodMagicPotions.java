@@ -39,14 +39,14 @@ public class BloodMagicPotions
 		reg.register(SACRIFICIAL_LAMB.setRegistryName("sacrificiallamb"));
 		reg.register(FLIGHT.setRegistryName("flight"));
 		reg.register(SPECTRAL_SIGHT.setRegistryName("spectral_sight"));
-		reg.register(GRAVITY.addAttributesModifier(ForgeMod.ENTITY_GRAVITY.get(), "AF8B6E3F-3328-4C0A-AA66-6BA6BB6DBEF6", (double) 0.5F, AttributeModifier.Operation.MULTIPLY_BASE).setRegistryName("gravity"));
+		reg.register(GRAVITY.addAttributeModifier(ForgeMod.ENTITY_GRAVITY.get(), "AF8B6E3F-3328-4C0A-AA66-6BA6BB6DBEF6", (double) 0.5F, AttributeModifier.Operation.MULTIPLY_BASE).setRegistryName("gravity"));
 		reg.register(HEAVY_HEART.setRegistryName("heavy_heart"));
 		reg.register(GROUNDED.setRegistryName("grounded"));
 		reg.register(SUSPENDED.setRegistryName("suspended"));
 		reg.register(PASSIVITY.setRegistryName("passivity"));
 		reg.register(BOUNCE.setRegistryName("bounce"));
 		reg.register(OBSIDIAN_CLOAK.setRegistryName("obsidian_cloak"));
-		reg.register(HARD_CLOAK.addAttributesModifier(Attributes.ARMOR_TOUGHNESS, "BF8B6E3F-3328-4C0A-AA66-3BA6BB6DBEF6", 3, AttributeModifier.Operation.ADDITION).setRegistryName("hard_cloak"));
+		reg.register(HARD_CLOAK.addAttributeModifier(Attributes.ARMOR_TOUGHNESS, "BF8B6E3F-3328-4C0A-AA66-3BA6BB6DBEF6", 3, AttributeModifier.Operation.ADDITION).setRegistryName("hard_cloak"));
 		reg.register(SOFT_FALL.setRegistryName("soft_fall"));
 
 	}

@@ -41,7 +41,7 @@ public class CollectionEnchantFilterKey implements IFilterKey
 				}
 			} else
 			{
-				level = EnchantmentHelper.getEnchantmentLevel(entry.getKey(), testStack);
+				level = EnchantmentHelper.getItemEnchantmentLevel(entry.getKey(), testStack);
 			}
 
 			// Got a match!

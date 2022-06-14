@@ -27,9 +27,9 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
 
 	public ItemStack getFilterStack(Direction side)
 	{
-		int index = side.getIndex();
+		int index = side.get3DDataValue();
 
-		return getStackInSlot(index);
+		return getItem(index);
 	}
 
 //	public void setGhostItemAmount(int ghostItemSlot, int amount)
@@ -50,8 +50,8 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
 			currentActiveSlot = 0;
 			for (Direction dir : Direction.values())
 			{
-				BlockPos offsetPos = this.getCurrentBlockPos().offset(dir);
-				TileEntity tile = world.getTileEntity(offsetPos);
+				BlockPos offsetPos = this.getCurrentBlockPos().relative(dir);
+				TileEntity tile = level.getBlockEntity(offsetPos);
 				if (tile != null)
 				{
 					LazyOptional<IItemHandler> opt = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir.getOpposite());
@@ -128,7 +128,7 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
 	{
 		currentActiveSlot = requestedSlot;
 //		itemInventory.initializeInventory(getStackInSlot(currentActiveSlot));
-		this.markDirty();
+		this.setChanged();
 	}
 
 	@Override
@@ -138,13 +138,13 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
 	}
 
 	@Override
-	public boolean canInsertItem(int index, ItemStack itemStackIn, Direction direction)
+	public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction)
 	{
 		return false;
 	}
 
 	@Override
-	public boolean canExtractItem(int index, ItemStack stack, Direction direction)
+	public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction)
 	{
 		return false;
 	}
@@ -152,20 +152,20 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
 	@Override
 	public int getPriority(Direction side)
 	{
-		return priorities[side.getIndex()];
+		return priorities[side.get3DDataValue()];
 	}
 
 	public void incrementCurrentPriotiryToMaximum(int max)
 	{
 		priorities[currentActiveSlot] = Math.min(priorities[currentActiveSlot] + 1, max);
-		BlockState state = getWorld().getBlockState(pos);
-		getWorld().notifyBlockUpdate(pos, state, state, 3);
+		BlockState state = getLevel().getBlockState(worldPosition);
+		getLevel().sendBlockUpdated(worldPosition, state, state, 3);
 	}
 
 	public void decrementCurrentPriority()
 	{
 		priorities[currentActiveSlot] = Math.max(priorities[currentActiveSlot] - 1, 0);
-		BlockState state = getWorld().getBlockState(pos);
-		getWorld().notifyBlockUpdate(pos, state, state, 3);
+		BlockState state = getLevel().getBlockState(worldPosition);
+		getLevel().sendBlockUpdated(worldPosition, state, state, 3);
 	}
 }

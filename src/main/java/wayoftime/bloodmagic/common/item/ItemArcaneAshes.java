@@ -26,39 +26,39 @@ public class ItemArcaneAshes extends Item
 {
 	public ItemArcaneAshes()
 	{
-		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB).maxDamage(20));
+		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB).durability(20));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.arcaneAshes").mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.arcaneAshes").withStyle(TextFormatting.GRAY));
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context)
+	public ActionResultType useOn(ItemUseContext context)
 	{
-		ItemStack stack = context.getItem();
-		BlockPos newPos = context.getPos().offset(context.getFace());
-		World world = context.getWorld();
+		ItemStack stack = context.getItemInHand();
+		BlockPos newPos = context.getClickedPos().relative(context.getClickedFace());
+		World world = context.getLevel();
 		PlayerEntity player = context.getPlayer();
 
-		if (world.isAirBlock(newPos))
+		if (world.isEmptyBlock(newPos))
 		{
-			if (!world.isRemote)
+			if (!world.isClientSide)
 			{
-				Direction rotation = Direction.fromAngle(player.getRotationYawHead());
-				world.setBlockState(newPos, BloodMagicBlocks.ALCHEMY_ARRAY.get().getDefaultState());
-				TileEntity tile = world.getTileEntity(newPos);
+				Direction rotation = Direction.fromYRot(player.getYHeadRot());
+				world.setBlockAndUpdate(newPos, BloodMagicBlocks.ALCHEMY_ARRAY.get().defaultBlockState());
+				TileEntity tile = world.getBlockEntity(newPos);
 				if (tile instanceof TileAlchemyArray)
 				{
 					((TileAlchemyArray) tile).setRotation(rotation);
 				}
 
 //				PickaxeItem d;
-				stack.damageItem(1, player, (entity) -> {
-					entity.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+				stack.hurtAndBreak(1, player, (entity) -> {
+					entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
 				});
 
 			}

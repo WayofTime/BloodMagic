@@ -62,7 +62,7 @@ public class ItemLavaCrystal extends ItemBindableBase
 				PlayerEntity player = PlayerHelper.getPlayerFromUUID(binding.getOwnerId());
 				if (player != null)
 				{
-					player.addPotionEffect(new EffectInstance(Effects.NAUSEA, 99));
+					player.addEffect(new EffectInstance(Effects.CONFUSION, 99));
 				}
 			}
 		} else
@@ -91,33 +91,33 @@ public class ItemLavaCrystal extends ItemBindableBase
 //	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context)
+	public ActionResultType useOn(ItemUseContext context)
 	{
-		BlockPos pos = context.getPos();
-		Direction facing = context.getFace();
-		pos = pos.offset(facing);
+		BlockPos pos = context.getClickedPos();
+		Direction facing = context.getClickedFace();
+		pos = pos.relative(facing);
 		PlayerEntity player = context.getPlayer();
 		Hand hand = context.getHand();
-		ItemStack itemstack = player.getHeldItem(hand);
+		ItemStack itemstack = player.getItemInHand(hand);
 
-		Binding binding = getBinding(player.getHeldItem(hand));
+		Binding binding = getBinding(player.getItemInHand(hand));
 
 		if (binding == null)
 			return ActionResultType.FAIL;
 
-		if (!player.canPlayerEdit(pos, facing, itemstack))
+		if (!player.mayUseItemAt(pos, facing, itemstack))
 			return ActionResultType.FAIL;
 
-		if (context.getWorld().isAirBlock(pos) && context.getWorld().isRemote)
+		if (context.getLevel().isEmptyBlock(pos) && context.getLevel().isClientSide)
 		{
-			context.getWorld().playSound(player, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0F, random.nextFloat() * 0.4F + 0.8F);
+			context.getLevel().playSound(player, pos, SoundEvents.FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0F, random.nextFloat() * 0.4F + 0.8F);
 			return ActionResultType.SUCCESS;
 		}
 
-		if (context.getWorld().isAirBlock(pos) && NetworkHelper.getSoulNetwork(binding).syphonAndDamage(player, SoulTicket.item(player.getHeldItem(hand), 100)).isSuccess())
+		if (context.getLevel().isEmptyBlock(pos) && NetworkHelper.getSoulNetwork(binding).syphonAndDamage(player, SoulTicket.item(player.getItemInHand(hand), 100)).isSuccess())
 		{
-			context.getWorld().playSound(player, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0F, random.nextFloat() * 0.4F + 0.8F);
-			context.getWorld().setBlockState(pos, Blocks.FIRE.getDefaultState(), 11);
+			context.getLevel().playSound(player, pos, SoundEvents.FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0F, random.nextFloat() * 0.4F + 0.8F);
+			context.getLevel().setBlock(pos, Blocks.FIRE.defaultBlockState(), 11);
 		} else
 			return ActionResultType.FAIL;
 

@@ -50,8 +50,8 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 	{
 		super(container, playerInventory, title);
 		trainerInventory = container.inventoryTrainer;
-		xSize = 176;
-		ySize = 187;
+		imageWidth = 176;
+		imageHeight = 187;
 		this.player = playerInventory.player;
 		this.isWhitelist = ((ItemLivingTrainer) container.trainerStack.getItem()).getIsWhitelist(container.trainerStack);
 	}
@@ -60,8 +60,8 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 	public void init()
 	{
 		super.init();
-		left = (this.width - this.xSize) / 2;
-		top = (this.height - this.ySize) / 2;
+		left = (this.width - this.imageWidth) / 2;
+		top = (this.height - this.imageHeight) / 2;
 
 		buttonKeyList.clear();
 
@@ -105,7 +105,7 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 			return 0;
 		}
 
-		ItemStack stack = this.container.getSlot(container.lastGhostSlotClicked).getStack();
+		ItemStack stack = this.container.getSlot(container.lastGhostSlotClicked).getItem();
 		return getStackUpgradeLevel(stack);
 	}
 
@@ -117,7 +117,7 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 		}
 
 		int slotClicked = container.lastGhostSlotClicked;
-		ItemStack stack = container.getSlot(slotClicked).getStack();
+		ItemStack stack = container.getSlot(slotClicked).getItem();
 		level = Math.max(0, Math.min(level, getMaxUpgradeLevel(stack)));
 
 		if (stack.getItem() instanceof ILivingContainer)
@@ -135,8 +135,8 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 				}
 
 				((ILivingContainer) stack.getItem()).updateLivingStats(stack, newStats);
-				container.getSlot(slotClicked).putStack(stack);
-				container.inventoryTrainer.setInventorySlotContents(slotClicked, stack);
+				container.getSlot(slotClicked).set(stack);
+				container.inventoryTrainer.setItem(slotClicked, stack);
 				((ItemLivingTrainer) container.trainerStack.getItem()).setTomeLevel(container.trainerStack, slotClicked, level);
 
 //				System.out.println("Changing level on client side");
@@ -190,14 +190,14 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(MatrixStack stack, int mouseX, int mouseY)
+	protected void renderLabels(MatrixStack stack, int mouseX, int mouseY)
 	{
 		String textEntry = "" + getCurrentActiveSlotUpgradeLevel();
 		int offset = -3 * textEntry.length();
-		this.font.func_243248_b(stack, new StringTextComponent(textEntry), 45 - 18 + offset + 7.5f, 37 + 3, 0xFFFFFF);
-//		this.font.func_243248_b(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
-		this.font.func_243248_b(stack, new TranslationTextComponent("container.inventory"), 8, 93, 4210752);
-		this.font.func_243248_b(stack, container.trainerStack.getDisplayName(), 8, 4, 4210752);
+		this.font.draw(stack, new StringTextComponent(textEntry), 45 - 18 + offset + 7.5f, 37 + 3, 0xFFFFFF);
+//		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
+		this.font.draw(stack, new TranslationTextComponent("container.inventory"), 8, 93, 4210752);
+		this.font.draw(stack, container.trainerStack.getHoverName(), 8, 4, 4210752);
 
 		int w = 20;
 		int h = 20;
@@ -206,15 +206,15 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 		int yl = whitelistButtonPosY;
 
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		getMinecraft().getTextureManager().bindTexture(background);
+		getMinecraft().getTextureManager().bind(background);
 		this.blit(stack, +xl, +yl, 176, isWhitelist ? 0 : 20, w, h);
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		getMinecraft().getTextureManager().bindTexture(background);
+		getMinecraft().getTextureManager().bind(background);
 //		int i = (this.width - this.xSize) / 2;
 //		int j = (this.height - this.ySize) / 2;
 //		this.blit(stack, i, j, 0, 0, this.xSize, this.ySize);
@@ -235,10 +235,10 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 		// draw your Gui here, only thing you need to change is the path
 //        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 //        this.mc.getTextureManager().bindTexture(texture);
-		int x = (width - xSize) / 2;
-		int y = (height - ySize) / 2;
-		this.blit(stack, x, y, 0, 0, xSize, ySize);
-		ItemStack held = player.getHeldItem(Hand.MAIN_HAND);
+		int x = (width - imageWidth) / 2;
+		int y = (height - imageHeight) / 2;
+		this.blit(stack, x, y, 0, 0, imageWidth, imageHeight);
+		ItemStack held = player.getItemInHand(Hand.MAIN_HAND);
 		if (container.lastGhostSlotClicked >= 0)
 		{
 //            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -260,8 +260,8 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 		int w = 20;
 		int h = 20;
 
-		int x = this.guiLeft + whitelistButtonPosX;
-		int y = this.guiTop + whitelistButtonPosY;
+		int x = this.leftPos + whitelistButtonPosX;
+		int y = this.topPos + whitelistButtonPosY;
 
 		if (mouseX >= x && mouseX < x + w && mouseY >= y && mouseY < y + h)
 		{
@@ -273,8 +273,8 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 		w = +numberHoverWidth;
 		h = numberHoverHeight;
 
-		x = this.guiLeft + numberHoverPosX;
-		y = this.guiTop + numberHoverPosY;
+		x = this.leftPos + numberHoverPosX;
+		y = this.topPos + numberHoverPosY;
 
 		if (mouseX >= x && mouseX < x + w && mouseY >= y && mouseY < y + h)
 		{
@@ -321,7 +321,7 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 		}
 
 		int slotClicked = container.lastGhostSlotClicked;
-		ItemStack stack = container.getSlot(slotClicked).getStack();
+		ItemStack stack = container.getSlot(slotClicked).getItem();
 
 		if (stack.getItem() instanceof ILivingContainer)
 		{
@@ -367,12 +367,12 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 				int currentLevel = getCurrentActiveSlotUpgradeLevel();
 				int newLevel = setCurrentActiveSlotUpgradeLevel(currentLevel + 1);
 //				System.out.println("Sending incrementation packet with new level of: " + newLevel);
-				BloodMagic.packetHandler.sendToServer(new LivingTrainerPacket(player.inventory.currentItem, screen.container.lastGhostSlotClicked, newLevel));
+				BloodMagic.packetHandler.sendToServer(new LivingTrainerPacket(player.inventory.selected, screen.container.lastGhostSlotClicked, newLevel));
 			} else if (id == 1)
 			{
 				int currentLevel = getCurrentActiveSlotUpgradeLevel();
 				int newLevel = setCurrentActiveSlotUpgradeLevel(currentLevel - 1);
-				BloodMagic.packetHandler.sendToServer(new LivingTrainerPacket(player.inventory.currentItem, screen.container.lastGhostSlotClicked, newLevel));
+				BloodMagic.packetHandler.sendToServer(new LivingTrainerPacket(player.inventory.selected, screen.container.lastGhostSlotClicked, newLevel));
 			}
 		}
 	}
@@ -393,7 +393,7 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 
 			screen.isWhitelist = newWhitelistState;
 			((ItemLivingTrainer) screen.container.trainerStack.getItem()).setIsWhitelist(screen.container.trainerStack, newWhitelistState);
-			BloodMagic.packetHandler.sendToServer(new LivingTrainerWhitelistPacket(player.inventory.currentItem, newWhitelistState));
+			BloodMagic.packetHandler.sendToServer(new LivingTrainerWhitelistPacket(player.inventory.selected, newWhitelistState));
 
 		}
 	}

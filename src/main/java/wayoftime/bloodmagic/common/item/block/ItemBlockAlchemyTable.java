@@ -17,6 +17,8 @@ import net.minecraft.world.World;
 import wayoftime.bloodmagic.common.block.BlockAlchemyTable;
 import wayoftime.bloodmagic.tile.TileAlchemyTable;
 
+import net.minecraft.item.Item.Properties;
+
 public class ItemBlockAlchemyTable extends BlockItem
 {
 	public ItemBlockAlchemyTable(Block block, Properties properties)
@@ -25,35 +27,35 @@ public class ItemBlockAlchemyTable extends BlockItem
 	}
 
 	@Override
-	public ActionResultType tryPlace(BlockItemUseContext context)
+	public ActionResultType place(BlockItemUseContext context)
 	{
 //		PlayerEntity player = context.getPlayer()
 //		float yaw = player.rotationYaw;
-		Direction direction = context.getPlacementHorizontalFacing();
+		Direction direction = context.getHorizontalDirection();
 		PlayerEntity player = context.getPlayer();
 
-		if (direction.getYOffset() != 0)
+		if (direction.getStepY() != 0)
 		{
 			return ActionResultType.FAIL;
 		}
 
-		World world = context.getWorld();
-		BlockPos pos = context.getPos();
+		World world = context.getLevel();
+		BlockPos pos = context.getClickedPos();
 
-		if (!world.isAirBlock(pos.offset(direction)))
+		if (!world.isEmptyBlock(pos.relative(direction)))
 		{
 			return ActionResultType.FAIL;
 		}
 
-		BlockState thisState = this.getBlock().getDefaultState().with(BlockAlchemyTable.DIRECTION, direction).with(BlockAlchemyTable.INVISIBLE, false);
-		BlockState newState = this.getBlock().getDefaultState().with(BlockAlchemyTable.DIRECTION, direction).with(BlockAlchemyTable.INVISIBLE, true);
+		BlockState thisState = this.getBlock().defaultBlockState().setValue(BlockAlchemyTable.DIRECTION, direction).setValue(BlockAlchemyTable.INVISIBLE, false);
+		BlockState newState = this.getBlock().defaultBlockState().setValue(BlockAlchemyTable.DIRECTION, direction).setValue(BlockAlchemyTable.INVISIBLE, true);
 
-		if (!this.canPlace(context, thisState) || !world.setBlockState(pos.offset(direction), newState, 3))
+		if (!this.canPlace(context, thisState) || !world.setBlock(pos.relative(direction), newState, 3))
 		{
 			return ActionResultType.FAIL;
 		}
 
-		if (!world.setBlockState(pos, thisState, 3))
+		if (!world.setBlock(pos, thisState, 3))
 		{
 			return ActionResultType.FAIL;
 		}
@@ -61,35 +63,35 @@ public class ItemBlockAlchemyTable extends BlockItem
 		BlockState state = world.getBlockState(pos);
 		if (state.getBlock() == this.getBlock())
 		{
-			TileEntity tile = world.getTileEntity(pos);
+			TileEntity tile = world.getBlockEntity(pos);
 			if (tile instanceof TileAlchemyTable)
 			{
-				((TileAlchemyTable) tile).setInitialTableParameters(direction, false, pos.offset(direction));
+				((TileAlchemyTable) tile).setInitialTableParameters(direction, false, pos.relative(direction));
 			}
 
-			TileEntity slaveTile = world.getTileEntity(pos.offset(direction));
+			TileEntity slaveTile = world.getBlockEntity(pos.relative(direction));
 			if (slaveTile instanceof TileAlchemyTable)
 			{
 				((TileAlchemyTable) slaveTile).setInitialTableParameters(direction, true, pos);
 			}
 
-			setTileEntityNBT(world, context.getPlayer(), pos, context.getItem());
-			this.getBlock().onBlockPlacedBy(world, pos, state, context.getPlayer(), context.getItem());
+			updateCustomBlockEntityTag(world, context.getPlayer(), pos, context.getItemInHand());
+			this.getBlock().setPlacedBy(world, pos, state, context.getPlayer(), context.getItemInHand());
 			if (player instanceof ServerPlayerEntity)
 			{
-				CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayerEntity) player, pos, context.getItem());
+				CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayerEntity) player, pos, context.getItemInHand());
 			}
 		}
 
 		SoundType soundtype = state.getSoundType(world, pos, context.getPlayer());
 		world.playSound(player, pos, this.getPlaceSound(state, world, pos, context.getPlayer()), SoundCategory.BLOCKS, (soundtype.getVolume()
 				+ 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
-		if (player == null || !player.abilities.isCreativeMode)
+		if (player == null || !player.abilities.instabuild)
 		{
-			context.getItem().shrink(1);
+			context.getItemInHand().shrink(1);
 		}
 
-		return ActionResultType.func_233537_a_(world.isRemote);
+		return ActionResultType.sidedSuccess(world.isClientSide);
 
 //		return ActionResultType.SUCCESS;
 	}

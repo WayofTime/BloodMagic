@@ -45,10 +45,10 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickableTi
 
 	public void setOutputState(boolean state)
 	{
-		BlockAltar altar = (BlockAltar) this.getWorld().getBlockState(pos).getBlock();
+		BlockAltar altar = (BlockAltar) this.getLevel().getBlockState(worldPosition).getBlock();
 
 		this.isOutputOn = state;
-		this.world.notifyNeighborsOfStateChange(pos, altar);
+		this.level.updateNeighborsAt(worldPosition, altar);
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickableTi
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int slot, ItemStack itemstack)
+	public boolean canPlaceItem(int slot, ItemStack itemstack)
 	{
 		return slot == 0;
 	}

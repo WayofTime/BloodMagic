@@ -36,14 +36,14 @@ public class RitualMeteor extends Ritual
 	{
 		World world = masterRitualStone.getWorldObj();
 
-		if (world.isRemote)
+		if (world.isClientSide)
 		{
 			return;
 		}
 
 		AreaDescriptor itemRange = masterRitualStone.getBlockRange(CHECK_RANGE);
 
-		List<ItemEntity> itemList = world.getEntitiesWithinAABB(ItemEntity.class, itemRange.getAABB(masterRitualStone.getMasterBlockPos()));
+		List<ItemEntity> itemList = world.getEntitiesOfClass(ItemEntity.class, itemRange.getAABB(masterRitualStone.getMasterBlockPos()));
 
 		for (ItemEntity entityItem : itemList)
 		{
@@ -70,9 +70,9 @@ public class RitualMeteor extends Ritual
 					masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(syphonAmount));
 
 				EntityMeteor meteor = new EntityMeteor(world, masterRitualStone.getMasterBlockPos().getX() + 0.5, 260, masterRitualStone.getMasterBlockPos().getZ() + 0.5);
-				meteor.setVelocity(0, -0.1, 0);
+				meteor.lerpMotion(0, -0.1, 0);
 				meteor.setContainedStack(stack.split(1));
-				world.addEntity(meteor);
+				world.addFreshEntity(meteor);
 
 				if (stack.isEmpty())
 					entityItem.remove();

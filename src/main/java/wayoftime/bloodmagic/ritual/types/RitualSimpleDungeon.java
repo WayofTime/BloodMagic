@@ -45,7 +45,7 @@ public class RitualSimpleDungeon extends Ritual
 	{
 		if (ConfigManager.COMMON.makeDungeonRitualCreativeOnly.get())
 		{
-			ItemStack heldStack = player.getActiveItemStack();
+			ItemStack heldStack = player.getUseItem();
 			if (heldStack.getItem() instanceof ItemActivationCrystal)
 			{
 				int crystalLevel = ((ItemActivationCrystal) heldStack.getItem()).getCrystalLevel(heldStack);
@@ -64,7 +64,7 @@ public class RitualSimpleDungeon extends Ritual
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 		BlockPos masterPos = masterRitualStone.getMasterBlockPos();
 
-		if (!world.isRemote && world instanceof ServerWorld)
+		if (!world.isClientSide && world instanceof ServerWorld)
 		{
 //			DungeonDimensionHelper.test(world);
 			ServerWorld dungeonWorld = DungeonDimensionHelper.getDungeonWorld(world);
@@ -75,30 +75,30 @@ public class RitualSimpleDungeon extends Ritual
 
 				for (RitualComponent component : components)
 				{
-					BlockPos newPos = masterPos.add(component.getOffset(masterRitualStone.getDirection()));
-					world.setBlockState(newPos, Blocks.SMOOTH_STONE.getDefaultState());
+					BlockPos newPos = masterPos.offset(component.getOffset(masterRitualStone.getDirection()));
+					world.setBlockAndUpdate(newPos, Blocks.SMOOTH_STONE.defaultBlockState());
 				}
 
 				BlockPos dungeonSpawnLocation = NetworkHelper.getSpawnPositionOfDungeon();
 				DungeonSynthesizer dungeon = new DungeonSynthesizer();
 ////			ResourceLocation initialType = new ResourceLocation("bloodmagic:room_pools/test_pool_1");
 				ResourceLocation initialType = new ResourceLocation("bloodmagic:room_pools/entrances/mini_dungeon_entrances");
-				BlockPos[] positions = dungeon.generateInitialRoom(initialType, world.rand, dungeonWorld, dungeonSpawnLocation);
+				BlockPos[] positions = dungeon.generateInitialRoom(initialType, world.random, dungeonWorld, dungeonSpawnLocation);
 
-				BlockPos pillarPos = masterPos.offset(Direction.UP, 2);
+				BlockPos pillarPos = masterPos.relative(Direction.UP, 2);
 				BlockPos safePlayerPosition = positions[0];
 
 				BlockPos dungeonPortalPos = positions[1];
-				BlockPos overworldPlayerPos = masterPos.offset(Direction.UP).offset(masterRitualStone.getDirection(), 2);
+				BlockPos overworldPlayerPos = masterPos.relative(Direction.UP).relative(masterRitualStone.getDirection(), 2);
 
 				spawnPortalPillar(world, dungeonWorld, pillarPos, safePlayerPosition);
 				spawnPortalPillar(dungeonWorld, world, dungeonPortalPos, overworldPlayerPos);
 
 				LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
 //				LightningBoltEntity lightning = new LightningBoltEntity(world, pos.getX() + dispX, pos.getY(), pos.getZ() + dispZ);
-				lightningboltentity.setPosition(masterPos.getX(), masterPos.getY() + 1, masterPos.getZ());
-				lightningboltentity.setEffectOnly(true);
-				world.addEntity(lightningboltentity);
+				lightningboltentity.setPos(masterPos.getX(), masterPos.getY() + 1, masterPos.getZ());
+				lightningboltentity.setVisualOnly(true);
+				world.addFreshEntity(lightningboltentity);
 
 				NetworkHelper.incrementDungeonCounter();
 
@@ -118,7 +118,7 @@ public class RitualSimpleDungeon extends Ritual
 //					tileInversion.setDestination(world, overworldPlayerPos);
 //				}
 			}
-			world.setBlockState(masterPos, Blocks.AIR.getDefaultState());
+			world.setBlockAndUpdate(masterPos, Blocks.AIR.defaultBlockState());
 ////			System.out.println("Test");
 ////			DungeonTester.testDungeonElementWithOutput((ServerWorld) world, player.getPosition());
 //			DungeonSynthesizer dungeon = new DungeonSynthesizer();
@@ -139,14 +139,14 @@ public class RitualSimpleDungeon extends Ritual
 
 	public void spawnPortalPillar(World spawnWorld, World destinationWorld, BlockPos pillarPos, BlockPos safePlayerPos)
 	{
-		spawnWorld.setBlockState(pillarPos, BloodMagicBlocks.INVERSION_PILLAR.get().getDefaultState());
-		TileEntity tile = spawnWorld.getTileEntity(pillarPos);
+		spawnWorld.setBlockAndUpdate(pillarPos, BloodMagicBlocks.INVERSION_PILLAR.get().defaultBlockState());
+		TileEntity tile = spawnWorld.getBlockEntity(pillarPos);
 		if (tile instanceof TileInversionPillar)
 		{
 			TileInversionPillar tileInversion = (TileInversionPillar) tile;
 			tileInversion.setDestination(destinationWorld, safePlayerPos);
-			spawnWorld.setBlockState(pillarPos.offset(Direction.DOWN), BloodMagicBlocks.INVERSION_PILLAR_CAP.get().getDefaultState().with(BlockInversionPillarEnd.TYPE, PillarCapType.BOTTOM));
-			spawnWorld.setBlockState(pillarPos.offset(Direction.UP), BloodMagicBlocks.INVERSION_PILLAR_CAP.get().getDefaultState().with(BlockInversionPillarEnd.TYPE, PillarCapType.TOP));
+			spawnWorld.setBlockAndUpdate(pillarPos.relative(Direction.DOWN), BloodMagicBlocks.INVERSION_PILLAR_CAP.get().defaultBlockState().setValue(BlockInversionPillarEnd.TYPE, PillarCapType.BOTTOM));
+			spawnWorld.setBlockAndUpdate(pillarPos.relative(Direction.UP), BloodMagicBlocks.INVERSION_PILLAR_CAP.get().defaultBlockState().setValue(BlockInversionPillarEnd.TYPE, PillarCapType.TOP));
 		}
 	}
 

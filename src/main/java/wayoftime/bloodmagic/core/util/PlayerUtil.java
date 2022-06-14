@@ -19,14 +19,14 @@ public class PlayerUtil
 	{
 
 		// Check offhand first
-		ItemStack offHand = player.getHeldItemOffhand();
+		ItemStack offHand = player.getOffhandItem();
 		if (requirements.test(offHand))
 			return offHand;
 
 		// Check inventory next
-		for (int slot = 0; slot < player.inventory.getSizeInventory(); slot++)
+		for (int slot = 0; slot < player.inventory.getContainerSize(); slot++)
 		{
-			ItemStack foundStack = player.inventory.getStackInSlot(slot);
+			ItemStack foundStack = player.inventory.getItem(slot);
 			if (!foundStack.isEmpty() && requirements.test(foundStack))
 				return foundStack;
 		}
@@ -37,18 +37,18 @@ public class PlayerUtil
 	public static Multimap<Attribute, AttributeModifier> handle(PlayerEntity player, Multimap<Attribute, AttributeModifier> existing)
 	{
 
-		ItemStack chest = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
+		ItemStack chest = player.getItemBySlot(EquipmentSlotType.CHEST);
 		boolean hasFullSet = LivingUtil.hasFullSet(player);
 
 		if (hasFullSet && existing == null)
 		{
 			existing = ((ExpandedArmor) chest.getItem()).getAttributeModifiers(EquipmentSlotType.CHEST, chest);
-			player.getAttributeManager().reapplyModifiers(existing);
+			player.getAttributes().addTransientAttributeModifiers(existing);
 		}
 
 		if (!hasFullSet && existing != null)
 		{
-			player.getAttributeManager().removeModifiers(existing);
+			player.getAttributes().removeAttributeModifiers(existing);
 			existing = null;
 		}
 

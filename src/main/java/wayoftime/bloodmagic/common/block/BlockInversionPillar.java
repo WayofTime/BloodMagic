@@ -14,9 +14,11 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import wayoftime.bloodmagic.tile.TileInversionPillar;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockInversionPillar extends Block
 {
-	protected static final VoxelShape BODY = Block.makeCuboidShape(2, 1, 2, 14, 15, 14);
+	protected static final VoxelShape BODY = Block.box(2, 1, 2, 14, 15, 14);
 
 	public BlockInversionPillar(Properties properties)
 	{
@@ -42,12 +44,12 @@ public class BlockInversionPillar extends Block
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
 	{
-		if (world.isRemote)
+		if (world.isClientSide)
 			return ActionResultType.SUCCESS;
 
-		TileEntity tile = world.getTileEntity(pos);
+		TileEntity tile = world.getBlockEntity(pos);
 		if (tile != null)
 		{
 			((TileInversionPillar) tile).handlePlayerInteraction(player);

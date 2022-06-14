@@ -48,7 +48,7 @@ public class SerializerHelper
 	public static ItemStack getItemStack(@Nonnull JsonObject json, @Nonnull String key)
 	{
 		validateKey(json, key);
-		return ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, key));
+		return ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, key));
 	}
 
 	public static JsonElement serializeItemStack(@Nonnull ItemStack stack)
@@ -69,7 +69,7 @@ public class SerializerHelper
 	public static FluidStack getFluidStack(@Nonnull JsonObject json, @Nonnull String key)
 	{
 		validateKey(json, key);
-		return deserializeFluid(JSONUtils.getJsonObject(json, key));
+		return deserializeFluid(JSONUtils.getAsJsonObject(json, key));
 	}
 
 	public static FluidStack deserializeFluid(@Nonnull JsonObject json)
@@ -79,7 +79,7 @@ public class SerializerHelper
 			throw new JsonSyntaxException("Expected to receive a amount that is greater than zero");
 		}
 		JsonElement count = json.get(Constants.JSON.AMOUNT);
-		if (!JSONUtils.isNumber(count))
+		if (!JSONUtils.isNumberValue(count))
 		{
 			throw new JsonSyntaxException("Expected amount to be a number greater than zero.");
 		}
@@ -88,7 +88,7 @@ public class SerializerHelper
 		{
 			throw new JsonSyntaxException("Expected amount to be greater than zero.");
 		}
-		ResourceLocation resourceLocation = new ResourceLocation(JSONUtils.getString(json, Constants.JSON.FLUID));
+		ResourceLocation resourceLocation = new ResourceLocation(JSONUtils.getAsString(json, Constants.JSON.FLUID));
 		Fluid fluid = ForgeRegistries.FLUIDS.getValue(resourceLocation);
 		if (fluid == null || fluid == Fluids.EMPTY)
 		{
@@ -102,10 +102,10 @@ public class SerializerHelper
 			{
 				if (jsonNBT.isJsonObject())
 				{
-					nbt = JsonToNBT.getTagFromJson(GSON.toJson(jsonNBT));
+					nbt = JsonToNBT.parseTag(GSON.toJson(jsonNBT));
 				} else
 				{
-					nbt = JsonToNBT.getTagFromJson(JSONUtils.getString(jsonNBT, Constants.JSON.NBT));
+					nbt = JsonToNBT.parseTag(JSONUtils.convertToString(jsonNBT, Constants.JSON.NBT));
 				}
 			} catch (CommandSyntaxException e)
 			{

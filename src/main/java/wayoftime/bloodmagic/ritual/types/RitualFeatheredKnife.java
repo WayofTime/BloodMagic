@@ -85,9 +85,9 @@ public class RitualFeatheredKnife extends Ritual
 		int maxEffects = currentEssence / getRefreshCost();
 		int totalEffects = 0;
 
-		BlockPos altarPos = pos.add(altarOffsetPos);
+		BlockPos altarPos = pos.offset(altarOffsetPos);
 
-		TileEntity tile = world.getTileEntity(altarPos);
+		TileEntity tile = world.getBlockEntity(altarPos);
 
 		AreaDescriptor altarRange = masterRitualStone.getBlockRange(ALTAR_RANGE);
 
@@ -95,7 +95,7 @@ public class RitualFeatheredKnife extends Ritual
 		{
 			for (BlockPos newPos : altarRange.getContainedPositions(pos))
 			{
-				TileEntity nextTile = world.getTileEntity(newPos);
+				TileEntity nextTile = world.getBlockEntity(newPos);
 				if (nextTile instanceof IBloodAltar)
 				{
 					tile = nextTile;
@@ -118,7 +118,7 @@ public class RitualFeatheredKnife extends Ritual
 
 			double destructiveDrain = 0;
 
-			List<PlayerEntity> entities = world.getEntitiesWithinAABB(PlayerEntity.class, range);
+			List<PlayerEntity> entities = world.getEntitiesOfClass(PlayerEntity.class, range);
 
 			for (PlayerEntity player : entities)
 			{
@@ -135,7 +135,7 @@ public class RitualFeatheredKnife extends Ritual
 				float sacrificedHealth = 1;
 				double lpModifier = 1;
 
-				if ((health / player.getMaxHealth() > healthThreshold) && (!useIncense || !player.isPotionActive(BloodMagicPotions.SOUL_FRAY)))
+				if ((health / player.getMaxHealth() > healthThreshold) && (!useIncense || !player.hasEffect(BloodMagicPotions.SOUL_FRAY)))
 				{
 					if (useIncense)
 					{
@@ -145,7 +145,7 @@ public class RitualFeatheredKnife extends Ritual
 						lpModifier *= PlayerSacrificeHelper.getModifier(incenseAmount);
 
 						PlayerSacrificeHelper.setPlayerIncense(player, 0);
-						player.addPotionEffect(new EffectInstance(BloodMagicPotions.SOUL_FRAY, PlayerSacrificeHelper.soulFrayDuration));
+						player.addEffect(new EffectInstance(BloodMagicPotions.SOUL_FRAY, PlayerSacrificeHelper.soulFrayDuration));
 					}
 
 					if (destructiveWill >= destructiveWillDrain * sacrificedHealth)

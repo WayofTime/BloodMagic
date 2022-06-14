@@ -18,7 +18,7 @@ public class ItemBasicNodeUpgrade extends Item implements IRouterUpgrade
 {
 	public ItemBasicNodeUpgrade()
 	{
-		super(new Item.Properties().maxStackSize(16).group(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(16).tab(BloodMagic.TAB));
 	}
 
 	@Override
@@ -34,8 +34,8 @@ public class ItemBasicNodeUpgrade extends Item implements IRouterUpgrade
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.basicnodeupgrade").mergeStyle(TextFormatting.GRAY).mergeStyle(TextFormatting.ITALIC));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.basicnodeupgrade").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 	}
 }

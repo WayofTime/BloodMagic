@@ -62,12 +62,12 @@ public class BloodMagicJEIPlugin implements IModPlugin
 	@Override
 	public void registerRecipes(IRecipeRegistration registration)
 	{
-		ClientWorld world = Objects.requireNonNull(Minecraft.getInstance().world);
+		ClientWorld world = Objects.requireNonNull(Minecraft.getInstance().level);
 		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getTartaricForgeRecipes(world), TartaricForgeRecipeCategory.UID);
 		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAltarRecipes(world), BloodAltarRecipeCategory.UID);
 		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyArrayRecipes(world), AlchemyArrayCraftingCategory.UID);
 		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getARCRecipes(world), ARCRecipeCategory.UID);
-		registration.addRecipes(ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(IRecipeType.SMELTING)), ARCFurnaceRecipeCategory.UID);
+		registration.addRecipes(ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(IRecipeType.SMELTING)), ARCFurnaceRecipeCategory.UID);
 		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyTableRecipes(world), AlchemyTableRecipeCategory.UID);
 		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getPotionFlaskRecipes(world), PotionRecipeCategory.UID);
 	}

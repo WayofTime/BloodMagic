@@ -96,12 +96,12 @@ public class ClientHandler
 
 	public static void bindTexture(String path)
 	{
-		mc().getTextureManager().bindTexture(getResource(path));
+		mc().getTextureManager().bind(getResource(path));
 	}
 
 	public static void bindAtlas()
 	{
-		mc().getTextureManager().bindTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
+		mc().getTextureManager().bind(PlayerContainer.BLOCK_ATLAS);
 	}
 
 	public static ResourceLocation getResource(String path)
@@ -114,7 +114,7 @@ public class ClientHandler
 
 	public static TextureAtlasSprite getSprite(ResourceLocation rl)
 	{
-		return mc().getModelManager().getAtlasTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE).getSprite(rl);
+		return mc().getModelManager().getAtlas(PlayerContainer.BLOCK_ATLAS).getSprite(rl);
 	}
 
 	@SubscribeEvent
@@ -143,19 +143,19 @@ public class ClientHandler
 	public static void render(RenderWorldLastEvent event)
 	{
 		ClientPlayerEntity player = minecraft.player;
-		World world = player.getEntityWorld();
+		World world = player.getCommandSenderWorld();
 
 		if (mrsHoloTile != null)
 		{
-			if (world.getTileEntity(mrsHoloTile.getPos()) instanceof TileMasterRitualStone)
+			if (world.getBlockEntity(mrsHoloTile.getBlockPos()) instanceof TileMasterRitualStone)
 			{
 				if (mrsHoloDisplay)
 				{
-					IRenderTypeBuffer.Impl buffers = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
+					IRenderTypeBuffer.Impl buffers = Minecraft.getInstance().renderBuffers().bufferSource();
 					MatrixStack stack = event.getMatrixStack();
 					renderRitualStones(stack, buffers, mrsHoloTile, event.getPartialTicks());
 					RenderSystem.disableDepthTest();
-					buffers.finish();
+					buffers.endBatch();
 				} else
 					ClientHandler.setRitualHoloToNull();
 			} else
@@ -166,15 +166,15 @@ public class ClientHandler
 
 		if (mrsRangeTile != null)
 		{
-			if (world.getTileEntity(mrsRangeTile.getPos()) instanceof TileMasterRitualStone)
+			if (world.getBlockEntity(mrsRangeTile.getBlockPos()) instanceof TileMasterRitualStone)
 			{
 				if (mrsRangeDisplay)
 				{
-					IRenderTypeBuffer.Impl buffers = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
+					IRenderTypeBuffer.Impl buffers = Minecraft.getInstance().renderBuffers().bufferSource();
 					MatrixStack stack = event.getMatrixStack();
 					renderRangeHologram(stack, buffers, mrsRangeTile, event.getPartialTicks());
 					RenderSystem.disableDepthTest();
-					buffers.finish();
+					buffers.endBatch();
 				} else
 					ClientHandler.setRitualRangeHoloToNull();
 			} else
@@ -183,18 +183,18 @@ public class ClientHandler
 			}
 		}
 
-		if (minecraft.objectMouseOver == null || minecraft.objectMouseOver.getType() != RayTraceResult.Type.BLOCK)
+		if (minecraft.hitResult == null || minecraft.hitResult.getType() != RayTraceResult.Type.BLOCK)
 			return;
 
-		TileEntity tileEntity = world.getTileEntity(((BlockRayTraceResult) minecraft.objectMouseOver).getPos());
+		TileEntity tileEntity = world.getBlockEntity(((BlockRayTraceResult) minecraft.hitResult).getBlockPos());
 
-		if (tileEntity instanceof TileMasterRitualStone && !player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() instanceof ItemRitualDiviner)
+		if (tileEntity instanceof TileMasterRitualStone && !player.getMainHandItem().isEmpty() && player.getMainHandItem().getItem() instanceof ItemRitualDiviner)
 		{
-			IRenderTypeBuffer.Impl buffers = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
+			IRenderTypeBuffer.Impl buffers = Minecraft.getInstance().renderBuffers().bufferSource();
 			MatrixStack stack = event.getMatrixStack();
 			renderRitualStones(stack, buffers, player, event.getPartialTicks());
 			RenderSystem.disableDepthTest();
-			buffers.finish();
+			buffers.endBatch();
 		}
 	}
 
@@ -205,33 +205,33 @@ public class ClientHandler
 
 	private static void renderRitualStones(MatrixStack stack, IRenderTypeBuffer renderer, ClientPlayerEntity player, float partialTicks)
 	{
-		ActiveRenderInfo activerenderinfo = Minecraft.getInstance().gameRenderer.getActiveRenderInfo();
-		Vector3d eyePos = activerenderinfo.getProjectedView();
-		IVertexBuilder buffer = renderer.getBuffer(Atlases.getTranslucentCullBlockType());
-		World world = player.getEntityWorld();
-		ItemRitualDiviner ritualDiviner = (ItemRitualDiviner) player.inventory.getCurrentItem().getItem();
-		Direction direction = ritualDiviner.getDirection(player.inventory.getCurrentItem());
-		Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(ritualDiviner.getCurrentRitual(player.inventory.getCurrentItem()));
+		ActiveRenderInfo activerenderinfo = Minecraft.getInstance().gameRenderer.getMainCamera();
+		Vector3d eyePos = activerenderinfo.getPosition();
+		IVertexBuilder buffer = renderer.getBuffer(Atlases.translucentCullBlockSheet());
+		World world = player.getCommandSenderWorld();
+		ItemRitualDiviner ritualDiviner = (ItemRitualDiviner) player.inventory.getSelected().getItem();
+		Direction direction = ritualDiviner.getDirection(player.inventory.getSelected());
+		Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(ritualDiviner.getCurrentRitual(player.inventory.getSelected()));
 
 		if (ritual == null)
 			return;
 
 		BlockPos vec3, vX;
-		vec3 = ((BlockRayTraceResult) minecraft.objectMouseOver).getPos();
+		vec3 = ((BlockRayTraceResult) minecraft.hitResult).getBlockPos();
 
 		List<RitualComponent> components = Lists.newArrayList();
 		ritual.gatherComponents(components::add);
 		for (RitualComponent ritualComponent : components)
 		{
-			stack.push();
-			vX = vec3.add(ritualComponent.getOffset(direction));
+			stack.pushPose();
+			vX = vec3.offset(ritualComponent.getOffset(direction));
 			double minX = vX.getX() - eyePos.x;
 			double minY = vX.getY() - eyePos.y;
 			double minZ = vX.getZ() - eyePos.z;
 
 			stack.translate(minX, minY, minZ);
 
-			if (!world.getBlockState(vX).isOpaqueCube(world, vX))
+			if (!world.getBlockState(vX).isSolidRender(world, vX))
 			{
 				ResourceLocation rl = null;
 
@@ -264,17 +264,17 @@ public class ClientHandler
 
 				RenderResizableCuboid.INSTANCE.renderCube(model, stack, buffer, 0xDDFFFFFF, 0x00F000F0, OverlayTexture.NO_OVERLAY);
 			}
-			stack.pop();
+			stack.popPose();
 		}
 	}
 
 	public static void renderRitualStones(MatrixStack stack, IRenderTypeBuffer renderer, TileMasterRitualStone masterRitualStone, float partialTicks)
 	{
-		ActiveRenderInfo activerenderinfo = Minecraft.getInstance().gameRenderer.getActiveRenderInfo();
-		Vector3d eyePos = activerenderinfo.getProjectedView();
-		IVertexBuilder buffer = renderer.getBuffer(Atlases.getTranslucentCullBlockType());
+		ActiveRenderInfo activerenderinfo = Minecraft.getInstance().gameRenderer.getMainCamera();
+		Vector3d eyePos = activerenderinfo.getPosition();
+		IVertexBuilder buffer = renderer.getBuffer(Atlases.translucentCullBlockSheet());
 		ClientPlayerEntity player = minecraft.player;
-		World world = player.getEntityWorld();
+		World world = player.getCommandSenderWorld();
 		Direction direction = mrsHoloDirection;
 		Ritual ritual = mrsHoloRitual;
 
@@ -284,14 +284,14 @@ public class ClientHandler
 		}
 
 		BlockPos vec3, vX;
-		vec3 = masterRitualStone.getPos();
+		vec3 = masterRitualStone.getBlockPos();
 
 		List<RitualComponent> components = Lists.newArrayList();
 		ritual.gatherComponents(components::add);
 		for (RitualComponent ritualComponent : components)
 		{
-			stack.push();
-			vX = vec3.add(ritualComponent.getOffset(direction));
+			stack.pushPose();
+			vX = vec3.offset(ritualComponent.getOffset(direction));
 
 			double minX = vX.getX() - eyePos.x;
 			double minY = vX.getY() - eyePos.y;
@@ -299,7 +299,7 @@ public class ClientHandler
 
 			stack.translate(minX, minY, minZ);
 
-			if (!world.getBlockState(vX).isOpaqueCube(world, vX))
+			if (!world.getBlockState(vX).isSolidRender(world, vX))
 			{
 				ResourceLocation rl = null;
 
@@ -333,21 +333,21 @@ public class ClientHandler
 				RenderResizableCuboid.INSTANCE.renderCube(model, stack, buffer, 0xDDFFFFFF, 0x00F000F0, OverlayTexture.NO_OVERLAY);
 			}
 
-			stack.pop();
+			stack.popPose();
 		}
 	}
 
 	public static void renderRangeHologram(MatrixStack stack, IRenderTypeBuffer renderer, TileMasterRitualStone masterRitualStone, float partialTicks)
 	{
-		ActiveRenderInfo activerenderinfo = Minecraft.getInstance().gameRenderer.getActiveRenderInfo();
-		Vector3d eyePos = activerenderinfo.getProjectedView();
-		IVertexBuilder buffer = renderer.getBuffer(Atlases.getTranslucentCullBlockType());
+		ActiveRenderInfo activerenderinfo = Minecraft.getInstance().gameRenderer.getMainCamera();
+		Vector3d eyePos = activerenderinfo.getPosition();
+		IVertexBuilder buffer = renderer.getBuffer(Atlases.translucentCullBlockSheet());
 		ClientPlayerEntity player = minecraft.player;
-		World world = player.getEntityWorld();
+		World world = player.getCommandSenderWorld();
 
-		if (!player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() instanceof ItemRitualReader)
+		if (!player.getMainHandItem().isEmpty() && player.getMainHandItem().getItem() instanceof ItemRitualReader)
 		{
-			ItemStack itemStack = player.getHeldItemMainhand();
+			ItemStack itemStack = player.getMainHandItem();
 			EnumRitualReaderState state = ((ItemRitualReader) itemStack.getItem()).getState(itemStack);
 			if (state == EnumRitualReaderState.SET_AREA)
 			{
@@ -358,9 +358,9 @@ public class ClientHandler
 					return;
 				}
 
-				stack.push();
+				stack.pushPose();
 				BlockPos vec3;
-				vec3 = masterRitualStone.getPos();
+				vec3 = masterRitualStone.getBlockPos();
 				AxisAlignedBB aabb = descriptor.getAABB(vec3);
 				double sizeOffset = -1d / 16d;
 				if (aabb.contains(eyePos))
@@ -375,9 +375,9 @@ public class ClientHandler
 				stack.translate(minX, minY, minZ);
 
 				ResourceLocation rl = boarder;
-				Model3D model = getBlockModelWithSize(rl, aabb.getXSize() - 2 * sizeOffset, aabb.getYSize() - 2 * sizeOffset, aabb.getZSize() - 2 * sizeOffset);
+				Model3D model = getBlockModelWithSize(rl, aabb.getXsize() - 2 * sizeOffset, aabb.getYsize() - 2 * sizeOffset, aabb.getZsize() - 2 * sizeOffset);
 				RenderResizableCuboid.INSTANCE.renderCube(model, stack, buffer, 0x99FF4444, 0x00F000F0, OverlayTexture.NO_OVERLAY);
-				stack.pop();
+				stack.popPose();
 			}
 		}
 	}
@@ -385,7 +385,7 @@ public class ClientHandler
 	private static Model3D getBlockModel(ResourceLocation rl)
 	{
 		Model3D model = new BloodMagicRenderer.Model3D();
-		model.setTexture(Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(rl));
+		model.setTexture(Minecraft.getInstance().getTextureAtlas(AtlasTexture.LOCATION_BLOCKS).apply(rl));
 		model.minX = 0;
 		model.minY = 0;
 		model.minZ = 0;
@@ -399,7 +399,7 @@ public class ClientHandler
 	private static Model3D getBlockModelWithSize(ResourceLocation rl, double maxX, double maxY, double maxZ)
 	{
 		Model3D model = new BloodMagicRenderer.Model3D();
-		model.setTexture(Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(rl));
+		model.setTexture(Minecraft.getInstance().getTextureAtlas(AtlasTexture.LOCATION_BLOCKS).apply(rl));
 		model.minX = 0;
 		model.minY = 0;
 		model.minZ = 0;
@@ -447,8 +447,8 @@ public class ClientHandler
 	{
 		if (tooltip == null)
 		{
-			transform.push();
-			IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
+			transform.pushPose();
+			IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.immediate(Tessellator.getInstance().getBuilder());
 			if (fluid != null && fluid.getFluid() != null)
 			{
 				int fluidHeight = (int) (h * (fluid.getAmount() / (float) capacity));
@@ -459,8 +459,8 @@ public class ClientHandler
 			int yOff = (h - oH) / 2;
 			RenderType renderType = BMRenderTypes.getGui(new ResourceLocation(originalTexture));
 			drawTexturedRect(buffer.getBuffer(renderType), transform, x + xOff, y + yOff, oW, oH, 256f, oX, oX + oW, oY, oY + oH);
-			buffer.finish(renderType);
-			transform.pop();
+			buffer.endBatch(renderType);
+			transform.popPose();
 		} else
 		{
 			if (mX >= x && mX < x + w && mY >= y && mY < y + h)
@@ -470,7 +470,7 @@ public class ClientHandler
 
 	public static void drawRepeatedFluidSpriteGui(IRenderTypeBuffer buffer, MatrixStack transform, FluidStack fluid, float x, float y, float w, float h)
 	{
-		RenderType renderType = BMRenderTypes.getGui(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
+		RenderType renderType = BMRenderTypes.getGui(PlayerContainer.BLOCK_ATLAS);
 		IVertexBuilder builder = buffer.getBuffer(renderType);
 		drawRepeatedFluidSprite(builder, transform, fluid, x, y, w, h);
 	}
@@ -482,7 +482,7 @@ public class ClientHandler
 		int iW = sprite.getWidth();
 		int iH = sprite.getHeight();
 		if (iW > 0 && iH > 0)
-			drawRepeatedSprite(builder, transform, x, y, w, h, iW, iH, sprite.getMinU(), sprite.getMaxU(), sprite.getMinV(), sprite.getMaxV(), (col >> 16 & 255) / 255.0f, (col >> 8 & 255) / 255.0f, (col & 255) / 255.0f, 1);
+			drawRepeatedSprite(builder, transform, x, y, w, h, iW, iH, sprite.getU0(), sprite.getU1(), sprite.getV0(), sprite.getV1(), (col >> 16 & 255) / 255.0f, (col >> 8 & 255) / 255.0f, (col & 255) / 255.0f, 1);
 	}
 
 	public static void drawRepeatedSprite(IVertexBuilder builder, MatrixStack transform, float x, float y, float w, float h, int iconWidth, int iconHeight, float uMin, float uMax, float vMin, float vMax, float r, float g, float b, float alpha)
@@ -511,11 +511,11 @@ public class ClientHandler
 
 	public static void drawTexturedRect(IVertexBuilder builder, MatrixStack transform, float x, float y, float w, float h, float r, float g, float b, float alpha, float u0, float u1, float v0, float v1)
 	{
-		Matrix4f mat = transform.getLast().getMatrix();
-		builder.pos(mat, x, y + h, 0).color(r, g, b, alpha).tex(u0, v1).overlay(OverlayTexture.NO_OVERLAY).lightmap(0xf000f0).normal(1, 1, 1).endVertex();
-		builder.pos(mat, x + w, y + h, 0).color(r, g, b, alpha).tex(u1, v1).overlay(OverlayTexture.NO_OVERLAY).lightmap(15728880).normal(1, 1, 1).endVertex();
-		builder.pos(mat, x + w, y, 0).color(r, g, b, alpha).tex(u1, v0).overlay(OverlayTexture.NO_OVERLAY).lightmap(15728880).normal(1, 1, 1).endVertex();
-		builder.pos(mat, x, y, 0).color(r, g, b, alpha).tex(u0, v0).overlay(OverlayTexture.NO_OVERLAY).lightmap(15728880).normal(1, 1, 1).endVertex();
+		Matrix4f mat = transform.last().pose();
+		builder.vertex(mat, x, y + h, 0).color(r, g, b, alpha).uv(u0, v1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xf000f0).normal(1, 1, 1).endVertex();
+		builder.vertex(mat, x + w, y + h, 0).color(r, g, b, alpha).uv(u1, v1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).normal(1, 1, 1).endVertex();
+		builder.vertex(mat, x + w, y, 0).color(r, g, b, alpha).uv(u1, v0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).normal(1, 1, 1).endVertex();
+		builder.vertex(mat, x, y, 0).color(r, g, b, alpha).uv(u0, v0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).normal(1, 1, 1).endVertex();
 	}
 
 	public static void drawTexturedRect(IVertexBuilder builder, MatrixStack transform, int x, int y, int w, int h, float picSize, int u0, int u1, int v0, int v1)
@@ -532,7 +532,7 @@ public class ClientHandler
 //		if (fluid.getFluid() instanceof IEFluid)
 //			((IEFluid) fluid.getFluid()).addTooltipInfo(fluid, null, tooltip);
 
-		if (mc().gameSettings.advancedItemTooltips && !fluid.isEmpty())
+		if (mc().options.advancedItemTooltips && !fluid.isEmpty())
 		{
 			if (!Screen.hasShiftDown())
 				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.holdShiftForInfo"));
@@ -556,8 +556,8 @@ public class ClientHandler
 	public static IFormattableTextComponent applyFormat(ITextComponent component, TextFormatting... color)
 	{
 		Style style = component.getStyle();
-		for (TextFormatting format : color) style = style.applyFormatting(format);
-		return component.deepCopy().setStyle(style);
+		for (TextFormatting format : color) style = style.applyFormat(format);
+		return component.copy().setStyle(style);
 	}
 
 }

@@ -42,11 +42,11 @@ public class ItemRoutingNodeButtonPacket
 	{
 		context.get().enqueueWork(() -> {
 			PlayerEntity player = context.get().getSender();
-			if (player == null || player.world.isRemote)
+			if (player == null || player.level.isClientSide)
 			{
 				return;
 			}
-			TileEntity tile = player.getEntityWorld().getTileEntity(message.pos);
+			TileEntity tile = player.getCommandSenderWorld().getBlockEntity(message.pos);
 			if (tile instanceof TileFilteredRoutingNode)
 			{
 				int buttonPress = message.buttonPress;

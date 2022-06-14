@@ -22,45 +22,45 @@ import wayoftime.bloodmagic.recipe.EffectHolder;
 public class ItemAlchemyFlaskThrowable extends ItemAlchemyFlask
 {
 	@Override
-	public UseAction getUseAction(ItemStack stack)
+	public UseAction getUseAnimation(ItemStack stack)
 	{
 		return UseAction.NONE;
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
+		ItemStack stack = player.getItemInHand(hand);
 
 		if (getRemainingUses(stack) <= 0)
 		{
-			return ActionResult.resultPass(stack);
+			return ActionResult.pass(stack);
 		}
 
 		List<EffectHolder> holderList = getEffectHoldersOfFlask(stack);
 		if (holderList.size() <= 0)
 		{
-			return ActionResult.resultPass(stack);
+			return ActionResult.pass(stack);
 		}
 
-		world.playSound((PlayerEntity) null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+		world.playSound((PlayerEntity) null, player.getX(), player.getY(), player.getZ(), SoundEvents.SPLASH_POTION_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
 
-		if (!world.isRemote)
+		if (!world.isClientSide)
 		{
 			EntityPotionFlask potionentity = new EntityPotionFlask(world, player);
 			potionentity.setItem(stack);
-			potionentity.func_234612_a_(player, player.rotationPitch, player.rotationYaw, -20.0F, 0.5F, 1.0F);
+			potionentity.shootFromRotation(player, player.xRot, player.yRot, -20.0F, 0.5F, 1.0F);
 			prepPotionFlask(stack, player, potionentity);
-			world.addEntity(potionentity);
+			world.addFreshEntity(potionentity);
 		}
 
-		player.addStat(Stats.ITEM_USED.get(this));
-		if (!player.abilities.isCreativeMode)
+		player.awardStat(Stats.ITEM_USED.get(this));
+		if (!player.abilities.instabuild)
 		{
-			stack.setDamage(stack.getDamage() + 1);
+			stack.setDamageValue(stack.getDamageValue() + 1);
 		}
 
-		return ActionResult.func_233538_a_(stack, world.isRemote());
+		return ActionResult.sidedSuccess(stack, world.isClientSide());
 	}
 
 	public void prepPotionFlask(ItemStack stack, PlayerEntity player, EntityPotionFlask potionEntity)
@@ -86,10 +86,10 @@ public class ItemAlchemyFlaskThrowable extends ItemAlchemyFlask
 		}
 
 		setEffectsOfFlask(stack, effectList);
-		Collection<EffectInstance> instanceList = PotionUtils.getEffectsFromStack(stack);
+		Collection<EffectInstance> instanceList = PotionUtils.getMobEffects(stack);
 
-		int color = instanceList.isEmpty() ? PotionUtils.getPotionColor(Potions.WATER)
-				: PotionUtils.getPotionColorFromEffectList(instanceList);
+		int color = instanceList.isEmpty() ? PotionUtils.getColor(Potions.WATER)
+				: PotionUtils.getColor(instanceList);
 		stack.getTag().putInt("CustomPotionColor", color);
 	}
 }

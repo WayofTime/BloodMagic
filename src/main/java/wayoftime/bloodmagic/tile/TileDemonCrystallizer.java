@@ -41,26 +41,26 @@ public class TileDemonCrystallizer extends TileTicking implements IDemonWillCond
 	@Override
 	public void onUpdate()
 	{
-		if (world.isRemote)
+		if (level.isClientSide)
 		{
 			return;
 		}
 
-		BlockPos offsetPos = pos.offset(Direction.UP);
-		if (getWorld().isAirBlock(offsetPos)) // Room for a crystal to grow
+		BlockPos offsetPos = worldPosition.relative(Direction.UP);
+		if (getLevel().isEmptyBlock(offsetPos)) // Room for a crystal to grow
 		{
-			EnumDemonWillType highestType = WorldDemonWillHandler.getHighestDemonWillType(getWorld(), pos);
-			double amount = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, highestType);
+			EnumDemonWillType highestType = WorldDemonWillHandler.getHighestDemonWillType(getLevel(), worldPosition);
+			double amount = WorldDemonWillHandler.getCurrentWill(getLevel(), worldPosition, highestType);
 			if (amount >= willToFormCrystal)
 			{
 				internalCounter += getCrystalFormationRate(amount);
 				if (internalCounter >= totalFormationTime)
 				{
-					if (WorldDemonWillHandler.drainWill(getWorld(), getPos(), highestType, willToFormCrystal, false) >= willToFormCrystal)
+					if (WorldDemonWillHandler.drainWill(getLevel(), getBlockPos(), highestType, willToFormCrystal, false) >= willToFormCrystal)
 					{
 						if (formCrystal(highestType, offsetPos))
 						{
-							WorldDemonWillHandler.drainWill(getWorld(), getPos(), highestType, willToFormCrystal, true);
+							WorldDemonWillHandler.drainWill(getLevel(), getBlockPos(), highestType, willToFormCrystal, true);
 							internalCounter = 0;
 						}
 					}
@@ -89,8 +89,8 @@ public class TileDemonCrystallizer extends TileTicking implements IDemonWillCond
 		default:
 			break;
 		}
-		getWorld().setBlockState(position, block.getDefaultState());
-		TileEntity tile = getWorld().getTileEntity(position);
+		getLevel().setBlockAndUpdate(position, block.defaultBlockState());
+		TileEntity tile = getLevel().getBlockEntity(position);
 		if (tile instanceof TileDemonCrystal)
 		{
 			((TileDemonCrystal) tile).setPlacement(Direction.UP);

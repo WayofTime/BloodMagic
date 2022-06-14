@@ -171,7 +171,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 		super.deserialize(tag);
 
 		isSlave = tag.getBoolean("isSlave");
-		direction = Direction.byIndex(tag.getInt(Constants.NBT.DIRECTION));
+		direction = Direction.from3DDataValue(tag.getInt(Constants.NBT.DIRECTION));
 		connectedPos = new BlockPos(tag.getInt(Constants.NBT.X_COORD), tag.getInt(Constants.NBT.Y_COORD), tag.getInt(Constants.NBT.Z_COORD));
 
 		burnTime = tag.getInt("burnTime");
@@ -197,7 +197,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 		super.serialize(tag);
 
 		tag.putBoolean("isSlave", isSlave);
-		tag.putInt(Constants.NBT.DIRECTION, direction.getIndex());
+		tag.putInt(Constants.NBT.DIRECTION, direction.get3DDataValue());
 		tag.putInt(Constants.NBT.X_COORD, connectedPos.getX());
 		tag.putInt(Constants.NBT.Y_COORD, connectedPos.getY());
 		tag.putInt(Constants.NBT.Z_COORD, connectedPos.getZ());
@@ -230,7 +230,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 		{
 			if (this.isSlave())
 			{
-				TileEntity tile = getWorld().getTileEntity(connectedPos);
+				TileEntity tile = getLevel().getBlockEntity(connectedPos);
 				if (tile instanceof TileAlchemyTable && !((TileAlchemyTable) tile).isSlave)
 				{
 					return (LazyOptional<T>) tile.getCapability(capability, facing);
@@ -275,7 +275,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 	}
 
 	@Override
-	public boolean canInsertItem(int index, ItemStack stack, Direction direction)
+	public boolean canPlaceItemThroughFace(int index, ItemStack stack, Direction direction)
 	{
 		switch (index)
 		{
@@ -312,7 +312,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 	}
 
 	@Override
-	public boolean canExtractItem(int index, ItemStack stack, Direction direction)
+	public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction)
 	{
 		switch (direction)
 		{
@@ -352,9 +352,9 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
 		for (int i = 0; i < 6; i++)
 		{
-			if (!getStackInSlot(i).isEmpty())
+			if (!getItem(i).isEmpty())
 			{
-				ItemStack slotStack = getStackInSlot(i);
+				ItemStack slotStack = getItem(i);
 				inputList.add(slotStack);
 				if (slotStack.getItem() instanceof ItemAlchemyFlask && flaskStack.isEmpty())
 				{
@@ -369,8 +369,8 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 		int tier = getTierOfOrb();
 
 		// Simple recipes
-		RecipeAlchemyTable recipeAlchemyTable = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyTable(world, inputList);
-		if (recipeAlchemyTable != null && (burnTime > 0 || (!getWorld().isRemote && tier >= recipeAlchemyTable.getMinimumTier() && getContainedLp() >= recipeAlchemyTable.getSyphon())))
+		RecipeAlchemyTable recipeAlchemyTable = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyTable(level, inputList);
+		if (recipeAlchemyTable != null && (burnTime > 0 || (!getLevel().isClientSide && tier >= recipeAlchemyTable.getMinimumTier() && getContainedLp() >= recipeAlchemyTable.getSyphon())))
 		{
 			orbFlag = lpFlag = false;
 			if (burnTime == 1)
@@ -382,7 +382,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 				burnTime++;
 				if (burnTime >= ticksRequired)
 				{
-					if (!getWorld().isRemote)
+					if (!getLevel().isClientSide)
 					{
 						if (recipeAlchemyTable.getSyphon() > 0)
 						{
@@ -401,9 +401,9 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 						BloodMagicCraftedEvent.AlchemyTable event = new BloodMagicCraftedEvent.AlchemyTable(recipeAlchemyTable.getOutput(inputList).copy(), inputs);
 						MinecraftForge.EVENT_BUS.post(event);
 
-						ItemStack outputSlotStack = getStackInSlot(outputSlot);
+						ItemStack outputSlotStack = getItem(outputSlot);
 						if (outputSlotStack.isEmpty())
-							setInventorySlotContents(outputSlot, event.getOutput());
+							setItem(outputSlot, event.getOutput());
 						else
 							outputSlotStack.grow(event.getOutput().getCount());
 
@@ -423,21 +423,21 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 			List<EffectHolder> holderList = ((ItemAlchemyFlask) flaskStack.getItem()).getEffectHoldersOfFlask(flaskStack);
 			inputList.remove(flaskIndex);
 
-			RecipePotionFlaskBase recipePotionFlask = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getPotionFlaskRecipe(world, flaskStack, holderList, inputList);
-			if (recipePotionFlask != null && (burnTime > 0 || (!getWorld().isRemote && tier >= recipePotionFlask.getMinimumTier() && getContainedLp() >= recipePotionFlask.getSyphon())))
+			RecipePotionFlaskBase recipePotionFlask = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getPotionFlaskRecipe(level, flaskStack, holderList, inputList);
+			if (recipePotionFlask != null && (burnTime > 0 || (!getLevel().isClientSide && tier >= recipePotionFlask.getMinimumTier() && getContainedLp() >= recipePotionFlask.getSyphon())))
 			{
 				orbFlag = lpFlag = false;
 				if (burnTime == 1)
 					notifyUpdate();
 
-				if (getStackInSlot(outputSlot).isEmpty())
+				if (getItem(outputSlot).isEmpty())
 				{
 					ticksRequired = recipePotionFlask.getTicks();
 					burnTime++;
 
 					if (burnTime >= ticksRequired)
 					{
-						if (!getWorld().isRemote)
+						if (!getLevel().isClientSide)
 						{
 							if (recipePotionFlask.getSyphon() > 0)
 							{
@@ -467,7 +467,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 							{
 								((ItemAlchemyFlask) outputStack.getItem()).resyncEffectInstances(outputStack);
 							}
-							setInventorySlotContents(outputSlot, outputStack);
+							setItem(outputSlot, outputStack);
 
 							// TODO: Need similar for the potion one, but isolate the flask
 							consumeInventory(recipePotionFlask);
@@ -484,7 +484,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
 		{
 			burnTime = 0;
-			if (!world.isRemote)
+			if (!level.isClientSide)
 			{
 				boolean oldOrbFlag = orbFlag;
 				boolean oldLPFlag = lpFlag;
@@ -533,7 +533,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
 	private boolean canCraft(ItemStack output)
 	{
-		ItemStack currentOutputStack = getStackInSlot(outputSlot);
+		ItemStack currentOutputStack = getItem(outputSlot);
 		if (output.isEmpty())
 			return false;
 		if (currentOutputStack.isEmpty())
@@ -541,12 +541,12 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 		if (!ItemHandlerHelper.canItemStacksStack(output, currentOutputStack))
 			return false;
 		int result = currentOutputStack.getCount() + output.getCount();
-		return result <= getInventoryStackLimit() && result <= currentOutputStack.getMaxStackSize();
+		return result <= getMaxStackSize() && result <= currentOutputStack.getMaxStackSize();
 	}
 
 	public int getTierOfOrb()
 	{
-		ItemStack orbStack = getStackInSlot(orbSlot);
+		ItemStack orbStack = getItem(orbSlot);
 		if (!orbStack.isEmpty())
 		{
 			if (orbStack.getItem() instanceof IBloodOrb)
@@ -561,7 +561,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
 	public int getContainedLp()
 	{
-		ItemStack orbStack = getStackInSlot(orbSlot);
+		ItemStack orbStack = getItem(orbSlot);
 		if (!orbStack.isEmpty())
 		{
 			if (orbStack.getItem() instanceof IBloodOrb)
@@ -586,7 +586,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 		ItemStack outputStack = recipe.getOutput(inputList);
 		if (this.canCraft(outputStack))
 		{
-			ItemStack currentOutputStack = getStackInSlot(outputSlot);
+			ItemStack currentOutputStack = getItem(outputSlot);
 
 			ItemStack[] inputs = new ItemStack[0];
 			for (ItemStack stack : inputList) ArrayUtils.add(inputs, stack.copy());
@@ -597,7 +597,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
 			if (currentOutputStack.isEmpty())
 			{
-				setInventorySlotContents(outputSlot, outputStack);
+				setItem(outputSlot, outputStack);
 			} else if (ItemHandlerHelper.canItemStacksStack(outputStack, currentOutputStack))
 			{
 				currentOutputStack.grow(outputStack.getCount());
@@ -609,13 +609,13 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
 	public int consumeLp(int requested)
 	{
-		ItemStack orbStack = getStackInSlot(orbSlot);
+		ItemStack orbStack = getItem(orbSlot);
 
 		if (!orbStack.isEmpty())
 		{
 			if (orbStack.getItem() instanceof IBloodOrb)
 			{
-				if (NetworkHelper.syphonFromContainer(orbStack, SoulTicket.item(orbStack, world, pos, requested)))
+				if (NetworkHelper.syphonFromContainer(orbStack, SoulTicket.item(orbStack, level, worldPosition, requested)))
 				{
 					return requested;
 				}
@@ -629,20 +629,20 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 	{
 		for (int i = 0; i < 6; i++)
 		{
-			ItemStack inputStack = getStackInSlot(i);
+			ItemStack inputStack = getItem(i);
 			if (!inputStack.isEmpty())
 			{
 				if (inputStack.getItem() instanceof IAlchemyItem)
 				{
 					if (((IAlchemyItem) inputStack.getItem()).isStackChangedOnUse(inputStack))
 					{
-						setInventorySlotContents(i, ((IAlchemyItem) inputStack.getItem()).onConsumeInput(inputStack));
+						setItem(i, ((IAlchemyItem) inputStack.getItem()).onConsumeInput(inputStack));
 					}
 
 					continue;
 				} else if (inputStack.getItem().hasContainerItem(inputStack))
 				{
-					setInventorySlotContents(i, inputStack.getItem().getContainerItem(inputStack));
+					setItem(i, inputStack.getItem().getContainerItem(inputStack));
 					continue;
 				} else if (inputStack.getMaxDamage() > 0)
 				{
@@ -652,13 +652,13 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 //						
 //					}
 
-					if (!inputStack.isDamageable())
+					if (!inputStack.isDamageableItem())
 					{
 						continue;
 					}
-					if (inputStack.attemptDamageItem(1, world.rand, null))
+					if (inputStack.hurt(1, level.random, null))
 					{
-						setInventorySlotContents(i, ItemStack.EMPTY);
+						setItem(i, ItemStack.EMPTY);
 					}
 					continue;
 				}
@@ -666,7 +666,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 				inputStack.shrink(1);
 				if (inputStack.isEmpty())
 				{
-					setInventorySlotContents(i, ItemStack.EMPTY);
+					setItem(i, ItemStack.EMPTY);
 				}
 			}
 		}
@@ -676,27 +676,27 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 	{
 		for (int i = 0; i < 6; i++)
 		{
-			ItemStack inputStack = getStackInSlot(i);
+			ItemStack inputStack = getItem(i);
 			if (!inputStack.isEmpty())
 			{
 				if (inputStack.getItem() instanceof IAlchemyItem)
 				{
 					if (((IAlchemyItem) inputStack.getItem()).isStackChangedOnUse(inputStack))
 					{
-						setInventorySlotContents(i, ((IAlchemyItem) inputStack.getItem()).onConsumeInput(inputStack));
+						setItem(i, ((IAlchemyItem) inputStack.getItem()).onConsumeInput(inputStack));
 					}
 
 					continue;
 				} else if (inputStack.getItem().hasContainerItem(inputStack))
 				{
-					setInventorySlotContents(i, inputStack.getItem().getContainerItem(inputStack));
+					setItem(i, inputStack.getItem().getContainerItem(inputStack));
 					continue;
 				}
 
 				inputStack.shrink(1);
 				if (inputStack.isEmpty())
 				{
-					setInventorySlotContents(i, ItemStack.EMPTY);
+					setItem(i, ItemStack.EMPTY);
 				}
 			}
 		}
@@ -745,7 +745,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 	@Override
 	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_)
 	{
-		assert world != null;
+		assert level != null;
 		return new ContainerAlchemyTable(this, p_createMenu_1_, p_createMenu_2_);
 	}
 

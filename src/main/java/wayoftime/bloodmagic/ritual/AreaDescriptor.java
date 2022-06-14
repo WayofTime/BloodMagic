@@ -94,7 +94,7 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 
 		public Rectangle(BlockPos minimumOffset, int sizeX, int sizeY, int sizeZ)
 		{
-			this(minimumOffset, minimumOffset.add(sizeX, sizeY, sizeZ));
+			this(minimumOffset, minimumOffset.offset(sizeX, sizeY, sizeZ));
 		}
 
 		public Rectangle(BlockPos minimumOffset, int size)
@@ -125,7 +125,7 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 					{
 						for (int k = minimumOffset.getZ(); k < maximumOffset.getZ(); k++)
 						{
-							posList.add(pos.add(i, j, k));
+							posList.add(pos.offset(i, j, k));
 						}
 					}
 				}
@@ -141,7 +141,7 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 		public AxisAlignedBB getAABB(BlockPos pos)
 		{
 			AxisAlignedBB tempAABB = new AxisAlignedBB(minimumOffset, maximumOffset);
-			return tempAABB.offset(pos.getX(), pos.getY(), pos.getZ());
+			return tempAABB.move(pos.getX(), pos.getY(), pos.getZ());
 		}
 
 		@Override
@@ -236,7 +236,7 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 		public void modifyAreaByBlockPositions(BlockPos pos1, BlockPos pos2)
 		{
 			setOffsets(pos1, pos2);
-			maximumOffset = maximumOffset.add(1, 1, 1);
+			maximumOffset = maximumOffset.offset(1, 1, 1);
 			resetIterator();
 			resetCache();
 		}
@@ -265,7 +265,7 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 			BlockPos minPos = new BlockPos(Math.min(offset1.getX(), offset2.getX()), Math.min(offset1.getY(), offset2.getY()), Math.min(offset1.getZ(), offset2.getZ()));
 			BlockPos maxPos = new BlockPos(Math.max(offset1.getX(), offset2.getX()), Math.max(offset1.getY(), offset2.getY()), Math.max(offset1.getZ(), offset2.getZ()));
 
-			maxPos = maxPos.add(1, 1, 1);
+			maxPos = maxPos.offset(1, 1, 1);
 
 			return (maxPos.getX() - minPos.getX()) * (maxPos.getY() - minPos.getY()) * (maxPos.getZ() - minPos.getZ());
 		}
@@ -317,14 +317,14 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 		@Override
 		public AreaDescriptor offset(BlockPos offset)
 		{
-			return new AreaDescriptor.Rectangle(this.minimumOffset.add(offset), this.maximumOffset.add(offset));
+			return new AreaDescriptor.Rectangle(this.minimumOffset.offset(offset), this.maximumOffset.offset(offset));
 		}
 
 		@Override
 		public AreaDescriptor rotateDescriptor(PlacementSettings settings)
 		{
-			BlockPos rotatePos1 = Template.transformedBlockPos(settings, minimumOffset);
-			BlockPos rotatePos2 = Template.transformedBlockPos(settings, maximumOffset.add(-1, -1, -1)); // It works,
+			BlockPos rotatePos1 = Template.calculateRelativePosition(settings, minimumOffset);
+			BlockPos rotatePos2 = Template.calculateRelativePosition(settings, maximumOffset.offset(-1, -1, -1)); // It works,
 																											// shut up!
 
 			AreaDescriptor.Rectangle rectangle = new AreaDescriptor.Rectangle(this.minimumOffset, 1);
@@ -398,7 +398,7 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 								continue;
 							}
 
-							posList.add(pos.add(i, j, k));
+							posList.add(pos.offset(i, j, k));
 							k++;
 						}
 
@@ -501,7 +501,7 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 		@Override
 		public AreaDescriptor offset(BlockPos offset)
 		{
-			return new AreaDescriptor.HemiSphere(minimumOffset.add(offset), radius);
+			return new AreaDescriptor.HemiSphere(minimumOffset.offset(offset), radius);
 		}
 
 		@Override
@@ -552,13 +552,13 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 			{
 				resetCache();
 
-				blockPosCache.add(centerPos.add(pos));
+				blockPosCache.add(centerPos.offset(pos));
 				for (int i = 1; i <= size; i++)
 				{
-					blockPosCache.add(centerPos.add(pos).add(i, 0, 0));
-					blockPosCache.add(centerPos.add(pos).add(0, 0, i));
-					blockPosCache.add(centerPos.add(pos).add(-i, 0, 0));
-					blockPosCache.add(centerPos.add(pos).add(0, 0, -i));
+					blockPosCache.add(centerPos.offset(pos).offset(i, 0, 0));
+					blockPosCache.add(centerPos.offset(pos).offset(0, 0, i));
+					blockPosCache.add(centerPos.offset(pos).offset(-i, 0, 0));
+					blockPosCache.add(centerPos.offset(pos).offset(0, 0, -i));
 				}
 			}
 
@@ -642,7 +642,7 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 		@Override
 		public AreaDescriptor offset(BlockPos offset)
 		{
-			return new AreaDescriptor.Cross(centerPos.add(offset), size);
+			return new AreaDescriptor.Cross(centerPos.offset(offset), size);
 		}
 
 		@Override

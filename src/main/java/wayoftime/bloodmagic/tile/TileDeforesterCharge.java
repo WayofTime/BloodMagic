@@ -62,14 +62,14 @@ public class TileDeforesterCharge extends TileExplosiveCharge
 	@Override
 	public void onUpdate()
 	{
-		if (world.isRemote)
+		if (level.isClientSide)
 		{
 			return;
 		}
 //		System.out.println("Counter: " + internalCounter);
 
-		Direction explosiveDirection = this.getBlockState().get(BlockShapedExplosive.ATTACHED).getOpposite();
-		BlockState attachedState = world.getBlockState(pos.offset(explosiveDirection));
+		Direction explosiveDirection = this.getBlockState().getValue(BlockShapedExplosive.ATTACHED).getOpposite();
+		BlockState attachedState = level.getBlockState(worldPosition.relative(explosiveDirection));
 		if (!BlockTags.LOGS.contains(attachedState.getBlock()) && !BlockTags.LEAVES.contains(attachedState.getBlock()))
 		{
 			return;
@@ -78,9 +78,9 @@ public class TileDeforesterCharge extends TileExplosiveCharge
 		if (treePartsMap == null)
 		{
 			treePartsMap = new HashMap<BlockPos, Boolean>();
-			treePartsMap.put(pos.offset(explosiveDirection), false);
+			treePartsMap.put(worldPosition.relative(explosiveDirection), false);
 			treePartsCache = new LinkedList<BlockPos>();
-			treePartsCache.add(pos.offset(explosiveDirection));
+			treePartsCache.add(worldPosition.relative(explosiveDirection));
 			internalCounter = 0;
 //			treePartsMap.add(pos.offset(explosiveDirection));
 		}
@@ -94,13 +94,13 @@ public class TileDeforesterCharge extends TileExplosiveCharge
 //				BlockPos currentPos = entry.getKey();
 				for (Direction dir : Direction.values())
 				{
-					BlockPos checkPos = currentPos.offset(dir);
+					BlockPos checkPos = currentPos.relative(dir);
 					if (treePartsMap.containsKey(checkPos))
 					{
 						continue;
 					}
 
-					BlockState checkState = world.getBlockState(checkPos);
+					BlockState checkState = level.getBlockState(checkPos);
 
 					boolean isTree = false;
 					if (currentLogs >= maxLogs)
@@ -147,13 +147,13 @@ public class TileDeforesterCharge extends TileExplosiveCharge
 		if (internalCounter == 20)
 		{
 //			worldIn.playSound((PlayerEntity)null, tntentity.getPosX(), tntentity.getPosY(), tntentity.getPosZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
-			world.playSound((PlayerEntity) null, this.getPos().getX() + 0.5, this.getPos().getY() + 0.5, this.getPos().getZ() + 0.5, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, world.rand.nextFloat() * 0.4F + 0.8F);
-			((ServerWorld) this.world).spawnParticle(ParticleTypes.FLAME, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 5, 0.02, 0.03, 0.02, 0);
+			level.playSound((PlayerEntity) null, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, SoundEvents.FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, level.random.nextFloat() * 0.4F + 0.8F);
+			((ServerWorld) this.level).sendParticles(ParticleTypes.FLAME, worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5, 5, 0.02, 0.03, 0.02, 0);
 		}
 
 		if (internalCounter == 30)
 		{
-			world.playSound((PlayerEntity) null, this.getPos().getX() + 0.5, this.getPos().getY() + 0.5, this.getPos().getZ() + 0.5, SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
+			level.playSound((PlayerEntity) null, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, SoundEvents.TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
 		}
 
 		if (internalCounter < 30)
@@ -161,19 +161,19 @@ public class TileDeforesterCharge extends TileExplosiveCharge
 			return;
 		}
 
-		if (world.rand.nextDouble() < 0.3)
+		if (level.random.nextDouble() < 0.3)
 		{
-			((ServerWorld) this.world).spawnParticle(ParticleTypes.SMOKE, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 1, 0.0D, 0.0D, 0.0D, 0);
+			((ServerWorld) this.level).sendParticles(ParticleTypes.SMOKE, worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5, 1, 0.0D, 0.0D, 0.0D, 0);
 		}
 
 		if (internalCounter == 100)
 		{
 			ItemStack toolStack = this.getHarvestingTool();
-			world.playSound((PlayerEntity) null, this.getPos().getX() + 0.5, this.getPos().getY() + 0.5, this.getPos().getZ() + 0.5, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F) * 0.7F);
+			level.playSound((PlayerEntity) null, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, SoundEvents.GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.2F) * 0.7F);
 
 			int numParticles = 10;
 
-			((ServerWorld) this.world).spawnParticle(ParticleTypes.EXPLOSION, pos.getX() + 0.5 + explosiveDirection.getXOffset(), pos.getY() + 0.5 + explosiveDirection.getYOffset(), pos.getZ() + 0.5 + explosiveDirection.getZOffset(), numParticles, 1.0D, 1.0D, 1.0D, 0);
+			((ServerWorld) this.level).sendParticles(ParticleTypes.EXPLOSION, worldPosition.getX() + 0.5 + explosiveDirection.getStepX(), worldPosition.getY() + 0.5 + explosiveDirection.getStepY(), worldPosition.getZ() + 0.5 + explosiveDirection.getStepZ(), numParticles, 1.0D, 1.0D, 1.0D, 0);
 
 			ObjectArrayList<Pair<ItemStack, BlockPos>> objectarraylist = new ObjectArrayList<>();
 
@@ -181,16 +181,16 @@ public class TileDeforesterCharge extends TileExplosiveCharge
 			{
 //				BlockPos blockpos = initialPos.offset(explosiveDirection, i).offset(sweepDir1, j).offset(sweepDir2, k);
 
-				BlockState blockstate = this.world.getBlockState(blockPos);
+				BlockState blockstate = this.level.getBlockState(blockPos);
 				Block block = blockstate.getBlock();
-				if (!blockstate.isAir(this.world, blockPos))
+				if (!blockstate.isAir(this.level, blockPos))
 				{
-					BlockPos blockpos1 = blockPos.toImmutable();
+					BlockPos blockpos1 = blockPos.immutable();
 //				this.world.getProfiler().startSection("explosion_blocks");
-					if (this.world instanceof ServerWorld)
+					if (this.level instanceof ServerWorld)
 					{
-						TileEntity tileentity = blockstate.hasTileEntity() ? this.world.getTileEntity(blockPos) : null;
-						LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) this.world)).withRandom(this.world.rand).withParameter(LootParameters.field_237457_g_, Vector3d.copyCentered(blockPos)).withParameter(LootParameters.TOOL, toolStack).withNullableParameter(LootParameters.BLOCK_ENTITY, tileentity);
+						TileEntity tileentity = blockstate.hasTileEntity() ? this.level.getBlockEntity(blockPos) : null;
+						LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) this.level)).withRandom(this.level.random).withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf(blockPos)).withParameter(LootParameters.TOOL, toolStack).withOptionalParameter(LootParameters.BLOCK_ENTITY, tileentity);
 //                  if (this.mode == Explosion.Mode.DESTROY) {
 //                     lootcontext$builder.withParameter(LootParameters.EXPLOSION_RADIUS, this.size);
 //                  }
@@ -199,7 +199,7 @@ public class TileDeforesterCharge extends TileExplosiveCharge
 							handleExplosionDrops(objectarraylist, stack, blockpos1);
 						});
 
-						world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), 3);
+						level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
 
 //				blockstate.onBlockExploded(this.world, blockpos, null);
 //               this.world.getProfiler().endSection();
@@ -209,10 +209,10 @@ public class TileDeforesterCharge extends TileExplosiveCharge
 
 			for (Pair<ItemStack, BlockPos> pair : objectarraylist)
 			{
-				Block.spawnAsEntity(this.world, pair.getSecond(), pair.getFirst());
+				Block.popResource(this.level, pair.getSecond(), pair.getFirst());
 			}
 
-			world.setBlockState(getPos(), Blocks.AIR.getDefaultState());
+			level.setBlockAndUpdate(getBlockPos(), Blocks.AIR.defaultBlockState());
 		}
 	}
 

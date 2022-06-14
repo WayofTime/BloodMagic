@@ -77,7 +77,7 @@ public class RitualGrounding extends Ritual
 
 		/* Actual ritual stuff begins here */
 		AreaDescriptor groundingRange = masterRitualStone.getBlockRange(GROUNDING_RANGE);
-		List<LivingEntity> entities = world.getEntitiesWithinAABB(LivingEntity.class, groundingRange.getAABB(pos));
+		List<LivingEntity> entities = world.getEntitiesOfClass(LivingEntity.class, groundingRange.getAABB(pos));
 		for (LivingEntity entity : entities)
 		{
 			if (totalEffects >= maxEffects)
@@ -107,7 +107,7 @@ public class RitualGrounding extends Ritual
 						vengefulDrained += drainagePlayer[2];
 					}
 				}
-			} else if (entity.isNonBoss())
+			} else if (entity.canChangeDimensions())
 			{
 				if (world.getGameTime() % 10 == 0)
 				{
@@ -117,7 +117,7 @@ public class RitualGrounding extends Ritual
 					destructiveDrained += drainageEntity[1];
 					vengefulDrained += drainageEntity[2];
 				}
-			} else if (!entity.isNonBoss())
+			} else if (!entity.canChangeDimensions())
 			{
 				/*
 				 * Steadfast will effect: Affects bosses (some bosses, like the wither, have a
@@ -189,7 +189,7 @@ public class RitualGrounding extends Ritual
 		if (corrosiveWill >= willDrain)
 		{
 
-			entity.addPotionEffect(new EffectInstance(BloodMagicPotions.SUSPENDED, 20, 0));
+			entity.addEffect(new EffectInstance(BloodMagicPotions.SUSPENDED, 20, 0));
 			corrosiveDrained += willDrain;
 
 			/* Vengeful will effect: Levitation */
@@ -197,12 +197,12 @@ public class RitualGrounding extends Ritual
 		{
 
 			vengefulDrained += willDrain;
-			entity.addPotionEffect(new EffectInstance(Effects.LEVITATION, 20, 10));
+			entity.addEffect(new EffectInstance(Effects.LEVITATION, 20, 10));
 
 		} else
 		{
-			entity.addPotionEffect(new EffectInstance(BloodMagicPotions.GROUNDED, 20, 0));
-			entity.addPotionEffect(new EffectInstance(BloodMagicPotions.GRAVITY, 20, 0));
+			entity.addEffect(new EffectInstance(BloodMagicPotions.GROUNDED, 20, 0));
+			entity.addEffect(new EffectInstance(BloodMagicPotions.GRAVITY, 20, 0));
 		}
 
 		/* Destructive will effect: Increased fall damage */
@@ -210,7 +210,7 @@ public class RitualGrounding extends Ritual
 		{
 			destructiveDrained += willDrain;
 
-			entity.addPotionEffect(new EffectInstance(BloodMagicPotions.HEAVY_HEART, 100, 1));
+			entity.addEffect(new EffectInstance(BloodMagicPotions.HEAVY_HEART, 100, 1));
 		}
 		return new double[] { corrosiveDrained, destructiveDrained, vengefulDrained };
 	}

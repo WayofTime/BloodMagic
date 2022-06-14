@@ -73,9 +73,9 @@ public class RitualFelling extends Ritual
 
 		BlockPos masterPos = masterRitualStone.getMasterBlockPos();
 		AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
-		TileEntity tileInventory = world.getTileEntity(chestRange.getContainedPositions(masterPos).get(0));
+		TileEntity tileInventory = world.getBlockEntity(chestRange.getContainedPositions(masterPos).get(0));
 
-		if (world.isRemote)
+		if (world.isClientSide)
 		{
 			return;
 		}
@@ -96,7 +96,7 @@ public class RitualFelling extends Ritual
 			for (BlockPos blockPos : masterRitualStone.getBlockRange(FELLING_RANGE).getContainedPositions(masterRitualStone.getMasterBlockPos()))
 			{
 				if (!treePartsCache.contains(blockPos))
-					if (!world.isAirBlock(blockPos) && (BlockTags.LOGS.contains(world.getBlockState(blockPos).getBlock()) || BlockTags.LEAVES.contains(world.getBlockState(blockPos).getBlock())))
+					if (!world.isEmptyBlock(blockPos) && (BlockTags.LOGS.contains(world.getBlockState(blockPos).getBlock()) || BlockTags.LEAVES.contains(world.getBlockState(blockPos).getBlock())))
 					{
 						treePartsCache.add(blockPos);
 					}
@@ -114,10 +114,10 @@ public class RitualFelling extends Ritual
 			BlockState state = world.getBlockState(currentPos);
 			placeInInventory(state, world, currentPos, inventory);
 
-			BlockItemUseContext ctx = new BlockItemUseContext(world, null, Hand.MAIN_HAND, ItemStack.EMPTY, BlockRayTraceResult.createMiss(new Vector3d(0, 0, 0), Direction.UP, currentPos));
+			BlockItemUseContext ctx = new BlockItemUseContext(world, null, Hand.MAIN_HAND, ItemStack.EMPTY, BlockRayTraceResult.miss(new Vector3d(0, 0, 0), Direction.UP, currentPos));
 			spawnParticlesAndSound((ServerWorld) world, currentPos, state, ctx);
 
-			world.setBlockState(currentPos, Blocks.AIR.getDefaultState());
+			world.setBlockAndUpdate(currentPos, Blocks.AIR.defaultBlockState());
 			blockPosIterator.remove();
 		}
 	}
@@ -129,7 +129,7 @@ public class RitualFelling extends Ritual
 
 		BlockParticleData particleData = new BlockParticleData(ParticleTypes.BLOCK, state);
 
-		world.spawnParticle(particleData, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 8, 0.2, 0.2, 0.2, 0.03);
+		world.sendParticles(particleData, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 8, 0.2, 0.2, 0.2, 0.03);
 	}
 
 	@Override
@@ -164,14 +164,14 @@ public class RitualFelling extends Ritual
 
 		LootContext.Builder lootBuilder = new LootContext.Builder((ServerWorld) world);
 		Vector3d blockCenter = new Vector3d(choppedPos.getX() + 0.5, choppedPos.getY() + 0.5, choppedPos.getZ() + 0.5);
-		List<ItemStack> silkDrops = choppedState.getDrops(lootBuilder.withParameter(LootParameters.field_237457_g_, blockCenter).withParameter(LootParameters.TOOL, mockAxe));
+		List<ItemStack> silkDrops = choppedState.getDrops(lootBuilder.withParameter(LootParameters.ORIGIN, blockCenter).withParameter(LootParameters.TOOL, mockAxe));
 
 //		ItemHandlerHelper.insertItem(inventory, stack, simulate)
 		for (ItemStack stack : silkDrops)
 		{
 			ItemStack remainder = ItemHandlerHelper.insertItem(inventory, stack, false);
 			if (!remainder.isEmpty())
-				world.addEntity(new ItemEntity(world, choppedPos.getX() + 0.4, choppedPos.getY() + 2, choppedPos.getZ() + 0.4, remainder));
+				world.addFreshEntity(new ItemEntity(world, choppedPos.getX() + 0.4, choppedPos.getY() + 2, choppedPos.getZ() + 0.4, remainder));
 		}
 	}
 }

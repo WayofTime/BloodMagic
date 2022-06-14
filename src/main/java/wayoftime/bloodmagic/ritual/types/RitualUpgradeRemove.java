@@ -42,7 +42,7 @@ public class RitualUpgradeRemove extends Ritual
 	{
 		World world = masterRitualStone.getWorldObj();
 
-		if (world.isRemote)
+		if (world.isClientSide)
 		{
 			return;
 		}
@@ -51,7 +51,7 @@ public class RitualUpgradeRemove extends Ritual
 
 		AreaDescriptor checkRange = masterRitualStone.getBlockRange(CHECK_RANGE);
 
-		List<PlayerEntity> playerList = world.getEntitiesWithinAABB(PlayerEntity.class, checkRange.getAABB(pos));
+		List<PlayerEntity> playerList = world.getEntitiesOfClass(PlayerEntity.class, checkRange.getAABB(pos));
 
 		for (PlayerEntity player : playerList)
 		{
@@ -59,7 +59,7 @@ public class RitualUpgradeRemove extends Ritual
 			{
 				boolean removedUpgrade = false;
 
-				ItemStack chestStack = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
+				ItemStack chestStack = player.getItemBySlot(EquipmentSlotType.CHEST);
 				LivingStats stats = LivingStats.fromPlayer(player);
 				if (stats != null)
 				{
@@ -75,8 +75,8 @@ public class RitualUpgradeRemove extends Ritual
 							ItemStack upgradeStack = new ItemStack(BloodMagicItems.LIVING_TOME.get());
 //							int expForLevel = upgrade.getNextRequirement(upgrade.getLevel(exp) - 1);
 							((ILivingContainer) BloodMagicItems.LIVING_TOME.get()).updateLivingStats(upgradeStack, new LivingStats().setMaxPoints(upgrade.getLevelCost(exp)).addExperience(upgrade.getKey(), exp));
-							ItemEntity item = new ItemEntity(world, player.getPosX(), player.getPosY(), player.getPosZ(), upgradeStack);
-							world.addEntity(item);
+							ItemEntity item = new ItemEntity(world, player.getX(), player.getY(), player.getZ(), upgradeStack);
+							world.addFreshEntity(item);
 							removedUpgrade = true;
 						}
 						stats.resetExperience(upgrade.getKey());
@@ -123,9 +123,9 @@ public class RitualUpgradeRemove extends Ritual
 
 						LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
 //						LightningBoltEntity lightning = new LightningBoltEntity(world, pos.getX() + dispX, pos.getY(), pos.getZ() + dispZ);
-						lightningboltentity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-						lightningboltentity.setEffectOnly(true);
-						world.addEntity(lightningboltentity);
+						lightningboltentity.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+						lightningboltentity.setVisualOnly(true);
+						world.addFreshEntity(lightningboltentity);
 					}
 
 				}

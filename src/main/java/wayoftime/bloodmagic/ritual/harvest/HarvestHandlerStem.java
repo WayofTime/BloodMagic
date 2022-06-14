@@ -30,20 +30,20 @@ public class HarvestHandlerStem implements IHarvestHandler
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			Direction facing = Direction.byHorizontalIndex(i);
-			HarvestRegistry.registerStemCrop(Blocks.PUMPKIN.getDefaultState(), Blocks.ATTACHED_PUMPKIN_STEM.getDefaultState().with(AttachedStemBlock.FACING, facing));
-			HarvestRegistry.registerStemCrop(Blocks.MELON.getDefaultState(), Blocks.ATTACHED_MELON_STEM.getDefaultState().with(AttachedStemBlock.FACING, facing));
+			Direction facing = Direction.from2DDataValue(i);
+			HarvestRegistry.registerStemCrop(Blocks.PUMPKIN.defaultBlockState(), Blocks.ATTACHED_PUMPKIN_STEM.defaultBlockState().setValue(AttachedStemBlock.FACING, facing));
+			HarvestRegistry.registerStemCrop(Blocks.MELON.defaultBlockState(), Blocks.ATTACHED_MELON_STEM.defaultBlockState().setValue(AttachedStemBlock.FACING, facing));
 		}
 	}
 
 	@Override
 	public boolean harvest(World world, BlockPos pos, BlockState state, List<ItemStack> drops)
 	{
-		Direction cropDir = state.get(AttachedStemBlock.FACING);
+		Direction cropDir = state.getValue(AttachedStemBlock.FACING);
 
 		if (cropDir != Direction.UP)
 		{
-			BlockPos cropPos = pos.offset(cropDir);
+			BlockPos cropPos = pos.relative(cropDir);
 			BlockState probableCrop = world.getBlockState(cropPos);
 			Collection<BlockState> registeredCrops = HarvestRegistry.getStemCrops().get(state);
 
@@ -53,7 +53,7 @@ public class HarvestHandlerStem implements IHarvestHandler
 				{
 					LootContext.Builder lootBuilder = new LootContext.Builder((ServerWorld) world);
 					Vector3d blockCenter = new Vector3d(cropPos.getX() + 0.5, cropPos.getY() + 0.5, cropPos.getZ() + 0.5);
-					List<ItemStack> blockDrops = registeredCrop.getDrops(lootBuilder.withParameter(LootParameters.field_237457_g_, blockCenter).withParameter(LootParameters.TOOL, mockHoe));
+					List<ItemStack> blockDrops = registeredCrop.getDrops(lootBuilder.withParameter(LootParameters.ORIGIN, blockCenter).withParameter(LootParameters.TOOL, mockHoe));
 					drops.addAll(blockDrops);
 					world.destroyBlock(cropPos, false);
 					return true;

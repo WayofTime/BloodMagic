@@ -11,13 +11,13 @@ public class PotionPlantLeech extends PotionBloodMagic
 	}
 
 	@Override
-	public void performEffect(LivingEntity entity, int amplifier)
+	public void applyEffectTick(LivingEntity entity, int amplifier)
 	{
 		BMPotionUtils.damageMobAndGrowSurroundingPlants(entity, 2 + amplifier, 1, 0.5 * 3 / (amplifier + 3), 25 * (1 + amplifier));
 	}
 
 	@Override
-	public boolean isReady(int duration, int amplifier)
+	public boolean isDurationEffectTick(int duration, int amplifier)
 	{
 		return duration % 10 == 0;
 	}

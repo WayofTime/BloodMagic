@@ -13,12 +13,12 @@ public class DamageSourceBloodMagic extends DamageSource
 	{
 		super("bloodMagic");
 
-		setDamageBypassesArmor();
-		setDamageIsAbsolute();
+		bypassArmor();
+		bypassMagic();
 	}
 
 	@Override
-	public ITextComponent getDeathMessage(LivingEntity livingBase)
+	public ITextComponent getLocalizedDeathMessage(LivingEntity livingBase)
 	{
 		return new TranslationTextComponent("chat.bloodmagic.damageSource", livingBase.getName());
 	}

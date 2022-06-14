@@ -14,10 +14,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
-import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
-import wayoftime.bloodmagic.recipe.helper.FluidStackIngredient;
-import wayoftime.bloodmagic.recipe.RecipeARC;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder;
+import wayoftime.bloodmagic.recipe.RecipeARC;
+import wayoftime.bloodmagic.recipe.helper.FluidStackIngredient;
+import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
 import wayoftime.bloodmagic.util.Constants;
 
 public class ARCRecipeBuilder extends BloodMagicRecipeBuilder<ARCRecipeBuilder>
@@ -77,10 +77,10 @@ public class ARCRecipeBuilder extends BloodMagicRecipeBuilder<ARCRecipeBuilder>
 		}
 
 		@Override
-		public void serialize(@Nonnull JsonObject json)
+		public void serializeRecipeData(@Nonnull JsonObject json)
 		{
-			json.add(Constants.JSON.INPUT, input.serialize());
-			json.add(Constants.JSON.TOOL, arcTool.serialize());
+			json.add(Constants.JSON.INPUT, input.toJson());
+			json.add(Constants.JSON.TOOL, arcTool.toJson());
 
 			if (inputFluid != null)
 				json.add(Constants.JSON.INPUT_FLUID, inputFluid.serialize());

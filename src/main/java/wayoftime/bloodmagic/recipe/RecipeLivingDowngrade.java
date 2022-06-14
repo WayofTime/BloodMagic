@@ -53,7 +53,7 @@ public class RecipeLivingDowngrade extends BloodMagicRecipe
 	@Override
 	public void write(PacketBuffer buffer)
 	{
-		input.write(buffer);
+		input.toNetwork(buffer);
 		buffer.writeResourceLocation(livingArmourRL);
 	}
 

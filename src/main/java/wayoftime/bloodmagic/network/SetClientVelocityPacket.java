@@ -49,6 +49,6 @@ public class SetClientVelocityPacket
 	@OnlyIn(Dist.CLIENT)
 	public static void updateClientVelocity(double motionX, double motionY, double motionZ)
 	{
-		Minecraft.getInstance().player.setMotion(motionX, motionY, motionZ);
+		Minecraft.getInstance().player.setDeltaMovement(motionX, motionY, motionZ);
 	}
 }

@@ -35,19 +35,19 @@ public class ItemAlchemyFlask extends Item
 {
 	public ItemAlchemyFlask()
 	{
-		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB).maxDamage(8));
+		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB).durability(8));
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.arctool.uses", getRemainingUses(stack)).mergeStyle(TextFormatting.GOLD));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.arctool.uses", getRemainingUses(stack)).withStyle(TextFormatting.GOLD));
 		PotionUtils.addPotionTooltip(stack, tooltip, 1.0F);
 	}
 
 	public int getRemainingUses(ItemStack stack)
 	{
-		return stack.getMaxDamage() - stack.getDamage();
+		return stack.getMaxDamage() - stack.getDamageValue();
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class ItemAlchemyFlask extends Item
 	 * returns the action that specifies what animation to play when the items is
 	 * being used
 	 */
-	public UseAction getUseAction(ItemStack stack)
+	public UseAction getUseAnimation(ItemStack stack)
 	{
 		return UseAction.DRINK;
 	}
@@ -106,7 +106,7 @@ public class ItemAlchemyFlask extends Item
 
 			for (EffectInstance effectinstance : effects)
 			{
-				listnbt.add(effectinstance.write(new CompoundNBT()));
+				listnbt.add(effectinstance.save(new CompoundNBT()));
 			}
 
 			compoundnbt.put("CustomPotionEffects", listnbt);
@@ -157,19 +157,19 @@ public class ItemAlchemyFlask extends Item
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn)
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn)
 	{
-		ItemStack heldStack = playerIn.getHeldItem(handIn);
+		ItemStack heldStack = playerIn.getItemInHand(handIn);
 		if (getRemainingUses(heldStack) <= 0)
 		{
-			return ActionResult.resultPass(heldStack);
+			return ActionResult.pass(heldStack);
 		}
 
-		return DrinkHelper.startDrinking(worldIn, playerIn, handIn);
+		return DrinkHelper.useDrink(worldIn, playerIn, handIn);
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving)
+	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving)
 	{
 		PlayerEntity playerentity = entityLiving instanceof PlayerEntity ? (PlayerEntity) entityLiving : null;
 		if (playerentity instanceof ServerPlayerEntity)
@@ -177,26 +177,26 @@ public class ItemAlchemyFlask extends Item
 			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) playerentity, stack);
 		}
 
-		if (!worldIn.isRemote)
+		if (!worldIn.isClientSide)
 		{
-			for (EffectInstance effectinstance : PotionUtils.getEffectsFromStack(stack))
+			for (EffectInstance effectinstance : PotionUtils.getMobEffects(stack))
 			{
-				if (effectinstance.getPotion().isInstant())
+				if (effectinstance.getEffect().isInstantenous())
 				{
-					effectinstance.getPotion().affectEntity(playerentity, playerentity, entityLiving, effectinstance.getAmplifier(), 1.0D);
+					effectinstance.getEffect().applyInstantenousEffect(playerentity, playerentity, entityLiving, effectinstance.getAmplifier(), 1.0D);
 				} else
 				{
-					entityLiving.addPotionEffect(new EffectInstance(effectinstance));
+					entityLiving.addEffect(new EffectInstance(effectinstance));
 				}
 			}
 		}
 
 		if (playerentity != null)
 		{
-			playerentity.addStat(Stats.ITEM_USED.get(this));
-			if (!playerentity.abilities.isCreativeMode)
+			playerentity.awardStat(Stats.ITEM_USED.get(this));
+			if (!playerentity.abilities.instabuild)
 			{
-				stack.setDamage(stack.getDamage() + 1);
+				stack.setDamageValue(stack.getDamageValue() + 1);
 			}
 		}
 

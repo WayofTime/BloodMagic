@@ -41,8 +41,8 @@ public class RitualZephyr extends Ritual
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 		BlockPos masterPos = masterRitualStone.getMasterBlockPos();
 		AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
-		TileEntity tileInventory = world.getTileEntity(chestRange.getContainedPositions(masterPos).get(0));
-		if (!masterRitualStone.getWorldObj().isRemote && tileInventory != null)
+		TileEntity tileInventory = world.getBlockEntity(chestRange.getContainedPositions(masterPos).get(0));
+		if (!masterRitualStone.getWorldObj().isClientSide && tileInventory != null)
 		{
 			if (currentEssence < getRefreshCost())
 			{
@@ -52,7 +52,7 @@ public class RitualZephyr extends Ritual
 
 			AreaDescriptor zephyrRange = masterRitualStone.getBlockRange(ZEPHYR_RANGE);
 
-			List<ItemEntity> itemList = world.getEntitiesWithinAABB(ItemEntity.class, zephyrRange.getAABB(masterRitualStone.getMasterBlockPos()));
+			List<ItemEntity> itemList = world.getEntitiesOfClass(ItemEntity.class, zephyrRange.getAABB(masterRitualStone.getMasterBlockPos()));
 			int count = 0;
 
 			for (ItemEntity entityItem : itemList)

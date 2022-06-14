@@ -32,30 +32,30 @@ public class TartaricForgeRecipeSerializer<RECIPE extends RecipeTartaricForge>
 
 	@Nonnull
 	@Override
-	public RECIPE read(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
+	public RECIPE fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
 	{
 		List<Ingredient> inputList = new ArrayList<Ingredient>();
 		for (int i = 0; i < 4; i++)
 		{
 			if (json.has(Constants.JSON.INPUT + i))
 			{
-				JsonElement input = JSONUtils.isJsonArray(json, Constants.JSON.INPUT + i)
-						? JSONUtils.getJsonArray(json, Constants.JSON.INPUT + i)
-						: JSONUtils.getJsonObject(json, Constants.JSON.INPUT + i);
-				inputList.add(Ingredient.deserialize(input));
+				JsonElement input = JSONUtils.isArrayNode(json, Constants.JSON.INPUT + i)
+						? JSONUtils.getAsJsonArray(json, Constants.JSON.INPUT + i)
+						: JSONUtils.getAsJsonObject(json, Constants.JSON.INPUT + i);
+				inputList.add(Ingredient.fromJson(input));
 			}
 		}
 
 		ItemStack output = SerializerHelper.getItemStack(json, Constants.JSON.OUTPUT);
 
-		float minimumSouls = JSONUtils.getFloat(json, Constants.JSON.TARTARIC_MINIMUM);
-		float soulDrain = JSONUtils.getFloat(json, Constants.JSON.TARTARIC_DRAIN);
+		float minimumSouls = JSONUtils.getAsFloat(json, Constants.JSON.TARTARIC_MINIMUM);
+		float soulDrain = JSONUtils.getAsFloat(json, Constants.JSON.TARTARIC_DRAIN);
 
 		return this.factory.create(recipeId, inputList, output, minimumSouls, soulDrain);
 	}
 
 	@Override
-	public RECIPE read(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
+	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
 	{
 		try
 		{
@@ -64,10 +64,10 @@ public class TartaricForgeRecipeSerializer<RECIPE extends RecipeTartaricForge>
 
 			for (int i = 0; i < size; i++)
 			{
-				input.add(i, Ingredient.read(buffer));
+				input.add(i, Ingredient.fromNetwork(buffer));
 			}
 
-			ItemStack output = buffer.readItemStack();
+			ItemStack output = buffer.readItem();
 			double minimumSouls = buffer.readDouble();
 			double soulDrain = buffer.readDouble();
 
@@ -80,7 +80,7 @@ public class TartaricForgeRecipeSerializer<RECIPE extends RecipeTartaricForge>
 	}
 
 	@Override
-	public void write(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
+	public void toNetwork(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
 	{
 		try
 		{

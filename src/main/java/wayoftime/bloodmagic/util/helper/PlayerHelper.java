@@ -28,7 +28,7 @@ public class PlayerHelper
 			return null;
 		}
 
-		return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByUUID(uuid);
+		return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayer(uuid);
 
 //		return FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(uuid);
 	}

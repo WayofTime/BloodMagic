@@ -21,14 +21,16 @@ import net.minecraft.world.World;
 import wayoftime.bloodmagic.tile.TileExplosiveCharge;
 import wayoftime.bloodmagic.tile.TileShapedExplosive;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockShapedExplosive extends Block
 {
-	private static final VoxelShape UP = Block.makeCuboidShape(2, 0, 2, 14, 7, 14);
-	private static final VoxelShape DOWN = Block.makeCuboidShape(2, 9, 2, 14, 16, 14);
-	private static final VoxelShape NORTH = Block.makeCuboidShape(2, 2, 7, 14, 14, 16);
-	private static final VoxelShape SOUTH = Block.makeCuboidShape(2, 2, 0, 14, 14, 7);
-	private static final VoxelShape EAST = Block.makeCuboidShape(0, 2, 2, 7, 14, 14);
-	private static final VoxelShape WEST = Block.makeCuboidShape(16, 2, 2, 9, 14, 14);
+	private static final VoxelShape UP = Block.box(2, 0, 2, 14, 7, 14);
+	private static final VoxelShape DOWN = Block.box(2, 9, 2, 14, 16, 14);
+	private static final VoxelShape NORTH = Block.box(2, 2, 7, 14, 14, 16);
+	private static final VoxelShape SOUTH = Block.box(2, 2, 0, 14, 14, 7);
+	private static final VoxelShape EAST = Block.box(0, 2, 2, 7, 14, 14);
+	private static final VoxelShape WEST = Block.box(16, 2, 2, 9, 14, 14);
 
 	public static final EnumProperty<Direction> ATTACHED = EnumProperty.create("attached", Direction.class);
 	protected final int explosionSize;
@@ -38,29 +40,29 @@ public class BlockShapedExplosive extends Block
 		super(properties);
 		this.explosionSize = explosionSize;
 
-		this.setDefaultState(this.stateContainer.getBaseState().with(ATTACHED, Direction.UP));
+		this.registerDefaultState(this.stateDefinition.any().setValue(ATTACHED, Direction.UP));
 	}
 
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
 	{
-		return facing.getOpposite() == stateIn.get(ATTACHED) && !stateIn.isValidPosition(worldIn, currentPos)
-				? Blocks.AIR.getDefaultState()
+		return facing.getOpposite() == stateIn.getValue(ATTACHED) && !stateIn.canSurvive(worldIn, currentPos)
+				? Blocks.AIR.defaultBlockState()
 				: stateIn;
 	}
 
 	@Nullable
 	public BlockState getStateForPlacement(BlockItemUseContext context)
 	{
-		BlockState blockstate = this.getDefaultState();
-		IWorldReader iworldreader = context.getWorld();
-		BlockPos blockpos = context.getPos();
+		BlockState blockstate = this.defaultBlockState();
+		IWorldReader iworldreader = context.getLevel();
+		BlockPos blockpos = context.getClickedPos();
 		Direction[] adirection = context.getNearestLookingDirections();
 
 		for (Direction direction : adirection)
 		{
 			Direction direction1 = direction.getOpposite();
-			blockstate = blockstate.with(ATTACHED, direction1);
-			if (blockstate.isValidPosition(iworldreader, blockpos))
+			blockstate = blockstate.setValue(ATTACHED, direction1);
+			if (blockstate.canSurvive(iworldreader, blockpos))
 			{
 				return blockstate;
 			}
@@ -70,7 +72,7 @@ public class BlockShapedExplosive extends Block
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
 	{
 		builder.add(ATTACHED);
 	}
@@ -78,7 +80,7 @@ public class BlockShapedExplosive extends Block
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
 	{
-		switch (state.get(ATTACHED))
+		switch (state.getValue(ATTACHED))
 		{
 		case DOWN:
 			return DOWN;
@@ -109,13 +111,13 @@ public class BlockShapedExplosive extends Block
 	}
 
 	@Override
-	public void onBlockHarvested(World world, BlockPos blockPos, BlockState blockState, PlayerEntity player)
+	public void playerWillDestroy(World world, BlockPos blockPos, BlockState blockState, PlayerEntity player)
 	{
-		TileExplosiveCharge tile = (TileExplosiveCharge) world.getTileEntity(blockPos);
-		if (tile != null && !world.isRemote)
+		TileExplosiveCharge tile = (TileExplosiveCharge) world.getBlockEntity(blockPos);
+		if (tile != null && !world.isClientSide)
 			tile.dropSelf();
 
-		super.onBlockHarvested(world, blockPos, blockState, player);
+		super.playerWillDestroy(world, blockPos, blockState, player);
 	}
 
 //	@Override

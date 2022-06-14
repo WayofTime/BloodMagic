@@ -45,7 +45,7 @@ public class RitualPlacer extends Ritual
 		World world = masterRitualStone.getWorldObj();
 		BlockPos masterPos = masterRitualStone.getMasterBlockPos();
 		AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
-		TileEntity tileEntity = world.getTileEntity(chestRange.getContainedPositions(masterPos).get(0));
+		TileEntity tileEntity = world.getBlockEntity(chestRange.getContainedPositions(masterPos).get(0));
 
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
@@ -68,8 +68,8 @@ public class RitualPlacer extends Ritual
 
 			posLoop: for (BlockPos blockPos : areaDescriptor.getContainedPositions(masterRitualStone.getMasterBlockPos()))
 			{
-				BlockItemUseContext ctx = new BlockItemUseContext(world, null, Hand.MAIN_HAND, ItemStack.EMPTY, BlockRayTraceResult.createMiss(new Vector3d(0, 0, 0), Direction.UP, blockPos));
-				if (!world.getBlockState(blockPos).isReplaceable(ctx))
+				BlockItemUseContext ctx = new BlockItemUseContext(world, null, Hand.MAIN_HAND, ItemStack.EMPTY, BlockRayTraceResult.miss(new Vector3d(0, 0, 0), Direction.UP, blockPos));
+				if (!world.getBlockState(blockPos).canBeReplaced(ctx))
 					continue;
 
 				for (int invSlot = 0; invSlot < itemHandler.getSlots(); invSlot++)
@@ -78,11 +78,11 @@ public class RitualPlacer extends Ritual
 					if (stack.isEmpty() || !(stack.getItem() instanceof BlockItem))
 						continue;
 
-					ActionResultType result = ((BlockItem) stack.getItem()).tryPlace(ctx);
-					if (result.isSuccessOrConsume())
+					ActionResultType result = ((BlockItem) stack.getItem()).place(ctx);
+					if (result.consumesAction())
 					{
 						itemHandler.extractItem(invSlot, 1, false);
-						tileEntity.markDirty();
+						tileEntity.setChanged();
 						masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
 						break posLoop; // Break instead of return in case we add things later
 					}

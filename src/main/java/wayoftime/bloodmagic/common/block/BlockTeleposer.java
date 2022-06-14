@@ -23,7 +23,7 @@ public class BlockTeleposer extends Block
 {
 	public BlockTeleposer()
 	{
-		super(AbstractBlock.Properties.create(Material.IRON).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(2));
+		super(AbstractBlock.Properties.of(Material.METAL).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(2));
 
 //		this.setDefaultState(this.stateContainer.getBaseState().with(DOWN, false).with(UP, false).with(NORTH, false).with(EAST, false).with(SOUTH, false).with(WEST, false));
 	}
@@ -41,38 +41,38 @@ public class BlockTeleposer extends Block
 	}
 
 	@Override
-	public void onPlayerDestroy(IWorld world, BlockPos blockPos, BlockState blockState)
+	public void destroy(IWorld world, BlockPos blockPos, BlockState blockState)
 	{
-		TileTeleposer arc = (TileTeleposer) world.getTileEntity(blockPos);
+		TileTeleposer arc = (TileTeleposer) world.getBlockEntity(blockPos);
 		if (arc != null)
 			arc.dropItems();
 
-		super.onPlayerDestroy(world, blockPos, blockState);
+		super.destroy(world, blockPos, blockState);
 	}
 
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{
-		if (!state.isIn(newState.getBlock()))
+		if (!state.is(newState.getBlock()))
 		{
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+			TileEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof TileTeleposer)
 			{
 				((TileTeleposer) tileentity).dropItems();
-				worldIn.updateComparatorOutputLevel(pos, this);
+				worldIn.updateNeighbourForOutputSignal(pos, this);
 			}
 
-			super.onReplaced(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
 	{
-		if (world.isRemote)
+		if (world.isClientSide)
 			return ActionResultType.SUCCESS;
 
-		TileEntity tile = world.getTileEntity(pos);
+		TileEntity tile = world.getBlockEntity(pos);
 		if (!(tile instanceof TileTeleposer))
 			return ActionResultType.FAIL;
 

@@ -21,7 +21,7 @@ public class ContainerHolding extends Container
 
 	public ContainerHolding(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
 	{
-		this(windowId, playerInventory.player, playerInventory, new InventoryHolding(extraData.readItemStack()));
+		this(windowId, playerInventory.player, playerInventory, new InventoryHolding(extraData.readItem()));
 	}
 
 	public ContainerHolding(int windowId, PlayerEntity player, PlayerInventory playerInventory, InventoryHolding inventoryHolding)
@@ -29,7 +29,7 @@ public class ContainerHolding extends Container
 		super(BloodMagicBlocks.HOLDING_CONTAINER.get(), windowId);
 		this.player = player;
 		this.inventoryHolding = inventoryHolding;
-		int currentSlotHeldIn = player.inventory.currentItem;
+		int currentSlotHeldIn = player.inventory.selected;
 		this.setup(playerInventory, currentSlotHeldIn);
 	}
 
@@ -61,54 +61,54 @@ public class ContainerHolding extends Container
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity entityPlayer)
+	public boolean stillValid(PlayerEntity entityPlayer)
 	{
 		return true;
 	}
 
 	@Override
-	public void onContainerClosed(PlayerEntity entityPlayer)
+	public void removed(PlayerEntity entityPlayer)
 	{
-		super.onContainerClosed(entityPlayer);
+		super.removed(entityPlayer);
 
-		if (!entityPlayer.getEntityWorld().isRemote)
+		if (!entityPlayer.getCommandSenderWorld().isClientSide)
 		{
 			saveInventory(entityPlayer);
 		}
 	}
 
 	@Override
-	public void detectAndSendChanges()
+	public void broadcastChanges()
 	{
-		super.detectAndSendChanges();
+		super.broadcastChanges();
 
-		if (!player.getEntityWorld().isRemote)
+		if (!player.getCommandSenderWorld().isClientSide)
 		{
 			saveInventory(player);
 		}
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity entityPlayer, int slotIndex)
+	public ItemStack quickMoveStack(PlayerEntity entityPlayer, int slotIndex)
 	{
 		ItemStack stack = ItemStack.EMPTY;
-		Slot slotObject = inventorySlots.get(slotIndex);
-		int slots = inventorySlots.size();
+		Slot slotObject = slots.get(slotIndex);
+		int slotCount = slots.size();
 
-		if (slotObject != null && slotObject.getHasStack())
+		if (slotObject != null && slotObject.hasItem())
 		{
-			ItemStack stackInSlot = slotObject.getStack();
+			ItemStack stackInSlot = slotObject.getItem();
 			stack = stackInSlot.copy();
 
 			if (stack.getItem() instanceof ISigil)
 			{
 				if (slotIndex < ItemSigilHolding.inventorySize)
 				{
-					if (!this.mergeItemStack(stackInSlot, ItemSigilHolding.inventorySize, slots, false))
+					if (!this.moveItemStackTo(stackInSlot, ItemSigilHolding.inventorySize, slotCount, false))
 					{
 						return ItemStack.EMPTY;
 					}
-				} else if (!this.mergeItemStack(stackInSlot, 0, ItemSigilHolding.inventorySize, false))
+				} else if (!this.moveItemStackTo(stackInSlot, 0, ItemSigilHolding.inventorySize, false))
 				{
 					return ItemStack.EMPTY;
 				}
@@ -116,11 +116,11 @@ public class ContainerHolding extends Container
 			{
 				if (slotIndex < ItemSigilHolding.inventorySize + (PLAYER_INVENTORY_ROWS * PLAYER_INVENTORY_COLUMNS))
 				{
-					if (!this.mergeItemStack(stackInSlot, ItemSigilHolding.inventorySize + (PLAYER_INVENTORY_ROWS * PLAYER_INVENTORY_COLUMNS), inventorySlots.size(), false))
+					if (!this.moveItemStackTo(stackInSlot, ItemSigilHolding.inventorySize + (PLAYER_INVENTORY_ROWS * PLAYER_INVENTORY_COLUMNS), slots.size(), false))
 					{
 						return ItemStack.EMPTY;
 					}
-				} else if (!this.mergeItemStack(stackInSlot, ItemSigilHolding.inventorySize, ItemSigilHolding.inventorySize + (PLAYER_INVENTORY_ROWS * PLAYER_INVENTORY_COLUMNS), false))
+				} else if (!this.moveItemStackTo(stackInSlot, ItemSigilHolding.inventorySize, ItemSigilHolding.inventorySize + (PLAYER_INVENTORY_ROWS * PLAYER_INVENTORY_COLUMNS), false))
 				{
 					return ItemStack.EMPTY;
 				}
@@ -128,10 +128,10 @@ public class ContainerHolding extends Container
 
 			if (stackInSlot.isEmpty())
 			{
-				slotObject.putStack(ItemStack.EMPTY);
+				slotObject.set(ItemStack.EMPTY);
 			} else
 			{
-				slotObject.onSlotChanged();
+				slotObject.setChanged();
 			}
 
 			if (stackInSlot.getCount() == stack.getCount())
@@ -163,9 +163,9 @@ public class ContainerHolding extends Container
 		}
 
 		@Override
-		public void onSlotChanged()
+		public void setChanged()
 		{
-			super.onSlotChanged();
+			super.setChanged();
 
 			if (EffectiveSide.get().isServer())
 			{
@@ -174,7 +174,7 @@ public class ContainerHolding extends Container
 		}
 
 		@Override
-		public boolean isItemValid(ItemStack itemStack)
+		public boolean mayPlace(ItemStack itemStack)
 		{
 			return itemStack.getItem() instanceof ISigil && !(itemStack.getItem() instanceof ItemSigilHolding);
 		}
@@ -188,13 +188,13 @@ public class ContainerHolding extends Container
 		}
 
 		@Override
-		public boolean isItemValid(ItemStack itemStack)
+		public boolean mayPlace(ItemStack itemStack)
 		{
 			return false;
 		}
 
 		@Override
-		public boolean canTakeStack(PlayerEntity player)
+		public boolean mayPickup(PlayerEntity player)
 		{
 			return false;
 		}

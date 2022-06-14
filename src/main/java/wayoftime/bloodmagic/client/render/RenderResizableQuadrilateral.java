@@ -27,19 +27,19 @@ public class RenderResizableQuadrilateral
 	private static final int V_MIN = 2;
 	private static final int V_MAX = 3;
 
-	protected EntityRendererManager manager = Minecraft.getInstance().getRenderManager();
+	protected EntityRendererManager manager = Minecraft.getInstance().getEntityRenderDispatcher();
 
 	private static Vector3f withValue(Vector3f vector, Axis axis, float value)
 	{
 		if (axis == Axis.X)
 		{
-			return new Vector3f(value, vector.getY(), vector.getZ());
+			return new Vector3f(value, vector.y(), vector.z());
 		} else if (axis == Axis.Y)
 		{
-			return new Vector3f(vector.getX(), value, vector.getZ());
+			return new Vector3f(vector.x(), value, vector.z());
 		} else if (axis == Axis.Z)
 		{
-			return new Vector3f(vector.getX(), vector.getY(), value);
+			return new Vector3f(vector.x(), vector.y(), value);
 		}
 		throw new RuntimeException("Was given a null axis! That was probably not intentional, consider this a bug! (Vector = " + vector + ")");
 	}
@@ -66,11 +66,11 @@ public class RenderResizableQuadrilateral
 		float blue = BloodMagicRenderer.getBlue(argb);
 		float alpha = BloodMagicRenderer.getAlpha(argb);
 		Vector3d size = new Vector3d(square.sizeX(), 0, square.sizeY());
-		matrix.push();
+		matrix.pushPose();
 		matrix.translate(square.minX, 0, square.minY);
-		MatrixStack.Entry lastMatrix = matrix.getLast();
-		Matrix4f matrix4f = lastMatrix.getMatrix();
-		Matrix3f normal = lastMatrix.getNormal();
+		MatrixStack.Entry lastMatrix = matrix.last();
+		Matrix4f matrix4f = lastMatrix.pose();
+		Matrix3f normal = lastMatrix.normal();
 		Direction face = Direction.UP;
 //		for (Direction face : Direction.values())
 
@@ -148,7 +148,7 @@ public class RenderResizableQuadrilateral
 
 			}
 		}
-		matrix.pop();
+		matrix.popPose();
 	}
 
 	private void renderPoint(Matrix4f matrix4f, Matrix3f normal, IVertexBuilder buffer, Direction face, Axis u, Axis v, float other, float[] uv, float[] xyz, boolean minU, boolean minV, float red, float green, float blue, float alpha, int light, int overlay)
@@ -158,12 +158,12 @@ public class RenderResizableQuadrilateral
 		Vector3f vertex = withValue(VEC_ZERO, u, xyz[U_ARRAY]);
 		vertex = withValue(vertex, v, xyz[V_ARRAY]);
 		vertex = withValue(vertex, face.getAxis(), other);
-		Vector3i normalForFace = face.getDirectionVec();
+		Vector3i normalForFace = face.getNormal();
 		// TODO: Figure out how and why this works, it gives about the same brightness
 		// as we used to have but I don't understand why/how
 		float adjustment = 2.5F;
 		Vector3f norm = new Vector3f(normalForFace.getX() + adjustment, normalForFace.getY() + adjustment, normalForFace.getZ() + adjustment);
 		norm.normalize();
-		buffer.pos(matrix4f, vertex.getX(), vertex.getY(), vertex.getZ()).color(red, green, blue, alpha).tex(uv[U_ARRAY], uv[V_ARRAY]).overlay(overlay).lightmap(light).normal(normal, norm.getX(), norm.getY(), norm.getZ()).endVertex();
+		buffer.vertex(matrix4f, vertex.x(), vertex.y(), vertex.z()).color(red, green, blue, alpha).uv(uv[U_ARRAY], uv[V_ARRAY]).overlayCoords(overlay).uv2(light).normal(normal, norm.x(), norm.y(), norm.z()).endVertex();
 	}
 }

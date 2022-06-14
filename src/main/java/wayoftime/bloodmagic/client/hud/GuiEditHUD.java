@@ -39,7 +39,7 @@ public class GuiEditHUD extends Screen
 		super.init();
 
 		addButton(new Button(width / 2 - 155, height - 30, 70, 20, new TranslationTextComponent("gui.bloodmagic.toggle"), b -> {
-			Minecraft.getInstance().displayGuiScreen(parent);
+			Minecraft.getInstance().setScreen(parent);
 		})
 		{
 			{
@@ -53,11 +53,11 @@ public class GuiEditHUD extends Screen
 		}));
 		addButton(new Button(width / 2 + 5, height - 30, 70, 20, new TranslationTextComponent("gui.bloodmagic.save"), b -> {
 			ElementRegistry.save(currentOverrides);
-			Minecraft.getInstance().displayGuiScreen(parent);
+			Minecraft.getInstance().setScreen(parent);
 		}));
 		addButton(new Button(width / 2 + 90, height - 30, 70, 20, new TranslationTextComponent("gui.bloodmagic.cancel"), b -> {
 			currentOverrides.clear();
-			Minecraft.getInstance().displayGuiScreen(parent);
+			Minecraft.getInstance().setScreen(parent);
 		}));
 	}
 
@@ -68,7 +68,7 @@ public class GuiEditHUD extends Screen
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 
 //		ScaledResolution resolution = new ScaledResolution(Minecraft.getInstance());
-		MainWindow window = Minecraft.getInstance().getMainWindow();
+		MainWindow window = Minecraft.getInstance().getWindow();
 		for (HUDElement element : ElementRegistry.getElements())
 		{
 			if (dragged == element)
@@ -76,8 +76,8 @@ public class GuiEditHUD extends Screen
 
 			ResourceLocation key = ElementRegistry.getKey(element);
 			Vector2f position = currentOverrides.getOrDefault(key, ElementRegistry.getPosition(key));
-			int xPos = (int) (window.getScaledWidth() * position.x);
-			int yPos = (int) (window.getScaledHeight() * position.y);
+			int xPos = (int) (window.getGuiScaledWidth() * position.x);
+			int yPos = (int) (window.getGuiScaledHeight() * position.y);
 
 			drawWithBox(matrixStack, element, partialTicks, xPos, yPos);
 		}
@@ -129,10 +129,10 @@ public class GuiEditHUD extends Screen
 	{
 		if (dragged != null)
 		{
-			MainWindow window = Minecraft.getInstance().getMainWindow();
+			MainWindow window = Minecraft.getInstance().getWindow();
 			Point bounded = getBoundedDrag(window, mouseX, mouseY);
-			float xPos = (float) ((bounded.x) / window.getScaledWidth());
-			float yPos = (float) ((bounded.y) / window.getScaledHeight());
+			float xPos = (float) ((bounded.x) / window.getGuiScaledWidth());
+			float yPos = (float) ((bounded.y) / window.getGuiScaledHeight());
 
 			currentOverrides.put(ElementRegistry.getKey(dragged), new Vector2f(xPos, yPos));
 			changes = true;
@@ -178,14 +178,14 @@ public class GuiEditHUD extends Screen
 	@Nullable
 	public HUDElement getHoveredElement(double mouseX, double mouseY)
 	{
-		MainWindow window = Minecraft.getInstance().getMainWindow();
+		MainWindow window = Minecraft.getInstance().getWindow();
 		for (HUDElement element : ElementRegistry.getElements())
 		{
 			ResourceLocation key = ElementRegistry.getKey(element);
 			Vector2f position = currentOverrides.getOrDefault(key, ElementRegistry.getPosition(key));
 
-			int xPos = (int) (window.getScaledWidth() * position.x);
-			int yPos = (int) (window.getScaledHeight() * position.y);
+			int xPos = (int) (window.getGuiScaledWidth() * position.x);
+			int yPos = (int) (window.getGuiScaledHeight() * position.y);
 
 			if (mouseX < xPos || mouseX > xPos + element.getWidth())
 				continue;
@@ -202,14 +202,14 @@ public class GuiEditHUD extends Screen
 	protected Point getBoundedDrag(MainWindow window, double mouseX, double mouseY)
 	{
 		int drawX = (int) (mouseX - dragged.getWidth() / 2);
-		if (drawX + dragged.getWidth() >= window.getScaledWidth())
-			drawX = window.getScaledWidth() - dragged.getWidth();
+		if (drawX + dragged.getWidth() >= window.getGuiScaledWidth())
+			drawX = window.getGuiScaledWidth() - dragged.getWidth();
 		if (drawX < 0)
 			drawX = 0;
 
 		int drawY = (int) (mouseY - dragged.getHeight() / 2);
-		if (drawY + dragged.getHeight() >= window.getScaledHeight())
-			drawY = window.getScaledHeight() - dragged.getHeight();
+		if (drawY + dragged.getHeight() >= window.getGuiScaledHeight())
+			drawY = window.getGuiScaledHeight() - dragged.getHeight();
 		if (drawY < 0)
 			drawY = 0;
 
@@ -219,7 +219,7 @@ public class GuiEditHUD extends Screen
 	protected void drawWithBox(MatrixStack matrixStack, HUDElement element, float partialTicks, int drawX, int drawY)
 	{
 		int color = ElementRegistry.getColor(ElementRegistry.getKey(element));
-		matrixStack.push();
+		matrixStack.pushPose();
 //		GlStateManager.enableAlpha();
 //		GlStateManager.enableBlend();
 //		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
@@ -230,7 +230,7 @@ public class GuiEditHUD extends Screen
 		this.hLine(matrixStack, drawX, drawX + element.getWidth() - 1, drawY + element.getHeight() - 1, color);
 //		GlStateManager.disableBlend();
 //		GlStateManager.disableAlpha();
-		matrixStack.pop();
+		matrixStack.popPose();
 //		GlStateManager.color(1.0F, 1.0F, 1.0F);
 //		GlStateManager.enableTexture2D();
 		element.draw(matrixStack, partialTicks, drawX, drawY);

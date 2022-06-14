@@ -26,9 +26,9 @@ public class DungeonStructure
 			return false;
 
 		MinecraftServer minecraftserver = world.getServer();
-		TemplateManager templatemanager = world.getStructureTemplateManager();
+		TemplateManager templatemanager = world.getStructureManager();
 
-		Template template = templatemanager.getTemplate(resource);
+		Template template = templatemanager.get(resource);
 
 		if (template == null)
 		{
@@ -39,11 +39,11 @@ public class DungeonStructure
 
 //        settings.func_189946_a(MathHelper.clamp_float(schema.integrity, 0.0F, 1.0F));
 
-		BlockPos offset = Template.transformedBlockPos(settings, new BlockPos(0, 0, 0));
-		BlockPos finalPos = pos.add(offset);
+		BlockPos offset = Template.calculateRelativePosition(settings, new BlockPos(0, 0, 0));
+		BlockPos finalPos = pos.offset(offset);
 //		template.addBlocksToWorldChunk(world, finalPos, settings);
-		template.func_237144_a_(world, finalPos, settings, rand);
-//		template.func_237152_b_(world, finalPos, settings, rand);
+		template.placeInWorldChunk(world, finalPos, settings, rand);
+//		template.placeInWorld(world, finalPos, settings, rand);
 
 		return true;
 	}

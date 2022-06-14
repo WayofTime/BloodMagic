@@ -63,7 +63,7 @@ public class RitualMagnetic extends Ritual
 
 		for (BlockPos offset : placementRange.getContainedPositions(pos))
 		{
-			if (world.isAirBlock(offset))
+			if (world.isEmptyBlock(offset))
 			{
 				replacement = offset;
 				replace = true;
@@ -71,7 +71,7 @@ public class RitualMagnetic extends Ritual
 			}
 		}
 
-		BlockState downState = world.getBlockState(pos.down());
+		BlockState downState = world.getBlockState(pos.below());
 		int radius = getRadius(downState.getBlock());
 
 		int maxBlockChecks = 100;
@@ -102,7 +102,7 @@ public class RitualMagnetic extends Ritual
 							return;
 						}
 						checks++;
-						BlockPos newPos = pos.add(i, j, k);
+						BlockPos newPos = pos.offset(i, j, k);
 						Vector3d newPosVector = new Vector3d(newPos.getX(), newPos.getY(), newPos.getZ());
 						BlockState state = world.getBlockState(newPos);
 //						RayTraceResult fakeRayTrace = world.rayTraceBlocks(MRSpos, newPosVector, false);
@@ -208,7 +208,7 @@ public class RitualMagnetic extends Ritual
 		if (stack.isEmpty())
 			return false;
 
-		return stack.getItem().isIn(Tags.Items.ORES);
+		return stack.getItem().is(Tags.Items.ORES);
 
 //		for(ResourceLocation rl :  stack.getItem().getTags())
 //		{

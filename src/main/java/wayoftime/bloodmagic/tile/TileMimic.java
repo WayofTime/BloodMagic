@@ -70,13 +70,13 @@ public class TileMimic extends TileInventory
 	{
 		if (!heldItem.isEmpty() && player.isCreative())
 		{
-			List<EffectInstance> list = PotionUtils.getEffectsFromStack(heldItem);
+			List<EffectInstance> list = PotionUtils.getMobEffects(heldItem);
 			if (!list.isEmpty())
 			{
-				if (!world.isRemote)
+				if (!world.isClientSide)
 				{
-					setInventorySlotContents(1, heldItem.copy());
-					world.notifyBlockUpdate(pos, state, state, 3);
+					setItem(1, heldItem.copy());
+					world.sendBlockUpdated(pos, state, state, 3);
 					ChatUtil.sendNoSpam(player, new TranslationTextComponent("chat.bloodmagic.mimic.potionSet"));
 				}
 				return true;
@@ -99,26 +99,26 @@ public class TileMimic extends TileInventory
 			return true;
 		}
 
-		if (player.isSneaking())
+		if (player.isShiftKeyDown())
 			return false;
 
-		if (!player.getHeldItem(hand).isEmpty() && player.getHeldItem(hand).getItem() == new ItemStack(BloodMagicBlocks.MIMIC.get()).getItem())
+		if (!player.getItemInHand(hand).isEmpty() && player.getItemInHand(hand).getItem() == new ItemStack(BloodMagicBlocks.MIMIC.get()).getItem())
 			return false;
 
-		if (!getStackInSlot(0).isEmpty() && !player.getHeldItem(hand).isEmpty())
+		if (!getItem(0).isEmpty() && !player.getItemInHand(hand).isEmpty())
 			return false;
 
 		if (!dropItemsOnBreak && !player.isCreative())
 			return false;
 
 		Utils.insertItemToTile(this, player, 0);
-		ItemStack stack = getStackInSlot(0);
-		if (mimic == null || mimic == Blocks.AIR.getDefaultState())
+		ItemStack stack = getItem(0);
+		if (mimic == null || mimic == Blocks.AIR.defaultBlockState())
 		{
-			if (!stack.isEmpty() && stack.getItem() instanceof BlockItem && !world.isRemote)
+			if (!stack.isEmpty() && stack.getItem() instanceof BlockItem && !world.isClientSide)
 			{
 				Block block = ((BlockItem) stack.getItem()).getBlock();
-				this.setMimic(block.getDefaultState());
+				this.setMimic(block.defaultBlockState());
 //				mimic = block.getDefaultState();
 //				markDirty();
 			}
@@ -127,7 +127,7 @@ public class TileMimic extends TileInventory
 
 		if (player.isCreative())
 		{
-			dropItemsOnBreak = getStackInSlot(0).isEmpty();
+			dropItemsOnBreak = getItem(0).isEmpty();
 		}
 
 //		world.notifyBlockUpdate(pos, state, state, 3);
@@ -141,14 +141,14 @@ public class TileMimic extends TileInventory
 			return false;
 		}
 
-		if (player.getActiveItemStack().isEmpty() && !getStackInSlot(1).isEmpty())
+		if (player.getUseItem().isEmpty() && !getItem(1).isEmpty())
 		{
 			switch (sideHit)
 			{
 			case EAST: // When the block is clicked on the EAST or WEST side, potionSpawnRadius is
 						// edited.
 			case WEST:
-				if (player.isSneaking())
+				if (player.isShiftKeyDown())
 				{
 					potionSpawnRadius = Math.max(potionSpawnRadius - 1, 0);
 					ChatUtil.sendNoSpam(player, new TranslationTextComponent("chat.bloodmagic.mimic.potionSpawnRadius.down", potionSpawnRadius));
@@ -160,7 +160,7 @@ public class TileMimic extends TileInventory
 				break;
 			case NORTH: // When the block is clicked on the NORTH or SOUTH side, detectRadius is edited.
 			case SOUTH:
-				if (player.isSneaking())
+				if (player.isShiftKeyDown())
 				{
 					playerCheckRadius = Math.max(playerCheckRadius - 1, 0);
 					ChatUtil.sendNoSpam(player, new TranslationTextComponent("chat.bloodmagic.mimic.detectRadius.down", playerCheckRadius));
@@ -173,7 +173,7 @@ public class TileMimic extends TileInventory
 			case UP: // When the block is clicked on the UP or DOWN side, potionSpawnInterval is
 						// edited.
 			case DOWN:
-				if (player.isSneaking())
+				if (player.isShiftKeyDown())
 				{
 					potionSpawnInterval = Math.max(potionSpawnInterval - 1, 1);
 					ChatUtil.sendNoSpam(player, new TranslationTextComponent("chat.bloodmagic.mimic.potionInterval.down", potionSpawnInterval));
@@ -200,14 +200,14 @@ public class TileMimic extends TileInventory
 		{
 			dropMimicedTileInventory();
 		}
-		mimicedTile = getTileFromStackWithTag(getWorld(), pos, getStackInSlot(0), tileTag, mimic);
+		mimicedTile = getTileFromStackWithTag(getLevel(), worldPosition, getItem(0), tileTag, mimic);
 	}
 
 	public void dropMimicedTileInventory()
 	{
-		if (!getWorld().isRemote && mimicedTile instanceof IInventory)
+		if (!getLevel().isClientSide && mimicedTile instanceof IInventory)
 		{
-			InventoryHelper.dropInventoryItems(getWorld(), getPos(), (IInventory) mimicedTile);
+			InventoryHelper.dropContents(getLevel(), getBlockPos(), (IInventory) mimicedTile);
 		}
 	}
 
@@ -234,7 +234,7 @@ public class TileMimic extends TileInventory
 					tile.deserializeNBT(copyTag);
 				}
 
-				tile.setWorldAndPos(world, pos);
+				tile.setLevelAndPosition(world, pos);
 
 				return tile;
 			}
@@ -246,8 +246,8 @@ public class TileMimic extends TileInventory
 	public void setMimic(BlockState mimic)
 	{
 		this.mimic = mimic;
-		markDirty();
-		world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS);
+		setChanged();
+		level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS);
 	}
 
 	public BlockState getMimic()
@@ -277,19 +277,19 @@ public class TileMimic extends TileInventory
 	@Override
 	public SUpdateTileEntityPacket getUpdatePacket()
 	{
-		return new SUpdateTileEntityPacket(pos, 1, getUpdateTag());
+		return new SUpdateTileEntityPacket(worldPosition, 1, getUpdateTag());
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
 	{
 		BlockState oldMimic = mimic;
-		CompoundNBT tag = pkt.getNbtCompound();
+		CompoundNBT tag = pkt.getTag();
 		deserialize(tag);
 		if (!Objects.equals(oldMimic, mimic))
 		{
 			ModelDataManager.requestModelDataRefresh(this);
-			world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS);
+			level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS);
 		}
 	}
 
@@ -309,7 +309,7 @@ public class TileMimic extends TileInventory
 		tileTag = tag.getCompound("tileTag");
 //        stateOfReplacedBlock = StateUtil.parseState(tag.getString("stateOfReplacedBlock"));
 		readMimic(tag);
-		mimicedTile = getTileFromStackWithTag(getWorld(), pos, getStackInSlot(0), tileTag, mimic);
+		mimicedTile = getTileFromStackWithTag(getLevel(), worldPosition, getItem(0), tileTag, mimic);
 		playerCheckRadius = tag.getInt("playerCheckRadius");
 		potionSpawnRadius = tag.getInt("potionSpawnRadius");
 		potionSpawnInterval = Math.max(1, tag.getInt("potionSpawnInterval"));
@@ -349,7 +349,7 @@ public class TileMimic extends TileInventory
 	{
 		if (dropItemsOnBreak)
 		{
-			InventoryHelper.dropInventoryItems(getWorld(), getPos(), this);
+			InventoryHelper.dropContents(getLevel(), getBlockPos(), this);
 		}
 
 		dropMimicedTileInventory();

@@ -10,8 +10,8 @@ import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
-import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder;
+import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
 import wayoftime.bloodmagic.util.Constants;
 
 public class TartaricForgeRecipeBuilder extends BloodMagicRecipeBuilder<TartaricForgeRecipeBuilder>
@@ -59,11 +59,11 @@ public class TartaricForgeRecipeBuilder extends BloodMagicRecipeBuilder<Tartaric
 		}
 
 		@Override
-		public void serialize(@Nonnull JsonObject json)
+		public void serializeRecipeData(@Nonnull JsonObject json)
 		{
 			for (int i = 0; i < Math.min(input.size(), 4); i++)
 			{
-				json.add(Constants.JSON.INPUT + i, input.get(i).serialize());
+				json.add(Constants.JSON.INPUT + i, input.get(i).toJson());
 			}
 
 			json.add(Constants.JSON.OUTPUT, SerializerHelper.serializeItemStack(output));

@@ -26,7 +26,7 @@ public class ContainerAlchemyTable extends Container
 
 	public ContainerAlchemyTable(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
 	{
-		this((TileAlchemyTable) playerInventory.player.world.getTileEntity(extraData.readBlockPos()), windowId, playerInventory);
+		this((TileAlchemyTable) playerInventory.player.level.getBlockEntity(extraData.readBlockPos()), windowId, playerInventory);
 	}
 
 	public ContainerAlchemyTable(@Nullable TileAlchemyTable tile, int windowId, PlayerInventory playerInventory)
@@ -62,14 +62,14 @@ public class ContainerAlchemyTable extends Container
 	}
 
 	@Override
-	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player)
+	public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player)
 	{
 		PlayerInventory inventoryPlayer = player.inventory;
 
 		if (slotId <= TileAlchemyTable.outputSlot && slotId >= 0)
 		{
 			Slot slot = this.getSlot(slotId);
-			if (!slot.getHasStack() && inventoryPlayer.getItemStack().isEmpty())
+			if (!slot.hasItem() && inventoryPlayer.getCarried().isEmpty())
 			{
 //				((TileAlchemyTable) tileTable).toggleInputSlotAccessible(slotId);
 				if (tileTable.activeSlot == slotId)
@@ -82,51 +82,51 @@ public class ContainerAlchemyTable extends Container
 			}
 		}
 
-		return super.slotClick(slotId, dragType, clickTypeIn, player);
+		return super.clicked(slotId, dragType, clickTypeIn, player);
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index)
+	public ItemStack quickMoveStack(PlayerEntity playerIn, int index)
 	{
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
+		Slot slot = this.slots.get(index);
 
-		if (slot != null && slot.getHasStack())
+		if (slot != null && slot.hasItem())
 		{
-			ItemStack itemstack1 = slot.getStack();
+			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 
 			if (index == 7)
 			{
-				if (!this.mergeItemStack(itemstack1, 8, 8 + 36, true))
+				if (!this.moveItemStackTo(itemstack1, 8, 8 + 36, true))
 				{
 					return ItemStack.EMPTY;
 				}
 
-				slot.onSlotChange(itemstack1, itemstack);
+				slot.onQuickCraft(itemstack1, itemstack);
 			} else if (index > 7)
 			{
 				if (itemstack1.getItem() instanceof IBloodOrb)
 				{
-					if (!this.mergeItemStack(itemstack1, 6, 7, false))
+					if (!this.moveItemStackTo(itemstack1, 6, 7, false))
 					{
 						return ItemStack.EMPTY;
 					}
-				} else if (!this.mergeItemStack(itemstack1, 0, 6, false))
+				} else if (!this.moveItemStackTo(itemstack1, 0, 6, false))
 				{
 					return ItemStack.EMPTY;
 				}
-			} else if (!this.mergeItemStack(itemstack1, 8, 8 + 36, false))
+			} else if (!this.moveItemStackTo(itemstack1, 8, 8 + 36, false))
 			{
 				return ItemStack.EMPTY;
 			}
 
 			if (itemstack1.getCount() == 0)
 			{
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else
 			{
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 
 			if (itemstack1.getCount() == itemstack.getCount())
@@ -141,9 +141,9 @@ public class ContainerAlchemyTable extends Container
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn)
+	public boolean stillValid(PlayerEntity playerIn)
 	{
-		return this.tileTable.isUsableByPlayer(playerIn);
+		return this.tileTable.stillValid(playerIn);
 	}
 
 	private class SlotOrb extends Slot
@@ -154,7 +154,7 @@ public class ContainerAlchemyTable extends Container
 		}
 
 		@Override
-		public boolean isItemValid(ItemStack itemStack)
+		public boolean mayPlace(ItemStack itemStack)
 		{
 			return itemStack.getItem() instanceof IBloodOrb;
 		}
@@ -168,7 +168,7 @@ public class ContainerAlchemyTable extends Container
 		}
 
 		@Override
-		public boolean isItemValid(ItemStack stack)
+		public boolean mayPlace(ItemStack stack)
 		{
 			return false;
 		}

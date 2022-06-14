@@ -19,18 +19,18 @@ import wayoftime.bloodmagic.client.render.model.ModelMeteor;
 public class EntityMeteorRenderer extends EntityRenderer<Entity>
 {
 	public Model model = new ModelMeteor();
-	private static final ResourceLocation field_110833_a = BloodMagic.rl("textures/models/meteor.png");
+	private static final ResourceLocation COW_LOCATION = BloodMagic.rl("textures/models/meteor.png");
 	private float scale = 1.0f;
 
 	public EntityMeteorRenderer(EntityRendererManager renderManagerIn)
 	{
 		super(renderManagerIn);
-		this.shadowSize = 0.5F;
+		this.shadowRadius = 0.5F;
 	}
 
 	public void render(Entity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn)
 	{
-		matrixStackIn.push();
+		matrixStackIn.pushPose();
 //	      matrixStackIn.translate(0.0D, 0.375D, 0.0D);
 //	      matrixStackIn.rotate(Vector3f.YP.rotationDegrees(180.0F - entityYaw));
 //	      float f = (float)entityIn.getTimeSinceHit() - partialTicks;
@@ -51,22 +51,22 @@ public class EntityMeteorRenderer extends EntityRenderer<Entity>
 //	      matrixStackIn.scale(-1.0F, -1.0F, 1.0F);
 //	      matrixStackIn.rotate(Vector3f.YP.rotationDegrees(90.0F));
 //	      this.modelBoat.setRotationAngles(entityIn, partialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
-		IVertexBuilder ivertexbuilder = bufferIn.getBuffer(this.model.getRenderType(this.getEntityTexture(entityIn)));
-		this.model.render(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+		IVertexBuilder ivertexbuilder = bufferIn.getBuffer(this.model.renderType(this.getTextureLocation(entityIn)));
+		this.model.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 //	      if (!entityIn.canSwim()) {
 //	         IVertexBuilder ivertexbuilder1 = bufferIn.getBuffer(RenderType.getWaterMask());
-//	         this.modelBoat.func_228245_c_().render(matrixStackIn, ivertexbuilder1, packedLightIn, OverlayTexture.NO_OVERLAY);
+//	         this.modelBoat.waterPatch().render(matrixStackIn, ivertexbuilder1, packedLightIn, OverlayTexture.NO_OVERLAY);
 //	      }
 
-		matrixStackIn.pop();
+		matrixStackIn.popPose();
 		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 	}
 
 	/**
 	 * Returns the location of an entity's texture.
 	 */
-	public ResourceLocation getEntityTexture(Entity entity)
+	public ResourceLocation getTextureLocation(Entity entity)
 	{
-		return field_110833_a;
+		return COW_LOCATION;
 	}
 }

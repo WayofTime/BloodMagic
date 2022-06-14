@@ -27,14 +27,14 @@ public class TestSpecialRecipe extends SpecialRecipe implements IShapedRecipe<Cr
 	}
 
 	@Override
-	public ItemStack getCraftingResult(CraftingInventory inv)
+	public ItemStack assemble(CraftingInventory inv)
 	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean canFit(int width, int height)
+	public boolean canCraftInDimensions(int width, int height)
 	{
 		// TODO Auto-generated method stub
 		return false;

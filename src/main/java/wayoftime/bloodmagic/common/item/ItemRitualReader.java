@@ -49,18 +49,18 @@ public class ItemRitualReader extends Item
 
 	public ItemRitualReader()
 	{
-		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
 		if (!stack.hasTag())
 			return;
 
 		EnumRitualReaderState state = this.getState(stack);
-		tooltip.add(new TranslationTextComponent(tooltipBase + "currentState", TextHelper.localizeEffect(tooltipBase + state.toString().toLowerCase(Locale.ROOT))).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent(tooltipBase + "currentState", TextHelper.localizeEffect(tooltipBase + state.toString().toLowerCase(Locale.ROOT))).withStyle(TextFormatting.GRAY));
 
 		tooltip.add(new StringTextComponent(""));
 
@@ -68,28 +68,28 @@ public class ItemRitualReader extends Item
 
 		if (sneaking)
 		{
-			tooltip.add(new TranslationTextComponent(tooltipBase + "desc." + state.toString().toLowerCase(Locale.ROOT)).mergeStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent(tooltipBase + "desc." + state.toString().toLowerCase(Locale.ROOT)).withStyle(TextFormatting.GRAY));
 		} else
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.extraInfo").mergeStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.extraInfo").withStyle(TextFormatting.GRAY));
 		}
 
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
-		RayTraceResult ray = Item.rayTrace(world, player, FluidMode.NONE);
+		ItemStack stack = player.getItemInHand(hand);
+		RayTraceResult ray = Item.getPlayerPOVHitResult(world, player, FluidMode.NONE);
 		if (ray != null && ray.getType() == RayTraceResult.Type.BLOCK)
 		{
 			return new ActionResult<>(ActionResultType.PASS, stack);
 		}
 
-		if (player.isSneaking())
+		if (player.isShiftKeyDown())
 		{
-			if (!world.isRemote)
+			if (!world.isClientSide)
 			{
 				cycleReader(stack, player);
 			}
@@ -101,26 +101,26 @@ public class ItemRitualReader extends Item
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context)
+	public ActionResultType useOn(ItemUseContext context)
 	{
-		World world = context.getWorld();
-		BlockPos pos = context.getPos();
+		World world = context.getLevel();
+		BlockPos pos = context.getClickedPos();
 
 		PlayerEntity player = context.getPlayer();
-		ItemStack stack = context.getItem();
+		ItemStack stack = context.getItemInHand();
 		Hand hand = context.getHand();
-		Direction direction = context.getFace();
+		Direction direction = context.getClickedFace();
 
 //		ItemStack stack = player.getHeldItem(hand);
-		if (!world.isRemote)
+		if (!world.isClientSide)
 		{
 			EnumRitualReaderState state = this.getState(stack);
-			TileEntity tile = world.getTileEntity(pos);
+			TileEntity tile = world.getBlockEntity(pos);
 			if (tile instanceof IMasterRitualStone)
 			{
 				IMasterRitualStone master = (IMasterRitualStone) tile;
 				if (master.getCurrentRitual() == null)
-					super.onItemUse(context);
+					super.useOn(context);
 				this.setMasterBlockPos(stack, pos);
 				this.setBlockPos(stack, BlockPos.ZERO);
 
@@ -131,7 +131,7 @@ public class ItemRitualReader extends Item
 
 					break;
 				case SET_AREA:
-					if (player.isSneaking() && player.getHeldItem(Hand.OFF_HAND).getItem() instanceof ItemBloodOrb)
+					if (player.isShiftKeyDown() && player.getItemInHand(Hand.OFF_HAND).getItem() instanceof ItemBloodOrb)
 					{
 						Ritual ritual = master.getCurrentRitual();
 						for (String range : ritual.getListOfRanges())
@@ -144,7 +144,7 @@ public class ItemRitualReader extends Item
 
 					String range = this.getCurrentBlockRange(stack);
 
-					if (range == null || range.isEmpty() || player.isSneaking())
+					if (range == null || range.isEmpty() || player.isShiftKeyDown())
 					{
 						String newRange = master.getNextBlockRange(range);
 						range = newRange;
@@ -156,7 +156,7 @@ public class ItemRitualReader extends Item
 					break;
 				case SET_WILL_TYPES:
 					List<EnumDemonWillType> typeList = new ArrayList<>();
-					NonNullList<ItemStack> inv = player.inventory.mainInventory;
+					NonNullList<ItemStack> inv = player.inventory.items;
 					for (int i = 0; i < 9; i++)
 					{
 						ItemStack testStack = inv.get(i);
@@ -193,10 +193,10 @@ public class ItemRitualReader extends Item
 						{
 							BlockPos pos1 = pos.subtract(masterPos);
 							this.setBlockPos(stack, pos1);
-							player.sendStatusMessage(new TranslationTextComponent("ritual.bloodmagic.blockRange.firstBlock"), true);
+							player.displayClientMessage(new TranslationTextComponent("ritual.bloodmagic.blockRange.firstBlock"), true);
 						} else
 						{
-							tile = world.getTileEntity(masterPos);
+							tile = world.getBlockEntity(masterPos);
 							if (tile instanceof IMasterRitualStone)
 							{
 								IMasterRitualStone master = (IMasterRitualStone) tile;
@@ -219,16 +219,16 @@ public class ItemRitualReader extends Item
 								switch (master.setBlockRangeByBounds(player, range, containedPos, pos2))
 								{
 								case SUCCESS:
-									player.sendStatusMessage(new TranslationTextComponent("ritual.bloodmagic.blockRange.success"), true);
+									player.displayClientMessage(new TranslationTextComponent("ritual.bloodmagic.blockRange.success"), true);
 									break;
 								case NOT_WITHIN_BOUNDARIES:
-									player.sendStatusMessage(new TranslationTextComponent("ritual.bloodmagic.blockRange.tooFar", maxVerticalRange, maxHorizontalRange), false);
+									player.displayClientMessage(new TranslationTextComponent("ritual.bloodmagic.blockRange.tooFar", maxVerticalRange, maxHorizontalRange), false);
 									break;
 								case VOLUME_TOO_LARGE:
-									player.sendStatusMessage(new TranslationTextComponent("ritual.bloodmagic.blockRange.tooBig", maxVolume), false);
+									player.displayClientMessage(new TranslationTextComponent("ritual.bloodmagic.blockRange.tooBig", maxVolume), false);
 									break;
 								default:
-									player.sendStatusMessage(new TranslationTextComponent("ritual.bloodmagic.blockRange.noRange"), false);
+									player.displayClientMessage(new TranslationTextComponent("ritual.bloodmagic.blockRange.noRange"), false);
 									break;
 								}
 							}
@@ -243,7 +243,7 @@ public class ItemRitualReader extends Item
 
 			if (state == EnumRitualReaderState.SET_AREA)
 			{
-				TileEntity tile = world.getTileEntity(pos);
+				TileEntity tile = world.getBlockEntity(pos);
 				if (tile instanceof TileMasterRitualStone)
 				{
 
@@ -255,7 +255,7 @@ public class ItemRitualReader extends Item
 
 		}
 
-		return super.onItemUse(context);
+		return super.useOn(context);
 	}
 
 	public BlockPos getBlockPos(ItemStack stack)

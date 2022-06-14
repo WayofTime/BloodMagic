@@ -38,12 +38,12 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 	{
 		super(container, playerInventory, title);
 		tileNode = container.tileNode;
-		this.xSize = 176;
-		this.ySize = 187;
+		this.imageWidth = 176;
+		this.imageHeight = 187;
 
-		Vector3d facingVec = Vector3d.fromPitchYaw(playerInventory.player.getPitchYaw());
-		this.playerFacing = Direction.getFacingFromVector(facingVec.x, facingVec.y, facingVec.z);
-		this.horizontalFacing = playerInventory.player.getHorizontalFacing();
+		Vector3d facingVec = Vector3d.directionFromRotation(playerInventory.player.getRotationVector());
+		this.playerFacing = Direction.getNearest(facingVec.x, facingVec.y, facingVec.z);
+		this.horizontalFacing = playerInventory.player.getDirection();
 
 	}
 
@@ -51,8 +51,8 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 	public void init()
 	{
 		super.init();
-		left = (this.width - this.xSize) / 2;
-		top = (this.height - this.ySize) / 2;
+		left = (this.width - this.imageWidth) / 2;
+		top = (this.height - this.imageHeight) / 2;
 
 		this.buttons.clear();
 
@@ -61,7 +61,7 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 			Direction dir = getFilterDirectionForButton(i);
 			Pair<Integer, Integer> buttonLocation = getButtonLocation(i);
 			String dirName = getStringForDirection(dir);
-			if (!tileNode.getWorld().isAirBlock(tileNode.getCurrentBlockPos().offset(dir)))
+			if (!tileNode.getLevel().isEmptyBlock(tileNode.getCurrentBlockPos().relative(dir)))
 			{
 				dirName = "";
 			}
@@ -97,9 +97,9 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 			case 4:
 				return horizontalFacing;
 			case 1:
-				return horizontalFacing.rotateYCCW();
+				return horizontalFacing.getCounterClockWise();
 			case 3:
-				return horizontalFacing.rotateY();
+				return horizontalFacing.getClockWise();
 			}
 		} else if (playerFacing == Direction.DOWN)
 		{
@@ -110,9 +110,9 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 			case 4:
 				return horizontalFacing.getOpposite();
 			case 1:
-				return horizontalFacing.rotateYCCW();
+				return horizontalFacing.getCounterClockWise();
 			case 3:
-				return horizontalFacing.rotateY();
+				return horizontalFacing.getClockWise();
 			}
 		} else
 		{
@@ -123,9 +123,9 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 			case 4:
 				return Direction.DOWN;
 			case 1:
-				return horizontalFacing.rotateYCCW();
+				return horizontalFacing.getCounterClockWise();
 			case 3:
-				return horizontalFacing.rotateY();
+				return horizontalFacing.getClockWise();
 			}
 		}
 
@@ -160,21 +160,21 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(MatrixStack stack, int mouseX, int mouseY)
+	protected void renderLabels(MatrixStack stack, int mouseX, int mouseY)
 	{
-		this.font.func_243248_b(stack, new StringTextComponent("" + getCurrentActiveSlotPriority()), 71 + 5, 51 + 5, 0xFFFFFF);
-//		this.font.func_243248_b(stack, new TranslationTextComponent("tile.bloodmagic.routingnode.name"), 8, 5, 4210752);
-//		this.font.func_243248_b(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
+		this.font.draw(stack, new StringTextComponent("" + getCurrentActiveSlotPriority()), 71 + 5, 51 + 5, 0xFFFFFF);
+//		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.routingnode.name"), 8, 5, 4210752);
+//		this.font.draw(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
 
 		BlockPos tilePos = tileNode.getCurrentBlockPos();
-		World world = tileNode.getWorld();
+		World world = tileNode.getLevel();
 
 		for (int i = 0; i < 6; i++)
 		{
 			Direction dir = getFilterDirectionForButton(i);
 			Pair<Integer, Integer> buttonLocation = getButtonLocation(i);
 
-			BlockState blockState = world.getBlockState(tilePos.offset(dir));
+			BlockState blockState = world.getBlockState(tilePos.relative(dir));
 			Block block = blockState.getBlock();
 			if (block != null)
 			{
@@ -207,7 +207,7 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 
 	private int getCurrentActiveSlotPriority()
 	{
-		Direction direction = Direction.byIndex(tileNode.getCurrentActiveSlot());
+		Direction direction = Direction.from3DDataValue(tileNode.getCurrentActiveSlot());
 		if (direction != null)
 		{
 			return tileNode.getPriority(direction);
@@ -230,13 +230,13 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		getMinecraft().getTextureManager().bindTexture(background);
-		int i = (this.width - this.xSize) / 2;
-		int j = (this.height - this.ySize) / 2;
-		this.blit(stack, i, j, 0, 0, this.xSize, this.ySize);
+		getMinecraft().getTextureManager().bind(background);
+		int i = (this.width - this.imageWidth) / 2;
+		int j = (this.height - this.imageHeight) / 2;
+		this.blit(stack, i, j, 0, 0, this.imageWidth, this.imageHeight);
 
 	}
 
@@ -261,15 +261,15 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 		RenderSystem.translatef(0.0F, 0.0F, 32.0F);
 //		this.getbl
 		this.setBlitOffset(1);
-		this.itemRenderer.zLevel = 1;
+		this.itemRenderer.blitOffset = 1;
 		net.minecraft.client.gui.FontRenderer font = stack.getItem().getFontRenderer(stack);
 		if (font == null)
 			font = this.font;
-		this.itemRenderer.renderItemAndEffectIntoGUI(stack, x, y);
+		this.itemRenderer.renderAndDecorateItem(stack, x, y);
 		int offset = 8; // (this.draggedStack.isEmpty() ? 0 : 8)
-		this.itemRenderer.renderItemOverlayIntoGUI(font, stack, x, y - offset, altText);
+		this.itemRenderer.renderGuiItemDecorations(font, stack, x, y - offset, altText);
 		this.setBlitOffset(0);
-		this.itemRenderer.zLevel = 0.0F;
+		this.itemRenderer.blitOffset = 0.0F;
 	}
 
 	public class DirectionalPress implements Button.IPressable
@@ -292,7 +292,7 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 		{
 			if (button.active)
 			{
-				BloodMagicPacketHandler.INSTANCE.sendToServer(new ItemRoutingNodeButtonPacket(node.getPos(), direction.ordinal()));
+				BloodMagicPacketHandler.INSTANCE.sendToServer(new ItemRoutingNodeButtonPacket(node.getBlockPos(), direction.ordinal()));
 
 				if (id < 6)
 				{
@@ -320,7 +320,7 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 		{
 			if (button.active)
 			{
-				BloodMagicPacketHandler.INSTANCE.sendToServer(new ItemRoutingNodeButtonPacket(node.getPos(), id));
+				BloodMagicPacketHandler.INSTANCE.sendToServer(new ItemRoutingNodeButtonPacket(node.getBlockPos(), id));
 			}
 		}
 	}

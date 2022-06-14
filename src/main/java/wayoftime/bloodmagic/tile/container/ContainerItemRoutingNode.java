@@ -23,7 +23,7 @@ public class ContainerItemRoutingNode extends Container
 
 	public ContainerItemRoutingNode(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
 	{
-		this((TileFilteredRoutingNode) playerInventory.player.world.getTileEntity(extraData.readBlockPos()), windowId, playerInventory);
+		this((TileFilteredRoutingNode) playerInventory.player.level.getBlockEntity(extraData.readBlockPos()), windowId, playerInventory);
 	}
 
 	public ContainerItemRoutingNode(@Nullable TileFilteredRoutingNode tile, int windowId, PlayerInventory playerInventory)
@@ -66,45 +66,45 @@ public class ContainerItemRoutingNode extends Container
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index)
+	public ItemStack quickMoveStack(PlayerEntity playerIn, int index)
 	{
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
+		Slot slot = this.slots.get(index);
 
-		if (slot != null && slot.getHasStack())
+		if (slot != null && slot.hasItem())
 		{
-			ItemStack itemstack1 = slot.getStack();
+			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 
 			if (index == 0)
 			{
-				if (!this.mergeItemStack(itemstack1, slotsOccupied, slotsOccupied + 36, true))
+				if (!this.moveItemStackTo(itemstack1, slotsOccupied, slotsOccupied + 36, true))
 				{
 					return null;
 				}
 
-				slot.onSlotChange(itemstack1, itemstack);
+				slot.onQuickCraft(itemstack1, itemstack);
 			} else if (index > 0)
 			{
 //                return null;
 				if (itemstack1.getItem() instanceof IRoutingFilterProvider) // Change to check item is a filter
 				{
-					if (!this.mergeItemStack(itemstack1, 0, 1, false))
+					if (!this.moveItemStackTo(itemstack1, 0, 1, false))
 					{
 						return ItemStack.EMPTY;
 					}
 				}
-			} else if (!this.mergeItemStack(itemstack1, slotsOccupied, 36 + slotsOccupied, false))
+			} else if (!this.moveItemStackTo(itemstack1, slotsOccupied, 36 + slotsOccupied, false))
 			{
 				return ItemStack.EMPTY;
 			}
 
 			if (itemstack1.isEmpty())
 			{
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else
 			{
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 
 			if (itemstack1.getCount() == itemstack.getCount())
@@ -119,15 +119,15 @@ public class ContainerItemRoutingNode extends Container
 	}
 
 	@Override
-	public void detectAndSendChanges()
+	public void broadcastChanges()
 	{
-		super.detectAndSendChanges();
+		super.broadcastChanges();
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn)
+	public boolean stillValid(PlayerEntity playerIn)
 	{
-		return this.tileNode.isUsableByPlayer(playerIn);
+		return this.tileNode.stillValid(playerIn);
 	}
 
 	private class SlotItemFilter extends Slot
@@ -143,47 +143,47 @@ public class ContainerItemRoutingNode extends Container
 		}
 
 		@Override
-		public boolean isItemValid(ItemStack itemStack)
+		public boolean mayPlace(ItemStack itemStack)
 		{
 			return itemStack.getItem() instanceof IRoutingFilterProvider; // TODO: Create a new Item that holds the
 																			// filter.
 		}
 
 		@Override
-		public int getSlotStackLimit()
+		public int getMaxStackSize()
 		{
 			return 1;
 		}
 
 		@Override
-		public void onSlotChanged()
+		public void setChanged()
 		{
-			super.onSlotChanged();
-			container.resetItemInventory(getStack());
+			super.setChanged();
+			container.resetItemInventory(getItem());
 			for (int i = 1; i <= 9; i++)
 			{
 				Slot slot = container.getSlot(i);
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 		}
 
 		@Override
-		public ItemStack getStack()
+		public ItemStack getItem()
 		{
-			return this.inventory.getStackInSlot(getActiveSlot());
+			return this.inventory.getItem(getActiveSlot());
 		}
 
 		@Override
-		public void putStack(@Nullable ItemStack stack)
+		public void set(@Nullable ItemStack stack)
 		{
-			this.inventory.setInventorySlotContents(getActiveSlot(), stack);
-			this.onSlotChanged();
+			this.inventory.setItem(getActiveSlot(), stack);
+			this.setChanged();
 		}
 
 		@Override
-		public ItemStack decrStackSize(int amount)
+		public ItemStack remove(int amount)
 		{
-			return this.inventory.decrStackSize(getActiveSlot(), amount);
+			return this.inventory.removeItem(getActiveSlot(), amount);
 		}
 
 		public int getActiveSlot()

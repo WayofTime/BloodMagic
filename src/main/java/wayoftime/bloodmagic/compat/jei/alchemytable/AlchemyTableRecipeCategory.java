@@ -140,7 +140,7 @@ public class AlchemyTableRecipeCategory implements IRecipeCategory<RecipeAlchemy
 		}
 
 		List<Ingredient> ingList = Lists.newArrayList();
-		ingList.add(Ingredient.fromStacks(validOrbStacks));
+		ingList.add(Ingredient.of(validOrbStacks));
 		ingList.addAll(recipe.getInput());
 		ingredients.setInputIngredients(ingList);
 		ingredients.setOutput(VanillaTypes.ITEM, recipe.getOutput());

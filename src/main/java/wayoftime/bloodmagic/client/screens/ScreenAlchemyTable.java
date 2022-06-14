@@ -25,6 +25,8 @@ import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
 import wayoftime.bloodmagic.tile.TileAlchemyTable;
 import wayoftime.bloodmagic.tile.container.ContainerAlchemyTable;
 
+import net.minecraft.client.gui.widget.button.Button.IPressable;
+
 public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 {
 	private static final ResourceLocation background = new ResourceLocation(BloodMagic.MODID, "textures/gui/alchemytable.png");
@@ -38,15 +40,15 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 	{
 		super(container, playerInventory, title);
 		tileTable = container.tileTable;
-		this.xSize = 176;
-		this.ySize = 205;
+		this.imageWidth = 176;
+		this.imageHeight = 205;
 
 		orbError.clear();
-		orbError.add(new TranslationTextComponent("tooltip.bloodmagic.alchemytable.orberror.title").mergeStyle(TextFormatting.RED));
-		orbError.add(new TranslationTextComponent("tooltip.bloodmagic.alchemytable.orberror.text").mergeStyle(TextFormatting.GRAY));
+		orbError.add(new TranslationTextComponent("tooltip.bloodmagic.alchemytable.orberror.title").withStyle(TextFormatting.RED));
+		orbError.add(new TranslationTextComponent("tooltip.bloodmagic.alchemytable.orberror.text").withStyle(TextFormatting.GRAY));
 		lpError.clear();
-		lpError.add(new TranslationTextComponent("tooltip.bloodmagic.alchemytable.lperror.title").mergeStyle(TextFormatting.RED));
-		lpError.add(new TranslationTextComponent("tooltip.bloodmagic.alchemytable.lperror.text").mergeStyle(TextFormatting.GRAY));
+		lpError.add(new TranslationTextComponent("tooltip.bloodmagic.alchemytable.lperror.title").withStyle(TextFormatting.RED));
+		lpError.add(new TranslationTextComponent("tooltip.bloodmagic.alchemytable.lperror.text").withStyle(TextFormatting.GRAY));
 	}
 
 	@Override
@@ -56,18 +58,18 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(MatrixStack stack, int mouseX, int mouseY)
+	protected void renderLabels(MatrixStack stack, int mouseX, int mouseY)
 	{
-		this.font.func_243248_b(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
-		this.font.func_243248_b(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
+		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
+		this.font.draw(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
 	}
 
 	@Override
 	public void init()
 	{
 		super.init();
-		left = (this.width - this.xSize) / 2;
-		top = (this.height - this.ySize) / 2;
+		left = (this.width - this.imageWidth) / 2;
+		top = (this.height - this.imageHeight) / 2;
 
 		this.buttons.clear();
 //		this.buttons.add();
@@ -80,13 +82,13 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		getMinecraft().getTextureManager().bindTexture(background);
-		int i = (this.width - this.xSize) / 2;
-		int j = (this.height - this.ySize) / 2;
-		this.blit(stack, i, j, 0, 0, this.xSize, this.ySize);
+		getMinecraft().getTextureManager().bind(background);
+		int i = (this.width - this.imageWidth) / 2;
+		int j = (this.height - this.imageHeight) / 2;
+		this.blit(stack, i, j, 0, 0, this.imageWidth, this.imageHeight);
 
 		int l = this.getCookProgressScaled(90);
 		this.blit(stack, i + 106, j + 14 + 90 - l, 176, 90 - l, 18, l);
@@ -106,21 +108,21 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 		int slotId = tileTable.activeSlot;
 		if (slotId != -1)
 		{
-			Slot slot = this.getContainer().getSlot(slotId);
+			Slot slot = this.getMenu().getSlot(slotId);
 
 			if (slotId == TileAlchemyTable.outputSlot)
 			{
-				this.blit(stack, i + slot.xPos, j + slot.yPos, 195, 37, 16, 16);
+				this.blit(stack, i + slot.x, j + slot.y, 195, 37, 16, 16);
 			} else
 			{
-				this.blit(stack, i + slot.xPos, j + slot.yPos, 195, 19, 16, 16);
+				this.blit(stack, i + slot.x, j + slot.y, 195, 19, 16, 16);
 			}
 
 			for (int buttonId = 0; buttonId < 6; buttonId++)
 			{
 				int xOffset = (buttonId % 2) * 18 + 133;
 				int yOffset = (buttonId / 2) * 18 + 50;
-				if (tileTable.isSlotEnabled(slotId, Direction.byIndex(buttonId)))
+				if (tileTable.isSlotEnabled(slotId, Direction.from3DDataValue(buttonId)))
 				{
 					this.blit(stack, i + xOffset, j + yOffset, 212, 18, 18, 18);
 				} else
@@ -185,8 +187,8 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 		public void renderButton(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks)
 		{
 			Minecraft minecraft = Minecraft.getInstance();
-			FontRenderer fontrenderer = minecraft.fontRenderer;
-			minecraft.getTextureManager().bindTexture(WIDGETS_LOCATION);
+			FontRenderer fontrenderer = minecraft.font;
+			minecraft.getTextureManager().bind(WIDGETS_LOCATION);
 
 			// Vanilla's method
 //			RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
@@ -252,7 +254,7 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 			{
 				boolean enabled = table.isSlotEnabled(activeSlot, direction);
 				table.setSlotEnabled(!enabled, activeSlot, direction);
-				BloodMagicPacketHandler.INSTANCE.sendToServer(new AlchemyTableButtonPacket(table.getPos(), activeSlot, direction, !enabled));
+				BloodMagicPacketHandler.INSTANCE.sendToServer(new AlchemyTableButtonPacket(table.getBlockPos(), activeSlot, direction, !enabled));
 			}
 ////			if (button.visible)
 //			{

@@ -46,7 +46,7 @@ public class CycleRitualDivinerPacket
 
 		if (msg.slot > -1 && msg.slot < 9)
 		{
-			itemStack = playerEntity.inventory.getStackInSlot(msg.slot);
+			itemStack = playerEntity.inventory.getItem(msg.slot);
 		}
 
 		if (!itemStack.isEmpty() && itemStack.getItem() instanceof ItemRitualDiviner)

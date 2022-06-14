@@ -20,7 +20,7 @@ public class TileAlchemyArray extends TileInventory implements ITickableTileEnti
 
 	public boolean isActive = false;
 	public int activeCounter = 0;
-	public Direction rotation = Direction.byHorizontalIndex(0);
+	public Direction rotation = Direction.from2DDataValue(0);
 	public int rotateCooldown = 0;
 
 	private String key = "";
@@ -42,7 +42,7 @@ public class TileAlchemyArray extends TileInventory implements ITickableTileEnti
 	{
 		if (arrayEffect != null)
 		{
-			arrayEffect.onEntityCollidedWithBlock(this, getWorld(), pos, state, entity);
+			arrayEffect.onEntityCollidedWithBlock(this, getLevel(), worldPosition, state, entity);
 		}
 	}
 
@@ -60,7 +60,7 @@ public class TileAlchemyArray extends TileInventory implements ITickableTileEnti
 		{
 			this.doDropIngredients = tagCompound.getBoolean("doDropIngredients");
 		}
-		this.rotation = Direction.byHorizontalIndex(tagCompound.getInt(Constants.NBT.DIRECTION));
+		this.rotation = Direction.from2DDataValue(tagCompound.getInt(Constants.NBT.DIRECTION));
 
 		CompoundNBT arrayTag = tagCompound.getCompound("arrayTag");
 //		arrayEffect = AlchemyArrayRegistry.getEffect(world, this.getStackInSlot(0), this.getStackInSlot(1));
@@ -83,7 +83,7 @@ public class TileAlchemyArray extends TileInventory implements ITickableTileEnti
 		tagCompound.putInt("activeCounter", activeCounter);
 		tagCompound.putString("stringKey", "".equals(key) ? "empty" : key.toString());
 		tagCompound.putBoolean("doDropIngredients", doDropIngredients);
-		tagCompound.putInt(Constants.NBT.DIRECTION, rotation.getHorizontalIndex());
+		tagCompound.putInt(Constants.NBT.DIRECTION, rotation.get2DDataValue());
 
 		CompoundNBT arrayTag = new CompoundNBT();
 		if (arrayEffect != null)
@@ -122,7 +122,7 @@ public class TileAlchemyArray extends TileInventory implements ITickableTileEnti
 
 		} else
 		{
-			AlchemyArrayEffect effect = AlchemyArrayRegistry.getEffect(world, this.getStackInSlot(0), this.getStackInSlot(1));
+			AlchemyArrayEffect effect = AlchemyArrayRegistry.getEffect(level, this.getItem(0), this.getItem(1));
 //			System.out.println("Effect: " + effect);
 			if (effect == null)
 			{
@@ -139,9 +139,9 @@ public class TileAlchemyArray extends TileInventory implements ITickableTileEnti
 			isActive = true;
 			if (arrayEffect.update(this, this.activeCounter))
 			{
-				this.decrStackSize(0, 1);
-				this.decrStackSize(1, 1);
-				this.getWorld().setBlockState(getPos(), Blocks.AIR.getDefaultState());
+				this.removeItem(0, 1);
+				this.removeItem(1, 1);
+				this.getLevel().setBlockAndUpdate(getBlockPos(), Blocks.AIR.defaultBlockState());
 			}
 
 			return true;
@@ -161,7 +161,7 @@ public class TileAlchemyArray extends TileInventory implements ITickableTileEnti
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int slot, ItemStack itemstack)
+	public boolean canPlaceItem(int slot, ItemStack itemstack)
 	{
 		return slot == 0 || slot == 1;
 	}

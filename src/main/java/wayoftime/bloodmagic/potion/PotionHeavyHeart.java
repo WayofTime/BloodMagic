@@ -12,16 +12,16 @@ public class PotionHeavyHeart extends PotionBloodMagic
 	}
 
 	@Override
-	public void performEffect(LivingEntity entity, int amplifier)
+	public void applyEffectTick(LivingEntity entity, int amplifier)
 	{
 		double modifier = -0.03 * (amplifier + 1);
-		Vector3d motion = entity.getMotion();
+		Vector3d motion = entity.getDeltaMovement();
 		motion = motion.add(0, modifier, 0);
-		entity.setMotion(motion);
+		entity.setDeltaMovement(motion);
 	}
 
 	@Override
-	public boolean isReady(int duration, int amplifier)
+	public boolean isDurationEffectTick(int duration, int amplifier)
 	{
 		return true;
 	}

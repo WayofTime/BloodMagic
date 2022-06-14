@@ -31,13 +31,13 @@ public class FilterButtonPacket
 	{
 		buf.writeInt(pkt.slot);
 		buf.writeInt(pkt.ghostSlot);
-		buf.writeString(pkt.buttonKey);
+		buf.writeUtf(pkt.buttonKey);
 		buf.writeInt(pkt.currentButtonState);
 	}
 
 	public static FilterButtonPacket decode(PacketBuffer buf)
 	{
-		FilterButtonPacket pkt = new FilterButtonPacket(buf.readInt(), buf.readInt(), buf.readString(32767), buf.readInt());
+		FilterButtonPacket pkt = new FilterButtonPacket(buf.readInt(), buf.readInt(), buf.readUtf(32767), buf.readInt());
 
 		return pkt;
 	}
@@ -54,7 +54,7 @@ public class FilterButtonPacket
 
 		if (msg.slot > -1 && msg.slot < 9)
 		{
-			itemStack = playerEntity.inventory.getStackInSlot(msg.slot);
+			itemStack = playerEntity.inventory.getItem(msg.slot);
 		}
 
 		if (!itemStack.isEmpty() && itemStack.getItem() instanceof IItemFilterProvider)

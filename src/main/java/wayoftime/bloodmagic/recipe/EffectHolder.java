@@ -94,7 +94,7 @@ public class EffectHolder
 	public static EffectHolder read(CompoundNBT nbt)
 	{
 		int i = nbt.getInt("Id");
-		Effect effect = Effect.get(i);
+		Effect effect = Effect.byId(i);
 		return effect == null ? null : readInternal(effect, nbt);
 	}
 

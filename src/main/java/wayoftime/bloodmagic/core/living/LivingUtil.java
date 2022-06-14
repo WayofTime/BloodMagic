@@ -87,7 +87,7 @@ public class LivingUtil
 			MinecraftForge.EVENT_BUS.post(levelUpEvent);
 			didUpgrade = true;
 
-			player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.living_upgrade_level_increase", new TranslationTextComponent(upgrade.getTranslationKey()), newLevel), true);
+			player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.living_upgrade_level_increase", new TranslationTextComponent(upgrade.getTranslationKey()), newLevel), true);
 		}
 
 //		System.out.println("Adding experience! Total experience is: " + currentExperience);
@@ -202,7 +202,7 @@ public class LivingUtil
 			MinecraftForge.EVENT_BUS.post(levelUpEvent);
 			didUpgrade = true;
 
-			player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.living_upgrade_level_increase", new TranslationTextComponent(upgrade.getTranslationKey()), newLevel), true);
+			player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.living_upgrade_level_increase", new TranslationTextComponent(upgrade.getTranslationKey()), newLevel), true);
 		}
 
 //			System.out.println("Adding experience! Total experience is: " + currentExperience);
@@ -294,14 +294,14 @@ public class LivingUtil
 
 	public static boolean hasFullSet(PlayerEntity player)
 	{
-		for (ItemStack stack : player.inventory.armorInventory)
+		for (ItemStack stack : player.inventory.armor)
 		{
 			if (stack.isEmpty() || !(stack.getItem() instanceof ILivingContainer))
 				return false;
 
-			if (stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getEquipmentSlot() == EquipmentSlotType.CHEST)
+			if (stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlotType.CHEST)
 			{
-				if (stack.getMaxDamage() - stack.getDamage() <= 1)
+				if (stack.getMaxDamage() - stack.getDamageValue() <= 1)
 				{
 					return false;
 				}

@@ -109,23 +109,23 @@ public class BloodMagicBlocks
 
 	public static final RegistryObject<Block> TELEPOSER = BLOCKS.register("teleposer", () -> new BlockTeleposer());
 
-	public static final RegistryObject<Block> WOOD_PATH = BASICBLOCKS.register("woodbrickpath", () -> new BlockPath(2, AbstractBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.AXE).harvestLevel(0)));
-	public static final RegistryObject<Block> WOOD_TILE_PATH = BASICBLOCKS.register("woodtilepath", () -> new BlockPath(2, AbstractBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.AXE).harvestLevel(0)));
-	public static final RegistryObject<Block> STONE_PATH = BASICBLOCKS.register("stonebrickpath", () -> new BlockPath(4, AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0)));
-	public static final RegistryObject<Block> STONE_TILE_PATH = BASICBLOCKS.register("stonetilepath", () -> new BlockPath(4, AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0)));
-	public static final RegistryObject<Block> WORN_STONE_PATH = BASICBLOCKS.register("wornstonebrickpath", () -> new BlockPath(6, AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0)));
-	public static final RegistryObject<Block> WORN_STONE_TILE_PATH = BASICBLOCKS.register("wornstonetilepath", () -> new BlockPath(6, AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0)));
-	public static final RegistryObject<Block> OBSIDIAN_PATH = BASICBLOCKS.register("obsidianbrickpath", () -> new BlockPath(8, AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(3)));
-	public static final RegistryObject<Block> OBSIDIAN_TILE_PATH = BASICBLOCKS.register("obsidiantilepath", () -> new BlockPath(8, AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(3)));
+	public static final RegistryObject<Block> WOOD_PATH = BASICBLOCKS.register("woodbrickpath", () -> new BlockPath(2, AbstractBlock.Properties.of(Material.WOOD).strength(2.0F, 5.0F).harvestTool(ToolType.AXE).harvestLevel(0)));
+	public static final RegistryObject<Block> WOOD_TILE_PATH = BASICBLOCKS.register("woodtilepath", () -> new BlockPath(2, AbstractBlock.Properties.of(Material.WOOD).strength(2.0F, 5.0F).harvestTool(ToolType.AXE).harvestLevel(0)));
+	public static final RegistryObject<Block> STONE_PATH = BASICBLOCKS.register("stonebrickpath", () -> new BlockPath(4, AbstractBlock.Properties.of(Material.STONE).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0)));
+	public static final RegistryObject<Block> STONE_TILE_PATH = BASICBLOCKS.register("stonetilepath", () -> new BlockPath(4, AbstractBlock.Properties.of(Material.STONE).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0)));
+	public static final RegistryObject<Block> WORN_STONE_PATH = BASICBLOCKS.register("wornstonebrickpath", () -> new BlockPath(6, AbstractBlock.Properties.of(Material.STONE).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0)));
+	public static final RegistryObject<Block> WORN_STONE_TILE_PATH = BASICBLOCKS.register("wornstonetilepath", () -> new BlockPath(6, AbstractBlock.Properties.of(Material.STONE).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0)));
+	public static final RegistryObject<Block> OBSIDIAN_PATH = BASICBLOCKS.register("obsidianbrickpath", () -> new BlockPath(8, AbstractBlock.Properties.of(Material.STONE).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(3)));
+	public static final RegistryObject<Block> OBSIDIAN_TILE_PATH = BASICBLOCKS.register("obsidiantilepath", () -> new BlockPath(8, AbstractBlock.Properties.of(Material.STONE).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(3)));
 
-	public static final RegistryObject<Block> MIMIC = BLOCKS.register("mimic", () -> new BlockMimic(Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(2.0f).setOpaque(BloodMagicBlocks::isntSolid).setSuffocates(BloodMagicBlocks::isntSolid).setBlocksVision(BloodMagicBlocks::isntSolid).notSolid()));
-	public static final RegistryObject<Block> ETHEREAL_MIMIC = BLOCKS.register("ethereal_mimic", () -> new BlockMimic(Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(2.0f).setOpaque(BloodMagicBlocks::isntSolid).setSuffocates(BloodMagicBlocks::isntSolid).setBlocksVision(BloodMagicBlocks::isntSolid).notSolid().doesNotBlockMovement()));
+	public static final RegistryObject<Block> MIMIC = BLOCKS.register("mimic", () -> new BlockMimic(Properties.of(Material.METAL).sound(SoundType.METAL).strength(2.0f).isRedstoneConductor(BloodMagicBlocks::isntSolid).isSuffocating(BloodMagicBlocks::isntSolid).isViewBlocking(BloodMagicBlocks::isntSolid).noOcclusion()));
+	public static final RegistryObject<Block> ETHEREAL_MIMIC = BLOCKS.register("ethereal_mimic", () -> new BlockMimic(Properties.of(Material.METAL).sound(SoundType.METAL).strength(2.0f).isRedstoneConductor(BloodMagicBlocks::isntSolid).isSuffocating(BloodMagicBlocks::isntSolid).isViewBlocking(BloodMagicBlocks::isntSolid).noOcclusion().noCollission()));
 
-	public static final RegistryObject<Block> SPECTRAL = BLOCKS.register("spectral", () -> new BlockSpectral(Properties.create(Material.ROCK).sound(SoundType.METAL).hardnessAndResistance(100.0f).setOpaque(BloodMagicBlocks::isntSolid).setSuffocates(BloodMagicBlocks::isntSolid).setBlocksVision(BloodMagicBlocks::isntSolid).notSolid().doesNotBlockMovement()));
+	public static final RegistryObject<Block> SPECTRAL = BLOCKS.register("spectral", () -> new BlockSpectral(Properties.of(Material.STONE).sound(SoundType.METAL).strength(100.0f).isRedstoneConductor(BloodMagicBlocks::isntSolid).isSuffocating(BloodMagicBlocks::isntSolid).isViewBlocking(BloodMagicBlocks::isntSolid).noOcclusion().noCollission()));
 
 	private static ForgeFlowingFluid.Properties makeLifeEssenceProperties()
 	{
-		return new ForgeFlowingFluid.Properties(LIFE_ESSENCE_FLUID, LIFE_ESSENCE_FLUID_FLOWING, FluidAttributes.builder(FLUID_STILL, FLUID_FLOWING).overlay(new ResourceLocation("block/water_overlay")).viscosity(1).sound(SoundEvents.ITEM_BUCKET_FILL, SoundEvents.ITEM_BUCKET_EMPTY)).bucket(LIFE_ESSENCE_BUCKET).block(LIFE_ESSENCE_BLOCK);
+		return new ForgeFlowingFluid.Properties(LIFE_ESSENCE_FLUID, LIFE_ESSENCE_FLUID_FLOWING, FluidAttributes.builder(FLUID_STILL, FLUID_FLOWING).overlay(new ResourceLocation("block/water_overlay")).viscosity(1).sound(SoundEvents.BUCKET_FILL, SoundEvents.BUCKET_EMPTY)).bucket(LIFE_ESSENCE_BUCKET).block(LIFE_ESSENCE_BLOCK);
 	}
 
 	public static final ResourceLocation DOUBT_STILL_RESOURCE = new ResourceLocation("bloodmagic:block/liquid_doubt_still");
@@ -133,7 +133,7 @@ public class BloodMagicBlocks
 
 	private static ForgeFlowingFluid.Properties makeDoubtProperties()
 	{
-		return new ForgeFlowingFluid.Properties(DOUBT_FLUID, DOUBT_FLUID_FLOWING, FluidAttributes.builder(DOUBT_STILL_RESOURCE, DOUBT_FLOWING_RESOURCE).overlay(new ResourceLocation("block/water_overlay")).viscosity(1).sound(SoundEvents.ITEM_BUCKET_FILL, SoundEvents.ITEM_BUCKET_EMPTY)).bucket(DOUBT_BUCKET).block(DOUBT_BLOCK);
+		return new ForgeFlowingFluid.Properties(DOUBT_FLUID, DOUBT_FLUID_FLOWING, FluidAttributes.builder(DOUBT_STILL_RESOURCE, DOUBT_FLOWING_RESOURCE).overlay(new ResourceLocation("block/water_overlay")).viscosity(1).sound(SoundEvents.BUCKET_FILL, SoundEvents.BUCKET_EMPTY)).bucket(DOUBT_BUCKET).block(DOUBT_BLOCK);
 	}
 
 	public static RegistryObject<FlowingFluid> LIFE_ESSENCE_FLUID = FLUIDS.register("life_essence_fluid", () -> new ForgeFlowingFluid.Source(makeLifeEssenceProperties()));
@@ -141,10 +141,10 @@ public class BloodMagicBlocks
 	public static RegistryObject<FlowingFluid> DOUBT_FLUID = FLUIDS.register("doubt_fluid", () -> new ForgeFlowingFluid.Source(makeDoubtProperties()));
 	public static RegistryObject<FlowingFluid> DOUBT_FLUID_FLOWING = FLUIDS.register("doubt_fluid_flowing", () -> new ForgeFlowingFluid.Flowing(makeDoubtProperties()));
 
-	public static RegistryObject<FlowingFluidBlock> LIFE_ESSENCE_BLOCK = BLOCKS.register("life_essence_block", () -> new FlowingFluidBlock(LIFE_ESSENCE_FLUID, Block.Properties.create(net.minecraft.block.material.Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()));
-	public static RegistryObject<FlowingFluidBlock> DOUBT_BLOCK = BLOCKS.register("doubt_block", () -> new FlowingFluidBlock(DOUBT_FLUID, Block.Properties.create(net.minecraft.block.material.Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()));
-	public static RegistryObject<Item> LIFE_ESSENCE_BUCKET = ITEMS.register("life_essence_bucket", () -> new BucketItem(LIFE_ESSENCE_FLUID, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(BloodMagic.TAB)));
-	public static RegistryObject<Item> DOUBT_BUCKET = ITEMS.register("doubt_bucket", () -> new BucketItem(DOUBT_FLUID, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(BloodMagic.TAB)));
+	public static RegistryObject<FlowingFluidBlock> LIFE_ESSENCE_BLOCK = BLOCKS.register("life_essence_block", () -> new FlowingFluidBlock(LIFE_ESSENCE_FLUID, AbstractBlock.Properties.of(net.minecraft.block.material.Material.WATER).noCollission().strength(100.0F).noDrops()));
+	public static RegistryObject<FlowingFluidBlock> DOUBT_BLOCK = BLOCKS.register("doubt_block", () -> new FlowingFluidBlock(DOUBT_FLUID, AbstractBlock.Properties.of(net.minecraft.block.material.Material.WATER).noCollission().strength(100.0F).noDrops()));
+	public static RegistryObject<Item> LIFE_ESSENCE_BUCKET = ITEMS.register("life_essence_bucket", () -> new BucketItem(LIFE_ESSENCE_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(BloodMagic.TAB)));
+	public static RegistryObject<Item> DOUBT_BUCKET = ITEMS.register("doubt_bucket", () -> new BucketItem(DOUBT_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(BloodMagic.TAB)));
 
 	public static final RegistryObject<ContainerType<ContainerSoulForge>> SOUL_FORGE_CONTAINER = CONTAINERS.register("soul_forge_container", () -> IForgeContainerType.create(ContainerSoulForge::new));
 	public static final RegistryObject<ContainerType<ContainerAlchemicalReactionChamber>> ARC_CONTAINER = CONTAINERS.register("arc_container", () -> IForgeContainerType.create(ContainerAlchemicalReactionChamber::new));
@@ -157,69 +157,69 @@ public class BloodMagicBlocks
 	public static final RegistryObject<ContainerType<ContainerMasterRoutingNode>> MASTER_ROUTING_NODE_CONTAINER = CONTAINERS.register("master_routing_node_container", () -> IForgeContainerType.create(ContainerMasterRoutingNode::new));
 
 	// Dungeon Blocks
-	public static final RegistryObject<Block> DUNGEON_BRICK_1 = DUNGEONBLOCKS.register("dungeon_brick1", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
-	public static final RegistryObject<Block> DUNGEON_BRICK_2 = DUNGEONBLOCKS.register("dungeon_brick2", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
-	public static final RegistryObject<Block> DUNGEON_BRICK_3 = DUNGEONBLOCKS.register("dungeon_brick3", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
-	public static final RegistryObject<Block> DUNGEON_ORE = DUNGEONBLOCKS.register("dungeon_ore", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_BRICK_1 = DUNGEONBLOCKS.register("dungeon_brick1", () -> new Block(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_BRICK_2 = DUNGEONBLOCKS.register("dungeon_brick2", () -> new Block(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_BRICK_3 = DUNGEONBLOCKS.register("dungeon_brick3", () -> new Block(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_ORE = DUNGEONBLOCKS.register("dungeon_ore", () -> new Block(Properties.of(Material.STONE).strength(3.0F, 3.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
 
-	public static final RegistryObject<Block> DUNGEON_STONE = BLOCKS.register("dungeon_stone", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
-	public static final RegistryObject<Block> DUNGEON_EYE = DUNGEONBLOCKS.register("dungeon_eye", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool().setLightLevel((state) -> {
+	public static final RegistryObject<Block> DUNGEON_STONE = BLOCKS.register("dungeon_stone", () -> new Block(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_EYE = DUNGEONBLOCKS.register("dungeon_eye", () -> new Block(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops().lightLevel((state) -> {
 		return 15;
 	})));
-	public static final RegistryObject<Block> DUNGEON_EMITTER = DUNGEONBLOCKS.register("dungeon_emitter", () -> new RedstoneBlock(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool().setLightLevel((state) -> {
+	public static final RegistryObject<Block> DUNGEON_EMITTER = DUNGEONBLOCKS.register("dungeon_emitter", () -> new RedstoneBlock(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops().lightLevel((state) -> {
 		return 8;
 	})));
-	public static final RegistryObject<Block> DUNGEON_ALTERNATOR = DUNGEONBLOCKS.register("dungeon_alternator", () -> new BlockAlternator(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
-	public static final RegistryObject<Block> DUNGEON_POLISHED_STONE = DUNGEONBLOCKS.register("dungeon_polished", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
-	public static final RegistryObject<Block> DUNGEON_TILE = DUNGEONBLOCKS.register("dungeon_tile", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
-	public static final RegistryObject<Block> DUNGEON_SMALL_BRICK = DUNGEONBLOCKS.register("dungeon_smallbrick", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
-	public static final RegistryObject<Block> DUNGEON_TILE_SPECIAL = DUNGEONBLOCKS.register("dungeon_tilespecial", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_ALTERNATOR = DUNGEONBLOCKS.register("dungeon_alternator", () -> new BlockAlternator(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_POLISHED_STONE = DUNGEONBLOCKS.register("dungeon_polished", () -> new Block(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_TILE = DUNGEONBLOCKS.register("dungeon_tile", () -> new Block(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_SMALL_BRICK = DUNGEONBLOCKS.register("dungeon_smallbrick", () -> new Block(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_TILE_SPECIAL = DUNGEONBLOCKS.register("dungeon_tilespecial", () -> new Block(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
 
-	public static final RegistryObject<Block> DUNGEON_BRICK_ASSORTED = BLOCKS.register("dungeon_brick_assorted", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(20.0F, 50.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(3).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_BRICK_ASSORTED = BLOCKS.register("dungeon_brick_assorted", () -> new Block(Properties.of(Material.STONE).strength(20.0F, 50.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(3).requiresCorrectToolForDrops()));
 
-	public static final RegistryObject<Block> DUNGEON_BRICK_STAIRS = BLOCKS.register("dungeon_brick_stairs", () -> new StairsBlock(() -> DUNGEON_BRICK_1.get().getDefaultState(), Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
-	public static final RegistryObject<Block> DUNGEON_POLISHED_STAIRS = BLOCKS.register("dungeon_polished_stairs", () -> new StairsBlock(() -> DUNGEON_POLISHED_STONE.get().getDefaultState(), Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_BRICK_STAIRS = BLOCKS.register("dungeon_brick_stairs", () -> new StairsBlock(() -> DUNGEON_BRICK_1.get().defaultBlockState(), Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_POLISHED_STAIRS = BLOCKS.register("dungeon_polished_stairs", () -> new StairsBlock(() -> DUNGEON_POLISHED_STONE.get().defaultBlockState(), Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
 
-	public static final RegistryObject<Block> DUNGEON_PILLAR_CENTER = BLOCKS.register("dungeon_pillar_center", () -> new RotatedPillarBlock(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
-	public static final RegistryObject<Block> DUNGEON_PILLAR_SPECIAL = BLOCKS.register("dungeon_pillar_special", () -> new RotatedPillarBlock(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
-	public static final RegistryObject<Block> DUNGEON_PILLAR_CAP = BLOCKS.register("dungeon_pillar_cap", () -> new BlockPillarCap(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_PILLAR_CENTER = BLOCKS.register("dungeon_pillar_center", () -> new RotatedPillarBlock(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_PILLAR_SPECIAL = BLOCKS.register("dungeon_pillar_special", () -> new RotatedPillarBlock(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_PILLAR_CAP = BLOCKS.register("dungeon_pillar_cap", () -> new BlockPillarCap(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
 
-	public static final RegistryObject<Block> DUNGEON_BRICK_WALL = BLOCKS.register("dungeon_brick_wall", () -> new WallBlock(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
-	public static final RegistryObject<Block> DUNGEON_POLISHED_WALL = BLOCKS.register("dungeon_polished_wall", () -> new WallBlock(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
-	public static final RegistryObject<Block> DUNGEON_BRICK_GATE = BLOCKS.register("dungeon_brick_gate", () -> new FenceGateBlock(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
-	public static final RegistryObject<Block> DUNGEON_POLISHED_GATE = BLOCKS.register("dungeon_polished_gate", () -> new FenceGateBlock(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_BRICK_WALL = BLOCKS.register("dungeon_brick_wall", () -> new WallBlock(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_POLISHED_WALL = BLOCKS.register("dungeon_polished_wall", () -> new WallBlock(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_BRICK_GATE = BLOCKS.register("dungeon_brick_gate", () -> new FenceGateBlock(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_POLISHED_GATE = BLOCKS.register("dungeon_polished_gate", () -> new FenceGateBlock(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
 
-	public static final RegistryObject<Block> DUNGEON_BRICK_SLAB = BLOCKS.register("dungeon_brick_slab", () -> new SlabBlock(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
-	public static final RegistryObject<Block> DUNGEON_TILE_SLAB = BLOCKS.register("dungeon_tile_slab", () -> new SlabBlock(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_BRICK_SLAB = BLOCKS.register("dungeon_brick_slab", () -> new SlabBlock(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_TILE_SLAB = BLOCKS.register("dungeon_tile_slab", () -> new SlabBlock(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
 
-	public static final RegistryObject<Block> HELLFORGED_BLOCK = DUNGEONBLOCKS.register("dungeon_metal", () -> new Block(Properties.create(Material.IRON).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> HELLFORGED_BLOCK = DUNGEONBLOCKS.register("dungeon_metal", () -> new Block(Properties.of(Material.METAL).strength(5.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
 
-	public static final RegistryObject<Block> DUNGEON_CRACKED_BRICK_1 = DUNGEONBLOCKS.register("dungeon_regular_cracked_brick1", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
-	public static final RegistryObject<Block> DUNGEON_GLOWING_CRACKED_BRICK_1 = DUNGEONBLOCKS.register("dungeon_cracked_brick1", () -> new Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> DUNGEON_CRACKED_BRICK_1 = DUNGEONBLOCKS.register("dungeon_regular_cracked_brick1", () -> new Block(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_GLOWING_CRACKED_BRICK_1 = DUNGEONBLOCKS.register("dungeon_cracked_brick1", () -> new Block(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
 
 	public static final RegistryObject<Block> DUNGEON_CONTROLLER = BLOCKS.register("dungeon_controller", () -> new BlockDungeonController());
 	public static final RegistryObject<Block> DUNGEON_SEAL = BLOCKS.register("dungeon_seal", () -> new BlockDungeonSeal());
-	public static final RegistryObject<Block> SPIKES = BLOCKS.register("spikes", () -> new BlockSpikes(Properties.create(Material.IRON).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.CHAIN).notSolid().doesNotBlockMovement().harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
-	public static final RegistryObject<Block> DUNGEON_SPIKE_TRAP = BLOCKS.register("dungeon_spike_trap", () -> new BlockSpikeTrap(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> SPIKES = BLOCKS.register("spikes", () -> new BlockSpikes(Properties.of(Material.METAL).strength(2.0F, 5.0F).sound(SoundType.CHAIN).noOcclusion().noCollission().harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_SPIKE_TRAP = BLOCKS.register("dungeon_spike_trap", () -> new BlockSpikeTrap(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
 
-	public static final RegistryObject<Block> NETHER_SOIL = BLOCKS.register("nether_soil", () -> new BlockNetherrackSoil(Properties.create(Material.EARTH).hardnessAndResistance(0.4F, 0.4F).sound(SoundType.NETHERRACK).harvestTool(ToolType.PICKAXE).tickRandomly()));
+	public static final RegistryObject<Block> NETHER_SOIL = BLOCKS.register("nether_soil", () -> new BlockNetherrackSoil(Properties.of(Material.DIRT).strength(0.4F, 0.4F).sound(SoundType.NETHERRACK).harvestTool(ToolType.PICKAXE).randomTicks()));
 
-	public static final RegistryObject<Block> GROWING_DOUBT = BLOCKS.register("creeping_doubt", () -> new BlockGrowingDoubt(Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().zeroHardnessAndResistance().sound(SoundType.CROP)));
-	public static final RegistryObject<Block> WEAK_TAU = BLOCKS.register("weak_tau", () -> new BlockTau(Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().zeroHardnessAndResistance().sound(SoundType.CROP), false));
-	public static final RegistryObject<Block> STRONG_TAU = BLOCKS.register("strong_tau", () -> new BlockTau(Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().zeroHardnessAndResistance().sound(SoundType.CROP), true));
+	public static final RegistryObject<Block> GROWING_DOUBT = BLOCKS.register("creeping_doubt", () -> new BlockGrowingDoubt(Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+	public static final RegistryObject<Block> WEAK_TAU = BLOCKS.register("weak_tau", () -> new BlockTau(Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP), false));
+	public static final RegistryObject<Block> STRONG_TAU = BLOCKS.register("strong_tau", () -> new BlockTau(Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP), true));
 
-	public static final RegistryObject<Block> INVERSION_PILLAR = BLOCKS.register("inversion_pillar", () -> new BlockInversionPillar(Properties.create(Material.ROCK).hardnessAndResistance(100.0F, 500000.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool().setBlocksVision(BloodMagicBlocks::isntSolid).notSolid().setOpaque(BloodMagicBlocks::isntSolid)));
-	public static final RegistryObject<Block> INVERSION_PILLAR_CAP = BLOCKS.register("inversion_pillar_cap", () -> new BlockInversionPillarEnd(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool()));
+	public static final RegistryObject<Block> INVERSION_PILLAR = BLOCKS.register("inversion_pillar", () -> new BlockInversionPillar(Properties.of(Material.STONE).strength(100.0F, 500000.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops().isViewBlocking(BloodMagicBlocks::isntSolid).noOcclusion().isRedstoneConductor(BloodMagicBlocks::isntSolid)));
+	public static final RegistryObject<Block> INVERSION_PILLAR_CAP = BLOCKS.register("inversion_pillar_cap", () -> new BlockInversionPillarEnd(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops()));
 
 	private static boolean isntSolid(BlockState state, IBlockReader reader, BlockPos pos)
 	{
 		return false;
 	}
 
-	public static final RegistryObject<Block> SHAPED_CHARGE = BLOCKS.register("shaped_charge", () -> new BlockShapedExplosive(3, Properties.create(Material.IRON).hardnessAndResistance(2.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).setRequiresTool()));
-	public static final RegistryObject<Block> DEFORESTER_CHARGE = BLOCKS.register("deforester_charge", () -> new BlockDeforesterCharge(3, Properties.create(Material.IRON).hardnessAndResistance(2.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).setRequiresTool()));
-	public static final RegistryObject<Block> VEINMINE_CHARGE = BLOCKS.register("veinmine_charge", () -> new BlockVeinMineCharge(3, Properties.create(Material.IRON).hardnessAndResistance(2.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).setRequiresTool()));
-	public static final RegistryObject<Block> FUNGAL_CHARGE = BLOCKS.register("fungal_charge", () -> new BlockFungalCharge(3, Properties.create(Material.IRON).hardnessAndResistance(2.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).setRequiresTool()));
+	public static final RegistryObject<Block> SHAPED_CHARGE = BLOCKS.register("shaped_charge", () -> new BlockShapedExplosive(3, Properties.of(Material.METAL).strength(2.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DEFORESTER_CHARGE = BLOCKS.register("deforester_charge", () -> new BlockDeforesterCharge(3, Properties.of(Material.METAL).strength(2.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> VEINMINE_CHARGE = BLOCKS.register("veinmine_charge", () -> new BlockVeinMineCharge(3, Properties.of(Material.METAL).strength(2.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> FUNGAL_CHARGE = BLOCKS.register("fungal_charge", () -> new BlockFungalCharge(3, Properties.of(Material.METAL).strength(2.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops()));
 
 	//
 ////	private static <T extends Block> RegistryObject<T> register(String name, Supplier<? extends T> sup, Function<RegistryObject<T>, Supplier<? extends Item>> itemCreator) 

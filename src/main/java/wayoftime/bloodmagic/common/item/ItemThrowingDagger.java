@@ -32,7 +32,7 @@ public class ItemThrowingDagger extends Item
 
 	public ItemThrowingDagger()
 	{
-		super(new Item.Properties().maxStackSize(64).group(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(64).tab(BloodMagic.TAB));
 
 //		setTranslationKey(BloodMagic.MODID + ".soulSnare.");
 //		setCreativeTab(BloodMagic.TAB_BM);
@@ -41,22 +41,22 @@ public class ItemThrowingDagger extends Item
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand hand)
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand hand)
 	{
-		ItemStack stack = playerIn.getHeldItem(hand);
+		ItemStack stack = playerIn.getItemInHand(hand);
 		if (!playerIn.isCreative())
 		{
 			stack.shrink(1);
 		}
-		playerIn.getCooldownTracker().setCooldown(this, 50);
+		playerIn.getCooldowns().addCooldown(this, 50);
 
-		worldIn.playSound((PlayerEntity) null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+		worldIn.playSound((PlayerEntity) null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
 
-		if (!worldIn.isRemote)
+		if (!worldIn.isClientSide)
 		{
 //			System.out.println("Attempting to spawn");
 //			EntitySoulSnare snare = new EntitySoulSnare(worldIn, playerIn);
-//			snare.func_234612_a_(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
+//			snare.shootFromRotation(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
 //			worldIn.addEntity(snare);
 			EnumDemonWillType largestType = PlayerDemonWillHandler.getLargestWillType(playerIn);
 			double souls = PlayerDemonWillHandler.getTotalDemonWill(largestType, playerIn);
@@ -68,16 +68,16 @@ public class ItemThrowingDagger extends Item
 			int level = getLevel(souls);
 			if (level >= 0)
 			{
-				double willDrop = (soulDrop[level] * worldIn.rand.nextDouble() + staticDrop[level]);
+				double willDrop = (soulDrop[level] * worldIn.random.nextDouble() + staticDrop[level]);
 				dagger.setWillDrop(willDrop);
 				dagger.setWillType(largestType);
 			}
 
-			worldIn.addEntity(dagger);
+			worldIn.addFreshEntity(dagger);
 //			
 //			SnowballEntity snowballentity = new SnowballEntity(worldIn, playerIn);
 //	         snowballentity.setItem(itemstack);
-//	         snowballentity.func_234612_a_(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
+//	         snowballentity.shootFromRotation(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
 //	         worldIn.addEntity(snowballentity);
 		}
 
@@ -87,7 +87,7 @@ public class ItemThrowingDagger extends Item
 	public AbstractEntityThrowingDagger getDagger(ItemStack stack, World world, PlayerEntity player)
 	{
 		AbstractEntityThrowingDagger dagger = new EntityThrowingDagger(stack, world, player);
-		dagger.func_234612_a_(player, player.rotationPitch, player.rotationYaw, 0.0F, 3F, 0.5F);
+		dagger.shootFromRotation(player, player.xRot, player.yRot, 0.0F, 3F, 0.5F);
 		dagger.setDamage(10);
 		return dagger;
 	}
@@ -108,10 +108,10 @@ public class ItemThrowingDagger extends Item
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.throwing_dagger.desc").mergeStyle(TextFormatting.ITALIC).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.throwing_dagger.desc").withStyle(TextFormatting.ITALIC).withStyle(TextFormatting.GRAY));
 
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

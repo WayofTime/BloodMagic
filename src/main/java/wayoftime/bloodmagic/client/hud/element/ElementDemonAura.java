@@ -32,7 +32,7 @@ public class ElementDemonAura extends HUDElement
 		Minecraft minecraft = Minecraft.getInstance();
 		PlayerEntity player = minecraft.player;
 
-		minecraft.getTextureManager().bindTexture(BAR_LOCATION);
+		minecraft.getTextureManager().bind(BAR_LOCATION);
 //		GlStateManager.color(1.0F, 1.0F, 1.0F);
 		this.blit(matrixStack, drawX, drawY, 0, 210, 80, 46);
 
@@ -43,7 +43,7 @@ public class ElementDemonAura extends HUDElement
 		{
 			i++;
 //			GlStateManager.color(1.0F, 1.0F, 1.0F);
-			minecraft.getTextureManager().bindTexture(BAR_LOCATION);
+			minecraft.getTextureManager().bind(BAR_LOCATION);
 			int textureXOffset = (i > 3) ? (i - 3) : (3 - i);
 			int maxBarSize = 30 - 2 * textureXOffset;
 
@@ -63,14 +63,14 @@ public class ElementDemonAura extends HUDElement
 
 			this.blit(matrixStack, (int) x, (int) y, (int) textureX, (int) textureY, (int) width, (int) height);
 
-			if (player.isSneaking())
+			if (player.isShiftKeyDown())
 			{
-				matrixStack.push();
+				matrixStack.pushPose();
 				matrixStack.translate(x - 2 * textureXOffset + 70, (y - 2), 0);
 				matrixStack.scale(0.5f, 0.5f, 1f);
-				minecraft.fontRenderer.drawStringWithShadow(matrixStack, String.valueOf((int) amount), 0, 2, 0xffffffff);
+				minecraft.font.drawShadow(matrixStack, String.valueOf((int) amount), 0, 2, 0xffffffff);
 				RenderSystem.clearTexGen();
-				matrixStack.pop();
+				matrixStack.popPose();
 			}
 		}
 	}

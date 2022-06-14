@@ -18,18 +18,18 @@ public class ItemBindableBase extends Item implements IBindable
 {
 	public ItemBindableBase()
 	{
-		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
 		if (!stack.hasTag())
 			return;
 
 		Binding binding = getBinding(stack);
 		if (binding != null)
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentOwner", binding.getOwnerName()).mergeStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentOwner", binding.getOwnerName()).withStyle(TextFormatting.GRAY));
 	}
 }

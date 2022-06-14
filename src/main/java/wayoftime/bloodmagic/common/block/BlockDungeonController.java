@@ -10,11 +10,13 @@ import net.minecraft.world.IWorld;
 import net.minecraftforge.common.ToolType;
 import wayoftime.bloodmagic.tile.TileDungeonController;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockDungeonController extends Block
 {
 	public BlockDungeonController()
 	{
-		super(Properties.create(Material.ROCK).hardnessAndResistance(20.0F, 50.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1));
+		super(Properties.of(Material.STONE).strength(20.0F, 50.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1));
 	}
 
 	@Override
@@ -30,13 +32,13 @@ public class BlockDungeonController extends Block
 	}
 
 	@Override
-	public void onPlayerDestroy(IWorld world, BlockPos blockPos, BlockState blockState)
+	public void destroy(IWorld world, BlockPos blockPos, BlockState blockState)
 	{
 //		TileAltar altar = (TileAltar) world.getTileEntity(blockPos);
 //		if (altar != null)
 //			altar.dropItems();
 		// TODO: Spawn particles?
 
-		super.onPlayerDestroy(world, blockPos, blockState);
+		super.destroy(world, blockPos, blockState);
 	}
 }

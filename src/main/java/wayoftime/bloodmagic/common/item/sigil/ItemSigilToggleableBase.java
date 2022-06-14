@@ -20,7 +20,7 @@ public class ItemSigilToggleableBase extends ItemSigilToggleable// implements IM
 
 	public ItemSigilToggleableBase(String name, int lpUsed)
 	{
-		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB), lpUsed);
+		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB), lpUsed);
 
 		this.name = name;
 		this.tooltipBase = "tooltip.bloodmagic.sigil." + name + ".";
@@ -29,14 +29,14 @@ public class ItemSigilToggleableBase extends ItemSigilToggleable// implements IM
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 		if (!stack.hasTag())
 			return;
 
 		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic." + (getActivated(stack) ? "activated"
-				: "deactivated")).mergeStyle(TextFormatting.GRAY));
+				: "deactivated")).withStyle(TextFormatting.GRAY));
 	}
 
 //	@Override

@@ -10,9 +10,9 @@ public class ModRituals
 {
 	public static void initHarvestHandlers()
 	{
-		HarvestRegistry.registerRangeAmplifier(Blocks.DIAMOND_BLOCK.getDefaultState(), 15);
-		HarvestRegistry.registerRangeAmplifier(Blocks.GOLD_BLOCK.getDefaultState(), 10);
-		HarvestRegistry.registerRangeAmplifier(Blocks.IRON_BLOCK.getDefaultState(), 6);
+		HarvestRegistry.registerRangeAmplifier(Blocks.DIAMOND_BLOCK.defaultBlockState(), 15);
+		HarvestRegistry.registerRangeAmplifier(Blocks.GOLD_BLOCK.defaultBlockState(), 10);
+		HarvestRegistry.registerRangeAmplifier(Blocks.IRON_BLOCK.defaultBlockState(), 6);
 
 		HarvestRegistry.registerHandler(new HarvestHandlerPlantable());
 		HarvestRegistry.registerHandler(new HarvestHandlerTall());

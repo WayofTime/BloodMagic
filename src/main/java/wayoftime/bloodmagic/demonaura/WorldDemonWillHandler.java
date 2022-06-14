@@ -214,7 +214,7 @@ public class WorldDemonWillHandler
 
 	public static ResourceLocation getDimensionResourceLocation(World world)
 	{
-		return world.getDimensionKey().getLocation();
+		return world.dimension().location();
 	}
 
 }

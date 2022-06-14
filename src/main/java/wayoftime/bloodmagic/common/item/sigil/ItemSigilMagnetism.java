@@ -25,25 +25,25 @@ public class ItemSigilMagnetism extends ItemSigilToggleableBase
 
 		int range = 5;
 		int verticalRange = 5;
-		float posX = Math.round(player.getPosX());
-		float posY = (float) (player.getPosY() - player.getEyeHeight());
-		float posZ = Math.round(player.getPosZ());
-		List<ItemEntity> entities = player.getEntityWorld().getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).grow(range, verticalRange, range));
-		List<ExperienceOrbEntity> xpOrbs = player.getEntityWorld().getEntitiesWithinAABB(ExperienceOrbEntity.class, new AxisAlignedBB(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).grow(range, verticalRange, range));
+		float posX = Math.round(player.getX());
+		float posY = (float) (player.getY() - player.getEyeHeight());
+		float posZ = Math.round(player.getZ());
+		List<ItemEntity> entities = player.getCommandSenderWorld().getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).inflate(range, verticalRange, range));
+		List<ExperienceOrbEntity> xpOrbs = player.getCommandSenderWorld().getEntitiesOfClass(ExperienceOrbEntity.class, new AxisAlignedBB(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).inflate(range, verticalRange, range));
 
 		for (ItemEntity entity : entities)
 		{
-			if (entity != null && !world.isRemote && entity.isAlive())
+			if (entity != null && !world.isClientSide && entity.isAlive())
 			{
-				entity.onCollideWithPlayer(player);
+				entity.playerTouch(player);
 			}
 		}
 
 		for (ExperienceOrbEntity xpOrb : xpOrbs)
 		{
-			if (xpOrb != null && !world.isRemote)
+			if (xpOrb != null && !world.isClientSide)
 			{
-				xpOrb.onCollideWithPlayer(player);
+				xpOrb.playerTouch(player);
 			}
 		}
 	}

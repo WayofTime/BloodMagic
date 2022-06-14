@@ -63,7 +63,7 @@ public class RecipePotionFill extends RecipePotionFlaskBase
 		}
 
 		((ItemAlchemyFlask) copyStack.getItem()).setEffectHoldersOfFlask(copyStack, flaskEffectCopyList);
-		copyStack.setDamage(0);
+		copyStack.setDamageValue(0);
 
 		return copyStack;
 	}
@@ -72,7 +72,7 @@ public class RecipePotionFill extends RecipePotionFlaskBase
 	public ItemStack getExamplePotionFlask()
 	{
 		ItemStack flaskStack = new ItemStack(BloodMagicItems.ALCHEMY_FLASK.get());
-		flaskStack.setDamage(8);
+		flaskStack.setDamageValue(8);
 		((ItemAlchemyFlask) flaskStack.getItem()).setEffectHoldersOfFlask(flaskStack, getExampleEffectList());
 		((ItemAlchemyFlask) flaskStack.getItem()).resyncEffectInstances(flaskStack);
 
@@ -90,9 +90,9 @@ public class RecipePotionFill extends RecipePotionFlaskBase
 	{
 		List<EffectHolder> holderList = new ArrayList<>();
 
-		holderList.add(new EffectHolder(Effects.SPEED, 3600, 0, 1, 1));
+		holderList.add(new EffectHolder(Effects.MOVEMENT_SPEED, 3600, 0, 1, 1));
 		holderList.add(new EffectHolder(Effects.FIRE_RESISTANCE, 3600, 0, 1, 1));
-		holderList.add(new EffectHolder(Effects.HASTE, 3600, 0, 1, 1));
+		holderList.add(new EffectHolder(Effects.DIG_SPEED, 3600, 0, 1, 1));
 
 		return holderList;
 	}

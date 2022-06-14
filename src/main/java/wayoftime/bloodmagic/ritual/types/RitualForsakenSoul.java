@@ -62,7 +62,7 @@ public class RitualForsakenSoul extends Ritual
 			return;
 		}
 
-		TileEntity tileInventory = world.getTileEntity(chestList.get(0));
+		TileEntity tileInventory = world.getBlockEntity(chestList.get(0));
 
 		if (tileInventory == null)
 			return;
@@ -78,8 +78,8 @@ public class RitualForsakenSoul extends Ritual
 		crystalRange.resetIterator();
 		while (crystalRange.hasNext())
 		{
-			BlockPos nextPos = crystalRange.next().add(pos);
-			TileEntity tile = world.getTileEntity(nextPos);
+			BlockPos nextPos = crystalRange.next().offset(pos);
+			TileEntity tile = world.getBlockEntity(nextPos);
 			if (tile instanceof TileDemonCrystal)
 			{
 				crystalList.add((TileDemonCrystal) tile);

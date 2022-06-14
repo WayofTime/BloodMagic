@@ -34,7 +34,7 @@ public class LivingArmourDowngradeRecipeProcessor implements IComponentProcessor
 	public void setup(IVariableProvider variables)
 	{
 		ResourceLocation id = new ResourceLocation(variables.get("recipe").asString());
-		Optional<? extends IRecipe<?>> recipeHandler = Minecraft.getInstance().world.getRecipeManager().getRecipe(id);
+		Optional<? extends IRecipe<?>> recipeHandler = Minecraft.getInstance().level.getRecipeManager().byKey(id);
 		if (recipeHandler.isPresent())
 		{
 			IRecipe<?> recipe = recipeHandler.get();
@@ -57,7 +57,7 @@ public class LivingArmourDowngradeRecipeProcessor implements IComponentProcessor
 			return null;
 		}
 		if (key.equals("input"))
-			return IVariable.wrapList(Arrays.stream(recipe.getInput().getMatchingStacks()).map(IVariable::from).collect(Collectors.toList()));
+			return IVariable.wrapList(Arrays.stream(recipe.getInput().getItems()).map(IVariable::from).collect(Collectors.toList()));
 		else
 			return null;
 	}

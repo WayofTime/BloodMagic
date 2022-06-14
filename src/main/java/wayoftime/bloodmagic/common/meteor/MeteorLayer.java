@@ -110,7 +110,7 @@ public class MeteorLayer
 
 	public void buildLayer(World world, BlockPos centerPos, int emptyRadius)
 	{
-		recalculateMaxWeight(world.rand, world);
+		recalculateMaxWeight(world.random, world);
 
 		int radius = layerRadius;
 		for (int i = -radius; i <= radius; i++)
@@ -126,19 +126,19 @@ public class MeteorLayer
 
 					if (checkIfSphere(radius, i, j, k))
 					{
-						BlockPos pos = centerPos.add(i, j, k);
+						BlockPos pos = centerPos.offset(i, j, k);
 						BlockState currentState = world.getBlockState(pos);
-						BlockItemUseContext ctx = new BlockItemUseContext(world, null, Hand.MAIN_HAND, ItemStack.EMPTY, BlockRayTraceResult.createMiss(new Vector3d(0, 0, 0), Direction.UP, pos));
-						if (!currentState.isReplaceable(ctx))
+						BlockItemUseContext ctx = new BlockItemUseContext(world, null, Hand.MAIN_HAND, ItemStack.EMPTY, BlockRayTraceResult.miss(new Vector3d(0, 0, 0), Direction.UP, pos));
+						if (!currentState.canBeReplaced(ctx))
 						{
 							continue;
 						}
 						if (shellBlock != null && checkIfSphereShell(radius, i, j, k))
 						{
-							world.setBlockState(pos, shellBlock.getRandomBlock(world.rand, world).getDefaultState());
+							world.setBlockAndUpdate(pos, shellBlock.getRandomBlock(world.random, world).defaultBlockState());
 						} else
 						{
-							world.setBlockState(pos, getRandomState(world.rand, world));
+							world.setBlockAndUpdate(pos, getRandomState(world.random, world));
 						}
 					}
 				}
@@ -189,10 +189,10 @@ public class MeteorLayer
 
 		if (block != null)
 		{
-			return block.getDefaultState();
+			return block.defaultBlockState();
 		} else
 		{
-			return Blocks.AIR.getDefaultState();
+			return Blocks.AIR.defaultBlockState();
 		}
 	}
 
@@ -254,21 +254,21 @@ public class MeteorLayer
 
 	public static MeteorLayer deserialize(JsonObject json)
 	{
-		int layerRadius = JSONUtils.getInt(json, Constants.JSON.RADIUS);
-		int maxWeight = JSONUtils.getInt(json, Constants.JSON.ADDITIONAL_MAX_WEIGHT);
-		int minWeight = JSONUtils.getInt(json, Constants.JSON.MIN_WEIGHT);
+		int layerRadius = JSONUtils.getAsInt(json, Constants.JSON.RADIUS);
+		int maxWeight = JSONUtils.getAsInt(json, Constants.JSON.ADDITIONAL_MAX_WEIGHT);
+		int minWeight = JSONUtils.getAsInt(json, Constants.JSON.MIN_WEIGHT);
 		List<Pair<RandomBlockContainer, Integer>> weightList = new ArrayList<>();
 
-		if (json.has(Constants.JSON.WEIGHT_MAP) && JSONUtils.isJsonArray(json, Constants.JSON.WEIGHT_MAP))
+		if (json.has(Constants.JSON.WEIGHT_MAP) && JSONUtils.isArrayNode(json, Constants.JSON.WEIGHT_MAP))
 		{
-			JsonArray mainArray = JSONUtils.getJsonArray(json, Constants.JSON.WEIGHT_MAP);
+			JsonArray mainArray = JSONUtils.getAsJsonArray(json, Constants.JSON.WEIGHT_MAP);
 
 			for (JsonElement element : mainArray)
 			{
 				JsonObject obj = element.getAsJsonObject();
-				RandomBlockContainer container = RandomBlockContainer.parseEntry(JSONUtils.getString(obj, Constants.JSON.TAG));
+				RandomBlockContainer container = RandomBlockContainer.parseEntry(JSONUtils.getAsString(obj, Constants.JSON.TAG));
 //				ITag<Block> itag = TagCollectionManager.getManager().getBlockTags().get(new ResourceLocation(JSONUtils.getString(obj, Constants.JSON.TAG)));
-				int weight = JSONUtils.getInt(obj, Constants.JSON.WEIGHT);
+				int weight = JSONUtils.getAsInt(obj, Constants.JSON.WEIGHT);
 
 				if (container != null)
 				{
@@ -278,12 +278,12 @@ public class MeteorLayer
 		}
 
 //		Block fillBlock = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(JSONUtils.getString(json, Constants.JSON.FILL)));
-		RandomBlockContainer fillBlock = RandomBlockContainer.parseEntry(JSONUtils.getString(json, Constants.JSON.FILL));
+		RandomBlockContainer fillBlock = RandomBlockContainer.parseEntry(JSONUtils.getAsString(json, Constants.JSON.FILL));
 
 		MeteorLayer layer = new MeteorLayer(layerRadius, maxWeight, weightList, fillBlock);
-		if (JSONUtils.hasField(json, Constants.JSON.SHELL))
+		if (JSONUtils.isValidNode(json, Constants.JSON.SHELL))
 		{
-			layer.addShellBlock(RandomBlockContainer.parseEntry(JSONUtils.getString(json, Constants.JSON.SHELL)));
+			layer.addShellBlock(RandomBlockContainer.parseEntry(JSONUtils.getAsString(json, Constants.JSON.SHELL)));
 		}
 
 		layer.setMinWeight(minWeight);
@@ -304,20 +304,20 @@ public class MeteorLayer
 //
 //			ResourceLocation rl = TagCollectionManager.getManager().getBlockTags().getDirectIdFromTag(tag);
 //			buffer.writeString(rl == null ? "" : rl.toString());
-			buffer.writeString(weightList.get(i).getKey().getEntry());
+			buffer.writeUtf(weightList.get(i).getKey().getEntry());
 			buffer.writeInt(weightList.get(i).getValue());
 //			tag = Tags.Blocks.BARRELS;
 //			BlockTags.getCollection().get(new ResourceLocation(name));
 //			ITag<Block> itag = TagCollectionManager.getManager().getBlockTags().get(resourcelocation);
 		}
 
-		buffer.writeString(fillBlock.getEntry());
+		buffer.writeUtf(fillBlock.getEntry());
 		if (shellBlock == null)
 		{
-			buffer.writeString("");
+			buffer.writeUtf("");
 		} else
 		{
-			buffer.writeString(shellBlock.getEntry());
+			buffer.writeUtf(shellBlock.getEntry());
 		}
 	}
 
@@ -330,7 +330,7 @@ public class MeteorLayer
 		List<Pair<RandomBlockContainer, Integer>> weightList = new ArrayList<>();
 		for (int i = 0; i < listSize; i++)
 		{
-			String entry = buffer.readString();
+			String entry = buffer.readUtf();
 			int weight = buffer.readInt();
 			if (!entry.isEmpty())
 			{
@@ -340,10 +340,10 @@ public class MeteorLayer
 			}
 		}
 
-		RandomBlockContainer fillBlock = RandomBlockContainer.parseEntry(buffer.readString());
+		RandomBlockContainer fillBlock = RandomBlockContainer.parseEntry(buffer.readUtf());
 
 		MeteorLayer layer = new MeteorLayer(layerRadius, maxWeight, weightList, fillBlock);
-		String shellEntry = buffer.readString();
+		String shellEntry = buffer.readUtf();
 		if (!shellEntry.isEmpty())
 		{
 			layer.addShellBlock(RandomBlockContainer.parseEntry(shellEntry));

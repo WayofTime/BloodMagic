@@ -156,16 +156,16 @@ public class ElementRegistry
 //				element.draw(event.getResolution(), event.getPartialTicks(), xPos, yPos);
 
 				Vector2f position = ELEMENT_INFO.get(getKey(element)).getPosition();
-				int xPos = (int) (window.getScaledWidth() * position.x);
+				int xPos = (int) (window.getGuiScaledWidth() * position.x);
 				if (xPos - element.getWidth() < 0)
 					xPos *= 2;
-				if (xPos + element.getWidth() > window.getScaledWidth())
+				if (xPos + element.getWidth() > window.getGuiScaledWidth())
 					xPos -= element.getWidth();
 
-				int yPos = (int) (window.getScaledHeight() * position.y);
+				int yPos = (int) (window.getGuiScaledHeight() * position.y);
 				if (yPos - element.getHeight() < 0)
 					yPos *= 2;
-				if (yPos + element.getHeight() > window.getScaledHeight())
+				if (yPos + element.getHeight() > window.getGuiScaledHeight())
 					yPos -= element.getHeight();
 
 				element.draw(event.getMatrixStack(), event.getPartialTicks(), xPos, yPos);

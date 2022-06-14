@@ -21,7 +21,7 @@ public class ItemSigilBase extends ItemSigil
 
 	public ItemSigilBase(String name, int lpUsed)
 	{
-		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB), lpUsed);
+		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB), lpUsed);
 //		super(lpUsed);
 
 //		this.name = name;
@@ -35,14 +35,14 @@ public class ItemSigilBase extends ItemSigil
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent(tooltipBase + "desc").mergeStyle(TextFormatting.ITALIC).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent(tooltipBase + "desc").withStyle(TextFormatting.ITALIC).withStyle(TextFormatting.GRAY));
 //		if (TextHelper.canTranslate(tooltipBase + "desc"))
 //			tooltip.addAll(Arrays.asList(WordUtils.wrap(TextHelper.localizeEffect(tooltipBase
 //					+ "desc"), 30, "/cut", false).split("/cut")));
 
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 
 //	public String getName()

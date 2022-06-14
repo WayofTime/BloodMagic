@@ -31,7 +31,7 @@ public class ItemInventory implements IInventory
 	public void initializeInventory(ItemStack masterStack)
 	{
 		this.masterStack = masterStack;
-		this.clear();
+		this.clearContent();
 		this.readFromStack(masterStack);
 	}
 
@@ -49,7 +49,7 @@ public class ItemInventory implements IInventory
 
 	public void readFromNBT(CompoundNBT tagCompound)
 	{
-		this.inventory = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
+		this.inventory = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
 
 		ItemStackHelper.loadAllItems(tagCompound, this.inventory);
 	}
@@ -97,19 +97,19 @@ public class ItemInventory implements IInventory
 	}
 
 	@Override
-	public int getSizeInventory()
+	public int getContainerSize()
 	{
 		return size;
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int index)
+	public ItemStack getItem(int index)
 	{
 		return inventory.get(index);
 	}
 
 	@Override
-	public ItemStack decrStackSize(int index, int count)
+	public ItemStack removeItem(int index, int count)
 	{
 		if (!inventory.get(index).isEmpty())
 		{
@@ -120,7 +120,7 @@ public class ItemInventory implements IInventory
 			{
 				ItemStack itemStack = inventory.get(index);
 				inventory.set(index, ItemStack.EMPTY);
-				markDirty();
+				setChanged();
 				return itemStack;
 			}
 
@@ -128,7 +128,7 @@ public class ItemInventory implements IInventory
 			if (inventory.get(index).isEmpty())
 				inventory.set(index, ItemStack.EMPTY);
 
-			markDirty();
+			setChanged();
 			return itemStack;
 		}
 
@@ -136,54 +136,54 @@ public class ItemInventory implements IInventory
 	}
 
 	@Override
-	public ItemStack removeStackFromSlot(int slot)
+	public ItemStack removeItemNoUpdate(int slot)
 	{
 		if (!inventory.get(slot).isEmpty())
 		{
 			ItemStack itemStack = inventory.get(slot);
-			setInventorySlotContents(slot, ItemStack.EMPTY);
+			setItem(slot, ItemStack.EMPTY);
 			return itemStack;
 		}
 		return ItemStack.EMPTY;
 	}
 
 	@Override
-	public void setInventorySlotContents(int slot, ItemStack stack)
+	public void setItem(int slot, ItemStack stack)
 	{
 		inventory.set(slot, stack);
-		if (stack.getCount() > getInventoryStackLimit())
-			stack.setCount(getInventoryStackLimit());
-		markDirty();
+		if (stack.getCount() > getMaxStackSize())
+			stack.setCount(getMaxStackSize());
+		setChanged();
 //        if (!worldObj.isRemote)
 //            worldObj.markBlockForUpdate(this.pos);
 	}
 
 	@Override
-	public int getInventoryStackLimit()
+	public int getMaxStackSize()
 	{
 		return 64;
 	}
 
 	@Override
-	public boolean isUsableByPlayer(PlayerEntity player)
+	public boolean stillValid(PlayerEntity player)
 	{
 		return true;
 	}
 
 	@Override
-	public void openInventory(PlayerEntity player)
+	public void startOpen(PlayerEntity player)
 	{
 
 	}
 
 	@Override
-	public void closeInventory(PlayerEntity player)
+	public void stopOpen(PlayerEntity player)
 	{
 
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int index, ItemStack stack)
+	public boolean canPlaceItem(int index, ItemStack stack)
 	{
 		return true;
 	}
@@ -207,9 +207,9 @@ public class ItemInventory implements IInventory
 //	}
 
 	@Override
-	public void clear()
+	public void clearContent()
 	{
-		this.inventory = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
+		this.inventory = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
 	}
 
 //	@Override
@@ -231,7 +231,7 @@ public class ItemInventory implements IInventory
 //	}
 
 	@Override
-	public void markDirty()
+	public void setChanged()
 	{
 		if (masterStack != null)
 		{

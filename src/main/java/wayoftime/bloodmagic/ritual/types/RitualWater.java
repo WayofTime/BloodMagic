@@ -62,9 +62,9 @@ public class RitualWater extends Ritual
 
 		for (BlockPos newPos : waterRange.getContainedPositions(masterRitualStone.getMasterBlockPos()))
 		{
-			if (world.isAirBlock(newPos))
+			if (world.isEmptyBlock(newPos))
 			{
-				world.setBlockState(newPos, Blocks.WATER.getDefaultState());
+				world.setBlockAndUpdate(newPos, Blocks.WATER.defaultBlockState());
 				totalEffects++;
 			}
 
@@ -82,7 +82,7 @@ public class RitualWater extends Ritual
 		if (rawWill > 0)
 		{
 			AreaDescriptor chestRange = masterRitualStone.getBlockRange(WATER_TANK_RANGE);
-			TileEntity tile = world.getTileEntity(chestRange.getContainedPositions(pos).get(0));
+			TileEntity tile = world.getBlockEntity(chestRange.getContainedPositions(pos).get(0));
 			double drain = getWillCostForRawWill(rawWill);
 			int lpCost = getLPCostForRawWill(rawWill);
 

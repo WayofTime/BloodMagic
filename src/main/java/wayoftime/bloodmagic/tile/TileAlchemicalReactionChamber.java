@@ -46,6 +46,8 @@ import wayoftime.bloodmagic.tile.container.ContainerAlchemicalReactionChamber;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.MultiSlotItemHandler;
 
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+
 public class TileAlchemicalReactionChamber extends TileInventory implements ITickableTileEntity, INamedContainerProvider, ISidedInventory, IFluidHandler
 {
 	@ObjectHolder("bloodmagic:alchemicalreactionchamber")
@@ -124,15 +126,15 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 
 		boolean outputChanged = false;
 
-		ItemStack fullBucketStack = this.getStackInSlot(INPUT_BUCKET_SLOT);
-		ItemStack emptyBucketStack = this.getStackInSlot(OUTPUT_BUCKET_SLOT);
+		ItemStack fullBucketStack = this.getItem(INPUT_BUCKET_SLOT);
+		ItemStack emptyBucketStack = this.getItem(OUTPUT_BUCKET_SLOT);
 
-		ItemStack[] outputInventory = new ItemStack[] { getStackInSlot(1), getStackInSlot(2), getStackInSlot(3),
-				getStackInSlot(4), getStackInSlot(5) };
+		ItemStack[] outputInventory = new ItemStack[] { getItem(1), getItem(2), getItem(3),
+				getItem(4), getItem(5) };
 
 		MultiSlotItemHandler outputSlotHandler = new MultiSlotItemHandler(outputInventory, 64);
 
-		if (!world.isRemote)
+		if (!level.isClientSide)
 		{
 			if (!fullBucketStack.isEmpty() && inputTank.getSpace() >= 1000)
 			{
@@ -157,7 +159,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 								fullBucketStack.setCount(fullBucketStack.getCount() - 1);
 							} else
 							{
-								setInventorySlotContents(INPUT_BUCKET_SLOT, ItemStack.EMPTY);
+								setItem(INPUT_BUCKET_SLOT, ItemStack.EMPTY);
 							}
 						}
 					}
@@ -187,7 +189,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 								emptyBucketStack.setCount(emptyBucketStack.getCount() - 1);
 							} else
 							{
-								setInventorySlotContents(OUTPUT_BUCKET_SLOT, ItemStack.EMPTY);
+								setItem(OUTPUT_BUCKET_SLOT, ItemStack.EMPTY);
 							}
 						}
 					}
@@ -195,8 +197,8 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 			}
 		}
 
-		ItemStack inputStack = this.getStackInSlot(INPUT_SLOT);
-		ItemStack toolStack = this.getStackInSlot(ARC_TOOL_SLOT);
+		ItemStack inputStack = this.getItem(INPUT_SLOT);
+		ItemStack toolStack = this.getItem(ARC_TOOL_SLOT);
 
 		double craftingMultiplier = 1;
 		if (toolStack.getItem() instanceof IARCTool)
@@ -204,14 +206,14 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 			craftingMultiplier = ((IARCTool) toolStack.getItem()).getCraftingSpeedMultiplier(toolStack);
 		}
 
-		RecipeARC recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getARC(world, inputStack, toolStack, inputTank.getFluid());
+		RecipeARC recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getARC(level, inputStack, toolStack, inputTank.getFluid());
 		if (canCraft(recipe, outputSlotHandler))
 		{
 			// We have enough fluid (if applicable) and the theoretical outputs can fit.
 			currentProgress += craftingMultiplier * DEFAULT_SPEED;
 			if (currentProgress >= 1)
 			{
-				if (!world.isRemote)
+				if (!level.isClientSide)
 				{
 					outputChanged = true;
 					craftItem(recipe, outputSlotHandler);
@@ -221,24 +223,24 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 			}
 		} else
 		{
-			if (toolStack.getItem().isIn(BloodMagicTags.ARC_TOOL_FURNACE))
+			if (toolStack.getItem().is(BloodMagicTags.ARC_TOOL_FURNACE))
 			{
 				InventoryWrapper invWrapper = new InventoryWrapper(1);
-				invWrapper.setInventorySlotContents(0, inputStack.copy());
+				invWrapper.setItem(0, inputStack.copy());
 //				ItemStack[] outputInventory = new ItemStack[]
 //				{ input };
 
 //				MultiSlotItemHandler outputSlotHandler = new MultiSlotItemHandler(outputInventory, 64);
-				Optional<FurnaceRecipe> furnaceRecipe = world.getRecipeManager().getRecipe(IRecipeType.SMELTING, invWrapper, world);
+				Optional<FurnaceRecipe> furnaceRecipe = level.getRecipeManager().getRecipeFor(IRecipeType.SMELTING, invWrapper, level);
 				if (furnaceRecipe.isPresent())
 				{
-					ItemStack outputStack = furnaceRecipe.get().getCraftingResult(invWrapper);
+					ItemStack outputStack = furnaceRecipe.get().assemble(invWrapper);
 					if (canCraftFurnace(outputStack, outputSlotHandler))
 					{
 						currentProgress += craftingMultiplier * DEFAULT_SPEED;
 						if (currentProgress >= 1)
 						{
-							if (!world.isRemote)
+							if (!level.isClientSide)
 							{
 								craftFurnace(outputStack, outputSlotHandler);
 								outputChanged = true;
@@ -257,11 +259,11 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 			}
 		}
 
-		if (outputChanged && !world.isRemote)
+		if (outputChanged && !level.isClientSide)
 		{
 			for (int i = 0; i < NUM_OUTPUTS; i++)
 			{
-				this.setInventorySlotContents(OUTPUT_SLOT + i, outputSlotHandler.getStackInSlot(i));
+				this.setItem(OUTPUT_SLOT + i, outputSlotHandler.getStackInSlot(i));
 			}
 		}
 
@@ -299,7 +301,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 				inputTank.drain(inputStack, FluidAction.EXECUTE);
 			}
 
-			outputSlotHandler.canTransferAllItemsToSlots(recipe.getAllOutputs(world.rand), false);
+			outputSlotHandler.canTransferAllItemsToSlots(recipe.getAllOutputs(level.random), false);
 			outputTank.fill(recipe.getFluidOutput().copy(), FluidAction.EXECUTE);
 			consumeInventory(recipe.getConsumeIngredient());
 		}
@@ -322,45 +324,45 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 
 	public void consumeInventory(boolean consumeInput)
 	{
-		ItemStack inputStack = getStackInSlot(INPUT_SLOT);
+		ItemStack inputStack = getItem(INPUT_SLOT);
 		if (!inputStack.isEmpty())
 		{
 			if (!consumeInput && inputStack.getItem().hasContainerItem(inputStack))
 			{
-				setInventorySlotContents(INPUT_SLOT, inputStack.getItem().getContainerItem(inputStack));
+				setItem(INPUT_SLOT, inputStack.getItem().getContainerItem(inputStack));
 			} else
 			{
 				inputStack.shrink(1);
 				if (inputStack.isEmpty())
 				{
-					setInventorySlotContents(INPUT_SLOT, ItemStack.EMPTY);
+					setItem(INPUT_SLOT, ItemStack.EMPTY);
 				}
 			}
 		}
 
-		ItemStack toolStack = getStackInSlot(ARC_TOOL_SLOT);
+		ItemStack toolStack = getItem(ARC_TOOL_SLOT);
 		if (!toolStack.isEmpty())
 		{
-			if (toolStack.isDamageable())
+			if (toolStack.isDamageableItem())
 			{
-				int unbreakingLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, toolStack);
-				if (unbreakingLevel == 0 || world.rand.nextInt(unbreakingLevel + 1) == 0)
+				int unbreakingLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, toolStack);
+				if (unbreakingLevel == 0 || level.random.nextInt(unbreakingLevel + 1) == 0)
 				{
-					toolStack.setDamage(toolStack.getDamage() + 1);
-					if (toolStack.getDamage() >= toolStack.getMaxDamage())
+					toolStack.setDamageValue(toolStack.getDamageValue() + 1);
+					if (toolStack.getDamageValue() >= toolStack.getMaxDamage())
 					{
-						setInventorySlotContents(ARC_TOOL_SLOT, ItemStack.EMPTY);
+						setItem(ARC_TOOL_SLOT, ItemStack.EMPTY);
 					}
 				}
 			} else if (toolStack.getItem().hasContainerItem(toolStack))
 			{
-				setInventorySlotContents(ARC_TOOL_SLOT, toolStack.getItem().getContainerItem(inputStack));
+				setItem(ARC_TOOL_SLOT, toolStack.getItem().getContainerItem(inputStack));
 			} else
 			{
 				toolStack.shrink(1);
 				if (toolStack.isEmpty())
 				{
-					setInventorySlotContents(ARC_TOOL_SLOT, ItemStack.EMPTY);
+					setItem(ARC_TOOL_SLOT, ItemStack.EMPTY);
 				}
 			}
 		}
@@ -369,7 +371,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 	@Override
 	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_)
 	{
-		assert world != null;
+		assert level != null;
 		return new ContainerAlchemicalReactionChamber(this, p_createMenu_1_, p_createMenu_2_);
 	}
 
@@ -399,7 +401,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 	}
 
 	@Override
-	public boolean canInsertItem(int index, ItemStack itemStack, Direction direction)
+	public boolean canPlaceItemThroughFace(int index, ItemStack itemStack, Direction direction)
 	{
 		if (index == INPUT_BUCKET_SLOT || index == OUTPUT_BUCKET_SLOT)
 		{
@@ -415,14 +417,14 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 
 		if (index == ARC_TOOL_SLOT)
 		{
-			return itemStack.getItem().isIn(BloodMagicTags.ARC_TOOL);
+			return itemStack.getItem().is(BloodMagicTags.ARC_TOOL);
 		}
 
 		return true;
 	}
 
 	@Override
-	public boolean canExtractItem(int index, ItemStack stack, Direction direction)
+	public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction)
 	{
 		return index >= OUTPUT_SLOT && index < OUTPUT_SLOT + NUM_OUTPUTS;
 	}
@@ -501,7 +503,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 	public int fill(FluidStack resource, FluidAction action)
 	{
 		int fillAmount = inputTank.fill(resource, action);
-		if (fillAmount > 0 && !world.isRemote)
+		if (fillAmount > 0 && !level.isClientSide)
 		{
 			BloodMagic.packetHandler.sendToAllTracking(new ARCTanksPacket(this), this);
 //			this.world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
@@ -513,7 +515,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 	public FluidStack drain(FluidStack resource, FluidAction action)
 	{
 		FluidStack drainedStack = outputTank.drain(resource, action);
-		if (!drainedStack.isEmpty() && !world.isRemote)
+		if (!drainedStack.isEmpty() && !level.isClientSide)
 		{
 			BloodMagic.packetHandler.sendToAllTracking(new ARCTanksPacket(this), this);
 //			this.world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);
@@ -525,7 +527,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 	public FluidStack drain(int maxDrain, FluidAction action)
 	{
 		FluidStack drainedStack = outputTank.drain(maxDrain, action);
-		if (!drainedStack.isEmpty() && !world.isRemote)
+		if (!drainedStack.isEmpty() && !level.isClientSide)
 		{
 			BloodMagic.packetHandler.sendToAllTracking(new ARCTanksPacket(this), this);
 //			this.world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 3);

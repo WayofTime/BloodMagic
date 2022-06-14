@@ -58,9 +58,9 @@ public class RitualWellOfSuffering extends Ritual
 		int maxEffects = currentEssence / getRefreshCost();
 		int totalEffects = 0;
 
-		BlockPos altarPos = pos.add(altarOffsetPos);
+		BlockPos altarPos = pos.offset(altarOffsetPos);
 
-		TileEntity tile = world.getTileEntity(altarPos);
+		TileEntity tile = world.getBlockEntity(altarPos);
 
 		AreaDescriptor altarRange = masterRitualStone.getBlockRange(ALTAR_RANGE);
 
@@ -68,7 +68,7 @@ public class RitualWellOfSuffering extends Ritual
 		{
 			for (BlockPos newPos : altarRange.getContainedPositions(pos))
 			{
-				TileEntity nextTile = world.getTileEntity(newPos);
+				TileEntity nextTile = world.getBlockEntity(newPos);
 				if (nextTile instanceof TileAltar)
 				{
 					tile = nextTile;
@@ -87,7 +87,7 @@ public class RitualWellOfSuffering extends Ritual
 			AreaDescriptor damageRange = masterRitualStone.getBlockRange(DAMAGE_RANGE);
 			AxisAlignedBB range = damageRange.getAABB(pos);
 
-			List<LivingEntity> entities = world.getEntitiesWithinAABB(LivingEntity.class, range);
+			List<LivingEntity> entities = world.getEntitiesOfClass(LivingEntity.class, range);
 
 			for (LivingEntity entity : entities)
 			{
@@ -104,9 +104,9 @@ public class RitualWellOfSuffering extends Ritual
 
 				if (entity.isAlive() && !(entity instanceof PlayerEntity))
 				{
-					if (entity.attackEntityFrom(RitualManager.RITUAL_DAMAGE, 1))
+					if (entity.hurt(RitualManager.RITUAL_DAMAGE, 1))
 					{
-						if (entity.isChild())
+						if (entity.isBaby())
 							lifeEssenceRatio *= 0.5F;
 
 						tileAltar.sacrificialDaggerCall(lifeEssenceRatio, true);

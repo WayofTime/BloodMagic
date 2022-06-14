@@ -57,9 +57,9 @@ public class MeteorRecipeBuilder extends BloodMagicRecipeBuilder<MeteorRecipeBui
 		}
 
 		@Override
-		public void serialize(@Nonnull JsonObject json)
+		public void serializeRecipeData(@Nonnull JsonObject json)
 		{
-			json.add(Constants.JSON.INPUT, input.serialize());
+			json.add(Constants.JSON.INPUT, input.toJson());
 			json.addProperty(Constants.JSON.SYPHON, syphon);
 			json.addProperty(Constants.JSON.EXPLOSION, explosionRadius);
 

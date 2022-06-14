@@ -20,21 +20,23 @@ import net.minecraftforge.common.ToolType;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.ritual.IRitualStone;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockRitualStone extends Block implements IRitualStone
 {
 	private final EnumRuneType type;
 
 	public BlockRitualStone(EnumRuneType type)
 	{
-		super(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).setRequiresTool());
+		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops());
 		this.type = type;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, @Nullable IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.decoration.safe").mergeStyle(TextFormatting.GRAY));
-		super.addInformation(stack, world, tooltip, flag);
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.decoration.safe").withStyle(TextFormatting.GRAY));
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 
 //	@Override
@@ -84,7 +86,7 @@ public class BlockRitualStone extends Block implements IRitualStone
 			break;
 		}
 
-		BlockState newState = runeBlock.getDefaultState();
-		world.setBlockState(pos, newState);
+		BlockState newState = runeBlock.defaultBlockState();
+		world.setBlockAndUpdate(pos, newState);
 	}
 }

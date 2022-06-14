@@ -16,7 +16,7 @@ public class TextHelper
 
 	public static String localize(String input, Object... format)
 	{
-		return I18n.format(input, format);
+		return I18n.get(input, format);
 	}
 
 	public static String localizeEffect(String input, Object... format)
@@ -72,6 +72,6 @@ public class TextHelper
 
 	public static boolean canTranslate(String key)
 	{
-		return I18n.hasKey(key);
+		return I18n.exists(key);
 	}
 }

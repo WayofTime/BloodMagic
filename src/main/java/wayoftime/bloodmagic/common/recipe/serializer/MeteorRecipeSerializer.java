@@ -30,22 +30,22 @@ public class MeteorRecipeSerializer<RECIPE extends RecipeMeteor> extends ForgeRe
 
 	@Nonnull
 	@Override
-	public RECIPE read(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
+	public RECIPE fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
 	{
 
-		JsonElement input = JSONUtils.isJsonArray(json, Constants.JSON.INPUT)
-				? JSONUtils.getJsonArray(json, Constants.JSON.INPUT)
-				: JSONUtils.getJsonObject(json, Constants.JSON.INPUT);
+		JsonElement input = JSONUtils.isArrayNode(json, Constants.JSON.INPUT)
+				? JSONUtils.getAsJsonArray(json, Constants.JSON.INPUT)
+				: JSONUtils.getAsJsonObject(json, Constants.JSON.INPUT);
 
-		Ingredient inputIng = Ingredient.deserialize(input);
+		Ingredient inputIng = Ingredient.fromJson(input);
 
-		int syphon = JSONUtils.getInt(json, Constants.JSON.SYPHON);
-		float explosionRadius = JSONUtils.getInt(json, Constants.JSON.EXPLOSION);
+		int syphon = JSONUtils.getAsInt(json, Constants.JSON.SYPHON);
+		float explosionRadius = JSONUtils.getAsInt(json, Constants.JSON.EXPLOSION);
 
 		List<MeteorLayer> layerList = new ArrayList<>();
-		if (json.has(Constants.JSON.LAYER) && JSONUtils.isJsonArray(json, Constants.JSON.LAYER))
+		if (json.has(Constants.JSON.LAYER) && JSONUtils.isArrayNode(json, Constants.JSON.LAYER))
 		{
-			JsonArray mainArray = JSONUtils.getJsonArray(json, Constants.JSON.LAYER);
+			JsonArray mainArray = JSONUtils.getAsJsonArray(json, Constants.JSON.LAYER);
 
 			for (JsonElement element : mainArray)
 			{
@@ -60,11 +60,11 @@ public class MeteorRecipeSerializer<RECIPE extends RecipeMeteor> extends ForgeRe
 	}
 
 	@Override
-	public RECIPE read(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
+	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
 	{
 		try
 		{
-			Ingredient input = Ingredient.read(buffer);
+			Ingredient input = Ingredient.fromNetwork(buffer);
 			int syphon = buffer.readInt();
 			float explosionRadius = buffer.readFloat();
 
@@ -84,7 +84,7 @@ public class MeteorRecipeSerializer<RECIPE extends RecipeMeteor> extends ForgeRe
 	}
 
 	@Override
-	public void write(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
+	public void toNetwork(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
 	{
 		try
 		{

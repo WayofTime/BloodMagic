@@ -7,8 +7,8 @@ import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
-import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder;
+import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
 import wayoftime.bloodmagic.util.Constants;
 
 public class BloodAltarRecipeBuilder extends BloodMagicRecipeBuilder<BloodAltarRecipeBuilder>
@@ -50,9 +50,9 @@ public class BloodAltarRecipeBuilder extends BloodMagicRecipeBuilder<BloodAltarR
 		}
 
 		@Override
-		public void serialize(@Nonnull JsonObject json)
+		public void serializeRecipeData(@Nonnull JsonObject json)
 		{
-			json.add(Constants.JSON.INPUT, input.serialize());
+			json.add(Constants.JSON.INPUT, input.toJson());
 			json.add(Constants.JSON.OUTPUT, SerializerHelper.serializeItemStack(output));
 			json.addProperty(Constants.JSON.ALTAR_TIER, minimumTier);
 			json.addProperty(Constants.JSON.ALTAR_SYPHON, syphon);

@@ -83,7 +83,7 @@ public class RecipeFilterMergeAlchemyTable extends RecipeAlchemyTable
 	@Override
 	public void write(PacketBuffer buffer)
 	{
-		filterIngredient.write(buffer);
+		filterIngredient.toNetwork(buffer);
 		super.write(buffer);
 	}
 

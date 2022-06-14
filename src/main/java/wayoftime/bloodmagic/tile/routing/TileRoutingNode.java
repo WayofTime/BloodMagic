@@ -52,9 +52,9 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 	@Override
 	public void tick()
 	{
-		if (!getWorld().isRemote)
+		if (!getLevel().isClientSide)
 		{
-			currentInput = getWorld().getRedstonePowerFromNeighbors(pos);
+			currentInput = getLevel().getBestNeighborSignal(worldPosition);
 //            currentInput = getWorld().getStrongPower(pos);
 		}
 	}
@@ -102,18 +102,18 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 	@Override
 	public void removeAllConnections()
 	{
-		TileEntity testTile = getWorld().getTileEntity(getMasterPos());
+		TileEntity testTile = getLevel().getBlockEntity(getMasterPos());
 		if (testTile instanceof IMasterRoutingNode)
 		{
-			((IMasterRoutingNode) testTile).removeConnection(pos); // Remove this node from the master
+			((IMasterRoutingNode) testTile).removeConnection(worldPosition); // Remove this node from the master
 		}
 		for (BlockPos testPos : connectionList)
 		{
-			TileEntity tile = getWorld().getTileEntity(testPos);
+			TileEntity tile = getLevel().getBlockEntity(testPos);
 			if (tile instanceof IRoutingNode)
 			{
-				((IRoutingNode) tile).removeConnection(pos);
-				getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(testPos), getWorld().getBlockState(testPos), 3);
+				((IRoutingNode) tile).removeConnection(worldPosition);
+				getLevel().sendBlockUpdated(getBlockPos(), getLevel().getBlockState(testPos), getLevel().getBlockState(testPos), 3);
 			}
 		}
 
@@ -132,7 +132,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 				continue;
 			}
 			alreadyChecked.add(testPos);
-			TileEntity tile = world.getTileEntity(testPos);
+			TileEntity tile = world.getBlockEntity(testPos);
 			if (!(tile instanceof IRoutingNode))
 			{
 				continue;
@@ -170,7 +170,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 				continue;
 			}
 			alreadyChecked.add(testPos);
-			TileEntity tile = world.getTileEntity(testPos);
+			TileEntity tile = level.getBlockEntity(testPos);
 			if (!(tile instanceof IRoutingNode))
 			{
 				continue;
@@ -211,7 +211,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 		Triple<Boolean, List<BlockPos>, List<IRoutingNode>> recheckResult = recheckConnectionToMaster(posList, new LinkedList<IRoutingNode>());
 		if (!recheckResult.getLeft())
 		{
-			TileEntity testTile = world.getTileEntity(masterPos);
+			TileEntity testTile = level.getBlockEntity(masterPos);
 			IMasterRoutingNode masterNode = null;
 			if (testTile instanceof IMasterRoutingNode)
 			{
@@ -235,7 +235,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 	@Override
 	public BlockPos getCurrentBlockPos()
 	{
-		return this.getPos();
+		return this.getBlockPos();
 	}
 
 	@Override
@@ -268,7 +268,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 	{
 		if (!connectionList.contains(pos1))
 		{
-			getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
+			getLevel().sendBlockUpdated(getBlockPos(), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3);
 			connectionList.add(pos1);
 		}
 	}
@@ -279,7 +279,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 		if (connectionList.contains(pos1))
 		{
 			connectionList.remove(pos1);
-			getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
+			getLevel().sendBlockUpdated(getBlockPos(), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3);
 		}
 
 		if (pos1.equals(masterPos))
@@ -302,7 +302,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public double getMaxRenderDistanceSquared()
+	public double getViewDistance()
 	{
 		return 10000;
 	}
@@ -312,7 +312,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 	{
 		if (boundingBox == null)
 		{
-			boundingBox = super.getRenderBoundingBox().grow(5);
+			boundingBox = super.getRenderBoundingBox().inflate(5);
 		}
 		return boundingBox;
 	}

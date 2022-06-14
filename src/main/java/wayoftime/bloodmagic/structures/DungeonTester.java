@@ -46,7 +46,7 @@ public class DungeonTester
 //
 //		settings.setIgnoreEntities(true);
 //		settings.setChunk((ChunkPos) null);
-//		settings.func_215223_c(true);
+//		settings.setKnownShape(true);
 ////		settings.setReplacedBlock((Block) null);
 ////		settings.setIgnoreStructureBlock(false);
 //

@@ -17,14 +17,14 @@ public class ItemSyntheticPoint extends Item implements ILivingUpgradePointsProv
 {
 	public ItemSyntheticPoint()
 	{
-		super(new Item.Properties().group(BloodMagic.TAB));
+		super(new Item.Properties().tab(BloodMagic.TAB));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.syntheticpoint.desc").mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.syntheticpoint.desc").withStyle(TextFormatting.GRAY));
 	}
 
 	@Override

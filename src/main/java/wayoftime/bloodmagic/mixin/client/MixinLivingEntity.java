@@ -22,9 +22,9 @@ public class MixinLivingEntity extends MixinEntity
 			return;
 		}
 
-		if (player.isPotionActive(BloodMagicPotions.SPECTRAL_SIGHT))
+		if (player.hasEffect(BloodMagicPotions.SPECTRAL_SIGHT))
 		{
-			double distance = (player.getActivePotionEffect(BloodMagicPotions.SPECTRAL_SIGHT).getAmplifier() * 32 + 24);
+			double distance = (player.getEffect(BloodMagicPotions.SPECTRAL_SIGHT).getAmplifier() * 32 + 24);
 			if (getDistanceSq(Minecraft.getInstance().player) <= (distance * distance))
 			{
 				if (!this.glowing)

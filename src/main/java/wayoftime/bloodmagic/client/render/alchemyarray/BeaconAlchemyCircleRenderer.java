@@ -73,7 +73,7 @@ public class BeaconAlchemyCircleRenderer extends AlchemyArrayRenderer
 
 	public void renderAt(TileAlchemyArray tileArray, double x, double y, double z, float craftTime, MatrixStack matrixStack, IRenderTypeBuffer renderer, int combinedLightIn, int combinedOverlayIn)
 	{
-		matrixStack.push();
+		matrixStack.pushPose();
 
 		matrixStack.translate(0.5, 0.5, 0.5);
 
@@ -83,17 +83,17 @@ public class BeaconAlchemyCircleRenderer extends AlchemyArrayRenderer
 		float size = 1.0F * getSizeModifier(craftTime);
 		Direction rotation = tileArray.getRotation();
 
-		matrixStack.push();
+		matrixStack.pushPose();
 		matrixStack.translate(0, getVerticalOffset(craftTime), 0);
-		matrixStack.rotate(new Quaternion(Direction.UP.toVector3f(), -rotation.getHorizontalAngle(), true));
+		matrixStack.mulPose(new Quaternion(Direction.UP.step(), -rotation.toYRot(), true));
 
-		matrixStack.push();
+		matrixStack.pushPose();
 
-		matrixStack.rotate(new Quaternion(Direction.UP.toVector3f(), rot, true));
-		matrixStack.rotate(new Quaternion(Direction.EAST.toVector3f(), -secondaryRot, true));
+		matrixStack.mulPose(new Quaternion(Direction.UP.step(), rot, true));
+		matrixStack.mulPose(new Quaternion(Direction.EAST.step(), -secondaryRot, true));
 //		matrixStack.rotate(new Quaternion(Direction.EAST.toVector3f(), secondaryRot * 0.45812f, true));
 
-		IVertexBuilder twoDBuffer = renderer.getBuffer(RenderType.getEntityTranslucent(arrayResource));
+		IVertexBuilder twoDBuffer = renderer.getBuffer(RenderType.entityTranslucent(arrayResource));
 		Model2D arrayModel = new BloodMagicRenderer.Model2D();
 		arrayModel.minX = -0.5;
 		arrayModel.maxX = +0.5;
@@ -106,8 +106,8 @@ public class BeaconAlchemyCircleRenderer extends AlchemyArrayRenderer
 //		RenderResizableQuadrilateral.INSTANCE.renderSquare(arrayModel, matrixStack, twoDBuffer, 0x000000FF, 0xFFFFFFFF, OverlayTexture.NO_OVERLAY);
 		RenderResizableQuadrilateral.INSTANCE.renderSquare(arrayModel, matrixStack, twoDBuffer, 0xFFFFFFFF, 0x00F000F0, combinedOverlayIn);
 
-		matrixStack.pop();
-		matrixStack.pop();
-		matrixStack.pop();
+		matrixStack.popPose();
+		matrixStack.popPose();
+		matrixStack.popPose();
 	}
 }

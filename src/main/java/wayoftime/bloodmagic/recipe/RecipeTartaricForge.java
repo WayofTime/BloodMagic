@@ -71,9 +71,9 @@ public class RecipeTartaricForge extends BloodMagicRecipe
 		buffer.writeInt(input.size());
 		for (int i = 0; i < input.size(); i++)
 		{
-			input.get(i).write(buffer);
+			input.get(i).toNetwork(buffer);
 		}
-		buffer.writeItemStack(output);
+		buffer.writeItem(output);
 		buffer.writeDouble(minimumSouls);
 		buffer.writeDouble(soulDrain);
 	}

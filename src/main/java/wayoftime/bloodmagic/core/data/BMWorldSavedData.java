@@ -42,7 +42,7 @@ public class BMWorldSavedData extends WorldSavedData
 	}
 
 	@Override
-	public void read(CompoundNBT tagCompound)
+	public void load(CompoundNBT tagCompound)
 	{
 		ListNBT networkData = tagCompound.getList("networkData", 10);
 
@@ -58,7 +58,7 @@ public class BMWorldSavedData extends WorldSavedData
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT tagCompound)
+	public CompoundNBT save(CompoundNBT tagCompound)
 	{
 		ListNBT networkData = new ListNBT();
 		for (SoulNetwork soulNetwork : soulNetworks.values()) networkData.add(soulNetwork.serializeNBT());

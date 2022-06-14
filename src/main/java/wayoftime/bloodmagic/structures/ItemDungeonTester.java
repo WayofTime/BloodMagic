@@ -14,13 +14,13 @@ public class ItemDungeonTester extends Item
 {
 	public ItemDungeonTester()
 	{
-		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		if (!world.isRemote && world instanceof ServerWorld)
+		if (!world.isClientSide && world instanceof ServerWorld)
 		{
 //			System.out.println("Test");
 //			DungeonTester.testDungeonElementWithOutput((ServerWorld) world, player.getPosition());
@@ -31,6 +31,6 @@ public class ItemDungeonTester extends Item
 
 //			player.setPosition(safePlayerPosition.getX(), safePlayerPosition.getY(), safePlayerPosition.getZ());
 		}
-		return super.onItemRightClick(world, player, hand);
+		return super.use(world, player, hand);
 	}
 }

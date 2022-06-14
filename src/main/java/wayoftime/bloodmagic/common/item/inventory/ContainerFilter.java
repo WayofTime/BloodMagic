@@ -26,7 +26,7 @@ public class ContainerFilter extends Container
 
 	public ContainerFilter(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
 	{
-		this(windowId, playerInventory.player, playerInventory, extraData.readItemStack());
+		this(windowId, playerInventory.player, playerInventory, extraData.readItem());
 	}
 
 	public ContainerFilter(int windowId, PlayerEntity player, PlayerInventory playerInventory, ItemStack filterStack)
@@ -35,7 +35,7 @@ public class ContainerFilter extends Container
 		this.player = player;
 		this.filterStack = filterStack;
 		this.inventoryFilter = new InventoryFilter(filterStack);
-		int currentSlotHeldIn = player.inventory.currentItem;
+		int currentSlotHeldIn = player.inventory.selected;
 		this.setup(playerInventory, currentSlotHeldIn);
 	}
 
@@ -77,22 +77,22 @@ public class ContainerFilter extends Container
 	}
 
 	@Override
-	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player)
+	public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player)
 	{
 		PlayerInventory inventoryPlayer = player.inventory;
 //      if (!player.worldObj.isRemote)
 		{
 			if (slotId >= 0)
 			{
-				Slot slot = this.inventorySlots.get(slotId);
+				Slot slot = this.slots.get(slotId);
 
 				if (slot instanceof SlotGhostItem) // TODO: make the slot clicking work!
 				{
 					lastGhostSlotClicked = slot.getSlotIndex();
 					if ((dragType == 0 || dragType == 1))
 					{
-						ItemStack slotStack = slot.getStack();
-						ItemStack heldStack = inventoryPlayer.getItemStack();
+						ItemStack slotStack = slot.getItem();
+						ItemStack heldStack = inventoryPlayer.getCarried();
 
 						if (dragType == 0) // Left mouse click-eth
 						{
@@ -106,72 +106,72 @@ public class ContainerFilter extends Container
 								{
 									if (!((SlotGhostItem) slot).canBeAccessed())
 									{
-										return super.slotClick(slotId, dragType, clickTypeIn, player);
+										return super.clicked(slotId, dragType, clickTypeIn, player);
 									}
 
 									ItemStack copyStack = heldStack.copy();
 									GhostItemHelper.setItemGhostAmount(copyStack, 0);
 									copyStack.setCount(1);
-									slot.putStack(copyStack);
+									slot.set(copyStack);
 
 //									ItemStack filterStack = this.filterStack;
 									if (filterStack.getItem() instanceof IRoutingFilterProvider)
 									{
 										ItemStack filterCopy = ((IRoutingFilterProvider) filterStack.getItem()).getContainedStackForItem(filterStack, heldStack);
-										slot.putStack(filterCopy);
+										slot.set(filterCopy);
 									}
 								}
 							}
 						} else
 						// Right mouse click-eth away
 						{
-							slot.putStack(ItemStack.EMPTY);
+							slot.set(ItemStack.EMPTY);
 						}
 					}
 				}
 			}
 		}
 
-		return super.slotClick(slotId, dragType, clickTypeIn, player);
+		return super.clicked(slotId, dragType, clickTypeIn, player);
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity entityPlayer)
+	public boolean stillValid(PlayerEntity entityPlayer)
 	{
 		return true;
 	}
 
 	@Override
-	public void onContainerClosed(PlayerEntity entityPlayer)
+	public void removed(PlayerEntity entityPlayer)
 	{
-		super.onContainerClosed(entityPlayer);
+		super.removed(entityPlayer);
 
-		if (!entityPlayer.getEntityWorld().isRemote)
+		if (!entityPlayer.getCommandSenderWorld().isClientSide)
 		{
 			saveInventory(entityPlayer);
 		}
 	}
 
 	@Override
-	public void detectAndSendChanges()
+	public void broadcastChanges()
 	{
-		super.detectAndSendChanges();
+		super.broadcastChanges();
 
-		if (!player.getEntityWorld().isRemote)
+		if (!player.getCommandSenderWorld().isClientSide)
 		{
 			saveInventory(player);
 		}
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity entityPlayer, int slotIndex)
+	public ItemStack quickMoveStack(PlayerEntity entityPlayer, int slotIndex)
 	{
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(slotIndex);
+		Slot slot = this.slots.get(slotIndex);
 
-		if (slot != null && slot.getHasStack())
+		if (slot != null && slot.hasItem())
 		{
-			ItemStack itemstack1 = slot.getStack();
+			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 
 			if (slotIndex >= 0)
@@ -179,22 +179,22 @@ public class ContainerFilter extends Container
 //                return null;
 				if (itemstack1.getItem() instanceof IRoutingFilterProvider) // Change to check item is a filter
 				{
-					if (!this.mergeItemStack(itemstack1, 0, 1, false))
+					if (!this.moveItemStackTo(itemstack1, 0, 1, false))
 					{
 						return ItemStack.EMPTY;
 					}
 				}
-			} else if (!this.mergeItemStack(itemstack1, slotsOccupied, 36 + slotsOccupied, false))
+			} else if (!this.moveItemStackTo(itemstack1, slotsOccupied, 36 + slotsOccupied, false))
 			{
 				return ItemStack.EMPTY;
 			}
 
 			if (itemstack1.isEmpty())
 			{
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else
 			{
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 
 			if (itemstack1.getCount() == itemstack.getCount())
@@ -226,9 +226,9 @@ public class ContainerFilter extends Container
 		}
 
 		@Override
-		public void onSlotChanged()
+		public void setChanged()
 		{
-			super.onSlotChanged();
+			super.setChanged();
 
 			if (EffectiveSide.get().isServer())
 			{
@@ -237,13 +237,13 @@ public class ContainerFilter extends Container
 		}
 
 		@Override
-		public boolean isItemValid(ItemStack stack)
+		public boolean mayPlace(ItemStack stack)
 		{
 			return false;
 		}
 
 		@Override
-		public boolean canTakeStack(PlayerEntity playerIn)
+		public boolean mayPickup(PlayerEntity playerIn)
 		{
 			return false;
 		}
@@ -262,13 +262,13 @@ public class ContainerFilter extends Container
 		}
 
 		@Override
-		public boolean isItemValid(ItemStack itemStack)
+		public boolean mayPlace(ItemStack itemStack)
 		{
 			return false;
 		}
 
 		@Override
-		public boolean canTakeStack(PlayerEntity player)
+		public boolean mayPickup(PlayerEntity player)
 		{
 			return false;
 		}

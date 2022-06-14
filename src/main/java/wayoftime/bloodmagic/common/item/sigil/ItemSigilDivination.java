@@ -25,6 +25,8 @@ import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.NumeralHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 
+import wayoftime.bloodmagic.common.item.sigil.ISigil.Holding;
+
 public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 {
 	private final boolean isSimple;
@@ -36,21 +38,21 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
+		ItemStack stack = player.getItemInHand(hand);
 		if (stack.getItem() instanceof ISigil.Holding)
 			stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
 		if (PlayerHelper.isFakePlayer(player))
-			return ActionResult.resultFail(stack);
+			return ActionResult.fail(stack);
 
-		if (!world.isRemote)
+		if (!world.isClientSide)
 		{
-			RayTraceResult position = Item.rayTrace(world, player, FluidMode.NONE);
+			RayTraceResult position = Item.getPlayerPOVHitResult(world, player, FluidMode.NONE);
 
 			if (position == null || position.getType() == RayTraceResult.Type.MISS)
 			{
-				super.onItemRightClick(world, player, hand);
+				super.use(world, player, hand);
 
 				Binding binding = getBinding(stack);
 				if (isSimple && binding != null)
@@ -66,7 +68,7 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 			{
 				if (position.getType() == RayTraceResult.Type.BLOCK)
 				{
-					TileEntity tile = world.getTileEntity(new BlockPos(position.getHitVec()));
+					TileEntity tile = world.getBlockEntity(new BlockPos(position.getLocation()));
 
 					if (tile != null && tile instanceof IBloodAltar)
 					{
@@ -113,6 +115,6 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 
 		}
 
-		return super.onItemRightClick(world, player, hand);
+		return super.use(world, player, hand);
 	}
 }

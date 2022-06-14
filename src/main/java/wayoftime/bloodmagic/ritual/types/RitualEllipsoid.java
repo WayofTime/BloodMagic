@@ -48,7 +48,7 @@ public class RitualEllipsoid extends Ritual
 
 		BlockPos masterPos = masterRitualStone.getMasterBlockPos();
 		AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
-		TileEntity tileInventory = world.getTileEntity(chestRange.getContainedPositions(masterPos).get(0));
+		TileEntity tileInventory = world.getBlockEntity(chestRange.getContainedPositions(masterPos).get(0));
 
 		if (currentEssence < getRefreshCost())
 		{
@@ -129,19 +129,19 @@ public class RitualEllipsoid extends Ritual
 
 							if (checkIfEllipsoidShell(xR, yR, zR, i, j, k))
 							{
-								BlockPos newPos = masterPos.add(i, j, k);
+								BlockPos newPos = masterPos.offset(i, j, k);
 //
-								if (!world.isAirBlock(newPos))
+								if (!world.isEmptyBlock(newPos))
 								{
 									k++;
 									continue;
 								}
 
-								BlockState placeState = Block.getBlockFromItem(itemHandler.getStackInSlot(blockSlot).getItem()).getDefaultState();
-								world.setBlockState(newPos, placeState);
+								BlockState placeState = Block.byItem(itemHandler.getStackInSlot(blockSlot).getItem()).defaultBlockState();
+								world.setBlockAndUpdate(newPos, placeState);
 
 								itemHandler.extractItem(blockSlot, 1, false);
-								tileInventory.markDirty();
+								tileInventory.setChanged();
 								// TODO:
 								masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
 								k++;

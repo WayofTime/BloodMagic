@@ -63,7 +63,7 @@ public interface ILivingContainer
 		if (stats != null)
 		{
 			if (trainable)
-				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.livingarmour.upgrade.points", stats.getUsedPoints(), stats.getMaxPoints()).mergeStyle(TextFormatting.GOLD));
+				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.livingarmour.upgrade.points", stats.getUsedPoints(), stats.getMaxPoints()).withStyle(TextFormatting.GOLD));
 
 			stats.getUpgrades().forEach((k, v) -> {
 				if (k.getLevel(v.intValue()) <= 0 && !displayIfLevelZero(stack))
@@ -75,11 +75,11 @@ public interface ILivingContainer
 				{
 					int level = k.getLevel(v.intValue());
 					if (level > 0)
-						tooltip.add(new TranslationTextComponent("%s %s", new TranslationTextComponent(k.getTranslationKey()), new TranslationTextComponent("enchantment.level." + level)).mergeStyle(TextFormatting.GRAY));
+						tooltip.add(new TranslationTextComponent("%s %s", new TranslationTextComponent(k.getTranslationKey()), new TranslationTextComponent("enchantment.level." + level)).withStyle(TextFormatting.GRAY));
 					else
-						tooltip.add(new TranslationTextComponent(k.getTranslationKey()).mergeStyle(TextFormatting.GRAY));
+						tooltip.add(new TranslationTextComponent(k.getTranslationKey()).withStyle(TextFormatting.GRAY));
 				} else
-					tooltip.add(new TranslationTextComponent("%s %s", new TranslationTextComponent(k.getTranslationKey()), (": " + v.intValue() + "/" + k.getNextRequirement(v.intValue()))).mergeStyle(TextFormatting.GRAY));
+					tooltip.add(new TranslationTextComponent("%s %s", new TranslationTextComponent(k.getTranslationKey()), (": " + v.intValue() + "/" + k.getNextRequirement(v.intValue()))).withStyle(TextFormatting.GRAY));
 			});
 		}
 	}

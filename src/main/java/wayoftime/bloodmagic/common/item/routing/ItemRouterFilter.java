@@ -48,14 +48,14 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 
 	public ItemRouterFilter()
 	{
-		super(new Item.Properties().maxStackSize(16).group(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(16).tab(BloodMagic.TAB));
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
-		if (!world.isRemote)
+		ItemStack stack = player.getItemInHand(hand);
+		if (!world.isClientSide)
 		{
 			Utils.setUUID(stack);
 
@@ -72,8 +72,8 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity player)
 	{
 		// TODO Auto-generated method stub
-		assert player.getEntityWorld() != null;
-		return new ContainerFilter(p_createMenu_1_, player, p_createMenu_2_, player.getHeldItemMainhand());
+		assert player.getCommandSenderWorld() != null;
+		return new ContainerFilter(p_createMenu_1_, player, p_createMenu_2_, player.getMainHandItem());
 	}
 
 	@Override
@@ -117,9 +117,9 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 		List<IFilterKey> filteredList = new ArrayList<>();
 		ItemInventory inv = new InventoryFilter(filterStack);
 
-		for (int i = 0; i < inv.getSizeInventory(); i++)
+		for (int i = 0; i < inv.getContainerSize(); i++)
 		{
-			ItemStack stack = inv.getStackInSlot(i);
+			ItemStack stack = inv.getItem(i);
 			if (stack.isEmpty())
 			{
 				continue;
@@ -145,9 +145,9 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 		List<IFilterKey> filteredList = new ArrayList<>();
 		ItemInventory inv = new InventoryFilter(filterStack); // TODO: Change to grab the filter from the Item
 
-		for (int i = 0; i < inv.getSizeInventory(); i++)
+		for (int i = 0; i < inv.getContainerSize(); i++)
 		{
-			ItemStack stack = inv.getStackInSlot(i);
+			ItemStack stack = inv.getItem(i);
 			if (stack.isEmpty())
 			{
 				continue;
@@ -174,7 +174,7 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 	public void setGhostItemAmount(ItemStack filterStack, int ghostItemSlot, int amount)
 	{
 		ItemInventory inv = new InventoryFilter(filterStack);
-		ItemStack stack = inv.getStackInSlot(ghostItemSlot);
+		ItemStack stack = inv.getItem(ghostItemSlot);
 		if (!stack.isEmpty())
 		{
 			GhostItemHelper.setItemGhostAmount(stack, amount);
@@ -292,9 +292,9 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 		List<IFilterKey> filteredList = new ArrayList<>();
 		ItemInventory inv = new InventoryFilter(filterStack);
 
-		for (int i = 0; i < inv.getSizeInventory(); i++)
+		for (int i = 0; i < inv.getContainerSize(); i++)
 		{
-			ItemStack stack = inv.getStackInSlot(i);
+			ItemStack stack = inv.getItem(i);
 			if (stack.isEmpty())
 			{
 				continue;

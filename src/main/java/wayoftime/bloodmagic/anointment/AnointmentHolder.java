@@ -188,13 +188,13 @@ public class AnointmentHolder
 		anointments.remove(anointment);
 		anointment.removeAnointment(this, weaponStack, type);
 
-		SoundEvent soundevent = SoundEvents.ENTITY_SPLASH_POTION_BREAK;
-		user.world.playSound(null, user.getPosition(), soundevent, SoundCategory.BLOCKS, 1.0F, 1.0F);
+		SoundEvent soundevent = SoundEvents.SPLASH_POTION_BREAK;
+		user.level.playSound(null, user.blockPosition(), soundevent, SoundCategory.BLOCKS, 1.0F, 1.0F);
 
-		if (user.world instanceof ServerWorld)
+		if (user.level instanceof ServerWorld)
 		{
-			ServerWorld server = (ServerWorld) user.world;
-			server.spawnParticle(ParticleTypes.LARGE_SMOKE, user.getPosX(), user.getPosY() + 1, user.getPosZ(), 16, 0.3, 0, 0.3, 0);
+			ServerWorld server = (ServerWorld) user.level;
+			server.sendParticles(ParticleTypes.LARGE_SMOKE, user.getX(), user.getY() + 1, user.getZ(), 16, 0.3, 0, 0.3, 0);
 		}
 
 		return true;
@@ -295,7 +295,7 @@ public class AnointmentHolder
 
 	public static AnointmentHolder fromPlayer(PlayerEntity player, Hand hand, boolean createNew)
 	{
-		ItemStack heldItem = player.getHeldItem(hand);
+		ItemStack heldItem = player.getItemInHand(hand);
 
 		AnointmentHolder holder = fromItemStack(heldItem);
 		return holder == null && createNew ? new AnointmentHolder() : holder;
@@ -303,7 +303,7 @@ public class AnointmentHolder
 
 	public static void toPlayer(PlayerEntity player, Hand hand, AnointmentHolder holder)
 	{
-		ItemStack heldItem = player.getHeldItem(hand);
+		ItemStack heldItem = player.getItemInHand(hand);
 		holder.toItemStack(heldItem);
 	}
 

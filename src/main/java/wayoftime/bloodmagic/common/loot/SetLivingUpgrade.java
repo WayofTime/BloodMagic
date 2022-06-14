@@ -38,18 +38,18 @@ public class SetLivingUpgrade extends LootFunction
 		this.livingUpgrades = livingUpgrades;
 	}
 
-	public LootFunctionType getFunctionType()
+	public LootFunctionType getType()
 	{
 		return BloodMagicLootFunctionManager.SET_LIVING_UPGRADE;
 	}
 
-	public ItemStack doApply(ItemStack stack, LootContext context)
+	public ItemStack run(ItemStack stack, LootContext context)
 	{
 		if (stack.getItem() instanceof ILivingContainer)
 		{
 			Collections.shuffle(livingUpgrades);
 			ResourceLocation upgrade = livingUpgrades.get(0);
-			float points = pointsRange.generateFloat(context.getRandom());
+			float points = pointsRange.getFloat(context.getRandom());
 			LivingStats stats = new LivingStats();
 			stats.addExperience(upgrade, points);
 			((ILivingContainer) stack.getItem()).updateLivingStats(stack, stats);
@@ -63,7 +63,7 @@ public class SetLivingUpgrade extends LootFunction
 
 	public static LootFunction.Builder<?> withRange(RandomValueRange p_215931_0_, ResourceLocation... livingUpgrades)
 	{
-		return builder((p_215930_1_) -> {
+		return simpleBuilder((p_215930_1_) -> {
 			List<ResourceLocation> list = new ArrayList<>();
 			for (ResourceLocation resource : livingUpgrades)
 			{
@@ -95,9 +95,9 @@ public class SetLivingUpgrade extends LootFunction
 		{
 			List<ResourceLocation> inputList = new ArrayList<ResourceLocation>();
 
-			if (json.has(Constants.JSON.UPGRADES) && JSONUtils.isJsonArray(json, Constants.JSON.UPGRADES))
+			if (json.has(Constants.JSON.UPGRADES) && JSONUtils.isArrayNode(json, Constants.JSON.UPGRADES))
 			{
-				JsonArray mainArray = JSONUtils.getJsonArray(json, Constants.JSON.UPGRADES);
+				JsonArray mainArray = JSONUtils.getAsJsonArray(json, Constants.JSON.UPGRADES);
 
 				for (JsonElement element : mainArray)
 				{
@@ -106,7 +106,7 @@ public class SetLivingUpgrade extends LootFunction
 				}
 			}
 
-			return new SetLivingUpgrade(conditionsIn, inputList, JSONUtils.deserializeClass(json, "points", deserializationContext, RandomValueRange.class));
+			return new SetLivingUpgrade(conditionsIn, inputList, JSONUtils.getAsObject(json, "points", deserializationContext, RandomValueRange.class));
 		}
 	}
 }

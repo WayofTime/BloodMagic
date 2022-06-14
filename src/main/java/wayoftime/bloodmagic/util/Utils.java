@@ -67,18 +67,18 @@ public class Utils
 	 */
 	public static boolean insertItemToTile(TileInventory tile, PlayerEntity player, int slot)
 	{
-		ItemStack slotStack = tile.getStackInSlot(slot);
-		if (slotStack.isEmpty() && !player.getHeldItemMainhand().isEmpty())
+		ItemStack slotStack = tile.getItem(slot);
+		if (slotStack.isEmpty() && !player.getMainHandItem().isEmpty())
 		{
-			ItemStack input = player.getHeldItemMainhand().copy();
+			ItemStack input = player.getMainHandItem().copy();
 			input.setCount(1);
-			player.getHeldItemMainhand().shrink(1);
-			tile.setInventorySlotContents(slot, input);
+			player.getMainHandItem().shrink(1);
+			tile.setItem(slot, input);
 			return true;
-		} else if (!slotStack.isEmpty() && player.getHeldItemMainhand().isEmpty())
+		} else if (!slotStack.isEmpty() && player.getMainHandItem().isEmpty())
 		{
 			ItemHandlerHelper.giveItemToPlayer(player, slotStack);
-			tile.clear();
+			tile.clearContent();
 			return false;
 		}
 
@@ -92,7 +92,7 @@ public class Utils
 
 	public static boolean isImmuneToFireDamage(LivingEntity entity)
 	{
-		return entity.isImmuneToFire() || entity.isPotionActive(Effects.FIRE_RESISTANCE);
+		return entity.fireImmune() || entity.hasEffect(Effects.FIRE_RESISTANCE);
 	}
 
 	public static boolean isBlockLiquid(BlockState state)
@@ -116,7 +116,7 @@ public class Utils
 		double velocity = 0.15D;
 		if (pushDirection != null)
 		{
-			spawnPos = spawnPos.offset(pushDirection);
+			spawnPos = spawnPos.relative(pushDirection);
 
 			switch (pushDirection)
 			{
@@ -158,10 +158,10 @@ public class Utils
 		double posZ = spawnPos.getZ() + 0.5;
 
 		ItemEntity entityItem = new ItemEntity(world, posX, posY, posZ, stack);
-		entityItem.setMotion(velX, velY, velZ);
+		entityItem.setDeltaMovement(velX, velY, velZ);
 
 		entityItem.setItem(stack);
-		return world.addEntity(entityItem);
+		return world.addFreshEntity(entityItem);
 	}
 
 	public static boolean swapLocations(World initialWorld, BlockPos initialPos, World finalWorld, BlockPos finalPos)
@@ -171,14 +171,14 @@ public class Utils
 
 	public static boolean swapLocations(World initialWorld, BlockPos initialPos, World finalWorld, BlockPos finalPos, boolean playSound)
 	{
-		TileEntity initialTile = initialWorld.getTileEntity(initialPos);
-		TileEntity finalTile = finalWorld.getTileEntity(finalPos);
+		TileEntity initialTile = initialWorld.getBlockEntity(initialPos);
+		TileEntity finalTile = finalWorld.getBlockEntity(finalPos);
 		CompoundNBT initialTag = new CompoundNBT();
 		CompoundNBT finalTag = new CompoundNBT();
 		if (initialTile != null)
-			initialTile.write(initialTag);
+			initialTile.save(initialTag);
 		if (finalTile != null)
-			finalTile.write(finalTag);
+			finalTile.save(finalTag);
 
 		BlockState initialState = initialWorld.getBlockState(initialPos);
 		BlockState finalState = finalWorld.getBlockState(finalPos);
@@ -188,55 +188,55 @@ public class Utils
 
 		if (playSound)
 		{
-			initialWorld.playSound(null, initialPos.getX(), initialPos.getY(), initialPos.getZ(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F);
-			finalWorld.playSound(null, finalPos.getX(), finalPos.getY(), finalPos.getZ(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F);
+			initialWorld.playSound(null, initialPos.getX(), initialPos.getY(), initialPos.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F);
+			finalWorld.playSound(null, finalPos.getX(), finalPos.getY(), finalPos.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F);
 		}
 
 		// Finally, we get to do something! (CLEARING TILES)
 		if (finalState.getBlock().hasTileEntity(finalState))
-			finalWorld.removeTileEntity(finalPos);
+			finalWorld.removeBlockEntity(finalPos);
 		if (initialState.getBlock().hasTileEntity(initialState))
-			initialWorld.removeTileEntity(initialPos);
+			initialWorld.removeBlockEntity(initialPos);
 
 		// TILES CLEARED
 		BlockState initialBlockState = initialWorld.getBlockState(initialPos);
 		BlockState finalBlockState = finalWorld.getBlockState(finalPos);
-		finalWorld.setBlockState(finalPos, initialBlockState, 3);
+		finalWorld.setBlock(finalPos, initialBlockState, 3);
 
 		if (initialTile != null)
 		{
 //			TileEntity newTileInitial = TileEntity.create(finalWorld, initialTag);
-			TileEntity newTileInitial = TileEntity.readTileEntity(finalBlockState, initialTag);
+			TileEntity newTileInitial = TileEntity.loadStatic(finalBlockState, initialTag);
 
-			finalWorld.setTileEntity(finalPos, newTileInitial);
+			finalWorld.setBlockEntity(finalPos, newTileInitial);
 //			newTileInitial.setPos(finalPos);
-			newTileInitial.setWorldAndPos(finalWorld, finalPos);
+			newTileInitial.setLevelAndPosition(finalWorld, finalPos);
 		}
 
-		initialWorld.setBlockState(initialPos, finalBlockState, 3);
+		initialWorld.setBlock(initialPos, finalBlockState, 3);
 
 		if (finalTile != null)
 		{
 //			TileEntity newTileFinal = TileEntity.create(initialWorld, finalTag);
-			TileEntity newTileFinal = TileEntity.readTileEntity(initialBlockState, finalTag);
+			TileEntity newTileFinal = TileEntity.loadStatic(initialBlockState, finalTag);
 
-			initialWorld.setTileEntity(initialPos, newTileFinal);
+			initialWorld.setBlockEntity(initialPos, newTileFinal);
 //			newTileFinal.setPos(initialPos);
-			newTileFinal.setWorldAndPos(initialWorld, initialPos);
+			newTileFinal.setLevelAndPosition(initialWorld, initialPos);
 		}
 
-		initialWorld.notifyNeighborsOfStateChange(initialPos, finalState.getBlock());
-		finalWorld.notifyNeighborsOfStateChange(finalPos, initialState.getBlock());
+		initialWorld.updateNeighborsAt(initialPos, finalState.getBlock());
+		finalWorld.updateNeighborsAt(finalPos, initialState.getBlock());
 
 		// Block tick scheduling
-		if (initialWorld.getPendingBlockTicks().isTickScheduled(initialPos, initialState.getBlock()))
+		if (initialWorld.getBlockTicks().hasScheduledTick(initialPos, initialState.getBlock()))
 		{
-			finalWorld.getPendingBlockTicks().scheduleTick(finalPos, initialState.getBlock(), 20);
+			finalWorld.getBlockTicks().scheduleTick(finalPos, initialState.getBlock(), 20);
 		}
 
-		if (finalWorld.getPendingBlockTicks().isTickScheduled(finalPos, finalState.getBlock()))
+		if (finalWorld.getBlockTicks().hasScheduledTick(finalPos, finalState.getBlock()))
 		{
-			initialWorld.getPendingBlockTicks().scheduleTick(initialPos, finalState.getBlock(), 20);
+			initialWorld.getBlockTicks().scheduleTick(initialPos, finalState.getBlock(), 20);
 		}
 
 		return true;
@@ -294,9 +294,9 @@ public class Utils
 			}
 		} else if (tile instanceof IInventory)
 		{
-			for (int i = 0; i < ((IInventory) tile).getSizeInventory(); i++)
+			for (int i = 0; i < ((IInventory) tile).getContainerSize(); i++)
 			{
-				if (((IInventory) tile).getStackInSlot(i).isEmpty())
+				if (((IInventory) tile).getItem(i).isEmpty())
 				{
 					slots++;
 				}
@@ -313,33 +313,33 @@ public class Utils
 			return ItemStack.EMPTY;
 		}
 
-		boolean[] canBeInserted = new boolean[inventory.getSizeInventory()];
+		boolean[] canBeInserted = new boolean[inventory.getContainerSize()];
 
 		if (inventory instanceof ISidedInventory)
 		{
 			int[] array = ((ISidedInventory) inventory).getSlotsForFace(dir);
 			for (int in : array)
 			{
-				canBeInserted[in] = inventory.isItemValidForSlot(in, stack) && ((ISidedInventory) inventory).canInsertItem(in, stack, dir);
+				canBeInserted[in] = inventory.canPlaceItem(in, stack) && ((ISidedInventory) inventory).canPlaceItemThroughFace(in, stack, dir);
 			}
 		} else
 		{
 			for (int i = 0; i < canBeInserted.length; i++)
 			{
-				canBeInserted[i] = inventory.isItemValidForSlot(i, stack);
+				canBeInserted[i] = inventory.canPlaceItem(i, stack);
 			}
 		}
 
-		for (int i = 0; i < inventory.getSizeInventory(); i++)
+		for (int i = 0; i < inventory.getContainerSize(); i++)
 		{
 			if (!canBeInserted[i])
 			{
 				continue;
 			}
 
-			ItemStack[] combinedStacks = combineStacks(stack, inventory.getStackInSlot(i));
+			ItemStack[] combinedStacks = combineStacks(stack, inventory.getItem(i));
 			stack = combinedStacks[0];
-			inventory.setInventorySlotContents(i, combinedStacks[1]);
+			inventory.setItem(i, combinedStacks[1]);
 
 			if (stack.isEmpty())
 			{
@@ -359,20 +359,20 @@ public class Utils
 
 		int itemsLeft = stack.getCount();
 
-		boolean[] canBeInserted = new boolean[inventory.getSizeInventory()];
+		boolean[] canBeInserted = new boolean[inventory.getContainerSize()];
 
 		if (inventory instanceof ISidedInventory)
 		{
 			int[] array = ((ISidedInventory) inventory).getSlotsForFace(dir);
 			for (int in : array)
 			{
-				canBeInserted[in] = inventory.isItemValidForSlot(in, stack) && ((ISidedInventory) inventory).canInsertItem(in, stack, dir);
+				canBeInserted[in] = inventory.canPlaceItem(in, stack) && ((ISidedInventory) inventory).canPlaceItemThroughFace(in, stack, dir);
 			}
 		} else
 		{
 			for (int i = 0; i < canBeInserted.length; i++)
 			{
-				canBeInserted[i] = inventory.isItemValidForSlot(i, stack);
+				canBeInserted[i] = inventory.canPlaceItem(i, stack);
 			}
 		}
 
@@ -380,14 +380,14 @@ public class Utils
 
 		if (fillToLimit)
 		{
-			for (int i = 0; i < inventory.getSizeInventory(); i++)
+			for (int i = 0; i < inventory.getContainerSize(); i++)
 			{
 				if (!canBeInserted[i])
 				{
 					continue;
 				}
 
-				ItemStack invStack = inventory.getStackInSlot(i);
+				ItemStack invStack = inventory.getItem(i);
 
 				if (!invStack.isEmpty() && ItemHandlerHelper.canItemStacksStack(stack, invStack))
 				{
@@ -401,14 +401,14 @@ public class Utils
 			return false;
 		}
 
-		for (int i = 0; i < inventory.getSizeInventory(); i++)
+		for (int i = 0; i < inventory.getContainerSize(); i++)
 		{
 			if (!canBeInserted[i])
 			{
 				continue;
 			}
 
-			ItemStack invStack = inventory.getStackInSlot(i);
+			ItemStack invStack = inventory.getItem(i);
 			boolean canCombine = ItemHandlerHelper.canItemStacksStack(stack, invStack);
 			if (canCombine)
 			{
@@ -474,14 +474,14 @@ public class Utils
 				continue;
 			}
 
-			if (stack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) stack.getItem()).canSeeDemonWillAura(player.getEntityWorld(), stack, player))
+			if (stack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) stack.getItem()).canSeeDemonWillAura(player.getCommandSenderWorld(), stack, player))
 			{
 				return true;
 			}
 		}
 
-		ItemStack offhandStack = player.getHeldItemOffhand();
-		if (!offhandStack.isEmpty() && offhandStack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) offhandStack.getItem()).canSeeDemonWillAura(player.getEntityWorld(), offhandStack, player))
+		ItemStack offhandStack = player.getOffhandItem();
+		if (!offhandStack.isEmpty() && offhandStack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) offhandStack.getItem()).canSeeDemonWillAura(player.getCommandSenderWorld(), offhandStack, player))
 		{
 			return true;
 		}
@@ -501,16 +501,16 @@ public class Utils
 				continue;
 			}
 
-			if (stack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) stack.getItem()).canSeeDemonWillAura(player.getEntityWorld(), stack, player))
+			if (stack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) stack.getItem()).canSeeDemonWillAura(player.getCommandSenderWorld(), stack, player))
 			{
-				return ((IDemonWillViewer) stack.getItem()).getDemonWillAuraResolution(player.getEntityWorld(), stack, player);
+				return ((IDemonWillViewer) stack.getItem()).getDemonWillAuraResolution(player.getCommandSenderWorld(), stack, player);
 			}
 		}
 
-		ItemStack offhandStack = player.getHeldItemOffhand();
-		if (!offhandStack.isEmpty() && offhandStack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) offhandStack.getItem()).canSeeDemonWillAura(player.getEntityWorld(), offhandStack, player))
+		ItemStack offhandStack = player.getOffhandItem();
+		if (!offhandStack.isEmpty() && offhandStack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) offhandStack.getItem()).canSeeDemonWillAura(player.getCommandSenderWorld(), offhandStack, player))
 		{
-			return ((IDemonWillViewer) offhandStack.getItem()).getDemonWillAuraResolution(player.getEntityWorld(), offhandStack, player);
+			return ((IDemonWillViewer) offhandStack.getItem()).getDemonWillAuraResolution(player.getCommandSenderWorld(), offhandStack, player);
 		}
 
 		return 100;
@@ -519,7 +519,7 @@ public class Utils
 	public static int plantSeedsInArea(World world, AxisAlignedBB aabb, int horizontalRadius, int verticalRadius)
 	{
 		int placedBlocks = 0;
-		List<ItemEntity> itemEntities = world.getEntitiesWithinAABB(ItemEntity.class, aabb);
+		List<ItemEntity> itemEntities = world.getEntitiesOfClass(ItemEntity.class, aabb);
 
 		for (ItemEntity itemEntity : itemEntities)
 		{
@@ -559,17 +559,17 @@ public class Utils
 								continue;
 							}
 
-							BlockPos newPos = centralPos.add(i, j, k);
-							if (world.isAirBlock(newPos))
+							BlockPos newPos = centralPos.offset(i, j, k);
+							if (world.isEmptyBlock(newPos))
 							{
-								BlockPos offsetPos = newPos.offset(Direction.DOWN);
+								BlockPos offsetPos = newPos.relative(Direction.DOWN);
 								BlockState state = world.getBlockState(offsetPos);
 								if (state.getBlock().canSustainPlant(state, world, offsetPos, Direction.UP, (IPlantable) item))
 								{
 									BlockState plantState = ((IPlantable) item).getPlant(world, newPos);
-									world.setBlockState(newPos, plantState, 3);
+									world.setBlock(newPos, plantState, 3);
 //									Block.
-									world.playEvent(2001, newPos, Block.getStateId(plantState));
+									world.levelEvent(2001, newPos, Block.getId(plantState));
 									stack.shrink(1);
 									planted++;
 									if (stack.isEmpty() || stack.getCount() <= 0)
@@ -594,8 +594,8 @@ public class Utils
 			return 0;
 		}
 
-		World world = itemEntity.getEntityWorld();
-		BlockPos pos = itemEntity.getPosition();
+		World world = itemEntity.getCommandSenderWorld();
+		BlockPos pos = itemEntity.blockPosition();
 		ItemStack stack = itemEntity.getItem();
 
 		int planted = plantItemStack(world, pos, stack, horizontalRadius, verticalRadius);
@@ -641,7 +641,7 @@ public class Utils
 		if (duration > 0)
 		{
 			int potionLevel = (int) ((currentAmount + added) / 4);
-			entity.addPotionEffect(new EffectInstance(Effects.ABSORPTION, duration, potionLevel, true, false));
+			entity.addEffect(new EffectInstance(Effects.ABSORPTION, duration, potionLevel, true, false));
 		}
 
 		entity.setAbsorptionAmount(currentAmount + added);

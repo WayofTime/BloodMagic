@@ -24,7 +24,7 @@ public class ItemSigilFastMiner extends ItemSigilToggleableBase
 	{
 		if (PlayerHelper.isFakePlayer(player))
 			return;
-		player.addPotionEffect(new EffectInstance(Effects.HASTE, 2, 0, true, false));
+		player.addEffect(new EffectInstance(Effects.DIG_SPEED, 2, 0, true, false));
 	}
 
 	@Override
@@ -34,18 +34,18 @@ public class ItemSigilFastMiner extends ItemSigilToggleableBase
 		int ticks = 600;
 		int potionPotency = 2;
 
-		AxisAlignedBB bb = new AxisAlignedBB(pos).grow(radius);
-		List<PlayerEntity> playerList = world.getEntitiesWithinAABB(PlayerEntity.class, bb);
+		AxisAlignedBB bb = new AxisAlignedBB(pos).inflate(radius);
+		List<PlayerEntity> playerList = world.getEntitiesOfClass(PlayerEntity.class, bb);
 		for (PlayerEntity player : playerList)
 		{
-			if (!player.isPotionActive(Effects.HASTE) || (player.isPotionActive(Effects.HASTE)
-					&& player.getActivePotionEffect(Effects.HASTE).getAmplifier() < potionPotency))
+			if (!player.hasEffect(Effects.DIG_SPEED) || (player.hasEffect(Effects.DIG_SPEED)
+					&& player.getEffect(Effects.DIG_SPEED).getAmplifier() < potionPotency))
 			{
-				player.addPotionEffect(new EffectInstance(Effects.HASTE, ticks, potionPotency));
+				player.addEffect(new EffectInstance(Effects.DIG_SPEED, ticks, potionPotency));
 				if (!player.isCreative())
 				{
-					player.hurtResistantTime = 0;
-					player.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, 1.0F);
+					player.invulnerableTime = 0;
+					player.hurt(DamageSourceBloodMagic.INSTANCE, 1.0F);
 				}
 			}
 		}

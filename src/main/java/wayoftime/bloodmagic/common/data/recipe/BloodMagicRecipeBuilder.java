@@ -33,7 +33,7 @@ public abstract class BloodMagicRecipeBuilder<BUILDER extends BloodMagicRecipeBu
 	}
 
 	protected final List<ICondition> conditions = new ArrayList<>();
-	protected final Advancement.Builder advancementBuilder = Advancement.Builder.builder();
+	protected final Advancement.Builder advancementBuilder = Advancement.Builder.advancement();
 	protected final ResourceLocation serializerName;
 
 	protected BloodMagicRecipeBuilder(ResourceLocation serializerName)
@@ -48,7 +48,7 @@ public abstract class BloodMagicRecipeBuilder<BUILDER extends BloodMagicRecipeBu
 
 	public BUILDER addCriterion(String name, ICriterionInstance criterion)
 	{
-		advancementBuilder.withCriterion(name, criterion);
+		advancementBuilder.addCriterion(name, criterion);
 		return (BUILDER) this;
 	}
 
@@ -76,7 +76,7 @@ public abstract class BloodMagicRecipeBuilder<BUILDER extends BloodMagicRecipeBu
 		{
 			// If there is a way to "unlock" this recipe then add an advancement with the
 			// criteria
-			advancementBuilder.withParentId(new ResourceLocation("recipes/root")).withCriterion("has_the_recipe", RecipeUnlockedTrigger.create(id)).withRewards(AdvancementRewards.Builder.recipe(id)).withRequirementsStrategy(IRequirementsStrategy.OR);
+			advancementBuilder.parent(new ResourceLocation("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(IRequirementsStrategy.OR);
 		}
 		consumer.accept(getResult(id));
 	}
@@ -92,7 +92,7 @@ public abstract class BloodMagicRecipeBuilder<BUILDER extends BloodMagicRecipeBu
 		}
 
 		@Override
-		public JsonObject getRecipeJson()
+		public JsonObject serializeRecipe()
 		{
 			JsonObject jsonObject = new JsonObject();
 			jsonObject.addProperty(Constants.JSON.TYPE, serializerName.toString());
@@ -105,13 +105,13 @@ public abstract class BloodMagicRecipeBuilder<BUILDER extends BloodMagicRecipeBu
 				}
 				jsonObject.add(Constants.JSON.CONDITIONS, conditionsArray);
 			}
-			this.serialize(jsonObject);
+			this.serializeRecipeData(jsonObject);
 			return jsonObject;
 		}
 
 		@Nonnull
 		@Override
-		public IRecipeSerializer<?> getSerializer()
+		public IRecipeSerializer<?> getType()
 		{
 			// Note: This may be null if something is screwed up but this method isn't
 			// actually used so it shouldn't matter
@@ -123,21 +123,21 @@ public abstract class BloodMagicRecipeBuilder<BUILDER extends BloodMagicRecipeBu
 
 		@Nonnull
 		@Override
-		public ResourceLocation getID()
+		public ResourceLocation getId()
 		{
 			return this.id;
 		}
 
 		@Nullable
 		@Override
-		public JsonObject getAdvancementJson()
+		public JsonObject serializeAdvancement()
 		{
-			return hasCriteria() ? advancementBuilder.serialize() : null;
+			return hasCriteria() ? advancementBuilder.serializeToJson() : null;
 		}
 
 		@Nullable
 		@Override
-		public ResourceLocation getAdvancementID()
+		public ResourceLocation getAdvancementId()
 		{
 			return new ResourceLocation(id.getNamespace(), "recipes/" + id.getPath());
 		}

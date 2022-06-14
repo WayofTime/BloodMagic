@@ -19,25 +19,25 @@ public class ItemDaggerOfSacrifice extends Item
 {
 	public ItemDaggerOfSacrifice()
 	{
-		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
 	}
 
 	@Override
-	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker)
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker)
 	{
 		if (attacker instanceof FakePlayer)
 			return false;
 
-		if (target == null || attacker == null || attacker.getEntityWorld().isRemote || (attacker instanceof PlayerEntity && !(attacker instanceof ServerPlayerEntity)))
+		if (target == null || attacker == null || attacker.getCommandSenderWorld().isClientSide || (attacker instanceof PlayerEntity && !(attacker instanceof ServerPlayerEntity)))
 			return false;
 
-		if (!target.isNonBoss())
+		if (!target.canChangeDimensions())
 			return false;
 
 		if (target instanceof PlayerEntity)
 			return false;
 
-		if (target.isChild() && !(target instanceof IMob))
+		if (target.isBaby() && !(target instanceof IMob))
 			return false;
 
 		if (!target.isAlive() || target.getHealth() < 0.5F)
@@ -59,17 +59,17 @@ public class ItemDaggerOfSacrifice extends Item
 //			lifeEssence = (int) (lifeEssence * (1 + PurificationHelper.getCurrentPurity((AnimalEntity) target)));
 //		}
 
-		if (target.isChild())
+		if (target.isBaby())
 		{
 			lifeEssence *= 0.5F;
 		}
 
-		if (PlayerSacrificeHelper.findAndFillAltar(attacker.getEntityWorld(), target, lifeEssence, true))
+		if (PlayerSacrificeHelper.findAndFillAltar(attacker.getCommandSenderWorld(), target, lifeEssence, true))
 		{
-			target.getEntityWorld().playSound(null, target.getPosX(), target.getPosY(), target.getPosZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (target.getEntityWorld().rand.nextFloat() - target.getEntityWorld().rand.nextFloat()) * 0.8F);
+			target.getCommandSenderWorld().playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (target.getCommandSenderWorld().random.nextFloat() - target.getCommandSenderWorld().random.nextFloat()) * 0.8F);
 			target.setHealth(0.00001f);
-			target.hurtResistantTime = 0;
-			target.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, 10);
+			target.invulnerableTime = 0;
+			target.hurt(DamageSourceBloodMagic.INSTANCE, 10);
 //			target.onDeath(DamageSourceBloodMagic.INSTANCE);
 		}
 

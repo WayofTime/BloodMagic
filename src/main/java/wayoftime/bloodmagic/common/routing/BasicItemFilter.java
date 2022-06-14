@@ -155,9 +155,9 @@ public class BasicItemFilter implements IItemFilter
 			}
 		}
 
-		World world = accessedTile.getWorld();
-		BlockPos pos = accessedTile.getPos();
-		world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+		World world = accessedTile.getLevel();
+		BlockPos pos = accessedTile.getBlockPos();
+		world.sendBlockUpdated(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 
 		return testStack;
 	}
@@ -227,9 +227,9 @@ public class BasicItemFilter implements IItemFilter
 				}
 			}
 
-			World world = accessedTile.getWorld();
-			BlockPos pos = accessedTile.getPos();
-			world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+			World world = accessedTile.getLevel();
+			BlockPos pos = accessedTile.getBlockPos();
+			world.sendBlockUpdated(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 
 			maxTransfer -= changeAmount;
 			totalChange += changeAmount;

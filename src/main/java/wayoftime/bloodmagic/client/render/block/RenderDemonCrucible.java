@@ -25,33 +25,33 @@ public class RenderDemonCrucible extends TileEntityRenderer<TileDemonCrucible>
 	@Override
 	public void render(TileDemonCrucible tileAltar, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn)
 	{
-		ItemStack inputStack = tileAltar.getStackInSlot(0);
+		ItemStack inputStack = tileAltar.getItem(0);
 
 		this.renderItem(inputStack, tileAltar, matrixStack, buffer, combinedLightIn, combinedOverlayIn);
 	}
 
 	private void renderItem(ItemStack stack, TileDemonCrucible tileAltar, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn)
 	{
-		matrixStack.push();
+		matrixStack.pushPose();
 		Minecraft mc = Minecraft.getInstance();
 		ItemRenderer itemRenderer = mc.getItemRenderer();
 		if (!stack.isEmpty())
 		{
 			matrixStack.translate(0.5, 1.5, 0.5);
-			matrixStack.push();
+			matrixStack.pushPose();
 
 			float rotation = (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL);
 
-			matrixStack.rotate(Vector3f.YP.rotationDegrees(rotation));
+			matrixStack.mulPose(Vector3f.YP.rotationDegrees(rotation));
 			matrixStack.scale(0.5F, 0.5F, 0.5F);
-			RenderHelper.enableStandardItemLighting();
-			IBakedModel ibakedmodel = itemRenderer.getItemModelWithOverrides(stack, tileAltar.getWorld(), (LivingEntity) null);
-			itemRenderer.renderItem(stack, ItemCameraTransforms.TransformType.FIXED, true, matrixStack, buffer, combinedLightIn, combinedOverlayIn, ibakedmodel); // renderItem
-			RenderHelper.disableStandardItemLighting();
+			RenderHelper.turnBackOn();
+			IBakedModel ibakedmodel = itemRenderer.getModel(stack, tileAltar.getLevel(), (LivingEntity) null);
+			itemRenderer.render(stack, ItemCameraTransforms.TransformType.FIXED, true, matrixStack, buffer, combinedLightIn, combinedOverlayIn, ibakedmodel); // renderItem
+			RenderHelper.turnOff();
 
-			matrixStack.pop();
+			matrixStack.popPose();
 		}
 
-		matrixStack.pop();
+		matrixStack.popPose();
 	}
 }

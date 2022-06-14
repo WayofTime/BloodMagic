@@ -85,14 +85,14 @@ public class PotionTransformRecipeBuilder extends BloodMagicRecipeBuilder<Potion
 		}
 
 		@Override
-		public void serialize(@Nonnull JsonObject json)
+		public void serializeRecipeData(@Nonnull JsonObject json)
 		{
 			if (input.size() > 0)
 			{
 				JsonArray mainArray = new JsonArray();
 				for (Ingredient ing : input)
 				{
-					JsonElement jsonObj = ing.serialize();
+					JsonElement jsonObj = ing.toJson();
 
 					mainArray.add(jsonObj);
 				}

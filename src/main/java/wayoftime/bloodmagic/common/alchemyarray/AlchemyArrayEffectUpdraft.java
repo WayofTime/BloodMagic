@@ -31,13 +31,13 @@ public class AlchemyArrayEffectUpdraft extends AlchemyArrayEffect
 
 		TileAlchemyArray tileArray = (TileAlchemyArray) array;
 
-		motionY += motionYGlowstoneMod * (tileArray.getStackInSlot(0).getCount() - 1); // Glowstone Dust
-		motionY += motionYFeatherMod * (tileArray.getStackInSlot(1).getCount() - 1); // Feathers
+		motionY += motionYGlowstoneMod * (tileArray.getItem(0).getCount() - 1); // Glowstone Dust
+		motionY += motionYFeatherMod * (tileArray.getItem(1).getCount() - 1); // Feathers
 
 //		entity.getMotion().y = motionY;
 		entity.fallDistance = 0;
 
-		entity.setMotion(new Vector3d(0, motionY, 0));
+		entity.setDeltaMovement(new Vector3d(0, motionY, 0));
 
 	}
 

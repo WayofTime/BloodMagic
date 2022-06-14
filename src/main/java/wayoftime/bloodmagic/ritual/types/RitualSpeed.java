@@ -83,15 +83,15 @@ public class RitualSpeed extends Ritual
 			corrosiveWill = 0; // Simplifies later calculations
 		}
 
-		for (LivingEntity entity : world.getEntitiesWithinAABB(LivingEntity.class, speedRange.getAABB(masterRitualStone.getMasterBlockPos())))
+		for (LivingEntity entity : world.getEntitiesOfClass(LivingEntity.class, speedRange.getAABB(masterRitualStone.getMasterBlockPos())))
 		{
-			if (entity.isSneaking())
+			if (entity.isShiftKeyDown())
 				continue;
 
 			boolean transportChildren = destructiveWill < destructiveWillDrain;
 			boolean transportAdults = vengefulWill < vengefulWillDrain;
 
-			if ((entity.isChild() && !transportChildren) || (!entity.isChild() && !transportAdults))
+			if ((entity.isBaby() && !transportChildren) || (!entity.isBaby() && !transportAdults))
 			{
 				continue;
 			}
@@ -130,10 +130,10 @@ public class RitualSpeed extends Ritual
 				speed += getAdditionalHorizontalSpeedForWill(corrosiveWill);
 			}
 
-			Vector3d motion = entity.getMotion();
+			Vector3d motion = entity.getDeltaMovement();
 
-			double motionX = motion.getX();
-			double motionZ = motion.getZ();
+			double motionX = motion.x();
+			double motionZ = motion.z();
 			entity.fallDistance = 0;
 
 			switch (direction)
@@ -163,12 +163,12 @@ public class RitualSpeed extends Ritual
 
 			if (steadfastWill >= steadfastWillDrain)
 			{
-				entity.addPotionEffect(new EffectInstance(BloodMagicPotions.SOFT_FALL, 100, 0));
+				entity.addEffect(new EffectInstance(BloodMagicPotions.SOFT_FALL, 100, 0));
 				steadfastWill -= steadfastWillDrain;
 				steadfastDrain += steadfastWillDrain;
 			}
 
-			entity.setMotion(motionX, motionY, motionZ);
+			entity.setDeltaMovement(motionX, motionY, motionZ);
 			if (entity instanceof ServerPlayerEntity)
 			{
 				BloodMagic.packetHandler.sendTo(new SetClientVelocityPacket(motionX, motionY, motionZ), (ServerPlayerEntity) entity);

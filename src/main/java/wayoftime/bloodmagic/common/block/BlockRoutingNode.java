@@ -24,13 +24,13 @@ public class BlockRoutingNode extends Block
 	public static final BooleanProperty EAST = BooleanProperty.create("east");
 	public static final BooleanProperty SOUTH = BooleanProperty.create("south");
 	public static final BooleanProperty WEST = BooleanProperty.create("west");
-	protected static final VoxelShape SHAPE = Block.makeCuboidShape(6.0D, 6.0D, 6.0D, 10.0D, 10.0D, 10.0D);
+	protected static final VoxelShape SHAPE = Block.box(6.0D, 6.0D, 6.0D, 10.0D, 10.0D, 10.0D);
 
 	public BlockRoutingNode()
 	{
-		super(AbstractBlock.Properties.create(Material.IRON).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(2));
+		super(AbstractBlock.Properties.of(Material.METAL).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(2));
 
-		this.setDefaultState(this.stateContainer.getBaseState().with(DOWN, false).with(UP, false).with(NORTH, false).with(EAST, false).with(SOUTH, false).with(WEST, false));
+		this.registerDefaultState(this.stateDefinition.any().setValue(DOWN, false).setValue(UP, false).setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false).setValue(WEST, false));
 	}
 
 //	@Override
@@ -45,7 +45,7 @@ public class BlockRoutingNode extends Block
 	}
 
 	@Override
-	public BlockRenderType getRenderType(BlockState state)
+	public BlockRenderType getRenderShape(BlockState state)
 	{
 		return BlockRenderType.MODEL;
 	}
@@ -53,12 +53,12 @@ public class BlockRoutingNode extends Block
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context)
 	{
-		IBlockReader iblockreader = context.getWorld();
-		BlockPos blockpos = context.getPos();
+		IBlockReader iblockreader = context.getLevel();
+		BlockPos blockpos = context.getClickedPos();
 		BlockState returnState = super.getStateForPlacement(context);
 		for (Direction dir : Direction.values())
 		{
-			BlockPos attachedPos = blockpos.offset(dir);
+			BlockPos attachedPos = blockpos.relative(dir);
 			BlockState attachedState = iblockreader.getBlockState(attachedPos);
 			BooleanProperty prop = UP;
 			switch (dir)
@@ -82,7 +82,7 @@ public class BlockRoutingNode extends Block
 				prop = WEST;
 				break;
 			}
-			returnState = returnState.with(prop, canConnect(attachedState, attachedState.isSolidSide(iblockreader, attachedPos, dir.getOpposite()), dir));
+			returnState = returnState.setValue(prop, canConnect(attachedState, attachedState.isFaceSturdy(iblockreader, attachedPos, dir.getOpposite()), dir));
 		}
 
 		return returnState;
@@ -96,12 +96,12 @@ public class BlockRoutingNode extends Block
 	 * only the specific face passed in.
 	 */
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
 	{
 		BlockState returnState = stateIn;
 		for (Direction dir : Direction.values())
 		{
-			BlockPos attachedPos = currentPos.offset(dir);
+			BlockPos attachedPos = currentPos.relative(dir);
 			BlockState attachedState = worldIn.getBlockState(attachedPos);
 			BooleanProperty prop = UP;
 			switch (dir)
@@ -125,7 +125,7 @@ public class BlockRoutingNode extends Block
 				prop = WEST;
 				break;
 			}
-			returnState = returnState.with(prop, canConnect(attachedState, attachedState.isSolidSide(worldIn, attachedPos, dir.getOpposite()), dir));
+			returnState = returnState.setValue(prop, canConnect(attachedState, attachedState.isFaceSturdy(worldIn, attachedPos, dir.getOpposite()), dir));
 		}
 
 		return returnState;
@@ -138,11 +138,11 @@ public class BlockRoutingNode extends Block
 //		      boolean flag1 = block instanceof FenceGateBlock && FenceGateBlock.isParallel(state, direction);
 //		      return !cannotAttach(block) && isSideSolid || flag || flag1;
 
-		return state.getMaterial().isOpaque() && isSideSolid;
+		return state.getMaterial().isSolidBlocking() && isSideSolid;
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
 	{
 		builder.add(UP, DOWN, NORTH, EAST, SOUTH, WEST);
 	}

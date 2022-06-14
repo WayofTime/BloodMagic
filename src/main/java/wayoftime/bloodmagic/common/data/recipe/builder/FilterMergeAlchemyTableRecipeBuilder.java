@@ -74,16 +74,16 @@ public class FilterMergeAlchemyTableRecipeBuilder extends BloodMagicRecipeBuilde
 		}
 
 		@Override
-		public void serialize(@Nonnull JsonObject json)
+		public void serializeRecipeData(@Nonnull JsonObject json)
 		{
-			json.add(Constants.JSON.FILTER, filter.serialize());
+			json.add(Constants.JSON.FILTER, filter.toJson());
 
 			if (input.size() > 0)
 			{
 				JsonArray mainArray = new JsonArray();
 				for (Ingredient ing : input)
 				{
-					JsonElement jsonObj = ing.serialize();
+					JsonElement jsonObj = ing.toJson();
 
 					mainArray.add(jsonObj);
 				}

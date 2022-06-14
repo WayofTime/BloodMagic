@@ -18,13 +18,13 @@ public class InventoryWrapper implements IInventory
 	}
 
 	@Override
-	public void clear()
+	public void clearContent()
 	{
 		this.inventory = NonNullList.withSize(size, ItemStack.EMPTY);
 	}
 
 	@Override
-	public int getSizeInventory()
+	public int getContainerSize()
 	{
 		return size;
 	}
@@ -39,26 +39,26 @@ public class InventoryWrapper implements IInventory
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int index)
+	public ItemStack getItem(int index)
 	{
 		return inventory.get(index);
 	}
 
 	@Override
-	public ItemStack decrStackSize(int index, int count)
+	public ItemStack removeItem(int index, int count)
 	{
-		if (!getStackInSlot(index).isEmpty())
+		if (!getItem(index).isEmpty())
 		{
-			if (getStackInSlot(index).getCount() <= count)
+			if (getItem(index).getCount() <= count)
 			{
 				ItemStack itemStack = inventory.get(index);
 				inventory.set(index, ItemStack.EMPTY);
-				markDirty();
+				setChanged();
 				return itemStack;
 			}
 
 			ItemStack itemStack = inventory.get(index).split(count);
-			markDirty();
+			setChanged();
 			return itemStack;
 		}
 
@@ -66,34 +66,34 @@ public class InventoryWrapper implements IInventory
 	}
 
 	@Override
-	public ItemStack removeStackFromSlot(int slot)
+	public ItemStack removeItemNoUpdate(int slot)
 	{
 		if (!inventory.get(slot).isEmpty())
 		{
 			ItemStack itemStack = inventory.get(slot);
-			setInventorySlotContents(slot, ItemStack.EMPTY);
+			setItem(slot, ItemStack.EMPTY);
 			return itemStack;
 		}
 		return ItemStack.EMPTY;
 	}
 
 	@Override
-	public void setInventorySlotContents(int slot, ItemStack stack)
+	public void setItem(int slot, ItemStack stack)
 	{
 		inventory.set(slot, stack);
-		if (!stack.isEmpty() && stack.getCount() > getInventoryStackLimit())
-			stack.setCount(getInventoryStackLimit());
-		markDirty();
+		if (!stack.isEmpty() && stack.getCount() > getMaxStackSize())
+			stack.setCount(getMaxStackSize());
+		setChanged();
 	}
 
 	@Override
-	public void markDirty()
+	public void setChanged()
 	{
 
 	}
 
 	@Override
-	public boolean isUsableByPlayer(PlayerEntity player)
+	public boolean stillValid(PlayerEntity player)
 	{
 		return false;
 	}

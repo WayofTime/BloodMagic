@@ -61,7 +61,7 @@ public class RitualLivingDowngrade extends Ritual
 		PlayerEntity selectedPlayer = null;
 		AreaDescriptor downgradeRange = masterRitualStone.getBlockRange(DOWNGRADE_RANGE);
 
-		for (PlayerEntity player : world.getEntitiesWithinAABB(PlayerEntity.class, downgradeRange.getAABB(masterRitualStone.getMasterBlockPos())))
+		for (PlayerEntity player : world.getEntitiesOfClass(PlayerEntity.class, downgradeRange.getAABB(masterRitualStone.getMasterBlockPos())))
 		{
 			if (!player.isCrouching() && LivingUtil.hasFullSet(player))
 			{
@@ -81,11 +81,11 @@ public class RitualLivingDowngrade extends Ritual
 //		System.out.println("Found a downgrade!");
 
 		BlockPos chestOffsetPos = new BlockPos(0, 1, 0);
-		chestOffsetPos = chestOffsetPos.offset(direction, 2);
+		chestOffsetPos = chestOffsetPos.relative(direction, 2);
 
-		BlockPos chestPos = masterPos.add(chestOffsetPos);
+		BlockPos chestPos = masterPos.offset(chestOffsetPos);
 
-		TileEntity tile = world.getTileEntity(chestPos);
+		TileEntity tile = world.getBlockEntity(chestPos);
 
 		if (tile == null)
 		{
@@ -133,9 +133,9 @@ public class RitualLivingDowngrade extends Ritual
 			}
 		} else if (tile instanceof IInventory)
 		{
-			for (int i = 0; i < ((IInventory) tile).getSizeInventory(); i++)
+			for (int i = 0; i < ((IInventory) tile).getContainerSize(); i++)
 			{
-				ItemStack invStack = ((IInventory) tile).getStackInSlot(i);
+				ItemStack invStack = ((IInventory) tile).getItem(i);
 				availablePoints += getAvailablePointsFromStack(invStack);
 				LivingUpgrade downgrade = getDowngradeFromStack(world, invStack);
 				if (downgrade != null && downgrade != LivingUpgrade.DUMMY)
@@ -263,7 +263,7 @@ public class RitualLivingDowngrade extends Ritual
 		{
 			for (int i : slotOrderList)
 			{
-				ItemStack invStack = ((IInventory) tile).getStackInSlot(i);
+				ItemStack invStack = ((IInventory) tile).getItem(i);
 				if (!invStack.isEmpty() && invStack.getItem() instanceof ILivingUpgradePointsProvider)
 				{
 					int drainPoints = Math.min(((ILivingUpgradePointsProvider) invStack.getItem()).getAvailableUpgradePoints(invStack, requiredPoints), requiredPoints);
@@ -271,7 +271,7 @@ public class RitualLivingDowngrade extends Ritual
 					ItemStack newItemStack = ((ILivingUpgradePointsProvider) invStack.getItem()).getResultingStack(invStack, drainPoints);
 
 					requiredPoints -= (drainPoints - remainingPointsInItem);
-					((IInventory) tile).setInventorySlotContents(i, newItemStack);
+					((IInventory) tile).setItem(i, newItemStack);
 
 					if (requiredPoints <= 0)
 					{
@@ -299,8 +299,8 @@ public class RitualLivingDowngrade extends Ritual
 			masterRitualStone.setActive(false);
 
 			LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
-			lightningboltentity.setPosition(masterPos.getX() + 0.5, masterPos.getY(), masterPos.getZ() + 0.5);
-			world.addEntity(lightningboltentity);
+			lightningboltentity.setPos(masterPos.getX() + 0.5, masterPos.getY(), masterPos.getZ() + 0.5);
+			world.addFreshEntity(lightningboltentity);
 		} else if (requiredPoints < initialRequiredPoints)
 		{
 			ItemStack scrapStack = new ItemStack(BloodMagicItems.UPGRADE_SCRAPS.get());
@@ -412,15 +412,15 @@ public class RitualLivingDowngrade extends Ritual
 	public ItemStack getStackFromItemFrame(World world, BlockPos masterPos, Direction direction)
 	{
 		BlockPos offsetPos = new BlockPos(0, 3, 0);
-		offsetPos = offsetPos.offset(direction, 2);
+		offsetPos = offsetPos.relative(direction, 2);
 
-		AxisAlignedBB bb = new AxisAlignedBB(masterPos.add(offsetPos));
-		List<ItemFrameEntity> frames = world.getEntitiesWithinAABB(ItemFrameEntity.class, bb);
+		AxisAlignedBB bb = new AxisAlignedBB(masterPos.offset(offsetPos));
+		List<ItemFrameEntity> frames = world.getEntitiesOfClass(ItemFrameEntity.class, bb);
 		for (ItemFrameEntity frame : frames)
 		{
-			if (!frame.getDisplayedItem().isEmpty())
+			if (!frame.getItem().isEmpty())
 			{
-				return frame.getDisplayedItem();
+				return frame.getItem();
 			}
 		}
 

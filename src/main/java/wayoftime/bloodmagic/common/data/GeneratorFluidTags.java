@@ -15,8 +15,8 @@ public class GeneratorFluidTags extends FluidTagsProvider
 	}
 
 	@Override
-	public void registerTags()
+	public void addTags()
 	{
-		this.getOrCreateBuilder(BloodMagicTags.LIFE_ESSENCE).add(BloodMagicBlocks.LIFE_ESSENCE_FLUID.get(), BloodMagicBlocks.LIFE_ESSENCE_FLUID_FLOWING.get());
+		this.tag(BloodMagicTags.LIFE_ESSENCE).add(BloodMagicBlocks.LIFE_ESSENCE_FLUID.get(), BloodMagicBlocks.LIFE_ESSENCE_FLUID_FLOWING.get());
 	}
 }

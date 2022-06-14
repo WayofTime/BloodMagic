@@ -112,7 +112,7 @@ public class BindingAlchemyCircleRenderer extends AlchemyArrayRenderer
 
 	public void renderAt(TileAlchemyArray tileArray, double x, double y, double z, float craftTime, MatrixStack matrixStack, IRenderTypeBuffer renderer, int combinedLightIn, int combinedOverlayIn)
 	{
-		matrixStack.push();
+		matrixStack.pushPose();
 
 		matrixStack.translate(0.5, 0.5, 0.5);
 
@@ -122,17 +122,17 @@ public class BindingAlchemyCircleRenderer extends AlchemyArrayRenderer
 		float size = 3;
 		Direction dirRotation = tileArray.getRotation();
 
-		matrixStack.push();
+		matrixStack.pushPose();
 		matrixStack.translate(0, getVerticalOffset(craftTime), 0);
-		matrixStack.rotate(new Quaternion(Direction.UP.toVector3f(), -dirRotation.getHorizontalAngle(), true));
+		matrixStack.mulPose(new Quaternion(Direction.UP.step(), -dirRotation.toYRot(), true));
 
-		matrixStack.push();
+		matrixStack.pushPose();
 
-		matrixStack.rotate(new Quaternion(Direction.UP.toVector3f(), rot, true));
+		matrixStack.mulPose(new Quaternion(Direction.UP.step(), rot, true));
 //		matrixStack.rotate(new Quaternion(Direction.NORTH.toVector3f(), secondaryRot, true));
 //		matrixStack.rotate(new Quaternion(Direction.EAST.toVector3f(), secondaryRot * 0.45812f, true));
 
-		IVertexBuilder twoDBuffer = renderer.getBuffer(RenderType.getEntityTranslucent(arrayResource));
+		IVertexBuilder twoDBuffer = renderer.getBuffer(RenderType.entityTranslucent(arrayResource));
 		Model2D arrayModel = new BloodMagicRenderer.Model2D();
 		arrayModel.minX = -0.5;
 		arrayModel.maxX = +0.5;
@@ -144,11 +144,11 @@ public class BindingAlchemyCircleRenderer extends AlchemyArrayRenderer
 
 		RenderResizableQuadrilateral.INSTANCE.renderSquare(arrayModel, matrixStack, twoDBuffer, 0xFFFFFFFF, combinedLightIn, combinedOverlayIn);
 
-		matrixStack.pop();
+		matrixStack.popPose();
 
 		for (int i = 0; i < 5; i++)
 		{
-			matrixStack.push();
+			matrixStack.pushPose();
 
 			float newSize = 1;
 			float distance = BindingAlchemyCircleRenderer.getDistanceOfCircle(i, craftTime);
@@ -156,21 +156,21 @@ public class BindingAlchemyCircleRenderer extends AlchemyArrayRenderer
 			float rotation = this.getRotation(i, craftTime);
 
 			matrixStack.translate(distance * Math.sin(angle), this.getVerticalOffset(i, craftTime), -distance * Math.cos(angle));
-			matrixStack.rotate(new Quaternion(Direction.UP.toVector3f(), i * 360 / 5, true));
-			matrixStack.rotate(new Quaternion(Direction.NORTH.toVector3f(), getInwardRotation(i, craftTime), true));
-			matrixStack.rotate(new Quaternion(Direction.UP.toVector3f(), rotation, true));
-			twoDBuffer = renderer.getBuffer(RenderType.getEntityTranslucent(arraysResources[i]));
+			matrixStack.mulPose(new Quaternion(Direction.UP.step(), i * 360 / 5, true));
+			matrixStack.mulPose(new Quaternion(Direction.NORTH.step(), getInwardRotation(i, craftTime), true));
+			matrixStack.mulPose(new Quaternion(Direction.UP.step(), rotation, true));
+			twoDBuffer = renderer.getBuffer(RenderType.entityTranslucent(arraysResources[i]));
 			arrayModel.resource = arraysResources[i];
 
 			matrixStack.scale(newSize, newSize, newSize);
 
 			RenderResizableQuadrilateral.INSTANCE.renderSquare(arrayModel, matrixStack, twoDBuffer, 0xFFFFFFFF, combinedLightIn, combinedOverlayIn);
 
-			matrixStack.pop();
+			matrixStack.popPose();
 		}
 
-		matrixStack.pop();
-		matrixStack.pop();
+		matrixStack.popPose();
+		matrixStack.popPose();
 	}
 
 	public static float getAngleOfCircle(int circle, float craftTime)

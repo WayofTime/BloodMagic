@@ -66,7 +66,7 @@ public class RitualAnimalGrowth extends Ritual
 		BlockPos pos = masterRitualStone.getMasterBlockPos();
 
 		AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
-		TileEntity chest = world.getTileEntity(chestRange.getContainedPositions(pos).get(0));
+		TileEntity chest = world.getBlockEntity(chestRange.getContainedPositions(pos).get(0));
 		IItemHandler itemHandler = null;
 		if (chest != null)
 		{
@@ -95,24 +95,24 @@ public class RitualAnimalGrowth extends Ritual
 
 		AreaDescriptor growingRange = masterRitualStone.getBlockRange(GROWTH_RANGE);
 		AxisAlignedBB axis = growingRange.getAABB(masterRitualStone.getMasterBlockPos());
-		List<AnimalEntity> animalList = world.getEntitiesWithinAABB(AnimalEntity.class, axis);
+		List<AnimalEntity> animalList = world.getEntitiesOfClass(AnimalEntity.class, axis);
 
 		boolean performedEffect = false;
 
 		for (AnimalEntity animal : animalList)
 		{
-			if (animal.getGrowingAge() < 0)
+			if (animal.getAge() < 0)
 			{
-				animal.addGrowth(5);
+				animal.ageUp(5);
 				totalGrowths++;
 				performedEffect = true;
-			} else if (animal.getGrowingAge() > 0)
+			} else if (animal.getAge() > 0)
 			{
 				if (decreaseBreedTimer)
 				{
 					if (vengefulWill >= vengefulWillDrain)
 					{
-						animal.setGrowingAge(Math.max(0, animal.getGrowingAge() - getBreedingDecreaseForWill(vengefulWill)));
+						animal.setAge(Math.max(0, animal.getAge() - getBreedingDecreaseForWill(vengefulWill)));
 						vengefulDrain += vengefulWillDrain;
 						vengefulWill -= vengefulWillDrain;
 						performedEffect = true;
@@ -127,9 +127,9 @@ public class RitualAnimalGrowth extends Ritual
 				{
 					if (destructiveWill >= destructiveWillDrain)
 					{
-						if (!animal.isPotionActive(BloodMagicPotions.SACRIFICIAL_LAMB))
+						if (!animal.hasEffect(BloodMagicPotions.SACRIFICIAL_LAMB))
 						{
-							animal.addPotionEffect(new EffectInstance(BloodMagicPotions.SACRIFICIAL_LAMB, 1200));
+							animal.addEffect(new EffectInstance(BloodMagicPotions.SACRIFICIAL_LAMB, 1200));
 							destructiveDrain += destructiveWillDrain;
 							destructiveWill -= destructiveWillDrain;
 							performedEffect = true;
@@ -149,7 +149,7 @@ public class RitualAnimalGrowth extends Ritual
 							for (int slot = 0; slot < itemHandler.getSlots(); slot++)
 							{
 								ItemStack foodStack = itemHandler.getStackInSlot(slot);
-								if (foodStack != null && animal.isBreedingItem(foodStack) && itemHandler.extractItem(slot, 1, true) != null)
+								if (foodStack != null && animal.isFood(foodStack) && itemHandler.extractItem(slot, 1, true) != null)
 								{
 									animal.setInLove(null);
 									itemHandler.extractItem(slot, 1, false);

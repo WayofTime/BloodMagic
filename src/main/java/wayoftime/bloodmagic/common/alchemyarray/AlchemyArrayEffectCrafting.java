@@ -26,21 +26,21 @@ public class AlchemyArrayEffectCrafting extends AlchemyArrayEffect
 	public boolean update(TileAlchemyArray tile, int ticksActive)
 	{
 		// TODO: Add recipe rechecking to verify nothing screwy is going on.
-		if (tile.getWorld().isRemote)
+		if (tile.getLevel().isClientSide)
 		{
 			return false;
 		}
 
 		if (ticksActive >= tickLimit)
 		{
-			BlockPos pos = tile.getPos();
+			BlockPos pos = tile.getBlockPos();
 
 			ItemStack output = outputStack.copy();
 
-			ItemEntity outputEntity = new ItemEntity(tile.getWorld(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ()
+			ItemEntity outputEntity = new ItemEntity(tile.getLevel(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ()
 					+ 0.5, output);
 
-			tile.getWorld().addEntity(outputEntity);
+			tile.getLevel().addFreshEntity(outputEntity);
 //			tile.getWorld().spawnEntity(outputEntity);
 
 			return true;

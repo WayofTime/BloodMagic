@@ -17,7 +17,7 @@ import wayoftime.bloodmagic.util.BMLog;
 
 public class RitualManager
 {
-	public static final DamageSource RITUAL_DAMAGE = new DamageSource("ritual_damage").setDamageBypassesArmor();
+	public static final DamageSource RITUAL_DAMAGE = new DamageSource("ritual_damage").bypassArmor();
 
 	private final Map<String, Ritual> rituals;
 	private final Map<Ritual, String> ritualsReverse;

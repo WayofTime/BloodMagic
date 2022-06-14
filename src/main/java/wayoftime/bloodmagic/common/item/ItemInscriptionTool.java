@@ -28,17 +28,17 @@ public class ItemInscriptionTool extends Item
 
 	public ItemInscriptionTool(EnumRuneType type)
 	{
-		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB).maxDamage(40));
+		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB).durability(40));
 
 		this.type = type;
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context)
+	public ActionResultType useOn(ItemUseContext context)
 	{
-		ItemStack stack = context.getItem();
-		BlockPos pos = context.getPos();
-		World world = context.getWorld();
+		ItemStack stack = context.getItemInHand();
+		BlockPos pos = context.getClickedPos();
+		World world = context.getLevel();
 		PlayerEntity player = context.getPlayer();
 		BlockState state = world.getBlockState(pos);
 
@@ -48,8 +48,8 @@ public class ItemInscriptionTool extends Item
 			((BlockRitualStone) state.getBlock()).setRuneType(world, pos, type);
 			if (!player.isCreative())
 			{
-				stack.damageItem(1, player, (entity) -> {
-					entity.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+				stack.hurtAndBreak(1, player, (entity) -> {
+					entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
 				});
 			}
 			return ActionResultType.SUCCESS;
@@ -60,8 +60,8 @@ public class ItemInscriptionTool extends Item
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent(TextHelper.localizeEffect("tooltip.bloodmagic.inscriber.desc")).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent(TextHelper.localizeEffect("tooltip.bloodmagic.inscriber.desc")).withStyle(TextFormatting.GRAY));
 	}
 }

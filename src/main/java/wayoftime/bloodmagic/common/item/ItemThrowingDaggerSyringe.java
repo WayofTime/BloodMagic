@@ -12,7 +12,7 @@ public class ItemThrowingDaggerSyringe extends ItemThrowingDagger
 	public AbstractEntityThrowingDagger getDagger(ItemStack stack, World world, PlayerEntity player)
 	{
 		AbstractEntityThrowingDagger dagger = new EntityThrowingDaggerSyringe(stack, world, player);
-		dagger.func_234612_a_(player, player.rotationPitch, player.rotationYaw, 0.0F, 3F, 0.5F);
+		dagger.shootFromRotation(player, player.xRot, player.yRot, 0.0F, 3F, 0.5F);
 		dagger.setDamage(8);
 		return dagger;
 	}

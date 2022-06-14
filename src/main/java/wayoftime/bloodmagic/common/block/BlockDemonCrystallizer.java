@@ -12,13 +12,15 @@ import net.minecraft.world.IBlockReader;
 import net.minecraftforge.common.ToolType;
 import wayoftime.bloodmagic.tile.TileDemonCrystallizer;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockDemonCrystallizer extends Block
 {
-	protected static final VoxelShape BODY = Block.makeCuboidShape(2, 2, 2, 14, 16, 14);
+	protected static final VoxelShape BODY = Block.box(2, 2, 2, 14, 16, 14);
 
 	public BlockDemonCrystallizer()
 	{
-		super(Properties.create(Material.IRON).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1));
+		super(Properties.of(Material.METAL).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1));
 	}
 
 	@Override
@@ -40,7 +42,7 @@ public class BlockDemonCrystallizer extends Block
 	}
 
 	@Override
-	public BlockRenderType getRenderType(BlockState state)
+	public BlockRenderType getRenderShape(BlockState state)
 	{
 		return BlockRenderType.MODEL;
 	}

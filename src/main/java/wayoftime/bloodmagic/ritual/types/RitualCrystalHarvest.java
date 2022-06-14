@@ -49,15 +49,15 @@ public class RitualCrystalHarvest extends Ritual
 		crystalRange.resetIterator();
 		while (crystalRange.hasNext())
 		{
-			BlockPos nextPos = crystalRange.next().add(pos);
-			TileEntity tile = world.getTileEntity(nextPos);
+			BlockPos nextPos = crystalRange.next().offset(pos);
+			TileEntity tile = world.getBlockEntity(nextPos);
 			if (tile instanceof TileDemonCrystal)
 			{
 				TileDemonCrystal demonCrystal = (TileDemonCrystal) tile;
 				if (demonCrystal.dropSingleCrystal())
 				{
 					BlockState state = world.getBlockState(nextPos);
-					world.notifyBlockUpdate(nextPos, state, state, 3);
+					world.sendBlockUpdated(nextPos, state, state, 3);
 					totalEffects++;
 					if (totalEffects >= maxEffects)
 					{

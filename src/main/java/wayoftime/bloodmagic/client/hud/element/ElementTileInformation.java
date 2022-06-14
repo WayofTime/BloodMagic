@@ -37,18 +37,18 @@ public abstract class ElementTileInformation<T extends TileEntity> extends HUDEl
 	@Override
 	public void draw(MatrixStack matrixStack, float partialTicks, int drawX, int drawY)
 	{
-		RayTraceResult trace = Minecraft.getInstance().objectMouseOver;
+		RayTraceResult trace = Minecraft.getInstance().hitResult;
 		if (trace == null || trace.getType() != RayTraceResult.Type.BLOCK)
 			return;
 
-		T tile = (T) Minecraft.getInstance().world.getTileEntity(((BlockRayTraceResult) trace).getPos());
+		T tile = (T) Minecraft.getInstance().level.getBlockEntity(((BlockRayTraceResult) trace).getBlockPos());
 
 		int yOffset = 0;
 		for (Pair<Sprite, Function<T, String>> sprite : information)
 		{
 			sprite.getLeft().draw(matrixStack, drawX, drawY + yOffset);
 			int textY = drawY + yOffset + (sprite.getLeft().getTextureHeight() / 4);
-			Minecraft.getInstance().fontRenderer.drawStringWithShadow(matrixStack, (tile != null && tile.getClass() == tileClass)
+			Minecraft.getInstance().font.drawShadow(matrixStack, (tile != null && tile.getClass() == tileClass)
 					? sprite.getRight().apply(tile)
 					: "?", drawX + sprite.getLeft().getTextureWidth() + 2, textY, Color.WHITE.getRGB());
 			yOffset += sprite.getLeft().getTextureHeight() + 2;
@@ -58,11 +58,11 @@ public abstract class ElementTileInformation<T extends TileEntity> extends HUDEl
 	@Override
 	public boolean shouldRender(Minecraft minecraft)
 	{
-		RayTraceResult trace = Minecraft.getInstance().objectMouseOver;
+		RayTraceResult trace = Minecraft.getInstance().hitResult;
 		if (trace == null || trace.getType() != RayTraceResult.Type.BLOCK)
 			return false;
 
-		TileEntity tile = Minecraft.getInstance().world.getTileEntity(((BlockRayTraceResult) trace).getPos());
+		TileEntity tile = Minecraft.getInstance().level.getBlockEntity(((BlockRayTraceResult) trace).getBlockPos());
 		if (tile == null || !tileClass.isAssignableFrom(tile.getClass()))
 			return false;
 

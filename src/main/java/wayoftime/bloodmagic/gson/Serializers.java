@@ -29,23 +29,23 @@ public class Serializers
 		@Override
 		public void write(PacketBuffer buf, EnumDemonWillType value)
 		{
-			buf.writeEnumValue(value);
+			buf.writeEnum(value);
 		}
 
 		@Override
 		public EnumDemonWillType read(PacketBuffer buf)
 		{
-			return buf.readEnumValue(EnumDemonWillType.class);
+			return buf.readEnum(EnumDemonWillType.class);
 		}
 
 		@Override
-		public DataParameter<EnumDemonWillType> createKey(int id)
+		public DataParameter<EnumDemonWillType> createAccessor(int id)
 		{
 			return new DataParameter<>(id, this);
 		}
 
 		@Override
-		public EnumDemonWillType copyValue(EnumDemonWillType value)
+		public EnumDemonWillType copy(EnumDemonWillType value)
 		{
 			return EnumDemonWillType.valueOf(value.name());
 		}
@@ -115,7 +115,7 @@ public class Serializers
 		{
 			JsonObject jsonObject = new JsonObject();
 			jsonObject.add("registryName", context.serialize(src.getItem().getRegistryName()));
-			jsonObject.addProperty("meta", src.getDamage());
+			jsonObject.addProperty("meta", src.getDamageValue());
 			return jsonObject;
 		}
 	};

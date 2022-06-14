@@ -32,12 +32,12 @@ public class BlockOutputRoutingNode extends BlockItemRoutingNode
 //    }
 //
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
 	{
-		if (world.isRemote)
+		if (world.isClientSide)
 			return ActionResultType.SUCCESS;
 
-		TileEntity tile = world.getTileEntity(pos);
+		TileEntity tile = world.getBlockEntity(pos);
 		if (!(tile instanceof TileOutputRoutingNode))
 			return ActionResultType.FAIL;
 

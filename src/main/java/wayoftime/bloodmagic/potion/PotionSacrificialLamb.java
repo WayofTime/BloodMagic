@@ -18,7 +18,7 @@ public class PotionSacrificialLamb extends PotionBloodMagic
 	}
 
 	@Override
-	public void performEffect(LivingEntity entity, int amplifier)
+	public void applyEffectTick(LivingEntity entity, int amplifier)
 	{
 		if (!(entity instanceof CreatureEntity))
 		{
@@ -33,14 +33,14 @@ public class PotionSacrificialLamb extends PotionBloodMagic
 		animal.targetSelector.addGoal(2, goal);
 		animal.goalSelector.addGoal(2, attackGoal);
 
-		if (animal.getAttackTarget() != null && animal.getDistanceSq(animal.getAttackTarget()) < 4)
+		if (animal.getTarget() != null && animal.distanceToSqr(animal.getTarget()) < 4)
 		{
-			animal.getEntityWorld().createExplosion(null, animal.getPosX(), animal.getPosY() + (double) (animal.getHeight() / 16.0F), animal.getPosZ(), 2 + animal.getActivePotionEffect(BloodMagicPotions.SACRIFICIAL_LAMB).getAmplifier() * 1.5f, false, Mode.NONE);
+			animal.getCommandSenderWorld().explode(null, animal.getX(), animal.getY() + (double) (animal.getBbHeight() / 16.0F), animal.getZ(), 2 + animal.getEffect(BloodMagicPotions.SACRIFICIAL_LAMB).getAmplifier() * 1.5f, false, Mode.NONE);
 		}
 	}
 
 	@Override
-	public boolean isReady(int duration, int amplifier)
+	public boolean isDurationEffectTick(int duration, int amplifier)
 	{
 		return true;
 	}

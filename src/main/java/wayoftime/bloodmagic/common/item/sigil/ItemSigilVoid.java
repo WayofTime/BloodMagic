@@ -18,6 +18,8 @@ import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 
+import wayoftime.bloodmagic.common.item.sigil.ISigil.Holding;
+
 public class ItemSigilVoid extends ItemSigilFluidBase
 {
 	public ItemSigilVoid()
@@ -26,36 +28,36 @@ public class ItemSigilVoid extends ItemSigilFluidBase
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
+		ItemStack stack = player.getItemInHand(hand);
 		if (stack.getItem() instanceof ISigil.Holding)
 			stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
 		if (PlayerHelper.isFakePlayer(player))
-			return ActionResult.resultFail(stack);
+			return ActionResult.fail(stack);
 
-		if (!world.isRemote && !isUnusable(stack))
+		if (!world.isClientSide && !isUnusable(stack))
 		{
-			RayTraceResult rayTrace = rayTrace(world, player, RayTraceContext.FluidMode.SOURCE_ONLY);
+			RayTraceResult rayTrace = getPlayerPOVHitResult(world, player, RayTraceContext.FluidMode.SOURCE_ONLY);
 
 			if (rayTrace == null || rayTrace.getType() != RayTraceResult.Type.BLOCK)
 			{
-				return ActionResult.resultFail(stack);
+				return ActionResult.fail(stack);
 			}
 
 			BlockRayTraceResult blockRayTrace = (BlockRayTraceResult) rayTrace;
-			BlockPos blockPos = blockRayTrace.getPos();
-			Direction sideHit = blockRayTrace.getFace();
+			BlockPos blockPos = blockRayTrace.getBlockPos();
+			Direction sideHit = blockRayTrace.getDirection();
 
-			if (world.isBlockModifiable(player, blockPos) && player.canPlayerEdit(blockPos, sideHit, stack))
+			if (world.mayInteract(player, blockPos) && player.mayUseItemAt(blockPos, sideHit, stack))
 			{
 				BlockState blockState = world.getBlockState(blockPos);
 				if (blockState.getBlock() instanceof IBucketPickupHandler)
 				{
 					if (NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess())
 					{
-						((IBucketPickupHandler) blockState.getBlock()).pickupFluid(world, blockPos, blockState);
-						return ActionResult.resultSuccess(stack);
+						((IBucketPickupHandler) blockState.getBlock()).takeLiquid(world, blockPos, blockState);
+						return ActionResult.success(stack);
 					}
 				}
 				// Void is simpler than the other fluid sigils, because getFluidHandler grabs
@@ -79,6 +81,6 @@ public class ItemSigilVoid extends ItemSigilFluidBase
 			}
 		}
 
-		return super.onItemRightClick(world, player, hand);
+		return super.use(world, player, hand);
 	}
 }

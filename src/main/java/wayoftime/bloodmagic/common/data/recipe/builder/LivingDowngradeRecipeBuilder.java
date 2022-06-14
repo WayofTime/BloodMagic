@@ -40,9 +40,9 @@ public class LivingDowngradeRecipeBuilder extends BloodMagicRecipeBuilder<Living
 		}
 
 		@Override
-		public void serialize(@Nonnull JsonObject json)
+		public void serializeRecipeData(@Nonnull JsonObject json)
 		{
-			json.add(Constants.JSON.INPUT, input.serialize());
+			json.add(Constants.JSON.INPUT, input.toJson());
 			json.addProperty(Constants.JSON.RESOURCE, livingArmourRL.toString());
 		}
 	}

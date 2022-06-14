@@ -34,13 +34,13 @@ public class PotionTransformRecipeSerializer<RECIPE extends RecipePotionTransfor
 
 	@Nonnull
 	@Override
-	public RECIPE read(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
+	public RECIPE fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
 	{
 		List<Ingredient> inputList = new ArrayList<Ingredient>();
 
-		if (json.has(Constants.JSON.INPUT) && JSONUtils.isJsonArray(json, Constants.JSON.INPUT))
+		if (json.has(Constants.JSON.INPUT) && JSONUtils.isArrayNode(json, Constants.JSON.INPUT))
 		{
-			JsonArray mainArray = JSONUtils.getJsonArray(json, Constants.JSON.INPUT);
+			JsonArray mainArray = JSONUtils.getAsJsonArray(json, Constants.JSON.INPUT);
 
 			arrayLoop: for (JsonElement element : mainArray)
 			{
@@ -57,47 +57,47 @@ public class PotionTransformRecipeSerializer<RECIPE extends RecipePotionTransfor
 					element.getAsJsonObject();
 				}
 
-				inputList.add(Ingredient.deserialize(element));
+				inputList.add(Ingredient.fromJson(element));
 			}
 		}
 
 		List<Pair<Effect, Integer>> outputEffectList = new ArrayList<>();
-		if (json.has(Constants.JSON.OUTPUT_EFFECT) && JSONUtils.isJsonArray(json, Constants.JSON.OUTPUT_EFFECT))
+		if (json.has(Constants.JSON.OUTPUT_EFFECT) && JSONUtils.isArrayNode(json, Constants.JSON.OUTPUT_EFFECT))
 		{
-			JsonArray mainArray = JSONUtils.getJsonArray(json, Constants.JSON.OUTPUT_EFFECT);
+			JsonArray mainArray = JSONUtils.getAsJsonArray(json, Constants.JSON.OUTPUT_EFFECT);
 
 			for (JsonElement element : mainArray)
 			{
 				JsonObject obj = element.getAsJsonObject();
-				Effect outputEffect = BloodMagicPotions.getEffect(new ResourceLocation(JSONUtils.getString(obj, Constants.JSON.EFFECT)));
-				int baseDuration = JSONUtils.getInt(obj, Constants.JSON.DURATION);
+				Effect outputEffect = BloodMagicPotions.getEffect(new ResourceLocation(JSONUtils.getAsString(obj, Constants.JSON.EFFECT)));
+				int baseDuration = JSONUtils.getAsInt(obj, Constants.JSON.DURATION);
 
 				outputEffectList.add(Pair.of(outputEffect, baseDuration));
 			}
 		}
 
 		List<Effect> inputEffectList = new ArrayList<>();
-		if (json.has(Constants.JSON.INPUT_EFFECT) && JSONUtils.isJsonArray(json, Constants.JSON.INPUT_EFFECT))
+		if (json.has(Constants.JSON.INPUT_EFFECT) && JSONUtils.isArrayNode(json, Constants.JSON.INPUT_EFFECT))
 		{
-			JsonArray mainArray = JSONUtils.getJsonArray(json, Constants.JSON.INPUT_EFFECT);
+			JsonArray mainArray = JSONUtils.getAsJsonArray(json, Constants.JSON.INPUT_EFFECT);
 
 			for (JsonElement element : mainArray)
 			{
-				Effect inputEffect = BloodMagicPotions.getEffect(new ResourceLocation(JSONUtils.getString(element, Constants.JSON.EFFECT)));
+				Effect inputEffect = BloodMagicPotions.getEffect(new ResourceLocation(JSONUtils.convertToString(element, Constants.JSON.EFFECT)));
 
 				inputEffectList.add(inputEffect);
 			}
 		}
 
-		int syphon = JSONUtils.getInt(json, Constants.JSON.SYPHON);
-		int ticks = JSONUtils.getInt(json, Constants.JSON.TICKS);
-		int minimumTier = JSONUtils.getInt(json, Constants.JSON.ALTAR_TIER);
+		int syphon = JSONUtils.getAsInt(json, Constants.JSON.SYPHON);
+		int ticks = JSONUtils.getAsInt(json, Constants.JSON.TICKS);
+		int minimumTier = JSONUtils.getAsInt(json, Constants.JSON.ALTAR_TIER);
 
 		return this.factory.create(recipeId, inputList, outputEffectList, inputEffectList, syphon, ticks, minimumTier);
 	}
 
 	@Override
-	public RECIPE read(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
+	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
 	{
 		try
 		{
@@ -106,7 +106,7 @@ public class PotionTransformRecipeSerializer<RECIPE extends RecipePotionTransfor
 
 			for (int i = 0; i < size; i++)
 			{
-				input.add(i, Ingredient.read(buffer));
+				input.add(i, Ingredient.fromNetwork(buffer));
 			}
 
 			int syphon = buffer.readInt();
@@ -119,7 +119,7 @@ public class PotionTransformRecipeSerializer<RECIPE extends RecipePotionTransfor
 			for (int i = 0; i < outputEffectSize; i++)
 			{
 				int effectId = buffer.readInt();
-				outputEffectList.add(i, Pair.of(Effect.get(effectId), buffer.readInt()));
+				outputEffectList.add(i, Pair.of(Effect.byId(effectId), buffer.readInt()));
 			}
 
 			int inputEffectSize = buffer.readInt();
@@ -127,7 +127,7 @@ public class PotionTransformRecipeSerializer<RECIPE extends RecipePotionTransfor
 
 			for (int i = 0; i < inputEffectSize; i++)
 			{
-				inputEffectList.add(i, Effect.get(buffer.readInt()));
+				inputEffectList.add(i, Effect.byId(buffer.readInt()));
 			}
 
 //
@@ -142,7 +142,7 @@ public class PotionTransformRecipeSerializer<RECIPE extends RecipePotionTransfor
 	}
 
 	@Override
-	public void write(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
+	public void toNetwork(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
 	{
 		try
 		{

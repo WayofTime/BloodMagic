@@ -35,11 +35,11 @@ public class BlockAlchemyTable extends Block// implements IBMBlock
 {
 	public static final DirectionProperty DIRECTION = DirectionProperty.create("direction", Direction.Plane.HORIZONTAL);
 	public static final BooleanProperty INVISIBLE = BooleanProperty.create("invisible");
-	protected static final VoxelShape BODY = Block.makeCuboidShape(1, 0, 1, 15, 15, 15);
+	protected static final VoxelShape BODY = Block.box(1, 0, 1, 15, 15, 15);
 
 	public BlockAlchemyTable()
 	{
-		super(AbstractBlock.Properties.create(Material.IRON).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1).notSolid().setOpaque(BlockAlchemyTable::isntSolid).setBlocksVision(BlockAlchemyTable::isntSolid));
+		super(AbstractBlock.Properties.of(Material.METAL).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1).noOcclusion().isRedstoneConductor(BlockAlchemyTable::isntSolid).isViewBlocking(BlockAlchemyTable::isntSolid));
 	}
 
 	private static boolean isntSolid(BlockState state, IBlockReader reader, BlockPos pos)
@@ -53,7 +53,7 @@ public class BlockAlchemyTable extends Block// implements IBMBlock
 		return BODY;
 	}
 
-	public VoxelShape getRayTraceShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context)
+	public VoxelShape getVisualShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context)
 	{
 		return VoxelShapes.empty();
 	}
@@ -71,23 +71,23 @@ public class BlockAlchemyTable extends Block// implements IBMBlock
 	}
 
 	@Override
-	public BlockRenderType getRenderType(BlockState state)
+	public BlockRenderType getRenderShape(BlockState state)
 	{
 		return BlockRenderType.MODEL;
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
 	{
-		if (world.isRemote)
+		if (world.isClientSide)
 			return ActionResultType.SUCCESS;
 
-		TileEntity tile = world.getTileEntity(pos);
+		TileEntity tile = world.getBlockEntity(pos);
 		if (tile instanceof TileAlchemyTable)
 		{
 			if (((TileAlchemyTable) tile).isSlave())
 			{
-				NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) world.getTileEntity(((TileAlchemyTable) tile).getConnectedPos()), ((TileAlchemyTable) tile).getConnectedPos());
+				NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) world.getBlockEntity(((TileAlchemyTable) tile).getConnectedPos()), ((TileAlchemyTable) tile).getConnectedPos());
 			} else
 			{
 				NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tile, pos);
@@ -104,11 +104,11 @@ public class BlockAlchemyTable extends Block// implements IBMBlock
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context)
 	{
-		return this.getDefaultState().with(DIRECTION, context.getPlacementHorizontalFacing());
+		return this.defaultBlockState().setValue(DIRECTION, context.getHorizontalDirection());
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
 	{
 		builder.add(DIRECTION, INVISIBLE);
 	}
@@ -116,46 +116,46 @@ public class BlockAlchemyTable extends Block// implements IBMBlock
 	@Override
 	public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor)
 	{
-		TileAlchemyTable tile = (TileAlchemyTable) world.getTileEntity(pos);
+		TileAlchemyTable tile = (TileAlchemyTable) world.getBlockEntity(pos);
 		if (tile != null)
 		{
 			BlockPos connectedPos = tile.getConnectedPos();
-			TileEntity connectedTile = world.getTileEntity(connectedPos);
+			TileEntity connectedTile = world.getBlockEntity(connectedPos);
 			if (!(connectedTile instanceof TileAlchemyTable
 					&& ((TileAlchemyTable) connectedTile).getConnectedPos().equals(pos)))
 			{
-				this.onPlayerDestroy(tile.getWorld(), pos, state);
-				this.removedByPlayer(state, tile.getWorld(), pos, null, true, this.getFluidState(state));
+				this.destroy(tile.getLevel(), pos, state);
+				this.removedByPlayer(state, tile.getLevel(), pos, null, true, this.getFluidState(state));
 			}
 		}
 	}
 
 	@Override
-	public void onPlayerDestroy(IWorld world, BlockPos blockPos, BlockState blockState)
+	public void destroy(IWorld world, BlockPos blockPos, BlockState blockState)
 	{
-		TileAlchemyTable forge = (TileAlchemyTable) world.getTileEntity(blockPos);
+		TileAlchemyTable forge = (TileAlchemyTable) world.getBlockEntity(blockPos);
 
 		if (forge != null && !forge.isSlave())
 		{
 			forge.dropItems();
 		}
 
-		super.onPlayerDestroy(world, blockPos, blockState);
+		super.destroy(world, blockPos, blockState);
 	}
 
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{
-		if (!state.isIn(newState.getBlock()))
+		if (!state.is(newState.getBlock()))
 		{
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+			TileEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof TileAlchemyTable && !((TileAlchemyTable) tileentity).isSlave())
 			{
 				((TileAlchemyTable) tileentity).dropItems();
-				worldIn.updateComparatorOutputLevel(pos, this);
+				worldIn.updateNeighbourForOutputSignal(pos, this);
 			}
 
-			super.onReplaced(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
 

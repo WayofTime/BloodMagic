@@ -20,6 +20,8 @@ import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 
+import wayoftime.bloodmagic.common.item.sigil.ISigil.Holding;
+
 public class ItemSigilWater extends ItemSigilFluidBase implements IAlchemyItem
 {
 	public ItemSigilWater()
@@ -28,29 +30,29 @@ public class ItemSigilWater extends ItemSigilFluidBase implements IAlchemyItem
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
+		ItemStack stack = player.getItemInHand(hand);
 		if (stack.getItem() instanceof ISigil.Holding)
 			stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
 		if (PlayerHelper.isFakePlayer(player))
-			return ActionResult.resultFail(stack);
+			return ActionResult.fail(stack);
 
-		if (!world.isRemote && !isUnusable(stack))
+		if (!world.isClientSide && !isUnusable(stack))
 		{
-			RayTraceResult rayTrace = rayTrace(world, player, RayTraceContext.FluidMode.NONE);
+			RayTraceResult rayTrace = getPlayerPOVHitResult(world, player, RayTraceContext.FluidMode.NONE);
 
 			if (rayTrace == null || rayTrace.getType() != RayTraceResult.Type.BLOCK)
 			{
-				return ActionResult.resultFail(stack);
+				return ActionResult.fail(stack);
 			}
 
 			BlockRayTraceResult blockRayTrace = (BlockRayTraceResult) rayTrace;
-			BlockPos blockPos = blockRayTrace.getPos();
-			Direction sideHit = blockRayTrace.getFace();
-			BlockPos blockpos1 = blockPos.offset(sideHit);
+			BlockPos blockPos = blockRayTrace.getBlockPos();
+			Direction sideHit = blockRayTrace.getDirection();
+			BlockPos blockpos1 = blockPos.relative(sideHit);
 
-			if (world.isBlockModifiable(player, blockPos) && player.canPlayerEdit(blockpos1, sideHit, stack))
+			if (world.mayInteract(player, blockPos) && player.mayUseItemAt(blockpos1, sideHit, stack))
 			{
 
 				// Case for if block at blockPos is a fluid handler like a tank
@@ -60,7 +62,7 @@ public class ItemSigilWater extends ItemSigilFluidBase implements IAlchemyItem
 				{
 					boolean result = tryInsertSigilFluid(destination, true);
 					if (result)
-						return ActionResult.resultSuccess(stack);
+						return ActionResult.success(stack);
 				}
 				// Do the same as above, but use sidedness to interact with the fluid handler.
 				IFluidHandler destinationSide = getFluidHandler(world, blockPos, sideHit);
@@ -68,30 +70,30 @@ public class ItemSigilWater extends ItemSigilFluidBase implements IAlchemyItem
 				{
 					boolean result = tryInsertSigilFluid(destinationSide, true);
 					if (result)
-						return ActionResult.resultSuccess(stack);
+						return ActionResult.success(stack);
 				}
 
 				// Special vanilla cauldron handling, yay.
 				if (world.getBlockState(blockPos).getBlock() == Blocks.CAULDRON && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess())
 				{
-					world.setBlockState(blockPos, Blocks.CAULDRON.getDefaultState().with(CauldronBlock.LEVEL, 3));
-					return ActionResult.resultSuccess(stack);
+					world.setBlockAndUpdate(blockPos, Blocks.CAULDRON.defaultBlockState().setValue(CauldronBlock.LEVEL, 3));
+					return ActionResult.success(stack);
 				}
 
 				// Case for if block at blockPos is not a tank
 				// Place fluid in world
 				if (destination == null && destinationSide == null)
 				{
-					BlockPos targetPos = blockPos.offset(sideHit);
+					BlockPos targetPos = blockPos.relative(sideHit);
 					if (tryPlaceSigilFluid(player, world, targetPos) && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess())
 					{
-						return ActionResult.resultSuccess(stack);
+						return ActionResult.success(stack);
 					}
 				}
 			}
 		}
 
-		return super.onItemRightClick(world, player, hand);
+		return super.use(world, player, hand);
 	}
 
 	@Override

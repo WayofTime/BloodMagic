@@ -12,16 +12,16 @@ public class DungeonDimensionHelper
 {
 	public static void test(World world)
 	{
-		RegistryKey<World> key = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, BloodMagic.rl("dungeon"));
-		World testWorld = world.getServer().getWorld(key);
+		RegistryKey<World> key = RegistryKey.create(Registry.DIMENSION_REGISTRY, BloodMagic.rl("dungeon"));
+		World testWorld = world.getServer().getLevel(key);
 		System.out.println("Testing! Key is: " + key + ", World is: " + testWorld);
 //		world.getServer().getCommandManager().handleCommand(source, command)
-		testWorld.setBlockState(new BlockPos(0, 100, 0), BloodMagicBlocks.ACCELERATION_RUNE.get().getDefaultState());
+		testWorld.setBlockAndUpdate(new BlockPos(0, 100, 0), BloodMagicBlocks.ACCELERATION_RUNE.get().defaultBlockState());
 	}
 
 	public static ServerWorld getDungeonWorld(World world)
 	{
-		RegistryKey<World> key = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, BloodMagic.rl("dungeon"));
-		return world.getServer().getWorld(key);
+		RegistryKey<World> key = RegistryKey.create(Registry.DIMENSION_REGISTRY, BloodMagic.rl("dungeon"));
+		return world.getServer().getLevel(key);
 	}
 }

@@ -34,10 +34,10 @@ public class AlchemyArrayProcessor implements IComponentProcessor
 	public void setup(IVariableProvider variables)
 	{
 		ResourceLocation id = new ResourceLocation(variables.get("recipe").asString());
-		Optional<? extends IRecipe<?>> recipeHandler = Minecraft.getInstance().world.getRecipeManager().getRecipe(id);
+		Optional<? extends IRecipe<?>> recipeHandler = Minecraft.getInstance().level.getRecipeManager().byKey(id);
 		if (recipeHandler.isPresent())
 		{
-			IRecipe<?> recipe = Minecraft.getInstance().world.getRecipeManager().getRecipe(id).get();
+			IRecipe<?> recipe = Minecraft.getInstance().level.getRecipeManager().byKey(id).get();
 			if (recipe.getType().equals(BloodMagicRecipeType.ARRAY))
 			{
 				this.recipe = (RecipeAlchemyArray) recipe;
@@ -59,9 +59,9 @@ public class AlchemyArrayProcessor implements IComponentProcessor
 		switch (key)
 		{
 		case "baseinput":
-			return IVariable.wrapList(Arrays.stream(recipe.getBaseInput().getMatchingStacks()).map(IVariable::from).collect(Collectors.toList()));
+			return IVariable.wrapList(Arrays.stream(recipe.getBaseInput().getItems()).map(IVariable::from).collect(Collectors.toList()));
 		case "addedinput":
-			return IVariable.wrapList(Arrays.stream(recipe.getAddedInput().getMatchingStacks()).map(IVariable::from).collect(Collectors.toList()));
+			return IVariable.wrapList(Arrays.stream(recipe.getAddedInput().getItems()).map(IVariable::from).collect(Collectors.toList()));
 		case "output":
 			return IVariable.from(recipe.getOutput());
 		default:

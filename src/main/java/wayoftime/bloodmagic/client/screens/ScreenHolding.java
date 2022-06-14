@@ -26,8 +26,8 @@ public class ScreenHolding extends ScreenBase<ContainerHolding>
 	{
 		super(container, playerInventory, title);
 		tileTable = container.inventoryHolding;
-		xSize = 176;
-		ySize = 121;
+		imageWidth = 176;
+		imageHeight = 121;
 		this.player = playerInventory.player;
 	}
 
@@ -38,18 +38,18 @@ public class ScreenHolding extends ScreenBase<ContainerHolding>
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(MatrixStack stack, int mouseX, int mouseY)
+	protected void renderLabels(MatrixStack stack, int mouseX, int mouseY)
 	{
-//		this.font.func_243248_b(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
-//		this.font.func_243248_b(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
-		this.font.func_243248_b(stack, new TranslationTextComponent("item.bloodmagic.sigilofholding"), 53, 4, 4210752);
+//		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
+//		this.font.draw(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
+		this.font.draw(stack, new TranslationTextComponent("item.bloodmagic.sigilofholding"), 53, 4, 4210752);
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		getMinecraft().getTextureManager().bindTexture(background);
+		getMinecraft().getTextureManager().bind(background);
 //		int i = (this.width - this.xSize) / 2;
 //		int j = (this.height - this.ySize) / 2;
 //		this.blit(stack, i, j, 0, 0, this.xSize, this.ySize);
@@ -70,15 +70,15 @@ public class ScreenHolding extends ScreenBase<ContainerHolding>
 		// draw your Gui here, only thing you need to change is the path
 //        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 //        this.mc.getTextureManager().bindTexture(texture);
-		int x = (width - xSize) / 2;
-		int y = (height - ySize) / 2;
-		this.blit(stack, x, y, 0, 0, xSize, ySize);
-		ItemStack held = player.getHeldItem(Hand.MAIN_HAND);
+		int x = (width - imageWidth) / 2;
+		int y = (height - imageHeight) / 2;
+		this.blit(stack, x, y, 0, 0, imageWidth, imageHeight);
+		ItemStack held = player.getItemInHand(Hand.MAIN_HAND);
 		if (!held.isEmpty() && held.getItem() == BloodMagicItems.HOLDING_SIGIL.get())
 		{
 //            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 			RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-			this.blit(stack, 4 + x + 36 * ItemSigilHolding.getCurrentItemOrdinal(player.getHeldItemMainhand()), y + 13, 0, 123, 24, 24);
+			this.blit(stack, 4 + x + 36 * ItemSigilHolding.getCurrentItemOrdinal(player.getMainHandItem()), y + 13, 0, 123, 24, 24);
 		}
 	}
 

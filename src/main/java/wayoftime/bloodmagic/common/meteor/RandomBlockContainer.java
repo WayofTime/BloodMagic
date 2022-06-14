@@ -26,7 +26,7 @@ public abstract class RandomBlockContainer
 
 			int index = -1;
 			String tagName = splitStr[1];
-			ITag<Block> tag = TagCollectionManager.getManager().getBlockTags().get(new ResourceLocation(tagName));
+			ITag<Block> tag = TagCollectionManager.getInstance().getBlocks().getTag(new ResourceLocation(tagName));
 
 			if (splitStr.length > 2)
 			{

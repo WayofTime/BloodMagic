@@ -26,13 +26,13 @@ import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 
 public class BlockNetherrackSoil extends Block
 {
-	public static final IntegerProperty MOISTURE = BlockStateProperties.MOISTURE_0_7;
-	protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 15.0D, 16.0D);
+	public static final IntegerProperty MOISTURE = BlockStateProperties.MOISTURE;
+	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 15.0D, 16.0D);
 
 	public BlockNetherrackSoil(AbstractBlock.Properties builder)
 	{
 		super(builder);
-		this.setDefaultState(this.stateContainer.getBaseState().with(MOISTURE, Integer.valueOf(0)));
+		this.registerDefaultState(this.stateDefinition.any().setValue(MOISTURE, Integer.valueOf(0)));
 	}
 
 	/**
@@ -42,30 +42,30 @@ public class BlockNetherrackSoil extends Block
 	 * its solidified counterpart. Note that this method should ideally consider
 	 * only the specific face passed in.
 	 */
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
 	{
-		if (facing == Direction.UP && !stateIn.isValidPosition(worldIn, currentPos))
+		if (facing == Direction.UP && !stateIn.canSurvive(worldIn, currentPos))
 		{
-			worldIn.getPendingBlockTicks().scheduleTick(currentPos, this, 1);
+			worldIn.getBlockTicks().scheduleTick(currentPos, this, 1);
 		}
 
-		return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+		return super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
 	}
 
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos)
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos)
 	{
-		BlockState blockstate = worldIn.getBlockState(pos.up());
+		BlockState blockstate = worldIn.getBlockState(pos.above());
 		return !blockstate.getMaterial().isSolid() || blockstate.getBlock() instanceof FenceGateBlock || blockstate.getBlock() instanceof MovingPistonBlock;
 	}
 
 	public BlockState getStateForPlacement(BlockItemUseContext context)
 	{
-		return !this.getDefaultState().isValidPosition(context.getWorld(), context.getPos())
-				? Blocks.NETHERRACK.getDefaultState()
+		return !this.defaultBlockState().canSurvive(context.getLevel(), context.getClickedPos())
+				? Blocks.NETHERRACK.defaultBlockState()
 				: super.getStateForPlacement(context);
 	}
 
-	public boolean isTransparent(BlockState state)
+	public boolean useShapeForLightOcclusion(BlockState state)
 	{
 		return true;
 	}
@@ -77,7 +77,7 @@ public class BlockNetherrackSoil extends Block
 
 	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand)
 	{
-		if (!state.isValidPosition(worldIn, pos))
+		if (!state.canSurvive(worldIn, pos))
 		{
 			turnToDirt(state, worldIn, pos);
 		}
@@ -89,19 +89,19 @@ public class BlockNetherrackSoil extends Block
 	 */
 	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random)
 	{
-		int i = state.get(MOISTURE);
-		if (!hasLifeEssence(worldIn, pos) && !worldIn.isRainingAt(pos.up()))
+		int i = state.getValue(MOISTURE);
+		if (!hasLifeEssence(worldIn, pos) && !worldIn.isRainingAt(pos.above()))
 		{
 			if (i > 0)
 			{
-				worldIn.setBlockState(pos, state.with(MOISTURE, Integer.valueOf(i - 1)), 2);
+				worldIn.setBlock(pos, state.setValue(MOISTURE, Integer.valueOf(i - 1)), 2);
 			} else if (!hasCrops(worldIn, pos))
 			{
 				turnToDirt(state, worldIn, pos);
 			}
 		} else if (i < 7)
 		{
-			worldIn.setBlockState(pos, state.with(MOISTURE, Integer.valueOf(7)), 2);
+			worldIn.setBlock(pos, state.setValue(MOISTURE, Integer.valueOf(7)), 2);
 		}
 
 	}
@@ -121,21 +121,21 @@ public class BlockNetherrackSoil extends Block
 
 	public static void turnToDirt(BlockState state, World worldIn, BlockPos pos)
 	{
-		worldIn.setBlockState(pos, nudgeEntitiesWithNewState(state, Blocks.NETHERRACK.getDefaultState(), worldIn, pos));
+		worldIn.setBlockAndUpdate(pos, pushEntitiesUp(state, Blocks.NETHERRACK.defaultBlockState(), worldIn, pos));
 	}
 
 	private boolean hasCrops(IBlockReader worldIn, BlockPos pos)
 	{
-		BlockState plant = worldIn.getBlockState(pos.up());
+		BlockState plant = worldIn.getBlockState(pos.above());
 		BlockState state = worldIn.getBlockState(pos);
 		return plant.getBlock() instanceof net.minecraftforge.common.IPlantable && state.canSustainPlant(worldIn, pos, Direction.UP, (net.minecraftforge.common.IPlantable) plant.getBlock());
 	}
 
 	private static boolean hasLifeEssence(IWorldReader worldIn, BlockPos pos)
 	{
-		for (BlockPos blockpos : BlockPos.getAllInBoxMutable(pos.add(-4, 0, -4), pos.add(4, 1, 4)))
+		for (BlockPos blockpos : BlockPos.betweenClosed(pos.offset(-4, 0, -4), pos.offset(4, 1, 4)))
 		{
-			if (worldIn.getFluidState(blockpos).isTagged(BloodMagicTags.LIFE_ESSENCE))
+			if (worldIn.getFluidState(blockpos).is(BloodMagicTags.LIFE_ESSENCE))
 			{
 				return true;
 			}
@@ -144,12 +144,12 @@ public class BlockNetherrackSoil extends Block
 		return false;
 	}
 
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
 	{
 		builder.add(MOISTURE);
 	}
 
-	public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type)
+	public boolean isPathfindable(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type)
 	{
 		return false;
 	}

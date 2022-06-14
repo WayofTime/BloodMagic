@@ -34,6 +34,6 @@ public class MimicModelGeometry implements IModelGeometry<MimicModelGeometry>
 	@Override
 	public Collection<RenderMaterial> getTextures(IModelConfiguration owner, java.util.function.Function<ResourceLocation, IUnbakedModel> modelGetter, Set<com.mojang.datafixers.util.Pair<String, String>> missingTextureErrors)
 	{
-		return Collections.singletonList(new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, texture));
+		return Collections.singletonList(new RenderMaterial(AtlasTexture.LOCATION_BLOCKS, texture));
 	}
 }

@@ -31,13 +31,13 @@ public class PotionIncreaseLengthRecipeSerializer<RECIPE extends RecipePotionInc
 
 	@Nonnull
 	@Override
-	public RECIPE read(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
+	public RECIPE fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
 	{
 		List<Ingredient> inputList = new ArrayList<Ingredient>();
 
-		if (json.has(Constants.JSON.INPUT) && JSONUtils.isJsonArray(json, Constants.JSON.INPUT))
+		if (json.has(Constants.JSON.INPUT) && JSONUtils.isArrayNode(json, Constants.JSON.INPUT))
 		{
-			JsonArray mainArray = JSONUtils.getJsonArray(json, Constants.JSON.INPUT);
+			JsonArray mainArray = JSONUtils.getAsJsonArray(json, Constants.JSON.INPUT);
 
 			arrayLoop: for (JsonElement element : mainArray)
 			{
@@ -54,24 +54,24 @@ public class PotionIncreaseLengthRecipeSerializer<RECIPE extends RecipePotionInc
 					element.getAsJsonObject();
 				}
 
-				inputList.add(Ingredient.deserialize(element));
+				inputList.add(Ingredient.fromJson(element));
 			}
 		}
 
 //		ItemStack output = SerializerHelper.getItemStack(json, Constants.JSON.OUTPUT);
 
-		int syphon = JSONUtils.getInt(json, Constants.JSON.SYPHON);
-		int ticks = JSONUtils.getInt(json, Constants.JSON.TICKS);
-		int minimumTier = JSONUtils.getInt(json, Constants.JSON.ALTAR_TIER);
+		int syphon = JSONUtils.getAsInt(json, Constants.JSON.SYPHON);
+		int ticks = JSONUtils.getAsInt(json, Constants.JSON.TICKS);
+		int minimumTier = JSONUtils.getAsInt(json, Constants.JSON.ALTAR_TIER);
 
-		Effect outputEffect = BloodMagicPotions.getEffect(new ResourceLocation(JSONUtils.getString(json, Constants.JSON.EFFECT)));
-		double lengthDurationMod = JSONUtils.getFloat(json, Constants.JSON.LENGTH_DUR_MOD);
+		Effect outputEffect = BloodMagicPotions.getEffect(new ResourceLocation(JSONUtils.getAsString(json, Constants.JSON.EFFECT)));
+		double lengthDurationMod = JSONUtils.getAsFloat(json, Constants.JSON.LENGTH_DUR_MOD);
 
 		return this.factory.create(recipeId, inputList, outputEffect, lengthDurationMod, syphon, ticks, minimumTier);
 	}
 
 	@Override
-	public RECIPE read(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
+	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
 	{
 		try
 		{
@@ -80,14 +80,14 @@ public class PotionIncreaseLengthRecipeSerializer<RECIPE extends RecipePotionInc
 
 			for (int i = 0; i < size; i++)
 			{
-				input.add(i, Ingredient.read(buffer));
+				input.add(i, Ingredient.fromNetwork(buffer));
 			}
 
 			int syphon = buffer.readInt();
 			int ticks = buffer.readInt();
 			int minimumTier = buffer.readInt();
 
-			Effect outputEffect = Effect.get(buffer.readInt());
+			Effect outputEffect = Effect.byId(buffer.readInt());
 			double lengthDurationMod = buffer.readDouble();
 
 			return this.factory.create(recipeId, input, outputEffect, lengthDurationMod, syphon, ticks, minimumTier);
@@ -98,7 +98,7 @@ public class PotionIncreaseLengthRecipeSerializer<RECIPE extends RecipePotionInc
 	}
 
 	@Override
-	public void write(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
+	public void toNetwork(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
 	{
 		try
 		{

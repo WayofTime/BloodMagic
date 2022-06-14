@@ -47,7 +47,7 @@ public class EntityBloodLight extends ProjectileItemEntity
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket()
+	public IPacket<?> getAddEntityPacket()
 	{
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
@@ -56,22 +56,22 @@ public class EntityBloodLight extends ProjectileItemEntity
 	public void tick()
 	{
 		super.tick();
-		RayTraceResult raytraceresult = ProjectileHelper.func_234618_a_(this, this::func_230298_a_);
+		RayTraceResult raytraceresult = ProjectileHelper.getHitResult(this, this::canHitEntity);
 //		boolean flag = false;
 		if (raytraceresult.getType() == RayTraceResult.Type.BLOCK)
 		{
-			BlockPos blockpos = ((BlockRayTraceResult) raytraceresult).getPos().offset(((BlockRayTraceResult) raytraceresult).getFace());
-			BlockState blockstate = this.world.getBlockState(blockpos);
+			BlockPos blockpos = ((BlockRayTraceResult) raytraceresult).getBlockPos().relative(((BlockRayTraceResult) raytraceresult).getDirection());
+			BlockState blockstate = this.level.getBlockState(blockpos);
 			Material material = blockstate.getMaterial();
-			if (blockstate.isAir() || blockstate.isIn(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable())
+			if (blockstate.isAir() || blockstate.is(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable())
 			{
-				this.getEntityWorld().setBlockState(blockpos, BloodMagicBlocks.BLOOD_LIGHT.get().getDefaultState());
-				this.setDead();
+				this.getCommandSenderWorld().setBlockAndUpdate(blockpos, BloodMagicBlocks.BLOOD_LIGHT.get().defaultBlockState());
+				this.removeAfterChangingDimensions();
 			}
 		}
 	}
 
-	protected float getGravityVelocity()
+	protected float getGravity()
 	{
 		return 0;
 	}
@@ -79,7 +79,7 @@ public class EntityBloodLight extends ProjectileItemEntity
 	@OnlyIn(Dist.CLIENT)
 	private IParticleData makeParticle()
 	{
-		ItemStack itemstack = this.func_213882_k();
+		ItemStack itemstack = this.getItemRaw();
 		return (IParticleData) (itemstack.isEmpty() ? ParticleTypes.LAVA
 				: new ItemParticleData(ParticleTypes.ITEM, itemstack));
 	}
@@ -88,7 +88,7 @@ public class EntityBloodLight extends ProjectileItemEntity
 	 * Handler for {@link World#setEntityState}
 	 */
 	@OnlyIn(Dist.CLIENT)
-	public void handleStatusUpdate(byte id)
+	public void handleEntityEvent(byte id)
 	{
 		if (id == 3)
 		{
@@ -96,7 +96,7 @@ public class EntityBloodLight extends ProjectileItemEntity
 
 			for (int i = 0; i < 8; ++i)
 			{
-				this.world.addParticle(iparticledata, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
+				this.level.addParticle(iparticledata, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 			}
 		}
 	}

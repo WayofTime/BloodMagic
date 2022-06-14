@@ -41,7 +41,7 @@ public class TileDungeonController extends TileBase
 
 	public int handleRequestForRoomPlacement(ItemStack keyStack, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, List<ResourceLocation> potentialRooms)
 	{
-		if (!world.isRemote && world instanceof ServerWorld)
+		if (!level.isClientSide && level instanceof ServerWorld)
 		{
 			if (!keyStack.isEmpty() && keyStack.getItem() instanceof IDungeonKey)
 			{
@@ -50,16 +50,16 @@ public class TileDungeonController extends TileBase
 				{
 					return -1;
 				}
-				int placementState = dungeon.addNewRoomToExistingDungeon((ServerWorld) world, this.getPos(), roomType, world.rand, activatedDoorPos, doorFacing, activatedDoorType, potentialRooms);
+				int placementState = dungeon.addNewRoomToExistingDungeon((ServerWorld) level, this.getBlockPos(), roomType, level.random, activatedDoorPos, doorFacing, activatedDoorType, potentialRooms);
 				if (placementState == 0)
 				{
 					// Consume the key!
 					keyStack.shrink(1);
-					LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
+					LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(level);
 //					LightningBoltEntity lightning = new LightningBoltEntity(world, pos.getX() + dispX, pos.getY(), pos.getZ() + dispZ);
-					lightningboltentity.setPosition(activatedDoorPos.getX(), activatedDoorPos.getY(), activatedDoorPos.getZ());
-					lightningboltentity.setEffectOnly(true);
-					world.addEntity(lightningboltentity);
+					lightningboltentity.setPos(activatedDoorPos.getX(), activatedDoorPos.getY(), activatedDoorPos.getZ());
+					lightningboltentity.setVisualOnly(true);
+					level.addFreshEntity(lightningboltentity);
 				}
 				return placementState;
 			}

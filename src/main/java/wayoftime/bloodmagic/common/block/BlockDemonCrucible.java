@@ -21,13 +21,15 @@ import wayoftime.bloodmagic.util.Utils;
 import wayoftime.bloodmagic.api.compat.IDemonWillGem;
 import wayoftime.bloodmagic.api.compat.IDiscreteDemonWill;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockDemonCrucible extends Block
 {
-	protected static final VoxelShape BODY = Block.makeCuboidShape(1, 0, 1, 15, 12, 15);
+	protected static final VoxelShape BODY = Block.box(1, 0, 1, 15, 12, 15);
 
 	public BlockDemonCrucible()
 	{
-		super(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1));
+		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1));
 	}
 
 	@Override
@@ -49,14 +51,14 @@ public class BlockDemonCrucible extends Block
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
 	{
-		TileDemonCrucible crucible = (TileDemonCrucible) world.getTileEntity(pos);
+		TileDemonCrucible crucible = (TileDemonCrucible) world.getBlockEntity(pos);
 
-		if (crucible == null || player.isSneaking())
+		if (crucible == null || player.isShiftKeyDown())
 			return ActionResultType.FAIL;
 
-		ItemStack playerItem = player.getHeldItem(hand);
+		ItemStack playerItem = player.getItemInHand(hand);
 
 		if (!playerItem.isEmpty())
 		{
@@ -69,33 +71,33 @@ public class BlockDemonCrucible extends Block
 
 		Utils.insertItemToTile(crucible, player);
 
-		world.notifyBlockUpdate(pos, state, state, 3);
+		world.sendBlockUpdated(pos, state, state, 3);
 		return ActionResultType.SUCCESS;
 	}
 
 	@Override
-	public void onPlayerDestroy(IWorld world, BlockPos blockPos, BlockState blockState)
+	public void destroy(IWorld world, BlockPos blockPos, BlockState blockState)
 	{
-		TileDemonCrucible altar = (TileDemonCrucible) world.getTileEntity(blockPos);
+		TileDemonCrucible altar = (TileDemonCrucible) world.getBlockEntity(blockPos);
 		if (altar != null)
 			altar.dropItems();
 
-		super.onPlayerDestroy(world, blockPos, blockState);
+		super.destroy(world, blockPos, blockState);
 	}
 
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{
-		if (!state.isIn(newState.getBlock()))
+		if (!state.is(newState.getBlock()))
 		{
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+			TileEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof TileDemonCrucible)
 			{
 				((TileDemonCrucible) tileentity).dropItems();
-				worldIn.updateComparatorOutputLevel(pos, this);
+				worldIn.updateNeighbourForOutputSignal(pos, this);
 			}
 
-			super.onReplaced(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
 }

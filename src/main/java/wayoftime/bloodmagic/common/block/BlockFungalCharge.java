@@ -5,6 +5,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 import wayoftime.bloodmagic.tile.TileFungalCharge;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockFungalCharge extends BlockShapedExplosive
 {
 	public BlockFungalCharge(int explosionSize, Properties properties)

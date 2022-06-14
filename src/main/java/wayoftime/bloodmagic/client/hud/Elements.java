@@ -56,9 +56,9 @@ public class Elements
 				// Crafting progress/Crafting requirement
 				information.accept(Pair.of(new Sprite(new ResourceLocation(BloodMagic.MODID, "textures/gui/widgets.png"), 32, 46, 16, 16), altar -> {
 					if (altar == null || !altar.isActive())
-						return I18n.format("hud.bloodmagic.inactive");
+						return I18n.get("hud.bloodmagic.inactive");
 					int progress = altar.getProgress();
-					int totalLiquidRequired = altar.getLiquidRequired() * altar.getStackInSlot(0).getCount();
+					int totalLiquidRequired = altar.getLiquidRequired() * altar.getItem(0).getCount();
 					return String.format("%d/%d", progress, totalLiquidRequired);
 				}));
 				// Consumption rate

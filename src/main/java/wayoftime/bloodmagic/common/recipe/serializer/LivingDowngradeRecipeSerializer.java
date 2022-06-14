@@ -25,24 +25,24 @@ public class LivingDowngradeRecipeSerializer<RECIPE extends RecipeLivingDowngrad
 
 	@Nonnull
 	@Override
-	public RECIPE read(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
+	public RECIPE fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
 	{
-		JsonElement input = JSONUtils.isJsonArray(json, Constants.JSON.INPUT)
-				? JSONUtils.getJsonArray(json, Constants.JSON.INPUT)
-				: JSONUtils.getJsonObject(json, Constants.JSON.INPUT);
+		JsonElement input = JSONUtils.isArrayNode(json, Constants.JSON.INPUT)
+				? JSONUtils.getAsJsonArray(json, Constants.JSON.INPUT)
+				: JSONUtils.getAsJsonObject(json, Constants.JSON.INPUT);
 
-		Ingredient inputIng = Ingredient.deserialize(input);
-		ResourceLocation rl = new ResourceLocation(JSONUtils.getString(json, Constants.JSON.RESOURCE));
+		Ingredient inputIng = Ingredient.fromJson(input);
+		ResourceLocation rl = new ResourceLocation(JSONUtils.getAsString(json, Constants.JSON.RESOURCE));
 
 		return this.factory.create(recipeId, inputIng, rl);
 	}
 
 	@Override
-	public RECIPE read(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
+	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
 	{
 		try
 		{
-			Ingredient input = Ingredient.read(buffer);
+			Ingredient input = Ingredient.fromNetwork(buffer);
 			ResourceLocation rl = buffer.readResourceLocation();
 
 //			ItemStack output = buffer.readItemStack();
@@ -60,7 +60,7 @@ public class LivingDowngradeRecipeSerializer<RECIPE extends RecipeLivingDowngrad
 	}
 
 	@Override
-	public void write(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
+	public void toNetwork(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
 	{
 		try
 		{

@@ -27,7 +27,7 @@ public class AlchemyArrayEffectSpike extends AlchemyArrayEffect
 	{
 		if (entity instanceof LivingEntity)
 		{
-			entity.attackEntityFrom(DamageSource.CACTUS, 2);
+			entity.hurt(DamageSource.CACTUS, 2);
 		}
 	}
 

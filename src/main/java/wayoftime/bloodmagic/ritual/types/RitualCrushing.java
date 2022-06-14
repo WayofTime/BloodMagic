@@ -58,7 +58,7 @@ public class RitualCrushing extends Ritual
 	private static final ItemStack mockPick = new ItemStack(Items.DIAMOND_PICKAXE, 1);
 	static
 	{
-		mockPick.addEnchantment(Enchantments.SILK_TOUCH, 1);
+		mockPick.enchant(Enchantments.SILK_TOUCH, 1);
 	}
 
 	public RitualCrushing()
@@ -75,7 +75,7 @@ public class RitualCrushing extends Ritual
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
 		World world = masterRitualStone.getWorldObj();
-		if (world.isRemote)
+		if (world.isClientSide)
 		{
 			return;
 		}
@@ -97,7 +97,7 @@ public class RitualCrushing extends Ritual
 			return;
 		}
 
-		TileEntity tile = world.getTileEntity(chestList.get(0));
+		TileEntity tile = world.getBlockEntity(chestList.get(0));
 
 		if (tile != null && Utils.getNumberOfFreeSlots(tile, Direction.DOWN) < 1)
 		{
@@ -128,7 +128,7 @@ public class RitualCrushing extends Ritual
 
 		for (BlockPos newPos : crushingRange.getContainedPositions(pos))
 		{
-			if (world.isAirBlock(newPos))
+			if (world.isEmptyBlock(newPos))
 			{
 				continue;
 			}
@@ -136,7 +136,7 @@ public class RitualCrushing extends Ritual
 			BlockState state = world.getBlockState(newPos);
 			Block block = state.getBlock();
 
-			if (block instanceof BlockMasterRitualStone || block instanceof IRitualStone || state.getBlockHardness(world, newPos) == -1.0F || Utils.isBlockLiquid(state))
+			if (block instanceof BlockMasterRitualStone || block instanceof IRitualStone || state.getDestroySpeed(world, newPos) == -1.0F || Utils.isBlockLiquid(state))
 			{
 				continue;
 			}
@@ -196,7 +196,7 @@ public class RitualCrushing extends Ritual
 			{
 				LootContext.Builder lootBuilder = new LootContext.Builder((ServerWorld) world);
 				Vector3d blockCenter = new Vector3d(newPos.getX() + 0.5, newPos.getY() + 0.5, newPos.getZ() + 0.5);
-				List<ItemStack> silkDrops = state.getDrops(lootBuilder.withParameter(LootParameters.field_237457_g_, blockCenter).withParameter(LootParameters.TOOL, mockPick));
+				List<ItemStack> silkDrops = state.getDrops(lootBuilder.withParameter(LootParameters.ORIGIN, blockCenter).withParameter(LootParameters.TOOL, mockPick));
 
 				for (ItemStack item : silkDrops)
 				{
@@ -233,11 +233,11 @@ public class RitualCrushing extends Ritual
 				}
 
 				ItemStack mockFortunePick = new ItemStack(Items.DIAMOND_PICKAXE, 1);
-				mockFortunePick.addEnchantment(Enchantments.FORTUNE, fortune);
+				mockFortunePick.enchant(Enchantments.BLOCK_FORTUNE, fortune);
 
 				LootContext.Builder lootBuilder = new LootContext.Builder((ServerWorld) world);
 				Vector3d blockCenter = new Vector3d(newPos.getX() + 0.5, newPos.getY() + 0.5, newPos.getZ() + 0.5);
-				List<ItemStack> stackList = state.getDrops(lootBuilder.withParameter(LootParameters.field_237457_g_, blockCenter).withParameter(LootParameters.TOOL, mockFortunePick));
+				List<ItemStack> stackList = state.getDrops(lootBuilder.withParameter(LootParameters.ORIGIN, blockCenter).withParameter(LootParameters.TOOL, mockFortunePick));
 //				List<ItemStack> stackList = Block.getDrops(state, world, newPos, world.getTileEntity(newPos));
 
 //				List<ItemStack> stackList = block.getDrops(world, newPos, state, fortune);

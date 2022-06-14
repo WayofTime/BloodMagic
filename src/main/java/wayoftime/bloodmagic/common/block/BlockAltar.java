@@ -22,14 +22,16 @@ import wayoftime.bloodmagic.api.compat.IAltarReader;
 import wayoftime.bloodmagic.tile.TileAltar;
 import wayoftime.bloodmagic.util.Utils;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockAltar extends Block
 {
-	protected static final VoxelShape BODY = Block.makeCuboidShape(0, 0, 0, 16, 12, 16);
+	protected static final VoxelShape BODY = Block.box(0, 0, 0, 16, 12, 16);
 	public boolean isRedstoneActive = false;
 
 	public BlockAltar()
 	{
-		super(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1));
+		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1));
 	}
 
 	@Override
@@ -51,17 +53,17 @@ public class BlockAltar extends Block
 	}
 
 	@Override
-	public boolean hasComparatorInputOverride(BlockState state)
+	public boolean hasAnalogOutputSignal(BlockState state)
 	{
 		return true;
 	}
 
 	@Override
-	public int getComparatorInputOverride(BlockState state, World world, BlockPos pos)
+	public int getAnalogOutputSignal(BlockState state, World world, BlockPos pos)
 	{
 		this.isRedstoneActive = false;
-		TileAltar altar = (TileAltar) world.getTileEntity(pos);
-		Block blockdown = world.getBlockState(pos.down()).getBlock();
+		TileAltar altar = (TileAltar) world.getBlockEntity(pos);
+		Block blockdown = world.getBlockState(pos.below()).getBlock();
 		int redstoneMode = 0;
 
 		if (blockdown instanceof BloodstoneBlock)
@@ -77,16 +79,16 @@ public class BlockAltar extends Block
 	}
 
 	@Override
-	public boolean canProvidePower(BlockState iBlockState)
+	public boolean isSignalSource(BlockState iBlockState)
 	{
 		return true;
 	}
 
 	@Override
-	public int getWeakPower(BlockState blockState, IBlockReader blockReader, BlockPos pos, Direction dir)
+	public int getSignal(BlockState blockState, IBlockReader blockReader, BlockPos pos, Direction dir)
 	{
 		boolean isOutputOn = false;
-		TileEntity tileentity = blockReader.getTileEntity(pos);
+		TileEntity tileentity = blockReader.getBlockEntity(pos);
 		if (tileentity instanceof TileAltar)
 		{
 			TileAltar altar = (TileAltar) tileentity;
@@ -98,24 +100,24 @@ public class BlockAltar extends Block
 	}
 
 	@Override
-	public int getStrongPower(BlockState blockState, IBlockReader blockReader, BlockPos pos, Direction dir)
+	public int getDirectSignal(BlockState blockState, IBlockReader blockReader, BlockPos pos, Direction dir)
 	{
 		return 0;
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
 	{
-		TileAltar altar = (TileAltar) world.getTileEntity(pos);
+		TileAltar altar = (TileAltar) world.getBlockEntity(pos);
 
-		if (altar == null || player.isSneaking())
+		if (altar == null || player.isShiftKeyDown())
 			return ActionResultType.FAIL;
 
-		ItemStack playerItem = player.getHeldItem(hand);
+		ItemStack playerItem = player.getItemInHand(hand);
 
 		if (playerItem.getItem() instanceof IAltarReader)// || playerItem.getItem() instanceof IAltarManipulator)
 		{
-			playerItem.getItem().onItemRightClick(world, player, hand);
+			playerItem.getItem().use(world, player, hand);
 			return ActionResultType.SUCCESS;
 		}
 
@@ -124,33 +126,33 @@ public class BlockAltar extends Block
 		else
 			altar.setActive();
 
-		world.notifyBlockUpdate(pos, state, state, 3);
+		world.sendBlockUpdated(pos, state, state, 3);
 		return ActionResultType.SUCCESS;
 	}
 
 	@Override
-	public void onPlayerDestroy(IWorld world, BlockPos blockPos, BlockState blockState)
+	public void destroy(IWorld world, BlockPos blockPos, BlockState blockState)
 	{
-		TileAltar altar = (TileAltar) world.getTileEntity(blockPos);
+		TileAltar altar = (TileAltar) world.getBlockEntity(blockPos);
 		if (altar != null)
 			altar.dropItems();
 
-		super.onPlayerDestroy(world, blockPos, blockState);
+		super.destroy(world, blockPos, blockState);
 	}
 
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{
-		if (!state.isIn(newState.getBlock()))
+		if (!state.is(newState.getBlock()))
 		{
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+			TileEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof TileAltar)
 			{
 				((TileAltar) tileentity).dropItems();
-				worldIn.updateComparatorOutputLevel(pos, this);
+				worldIn.updateNeighbourForOutputSignal(pos, this);
 			}
 
-			super.onReplaced(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
 }

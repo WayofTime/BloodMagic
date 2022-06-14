@@ -47,7 +47,7 @@ public class RitualGreenGrove extends Ritual
 	public static double steadfastWillDrain = 0.05;
 	public static int defaultRefreshTime = 20;
 	public static double defaultGrowthChance = 0.3;
-	public static BlockState farmlandState = Blocks.FARMLAND.getDefaultState().with(FarmlandBlock.MOISTURE, 7);
+	public static BlockState farmlandState = Blocks.FARMLAND.defaultBlockState().setValue(FarmlandBlock.MOISTURE, 7);
 	public int refreshTime = 20;
 
 	public RitualGreenGrove()
@@ -117,13 +117,13 @@ public class RitualGreenGrove extends Ritual
 				boolean flag = state.getBlock() instanceof IGrowable || state.getBlock() instanceof CactusBlock || state.getBlock() instanceof SugarCaneBlock;
 				if (flag)
 				{
-					if (world.rand.nextDouble() < growthChance)
+					if (world.random.nextDouble() < growthChance)
 					{
 						state.getBlock().randomTick(state, serverWorld, newPos, new Random());
 						BlockState newState = world.getBlockState(newPos);
 						if (!newState.equals(state))
 						{
-							world.playEvent(2005, newPos, 0);
+							world.levelEvent(2005, newPos, 0);
 							totalGrowths++;
 							if (consumeRawWill)
 							{
@@ -179,14 +179,14 @@ public class RitualGreenGrove extends Ritual
 				boolean hydratedBlock = false;
 				if (block == Blocks.DIRT || block == Blocks.GRASS)
 				{
-					world.setBlockState(newPos, farmlandState);
+					world.setBlockAndUpdate(newPos, farmlandState);
 					hydratedBlock = true;
 				} else if (block == Blocks.FARMLAND)
 				{
-					int meta = state.get(FarmlandBlock.MOISTURE);
+					int meta = state.getValue(FarmlandBlock.MOISTURE);
 					if (meta < 7)
 					{
-						world.setBlockState(newPos, farmlandState);
+						world.setBlockAndUpdate(newPos, farmlandState);
 						hydratedBlock = true;
 					}
 				}
@@ -209,7 +209,7 @@ public class RitualGreenGrove extends Ritual
 		{
 			AreaDescriptor leechRange = masterRitualStone.getBlockRange(LEECH_RANGE);
 			AxisAlignedBB mobArea = leechRange.getAABB(pos);
-			List<LivingEntity> entityList = world.getEntitiesWithinAABB(LivingEntity.class, mobArea);
+			List<LivingEntity> entityList = world.getEntitiesOfClass(LivingEntity.class, mobArea);
 			for (LivingEntity entityLiving : entityList)
 			{
 				if (corrosiveWill < corrosiveWillDrain)
@@ -222,12 +222,12 @@ public class RitualGreenGrove extends Ritual
 					continue;
 				}
 
-				if (entityLiving.isPotionActive(BloodMagicPotions.PLANT_LEECH) || !entityLiving.isPotionApplicable(new EffectInstance(BloodMagicPotions.PLANT_LEECH)))
+				if (entityLiving.hasEffect(BloodMagicPotions.PLANT_LEECH) || !entityLiving.canBeAffected(new EffectInstance(BloodMagicPotions.PLANT_LEECH)))
 				{
 					continue;
 				}
 
-				entityLiving.addPotionEffect(new EffectInstance(BloodMagicPotions.PLANT_LEECH, 200, 0));
+				entityLiving.addEffect(new EffectInstance(BloodMagicPotions.PLANT_LEECH, 200, 0));
 
 				corrosiveWill -= corrosiveWillDrain;
 				corrosiveDrain += corrosiveWillDrain;

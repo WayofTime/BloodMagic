@@ -61,7 +61,7 @@ public class AnointmentRegistrar
 	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_FORTUNE = ANOINTMENTS.register("fortune", () -> new Anointment(BloodMagic.rl("fortune")).setConsumeOnHarvest().addIncompatibility(BloodMagic.rl("silk_touch")));
 
 	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_HOLY_WATER = ANOINTMENTS.register("holy_water", () -> parseDefinition("holy_water").withDamageProvider((player, weapon, damage, holder, attacked, anoint, level) -> {
-		if (attacked.isEntityUndead())
+		if (attacked.isInvertedHealAndHarm())
 			return anoint.getBonusValue("damage", level).doubleValue();
 		else
 			return 0;

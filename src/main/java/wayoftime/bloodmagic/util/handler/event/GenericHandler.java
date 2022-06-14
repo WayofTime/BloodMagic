@@ -88,25 +88,25 @@ public class GenericHandler
 	{
 		LivingEntity eventEntityLiving = event.getEntityLiving();
 
-		if (eventEntityLiving.isPotionActive(BloodMagicPotions.HEAVY_HEART))
+		if (eventEntityLiving.hasEffect(BloodMagicPotions.HEAVY_HEART))
 		{
-			int i = eventEntityLiving.getActivePotionEffect(BloodMagicPotions.HEAVY_HEART).getAmplifier() + 1;
+			int i = eventEntityLiving.getEffect(BloodMagicPotions.HEAVY_HEART).getAmplifier() + 1;
 			event.setDamageMultiplier(event.getDamageMultiplier() + i);
 			event.setDistance(event.getDistance() + i);
 		}
 
-		if (eventEntityLiving.isPotionActive(BloodMagicPotions.BOUNCE))
+		if (eventEntityLiving.hasEffect(BloodMagicPotions.BOUNCE))
 		{
 			if (eventEntityLiving instanceof PlayerEntity)
 			{
 				PlayerEntity player = (PlayerEntity) eventEntityLiving;
 				event.setDamageMultiplier(0);
-				if (!player.isSneaking() && event.getDistance() > 1.5)
+				if (!player.isShiftKeyDown() && event.getDistance() > 1.5)
 				{
-					if (player.world.isRemote)
+					if (player.level.isClientSide)
 					{
-						player.setMotion(player.getMotion().mul(1, -1, 1));
-						bounceMap.put(player.getUniqueID(), player.getMotion().getY());
+						player.setDeltaMovement(player.getDeltaMovement().multiply(1, -1, 1));
+						bounceMap.put(player.getUUID(), player.getDeltaMovement().y());
 					} else
 					{
 						event.setCanceled(true);
@@ -119,10 +119,10 @@ public class GenericHandler
 	@SubscribeEvent
 	public void playerTickPost(TickEvent.PlayerTickEvent event)
 	{
-		if (event.phase == TickEvent.Phase.END && bounceMap.containsKey(event.player.getUniqueID()))
+		if (event.phase == TickEvent.Phase.END && bounceMap.containsKey(event.player.getUUID()))
 		{
-			double motionY = bounceMap.remove(event.player.getUniqueID());
-			event.player.setMotion(event.player.getMotion().mul(1, 0, 1).add(0, motionY, 0));
+			double motionY = bounceMap.remove(event.player.getUUID());
+			event.player.setDeltaMovement(event.player.getDeltaMovement().multiply(1, 0, 1).add(0, motionY, 0));
 		}
 	}
 
@@ -130,7 +130,7 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onInteract(PlayerInteractEvent.RightClickItem event)
 	{
-		if (event.getWorld().isRemote)
+		if (event.getWorld().isClientSide)
 			return;
 
 		PlayerEntity player = event.getPlayer();
@@ -181,7 +181,7 @@ public class GenericHandler
 	{
 		if (event.getItemStack().getItem() instanceof ItemRitualDiviner)
 		{
-			BloodMagicPacketHandler.INSTANCE.sendToServer(new CycleRitualDivinerPacket(event.getPlayer().inventory.currentItem));
+			BloodMagicPacketHandler.INSTANCE.sendToServer(new CycleRitualDivinerPacket(event.getPlayer().inventory.selected));
 		}
 	}
 
@@ -190,7 +190,7 @@ public class GenericHandler
 	// calculations.
 	public void onLivingHurt(LivingHurtEvent event)
 	{
-		Entity sourceEntity = event.getSource().getTrueSource();
+		Entity sourceEntity = event.getSource().getEntity();
 		LivingEntity living = event.getEntityLiving();
 
 		if (sourceEntity instanceof PlayerEntity)
@@ -198,12 +198,12 @@ public class GenericHandler
 			PlayerEntity sourcePlayer = (PlayerEntity) sourceEntity;
 			if (LivingUtil.hasFullSet(sourcePlayer))
 			{
-				ItemStack mainWeapon = sourcePlayer.getActiveItemStack();
+				ItemStack mainWeapon = sourcePlayer.getUseItem();
 				double additionalDamage = LivingUtil.getAdditionalDamage(sourcePlayer, mainWeapon, living, event.getAmount());
 				event.setAmount((float) (event.getAmount() + additionalDamage));
 			}
 
-			ItemStack heldStack = sourcePlayer.getHeldItemMainhand();
+			ItemStack heldStack = sourcePlayer.getMainHandItem();
 			AnointmentHolder holder = AnointmentHolder.fromItemStack(heldStack);
 
 			if (holder != null)
@@ -241,9 +241,9 @@ public class GenericHandler
 			}
 		}
 
-		if (!event.getSource().isMagicDamage() && living.isPotionActive(BloodMagicPotions.OBSIDIAN_CLOAK))
+		if (!event.getSource().isMagic() && living.hasEffect(BloodMagicPotions.OBSIDIAN_CLOAK))
 		{
-			float modifier = (float) (1 - 0.2 * (1 + living.getActivePotionEffect(BloodMagicPotions.OBSIDIAN_CLOAK).getAmplifier()));
+			float modifier = (float) (1 - 0.2 * (1 + living.getEffect(BloodMagicPotions.OBSIDIAN_CLOAK).getAmplifier()));
 			event.setAmount((float) (event.getAmount() * Math.max(0, modifier)));
 		}
 	}
@@ -270,7 +270,7 @@ public class GenericHandler
 				}
 			}
 
-			if (event.getItemStack().getUseAction() == UseAction.DRINK)
+			if (event.getItemStack().getUseAnimation() == UseAction.DRINK)
 			{
 				ItemStack drinkStack = event.getItemStack();
 				if (!(drinkStack.getItem() instanceof SplashPotionItem))
@@ -290,7 +290,7 @@ public class GenericHandler
 	// Damage that the player should receive after armour/absorption hearts.
 	public void onLivingDamage(LivingDamageEvent event)
 	{
-		Entity sourceEntity = event.getSource().getTrueSource();
+		Entity sourceEntity = event.getSource().getEntity();
 		LivingEntity living = event.getEntityLiving();
 
 		if (sourceEntity instanceof PlayerEntity)
@@ -299,7 +299,7 @@ public class GenericHandler
 			if (LivingUtil.hasFullSet(sourcePlayer))
 			{
 				LivingStats stats = LivingStats.fromPlayer(sourcePlayer, true);
-				ItemStack chestStack = sourcePlayer.getItemStackFromSlot(EquipmentSlotType.CHEST);
+				ItemStack chestStack = sourcePlayer.getItemBySlot(EquipmentSlotType.CHEST);
 
 				if (sourcePlayer.isSprinting())
 				{
@@ -320,7 +320,7 @@ public class GenericHandler
 				}
 			}
 
-			ItemStack heldStack = sourcePlayer.getHeldItemMainhand();
+			ItemStack heldStack = sourcePlayer.getMainHandItem();
 			AnointmentHolder holder = AnointmentHolder.fromItemStack(heldStack);
 //			AnointmentHolder holder = AnointmentHolder.fromPlayer(sourcePlayer, Hand.MAIN_HAND);
 
@@ -367,13 +367,13 @@ public class GenericHandler
 				double expModifier = 1 + LivingArmorRegistrar.UPGRADE_EXPERIENCE.get().getBonusValue("exp", stats.getLevel(LivingArmorRegistrar.UPGRADE_EXPERIENCE.get().getKey())).doubleValue();
 //				System.out.println("Experience modifier: " + expModifier);
 
-				int xp = event.getOrb().xpValue;
+				int xp = event.getOrb().value;
 
-				event.getOrb().xpValue = ((int) Math.floor(xp * expModifier) + (player.world.rand.nextDouble() < (xp * expModifier) % 1
+				event.getOrb().value = ((int) Math.floor(xp * expModifier) + (player.level.random.nextDouble() < (xp * expModifier) % 1
 						? 1
 						: 0));
 
-				LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_EXPERIENCE.get(), event.getOrb().getXpValue());
+				LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_EXPERIENCE.get(), event.getOrb().getValue());
 			}
 		}
 	}
@@ -383,7 +383,7 @@ public class GenericHandler
 	{
 		if (event.getToolType() == ToolType.HOE && Tags.Blocks.NETHERRACK.contains(event.getState().getBlock()))
 		{
-			event.setFinalState(BloodMagicBlocks.NETHER_SOIL.get().getDefaultState());
+			event.setFinalState(BloodMagicBlocks.NETHER_SOIL.get().defaultBlockState());
 		}
 	}
 
@@ -392,27 +392,27 @@ public class GenericHandler
 	public void onExperiencePickup(PlayerXpEvent.PickupXp event)
 	{
 		PlayerEntity player = event.getPlayer();
-		Entry<EquipmentSlotType, ItemStack> entry = EnchantmentHelper.getRandomItemWithEnchantment(Enchantments.MENDING, player);
+		Entry<EquipmentSlotType, ItemStack> entry = EnchantmentHelper.getRandomItemWith(Enchantments.MENDING, player);
 
 		if (entry != null)
 		{
 			ItemStack itemStack = entry.getValue();
 			if (!itemStack.isEmpty() && itemStack.isDamaged())
 			{
-				int i = Math.min(xpToDurability(event.getOrb().xpValue), itemStack.getDamage());
-				event.getOrb().xpValue -= durabilityToXp(i);
-				itemStack.setDamage(itemStack.getDamage() - i);
+				int i = Math.min(xpToDurability(event.getOrb().value), itemStack.getDamageValue());
+				event.getOrb().value -= durabilityToXp(i);
+				itemStack.setDamageValue(itemStack.getDamageValue() - i);
 			}
 		}
 
-		if (!player.getEntityWorld().isRemote)
+		if (!player.getCommandSenderWorld().isClientSide)
 		{
 			for (ItemStack stack : InventoryHelper.getAllInventories(player))
 			{
 				if (stack.getItem() instanceof ItemExperienceBook)
 				{
-					ItemExperienceBook.addExperience(stack, event.getOrb().xpValue);
-					event.getOrb().xpValue = 0;
+					ItemExperienceBook.addExperience(stack, event.getOrb().value);
+					event.getOrb().value = 0;
 					break;
 				}
 			}
@@ -433,8 +433,8 @@ public class GenericHandler
 	{
 		if (player instanceof ServerPlayerEntity)
 		{
-			BlockPos pos = player.getPosition();
-			DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(WorldDemonWillHandler.getDimensionResourceLocation(player.world), pos.getX() >> 4, pos.getZ() >> 4);
+			BlockPos pos = player.blockPosition();
+			DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(WorldDemonWillHandler.getDimensionResourceLocation(player.level), pos.getX() >> 4, pos.getZ() >> 4);
 			if (holder != null)
 			{
 				BloodMagic.packetHandler.sendTo(new DemonAuraClientPacket(holder), (ServerPlayerEntity) player);
@@ -485,18 +485,18 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onPotionAdded(PotionEvent.PotionAddedEvent event)
 	{
-		if (event.getPotionEffect().getPotion() == BloodMagicPotions.FLIGHT && event.getEntityLiving() instanceof PlayerEntity)
+		if (event.getPotionEffect().getEffect() == BloodMagicPotions.FLIGHT && event.getEntityLiving() instanceof PlayerEntity)
 		{
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-			player.abilities.allowFlying = true;
-			if (!prevFlySpeedMap.containsKey(player.getUniqueID()))
+			player.abilities.mayfly = true;
+			if (!prevFlySpeedMap.containsKey(player.getUUID()))
 			{
-				prevFlySpeedMap.put(player.getUniqueID(), player.abilities.getFlySpeed());
+				prevFlySpeedMap.put(player.getUUID(), player.abilities.getFlyingSpeed());
 			}
 
-			if (event.getEntity().world.isRemote)
-				player.abilities.setFlySpeed(getFlySpeedForFlightLevel(event.getPotionEffect().getAmplifier()));
-			player.sendPlayerAbilities();
+			if (event.getEntity().level.isClientSide)
+				player.abilities.setFlyingSpeed(getFlySpeedForFlightLevel(event.getPotionEffect().getAmplifier()));
+			player.onUpdateAbilities();
 		}
 
 	}
@@ -504,18 +504,18 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onPotionExpired(PotionEvent.PotionExpiryEvent event)
 	{
-		if (event.getPotionEffect().getPotion() == BloodMagicPotions.FLIGHT && event.getEntityLiving() instanceof PlayerEntity)
+		if (event.getPotionEffect().getEffect() == BloodMagicPotions.FLIGHT && event.getEntityLiving() instanceof PlayerEntity)
 		{
-			((PlayerEntity) event.getEntityLiving()).abilities.allowFlying = ((PlayerEntity) event.getEntityLiving()).isCreative();
-			((PlayerEntity) event.getEntityLiving()).abilities.isFlying = false;
+			((PlayerEntity) event.getEntityLiving()).abilities.mayfly = ((PlayerEntity) event.getEntityLiving()).isCreative();
+			((PlayerEntity) event.getEntityLiving()).abilities.flying = false;
 
-			if (event.getEntity().world.isRemote)
+			if (event.getEntity().level.isClientSide)
 			{
-				((PlayerEntity) event.getEntityLiving()).abilities.setFlySpeed(prevFlySpeedMap.getOrDefault((((PlayerEntity) event.getEntityLiving()).getUniqueID()), getFlySpeedForFlightLevel(-1)));
-				prevFlySpeedMap.remove(((PlayerEntity) event.getEntityLiving()).getUniqueID());
+				((PlayerEntity) event.getEntityLiving()).abilities.setFlyingSpeed(prevFlySpeedMap.getOrDefault((((PlayerEntity) event.getEntityLiving()).getUUID()), getFlySpeedForFlightLevel(-1)));
+				prevFlySpeedMap.remove(((PlayerEntity) event.getEntityLiving()).getUUID());
 			}
 
-			((PlayerEntity) event.getEntityLiving()).sendPlayerAbilities();
+			((PlayerEntity) event.getEntityLiving()).onUpdateAbilities();
 		}
 	}
 
@@ -534,7 +534,7 @@ public class GenericHandler
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
 	{
-		if (event.getEntity().world.isRemote)
+		if (event.getEntity().level.isClientSide)
 		{
 			if (event.getEntityLiving() instanceof PlayerEntity)
 			{
@@ -542,11 +542,11 @@ public class GenericHandler
 				if (LivingUtil.hasFullSet(player))
 				{
 					LivingStats stats = LivingStats.fromPlayer(player, true);
-					if (!player.isOnGround() && player.getMotion().getY() < 0)
+					if (!player.isOnGround() && player.getDeltaMovement().y() < 0)
 					{
 						int jumpLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_JUMP.get().getKey());
 						double fallDistanceMultiplier = LivingArmorRegistrar.UPGRADE_JUMP.get().getBonusValue("fall", jumpLevel).doubleValue();
-						player.fallDistance = (float) Math.max(0, player.fallDistance + fallDistanceMultiplier * player.getMotion().getY());
+						player.fallDistance = (float) Math.max(0, player.fallDistance + fallDistanceMultiplier * player.getDeltaMovement().y());
 //				System.out.println("Player's motion: " + player.getMotion().getY() + ", Player's fall reduction multiplier: " + fallDistanceMultiplier + ", Player's final fall distance: " + player.fallDistance);
 					}
 				}
@@ -556,16 +556,16 @@ public class GenericHandler
 		if (event.getEntityLiving() instanceof PlayerEntity)
 		{
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-			if (player.isPotionActive(BloodMagicPotions.FLIGHT))
+			if (player.hasEffect(BloodMagicPotions.FLIGHT))
 			{
 				player.fallDistance = 0;
-				if (!player.abilities.allowFlying || !prevFlySpeedMap.containsKey(player.getUniqueID()))
+				if (!player.abilities.mayfly || !prevFlySpeedMap.containsKey(player.getUUID()))
 				{
-					prevFlySpeedMap.put(player.getUniqueID(), player.abilities.getFlySpeed());
-					player.abilities.allowFlying = true;
-					if (player.world.isRemote)
-						player.abilities.setFlySpeed(getFlySpeedForFlightLevel(player.getActivePotionEffect(BloodMagicPotions.FLIGHT).getAmplifier()));
-					player.sendPlayerAbilities();
+					prevFlySpeedMap.put(player.getUUID(), player.abilities.getFlyingSpeed());
+					player.abilities.mayfly = true;
+					if (player.level.isClientSide)
+						player.abilities.setFlyingSpeed(getFlySpeedForFlightLevel(player.getEffect(BloodMagicPotions.FLIGHT).getAmplifier()));
+					player.onUpdateAbilities();
 				}
 			}
 
@@ -576,7 +576,7 @@ public class GenericHandler
 			if (LivingUtil.hasFullSet(player))
 			{
 				LivingStats stats = LivingStats.fromPlayer(player, true);
-				ItemStack chestStack = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
+				ItemStack chestStack = player.getItemBySlot(EquipmentSlotType.CHEST);
 //				percentIncrease += LivingArmorRegistrar.UPGRADE_SPEED.get().getBonusValue("speed_modifier", stats.getLevel(LivingArmorRegistrar.UPGRADE_SPEED.get().getKey())).doubleValue();
 				if (player.isSprinting())
 				{
@@ -584,25 +584,25 @@ public class GenericHandler
 					if (speedTime > 0)
 					{
 						int speedLevel = LivingArmorRegistrar.UPGRADE_SPEED.get().getBonusValue("speed_level", stats.getLevel(LivingArmorRegistrar.UPGRADE_SPEED.get().getKey())).intValue();
-						player.addPotionEffect(new EffectInstance(Effects.SPEED, speedTime, speedLevel, true, false));
+						player.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, speedTime, speedLevel, true, false));
 					}
 				}
 
 				double distance = 0;
 
-				if (posXMap.containsKey(player.getUniqueID()))
+				if (posXMap.containsKey(player.getUUID()))
 				{
-					distance = Math.sqrt((player.getPosX() - posXMap.get(player.getUniqueID())) * (player.getPosX() - posXMap.get(player.getUniqueID())) + (player.getPosZ() - posZMap.get(player.getUniqueID())) * (player.getPosZ() - posZMap.get(player.getUniqueID())));
+					distance = Math.sqrt((player.getX() - posXMap.get(player.getUUID())) * (player.getX() - posXMap.get(player.getUUID())) + (player.getZ() - posZMap.get(player.getUUID())) * (player.getZ() - posZMap.get(player.getUUID())));
 				}
 
-				int currentFood = player.getFoodStats().getFoodLevel();
+				int currentFood = player.getFoodData().getFoodLevel();
 
-				if (foodMap.getOrDefault(player.getUniqueID(), 19) < currentFood)
+				if (foodMap.getOrDefault(player.getUUID(), 19) < currentFood)
 				{
-					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_KNOCKBACK_RESIST.get(), currentFood - foodMap.getOrDefault(player.getUniqueID(), 19));
+					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_KNOCKBACK_RESIST.get(), currentFood - foodMap.getOrDefault(player.getUUID(), 19));
 				}
 
-				foodMap.put(player.getUniqueID(), currentFood);
+				foodMap.put(player.getUUID(), currentFood);
 
 //				System.out.println("Distance travelled: " + distance);
 				if (player.isOnGround() && distance > 0 && distance < 50)
@@ -611,12 +611,12 @@ public class GenericHandler
 					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_SPEED.get(), distance);
 				}
 
-				if (!player.isOnGround() && player.getMotion().getY() < 0)
+				if (!player.isOnGround() && player.getDeltaMovement().y() < 0)
 				{
 
 					int jumpLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_JUMP.get().getKey());
 					double fallDistanceMultiplier = LivingArmorRegistrar.UPGRADE_JUMP.get().getBonusValue("fall", jumpLevel).doubleValue();
-					player.fallDistance = (float) Math.max(0, player.fallDistance + fallDistanceMultiplier * player.getMotion().getY());
+					player.fallDistance = (float) Math.max(0, player.fallDistance + fallDistanceMultiplier * player.getDeltaMovement().y());
 //					System.out.println("Player's motion: " + player.getMotion().getY() + ", Player's fall reduction multiplier: " + fallDistanceMultiplier + ", Player's final fall distance: " + player.fallDistance);
 				}
 
@@ -637,7 +637,7 @@ public class GenericHandler
 					}
 				}
 
-				if (player.getFireTimer() > 0)
+				if (player.getRemainingFireTicks() > 0)
 				{
 					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_FIRE_RESIST.get(), 1);
 					if (fireLevel > 0)
@@ -645,10 +645,10 @@ public class GenericHandler
 						boolean hasChanged = false;
 						int fireCooldown = chestStack.getTag().getInt("fire_cooldown");
 
-						if (player.getFireTimer() > 0 && fireCooldown <= 0)
+						if (player.getRemainingFireTicks() > 0 && fireCooldown <= 0)
 						{
 							fireCooldown = LivingArmorRegistrar.UPGRADE_FIRE_RESIST.get().getBonusValue("cooldown_time", fireLevel).intValue();
-							player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, LivingArmorRegistrar.UPGRADE_FIRE_RESIST.get().getBonusValue("resist_duration", fireLevel).intValue(), 0, true, false));
+							player.addEffect(new EffectInstance(Effects.FIRE_RESISTANCE, LivingArmorRegistrar.UPGRADE_FIRE_RESIST.get().getBonusValue("resist_duration", fireLevel).intValue(), 0, true, false));
 							hasChanged = true;
 						}
 
@@ -660,7 +660,7 @@ public class GenericHandler
 				}
 
 				int poisonLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_POISON_RESIST.get().getKey());
-				if (player.isPotionActive(Effects.POISON))
+				if (player.hasEffect(Effects.POISON))
 				{
 					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_POISON_RESIST.get(), 1);
 				}
@@ -674,10 +674,10 @@ public class GenericHandler
 						hasChanged = true;
 					}
 
-					if (player.isPotionActive(Effects.POISON) && poisonCooldown <= 0 && LivingArmorRegistrar.UPGRADE_POISON_RESIST.get().getBonusValue("max_cure", poisonLevel).intValue() >= player.getActivePotionEffect(Effects.POISON).getAmplifier())
+					if (player.hasEffect(Effects.POISON) && poisonCooldown <= 0 && LivingArmorRegistrar.UPGRADE_POISON_RESIST.get().getBonusValue("max_cure", poisonLevel).intValue() >= player.getEffect(Effects.POISON).getAmplifier())
 					{
 						poisonCooldown = LivingArmorRegistrar.UPGRADE_POISON_RESIST.get().getBonusValue("cooldown", poisonLevel).intValue();
-						player.removePotionEffect(Effects.POISON);
+						player.removeEffect(Effects.POISON);
 						hasChanged = true;
 					}
 
@@ -702,7 +702,7 @@ public class GenericHandler
 					{
 						battleCooldown = 20;
 						float exhaustionAdded = LivingArmorRegistrar.DOWNGRADE_BATTLE_HUNGRY.get().getBonusValue("exhaustion", battleHungryLevel).floatValue();
-						player.addExhaustion(exhaustionAdded);
+						player.causeFoodExhaustion(exhaustionAdded);
 						hasChanged = true;
 					}
 
@@ -713,7 +713,7 @@ public class GenericHandler
 				}
 
 				int pastArmourDamage = chestStack.getTag().getInt("past_damage");
-				int currentArmourDamage = chestStack.getDamage();
+				int currentArmourDamage = chestStack.getDamageValue();
 				if (pastArmourDamage > currentArmourDamage)
 				{
 //					System.out.println("Past damage: " + pastArmourDamage + ", current damage: " + currentArmourDamage);
@@ -725,7 +725,7 @@ public class GenericHandler
 					chestStack.getTag().putInt("past_damage", currentArmourDamage);
 				}
 
-				if (!player.world.isRemote)
+				if (!player.level.isClientSide)
 				{
 					int repairingLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_REPAIR.get().getKey());
 					if (repairingLevel > 0)
@@ -743,17 +743,17 @@ public class GenericHandler
 
 							repairCooldown = LivingArmorRegistrar.UPGRADE_REPAIR.get().getBonusValue("interval", repairingLevel).intValue();
 							hasChanged = true;
-							EquipmentSlotType randomSlot = EquipmentSlotType.values()[2 + player.world.rand.nextInt(4)];
-							ItemStack repairStack = player.getItemStackFromSlot(randomSlot);
+							EquipmentSlotType randomSlot = EquipmentSlotType.values()[2 + player.level.random.nextInt(4)];
+							ItemStack repairStack = player.getItemBySlot(randomSlot);
 							if (!repairStack.isEmpty())
 							{
-								if (repairStack.isDamageable() && repairStack.isDamaged())
+								if (repairStack.isDamageableItem() && repairStack.isDamaged())
 								{
 									int maxDurabilityRepaired = LivingArmorRegistrar.UPGRADE_REPAIR.get().getBonusValue("max", repairingLevel).intValue();
-									int toRepair = Math.min(maxDurabilityRepaired, repairStack.getDamage());
+									int toRepair = Math.min(maxDurabilityRepaired, repairStack.getDamageValue());
 									if (toRepair > 0)
 									{
-										repairStack.setDamage(repairStack.getDamage() - toRepair);
+										repairStack.setDamageValue(repairStack.getDamageValue() - toRepair);
 									}
 								}
 							}
@@ -772,8 +772,8 @@ public class GenericHandler
 //				player.travel(new Vector3d(player.moveStrafing * percentIncrease, 0, player.moveForward * percentIncrease));
 //			}
 
-			posXMap.put(player.getUniqueID(), player.getPosX());
-			posZMap.put(player.getUniqueID(), player.getPosZ());
+			posXMap.put(player.getUUID(), player.getX());
+			posZMap.put(player.getUUID(), player.getZ());
 		}
 	}
 
@@ -806,18 +806,18 @@ public class GenericHandler
 				int mineTime = LivingArmorRegistrar.UPGRADE_DIGGING.get().getBonusValue("speed_time", stats.getLevel(LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())).intValue();
 				if (mineTime > 0)
 				{
-					player.addPotionEffect(new EffectInstance(Effects.HASTE, mineTime, LivingArmorRegistrar.UPGRADE_DIGGING.get().getBonusValue("speed_level", stats.getLevel(LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())).intValue(), true, false));
+					player.addEffect(new EffectInstance(Effects.DIG_SPEED, mineTime, LivingArmorRegistrar.UPGRADE_DIGGING.get().getBonusValue("speed_level", stats.getLevel(LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())).intValue(), true, false));
 				}
 			}
 
-			ItemStack heldStack = player.getHeldItemMainhand();
+			ItemStack heldStack = player.getMainHandItem();
 			AnointmentHolder holder = AnointmentHolder.fromItemStack(heldStack);
 
 			if (holder != null)
 			{
 				if (holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get()) >= 1)
 				{
-					int bonusLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand());
+					int bonusLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player.getMainHandItem());
 					int exp = event.getState().getExpDrop(event.getWorld(), event.getPos(), bonusLevel, holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get()));
 					event.setExpToDrop(exp);
 				}
@@ -839,11 +839,11 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onJump(LivingJumpEvent event)
 	{
-		if (event.getEntityLiving().isPotionActive(BloodMagicPotions.GROUNDED))
+		if (event.getEntityLiving().hasEffect(BloodMagicPotions.GROUNDED))
 		{
-			Vector3d motion = event.getEntityLiving().getMotion();
-			motion = motion.mul(1, 0, 1);
-			event.getEntityLiving().setMotion(motion);
+			Vector3d motion = event.getEntityLiving().getDeltaMovement();
+			motion = motion.multiply(1, 0, 1);
+			event.getEntityLiving().setDeltaMovement(motion);
 			return;
 		}
 
@@ -854,11 +854,11 @@ public class GenericHandler
 			if (LivingUtil.hasFullSet(player))
 			{
 				LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_JUMP.get(), 1);
-				if (!player.isSneaking())
+				if (!player.isShiftKeyDown())
 				{
 					LivingStats stats = LivingStats.fromPlayer(player);
 					double jumpModifier = LivingArmorRegistrar.UPGRADE_JUMP.get().getBonusValue("jump", stats.getLevel(LivingArmorRegistrar.UPGRADE_JUMP.get().getKey())).doubleValue();
-					player.setMotion(player.getMotion().add(0, jumpModifier, 0));
+					player.setDeltaMovement(player.getDeltaMovement().add(0, jumpModifier, 0));
 				}
 			}
 		}
@@ -923,9 +923,9 @@ public class GenericHandler
 		Entity owner = null;
 		Entity entity = event.getEntity();
 		if (entity instanceof ArrowEntity)
-			owner = ((ArrowEntity) event.getEntity()).func_234616_v_();
+			owner = ((ArrowEntity) event.getEntity()).getOwner();
 		else if (entity instanceof ThrowableEntity)
-			owner = ((ThrowableEntity) entity).func_234616_v_();
+			owner = ((ThrowableEntity) entity).getOwner();
 
 		if (owner instanceof PlayerEntity)
 		{
@@ -940,30 +940,30 @@ public class GenericHandler
 
 				if (arrowJiggle > 0)
 				{
-					Vector3d motion = projectile.getMotion();
+					Vector3d motion = projectile.getDeltaMovement();
 					float velocityModifier = (float) (arrowJiggle * Math.sqrt(motion.x * motion.x + motion.y * motion.y + motion.z * motion.z));
 
-					Vector3d newMotion = motion.add(2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier, 2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier, 2 * (event.getWorld().rand.nextDouble() - 0.5) * velocityModifier);
+					Vector3d newMotion = motion.add(2 * (event.getWorld().random.nextDouble() - 0.5) * velocityModifier, 2 * (event.getWorld().random.nextDouble() - 0.5) * velocityModifier, 2 * (event.getWorld().random.nextDouble() - 0.5) * velocityModifier);
 
-					projectile.setMotion(newMotion);
+					projectile.setDeltaMovement(newMotion);
 				}
 			}
 		}
 
 		if (entity instanceof ArrowEntity)
 		{
-			if (entity.ticksExisted <= 0)
+			if (entity.tickCount <= 0)
 			{
 //				System.out.println("An arrow joined the world! Looking for the shooter...");
 				ArrowEntity arrowEntity = (ArrowEntity) entity;
-				Entity shooter = arrowEntity.func_234616_v_();
+				Entity shooter = arrowEntity.getOwner();
 				if (shooter instanceof PlayerEntity)
 				{
 					PlayerEntity playerShooter = (PlayerEntity) shooter;
 
 					for (Hand hand : Hand.values())
 					{
-						ItemStack heldStack = playerShooter.getHeldItem(hand);
+						ItemStack heldStack = playerShooter.getItemInHand(hand);
 						AnointmentHolder holder = AnointmentHolder.fromItemStack(heldStack);
 						if (holder == null)
 						{
@@ -973,7 +973,7 @@ public class GenericHandler
 						int powerLevel = holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_BOW_POWER.get());
 						if (powerLevel > 0)
 						{
-							arrowEntity.setDamage(arrowEntity.getDamage() * AnointmentRegistrar.ANOINTMENT_BOW_POWER.get().getBonusValue("damage", powerLevel).doubleValue());
+							arrowEntity.setBaseDamage(arrowEntity.getBaseDamage() * AnointmentRegistrar.ANOINTMENT_BOW_POWER.get().getBonusValue("damage", powerLevel).doubleValue());
 
 //							System.out.println("Arrow damage is now: " + arrowEntity.getDamage());
 						}
@@ -981,12 +981,12 @@ public class GenericHandler
 						int velocityLevel = holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_BOW_VELOCITY.get());
 						if (velocityLevel > 0)
 						{
-							Vector3d motion = arrowEntity.getMotion();
+							Vector3d motion = arrowEntity.getDeltaMovement();
 
 							double multiplier = (float) AnointmentRegistrar.ANOINTMENT_BOW_VELOCITY.get().getBonusValue("multiplier", velocityLevel).doubleValue();
 
-							arrowEntity.setMotion(motion.scale(multiplier));
-							arrowEntity.setDamage(arrowEntity.getDamage() / multiplier);
+							arrowEntity.setDeltaMovement(motion.scale(multiplier));
+							arrowEntity.setBaseDamage(arrowEntity.getBaseDamage() / multiplier);
 //
 //							arrowEntity.shoot(f, f1, f2, (float) velocity, 0);
 						}
@@ -1033,10 +1033,10 @@ public class GenericHandler
 		{
 			return;
 		}
-		Entity entity = source.getTrueSource();
+		Entity entity = source.getEntity();
 		if (entity instanceof PlayerEntity)
 		{
-			ItemStack heldStack = ((PlayerEntity) entity).getHeldItemMainhand();
+			ItemStack heldStack = ((PlayerEntity) entity).getMainHandItem();
 			AnointmentHolder holder = AnointmentHolder.fromItemStack(heldStack);
 			if (holder == null)
 			{
@@ -1065,7 +1065,7 @@ public class GenericHandler
 				if (entity instanceof PlayerEntity)
 				{ // is a player
 					PlayerEntity player = (PlayerEntity) entity;
-					UUID uuid = player.getUniqueID();
+					UUID uuid = player.getUUID();
 					if (LivingUtil.hasFullSet(player))
 					{ // Player has a full set
 						LivingStats stats = LivingStats.fromPlayer(player);
@@ -1103,7 +1103,7 @@ public class GenericHandler
 
 	public static int getChargeTime(ItemStack stack)
 	{
-		int i = EnchantmentHelper.getEnchantmentLevel(Enchantments.QUICK_CHARGE, stack);
+		int i = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, stack);
 		return i == 0 ? 25 : 25 - 5 * i;
 	}
 }

@@ -43,9 +43,9 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack filterStack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack filterStack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.compositefilter.desc").mergeStyle(TextFormatting.ITALIC).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.compositefilter.desc").withStyle(TextFormatting.ITALIC).withStyle(TextFormatting.GRAY));
 
 		if (filterStack.getTag() == null)
 		{
@@ -58,13 +58,13 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 			boolean sneaking = Screen.hasShiftDown();
 			if (!sneaking)
 			{
-				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.extraInfo").mergeStyle(TextFormatting.BLUE));
+				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.extraInfo").withStyle(TextFormatting.BLUE));
 			} else
 			{
-				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.contained_filters").mergeStyle(TextFormatting.BLUE));
+				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.contained_filters").withStyle(TextFormatting.BLUE));
 				for (ItemStack nestedStack : nestedFilters)
 				{
-					tooltip.add(nestedStack.getDisplayName());
+					tooltip.add(nestedStack.getHoverName());
 				}
 			}
 		}
@@ -74,16 +74,16 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 
 		if (isWhitelist)
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist").mergeStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist").withStyle(TextFormatting.GRAY));
 		} else
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist").mergeStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist").withStyle(TextFormatting.GRAY));
 		}
 
 		ItemInventory inv = new InventoryFilter(filterStack);
-		for (int i = 0; i < inv.getSizeInventory(); i++)
+		for (int i = 0; i < inv.getContainerSize(); i++)
 		{
-			ItemStack stack = inv.getStackInSlot(i);
+			ItemStack stack = inv.getItem(i);
 			if (stack.isEmpty())
 			{
 				continue;
@@ -94,14 +94,14 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 				int amount = GhostItemHelper.getItemGhostAmount(stack);
 				if (amount > 0)
 				{
-					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.count", amount, stack.getDisplayName()));
+					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.count", amount, stack.getHoverName()));
 				} else
 				{
-					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.all", stack.getDisplayName()));
+					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.all", stack.getHoverName()));
 				}
 			} else
 			{
-				tooltip.add(stack.getDisplayName());
+				tooltip.add(stack.getHoverName());
 			}
 		}
 
@@ -109,13 +109,13 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
+		ItemStack stack = player.getItemInHand(hand);
 		List<ItemStack> nestedFilters = getNestedFilters(stack);
 		if (nestedFilters.size() > 0)
 		{
-			return super.onItemRightClick(world, player, hand);
+			return super.use(world, player, hand);
 		}
 
 		return new ActionResult<>(ActionResultType.SUCCESS, stack);
@@ -147,9 +147,9 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 		ItemInventory inv = new InventoryFilter(filterStack);
 
 		List<ItemStack> nestedList = getNestedFilters(filterStack);
-		for (int i = 0; i < inv.getSizeInventory(); i++)
+		for (int i = 0; i < inv.getContainerSize(); i++)
 		{
-			ItemStack stack = inv.getStackInSlot(i);
+			ItemStack stack = inv.getItem(i);
 			if (stack.isEmpty())
 			{
 				continue;
@@ -194,9 +194,9 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 
 		List<ItemStack> nestedList = getNestedFilters(filterStack);
 		// later.
-		for (int i = 0; i < inv.getSizeInventory(); i++)
+		for (int i = 0; i < inv.getContainerSize(); i++)
 		{
-			ItemStack stack = inv.getStackInSlot(i);
+			ItemStack stack = inv.getItem(i);
 			if (stack.isEmpty())
 			{
 				continue;
@@ -389,7 +389,7 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 		ItemInventory inv = new ItemInventory(mainFilterStack, maxUpgrades, FILTER_INV);
 		for (int i = 0; i < maxUpgrades; i++)
 		{
-			ItemStack testStack = inv.getStackInSlot(i);
+			ItemStack testStack = inv.getItem(i);
 			if (testStack.isEmpty())
 			{
 				continue;
@@ -420,7 +420,7 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 		ItemInventory inv = new ItemInventory(mainFilterStack, maxUpgrades, FILTER_INV);
 		for (int i = 0; i < maxUpgrades; i++)
 		{
-			ItemStack testStack = inv.getStackInSlot(i);
+			ItemStack testStack = inv.getItem(i);
 			if (testStack.isEmpty())
 			{
 				hasEmpty = true;
@@ -446,11 +446,11 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 			ItemInventory inv = new ItemInventory(copyStack, maxUpgrades, FILTER_INV);
 			for (int i = 0; i < maxUpgrades; i++)
 			{
-				ItemStack testStack = inv.getStackInSlot(i);
+				ItemStack testStack = inv.getItem(i);
 				if (testStack.isEmpty())
 				{
-					inv.setInventorySlotContents(i, nestedFilterStack);
-					inv.markDirty();
+					inv.setItem(i, nestedFilterStack);
+					inv.setChanged();
 					return copyStack;
 				}
 			}

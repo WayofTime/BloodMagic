@@ -21,25 +21,27 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockSpikes extends Block {
 
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
-    protected static final VoxelShape UP_SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 14.0D, 14.0D);
-    protected static final VoxelShape DOWN_SHAPE = Block.makeCuboidShape(2.0D, 2.0D, 2.0D, 14.0D, 16.0D, 14.0D);
-    protected static final VoxelShape NORTH_SHAPE = Block.makeCuboidShape(2.0D, 2.0D, 2.0D, 14.0D, 14.0D, 16.0D);
-    protected static final VoxelShape EAST_SHAPE = Block.makeCuboidShape(0.0D, 2.0D, 2.0D, 14.0D, 14.0D, 14.0D);
-    protected static final VoxelShape SOUTH_SHAPE = Block.makeCuboidShape(2.0D, 2.0D, 0.0D, 14.0D, 14.0D, 14.0D);
-    protected static final VoxelShape WEST_SHAPE = Block.makeCuboidShape(2.0D, 2.0D, 2.0D, 16.0D, 14.0D, 14.0D);
+    protected static final VoxelShape UP_SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 14.0D, 14.0D);
+    protected static final VoxelShape DOWN_SHAPE = Block.box(2.0D, 2.0D, 2.0D, 14.0D, 16.0D, 14.0D);
+    protected static final VoxelShape NORTH_SHAPE = Block.box(2.0D, 2.0D, 2.0D, 14.0D, 14.0D, 16.0D);
+    protected static final VoxelShape EAST_SHAPE = Block.box(0.0D, 2.0D, 2.0D, 14.0D, 14.0D, 14.0D);
+    protected static final VoxelShape SOUTH_SHAPE = Block.box(2.0D, 2.0D, 0.0D, 14.0D, 14.0D, 14.0D);
+    protected static final VoxelShape WEST_SHAPE = Block.box(2.0D, 2.0D, 2.0D, 16.0D, 14.0D, 14.0D);
 
 
     public BlockSpikes(Properties properties) {
         super(properties);
-        setDefaultState(stateContainer.getBaseState().with(FACING, Direction.UP));
+        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.UP));
     }
 
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 
-        switch (state.get(FACING)) {
+        switch (state.getValue(FACING)) {
             case UP:
                 return UP_SHAPE;
             case DOWN:
@@ -59,18 +61,18 @@ public class BlockSpikes extends Block {
 
     @Nonnull
     public BlockState getStateForPlacement(BlockItemUseContext context){
-        return super.getStateForPlacement(context).with(FACING, context.getFace());
+        return super.getStateForPlacement(context).setValue(FACING, context.getClickedFace());
     }
 
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder){
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder){
         builder.add(FACING);
     }
 
 
-    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+    public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
         if (entityIn.getType() != EntityType.ITEM){
-            entityIn.setMotionMultiplier(state, new Vector3d(0.55D, (double) 0.20F, 0.55D));
-            entityIn.attackEntityFrom(DamageSource.GENERIC, 2.0F);
+            entityIn.makeStuckInBlock(state, new Vector3d(0.55D, (double) 0.20F, 0.55D));
+            entityIn.hurt(DamageSource.GENERIC, 2.0F);
         }
     }
     
@@ -78,8 +80,8 @@ public class BlockSpikes extends Block {
     @Override
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
-        if (worldIn.getBlockState(pos.offset(state.get(FACING).getOpposite())).isAir()){
-            worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
+        if (worldIn.getBlockState(pos.relative(state.getValue(FACING).getOpposite())).isAir()){
+            worldIn.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
         }
     }
 }

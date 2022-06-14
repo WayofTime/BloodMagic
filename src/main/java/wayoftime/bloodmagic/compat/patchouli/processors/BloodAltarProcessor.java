@@ -34,7 +34,7 @@ public class BloodAltarProcessor implements IComponentProcessor
 	public void setup(IVariableProvider variables)
 	{
 		ResourceLocation id = new ResourceLocation(variables.get("recipe").asString());
-		Optional<? extends IRecipe<?>> recipeHandler = Minecraft.getInstance().world.getRecipeManager().getRecipe(id);
+		Optional<? extends IRecipe<?>> recipeHandler = Minecraft.getInstance().level.getRecipeManager().byKey(id);
 		if (recipeHandler.isPresent())
 		{
 			IRecipe<?> recipe = recipeHandler.get();
@@ -59,7 +59,7 @@ public class BloodAltarProcessor implements IComponentProcessor
 		switch (key)
 		{
 		case "input":
-			return IVariable.wrapList(Arrays.stream(recipe.getInput().getMatchingStacks()).map(IVariable::from).collect(Collectors.toList()));
+			return IVariable.wrapList(Arrays.stream(recipe.getInput().getItems()).map(IVariable::from).collect(Collectors.toList()));
 		case "output":
 			return IVariable.from(recipe.getOutput());
 		case "tier":

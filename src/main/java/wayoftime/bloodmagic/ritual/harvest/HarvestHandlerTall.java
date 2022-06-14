@@ -29,22 +29,22 @@ public class HarvestHandlerTall implements IHarvestHandler
 	{
 		for (int i = 0; i < 15; i++)
 		{
-			HarvestRegistry.registerTallCrop(Blocks.SUGAR_CANE.getDefaultState().with(SugarCaneBlock.AGE, i));
-			HarvestRegistry.registerTallCrop(Blocks.CACTUS.getDefaultState().with(CactusBlock.AGE, i));
+			HarvestRegistry.registerTallCrop(Blocks.SUGAR_CANE.defaultBlockState().setValue(SugarCaneBlock.AGE, i));
+			HarvestRegistry.registerTallCrop(Blocks.CACTUS.defaultBlockState().setValue(CactusBlock.AGE, i));
 		}
 	}
 
 	@Override
 	public boolean harvest(World world, BlockPos pos, BlockState state, List<ItemStack> drops)
 	{
-		BlockState up = world.getBlockState(pos.up());
+		BlockState up = world.getBlockState(pos.above());
 		if (up.getBlock() == state.getBlock())
 		{
 			LootContext.Builder lootBuilder = new LootContext.Builder((ServerWorld) world);
 			Vector3d blockCenter = new Vector3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
-			List<ItemStack> blockDrops = state.getDrops(lootBuilder.withParameter(LootParameters.field_237457_g_, blockCenter).withParameter(LootParameters.TOOL, mockHoe));
+			List<ItemStack> blockDrops = state.getDrops(lootBuilder.withParameter(LootParameters.ORIGIN, blockCenter).withParameter(LootParameters.TOOL, mockHoe));
 			drops.addAll(blockDrops);
-			world.destroyBlock(pos.up(), false);
+			world.destroyBlock(pos.above(), false);
 			return true;
 		}
 

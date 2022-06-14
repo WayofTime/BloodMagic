@@ -84,9 +84,9 @@ public class RecipeAlchemyArray extends BloodMagicRecipe
 			buffer.writeBoolean(false);
 		}
 
-		baseInput.write(buffer);
-		addedInput.write(buffer);
-		buffer.writeItemStack(output);
+		baseInput.toNetwork(buffer);
+		addedInput.toNetwork(buffer);
+		buffer.writeItem(output);
 	}
 
 	@Override

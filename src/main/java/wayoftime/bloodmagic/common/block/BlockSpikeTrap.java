@@ -22,6 +22,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Random;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockSpikeTrap extends Block {
 
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
@@ -33,7 +35,7 @@ public class BlockSpikeTrap extends Block {
 
     @Nullable
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(FACING, context.getNearestLookingDirection().getOpposite()).with(ACTIVE, context.getWorld().isBlockPowered(context.getPos()));
+        return this.defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite()).setValue(ACTIVE, context.getLevel().hasNeighborSignal(context.getClickedPos()));
     }
     
     @Nullable
@@ -47,7 +49,7 @@ public class BlockSpikeTrap extends Block {
         return true;
     }
     
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(ACTIVE).add(FACING);
     }
 }

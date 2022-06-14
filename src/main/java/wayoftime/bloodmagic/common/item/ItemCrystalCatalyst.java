@@ -35,7 +35,7 @@ public class ItemCrystalCatalyst extends Item
 
 	public ItemCrystalCatalyst(EnumDemonWillType type, double injectedWill, double speedModifier, double conversionRate, double maxInjectedWill)
 	{
-		super(new Item.Properties().group(BloodMagic.TAB));
+		super(new Item.Properties().tab(BloodMagic.TAB));
 		this.type = type;
 		this.injectedWill = injectedWill;
 		this.speedModifier = speedModifier;
@@ -45,22 +45,22 @@ public class ItemCrystalCatalyst extends Item
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.crystalCatalyst").mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.crystalCatalyst").withStyle(TextFormatting.GRAY));
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context)
+	public ActionResultType useOn(ItemUseContext context)
 	{
-		ItemStack stack = context.getItem();
-		BlockPos pos = context.getPos();
-		World world = context.getWorld();
+		ItemStack stack = context.getItemInHand();
+		BlockPos pos = context.getClickedPos();
+		World world = context.getLevel();
 
-		TileEntity tile = world.getTileEntity(pos);
+		TileEntity tile = world.getBlockEntity(pos);
 		if (tile instanceof TileDemonCrystal)
 		{
-			if (!world.isRemote)
+			if (!world.isClientSide)
 			{
 				TileDemonCrystal crystalTile = (TileDemonCrystal) tile;
 
@@ -73,10 +73,10 @@ public class ItemCrystalCatalyst extends Item
 					ItemParticleData particleData = new ItemParticleData(ParticleTypes.ITEM, crystalStack);
 					for (int i = 0; i < 8; ++i)
 					{
-						server.spawnParticle(particleData, pos.getX() + 0.5, pos.getY() + 0.6, pos.getZ() + 0.5, 1, 0.2, 0.2, 0.2, 0.03);
+						server.sendParticles(particleData, pos.getX() + 0.5, pos.getY() + 0.6, pos.getZ() + 0.5, 1, 0.2, 0.2, 0.2, 0.03);
 					}
 					stack.setCount(stack.getCount() - 1);
-					world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1, 1);
+					world.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundCategory.BLOCKS, 1, 1);
 				}
 			}
 

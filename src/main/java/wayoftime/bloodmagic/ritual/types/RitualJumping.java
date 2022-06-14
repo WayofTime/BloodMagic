@@ -48,7 +48,7 @@ public class RitualJumping extends Ritual
 		int totalEffects = 0;
 
 		AreaDescriptor jumpRange = masterRitualStone.getBlockRange(JUMP_RANGE);
-		List<LivingEntity> entities = world.getEntitiesWithinAABB(LivingEntity.class, jumpRange.getAABB(masterRitualStone.getMasterBlockPos()));
+		List<LivingEntity> entities = world.getEntitiesOfClass(LivingEntity.class, jumpRange.getAABB(masterRitualStone.getMasterBlockPos()));
 		for (LivingEntity entity : entities)
 		{
 			if (totalEffects >= maxEffects)
@@ -59,19 +59,19 @@ public class RitualJumping extends Ritual
 			double motionY = masterRitualStone.getBlockRange(JUMP_POWER).getHeight() * 0.3;
 
 			entity.fallDistance = 0;
-			if (entity.isSneaking())
+			if (entity.isShiftKeyDown())
 			{
 				continue;
 			}
 
-			Vector3d motion = entity.getMotion();
+			Vector3d motion = entity.getDeltaMovement();
 
-			double motionX = motion.getX();
-			double motionZ = motion.getZ();
+			double motionX = motion.x();
+			double motionZ = motion.z();
 
 			totalEffects++;
 
-			entity.setMotion(motionX, motionY, motionZ);
+			entity.setDeltaMovement(motionX, motionY, motionZ);
 			if (entity instanceof ServerPlayerEntity)
 			{
 				BloodMagic.packetHandler.sendTo(new SetClientVelocityPacket(motionX, motionY, motionZ), (ServerPlayerEntity) entity);

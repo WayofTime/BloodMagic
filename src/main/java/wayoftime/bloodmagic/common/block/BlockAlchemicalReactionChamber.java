@@ -31,15 +31,17 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.NetworkHooks;
 import wayoftime.bloodmagic.tile.TileAlchemicalReactionChamber;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockAlchemicalReactionChamber extends Block
 {
-	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+	public static final DirectionProperty FACING = HorizontalBlock.FACING;
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
 	public BlockAlchemicalReactionChamber()
 	{
-		super(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(2).sound(SoundType.STONE));
-		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(LIT, Boolean.valueOf(false)));
+		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(2).sound(SoundType.STONE));
+		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, Boolean.valueOf(false)));
 	}
 
 	@Override
@@ -55,38 +57,38 @@ public class BlockAlchemicalReactionChamber extends Block
 	}
 
 	@Override
-	public void onPlayerDestroy(IWorld world, BlockPos blockPos, BlockState blockState)
+	public void destroy(IWorld world, BlockPos blockPos, BlockState blockState)
 	{
-		TileAlchemicalReactionChamber arc = (TileAlchemicalReactionChamber) world.getTileEntity(blockPos);
+		TileAlchemicalReactionChamber arc = (TileAlchemicalReactionChamber) world.getBlockEntity(blockPos);
 		if (arc != null)
 			arc.dropItems();
 
-		super.onPlayerDestroy(world, blockPos, blockState);
+		super.destroy(world, blockPos, blockState);
 	}
 
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{
-		if (!state.isIn(newState.getBlock()))
+		if (!state.is(newState.getBlock()))
 		{
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+			TileEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof TileAlchemicalReactionChamber)
 			{
 				((TileAlchemicalReactionChamber) tileentity).dropItems();
-				worldIn.updateComparatorOutputLevel(pos, this);
+				worldIn.updateNeighbourForOutputSignal(pos, this);
 			}
 
-			super.onReplaced(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
 	{
-		if (world.isRemote)
+		if (world.isClientSide)
 			return ActionResultType.SUCCESS;
 
-		TileEntity tile = world.getTileEntity(pos);
+		TileEntity tile = world.getBlockEntity(pos);
 		if (!(tile instanceof TileAlchemicalReactionChamber))
 			return ActionResultType.FAIL;
 
@@ -99,7 +101,7 @@ public class BlockAlchemicalReactionChamber extends Block
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context)
 	{
-		return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
+		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
 
 	/**
@@ -107,14 +109,14 @@ public class BlockAlchemicalReactionChamber extends Block
 	 * logic
 	 */
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
+	public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
 	{
-		if (stack.hasDisplayName())
+		if (stack.hasCustomHoverName())
 		{
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+			TileEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof AbstractFurnaceTileEntity)
 			{
-				((AbstractFurnaceTileEntity) tileentity).setCustomName(stack.getDisplayName());
+				((AbstractFurnaceTileEntity) tileentity).setCustomName(stack.getHoverName());
 			}
 		}
 
@@ -130,7 +132,7 @@ public class BlockAlchemicalReactionChamber extends Block
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot)
 	{
-		return state.with(FACING, rot.rotate(state.get(FACING)));
+		return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
 	}
 
 	/**
@@ -143,20 +145,20 @@ public class BlockAlchemicalReactionChamber extends Block
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirrorIn)
 	{
-		return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+		return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
 	{
 		builder.add(FACING, LIT);
 	}
 
-	public boolean eventReceived(BlockState state, World worldIn, BlockPos pos, int id, int param)
+	public boolean triggerEvent(BlockState state, World worldIn, BlockPos pos, int id, int param)
 	{
-		super.eventReceived(state, worldIn, pos, id, param);
-		TileEntity tileentity = worldIn.getTileEntity(pos);
-		return tileentity == null ? false : tileentity.receiveClientEvent(id, param);
+		super.triggerEvent(state, worldIn, pos, id, param);
+		TileEntity tileentity = worldIn.getBlockEntity(pos);
+		return tileentity == null ? false : tileentity.triggerEvent(id, param);
 	}
 
 }

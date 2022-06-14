@@ -22,14 +22,14 @@ public class RandomBlockTagContainer extends RandomBlockContainer
 	@Override
 	public Block getRandomBlock(Random rand, World world)
 	{
-		if (tag.getAllElements().size() <= 0)
+		if (tag.getValues().size() <= 0)
 		{
 			return null;
 		}
 
-		if (index >= 0 && index < tag.getAllElements().size())
+		if (index >= 0 && index < tag.getValues().size())
 		{
-			return tag.getAllElements().get(index);
+			return tag.getValues().get(index);
 		}
 
 		return tag.getRandomElement(rand);
@@ -38,7 +38,7 @@ public class RandomBlockTagContainer extends RandomBlockContainer
 	@Override
 	public String getEntry()
 	{
-		ResourceLocation rl = TagCollectionManager.getManager().getBlockTags().getDirectIdFromTag(tag);
+		ResourceLocation rl = TagCollectionManager.getInstance().getBlocks().getId(tag);
 		String entry = "#" + rl.toString();
 		if (index >= 0)
 		{

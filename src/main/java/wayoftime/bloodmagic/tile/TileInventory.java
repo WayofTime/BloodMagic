@@ -62,7 +62,7 @@ public class TileInventory extends TileBase implements IInventory
 	{
 		super.deserialize(tagCompound);
 
-		this.inventory = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
+		this.inventory = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
 
 		ItemStackHelper.loadAllItems(tagCompound, this.inventory);
 
@@ -114,39 +114,39 @@ public class TileInventory extends TileBase implements IInventory
 
 	public void dropItems()
 	{
-		InventoryHelper.dropInventoryItems(getWorld(), getPos(), this);
+		InventoryHelper.dropContents(getLevel(), getBlockPos(), this);
 	}
 
 	@Override
-	public int getSizeInventory()
+	public int getContainerSize()
 	{
 		return size;
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int index)
+	public ItemStack getItem(int index)
 	{
 		return inventory.get(index);
 	}
 
 	@Override
-	public ItemStack decrStackSize(int index, int count)
+	public ItemStack removeItem(int index, int count)
 	{
-		if (!getStackInSlot(index).isEmpty())
+		if (!getItem(index).isEmpty())
 		{
-			if (!getWorld().isRemote)
-				getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
+			if (!getLevel().isClientSide)
+				getLevel().sendBlockUpdated(getBlockPos(), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3);
 
-			if (getStackInSlot(index).getCount() <= count)
+			if (getItem(index).getCount() <= count)
 			{
 				ItemStack itemStack = inventory.get(index);
 				inventory.set(index, ItemStack.EMPTY);
-				markDirty();
+				setChanged();
 				return itemStack;
 			}
 
 			ItemStack itemStack = inventory.get(index).split(count);
-			markDirty();
+			setChanged();
 			return itemStack;
 		}
 
@@ -154,48 +154,48 @@ public class TileInventory extends TileBase implements IInventory
 	}
 
 	@Override
-	public ItemStack removeStackFromSlot(int slot)
+	public ItemStack removeItemNoUpdate(int slot)
 	{
 		if (!inventory.get(slot).isEmpty())
 		{
 			ItemStack itemStack = inventory.get(slot);
-			setInventorySlotContents(slot, ItemStack.EMPTY);
+			setItem(slot, ItemStack.EMPTY);
 			return itemStack;
 		}
 		return ItemStack.EMPTY;
 	}
 
 	@Override
-	public void setInventorySlotContents(int slot, ItemStack stack)
+	public void setItem(int slot, ItemStack stack)
 	{
 		inventory.set(slot, stack);
-		if (!stack.isEmpty() && stack.getCount() > getInventoryStackLimit())
-			stack.setCount(getInventoryStackLimit());
-		markDirty();
-		if (!getWorld().isRemote)
-			getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
+		if (!stack.isEmpty() && stack.getCount() > getMaxStackSize())
+			stack.setCount(getMaxStackSize());
+		setChanged();
+		if (!getLevel().isClientSide)
+			getLevel().sendBlockUpdated(getBlockPos(), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3);
 	}
 
 	@Override
-	public int getInventoryStackLimit()
+	public int getMaxStackSize()
 	{
 		return 64;
 	}
 
 	@Override
-	public void openInventory(PlayerEntity player)
+	public void startOpen(PlayerEntity player)
 	{
 
 	}
 
 	@Override
-	public void closeInventory(PlayerEntity player)
+	public void stopOpen(PlayerEntity player)
 	{
 
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int index, ItemStack stack)
+	public boolean canPlaceItem(int index, ItemStack stack)
 	{
 		return true;
 	}
@@ -221,7 +221,7 @@ public class TileInventory extends TileBase implements IInventory
 //	}
 
 	@Override
-	public void clear()
+	public void clearContent()
 	{
 		this.inventory = NonNullList.withSize(size, ItemStack.EMPTY);
 	}
@@ -236,7 +236,7 @@ public class TileInventory extends TileBase implements IInventory
 	}
 
 	@Override
-	public boolean isUsableByPlayer(PlayerEntity player)
+	public boolean stillValid(PlayerEntity player)
 	{
 		return true;
 	}

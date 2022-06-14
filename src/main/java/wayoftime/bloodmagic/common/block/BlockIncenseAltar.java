@@ -15,13 +15,15 @@ import net.minecraftforge.common.ToolType;
 import wayoftime.bloodmagic.tile.TileIncenseAltar;
 import wayoftime.bloodmagic.tile.TileSoulForge;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockIncenseAltar extends Block
 {
-	protected static final VoxelShape BODY = Block.makeCuboidShape(5, 0, 5, 12, 16, 12);
+	protected static final VoxelShape BODY = Block.box(5, 0, 5, 12, 16, 12);
 
 	public BlockIncenseAltar()
 	{
-		super(Properties.create(Material.IRON).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0));
+		super(Properties.of(Material.METAL).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0));
 	}
 
 	@Override
@@ -31,28 +33,28 @@ public class BlockIncenseAltar extends Block
 	}
 
 	@Override
-	public void onPlayerDestroy(IWorld world, BlockPos blockPos, BlockState blockState)
+	public void destroy(IWorld world, BlockPos blockPos, BlockState blockState)
 	{
-		TileSoulForge forge = (TileSoulForge) world.getTileEntity(blockPos);
+		TileSoulForge forge = (TileSoulForge) world.getBlockEntity(blockPos);
 		if (forge != null)
 			forge.dropItems();
 
-		super.onPlayerDestroy(world, blockPos, blockState);
+		super.destroy(world, blockPos, blockState);
 	}
 
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{
-		if (!state.isIn(newState.getBlock()))
+		if (!state.is(newState.getBlock()))
 		{
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+			TileEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof TileSoulForge)
 			{
 				((TileSoulForge) tileentity).dropItems();
-				worldIn.updateComparatorOutputLevel(pos, this);
+				worldIn.updateNeighbourForOutputSignal(pos, this);
 			}
 
-			super.onReplaced(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
 
@@ -69,7 +71,7 @@ public class BlockIncenseAltar extends Block
 	}
 
 	@Override
-	public BlockRenderType getRenderType(BlockState state)
+	public BlockRenderType getRenderShape(BlockState state)
 	{
 		return BlockRenderType.MODEL;
 	}

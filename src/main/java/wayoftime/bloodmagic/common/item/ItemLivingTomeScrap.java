@@ -21,21 +21,21 @@ public class ItemLivingTomeScrap extends Item implements ILivingUpgradePointsPro
 {
 	public ItemLivingTomeScrap()
 	{
-		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.livingtomescrap.desc").mergeStyle(TextFormatting.GRAY));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.livingtomescrap.points", getTotalUpgradePoints(stack)).mergeStyle(TextFormatting.GOLD));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.livingtomescrap.desc").withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.livingtomescrap.points", getTotalUpgradePoints(stack)).withStyle(TextFormatting.GOLD));
 	}
 
 	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items)
+	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items)
 	{
-		if (!isInGroup(group))
+		if (!allowdedIn(group))
 			return;
 
 		ItemStack stack = new ItemStack(this);

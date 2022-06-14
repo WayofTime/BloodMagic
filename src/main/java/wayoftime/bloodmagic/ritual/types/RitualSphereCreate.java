@@ -113,20 +113,20 @@ public class RitualSphereCreate extends Ritual
 //							if (checkIfEllipsoidShell(xR, yR, zR, i - sphereCenterX, j - sphereCenterY, k - sphereCenterZ))
 					if (checkIfEllipsoid(xR, yR, zR, i - sphereCenterX, j - sphereCenterY, k - sphereCenterZ))
 					{
-						BlockPos newPos = masterPos.add(i, j, k);
+						BlockPos newPos = masterPos.offset(i, j, k);
 
-						if (world.isAirBlock(newPos))
+						if (world.isEmptyBlock(newPos))
 						{
 							// Don't swap the location, since this is empty
 							k++;
 							continue;
 						}
 
-						BlockPos swapPos = newPos.add(0, yTeleportOffset, 0);
+						BlockPos swapPos = newPos.offset(0, yTeleportOffset, 0);
 //
 						Utils.swapLocations(world, newPos, world, swapPos);
 
-						if (world.isAirBlock(newPos))
+						if (world.isEmptyBlock(newPos))
 						{
 							// TODO: If we have Will, fill in the space with something related to the type.
 						}

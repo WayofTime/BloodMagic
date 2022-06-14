@@ -25,38 +25,38 @@ public class ItemExperienceBook extends Item
 {
 	public ItemExperienceBook()
 	{
-		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean hasEffect(ItemStack stack)
+	public boolean isFoil(ItemStack stack)
 	{
 		return true;
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.experienceTome").mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.experienceTome").withStyle(TextFormatting.GRAY));
 
 		if (!stack.hasTag())
 			return;
 
 		double storedExp = getStoredExperience(stack);
 
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.experienceTome.exp", (int) storedExp).mergeStyle(TextFormatting.GRAY));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.experienceTome.expLevel", getLevelForExperience(storedExp)).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.experienceTome.exp", (int) storedExp).withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.experienceTome.expLevel", getLevelForExperience(storedExp)).withStyle(TextFormatting.GRAY));
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
-		if (!world.isRemote)
+		ItemStack stack = player.getItemInHand(hand);
+		if (!world.isClientSide)
 		{
-			if (player.isSneaking())
+			if (player.isShiftKeyDown())
 				absorbOneLevelExpFromPlayer(stack, player);
 			else
 				giveOneLevelExpToPlayer(stack, player);
@@ -67,7 +67,7 @@ public class ItemExperienceBook extends Item
 
 	public void giveOneLevelExpToPlayer(ItemStack stack, PlayerEntity player)
 	{
-		float progress = player.experience;
+		float progress = player.experienceProgress;
 		int expToNext = getExperienceForNextLevel(player.experienceLevel);
 
 		int neededExp = (int) Math.ceil((1 - progress) * expToNext);
@@ -83,7 +83,7 @@ public class ItemExperienceBook extends Item
 			if (player.experienceLevel % 5 == 0)
 			{
 				float f = player.experienceLevel > 30 ? 1.0F : (float) player.experienceLevel / 30.0F;
-				player.getEntityWorld().playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_PLAYER_LEVELUP, player.getSoundCategory(), f * 0.75F, 1.0F);
+				player.getCommandSenderWorld().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_LEVELUP, player.getSoundSource(), f * 0.75F, 1.0F);
 			}
 		} else
 		{
@@ -94,7 +94,7 @@ public class ItemExperienceBook extends Item
 
 	public void absorbOneLevelExpFromPlayer(ItemStack stack, PlayerEntity player)
 	{
-		float progress = player.experience;
+		float progress = player.experienceProgress;
 
 		if (progress > 0)
 		{
@@ -116,16 +116,16 @@ public class ItemExperienceBook extends Item
 	// slightly for my convenience.
 	public static int getPlayerXP(PlayerEntity player)
 	{
-		return (int) (getExperienceForLevel(player.experienceLevel) + (player.experience * player.xpBarCap()));
+		return (int) (getExperienceForLevel(player.experienceLevel) + (player.experienceProgress * player.getXpNeededForNextLevel()));
 	}
 
 	public static void addPlayerXP(PlayerEntity player, int amount)
 	{
 		int experience = Math.max(0, getPlayerXP(player) + amount);
-		player.experienceTotal = experience;
+		player.totalExperience = experience;
 		player.experienceLevel = getLevelForExperience(experience);
 		int expForLevel = getExperienceForLevel(player.experienceLevel);
-		player.experience = (float) (experience - expForLevel) / (float) player.xpBarCap();
+		player.experienceProgress = (float) (experience - expForLevel) / (float) player.getXpNeededForNextLevel();
 	}
 
 	public static void setStoredExperience(ItemStack stack, double exp)
@@ -186,7 +186,7 @@ public class ItemExperienceBook extends Item
 
 	public static double getExperienceAcquiredToNext(PlayerEntity player)
 	{
-		return player.experience * player.xpBarCap();
+		return player.experienceProgress * player.getXpNeededForNextLevel();
 	}
 
 	public static int getLevelForExperience(double exp)

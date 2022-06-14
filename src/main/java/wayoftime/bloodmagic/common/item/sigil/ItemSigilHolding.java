@@ -52,7 +52,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
 	@Override
 	public void onKeyPressed(ItemStack stack, PlayerEntity player, KeyBindings key, boolean showInChat)
 	{
-		if (stack == player.getHeldItemMainhand() && stack.getItem() instanceof ItemSigilHolding && key.equals(KeyBindings.OPEN_HOLDING))
+		if (stack == player.getMainHandItem() && stack.getItem() instanceof ItemSigilHolding && key.equals(KeyBindings.OPEN_HOLDING))
 		{
 			Utils.setUUID(stack);
 
@@ -79,10 +79,10 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		super.addInformation(stack, world, tooltip, flag);
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sigil.holding.press", new TranslationTextComponent(KeyBindings.OPEN_HOLDING.getKey().getTranslationKey()).mergeStyle(TextFormatting.ITALIC)).mergeStyle(TextFormatting.GRAY));
+		super.appendHoverText(stack, world, tooltip, flag);
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sigil.holding.press", new TranslationTextComponent(KeyBindings.OPEN_HOLDING.getKey().saveString()).withStyle(TextFormatting.ITALIC)).withStyle(TextFormatting.GRAY));
 
 		if (!stack.hasTag())
 			return;
@@ -97,23 +97,23 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
 			if (!invStack.isEmpty())
 				if (!item.isEmpty() && invStack == item)
 				{
-					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sigil.holding.sigilInSlot", i + 1, (invStack.getDisplayName().copyRaw()).mergeStyle(TextFormatting.ITALIC, TextFormatting.UNDERLINE)));
+					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sigil.holding.sigilInSlot", i + 1, (invStack.getHoverName().plainCopy()).withStyle(TextFormatting.ITALIC, TextFormatting.UNDERLINE)));
 //					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sigil.holding.sigilInSlot", i + 1, new TranslationTextComponent(invStack.getDisplayName()).mergeStyle(TextFormatting.ITALIC, TextFormatting.UNDERLINE)));
 
 				} else
-					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sigil.holding.sigilInSlot", i + 1, invStack.getDisplayName()));
+					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sigil.holding.sigilInSlot", i + 1, invStack.getHoverName()));
 		}
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context)
+	public ActionResultType useOn(ItemUseContext context)
 	{
 //		BlockPos pos = context.getPos();
 //		Direction facing = context.getFace();
 //		pos = pos.offset(facing);
 		PlayerEntity player = context.getPlayer();
 		Hand hand = context.getHand();
-		ItemStack stack = player.getHeldItem(hand);
+		ItemStack stack = player.getItemInHand(hand);
 
 //		ItemStack stack = player.getHeldItem(hand);
 		if (PlayerHelper.isFakePlayer(player))
@@ -126,31 +126,31 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
 		if (itemUsing.isEmpty() || ((IBindable) itemUsing.getItem()).getBinding(itemUsing) == null)
 			return ActionResultType.PASS;
 
-		ActionResultType result = itemUsing.getItem().onItemUse(context);
+		ActionResultType result = itemUsing.getItem().useOn(context);
 		saveInventory(stack, inv);
 
 		return result;
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
+		ItemStack stack = player.getItemInHand(hand);
 		if (PlayerHelper.isFakePlayer(player))
-			return ActionResult.resultFail(stack);
+			return ActionResult.fail(stack);
 
 		int currentSlot = getCurrentItemOrdinal(stack);
 		NonNullList<ItemStack> inv = getInternalInventory(stack);
 		ItemStack itemUsing = inv.get(currentSlot);
 
 		if (itemUsing.isEmpty() || ((IBindable) itemUsing.getItem()).getBinding(itemUsing) == null)
-			return ActionResult.resultPass(stack);
+			return ActionResult.pass(stack);
 
-		itemUsing.getItem().onItemRightClick(world, player, hand);
+		itemUsing.getItem().use(world, player, hand);
 
 		saveInventory(stack, inv);
 
-		return ActionResult.resultPass(stack);
+		return ActionResult.pass(stack);
 	}
 
 	@Nonnull
@@ -375,8 +375,8 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
 	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity player)
 	{
 		// TODO Auto-generated method stub
-		assert player.getEntityWorld() != null;
-		return new ContainerHolding(p_createMenu_1_, player, p_createMenu_2_, new InventoryHolding(player.getHeldItemMainhand()));
+		assert player.getCommandSenderWorld() != null;
+		return new ContainerHolding(p_createMenu_1_, player, p_createMenu_2_, new InventoryHolding(player.getMainHandItem()));
 	}
 
 	@Override

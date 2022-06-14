@@ -31,23 +31,23 @@ public class ItemLivingTome extends Item implements ILivingContainer, ILivingUpg
 
 	public ItemLivingTome()
 	{
-		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		boolean oneLevel = !player.isSneaking();
+		boolean oneLevel = !player.isShiftKeyDown();
 
-		ItemStack held = player.getHeldItem(hand);
+		ItemStack held = player.getItemInHand(hand);
 
 		LivingStats armorStats = LivingStats.fromPlayer(player, true);
 		if (armorStats == null)
-			return ActionResult.resultPass(held);
+			return ActionResult.pass(held);
 
 		LivingStats tomeStats = getLivingStats(held);
 		if (tomeStats == null)
-			return ActionResult.resultPass(held);
+			return ActionResult.pass(held);
 
 		Map<LivingUpgrade, Double> upgradeMap = tomeStats.getUpgrades();
 
@@ -115,15 +115,15 @@ public class ItemLivingTome extends Item implements ILivingContainer, ILivingUpg
 			}
 
 //			held.shrink(1);
-			return ActionResult.resultSuccess(held);
+			return ActionResult.success(held);
 		} else
-			return ActionResult.resultPass(held);
+			return ActionResult.pass(held);
 	}
 
 	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items)
+	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items)
 	{
-		if (!isInGroup(group))
+		if (!allowdedIn(group))
 			return;
 
 		for (Entry<ResourceLocation, LivingUpgrade> entry : LivingArmorRegistrar.UPGRADE_MAP.entrySet())
@@ -153,7 +153,7 @@ public class ItemLivingTome extends Item implements ILivingContainer, ILivingUpg
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
 		ILivingContainer.appendLivingTooltip(stack, getLivingStats(stack), tooltip, false);
 	}

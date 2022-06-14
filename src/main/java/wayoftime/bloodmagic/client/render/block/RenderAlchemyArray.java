@@ -22,12 +22,12 @@ public class RenderAlchemyArray extends TileEntityRenderer<TileAlchemyArray>
 	@Override
 	public void render(TileAlchemyArray tileArray, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn)
 	{
-		ItemStack inputStack = tileArray.getStackInSlot(0);
-		ItemStack catalystStack = tileArray.getStackInSlot(1);
+		ItemStack inputStack = tileArray.getItem(0);
+		ItemStack catalystStack = tileArray.getItem(1);
 //		arrayRenderer.renderAt(tileArray, 0, 0, 0, tileArray.activeCounter
 //				+ partialTicks, matrixStack, buffer, combinedLightIn, combinedOverlayIn);
 
-		AlchemyArrayRenderer renderer = AlchemyArrayRendererRegistry.getRenderer(tileArray.getWorld(), inputStack, catalystStack);
+		AlchemyArrayRenderer renderer = AlchemyArrayRendererRegistry.getRenderer(tileArray.getLevel(), inputStack, catalystStack);
 		if (renderer == null)
 		{
 			renderer = AlchemyArrayRendererRegistry.DEFAULT_RENDERER;

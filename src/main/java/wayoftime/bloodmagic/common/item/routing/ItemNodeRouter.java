@@ -29,12 +29,12 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 {
 	public ItemNodeRouter()
 	{
-		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
 		if (!stack.hasTag())
 			return;
@@ -48,20 +48,20 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context)
+	public ActionResultType useOn(ItemUseContext context)
 	{
 		Hand hand = context.getHand();
 		PlayerEntity player = context.getPlayer();
-		World world = context.getWorld();
-		BlockPos pos = context.getPos();
+		World world = context.getLevel();
+		BlockPos pos = context.getClickedPos();
 
-		ItemStack stack = player.getHeldItem(hand);
-		if (world.isRemote)
+		ItemStack stack = player.getItemInHand(hand);
+		if (world.isClientSide)
 		{
 			return ActionResultType.PASS;
 		}
 
-		TileEntity tileHit = world.getTileEntity(pos);
+		TileEntity tileHit = world.getBlockEntity(pos);
 
 		if (!(tileHit instanceof IRoutingNode))
 		{
@@ -70,7 +70,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 			if (!containedPos.equals(BlockPos.ZERO))
 			{
 				this.setBlockPos(stack, BlockPos.ZERO);
-				player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.remove"), true);
+				player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.routing.remove"), true);
 				return ActionResultType.FAIL;
 			}
 			return ActionResultType.FAIL;
@@ -80,20 +80,20 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 		if (containedPos.equals(BlockPos.ZERO))
 		{
 			this.setBlockPos(stack, pos);
-			player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.set"), true);
+			player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.routing.set"), true);
 			return ActionResultType.SUCCESS;
 		} else
 		{
-			if (containedPos.distanceSq(pos) > 16 * 16)
+			if (containedPos.distSqr(pos) > 16 * 16)
 			{
-				player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.distance"), true);
+				player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.routing.distance"), true);
 				return ActionResultType.SUCCESS;
 			} else if (containedPos.equals(pos))
 			{
-				player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.same"), true);
+				player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.routing.same"), true);
 				return ActionResultType.SUCCESS;
 			}
-			TileEntity pastTile = world.getTileEntity(containedPos);
+			TileEntity pastTile = world.getBlockEntity(containedPos);
 			if (pastTile instanceof IRoutingNode)
 			{
 				IRoutingNode pastNode = (IRoutingNode) pastTile;
@@ -110,7 +110,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 							master.addConnection(pos, containedPos);
 							master.addNodeToList(node);
 							node.addConnection(containedPos);
-							player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.link.master"), true);
+							player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.routing.link.master"), true);
 							this.setBlockPos(stack, BlockPos.ZERO);
 							return ActionResultType.SUCCESS;
 						}
@@ -118,7 +118,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 					{
 						master.addConnection(pos, containedPos);
 						node.addConnection(containedPos);
-						player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.link.master"), true);
+						player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.routing.link.master"), true);
 						this.setBlockPos(stack, BlockPos.ZERO);
 						return ActionResultType.SUCCESS;
 					}
@@ -135,7 +135,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 							master.addConnection(pos, containedPos);
 							pastNode.addConnection(pos);
 							master.addNodeToList(pastNode);
-							player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.link.master"), true);
+							player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.routing.link.master"), true);
 							this.setBlockPos(stack, BlockPos.ZERO);
 							return ActionResultType.SUCCESS;
 						}
@@ -143,7 +143,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 					{
 						master.addConnection(pos, containedPos);
 						pastNode.addConnection(pos);
-						player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.link.master"), true);
+						player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.routing.link.master"), true);
 						this.setBlockPos(stack, BlockPos.ZERO);
 						return ActionResultType.SUCCESS;
 					}
@@ -154,7 +154,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 					{
 						if (!pastNode.getMasterPos().equals(BlockPos.ZERO))
 						{
-							TileEntity testTile = world.getTileEntity(pastNode.getMasterPos());
+							TileEntity testTile = world.getBlockEntity(pastNode.getMasterPos());
 							if (testTile instanceof IMasterRoutingNode)
 							{
 								IMasterRoutingNode master = (IMasterRoutingNode) testTile;
@@ -163,13 +163,13 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 						}
 						pastNode.addConnection(pos);
 						node.addConnection(containedPos);
-						player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.link"), true);
+						player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.routing.link"), true);
 						this.setBlockPos(stack, BlockPos.ZERO);
 						return ActionResultType.SUCCESS;
 					} else if (pastNode.getMasterPos().equals(BlockPos.ZERO)) // pastNode is not connected to a
 																				// master, but node is
 					{
-						TileEntity tile = world.getTileEntity(node.getMasterPos());
+						TileEntity tile = world.getBlockEntity(node.getMasterPos());
 						if (tile instanceof IMasterRoutingNode)
 						{
 							IMasterRoutingNode master = (IMasterRoutingNode) tile;
@@ -179,13 +179,13 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 						}
 						pastNode.addConnection(pos);
 						node.addConnection(containedPos);
-						player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.link"), true);
+						player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.routing.link"), true);
 						this.setBlockPos(stack, BlockPos.ZERO);
 						return ActionResultType.SUCCESS;
 					} else if (node.getMasterPos().equals(BlockPos.ZERO)) // node is not connected to a master, but
 																			// pastNode is
 					{
-						TileEntity tile = world.getTileEntity(pastNode.getMasterPos());
+						TileEntity tile = world.getBlockEntity(pastNode.getMasterPos());
 						if (tile instanceof IMasterRoutingNode)
 						{
 							IMasterRoutingNode master = (IMasterRoutingNode) tile;
@@ -195,7 +195,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 						}
 						pastNode.addConnection(pos);
 						node.addConnection(containedPos);
-						player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.routing.link"), true);
+						player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.routing.link"), true);
 						this.setBlockPos(stack, BlockPos.ZERO);
 						return ActionResultType.SUCCESS;
 					} else

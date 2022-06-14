@@ -16,13 +16,13 @@ public class PotionSuspended extends PotionBloodMagic
 	}
 
 	@Override
-	public void performEffect(LivingEntity entity, int amplifier)
+	public void applyEffectTick(LivingEntity entity, int amplifier)
 	{
 		if (!noGravityList.contains(entity))
 		{
 			noGravityList.add(entity);
 			entity.setNoGravity(true);
-		} else if (entity.getActivePotionEffect(this).getDuration() <= 1)
+		} else if (entity.getEffect(this).getDuration() <= 1)
 		{
 			noGravityList.remove(entity);
 			entity.setNoGravity(false);
@@ -30,7 +30,7 @@ public class PotionSuspended extends PotionBloodMagic
 	}
 
 	@Override
-	public boolean isReady(int duration, int amplifier)
+	public boolean isDurationEffectTick(int duration, int amplifier)
 	{
 		return true;
 	}

@@ -48,22 +48,22 @@ public class Dungeon
 
 		settings.setRotation(rot);
 		settings.setIgnoreEntities(true);
-		settings.setChunk(null);
+		settings.setChunkPos(null);
 
 		settings.addProcessor(new StoneToOreProcessor(0.0f));
 
 //		settings.setReplacedBlock(null);
 
 //		settings.setIgnoreStructureBlock(false);
-		settings.func_215223_c(true);
+		settings.setKnownShape(true);
 
 //        PlacementSettings placementsettings = (new PlacementSettings()).setMirror(this.mirror).setRotation(this.rotation).setIgnoreEntities(this.ignoreEntities).setChunk((ChunkPos)null);
 //        if (this.integrity < 1.0F) {
-//           placementsettings.clearProcessors().addProcessor(new IntegrityProcessor(MathHelper.clamp(this.integrity, 0.0F, 1.0F))).setRandom(func_214074_b(this.seed));
+//           placementsettings.clearProcessors().addProcessor(new IntegrityProcessor(MathHelper.clamp(this.integrity, 0.0F, 1.0F))).setRandom(createRandom(this.seed));
 //        }
 //
 //        BlockPos blockpos2 = blockpos.add(this.position);
-//        p_242689_3_.func_237144_a_(p_242689_1_, blockpos2, placementsettings, func_214074_b(this.seed));
+//        p_242689_3_.placeInWorldChunk(p_242689_1_, blockpos2, placementsettings, createRandom(this.seed));
 
 //		List<Rotation> rotationInfo = new ArrayList();
 
@@ -144,7 +144,7 @@ public class Dungeon
 					testDoor: for (BlockPos availableDoor : availableDoorList)
 					{
 						// TODO: Test if it fits, then add the doors to the list.
-						roomLocation = availableDoor.subtract(testDoor).add(doorFacing.getDirectionVec());
+						roomLocation = availableDoor.subtract(testDoor).offset(doorFacing.getNormal());
 
 						List<AreaDescriptor> descriptors = testingRoom.getAreaDescriptors(settings, roomLocation);
 						for (AreaDescriptor testDesc : descriptors)
@@ -165,7 +165,7 @@ public class Dungeon
 //						roomList.add(Pair.of(roomLocation, Pair.of(testingRoom, settings.copy())));
 						descriptorList.addAll(descriptors);
 						removedDoor1 = Pair.of(doorFacing, availableDoor);
-						removedDoor2 = Pair.of(oppositeDoorFacing, testDoor.add(roomLocation));
+						removedDoor2 = Pair.of(oppositeDoorFacing, testDoor.offset(roomLocation));
 
 						room = testingRoom;
 //						n++;

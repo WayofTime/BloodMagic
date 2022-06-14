@@ -28,14 +28,14 @@ public class ElementHolding extends HUDElement
 	public void draw(MatrixStack matrixStack, float partialTicks, int drawX, int drawY)
 	{
 //		GlStateManager.color(1.0F, 1.0F, 1.0F);
-		matrixStack.push();
+		matrixStack.pushPose();
 		HOLDING_BAR.draw(matrixStack, drawX, drawY);
 
 		Minecraft minecraft = Minecraft.getInstance();
-		ItemStack sigilHolding = minecraft.player.getHeldItemMainhand();
+		ItemStack sigilHolding = minecraft.player.getMainHandItem();
 		// Check mainhand for Sigil of Holding
 		if (!(sigilHolding.getItem() == BloodMagicItems.HOLDING_SIGIL.get()))
-			sigilHolding = minecraft.player.getHeldItemOffhand();
+			sigilHolding = minecraft.player.getOffhandItem();
 		// Check offhand for Sigil of Holding
 		if (!(sigilHolding.getItem() == BloodMagicItems.HOLDING_SIGIL.get()))
 			return;
@@ -43,7 +43,7 @@ public class ElementHolding extends HUDElement
 		int currentSlot = ItemSigilHolding.getCurrentItemOrdinal(sigilHolding);
 		SELECTED_OVERLAY.draw(matrixStack, drawX - 1 + (currentSlot * 20), drawY - 1);
 
-		RenderHelper.enableStandardItemLighting();
+		RenderHelper.turnBackOn();
 		List<ItemStack> inventory = ItemSigilHolding.getInternalInventory(sigilHolding);
 		int xOffset = 0;
 		for (ItemStack stack : inventory)
@@ -51,16 +51,16 @@ public class ElementHolding extends HUDElement
 			renderHotbarItem(matrixStack, drawX + 3 + xOffset, drawY + 3, partialTicks, minecraft.player, stack);
 			xOffset += 20;
 		}
-		matrixStack.pop();
+		matrixStack.popPose();
 	}
 
 	@Override
 	public boolean shouldRender(Minecraft minecraft)
 	{
-		ItemStack sigilHolding = minecraft.player.getHeldItemMainhand();
+		ItemStack sigilHolding = minecraft.player.getMainHandItem();
 		// Check mainhand for Sigil of Holding
 		if (!(sigilHolding.getItem() == BloodMagicItems.HOLDING_SIGIL.get()))
-			sigilHolding = minecraft.player.getHeldItemOffhand();
+			sigilHolding = minecraft.player.getOffhandItem();
 		// Check offhand for Sigil of Holding
 		if (!(sigilHolding.getItem() == BloodMagicItems.HOLDING_SIGIL.get()))
 			return false;
@@ -72,11 +72,11 @@ public class ElementHolding extends HUDElement
 	{
 		if (!stack.isEmpty())
 		{
-			float animation = (float) stack.getAnimationsToGo() - partialTicks;
+			float animation = (float) stack.getPopTime() - partialTicks;
 
 			if (animation > 0.0F)
 			{
-				matrixStack.push();
+				matrixStack.pushPose();
 				float f1 = 1.0F + animation / 5.0F;
 				matrixStack.translate((float) (x + 8), (float) (y + 12), 0.0F);
 				matrixStack.scale(1.0F / f1, (f1 + 1.0F) / 2.0F, 1.0F);
@@ -86,12 +86,12 @@ public class ElementHolding extends HUDElement
 //				RenderSystem.translatef((float) (-(x + 8)), (float) (-(y + 12)), 0.0F);
 			}
 
-			Minecraft.getInstance().getItemRenderer().renderItemAndEffectIntoGUI(player, stack, x, y);
+			Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(player, stack, x, y);
 
 			if (animation > 0.0F)
-				matrixStack.pop();
+				matrixStack.popPose();
 
-			Minecraft.getInstance().getItemRenderer().renderItemOverlays(Minecraft.getInstance().fontRenderer, stack, x, y);
+			Minecraft.getInstance().getItemRenderer().renderGuiItemDecorations(Minecraft.getInstance().font, stack, x, y);
 		}
 	}
 

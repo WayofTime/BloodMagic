@@ -73,7 +73,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 	@Override
 	public void onUpdate()
 	{
-		if (getWorld().isRemote)
+		if (getLevel().isClientSide)
 			return;
 
 		if (isPowered() && isActive())
@@ -96,7 +96,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 		if (getCurrentRitual() != null && isActive())
 		{
 			if (activeTime % getCurrentRitual().getRefreshTime() == 0)
-				performRitual(getWorld(), getPos());
+				performRitual(getLevel(), getBlockPos());
 
 			activeTime++;
 		}
@@ -105,7 +105,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 	@Override
 	public void deserialize(CompoundNBT tag)
 	{
-		owner = tag.hasUniqueId("owner") ? tag.getUniqueId("owner") : null;
+		owner = tag.hasUUID("owner") ? tag.getUUID("owner") : null;
 		if (owner != null)
 			cachedNetwork = NetworkHelper.getSoulNetwork(owner);
 		currentRitual = BloodMagic.RITUAL_MANAGER.getRitual(tag.getString(Constants.NBT.CURRENT_RITUAL));
@@ -143,7 +143,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 	{
 		String ritualId = BloodMagic.RITUAL_MANAGER.getId(getCurrentRitual());
 		if (owner != null)
-			tag.putUniqueId("owner", owner);
+			tag.putUUID("owner", owner);
 		tag.putString(Constants.NBT.CURRENT_RITUAL, Strings.isNullOrEmpty(ritualId) ? "" : ritualId);
 		if (currentRitual != null)
 		{
@@ -159,7 +159,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 		}
 		tag.putBoolean(Constants.NBT.IS_RUNNING, isActive());
 		tag.putInt(Constants.NBT.RUNTIME, getActiveTime());
-		tag.putInt(Constants.NBT.DIRECTION, direction.getIndex());
+		tag.putInt(Constants.NBT.DIRECTION, direction.get3DDataValue());
 		tag.putBoolean(Constants.NBT.IS_REDSTONED, redstoned);
 
 		for (EnumDemonWillType type : currentActiveWillConfig)
@@ -184,13 +184,13 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 				int crystalLevel = ((ItemActivationCrystal) activationCrystal.getItem()).getCrystalLevel(activationCrystal);
 				if (RitualHelper.canCrystalActivate(ritual, crystalLevel))
 				{
-					if (!getWorld().isRemote)
+					if (!getLevel().isClientSide)
 					{
 						SoulNetwork network = NetworkHelper.getSoulNetwork(binding);
 
 						if (!isRedstoned() && network.getCurrentEssence() < ritual.getActivationCost() && (activator != null && !activator.isCreative()))
 						{
-							activator.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.weak"), true);
+							activator.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.ritual.weak"), true);
 							return false;
 						}
 
@@ -202,7 +202,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 						if (MinecraftForge.EVENT_BUS.post(event))
 						{
 							if (activator != null)
-								activator.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.prevent"), true);
+								activator.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.ritual.prevent"), true);
 							return false;
 						}
 
@@ -212,7 +212,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 								network.syphon(ticket(ritual.getActivationCost()));
 
 							if (activator != null)
-								activator.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.activate"), true);
+								activator.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.ritual.activate"), true);
 
 							this.active = true;
 							this.owner = binding.getOwnerId();
@@ -234,7 +234,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 		} else
 		{
 			if (activator != null)
-				activator.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
+				activator.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
 		}
 
 		return false;
@@ -243,9 +243,9 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 	@Override
 	public void performRitual(World world, BlockPos pos)
 	{
-		if (!world.isRemote && getCurrentRitual() != null && BloodMagic.RITUAL_MANAGER.enabled(BloodMagic.RITUAL_MANAGER.getId(currentRitual), false))
+		if (!world.isClientSide && getCurrentRitual() != null && BloodMagic.RITUAL_MANAGER.enabled(BloodMagic.RITUAL_MANAGER.getId(currentRitual), false))
 		{
-			if (RitualHelper.checkValidRitual(getWorld(), getPos(), currentRitual, getDirection()))
+			if (RitualHelper.checkValidRitual(getLevel(), getBlockPos(), currentRitual, getDirection()))
 			{
 				Ritual ritual = getCurrentRitual();
 				RitualEvent.RitualRunEvent event = new RitualEvent.RitualRunEvent(this, getOwner(), ritual);
@@ -267,7 +267,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 	@Override
 	public void stopRitual(Ritual.BreakType breakType)
 	{
-		if (!getWorld().isRemote && getCurrentRitual() != null)
+		if (!getLevel().isClientSide && getCurrentRitual() != null)
 		{
 			RitualEvent.RitualStopEvent event = new RitualEvent.RitualStopEvent(this, getOwner(), getCurrentRitual(), breakType);
 
@@ -338,27 +338,27 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 	}
 
 	@Override
-	public World getWorld()
+	public World getLevel()
 	{
-		return super.getWorld();
+		return super.getLevel();
 	}
 
 	@Override
-	public BlockPos getPos()
+	public BlockPos getBlockPos()
 	{
-		return super.getPos();
+		return super.getBlockPos();
 	}
 
 	@Override
 	public World getWorldObj()
 	{
-		return getWorld();
+		return getLevel();
 	}
 
 	@Override
 	public BlockPos getMasterBlockPos()
 	{
-		return getPos();
+		return getBlockPos();
 	}
 
 	@Override
@@ -400,13 +400,13 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 	public EnumReaderBoundaries setBlockRangeByBounds(PlayerEntity player, String range, BlockPos offset1, BlockPos offset2)
 	{
 		AreaDescriptor descriptor = this.getBlockRange(range);
-		DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(world, getMasterBlockPos());
+		DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(level, getMasterBlockPos());
 
 		EnumReaderBoundaries modificationType = currentRitual.canBlockRangeBeModified(range, descriptor, this, offset1, offset2, holder);
 		if (modificationType == EnumReaderBoundaries.SUCCESS)
 			descriptor.modifyAreaByBlockPositions(offset1, offset2);
 
-		world.notifyBlockUpdate(pos, this.getBlockState(), this.getBlockState(), 3);
+		level.sendBlockUpdated(worldPosition, this.getBlockState(), this.getBlockState(), 3);
 
 		return modificationType;
 	}
@@ -446,9 +446,9 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 	public boolean isPowered()
 	{
 		if (inverted)
-			return !getWorld().isBlockPowered(getPos());
+			return !getLevel().hasNeighborSignal(getBlockPos());
 
-		return getWorld().isBlockPowered(getPos());
+		return getLevel().hasNeighborSignal(getBlockPos());
 	}
 
 	public SoulNetwork getCachedNetwork()

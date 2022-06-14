@@ -102,9 +102,9 @@ public class DungeonSynthesizer
 
 		settings.setRotation(rot);
 		settings.setIgnoreEntities(true);
-		settings.setChunk(null);
+		settings.setChunkPos(null);
 //		settings.addProcessor(new StoneToOreProcessor(0.0f));
-		settings.func_215223_c(true);
+		settings.setKnownShape(true);
 
 //		ResourceLocation initialType = new ResourceLocation("bloodmagic:room_pools/test_pool_1");
 		DungeonRoom initialRoom = DungeonRoomRegistry.getRandomDungeonRoom(initialType, rand);
@@ -165,8 +165,8 @@ public class DungeonSynthesizer
 	public void addNewControllerBlock(ServerWorld world, BlockPos controllerPos)
 	{
 //		world.setBlockState(controllerPos, Blocks.LAPIS_BLOCK.getDefaultState(), 3);
-		world.setBlockState(controllerPos, BloodMagicBlocks.DUNGEON_CONTROLLER.get().getDefaultState(), 3);
-		TileEntity tile = world.getTileEntity(controllerPos);
+		world.setBlock(controllerPos, BloodMagicBlocks.DUNGEON_CONTROLLER.get().defaultBlockState(), 3);
+		TileEntity tile = world.getBlockEntity(controllerPos);
 		if (tile instanceof TileDungeonController)
 		{
 			((TileDungeonController) tile).setDungeonSynthesizer(this);
@@ -176,9 +176,9 @@ public class DungeonSynthesizer
 
 	public void addNewDoorBlock(ServerWorld world, BlockPos controllerPos, BlockPos doorBlockPos, Direction doorFacing, String doorType, List<ResourceLocation> potentialRoomTypes, List<ResourceLocation> specialRoomTypes)
 	{
-		BlockPos doorBlockOffsetPos = doorBlockPos.offset(doorFacing).offset(Direction.UP, 2);
+		BlockPos doorBlockOffsetPos = doorBlockPos.relative(doorFacing).relative(Direction.UP, 2);
 //		world.setBlockState(doorBlockOffsetPos, Blocks.REDSTONE_BLOCK.getDefaultState(), 3);
-		Direction rightDirection = doorFacing.rotateY();
+		Direction rightDirection = doorFacing.getClockWise();
 		for (int i = -1; i <= 1; i++)
 		{
 			for (int j = -1; j <= 1; j++)
@@ -188,20 +188,20 @@ public class DungeonSynthesizer
 					continue;
 				}
 
-				world.setBlockState(doorBlockOffsetPos.offset(rightDirection, i).offset(Direction.UP, j), BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get().getDefaultState());
+				world.setBlockAndUpdate(doorBlockOffsetPos.relative(rightDirection, i).relative(Direction.UP, j), BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get().defaultBlockState());
 			}
 		}
 
 		ResourceLocation specialRoomType = getSpecialRoom(specialRoomTypes);
 		if (specialRoomType != null)
 		{
-			DungeonRoom randomRoom = getRandomRoom(specialRoomType, world.rand);
+			DungeonRoom randomRoom = getRandomRoom(specialRoomType, world.random);
 			if (randomRoom != null)
 			{
-				if (checkRequiredRoom(world, controllerPos, specialRoomType, doorBlockOffsetPos, randomRoom, world.rand, doorBlockPos, doorFacing, doorType))
+				if (checkRequiredRoom(world, controllerPos, specialRoomType, doorBlockOffsetPos, randomRoom, world.random, doorBlockPos, doorFacing, doorType))
 				{
 					removeSpecialRoom(specialRoomType);
-					world.setBlockState(doorBlockOffsetPos, Blocks.REDSTONE_BLOCK.getDefaultState(), 3);
+					world.setBlock(doorBlockOffsetPos, Blocks.REDSTONE_BLOCK.defaultBlockState(), 3);
 					return;
 				}
 			} else
@@ -213,8 +213,8 @@ public class DungeonSynthesizer
 
 		potentialRoomTypes = modifyRoomTypes(potentialRoomTypes);
 
-		world.setBlockState(doorBlockOffsetPos, BloodMagicBlocks.DUNGEON_SEAL.get().getDefaultState(), 3);
-		TileEntity tile = world.getTileEntity(doorBlockOffsetPos);
+		world.setBlock(doorBlockOffsetPos, BloodMagicBlocks.DUNGEON_SEAL.get().defaultBlockState(), 3);
+		TileEntity tile = world.getBlockEntity(doorBlockOffsetPos);
 		if (tile instanceof TileDungeonSeal)
 		{
 			((TileDungeonSeal) tile).acceptDoorInformation(controllerPos, doorBlockPos, doorFacing, doorType, potentialRoomTypes);
@@ -271,9 +271,9 @@ public class DungeonSynthesizer
 
 		settings.setRotation(rot);
 		settings.setIgnoreEntities(false);
-		settings.setChunk(null);
+		settings.setChunkPos(null);
 //		settings.addProcessor(new StoneToOreProcessor(0.0f));
-		settings.func_215223_c(true);
+		settings.setKnownShape(true);
 
 		DungeonRoom placedRoom = null;
 		Pair<Direction, BlockPos> activatedDoor = Pair.of(doorFacing, activatedDoorPos);
@@ -282,7 +282,7 @@ public class DungeonSynthesizer
 
 		Direction oppositeDoorFacing = doorFacing.getOpposite();
 
-		List<Rotation> rotationList = Rotation.shuffledRotations(rand);
+		List<Rotation> rotationList = Rotation.getShuffled(rand);
 		Rotation finalRotation = null;
 
 		// Got a random room, now test if any of the rotations have a valid door.
@@ -298,7 +298,7 @@ public class DungeonSynthesizer
 				int doorIndex = rand.nextInt(otherDoorList.size());
 				BlockPos testDoor = otherDoorList.get(doorIndex);
 
-				roomLocation = activatedDoorPos.subtract(testDoor).add(doorFacing.getDirectionVec());
+				roomLocation = activatedDoorPos.subtract(testDoor).offset(doorFacing.getNormal());
 
 				List<AreaDescriptor> descriptors = room.getAreaDescriptors(settings, roomLocation);
 				for (AreaDescriptor testDesc : descriptors)
@@ -315,7 +315,7 @@ public class DungeonSynthesizer
 
 //				roomMap.put(roomLocation, Pair.of(testingRoom, settings.copy()));
 				descriptorList.addAll(descriptors);
-				addedDoor = Pair.of(oppositeDoorFacing, testDoor.add(roomLocation));
+				addedDoor = Pair.of(oppositeDoorFacing, testDoor.offset(roomLocation));
 
 				placedRoom = room;
 				finalRotation = initialRotation;
@@ -383,9 +383,9 @@ public class DungeonSynthesizer
 
 		settings.setRotation(rot);
 		settings.setIgnoreEntities(false);
-		settings.setChunk(null);
+		settings.setChunkPos(null);
 //		settings.addProcessor(new StoneToOreProcessor(0.0f));
-		settings.func_215223_c(true);
+		settings.setKnownShape(true);
 		settings.setRotation(rotation);
 
 		DungeonRoom placedRoom = room;
@@ -395,14 +395,14 @@ public class DungeonSynthesizer
 //		System.out.println("Forced placed room name: " + roomName);
 
 		Direction oppositeDoorFacing = doorFacing.getOpposite();
-		addedDoor = Pair.of(oppositeDoorFacing, activatedDoorPos.offset(doorFacing));
+		addedDoor = Pair.of(oppositeDoorFacing, activatedDoorPos.relative(doorFacing));
 
 		// Need to save: rotation, addedDoor, roomLocation, doorFacing, roomName
 
 		settings.clearProcessors();
 		settings.addProcessor(new StoneToOreProcessor(room.oreDensity));
 
-		placedRoom.placeStructureAtPosition(world.rand, settings, world, roomLocation);
+		placedRoom.placeStructureAtPosition(world.random, settings, world, roomLocation);
 		for (String doorType : placedRoom.doorMap.keySet())
 		{
 			if (!availableDoorMasterMap.containsKey(doorType))
@@ -468,9 +468,9 @@ public class DungeonSynthesizer
 
 		settings.setRotation(rot);
 		settings.setIgnoreEntities(false);
-		settings.setChunk(null);
+		settings.setChunkPos(null);
 //		settings.addProcessor(new StoneToOreProcessor(0.0f));
-		settings.func_215223_c(true);
+		settings.setKnownShape(true);
 
 		DungeonRoom placedRoom = null;
 		Pair<Direction, BlockPos> activatedDoor = Pair.of(doorFacing, activatedDoorPos);
@@ -483,7 +483,7 @@ public class DungeonSynthesizer
 		if (displayDetailedInformation)
 			System.out.println("Room type: " + roomType);
 
-		List<Rotation> rotationList = Rotation.shuffledRotations(rand);
+		List<Rotation> rotationList = Rotation.getShuffled(rand);
 
 		// Got a random room, now test if any of the rotations have a valid door.
 		rotationCheck: for (Rotation initialRotation : rotationList)
@@ -498,7 +498,7 @@ public class DungeonSynthesizer
 				int doorIndex = rand.nextInt(otherDoorList.size());
 				BlockPos testDoor = otherDoorList.get(doorIndex);
 
-				roomLocation = activatedDoorPos.subtract(testDoor).add(doorFacing.getDirectionVec());
+				roomLocation = activatedDoorPos.subtract(testDoor).offset(doorFacing.getNormal());
 
 				List<AreaDescriptor> descriptors = testingRoom.getAreaDescriptors(settings, roomLocation);
 				for (AreaDescriptor testDesc : descriptors)
@@ -518,7 +518,7 @@ public class DungeonSynthesizer
 
 //				roomMap.put(roomLocation, Pair.of(testingRoom, settings.copy()));
 				descriptorList.addAll(descriptors);
-				addedDoor = Pair.of(oppositeDoorFacing, testDoor.add(roomLocation));
+				addedDoor = Pair.of(oppositeDoorFacing, testDoor.offset(roomLocation));
 
 				placedRoom = testingRoom;
 
@@ -640,15 +640,15 @@ public class DungeonSynthesizer
 ////		settings.setReplacedBlock(null);
 //
 ////		settings.setIgnoreStructureBlock(false);
-//		settings.func_215223_c(true);
+//		settings.setKnownShape(true);
 //
 ////        PlacementSettings placementsettings = (new PlacementSettings()).setMirror(this.mirror).setRotation(this.rotation).setIgnoreEntities(this.ignoreEntities).setChunk((ChunkPos)null);
 ////        if (this.integrity < 1.0F) {
-////           placementsettings.clearProcessors().addProcessor(new IntegrityProcessor(MathHelper.clamp(this.integrity, 0.0F, 1.0F))).setRandom(func_214074_b(this.seed));
+////           placementsettings.clearProcessors().addProcessor(new IntegrityProcessor(MathHelper.clamp(this.integrity, 0.0F, 1.0F))).setRandom(createRandom(this.seed));
 ////        }
 ////
 ////        BlockPos blockpos2 = blockpos.add(this.position);
-////        p_242689_3_.func_237144_a_(p_242689_1_, blockpos2, placementsettings, func_214074_b(this.seed));
+////        p_242689_3_.placeInWorldChunk(p_242689_1_, blockpos2, placementsettings, createRandom(this.seed));
 //
 ////		List<Rotation> rotationInfo = new ArrayList();
 //

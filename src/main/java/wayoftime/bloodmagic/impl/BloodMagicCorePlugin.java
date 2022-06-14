@@ -42,25 +42,25 @@ public class BloodMagicCorePlugin
 
 		IncenseTranquilityRegistry.registerTranquilityHandler((world, pos, block, state) -> BloodMagicAPI.INSTANCE.getValueManager().getTranquility().get(state));
 
-		apiInterface.registerAltarComponent(Blocks.GLOWSTONE.getDefaultState(), ComponentType.GLOWSTONE.name());
-		apiInterface.registerAltarComponent(Blocks.SEA_LANTERN.getDefaultState(), ComponentType.GLOWSTONE.name());
-		apiInterface.registerAltarComponent(BloodMagicBlocks.BLOODSTONE.get().getDefaultState(), ComponentType.BLOODSTONE.name());
-		apiInterface.registerAltarComponent(BloodMagicBlocks.BLOODSTONE_BRICK.get().getDefaultState(), ComponentType.BLOODSTONE.name());
-		apiInterface.registerAltarComponent(Blocks.BEACON.getDefaultState(), ComponentType.BEACON.name());
+		apiInterface.registerAltarComponent(Blocks.GLOWSTONE.defaultBlockState(), ComponentType.GLOWSTONE.name());
+		apiInterface.registerAltarComponent(Blocks.SEA_LANTERN.defaultBlockState(), ComponentType.GLOWSTONE.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.BLOODSTONE.get().defaultBlockState(), ComponentType.BLOODSTONE.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.BLOODSTONE_BRICK.get().defaultBlockState(), ComponentType.BLOODSTONE.name());
+		apiInterface.registerAltarComponent(Blocks.BEACON.defaultBlockState(), ComponentType.BEACON.name());
 
-		apiInterface.registerAltarComponent(BloodMagicBlocks.BLANK_RUNE.get().getDefaultState(), ComponentType.BLOODRUNE.name());
-		apiInterface.registerAltarComponent(BloodMagicBlocks.SPEED_RUNE.get().getDefaultState(), ComponentType.BLOODRUNE.name());
-		apiInterface.registerAltarComponent(BloodMagicBlocks.SACRIFICE_RUNE.get().getDefaultState(), ComponentType.BLOODRUNE.name());
-		apiInterface.registerAltarComponent(BloodMagicBlocks.SELF_SACRIFICE_RUNE.get().getDefaultState(), ComponentType.BLOODRUNE.name());
-		apiInterface.registerAltarComponent(BloodMagicBlocks.DISPLACEMENT_RUNE.get().getDefaultState(), ComponentType.BLOODRUNE.name());
-		apiInterface.registerAltarComponent(BloodMagicBlocks.CAPACITY_RUNE.get().getDefaultState(), ComponentType.BLOODRUNE.name());
-		apiInterface.registerAltarComponent(BloodMagicBlocks.AUGMENTED_CAPACITY_RUNE.get().getDefaultState(), ComponentType.BLOODRUNE.name());
-		apiInterface.registerAltarComponent(BloodMagicBlocks.ORB_RUNE.get().getDefaultState(), ComponentType.BLOODRUNE.name());
-		apiInterface.registerAltarComponent(BloodMagicBlocks.ACCELERATION_RUNE.get().getDefaultState(), ComponentType.BLOODRUNE.name());
-		apiInterface.registerAltarComponent(BloodMagicBlocks.CHARGING_RUNE.get().getDefaultState(), ComponentType.BLOODRUNE.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.BLANK_RUNE.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.SPEED_RUNE.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.SACRIFICE_RUNE.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.SELF_SACRIFICE_RUNE.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.DISPLACEMENT_RUNE.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.CAPACITY_RUNE.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.AUGMENTED_CAPACITY_RUNE.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.ORB_RUNE.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.ACCELERATION_RUNE.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.CHARGING_RUNE.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
 
-		apiInterface.registerInventoryProvider("mainInventory", player -> player.inventory.mainInventory);
-		apiInterface.registerInventoryProvider("armorInventory", player -> player.inventory.armorInventory);
-		apiInterface.registerInventoryProvider("offHandInventory", player -> player.inventory.offHandInventory);
+		apiInterface.registerInventoryProvider("mainInventory", player -> player.inventory.items);
+		apiInterface.registerInventoryProvider("armorInventory", player -> player.inventory.armor);
+		apiInterface.registerInventoryProvider("offHandInventory", player -> player.inventory.offhand);
 	}
 }

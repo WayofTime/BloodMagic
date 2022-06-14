@@ -17,6 +17,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import wayoftime.bloodmagic.tile.TileMimic;
 
+import net.minecraft.item.Item.Properties;
+
 public class ItemBlockMimic extends BlockItem
 {
 	public ItemBlockMimic(Block block, Properties prop)
@@ -25,42 +27,42 @@ public class ItemBlockMimic extends BlockItem
 	}
 
 	@Override
-	public ActionResultType tryPlace(BlockItemUseContext context)
+	public ActionResultType place(BlockItemUseContext context)
 	{
 		PlayerEntity player = context.getPlayer();
-		ItemStack stack = player.getHeldItem(context.getHand());
+		ItemStack stack = player.getItemInHand(context.getHand());
 
 		// If not sneaking, do normal item use
-		if (!player.isSneaking())
+		if (!player.isShiftKeyDown())
 		{
-			return super.tryPlace(context);
+			return super.place(context);
 		}
 
-		BlockPos pos = context.getPos().offset(context.getFace().getOpposite());
-		World world = context.getWorld();
-		Direction direction = context.getFace();
+		BlockPos pos = context.getClickedPos().relative(context.getClickedFace().getOpposite());
+		World world = context.getLevel();
+		Direction direction = context.getClickedFace();
 
 		// IF sneaking and player has permission, replace the targeted block
-		if (player.canPlayerEdit(pos, direction, stack))
+		if (player.mayUseItemAt(pos, direction, stack))
 		{
 			// Store information about the block being replaced and its appropriate
 			// itemstack
 			BlockState replacedBlockstate = world.getBlockState(pos);
 			Block replacedBlock = replacedBlockstate.getBlock();
-			ItemStack replacedStack = replacedBlock.getItem(world, pos, replacedBlockstate);
+			ItemStack replacedStack = replacedBlock.getCloneItemStack(world, pos, replacedBlockstate);
 
 			// Get the state for the mimic
-			BlockState mimicBlockstate = this.getBlock().getDefaultState();
+			BlockState mimicBlockstate = this.getBlock().defaultBlockState();
 
 			// Check if the block can be replaced
 
 			if (!canReplaceBlock(world, pos, replacedBlockstate))
 			{
-				return super.tryPlace(context);
+				return super.place(context);
 			}
 
 			// Check if the tile entity, if any, can be replaced
-			TileEntity tileReplaced = world.getTileEntity(pos);
+			TileEntity tileReplaced = world.getBlockEntity(pos);
 			if (!canReplaceTile(tileReplaced))
 			{
 				return ActionResultType.FAIL;
@@ -81,20 +83,20 @@ public class ItemBlockMimic extends BlockItem
 			stack.shrink(1);
 
 			// Replace the block
-			world.setBlockState(pos, mimicBlockstate, 3);
+			world.setBlock(pos, mimicBlockstate, 3);
 			// Make placing sound
 			SoundType soundtype = mimicBlockstate.getSoundType(world, pos, context.getPlayer());
 			world.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
 
 			// Replace the tile entity
-			TileEntity tile = world.getTileEntity(pos);
+			TileEntity tile = world.getBlockEntity(pos);
 			if (tile instanceof TileMimic)
 			{
 				TileMimic mimic = (TileMimic) tile;
 				mimic.tileTag = tileTag;
 //				mimic.setReplacedState(replacedBlockstate);
 				mimic.setMimic(replacedBlockstate);
-				mimic.setInventorySlotContents(0, replacedStack);
+				mimic.setItem(0, replacedStack);
 				mimic.refreshTileEntity();
 
 				if (player.isCreative())
@@ -121,7 +123,7 @@ public class ItemBlockMimic extends BlockItem
 
 	public boolean canReplaceBlock(World world, BlockPos pos, BlockState state)
 	{
-		return state.getBlockHardness(world, pos) != -1.0F;
+		return state.getDestroySpeed(world, pos) != -1.0F;
 	}
 
 	public CompoundNBT getTagFromTileEntity(TileEntity tile)
@@ -130,7 +132,7 @@ public class ItemBlockMimic extends BlockItem
 
 		if (tile != null)
 		{
-			return tile.write(tag);
+			return tile.save(tag);
 		}
 
 		return tag;

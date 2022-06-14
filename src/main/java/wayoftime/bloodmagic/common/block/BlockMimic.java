@@ -18,9 +18,11 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import wayoftime.bloodmagic.tile.TileMimic;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockMimic extends Block
 {
-	private static final VoxelShape SHAPE = VoxelShapes.create(0.01, 0, 0.01, 0.99, 1, 0.99);
+	private static final VoxelShape SHAPE = VoxelShapes.box(0.01, 0, 0.01, 0.99, 1, 0.99);
 
 	public BlockMimic(Properties prop)
 	{
@@ -51,7 +53,7 @@ public class BlockMimic extends Block
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context)
 	{
-		TileEntity te = reader.getTileEntity(pos);
+		TileEntity te = reader.getBlockEntity(pos);
 		if (te instanceof TileMimic)
 		{
 			BlockState mimic = ((TileMimic) te).getMimic();
@@ -77,11 +79,11 @@ public class BlockMimic extends Block
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult trace)
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult trace)
 	{
-		TileMimic mimic = (TileMimic) world.getTileEntity(pos);
+		TileMimic mimic = (TileMimic) world.getBlockEntity(pos);
 
-		return (mimic != null && mimic.onBlockActivated(world, pos, state, player, hand, player.getHeldItem(hand), trace.getFace()))
+		return (mimic != null && mimic.onBlockActivated(world, pos, state, player, hand, player.getItemInHand(hand), trace.getDirection()))
 				? ActionResultType.SUCCESS
 				: ActionResultType.FAIL;
 //		ItemStack item = player.getHeldItem(hand);
@@ -107,27 +109,27 @@ public class BlockMimic extends Block
 //	}
 
 	@Override
-	public void onPlayerDestroy(IWorld world, BlockPos blockPos, BlockState blockState)
+	public void destroy(IWorld world, BlockPos blockPos, BlockState blockState)
 	{
-		TileMimic altar = (TileMimic) world.getTileEntity(blockPos);
+		TileMimic altar = (TileMimic) world.getBlockEntity(blockPos);
 		if (altar != null)
 			altar.dropItems();
 
-		super.onPlayerDestroy(world, blockPos, blockState);
+		super.destroy(world, blockPos, blockState);
 	}
 
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{
-		if (!state.isIn(newState.getBlock()))
+		if (!state.is(newState.getBlock()))
 		{
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+			TileEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof TileMimic)
 			{
 				((TileMimic) tileentity).dropItems();
 			}
 
-			super.onReplaced(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
 }

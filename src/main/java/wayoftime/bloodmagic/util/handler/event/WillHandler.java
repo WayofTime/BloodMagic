@@ -86,24 +86,24 @@ public class WillHandler
 	{
 		LivingEntity attackedEntity = event.getEntityLiving();
 		DamageSource source = event.getSource();
-		Entity entity = source.getTrueSource();
+		Entity entity = source.getEntity();
 
-		if (attackedEntity.isPotionActive(BloodMagicPotions.SOUL_SNARE) && (attackedEntity instanceof MobEntity
-				|| attackedEntity.getEntityWorld().getDifficulty() == Difficulty.PEACEFUL))
+		if (attackedEntity.hasEffect(BloodMagicPotions.SOUL_SNARE) && (attackedEntity instanceof MobEntity
+				|| attackedEntity.getCommandSenderWorld().getDifficulty() == Difficulty.PEACEFUL))
 		{
-			EffectInstance eff = attackedEntity.getActivePotionEffect(BloodMagicPotions.SOUL_SNARE);
+			EffectInstance eff = attackedEntity.getEffect(BloodMagicPotions.SOUL_SNARE);
 			int lvl = eff.getAmplifier();
 
-			double amountOfSouls = attackedEntity.getEntityWorld().rand.nextDouble() * (lvl + 1) * (lvl + 1) * 4 + 1;
+			double amountOfSouls = attackedEntity.getCommandSenderWorld().random.nextDouble() * (lvl + 1) * (lvl + 1) * 4 + 1;
 			ItemStack soulStack = ((IDemonWill) BloodMagicItems.MONSTER_SOUL_RAW.get()).createWill(amountOfSouls);
-			event.getDrops().add(new ItemEntity(attackedEntity.getEntityWorld(), attackedEntity.getPosX(), attackedEntity.getPosY(), attackedEntity.getPosZ(), soulStack));
+			event.getDrops().add(new ItemEntity(attackedEntity.getCommandSenderWorld(), attackedEntity.getX(), attackedEntity.getY(), attackedEntity.getZ(), soulStack));
 		}
 
 		if (entity != null && entity instanceof PlayerEntity)
 		{
 			PlayerEntity player = (PlayerEntity) entity;
-			ItemStack heldStack = player.getHeldItemMainhand();
-			if (heldStack.getItem() instanceof IDemonWillWeapon && !player.getEntityWorld().isRemote)
+			ItemStack heldStack = player.getMainHandItem();
+			if (heldStack.getItem() instanceof IDemonWillWeapon && !player.getCommandSenderWorld().isClientSide)
 			{
 				IDemonWillWeapon demonWillWeapon = (IDemonWillWeapon) heldStack.getItem();
 				List<ItemStack> droppedSouls = demonWillWeapon.getRandomDemonWillDrop(attackedEntity, player, heldStack, event.getLootingLevel());
@@ -119,11 +119,11 @@ public class WillHandler
 							EnumDemonWillType pickupType = ((IDemonWill) remainder.getItem()).getType(remainder);
 							if (((IDemonWill) remainder.getItem()).getWill(pickupType, remainder) >= 0.0001)
 							{
-								event.getDrops().add(new ItemEntity(attackedEntity.getEntityWorld(), attackedEntity.getPosX(), attackedEntity.getPosY(), attackedEntity.getPosZ(), remainder));
+								event.getDrops().add(new ItemEntity(attackedEntity.getCommandSenderWorld(), attackedEntity.getX(), attackedEntity.getY(), attackedEntity.getZ(), remainder));
 							}
 						}
 					}
-					player.container.detectAndSendChanges();
+					player.inventoryMenu.broadcastChanges();
 				}
 			}
 		}
@@ -132,7 +132,7 @@ public class WillHandler
 	@SubscribeEvent
 	public void onServerWorldTick(TickEvent.WorldTickEvent event)
 	{
-		if (event.world.isRemote)
+		if (event.world.isClientSide)
 			return;
 
 		ResourceLocation rl = WorldDemonWillHandler.getDimensionResourceLocation(event.world);
@@ -155,7 +155,7 @@ public class WillHandler
 						IChunk chunk = event.world.getChunk(pos.x, pos.y, ChunkStatus.FULL, false);
 						if (chunk != null)
 						{
-							chunk.setModified(true);
+							chunk.setUnsaved(true);
 						}
 					}
 
@@ -170,7 +170,7 @@ public class WillHandler
 
 	public static boolean isBlockLoaded(IBlockReader world, BlockPos pos)
 	{
-		if (world == null || !World.isValid(pos))
+		if (world == null || !World.isInWorldBounds(pos))
 		{
 			return false;
 		} else if (world instanceof IWorldReader)
@@ -180,7 +180,7 @@ public class WillHandler
 			// all that does is also validate the y value is in bounds, and we already check
 			// to make
 			// sure the position is valid both in the y and xz directions
-			return ((IWorldReader) world).isBlockLoaded(pos);
+			return ((IWorldReader) world).hasChunkAt(pos);
 		}
 		return true;
 	}
@@ -206,7 +206,7 @@ public class WillHandler
 			nbt.putShort("base", ac.getBase());
 			ac.getCurrentWill().writeToNBT(nbt, "current");
 //			if (event.getChunk() instanceof Chunk && !((Chunk) event.getChunk()).setLoaded(loaded);)
-			if (!event.getWorld().getChunkProvider().isChunkLoaded(event.getChunk().getPos()))
+			if (!event.getWorld().getChunkSource().isEntityTickingChunk(event.getChunk().getPos()))
 				WorldDemonWillHandler.removeWillChunk(rl, loc.x, loc.z);
 		}
 	}

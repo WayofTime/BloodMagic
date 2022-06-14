@@ -27,16 +27,16 @@ public class SetWillRange extends LootFunction
 		this.damageRange = damageRangeIn;
 	}
 
-	public LootFunctionType getFunctionType()
+	public LootFunctionType getType()
 	{
 		return BloodMagicLootFunctionManager.SET_WILL_RANGE;
 	}
 
-	public ItemStack doApply(ItemStack stack, LootContext context)
+	public ItemStack run(ItemStack stack, LootContext context)
 	{
 		if (stack.getItem() instanceof IDemonWill)
 		{
-			float f = this.damageRange.generateFloat(context.getRandom());
+			float f = this.damageRange.getFloat(context.getRandom());
 			return ((IDemonWill) stack.getItem()).createWill(f);
 		} else
 		{
@@ -48,7 +48,7 @@ public class SetWillRange extends LootFunction
 
 	public static LootFunction.Builder<?> withRange(RandomValueRange p_215931_0_)
 	{
-		return builder((p_215930_1_) -> {
+		return simpleBuilder((p_215930_1_) -> {
 			return new SetWillRange(p_215930_1_, p_215931_0_);
 		});
 	}
@@ -63,7 +63,7 @@ public class SetWillRange extends LootFunction
 
 		public SetWillRange deserialize(JsonObject object, JsonDeserializationContext deserializationContext, ILootCondition[] conditionsIn)
 		{
-			return new SetWillRange(conditionsIn, JSONUtils.deserializeClass(object, "damage", deserializationContext, RandomValueRange.class));
+			return new SetWillRange(conditionsIn, JSONUtils.getAsObject(object, "damage", deserializationContext, RandomValueRange.class));
 		}
 	}
 }

@@ -121,10 +121,10 @@ public class BloodAltarRecipeCategory implements IRecipeCategory<RecipeBloodAlta
 		String[] infoString = new String[]
 		{ TextHelper.localize("jei.bloodmagic.recipe.requiredtier", NumeralHelper.toRoman(recipe.getMinimumTier() + 1)),
 				TextHelper.localize("jei.bloodmagic.recipe.requiredlp", recipe.getSyphon()) };
-		mc.fontRenderer.drawString(matrixStack, infoString[0], 90
-				- mc.fontRenderer.getStringWidth(infoString[0]) / 2, 0, Color.gray.getRGB());
-		mc.fontRenderer.drawString(matrixStack, infoString[1], 90
-				- mc.fontRenderer.getStringWidth(infoString[1]) / 2, 10, Color.gray.getRGB());
+		mc.font.draw(matrixStack, infoString[0], 90
+				- mc.font.width(infoString[0]) / 2, 0, Color.gray.getRGB());
+		mc.font.draw(matrixStack, infoString[1], 90
+				- mc.font.width(infoString[1]) / 2, 10, Color.gray.getRGB());
 	}
 
 }

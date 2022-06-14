@@ -28,7 +28,7 @@ public class ARCTanksPacket
 
 	public ARCTanksPacket(TileAlchemicalReactionChamber tile)
 	{
-		this(tile.getPos(), tile.inputTank.writeToNBT(new CompoundNBT()), tile.outputTank.writeToNBT(new CompoundNBT()));
+		this(tile.getBlockPos(), tile.inputTank.writeToNBT(new CompoundNBT()), tile.outputTank.writeToNBT(new CompoundNBT()));
 	}
 
 	public ARCTanksPacket(BlockPos pos, CompoundNBT inputNBT, CompoundNBT outputNBT)
@@ -41,13 +41,13 @@ public class ARCTanksPacket
 	public static void encode(ARCTanksPacket pkt, PacketBuffer buf)
 	{
 		buf.writeBlockPos(pkt.pos);
-		buf.writeCompoundTag(pkt.inputNBT);
-		buf.writeCompoundTag(pkt.outputNBT);
+		buf.writeNbt(pkt.inputNBT);
+		buf.writeNbt(pkt.outputNBT);
 	}
 
 	public static ARCTanksPacket decode(PacketBuffer buf)
 	{
-		ARCTanksPacket pkt = new ARCTanksPacket(buf.readBlockPos(), buf.readCompoundTag(), buf.readCompoundTag());
+		ARCTanksPacket pkt = new ARCTanksPacket(buf.readBlockPos(), buf.readNbt(), buf.readNbt());
 
 		return pkt;
 	}
@@ -61,8 +61,8 @@ public class ARCTanksPacket
 	@OnlyIn(Dist.CLIENT)
 	public static void updateTanks(BlockPos pos, CompoundNBT inputNBT, CompoundNBT outputNBT)
 	{
-		World world = Minecraft.getInstance().world;
-		TileEntity tile = world.getTileEntity(pos);
+		World world = Minecraft.getInstance().level;
+		TileEntity tile = world.getBlockEntity(pos);
 		if (tile instanceof TileAlchemicalReactionChamber)
 		{
 			((TileAlchemicalReactionChamber) tile).inputTank.readFromNBT(inputNBT);

@@ -20,47 +20,47 @@ public class RenderFakeBlocks
 		double maxY = minY + 1;
 		double maxZ = minZ + 1;
 		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder wr = tessellator.getBuffer();
+		BufferBuilder wr = tessellator.getBuilder();
 
-		Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(texture.getName());
+		Minecraft.getInstance().getTextureAtlas(AtlasTexture.LOCATION_BLOCKS).apply(texture.getName());
 
 		wr.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
 
-		float texMinU = texture.getMinU();
-		float texMinV = texture.getMinV();
-		float texMaxU = texture.getMaxU();
-		float texMaxV = texture.getMaxV();
+		float texMinU = texture.getU0();
+		float texMinV = texture.getV0();
+		float texMaxU = texture.getU1();
+		float texMaxV = texture.getV1();
 
-		wr.pos(minX, minY, minZ).tex(texMinU, texMinV).endVertex();
-		wr.pos(maxX, minY, minZ).tex(texMaxU, texMinV).endVertex();
-		wr.pos(maxX, minY, maxZ).tex(texMaxU, texMaxV).endVertex();
-		wr.pos(minX, minY, maxZ).tex(texMinU, texMaxV).endVertex();
+		wr.vertex(minX, minY, minZ).uv(texMinU, texMinV).endVertex();
+		wr.vertex(maxX, minY, minZ).uv(texMaxU, texMinV).endVertex();
+		wr.vertex(maxX, minY, maxZ).uv(texMaxU, texMaxV).endVertex();
+		wr.vertex(minX, minY, maxZ).uv(texMinU, texMaxV).endVertex();
 
-		wr.pos(minX, maxY, maxZ).tex(texMinU, texMaxV).endVertex();
-		wr.pos(maxX, maxY, maxZ).tex(texMaxU, texMaxV).endVertex();
-		wr.pos(maxX, maxY, minZ).tex(texMaxU, texMinV).endVertex();
-		wr.pos(minX, maxY, minZ).tex(texMinU, texMinV).endVertex();
+		wr.vertex(minX, maxY, maxZ).uv(texMinU, texMaxV).endVertex();
+		wr.vertex(maxX, maxY, maxZ).uv(texMaxU, texMaxV).endVertex();
+		wr.vertex(maxX, maxY, minZ).uv(texMaxU, texMinV).endVertex();
+		wr.vertex(minX, maxY, minZ).uv(texMinU, texMinV).endVertex();
 
-		wr.pos(maxX, minY, minZ).tex(texMinU, texMaxV).endVertex();
-		wr.pos(minX, minY, minZ).tex(texMaxU, texMaxV).endVertex();
-		wr.pos(minX, maxY, minZ).tex(texMaxU, texMinV).endVertex();
-		wr.pos(maxX, maxY, minZ).tex(texMinU, texMinV).endVertex();
+		wr.vertex(maxX, minY, minZ).uv(texMinU, texMaxV).endVertex();
+		wr.vertex(minX, minY, minZ).uv(texMaxU, texMaxV).endVertex();
+		wr.vertex(minX, maxY, minZ).uv(texMaxU, texMinV).endVertex();
+		wr.vertex(maxX, maxY, minZ).uv(texMinU, texMinV).endVertex();
 
-		wr.pos(minX, minY, maxZ).tex(texMinU, texMaxV).endVertex();
-		wr.pos(maxX, minY, maxZ).tex(texMaxU, texMaxV).endVertex();
-		wr.pos(maxX, maxY, maxZ).tex(texMaxU, texMinV).endVertex();
-		wr.pos(minX, maxY, maxZ).tex(texMinU, texMinV).endVertex();
+		wr.vertex(minX, minY, maxZ).uv(texMinU, texMaxV).endVertex();
+		wr.vertex(maxX, minY, maxZ).uv(texMaxU, texMaxV).endVertex();
+		wr.vertex(maxX, maxY, maxZ).uv(texMaxU, texMinV).endVertex();
+		wr.vertex(minX, maxY, maxZ).uv(texMinU, texMinV).endVertex();
 
-		wr.pos(minX, minY, minZ).tex(texMinU, texMaxV).endVertex();
-		wr.pos(minX, minY, maxZ).tex(texMaxU, texMaxV).endVertex();
-		wr.pos(minX, maxY, maxZ).tex(texMaxU, texMinV).endVertex();
-		wr.pos(minX, maxY, minZ).tex(texMinU, texMinV).endVertex();
+		wr.vertex(minX, minY, minZ).uv(texMinU, texMaxV).endVertex();
+		wr.vertex(minX, minY, maxZ).uv(texMaxU, texMaxV).endVertex();
+		wr.vertex(minX, maxY, maxZ).uv(texMaxU, texMinV).endVertex();
+		wr.vertex(minX, maxY, minZ).uv(texMinU, texMinV).endVertex();
 
-		wr.pos(maxX, minY, maxZ).tex(texMinU, texMaxV).endVertex();
-		wr.pos(maxX, minY, minZ).tex(texMaxU, texMaxV).endVertex();
-		wr.pos(maxX, maxY, minZ).tex(texMaxU, texMinV).endVertex();
-		wr.pos(maxX, maxY, maxZ).tex(texMinU, texMinV).endVertex();
+		wr.vertex(maxX, minY, maxZ).uv(texMinU, texMaxV).endVertex();
+		wr.vertex(maxX, minY, minZ).uv(texMaxU, texMaxV).endVertex();
+		wr.vertex(maxX, maxY, minZ).uv(texMaxU, texMinV).endVertex();
+		wr.vertex(maxX, maxY, maxZ).uv(texMinU, texMinV).endVertex();
 
-		tessellator.draw();
+		tessellator.end();
 	}
 }

@@ -12,7 +12,7 @@ public class NodeHelper
 		{
 			return false;
 		}
-		TileEntity tile = world.getTileEntity(testPos);
+		TileEntity tile = world.getBlockEntity(testPos);
 		if (!(tile instanceof IRoutingNode))
 		{
 			return false;

@@ -42,9 +42,9 @@ public class RitualCrystalSplit extends Ritual
 
 		BlockPos pos = masterRitualStone.getMasterBlockPos();
 		Direction direction = masterRitualStone.getDirection();
-		BlockPos rawPos = pos.up(2);
+		BlockPos rawPos = pos.above(2);
 
-		TileEntity tile = world.getTileEntity(rawPos);
+		TileEntity tile = world.getBlockEntity(rawPos);
 		if (!(tile instanceof TileDemonCrystal) || ((TileDemonCrystal) tile).getWillType() != EnumDemonWillType.DEFAULT)
 		{
 			return;
@@ -55,21 +55,21 @@ public class RitualCrystalSplit extends Ritual
 		TileDemonCrystal rawTile = (TileDemonCrystal) tile;
 		if (rawTile.getCrystalCount() >= 5)
 		{
-			BlockPos vengefulPos = pos.offset(rotateFacing(Direction.NORTH, direction)).up();
-			BlockPos corrosivePos = pos.offset(rotateFacing(Direction.EAST, direction)).up();
-			BlockPos steadfastPos = pos.offset(rotateFacing(Direction.SOUTH, direction)).up();
-			BlockPos destructivePos = pos.offset(rotateFacing(Direction.WEST, direction)).up();
+			BlockPos vengefulPos = pos.relative(rotateFacing(Direction.NORTH, direction)).above();
+			BlockPos corrosivePos = pos.relative(rotateFacing(Direction.EAST, direction)).above();
+			BlockPos steadfastPos = pos.relative(rotateFacing(Direction.SOUTH, direction)).above();
+			BlockPos destructivePos = pos.relative(rotateFacing(Direction.WEST, direction)).above();
 
 			int vengefulCrystals = 0;
 			int corrosiveCrystals = 0;
 			int steadfastCrystals = 0;
 			int destructiveCrystals = 0;
 
-			tile = world.getTileEntity(vengefulPos);
+			tile = world.getBlockEntity(vengefulPos);
 			if (tile instanceof TileDemonCrystal && ((TileDemonCrystal) tile).getWillType() == EnumDemonWillType.VENGEFUL && ((TileDemonCrystal) tile).getCrystalCount() < 7)
 			{
 				vengefulCrystals = ((TileDemonCrystal) tile).getCrystalCount();
-			} else if (!(tile instanceof TileDemonCrystal) && world.isAirBlock(vengefulPos))
+			} else if (!(tile instanceof TileDemonCrystal) && world.isEmptyBlock(vengefulPos))
 			{
 				// #donothing, no point setting the crystal to 0 again
 			} else
@@ -77,11 +77,11 @@ public class RitualCrystalSplit extends Ritual
 				return;
 			}
 
-			tile = world.getTileEntity(corrosivePos);
+			tile = world.getBlockEntity(corrosivePos);
 			if (tile instanceof TileDemonCrystal && ((TileDemonCrystal) tile).getWillType() == EnumDemonWillType.CORROSIVE && ((TileDemonCrystal) tile).getCrystalCount() < 7)
 			{
 				corrosiveCrystals = ((TileDemonCrystal) tile).getCrystalCount();
-			} else if (!(tile instanceof TileDemonCrystal) && world.isAirBlock(corrosivePos))
+			} else if (!(tile instanceof TileDemonCrystal) && world.isEmptyBlock(corrosivePos))
 			{
 
 			} else
@@ -89,11 +89,11 @@ public class RitualCrystalSplit extends Ritual
 				return;
 			}
 
-			tile = world.getTileEntity(steadfastPos);
+			tile = world.getBlockEntity(steadfastPos);
 			if (tile instanceof TileDemonCrystal && ((TileDemonCrystal) tile).getWillType() == EnumDemonWillType.STEADFAST && ((TileDemonCrystal) tile).getCrystalCount() < 7)
 			{
 				steadfastCrystals = ((TileDemonCrystal) tile).getCrystalCount();
-			} else if (!(tile instanceof TileDemonCrystal) && world.isAirBlock(steadfastPos))
+			} else if (!(tile instanceof TileDemonCrystal) && world.isEmptyBlock(steadfastPos))
 			{
 
 			} else
@@ -101,11 +101,11 @@ public class RitualCrystalSplit extends Ritual
 				return;
 			}
 
-			tile = world.getTileEntity(destructivePos);
+			tile = world.getBlockEntity(destructivePos);
 			if (tile instanceof TileDemonCrystal && ((TileDemonCrystal) tile).getWillType() == EnumDemonWillType.DESTRUCTIVE && ((TileDemonCrystal) tile).getCrystalCount() < 7)
 			{
 				destructiveCrystals = ((TileDemonCrystal) tile).getCrystalCount();
-			} else if (!(tile instanceof TileDemonCrystal) && world.isAirBlock(destructivePos))
+			} else if (!(tile instanceof TileDemonCrystal) && world.isEmptyBlock(destructivePos))
 			{
 
 			} else
@@ -119,8 +119,8 @@ public class RitualCrystalSplit extends Ritual
 			growCrystal(world, corrosivePos, EnumDemonWillType.CORROSIVE, corrosiveCrystals);
 			growCrystal(world, steadfastPos, EnumDemonWillType.STEADFAST, steadfastCrystals);
 			growCrystal(world, destructivePos, EnumDemonWillType.DESTRUCTIVE, destructiveCrystals);
-			rawTile.markDirty();
-			world.notifyBlockUpdate(rawPos, rawState, rawState, 3);
+			rawTile.setChanged();
+			world.sendBlockUpdated(rawPos, rawState, rawState, 3);
 		}
 	}
 
@@ -129,11 +129,11 @@ public class RitualCrystalSplit extends Ritual
 		switch (rotation)
 		{
 		case EAST:
-			return facing.rotateY();
+			return facing.getClockWise();
 		case SOUTH:
-			return facing.rotateY().rotateY();
+			return facing.getClockWise().getClockWise();
 		case WEST:
-			return facing.rotateYCCW();
+			return facing.getCounterClockWise();
 		case NORTH:
 		default:
 			return facing;
@@ -148,31 +148,31 @@ public class RitualCrystalSplit extends Ritual
 			switch (type)
 			{
 			case CORROSIVE:
-				state = BloodMagicBlocks.CORROSIVE_CRYSTAL_BLOCK.get().getDefaultState();
+				state = BloodMagicBlocks.CORROSIVE_CRYSTAL_BLOCK.get().defaultBlockState();
 				break;
 			case DEFAULT:
-				state = BloodMagicBlocks.RAW_CRYSTAL_BLOCK.get().getDefaultState();
+				state = BloodMagicBlocks.RAW_CRYSTAL_BLOCK.get().defaultBlockState();
 				break;
 			case DESTRUCTIVE:
-				state = BloodMagicBlocks.DESTRUCTIVE_CRYSTAL_BLOCK.get().getDefaultState();
+				state = BloodMagicBlocks.DESTRUCTIVE_CRYSTAL_BLOCK.get().defaultBlockState();
 				break;
 			case STEADFAST:
-				state = BloodMagicBlocks.STEADFAST_CRYSTAL_BLOCK.get().getDefaultState();
+				state = BloodMagicBlocks.STEADFAST_CRYSTAL_BLOCK.get().defaultBlockState();
 				break;
 			case VENGEFUL:
-				state = BloodMagicBlocks.VENGEFUL_CRYSTAL_BLOCK.get().getDefaultState();
+				state = BloodMagicBlocks.VENGEFUL_CRYSTAL_BLOCK.get().defaultBlockState();
 				break;
 			default:
-				state = BloodMagicBlocks.RAW_CRYSTAL_BLOCK.get().getDefaultState();
+				state = BloodMagicBlocks.RAW_CRYSTAL_BLOCK.get().defaultBlockState();
 			}
-			world.setBlockState(pos, state, 3);
+			world.setBlock(pos, state, 3);
 		} else
 		{
-			TileDemonCrystal tile = (TileDemonCrystal) world.getTileEntity(pos);
+			TileDemonCrystal tile = (TileDemonCrystal) world.getBlockEntity(pos);
 			tile.setCrystalCount(currentCrystalCount + 1);
-			tile.markDirty();
+			tile.setChanged();
 			BlockState state = world.getBlockState(pos);
-			world.notifyBlockUpdate(pos, state, state, 3);
+			world.sendBlockUpdated(pos, state, state, 3);
 		}
 	}
 

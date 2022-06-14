@@ -28,22 +28,22 @@ public class BlockAlternator extends Block {
 
     public BlockAlternator(AbstractBlock.Properties properties) {
         super(properties);
-        this.setDefaultState(this.getDefaultState().with(ACTIVE, false));
+        this.registerDefaultState(this.defaultBlockState().setValue(ACTIVE, false));
     }
 
     @Nullable
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(ACTIVE, false);
+        return this.defaultBlockState().setValue(ACTIVE, false);
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        worldIn.getPendingBlockTicks().scheduleTick(currentPos, this, 20);
-        return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+        worldIn.getBlockTicks().scheduleTick(currentPos, this, 20);
+        return super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
     }
 
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-            worldIn.getPendingBlockTicks().scheduleTick(pos, this, 1);
+    public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+            worldIn.getBlockTicks().scheduleTick(pos, this, 1);
 
     }
     
@@ -59,20 +59,20 @@ public class BlockAlternator extends Block {
     }
     
     @Override
-    public boolean canProvidePower(BlockState state) {
+    public boolean isSignalSource(BlockState state) {
         return true;
     }
 
-    public int getStrongPower(BlockState state, IBlockReader blockAccess, BlockPos pos, Direction side) {
-        return state.get(ACTIVE) ? 15 : 0;
+    public int getDirectSignal(BlockState state, IBlockReader blockAccess, BlockPos pos, Direction side) {
+        return state.getValue(ACTIVE) ? 15 : 0;
     }
     
     @Override
-    public int getWeakPower(BlockState state, IBlockReader blockAccess, BlockPos pos, Direction side) {
-        return state.get(ACTIVE) ? 15 : 0;
+    public int getSignal(BlockState state, IBlockReader blockAccess, BlockPos pos, Direction side) {
+        return state.getValue(ACTIVE) ? 15 : 0;
     }
     
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(ACTIVE);
     }
 }

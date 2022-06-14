@@ -40,7 +40,7 @@ public class AlchemyTableButtonPacket
 
 	public static AlchemyTableButtonPacket decode(PacketBuffer buf)
 	{
-		AlchemyTableButtonPacket pkt = new AlchemyTableButtonPacket(buf.readBlockPos(), buf.readInt(), Direction.byIndex(buf.readInt()), buf.readBoolean());
+		AlchemyTableButtonPacket pkt = new AlchemyTableButtonPacket(buf.readBlockPos(), buf.readInt(), Direction.from3DDataValue(buf.readInt()), buf.readBoolean());
 
 		return pkt;
 	}
@@ -53,7 +53,7 @@ public class AlchemyTableButtonPacket
 			{
 				return;
 			}
-			TileEntity tile = player.getEntityWorld().getTileEntity(message.pos);
+			TileEntity tile = player.getCommandSenderWorld().getBlockEntity(message.pos);
 			if (tile instanceof TileAlchemyTable)
 			{
 				((TileAlchemyTable) tile).setSlotEnabled(message.enable, message.slot, message.dir);

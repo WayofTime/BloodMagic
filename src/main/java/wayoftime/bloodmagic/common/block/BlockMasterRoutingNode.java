@@ -32,18 +32,18 @@ public class BlockMasterRoutingNode extends BlockItemRoutingNode
 //    }
 
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{
-		if (!state.isIn(newState.getBlock()))
+		if (!state.is(newState.getBlock()))
 		{
-			TileEntity tile = worldIn.getTileEntity(pos);
+			TileEntity tile = worldIn.getBlockEntity(pos);
 			if (tile instanceof TileMasterRoutingNode)
 			{
 				((TileMasterRoutingNode) tile).removeAllConnections();
 				((TileMasterRoutingNode) tile).dropItems();
 			}
 
-			super.onReplaced(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
 
@@ -60,12 +60,12 @@ public class BlockMasterRoutingNode extends BlockItemRoutingNode
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
 	{
-		if (world.isRemote)
+		if (world.isClientSide)
 			return ActionResultType.SUCCESS;
 
-		TileEntity tile = world.getTileEntity(pos);
+		TileEntity tile = world.getBlockEntity(pos);
 		if (!(tile instanceof TileMasterRoutingNode))
 			return ActionResultType.FAIL;
 

@@ -45,37 +45,37 @@ public class BlockDemonCrystal extends Block
 	public final EnumDemonWillType type;
 
 	// Bounding / Collision boxes
-	private static final VoxelShape[] UP = { Block.makeCuboidShape(6, 0, 5, 10, 13, 9),
-			Block.makeCuboidShape(7, 0, 0, 13, 6, 5), Block.makeCuboidShape(9, 0, 9, 13, 5, 14),
-			Block.makeCuboidShape(2, 0, 1, 7, 6, 7), Block.makeCuboidShape(5, 0, 9, 9, 7, 15),
-			Block.makeCuboidShape(0, 0, 7, 6, 6, 10), Block.makeCuboidShape(10, 0, 6, 15, 6, 9) };
-	private static final VoxelShape[] DOWN = { Block.makeCuboidShape(6, 3, 7, 10, 16, 11),
-			Block.makeCuboidShape(7, 10, 11, 13, 16, 16), Block.makeCuboidShape(9, 11, 2, 13, 16, 7),
-			Block.makeCuboidShape(2, 9, 11, 7, 16, 15), Block.makeCuboidShape(5, 9, 1, 9, 16, 7),
-			Block.makeCuboidShape(0, 10, 6, 6, 16, 9), Block.makeCuboidShape(10, 11, 7, 15, 16, 10) };
-	private static final VoxelShape[] NORTH = { Block.makeCuboidShape(6, 5, 3, 10, 9, 16),
-			Block.makeCuboidShape(9, 0, 6, 13, 5, 16), Block.makeCuboidShape(8, 9, 11, 13, 14, 16),
-			Block.makeCuboidShape(2, 1, 9, 7, 7, 16), Block.makeCuboidShape(5, 9, 9, 9, 15, 16),
-			Block.makeCuboidShape(0, 7, 10, 6, 10, 16), Block.makeCuboidShape(10, 7, 10, 15, 9, 15), };
-	private static final VoxelShape[] SOUTH = { Block.makeCuboidShape(6, 7, 0, 10, 11, 13),
-			Block.makeCuboidShape(7, 11, 0, 13, 16, 6), Block.makeCuboidShape(8, 2, 9, 13, 7, 14),
-			Block.makeCuboidShape(2, 9, 1, 7, 14, 7), Block.makeCuboidShape(5, 1, 9, 9, 7, 9),
-			Block.makeCuboidShape(0, 6, 1, 6, 9, 7), Block.makeCuboidShape(10, 8, 1, 15, 10, 6) };
-	private static final VoxelShape[] EAST = { Block.makeCuboidShape(0, 6, 5, 13, 10, 9),
-			Block.makeCuboidShape(0, 3, 0, 6, 9, 5), Block.makeCuboidShape(0, 3, 9, 5, 8, 14),
-			Block.makeCuboidShape(1, 9, 1, 7, 13, 7), Block.makeCuboidShape(1, 0, 9, 7, 11, 15),
-			Block.makeCuboidShape(0, 10, 7, 6, 16, 10), Block.makeCuboidShape(0, 1, 6, 5, 6, 9) };
-	private static final VoxelShape[] WEST = { Block.makeCuboidShape(3, 6, 5, 16, 10, 9),
-			Block.makeCuboidShape(9, 7, 0, 16, 12, 5), Block.makeCuboidShape(11, 4, 9, 16, 13, 14),
-			Block.makeCuboidShape(9, 3, 1, 16, 8, 7), Block.makeCuboidShape(9, 6, 9, 16, 8, 15),
-			Block.makeCuboidShape(10, 1, 7, 16, 6, 10), Block.makeCuboidShape(10, 6, 6, 15, 15, 9) };
+	private static final VoxelShape[] UP = { Block.box(6, 0, 5, 10, 13, 9),
+			Block.box(7, 0, 0, 13, 6, 5), Block.box(9, 0, 9, 13, 5, 14),
+			Block.box(2, 0, 1, 7, 6, 7), Block.box(5, 0, 9, 9, 7, 15),
+			Block.box(0, 0, 7, 6, 6, 10), Block.box(10, 0, 6, 15, 6, 9) };
+	private static final VoxelShape[] DOWN = { Block.box(6, 3, 7, 10, 16, 11),
+			Block.box(7, 10, 11, 13, 16, 16), Block.box(9, 11, 2, 13, 16, 7),
+			Block.box(2, 9, 11, 7, 16, 15), Block.box(5, 9, 1, 9, 16, 7),
+			Block.box(0, 10, 6, 6, 16, 9), Block.box(10, 11, 7, 15, 16, 10) };
+	private static final VoxelShape[] NORTH = { Block.box(6, 5, 3, 10, 9, 16),
+			Block.box(9, 0, 6, 13, 5, 16), Block.box(8, 9, 11, 13, 14, 16),
+			Block.box(2, 1, 9, 7, 7, 16), Block.box(5, 9, 9, 9, 15, 16),
+			Block.box(0, 7, 10, 6, 10, 16), Block.box(10, 7, 10, 15, 9, 15), };
+	private static final VoxelShape[] SOUTH = { Block.box(6, 7, 0, 10, 11, 13),
+			Block.box(7, 11, 0, 13, 16, 6), Block.box(8, 2, 9, 13, 7, 14),
+			Block.box(2, 9, 1, 7, 14, 7), Block.box(5, 1, 9, 9, 7, 9),
+			Block.box(0, 6, 1, 6, 9, 7), Block.box(10, 8, 1, 15, 10, 6) };
+	private static final VoxelShape[] EAST = { Block.box(0, 6, 5, 13, 10, 9),
+			Block.box(0, 3, 0, 6, 9, 5), Block.box(0, 3, 9, 5, 8, 14),
+			Block.box(1, 9, 1, 7, 13, 7), Block.box(1, 0, 9, 7, 11, 15),
+			Block.box(0, 10, 7, 6, 16, 10), Block.box(0, 1, 6, 5, 6, 9) };
+	private static final VoxelShape[] WEST = { Block.box(3, 6, 5, 16, 10, 9),
+			Block.box(9, 7, 0, 16, 12, 5), Block.box(11, 4, 9, 16, 13, 14),
+			Block.box(9, 3, 1, 16, 8, 7), Block.box(9, 6, 9, 16, 8, 15),
+			Block.box(10, 1, 7, 16, 6, 10), Block.box(10, 6, 6, 15, 15, 9) };
 
 	public BlockDemonCrystal(EnumDemonWillType type)
 	{
-		super(AbstractBlock.Properties.create(Material.IRON).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(2));
+		super(AbstractBlock.Properties.of(Material.METAL).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(2));
 		this.type = type;
 
-		this.setDefaultState(this.stateContainer.getBaseState().with(ATTACHED, Direction.UP).with(AGE, Integer.valueOf(0)));
+		this.registerDefaultState(this.stateDefinition.any().setValue(ATTACHED, Direction.UP).setValue(AGE, Integer.valueOf(0)));
 //		this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, EnumDemonWillType.DEFAULT).withProperty(ATTACHED, Direction.UP));
 
 //		setTranslationKey(BloodMagic.MODID + ".demonCrystal.");
@@ -114,7 +114,7 @@ public class BlockDemonCrystal extends Block
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
 	{
-		switch (state.get(ATTACHED))
+		switch (state.getValue(ATTACHED))
 		{
 		case DOWN:
 			return DOWN[0];
@@ -133,16 +133,16 @@ public class BlockDemonCrystal extends Block
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
 	{
-		if (!world.isRemote)
+		if (!world.isClientSide)
 		{
-			TileEntity tile = world.getTileEntity(pos);
+			TileEntity tile = world.getBlockEntity(pos);
 			if (tile instanceof TileDemonCrystal)
 			{
 				TileDemonCrystal crystal = (TileDemonCrystal) tile;
 				boolean isCreative = player.isCreative();
-				boolean holdsCrystal = player.getHeldItem(hand).getItem() instanceof ItemDemonCrystal;
+				boolean holdsCrystal = player.getItemInHand(hand).getItem() instanceof ItemDemonCrystal;
 
 				if (PlayerDemonWillHandler.getTotalDemonWill(PlayerDemonWillHandler.getLargestWillType(player), player) > 1024 && !(holdsCrystal && isCreative))
 				{
@@ -150,7 +150,7 @@ public class BlockDemonCrystal extends Block
 
 					return ActionResultType.SUCCESS;
 				}
-				if (!crystal.getWorld().isRemote && isCreative && holdsCrystal)
+				if (!crystal.getLevel().isClientSide && isCreative && holdsCrystal)
 				{
 					if (crystal.getCrystalCount() < 7)
 					{
@@ -158,30 +158,30 @@ public class BlockDemonCrystal extends Block
 						if (crystal.progressToNextCrystal > 0)
 							crystal.progressToNextCrystal--;
 						crystal.setCrystalCount(crystal.getCrystalCount() + 1);
-						crystal.markDirty();
+						crystal.setChanged();
 						crystal.notifyUpdate();
 					}
 				}
 			}
 		}
 
-		return super.onBlockActivated(state, world, pos, player, hand, blockRayTraceResult);
+		return super.use(state, world, pos, player, hand, blockRayTraceResult);
 	}
 
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos)
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos)
 	{
-		Direction direction = state.get(ATTACHED);
-		BlockPos blockpos = pos.offset(direction.getOpposite());
+		Direction direction = state.getValue(ATTACHED);
+		BlockPos blockpos = pos.relative(direction.getOpposite());
 		BlockState blockstate = worldIn.getBlockState(blockpos);
-		return blockstate.isSolidSide(worldIn, blockpos, direction);
+		return blockstate.isFaceSturdy(worldIn, blockpos, direction);
 	}
 
 	@Nullable
 	public BlockState getStateForPlacement(BlockItemUseContext context)
 	{
-		BlockState blockstate = this.getDefaultState();
-		IWorldReader iworldreader = context.getWorld();
-		BlockPos blockpos = context.getPos();
+		BlockState blockstate = this.defaultBlockState();
+		IWorldReader iworldreader = context.getLevel();
+		BlockPos blockpos = context.getClickedPos();
 		Direction[] adirection = context.getNearestLookingDirections();
 
 		for (Direction direction : adirection)
@@ -189,8 +189,8 @@ public class BlockDemonCrystal extends Block
 //			if (direction.getAxis().isHorizontal())
 			{
 				Direction direction1 = direction.getOpposite();
-				blockstate = blockstate.with(ATTACHED, direction1);
-				if (blockstate.isValidPosition(iworldreader, blockpos))
+				blockstate = blockstate.setValue(ATTACHED, direction1);
+				if (blockstate.canSurvive(iworldreader, blockpos))
 				{
 					return blockstate;
 				}
@@ -200,21 +200,21 @@ public class BlockDemonCrystal extends Block
 		return null;
 	}
 
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
 	{
-		return facing.getOpposite() == stateIn.get(ATTACHED) && !stateIn.isValidPosition(worldIn, currentPos)
-				? Blocks.AIR.getDefaultState()
+		return facing.getOpposite() == stateIn.getValue(ATTACHED) && !stateIn.canSurvive(worldIn, currentPos)
+				? Blocks.AIR.defaultBlockState()
 				: stateIn;
 	}
 
 	@Override
-	public BlockRenderType getRenderType(BlockState state)
+	public BlockRenderType getRenderShape(BlockState state)
 	{
 		return BlockRenderType.MODEL;
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
 	{
 		builder.add(ATTACHED, AGE);
 	}

@@ -20,7 +20,7 @@ public class MimicColor implements IBlockColor
 			return -1;
 		}
 
-		TileEntity te = world.getTileEntity(pos);
+		TileEntity te = world.getBlockEntity(pos);
 		if (te instanceof TileMimic)
 		{
 			TileMimic fancy = (TileMimic) te;

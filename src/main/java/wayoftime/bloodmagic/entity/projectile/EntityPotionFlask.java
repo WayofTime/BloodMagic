@@ -41,7 +41,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class EntityPotionFlask extends ProjectileItemEntity implements IRendersAsItem
 {
 	public boolean isLingering = false;
-	public static final Predicate<LivingEntity> WATER_SENSITIVE = LivingEntity::isWaterSensitive;
+	public static final Predicate<LivingEntity> WATER_SENSITIVE = LivingEntity::isSensitiveToWater;
 
 	public EntityPotionFlask(EntityType<? extends EntityPotionFlask> typeIn, World worldIn)
 	{
@@ -69,7 +69,7 @@ public class EntityPotionFlask extends ProjectileItemEntity implements IRendersA
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket()
+	public IPacket<?> getAddEntityPacket()
 	{
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
@@ -77,31 +77,31 @@ public class EntityPotionFlask extends ProjectileItemEntity implements IRendersA
 	/**
 	 * Gets the amount of gravity to apply to the thrown entity with each tick.
 	 */
-	protected float getGravityVelocity()
+	protected float getGravity()
 	{
 		return 0.05F;
 	}
 
-	protected void func_230299_a_(BlockRayTraceResult p_230299_1_)
+	protected void onHitBlock(BlockRayTraceResult p_230299_1_)
 	{
-		super.func_230299_a_(p_230299_1_);
-		if (!this.world.isRemote)
+		super.onHitBlock(p_230299_1_);
+		if (!this.level.isClientSide)
 		{
 			ItemStack itemstack = this.getItem();
-			Potion potion = PotionUtils.getPotionFromItem(itemstack);
-			List<EffectInstance> list = PotionUtils.getEffectsFromStack(itemstack);
+			Potion potion = PotionUtils.getPotion(itemstack);
+			List<EffectInstance> list = PotionUtils.getMobEffects(itemstack);
 			boolean flag = potion == Potions.WATER && list.isEmpty();
-			Direction direction = p_230299_1_.getFace();
-			BlockPos blockpos = p_230299_1_.getPos();
-			BlockPos blockpos1 = blockpos.offset(direction);
+			Direction direction = p_230299_1_.getDirection();
+			BlockPos blockpos = p_230299_1_.getBlockPos();
+			BlockPos blockpos1 = blockpos.relative(direction);
 			if (flag)
 			{
 				this.extinguishFires(blockpos1, direction);
-				this.extinguishFires(blockpos1.offset(direction.getOpposite()), direction);
+				this.extinguishFires(blockpos1.relative(direction.getOpposite()), direction);
 
 				for (Direction direction1 : Direction.Plane.HORIZONTAL)
 				{
-					this.extinguishFires(blockpos1.offset(direction1), direction1);
+					this.extinguishFires(blockpos1.relative(direction1), direction1);
 				}
 			}
 
@@ -111,14 +111,14 @@ public class EntityPotionFlask extends ProjectileItemEntity implements IRendersA
 	/**
 	 * Called when this EntityFireball hits a block or entity.
 	 */
-	protected void onImpact(RayTraceResult result)
+	protected void onHit(RayTraceResult result)
 	{
-		super.onImpact(result);
-		if (!this.world.isRemote)
+		super.onHit(result);
+		if (!this.level.isClientSide)
 		{
 			ItemStack itemstack = this.getItem();
-			Potion potion = PotionUtils.getPotionFromItem(itemstack);
-			List<EffectInstance> list = PotionUtils.getEffectsFromStack(itemstack);
+			Potion potion = PotionUtils.getPotion(itemstack);
+			List<EffectInstance> list = PotionUtils.getMobEffects(itemstack);
 			boolean flag = potion == Potions.WATER && list.isEmpty();
 			if (flag)
 			{
@@ -130,47 +130,47 @@ public class EntityPotionFlask extends ProjectileItemEntity implements IRendersA
 					this.makeAreaOfEffectCloud(itemstack, potion);
 				} else
 				{
-					this.func_213888_a(list, result.getType() == RayTraceResult.Type.ENTITY
+					this.applySplash(list, result.getType() == RayTraceResult.Type.ENTITY
 							? ((EntityRayTraceResult) result).getEntity()
 							: null);
 				}
 			}
 
-			int i = potion.hasInstantEffect() ? 2007 : 2002;
-			this.world.playEvent(i, this.getPosition(), PotionUtils.getColor(itemstack));
+			int i = potion.hasInstantEffects() ? 2007 : 2002;
+			this.level.levelEvent(i, this.blockPosition(), PotionUtils.getColor(itemstack));
 			this.remove();
 		}
 	}
 
 	private void applyWater()
 	{
-		AxisAlignedBB axisalignedbb = this.getBoundingBox().grow(4.0D, 2.0D, 4.0D);
-		List<LivingEntity> list = this.world.getEntitiesWithinAABB(LivingEntity.class, axisalignedbb, WATER_SENSITIVE);
+		AxisAlignedBB axisalignedbb = this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D);
+		List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, axisalignedbb, WATER_SENSITIVE);
 		if (!list.isEmpty())
 		{
 			for (LivingEntity livingentity : list)
 			{
-				double d0 = this.getDistanceSq(livingentity);
-				if (d0 < 16.0D && livingentity.isWaterSensitive())
+				double d0 = this.distanceToSqr(livingentity);
+				if (d0 < 16.0D && livingentity.isSensitiveToWater())
 				{
-					livingentity.attackEntityFrom(DamageSource.causeIndirectMagicDamage(livingentity, this.func_234616_v_()), 1.0F);
+					livingentity.hurt(DamageSource.indirectMagic(livingentity, this.getOwner()), 1.0F);
 				}
 			}
 		}
 
 	}
 
-	private void func_213888_a(List<EffectInstance> p_213888_1_, @Nullable Entity p_213888_2_)
+	private void applySplash(List<EffectInstance> p_213888_1_, @Nullable Entity p_213888_2_)
 	{
-		AxisAlignedBB axisalignedbb = this.getBoundingBox().grow(4.0D, 2.0D, 4.0D);
-		List<LivingEntity> list = this.world.getEntitiesWithinAABB(LivingEntity.class, axisalignedbb);
+		AxisAlignedBB axisalignedbb = this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D);
+		List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, axisalignedbb);
 		if (!list.isEmpty())
 		{
 			for (LivingEntity livingentity : list)
 			{
-				if (livingentity.canBeHitWithPotion())
+				if (livingentity.isAffectedByPotions())
 				{
-					double d0 = this.getDistanceSq(livingentity);
+					double d0 = this.distanceToSqr(livingentity);
 					if (d0 < 16.0D)
 					{
 						double d1 = 1.0D - Math.sqrt(d0) / 4.0D;
@@ -181,16 +181,16 @@ public class EntityPotionFlask extends ProjectileItemEntity implements IRendersA
 
 						for (EffectInstance effectinstance : p_213888_1_)
 						{
-							Effect effect = effectinstance.getPotion();
-							if (effect.isInstant())
+							Effect effect = effectinstance.getEffect();
+							if (effect.isInstantenous())
 							{
-								effect.affectEntity(this, this.func_234616_v_(), livingentity, effectinstance.getAmplifier(), d1);
+								effect.applyInstantenousEffect(this, this.getOwner(), livingentity, effectinstance.getAmplifier(), d1);
 							} else
 							{
 								int i = (int) (d1 * (double) effectinstance.getDuration() + 0.5D);
 								if (i > 20)
 								{
-									livingentity.addPotionEffect(new EffectInstance(effect, i, effectinstance.getAmplifier(), effectinstance.isAmbient(), effectinstance.doesShowParticles()));
+									livingentity.addEffect(new EffectInstance(effect, i, effectinstance.getAmplifier(), effectinstance.isAmbient(), effectinstance.isVisible()));
 								}
 							}
 						}
@@ -203,8 +203,8 @@ public class EntityPotionFlask extends ProjectileItemEntity implements IRendersA
 
 	public void makeAreaOfEffectCloud(ItemStack p_190542_1_, Potion p_190542_2_)
 	{
-		AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(this.world, this.getPosX(), this.getPosY(), this.getPosZ());
-		Entity entity = this.func_234616_v_();
+		AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(this.level, this.getX(), this.getY(), this.getZ());
+		Entity entity = this.getOwner();
 		if (entity instanceof LivingEntity)
 		{
 			areaeffectcloudentity.setOwner((LivingEntity) entity);
@@ -216,7 +216,7 @@ public class EntityPotionFlask extends ProjectileItemEntity implements IRendersA
 		areaeffectcloudentity.setRadiusPerTick(-areaeffectcloudentity.getRadius() / (float) areaeffectcloudentity.getDuration());
 		areaeffectcloudentity.setPotion(p_190542_2_);
 
-		for (EffectInstance effectinstance : PotionUtils.getFullEffectsFromItem(p_190542_1_))
+		for (EffectInstance effectinstance : PotionUtils.getCustomEffects(p_190542_1_))
 		{
 			areaeffectcloudentity.addEffect(new EffectInstance(effectinstance));
 		}
@@ -224,10 +224,10 @@ public class EntityPotionFlask extends ProjectileItemEntity implements IRendersA
 		CompoundNBT compoundnbt = p_190542_1_.getTag();
 		if (compoundnbt != null && compoundnbt.contains("CustomPotionColor", 99))
 		{
-			areaeffectcloudentity.setColor(compoundnbt.getInt("CustomPotionColor"));
+			areaeffectcloudentity.setFixedColor(compoundnbt.getInt("CustomPotionColor"));
 		}
 
-		this.world.addEntity(areaeffectcloudentity);
+		this.level.addFreshEntity(areaeffectcloudentity);
 	}
 
 	public boolean isLingering()
@@ -237,15 +237,15 @@ public class EntityPotionFlask extends ProjectileItemEntity implements IRendersA
 
 	public void extinguishFires(BlockPos pos, Direction p_184542_2_)
 	{
-		BlockState blockstate = this.world.getBlockState(pos);
-		if (blockstate.isIn(BlockTags.FIRE))
+		BlockState blockstate = this.level.getBlockState(pos);
+		if (blockstate.is(BlockTags.FIRE))
 		{
-			this.world.removeBlock(pos, false);
-		} else if (CampfireBlock.isLit(blockstate))
+			this.level.removeBlock(pos, false);
+		} else if (CampfireBlock.isLitCampfire(blockstate))
 		{
-			this.world.playEvent((PlayerEntity) null, 1009, pos, 0);
-			CampfireBlock.extinguish(this.world, pos, blockstate);
-			this.world.setBlockState(pos, blockstate.with(CampfireBlock.LIT, Boolean.valueOf(false)));
+			this.level.levelEvent((PlayerEntity) null, 1009, pos, 0);
+			CampfireBlock.dowse(this.level, pos, blockstate);
+			this.level.setBlockAndUpdate(pos, blockstate.setValue(CampfireBlock.LIT, Boolean.valueOf(false)));
 		}
 
 	}

@@ -25,14 +25,14 @@ public class BlockTau extends CropsBlock
 {
 	public final boolean isStrong;
 	private static final VoxelShape[] SHAPES = new VoxelShape[] {
-			Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D),
-			Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D),
-			Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 7.0D, 16.0D),
-			Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D),
-			Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 10.0D, 16.0D),
-			Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 11.0D, 16.0D),
-			Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D),
-			Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D) };
+			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D),
+			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D),
+			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 7.0D, 16.0D),
+			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D),
+			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 10.0D, 16.0D),
+			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 11.0D, 16.0D),
+			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D),
+			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D) };
 
 	public static final double TRANSFORM_CHANCE = 0.2d;
 
@@ -42,19 +42,19 @@ public class BlockTau extends CropsBlock
 		this.isStrong = isStrong;
 	}
 
-	protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos)
+	protected boolean mayPlaceOn(BlockState state, IBlockReader worldIn, BlockPos pos)
 	{
-		return state.isIn(Blocks.FARMLAND);
+		return state.is(Blocks.FARMLAND);
 	}
 
-	protected IItemProvider getSeedsItem()
+	protected IItemProvider getBaseSeedId()
 	{
 		return isStrong ? BloodMagicItems.STRONG_TAU_ITEM.get() : BloodMagicItems.WEAK_TAU_ITEM.get();
 	}
 
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
 	{
-		return SHAPES[state.get(this.getAgeProperty())];
+		return SHAPES[state.getValue(this.getAgeProperty())];
 	}
 
 	/**
@@ -64,22 +64,22 @@ public class BlockTau extends CropsBlock
 	{
 		if (!worldIn.isAreaLoaded(pos, 1))
 			return; // Forge: prevent loading unloaded chunks when checking neighbor's light
-		if (worldIn.getLightSubtracted(pos, 0) >= 9)
+		if (worldIn.getRawBrightness(pos, 0) >= 9)
 		{
 			int i = this.getAge(state);
 			if (i < this.getMaxAge())
 			{
-				float f = getGrowthChance(this, worldIn, pos);
+				float f = getGrowthSpeed(this, worldIn, pos);
 				if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt((int) (25.0F / f) + 1) == 0))
 				{
 					boolean doTransform = false;
 					boolean doGrow = !isStrong;
 
-					AxisAlignedBB boundingBox = new AxisAlignedBB(pos).grow(1, 0, 1);
-					List<LivingEntity> list = worldIn.getEntitiesWithinAABB(LivingEntity.class, boundingBox);
+					AxisAlignedBB boundingBox = new AxisAlignedBB(pos).inflate(1, 0, 1);
+					List<LivingEntity> list = worldIn.getEntitiesOfClass(LivingEntity.class, boundingBox);
 					for (LivingEntity entity : list)
 					{
-						if (entity.attackEntityFrom(DamageSource.CACTUS, 2))
+						if (entity.hurt(DamageSource.CACTUS, 2))
 						{
 							if (isStrong)
 							{
@@ -97,10 +97,10 @@ public class BlockTau extends CropsBlock
 					{
 						if (doTransform)
 						{
-							worldIn.setBlockState(pos, ((BlockTau) BloodMagicBlocks.STRONG_TAU.get()).withAge(i + 1), 2);
+							worldIn.setBlock(pos, ((BlockTau) BloodMagicBlocks.STRONG_TAU.get()).getStateForAge(i + 1), 2);
 						} else
 						{
-							worldIn.setBlockState(pos, this.withAge(i + 1), 2);
+							worldIn.setBlock(pos, this.getStateForAge(i + 1), 2);
 						}
 
 						net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
@@ -113,18 +113,18 @@ public class BlockTau extends CropsBlock
 	/**
 	 * Whether this IGrowable can grow
 	 */
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient)
+	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient)
 	{
 		return !this.isMaxAge(state);
 	}
 
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state)
+	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state)
 	{
 		return false;
 	}
 
 	@Override
-	public void grow(World worldIn, BlockPos pos, BlockState state)
+	public void growCrops(World worldIn, BlockPos pos, BlockState state)
 	{
 		int i = this.getAge(state);
 		if (i < this.getMaxAge())
@@ -134,16 +134,16 @@ public class BlockTau extends CropsBlock
 			boolean doGrow = !isStrong;
 
 			AxisAlignedBB boundingBox = new AxisAlignedBB(pos);
-			List<LivingEntity> list = worldIn.getEntitiesWithinAABB(LivingEntity.class, boundingBox);
+			List<LivingEntity> list = worldIn.getEntitiesOfClass(LivingEntity.class, boundingBox);
 			for (LivingEntity entity : list)
 			{
-				if (entity.attackEntityFrom(DamageSource.CACTUS, 2))
+				if (entity.hurt(DamageSource.CACTUS, 2))
 				{
 					if (isStrong)
 					{
 						doGrow = true;
 						break;
-					} else if (worldIn.rand.nextDouble() <= TRANSFORM_CHANCE)
+					} else if (worldIn.random.nextDouble() <= TRANSFORM_CHANCE)
 					{
 						doTransform = true;
 						break;
@@ -155,10 +155,10 @@ public class BlockTau extends CropsBlock
 			{
 				if (doTransform)
 				{
-					worldIn.setBlockState(pos, ((BlockTau) BloodMagicBlocks.STRONG_TAU.get()).withAge(newAge), 2);
+					worldIn.setBlock(pos, ((BlockTau) BloodMagicBlocks.STRONG_TAU.get()).getStateForAge(newAge), 2);
 				} else
 				{
-					worldIn.setBlockState(pos, this.withAge(newAge), 2);
+					worldIn.setBlock(pos, this.getStateForAge(newAge), 2);
 				}
 
 				net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
@@ -169,6 +169,6 @@ public class BlockTau extends CropsBlock
 	@Override
 	protected int getBonemealAgeIncrease(World worldIn)
 	{
-		return MathHelper.nextInt(worldIn.rand, 1, 1);
+		return MathHelper.nextInt(worldIn.random, 1, 1);
 	}
 }

@@ -25,25 +25,25 @@ public class AlchemyArrayEffectBinding extends AlchemyArrayEffectCrafting
 	public boolean update(TileAlchemyArray tile, int ticksActive)
 	{
 		// TODO: Add recipe rechecking to verify nothing screwy is going on.
-		if (tile.getWorld().isRemote)
+		if (tile.getLevel().isClientSide)
 		{
 			return false;
 		}
 
 		if (ticksActive >= 50 && ticksActive <= 250)
 		{
-			this.spawnLightningOnCircle(tile.getWorld(), tile.getPos(), ticksActive);
+			this.spawnLightningOnCircle(tile.getLevel(), tile.getBlockPos(), ticksActive);
 		}
 
 		if (ticksActive >= tickLimit)
 		{
-			BlockPos pos = tile.getPos();
+			BlockPos pos = tile.getBlockPos();
 
 			ItemStack output = outputStack.copy();
 
-			ItemEntity outputEntity = new ItemEntity(tile.getWorld(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output);
+			ItemEntity outputEntity = new ItemEntity(tile.getLevel(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output);
 
-			tile.getWorld().addEntity(outputEntity);
+			tile.getLevel().addFreshEntity(outputEntity);
 
 			return true;
 		}
@@ -64,9 +64,9 @@ public class AlchemyArrayEffectBinding extends AlchemyArrayEffectCrafting
 
 			LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
 //			LightningBoltEntity lightning = new LightningBoltEntity(world, pos.getX() + dispX, pos.getY(), pos.getZ() + dispZ);
-			lightningboltentity.setPosition(pos.getX() + dispX, pos.getY(), pos.getZ() + dispZ);
-			lightningboltentity.setEffectOnly(true);
-			world.addEntity(lightningboltentity);
+			lightningboltentity.setPos(pos.getX() + dispX, pos.getY(), pos.getZ() + dispZ);
+			lightningboltentity.setVisualOnly(true);
+			world.addFreshEntity(lightningboltentity);
 		}
 	}
 

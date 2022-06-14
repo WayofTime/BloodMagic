@@ -49,7 +49,7 @@ public class GlobalLootModifier
 		@Override
 		public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context)
 		{
-			ItemStack ctxTool = context.get(LootParameters.TOOL);
+			ItemStack ctxTool = context.getParamOrNull(LootParameters.TOOL);
 			// return early if silk-touch is already applied (otherwise we'll get stuck in
 			// an infinite loop).
 			if (EnchantmentHelper.getEnchantments(ctxTool).containsKey(Enchantments.SILK_TOUCH))
@@ -60,12 +60,12 @@ public class GlobalLootModifier
 				return generatedLoot;
 			}
 			ItemStack fakeTool = ctxTool.copy();
-			fakeTool.addEnchantment(Enchantments.SILK_TOUCH, 1);
+			fakeTool.enchant(Enchantments.SILK_TOUCH, 1);
 			LootContext.Builder builder = new LootContext.Builder(context);
 			builder.withParameter(LootParameters.TOOL, fakeTool);
-			LootContext ctx = builder.build(LootParameterSets.BLOCK);
-			LootTable loottable = context.getWorld().getServer().getLootTableManager().getLootTableFromLocation(context.get(LootParameters.BLOCK_STATE).getBlock().getLootTable());
-			return loottable.generate(ctx);
+			LootContext ctx = builder.create(LootParameterSets.BLOCK);
+			LootTable loottable = context.getLevel().getServer().getLootTables().get(context.getParamOrNull(LootParameters.BLOCK_STATE).getBlock().getLootTable());
+			return loottable.getRandomItems(ctx);
 		}
 
 		private static class Serializer extends GlobalLootModifierSerializer<SilkTouchTestModifier>
@@ -98,7 +98,7 @@ public class GlobalLootModifier
 		@Override
 		public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context)
 		{
-			ItemStack ctxTool = context.get(LootParameters.TOOL);
+			ItemStack ctxTool = context.getParamOrNull(LootParameters.TOOL);
 			// return early if silk-touch is already applied (otherwise we'll get stuck in
 			// an infinite loop).
 			if (ctxTool.getTag() != null && ctxTool.getTag().getBoolean("bloodmagic:checked_fortune"))
@@ -127,14 +127,14 @@ public class GlobalLootModifier
 
 			ItemStack fakeTool = ctxTool.copy();
 			fakeTool.getOrCreateTag().putBoolean("bloodmagic:checked_fortune", true);
-			int baseFortuneLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, ctxTool);
+			int baseFortuneLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, ctxTool);
 
-			fakeTool.addEnchantment(Enchantments.FORTUNE, baseFortuneLevel + additionalFortune);
+			fakeTool.enchant(Enchantments.BLOCK_FORTUNE, baseFortuneLevel + additionalFortune);
 			LootContext.Builder builder = new LootContext.Builder(context);
 			builder.withParameter(LootParameters.TOOL, fakeTool);
-			LootContext ctx = builder.build(LootParameterSets.BLOCK);
-			LootTable loottable = context.getWorld().getServer().getLootTableManager().getLootTableFromLocation(context.get(LootParameters.BLOCK_STATE).getBlock().getLootTable());
-			return loottable.generate(ctx);
+			LootContext ctx = builder.create(LootParameterSets.BLOCK);
+			LootTable loottable = context.getLevel().getServer().getLootTables().get(context.getParamOrNull(LootParameters.BLOCK_STATE).getBlock().getLootTable());
+			return loottable.getRandomItems(ctx);
 		}
 
 		private static class Serializer extends GlobalLootModifierSerializer<FortuneModifier>
@@ -253,7 +253,7 @@ public class GlobalLootModifier
 		@Override
 		public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context)
 		{
-			ItemStack ctxTool = context.get(LootParameters.TOOL);
+			ItemStack ctxTool = context.getParamOrNull(LootParameters.TOOL);
 			// return early if silk-touch is already applied (otherwise we'll get stuck in
 			// an infinite loop).
 			if (ctxTool.getTag() == null)
@@ -280,7 +280,7 @@ public class GlobalLootModifier
 
 		private static ItemStack smelt(ItemStack stack, LootContext context)
 		{
-			return context.getWorld().getRecipeManager().getRecipe(IRecipeType.SMELTING, new Inventory(stack), context.getWorld()).map(FurnaceRecipe::getRecipeOutput).filter(itemStack -> !itemStack.isEmpty()).map(itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, stack.getCount() * itemStack.getCount())).orElse(stack);
+			return context.getLevel().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new Inventory(stack), context.getLevel()).map(FurnaceRecipe::getResultItem).filter(itemStack -> !itemStack.isEmpty()).map(itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, stack.getCount() * itemStack.getCount())).orElse(stack);
 		}
 
 		private static class Serializer extends GlobalLootModifierSerializer<SmeltingModifier>

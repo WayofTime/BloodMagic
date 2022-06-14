@@ -5,6 +5,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 import wayoftime.bloodmagic.tile.TileVeinMineCharge;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockVeinMineCharge extends BlockShapedExplosive
 {
 	public BlockVeinMineCharge(int explosionSize, Properties properties)

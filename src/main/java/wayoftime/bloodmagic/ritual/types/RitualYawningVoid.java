@@ -104,7 +104,7 @@ public class RitualYawningVoid extends Ritual
 
 			for (BlockPos offset : placementRange.getContainedPositions(pos))
 			{
-				if (world.isAirBlock(offset))
+				if (world.isEmptyBlock(offset))
 				{
 					replacement = offset;
 					replace = true;
@@ -113,7 +113,7 @@ public class RitualYawningVoid extends Ritual
 			}
 		}
 
-		BlockState downState = world.getBlockState(pos.down());
+		BlockState downState = world.getBlockState(pos.below());
 
 		int maxBlockChecks = 100;
 		int checks = 0;
@@ -121,7 +121,7 @@ public class RitualYawningVoid extends Ritual
 		AreaDescriptor.Rectangle quarryRange = (AreaDescriptor.Rectangle) masterRitualStone.getBlockRange(QUARRY_RANGE);
 
 		BlockPos minOffset = quarryRange.getMinimumOffset();
-		BlockPos maxOffset = quarryRange.getMaximumOffset().add(-1, -1, -1);
+		BlockPos maxOffset = quarryRange.getMaximumOffset().offset(-1, -1, -1);
 
 		boolean isDone = false;
 
@@ -131,7 +131,7 @@ public class RitualYawningVoid extends Ritual
 		if (tryFilter)
 		{
 			AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
-			TileEntity tile = world.getTileEntity(chestRange.getContainedPositions(pos).get(0));
+			TileEntity tile = world.getBlockEntity(chestRange.getContainedPositions(pos).get(0));
 
 			if (tile != null)
 			{
@@ -173,7 +173,7 @@ public class RitualYawningVoid extends Ritual
 							return;
 						}
 						checks++;
-						BlockPos newPos = pos.add(i, j, k);
+						BlockPos newPos = pos.offset(i, j, k);
 						BlockState state = world.getBlockState(newPos);
 
 						if (!state.isAir(world, newPos))
@@ -203,7 +203,7 @@ public class RitualYawningVoid extends Ritual
 
 							if (destroy)
 							{
-								world.setBlockState(newPos, Blocks.AIR.getDefaultState(), 3);
+								world.setBlock(newPos, Blocks.AIR.defaultBlockState(), 3);
 								masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
 								k++;
 								this.lastPos = new BlockPos(i, j, k);

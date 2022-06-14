@@ -12,6 +12,8 @@ import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 
+import wayoftime.bloodmagic.common.item.sigil.ISigil.Holding;
+
 public class ItemSigilAir extends ItemSigilBase
 {
 	public ItemSigilAir()
@@ -20,18 +22,18 @@ public class ItemSigilAir extends ItemSigilBase
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
+		ItemStack stack = player.getItemInHand(hand);
 		if (stack.getItem() instanceof ISigil.Holding)
 			stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
 		if (PlayerHelper.isFakePlayer(player))
-			return ActionResult.resultFail(stack);
+			return ActionResult.fail(stack);
 
 		boolean unusable = isUnusable(stack);
-		if (world.isRemote && !unusable)
+		if (world.isClientSide && !unusable)
 		{
-			Vector3d vec = player.getLookVec();
+			Vector3d vec = player.getLookAngle();
 			double wantedVelocity = 1.7;
 
 			// TODO - Revisit after potions
@@ -41,12 +43,12 @@ public class ItemSigilAir extends ItemSigilBase
 //				wantedVelocity += (1 + amplifier) * (0.35);
 //			}
 
-			player.setMotion(vec.x * wantedVelocity, vec.y * wantedVelocity, vec.z * wantedVelocity);
+			player.setDeltaMovement(vec.x * wantedVelocity, vec.y * wantedVelocity, vec.z * wantedVelocity);
 		}
 
-		world.playSound(player, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+		world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.random.nextFloat() - world.random.nextFloat()) * 0.8F);
 
-		if (!world.isRemote)
+		if (!world.isClientSide)
 		{
 			if (!player.isCreative())
 				this.setUnusable(stack, !NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess());
@@ -55,6 +57,6 @@ public class ItemSigilAir extends ItemSigilBase
 				player.fallDistance = 0;
 		}
 
-		return super.onItemRightClick(world, player, hand);
+		return super.use(world, player, hand);
 	}
 }

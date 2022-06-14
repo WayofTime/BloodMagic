@@ -19,13 +19,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockBloodLight extends Block
 {
-	protected static final VoxelShape BODY = Block.makeCuboidShape(7, 7, 7, 9, 9, 9);
+	protected static final VoxelShape BODY = Block.box(7, 7, 7, 9, 9, 9);
 
 	public BlockBloodLight()
 	{
-		super(Properties.create(Material.WOOL).doesNotBlockMovement().setLightLevel((state) -> {
+		super(Properties.of(Material.WOOL).noCollission().lightLevel((state) -> {
 			return 15;
 		}));
 	}
@@ -37,7 +39,7 @@ public class BlockBloodLight extends Block
 	}
 
 	@Override
-	public BlockRenderType getRenderType(BlockState state)
+	public BlockRenderType getRenderShape(BlockState state)
 	{
 		return BlockRenderType.ENTITYBLOCK_ANIMATED;
 	}
@@ -50,9 +52,9 @@ public class BlockBloodLight extends Block
 
 		if (rand.nextInt(3) != 0)
 		{
-			world.addParticle(RedstoneParticleData.REDSTONE_DUST, pos.getX() + 0.5D
+			world.addParticle(RedstoneParticleData.REDSTONE, pos.getX() + 0.5D
 					+ rand.nextGaussian() / 8, pos.getY() + 0.5D, pos.getZ() + 0.5D + rand.nextGaussian() / 8, 0, 0, 0);
-			ItemStack heldItem = player.getHeldItem(Hand.MAIN_HAND);
+			ItemStack heldItem = player.getItemInHand(Hand.MAIN_HAND);
 
 //			if (heldItem.isEmpty() || heldItem.getItem() != RegistrarBloodMagicItems.SIGIL_BLOOD_LIGHT)
 //				return;

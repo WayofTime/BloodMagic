@@ -19,6 +19,8 @@ import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 
+import wayoftime.bloodmagic.common.item.sigil.ISigil.Holding;
+
 public class ItemSigilBloodLight extends ItemSigilBase
 {
 	public ItemSigilBloodLight()
@@ -34,50 +36,50 @@ public class ItemSigilBloodLight extends ItemSigilBase
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
+		ItemStack stack = player.getItemInHand(hand);
 		if (stack.getItem() instanceof ISigil.Holding)
 			stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
 		if (PlayerHelper.isFakePlayer(player))
-			return ActionResult.resultFail(stack);
+			return ActionResult.fail(stack);
 
-		RayTraceResult mop = rayTrace(world, player, RayTraceContext.FluidMode.NONE);
+		RayTraceResult mop = getPlayerPOVHitResult(world, player, RayTraceContext.FluidMode.NONE);
 
 		if (getCooldownRemainder(stack) > 0)
-			return super.onItemRightClick(world, player, hand);
+			return super.use(world, player, hand);
 
 		if (mop != null && mop.getType() == RayTraceResult.Type.BLOCK)
 		{
 			BlockRayTraceResult blockRayTrace = (BlockRayTraceResult) mop;
-			BlockPos blockPos = blockRayTrace.getPos().offset(blockRayTrace.getFace());
+			BlockPos blockPos = blockRayTrace.getBlockPos().relative(blockRayTrace.getDirection());
 
-			if (world.isAirBlock(blockPos))
+			if (world.isEmptyBlock(blockPos))
 			{
-				world.setBlockState(blockPos, BloodMagicBlocks.BLOOD_LIGHT.get().getDefaultState());
-				if (!world.isRemote)
+				world.setBlockAndUpdate(blockPos, BloodMagicBlocks.BLOOD_LIGHT.get().defaultBlockState());
+				if (!world.isClientSide)
 				{
 					SoulNetwork network = NetworkHelper.getSoulNetwork(getBinding(stack));
 					network.syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed()));
 				}
 				resetCooldown(stack);
-				player.swingArm(hand);
-				return super.onItemRightClick(world, player, hand);
+				player.swing(hand);
+				return super.use(world, player, hand);
 			}
 		} else
 		{
-			if (!world.isRemote)
+			if (!world.isClientSide)
 			{
 				SoulNetwork network = NetworkHelper.getSoulNetwork(getBinding(stack));
 				EntityBloodLight light = new EntityBloodLight(world, player);
-				light.func_234612_a_(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
-				world.addEntity(light);
+				light.shootFromRotation(player, player.xRot, player.yRot, 0.0F, 1.5F, 1.0F);
+				world.addFreshEntity(light);
 				network.syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed()));
 			}
 			resetCooldown(stack);
 		}
 
-		return super.onItemRightClick(world, player, hand);
+		return super.use(world, player, hand);
 	}
 
 	@Override

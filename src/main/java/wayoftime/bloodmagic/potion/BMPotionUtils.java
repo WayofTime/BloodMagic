@@ -20,8 +20,8 @@ public class BMPotionUtils
 
 	public static double damageMobAndGrowSurroundingPlants(LivingEntity entity, int horizontalRadius, int verticalRadius, double damageRatio, int maxPlantsGrown)
 	{
-		World world = entity.getEntityWorld();
-		if (world.isRemote)
+		World world = entity.getCommandSenderWorld();
+		if (world.isClientSide)
 		{
 			return 0;
 		}
@@ -37,7 +37,7 @@ public class BMPotionUtils
 
 		for (int i = 0; i < maxPlantsGrown; i++)
 		{
-			BlockPos blockPos = entity.getPosition().add(rand.nextInt(horizontalRadius * 2 + 1) - horizontalRadius, rand.nextInt(verticalRadius * 2 + 1) - verticalRadius, rand.nextInt(horizontalRadius * 2 + 1) - horizontalRadius);
+			BlockPos blockPos = entity.blockPosition().offset(rand.nextInt(horizontalRadius * 2 + 1) - horizontalRadius, rand.nextInt(verticalRadius * 2 + 1) - verticalRadius, rand.nextInt(horizontalRadius * 2 + 1) - horizontalRadius);
 			BlockState state = world.getBlockState(blockPos);
 
 			if (!BloodMagicAPI.INSTANCE.getBlacklist().getGreenGrove().contains(state))
@@ -56,12 +56,12 @@ public class BMPotionUtils
 			{
 				BlockState preBlockState = world.getBlockState(blockPos);
 				for (int n = 0; n < 10; n++)
-					block.randomTick(world.getBlockState(blockPos), (ServerWorld) world, blockPos, world.rand);
+					block.randomTick(world.getBlockState(blockPos), (ServerWorld) world, blockPos, world.random);
 
 				BlockState newState = world.getBlockState(blockPos);
 				if (!newState.equals(preBlockState))
 				{
-					world.playEvent(2005, blockPos, 0);
+					world.levelEvent(2005, blockPos, 0);
 					incurredDamage += damageRatio;
 				}
 			}
@@ -69,7 +69,7 @@ public class BMPotionUtils
 
 		if (incurredDamage > 0)
 		{
-			entity.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, (float) incurredDamage);
+			entity.hurt(DamageSourceBloodMagic.INSTANCE, (float) incurredDamage);
 		}
 
 		return incurredDamage;

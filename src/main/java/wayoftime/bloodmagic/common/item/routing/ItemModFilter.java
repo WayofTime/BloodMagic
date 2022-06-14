@@ -25,9 +25,9 @@ public class ItemModFilter extends ItemRouterFilter implements INestableItemFilt
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack filterStack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack filterStack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.modfilter.desc").mergeStyle(TextFormatting.ITALIC).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.modfilter.desc").withStyle(TextFormatting.ITALIC).withStyle(TextFormatting.GRAY));
 
 		if (filterStack.getTag() == null)
 		{
@@ -37,7 +37,7 @@ public class ItemModFilter extends ItemRouterFilter implements INestableItemFilt
 		boolean sneaking = Screen.hasShiftDown();
 		if (!sneaking)
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.extraInfo").mergeStyle(TextFormatting.BLUE));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.extraInfo").withStyle(TextFormatting.BLUE));
 		} else
 		{
 			int whitelistState = this.getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
@@ -45,15 +45,15 @@ public class ItemModFilter extends ItemRouterFilter implements INestableItemFilt
 
 			if (isWhitelist)
 			{
-				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist").mergeStyle(TextFormatting.GRAY));
+				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist").withStyle(TextFormatting.GRAY));
 			} else
 			{
-				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist").mergeStyle(TextFormatting.GRAY));
+				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist").withStyle(TextFormatting.GRAY));
 			}
 			ItemInventory inv = new InventoryFilter(filterStack);
-			for (int i = 0; i < inv.getSizeInventory(); i++)
+			for (int i = 0; i < inv.getContainerSize(); i++)
 			{
-				ItemStack stack = inv.getStackInSlot(i);
+				ItemStack stack = inv.getItem(i);
 				if (stack.isEmpty())
 				{
 					continue;

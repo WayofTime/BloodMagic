@@ -45,7 +45,7 @@ public abstract class BasePacketHandler
 	 */
 	public static String readString(PacketBuffer buffer)
 	{
-		return buffer.readString(Short.MAX_VALUE);
+		return buffer.readUtf(Short.MAX_VALUE);
 	}
 
 //	public static void log(String log)
@@ -88,7 +88,7 @@ public abstract class BasePacketHandler
 	 */
 	public <MSG> void sendTo(MSG message, ServerPlayerEntity player)
 	{
-		getChannel().sendTo(message, player.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+		getChannel().sendTo(message, player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
 	}
 
 	/**
@@ -129,7 +129,7 @@ public abstract class BasePacketHandler
 
 	public <MSG> void sendToAllTracking(MSG message, TileEntity tile)
 	{
-		sendToAllTracking(message, tile.getWorld(), tile.getPos());
+		sendToAllTracking(message, tile.getLevel(), tile.getBlockPos());
 	}
 
 	public <MSG> void sendToAllTracking(MSG message, World world, BlockPos pos)
@@ -139,7 +139,7 @@ public abstract class BasePacketHandler
 			// If we have a ServerWorld just directly figure out the ChunkPos so as to not
 			// require looking up the chunk
 			// This provides a decent performance boost over using the packet distributor
-			((ServerWorld) world).getChunkProvider().chunkManager.getTrackingPlayers(new ChunkPos(pos), false).forEach(p -> sendTo(message, p));
+			((ServerWorld) world).getChunkSource().chunkMap.getPlayers(new ChunkPos(pos), false).forEach(p -> sendTo(message, p));
 		} else
 		{
 			// Otherwise fallback to entities tracking the chunk if some mod did something

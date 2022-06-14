@@ -25,23 +25,23 @@ public abstract class TileBase extends TileEntity
 	 * read method
 	 */
 	@Override
-	public final void read(BlockState state, CompoundNBT compound)
+	public final void load(BlockState state, CompoundNBT compound)
 	{
-		super.read(state, compound);
+		super.load(state, compound);
 		deserializeBase(compound);
 		deserialize(compound);
 	}
 
 	@Override
-	public final CompoundNBT write(CompoundNBT compound)
+	public final CompoundNBT save(CompoundNBT compound)
 	{
-		super.write(compound);
+		super.save(compound);
 		serializeBase(compound);
 		return serialize(compound);
 	}
 
 	/**
-	 * Called by {@link #func_230337_a_(BlockState, CompoundNBT)}
+	 * Called by {@link #load(BlockState, CompoundNBT)}
 	 * <p>
 	 * Internal data (such as coordinates) are handled for you. Just read the data
 	 * you need.
@@ -92,8 +92,8 @@ public abstract class TileBase extends TileEntity
 
 	public void notifyUpdate()
 	{
-		BlockState state = getWorld().getBlockState(getPos());
-		getWorld().notifyBlockUpdate(getPos(), state, state, 3);
+		BlockState state = getLevel().getBlockState(getBlockPos());
+		getLevel().sendBlockUpdated(getBlockPos(), state, state, 3);
 	}
 
 //	// Data syncing
@@ -107,7 +107,7 @@ public abstract class TileBase extends TileEntity
 	@Override
 	public SUpdateTileEntityPacket getUpdatePacket()
 	{
-		return new SUpdateTileEntityPacket(getPos(), -999, getUpdateTag());
+		return new SUpdateTileEntityPacket(getBlockPos(), -999, getUpdateTag());
 	}
 
 //	@Override
@@ -121,18 +121,18 @@ public abstract class TileBase extends TileEntity
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
 	{
 		super.onDataPacket(net, pkt);
-		handleUpdateTag(getBlockState(), pkt.getNbtCompound());
+		handleUpdateTag(getBlockState(), pkt.getTag());
 	}
 
 	@Override
 	public CompoundNBT getUpdateTag()
 	{
-		return write(new CompoundNBT());
+		return save(new CompoundNBT());
 	}
 
 	@Override
 	public void handleUpdateTag(BlockState state, CompoundNBT tag)
 	{
-		read(state, tag);
+		load(state, tag);
 	}
 }

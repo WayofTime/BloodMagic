@@ -118,7 +118,7 @@ public class SoulNetwork implements INBTSerializable<CompoundNBT>
 
 	public BooleanResult<Integer> syphonAndDamage(PlayerEntity user, SoulTicket ticket)
 	{
-		if (user.getEntityWorld().isRemote)
+		if (user.getCommandSenderWorld().isClientSide)
 			return BooleanResult.newResult(false, 0);
 
 		SoulNetworkEvent.Syphon.User event = new SoulNetworkEvent.Syphon.User(this, ticket, user);
@@ -151,7 +151,7 @@ public class SoulNetwork implements INBTSerializable<CompoundNBT>
 	public void causeNausea()
 	{
 		if (getPlayer() != null)
-			getPlayer().addPotionEffect(new EffectInstance(Effects.NAUSEA, 99));
+			getPlayer().addEffect(new EffectInstance(Effects.CONFUSION, 99));
 	}
 
 	/**
@@ -171,8 +171,8 @@ public class SoulNetwork implements INBTSerializable<CompoundNBT>
 			{
 				if (!user.isCreative())
 				{
-					user.hurtResistantTime = 0;
-					user.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, 1.0F);
+					user.invulnerableTime = 0;
+					user.hurt(DamageSourceBloodMagic.INSTANCE, 1.0F);
 				}
 
 			} else if (syphon >= 100)
@@ -181,8 +181,8 @@ public class SoulNetwork implements INBTSerializable<CompoundNBT>
 				{
 					for (int i = 0; i < ((syphon + 99) / 100); i++)
 					{
-						user.hurtResistantTime = 0;
-						user.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, 1.0F);
+						user.invulnerableTime = 0;
+						user.hurt(DamageSourceBloodMagic.INSTANCE, 1.0F);
 					}
 				}
 			}
@@ -192,7 +192,7 @@ public class SoulNetwork implements INBTSerializable<CompoundNBT>
 	private void markDirty()
 	{
 		if (getParent() != null)
-			getParent().markDirty();
+			getParent().setDirty();
 		else
 			BMLog.DEFAULT.error("A SoulNetwork was created, but a parent was not set to allow saving.");
 	}

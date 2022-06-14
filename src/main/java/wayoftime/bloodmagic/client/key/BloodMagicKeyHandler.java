@@ -27,10 +27,10 @@ public class BloodMagicKeyHandler
 	public static boolean isKeyDown(KeyBinding keyBinding)
 	{
 		InputMappings.Input key = keyBinding.getKey();
-		int keyCode = key.getKeyCode();
-		if (keyCode != InputMappings.INPUT_INVALID.getKeyCode())
+		int keyCode = key.getValue();
+		if (keyCode != InputMappings.UNKNOWN.getValue())
 		{
-			long windowHandle = Minecraft.getInstance().getMainWindow().getHandle();
+			long windowHandle = Minecraft.getInstance().getWindow().getWindow();
 			try
 			{
 				if (key.getType() == InputMappings.Type.KEYSYM)
@@ -54,7 +54,7 @@ public class BloodMagicKeyHandler
 		{
 			KeyBindings keyBindings = KeyBindings.values()[i];
 			KeyBinding keyBinding = keyBindings.getKey();
-			boolean state = keyBinding.isKeyDown();
+			boolean state = keyBinding.isDown();
 			boolean lastState = keyDown.get(i);
 			if (state != lastState || (state && repeatings.get(i)))
 			{

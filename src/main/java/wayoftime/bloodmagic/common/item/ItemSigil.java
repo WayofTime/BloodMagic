@@ -16,6 +16,8 @@ import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 
+import net.minecraft.item.Item.Properties;
+
 /**
  * Base class for all (static) sigils.
  */
@@ -52,13 +54,13 @@ public class ItemSigil extends Item implements IBindable, ISigil
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
 		if (!stack.hasTag())
 			return;
 
 		Binding binding = getBinding(stack);
 		if (binding != null)
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentOwner", binding.getOwnerName()).mergeStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentOwner", binding.getOwnerName()).withStyle(TextFormatting.GRAY));
 	}
 }

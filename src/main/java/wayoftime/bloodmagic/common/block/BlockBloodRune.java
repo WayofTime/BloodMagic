@@ -19,13 +19,15 @@ import net.minecraftforge.common.ToolType;
 import wayoftime.bloodmagic.block.enums.BloodRuneType;
 import wayoftime.bloodmagic.altar.IBloodRune;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockBloodRune extends Block implements IBloodRune
 {
 	private final BloodRuneType type;
 
 	public BlockBloodRune(BloodRuneType type)
 	{
-		super(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(2).sound(SoundType.STONE));
+		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(2).sound(SoundType.STONE));
 		this.type = type;
 	}
 
@@ -37,10 +39,10 @@ public class BlockBloodRune extends Block implements IBloodRune
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable IBlockReader world, List<ITextComponent> tooltip,
+	public void appendHoverText(ItemStack stack, @Nullable IBlockReader world, List<ITextComponent> tooltip,
 			ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.decoration.safe").mergeStyle(TextFormatting.GRAY));
-		super.addInformation(stack, world, tooltip, flag);
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.decoration.safe").withStyle(TextFormatting.GRAY));
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

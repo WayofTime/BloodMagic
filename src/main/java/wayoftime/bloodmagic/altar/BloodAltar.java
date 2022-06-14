@@ -32,6 +32,8 @@ import wayoftime.bloodmagic.tile.TileAltar;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+
 public class BloodAltar// implements IFluidHandler
 {
 
@@ -179,8 +181,8 @@ public class BloodAltar// implements IFluidHandler
 
 	public void startCycle()
 	{
-		if (tileAltar.getWorld() != null)
-			tileAltar.getWorld().notifyBlockUpdate(tileAltar.getPos(), tileAltar.getWorld().getBlockState(tileAltar.getPos()), tileAltar.getWorld().getBlockState(tileAltar.getPos()), 3);
+		if (tileAltar.getLevel() != null)
+			tileAltar.getLevel().sendBlockUpdated(tileAltar.getBlockPos(), tileAltar.getLevel().getBlockState(tileAltar.getBlockPos()), tileAltar.getLevel().getBlockState(tileAltar.getBlockPos()), 3);
 
 		checkTier();
 
@@ -194,12 +196,12 @@ public class BloodAltar// implements IFluidHandler
 		if (!isActive)
 			progress = 0;
 
-		ItemStack input = tileAltar.getStackInSlot(0);
+		ItemStack input = tileAltar.getItem(0);
 
 		if (!input.isEmpty())
 		{
 			// Do recipes
-			RecipeBloodAltar recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getBloodAltar(tileAltar.getWorld(), input);
+			RecipeBloodAltar recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getBloodAltar(tileAltar.getLevel(), input);
 			if (recipe != null)
 			{
 				if (recipe.getMinimumTier() <= altarTier.ordinal())
@@ -242,10 +244,10 @@ public class BloodAltar// implements IFluidHandler
 
 //		System.out.println(this.fluidOutput.getAmount());
 
-		World world = tileAltar.getWorld();
-		BlockPos pos = tileAltar.getPos();
+		World world = tileAltar.getLevel();
+		BlockPos pos = tileAltar.getBlockPos();
 
-		if (world.isRemote)
+		if (world.isClientSide)
 			return;
 
 		// Used instead of the world time for checks that do not happen every tick
@@ -258,7 +260,7 @@ public class BloodAltar// implements IFluidHandler
 		{
 			for (Direction facing : Direction.values())
 			{
-				BlockPos newPos = pos.offset(facing);
+				BlockPos newPos = pos.relative(facing);
 				BlockState block = world.getBlockState(newPos);
 				block.getBlock().onNeighborChange(block, world, newPos, pos);
 			}
@@ -276,7 +278,7 @@ public class BloodAltar// implements IFluidHandler
 			fluidOutputted = Math.min(this.fluid.getAmount(), fluidOutputted);
 			this.fluidOutput.setAmount(this.fluidOutput.getAmount() + fluidOutputted);
 			this.fluid.setAmount(this.fluid.getAmount() - fluidOutputted);
-			tileAltar.getWorld().notifyBlockUpdate(tileAltar.getPos(), tileAltar.getWorld().getBlockState(tileAltar.getPos()), tileAltar.getWorld().getBlockState(tileAltar.getPos()), 3);
+			tileAltar.getLevel().sendBlockUpdated(tileAltar.getBlockPos(), tileAltar.getLevel().getBlockState(tileAltar.getBlockPos()), tileAltar.getLevel().getBlockState(tileAltar.getBlockPos()), 3);
 		}
 
 		if (internalCounter % this.getChargingFrequency() == 0 && !this.isActive)
@@ -285,7 +287,7 @@ public class BloodAltar// implements IFluidHandler
 			chargeInputted = Math.min(chargeInputted, maxCharge - totalCharge);
 			totalCharge += chargeInputted;
 			this.fluid.setAmount(this.fluid.getAmount() - chargeInputted);
-			tileAltar.getWorld().notifyBlockUpdate(tileAltar.getPos(), tileAltar.getWorld().getBlockState(tileAltar.getPos()), tileAltar.getWorld().getBlockState(tileAltar.getPos()), 3);
+			tileAltar.getLevel().sendBlockUpdated(tileAltar.getBlockPos(), tileAltar.getLevel().getBlockState(tileAltar.getBlockPos()), tileAltar.getLevel().getBlockState(tileAltar.getBlockPos()), 3);
 		}
 
 		if (internalCounter % 100 == 0 && (this.isActive || this.cooldownAfterCrafting <= 0))
@@ -313,15 +315,15 @@ public class BloodAltar// implements IFluidHandler
 			return;
 		}
 
-		ItemStack input = tileAltar.getStackInSlot(0);
+		ItemStack input = tileAltar.getItem(0);
 
 		if (input.isEmpty())
 			return;
 
-		World world = tileAltar.getWorld();
-		BlockPos pos = tileAltar.getPos();
+		World world = tileAltar.getLevel();
+		BlockPos pos = tileAltar.getBlockPos();
 
-		if (world.isRemote)
+		if (world.isClientSide)
 			return;
 
 		if (!canBeFilled)
@@ -358,7 +360,7 @@ public class BloodAltar// implements IFluidHandler
 //					server.spawnParticle(ParticleTypes.SPLASH, (double) pos.getX()
 //							+ worldIn.rand.nextDouble(), (double) (pos.getY() + 1), (double) pos.getZ()
 //									+ worldIn.rand.nextDouble(), 1, 0.0D, 0.0D, 0.0D, 1.0D);
-					server.spawnParticle(RedstoneParticleData.REDSTONE_DUST, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 1, 0.2, 0.0, 0.2, 0.0);
+					server.sendParticles(RedstoneParticleData.REDSTONE, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 1, 0.2, 0.0, 0.2, 0.0);
 				}
 
 			} else if (!hasOperated && progress > 0)
@@ -371,7 +373,7 @@ public class BloodAltar// implements IFluidHandler
 				if (internalCounter % 2 == 0 && world instanceof ServerWorld)
 				{
 					ServerWorld server = (ServerWorld) world;
-					server.spawnParticle(ParticleTypes.LARGE_SMOKE, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0.1, 0, 0.1, 0);
+					server.sendParticles(ParticleTypes.LARGE_SMOKE, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0.1, 0, 0.1, 0);
 				}
 			}
 
@@ -383,8 +385,8 @@ public class BloodAltar// implements IFluidHandler
 
 					BloodMagicCraftedEvent.Altar event = new BloodMagicCraftedEvent.Altar(result, input.copy());
 					MinecraftForge.EVENT_BUS.post(event);
-					tileAltar.setInventorySlotContents(0, event.getOutput());
-					if (tileAltar.getWorld().getBlockState(tileAltar.getPos().down()).getBlock() instanceof RedstoneLampBlock)
+					tileAltar.setItem(0, event.getOutput());
+					if (tileAltar.getLevel().getBlockState(tileAltar.getBlockPos().below()).getBlock() instanceof RedstoneLampBlock)
 						tileAltar.setOutputState(true);
 
 					progress = 0;
@@ -392,7 +394,7 @@ public class BloodAltar// implements IFluidHandler
 					if (world instanceof ServerWorld)
 					{
 						ServerWorld server = (ServerWorld) world;
-						server.spawnParticle(RedstoneParticleData.REDSTONE_DUST, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 40, 0.3, 0, 0.3, 0);
+						server.sendParticles(RedstoneParticleData.REDSTONE, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 40, 0.3, 0, 0.3, 0);
 					}
 
 					this.cooldownAfterCrafting = 30;
@@ -402,7 +404,7 @@ public class BloodAltar// implements IFluidHandler
 
 		} else
 		{
-			ItemStack contained = tileAltar.getStackInSlot(0);
+			ItemStack contained = tileAltar.getItem(0);
 
 			if (contained.isEmpty() || !(contained.getItem() instanceof IBloodOrb) || !(contained.getItem() instanceof IBindable))
 				return;
@@ -425,20 +427,20 @@ public class BloodAltar// implements IFluidHandler
 				if (drain > 0 && internalCounter % 4 == 0 && world instanceof ServerWorld)
 				{
 					ServerWorld server = (ServerWorld) world;
-					server.spawnParticle(ParticleTypes.WITCH, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0, 0, 0, 0.001);
+					server.sendParticles(ParticleTypes.WITCH, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0, 0, 0, 0.001);
 				}
 			}
 		}
 
-		tileAltar.getWorld().notifyBlockUpdate(tileAltar.getPos(), tileAltar.getWorld().getBlockState(tileAltar.getPos()), tileAltar.getWorld().getBlockState(tileAltar.getPos()), 3);
+		tileAltar.getLevel().sendBlockUpdated(tileAltar.getBlockPos(), tileAltar.getLevel().getBlockState(tileAltar.getBlockPos()), tileAltar.getLevel().getBlockState(tileAltar.getBlockPos()), 3);
 	}
 
 	public void checkTier()
 	{
-		AltarTier tier = AltarUtil.getTier(tileAltar.getWorld(), tileAltar.getPos());
+		AltarTier tier = AltarUtil.getTier(tileAltar.getLevel(), tileAltar.getBlockPos());
 		this.altarTier = tier;
 
-		upgrade = AltarUtil.getUpgrades(tileAltar.getWorld(), tileAltar.getPos(), tier);
+		upgrade = AltarUtil.getUpgrades(tileAltar.getLevel(), tileAltar.getBlockPos(), tier);
 
 		if (tier.equals(currentTierDisplayed))
 			currentTierDisplayed = AltarTier.ONE;
@@ -491,7 +493,7 @@ public class BloodAltar// implements IFluidHandler
 		if (this.totalCharge > this.maxCharge)
 			this.totalCharge = this.maxCharge;
 
-		tileAltar.getWorld().notifyBlockUpdate(tileAltar.getPos(), tileAltar.getWorld().getBlockState(tileAltar.getPos()), tileAltar.getWorld().getBlockState(tileAltar.getPos()), 3);
+		tileAltar.getLevel().sendBlockUpdated(tileAltar.getBlockPos(), tileAltar.getLevel().getBlockState(tileAltar.getBlockPos()), tileAltar.getLevel().getBlockState(tileAltar.getBlockPos()), 3);
 	}
 
 	public int fillMainTank(int amount)
@@ -775,7 +777,7 @@ public class BloodAltar// implements IFluidHandler
 			return getCurrentBlood() * 15 / getCapacity();
 
 		case 1:
-			ItemStack contained = tileAltar.getStackInSlot(0);
+			ItemStack contained = tileAltar.getItem(0);
 
 			if (contained.isEmpty() || !(contained.getItem() instanceof IBloodOrb) || !(contained.getItem() instanceof IBindable))
 				return 0;

@@ -125,8 +125,8 @@ public class ARCRecipeCategory implements IRecipeCategory<RecipeARC>
 				infoString[i] = "" + (int) (chanceArray[i] * 100) + "%";
 			}
 
-			mc.fontRenderer.drawStringWithShadow(matrixStack, infoString[i], 86 + 22 * i
-					- mc.fontRenderer.getStringWidth(infoString[i]) / 2, 5, Color.white.getRGB());
+			mc.font.drawShadow(matrixStack, infoString[i], 86 + 22 * i
+					- mc.font.width(infoString[i]) / 2, 5, Color.white.getRGB());
 		}
 
 //		if (recipe.getFluidOutput() != null && !recipe.getFluidOutput().isEmpty())

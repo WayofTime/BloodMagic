@@ -17,12 +17,14 @@ import net.minecraft.world.server.ServerWorld;
 import wayoftime.bloodmagic.common.block.type.SpectralBlockType;
 import wayoftime.bloodmagic.tile.TileSpectral;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockSpectral extends Block
 {
 	public static final EnumProperty<SpectralBlockType> SPECTRAL_STATE = EnumProperty.create("spectral", SpectralBlockType.class);
 	public static final int DECAY_RATE = 100;
 
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(0, 0, 0, 0, 0, 0);
+	private static final VoxelShape SHAPE = Block.box(0, 0, 0, 0, 0, 0);
 
 	public BlockSpectral(Properties prop)
 	{
@@ -31,14 +33,14 @@ public class BlockSpectral extends Block
 
 	public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand)
 	{
-		switch (state.get(SPECTRAL_STATE))
+		switch (state.getValue(SPECTRAL_STATE))
 		{
 		case SOLID:
-			world.setBlockState(pos, state.with(SPECTRAL_STATE, SpectralBlockType.LEAKING), 3);
-			world.getPendingBlockTicks().scheduleTick(pos, this, BlockSpectral.DECAY_RATE);
+			world.setBlock(pos, state.setValue(SPECTRAL_STATE, SpectralBlockType.LEAKING), 3);
+			world.getBlockTicks().scheduleTick(pos, this, BlockSpectral.DECAY_RATE);
 			break;
 		case LEAKING:
-			TileEntity tile = world.getTileEntity(pos);
+			TileEntity tile = world.getBlockEntity(pos);
 			if (tile instanceof TileSpectral)
 			{
 				((TileSpectral) tile).revertToFluid();
@@ -54,13 +56,13 @@ public class BlockSpectral extends Block
 	}
 
 	@Override
-	public boolean isReplaceable(BlockState state, BlockItemUseContext useContext)
+	public boolean canBeReplaced(BlockState state, BlockItemUseContext useContext)
 	{
 		return true;
 	}
 
 	@Override
-	public boolean isReplaceable(BlockState state, Fluid fluid)
+	public boolean canBeReplaced(BlockState state, Fluid fluid)
 	{
 		return false;
 	}
@@ -80,11 +82,11 @@ public class BlockSpectral extends Block
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context)
 	{
-		return this.getDefaultState().with(SPECTRAL_STATE, SpectralBlockType.SOLID);
+		return this.defaultBlockState().setValue(SPECTRAL_STATE, SpectralBlockType.SOLID);
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
 	{
 		builder.add(SPECTRAL_STATE);
 	}

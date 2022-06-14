@@ -52,7 +52,7 @@ public class RitualHelper
 		{
 			for (int i = 0; i < 4; i++)
 			{
-				Direction direction = Direction.byHorizontalIndex(i);
+				Direction direction = Direction.from2DDataValue(i);
 
 				if (checkValidRitual(world, pos, ritual, direction))
 					return BloodMagic.RITUAL_MANAGER.getId(ritual);
@@ -66,7 +66,7 @@ public class RitualHelper
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			Direction direction = Direction.byHorizontalIndex(i);
+			Direction direction = Direction.from2DDataValue(i);
 			if (checkValidRitual(world, pos, ritual, direction))
 				return direction;
 		}
@@ -86,7 +86,7 @@ public class RitualHelper
 
 		for (RitualComponent component : components)
 		{
-			BlockPos newPos = pos.add(component.getOffset(direction));
+			BlockPos newPos = pos.offset(component.getOffset(direction));
 			if (!isRuneType(world, newPos, component.getRuneType()))
 				return false;
 		}
@@ -99,7 +99,7 @@ public class RitualHelper
 		if (world == null)
 			return false;
 		Block block = world.getBlockState(pos).getBlock();
-		TileEntity tile = world.getTileEntity(pos);
+		TileEntity tile = world.getBlockEntity(pos);
 
 		if (block instanceof IRitualStone)
 			return ((IRitualStone) block).isRuneType(world, pos, type);
@@ -116,7 +116,7 @@ public class RitualHelper
 		if (world == null)
 			return false;
 		Block block = world.getBlockState(pos).getBlock();
-		TileEntity tile = world.getTileEntity(pos);
+		TileEntity tile = world.getBlockEntity(pos);
 
 		if (block instanceof IRitualStone)
 			return true;
@@ -132,7 +132,7 @@ public class RitualHelper
 		if (world == null)
 			return;
 		BlockState state = world.getBlockState(pos);
-		TileEntity tile = world.getTileEntity(pos);
+		TileEntity tile = world.getBlockEntity(pos);
 
 		if (state.getBlock() instanceof IRitualStone)
 			((IRitualStone) state.getBlock()).setRuneType(world, pos, type);
@@ -144,7 +144,7 @@ public class RitualHelper
 			if (cap.isPresent())
 			{
 				cap.resolve().get().setRuneType(type);
-				world.notifyBlockUpdate(pos, state, state, 3);
+				world.sendBlockUpdated(pos, state, state, 3);
 			}
 
 		}
@@ -159,8 +159,8 @@ public class RitualHelper
 		if (abortConstruction(world, pos, direction, safe, components))
 			return false;
 
-		BlockState mrs = BloodMagicBlocks.MASTER_RITUAL_STONE.get().getDefaultState();
-		world.setBlockState(pos, mrs);
+		BlockState mrs = BloodMagicBlocks.MASTER_RITUAL_STONE.get().defaultBlockState();
+		world.setBlockAndUpdate(pos, mrs);
 
 		setRitualStones(direction, world, pos, components);
 		return true;
@@ -173,8 +173,8 @@ public class RitualHelper
 		for (RitualComponent component : components)
 		{
 			BlockPos offset = component.getOffset(direction);
-			BlockPos newPos = pos.add(offset);
-			if (world.isOutsideBuildHeight(newPos) || (safe && !world.isAirBlock(newPos)))
+			BlockPos newPos = pos.offset(offset);
+			if (world.isOutsideBuildHeight(newPos) || (safe && !world.isEmptyBlock(newPos)))
 				return true;
 		}
 		return false;
@@ -193,8 +193,8 @@ public class RitualHelper
 		} else
 			direction = tile.getDirection();
 
-		World world = tile.getWorld();
-		BlockPos pos = tile.getPos();
+		World world = tile.getLevel();
+		BlockPos pos = tile.getBlockPos();
 
 		List<RitualComponent> components = Lists.newArrayList();
 		ritual.gatherComponents(components::add);
@@ -211,15 +211,15 @@ public class RitualHelper
 		for (RitualComponent component : gatheredComponents)
 		{
 			BlockPos offset = component.getOffset(direction);
-			BlockPos newPos = pos.add(offset);
+			BlockPos newPos = pos.offset(offset);
 			((BlockRitualStone) BloodMagicBlocks.BLANK_RITUAL_STONE.get()).setRuneType(world, newPos, component.getRuneType());
 		}
 	}
 
 	public static Pair<Ritual, Direction> getRitualFromRuins(TileMasterRitualStone tile)
 	{
-		BlockPos pos = tile.getPos();
-		World world = tile.getWorld();
+		BlockPos pos = tile.getBlockPos();
+		World world = tile.getLevel();
 		Ritual possibleRitual = tile.getCurrentRitual();
 		Direction possibleDirection = tile.getDirection();
 		int highestCount = 0;
@@ -229,14 +229,14 @@ public class RitualHelper
 			{
 				for (int i = 0; i < 4; i++)
 				{
-					Direction direction = Direction.byHorizontalIndex(i);
+					Direction direction = Direction.from2DDataValue(i);
 					List<RitualComponent> components = Lists.newArrayList();
 					ritual.gatherComponents(components::add);
 					int currentCount = 0;
 
 					for (RitualComponent component : components)
 					{
-						BlockPos newPos = pos.add(component.getOffset(direction));
+						BlockPos newPos = pos.offset(component.getOffset(direction));
 						if (isRuneType(world, newPos, component.getRuneType()))
 							currentCount += 1;
 					}

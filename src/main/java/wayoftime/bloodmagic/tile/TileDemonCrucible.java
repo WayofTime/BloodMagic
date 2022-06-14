@@ -38,17 +38,17 @@ public class TileDemonCrucible extends TileInventory implements ITickableTileEnt
 	@Override
 	public void tick()
 	{
-		if (getWorld().isRemote)
+		if (getLevel().isClientSide)
 		{
 			return;
 		}
 
 		internalCounter++;
 
-		if (getWorld().isBlockPowered(getPos()))
+		if (getLevel().hasNeighborSignal(getBlockPos()))
 		{
 			// TODO: Fill the contained gem if it is there.
-			ItemStack stack = this.getStackInSlot(0);
+			ItemStack stack = this.getItem(0);
 			if (stack.getItem() instanceof IDemonWillGem)
 			{
 				IDemonWillGem gemItem = (IDemonWillGem) stack.getItem();
@@ -74,7 +74,7 @@ public class TileDemonCrucible extends TileInventory implements ITickableTileEnt
 			}
 		} else
 		{
-			ItemStack stack = this.getStackInSlot(0);
+			ItemStack stack = this.getItem(0);
 			if (!stack.isEmpty())
 			{
 				if (stack.getItem() instanceof IDemonWillGem)
@@ -82,22 +82,22 @@ public class TileDemonCrucible extends TileInventory implements ITickableTileEnt
 					IDemonWillGem gemItem = (IDemonWillGem) stack.getItem();
 					for (EnumDemonWillType type : EnumDemonWillType.values())
 					{
-						double currentAmount = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, type);
+						double currentAmount = WorldDemonWillHandler.getCurrentWill(getLevel(), worldPosition, type);
 						double drainAmount = Math.min(maxWill - currentAmount, gemDrainRate);
-						double filled = WorldDemonWillHandler.fillWillToMaximum(getWorld(), pos, type, drainAmount, maxWill, false);
+						double filled = WorldDemonWillHandler.fillWillToMaximum(getLevel(), worldPosition, type, drainAmount, maxWill, false);
 
 						filled = gemItem.drainWill(type, stack, filled, false);
 						if (filled > 0)
 						{
 							filled = gemItem.drainWill(type, stack, filled, true);
-							WorldDemonWillHandler.fillWillToMaximum(getWorld(), pos, type, filled, maxWill, true);
+							WorldDemonWillHandler.fillWillToMaximum(getLevel(), worldPosition, type, filled, maxWill, true);
 						}
 					}
 				} else if (stack.getItem() instanceof IDiscreteDemonWill) // TODO: Limit the speed of this process
 				{
 					IDiscreteDemonWill willItem = (IDiscreteDemonWill) stack.getItem();
 					EnumDemonWillType type = willItem.getType(stack);
-					double currentAmount = WorldDemonWillHandler.getCurrentWill(getWorld(), pos, type);
+					double currentAmount = WorldDemonWillHandler.getCurrentWill(getLevel(), worldPosition, type);
 					double needed = maxWill - currentAmount;
 					double discreteAmount = willItem.getDiscretization(stack);
 					if (needed >= discreteAmount)
@@ -105,10 +105,10 @@ public class TileDemonCrucible extends TileInventory implements ITickableTileEnt
 						double filled = willItem.drainWill(stack, discreteAmount);
 						if (filled > 0)
 						{
-							WorldDemonWillHandler.fillWillToMaximum(getWorld(), pos, type, filled, maxWill, true);
+							WorldDemonWillHandler.fillWillToMaximum(getLevel(), worldPosition, type, filled, maxWill, true);
 							if (stack.getCount() <= 0)
 							{
-								this.setInventorySlotContents(0, ItemStack.EMPTY);
+								this.setItem(0, ItemStack.EMPTY);
 							}
 						}
 					}
@@ -257,14 +257,14 @@ public class TileDemonCrucible extends TileInventory implements ITickableTileEnt
 	}
 
 	@Override
-	public boolean canInsertItem(int index, ItemStack stack, Direction direction)
+	public boolean canPlaceItemThroughFace(int index, ItemStack stack, Direction direction)
 	{
 		return !stack.isEmpty() && inventory.get(0).isEmpty()
 				&& (stack.getItem() instanceof IDemonWillGem || stack.getItem() instanceof IDiscreteDemonWill);
 	}
 
 	@Override
-	public boolean canExtractItem(int index, ItemStack stack, Direction direction)
+	public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction)
 	{
 		return true;
 	}

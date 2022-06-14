@@ -40,7 +40,7 @@ public class BMRenderTypes
 	public static final RenderType POSITION_COLOR_LIGHTMAP;
 	public static final RenderType ITEM_DAMAGE_BAR;
 	protected static final RenderState.ShadeModelState SHADE_ENABLED = new RenderState.ShadeModelState(true);
-	protected static final RenderState.TextureState BLOCK_SHEET_MIPPED = new RenderState.TextureState(AtlasTexture.LOCATION_BLOCKS_TEXTURE, false, true);
+	protected static final RenderState.TextureState BLOCK_SHEET_MIPPED = new RenderState.TextureState(AtlasTexture.LOCATION_BLOCKS, false, true);
 	protected static final RenderState.LightmapState LIGHTMAP_DISABLED = new RenderState.LightmapState(false);
 	protected static final RenderState.TransparencyState TRANSLUCENT_TRANSPARENCY = new RenderState.TransparencyState("translucent_transparency", () -> {
 		RenderSystem.enableBlend();
@@ -52,31 +52,31 @@ public class BMRenderTypes
 
 	static
 	{
-		RenderType.State fullbrightSolidState = RenderType.State.getBuilder().shadeModel(SHADE_ENABLED).lightmap(LIGHTMAP_DISABLED).texture(BLOCK_SHEET_MIPPED).build(true);
-		SOLID_FULLBRIGHT = RenderType.makeType(BloodMagic.MODID + ":block_fullbright", DefaultVertexFormats.BLOCK, GL11.GL_QUADS, 256, fullbrightSolidState);
-		RenderType.State translucentNoDepthState = RenderType.State.getBuilder().transparency(TRANSLUCENT_TRANSPARENCY).line(new LineState(OptionalDouble.of(2))).texture(new TextureState()).depthTest(DEPTH_ALWAYS).build(false);
-		RenderType.State translucentNoTextureState = RenderType.State.getBuilder().transparency(TRANSLUCENT_TRANSPARENCY).texture(new TextureState()).build(false);
-		TRANSLUCENT_LINES = RenderType.makeType(BloodMagic.MODID + ":translucent_lines", DefaultVertexFormats.POSITION_COLOR, GL11.GL_LINES, 256, translucentNoDepthState);
-		LINES = RenderType.makeType(BloodMagic.MODID + ":lines", DefaultVertexFormats.POSITION_COLOR, GL11.GL_LINES, 256, RenderType.State.getBuilder().build(false));
-		TRANSLUCENT_TRIANGLES = RenderType.makeType(BloodMagic.MODID + ":translucent_triangle_fan", DefaultVertexFormats.POSITION_COLOR, GL11.GL_TRIANGLES, 256, translucentNoDepthState);
-		TRANSLUCENT_POSITION_COLOR = RenderType.makeType(BloodMagic.MODID + ":translucent_pos_color", DefaultVertexFormats.POSITION_COLOR, GL11.GL_QUADS, 256, translucentNoTextureState);
-		TRANSLUCENT_NO_DEPTH = RenderType.makeType(BloodMagic.MODID + ":translucent_no_depth", DefaultVertexFormats.POSITION_COLOR, GL11.GL_QUADS, 256, translucentNoDepthState);
-		RenderType.State chunkMarkerState = RenderType.State.getBuilder().texture(new TextureState()).transparency(TRANSLUCENT_TRANSPARENCY).cull(new CullState(false)).shadeModel(new ShadeModelState(true)).line(new LineState(OptionalDouble.of(5))).build(false);
-		CHUNK_MARKER = RenderType.makeType(BloodMagic.MODID + ":chunk_marker", DefaultVertexFormats.POSITION_COLOR, GL11.GL_LINES, 256, chunkMarkerState);
-		VEIN_MARKER = RenderType.makeType(BloodMagic.MODID + ":vein_marker", DefaultVertexFormats.POSITION_COLOR, GL11.GL_LINE_LOOP, 256, chunkMarkerState);
-		POSITION_COLOR_TEX_LIGHTMAP = RenderType.makeType(BloodMagic.MODID + ":pos_color_tex_lightmap", DefaultVertexFormats.POSITION_COLOR_TEX_LIGHTMAP, GL11.GL_QUADS, 256, RenderType.State.getBuilder().texture(new TextureState(PlayerContainer.LOCATION_BLOCKS_TEXTURE, false, false)).lightmap(new LightmapState(true)).build(false));
-		POSITION_COLOR_LIGHTMAP = RenderType.makeType(BloodMagic.MODID + ":pos_color_lightmap", DefaultVertexFormats.POSITION_COLOR_LIGHTMAP, GL11.GL_QUADS, 256, RenderType.State.getBuilder().texture(new TextureState()).lightmap(new LightmapState(true)).build(false));
-		ITEM_DAMAGE_BAR = RenderType.makeType(BloodMagic.MODID + ":item_damage_bar", DefaultVertexFormats.POSITION_COLOR, GL11.GL_QUADS, 256, RenderType.State.getBuilder().depthTest(DEPTH_ALWAYS).texture(new TextureState()).alpha(new AlphaState(0)).transparency(NO_TRANSPARENCY).build(false));
+		RenderType.State fullbrightSolidState = RenderType.State.builder().setShadeModelState(SHADE_ENABLED).setLightmapState(LIGHTMAP_DISABLED).setTextureState(BLOCK_SHEET_MIPPED).createCompositeState(true);
+		SOLID_FULLBRIGHT = RenderType.create(BloodMagic.MODID + ":block_fullbright", DefaultVertexFormats.BLOCK, GL11.GL_QUADS, 256, fullbrightSolidState);
+		RenderType.State translucentNoDepthState = RenderType.State.builder().setTransparencyState(TRANSLUCENT_TRANSPARENCY).setLineState(new LineState(OptionalDouble.of(2))).setTextureState(new TextureState()).setDepthTestState(DEPTH_ALWAYS).createCompositeState(false);
+		RenderType.State translucentNoTextureState = RenderType.State.builder().setTransparencyState(TRANSLUCENT_TRANSPARENCY).setTextureState(new TextureState()).createCompositeState(false);
+		TRANSLUCENT_LINES = RenderType.create(BloodMagic.MODID + ":translucent_lines", DefaultVertexFormats.POSITION_COLOR, GL11.GL_LINES, 256, translucentNoDepthState);
+		LINES = RenderType.create(BloodMagic.MODID + ":lines", DefaultVertexFormats.POSITION_COLOR, GL11.GL_LINES, 256, RenderType.State.builder().createCompositeState(false));
+		TRANSLUCENT_TRIANGLES = RenderType.create(BloodMagic.MODID + ":translucent_triangle_fan", DefaultVertexFormats.POSITION_COLOR, GL11.GL_TRIANGLES, 256, translucentNoDepthState);
+		TRANSLUCENT_POSITION_COLOR = RenderType.create(BloodMagic.MODID + ":translucent_pos_color", DefaultVertexFormats.POSITION_COLOR, GL11.GL_QUADS, 256, translucentNoTextureState);
+		TRANSLUCENT_NO_DEPTH = RenderType.create(BloodMagic.MODID + ":translucent_no_depth", DefaultVertexFormats.POSITION_COLOR, GL11.GL_QUADS, 256, translucentNoDepthState);
+		RenderType.State chunkMarkerState = RenderType.State.builder().setTextureState(new TextureState()).setTransparencyState(TRANSLUCENT_TRANSPARENCY).setCullState(new CullState(false)).setShadeModelState(new ShadeModelState(true)).setLineState(new LineState(OptionalDouble.of(5))).createCompositeState(false);
+		CHUNK_MARKER = RenderType.create(BloodMagic.MODID + ":chunk_marker", DefaultVertexFormats.POSITION_COLOR, GL11.GL_LINES, 256, chunkMarkerState);
+		VEIN_MARKER = RenderType.create(BloodMagic.MODID + ":vein_marker", DefaultVertexFormats.POSITION_COLOR, GL11.GL_LINE_LOOP, 256, chunkMarkerState);
+		POSITION_COLOR_TEX_LIGHTMAP = RenderType.create(BloodMagic.MODID + ":pos_color_tex_lightmap", DefaultVertexFormats.POSITION_COLOR_TEX_LIGHTMAP, GL11.GL_QUADS, 256, RenderType.State.builder().setTextureState(new TextureState(PlayerContainer.BLOCK_ATLAS, false, false)).setLightmapState(new LightmapState(true)).createCompositeState(false));
+		POSITION_COLOR_LIGHTMAP = RenderType.create(BloodMagic.MODID + ":pos_color_lightmap", DefaultVertexFormats.POSITION_COLOR_LIGHTMAP, GL11.GL_QUADS, 256, RenderType.State.builder().setTextureState(new TextureState()).setLightmapState(new LightmapState(true)).createCompositeState(false));
+		ITEM_DAMAGE_BAR = RenderType.create(BloodMagic.MODID + ":item_damage_bar", DefaultVertexFormats.POSITION_COLOR, GL11.GL_QUADS, 256, RenderType.State.builder().setDepthTestState(DEPTH_ALWAYS).setTextureState(new TextureState()).setAlphaState(new AlphaState(0)).setTransparencyState(NO_TRANSPARENCY).createCompositeState(false));
 	}
 
 	public static RenderType getGui(ResourceLocation texture)
 	{
-		return RenderType.makeType("gui_" + texture, DefaultVertexFormats.POSITION_COLOR_TEX, GL11.GL_QUADS, 256, RenderType.State.getBuilder().texture(new TextureState(texture, false, false)).alpha(new AlphaState(0.5F)).build(false));
+		return RenderType.create("gui_" + texture, DefaultVertexFormats.POSITION_COLOR_TEX, GL11.GL_QUADS, 256, RenderType.State.builder().setTextureState(new TextureState(texture, false, false)).setAlphaState(new AlphaState(0.5F)).createCompositeState(false));
 	}
 
 	public static RenderType getLines(float lineWidth)
 	{
-		return RenderType.makeType("lines_color_pos_" + lineWidth, DefaultVertexFormats.POSITION_COLOR, GL11.GL_LINES, 256, RenderType.State.getBuilder().line(new LineState(OptionalDouble.of(lineWidth))).texture(new TextureState()).build(false));
+		return RenderType.create("lines_color_pos_" + lineWidth, DefaultVertexFormats.POSITION_COLOR, GL11.GL_LINES, 256, RenderType.State.builder().setLineState(new LineState(OptionalDouble.of(lineWidth))).setTextureState(new TextureState()).createCompositeState(false));
 	}
 
 	public static RenderType getPoints(float pointSize)
@@ -86,18 +86,18 @@ public class BMRenderTypes
 		FogState setPointSize = new FogState(BloodMagic.MODID + ":pointsize_" + pointSize, () -> GL11.glPointSize(pointSize), () -> {
 			GL11.glPointSize(1);
 		});
-		return RenderType.makeType("point_pos_color_" + pointSize, DefaultVertexFormats.POSITION_COLOR, GL11.GL_POINTS, 256, RenderType.State.getBuilder().fog(setPointSize).texture(new TextureState()).build(false));
+		return RenderType.create("point_pos_color_" + pointSize, DefaultVertexFormats.POSITION_COLOR, GL11.GL_POINTS, 256, RenderType.State.builder().setFogState(setPointSize).setTextureState(new TextureState()).createCompositeState(false));
 	}
 
 	public static RenderType getPositionTex(ResourceLocation texture)
 	{
-		return RenderType.makeType(BloodMagic.MODID + ":pos_tex_" + texture, DefaultVertexFormats.POSITION_TEX, GL11.GL_QUADS, 256, RenderType.State.getBuilder().texture(new TextureState(texture, false, false)).build(false));
+		return RenderType.create(BloodMagic.MODID + ":pos_tex_" + texture, DefaultVertexFormats.POSITION_TEX, GL11.GL_QUADS, 256, RenderType.State.builder().setTextureState(new TextureState(texture, false, false)).createCompositeState(false));
 	}
 
 	public static RenderType getFullbrightTranslucent(ResourceLocation resourceLocation)
 	{
-		RenderType.State glState = RenderType.State.getBuilder().transparency(TRANSLUCENT_TRANSPARENCY).texture(new TextureState(resourceLocation, false, false)).lightmap(new LightmapState(false)).build(false);
-		return RenderType.makeType("BloodMagic:fullbright_translucent_" + resourceLocation, DefaultVertexFormats.BLOCK, GL11.GL_QUADS, 256, glState);
+		RenderType.State glState = RenderType.State.builder().setTransparencyState(TRANSLUCENT_TRANSPARENCY).setTextureState(new TextureState(resourceLocation, false, false)).setLightmapState(new LightmapState(false)).createCompositeState(false);
+		return RenderType.create("BloodMagic:fullbright_translucent_" + resourceLocation, DefaultVertexFormats.BLOCK, GL11.GL_QUADS, 256, glState);
 	}
 
 	public static IRenderTypeBuffer wrapWithStencil(IRenderTypeBuffer in, Consumer<IVertexBuilder> setupStencilArea, String name, int ref)
@@ -113,10 +113,10 @@ public class BMRenderTypes
 			RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT, true);
 			RenderSystem.disableTexture();
 			Tessellator tes = Tessellator.getInstance();
-			BufferBuilder bb = tes.getBuffer();
+			BufferBuilder bb = tes.getBuilder();
 			bb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
 			setupStencilArea.accept(bb);
-			tes.draw();
+			tes.end();
 			RenderSystem.enableTexture();
 			RenderSystem.colorMask(true, true, true, true);
 			RenderSystem.depthMask(true);
@@ -139,7 +139,7 @@ public class BMRenderTypes
 	private static IRenderTypeBuffer wrapWithAdditional(IRenderTypeBuffer in, String name, Runnable setup, Runnable teardown)
 	{
 		return type -> {
-			return in.getBuffer(new RenderType(BloodMagic.MODID + ":" + type + "_" + name, type.getVertexFormat(), type.getDrawMode(), type.getBufferSize(), type.isUseDelegate(), false, () -> {
+			return in.getBuffer(new RenderType(BloodMagic.MODID + ":" + type + "_" + name, type.format(), type.mode(), type.bufferSize(), type.affectsCrumbling(), false, () -> {
 				type.setupRenderState();
 				setup.run();
 			}, () -> {

@@ -21,14 +21,14 @@ public class ItemDemonWillGauge extends Item implements IDemonWillViewer
 {
 	public ItemDemonWillGauge()
 	{
-		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.willGauge").mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.willGauge").withStyle(TextFormatting.GRAY));
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class ItemDemonWillGauge extends Item implements IDemonWillViewer
 	@Override
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
 	{
-		if (entityIn instanceof PlayerEntity && entityIn.ticksExisted % 50 == 0)
+		if (entityIn instanceof PlayerEntity && entityIn.tickCount % 50 == 0)
 		{
 			GenericHandler.sendPlayerDemonWillAura((PlayerEntity) entityIn);
 		}

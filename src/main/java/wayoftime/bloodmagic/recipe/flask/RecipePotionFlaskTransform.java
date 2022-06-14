@@ -46,7 +46,7 @@ public class RecipePotionFlaskTransform extends RecipePotionFlaskBase
 	public void write(PacketBuffer buffer)
 	{
 		super.write(buffer);
-		buffer.writeItemStack(output);
+		buffer.writeItem(output);
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class RecipePotionFlaskTransform extends RecipePotionFlaskBase
 		ItemStack copyStack = output.copy();
 
 		copyStack.setTag(flaskStack.getTag());
-		copyStack.setDamage(flaskStack.getDamage());
+		copyStack.setDamageValue(flaskStack.getDamageValue());
 
 		return copyStack;
 	}
@@ -71,7 +71,7 @@ public class RecipePotionFlaskTransform extends RecipePotionFlaskBase
 	{
 		List<EffectHolder> holderList = new ArrayList<>();
 
-		holderList.add(new EffectHolder(Effects.SPEED, 3600, 0, 1, 1));
+		holderList.add(new EffectHolder(Effects.MOVEMENT_SPEED, 3600, 0, 1, 1));
 
 		return holderList;
 	}

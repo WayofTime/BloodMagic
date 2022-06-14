@@ -23,24 +23,24 @@ public class ItemActivationCrystal extends Item implements IBindable
 
 	public ItemActivationCrystal(CrystalType type)
 	{
-		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
 		this.type = type;
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.activationcrystal." + type.name().toLowerCase(Locale.ROOT)).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.activationcrystal." + type.name().toLowerCase(Locale.ROOT)).withStyle(TextFormatting.GRAY));
 
 		if (!stack.hasTag())
 			return;
 
 		Binding binding = getBinding(stack);
 		if (binding != null)
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentOwner", binding.getOwnerName()).mergeStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentOwner", binding.getOwnerName()).withStyle(TextFormatting.GRAY));
 
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 
 	public int getCrystalLevel(ItemStack stack)

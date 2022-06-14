@@ -27,9 +27,9 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
 		if (PlayerHelper.isFakePlayer(player))
 			return false;
 
-		if (!world.isRemote && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess() && applyBonemeal(stack, world, blockPos, player))
+		if (!world.isClientSide && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess() && applyBonemeal(stack, world, blockPos, player))
 		{
-			world.playEvent(2005, blockPos, 0);
+			world.levelEvent(2005, blockPos, 0);
 			return true;
 		}
 
@@ -44,9 +44,9 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
 
 		int range = 3;
 		int verticalRange = 2;
-		int posX = (int) Math.round(player.getPosX() - 0.5f);
-		int posY = (int) player.getPosY();
-		int posZ = (int) Math.round(player.getPosZ() - 0.5f);
+		int posX = (int) Math.round(player.getX() - 0.5f);
+		int posY = (int) player.getY();
+		int posZ = (int) Math.round(player.getZ() - 0.5f);
 		if (worldIn instanceof ServerWorld)
 		{
 			ServerWorld serverWorld = (ServerWorld) worldIn;
@@ -63,16 +63,16 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
 						{
 							if (state.getBlock() instanceof IGrowable && state.getBlock() != Blocks.GRASS_BLOCK)
 							{
-								if (worldIn.rand.nextInt(50) == 0)
+								if (worldIn.random.nextInt(50) == 0)
 								{
 									BlockState preBlockState = worldIn.getBlockState(blockPos);
-									if (((IGrowable) state.getBlock()).canGrow(serverWorld, blockPos, preBlockState, worldIn.isRemote))
+									if (((IGrowable) state.getBlock()).isValidBonemealTarget(serverWorld, blockPos, preBlockState, worldIn.isClientSide))
 									{
-										((IGrowable) state.getBlock()).grow(serverWorld, worldIn.rand, blockPos, state);
+										((IGrowable) state.getBlock()).performBonemeal(serverWorld, worldIn.random, blockPos, state);
 
 										BlockState newState = worldIn.getBlockState(blockPos);
-										if (!newState.equals(preBlockState) && !worldIn.isRemote)
-											worldIn.playEvent(2005, blockPos, 0);
+										if (!newState.equals(preBlockState) && !worldIn.isClientSide)
+											worldIn.levelEvent(2005, blockPos, 0);
 									}
 								}
 							}
@@ -93,13 +93,13 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
 		if (blockstate.getBlock() instanceof IGrowable)
 		{
 			IGrowable igrowable = (IGrowable) blockstate.getBlock();
-			if (igrowable.canGrow(worldIn, pos, blockstate, worldIn.isRemote))
+			if (igrowable.isValidBonemealTarget(worldIn, pos, blockstate, worldIn.isClientSide))
 			{
 				if (worldIn instanceof ServerWorld)
 				{
-					if (igrowable.canUseBonemeal(worldIn, worldIn.rand, pos, blockstate))
+					if (igrowable.isBonemealSuccess(worldIn, worldIn.random, pos, blockstate))
 					{
-						igrowable.grow((ServerWorld) worldIn, worldIn.rand, pos, blockstate);
+						igrowable.performBonemeal((ServerWorld) worldIn, worldIn.random, pos, blockstate);
 					}
 
 				}

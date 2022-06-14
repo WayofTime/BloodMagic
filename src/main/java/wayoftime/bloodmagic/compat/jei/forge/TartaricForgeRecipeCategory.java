@@ -144,7 +144,7 @@ public class TartaricForgeRecipeCategory implements IRecipeCategory<RecipeTartar
 		}
 
 		List<Ingredient> ingList = Lists.newArrayList();
-		ingList.add(Ingredient.fromStacks(validGemStacks));
+		ingList.add(Ingredient.of(validGemStacks));
 		ingList.addAll(recipe.getInput());
 
 		ingredients.setInputIngredients(ingList);

@@ -41,15 +41,15 @@ public class EntityMeteor extends ThrowableEntity
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket()
+	public IPacket<?> getAddEntityPacket()
 	{
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	@Override
-	protected void writeAdditional(CompoundNBT compound)
+	protected void addAdditionalSaveData(CompoundNBT compound)
 	{
-		compound.put(Constants.NBT.ITEM, containedStack.write(new CompoundNBT()));
+		compound.put(Constants.NBT.ITEM, containedStack.save(new CompoundNBT()));
 
 //	      compound.putInt("Time", this.fallTime);
 //	      compound.putBoolean("DropItem", this.shouldDropItem);
@@ -66,10 +66,10 @@ public class EntityMeteor extends ThrowableEntity
 	 * (abstract) Protected helper method to read subclass entity data from NBT.
 	 */
 	@Override
-	protected void readAdditional(CompoundNBT tagCompound)
+	protected void readAdditionalSaveData(CompoundNBT tagCompound)
 	{
 		CompoundNBT tag = tagCompound.getCompound(Constants.NBT.ITEM);
-		containedStack = ItemStack.read(tag);
+		containedStack = ItemStack.of(tag);
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class EntityMeteor extends ThrowableEntity
 		super.tick();
 		// TODO: Check doBlockCollision
 
-//		RayTraceResult raytraceresult = ProjectileHelper.func_234618_a_(this, this::func_230298_a_);
+//		RayTraceResult raytraceresult = ProjectileHelper.getHitResult(this, this::canHitEntity);
 ////		boolean flag = false;
 //		if (raytraceresult.getType() == RayTraceResult.Type.BLOCK)
 //		{
@@ -95,33 +95,33 @@ public class EntityMeteor extends ThrowableEntity
 
 	protected void onInsideBlock(BlockState state)
 	{
-		if (world.isRemote)
+		if (level.isClientSide)
 		{
 			return;
 		}
 
 //		System.out.println("Now inside a block: " + state.getBlock());
-		int i = MathHelper.floor(getPositionVec().x);
-		int j = MathHelper.floor(getPositionVec().y);
-		int k = MathHelper.floor(getPositionVec().z);
+		int i = MathHelper.floor(position().x);
+		int j = MathHelper.floor(position().y);
+		int k = MathHelper.floor(position().z);
 		BlockPos blockpos = new BlockPos(i, j, k);
 
-		if (!state.isSolid())
+		if (!state.canOcclude())
 		{
 			return;
 		}
 
 //		System.out.println("Contained item: " + containedStack.toString());
 
-		RecipeMeteor recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getMeteor(world, containedStack);
+		RecipeMeteor recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getMeteor(level, containedStack);
 		if (recipe != null)
 		{
-			recipe.spawnMeteorInWorld(world, blockpos);
+			recipe.spawnMeteorInWorld(level, blockpos);
 		}
 
 //		this.getEntityWorld().setBlockState(blockpos, BloodMagicBlocks.AIR_RITUAL_STONE.get().getDefaultState());
 //		spawnMeteorInWorld
-		this.setDead();
+		this.removeAfterChangingDimensions();
 	}
 
 //	protected float getGravityVelocity()
@@ -130,7 +130,7 @@ public class EntityMeteor extends ThrowableEntity
 //	}
 
 	@Override
-	protected void registerData()
+	protected void defineSynchedData()
 	{
 		// TODO Auto-generated method stub
 

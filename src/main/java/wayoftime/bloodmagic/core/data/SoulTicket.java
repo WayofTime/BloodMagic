@@ -50,9 +50,9 @@ public class SoulTicket
 	 */
 	public static SoulTicket block(World world, BlockPos pos, int amount)
 	{
-		// func_234923_W_() = getDimension
-		return new SoulTicket(new StringTextComponent("block|" + world.getDimensionKey().getRegistryName() + "|"
-				+ pos.toLong()), amount);
+		// dimension() = getDimension
+		return new SoulTicket(new StringTextComponent("block|" + world.dimension().getRegistryName() + "|"
+				+ pos.asLong()), amount);
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class SoulTicket
 	public static SoulTicket item(ItemStack itemStack, World world, Entity entity, int amount)
 	{
 		return new SoulTicket(new StringTextComponent("item|" + itemStack.getItem().getRegistryName() + "|"
-				+ world.getDimensionKey().getRegistryName() + "|" + entity.getCachedUniqueIdString()), amount);
+				+ world.dimension().getRegistryName() + "|" + entity.getStringUUID()), amount);
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class SoulTicket
 	public static SoulTicket item(ItemStack itemStack, World world, BlockPos pos, int amount)
 	{
 		return new SoulTicket(new StringTextComponent("item|" + itemStack.getItem().getRegistryName() + "|"
-				+ world.getDimensionKey().getRegistryName() + "|" + pos.toLong()), amount);
+				+ world.dimension().getRegistryName() + "|" + pos.asLong()), amount);
 	}
 
 	/**

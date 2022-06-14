@@ -20,24 +20,24 @@ public class GeneratorBlockTags extends BlockTagsProvider
 	}
 
 	@Override
-	public void registerTags()
+	public void addTags()
 	{
-		this.getOrCreateBuilder(BlockTags.WALLS).add(BloodMagicBlocks.DUNGEON_BRICK_WALL.get());
-		this.getOrCreateBuilder(BlockTags.WALLS).add(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get());
-		this.getOrCreateBuilder(BloodMagicTags.Blocks.MUSHROOM_STEM).add(Blocks.MUSHROOM_STEM).add(Blocks.CRIMSON_STEM).add(Blocks.WARPED_STEM);
-		this.getOrCreateBuilder(BloodMagicTags.Blocks.MUSHROOM_HYPHAE).add(Blocks.BROWN_MUSHROOM_BLOCK).add(Blocks.RED_MUSHROOM_BLOCK).add(Blocks.CRIMSON_HYPHAE).add(Blocks.WARPED_HYPHAE).add(Blocks.STRIPPED_CRIMSON_HYPHAE).add(Blocks.STRIPPED_WARPED_HYPHAE).add(Blocks.NETHER_WART_BLOCK).add(Blocks.WARPED_WART_BLOCK).add(Blocks.SHROOMLIGHT);
+		this.tag(BlockTags.WALLS).add(BloodMagicBlocks.DUNGEON_BRICK_WALL.get());
+		this.tag(BlockTags.WALLS).add(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get());
+		this.tag(BloodMagicTags.Blocks.MUSHROOM_STEM).add(Blocks.MUSHROOM_STEM).add(Blocks.CRIMSON_STEM).add(Blocks.WARPED_STEM);
+		this.tag(BloodMagicTags.Blocks.MUSHROOM_HYPHAE).add(Blocks.BROWN_MUSHROOM_BLOCK).add(Blocks.RED_MUSHROOM_BLOCK).add(Blocks.CRIMSON_HYPHAE).add(Blocks.WARPED_HYPHAE).add(Blocks.STRIPPED_CRIMSON_HYPHAE).add(Blocks.STRIPPED_WARPED_HYPHAE).add(Blocks.NETHER_WART_BLOCK).add(Blocks.WARPED_WART_BLOCK).add(Blocks.SHROOMLIGHT);
 
-		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_COPPER);
-		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_LEAD);
-		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_OSMIUM);
-		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_SILVER);
-		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_TIN);
-		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_APATITE);
-		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_CINNABAR);
-		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_RUBY);
-		getOrCreateBuilder(BloodMagicTags.BLOCK_ORE_SAPPHIRE);
+		tag(BloodMagicTags.BLOCK_ORE_COPPER);
+		tag(BloodMagicTags.BLOCK_ORE_LEAD);
+		tag(BloodMagicTags.BLOCK_ORE_OSMIUM);
+		tag(BloodMagicTags.BLOCK_ORE_SILVER);
+		tag(BloodMagicTags.BLOCK_ORE_TIN);
+		tag(BloodMagicTags.BLOCK_ORE_APATITE);
+		tag(BloodMagicTags.BLOCK_ORE_CINNABAR);
+		tag(BloodMagicTags.BLOCK_ORE_RUBY);
+		tag(BloodMagicTags.BLOCK_ORE_SAPPHIRE);
 
-		getOrCreateBuilder(BloodMagicTags.BLOCK_STONE_UNPOLISHED).add(Blocks.STONE, Blocks.ANDESITE, Blocks.DIORITE, Blocks.GRANITE);
+		tag(BloodMagicTags.BLOCK_STONE_UNPOLISHED).add(Blocks.STONE, Blocks.ANDESITE, Blocks.DIORITE, Blocks.GRANITE);
 
 	}
 
@@ -45,7 +45,7 @@ public class GeneratorBlockTags extends BlockTagsProvider
 	 * Resolves a Path for the location to save the given tag.
 	 */
 	@Override
-	protected Path makePath(ResourceLocation id)
+	protected Path getPath(ResourceLocation id)
 	{
 		return this.generator.getOutputFolder().resolve("data/" + id.getNamespace() + "/tags/blocks/" + id.getPath() + ".json");
 	}

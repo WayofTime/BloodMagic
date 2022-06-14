@@ -97,9 +97,9 @@ public class ARCFurnaceRecipeCategory implements IRecipeCategory<FurnaceRecipe>
 	public void setIngredients(FurnaceRecipe recipe, IIngredients ingredients)
 	{
 		List<Ingredient> inputIngList = recipe.getIngredients();
-		inputIngList.add(Ingredient.fromTag(BloodMagicTags.ARC_TOOL_FURNACE));
+		inputIngList.add(Ingredient.of(BloodMagicTags.ARC_TOOL_FURNACE));
 		ingredients.setInputIngredients(inputIngList);
-		ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+		ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
 	}
 
 	@Override

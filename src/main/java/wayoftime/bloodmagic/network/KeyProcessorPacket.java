@@ -48,7 +48,7 @@ public class KeyProcessorPacket
 	{
 		if (playerEntity != null)
 		{
-			ItemStack heldStack = playerEntity.getHeldItemMainhand();
+			ItemStack heldStack = playerEntity.getMainHandItem();
 			if (heldStack.getItem() instanceof IKeybindable)
 			{
 				if (msg.keyId < 0 || msg.keyId >= KeyBindings.values().length)

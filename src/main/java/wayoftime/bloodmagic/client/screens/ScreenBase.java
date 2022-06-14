@@ -33,10 +33,10 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
 		this.renderBackground(stack);
 		super.render(stack, mouseX, mouseY, partialTicks);
 
-		this.renderHoveredTooltip(stack, mouseX, mouseY); // @mcp: func_230459_a_ = renderHoveredToolTip
+		this.renderTooltip(stack, mouseX, mouseY); // @mcp: renderTooltip = renderHoveredToolTip
 //		if (mouseX > (guiLeft + 7) && mouseX < (guiLeft + 7) + 18 && mouseY > (guiTop + 7)
 //				&& mouseY < (guiTop + 7) + 73)
-//			this.renderTooltip(stack, LanguageMap.getInstance().func_244260_a(Arrays.asList(new TranslationTextComponent("screen.diregoo.energy", MagicHelpers.withSuffix(this.container.getEnergy()), MagicHelpers.withSuffix(this.container.getMaxPower())))), mouseX, mouseY);
+//			this.renderTooltip(stack, LanguageMap.getInstance().getVisualOrder(Arrays.asList(new TranslationTextComponent("screen.diregoo.energy", MagicHelpers.withSuffix(this.container.getEnergy()), MagicHelpers.withSuffix(this.container.getMaxPower())))), mouseX, mouseY);
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
 	{
 //		RenderSystem.color4f(1, 1, 1, 1);
 //		getMinecraft().getTextureManager().bindTexture(getBackground());

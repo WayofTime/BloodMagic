@@ -27,19 +27,19 @@ public class ItemMonsterSoul extends Item implements IDemonWill
 
 	public ItemMonsterSoul(EnumDemonWillType type)
 	{
-		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
 		this.type = type;
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
 		if (!stack.hasTag())
 			return;
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.will", ChatUtil.DECIMAL_FORMAT.format(getWill(getType(stack), stack))).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.will", ChatUtil.DECIMAL_FORMAT.format(getWill(getType(stack), stack))).withStyle(TextFormatting.GRAY));
 
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 
 	@Override
@@ -64,9 +64,9 @@ public class ItemMonsterSoul extends Item implements IDemonWill
 	}
 
 	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items)
+	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items)
 	{
-		if (this.isInGroup(group))
+		if (this.allowdedIn(group))
 		{
 			ItemStack stack = new ItemStack(this);
 			this.setWill(type, stack, 5);

@@ -16,6 +16,8 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
 import wayoftime.bloodmagic.common.item.BloodOrb;
 
+import net.minecraft.item.crafting.Ingredient.IItemList;
+
 public class IngredientBloodOrb extends Ingredient
 {
 	public static final ResourceLocation NAME = new ResourceLocation(BloodMagic.MODID, "bloodorb");
@@ -53,7 +55,7 @@ public class IngredientBloodOrb extends Ingredient
 		}
 
 		@Override
-		public Collection<ItemStack> getStacks()
+		public Collection<ItemStack> getItems()
 		{
 			List<ItemStack> orbGet = OrbRegistry.getOrbsDownToTier(orbTier);
 
@@ -77,7 +79,7 @@ public class IngredientBloodOrb extends Ingredient
 		@Override
 		public Ingredient parse(JsonObject json)
 		{
-			return new IngredientBloodOrb(JSONUtils.getInt(json, "orb_tier"));
+			return new IngredientBloodOrb(JSONUtils.getAsInt(json, "orb_tier"));
 		}
 	}
 }

@@ -14,23 +14,23 @@ import wayoftime.bloodmagic.tile.routing.TileRoutingNode;
 public class BlockItemRoutingNode extends BlockRoutingNode
 {
 	@Override
-	public void onPlayerDestroy(IWorld world, BlockPos blockPos, BlockState blockState)
+	public void destroy(IWorld world, BlockPos blockPos, BlockState blockState)
 	{
-		TileEntity tile = world.getTileEntity(blockPos);
+		TileEntity tile = world.getBlockEntity(blockPos);
 		if (tile instanceof TileRoutingNode)
 		{
 			((TileRoutingNode) tile).removeAllConnections();
 			((TileRoutingNode) tile).dropItems();
 		}
-		super.onPlayerDestroy(world, blockPos, blockState);
+		super.destroy(world, blockPos, blockState);
 	}
 
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{
-		if (!state.isIn(newState.getBlock()))
+		if (!state.is(newState.getBlock()))
 		{
-			TileEntity tile = worldIn.getTileEntity(pos);
+			TileEntity tile = worldIn.getBlockEntity(pos);
 			if (tile instanceof TileRoutingNode)
 			{
 				List<BlockPos> connectionList = ((TileRoutingNode) tile).getConnected();
@@ -44,7 +44,7 @@ public class BlockItemRoutingNode extends BlockRoutingNode
 //						continue;
 //					}
 
-					TileEntity connectedTile = worldIn.getTileEntity(connectedPos);
+					TileEntity connectedTile = worldIn.getBlockEntity(connectedPos);
 					if (connectedTile instanceof IRoutingNode)
 					{
 						List<BlockPos> checkResult = ((IRoutingNode) connectedTile).checkAndPurgeConnectionToMaster(pos);
@@ -57,7 +57,7 @@ public class BlockItemRoutingNode extends BlockRoutingNode
 
 			}
 
-			super.onReplaced(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
 

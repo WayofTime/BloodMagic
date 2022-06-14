@@ -14,32 +14,32 @@ import net.minecraft.world.IBlockReader;
 public class BlockGrowingDoubt extends CropsBlock
 {
 	private static final VoxelShape[] SHAPES = new VoxelShape[] {
-			Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D),
-			Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D),
-			Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 7.0D, 16.0D),
-			Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D),
-			Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 10.0D, 16.0D),
-			Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 11.0D, 16.0D),
-			Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D),
-			Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D) };
+			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D),
+			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D),
+			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 7.0D, 16.0D),
+			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D),
+			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 10.0D, 16.0D),
+			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 11.0D, 16.0D),
+			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D),
+			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D) };
 
 	public BlockGrowingDoubt(AbstractBlock.Properties properties)
 	{
 		super(properties);
 	}
 
-	protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos)
+	protected boolean mayPlaceOn(BlockState state, IBlockReader worldIn, BlockPos pos)
 	{
-		return state.isIn(BloodMagicBlocks.NETHER_SOIL.get());
+		return state.is(BloodMagicBlocks.NETHER_SOIL.get());
 	}
 
-	protected IItemProvider getSeedsItem()
+	protected IItemProvider getBaseSeedId()
 	{
 		return Items.POTATO;
 	}
 
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
 	{
-		return SHAPES[state.get(this.getAgeProperty())];
+		return SHAPES[state.getValue(this.getAgeProperty())];
 	}
 }

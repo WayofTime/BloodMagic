@@ -125,7 +125,7 @@ public class LivingUpgrade extends ForgeRegistryEntry<LivingUpgrade>
 
 	public String getTranslationKey()
 	{
-		return translationKey == null ? translationKey = Util.makeTranslationKey("living_upgrade", key)
+		return translationKey == null ? translationKey = Util.makeDescriptionId("living_upgrade", key)
 				: translationKey;
 	}
 

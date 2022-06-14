@@ -37,15 +37,15 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 
 	public ItemSoulGem(String name, int maxWill)
 	{
-		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
 		this.name = name;
 		this.maxWill = maxWill;
 	}
 
 	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items)
+	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items)
 	{
-		if (this.isInGroup(group))
+		if (this.allowdedIn(group))
 		{
 			for (EnumDemonWillType type : EnumDemonWillType.values())
 			{
@@ -58,9 +58,9 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
+		ItemStack stack = player.getItemInHand(hand);
 		EnumDemonWillType type = this.getCurrentType(stack);
 		double drain = Math.min(this.getWill(type, stack), this.getMaxWill(type, stack) / 10);
 
@@ -72,17 +72,17 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
 		if (!stack.hasTag())
 			return;
 
 		EnumDemonWillType type = this.getCurrentType(stack);
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.soulGem." + name).mergeStyle(TextFormatting.GRAY));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.will", ChatUtil.DECIMAL_FORMAT.format(getWill(type, stack))).mergeStyle(TextFormatting.GRAY));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase(Locale.ROOT)).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.soulGem." + name).withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.will", ChatUtil.DECIMAL_FORMAT.format(getWill(type, stack))).withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase(Locale.ROOT)).withStyle(TextFormatting.GRAY));
 
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 
 	@Override
@@ -113,7 +113,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 			return 1;
 		}
 
-		return MathHelper.hsvToRGB(Math.max(0.0F, (float) (getWill(type, stack)) / (float) maxWill) / 3.0F, 1.0F, 1.0F);
+		return MathHelper.hsvToRgb(Math.max(0.0F, (float) (getWill(type, stack)) / (float) maxWill) / 3.0F, 1.0F, 1.0F);
 	}
 
 	@Override

@@ -29,7 +29,7 @@ public class ContainerSoulForge extends Container
 
 	public ContainerSoulForge(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
 	{
-		this((TileSoulForge) playerInventory.player.world.getTileEntity(extraData.readBlockPos()), new IntArray(5), windowId, playerInventory);
+		this((TileSoulForge) playerInventory.player.level.getBlockEntity(extraData.readBlockPos()), new IntArray(5), windowId, playerInventory);
 	}
 
 	public ContainerSoulForge(@Nullable TileSoulForge tile, IIntArray data, int windowId, PlayerInventory playerInventory)
@@ -64,47 +64,47 @@ public class ContainerSoulForge extends Container
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index)
+	public ItemStack quickMoveStack(PlayerEntity playerIn, int index)
 	{
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
+		Slot slot = this.slots.get(index);
 
-		if (slot != null && slot.getHasStack())
+		if (slot != null && slot.hasItem())
 		{
-			ItemStack itemstack1 = slot.getStack();
+			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 
 			if (index == 5)
 			{
-				if (!this.mergeItemStack(itemstack1, 6, 6 + 36, true))
+				if (!this.moveItemStackTo(itemstack1, 6, 6 + 36, true))
 				{
 					return ItemStack.EMPTY;
 				}
 
-				slot.onSlotChange(itemstack1, itemstack);
+				slot.onQuickCraft(itemstack1, itemstack);
 			} else if (index > 5)
 			{
 				if (itemstack1.getItem() instanceof IDemonWill || itemstack1.getItem() instanceof IDemonWillGem)
 				{
-					if (!this.mergeItemStack(itemstack1, 4, 5, false))
+					if (!this.moveItemStackTo(itemstack1, 4, 5, false))
 					{
 						return ItemStack.EMPTY;
 					}
-				} else if (!this.mergeItemStack(itemstack1, 0, 4, false))
+				} else if (!this.moveItemStackTo(itemstack1, 0, 4, false))
 				{
 					return ItemStack.EMPTY;
 				}
-			} else if (!this.mergeItemStack(itemstack1, 6, 42, false))
+			} else if (!this.moveItemStackTo(itemstack1, 6, 42, false))
 			{
 				return ItemStack.EMPTY;
 			}
 
 			if (itemstack1.getCount() == 0)
 			{
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else
 			{
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 
 			if (itemstack1.getCount() == itemstack.getCount())
@@ -119,9 +119,9 @@ public class ContainerSoulForge extends Container
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn)
+	public boolean stillValid(PlayerEntity playerIn)
 	{
-		return this.tileForge.isUsableByPlayer(playerIn);
+		return this.tileForge.stillValid(playerIn);
 	}
 
 	private class SlotSoul extends Slot
@@ -132,7 +132,7 @@ public class ContainerSoulForge extends Container
 		}
 
 		@Override
-		public boolean isItemValid(ItemStack itemStack)
+		public boolean mayPlace(ItemStack itemStack)
 		{
 			return itemStack.getItem() instanceof IDemonWillGem || itemStack.getItem() instanceof IDemonWill;
 		}
@@ -146,7 +146,7 @@ public class ContainerSoulForge extends Container
 		}
 
 		@Override
-		public boolean isItemValid(ItemStack stack)
+		public boolean mayPlace(ItemStack stack)
 		{
 			return false;
 		}

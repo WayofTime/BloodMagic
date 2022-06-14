@@ -51,14 +51,14 @@ public class TileIncenseAltar extends TileInventory implements ITickableTileEnti
 	@Override
 	public void tick()
 	{
-		AxisAlignedBB aabb = incenseArea.getAABB(getPos());
-		List<PlayerEntity> playerList = getWorld().getEntitiesWithinAABB(PlayerEntity.class, aabb);
+		AxisAlignedBB aabb = incenseArea.getAABB(getBlockPos());
+		List<PlayerEntity> playerList = getLevel().getEntitiesOfClass(PlayerEntity.class, aabb);
 		if (playerList.isEmpty())
 		{
 			return;
 		}
 
-		if (getWorld().getGameTime() % 100 == 0)
+		if (getLevel().getGameTime() % 100 == 0)
 		{
 			recheckConstruction();
 		}
@@ -75,10 +75,10 @@ public class TileIncenseAltar extends TileInventory implements ITickableTileEnti
 
 		if (hasPerformed)
 		{
-			if (getWorld().rand.nextInt(4) == 0 && getWorld() instanceof ServerWorld)
+			if (getLevel().random.nextInt(4) == 0 && getLevel() instanceof ServerWorld)
 			{
-				ServerWorld server = (ServerWorld) getWorld();
-				server.spawnParticle(ParticleTypes.FLAME, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 1, 0.02, 0.03, 0.02, 0);
+				ServerWorld server = (ServerWorld) getLevel();
+				server.sendParticles(ParticleTypes.FLAME, worldPosition.getX() + 0.5, worldPosition.getY() + 1.2, worldPosition.getZ() + 0.5, 1, 0.02, 0.03, 0.02, 0);
 			}
 		}
 	}
@@ -116,19 +116,19 @@ public class TileIncenseAltar extends TileInventory implements ITickableTileEnti
 
 			for (int i = -maxCheckRange + yOffset; i <= maxCheckRange + yOffset; i++)
 			{
-				BlockPos verticalPos = pos.add(0, i, 0);
+				BlockPos verticalPos = worldPosition.offset(0, i, 0);
 
 				canFormRoad = true;
 				level: for (int index = 0; index < 4; index++)
 				{
-					Direction horizontalFacing = Direction.byHorizontalIndex(index);
-					BlockPos facingOffsetPos = verticalPos.offset(horizontalFacing, currentDistance);
+					Direction horizontalFacing = Direction.from2DDataValue(index);
+					BlockPos facingOffsetPos = verticalPos.relative(horizontalFacing, currentDistance);
 					for (int j = -1; j <= 1; j++)
 					{
-						BlockPos offsetPos = facingOffsetPos.offset(horizontalFacing.rotateY(), j);
-						BlockState state = getWorld().getBlockState(offsetPos);
+						BlockPos offsetPos = facingOffsetPos.relative(horizontalFacing.getClockWise(), j);
+						BlockState state = getLevel().getBlockState(offsetPos);
 						Block block = state.getBlock();
-						if (!(block instanceof IIncensePath && ((IIncensePath) block).getLevelOfPath(getWorld(), offsetPos, state) >= currentDistance - 2))
+						if (!(block instanceof IIncensePath && ((IIncensePath) block).getLevelOfPath(getLevel(), offsetPos, state) >= currentDistance - 2))
 						{
 							canFormRoad = false;
 							break level;
@@ -156,10 +156,10 @@ public class TileIncenseAltar extends TileInventory implements ITickableTileEnti
 
 						for (int y = yOffset; y <= 2 + yOffset; y++)
 						{
-							BlockPos offsetPos = pos.add(i, y, j);
-							BlockState state = getWorld().getBlockState(offsetPos);
+							BlockPos offsetPos = worldPosition.offset(i, y, j);
+							BlockState state = getLevel().getBlockState(offsetPos);
 							Block block = state.getBlock();
-							TranquilityStack stack = IncenseTranquilityRegistry.getTranquilityOfBlock(getWorld(), offsetPos, block, state);
+							TranquilityStack stack = IncenseTranquilityRegistry.getTranquilityOfBlock(getLevel(), offsetPos, block, state);
 							if (stack != null)
 							{
 								if (!tranquilityMap.containsKey(stack.type))
@@ -199,7 +199,7 @@ public class TileIncenseAltar extends TileInventory implements ITickableTileEnti
 			appliedTranquility += Math.sqrt(entry.getValue());
 		}
 
-		double bonus = IncenseAltarHandler.getIncenseBonusFromComponents(getWorld(), pos, appliedTranquility, roadDistance);
+		double bonus = IncenseAltarHandler.getIncenseBonusFromComponents(getLevel(), worldPosition, appliedTranquility, roadDistance);
 		incenseAddition = bonus;
 		this.tranquility = appliedTranquility;
 	}

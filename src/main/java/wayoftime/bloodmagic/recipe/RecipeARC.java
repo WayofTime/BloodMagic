@@ -144,13 +144,13 @@ public class RecipeARC extends BloodMagicRecipe
 	@Override
 	public void write(PacketBuffer buffer)
 	{
-		input.write(buffer);
-		arc_tool.write(buffer);
-		buffer.writeItemStack(output);
+		input.toNetwork(buffer);
+		arc_tool.toNetwork(buffer);
+		buffer.writeItem(output);
 		buffer.writeInt(addedItems.size());
 		for (Pair<ItemStack, Double> pair : addedItems)
 		{
-			buffer.writeItemStack(pair.getLeft());
+			buffer.writeItem(pair.getLeft());
 			buffer.writeDouble(pair.getValue());
 		}
 

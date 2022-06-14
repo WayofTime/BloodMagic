@@ -30,7 +30,7 @@ public enum BloodRuneType implements IStringSerializable
 	 * @return
 	 */
 	@Override
-	public String getString()
+	public String getSerializedName()
 	{
 		return this.toString();
 	}

@@ -43,7 +43,7 @@ public class EntitySoulSnare extends ProjectileItemEntity
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket()
+	public IPacket<?> getAddEntityPacket()
 	{
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
@@ -51,24 +51,24 @@ public class EntitySoulSnare extends ProjectileItemEntity
 	/**
 	 * Called when the arrow hits an entity
 	 */
-	protected void onEntityHit(EntityRayTraceResult result)
+	protected void onHitEntity(EntityRayTraceResult result)
 	{
-		if (result.getEntity() == this.func_234616_v_() || this.ticksExisted < 2 || getEntityWorld().isRemote)
+		if (result.getEntity() == this.getOwner() || this.tickCount < 2 || getCommandSenderWorld().isClientSide)
 			return;
 
 		if (result.getEntity() instanceof LivingEntity)
 		{
-			((LivingEntity) result.getEntity()).addPotionEffect(new EffectInstance(BloodMagicPotions.SOUL_SNARE, 300, 0));
-			result.getEntity().attackEntityFrom(DamageSource.causeThrownDamage(this, this.func_234616_v_()), (float) 0);
+			((LivingEntity) result.getEntity()).addEffect(new EffectInstance(BloodMagicPotions.SOUL_SNARE, 300, 0));
+			result.getEntity().hurt(DamageSource.thrown(this, this.getOwner()), (float) 0);
 		}
 
-		this.setDead();
+		this.removeAfterChangingDimensions();
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	private IParticleData makeParticle()
 	{
-		ItemStack itemstack = this.func_213882_k();
+		ItemStack itemstack = this.getItemRaw();
 		return (IParticleData) (itemstack.isEmpty() ? ParticleTypes.ITEM_SNOWBALL
 				: new ItemParticleData(ParticleTypes.ITEM, itemstack));
 	}
@@ -77,7 +77,7 @@ public class EntitySoulSnare extends ProjectileItemEntity
 	 * Handler for {@link World#setEntityState}
 	 */
 	@OnlyIn(Dist.CLIENT)
-	public void handleStatusUpdate(byte id)
+	public void handleEntityEvent(byte id)
 	{
 		if (id == 3)
 		{
@@ -85,7 +85,7 @@ public class EntitySoulSnare extends ProjectileItemEntity
 
 			for (int i = 0; i < 8; ++i)
 			{
-				this.world.addParticle(iparticledata, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
+				this.level.addParticle(iparticledata, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 			}
 		}
 	}

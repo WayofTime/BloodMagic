@@ -34,16 +34,16 @@ public class ItemBase extends Item
 
 	public ItemBase(int stackSize, String desc)
 	{
-		super(new Item.Properties().maxStackSize(stackSize).group(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(stackSize).tab(BloodMagic.TAB));
 		this.desc = desc;
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
 		if (!desc.isEmpty())
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic." + desc).mergeStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic." + desc).withStyle(TextFormatting.GRAY));
 
 	}
 }

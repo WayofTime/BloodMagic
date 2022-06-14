@@ -28,17 +28,17 @@ public class SetWillFraction extends LootFunction
 		this.damageRange = damageRangeIn;
 	}
 
-	public LootFunctionType getFunctionType()
+	public LootFunctionType getType()
 	{
 		return BloodMagicLootFunctionManager.SET_WILL_FRACTION;
 	}
 
-	public ItemStack doApply(ItemStack stack, LootContext context)
+	public ItemStack run(ItemStack stack, LootContext context)
 	{
 		if (stack.getItem() instanceof IDemonWillGem)
 		{
 			int maxWill = ((IDemonWillGem) stack.getItem()).getMaxWill(EnumDemonWillType.DEFAULT, stack);
-			float f = 1.0F - this.damageRange.generateFloat(context.getRandom());
+			float f = 1.0F - this.damageRange.getFloat(context.getRandom());
 			((IDemonWillGem) stack.getItem()).setWill(EnumDemonWillType.DEFAULT, stack, maxWill * f);
 		} else
 		{
@@ -50,7 +50,7 @@ public class SetWillFraction extends LootFunction
 
 	public static LootFunction.Builder<?> withRange(RandomValueRange p_215931_0_)
 	{
-		return builder((p_215930_1_) -> {
+		return simpleBuilder((p_215930_1_) -> {
 			return new SetWillFraction(p_215930_1_, p_215931_0_);
 		});
 	}
@@ -65,7 +65,7 @@ public class SetWillFraction extends LootFunction
 
 		public SetWillFraction deserialize(JsonObject object, JsonDeserializationContext deserializationContext, ILootCondition[] conditionsIn)
 		{
-			return new SetWillFraction(conditionsIn, JSONUtils.deserializeClass(object, "damage", deserializationContext, RandomValueRange.class));
+			return new SetWillFraction(conditionsIn, JSONUtils.getAsObject(object, "damage", deserializationContext, RandomValueRange.class));
 		}
 	}
 }

@@ -135,15 +135,15 @@ public class Anointment extends ForgeRegistryEntry<Anointment>
 					CompoundNBT compoundnbt = listnbt.getCompound(i);
 					if (!compoundnbt.contains("Slot", 8) || compoundnbt.getString("Slot").equals(slot.getName()))
 					{
-						Optional<Attribute> optional = Registry.ATTRIBUTE.getOptional(ResourceLocation.tryCreate(compoundnbt.getString("AttributeName")));
+						Optional<Attribute> optional = Registry.ATTRIBUTE.getOptional(ResourceLocation.tryParse(compoundnbt.getString("AttributeName")));
 						if (optional.isPresent())
 						{
-							AttributeModifier attributemodifier = AttributeModifier.read(compoundnbt);
-							if (attributemodifier != null && attributemodifier.getID().getLeastSignificantBits() != 0L && attributemodifier.getID().getMostSignificantBits() != 0L)
+							AttributeModifier attributemodifier = AttributeModifier.load(compoundnbt);
+							if (attributemodifier != null && attributemodifier.getId().getLeastSignificantBits() != 0L && attributemodifier.getId().getMostSignificantBits() != 0L)
 							{
 								for (Entry<Attribute, AttributeModifier> entry : modifiers.entries())
 								{
-									if (entry.getKey().equals(optional.get()) && entry.getValue().getID().equals(attributemodifier.getID()))
+									if (entry.getKey().equals(optional.get()) && entry.getValue().getId().equals(attributemodifier.getId()))
 									{
 										removeList.add(i);
 									}
@@ -191,7 +191,7 @@ public class Anointment extends ForgeRegistryEntry<Anointment>
 
 	public String getTranslationKey()
 	{
-		return translationKey == null ? translationKey = Util.makeTranslationKey("anointment", key) : translationKey;
+		return translationKey == null ? translationKey = Util.makeDescriptionId("anointment", key) : translationKey;
 	}
 
 	public Anointment setConsumeOnAttack()

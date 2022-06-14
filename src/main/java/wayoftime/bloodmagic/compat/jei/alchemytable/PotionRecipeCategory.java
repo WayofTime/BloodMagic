@@ -149,7 +149,7 @@ public class PotionRecipeCategory implements IRecipeCategory<RecipePotionFlaskBa
 		ItemStack[] flaskStacks = new ItemStack[flaskItems.length];
 
 		List<Ingredient> ingList = Lists.newArrayList();
-		ingList.add(Ingredient.fromStacks(validOrbStacks));
+		ingList.add(Ingredient.of(validOrbStacks));
 		ingList.addAll(recipe.getInput());
 		ItemStack flaskStack = recipe.getExamplePotionFlask();
 
@@ -162,7 +162,7 @@ public class PotionRecipeCategory implements IRecipeCategory<RecipePotionFlaskBa
 			flaskStacks[i] = copyFlaskStack;
 		}
 
-		ingList.add(Ingredient.fromStacks(flaskStacks));
+		ingList.add(Ingredient.of(flaskStacks));
 		List<EffectHolder> holderList = ((ItemAlchemyFlask) flaskStack.getItem()).getEffectHoldersOfFlask(flaskStack);
 		ingredients.setInputIngredients(ingList);
 		ItemStack outputStack = recipe.getOutput(flaskStack, holderList);

@@ -36,32 +36,32 @@ public class ItemSacrificialDagger extends Item
 
 	public ItemSacrificialDagger()
 	{
-		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
 //		tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.sacrificialDagger.desc"))));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sacrificialdagger.desc").mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sacrificialdagger.desc").withStyle(TextFormatting.GRAY));
 
 //		if (stack.getItemDamage() == 1)
 //			list.add(TextHelper.localizeEffect("tooltip.bloodmagic.sacrificialDagger.creative"));
 	}
 
 	@Override
-	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft)
+	public void releaseUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft)
 	{
-		if (entityLiving instanceof PlayerEntity && !entityLiving.getEntityWorld().isRemote)
+		if (entityLiving instanceof PlayerEntity && !entityLiving.getCommandSenderWorld().isClientSide)
 			if (PlayerSacrificeHelper.sacrificePlayerHealth((PlayerEntity) entityLiving))
 				IncenseHelper.setHasMaxIncense(stack, (PlayerEntity) entityLiving, false);
 	}
 
 	@Override
-	public boolean hasEffect(ItemStack stack)
+	public boolean isFoil(ItemStack stack)
 	{
-		return IncenseHelper.getHasMaxIncense(stack) || super.hasEffect(stack);
+		return IncenseHelper.getHasMaxIncense(stack) || super.isFoil(stack);
 	}
 
 	@Override
@@ -71,22 +71,22 @@ public class ItemSacrificialDagger extends Item
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack)
+	public UseAction getUseAnimation(ItemStack stack)
 	{
 		return UseAction.BOW;
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
+		ItemStack stack = player.getItemInHand(hand);
 		if (PlayerHelper.isFakePlayer(player))
-			return super.onItemRightClick(world, player, hand);
+			return super.use(world, player, hand);
 
 		if (this.canUseForSacrifice(stack))
 		{
-			player.setActiveHand(hand);
-			return ActionResult.resultSuccess(stack);
+			player.startUsingItem(hand);
+			return ActionResult.success(stack);
 		}
 
 		int lpAdded = ConfigManager.COMMON.sacrificialDaggerConversion.get() * 2;
@@ -100,61 +100,61 @@ public class ItemSacrificialDagger extends Item
 //				lpAdded = ((TileAltar) tile).getCapacity();
 //		}
 
-		if (!player.abilities.isCreativeMode)
+		if (!player.abilities.instabuild)
 		{
 			SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, 2, lpAdded);
 			if (MinecraftForge.EVENT_BUS.post(evt))
-				return super.onItemRightClick(world, player, hand);
+				return super.use(world, player, hand);
 
 			if (evt.shouldDrainHealth)
 			{
-				player.hurtResistantTime = 0;
+				player.invulnerableTime = 0;
 
-				player.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, 0.001F);
+				player.hurt(DamageSourceBloodMagic.INSTANCE, 0.001F);
 				player.setHealth(Math.max(player.getHealth() - 1.998F, 0.0001f));
-				if (player.getHealth() <= 0.001f && !world.isRemote)
+				if (player.getHealth() <= 0.001f && !world.isClientSide)
 				{
-					player.hurtResistantTime = 0;
-					player.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, 10);
+					player.invulnerableTime = 0;
+					player.hurt(DamageSourceBloodMagic.INSTANCE, 10);
 				}
 			}
 
 			if (!evt.shouldFillAltar)
-				return super.onItemRightClick(world, player, hand);
+				return super.use(world, player, hand);
 
 			lpAdded = evt.lpAdded;
-		} else if (player.isSneaking())
+		} else if (player.isShiftKeyDown())
 		{
 			lpAdded = Integer.MAX_VALUE;
 		}
 
-		double posX = player.getPosX();
-		double posY = player.getPosY();
-		double posZ = player.getPosZ();
-		world.playSound(player, posX, posY, posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+		double posX = player.getX();
+		double posY = player.getY();
+		double posZ = player.getZ();
+		world.playSound(player, posX, posY, posZ, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.random.nextFloat() - world.random.nextFloat()) * 0.8F);
 
 		for (int l = 0; l < 8; ++l)
-			world.addParticle(RedstoneParticleData.REDSTONE_DUST, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), 0, 0, 0);
+			world.addParticle(RedstoneParticleData.REDSTONE, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), 0, 0, 0);
 
-		if (!world.isRemote && PlayerHelper.isFakePlayer(player))
-			return super.onItemRightClick(world, player, hand);
+		if (!world.isClientSide && PlayerHelper.isFakePlayer(player))
+			return super.use(world, player, hand);
 
 		// TODO - Check if SoulFray is active
 		PlayerSacrificeHelper.findAndFillAltar(world, player, lpAdded, false);
 
-		return super.onItemRightClick(world, player, hand);
+		return super.use(world, player, hand);
 	}
 
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected)
 	{
-		if (!world.isRemote && entity instanceof PlayerEntity)
+		if (!world.isClientSide && entity instanceof PlayerEntity)
 			this.setUseForSacrifice(stack, this.isPlayerPreparedForSacrifice(world, (PlayerEntity) entity));
 	}
 
 	public boolean isPlayerPreparedForSacrifice(World world, PlayerEntity player)
 	{
-		return !world.isRemote && (PlayerSacrificeHelper.getPlayerIncense(player) > 0);
+		return !world.isClientSide && (PlayerSacrificeHelper.getPlayerIncense(player) > 0);
 	}
 
 	public boolean canUseForSacrifice(ItemStack stack)

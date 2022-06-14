@@ -76,13 +76,13 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 
 	public ItemSentientPickaxe()
 	{
-		super(BMItemTier.SENTIENT, (int) baseAttackDamage, (float) baseAttackSpeed, new Item.Properties().maxDamage(520).group(BloodMagic.TAB));
+		super(BMItemTier.SENTIENT, (int) baseAttackDamage, (float) baseAttackSpeed, new Item.Properties().durability(520).tab(BloodMagic.TAB));
 	}
 
 	@Override
-	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair)
 	{
-		return BloodMagicTags.CRYSTAL_DEMON.contains(repair.getItem()) || super.getIsRepairable(toRepair, repair);
+		return BloodMagicTags.CRYSTAL_DEMON.contains(repair.getItem()) || super.isValidRepairItem(toRepair, repair);
 	}
 
 	@Override
@@ -192,7 +192,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 		switch (type)
 		{
 		case CORROSIVE:
-			target.addPotionEffect(new EffectInstance(Effects.WITHER, poisonTime[willBracket], poisonLevel[willBracket]));
+			target.addEffect(new EffectInstance(Effects.WITHER, poisonTime[willBracket], poisonLevel[willBracket]));
 			break;
 		case DEFAULT:
 			break;
@@ -202,7 +202,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 			if (!target.isAlive())
 			{
 				float absorption = attacker.getAbsorptionAmount();
-				attacker.addPotionEffect(new EffectInstance(Effects.ABSORPTION, absorptionTime[willBracket], 127));
+				attacker.addEffect(new EffectInstance(Effects.ABSORPTION, absorptionTime[willBracket], 127));
 				attacker.setAbsorptionAmount((float) Math.min(absorption + target.getMaxHealth() * 0.05f, maxAbsorptionHearts));
 			}
 			break;
@@ -212,14 +212,14 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	}
 
 	@Override
-	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker)
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker)
 	{
-		if (super.hitEntity(stack, target, attacker))
+		if (super.hurtEnemy(stack, target, attacker))
 		{
 			if (attacker instanceof PlayerEntity)
 			{
 				PlayerEntity attackerPlayer = (PlayerEntity) attacker;
-				this.recalculatePowers(stack, attackerPlayer.getEntityWorld(), attackerPlayer);
+				this.recalculatePowers(stack, attackerPlayer.getCommandSenderWorld(), attackerPlayer);
 				EnumDemonWillType type = this.getCurrentType(stack);
 				double will = PlayerDemonWillHandler.getTotalDemonWill(type, attackerPlayer);
 				int willBracket = this.getLevel(stack, will);
@@ -268,10 +268,10 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		recalculatePowers(player.getHeldItem(hand), world, player);
-		return super.onItemRightClick(world, player, hand);
+		recalculatePowers(player.getItemInHand(hand), world, player);
+		return super.use(world, player, hand);
 	}
 
 	@Override
@@ -296,20 +296,20 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
 		if (!stack.hasTag())
 			return;
 
 //		tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.sentientSword.desc"))));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sentientPickaxe.desc").mergeStyle(TextFormatting.GRAY));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase(Locale.ROOT)).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sentientPickaxe.desc").withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase(Locale.ROOT)).withStyle(TextFormatting.GRAY));
 	}
 
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, PlayerEntity player, Entity entity)
 	{
-		recalculatePowers(stack, player.getEntityWorld(), player);
+		recalculatePowers(stack, player.getCommandSenderWorld(), player);
 
 		double drain = this.getDrainOfActivatedSword(stack);
 		if (drain > 0)
@@ -334,7 +334,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	{
 		List<ItemStack> soulList = new ArrayList<>();
 
-		if (killedEntity.getEntityWorld().getDifficulty() != Difficulty.PEACEFUL && !(killedEntity instanceof IMob))
+		if (killedEntity.getCommandSenderWorld().getDifficulty() != Difficulty.PEACEFUL && !(killedEntity instanceof IMob))
 		{
 			return soulList;
 		}
@@ -365,9 +365,9 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 
 		for (int i = 0; i <= looting; i++)
 		{
-			if (i == 0 || attackingEntity.getEntityWorld().rand.nextDouble() < 0.4)
+			if (i == 0 || attackingEntity.getCommandSenderWorld().random.nextDouble() < 0.4)
 			{
-				ItemStack soulStack = soul.createWill(willModifier * (this.getDropOfActivatedSword(stack) * attackingEntity.getEntityWorld().rand.nextDouble() + this.getStaticDropOfActivatedSword(stack)) * killedEntity.getMaxHealth() / 20d);
+				ItemStack soulStack = soul.createWill(willModifier * (this.getDropOfActivatedSword(stack) * attackingEntity.getCommandSenderWorld().random.nextDouble() + this.getStaticDropOfActivatedSword(stack)) * killedEntity.getMaxHealth() / 20d);
 				soulList.add(soulStack);
 			}
 		}
@@ -382,8 +382,8 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 		Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create();
 		if (slot == EquipmentSlotType.MAINHAND)
 		{
-			multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getDamageOfActivatedSword(stack), AttributeModifier.Operation.ADDITION));
-			multimap.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", this.getAttackSpeedOfSword(stack), AttributeModifier.Operation.ADDITION));
+			multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", getDamageOfActivatedSword(stack), AttributeModifier.Operation.ADDITION));
+			multimap.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", this.getAttackSpeedOfSword(stack), AttributeModifier.Operation.ADDITION));
 			multimap.put(Attributes.MAX_HEALTH, new AttributeModifier(new UUID(0, 31818145), "Weapon modifier", this.getHealthBonusOfSword(stack), AttributeModifier.Operation.ADDITION));
 			multimap.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(new UUID(0, 4218052), "Weapon modifier", this.getSpeedOfSword(stack), AttributeModifier.Operation.ADDITION));
 		}

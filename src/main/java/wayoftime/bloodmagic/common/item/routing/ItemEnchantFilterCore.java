@@ -36,10 +36,10 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack filterStack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack filterStack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
 //		super.addInformation(filterStack, world, tooltip, flag);
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.enchantfilter.desc").mergeStyle(TextFormatting.ITALIC).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.enchantfilter.desc").withStyle(TextFormatting.ITALIC).withStyle(TextFormatting.GRAY));
 
 		if (filterStack.getTag() == null)
 		{
@@ -49,7 +49,7 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 		boolean sneaking = Screen.hasShiftDown();
 		if (!sneaking)
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.extraInfo").mergeStyle(TextFormatting.BLUE));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.extraInfo").withStyle(TextFormatting.BLUE));
 		} else
 		{
 			int whitelistState = this.getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
@@ -57,16 +57,16 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 
 			if (isWhitelist)
 			{
-				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist").mergeStyle(TextFormatting.GRAY));
+				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist").withStyle(TextFormatting.GRAY));
 			} else
 			{
-				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist").mergeStyle(TextFormatting.GRAY));
+				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist").withStyle(TextFormatting.GRAY));
 			}
 
 			ItemInventory inv = new InventoryFilter(filterStack);
-			for (int i = 0; i < inv.getSizeInventory(); i++)
+			for (int i = 0; i < inv.getContainerSize(); i++)
 			{
-				ItemStack stack = inv.getStackInSlot(i);
+				ItemStack stack = inv.getItem(i);
 				if (stack.isEmpty())
 				{
 					continue;
@@ -162,7 +162,7 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 	{
 		ItemInventory inv = new InventoryFilter(filterStack);
 
-		ItemStack ghostStack = inv.getStackInSlot(slot);
+		ItemStack ghostStack = inv.getItem(slot);
 		if (ghostStack.isEmpty())
 		{
 			return;
@@ -198,7 +198,7 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 
 		ItemInventory inv = new InventoryFilter(filterStack);
 
-		ItemStack ghostStack = inv.getStackInSlot(slot);
+		ItemStack ghostStack = inv.getItem(slot);
 		if (ghostStack.isEmpty())
 		{
 			return null;
@@ -298,7 +298,7 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 			{
 				ItemInventory inv = new InventoryFilter(filterStack);
 
-				ItemStack ghostStack = inv.getStackInSlot(ghostItemSlot);
+				ItemStack ghostStack = inv.getItem(ghostItemSlot);
 				if (ghostStack.isEmpty())
 				{
 					componentList.add(new TranslationTextComponent("filter.bloodmagic.noenchant"));
@@ -318,7 +318,7 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 					}
 					for (Entry<Enchantment, Integer> entry : enchants.entrySet())
 					{
-						componentList.add(entry.getKey().getDisplayName(entry.getValue()));
+						componentList.add(entry.getKey().getFullname(entry.getValue()));
 					}
 				} else
 				{
@@ -330,7 +330,7 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 				Pair<Enchantment, Integer> enchant = getEnchantment(filterStack, ghostItemSlot);
 				if (enchant != null)
 				{
-					componentList.add(enchant.getLeft().getDisplayName(enchant.getRight()));
+					componentList.add(enchant.getLeft().getFullname(enchant.getRight()));
 				}
 			}
 		} else if (buttonKey.equals(Constants.BUTTONID.ENCHANT_LVL))

@@ -55,7 +55,7 @@ public class RitualFullStomach extends Ritual
 		}
 
 		AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
-		TileEntity tile = world.getTileEntity(chestRange.getContainedPositions(pos).get(0));
+		TileEntity tile = world.getBlockEntity(chestRange.getContainedPositions(pos).get(0));
 		if (tile == null)
 			return;
 
@@ -65,7 +65,7 @@ public class RitualFullStomach extends Ritual
 
 		int lastSlot = 0;
 		AreaDescriptor fillingRange = masterRitualStone.getBlockRange(FILL_RANGE);
-		List<PlayerEntity> playerList = world.getEntitiesWithinAABB(PlayerEntity.class, fillingRange.getAABB(pos));
+		List<PlayerEntity> playerList = world.getEntitiesOfClass(PlayerEntity.class, fillingRange.getAABB(pos));
 
 		// Check contained food level. If 0, grab a new food item to restock.
 
@@ -75,12 +75,12 @@ public class RitualFullStomach extends Ritual
 			{
 				ItemStack stack = inventory.extractItem(i, 1, true);
 
-				if (!stack.isEmpty() && stack.getItem().isFood())
+				if (!stack.isEmpty() && stack.getItem().isEdible())
 				{
-					Food food = stack.getItem().getFood();
+					Food food = stack.getItem().getFoodProperties();
 
-					foodLevel = food.getHealing();
-					storedSaturation = food.getSaturation();
+					foodLevel = food.getNutrition();
+					storedSaturation = food.getSaturationModifier();
 					inventory.extractItem(i, 1, false);
 
 					masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
@@ -97,7 +97,7 @@ public class RitualFullStomach extends Ritual
 
 		for (PlayerEntity player : playerList)
 		{
-			FoodStats foodStats = player.getFoodStats();
+			FoodStats foodStats = player.getFoodData();
 			float satLevel = foodStats.getSaturationLevel();
 			float saturationAmount = storedSaturation * 1 * 2.0f;
 
@@ -107,7 +107,7 @@ public class RitualFullStomach extends Ritual
 			// matter what if the player is low
 			while ((saturationAmount + satLevel <= 20 || satLevel < 5) && foodLevel > 0)
 			{
-				foodStats.addStats(1, storedSaturation);
+				foodStats.eat(1, storedSaturation);
 				satLevel = foodStats.getSaturationLevel();
 				foodLevel--;
 			}

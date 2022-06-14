@@ -16,7 +16,7 @@ import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 
 public class StoneToOreProcessor extends StructureProcessor
 {
-	public static final Codec<StoneToOreProcessor> field_237077_a_ = Codec.FLOAT.fieldOf("integrity").orElse(1.0F).xmap(StoneToOreProcessor::new, (p_237078_0_) -> {
+	public static final Codec<StoneToOreProcessor> CODEC = Codec.FLOAT.fieldOf("integrity").orElse(1.0F).xmap(StoneToOreProcessor::new, (p_237078_0_) -> {
 		return p_237078_0_.integrity;
 	}).codec();
 	private final float integrity;
@@ -27,7 +27,7 @@ public class StoneToOreProcessor extends StructureProcessor
 	}
 
 	@Nullable
-	public Template.BlockInfo func_230386_a_(IWorldReader p_230386_1_, BlockPos p_230386_2_, BlockPos p_230386_3_, Template.BlockInfo p_230386_4_, Template.BlockInfo p_230386_5_, PlacementSettings p_230386_6_)
+	public Template.BlockInfo processBlock(IWorldReader p_230386_1_, BlockPos p_230386_2_, BlockPos p_230386_3_, Template.BlockInfo p_230386_4_, Template.BlockInfo p_230386_5_, PlacementSettings p_230386_6_)
 	{
 		if (p_230386_5_.state.getBlock() != BloodMagicBlocks.DUNGEON_STONE.get())
 		{
@@ -35,7 +35,7 @@ public class StoneToOreProcessor extends StructureProcessor
 		}
 		Random random = p_230386_6_.getRandom(p_230386_5_.pos);
 		return !(this.integrity >= 1.0F) && !(random.nextFloat() >= this.integrity)
-				? new Template.BlockInfo(p_230386_5_.pos, BloodMagicBlocks.DUNGEON_ORE.get().getDefaultState(), p_230386_5_.nbt)
+				? new Template.BlockInfo(p_230386_5_.pos, BloodMagicBlocks.DUNGEON_ORE.get().defaultBlockState(), p_230386_5_.nbt)
 				: p_230386_5_;
 	}
 

@@ -29,7 +29,7 @@ public class ItemBloodProvider extends Item
 
 	public ItemBloodProvider(String name, int lpProvided)
 	{
-		super(new Item.Properties().maxStackSize(64).group(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(64).tab(BloodMagic.TAB));
 
 		this.tooltipBase = "tooltip.bloodmagic.blood_provider." + name + ".";
 		this.lpProvided = lpProvided;
@@ -41,25 +41,25 @@ public class ItemBloodProvider extends Item
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
+		ItemStack stack = player.getItemInHand(hand);
 		if (PlayerHelper.isFakePlayer(player))
-			return super.onItemRightClick(world, player, hand);
+			return super.use(world, player, hand);
 
-		IBloodAltar altarEntity = PlayerSacrificeHelper.getAltar(world, player.getPosition());
+		IBloodAltar altarEntity = PlayerSacrificeHelper.getAltar(world, player.blockPosition());
 		if (altarEntity != null)
 		{
-			double posX = player.getPosX();
-			double posY = player.getPosY();
-			double posZ = player.getPosZ();
-			world.playSound(player, posX, posY, posZ, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+			double posX = player.getX();
+			double posY = player.getY();
+			double posZ = player.getZ();
+			world.playSound(player, posX, posY, posZ, SoundEvents.GLASS_BREAK, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.random.nextFloat() - world.random.nextFloat()) * 0.8F);
 
 			for (int l = 0; l < 8; ++l)
-				world.addParticle(RedstoneParticleData.REDSTONE_DUST, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), 0, 0, 0);
+				world.addParticle(RedstoneParticleData.REDSTONE, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), 0, 0, 0);
 
-			if (!world.isRemote && PlayerHelper.isFakePlayer(player))
-				return super.onItemRightClick(world, player, hand);
+			if (!world.isClientSide && PlayerHelper.isFakePlayer(player))
+				return super.use(world, player, hand);
 
 			altarEntity.fillMainTank(lpProvided);
 			if (!player.isCreative())
@@ -68,15 +68,15 @@ public class ItemBloodProvider extends Item
 			}
 		}
 
-		return super.onItemRightClick(world, player, hand);
+		return super.use(world, player, hand);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent(tooltipBase + "desc").mergeStyle(TextFormatting.ITALIC).mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent(tooltipBase + "desc").withStyle(TextFormatting.ITALIC).withStyle(TextFormatting.GRAY));
 
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

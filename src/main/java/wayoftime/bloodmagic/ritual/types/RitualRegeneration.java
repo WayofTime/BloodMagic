@@ -86,9 +86,9 @@ public class RitualRegeneration extends Ritual
 		AreaDescriptor damageArea = masterRitualStone.getBlockRange(VAMPIRE_RANGE);
 		AxisAlignedBB damageRange = damageArea.getAABB(pos);
 
-		List<LivingEntity> entities = world.getEntitiesWithinAABB(LivingEntity.class, healRange);
-		List<PlayerEntity> players = world.getEntitiesWithinAABB(PlayerEntity.class, healRange);
-		List<LivingEntity> damagedEntities = world.getEntitiesWithinAABB(LivingEntity.class, damageRange);
+		List<LivingEntity> entities = world.getEntitiesOfClass(LivingEntity.class, healRange);
+		List<PlayerEntity> players = world.getEntitiesOfClass(PlayerEntity.class, healRange);
+		List<LivingEntity> damagedEntities = world.getEntitiesOfClass(LivingEntity.class, damageRange);
 
 		if (syphonHealth)
 		{
@@ -107,7 +107,7 @@ public class RitualRegeneration extends Ritual
 
 						float currentHealth = damagedEntity.getHealth();
 
-						damagedEntity.attackEntityFrom(DamageSourceBloodMagic.INSTANCE, Math.min(player.getMaxHealth() - player.getHealth(), syphonedHealthAmount));
+						damagedEntity.hurt(DamageSourceBloodMagic.INSTANCE, Math.min(player.getMaxHealth() - player.getHealth(), syphonedHealthAmount));
 
 						float healthDifference = currentHealth - damagedEntity.getHealth();
 						if (healthDifference > 0)
@@ -128,7 +128,7 @@ public class RitualRegeneration extends Ritual
 			float health = entity.getHealth();
 			if (health <= entity.getMaxHealth() - 1)
 			{
-				if (entity.isPotionApplicable(new EffectInstance(Effects.REGENERATION)))
+				if (entity.canBeAffected(new EffectInstance(Effects.REGENERATION)))
 				{
 					if (entity instanceof PlayerEntity)
 					{
@@ -140,7 +140,7 @@ public class RitualRegeneration extends Ritual
 						currentEssence -= getRefreshCost() / 10;
 					}
 
-					entity.addPotionEffect(new EffectInstance(Effects.REGENERATION, 50, 0, false, false));
+					entity.addEffect(new EffectInstance(Effects.REGENERATION, 50, 0, false, false));
 
 					totalEffects++;
 

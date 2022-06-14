@@ -14,17 +14,17 @@ public class GeneralClientEvents {
     @SubscribeEvent
     public static void getFogDensity(EntityViewRenderEvent.FogDensity event) {
         ActiveRenderInfo info = event.getInfo();
-        FluidState fluidState = info.getFluidState();
+        FluidState fluidState = info.getFluidInCamera();
         if (fluidState.isEmpty())
             return;
-        Fluid fluid = fluidState.getFluid();
+        Fluid fluid = fluidState.getType();
 
-        if (fluid.isEquivalentTo(BloodMagicBlocks.LIFE_ESSENCE_FLUID.get())) {
+        if (fluid.isSame(BloodMagicBlocks.LIFE_ESSENCE_FLUID.get())) {
             event.setDensity(1.2f);
             event.setCanceled(true);
         }
 
-        if (fluid.isEquivalentTo(BloodMagicBlocks.DOUBT_FLUID.get())) {
+        if (fluid.isSame(BloodMagicBlocks.DOUBT_FLUID.get())) {
             event.setDensity(1.2f);
             event.setCanceled(true);
         }
@@ -33,18 +33,18 @@ public class GeneralClientEvents {
     @SubscribeEvent
     public static void getFogColor(EntityViewRenderEvent.FogColors event) {
         ActiveRenderInfo info = event.getInfo();
-        FluidState fluidState = info.getFluidState();
+        FluidState fluidState = info.getFluidInCamera();
         if (fluidState.isEmpty())
             return;
-        Fluid fluid = fluidState.getFluid();
+        Fluid fluid = fluidState.getType();
 
-        if (fluid.isEquivalentTo(BloodMagicBlocks.LIFE_ESSENCE_FLUID.get())) {
+        if (fluid.isSame(BloodMagicBlocks.LIFE_ESSENCE_FLUID.get())) {
             event.setRed(101 / 256f);
             event.setGreen(2 / 256f);
             event.setBlue(6 / 256f);
         }
 
-        if (fluid.isEquivalentTo(BloodMagicBlocks.DOUBT_FLUID.get())) {
+        if (fluid.isSame(BloodMagicBlocks.DOUBT_FLUID.get())) {
             event.setRed(0 / 256f);
             event.setGreen(91 / 256f);
             event.setBlue(120 / 256f);

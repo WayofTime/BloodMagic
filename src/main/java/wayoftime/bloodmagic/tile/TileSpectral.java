@@ -34,7 +34,7 @@ public class TileSpectral extends TileBase
 
 	public static void createOrRefreshSpectralBlock(World world, BlockPos pos)
 	{
-		if (world.isAirBlock(pos))
+		if (world.isEmptyBlock(pos))
 		{
 			return;
 		}
@@ -43,22 +43,22 @@ public class TileSpectral extends TileBase
 
 		if (isFluidBlock(potentialFluidBlockState.getBlock()))
 		{
-			world.setBlockState(pos, BloodMagicBlocks.SPECTRAL.get().getDefaultState(), 3);
-			TileEntity spectralTile = world.getTileEntity(pos);
+			world.setBlock(pos, BloodMagicBlocks.SPECTRAL.get().defaultBlockState(), 3);
+			TileEntity spectralTile = world.getBlockEntity(pos);
 			if (spectralTile instanceof TileSpectral)
 			{
 				((TileSpectral) spectralTile).setContainedBlockInfo(potentialFluidBlockState);
-				world.getPendingBlockTicks().scheduleTick(pos, spectralTile.getBlockState().getBlock(), BlockSpectral.DECAY_RATE);
+				world.getBlockTicks().scheduleTick(pos, spectralTile.getBlockState().getBlock(), BlockSpectral.DECAY_RATE);
 			}
-		} else if (potentialFluidBlockState.getBlock() == BloodMagicBlocks.SPECTRAL.get() && potentialFluidBlockState.get(BlockSpectral.SPECTRAL_STATE) == SpectralBlockType.LEAKING)
+		} else if (potentialFluidBlockState.getBlock() == BloodMagicBlocks.SPECTRAL.get() && potentialFluidBlockState.getValue(BlockSpectral.SPECTRAL_STATE) == SpectralBlockType.LEAKING)
 		{
-			world.setBlockState(pos, BloodMagicBlocks.SPECTRAL.get().getDefaultState(), 0);
+			world.setBlock(pos, BloodMagicBlocks.SPECTRAL.get().defaultBlockState(), 0);
 		}
 	}
 
 	public void revertToFluid()
 	{
-		world.setBlockState(pos, storedBlock, 3);
+		level.setBlock(worldPosition, storedBlock, 3);
 //		BlockState fluidState = Block.getStateById(meta);
 	}
 

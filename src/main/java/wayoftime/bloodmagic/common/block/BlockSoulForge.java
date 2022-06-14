@@ -21,13 +21,15 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.NetworkHooks;
 import wayoftime.bloodmagic.tile.TileSoulForge;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockSoulForge extends Block// implements IBMBlock
 {
-	protected static final VoxelShape BODY = Block.makeCuboidShape(1, 0, 1, 15, 12, 15);
+	protected static final VoxelShape BODY = Block.box(1, 0, 1, 15, 12, 15);
 
 	public BlockSoulForge()
 	{
-		super(Properties.create(Material.IRON).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1));
+		super(Properties.of(Material.METAL).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1));
 	}
 
 	@Override
@@ -49,18 +51,18 @@ public class BlockSoulForge extends Block// implements IBMBlock
 	}
 
 	@Override
-	public BlockRenderType getRenderType(BlockState state)
+	public BlockRenderType getRenderShape(BlockState state)
 	{
 		return BlockRenderType.MODEL;
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
 	{
-		if (world.isRemote)
+		if (world.isClientSide)
 			return ActionResultType.SUCCESS;
 
-		TileEntity tile = world.getTileEntity(pos);
+		TileEntity tile = world.getBlockEntity(pos);
 		if (!(tile instanceof TileSoulForge))
 			return ActionResultType.FAIL;
 
@@ -71,28 +73,28 @@ public class BlockSoulForge extends Block// implements IBMBlock
 	}
 
 	@Override
-	public void onPlayerDestroy(IWorld world, BlockPos blockPos, BlockState blockState)
+	public void destroy(IWorld world, BlockPos blockPos, BlockState blockState)
 	{
-		TileSoulForge forge = (TileSoulForge) world.getTileEntity(blockPos);
+		TileSoulForge forge = (TileSoulForge) world.getBlockEntity(blockPos);
 		if (forge != null)
 			forge.dropItems();
 
-		super.onPlayerDestroy(world, blockPos, blockState);
+		super.destroy(world, blockPos, blockState);
 	}
 
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{
-		if (!state.isIn(newState.getBlock()))
+		if (!state.is(newState.getBlock()))
 		{
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+			TileEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof TileSoulForge)
 			{
 				((TileSoulForge) tileentity).dropItems();
-				worldIn.updateComparatorOutputLevel(pos, this);
+				worldIn.updateNeighbourForOutputSignal(pos, this);
 			}
 
-			super.onReplaced(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
 }

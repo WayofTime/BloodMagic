@@ -25,21 +25,23 @@ import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.tile.TileMasterRitualStone;
 import wayoftime.bloodmagic.util.helper.RitualHelper;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockMasterRitualStone extends Block
 {
 	public final boolean isInverted;
 
 	public BlockMasterRitualStone(boolean isInverted)
 	{
-		super(Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(2));
+		super(Properties.of(Material.STONE).sound(SoundType.STONE).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(2));
 		this.isInverted = isInverted;
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
 	{
-		ItemStack heldItem = player.getHeldItem(hand);
-		TileEntity tile = world.getTileEntity(pos);
+		ItemStack heldItem = player.getItemInHand(hand);
+		TileEntity tile = world.getBlockEntity(pos);
 
 		if (tile instanceof TileMasterRitualStone)
 		{
@@ -66,15 +68,15 @@ public class BlockMasterRitualStone extends Block
 							}
 						} else
 						{
-							player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
+							player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
 						}
 					} else
 					{
-						player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
+						player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
 					}
 				} else
 				{
-					player.sendStatusMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
+					player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
 				}
 			}
 		}
@@ -83,34 +85,34 @@ public class BlockMasterRitualStone extends Block
 	}
 
 	@Override
-	public void onPlayerDestroy(IWorld world, BlockPos blockPos, BlockState blockState)
+	public void destroy(IWorld world, BlockPos blockPos, BlockState blockState)
 	{
-		TileMasterRitualStone tile = (TileMasterRitualStone) world.getTileEntity(blockPos);
+		TileMasterRitualStone tile = (TileMasterRitualStone) world.getBlockEntity(blockPos);
 		if (tile != null)
 			((TileMasterRitualStone) tile).stopRitual(Ritual.BreakType.BREAK_MRS);
 
-		super.onPlayerDestroy(world, blockPos, blockState);
+		super.destroy(world, blockPos, blockState);
 	}
 
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{
-		if (!state.isIn(newState.getBlock()))
+		if (!state.is(newState.getBlock()))
 		{
-			TileEntity tile = worldIn.getTileEntity(pos);
+			TileEntity tile = worldIn.getBlockEntity(pos);
 			if (tile instanceof TileMasterRitualStone)
 			{
 				((TileMasterRitualStone) tile).stopRitual(Ritual.BreakType.BREAK_MRS);
 			}
 
-			super.onReplaced(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
 
 	@Override
-	public void onExplosionDestroy(World world, BlockPos pos, Explosion explosion)
+	public void wasExploded(World world, BlockPos pos, Explosion explosion)
 	{
-		TileEntity tile = world.getTileEntity(pos);
+		TileEntity tile = world.getBlockEntity(pos);
 
 		if (tile instanceof TileMasterRitualStone)
 			((TileMasterRitualStone) tile).stopRitual(Ritual.BreakType.EXPLOSION);

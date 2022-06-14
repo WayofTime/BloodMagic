@@ -29,9 +29,9 @@ public class EntityThrowingDaggerSyringe extends AbstractEntityThrowingDagger
 	}
 
 	@Override
-	protected void onEntityHit(EntityRayTraceResult p_213868_1_)
+	protected void onHitEntity(EntityRayTraceResult p_213868_1_)
 	{
-		super.onEntityHit(p_213868_1_);
+		super.onHitEntity(p_213868_1_);
 		Entity entity = p_213868_1_.getEntity();
 
 		if (entity instanceof LivingEntity)
@@ -39,9 +39,9 @@ public class EntityThrowingDaggerSyringe extends AbstractEntityThrowingDagger
 			double maxHealth = ((LivingEntity) entity).getMaxHealth();
 			if (!entity.isAlive())
 			{
-				int count = (int) (maxHealth / 20D) + (world.rand.nextDouble() < ((maxHealth % 20D) / 20D) ? 1 : 0);
+				int count = (int) (maxHealth / 20D) + (level.random.nextDouble() < ((maxHealth % 20D) / 20D) ? 1 : 0);
 				if (count > 0)
-					InventoryHelper.spawnItemStack(world, this.getPosX(), this.getPosY(), this.getPosZ(), new ItemStack(BloodMagicItems.SLATE_AMPOULE.get(), count));
+					InventoryHelper.dropItemStack(level, this.getX(), this.getY(), this.getZ(), new ItemStack(BloodMagicItems.SLATE_AMPOULE.get(), count));
 			}
 		}
 	}

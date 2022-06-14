@@ -51,7 +51,7 @@ public class Sprite
 
 	public void draw(MatrixStack matrixStack, int x, int y)
 	{
-		Minecraft.getInstance().getTextureManager().bindTexture(getTextureLocation());
+		Minecraft.getInstance().getTextureManager().bind(getTextureLocation());
 		AbstractGui.blit(matrixStack, x, y, 0, getTextureX(), getTextureY(), getTextureWidth(), getTextureHeight(), 256, 256);
 	}
 }

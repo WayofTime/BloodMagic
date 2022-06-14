@@ -42,7 +42,7 @@ public class TileOutputRoutingNode extends TileFilteredRoutingNode implements IO
 	@Override
 	public IItemFilter getOutputFilterForSide(Direction side)
 	{
-		TileEntity tile = getWorld().getTileEntity(pos.offset(side));
+		TileEntity tile = getLevel().getBlockEntity(worldPosition.relative(side));
 		if (tile != null)
 		{
 			IItemHandler handler = Utils.getInventory(tile, side.getOpposite());
@@ -66,7 +66,7 @@ public class TileOutputRoutingNode extends TileFilteredRoutingNode implements IO
 	@Override
 	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_)
 	{
-		assert world != null;
+		assert level != null;
 		return new ContainerItemRoutingNode(this, p_createMenu_1_, p_createMenu_2_);
 	}
 

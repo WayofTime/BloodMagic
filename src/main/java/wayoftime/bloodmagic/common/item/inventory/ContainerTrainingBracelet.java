@@ -26,7 +26,7 @@ public class ContainerTrainingBracelet extends Container
 
 	public ContainerTrainingBracelet(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
 	{
-		this(windowId, playerInventory.player, playerInventory, extraData.readItemStack());
+		this(windowId, playerInventory.player, playerInventory, extraData.readItem());
 	}
 
 	public ContainerTrainingBracelet(int windowId, PlayerEntity player, PlayerInventory playerInventory, ItemStack filterStack)
@@ -35,7 +35,7 @@ public class ContainerTrainingBracelet extends Container
 		this.player = player;
 		this.trainerStack = filterStack;
 		this.inventoryTrainer = ((ItemLivingTrainer) filterStack.getItem()).toInventory(filterStack);
-		int currentSlotHeldIn = player.inventory.currentItem;
+		int currentSlotHeldIn = player.inventory.selected;
 		this.setup(playerInventory, currentSlotHeldIn);
 	}
 
@@ -77,22 +77,22 @@ public class ContainerTrainingBracelet extends Container
 	}
 
 	@Override
-	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player)
+	public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player)
 	{
 		PlayerInventory inventoryPlayer = player.inventory;
 //      if (!player.worldObj.isRemote)
 		{
 			if (slotId >= 0)
 			{
-				Slot slot = this.inventorySlots.get(slotId);
+				Slot slot = this.slots.get(slotId);
 
 				if (slot instanceof SlotTomeItem) // TODO: make the slot clicking work!
 				{
 					lastGhostSlotClicked = slot.getSlotIndex();
 					if ((dragType == 0 || dragType == 1))
 					{
-						ItemStack slotStack = slot.getStack();
-						ItemStack heldStack = inventoryPlayer.getItemStack();
+						ItemStack slotStack = slot.getItem();
+						ItemStack heldStack = inventoryPlayer.getCarried();
 
 						if (dragType == 0) // Left mouse click-eth
 						{
@@ -106,13 +106,13 @@ public class ContainerTrainingBracelet extends Container
 								{
 									if (!((SlotTomeItem) slot).canBeAccessed())
 									{
-										return super.slotClick(slotId, dragType, clickTypeIn, player);
+										return super.clicked(slotId, dragType, clickTypeIn, player);
 									}
 
 									ItemStack copyStack = heldStack.copy();
 //									GhostItemHelper.setItemGhostAmount(copyStack, 0);
 									copyStack.setCount(1);
-									slot.putStack(copyStack);
+									slot.set(copyStack);
 
 //									ItemStack filterStack = this.filterStack;
 //									if (trainerStack.getItem() instanceof IRoutingFilterProvider)
@@ -125,18 +125,18 @@ public class ContainerTrainingBracelet extends Container
 						} else
 						// Right mouse click-eth away
 						{
-							slot.putStack(ItemStack.EMPTY);
+							slot.set(ItemStack.EMPTY);
 						}
 					}
 				}
 			}
 		}
 
-		return super.slotClick(slotId, dragType, clickTypeIn, player);
+		return super.clicked(slotId, dragType, clickTypeIn, player);
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity entityPlayer)
+	public boolean stillValid(PlayerEntity entityPlayer)
 	{
 		return true;
 	}
@@ -164,14 +164,14 @@ public class ContainerTrainingBracelet extends Container
 //	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity entityPlayer, int slotIndex)
+	public ItemStack quickMoveStack(PlayerEntity entityPlayer, int slotIndex)
 	{
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(slotIndex);
+		Slot slot = this.slots.get(slotIndex);
 
-		if (slot != null && slot.getHasStack())
+		if (slot != null && slot.hasItem())
 		{
-			ItemStack itemstack1 = slot.getStack();
+			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 
 			if (slotIndex >= 0)
@@ -184,17 +184,17 @@ public class ContainerTrainingBracelet extends Container
 //						return ItemStack.EMPTY;
 //					}
 //				}
-			} else if (!this.mergeItemStack(itemstack1, slotsOccupied, 36 + slotsOccupied, false))
+			} else if (!this.moveItemStackTo(itemstack1, slotsOccupied, 36 + slotsOccupied, false))
 			{
 				return ItemStack.EMPTY;
 			}
 
 			if (itemstack1.isEmpty())
 			{
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else
 			{
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 
 			if (itemstack1.getCount() == itemstack.getCount())
@@ -218,7 +218,7 @@ public class ContainerTrainingBracelet extends Container
 	{
 		ItemStack masterStack = inventoryTrainer.findParentStack(player);
 		InventoryTrainingBracelet storedInv = new InventoryTrainingBracelet(masterStack);
-		storedInv.setInventorySlotContents(slot, getSlot(slot).getStack());
+		storedInv.setItem(slot, getSlot(slot).getItem());
 		storedInv.save();
 	}
 
@@ -235,24 +235,24 @@ public class ContainerTrainingBracelet extends Container
 		}
 
 		@Override
-		public void onSlotChanged()
+		public void setChanged()
 		{
-			super.onSlotChanged();
+			super.setChanged();
 
 			if (EffectiveSide.get().isServer())
 			{
-				containerHolding.saveInventory(player, slotNumber);
+				containerHolding.saveInventory(player, index);
 			}
 		}
 
 		@Override
-		public boolean isItemValid(ItemStack stack)
+		public boolean mayPlace(ItemStack stack)
 		{
 			return false;
 		}
 
 		@Override
-		public boolean canTakeStack(PlayerEntity playerIn)
+		public boolean mayPickup(PlayerEntity playerIn)
 		{
 			return false;
 		}
@@ -271,13 +271,13 @@ public class ContainerTrainingBracelet extends Container
 		}
 
 		@Override
-		public boolean isItemValid(ItemStack itemStack)
+		public boolean mayPlace(ItemStack itemStack)
 		{
 			return false;
 		}
 
 		@Override
-		public boolean canTakeStack(PlayerEntity player)
+		public boolean mayPickup(PlayerEntity player)
 		{
 			return false;
 		}

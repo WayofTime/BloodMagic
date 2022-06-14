@@ -43,7 +43,7 @@ public class TileInversionPillar extends TileBase implements ICommandSource
 
 	public void setDestination(World destinationWorld, BlockPos destinationPos)
 	{
-		this.destinationKey = destinationWorld.getDimensionKey();
+		this.destinationKey = destinationWorld.dimension();
 		this.teleportPos = destinationPos;
 	}
 
@@ -59,7 +59,7 @@ public class TileInversionPillar extends TileBase implements ICommandSource
 		{
 			String key = tag.getString(Constants.NBT.DUNGEON_TELEPORT_KEY);
 //			System.out.println("Deserialized key: " + key);
-			destinationKey = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, new ResourceLocation(key));
+			destinationKey = RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(key));
 		}
 	}
 
@@ -75,7 +75,7 @@ public class TileInversionPillar extends TileBase implements ICommandSource
 		tag.put(Constants.NBT.DUNGEON_TELEPORT_POS, positionTag);
 
 		if (destinationKey != null)
-			tag.putString(Constants.NBT.DUNGEON_TELEPORT_KEY, destinationKey.getLocation().toString());
+			tag.putString(Constants.NBT.DUNGEON_TELEPORT_KEY, destinationKey.location().toString());
 
 		return tag;
 	}
@@ -88,12 +88,12 @@ public class TileInversionPillar extends TileBase implements ICommandSource
 			return;
 		}
 
-		teleportPlayerToLocation((ServerWorld) world, player, destinationKey, teleportPos);
+		teleportPlayerToLocation((ServerWorld) level, player, destinationKey, teleportPos);
 	}
 
 	public CommandSource getCommandSource(ServerWorld world)
 	{
-		return new CommandSource(this, new Vector3d(pos.getX(), pos.getY(), pos.getZ()), Vector2f.ZERO, world, 2, "Inversion Pillar", new StringTextComponent("Inversion Pillar"), world.getServer(), (Entity) null);
+		return new CommandSource(this, new Vector3d(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()), Vector2f.ZERO, world, 2, "Inversion Pillar", new StringTextComponent("Inversion Pillar"), world.getServer(), (Entity) null);
 	}
 
 	public void teleportPlayerToLocation(ServerWorld serverWorld, PlayerEntity player, RegistryKey<World> destination, BlockPos destinationPos)
@@ -102,14 +102,14 @@ public class TileInversionPillar extends TileBase implements ICommandSource
 //		String command = "execute in bloodmagic:dungeon run teleport Dev 0 100 0";
 		String command = getTextCommandForTeleport(destination, player, destinationPos.getX() + 0.5, destinationPos.getY(), destinationPos.getZ() + 0.5);
 		MinecraftServer mcServer = serverWorld.getServer();
-		mcServer.getCommandManager().handleCommand(getCommandSource(serverWorld), command);
+		mcServer.getCommands().performCommand(getCommandSource(serverWorld), command);
 	}
 
 	public String getTextCommandForTeleport(RegistryKey<World> destination, PlayerEntity player, double posX, double posY, double posZ)
 	{
 		String playerName = player.getName().getString();
 //		System.out.println("Potential player name: " + playerName);
-		return "execute in " + destination.getLocation().toString() + " run teleport " + playerName + " " + posX + " " + posY + " " + posZ;
+		return "execute in " + destination.location().toString() + " run teleport " + playerName + " " + posX + " " + posY + " " + posZ;
 	}
 
 	@Override
@@ -120,21 +120,21 @@ public class TileInversionPillar extends TileBase implements ICommandSource
 	}
 
 	@Override
-	public boolean shouldReceiveFeedback()
+	public boolean acceptsSuccess()
 	{
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean shouldReceiveErrors()
+	public boolean acceptsFailure()
 	{
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean allowLogging()
+	public boolean shouldInformAdmins()
 	{
 		// TODO Auto-generated method stub
 		return false;

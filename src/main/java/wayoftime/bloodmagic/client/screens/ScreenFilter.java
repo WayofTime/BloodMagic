@@ -45,8 +45,8 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	{
 		super(container, playerInventory, title);
 		filterInventory = container.inventoryFilter;
-		xSize = 176;
-		ySize = 187;
+		imageWidth = 176;
+		imageHeight = 187;
 		this.player = playerInventory.player;
 	}
 
@@ -54,16 +54,16 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	public void init()
 	{
 		super.init();
-		left = (this.width - this.xSize) / 2;
-		top = (this.height - this.ySize) / 2;
+		left = (this.width - this.imageWidth) / 2;
+		top = (this.height - this.imageHeight) / 2;
 
-		this.textBox = new TextFieldWidget(Minecraft.getInstance().fontRenderer, left + 23, top + 19, 70, 12, new StringTextComponent("itemGroup.search"));
-		this.textBox.setEnableBackgroundDrawing(false);
+		this.textBox = new TextFieldWidget(Minecraft.getInstance().font, left + 23, top + 19, 70, 12, new StringTextComponent("itemGroup.search"));
+		this.textBox.setBordered(false);
 //		this.textBox.setText("");
-		this.textBox.setMaxStringLength(50);
+		this.textBox.setMaxLength(50);
 		this.textBox.setVisible(true);
 		this.textBox.setTextColor(16777215);
-		this.textBox.setText("");
+		this.textBox.setValue("");
 
 		numberOfAddedButtons = 0;
 		buttonKeyList.clear();
@@ -120,12 +120,12 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		{
 			if ((keyCode == 259 || keyCode == 261) && container.lastGhostSlotClicked != -1)
 			{
-				String str = this.textBox.getText();
+				String str = this.textBox.getValue();
 
 				if (str != null && str.length() > 0)
 				{
 					str = str.substring(0, str.length() - 1);
-					this.textBox.setText(str);
+					this.textBox.setValue(str);
 					int amount = 0;
 					if (str.length() > 0)
 					{
@@ -161,7 +161,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 				{
 					if (container.lastGhostSlotClicked != -1)
 					{
-						String str = this.textBox.getText();
+						String str = this.textBox.getValue();
 						int amount = 0;
 
 						if (!str.isEmpty())
@@ -197,12 +197,12 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	private void setValueOfGhostItemInSlot(int ghostItemSlot, int amount)
 	{
 		Slot slot = container.getSlot(ghostItemSlot);
-		ItemStack ghostStack = slot.getStack();
+		ItemStack ghostStack = slot.getItem();
 //		ItemStack ghostStack = container.inventoryFilter.getStackInSlot(ghostItemSlot);
 		if (!ghostStack.isEmpty())
 		{
 			GhostItemHelper.setItemGhostAmount(ghostStack, amount);
-			GhostItemHelper.setItemGhostAmount(container.inventoryFilter.getStackInSlot(ghostItemSlot), amount);
+			GhostItemHelper.setItemGhostAmount(container.inventoryFilter.getItem(ghostItemSlot), amount);
 			if (container.filterStack.getItem() instanceof IItemFilterProvider)
 			{
 				((IItemFilterProvider) container.filterStack.getItem()).setGhostItemAmount(container.filterStack, ghostItemSlot, amount);
@@ -210,7 +210,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 			}
 		}
 
-		BloodMagic.packetHandler.sendToServer(new RouterFilterPacket(player.inventory.currentItem, ghostItemSlot, amount));
+		BloodMagic.packetHandler.sendToServer(new RouterFilterPacket(player.inventory.selected, ghostItemSlot, amount));
 	}
 
 	/**
@@ -230,20 +230,20 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		{
 			enableAllButtons();
 			Slot slot = container.getSlot(container.lastGhostSlotClicked);
-			ItemStack stack = slot.getStack();
+			ItemStack stack = slot.getItem();
 			if (!stack.isEmpty())
 			{
 				int amount = GhostItemHelper.getItemGhostAmount(stack);
 				if (amount == 0)
 				{
-					this.textBox.setText("");
+					this.textBox.setValue("");
 				} else
 				{
-					this.textBox.setText("" + amount);
+					this.textBox.setValue("" + amount);
 				}
 			} else
 			{
-				this.textBox.setText("");
+				this.textBox.setValue("");
 			}
 		}
 
@@ -265,11 +265,11 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(MatrixStack stack, int mouseX, int mouseY)
+	protected void renderLabels(MatrixStack stack, int mouseX, int mouseY)
 	{
-//		this.font.func_243248_b(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
-		this.font.func_243248_b(stack, new TranslationTextComponent("container.inventory"), 8, 93, 4210752);
-		this.font.func_243248_b(stack, container.filterStack.getDisplayName(), 8, 4, 4210752);
+//		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
+		this.font.draw(stack, new TranslationTextComponent("container.inventory"), 8, 93, 4210752);
+		this.font.draw(stack, container.filterStack.getHoverName(), 8, 4, 4210752);
 
 		if (container.filterStack.getItem() instanceof IItemFilterProvider)
 		{
@@ -286,17 +286,17 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 				int yl = buttonLocation.getRight();
 
 				RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-				getMinecraft().getTextureManager().bindTexture(background);
+				getMinecraft().getTextureManager().bind(background);
 				this.blit(stack, +xl, +yl, textureLocation.getLeft(), textureLocation.getRight(), w, h);
 			}
 		}
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		getMinecraft().getTextureManager().bindTexture(background);
+		getMinecraft().getTextureManager().bind(background);
 //		int i = (this.width - this.xSize) / 2;
 //		int j = (this.height - this.ySize) / 2;
 //		this.blit(stack, i, j, 0, 0, this.xSize, this.ySize);
@@ -317,10 +317,10 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		// draw your Gui here, only thing you need to change is the path
 //        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 //        this.mc.getTextureManager().bindTexture(texture);
-		int x = (width - xSize) / 2;
-		int y = (height - ySize) / 2;
-		this.blit(stack, x, y, 0, 0, xSize, ySize);
-		ItemStack held = player.getHeldItem(Hand.MAIN_HAND);
+		int x = (width - imageWidth) / 2;
+		int y = (height - imageHeight) / 2;
+		this.blit(stack, x, y, 0, 0, imageWidth, imageHeight);
+		ItemStack held = player.getItemInHand(Hand.MAIN_HAND);
 		if (container.lastGhostSlotClicked >= 0)
 		{
 //            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -348,8 +348,8 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 				int w = 20;
 				int h = 20;
 
-				int x = this.guiLeft + buttonLocation.getLeft();
-				int y = this.guiTop + buttonLocation.getRight();
+				int x = this.leftPos + buttonLocation.getLeft();
+				int y = this.topPos + buttonLocation.getRight();
 
 				if (mouseX >= x && mouseX < x + w && mouseY >= y && mouseY < y + h)
 				{

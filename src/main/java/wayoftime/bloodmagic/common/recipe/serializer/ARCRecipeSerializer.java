@@ -38,24 +38,24 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 
 	@Nonnull
 	@Override
-	public RECIPE read(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
+	public RECIPE fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
 	{
-		JsonElement input = JSONUtils.isJsonArray(json, Constants.JSON.INPUT)
-				? JSONUtils.getJsonArray(json, Constants.JSON.INPUT)
-				: JSONUtils.getJsonObject(json, Constants.JSON.INPUT);
+		JsonElement input = JSONUtils.isArrayNode(json, Constants.JSON.INPUT)
+				? JSONUtils.getAsJsonArray(json, Constants.JSON.INPUT)
+				: JSONUtils.getAsJsonObject(json, Constants.JSON.INPUT);
 
-		JsonElement tool = JSONUtils.isJsonArray(json, Constants.JSON.TOOL)
-				? JSONUtils.getJsonArray(json, Constants.JSON.TOOL)
-				: JSONUtils.getJsonObject(json, Constants.JSON.TOOL);
+		JsonElement tool = JSONUtils.isArrayNode(json, Constants.JSON.TOOL)
+				? JSONUtils.getAsJsonArray(json, Constants.JSON.TOOL)
+				: JSONUtils.getAsJsonObject(json, Constants.JSON.TOOL);
 
-		Ingredient inputIng = Ingredient.deserialize(input);
-		Ingredient toolIng = Ingredient.deserialize(tool);
+		Ingredient inputIng = Ingredient.fromJson(input);
+		Ingredient toolIng = Ingredient.fromJson(tool);
 		ItemStack output = SerializerHelper.getItemStack(json, Constants.JSON.OUTPUT);
 
 		List<Pair<ItemStack, Double>> addedItems = new ArrayList<Pair<ItemStack, Double>>();
-		if (json.has(Constants.JSON.ADDEDOUTPUT) && JSONUtils.isJsonArray(json, Constants.JSON.ADDEDOUTPUT))
+		if (json.has(Constants.JSON.ADDEDOUTPUT) && JSONUtils.isArrayNode(json, Constants.JSON.ADDEDOUTPUT))
 		{
-			JsonArray mainArray = JSONUtils.getJsonArray(json, Constants.JSON.ADDEDOUTPUT);
+			JsonArray mainArray = JSONUtils.getAsJsonArray(json, Constants.JSON.ADDEDOUTPUT);
 
 			arrayLoop: for (JsonElement element : mainArray)
 			{
@@ -66,7 +66,7 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 				if (element.isJsonObject())
 				{
 					JsonObject obj = element.getAsJsonObject();
-					double chance = JSONUtils.getFloat(obj, Constants.JSON.CHANCE);
+					double chance = JSONUtils.getAsFloat(obj, Constants.JSON.CHANCE);
 					ItemStack extraDrop = SerializerHelper.getItemStack(obj, Constants.JSON.TYPE);
 
 					addedItems.add(Pair.of(extraDrop, chance));
@@ -78,9 +78,9 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 
 		if (json.has(Constants.JSON.INPUT_FLUID))
 		{
-			JsonElement inputFluid = JSONUtils.isJsonArray(json, Constants.JSON.INPUT_FLUID)
-					? JSONUtils.getJsonArray(json, Constants.JSON.INPUT_FLUID)
-					: JSONUtils.getJsonObject(json, Constants.JSON.INPUT_FLUID);
+			JsonElement inputFluid = JSONUtils.isArrayNode(json, Constants.JSON.INPUT_FLUID)
+					? JSONUtils.getAsJsonArray(json, Constants.JSON.INPUT_FLUID)
+					: JSONUtils.getAsJsonObject(json, Constants.JSON.INPUT_FLUID);
 			inputFluidIng = FluidStackIngredient.deserialize(inputFluid);
 		}
 
@@ -88,29 +88,29 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 
 		if (json.has(Constants.JSON.OUTPUT_FLUID))
 		{
-			JsonObject outputFluid = JSONUtils.getJsonObject(json, Constants.JSON.OUTPUT_FLUID).getAsJsonObject();
+			JsonObject outputFluid = JSONUtils.getAsJsonObject(json, Constants.JSON.OUTPUT_FLUID).getAsJsonObject();
 			outputFluidStack = SerializerHelper.deserializeFluid(outputFluid);
 		}
 
-		boolean consumeIngredient = JSONUtils.getBoolean(json, "consumeingredient");
+		boolean consumeIngredient = JSONUtils.getAsBoolean(json, "consumeingredient");
 
 		return this.factory.create(recipeId, inputIng, toolIng, inputFluidIng, output, addedItems, outputFluidStack, consumeIngredient);
 	}
 
 	@Override
-	public RECIPE read(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
+	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
 	{
 		try
 		{
 			List<Pair<ItemStack, Double>> addedItems = new ArrayList<Pair<ItemStack, Double>>();
-			Ingredient inputIng = Ingredient.read(buffer);
-			Ingredient toolIng = Ingredient.read(buffer);
-			ItemStack output = buffer.readItemStack();
+			Ingredient inputIng = Ingredient.fromNetwork(buffer);
+			Ingredient toolIng = Ingredient.fromNetwork(buffer);
+			ItemStack output = buffer.readItem();
 
 			int addedItemSize = buffer.readInt();
 			for (int i = 0; i < addedItemSize; i++)
 			{
-				ItemStack stack = buffer.readItemStack();
+				ItemStack stack = buffer.readItem();
 				double chance = buffer.readDouble();
 				addedItems.add(Pair.of(stack, chance));
 			}
@@ -139,7 +139,7 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 	}
 
 	@Override
-	public void write(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
+	public void toNetwork(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
 	{
 		try
 		{

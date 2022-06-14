@@ -15,7 +15,7 @@ public class TagResolverHelper
 	{
 		try
 		{
-			return tag.getAllElements();
+			return tag.getValues();
 		} catch (IllegalStateException e)
 		{
 			// Why do tags have to be such an annoyance in 1.16

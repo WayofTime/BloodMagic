@@ -39,14 +39,14 @@ public class ItemTeleposerFocus extends ItemBindableBase implements ITeleposerFo
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context)
+	public ActionResultType useOn(ItemUseContext context)
 	{
-		ItemStack stack = context.getItem();
-		BlockPos pos = context.getPos();
-		World world = context.getWorld();
+		ItemStack stack = context.getItemInHand();
+		BlockPos pos = context.getClickedPos();
+		World world = context.getLevel();
 		PlayerEntity player = context.getPlayer();
 
-		if (world.getTileEntity(pos) instanceof TileTeleposer)
+		if (world.getBlockEntity(pos) instanceof TileTeleposer)
 		{
 			setStoredPos(stack, pos);
 			setWorld(stack, world);
@@ -94,7 +94,7 @@ public class ItemTeleposerFocus extends ItemBindableBase implements ITeleposerFo
 
 	public void setWorld(ItemStack stack, World world)
 	{
-		String worldKey = world.getDimensionKey().getLocation().toString();
+		String worldKey = world.dimension().location().toString();
 		if (!stack.hasTag())
 		{
 			stack.setTag(new CompoundNBT());
@@ -111,7 +111,7 @@ public class ItemTeleposerFocus extends ItemBindableBase implements ITeleposerFo
 		}
 
 		String worldKey = stack.getTag().getString(Constants.NBT.WORLD);
-		RegistryKey<World> registryKey = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, new ResourceLocation(worldKey));
+		RegistryKey<World> registryKey = RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(worldKey));
 		return registryKey;
 	}
 
@@ -123,21 +123,21 @@ public class ItemTeleposerFocus extends ItemBindableBase implements ITeleposerFo
 			return null;
 		}
 
-		return world.getServer().getWorld(registryKey);
+		return world.getServer().getLevel(registryKey);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 		RegistryKey<World> storedKey = getStoredKey(stack, world);
 //		World storedWorld = getStoredWorld(stack, world);
 		if (storedKey != null)
 		{
 			BlockPos storedPos = getStoredPos(stack);
-			tooltip.add(new TranslationTextComponent(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionfocus.coords", storedPos.getX(), storedPos.getY(), storedPos.getZ())).mergeStyle(TextFormatting.GRAY));
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.telepositionfocus.world", new TranslationTextComponent(storedKey.getLocation().toString())).mergeStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionfocus.coords", storedPos.getX(), storedPos.getY(), storedPos.getZ())).withStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.telepositionfocus.world", new TranslationTextComponent(storedKey.location().toString())).withStyle(TextFormatting.GRAY));
 		}
 	}
 

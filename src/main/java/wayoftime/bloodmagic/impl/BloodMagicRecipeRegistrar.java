@@ -37,7 +37,7 @@ public class BloodMagicRecipeRegistrar
 		if (input.isEmpty())
 			return null;
 
-		List<RecipeBloodAltar> altarRecipes = world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ALTAR);
+		List<RecipeBloodAltar> altarRecipes = world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ALTAR);
 
 		for (RecipeBloodAltar recipe : altarRecipes) if (recipe.getInput().test(input))
 			return recipe;
@@ -52,7 +52,7 @@ public class BloodMagicRecipeRegistrar
 		if (input.isEmpty() || arcToolInput.isEmpty())
 			return null;
 
-		List<RecipeARC> arcRecipes = world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ARC);
+		List<RecipeARC> arcRecipes = world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ARC);
 
 		for (RecipeARC recipe : arcRecipes)
 		{
@@ -86,7 +86,7 @@ public class BloodMagicRecipeRegistrar
 		if (input.isEmpty())
 			return null;
 
-		List<RecipeAlchemyTable> tartaricForgeRecipes = world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ALCHEMYTABLE);
+		List<RecipeAlchemyTable> tartaricForgeRecipes = world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ALCHEMYTABLE);
 		mainLoop: for (RecipeAlchemyTable recipe : tartaricForgeRecipes)
 		{
 			if (recipe.getInput().size() != input.size())
@@ -125,7 +125,7 @@ public class BloodMagicRecipeRegistrar
 		if (input.isEmpty())
 			return null;
 
-		List<RecipeMeteor> meteorRecipes = world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.METEOR);
+		List<RecipeMeteor> meteorRecipes = world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.METEOR);
 //		System.out.println("Number of recipes: " + meteorRecipes.size());
 
 		for (RecipeMeteor recipe : meteorRecipes) if (recipe.getInput().test(input))
@@ -144,7 +144,7 @@ public class BloodMagicRecipeRegistrar
 //		List<EffectHolder> holderList = ((ItemAlchemyFlask) flaskStack.getItem()).getEffectHoldersOfFlask(flaskStack);
 //		Collection<EffectInstance> instanceList = PotionUtils.getEffectsFromStack(flaskStack);
 
-		List<RecipePotionFlaskBase> potionRecipes = world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.POTIONFLASK);
+		List<RecipePotionFlaskBase> potionRecipes = world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.POTIONFLASK);
 //		System.out.println("Number of recipes: " + potionRecipes.size());
 
 		RecipePotionFlaskBase validRecipe = null;
@@ -199,7 +199,7 @@ public class BloodMagicRecipeRegistrar
 		if (input.isEmpty())
 			return null;
 
-		List<RecipeTartaricForge> tartaricForgeRecipes = world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.TARTARICFORGE);
+		List<RecipeTartaricForge> tartaricForgeRecipes = world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.TARTARICFORGE);
 		mainLoop: for (RecipeTartaricForge recipe : tartaricForgeRecipes)
 		{
 			if (recipe.getInput().size() != input.size())
@@ -246,7 +246,7 @@ public class BloodMagicRecipeRegistrar
 		if (input.isEmpty())
 			return null;
 
-		List<RecipeAlchemyArray> altarRecipes = world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ARRAY);
+		List<RecipeAlchemyArray> altarRecipes = world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ARRAY);
 
 		RecipeAlchemyArray partialMatch = null;
 		for (RecipeAlchemyArray recipe : altarRecipes)
@@ -273,7 +273,7 @@ public class BloodMagicRecipeRegistrar
 		if (input.isEmpty())
 			return null;
 
-		List<RecipeLivingDowngrade> downgradeRecipes = world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.LIVINGDOWNGRADE);
+		List<RecipeLivingDowngrade> downgradeRecipes = world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.LIVINGDOWNGRADE);
 
 		for (RecipeLivingDowngrade recipe : downgradeRecipes) if (recipe.getInput().test(input))
 			return recipe;
@@ -283,37 +283,37 @@ public class BloodMagicRecipeRegistrar
 
 	public Set<RecipeBloodAltar> getAltarRecipes(World world)
 	{
-		return ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ALTAR));
+		return ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ALTAR));
 	}
 
 	public Set<RecipeTartaricForge> getTartaricForgeRecipes(World world)
 	{
-		return ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.TARTARICFORGE));
+		return ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.TARTARICFORGE));
 	}
 
 	public Set<RecipeAlchemyArray> getAlchemyArrayRecipes(World world)
 	{
-		return ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ARRAY));
+		return ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ARRAY));
 	}
 
 	public Set<RecipeARC> getARCRecipes(World world)
 	{
-		return ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ARC));
+		return ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ARC));
 	}
 
 	public Set<RecipeAlchemyTable> getAlchemyTableRecipes(World world)
 	{
-		return ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ALCHEMYTABLE));
+		return ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ALCHEMYTABLE));
 	}
 
 	public Set<RecipePotionFlaskBase> getPotionFlaskRecipes(World world)
 	{
-		return ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.POTIONFLASK));
+		return ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.POTIONFLASK));
 	}
 
 	public Set<RecipeAlchemyArray> getCraftingAlchemyArrayRecipes(World world)
 	{
-		Set<RecipeAlchemyArray> recipes = new HashSet<RecipeAlchemyArray>(world.getRecipeManager().getRecipesForType(BloodMagicRecipeType.ARRAY));
+		Set<RecipeAlchemyArray> recipes = new HashSet<RecipeAlchemyArray>(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ARRAY));
 
 		Set<RecipeAlchemyArray> copyRecipes = new HashSet<RecipeAlchemyArray>();
 		for (RecipeAlchemyArray recipe : recipes)

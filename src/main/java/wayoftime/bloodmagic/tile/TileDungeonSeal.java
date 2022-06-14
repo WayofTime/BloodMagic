@@ -42,9 +42,9 @@ public class TileDungeonSeal extends TileBase
 	{
 		if (DungeonSynthesizer.displayDetailedInformation)
 			System.out.println("Potential rooms: " + potentialRoomTypes);
-		if (!world.isRemote && !potentialRoomTypes.isEmpty())
+		if (!level.isClientSide && !potentialRoomTypes.isEmpty())
 		{
-			TileEntity tile = world.getTileEntity(controllerPos);
+			TileEntity tile = level.getBlockEntity(controllerPos);
 			if (tile instanceof TileDungeonController)
 			{
 				TileDungeonController tileController = (TileDungeonController) tile;
@@ -115,7 +115,7 @@ public class TileDungeonSeal extends TileBase
 		doorTag.putInt(Constants.NBT.Z_COORD, doorPos.getZ());
 		tag.put(Constants.NBT.DUNGEON_DOOR, doorTag);
 
-		tag.putInt(Constants.NBT.DIRECTION, doorDirection.getIndex());
+		tag.putInt(Constants.NBT.DIRECTION, doorDirection.get3DDataValue());
 
 		ListNBT listnbt = new ListNBT();
 		for (int i = 0; i < potentialRoomTypes.size(); ++i)

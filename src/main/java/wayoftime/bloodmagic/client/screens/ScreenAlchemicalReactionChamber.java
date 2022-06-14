@@ -25,8 +25,8 @@ public class ScreenAlchemicalReactionChamber extends ScreenBase<ContainerAlchemi
 	{
 		super(container, playerInventory, title);
 		tileARC = container.tileARC;
-		this.xSize = 176;
-		this.ySize = 205;
+		this.imageWidth = 176;
+		this.imageHeight = 205;
 	}
 
 	@Override
@@ -53,9 +53,9 @@ public class ScreenAlchemicalReactionChamber extends ScreenBase<ContainerAlchemi
 //		FluidTank inputTank = new FluidTank(FluidAttributes.BUCKET_VOLUME * 2);
 //		inputTank.fill(new FluidStack(Fluids.WATER, 1000), FluidAction.EXECUTE);
 
-		ClientHandler.handleGuiTank(stack, tileARC.inputTank, this.guiLeft + 8, this.guiTop
+		ClientHandler.handleGuiTank(stack, tileARC.inputTank, this.leftPos + 8, this.topPos
 				+ 40, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), tooltip);
-		ClientHandler.handleGuiTank(stack, tileARC.outputTank, this.guiLeft + 152, this.guiTop
+		ClientHandler.handleGuiTank(stack, tileARC.outputTank, this.leftPos + 152, this.topPos
 				+ 15, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), tooltip);
 
 		if (!tooltip.isEmpty())
@@ -64,28 +64,28 @@ public class ScreenAlchemicalReactionChamber extends ScreenBase<ContainerAlchemi
 
 //
 	@Override
-	protected void drawGuiContainerForegroundLayer(MatrixStack stack, int mouseX, int mouseY)
+	protected void renderLabels(MatrixStack stack, int mouseX, int mouseY)
 	{
-		this.font.func_243248_b(stack, new TranslationTextComponent("tile.bloodmagic.arc.name"), 8, 5, 4210752);
-		this.font.func_243248_b(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
+		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.arc.name"), 8, 5, 4210752);
+		this.font.draw(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
 	}
 
 //
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		getMinecraft().getTextureManager().bindTexture(background);
-		int i = (this.width - this.xSize) / 2;
-		int j = (this.height - this.ySize) / 2;
-		this.blit(stack, i, j, 0, 0, this.xSize, this.ySize);
+		getMinecraft().getTextureManager().bind(background);
+		int i = (this.width - this.imageWidth) / 2;
+		int j = (this.height - this.imageHeight) / 2;
+		this.blit(stack, i, j, 0, 0, this.imageWidth, this.imageHeight);
 
 //		FluidTank inputTank = new FluidTank(FluidAttributes.BUCKET_VOLUME * 2);
 //		inputTank.fill(new FluidStack(Fluids.WATER, 1000), FluidAction.EXECUTE);
 
-		ClientHandler.handleGuiTank(stack, tileARC.inputTank, this.guiLeft + 8, this.guiTop
+		ClientHandler.handleGuiTank(stack, tileARC.inputTank, this.leftPos + 8, this.topPos
 				+ 40, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), null);
-		ClientHandler.handleGuiTank(stack, tileARC.outputTank, this.guiLeft + 152, this.guiTop
+		ClientHandler.handleGuiTank(stack, tileARC.outputTank, this.leftPos + 152, this.topPos
 				+ 15, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), null);
 
 		int w = this.getCookProgressScaled(38);

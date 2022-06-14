@@ -30,21 +30,21 @@ public class TileSpikeTrap extends TileTicking {
 	 */
 	@Override
 	public void onUpdate() {
-		if (world == null) return;
-		if (!world.isRemote) {
-			boolean flag = getBlockState().get(ACTIVE);
-			BlockPos newPos = pos.offset(getBlockState().get(FACING));
-			if (flag != world.isBlockPowered(pos)) {
-				world.setBlockState(pos, getBlockState().func_235896_a_(ACTIVE), 2);
+		if (level == null) return;
+		if (!level.isClientSide) {
+			boolean flag = getBlockState().getValue(ACTIVE);
+			BlockPos newPos = worldPosition.relative(getBlockState().getValue(FACING));
+			if (flag != level.hasNeighborSignal(worldPosition)) {
+				level.setBlock(worldPosition, getBlockState().cycle(ACTIVE), 2);
 			}
 			if(flag){
-				if (world.getBlockState(newPos).isAir()) {
-					world.setBlockState(newPos, BloodMagicBlocks.SPIKES.get().getDefaultState().with(FACING, getBlockState().get(FACING)));
-					world.playSound(null, pos, SoundEvents.BLOCK_PISTON_EXTEND, SoundCategory.BLOCKS, 0.3f, 0.6f);
+				if (level.getBlockState(newPos).isAir()) {
+					level.setBlockAndUpdate(newPos, BloodMagicBlocks.SPIKES.get().defaultBlockState().setValue(FACING, getBlockState().getValue(FACING)));
+					level.playSound(null, worldPosition, SoundEvents.PISTON_EXTEND, SoundCategory.BLOCKS, 0.3f, 0.6f);
 				}
-			} else if (world.getBlockState(newPos).getBlock() == BloodMagicBlocks.SPIKES.get()){
-				world.setBlockState(newPos, Blocks.AIR.getDefaultState());
-				world.playSound(null, pos, SoundEvents.BLOCK_PISTON_CONTRACT, SoundCategory.BLOCKS, 0.3f, 0.6f);
+			} else if (level.getBlockState(newPos).getBlock() == BloodMagicBlocks.SPIKES.get()){
+				level.setBlockAndUpdate(newPos, Blocks.AIR.defaultBlockState());
+				level.playSound(null, worldPosition, SoundEvents.PISTON_CONTRACT, SoundCategory.BLOCKS, 0.3f, 0.6f);
 			}
 		}
 	}

@@ -41,14 +41,14 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 
 	public ItemLivingTrainer()
 	{
-		super(new Item.Properties().maxStackSize(1).group(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
-		if (!world.isRemote)
+		ItemStack stack = player.getItemInHand(hand);
+		if (!world.isClientSide)
 		{
 			Utils.setUUID(stack);
 			ILivingContainer.setDisplayIfZero(stack, true);
@@ -64,7 +64,7 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
 		if (stack.getTag() != null)
 		{
@@ -98,7 +98,7 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 			});
 
 			positiveUpgradeMap.forEach((k, v) -> {
-				tooltip.add(new TranslationTextComponent("%s %s", new TranslationTextComponent(k.getTranslationKey()), new TranslationTextComponent("enchantment.level." + v)).mergeStyle(TextFormatting.GRAY));
+				tooltip.add(new TranslationTextComponent("%s %s", new TranslationTextComponent(k.getTranslationKey()), new TranslationTextComponent("enchantment.level." + v)).withStyle(TextFormatting.GRAY));
 			});
 
 			if (!zeroUpgradeList.isEmpty() && !isWhitelist)
@@ -106,7 +106,7 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.trainer.deny"));
 				for (LivingUpgrade upgrade : zeroUpgradeList)
 				{
-					tooltip.add(new TranslationTextComponent(upgrade.getTranslationKey()).mergeStyle(TextFormatting.GRAY));
+					tooltip.add(new TranslationTextComponent(upgrade.getTranslationKey()).withStyle(TextFormatting.GRAY));
 				}
 			}
 		}
@@ -136,8 +136,8 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity player)
 	{
 		// TODO Auto-generated method stub
-		assert player.getEntityWorld() != null;
-		return new ContainerTrainingBracelet(p_createMenu_1_, player, p_createMenu_2_, player.getHeldItemMainhand());
+		assert player.getCommandSenderWorld() != null;
+		return new ContainerTrainingBracelet(p_createMenu_1_, player, p_createMenu_2_, player.getMainHandItem());
 	}
 
 	@Override
@@ -151,7 +151,7 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 	{
 //		System.out.println("Called!");
 		InventoryTrainingBracelet inv = new InventoryTrainingBracelet(trainerStack);
-		ItemStack tomeStack = inv.getStackInSlot(slot);
+		ItemStack tomeStack = inv.getItem(slot);
 		if (!tomeStack.isEmpty() && tomeStack.getItem() instanceof ILivingContainer)
 		{
 			LivingStats tomeStats = ((ILivingContainer) tomeStack.getItem()).getLivingStats(tomeStack);
@@ -169,7 +169,7 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 
 				((ILivingContainer) tomeStack.getItem()).updateLivingStats(tomeStack, newStats);
 
-				inv.setInventorySlotContents(slot, tomeStack);
+				inv.setItem(slot, tomeStack);
 				inv.save();
 				fromInventory(trainerStack, inv);
 			} else
@@ -185,9 +185,9 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 	public void fromInventory(ItemStack trainerStack, InventoryTrainingBracelet inv)
 	{
 		List<ItemStack> invList = new ArrayList<>();
-		for (int i = 0; i < inv.getSizeInventory(); i++)
+		for (int i = 0; i < inv.getContainerSize(); i++)
 		{
-			invList.add(inv.getStackInSlot(i));
+			invList.add(inv.getItem(i));
 		}
 		fromItemStackList(trainerStack, invList);
 	}
@@ -226,12 +226,12 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 	public InventoryTrainingBracelet toInventory(ItemStack trainerStack)
 	{
 		InventoryTrainingBracelet inv = new InventoryTrainingBracelet(trainerStack);
-		inv.clear();
+		inv.clearContent();
 
 		List<ItemStack> stackList = toItemStackList(trainerStack);
-		for (int i = 0; i < Math.min(stackList.size(), inv.getSizeInventory()); i++)
+		for (int i = 0; i < Math.min(stackList.size(), inv.getContainerSize()); i++)
 		{
-			inv.setInventorySlotContents(i, stackList.get(i));
+			inv.setItem(i, stackList.get(i));
 		}
 
 		return inv;

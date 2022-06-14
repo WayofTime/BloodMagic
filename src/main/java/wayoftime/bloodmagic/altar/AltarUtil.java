@@ -22,7 +22,7 @@ public class AltarUtil
 	@Nonnull
 	public static AltarTier getTier(World world, BlockPos pos)
 	{
-		TileEntity tile = world.getTileEntity(pos);
+		TileEntity tile = world.getBlockEntity(pos);
 		if (!(tile instanceof TileAltar))
 			return AltarTier.ONE;
 
@@ -31,7 +31,7 @@ public class AltarUtil
 		{
 			for (AltarComponent component : tier.getAltarComponents())
 			{
-				BlockPos componentPos = pos.add(component.getOffset());
+				BlockPos componentPos = pos.offset(component.getOffset());
 				BlockState worldState = world.getBlockState(componentPos);
 
 				if (component.getComponent() == ComponentType.NOTAIR && worldState.getMaterial() != Material.AIR && !worldState.getMaterial().isLiquid())
@@ -58,7 +58,7 @@ public class AltarUtil
 			if (!component.isUpgradeSlot() || component.getComponent() != ComponentType.BLOODRUNE)
 				continue;
 
-			BlockPos componentPos = pos.add(component.getOffset());
+			BlockPos componentPos = pos.offset(component.getOffset());
 			BlockState state = world.getBlockState(componentPos);
 			if (state.getBlock() instanceof BlockBloodRune)
 				upgrades.upgrade(((BlockBloodRune) state.getBlock()).getBloodRune(world, componentPos));
@@ -77,7 +77,7 @@ public class AltarUtil
 		{
 			for (AltarComponent component : tier.getAltarComponents())
 			{
-				BlockPos componentPos = pos.add(component.getOffset());
+				BlockPos componentPos = pos.offset(component.getOffset());
 				BlockState worldState = world.getBlockState(componentPos);
 				if (component.getComponent() == ComponentType.NOTAIR && worldState.getMaterial() != Material.AIR && !worldState.getMaterial().isLiquid())
 					continue;

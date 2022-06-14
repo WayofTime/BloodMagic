@@ -29,7 +29,7 @@ public class ContainerAlchemicalReactionChamber extends Container
 
 	public ContainerAlchemicalReactionChamber(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
 	{
-		this((TileAlchemicalReactionChamber) playerInventory.player.world.getTileEntity(extraData.readBlockPos()), windowId, playerInventory);
+		this((TileAlchemicalReactionChamber) playerInventory.player.level.getBlockEntity(extraData.readBlockPos()), windowId, playerInventory);
 	}
 
 	public ContainerAlchemicalReactionChamber(@Nullable TileAlchemicalReactionChamber tile, int windowId, PlayerInventory playerInventory)
@@ -67,60 +67,60 @@ public class ContainerAlchemicalReactionChamber extends Container
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index)
+	public ItemStack quickMoveStack(PlayerEntity playerIn, int index)
 	{
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
+		Slot slot = this.slots.get(index);
 
-		if (slot != null && slot.getHasStack())
+		if (slot != null && slot.hasItem())
 		{
-			ItemStack itemstack1 = slot.getStack();
+			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 
 			if ((index >= 1 && index < 1 + 5) || (index == 7 || index == 8))// Attempting to transfer from output slots
 																			// or bucket slots
 			{
-				if (!this.mergeItemStack(itemstack1, 9, 9 + 36, true))
+				if (!this.moveItemStackTo(itemstack1, 9, 9 + 36, true))
 				{
 					return ItemStack.EMPTY;
 				}
 
-				slot.onSlotChange(itemstack1, itemstack);
+				slot.onQuickCraft(itemstack1, itemstack);
 			} else if (index >= 9) // Attempting to transfer from main inventory
 			{
-				if (itemstack1.getItem().isIn(BloodMagicTags.ARC_TOOL)) // Try the tool slot first
+				if (itemstack1.getItem().is(BloodMagicTags.ARC_TOOL)) // Try the tool slot first
 				{
-					if (!this.mergeItemStack(itemstack1, 0, 1, false))
+					if (!this.moveItemStackTo(itemstack1, 0, 1, false))
 					{
 						return ItemStack.EMPTY;
 					}
 				} else if (isBucket(itemstack1, true)) // If it's a full bucket, transfer to tank filler slot.
 				{
-					if (!this.mergeItemStack(itemstack1, 7, 8, false))
+					if (!this.moveItemStackTo(itemstack1, 7, 8, false))
 					{
 						return ItemStack.EMPTY;
 					}
 				} else if (isBucket(itemstack1, false)) // If it's an empty bucket, transfer to tank emptier slot.
 				{
-					if (!this.mergeItemStack(itemstack1, 8, 9, false))
+					if (!this.moveItemStackTo(itemstack1, 8, 9, false))
 					{
 						return ItemStack.EMPTY;
 					}
-				} else if (!this.mergeItemStack(itemstack1, 6, 7, false))
+				} else if (!this.moveItemStackTo(itemstack1, 6, 7, false))
 				{
 					return ItemStack.EMPTY;
 				}
-			} else if (!this.mergeItemStack(itemstack1, 9, 45, false)) // Attempting to transfer from input slots
+			} else if (!this.moveItemStackTo(itemstack1, 9, 45, false)) // Attempting to transfer from input slots
 			{
 				return ItemStack.EMPTY;
 			}
 
 			if (itemstack1.getCount() == 0)
 			{
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else
 			{
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 
 			if (itemstack1.getCount() == itemstack.getCount())
@@ -135,9 +135,9 @@ public class ContainerAlchemicalReactionChamber extends Container
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn)
+	public boolean stillValid(PlayerEntity playerIn)
 	{
-		return this.tileARC.isUsableByPlayer(playerIn);
+		return this.tileARC.stillValid(playerIn);
 	}
 
 	private class SlotARCTool extends Slot
@@ -148,9 +148,9 @@ public class ContainerAlchemicalReactionChamber extends Container
 		}
 
 		@Override
-		public boolean isItemValid(ItemStack itemStack)
+		public boolean mayPlace(ItemStack itemStack)
 		{
-			return itemStack.getItem().isIn(BloodMagicTags.ARC_TOOL);
+			return itemStack.getItem().is(BloodMagicTags.ARC_TOOL);
 		}
 	}
 
@@ -165,7 +165,7 @@ public class ContainerAlchemicalReactionChamber extends Container
 		}
 
 		@Override
-		public boolean isItemValid(ItemStack itemStack)
+		public boolean mayPlace(ItemStack itemStack)
 		{
 			Optional<FluidStack> fluidStackOptional = FluidUtil.getFluidContained(itemStack);
 
@@ -188,7 +188,7 @@ public class ContainerAlchemicalReactionChamber extends Container
 		}
 
 		@Override
-		public boolean isItemValid(ItemStack stack)
+		public boolean mayPlace(ItemStack stack)
 		{
 			return false;
 		}

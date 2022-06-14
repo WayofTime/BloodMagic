@@ -57,7 +57,7 @@ public class BloodMagicValueManager implements IBloodMagicValueManager
 
 	public void setTranquility(Block block, TranquilityStack tranquilityStack)
 	{
-		for (BlockState state : block.getStateContainer().getValidStates())
+		for (BlockState state : block.getStateDefinition().getPossibleStates())
 		{
 			BMLog.API_VERBOSE.info("Value Manager: Set tranquility value of {} to {} @ {}", state, tranquilityStack.type, tranquilityStack.value);
 			tranquility.put(state, tranquilityStack);

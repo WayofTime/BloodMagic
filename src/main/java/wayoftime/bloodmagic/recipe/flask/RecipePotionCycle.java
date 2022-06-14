@@ -79,9 +79,9 @@ public class RecipePotionCycle extends RecipePotionFlaskBase
 	{
 		List<EffectHolder> holderList = new ArrayList<>();
 
-		holderList.add(new EffectHolder(Effects.SPEED, 3600, 0, 1, 1));
+		holderList.add(new EffectHolder(Effects.MOVEMENT_SPEED, 3600, 0, 1, 1));
 		holderList.add(new EffectHolder(Effects.FIRE_RESISTANCE, 3600, 0, 1, 1));
-		holderList.add(new EffectHolder(Effects.HASTE, 3600, 0, 1, 1));
+		holderList.add(new EffectHolder(Effects.DIG_SPEED, 3600, 0, 1, 1));
 
 		return holderList;
 	}

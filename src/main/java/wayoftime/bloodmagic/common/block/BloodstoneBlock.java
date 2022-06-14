@@ -11,8 +11,8 @@ public class BloodstoneBlock extends Block
 	public BloodstoneBlock() 
 	{
 		super(Properties
-				.create(Material.ROCK)
-				.hardnessAndResistance(2.0F, 5.0F)
+				.of(Material.STONE)
+				.strength(2.0F, 5.0F)
 				.sound(SoundType.STONE)
 				.harvestTool(ToolType.PICKAXE)
 				.harvestLevel(1));

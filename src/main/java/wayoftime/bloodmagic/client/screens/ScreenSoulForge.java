@@ -21,8 +21,8 @@ public class ScreenSoulForge extends ScreenBase<ContainerSoulForge>
 	{
 		super(container, playerInventory, title);
 		tileSoulForge = container.tileForge;
-		this.xSize = 176;
-		this.ySize = 205;
+		this.imageWidth = 176;
+		this.imageHeight = 205;
 	}
 
 	@Override
@@ -50,21 +50,21 @@ public class ScreenSoulForge extends ScreenBase<ContainerSoulForge>
 //	}
 //
 	@Override
-	protected void drawGuiContainerForegroundLayer(MatrixStack stack, int mouseX, int mouseY)
+	protected void renderLabels(MatrixStack stack, int mouseX, int mouseY)
 	{
-		this.font.func_243248_b(stack, new TranslationTextComponent("tile.bloodmagic.soulforge.name"), 8, 5, 4210752);
-		this.font.func_243248_b(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
+		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.soulforge.name"), 8, 5, 4210752);
+		this.font.draw(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
 	}
 
 //
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		getMinecraft().getTextureManager().bindTexture(background);
-		int i = (this.width - this.xSize) / 2;
-		int j = (this.height - this.ySize) / 2;
-		this.blit(stack, i, j, 0, 0, this.xSize, this.ySize);
+		getMinecraft().getTextureManager().bind(background);
+		int i = (this.width - this.imageWidth) / 2;
+		int j = (this.height - this.imageHeight) / 2;
+		this.blit(stack, i, j, 0, 0, this.imageWidth, this.imageHeight);
 
 		int l = this.getCookProgressScaled(90);
 		this.blit(stack, i + 115, j + 14 + 90 - l, 176, 90 - l, 18, l);

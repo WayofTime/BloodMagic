@@ -100,10 +100,10 @@ public abstract class ItemSigilFluidBase extends ItemSigilBase
 	protected boolean tryPlaceSigilFluid(PlayerEntity player, World world, BlockPos blockPos)
 	{
 		FluidStack resource = sigilFluid;
-		BlockState state = sigilFluid.getFluid().getAttributes().getBlock(world, blockPos, sigilFluid.getFluid().getDefaultState());
+		BlockState state = sigilFluid.getFluid().getAttributes().getBlock(world, blockPos, sigilFluid.getFluid().defaultFluidState());
 		BlockWrapper wrapper = new BlockWrapper(state, world, blockPos);
 
-		if (world.getDimensionType().isUltrawarm() && resource.getFluid().getAttributes().doesVaporize(world, blockPos, resource))
+		if (world.dimensionType().ultraWarm() && resource.getFluid().getAttributes().doesVaporize(world, blockPos, resource))
 		{
 			resource.getFluid().getAttributes().vaporize(player, world, blockPos, resource);
 			return true;

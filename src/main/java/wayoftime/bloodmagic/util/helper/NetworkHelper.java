@@ -38,8 +38,8 @@ public class NetworkHelper
 			if (ServerLifecycleHooks.getCurrentServer() == null)
 				return null;
 
-			DimensionSavedDataManager savedData = ServerLifecycleHooks.getCurrentServer().func_241755_D_().getSavedData();
-			dataHandler = savedData.getOrCreate(() -> new BMWorldSavedData(), BMWorldSavedData.ID);
+			DimensionSavedDataManager savedData = ServerLifecycleHooks.getCurrentServer().overworld().getDataStorage();
+			dataHandler = savedData.computeIfAbsent(() -> new BMWorldSavedData(), BMWorldSavedData.ID);
 		}
 
 		return dataHandler.getNetwork(UUID.fromString(uuid));
@@ -189,8 +189,8 @@ public class NetworkHelper
 			if (ServerLifecycleHooks.getCurrentServer() == null)
 				return null;
 
-			DimensionSavedDataManager savedData = ServerLifecycleHooks.getCurrentServer().func_241755_D_().getSavedData();
-			dataHandler = savedData.getOrCreate(() -> new BMWorldSavedData(), BMWorldSavedData.ID);
+			DimensionSavedDataManager savedData = ServerLifecycleHooks.getCurrentServer().overworld().getDataStorage();
+			dataHandler = savedData.computeIfAbsent(() -> new BMWorldSavedData(), BMWorldSavedData.ID);
 		}
 
 //		currentNumberOfDungeons = curNumVec(n);
@@ -246,6 +246,6 @@ public class NetworkHelper
 	{
 		int currentNumberOfDungeons = dataHandler.getNumberOfDungeons();
 		dataHandler.setNumberOfDungeons(currentNumberOfDungeons + 1);
-		dataHandler.markDirty();
+		dataHandler.setDirty();
 	}
 }

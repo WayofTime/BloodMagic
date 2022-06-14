@@ -28,29 +28,29 @@ public class BloodAltarRecipeSerializer<RECIPE extends RecipeBloodAltar>
 
 	@Nonnull
 	@Override
-	public RECIPE read(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
+	public RECIPE fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
 	{
-		JsonElement input = JSONUtils.isJsonArray(json, Constants.JSON.INPUT)
-				? JSONUtils.getJsonArray(json, Constants.JSON.INPUT)
-				: JSONUtils.getJsonObject(json, Constants.JSON.INPUT);
+		JsonElement input = JSONUtils.isArrayNode(json, Constants.JSON.INPUT)
+				? JSONUtils.getAsJsonArray(json, Constants.JSON.INPUT)
+				: JSONUtils.getAsJsonObject(json, Constants.JSON.INPUT);
 
-		Ingredient inputIng = Ingredient.deserialize(input);
+		Ingredient inputIng = Ingredient.fromJson(input);
 		ItemStack output = SerializerHelper.getItemStack(json, Constants.JSON.OUTPUT);
-		int minimumTier = JSONUtils.getInt(json, Constants.JSON.ALTAR_TIER);
-		int syphon = JSONUtils.getInt(json, Constants.JSON.ALTAR_SYPHON);
-		int consumeRate = JSONUtils.getInt(json, Constants.JSON.ALTAR_CONSUMPTION_RATE);
-		int drainRate = JSONUtils.getInt(json, Constants.JSON.ALTAR_DRAIN_RATE);
+		int minimumTier = JSONUtils.getAsInt(json, Constants.JSON.ALTAR_TIER);
+		int syphon = JSONUtils.getAsInt(json, Constants.JSON.ALTAR_SYPHON);
+		int consumeRate = JSONUtils.getAsInt(json, Constants.JSON.ALTAR_CONSUMPTION_RATE);
+		int drainRate = JSONUtils.getAsInt(json, Constants.JSON.ALTAR_DRAIN_RATE);
 
 		return this.factory.create(recipeId, inputIng, output, minimumTier, syphon, consumeRate, drainRate);
 	}
 
 	@Override
-	public RECIPE read(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
+	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
 	{
 		try
 		{
-			Ingredient input = Ingredient.read(buffer);
-			ItemStack output = buffer.readItemStack();
+			Ingredient input = Ingredient.fromNetwork(buffer);
+			ItemStack output = buffer.readItem();
 			int minimumTier = buffer.readInt();
 			int syphon = buffer.readInt();
 			int consumeRate = buffer.readInt();
@@ -65,7 +65,7 @@ public class BloodAltarRecipeSerializer<RECIPE extends RecipeBloodAltar>
 	}
 
 	@Override
-	public void write(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
+	public void toNetwork(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
 	{
 		try
 		{

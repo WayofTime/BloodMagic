@@ -34,8 +34,8 @@ public class AlchemyArrayEffectMovement extends AlchemyArrayEffect
 		Direction direction = array.getRotation();
 		TileAlchemyArray tileArray = (TileAlchemyArray) array;
 
-		motionY += motionYGlowstoneMod * (tileArray.getStackInSlot(0).getCount() - 1);
-		speed += speedRedstoneMod * (tileArray.getStackInSlot(1).getCount() - 1);
+		motionY += motionYGlowstoneMod * (tileArray.getItem(0).getCount() - 1);
+		speed += speedRedstoneMod * (tileArray.getItem(1).getCount() - 1);
 
 //		entity.getMotion().y = motionY;
 		entity.fallDistance = 0;
@@ -46,28 +46,28 @@ public class AlchemyArrayEffectMovement extends AlchemyArrayEffect
 //                entity.motionX = 0;
 //                entity.motionY = motionY;
 //                entity.motionZ = -speed;
-			entity.setMotion(new Vector3d(0, motionY, -speed));
+			entity.setDeltaMovement(new Vector3d(0, motionY, -speed));
 			break;
 
 		case SOUTH:
 //                entity.motionX = 0;
 //                entity.motionY = motionY;
 //                entity.motionZ = speed;
-			entity.setMotion(new Vector3d(0, motionY, speed));
+			entity.setDeltaMovement(new Vector3d(0, motionY, speed));
 			break;
 
 		case WEST:
 //                entity.motionX = -speed;
 //                entity.motionY = motionY;
 //                entity.motionZ = 0;
-			entity.setMotion(new Vector3d(-speed, motionY, 0));
+			entity.setDeltaMovement(new Vector3d(-speed, motionY, 0));
 			break;
 
 		case EAST:
 //                entity.motionX = speed;
 //                entity.motionY = motionY;
 //                entity.motionZ = 0;
-			entity.setMotion(new Vector3d(speed, motionY, 0));
+			entity.setDeltaMovement(new Vector3d(speed, motionY, 0));
 			break;
 		default:
 			break;

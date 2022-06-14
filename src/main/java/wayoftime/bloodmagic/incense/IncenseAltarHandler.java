@@ -53,7 +53,7 @@ public class IncenseAltarHandler
 				boolean hasAllComponentsThisTier = true;
 				for (IncenseAltarComponent component : incenseComponentMap.get(i))
 				{
-					BlockPos offsetPos = pos.add(component.getOffset(Direction.NORTH));
+					BlockPos offsetPos = pos.offset(component.getOffset(Direction.NORTH));
 					BlockState state = world.getBlockState(offsetPos);
 					Block block = state.getBlock();
 					if (component.doesBlockMatch(block))

@@ -39,7 +39,7 @@ public class RenderAltar extends TileEntityRenderer<TileAltar>
 	@Override
 	public void render(TileAltar tileAltar, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn)
 	{
-		ItemStack inputStack = tileAltar.getStackInSlot(0);
+		ItemStack inputStack = tileAltar.getItem(0);
 
 		float level = ((float) tileAltar.getCurrentBlood()) / (float) tileAltar.getCapacity();
 
@@ -57,41 +57,41 @@ public class RenderAltar extends TileEntityRenderer<TileAltar>
 		FluidStack fluidStack = new FluidStack(fluid, 1000);
 
 		FluidRenderData data = new FluidRenderData(fluidStack);
-		matrixStack.push();
+		matrixStack.pushPose();
 
 		Model3D model = getFluidModel(fluidLevel, data);
-		IVertexBuilder buffer = renderer.getBuffer(Atlases.getTranslucentCullBlockType());
+		IVertexBuilder buffer = renderer.getBuffer(Atlases.translucentCullBlockSheet());
 
 //		matrixStack.translate(data.loca, y, z);
 //		int glow = data.calculateGlowLight(0);
 		RenderResizableCuboid.INSTANCE.renderCube(model, matrixStack, buffer, data.getColorARGB(1), combinedLightIn, combinedOverlayIn);
 
-		matrixStack.pop();
+		matrixStack.popPose();
 	}
 
 	private void renderItem(ItemStack stack, TileAltar tileAltar, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn)
 	{
-		matrixStack.push();
+		matrixStack.pushPose();
 		Minecraft mc = Minecraft.getInstance();
 		ItemRenderer itemRenderer = mc.getItemRenderer();
 		if (!stack.isEmpty())
 		{
 			matrixStack.translate(0.5, 1, 0.5);
-			matrixStack.push();
+			matrixStack.pushPose();
 
 			float rotation = (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL);
 
-			matrixStack.rotate(Vector3f.YP.rotationDegrees(rotation));
+			matrixStack.mulPose(Vector3f.YP.rotationDegrees(rotation));
 			matrixStack.scale(0.5F, 0.5F, 0.5F);
-			RenderHelper.enableStandardItemLighting();
-			IBakedModel ibakedmodel = itemRenderer.getItemModelWithOverrides(stack, tileAltar.getWorld(), (LivingEntity) null);
-			itemRenderer.renderItem(stack, ItemCameraTransforms.TransformType.FIXED, true, matrixStack, buffer, combinedLightIn, combinedOverlayIn, ibakedmodel); // renderItem
-			RenderHelper.disableStandardItemLighting();
+			RenderHelper.turnBackOn();
+			IBakedModel ibakedmodel = itemRenderer.getModel(stack, tileAltar.getLevel(), (LivingEntity) null);
+			itemRenderer.render(stack, ItemCameraTransforms.TransformType.FIXED, true, matrixStack, buffer, combinedLightIn, combinedOverlayIn, ibakedmodel); // renderItem
+			RenderHelper.turnOff();
 
-			matrixStack.pop();
+			matrixStack.popPose();
 		}
 
-		matrixStack.pop();
+		matrixStack.popPose();
 	}
 
 	private Model3D getFluidModel(float fluidLevel, FluidRenderData data)
@@ -125,7 +125,7 @@ public class RenderAltar extends TileEntityRenderer<TileAltar>
 
 		public TextureAtlasSprite getTexture()
 		{
-			return Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(fluidType.getFluid().getAttributes().getStillTexture());
+			return Minecraft.getInstance().getTextureAtlas(AtlasTexture.LOCATION_BLOCKS).apply(fluidType.getFluid().getAttributes().getStillTexture());
 		}
 
 		public boolean isGaseous()

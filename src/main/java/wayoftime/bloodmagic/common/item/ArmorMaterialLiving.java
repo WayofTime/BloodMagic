@@ -10,33 +10,33 @@ public class ArmorMaterialLiving implements IArmorMaterial
 	public static final IArmorMaterial INSTANCE = new ArmorMaterialLiving();
 
 	@Override
-	public int getDurability(EquipmentSlotType slot)
+	public int getDurabilityForSlot(EquipmentSlotType slot)
 	{
-		return ArmorMaterial.DIAMOND.getDurability(slot);
+		return ArmorMaterial.DIAMOND.getDurabilityForSlot(slot);
 	}
 
 	@Override
-	public int getDamageReductionAmount(EquipmentSlotType slot)
+	public int getDefenseForSlot(EquipmentSlotType slot)
 	{
-		return ArmorMaterial.IRON.getDamageReductionAmount(slot);
+		return ArmorMaterial.IRON.getDefenseForSlot(slot);
 	}
 
 	@Override
-	public int getEnchantability()
+	public int getEnchantmentValue()
 	{
-		return ArmorMaterial.IRON.getEnchantability();
+		return ArmorMaterial.IRON.getEnchantmentValue();
 	}
 
 	@Override
-	public net.minecraft.util.SoundEvent getSoundEvent()
+	public net.minecraft.util.SoundEvent getEquipSound()
 	{
-		return ArmorMaterial.IRON.getSoundEvent();
+		return ArmorMaterial.IRON.getEquipSound();
 	}
 
 	@Override
-	public Ingredient getRepairMaterial()
+	public Ingredient getRepairIngredient()
 	{
-		return ArmorMaterial.IRON.getRepairMaterial();
+		return ArmorMaterial.IRON.getRepairIngredient();
 	}
 
 	@Override

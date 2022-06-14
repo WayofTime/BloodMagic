@@ -76,15 +76,15 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 
 		// TODO: Want to cache the filters and detect if a filter changes. Could have a
 		// changed inventory cause the Master to recheck?
-		if (!getWorld().isRemote)
+		if (!getLevel().isClientSide)
 		{
 //          currentInput = getWorld().isBlockIndirectlyGettingPowered(pos);
-			currentInput = getWorld().getStrongPower(pos);
+			currentInput = getLevel().getDirectSignalTo(worldPosition);
 
 //          System.out.println(currentInput);
 		}
 
-		if (getWorld().isRemote || getWorld().getGameTime() % tickRate != 0) // Temporary tick rate solver
+		if (getLevel().isClientSide || getLevel().getGameTime() % tickRate != 0) // Temporary tick rate solver
 		{
 			return;
 		}
@@ -95,7 +95,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 
 		for (BlockPos outputPos : outputNodeList)
 		{
-			TileEntity outputTile = getWorld().getTileEntity(outputPos);
+			TileEntity outputTile = getLevel().getBlockEntity(outputPos);
 			if (this.isConnected(new LinkedList<>(), outputPos))
 			{
 				if (outputTile instanceof IOutputItemRoutingNode)
@@ -155,7 +155,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 
 		for (BlockPos inputPos : inputNodeList)
 		{
-			TileEntity inputTile = getWorld().getTileEntity(inputPos);
+			TileEntity inputTile = getLevel().getBlockEntity(inputPos);
 			if (this.isConnected(new LinkedList<>(), inputPos))
 			{
 				if (inputTile instanceof IInputItemRoutingNode)
@@ -190,7 +190,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 			}
 		}
 
-		int maxTransfer = this.getMaxTransferForDemonWill(WorldDemonWillHandler.getCurrentWill(getWorld(), pos, EnumDemonWillType.DEFAULT));
+		int maxTransfer = this.getMaxTransferForDemonWill(WorldDemonWillHandler.getCurrentWill(getLevel(), worldPosition, EnumDemonWillType.DEFAULT));
 		int maxFluidTransfer = 1000;
 
 //		Set<Entry<Integer, List<IItemFilter>>> outputSet = outputMap.entrySet();
@@ -258,7 +258,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 	public int getMaxTransferForDemonWill(double will)
 	{
 		int rate = 16;
-		ItemStack upgradeStack = getStackInSlot(SLOT);
+		ItemStack upgradeStack = getItem(SLOT);
 		if (!upgradeStack.isEmpty() && upgradeStack.getItem() instanceof IRouterUpgrade)
 		{
 			rate += ((IRouterUpgrade) upgradeStack.getItem()).getMaxTransferIncrease(upgradeStack);
@@ -344,7 +344,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 //        {
 //            return false;
 //        }
-		TileEntity tile = getWorld().getTileEntity(nodePos);
+		TileEntity tile = getLevel().getBlockEntity(nodePos);
 		if (!(tile instanceof IRoutingNode))
 		{
 //            connectionMap.remove(nodePos);
@@ -362,12 +362,12 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 				continue;
 			}
 
-			if (testPos.equals(this.getPos()) && node.isConnectionEnabled(testPos))
+			if (testPos.equals(this.getBlockPos()) && node.isConnectionEnabled(testPos))
 			{
 //                path.clear();
 //                path.addAll(testPath);
 				return true;
-			} else if (NodeHelper.isNodeConnectionEnabled(getWorld(), node, testPos))
+			} else if (NodeHelper.isNodeConnectionEnabled(getLevel(), node, testPos))
 			{
 				if (isConnected(path, testPos))
 				{
@@ -471,7 +471,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 	@Override
 	public BlockPos getCurrentBlockPos()
 	{
-		return this.getPos();
+		return this.getBlockPos();
 	}
 
 	@Override
@@ -483,7 +483,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 	@Override
 	public BlockPos getMasterPos()
 	{
-		return this.getPos();
+		return this.getBlockPos();
 	}
 
 	@Override
@@ -514,11 +514,11 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 		while (itr.hasNext())
 		{
 			BlockPos testPos = itr.next();
-			TileEntity tile = getWorld().getTileEntity(testPos);
+			TileEntity tile = getLevel().getBlockEntity(testPos);
 			if (tile instanceof IRoutingNode)
 			{
-				((IRoutingNode) tile).removeConnection(pos);
-				getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(testPos), getWorld().getBlockState(testPos), 3);
+				((IRoutingNode) tile).removeConnection(worldPosition);
+				getLevel().sendBlockUpdated(getBlockPos(), getLevel().getBlockState(testPos), getLevel().getBlockState(testPos), 3);
 			}
 
 			itr.remove();
@@ -555,7 +555,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 	@Override
 	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_)
 	{
-		assert world != null;
+		assert level != null;
 		return new ContainerMasterRoutingNode(this, p_createMenu_1_, p_createMenu_2_);
 	}
 

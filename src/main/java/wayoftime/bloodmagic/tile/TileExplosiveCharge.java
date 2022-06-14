@@ -30,9 +30,9 @@ public class TileExplosiveCharge extends TileTicking
 		{
 			Pair<ItemStack, BlockPos> pair = dropPositionArray.get(j);
 			ItemStack itemstack = pair.getFirst();
-			if (ItemEntity.canMergeStacks(itemstack, stack))
+			if (ItemEntity.areMergable(itemstack, stack))
 			{
-				ItemStack itemstack1 = ItemEntity.mergeStacks(itemstack, stack, 16);
+				ItemStack itemstack1 = ItemEntity.merge(itemstack, stack, 16);
 				dropPositionArray.set(j, Pair.of(itemstack1, pair.getSecond()));
 				if (stack.isEmpty())
 				{
@@ -86,7 +86,7 @@ public class TileExplosiveCharge extends TileTicking
 			anointmentHolder.toItemStack(stack);
 		}
 
-		InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+		InventoryHelper.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), stack);
 	}
 
 	@Override

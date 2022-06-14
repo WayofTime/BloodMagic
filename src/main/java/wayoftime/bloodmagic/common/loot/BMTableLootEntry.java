@@ -27,32 +27,32 @@ public class BMTableLootEntry extends StandaloneLootEntry
 		this.table = tableIn;
 	}
 
-	public LootPoolEntryType func_230420_a_()
+	public LootPoolEntryType getType()
 	{
 		return BloodMagicLootTypeManager.LOOT_TABLE;
 	}
 
-	public void func_216154_a(Consumer<ItemStack> stackConsumer, LootContext context)
+	public void createItemStack(Consumer<ItemStack> stackConsumer, LootContext context)
 	{
 		LootTable loottable = context.getLootTable(this.table);
-		loottable.recursiveGenerate(context, stackConsumer);
+		loottable.getRandomItemsRaw(context, stackConsumer);
 	}
 
-	public void func_225579_a_(ValidationTracker p_225579_1_)
+	public void validate(ValidationTracker p_225579_1_)
 	{
-		if (p_225579_1_.func_227532_a_(this.table))
+		if (p_225579_1_.hasVisitedTable(this.table))
 		{
-			p_225579_1_.addProblem("Table " + this.table + " is recursively called");
+			p_225579_1_.reportProblem("Table " + this.table + " is recursively called");
 		} else
 		{
-			super.func_225579_a_(p_225579_1_);
-			LootTable loottable = p_225579_1_.func_227539_c_(this.table);
+			super.validate(p_225579_1_);
+			LootTable loottable = p_225579_1_.resolveLootTable(this.table);
 //			if (loottable == null)
 //			{
 //				p_225579_1_.addProblem("Unknown loot table called " + this.table);
 //			} else
 //			{
-//				loottable.validate(p_225579_1_.func_227531_a_("->{" + this.table + "}", this.table));
+//				loottable.validate(p_225579_1_.enterTable("->{" + this.table + "}", this.table));
 //			}
 
 		}
@@ -60,22 +60,22 @@ public class BMTableLootEntry extends StandaloneLootEntry
 
 	public static StandaloneLootEntry.Builder<?> builder(ResourceLocation tableIn)
 	{
-		return builder((weight, quality, conditions, functions) -> {
+		return simpleBuilder((weight, quality, conditions, functions) -> {
 			return new BMTableLootEntry(tableIn, weight, quality, conditions, functions);
 		});
 	}
 
 	public static class Serializer extends StandaloneLootEntry.Serializer<BMTableLootEntry>
 	{
-		public void doSerialize(JsonObject object, BMTableLootEntry context, JsonSerializationContext conditions)
+		public void serializeCustom(JsonObject object, BMTableLootEntry context, JsonSerializationContext conditions)
 		{
-			super.doSerialize(object, context, conditions);
+			super.serializeCustom(object, context, conditions);
 			object.addProperty("name", context.table.toString());
 		}
 
 		protected BMTableLootEntry deserialize(JsonObject object, JsonDeserializationContext context, int weight, int quality, ILootCondition[] conditions, ILootFunction[] functions)
 		{
-			ResourceLocation resourcelocation = new ResourceLocation(JSONUtils.getString(object, "name"));
+			ResourceLocation resourcelocation = new ResourceLocation(JSONUtils.getAsString(object, "name"));
 			return new BMTableLootEntry(resourcelocation, weight, quality, conditions, functions);
 		}
 	}

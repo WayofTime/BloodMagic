@@ -67,7 +67,7 @@ public class RitualHarvest extends Ritual
 		harvestArea.resetIterator();
 		while (harvestArea.hasNext())
 		{
-			BlockPos nextPos = harvestArea.next().add(pos);
+			BlockPos nextPos = harvestArea.next().offset(pos);
 			if (harvestBlock(world, nextPos, masterRitualStone.getMasterBlockPos()))
 			{
 				harvested++;
@@ -107,7 +107,7 @@ public class RitualHarvest extends Ritual
 	public static boolean harvestBlock(World world, BlockPos cropPos, BlockPos controllerPos)
 	{
 		BlockState harvestState = world.getBlockState(cropPos);
-		TileEntity potentialInventory = world.getTileEntity(controllerPos.up());
+		TileEntity potentialInventory = world.getBlockEntity(controllerPos.above());
 		IItemHandler itemHandler = null;
 		if (potentialInventory != null && potentialInventory.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).isPresent())
 			itemHandler = potentialInventory.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).resolve().get();
@@ -127,12 +127,12 @@ public class RitualHarvest extends Ritual
 						// TODO I wrote this, but didn't actually think about whether it should be a
 						// thing. Remove the true if we want to keep it
 						if (itemHandler == null || true)
-							InventoryHelper.spawnItemStack(world, cropPos.getX(), cropPos.getY(), cropPos.getZ(), stack);
+							InventoryHelper.dropItemStack(world, cropPos.getX(), cropPos.getY(), cropPos.getZ(), stack);
 						else
 						{
 							ItemStack remainder = ItemHandlerHelper.insertItemStacked(itemHandler, stack, false);
 							if (!remainder.isEmpty())
-								InventoryHelper.spawnItemStack(world, cropPos.getX(), cropPos.getY(), cropPos.getZ(), remainder);
+								InventoryHelper.dropItemStack(world, cropPos.getX(), cropPos.getY(), cropPos.getZ(), remainder);
 						}
 					}
 					return true;

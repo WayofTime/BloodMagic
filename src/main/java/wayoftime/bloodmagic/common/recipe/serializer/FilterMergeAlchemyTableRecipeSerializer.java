@@ -32,18 +32,18 @@ public class FilterMergeAlchemyTableRecipeSerializer<RECIPE extends RecipeFilter
 
 	@Nonnull
 	@Override
-	public RECIPE read(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
+	public RECIPE fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
 	{
-		JsonElement filterElement = JSONUtils.isJsonArray(json, Constants.JSON.FILTER)
-				? JSONUtils.getJsonArray(json, Constants.JSON.FILTER)
-				: JSONUtils.getJsonObject(json, Constants.JSON.FILTER);
-		Ingredient filter = Ingredient.deserialize(filterElement);
+		JsonElement filterElement = JSONUtils.isArrayNode(json, Constants.JSON.FILTER)
+				? JSONUtils.getAsJsonArray(json, Constants.JSON.FILTER)
+				: JSONUtils.getAsJsonObject(json, Constants.JSON.FILTER);
+		Ingredient filter = Ingredient.fromJson(filterElement);
 
 		List<Ingredient> inputList = new ArrayList<Ingredient>();
 
-		if (json.has(Constants.JSON.INPUT) && JSONUtils.isJsonArray(json, Constants.JSON.INPUT))
+		if (json.has(Constants.JSON.INPUT) && JSONUtils.isArrayNode(json, Constants.JSON.INPUT))
 		{
-			JsonArray mainArray = JSONUtils.getJsonArray(json, Constants.JSON.INPUT);
+			JsonArray mainArray = JSONUtils.getAsJsonArray(json, Constants.JSON.INPUT);
 
 			arrayLoop: for (JsonElement element : mainArray)
 			{
@@ -60,34 +60,34 @@ public class FilterMergeAlchemyTableRecipeSerializer<RECIPE extends RecipeFilter
 					element.getAsJsonObject();
 				}
 
-				inputList.add(Ingredient.deserialize(element));
+				inputList.add(Ingredient.fromJson(element));
 			}
 		}
 
 		ItemStack output = SerializerHelper.getItemStack(json, Constants.JSON.OUTPUT);
 
-		int syphon = JSONUtils.getInt(json, Constants.JSON.SYPHON);
-		int ticks = JSONUtils.getInt(json, Constants.JSON.TICKS);
-		int minimumTier = JSONUtils.getInt(json, Constants.JSON.ALTAR_TIER);
+		int syphon = JSONUtils.getAsInt(json, Constants.JSON.SYPHON);
+		int ticks = JSONUtils.getAsInt(json, Constants.JSON.TICKS);
+		int minimumTier = JSONUtils.getAsInt(json, Constants.JSON.ALTAR_TIER);
 
 		return this.factory.create(recipeId, filter, inputList, output, syphon, ticks, minimumTier);
 	}
 
 	@Override
-	public RECIPE read(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
+	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
 	{
 		try
 		{
-			Ingredient filter = Ingredient.read(buffer);
+			Ingredient filter = Ingredient.fromNetwork(buffer);
 			int size = buffer.readInt();
 			List<Ingredient> input = new ArrayList<Ingredient>(size);
 
 			for (int i = 0; i < size; i++)
 			{
-				input.add(i, Ingredient.read(buffer));
+				input.add(i, Ingredient.fromNetwork(buffer));
 			}
 
-			ItemStack output = buffer.readItemStack();
+			ItemStack output = buffer.readItem();
 			int syphon = buffer.readInt();
 			int ticks = buffer.readInt();
 			int minimumTier = buffer.readInt();
@@ -101,7 +101,7 @@ public class FilterMergeAlchemyTableRecipeSerializer<RECIPE extends RecipeFilter
 	}
 
 	@Override
-	public void write(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
+	public void toNetwork(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
 	{
 		try
 		{

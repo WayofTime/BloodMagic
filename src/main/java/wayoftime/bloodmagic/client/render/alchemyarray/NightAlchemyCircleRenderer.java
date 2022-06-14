@@ -191,7 +191,7 @@ public class NightAlchemyCircleRenderer extends AlchemyArrayRenderer
 
 	public void renderAt(TileAlchemyArray tileArray, double x, double y, double z, float craftTime, MatrixStack matrixStack, IRenderTypeBuffer renderer, int combinedLightIn, int combinedOverlayIn)
 	{
-		matrixStack.push();
+		matrixStack.pushPose();
 
 		matrixStack.translate(0.5, 0.5, 0.5);
 
@@ -202,17 +202,17 @@ public class NightAlchemyCircleRenderer extends AlchemyArrayRenderer
 		float size = 1.0F * getSizeModifier(craftTime);
 		Direction rotation = tileArray.getRotation();
 
-		matrixStack.push();
+		matrixStack.pushPose();
 		matrixStack.translate(0, getVerticalOffset(craftTime), 0);
-		matrixStack.rotate(new Quaternion(Direction.UP.toVector3f(), -rotation.getHorizontalAngle(), true));
+		matrixStack.mulPose(new Quaternion(Direction.UP.step(), -rotation.toYRot(), true));
 
-		matrixStack.push();
+		matrixStack.pushPose();
 
-		matrixStack.rotate(new Quaternion(Direction.NORTH.toVector3f(), rot, true));
-		matrixStack.rotate(new Quaternion(Direction.UP.toVector3f(), secondaryRot, true));
+		matrixStack.mulPose(new Quaternion(Direction.NORTH.step(), rot, true));
+		matrixStack.mulPose(new Quaternion(Direction.UP.step(), secondaryRot, true));
 //		matrixStack.rotate(new Quaternion(Direction.EAST.toVector3f(), secondaryRot * 0.45812f, true));
 
-		IVertexBuilder twoDBuffer = renderer.getBuffer(RenderType.getEntityTranslucent(arrayResource));
+		IVertexBuilder twoDBuffer = renderer.getBuffer(RenderType.entityTranslucent(arrayResource));
 		Model2D arrayModel = new BloodMagicRenderer.Model2D();
 		arrayModel.minX = -0.5;
 		arrayModel.maxX = +0.5;
@@ -224,8 +224,8 @@ public class NightAlchemyCircleRenderer extends AlchemyArrayRenderer
 
 		RenderResizableQuadrilateral.INSTANCE.renderSquare(arrayModel, matrixStack, twoDBuffer, 0xFFFFFFFF, 0x00F000F0, combinedOverlayIn);
 
-		matrixStack.pop();
-		matrixStack.pop();
+		matrixStack.popPose();
+		matrixStack.popPose();
 
 //		matrixStack.push();
 //		matrixStack.translate(0, getSymbolVerticaloffset(craftTime), 0);
@@ -257,18 +257,18 @@ public class NightAlchemyCircleRenderer extends AlchemyArrayRenderer
 //		matrixStack.pop();
 //		matrixStack.pop();
 
-		matrixStack.push();
+		matrixStack.pushPose();
 		matrixStack.translate(0, getCentralCircleOffset(craftTime), 0);
-		matrixStack.rotate(new Quaternion(Direction.UP.toVector3f(), -rotation.getHorizontalAngle(), true));
+		matrixStack.mulPose(new Quaternion(Direction.UP.step(), -rotation.toYRot(), true));
 
-		matrixStack.push();
+		matrixStack.pushPose();
 
 		pitch = getCentralCirclePitch(craftTime);
-		matrixStack.rotate(new Quaternion(Direction.WEST.toVector3f(), pitch, true));
-		matrixStack.rotate(new Quaternion(Direction.UP.toVector3f(), -secondaryRot, true));
+		matrixStack.mulPose(new Quaternion(Direction.WEST.step(), pitch, true));
+		matrixStack.mulPose(new Quaternion(Direction.UP.step(), -secondaryRot, true));
 //		matrixStack.rotate(new Quaternion(Direction.EAST.toVector3f(), secondaryRot * 0.45812f, true));
 
-		twoDBuffer = renderer.getBuffer(RenderType.getEntityTranslucent(circleResource));
+		twoDBuffer = renderer.getBuffer(RenderType.entityTranslucent(circleResource));
 		arrayModel = new BloodMagicRenderer.Model2D();
 		arrayModel.minX = -0.5;
 		arrayModel.maxX = +0.5;
@@ -284,26 +284,26 @@ public class NightAlchemyCircleRenderer extends AlchemyArrayRenderer
 
 		RenderResizableQuadrilateral.INSTANCE.renderSquare(arrayModel, matrixStack, twoDBuffer, colorWanted, 0x00F000F0, combinedOverlayIn);
 
-		matrixStack.pop();
-		matrixStack.pop();
+		matrixStack.popPose();
+		matrixStack.popPose();
 
 		// Moon going over the array
 
-		matrixStack.push();
+		matrixStack.pushPose();
 		matrixStack.translate(0, getCentralCircleOffset(craftTime), 0);
-		matrixStack.rotate(new Quaternion(Direction.UP.toVector3f(), -rotation.getHorizontalAngle(), true));
-		matrixStack.rotate(new Quaternion(Direction.SOUTH.toVector3f(), moonArc(craftTime), true));
+		matrixStack.mulPose(new Quaternion(Direction.UP.step(), -rotation.toYRot(), true));
+		matrixStack.mulPose(new Quaternion(Direction.SOUTH.step(), moonArc(craftTime), true));
 		matrixStack.translate(moonDisplacement(craftTime), 0, 0);
 
-		matrixStack.push();
+		matrixStack.pushPose();
 
 		pitch = getSymbolPitch(craftTime);
 
-		matrixStack.rotate(new Quaternion(Direction.WEST.toVector3f(), pitch, true));
-		matrixStack.rotate(new Quaternion(Direction.NORTH.toVector3f(), tertiaryRot, true));
+		matrixStack.mulPose(new Quaternion(Direction.WEST.step(), pitch, true));
+		matrixStack.mulPose(new Quaternion(Direction.NORTH.step(), tertiaryRot, true));
 //		matrixStack.rotate(new Quaternion(Direction.EAST.toVector3f(), secondaryRot * 0.45812f, true));
 
-		twoDBuffer = renderer.getBuffer(RenderType.getEntityTranslucent(symbolResource));
+		twoDBuffer = renderer.getBuffer(RenderType.entityTranslucent(symbolResource));
 		arrayModel = new BloodMagicRenderer.Model2D();
 		arrayModel.minX = -0.5;
 		arrayModel.maxX = +0.5;
@@ -319,9 +319,9 @@ public class NightAlchemyCircleRenderer extends AlchemyArrayRenderer
 
 		RenderResizableQuadrilateral.INSTANCE.renderSquare(arrayModel, matrixStack, twoDBuffer, colorWanted, 0x00F000F0, combinedOverlayIn);
 
-		matrixStack.pop();
-		matrixStack.pop();
+		matrixStack.popPose();
+		matrixStack.popPose();
 
-		matrixStack.pop();
+		matrixStack.popPose();
 	}
 }

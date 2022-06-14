@@ -27,7 +27,7 @@ public class WillChunk
 
 	public boolean isModified()
 	{
-		return (this.chunkRef != null) && (this.chunkRef.get() != null) && this.chunkRef.get().isModified();
+		return (this.chunkRef != null) && (this.chunkRef.get() != null) && this.chunkRef.get().isUnsaved();
 	}
 
 	public PosXY getLoc()

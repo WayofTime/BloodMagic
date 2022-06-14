@@ -39,7 +39,7 @@ public class EnchantFilterKey implements IFilterKey
 			}
 		} else
 		{
-			level = EnchantmentHelper.getEnchantmentLevel(enchantment, testStack);
+			level = EnchantmentHelper.getItemEnchantmentLevel(enchantment, testStack);
 		}
 
 		return isFuzzy ? level > 0 : level == enchantLevel;

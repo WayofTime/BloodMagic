@@ -37,7 +37,7 @@ public class TartaricForgeProcessor implements IComponentProcessor
 	public void setup(IVariableProvider variables)
 	{
 		ResourceLocation id = new ResourceLocation(variables.get("recipe").asString());
-		Optional<? extends IRecipe<?>> recipeHandler = Minecraft.getInstance().world.getRecipeManager().getRecipe(id);
+		Optional<? extends IRecipe<?>> recipeHandler = Minecraft.getInstance().level.getRecipeManager().byKey(id);
 		if (recipeHandler.isPresent())
 		{
 			IRecipe<?> recipe = recipeHandler.get();
@@ -64,7 +64,7 @@ public class TartaricForgeProcessor implements IComponentProcessor
 			int index = Integer.parseInt(key.substring(5)) - 1;
 			if (recipe.getInput().size() > index)
 			{
-				return IVariable.wrapList(Arrays.stream(recipe.getInput().get(index).getMatchingStacks()).map(IVariable::from).collect(Collectors.toList()));
+				return IVariable.wrapList(Arrays.stream(recipe.getInput().get(index).getItems()).map(IVariable::from).collect(Collectors.toList()));
 			} else
 			{
 				return null;

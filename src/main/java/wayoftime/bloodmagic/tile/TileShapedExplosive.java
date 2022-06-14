@@ -47,7 +47,7 @@ public class TileShapedExplosive extends TileExplosiveCharge
 	@Override
 	public void onUpdate()
 	{
-		if (world.isRemote)
+		if (level.isClientSide)
 		{
 			return;
 		}
@@ -57,13 +57,13 @@ public class TileShapedExplosive extends TileExplosiveCharge
 		if (internalCounter == 20)
 		{
 //			worldIn.playSound((PlayerEntity)null, tntentity.getPosX(), tntentity.getPosY(), tntentity.getPosZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
-			world.playSound((PlayerEntity) null, this.getPos().getX() + 0.5, this.getPos().getY() + 0.5, this.getPos().getZ() + 0.5, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, world.rand.nextFloat() * 0.4F + 0.8F);
-			((ServerWorld) this.world).spawnParticle(ParticleTypes.FLAME, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 5, 0.02, 0.03, 0.02, 0);
+			level.playSound((PlayerEntity) null, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, SoundEvents.FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, level.random.nextFloat() * 0.4F + 0.8F);
+			((ServerWorld) this.level).sendParticles(ParticleTypes.FLAME, worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5, 5, 0.02, 0.03, 0.02, 0);
 		}
 
 		if (internalCounter == 30)
 		{
-			world.playSound((PlayerEntity) null, this.getPos().getX() + 0.5, this.getPos().getY() + 0.5, this.getPos().getZ() + 0.5, SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
+			level.playSound((PlayerEntity) null, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, SoundEvents.TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
 		}
 
 		if (internalCounter < 30)
@@ -71,22 +71,22 @@ public class TileShapedExplosive extends TileExplosiveCharge
 			return;
 		}
 
-		if (world.rand.nextDouble() < 0.3)
+		if (level.random.nextDouble() < 0.3)
 		{
-			((ServerWorld) this.world).spawnParticle(ParticleTypes.SMOKE, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 1, 0.0D, 0.0D, 0.0D, 0);
+			((ServerWorld) this.level).sendParticles(ParticleTypes.SMOKE, worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5, 1, 0.0D, 0.0D, 0.0D, 0);
 		}
 
 		if (internalCounter == 100)
 		{
-			world.playSound((PlayerEntity) null, this.getPos().getX() + 0.5, this.getPos().getY() + 0.5, this.getPos().getZ() + 0.5, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F) * 0.7F);
+			level.playSound((PlayerEntity) null, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, SoundEvents.GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.2F) * 0.7F);
 
-			Direction explosiveDirection = this.getBlockState().get(BlockShapedExplosive.ATTACHED).getOpposite();
+			Direction explosiveDirection = this.getBlockState().getValue(BlockShapedExplosive.ATTACHED).getOpposite();
 			Direction sweepDir1 = Direction.UP;
 			Direction sweepDir2 = Direction.UP;
 
 			int numParticles = explosionDepth * (explosionRadius + 1);
 
-			((ServerWorld) this.world).spawnParticle(ParticleTypes.EXPLOSION, pos.getX() + 0.5 + explosiveDirection.getXOffset() * explosionDepth / 2d, pos.getY() + 0.5 + explosiveDirection.getYOffset() * explosionDepth / 2d, pos.getZ() + 0.5 + explosiveDirection.getZOffset() * explosionDepth / 2d, numParticles, 1.0D, 1.0D, 1.0D, 0);
+			((ServerWorld) this.level).sendParticles(ParticleTypes.EXPLOSION, worldPosition.getX() + 0.5 + explosiveDirection.getStepX() * explosionDepth / 2d, worldPosition.getY() + 0.5 + explosiveDirection.getStepY() * explosionDepth / 2d, worldPosition.getZ() + 0.5 + explosiveDirection.getStepZ() * explosionDepth / 2d, numParticles, 1.0D, 1.0D, 1.0D, 0);
 
 			switch (explosiveDirection)
 			{
@@ -111,26 +111,26 @@ public class TileShapedExplosive extends TileExplosiveCharge
 
 			ObjectArrayList<Pair<ItemStack, BlockPos>> objectarraylist = new ObjectArrayList<>();
 
-			BlockPos initialPos = getPos();
+			BlockPos initialPos = getBlockPos();
 			for (int i = 1; i <= explosionDepth; i++)
 			{
 				for (int j = -explosionRadius; j <= explosionRadius; j++)
 				{
 					for (int k = -explosionRadius; k <= explosionRadius; k++)
 					{
-						BlockPos blockpos = initialPos.offset(explosiveDirection, i).offset(sweepDir1, j).offset(sweepDir2, k);
+						BlockPos blockpos = initialPos.relative(explosiveDirection, i).relative(sweepDir1, j).relative(sweepDir2, k);
 
-						BlockState blockstate = this.world.getBlockState(blockpos);
+						BlockState blockstate = this.level.getBlockState(blockpos);
 						Block block = blockstate.getBlock();
-						if (!blockstate.isAir(this.world, blockpos) && blockstate.getBlockHardness(world, blockpos) != -1.0F)
+						if (!blockstate.isAir(this.level, blockpos) && blockstate.getDestroySpeed(level, blockpos) != -1.0F)
 						{
-							BlockPos blockpos1 = blockpos.toImmutable();
+							BlockPos blockpos1 = blockpos.immutable();
 //							this.world.getProfiler().startSection("explosion_blocks");
-							if (this.world instanceof ServerWorld)
+							if (this.level instanceof ServerWorld)
 							{
-								TileEntity tileentity = blockstate.hasTileEntity() ? this.world.getTileEntity(blockpos)
+								TileEntity tileentity = blockstate.hasTileEntity() ? this.level.getBlockEntity(blockpos)
 										: null;
-								LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) this.world)).withRandom(this.world.rand).withParameter(LootParameters.field_237457_g_, Vector3d.copyCentered(blockpos)).withParameter(LootParameters.TOOL, toolStack).withNullableParameter(LootParameters.BLOCK_ENTITY, tileentity);
+								LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) this.level)).withRandom(this.level.random).withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf(blockpos)).withParameter(LootParameters.TOOL, toolStack).withOptionalParameter(LootParameters.BLOCK_ENTITY, tileentity);
 //			                  if (this.mode == Explosion.Mode.DESTROY) {
 //			                     lootcontext$builder.withParameter(LootParameters.EXPLOSION_RADIUS, this.size);
 //			                  }
@@ -139,7 +139,7 @@ public class TileShapedExplosive extends TileExplosiveCharge
 									handleExplosionDrops(objectarraylist, stack, blockpos1);
 								});
 
-								world.setBlockState(blockpos, Blocks.AIR.getDefaultState(), 3);
+								level.setBlock(blockpos, Blocks.AIR.defaultBlockState(), 3);
 
 //							blockstate.onBlockExploded(this.world, blockpos, null);
 //			               this.world.getProfiler().endSection();
@@ -151,10 +151,10 @@ public class TileShapedExplosive extends TileExplosiveCharge
 
 			for (Pair<ItemStack, BlockPos> pair : objectarraylist)
 			{
-				Block.spawnAsEntity(this.world, pair.getSecond(), pair.getFirst());
+				Block.popResource(this.level, pair.getSecond(), pair.getFirst());
 			}
 
-			world.setBlockState(getPos(), Blocks.AIR.getDefaultState());
+			level.setBlockAndUpdate(getBlockPos(), Blocks.AIR.defaultBlockState());
 		}
 	}
 
