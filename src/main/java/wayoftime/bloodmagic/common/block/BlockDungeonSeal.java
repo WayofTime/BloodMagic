@@ -1,21 +1,21 @@
 package wayoftime.bloodmagic.common.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolType;
 import wayoftime.bloodmagic.tile.TileDungeonSeal;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockDungeonSeal extends Block
 {
@@ -31,18 +31,18 @@ public class BlockDungeonSeal extends Block
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world)
+	public BlockEntity createTileEntity(BlockState state, BlockGetter world)
 	{
 		return new TileDungeonSeal();
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult blockRayTraceResult)
 	{
 		TileDungeonSeal seal = (TileDungeonSeal) world.getBlockEntity(pos);
 
 		if (seal == null || player.isShiftKeyDown())
-			return ActionResultType.FAIL;
+			return InteractionResult.FAIL;
 
 //
 		ItemStack playerItem = player.getItemInHand(hand);
@@ -61,6 +61,6 @@ public class BlockDungeonSeal extends Block
 //			altar.setActive();
 //
 //		world.notifyBlockUpdate(pos, state, state, 3);
-		return ActionResultType.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 }

@@ -2,16 +2,16 @@ package wayoftime.bloodmagic.common.item;
 
 import java.util.List;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
@@ -26,14 +26,14 @@ public class ItemLivingTomeScrap extends Item implements ILivingUpgradePointsPro
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.livingtomescrap.desc").withStyle(TextFormatting.GRAY));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.livingtomescrap.points", getTotalUpgradePoints(stack)).withStyle(TextFormatting.GOLD));
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.livingtomescrap.desc").withStyle(ChatFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.livingtomescrap.points", getTotalUpgradePoints(stack)).withStyle(ChatFormatting.GOLD));
 	}
 
 	@Override
-	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items)
+	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items)
 	{
 		if (!allowdedIn(group))
 			return;
@@ -89,10 +89,10 @@ public class ItemLivingTomeScrap extends Item implements ILivingUpgradePointsPro
 	{
 		if (!stack.hasTag())
 		{
-			stack.setTag(new CompoundNBT());
+			stack.setTag(new CompoundTag());
 		}
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putInt(Constants.NBT.POINTS, points);
 	}
@@ -102,10 +102,10 @@ public class ItemLivingTomeScrap extends Item implements ILivingUpgradePointsPro
 	{
 		if (!stack.hasTag())
 		{
-			stack.setTag(new CompoundNBT());
+			stack.setTag(new CompoundTag());
 		}
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		return tag.getInt(Constants.NBT.POINTS);
 	}

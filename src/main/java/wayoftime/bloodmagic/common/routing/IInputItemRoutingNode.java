@@ -1,6 +1,6 @@
 package wayoftime.bloodmagic.common.routing;
 
-import net.minecraft.util.Direction;
+import net.minecraft.core.Direction;
 
 public interface IInputItemRoutingNode extends IItemRoutingNode
 {

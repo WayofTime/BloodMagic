@@ -1,13 +1,13 @@
 package wayoftime.bloodmagic.entity.goal;
 
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 
 public class SacrificialLambMeleeAttackGoal extends MeleeAttackGoal
 {
-	public SacrificialLambMeleeAttackGoal(CreatureEntity creature, double speedIn, boolean useLongMemory)
+	public SacrificialLambMeleeAttackGoal(PathfinderMob creature, double speedIn, boolean useLongMemory)
 	{
 		super(creature, speedIn, useLongMemory);
 	}

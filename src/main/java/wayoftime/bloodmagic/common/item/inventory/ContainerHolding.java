@@ -1,30 +1,30 @@
 package wayoftime.bloodmagic.common.item.inventory;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.common.thread.EffectiveSide;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.sigil.ISigil;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilHolding;
 
-public class ContainerHolding extends Container
+public class ContainerHolding extends AbstractContainerMenu
 {
 	public final InventoryHolding inventoryHolding;
 	private final int PLAYER_INVENTORY_ROWS = 3;
 	private final int PLAYER_INVENTORY_COLUMNS = 9;
-	private final PlayerEntity player;
+	private final Player player;
 
-	public ContainerHolding(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
+	public ContainerHolding(int windowId, Inventory playerInventory, FriendlyByteBuf extraData)
 	{
 		this(windowId, playerInventory.player, playerInventory, new InventoryHolding(extraData.readItem()));
 	}
 
-	public ContainerHolding(int windowId, PlayerEntity player, PlayerInventory playerInventory, InventoryHolding inventoryHolding)
+	public ContainerHolding(int windowId, Player player, Inventory playerInventory, InventoryHolding inventoryHolding)
 	{
 		super(BloodMagicBlocks.HOLDING_CONTAINER.get(), windowId);
 		this.player = player;
@@ -33,7 +33,7 @@ public class ContainerHolding extends Container
 		this.setup(playerInventory, currentSlotHeldIn);
 	}
 
-	public void setup(PlayerInventory inventory, int currentSlotHeldIn)
+	public void setup(Inventory inventory, int currentSlotHeldIn)
 	{
 		for (int columnIndex = 0; columnIndex < ItemSigilHolding.inventorySize; ++columnIndex)
 		{
@@ -61,13 +61,13 @@ public class ContainerHolding extends Container
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity entityPlayer)
+	public boolean stillValid(Player entityPlayer)
 	{
 		return true;
 	}
 
 	@Override
-	public void removed(PlayerEntity entityPlayer)
+	public void removed(Player entityPlayer)
 	{
 		super.removed(entityPlayer);
 
@@ -89,7 +89,7 @@ public class ContainerHolding extends Container
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity entityPlayer, int slotIndex)
+	public ItemStack quickMoveStack(Player entityPlayer, int slotIndex)
 	{
 		ItemStack stack = ItemStack.EMPTY;
 		Slot slotObject = slots.get(slotIndex);
@@ -145,17 +145,17 @@ public class ContainerHolding extends Container
 		return stack;
 	}
 
-	public void saveInventory(PlayerEntity entityPlayer)
+	public void saveInventory(Player entityPlayer)
 	{
 		inventoryHolding.onGuiSaved(entityPlayer);
 	}
 
 	private class SlotHolding extends Slot
 	{
-		private final PlayerEntity player;
+		private final Player player;
 		private ContainerHolding containerHolding;
 
-		public SlotHolding(ContainerHolding containerHolding, IInventory inventory, PlayerEntity player, int slotIndex, int x, int y)
+		public SlotHolding(ContainerHolding containerHolding, Container inventory, Player player, int slotIndex, int x, int y)
 		{
 			super(inventory, slotIndex, x, y);
 			this.player = player;
@@ -182,7 +182,7 @@ public class ContainerHolding extends Container
 
 	private class SlotDisabled extends Slot
 	{
-		public SlotDisabled(IInventory inventory, int slotIndex, int x, int y)
+		public SlotDisabled(Container inventory, int slotIndex, int x, int y)
 		{
 			super(inventory, slotIndex, x, y);
 		}
@@ -194,7 +194,7 @@ public class ContainerHolding extends Container
 		}
 
 		@Override
-		public boolean mayPickup(PlayerEntity player)
+		public boolean mayPickup(Player player)
 		{
 			return false;
 		}

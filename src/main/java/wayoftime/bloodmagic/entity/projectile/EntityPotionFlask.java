@@ -5,55 +5,55 @@ import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CampfireBlock;
-import net.minecraft.entity.AreaEffectCloudEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IRendersAsItem;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.potion.Potions;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.world.entity.AreaEffectCloud;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.projectile.ItemSupplier;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-@OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem.class)
-public class EntityPotionFlask extends ProjectileItemEntity implements IRendersAsItem
+@OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
+public class EntityPotionFlask extends ThrowableItemProjectile implements ItemSupplier
 {
 	public boolean isLingering = false;
 	public static final Predicate<LivingEntity> WATER_SENSITIVE = LivingEntity::isSensitiveToWater;
 
-	public EntityPotionFlask(EntityType<? extends EntityPotionFlask> typeIn, World worldIn)
+	public EntityPotionFlask(EntityType<? extends EntityPotionFlask> typeIn, Level worldIn)
 	{
 		super(typeIn, worldIn);
 	}
 
-	public EntityPotionFlask(World worldIn, LivingEntity livingEntityIn)
+	public EntityPotionFlask(Level worldIn, LivingEntity livingEntityIn)
 	{
 		super(EntityType.POTION, livingEntityIn, worldIn);
 	}
 
-	public EntityPotionFlask(World worldIn, double x, double y, double z)
+	public EntityPotionFlask(Level worldIn, double x, double y, double z)
 	{
 		super(EntityType.POTION, x, y, z, worldIn);
 	}
@@ -69,7 +69,7 @@ public class EntityPotionFlask extends ProjectileItemEntity implements IRendersA
 	}
 
 	@Override
-	public IPacket<?> getAddEntityPacket()
+	public Packet<?> getAddEntityPacket()
 	{
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
@@ -82,14 +82,14 @@ public class EntityPotionFlask extends ProjectileItemEntity implements IRendersA
 		return 0.05F;
 	}
 
-	protected void onHitBlock(BlockRayTraceResult p_230299_1_)
+	protected void onHitBlock(BlockHitResult p_230299_1_)
 	{
 		super.onHitBlock(p_230299_1_);
 		if (!this.level.isClientSide)
 		{
 			ItemStack itemstack = this.getItem();
 			Potion potion = PotionUtils.getPotion(itemstack);
-			List<EffectInstance> list = PotionUtils.getMobEffects(itemstack);
+			List<MobEffectInstance> list = PotionUtils.getMobEffects(itemstack);
 			boolean flag = potion == Potions.WATER && list.isEmpty();
 			Direction direction = p_230299_1_.getDirection();
 			BlockPos blockpos = p_230299_1_.getBlockPos();
@@ -111,14 +111,14 @@ public class EntityPotionFlask extends ProjectileItemEntity implements IRendersA
 	/**
 	 * Called when this EntityFireball hits a block or entity.
 	 */
-	protected void onHit(RayTraceResult result)
+	protected void onHit(HitResult result)
 	{
 		super.onHit(result);
 		if (!this.level.isClientSide)
 		{
 			ItemStack itemstack = this.getItem();
 			Potion potion = PotionUtils.getPotion(itemstack);
-			List<EffectInstance> list = PotionUtils.getMobEffects(itemstack);
+			List<MobEffectInstance> list = PotionUtils.getMobEffects(itemstack);
 			boolean flag = potion == Potions.WATER && list.isEmpty();
 			if (flag)
 			{
@@ -130,8 +130,8 @@ public class EntityPotionFlask extends ProjectileItemEntity implements IRendersA
 					this.makeAreaOfEffectCloud(itemstack, potion);
 				} else
 				{
-					this.applySplash(list, result.getType() == RayTraceResult.Type.ENTITY
-							? ((EntityRayTraceResult) result).getEntity()
+					this.applySplash(list, result.getType() == HitResult.Type.ENTITY
+							? ((EntityHitResult) result).getEntity()
 							: null);
 				}
 			}
@@ -144,7 +144,7 @@ public class EntityPotionFlask extends ProjectileItemEntity implements IRendersA
 
 	private void applyWater()
 	{
-		AxisAlignedBB axisalignedbb = this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D);
+		AABB axisalignedbb = this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D);
 		List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, axisalignedbb, WATER_SENSITIVE);
 		if (!list.isEmpty())
 		{
@@ -160,9 +160,9 @@ public class EntityPotionFlask extends ProjectileItemEntity implements IRendersA
 
 	}
 
-	private void applySplash(List<EffectInstance> p_213888_1_, @Nullable Entity p_213888_2_)
+	private void applySplash(List<MobEffectInstance> p_213888_1_, @Nullable Entity p_213888_2_)
 	{
-		AxisAlignedBB axisalignedbb = this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D);
+		AABB axisalignedbb = this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D);
 		List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, axisalignedbb);
 		if (!list.isEmpty())
 		{
@@ -179,9 +179,9 @@ public class EntityPotionFlask extends ProjectileItemEntity implements IRendersA
 							d1 = 1.0D;
 						}
 
-						for (EffectInstance effectinstance : p_213888_1_)
+						for (MobEffectInstance effectinstance : p_213888_1_)
 						{
-							Effect effect = effectinstance.getEffect();
+							MobEffect effect = effectinstance.getEffect();
 							if (effect.isInstantenous())
 							{
 								effect.applyInstantenousEffect(this, this.getOwner(), livingentity, effectinstance.getAmplifier(), d1);
@@ -190,7 +190,7 @@ public class EntityPotionFlask extends ProjectileItemEntity implements IRendersA
 								int i = (int) (d1 * (double) effectinstance.getDuration() + 0.5D);
 								if (i > 20)
 								{
-									livingentity.addEffect(new EffectInstance(effect, i, effectinstance.getAmplifier(), effectinstance.isAmbient(), effectinstance.isVisible()));
+									livingentity.addEffect(new MobEffectInstance(effect, i, effectinstance.getAmplifier(), effectinstance.isAmbient(), effectinstance.isVisible()));
 								}
 							}
 						}
@@ -203,7 +203,7 @@ public class EntityPotionFlask extends ProjectileItemEntity implements IRendersA
 
 	public void makeAreaOfEffectCloud(ItemStack p_190542_1_, Potion p_190542_2_)
 	{
-		AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(this.level, this.getX(), this.getY(), this.getZ());
+		AreaEffectCloud areaeffectcloudentity = new AreaEffectCloud(this.level, this.getX(), this.getY(), this.getZ());
 		Entity entity = this.getOwner();
 		if (entity instanceof LivingEntity)
 		{
@@ -216,12 +216,12 @@ public class EntityPotionFlask extends ProjectileItemEntity implements IRendersA
 		areaeffectcloudentity.setRadiusPerTick(-areaeffectcloudentity.getRadius() / (float) areaeffectcloudentity.getDuration());
 		areaeffectcloudentity.setPotion(p_190542_2_);
 
-		for (EffectInstance effectinstance : PotionUtils.getCustomEffects(p_190542_1_))
+		for (MobEffectInstance effectinstance : PotionUtils.getCustomEffects(p_190542_1_))
 		{
-			areaeffectcloudentity.addEffect(new EffectInstance(effectinstance));
+			areaeffectcloudentity.addEffect(new MobEffectInstance(effectinstance));
 		}
 
-		CompoundNBT compoundnbt = p_190542_1_.getTag();
+		CompoundTag compoundnbt = p_190542_1_.getTag();
 		if (compoundnbt != null && compoundnbt.contains("CustomPotionColor", 99))
 		{
 			areaeffectcloudentity.setFixedColor(compoundnbt.getInt("CustomPotionColor"));
@@ -243,7 +243,7 @@ public class EntityPotionFlask extends ProjectileItemEntity implements IRendersA
 			this.level.removeBlock(pos, false);
 		} else if (CampfireBlock.isLitCampfire(blockstate))
 		{
-			this.level.levelEvent((PlayerEntity) null, 1009, pos, 0);
+			this.level.levelEvent((Player) null, 1009, pos, 0);
 			CampfireBlock.dowse(this.level, pos, blockstate);
 			this.level.setBlockAndUpdate(pos, blockstate.setValue(CampfireBlock.LIT, Boolean.valueOf(false)));
 		}

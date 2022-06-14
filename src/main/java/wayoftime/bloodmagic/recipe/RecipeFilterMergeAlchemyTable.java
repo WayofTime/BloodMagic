@@ -5,11 +5,11 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.common.item.routing.ICompositeItemFilterProvider;
 import wayoftime.bloodmagic.common.item.routing.INestableItemFilterProvider;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
@@ -81,14 +81,14 @@ public class RecipeFilterMergeAlchemyTable extends RecipeAlchemyTable
 	}
 
 	@Override
-	public void write(PacketBuffer buffer)
+	public void write(FriendlyByteBuf buffer)
 	{
 		filterIngredient.toNetwork(buffer);
 		super.write(buffer);
 	}
 
 	@Override
-	public IRecipeSerializer<RecipeFilterMergeAlchemyTable> getSerializer()
+	public RecipeSerializer<RecipeFilterMergeAlchemyTable> getSerializer()
 	{
 		return BloodMagicRecipeSerializers.FILTERALCHEMYTABLE.getRecipeSerializer();
 	}

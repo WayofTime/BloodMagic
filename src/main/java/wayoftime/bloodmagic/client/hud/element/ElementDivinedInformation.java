@@ -3,14 +3,14 @@ package wayoftime.bloodmagic.client.hud.element;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Hand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionHand;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilHolding;
 
-public abstract class ElementDivinedInformation<T extends TileEntity> extends ElementTileInformation<T>
+public abstract class ElementDivinedInformation<T extends BlockEntity> extends ElementTileInformation<T>
 {
 
 	private final boolean simple;
@@ -24,8 +24,8 @@ public abstract class ElementDivinedInformation<T extends TileEntity> extends El
 	@Override
 	public boolean shouldRender(Minecraft minecraft)
 	{
-		PlayerEntity player = Minecraft.getInstance().player;
-		ItemStack sigilStack = player.getItemInHand(Hand.MAIN_HAND);
+		Player player = Minecraft.getInstance().player;
+		ItemStack sigilStack = player.getItemInHand(InteractionHand.MAIN_HAND);
 		boolean flag = false;
 		if (simple)
 		{
@@ -36,7 +36,7 @@ public abstract class ElementDivinedInformation<T extends TileEntity> extends El
 
 			if (!flag)
 			{
-				sigilStack = player.getItemInHand(Hand.OFF_HAND);
+				sigilStack = player.getItemInHand(InteractionHand.OFF_HAND);
 				if (sigilStack.getItem() == BloodMagicItems.DIVINATION_SIGIL.get() || sigilStack.getItem() == BloodMagicItems.SEER_SIGIL.get())
 					flag = true;
 				else
@@ -52,7 +52,7 @@ public abstract class ElementDivinedInformation<T extends TileEntity> extends El
 
 			if (!flag)
 			{
-				sigilStack = player.getItemInHand(Hand.OFF_HAND);
+				sigilStack = player.getItemInHand(InteractionHand.OFF_HAND);
 				if (sigilStack.getItem() == BloodMagicItems.SEER_SIGIL.get())
 					flag = true;
 				else

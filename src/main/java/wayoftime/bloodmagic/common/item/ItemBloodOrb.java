@@ -5,17 +5,17 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.extensions.IForgeItem;
@@ -41,18 +41,18 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IForgeI
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
 		BloodOrb orb = getOrb(stack);
 
 		if (orb == null)
-			return ActionResult.fail(stack);
+			return InteractionResultHolder.fail(stack);
 
 		if (world == null)
 			return super.use(world, player, hand);
 
-		world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F
+		world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F
 				+ (world.random.nextFloat() - world.random.nextFloat()) * 0.8F);
 
 		if (PlayerHelper.isFakePlayer(player))
@@ -79,13 +79,13 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IForgeI
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.orb.desc").withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.orb.desc").withStyle(ChatFormatting.GRAY));
 
 		BloodOrb orb = getOrb(stack);
 		if (flag.isAdvanced() && orb != null)
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.orb.owner", stack.getItem().getRegistryName()).withStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.orb.owner", stack.getItem().getRegistryName()).withStyle(ChatFormatting.GRAY));
 
 		super.appendHoverText(stack, world, tooltip, flag);
 	}

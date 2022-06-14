@@ -1,11 +1,11 @@
 package wayoftime.bloodmagic.tile.base;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -14,9 +14,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * <p>
  * Handles data syncing and core data writing/reading.
  */
-public abstract class TileBase extends TileEntity
+public abstract class TileBase extends BlockEntity
 {
-	public TileBase(TileEntityType<?> type)
+	public TileBase(BlockEntityType<?> type)
 	{
 		super(type);
 	}
@@ -25,7 +25,7 @@ public abstract class TileBase extends TileEntity
 	 * read method
 	 */
 	@Override
-	public final void load(BlockState state, CompoundNBT compound)
+	public final void load(BlockState state, CompoundTag compound)
 	{
 		super.load(state, compound);
 		deserializeBase(compound);
@@ -33,7 +33,7 @@ public abstract class TileBase extends TileEntity
 	}
 
 	@Override
-	public final CompoundNBT save(CompoundNBT compound)
+	public final CompoundTag save(CompoundTag compound)
 	{
 		super.save(compound);
 		serializeBase(compound);
@@ -48,7 +48,7 @@ public abstract class TileBase extends TileEntity
 	 *
 	 * @param tagCompound - The tag compound to read from
 	 */
-	public void deserialize(CompoundNBT tagCompound)
+	public void deserialize(CompoundTag tagCompound)
 	{
 
 	}
@@ -59,7 +59,7 @@ public abstract class TileBase extends TileEntity
 	 * @param tagCompound - The tag compound to read from
 	 * @see TileTicking
 	 */
-	void deserializeBase(CompoundNBT tagCompound)
+	void deserializeBase(CompoundTag tagCompound)
 	{
 
 	}
@@ -73,7 +73,7 @@ public abstract class TileBase extends TileEntity
 	 * @param tagCompound - The tag compound to write to.
 	 * @return the modified tag compound
 	 */
-	public CompoundNBT serialize(CompoundNBT tagCompound)
+	public CompoundTag serialize(CompoundTag tagCompound)
 	{
 		return tagCompound;
 	}
@@ -85,7 +85,7 @@ public abstract class TileBase extends TileEntity
 	 * @return the modified tag compound
 	 * @see TileTicking
 	 */
-	CompoundNBT serializeBase(CompoundNBT tagCompound)
+	CompoundTag serializeBase(CompoundTag tagCompound)
 	{
 		return tagCompound;
 	}
@@ -105,9 +105,9 @@ public abstract class TileBase extends TileEntity
 //	}
 
 	@Override
-	public SUpdateTileEntityPacket getUpdatePacket()
+	public ClientboundBlockEntityDataPacket getUpdatePacket()
 	{
-		return new SUpdateTileEntityPacket(getBlockPos(), -999, getUpdateTag());
+		return new ClientboundBlockEntityDataPacket(getBlockPos(), -999, getUpdateTag());
 	}
 
 //	@Override
@@ -118,20 +118,20 @@ public abstract class TileBase extends TileEntity
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
+	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt)
 	{
 		super.onDataPacket(net, pkt);
 		handleUpdateTag(getBlockState(), pkt.getTag());
 	}
 
 	@Override
-	public CompoundNBT getUpdateTag()
+	public CompoundTag getUpdateTag()
 	{
-		return save(new CompoundNBT());
+		return save(new CompoundTag());
 	}
 
 	@Override
-	public void handleUpdateTag(BlockState state, CompoundNBT tag)
+	public void handleUpdateTag(BlockState state, CompoundTag tag)
 	{
 		load(state, tag);
 	}

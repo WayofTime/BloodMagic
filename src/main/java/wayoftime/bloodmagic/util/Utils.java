@@ -6,28 +6,28 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.block.NetherPortalBlock;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.NetherPortalBlock;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Container;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.IFluidBlock;
@@ -49,7 +49,7 @@ public class Utils
 	 * @return {@code true} if the ItemStack is inserted, {@code false} otherwise
 	 * @see #insertItemToTile(TileInventory, PlayerEntity, int)
 	 */
-	public static boolean insertItemToTile(TileInventory tile, PlayerEntity player)
+	public static boolean insertItemToTile(TileInventory tile, Player player)
 	{
 		return insertItemToTile(tile, player, 0);
 	}
@@ -65,7 +65,7 @@ public class Utils
 	 * @param slot   - The slot to attempt to insert to
 	 * @return {@code true} if the ItemStack is inserted, {@code false} otherwise
 	 */
-	public static boolean insertItemToTile(TileInventory tile, PlayerEntity player, int slot)
+	public static boolean insertItemToTile(TileInventory tile, Player player, int slot)
 	{
 		ItemStack slotStack = tile.getItem(slot);
 		if (slotStack.isEmpty() && !player.getMainHandItem().isEmpty())
@@ -92,7 +92,7 @@ public class Utils
 
 	public static boolean isImmuneToFireDamage(LivingEntity entity)
 	{
-		return entity.fireImmune() || entity.hasEffect(Effects.FIRE_RESISTANCE);
+		return entity.fireImmune() || entity.hasEffect(MobEffects.FIRE_RESISTANCE);
 	}
 
 	public static boolean isBlockLiquid(BlockState state)
@@ -100,13 +100,13 @@ public class Utils
 		return (state instanceof IFluidBlock || state.getMaterial().isLiquid());
 	}
 
-	public static boolean isFlowingLiquid(World world, BlockPos pos, BlockState state)
+	public static boolean isFlowingLiquid(Level world, BlockPos pos, BlockState state)
 	{
 		Block block = state.getBlock();
-		return ((block instanceof IFluidBlock && Math.abs(((IFluidBlock) block).getFilledPercentage(world, pos)) == 1) || (block instanceof FlowingFluidBlock && !((FlowingFluidBlock) block).getFluidState(state).isSource()));
+		return ((block instanceof IFluidBlock && Math.abs(((IFluidBlock) block).getFilledPercentage(world, pos)) == 1) || (block instanceof LiquidBlock && !((LiquidBlock) block).getFluidState(state).isSource()));
 	}
 
-	public static boolean spawnStackAtBlock(World world, BlockPos pos, @Nullable Direction pushDirection, ItemStack stack)
+	public static boolean spawnStackAtBlock(Level world, BlockPos pos, @Nullable Direction pushDirection, ItemStack stack)
 	{
 		BlockPos spawnPos = new BlockPos(pos);
 
@@ -164,17 +164,17 @@ public class Utils
 		return world.addFreshEntity(entityItem);
 	}
 
-	public static boolean swapLocations(World initialWorld, BlockPos initialPos, World finalWorld, BlockPos finalPos)
+	public static boolean swapLocations(Level initialWorld, BlockPos initialPos, Level finalWorld, BlockPos finalPos)
 	{
 		return swapLocations(initialWorld, initialPos, finalWorld, finalPos, true);
 	}
 
-	public static boolean swapLocations(World initialWorld, BlockPos initialPos, World finalWorld, BlockPos finalPos, boolean playSound)
+	public static boolean swapLocations(Level initialWorld, BlockPos initialPos, Level finalWorld, BlockPos finalPos, boolean playSound)
 	{
-		TileEntity initialTile = initialWorld.getBlockEntity(initialPos);
-		TileEntity finalTile = finalWorld.getBlockEntity(finalPos);
-		CompoundNBT initialTag = new CompoundNBT();
-		CompoundNBT finalTag = new CompoundNBT();
+		BlockEntity initialTile = initialWorld.getBlockEntity(initialPos);
+		BlockEntity finalTile = finalWorld.getBlockEntity(finalPos);
+		CompoundTag initialTag = new CompoundTag();
+		CompoundTag finalTag = new CompoundTag();
 		if (initialTile != null)
 			initialTile.save(initialTag);
 		if (finalTile != null)
@@ -188,8 +188,8 @@ public class Utils
 
 		if (playSound)
 		{
-			initialWorld.playSound(null, initialPos.getX(), initialPos.getY(), initialPos.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F);
-			finalWorld.playSound(null, finalPos.getX(), finalPos.getY(), finalPos.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F);
+			initialWorld.playSound(null, initialPos.getX(), initialPos.getY(), initialPos.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.AMBIENT, 1.0F, 1.0F);
+			finalWorld.playSound(null, finalPos.getX(), finalPos.getY(), finalPos.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.AMBIENT, 1.0F, 1.0F);
 		}
 
 		// Finally, we get to do something! (CLEARING TILES)
@@ -206,7 +206,7 @@ public class Utils
 		if (initialTile != null)
 		{
 //			TileEntity newTileInitial = TileEntity.create(finalWorld, initialTag);
-			TileEntity newTileInitial = TileEntity.loadStatic(finalBlockState, initialTag);
+			BlockEntity newTileInitial = BlockEntity.loadStatic(finalBlockState, initialTag);
 
 			finalWorld.setBlockEntity(finalPos, newTileInitial);
 //			newTileInitial.setPos(finalPos);
@@ -218,7 +218,7 @@ public class Utils
 		if (finalTile != null)
 		{
 //			TileEntity newTileFinal = TileEntity.create(initialWorld, finalTag);
-			TileEntity newTileFinal = TileEntity.loadStatic(initialBlockState, finalTag);
+			BlockEntity newTileFinal = BlockEntity.loadStatic(initialBlockState, finalTag);
 
 			initialWorld.setBlockEntity(initialPos, newTileFinal);
 //			newTileFinal.setPos(initialPos);
@@ -242,7 +242,7 @@ public class Utils
 		return true;
 	}
 
-	public static ItemStack insertStackIntoTile(ItemStack stack, TileEntity tile, Direction dir)
+	public static ItemStack insertStackIntoTile(ItemStack stack, BlockEntity tile, Direction dir)
 	{
 		LazyOptional<IItemHandler> capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir);
 		if (capability.isPresent())
@@ -250,9 +250,9 @@ public class Utils
 			IItemHandler handler = capability.resolve().get();
 
 			return insertStackIntoTile(stack, handler);
-		} else if (tile instanceof IInventory)
+		} else if (tile instanceof Container)
 		{
-			return insertStackIntoInventory(stack, (IInventory) tile, dir);
+			return insertStackIntoInventory(stack, (Container) tile, dir);
 		}
 
 		return stack;
@@ -276,7 +276,7 @@ public class Utils
 		return copyStack;
 	}
 
-	public static int getNumberOfFreeSlots(TileEntity tile, Direction dir)
+	public static int getNumberOfFreeSlots(BlockEntity tile, Direction dir)
 	{
 		int slots = 0;
 
@@ -292,11 +292,11 @@ public class Utils
 					slots++;
 				}
 			}
-		} else if (tile instanceof IInventory)
+		} else if (tile instanceof Container)
 		{
-			for (int i = 0; i < ((IInventory) tile).getContainerSize(); i++)
+			for (int i = 0; i < ((Container) tile).getContainerSize(); i++)
 			{
-				if (((IInventory) tile).getItem(i).isEmpty())
+				if (((Container) tile).getItem(i).isEmpty())
 				{
 					slots++;
 				}
@@ -306,7 +306,7 @@ public class Utils
 		return slots;
 	}
 
-	public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory, Direction dir)
+	public static ItemStack insertStackIntoInventory(ItemStack stack, Container inventory, Direction dir)
 	{
 		if (stack.isEmpty())
 		{
@@ -315,12 +315,12 @@ public class Utils
 
 		boolean[] canBeInserted = new boolean[inventory.getContainerSize()];
 
-		if (inventory instanceof ISidedInventory)
+		if (inventory instanceof WorldlyContainer)
 		{
-			int[] array = ((ISidedInventory) inventory).getSlotsForFace(dir);
+			int[] array = ((WorldlyContainer) inventory).getSlotsForFace(dir);
 			for (int in : array)
 			{
-				canBeInserted[in] = inventory.canPlaceItem(in, stack) && ((ISidedInventory) inventory).canPlaceItemThroughFace(in, stack, dir);
+				canBeInserted[in] = inventory.canPlaceItem(in, stack) && ((WorldlyContainer) inventory).canPlaceItemThroughFace(in, stack, dir);
 			}
 		} else
 		{
@@ -350,7 +350,7 @@ public class Utils
 		return stack;
 	}
 
-	public static boolean canInsertStackFullyIntoInventory(ItemStack stack, IInventory inventory, Direction dir, boolean fillToLimit, int limit)
+	public static boolean canInsertStackFullyIntoInventory(ItemStack stack, Container inventory, Direction dir, boolean fillToLimit, int limit)
 	{
 		if (stack.isEmpty())
 		{
@@ -361,12 +361,12 @@ public class Utils
 
 		boolean[] canBeInserted = new boolean[inventory.getContainerSize()];
 
-		if (inventory instanceof ISidedInventory)
+		if (inventory instanceof WorldlyContainer)
 		{
-			int[] array = ((ISidedInventory) inventory).getSlotsForFace(dir);
+			int[] array = ((WorldlyContainer) inventory).getSlotsForFace(dir);
 			for (int in : array)
 			{
-				canBeInserted[in] = inventory.canPlaceItem(in, stack) && ((ISidedInventory) inventory).canPlaceItemThroughFace(in, stack, dir);
+				canBeInserted[in] = inventory.canPlaceItem(in, stack) && ((WorldlyContainer) inventory).canPlaceItemThroughFace(in, stack, dir);
 			}
 		} else
 		{
@@ -462,7 +462,7 @@ public class Utils
 		return returned;
 	}
 
-	public static boolean canPlayerSeeDemonWill(PlayerEntity player)
+	public static boolean canPlayerSeeDemonWill(Player player)
 	{
 		IItemHandler inventory = new PlayerMainInvWrapper(player.inventory);
 
@@ -489,7 +489,7 @@ public class Utils
 		return false;
 	}
 
-	public static double getDemonWillResolution(PlayerEntity player)
+	public static double getDemonWillResolution(Player player)
 	{
 		IItemHandler inventory = new PlayerMainInvWrapper(player.inventory);
 
@@ -516,7 +516,7 @@ public class Utils
 		return 100;
 	}
 
-	public static int plantSeedsInArea(World world, AxisAlignedBB aabb, int horizontalRadius, int verticalRadius)
+	public static int plantSeedsInArea(Level world, AABB aabb, int horizontalRadius, int verticalRadius)
 	{
 		int placedBlocks = 0;
 		List<ItemEntity> itemEntities = world.getEntitiesOfClass(ItemEntity.class, aabb);
@@ -529,7 +529,7 @@ public class Utils
 		return placedBlocks;
 	}
 
-	public static int plantItemStack(World world, BlockPos centralPos, ItemStack stack, int horizontalRadius, int verticalRadius)
+	public static int plantItemStack(Level world, BlockPos centralPos, ItemStack stack, int horizontalRadius, int verticalRadius)
 	{
 		if (stack.isEmpty())
 		{
@@ -594,7 +594,7 @@ public class Utils
 			return 0;
 		}
 
-		World world = itemEntity.getCommandSenderWorld();
+		Level world = itemEntity.getCommandSenderWorld();
 		BlockPos pos = itemEntity.blockPosition();
 		ItemStack stack = itemEntity.getItem();
 
@@ -609,7 +609,7 @@ public class Utils
 	}
 
 	@Nullable
-	public static IItemHandler getInventory(TileEntity tile, @Nullable Direction facing)
+	public static IItemHandler getInventory(BlockEntity tile, @Nullable Direction facing)
 	{
 		if (facing == null)
 			facing = Direction.DOWN;
@@ -618,12 +618,12 @@ public class Utils
 
 		if (tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing).isPresent())
 			itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing).resolve().get();
-		else if (tile instanceof ISidedInventory)
-			itemHandler = ((ISidedInventory) tile).getSlotsForFace(facing).length != 0
-					? new SidedInvWrapper((ISidedInventory) tile, facing)
+		else if (tile instanceof WorldlyContainer)
+			itemHandler = ((WorldlyContainer) tile).getSlotsForFace(facing).length != 0
+					? new SidedInvWrapper((WorldlyContainer) tile, facing)
 					: null;
-		else if (tile instanceof IInventory)
-			itemHandler = new InvWrapper((IInventory) tile);
+		else if (tile instanceof Container)
+			itemHandler = new InvWrapper((Container) tile);
 
 		return itemHandler;
 	}
@@ -641,7 +641,7 @@ public class Utils
 		if (duration > 0)
 		{
 			int potionLevel = (int) ((currentAmount + added) / 4);
-			entity.addEffect(new EffectInstance(Effects.ABSORPTION, duration, potionLevel, true, false));
+			entity.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, duration, potionLevel, true, false));
 		}
 
 		entity.setAbsorptionAmount(currentAmount + added);

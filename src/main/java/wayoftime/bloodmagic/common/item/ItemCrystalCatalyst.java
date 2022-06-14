@@ -2,22 +2,22 @@ package wayoftime.bloodmagic.common.item;
 
 import java.util.List;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.particles.ItemParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
@@ -45,19 +45,19 @@ public class ItemCrystalCatalyst extends Item
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.crystalCatalyst").withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.crystalCatalyst").withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override
-	public ActionResultType useOn(ItemUseContext context)
+	public InteractionResult useOn(UseOnContext context)
 	{
 		ItemStack stack = context.getItemInHand();
 		BlockPos pos = context.getClickedPos();
-		World world = context.getLevel();
+		Level world = context.getLevel();
 
-		TileEntity tile = world.getBlockEntity(pos);
+		BlockEntity tile = world.getBlockEntity(pos);
 		if (tile instanceof TileDemonCrystal)
 		{
 			if (!world.isClientSide)
@@ -66,24 +66,24 @@ public class ItemCrystalCatalyst extends Item
 
 				if (applyCatalyst(crystalTile))
 				{
-					ServerWorld server = (ServerWorld) world;
+					ServerLevel server = (ServerLevel) world;
 //					EnumDemonWillType type = state.getValue(BlockDemonCrystal.TYPE);
 					ItemStack crystalStack = BlockDemonCrystal.getItemStackDropped(type, 1);
 
-					ItemParticleData particleData = new ItemParticleData(ParticleTypes.ITEM, crystalStack);
+					ItemParticleOption particleData = new ItemParticleOption(ParticleTypes.ITEM, crystalStack);
 					for (int i = 0; i < 8; ++i)
 					{
 						server.sendParticles(particleData, pos.getX() + 0.5, pos.getY() + 0.6, pos.getZ() + 0.5, 1, 0.2, 0.2, 0.2, 0.03);
 					}
 					stack.setCount(stack.getCount() - 1);
-					world.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundCategory.BLOCKS, 1, 1);
+					world.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1, 1);
 				}
 			}
 
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 
-		return ActionResultType.FAIL;
+		return InteractionResult.FAIL;
 	}
 
 	public boolean applyCatalyst(TileDemonCrystal crystalTile)

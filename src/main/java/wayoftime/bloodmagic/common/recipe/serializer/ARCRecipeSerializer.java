@@ -11,13 +11,13 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.BloodMagic;
@@ -26,8 +26,8 @@ import wayoftime.bloodmagic.recipe.helper.FluidStackIngredient;
 import wayoftime.bloodmagic.recipe.RecipeARC;
 import wayoftime.bloodmagic.util.Constants;
 
-public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistryEntry<IRecipeSerializer<?>>
-		implements IRecipeSerializer<RECIPE>
+public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistryEntry<RecipeSerializer<?>>
+		implements RecipeSerializer<RECIPE>
 {
 	private final IFactory<RECIPE> factory;
 
@@ -40,22 +40,22 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 	@Override
 	public RECIPE fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
 	{
-		JsonElement input = JSONUtils.isArrayNode(json, Constants.JSON.INPUT)
-				? JSONUtils.getAsJsonArray(json, Constants.JSON.INPUT)
-				: JSONUtils.getAsJsonObject(json, Constants.JSON.INPUT);
+		JsonElement input = GsonHelper.isArrayNode(json, Constants.JSON.INPUT)
+				? GsonHelper.getAsJsonArray(json, Constants.JSON.INPUT)
+				: GsonHelper.getAsJsonObject(json, Constants.JSON.INPUT);
 
-		JsonElement tool = JSONUtils.isArrayNode(json, Constants.JSON.TOOL)
-				? JSONUtils.getAsJsonArray(json, Constants.JSON.TOOL)
-				: JSONUtils.getAsJsonObject(json, Constants.JSON.TOOL);
+		JsonElement tool = GsonHelper.isArrayNode(json, Constants.JSON.TOOL)
+				? GsonHelper.getAsJsonArray(json, Constants.JSON.TOOL)
+				: GsonHelper.getAsJsonObject(json, Constants.JSON.TOOL);
 
 		Ingredient inputIng = Ingredient.fromJson(input);
 		Ingredient toolIng = Ingredient.fromJson(tool);
 		ItemStack output = SerializerHelper.getItemStack(json, Constants.JSON.OUTPUT);
 
 		List<Pair<ItemStack, Double>> addedItems = new ArrayList<Pair<ItemStack, Double>>();
-		if (json.has(Constants.JSON.ADDEDOUTPUT) && JSONUtils.isArrayNode(json, Constants.JSON.ADDEDOUTPUT))
+		if (json.has(Constants.JSON.ADDEDOUTPUT) && GsonHelper.isArrayNode(json, Constants.JSON.ADDEDOUTPUT))
 		{
-			JsonArray mainArray = JSONUtils.getAsJsonArray(json, Constants.JSON.ADDEDOUTPUT);
+			JsonArray mainArray = GsonHelper.getAsJsonArray(json, Constants.JSON.ADDEDOUTPUT);
 
 			arrayLoop: for (JsonElement element : mainArray)
 			{
@@ -66,7 +66,7 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 				if (element.isJsonObject())
 				{
 					JsonObject obj = element.getAsJsonObject();
-					double chance = JSONUtils.getAsFloat(obj, Constants.JSON.CHANCE);
+					double chance = GsonHelper.getAsFloat(obj, Constants.JSON.CHANCE);
 					ItemStack extraDrop = SerializerHelper.getItemStack(obj, Constants.JSON.TYPE);
 
 					addedItems.add(Pair.of(extraDrop, chance));
@@ -78,9 +78,9 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 
 		if (json.has(Constants.JSON.INPUT_FLUID))
 		{
-			JsonElement inputFluid = JSONUtils.isArrayNode(json, Constants.JSON.INPUT_FLUID)
-					? JSONUtils.getAsJsonArray(json, Constants.JSON.INPUT_FLUID)
-					: JSONUtils.getAsJsonObject(json, Constants.JSON.INPUT_FLUID);
+			JsonElement inputFluid = GsonHelper.isArrayNode(json, Constants.JSON.INPUT_FLUID)
+					? GsonHelper.getAsJsonArray(json, Constants.JSON.INPUT_FLUID)
+					: GsonHelper.getAsJsonObject(json, Constants.JSON.INPUT_FLUID);
 			inputFluidIng = FluidStackIngredient.deserialize(inputFluid);
 		}
 
@@ -88,17 +88,17 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 
 		if (json.has(Constants.JSON.OUTPUT_FLUID))
 		{
-			JsonObject outputFluid = JSONUtils.getAsJsonObject(json, Constants.JSON.OUTPUT_FLUID).getAsJsonObject();
+			JsonObject outputFluid = GsonHelper.getAsJsonObject(json, Constants.JSON.OUTPUT_FLUID).getAsJsonObject();
 			outputFluidStack = SerializerHelper.deserializeFluid(outputFluid);
 		}
 
-		boolean consumeIngredient = JSONUtils.getAsBoolean(json, "consumeingredient");
+		boolean consumeIngredient = GsonHelper.getAsBoolean(json, "consumeingredient");
 
 		return this.factory.create(recipeId, inputIng, toolIng, inputFluidIng, output, addedItems, outputFluidStack, consumeIngredient);
 	}
 
 	@Override
-	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
+	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull FriendlyByteBuf buffer)
 	{
 		try
 		{
@@ -139,7 +139,7 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 	}
 
 	@Override
-	public void toNetwork(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
+	public void toNetwork(@Nonnull FriendlyByteBuf buffer, @Nonnull RECIPE recipe)
 	{
 		try
 		{

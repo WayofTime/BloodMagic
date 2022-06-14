@@ -1,26 +1,26 @@
 package wayoftime.bloodmagic.tile.routing;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.util.Constants;
 
-public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedInventory
+public class TileFilteredRoutingNode extends TileRoutingNode implements WorldlyContainer
 {
 	private int currentActiveSlot = -1;
 	public int[] priorities = new int[6];
 
 //	public ItemInventory itemInventory = new ItemInventory(ItemStack.EMPTY, 9, "");
 
-	public TileFilteredRoutingNode(TileEntityType<?> type, int size, String name)
+	public TileFilteredRoutingNode(BlockEntityType<?> type, int size, String name)
 	{
 		super(type, size, name);
 	}
@@ -51,7 +51,7 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
 			for (Direction dir : Direction.values())
 			{
 				BlockPos offsetPos = this.getCurrentBlockPos().relative(dir);
-				TileEntity tile = level.getBlockEntity(offsetPos);
+				BlockEntity tile = level.getBlockEntity(offsetPos);
 				if (tile != null)
 				{
 					LazyOptional<IItemHandler> opt = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir.getOpposite());
@@ -79,7 +79,7 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tag)
+	public void deserialize(CompoundTag tag)
 	{
 		super.deserialize(tag);
 		currentActiveSlot = tag.getInt("currentSlot");
@@ -115,7 +115,7 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tag)
+	public CompoundTag serialize(CompoundTag tag)
 	{
 		super.serialize(tag);
 		tag.putInt("currentSlot", currentActiveSlot);

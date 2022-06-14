@@ -1,36 +1,36 @@
 package wayoftime.bloodmagic.entity.projectile;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkHooks;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.recipe.RecipeMeteor;
 import wayoftime.bloodmagic.util.Constants;
 
-public class EntityMeteor extends ThrowableEntity
+public class EntityMeteor extends ThrowableProjectile
 {
 	private ItemStack containedStack = ItemStack.EMPTY;
 
-	public EntityMeteor(EntityType<EntityMeteor> p_i50159_1_, World p_i50159_2_)
+	public EntityMeteor(EntityType<EntityMeteor> p_i50159_1_, Level p_i50159_2_)
 	{
 		super(p_i50159_1_, p_i50159_2_);
 	}
 
-	public EntityMeteor(World worldIn, LivingEntity throwerIn)
+	public EntityMeteor(Level worldIn, LivingEntity throwerIn)
 	{
 		super(BloodMagicEntityTypes.METEOR.getEntityType(), throwerIn, worldIn);
 	}
 
-	public EntityMeteor(World worldIn, double x, double y, double z)
+	public EntityMeteor(Level worldIn, double x, double y, double z)
 	{
 		super(BloodMagicEntityTypes.METEOR.getEntityType(), x, y, z, worldIn);
 	}
@@ -41,15 +41,15 @@ public class EntityMeteor extends ThrowableEntity
 	}
 
 	@Override
-	public IPacket<?> getAddEntityPacket()
+	public Packet<?> getAddEntityPacket()
 	{
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundNBT compound)
+	protected void addAdditionalSaveData(CompoundTag compound)
 	{
-		compound.put(Constants.NBT.ITEM, containedStack.save(new CompoundNBT()));
+		compound.put(Constants.NBT.ITEM, containedStack.save(new CompoundTag()));
 
 //	      compound.putInt("Time", this.fallTime);
 //	      compound.putBoolean("DropItem", this.shouldDropItem);
@@ -66,9 +66,9 @@ public class EntityMeteor extends ThrowableEntity
 	 * (abstract) Protected helper method to read subclass entity data from NBT.
 	 */
 	@Override
-	protected void readAdditionalSaveData(CompoundNBT tagCompound)
+	protected void readAdditionalSaveData(CompoundTag tagCompound)
 	{
-		CompoundNBT tag = tagCompound.getCompound(Constants.NBT.ITEM);
+		CompoundTag tag = tagCompound.getCompound(Constants.NBT.ITEM);
 		containedStack = ItemStack.of(tag);
 	}
 
@@ -101,9 +101,9 @@ public class EntityMeteor extends ThrowableEntity
 		}
 
 //		System.out.println("Now inside a block: " + state.getBlock());
-		int i = MathHelper.floor(position().x);
-		int j = MathHelper.floor(position().y);
-		int k = MathHelper.floor(position().z);
+		int i = Mth.floor(position().x);
+		int j = Mth.floor(position().y);
+		int k = Mth.floor(position().z);
 		BlockPos blockpos = new BlockPos(i, j, k);
 
 		if (!state.canOcclude())

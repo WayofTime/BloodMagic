@@ -5,7 +5,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -14,10 +14,10 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipe;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
@@ -26,7 +26,7 @@ import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.handler.event.ClientHandler;
 import wayoftime.bloodmagic.util.helper.TextHelper;
 
-public class ARCFurnaceRecipeCategory implements IRecipeCategory<FurnaceRecipe>
+public class ARCFurnaceRecipeCategory implements IRecipeCategory<SmeltingRecipe>
 {
 	private static final int OUTPUT_SLOT = 0;
 	private static final int INPUT_SLOT = 1;
@@ -76,7 +76,7 @@ public class ARCFurnaceRecipeCategory implements IRecipeCategory<FurnaceRecipe>
 	}
 
 	@Override
-	public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull FurnaceRecipe recipe, @Nonnull IIngredients ingredients)
+	public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull SmeltingRecipe recipe, @Nonnull IIngredients ingredients)
 	{
 		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
@@ -88,13 +88,13 @@ public class ARCFurnaceRecipeCategory implements IRecipeCategory<FurnaceRecipe>
 	}
 
 	@Override
-	public Class<? extends FurnaceRecipe> getRecipeClass()
+	public Class<? extends SmeltingRecipe> getRecipeClass()
 	{
-		return FurnaceRecipe.class;
+		return SmeltingRecipe.class;
 	}
 
 	@Override
-	public void setIngredients(FurnaceRecipe recipe, IIngredients ingredients)
+	public void setIngredients(SmeltingRecipe recipe, IIngredients ingredients)
 	{
 		List<Ingredient> inputIngList = recipe.getIngredients();
 		inputIngList.add(Ingredient.of(BloodMagicTags.ARC_TOOL_FURNACE));
@@ -103,7 +103,7 @@ public class ARCFurnaceRecipeCategory implements IRecipeCategory<FurnaceRecipe>
 	}
 
 	@Override
-	public void draw(FurnaceRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY)
+	public void draw(SmeltingRecipe recipe, PoseStack matrixStack, double mouseX, double mouseY)
 	{
 		FluidStack outputStack = FluidStack.EMPTY;
 		ClientHandler.handleGuiTank(matrixStack, outputStack, outputStack.getAmount(), 140, 7, 16, 36, 157, 6, 18, 38, (int) mouseX, (int) mouseY, BACKGROUNDRL.toString(), null);

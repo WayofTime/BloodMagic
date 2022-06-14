@@ -7,22 +7,22 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -48,10 +48,10 @@ import wayoftime.bloodmagic.util.MultiSlotItemHandler;
 
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
-public class TileAlchemicalReactionChamber extends TileInventory implements ITickableTileEntity, INamedContainerProvider, ISidedInventory, IFluidHandler
+public class TileAlchemicalReactionChamber extends TileInventory implements TickableBlockEntity, MenuProvider, WorldlyContainer, IFluidHandler
 {
 	@ObjectHolder("bloodmagic:alchemicalreactionchamber")
-	public static TileEntityType<TileAlchemicalReactionChamber> TYPE;
+	public static BlockEntityType<TileAlchemicalReactionChamber> TYPE;
 
 	public static final int ARC_TOOL_SLOT = 0;
 	public static final int OUTPUT_SLOT = 1;
@@ -68,7 +68,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 
 	private LazyOptional fluidOptional;
 
-	public TileAlchemicalReactionChamber(TileEntityType<?> type)
+	public TileAlchemicalReactionChamber(BlockEntityType<?> type)
 	{
 		super(type, 9, "alchemicalreactionchamber");
 		this.initializeFluidCapabilities();
@@ -80,31 +80,31 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tag)
+	public void deserialize(CompoundTag tag)
 	{
 		super.deserialize(tag);
 
 		currentProgress = tag.getDouble(Constants.NBT.ARC_PROGRESS);
 
-		CompoundNBT inputTankTag = tag.getCompound("inputtank");
+		CompoundTag inputTankTag = tag.getCompound("inputtank");
 		inputTank.readFromNBT(inputTankTag);
 
-		CompoundNBT outputTankTag = tag.getCompound("outputtank");
+		CompoundTag outputTankTag = tag.getCompound("outputtank");
 		outputTank.readFromNBT(outputTankTag);
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tag)
+	public CompoundTag serialize(CompoundTag tag)
 	{
 		super.serialize(tag);
 
 		tag.putDouble(Constants.NBT.ARC_PROGRESS, currentProgress);
 
-		CompoundNBT inputTankTag = new CompoundNBT();
+		CompoundTag inputTankTag = new CompoundTag();
 		inputTank.writeToNBT(inputTankTag);
 		tag.put("inputtank", inputTankTag);
 
-		CompoundNBT outputTankTag = new CompoundNBT();
+		CompoundTag outputTankTag = new CompoundTag();
 		outputTank.writeToNBT(outputTankTag);
 		tag.put("outputtank", outputTankTag);
 
@@ -231,7 +231,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 //				{ input };
 
 //				MultiSlotItemHandler outputSlotHandler = new MultiSlotItemHandler(outputInventory, 64);
-				Optional<FurnaceRecipe> furnaceRecipe = level.getRecipeManager().getRecipeFor(IRecipeType.SMELTING, invWrapper, level);
+				Optional<SmeltingRecipe> furnaceRecipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, invWrapper, level);
 				if (furnaceRecipe.isPresent())
 				{
 					ItemStack outputStack = furnaceRecipe.get().assemble(invWrapper);
@@ -369,16 +369,16 @@ public class TileAlchemicalReactionChamber extends TileInventory implements ITic
 	}
 
 	@Override
-	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_)
+	public AbstractContainerMenu createMenu(int p_createMenu_1_, Inventory p_createMenu_2_, Player p_createMenu_3_)
 	{
 		assert level != null;
 		return new ContainerAlchemicalReactionChamber(this, p_createMenu_1_, p_createMenu_2_);
 	}
 
 	@Override
-	public ITextComponent getDisplayName()
+	public Component getDisplayName()
 	{
-		return new StringTextComponent("Alchemical Reaction Chamber");
+		return new TextComponent("Alchemical Reaction Chamber");
 	}
 
 	public double getProgressForGui()

@@ -2,14 +2,14 @@ package wayoftime.bloodmagic.ritual.types;
 
 import java.util.function.Consumer;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
@@ -31,7 +31,7 @@ public class RitualCrystalSplit extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
+		Level world = masterRitualStone.getWorldObj();
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
 		if (currentEssence < getRefreshCost())
@@ -44,7 +44,7 @@ public class RitualCrystalSplit extends Ritual
 		Direction direction = masterRitualStone.getDirection();
 		BlockPos rawPos = pos.above(2);
 
-		TileEntity tile = world.getBlockEntity(rawPos);
+		BlockEntity tile = world.getBlockEntity(rawPos);
 		if (!(tile instanceof TileDemonCrystal) || ((TileDemonCrystal) tile).getWillType() != EnumDemonWillType.DEFAULT)
 		{
 			return;
@@ -140,7 +140,7 @@ public class RitualCrystalSplit extends Ritual
 		}
 	}
 
-	public void growCrystal(World world, BlockPos pos, EnumDemonWillType type, int currentCrystalCount)
+	public void growCrystal(Level world, BlockPos pos, EnumDemonWillType type, int currentCrystalCount)
 	{
 		if (currentCrystalCount <= 0)
 		{
@@ -208,8 +208,8 @@ public class RitualCrystalSplit extends Ritual
 	}
 
 	@Override
-	public ITextComponent[] provideInformationOfRitualToPlayer(PlayerEntity player)
+	public Component[] provideInformationOfRitualToPlayer(Player player)
 	{
-		return new ITextComponent[] { new TranslationTextComponent(this.getTranslationKey() + ".info") };
+		return new Component[] { new TranslatableComponent(this.getTranslationKey() + ".info") };
 	}
 }

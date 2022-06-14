@@ -2,16 +2,16 @@ package wayoftime.bloodmagic.altar;
 
 import com.google.common.base.Enums;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.RedstoneLampBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.particles.RedstoneParticleData;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.RedstoneLampBlock;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -83,7 +83,7 @@ public class BloodAltar// implements IFluidHandler
 		this.tileAltar = tileAltar;
 	}
 
-	public void readFromNBT(CompoundNBT tagCompound)
+	public void readFromNBT(CompoundTag tagCompound)
 	{
 		if (!tagCompound.contains(Constants.NBT.EMPTY))
 		{
@@ -135,7 +135,7 @@ public class BloodAltar// implements IFluidHandler
 		currentTierDisplayed = Enums.getIfPresent(AltarTier.class, tagCompound.getString(Constants.NBT.ALTAR_CURRENT_TIER_DISPLAYED)).or(AltarTier.ONE);
 	}
 
-	public void writeToNBT(CompoundNBT tagCompound)
+	public void writeToNBT(CompoundTag tagCompound)
 	{
 
 		if (fluid != null)
@@ -244,7 +244,7 @@ public class BloodAltar// implements IFluidHandler
 
 //		System.out.println(this.fluidOutput.getAmount());
 
-		World world = tileAltar.getLevel();
+		Level world = tileAltar.getLevel();
 		BlockPos pos = tileAltar.getBlockPos();
 
 		if (world.isClientSide)
@@ -320,7 +320,7 @@ public class BloodAltar// implements IFluidHandler
 		if (input.isEmpty())
 			return;
 
-		World world = tileAltar.getLevel();
+		Level world = tileAltar.getLevel();
 		BlockPos pos = tileAltar.getBlockPos();
 
 		if (world.isClientSide)
@@ -354,13 +354,13 @@ public class BloodAltar// implements IFluidHandler
 
 				hasOperated = true;
 
-				if (internalCounter % 4 == 0 && world instanceof ServerWorld)
+				if (internalCounter % 4 == 0 && world instanceof ServerLevel)
 				{
-					ServerWorld server = (ServerWorld) world;
+					ServerLevel server = (ServerLevel) world;
 //					server.spawnParticle(ParticleTypes.SPLASH, (double) pos.getX()
 //							+ worldIn.rand.nextDouble(), (double) (pos.getY() + 1), (double) pos.getZ()
 //									+ worldIn.rand.nextDouble(), 1, 0.0D, 0.0D, 0.0D, 1.0D);
-					server.sendParticles(RedstoneParticleData.REDSTONE, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 1, 0.2, 0.0, 0.2, 0.0);
+					server.sendParticles(DustParticleOptions.REDSTONE, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 1, 0.2, 0.0, 0.2, 0.0);
 				}
 
 			} else if (!hasOperated && progress > 0)
@@ -370,9 +370,9 @@ public class BloodAltar// implements IFluidHandler
 				if (progress < 0)
 					progress = 0;
 
-				if (internalCounter % 2 == 0 && world instanceof ServerWorld)
+				if (internalCounter % 2 == 0 && world instanceof ServerLevel)
 				{
-					ServerWorld server = (ServerWorld) world;
+					ServerLevel server = (ServerLevel) world;
 					server.sendParticles(ParticleTypes.LARGE_SMOKE, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0.1, 0, 0.1, 0);
 				}
 			}
@@ -391,10 +391,10 @@ public class BloodAltar// implements IFluidHandler
 
 					progress = 0;
 
-					if (world instanceof ServerWorld)
+					if (world instanceof ServerLevel)
 					{
-						ServerWorld server = (ServerWorld) world;
-						server.sendParticles(RedstoneParticleData.REDSTONE, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 40, 0.3, 0, 0.3, 0);
+						ServerLevel server = (ServerLevel) world;
+						server.sendParticles(DustParticleOptions.REDSTONE, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 40, 0.3, 0, 0.3, 0);
 					}
 
 					this.cooldownAfterCrafting = 30;
@@ -424,9 +424,9 @@ public class BloodAltar// implements IFluidHandler
 				int drain = NetworkHelper.getSoulNetwork(binding).add(liquidDrained, (int) (orb.getCapacity() * this.orbCapacityMultiplier));
 				fluid.setAmount(fluid.getAmount() - drain);
 
-				if (drain > 0 && internalCounter % 4 == 0 && world instanceof ServerWorld)
+				if (drain > 0 && internalCounter % 4 == 0 && world instanceof ServerLevel)
 				{
-					ServerWorld server = (ServerWorld) world;
+					ServerLevel server = (ServerLevel) world;
 					server.sendParticles(ParticleTypes.WITCH, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0, 0, 0, 0.001);
 				}
 			}

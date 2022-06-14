@@ -3,8 +3,8 @@ package wayoftime.bloodmagic.api;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Allows value modification for various features of Blood Magic such as

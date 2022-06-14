@@ -6,16 +6,16 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Maps;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.MainWindow;
+import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector2f;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.Vec2;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import wayoftime.bloodmagic.client.hud.element.HUDElement;
 
 public class GuiEditHUD extends Screen
@@ -23,13 +23,13 @@ public class GuiEditHUD extends Screen
 	private static final int LINE_COLOR = 0x2D2D2D;
 
 	private final Screen parent;
-	private final Map<ResourceLocation, Vector2f> currentOverrides = Maps.newHashMap();
+	private final Map<ResourceLocation, Vec2> currentOverrides = Maps.newHashMap();
 	private HUDElement dragged;
 	public boolean changes;
 
 	public GuiEditHUD(Screen parent)
 	{
-		super(new StringTextComponent("Testing GuiEditHUD"));
+		super(new TextComponent("Testing GuiEditHUD"));
 		this.parent = parent;
 	}
 
@@ -38,7 +38,7 @@ public class GuiEditHUD extends Screen
 	{
 		super.init();
 
-		addButton(new Button(width / 2 - 155, height - 30, 70, 20, new TranslationTextComponent("gui.bloodmagic.toggle"), b -> {
+		addButton(new Button(width / 2 - 155, height - 30, 70, 20, new TranslatableComponent("gui.bloodmagic.toggle"), b -> {
 			Minecraft.getInstance().setScreen(parent);
 		})
 		{
@@ -46,36 +46,36 @@ public class GuiEditHUD extends Screen
 				active = false;
 			}
 		});
-		addButton(new Button(width / 2 - 75, height - 30, 70, 20, new TranslationTextComponent("gui.bloodmagic.default"), b -> {
+		addButton(new Button(width / 2 - 75, height - 30, 70, 20, new TranslatableComponent("gui.bloodmagic.default"), b -> {
 			currentOverrides.clear();
 			ElementRegistry.resetPos();
 			changes = false;
 		}));
-		addButton(new Button(width / 2 + 5, height - 30, 70, 20, new TranslationTextComponent("gui.bloodmagic.save"), b -> {
+		addButton(new Button(width / 2 + 5, height - 30, 70, 20, new TranslatableComponent("gui.bloodmagic.save"), b -> {
 			ElementRegistry.save(currentOverrides);
 			Minecraft.getInstance().setScreen(parent);
 		}));
-		addButton(new Button(width / 2 + 90, height - 30, 70, 20, new TranslationTextComponent("gui.bloodmagic.cancel"), b -> {
+		addButton(new Button(width / 2 + 90, height - 30, 70, 20, new TranslatableComponent("gui.bloodmagic.cancel"), b -> {
 			currentOverrides.clear();
 			Minecraft.getInstance().setScreen(parent);
 		}));
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks)
+	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks)
 	{
 		this.renderBackground(matrixStack);
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 
 //		ScaledResolution resolution = new ScaledResolution(Minecraft.getInstance());
-		MainWindow window = Minecraft.getInstance().getWindow();
+		Window window = Minecraft.getInstance().getWindow();
 		for (HUDElement element : ElementRegistry.getElements())
 		{
 			if (dragged == element)
 				continue;
 
 			ResourceLocation key = ElementRegistry.getKey(element);
-			Vector2f position = currentOverrides.getOrDefault(key, ElementRegistry.getPosition(key));
+			Vec2 position = currentOverrides.getOrDefault(key, ElementRegistry.getPosition(key));
 			int xPos = (int) (window.getGuiScaledWidth() * position.x);
 			int yPos = (int) (window.getGuiScaledHeight() * position.y);
 
@@ -129,12 +129,12 @@ public class GuiEditHUD extends Screen
 	{
 		if (dragged != null)
 		{
-			MainWindow window = Minecraft.getInstance().getWindow();
+			Window window = Minecraft.getInstance().getWindow();
 			Point bounded = getBoundedDrag(window, mouseX, mouseY);
 			float xPos = (float) ((bounded.x) / window.getGuiScaledWidth());
 			float yPos = (float) ((bounded.y) / window.getGuiScaledHeight());
 
-			currentOverrides.put(ElementRegistry.getKey(dragged), new Vector2f(xPos, yPos));
+			currentOverrides.put(ElementRegistry.getKey(dragged), new Vec2(xPos, yPos));
 			changes = true;
 			dragged = null;
 //			return super;
@@ -178,11 +178,11 @@ public class GuiEditHUD extends Screen
 	@Nullable
 	public HUDElement getHoveredElement(double mouseX, double mouseY)
 	{
-		MainWindow window = Minecraft.getInstance().getWindow();
+		Window window = Minecraft.getInstance().getWindow();
 		for (HUDElement element : ElementRegistry.getElements())
 		{
 			ResourceLocation key = ElementRegistry.getKey(element);
-			Vector2f position = currentOverrides.getOrDefault(key, ElementRegistry.getPosition(key));
+			Vec2 position = currentOverrides.getOrDefault(key, ElementRegistry.getPosition(key));
 
 			int xPos = (int) (window.getGuiScaledWidth() * position.x);
 			int yPos = (int) (window.getGuiScaledHeight() * position.y);
@@ -199,7 +199,7 @@ public class GuiEditHUD extends Screen
 		return null;
 	}
 
-	protected Point getBoundedDrag(MainWindow window, double mouseX, double mouseY)
+	protected Point getBoundedDrag(Window window, double mouseX, double mouseY)
 	{
 		int drawX = (int) (mouseX - dragged.getWidth() / 2);
 		if (drawX + dragged.getWidth() >= window.getGuiScaledWidth())
@@ -216,7 +216,7 @@ public class GuiEditHUD extends Screen
 		return new Point(drawX, drawY);
 	}
 
-	protected void drawWithBox(MatrixStack matrixStack, HUDElement element, float partialTicks, int drawX, int drawY)
+	protected void drawWithBox(PoseStack matrixStack, HUDElement element, float partialTicks, int drawX, int drawY)
 	{
 		int color = ElementRegistry.getColor(ElementRegistry.getKey(element));
 		matrixStack.pushPose();

@@ -11,19 +11,19 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.potion.Effect;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionEffect;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionTransform;
 import wayoftime.bloodmagic.util.Constants;
 
-public class PotionTransformRecipeSerializer<RECIPE extends RecipePotionTransform> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RECIPE>
+public class PotionTransformRecipeSerializer<RECIPE extends RecipePotionTransform> extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RECIPE>
 {
 	private final IFactory<RECIPE> factory;
 
@@ -38,9 +38,9 @@ public class PotionTransformRecipeSerializer<RECIPE extends RecipePotionTransfor
 	{
 		List<Ingredient> inputList = new ArrayList<Ingredient>();
 
-		if (json.has(Constants.JSON.INPUT) && JSONUtils.isArrayNode(json, Constants.JSON.INPUT))
+		if (json.has(Constants.JSON.INPUT) && GsonHelper.isArrayNode(json, Constants.JSON.INPUT))
 		{
-			JsonArray mainArray = JSONUtils.getAsJsonArray(json, Constants.JSON.INPUT);
+			JsonArray mainArray = GsonHelper.getAsJsonArray(json, Constants.JSON.INPUT);
 
 			arrayLoop: for (JsonElement element : mainArray)
 			{
@@ -61,43 +61,43 @@ public class PotionTransformRecipeSerializer<RECIPE extends RecipePotionTransfor
 			}
 		}
 
-		List<Pair<Effect, Integer>> outputEffectList = new ArrayList<>();
-		if (json.has(Constants.JSON.OUTPUT_EFFECT) && JSONUtils.isArrayNode(json, Constants.JSON.OUTPUT_EFFECT))
+		List<Pair<MobEffect, Integer>> outputEffectList = new ArrayList<>();
+		if (json.has(Constants.JSON.OUTPUT_EFFECT) && GsonHelper.isArrayNode(json, Constants.JSON.OUTPUT_EFFECT))
 		{
-			JsonArray mainArray = JSONUtils.getAsJsonArray(json, Constants.JSON.OUTPUT_EFFECT);
+			JsonArray mainArray = GsonHelper.getAsJsonArray(json, Constants.JSON.OUTPUT_EFFECT);
 
 			for (JsonElement element : mainArray)
 			{
 				JsonObject obj = element.getAsJsonObject();
-				Effect outputEffect = BloodMagicPotions.getEffect(new ResourceLocation(JSONUtils.getAsString(obj, Constants.JSON.EFFECT)));
-				int baseDuration = JSONUtils.getAsInt(obj, Constants.JSON.DURATION);
+				MobEffect outputEffect = BloodMagicPotions.getEffect(new ResourceLocation(GsonHelper.getAsString(obj, Constants.JSON.EFFECT)));
+				int baseDuration = GsonHelper.getAsInt(obj, Constants.JSON.DURATION);
 
 				outputEffectList.add(Pair.of(outputEffect, baseDuration));
 			}
 		}
 
-		List<Effect> inputEffectList = new ArrayList<>();
-		if (json.has(Constants.JSON.INPUT_EFFECT) && JSONUtils.isArrayNode(json, Constants.JSON.INPUT_EFFECT))
+		List<MobEffect> inputEffectList = new ArrayList<>();
+		if (json.has(Constants.JSON.INPUT_EFFECT) && GsonHelper.isArrayNode(json, Constants.JSON.INPUT_EFFECT))
 		{
-			JsonArray mainArray = JSONUtils.getAsJsonArray(json, Constants.JSON.INPUT_EFFECT);
+			JsonArray mainArray = GsonHelper.getAsJsonArray(json, Constants.JSON.INPUT_EFFECT);
 
 			for (JsonElement element : mainArray)
 			{
-				Effect inputEffect = BloodMagicPotions.getEffect(new ResourceLocation(JSONUtils.convertToString(element, Constants.JSON.EFFECT)));
+				MobEffect inputEffect = BloodMagicPotions.getEffect(new ResourceLocation(GsonHelper.convertToString(element, Constants.JSON.EFFECT)));
 
 				inputEffectList.add(inputEffect);
 			}
 		}
 
-		int syphon = JSONUtils.getAsInt(json, Constants.JSON.SYPHON);
-		int ticks = JSONUtils.getAsInt(json, Constants.JSON.TICKS);
-		int minimumTier = JSONUtils.getAsInt(json, Constants.JSON.ALTAR_TIER);
+		int syphon = GsonHelper.getAsInt(json, Constants.JSON.SYPHON);
+		int ticks = GsonHelper.getAsInt(json, Constants.JSON.TICKS);
+		int minimumTier = GsonHelper.getAsInt(json, Constants.JSON.ALTAR_TIER);
 
 		return this.factory.create(recipeId, inputList, outputEffectList, inputEffectList, syphon, ticks, minimumTier);
 	}
 
 	@Override
-	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
+	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull FriendlyByteBuf buffer)
 	{
 		try
 		{
@@ -114,20 +114,20 @@ public class PotionTransformRecipeSerializer<RECIPE extends RecipePotionTransfor
 			int minimumTier = buffer.readInt();
 
 			int outputEffectSize = buffer.readInt();
-			List<Pair<Effect, Integer>> outputEffectList = new ArrayList<>(outputEffectSize);
+			List<Pair<MobEffect, Integer>> outputEffectList = new ArrayList<>(outputEffectSize);
 
 			for (int i = 0; i < outputEffectSize; i++)
 			{
 				int effectId = buffer.readInt();
-				outputEffectList.add(i, Pair.of(Effect.byId(effectId), buffer.readInt()));
+				outputEffectList.add(i, Pair.of(MobEffect.byId(effectId), buffer.readInt()));
 			}
 
 			int inputEffectSize = buffer.readInt();
-			List<Effect> inputEffectList = new ArrayList<>();
+			List<MobEffect> inputEffectList = new ArrayList<>();
 
 			for (int i = 0; i < inputEffectSize; i++)
 			{
-				inputEffectList.add(i, Effect.byId(buffer.readInt()));
+				inputEffectList.add(i, MobEffect.byId(buffer.readInt()));
 			}
 
 //
@@ -142,7 +142,7 @@ public class PotionTransformRecipeSerializer<RECIPE extends RecipePotionTransfor
 	}
 
 	@Override
-	public void toNetwork(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
+	public void toNetwork(@Nonnull FriendlyByteBuf buffer, @Nonnull RECIPE recipe)
 	{
 		try
 		{
@@ -156,6 +156,6 @@ public class PotionTransformRecipeSerializer<RECIPE extends RecipePotionTransfor
 	@FunctionalInterface
 	public interface IFactory<RECIPE extends RecipePotionTransform>
 	{
-		RECIPE create(ResourceLocation id, List<Ingredient> input, List<Pair<Effect, Integer>> outputEffectList, List<Effect> inputEffectList, int syphon, int ticks, int minimumTier);
+		RECIPE create(ResourceLocation id, List<Ingredient> input, List<Pair<MobEffect, Integer>> outputEffectList, List<MobEffect> inputEffectList, int syphon, int ticks, int minimumTier);
 	}
 }

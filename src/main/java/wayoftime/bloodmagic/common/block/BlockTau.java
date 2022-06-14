@@ -3,25 +3,25 @@ package wayoftime.bloodmagic.common.block;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.CropsBlock;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 
-public class BlockTau extends CropsBlock
+public class BlockTau extends CropBlock
 {
 	public final boolean isStrong;
 	private static final VoxelShape[] SHAPES = new VoxelShape[] {
@@ -36,23 +36,23 @@ public class BlockTau extends CropsBlock
 
 	public static final double TRANSFORM_CHANCE = 0.2d;
 
-	public BlockTau(AbstractBlock.Properties properties, boolean isStrong)
+	public BlockTau(BlockBehaviour.Properties properties, boolean isStrong)
 	{
 		super(properties);
 		this.isStrong = isStrong;
 	}
 
-	protected boolean mayPlaceOn(BlockState state, IBlockReader worldIn, BlockPos pos)
+	protected boolean mayPlaceOn(BlockState state, BlockGetter worldIn, BlockPos pos)
 	{
 		return state.is(Blocks.FARMLAND);
 	}
 
-	protected IItemProvider getBaseSeedId()
+	protected ItemLike getBaseSeedId()
 	{
 		return isStrong ? BloodMagicItems.STRONG_TAU_ITEM.get() : BloodMagicItems.WEAK_TAU_ITEM.get();
 	}
 
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context)
 	{
 		return SHAPES[state.getValue(this.getAgeProperty())];
 	}
@@ -60,7 +60,7 @@ public class BlockTau extends CropsBlock
 	/**
 	 * Performs a random tick on a block.
 	 */
-	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random)
+	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random)
 	{
 		if (!worldIn.isAreaLoaded(pos, 1))
 			return; // Forge: prevent loading unloaded chunks when checking neighbor's light
@@ -75,7 +75,7 @@ public class BlockTau extends CropsBlock
 					boolean doTransform = false;
 					boolean doGrow = !isStrong;
 
-					AxisAlignedBB boundingBox = new AxisAlignedBB(pos).inflate(1, 0, 1);
+					AABB boundingBox = new AABB(pos).inflate(1, 0, 1);
 					List<LivingEntity> list = worldIn.getEntitiesOfClass(LivingEntity.class, boundingBox);
 					for (LivingEntity entity : list)
 					{
@@ -113,18 +113,18 @@ public class BlockTau extends CropsBlock
 	/**
 	 * Whether this IGrowable can grow
 	 */
-	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient)
+	public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient)
 	{
 		return !this.isMaxAge(state);
 	}
 
-	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state)
+	public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state)
 	{
 		return false;
 	}
 
 	@Override
-	public void growCrops(World worldIn, BlockPos pos, BlockState state)
+	public void growCrops(Level worldIn, BlockPos pos, BlockState state)
 	{
 		int i = this.getAge(state);
 		if (i < this.getMaxAge())
@@ -133,7 +133,7 @@ public class BlockTau extends CropsBlock
 			boolean doTransform = false;
 			boolean doGrow = !isStrong;
 
-			AxisAlignedBB boundingBox = new AxisAlignedBB(pos);
+			AABB boundingBox = new AABB(pos);
 			List<LivingEntity> list = worldIn.getEntitiesOfClass(LivingEntity.class, boundingBox);
 			for (LivingEntity entity : list)
 			{
@@ -167,8 +167,8 @@ public class BlockTau extends CropsBlock
 	}
 
 	@Override
-	protected int getBonemealAgeIncrease(World worldIn)
+	protected int getBonemealAgeIncrease(Level worldIn)
 	{
-		return MathHelper.nextInt(worldIn.random, 1, 1);
+		return Mth.nextInt(worldIn.random, 1, 1);
 	}
 }

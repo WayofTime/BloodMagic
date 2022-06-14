@@ -1,9 +1,9 @@
 package wayoftime.bloodmagic.tile;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.api.compat.IDemonWillConduit;
@@ -14,13 +14,13 @@ import wayoftime.bloodmagic.will.DemonWillHolder;
 public class TileDemonPylon extends TileTicking implements IDemonWillConduit
 {
 	@ObjectHolder("bloodmagic:demonpylon")
-	public static TileEntityType<TileDemonPylon> TYPE;
+	public static BlockEntityType<TileDemonPylon> TYPE;
 
 	public final int maxWill = 100;
 	public final double drainRate = 1;
 	public DemonWillHolder holder = new DemonWillHolder();
 
-	public TileDemonPylon(TileEntityType<?> type)
+	public TileDemonPylon(BlockEntityType<?> type)
 	{
 		super(type);
 	}
@@ -58,13 +58,13 @@ public class TileDemonPylon extends TileTicking implements IDemonWillConduit
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tag)
+	public void deserialize(CompoundTag tag)
 	{
 		holder.readFromNBT(tag, "Will");
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tag)
+	public CompoundTag serialize(CompoundTag tag)
 	{
 		holder.writeToNBT(tag, "Will");
 		return tag;

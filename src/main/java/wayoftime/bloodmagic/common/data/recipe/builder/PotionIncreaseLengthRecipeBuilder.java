@@ -9,24 +9,26 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.potion.Effect;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionIncreaseLength;
 import wayoftime.bloodmagic.util.Constants;
 
+import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder.RecipeResult;
+
 public class PotionIncreaseLengthRecipeBuilder extends BloodMagicRecipeBuilder<PotionIncreaseLengthRecipeBuilder>
 {
 	private final List<Ingredient> input;
-	private final Effect outputEffect;
+	private final MobEffect outputEffect;
 	private final double lengthDurationMod;
 	private final int syphon;
 	private final int ticks;
 	private final int minimumTier;
 
-	protected PotionIncreaseLengthRecipeBuilder(List<Ingredient> input, Effect outputEffect, double lengthDurationMod, int syphon, int ticks, int minimumTier)
+	protected PotionIncreaseLengthRecipeBuilder(List<Ingredient> input, MobEffect outputEffect, double lengthDurationMod, int syphon, int ticks, int minimumTier)
 	{
 		super(bmSerializer("flask_potionlength"));
 		this.outputEffect = outputEffect;
@@ -37,7 +39,7 @@ public class PotionIncreaseLengthRecipeBuilder extends BloodMagicRecipeBuilder<P
 		this.minimumTier = minimumTier;
 	}
 
-	public static PotionIncreaseLengthRecipeBuilder potionIncreaseLength(Effect outputEffect, double lengthDurationMod, int syphon, int ticks, int minimumTier)
+	public static PotionIncreaseLengthRecipeBuilder potionIncreaseLength(MobEffect outputEffect, double lengthDurationMod, int syphon, int ticks, int minimumTier)
 	{
 		List<Ingredient> inputList = new ArrayList<Ingredient>();
 

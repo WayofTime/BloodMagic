@@ -3,21 +3,21 @@ package wayoftime.bloodmagic.common.item.soul;
 import java.util.List;
 import java.util.Locale;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.NonNullList;
+import net.minecraft.util.Mth;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
@@ -43,7 +43,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 	}
 
 	@Override
-	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items)
+	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items)
 	{
 		if (this.allowdedIn(group))
 		{
@@ -58,7 +58,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
 		EnumDemonWillType type = this.getCurrentType(stack);
@@ -67,20 +67,20 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 		double filled = PlayerDemonWillHandler.addDemonWill(type, player, drain, stack);
 		this.drainWill(type, stack, filled, true);
 
-		return new ActionResult<>(ActionResultType.PASS, stack);
+		return new InteractionResultHolder<>(InteractionResult.PASS, stack);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
 		if (!stack.hasTag())
 			return;
 
 		EnumDemonWillType type = this.getCurrentType(stack);
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.soulGem." + name).withStyle(TextFormatting.GRAY));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.will", ChatUtil.DECIMAL_FORMAT.format(getWill(type, stack))).withStyle(TextFormatting.GRAY));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase(Locale.ROOT)).withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.soulGem." + name).withStyle(ChatFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.will", ChatUtil.DECIMAL_FORMAT.format(getWill(type, stack))).withStyle(ChatFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GRAY));
 
 		super.appendHoverText(stack, world, tooltip, flag);
 	}
@@ -113,7 +113,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 			return 1;
 		}
 
-		return MathHelper.hsvToRgb(Math.max(0.0F, (float) (getWill(type, stack)) / (float) maxWill) / 3.0F, 1.0F, 1.0F);
+		return Mth.hsvToRgb(Math.max(0.0F, (float) (getWill(type, stack)) / (float) maxWill) / 3.0F, 1.0F, 1.0F);
 	}
 
 	@Override
@@ -153,7 +153,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 			return 0;
 		}
 
-		CompoundNBT tag = soulGemStack.getTag();
+		CompoundTag tag = soulGemStack.getTag();
 
 		return tag.getDouble(Constants.NBT.SOULS);
 	}
@@ -163,7 +163,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 	{
 		setCurrentType(type, soulGemStack);
 
-		CompoundNBT tag = soulGemStack.getTag();
+		CompoundTag tag = soulGemStack.getTag();
 
 		tag.putDouble(Constants.NBT.SOULS, souls);
 	}
@@ -205,7 +205,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 	{
 		NBTHelper.checkNBT(soulGemStack);
 
-		CompoundNBT tag = soulGemStack.getTag();
+		CompoundTag tag = soulGemStack.getTag();
 
 		if (!tag.contains(Constants.NBT.WILL_TYPE))
 		{
@@ -219,7 +219,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 	{
 		NBTHelper.checkNBT(soulGemStack);
 
-		CompoundNBT tag = soulGemStack.getTag();
+		CompoundTag tag = soulGemStack.getTag();
 
 		if (type == EnumDemonWillType.DEFAULT)
 		{

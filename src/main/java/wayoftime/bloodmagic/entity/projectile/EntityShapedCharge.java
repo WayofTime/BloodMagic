@@ -2,27 +2,27 @@ package wayoftime.bloodmagic.entity.projectile;
 
 import java.util.Optional;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -32,25 +32,25 @@ import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.tile.TileExplosiveCharge;
 
-public class EntityShapedCharge extends ThrowableEntity
+public class EntityShapedCharge extends ThrowableProjectile
 {
-	private static final DataParameter<Optional<BlockState>> ITEMSTACK_DATA = EntityDataManager.defineId(EntityShapedCharge.class, DataSerializers.BLOCK_STATE);
+	private static final EntityDataAccessor<Optional<BlockState>> ITEMSTACK_DATA = SynchedEntityData.defineId(EntityShapedCharge.class, EntityDataSerializers.BLOCK_STATE);
 //	private BlockState fallTile = BloodMagicBlocks.SHAPED_CHARGE.get().getDefaultState();
 	private AnointmentHolder holder;
 
-	public EntityShapedCharge(EntityType<EntityShapedCharge> p_i50159_1_, World p_i50159_2_)
+	public EntityShapedCharge(EntityType<EntityShapedCharge> p_i50159_1_, Level p_i50159_2_)
 	{
 		super(p_i50159_1_, p_i50159_2_);
 	}
 
-	public EntityShapedCharge(World worldIn, Block block, LivingEntity throwerIn)
+	public EntityShapedCharge(Level worldIn, Block block, LivingEntity throwerIn)
 	{
 		super(BloodMagicEntityTypes.SHAPED_CHARGE.getEntityType(), throwerIn, worldIn);
 //		this.fallTile = block.getDefaultState();
 		this.setFallTile(block.defaultBlockState());
 	}
 
-	public EntityShapedCharge(World worldIn, Block block, double x, double y, double z)
+	public EntityShapedCharge(Level worldIn, Block block, double x, double y, double z)
 	{
 		super(BloodMagicEntityTypes.SHAPED_CHARGE.getEntityType(), x, y, z, worldIn);
 //		this.fallTile = block.getDefaultState();
@@ -71,16 +71,16 @@ public class EntityShapedCharge extends ThrowableEntity
 	public void tick()
 	{
 		super.tick();
-		RayTraceResult raytraceresult = ProjectileHelper.getHitResult(this, this::canHitEntity);
+		HitResult raytraceresult = ProjectileUtil.getHitResult(this, this::canHitEntity);
 //		boolean flag = false;
 		if (level.isClientSide)
 		{
 			return;
 		}
-		if (raytraceresult.getType() == RayTraceResult.Type.BLOCK)
+		if (raytraceresult.getType() == HitResult.Type.BLOCK)
 		{
-			Direction faceHit = ((BlockRayTraceResult) raytraceresult).getDirection();
-			BlockPos blockpos = ((BlockRayTraceResult) raytraceresult).getBlockPos().relative(((BlockRayTraceResult) raytraceresult).getDirection());
+			Direction faceHit = ((BlockHitResult) raytraceresult).getDirection();
+			BlockPos blockpos = ((BlockHitResult) raytraceresult).getBlockPos().relative(((BlockHitResult) raytraceresult).getDirection());
 			BlockState blockstate = this.level.getBlockState(blockpos);
 			Material material = blockstate.getMaterial();
 //		      return state.isAir() || state.isIn(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable();
@@ -88,7 +88,7 @@ public class EntityShapedCharge extends ThrowableEntity
 			if (blockstate.isAir() || blockstate.is(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable())
 			{
 				this.getCommandSenderWorld().setBlockAndUpdate(blockpos, fallTile.setValue(BlockShapedExplosive.ATTACHED, faceHit));
-				TileEntity tile = this.getCommandSenderWorld().getBlockEntity(blockpos);
+				BlockEntity tile = this.getCommandSenderWorld().getBlockEntity(blockpos);
 				if (tile instanceof TileExplosiveCharge)
 				{
 					((TileExplosiveCharge) tile).setAnointmentHolder(holder);
@@ -105,9 +105,9 @@ public class EntityShapedCharge extends ThrowableEntity
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundNBT compound)
+	protected void addAdditionalSaveData(CompoundTag compound)
 	{
-		compound.put("BlockState", NBTUtil.writeBlockState(this.getBlockState()));
+		compound.put("BlockState", NbtUtils.writeBlockState(this.getBlockState()));
 		if (holder != null)
 			compound.put("holder", holder.serialize());
 //	      compound.putInt("Time", this.fallTime);
@@ -125,9 +125,9 @@ public class EntityShapedCharge extends ThrowableEntity
 	 * (abstract) Protected helper method to read subclass entity data from NBT.
 	 */
 	@Override
-	protected void readAdditionalSaveData(CompoundNBT compound)
+	protected void readAdditionalSaveData(CompoundTag compound)
 	{
-		BlockState fallTile = NBTUtil.readBlockState(compound.getCompound("BlockState"));
+		BlockState fallTile = NbtUtils.readBlockState(compound.getCompound("BlockState"));
 		this.setFallTile(fallTile);
 		if (compound.contains("holder"))
 			this.holder = AnointmentHolder.fromNBT(compound.getCompound("holder"));
@@ -172,7 +172,7 @@ public class EntityShapedCharge extends ThrowableEntity
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public World getWorldObj()
+	public Level getWorldObj()
 	{
 		return this.level;
 	}
@@ -184,7 +184,7 @@ public class EntityShapedCharge extends ThrowableEntity
 //	}
 
 	@Override
-	public IPacket<?> getAddEntityPacket()
+	public Packet<?> getAddEntityPacket()
 	{
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}

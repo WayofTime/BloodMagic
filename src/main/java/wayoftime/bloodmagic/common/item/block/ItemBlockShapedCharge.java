@@ -1,22 +1,22 @@
 package wayoftime.bloodmagic.common.item.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.entity.projectile.EntityShapedCharge;
 import wayoftime.bloodmagic.tile.TileExplosiveCharge;
 
-import net.minecraft.item.Item.Properties;
+import net.minecraft.world.item.Item.Properties;
 
 public class ItemBlockShapedCharge extends BlockItem
 {
@@ -26,7 +26,7 @@ public class ItemBlockShapedCharge extends BlockItem
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand hand)
 	{
 		ItemStack stack = playerIn.getItemInHand(hand);
 		if (!playerIn.isCreative())
@@ -34,7 +34,7 @@ public class ItemBlockShapedCharge extends BlockItem
 			stack.shrink(1);
 		}
 
-		worldIn.playSound((PlayerEntity) null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+		worldIn.playSound((Player) null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
 
 		if (!worldIn.isClientSide)
 		{
@@ -50,18 +50,18 @@ public class ItemBlockShapedCharge extends BlockItem
 //	         worldIn.addEntity(snowballentity);
 		}
 
-		return new ActionResult<>(ActionResultType.SUCCESS, stack);
+		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 	}
 
 	@Override
-	public ActionResultType place(BlockItemUseContext context)
+	public InteractionResult place(BlockPlaceContext context)
 	{
-		ActionResultType result = super.place(context);
+		InteractionResult result = super.place(context);
 
 		AnointmentHolder holder = AnointmentHolder.fromItemStack(context.getItemInHand());
 		if (holder != null)
 		{
-			TileEntity tile = context.getLevel().getBlockEntity(context.getClickedPos());
+			BlockEntity tile = context.getLevel().getBlockEntity(context.getClickedPos());
 			if (tile instanceof TileExplosiveCharge)
 			{
 				((TileExplosiveCharge) tile).setAnointmentHolder(holder);

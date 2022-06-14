@@ -5,9 +5,9 @@ import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffect;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffectBinding;
@@ -45,7 +45,7 @@ public class AlchemyArrayRegistry
 		registerEffect(BloodMagic.rl("array/bounce"), new AlchemyArrayEffectBounce());
 	}
 
-	public static AlchemyArrayEffect getEffect(World world, ResourceLocation rl, RecipeAlchemyArray recipe)
+	public static AlchemyArrayEffect getEffect(Level world, ResourceLocation rl, RecipeAlchemyArray recipe)
 	{
 		if (effectMap.containsKey(rl))
 		{
@@ -65,7 +65,7 @@ public class AlchemyArrayRegistry
 		return null;
 	}
 
-	public static AlchemyArrayEffect getEffect(World world, ItemStack input, ItemStack catalyst)
+	public static AlchemyArrayEffect getEffect(Level world, ItemStack input, ItemStack catalyst)
 	{
 		Pair<Boolean, RecipeAlchemyArray> array = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyArray(world, input, catalyst);
 		if (array == null || array.getRight() == null || !array.getLeft())

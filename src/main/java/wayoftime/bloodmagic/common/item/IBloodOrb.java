@@ -2,7 +2,7 @@ package wayoftime.bloodmagic.common.item;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Interface for any items that are Blood Orbs

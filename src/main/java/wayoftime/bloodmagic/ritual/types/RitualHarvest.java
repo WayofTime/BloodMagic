@@ -5,13 +5,13 @@ import java.util.function.Consumer;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.Containers;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -51,7 +51,7 @@ public class RitualHarvest extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
+		Level world = masterRitualStone.getWorldObj();
 		BlockPos pos = masterRitualStone.getMasterBlockPos();
 
 		if (masterRitualStone.getOwnerNetwork().getCurrentEssence() < getRefreshCost())
@@ -104,10 +104,10 @@ public class RitualHarvest extends Ritual
 		return new RitualHarvest();
 	}
 
-	public static boolean harvestBlock(World world, BlockPos cropPos, BlockPos controllerPos)
+	public static boolean harvestBlock(Level world, BlockPos cropPos, BlockPos controllerPos)
 	{
 		BlockState harvestState = world.getBlockState(cropPos);
-		TileEntity potentialInventory = world.getBlockEntity(controllerPos.above());
+		BlockEntity potentialInventory = world.getBlockEntity(controllerPos.above());
 		IItemHandler itemHandler = null;
 		if (potentialInventory != null && potentialInventory.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).isPresent())
 			itemHandler = potentialInventory.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).resolve().get();
@@ -127,12 +127,12 @@ public class RitualHarvest extends Ritual
 						// TODO I wrote this, but didn't actually think about whether it should be a
 						// thing. Remove the true if we want to keep it
 						if (itemHandler == null || true)
-							InventoryHelper.dropItemStack(world, cropPos.getX(), cropPos.getY(), cropPos.getZ(), stack);
+							Containers.dropItemStack(world, cropPos.getX(), cropPos.getY(), cropPos.getZ(), stack);
 						else
 						{
 							ItemStack remainder = ItemHandlerHelper.insertItemStacked(itemHandler, stack, false);
 							if (!remainder.isEmpty())
-								InventoryHelper.dropItemStack(world, cropPos.getX(), cropPos.getY(), cropPos.getZ(), remainder);
+								Containers.dropItemStack(world, cropPos.getX(), cropPos.getY(), cropPos.getZ(), remainder);
 						}
 					}
 					return true;

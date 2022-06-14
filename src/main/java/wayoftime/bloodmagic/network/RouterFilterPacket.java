@@ -2,9 +2,9 @@ package wayoftime.bloodmagic.network;
 
 import java.util.function.Supplier;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
 import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
 
@@ -25,14 +25,14 @@ public class RouterFilterPacket
 		this.amount = amount;
 	}
 
-	public static void encode(RouterFilterPacket pkt, PacketBuffer buf)
+	public static void encode(RouterFilterPacket pkt, FriendlyByteBuf buf)
 	{
 		buf.writeInt(pkt.slot);
 		buf.writeInt(pkt.ghostSlot);
 		buf.writeInt(pkt.amount);
 	}
 
-	public static RouterFilterPacket decode(PacketBuffer buf)
+	public static RouterFilterPacket decode(FriendlyByteBuf buf)
 	{
 		RouterFilterPacket pkt = new RouterFilterPacket(buf.readInt(), buf.readInt(), buf.readInt());
 
@@ -45,7 +45,7 @@ public class RouterFilterPacket
 		context.get().setPacketHandled(true);
 	}
 
-	public static void sendKeyToServer(RouterFilterPacket msg, PlayerEntity playerEntity)
+	public static void sendKeyToServer(RouterFilterPacket msg, Player playerEntity)
 	{
 		ItemStack itemStack = ItemStack.EMPTY;
 

@@ -1,15 +1,15 @@
 package wayoftime.bloodmagic.common.recipe.serializer;
 
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.SpecialRecipe;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.CustomRecipe;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 
-public class TestSpecialRecipe extends SpecialRecipe implements IShapedRecipe<CraftingInventory>
+public class TestSpecialRecipe extends CustomRecipe implements IShapedRecipe<CraftingContainer>
 {
 
 	public TestSpecialRecipe(ResourceLocation idIn)
@@ -20,14 +20,14 @@ public class TestSpecialRecipe extends SpecialRecipe implements IShapedRecipe<Cr
 	}
 
 	@Override
-	public boolean matches(CraftingInventory inv, World worldIn)
+	public boolean matches(CraftingContainer inv, Level worldIn)
 	{
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public ItemStack assemble(CraftingInventory inv)
+	public ItemStack assemble(CraftingContainer inv)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -41,14 +41,14 @@ public class TestSpecialRecipe extends SpecialRecipe implements IShapedRecipe<Cr
 	}
 
 	@Override
-	public IRecipeSerializer<?> getSerializer()
+	public RecipeSerializer<?> getSerializer()
 	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public IRecipeType<?> getType()
+	public RecipeType<?> getType()
 	{
 		// TODO Auto-generated method stub
 		return null;

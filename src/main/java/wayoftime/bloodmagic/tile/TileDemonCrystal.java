@@ -2,12 +2,12 @@ package wayoftime.bloodmagic.tile;
 
 import java.util.Locale;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.Containers;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.block.BlockDemonCrystal;
@@ -34,9 +34,9 @@ public class TileDemonCrystal extends TileTicking
 	public EnumDemonWillType willType;
 
 	@ObjectHolder("bloodmagic:demoncrystal")
-	public static TileEntityType<TileDemonCrystal> TYPE;
+	public static BlockEntityType<TileDemonCrystal> TYPE;
 
-	public TileDemonCrystal(TileEntityType<?> type, EnumDemonWillType willType)
+	public TileDemonCrystal(BlockEntityType<?> type, EnumDemonWillType willType)
 	{
 		super(type);
 		this.willType = willType;
@@ -207,7 +207,7 @@ public class TileDemonCrystal extends TileTicking
 			if (!stack.isEmpty())
 			{
 				setCrystalCount(crystalCount - 1);
-				InventoryHelper.dropItemStack(getLevel(), worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), stack);
+				Containers.dropItemStack(getLevel(), worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), stack);
 				notifyUpdate();
 				return true;
 			}
@@ -228,7 +228,7 @@ public class TileDemonCrystal extends TileTicking
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tag)
+	public void deserialize(CompoundTag tag)
 	{
 		holder.readFromNBT(tag, "Will");
 		placement = Direction.from3DDataValue(tag.getInt("placement"));
@@ -248,7 +248,7 @@ public class TileDemonCrystal extends TileTicking
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tag)
+	public CompoundTag serialize(CompoundTag tag)
 	{
 		holder.writeToNBT(tag, "Will");
 		tag.putInt("placement", placement.get3DDataValue());

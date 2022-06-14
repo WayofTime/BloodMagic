@@ -6,23 +6,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -35,7 +35,7 @@ import wayoftime.bloodmagic.core.living.LivingUpgrade;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.Utils;
 
-public class ItemLivingTrainer extends Item implements ILivingContainer, INamedContainerProvider
+public class ItemLivingTrainer extends Item implements ILivingContainer, MenuProvider
 {
 	public static final int MAX_SIZE = 16;
 
@@ -45,7 +45,7 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
 		if (!world.isClientSide)
@@ -53,18 +53,18 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 			Utils.setUUID(stack);
 			ILivingContainer.setDisplayIfZero(stack, true);
 
-			if (player instanceof ServerPlayerEntity)
+			if (player instanceof ServerPlayer)
 			{
-				NetworkHooks.openGui((ServerPlayerEntity) player, this, buf -> buf.writeItemStack(stack, false));
+				NetworkHooks.openGui((ServerPlayer) player, this, buf -> buf.writeItemStack(stack, false));
 			}
 		}
 
-		return new ActionResult<>(ActionResultType.SUCCESS, stack);
+		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
 		if (stack.getTag() != null)
 		{
@@ -80,10 +80,10 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 			boolean isWhitelist = getIsWhitelist(stack);
 			if (isWhitelist)
 			{
-				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.trainer.whitelist"));
+				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.trainer.whitelist"));
 			} else
 			{
-				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.trainer.blacklist"));
+				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.trainer.blacklist"));
 			}
 
 			Map<LivingUpgrade, Integer> positiveUpgradeMap = new HashMap<>();
@@ -98,15 +98,15 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 			});
 
 			positiveUpgradeMap.forEach((k, v) -> {
-				tooltip.add(new TranslationTextComponent("%s %s", new TranslationTextComponent(k.getTranslationKey()), new TranslationTextComponent("enchantment.level." + v)).withStyle(TextFormatting.GRAY));
+				tooltip.add(new TranslatableComponent("%s %s", new TranslatableComponent(k.getTranslationKey()), new TranslatableComponent("enchantment.level." + v)).withStyle(ChatFormatting.GRAY));
 			});
 
 			if (!zeroUpgradeList.isEmpty() && !isWhitelist)
 			{
-				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.trainer.deny"));
+				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.trainer.deny"));
 				for (LivingUpgrade upgrade : zeroUpgradeList)
 				{
-					tooltip.add(new TranslationTextComponent(upgrade.getTranslationKey()).withStyle(TextFormatting.GRAY));
+					tooltip.add(new TranslatableComponent(upgrade.getTranslationKey()).withStyle(ChatFormatting.GRAY));
 				}
 			}
 		}
@@ -116,7 +116,7 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 	{
 		if (trainerStack.getTag() == null)
 		{
-			trainerStack.setTag(new CompoundNBT());
+			trainerStack.setTag(new CompoundTag());
 		}
 
 		trainerStack.getTag().putBoolean(Constants.NBT.BLACKWHITELIST, isWhitelist);
@@ -126,14 +126,14 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 	{
 		if (trainerStack.getTag() == null)
 		{
-			trainerStack.setTag(new CompoundNBT());
+			trainerStack.setTag(new CompoundTag());
 		}
 
 		return trainerStack.getTag().getBoolean(Constants.NBT.BLACKWHITELIST);
 	}
 
 	@Override
-	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity player)
+	public AbstractContainerMenu createMenu(int p_createMenu_1_, Inventory p_createMenu_2_, Player player)
 	{
 		// TODO Auto-generated method stub
 		assert player.getCommandSenderWorld() != null;
@@ -141,10 +141,10 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, INamedC
 	}
 
 	@Override
-	public ITextComponent getDisplayName()
+	public Component getDisplayName()
 	{
 		// TODO Auto-generated method stub
-		return new StringTextComponent("Bracelet");
+		return new TextComponent("Bracelet");
 	}
 
 	public void setTomeLevel(ItemStack trainerStack, int slot, int desiredLevel)

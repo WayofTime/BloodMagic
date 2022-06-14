@@ -1,8 +1,8 @@
 package wayoftime.bloodmagic.compat;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.NonNullList;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.items.IItemHandler;
@@ -30,7 +30,7 @@ public class CuriosCompat
 		BloodMagicAPI.INSTANCE.registerInventoryProvider("curiosInventory", player -> getCuriosInventory(player));
 	}
 
-	public NonNullList<ItemStack> getCuriosInventory(PlayerEntity player)
+	public NonNullList<ItemStack> getCuriosInventory(Player player)
 	{
 		IItemHandler itemHandler = CuriosApi.getCuriosHelper().getEquippedCurios(player).resolve().get();
 
@@ -42,7 +42,7 @@ public class CuriosCompat
 		return inventory;
 	}
 
-	public int recalculateCuriosSlots(PlayerEntity player)
+	public int recalculateCuriosSlots(Player player)
 	{
 		ISlotHelper slotHelper = CuriosApi.getSlotHelper();
 		if (LivingUtil.hasFullSet(player))

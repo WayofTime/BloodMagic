@@ -1,19 +1,19 @@
 package wayoftime.bloodmagic.common.item;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.fml.common.thread.EffectiveSide;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulTicket;
@@ -59,10 +59,10 @@ public class ItemLavaCrystal extends ItemBindableBase
 				return 200;
 			else
 			{
-				PlayerEntity player = PlayerHelper.getPlayerFromUUID(binding.getOwnerId());
+				Player player = PlayerHelper.getPlayerFromUUID(binding.getOwnerId());
 				if (player != null)
 				{
-					player.addEffect(new EffectInstance(Effects.CONFUSION, 99));
+					player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 99));
 				}
 			}
 		} else
@@ -91,39 +91,39 @@ public class ItemLavaCrystal extends ItemBindableBase
 //	}
 
 	@Override
-	public ActionResultType useOn(ItemUseContext context)
+	public InteractionResult useOn(UseOnContext context)
 	{
 		BlockPos pos = context.getClickedPos();
 		Direction facing = context.getClickedFace();
 		pos = pos.relative(facing);
-		PlayerEntity player = context.getPlayer();
-		Hand hand = context.getHand();
+		Player player = context.getPlayer();
+		InteractionHand hand = context.getHand();
 		ItemStack itemstack = player.getItemInHand(hand);
 
 		Binding binding = getBinding(player.getItemInHand(hand));
 
 		if (binding == null)
-			return ActionResultType.FAIL;
+			return InteractionResult.FAIL;
 
 		if (!player.mayUseItemAt(pos, facing, itemstack))
-			return ActionResultType.FAIL;
+			return InteractionResult.FAIL;
 
 		if (context.getLevel().isEmptyBlock(pos) && context.getLevel().isClientSide)
 		{
-			context.getLevel().playSound(player, pos, SoundEvents.FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0F, random.nextFloat() * 0.4F + 0.8F);
-			return ActionResultType.SUCCESS;
+			context.getLevel().playSound(player, pos, SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS, 1.0F, random.nextFloat() * 0.4F + 0.8F);
+			return InteractionResult.SUCCESS;
 		}
 
 		if (context.getLevel().isEmptyBlock(pos) && NetworkHelper.getSoulNetwork(binding).syphonAndDamage(player, SoulTicket.item(player.getItemInHand(hand), 100)).isSuccess())
 		{
-			context.getLevel().playSound(player, pos, SoundEvents.FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0F, random.nextFloat() * 0.4F + 0.8F);
+			context.getLevel().playSound(player, pos, SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS, 1.0F, random.nextFloat() * 0.4F + 0.8F);
 			context.getLevel().setBlock(pos, Blocks.FIRE.defaultBlockState(), 11);
 		} else
-			return ActionResultType.FAIL;
+			return InteractionResult.FAIL;
 
-		if (player instanceof ServerPlayerEntity)
-			CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayerEntity) player, pos, itemstack);
+		if (player instanceof ServerPlayer)
+			CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer) player, pos, itemstack);
 
-		return ActionResultType.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 }

@@ -9,18 +9,18 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.potion.Effect;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionIncreaseLength;
 import wayoftime.bloodmagic.util.Constants;
 
-public class PotionIncreaseLengthRecipeSerializer<RECIPE extends RecipePotionIncreaseLength> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RECIPE>
+public class PotionIncreaseLengthRecipeSerializer<RECIPE extends RecipePotionIncreaseLength> extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RECIPE>
 {
 	private final IFactory<RECIPE> factory;
 
@@ -35,9 +35,9 @@ public class PotionIncreaseLengthRecipeSerializer<RECIPE extends RecipePotionInc
 	{
 		List<Ingredient> inputList = new ArrayList<Ingredient>();
 
-		if (json.has(Constants.JSON.INPUT) && JSONUtils.isArrayNode(json, Constants.JSON.INPUT))
+		if (json.has(Constants.JSON.INPUT) && GsonHelper.isArrayNode(json, Constants.JSON.INPUT))
 		{
-			JsonArray mainArray = JSONUtils.getAsJsonArray(json, Constants.JSON.INPUT);
+			JsonArray mainArray = GsonHelper.getAsJsonArray(json, Constants.JSON.INPUT);
 
 			arrayLoop: for (JsonElement element : mainArray)
 			{
@@ -60,18 +60,18 @@ public class PotionIncreaseLengthRecipeSerializer<RECIPE extends RecipePotionInc
 
 //		ItemStack output = SerializerHelper.getItemStack(json, Constants.JSON.OUTPUT);
 
-		int syphon = JSONUtils.getAsInt(json, Constants.JSON.SYPHON);
-		int ticks = JSONUtils.getAsInt(json, Constants.JSON.TICKS);
-		int minimumTier = JSONUtils.getAsInt(json, Constants.JSON.ALTAR_TIER);
+		int syphon = GsonHelper.getAsInt(json, Constants.JSON.SYPHON);
+		int ticks = GsonHelper.getAsInt(json, Constants.JSON.TICKS);
+		int minimumTier = GsonHelper.getAsInt(json, Constants.JSON.ALTAR_TIER);
 
-		Effect outputEffect = BloodMagicPotions.getEffect(new ResourceLocation(JSONUtils.getAsString(json, Constants.JSON.EFFECT)));
-		double lengthDurationMod = JSONUtils.getAsFloat(json, Constants.JSON.LENGTH_DUR_MOD);
+		MobEffect outputEffect = BloodMagicPotions.getEffect(new ResourceLocation(GsonHelper.getAsString(json, Constants.JSON.EFFECT)));
+		double lengthDurationMod = GsonHelper.getAsFloat(json, Constants.JSON.LENGTH_DUR_MOD);
 
 		return this.factory.create(recipeId, inputList, outputEffect, lengthDurationMod, syphon, ticks, minimumTier);
 	}
 
 	@Override
-	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
+	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull FriendlyByteBuf buffer)
 	{
 		try
 		{
@@ -87,7 +87,7 @@ public class PotionIncreaseLengthRecipeSerializer<RECIPE extends RecipePotionInc
 			int ticks = buffer.readInt();
 			int minimumTier = buffer.readInt();
 
-			Effect outputEffect = Effect.byId(buffer.readInt());
+			MobEffect outputEffect = MobEffect.byId(buffer.readInt());
 			double lengthDurationMod = buffer.readDouble();
 
 			return this.factory.create(recipeId, input, outputEffect, lengthDurationMod, syphon, ticks, minimumTier);
@@ -98,7 +98,7 @@ public class PotionIncreaseLengthRecipeSerializer<RECIPE extends RecipePotionInc
 	}
 
 	@Override
-	public void toNetwork(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
+	public void toNetwork(@Nonnull FriendlyByteBuf buffer, @Nonnull RECIPE recipe)
 	{
 		try
 		{
@@ -112,6 +112,6 @@ public class PotionIncreaseLengthRecipeSerializer<RECIPE extends RecipePotionInc
 	@FunctionalInterface
 	public interface IFactory<RECIPE extends RecipePotionIncreaseLength>
 	{
-		RECIPE create(ResourceLocation id, List<Ingredient> input, Effect outputEffect, double lengthDurationMod, int syphon, int ticks, int minimumTier);
+		RECIPE create(ResourceLocation id, List<Ingredient> input, MobEffect outputEffect, double lengthDurationMod, int syphon, int ticks, int minimumTier);
 	}
 }

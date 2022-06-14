@@ -1,6 +1,6 @@
 package wayoftime.bloodmagic.api.compat;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Interface for Items that contain Will

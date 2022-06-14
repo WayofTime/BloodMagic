@@ -2,19 +2,19 @@ package wayoftime.bloodmagic.common.item;
 
 import java.util.List;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
@@ -34,12 +34,12 @@ public class ItemInscriptionTool extends Item
 	}
 
 	@Override
-	public ActionResultType useOn(ItemUseContext context)
+	public InteractionResult useOn(UseOnContext context)
 	{
 		ItemStack stack = context.getItemInHand();
 		BlockPos pos = context.getClickedPos();
-		World world = context.getLevel();
-		PlayerEntity player = context.getPlayer();
+		Level world = context.getLevel();
+		Player player = context.getPlayer();
 		BlockState state = world.getBlockState(pos);
 
 		if (state.getBlock() instanceof BlockRitualStone
@@ -49,19 +49,19 @@ public class ItemInscriptionTool extends Item
 			if (!player.isCreative())
 			{
 				stack.hurtAndBreak(1, player, (entity) -> {
-					entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
+					entity.broadcastBreakEvent(EquipmentSlot.MAINHAND);
 				});
 			}
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 
-		return ActionResultType.FAIL;
+		return InteractionResult.FAIL;
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent(TextHelper.localizeEffect("tooltip.bloodmagic.inscriber.desc")).withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslatableComponent(TextHelper.localizeEffect("tooltip.bloodmagic.inscriber.desc")).withStyle(ChatFormatting.GRAY));
 	}
 }

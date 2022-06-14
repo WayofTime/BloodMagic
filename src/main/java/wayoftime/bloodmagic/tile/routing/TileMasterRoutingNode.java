@@ -12,21 +12,21 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.Triple;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -44,10 +44,10 @@ import wayoftime.bloodmagic.tile.TileInventory;
 import wayoftime.bloodmagic.tile.container.ContainerMasterRoutingNode;
 import wayoftime.bloodmagic.util.Constants;
 
-public class TileMasterRoutingNode extends TileInventory implements IMasterRoutingNode, ITickableTileEntity, INamedContainerProvider
+public class TileMasterRoutingNode extends TileInventory implements IMasterRoutingNode, TickableBlockEntity, MenuProvider
 {
 	@ObjectHolder("bloodmagic:masterroutingnode")
-	public static TileEntityType<TileMasterRoutingNode> TYPE;
+	public static BlockEntityType<TileMasterRoutingNode> TYPE;
 
 	public static final int tickRate = 20;
 	private int currentInput;
@@ -60,7 +60,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 
 	public static final int SLOT = 0;
 
-	public TileMasterRoutingNode(TileEntityType<?> type)
+	public TileMasterRoutingNode(BlockEntityType<?> type)
 	{
 		super(type, 1, "masterroutingnode");
 	}
@@ -95,7 +95,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 
 		for (BlockPos outputPos : outputNodeList)
 		{
-			TileEntity outputTile = getLevel().getBlockEntity(outputPos);
+			BlockEntity outputTile = getLevel().getBlockEntity(outputPos);
 			if (this.isConnected(new LinkedList<>(), outputPos))
 			{
 				if (outputTile instanceof IOutputItemRoutingNode)
@@ -155,7 +155,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 
 		for (BlockPos inputPos : inputNodeList)
 		{
-			TileEntity inputTile = getLevel().getBlockEntity(inputPos);
+			BlockEntity inputTile = getLevel().getBlockEntity(inputPos);
 			if (this.isConnected(new LinkedList<>(), inputPos))
 			{
 				if (inputTile instanceof IInputItemRoutingNode)
@@ -268,13 +268,13 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tag)
+	public CompoundTag serialize(CompoundTag tag)
 	{
 		super.serialize(tag);
-		ListNBT tags = new ListNBT();
+		ListTag tags = new ListTag();
 		for (BlockPos pos : generalNodeList)
 		{
-			CompoundNBT posTag = new CompoundNBT();
+			CompoundTag posTag = new CompoundTag();
 			posTag.putInt(Constants.NBT.X_COORD, pos.getX());
 			posTag.putInt(Constants.NBT.Y_COORD, pos.getY());
 			posTag.putInt(Constants.NBT.Z_COORD, pos.getZ());
@@ -282,10 +282,10 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 		}
 		tag.put(Constants.NBT.ROUTING_MASTER_GENERAL, tags);
 
-		tags = new ListNBT();
+		tags = new ListTag();
 		for (BlockPos pos : inputNodeList)
 		{
-			CompoundNBT posTag = new CompoundNBT();
+			CompoundTag posTag = new CompoundTag();
 			posTag.putInt(Constants.NBT.X_COORD, pos.getX());
 			posTag.putInt(Constants.NBT.Y_COORD, pos.getY());
 			posTag.putInt(Constants.NBT.Z_COORD, pos.getZ());
@@ -293,10 +293,10 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 		}
 		tag.put(Constants.NBT.ROUTING_MASTER_INPUT, tags);
 
-		tags = new ListNBT();
+		tags = new ListTag();
 		for (BlockPos pos : outputNodeList)
 		{
-			CompoundNBT posTag = new CompoundNBT();
+			CompoundTag posTag = new CompoundTag();
 			posTag.putInt(Constants.NBT.X_COORD, pos.getX());
 			posTag.putInt(Constants.NBT.Y_COORD, pos.getY());
 			posTag.putInt(Constants.NBT.Z_COORD, pos.getZ());
@@ -307,14 +307,14 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tag)
+	public void deserialize(CompoundTag tag)
 	{
 		super.deserialize(tag);
 
-		ListNBT tags = tag.getList(Constants.NBT.ROUTING_MASTER_GENERAL, 10);
+		ListTag tags = tag.getList(Constants.NBT.ROUTING_MASTER_GENERAL, 10);
 		for (int i = 0; i < tags.size(); i++)
 		{
-			CompoundNBT blockTag = tags.getCompound(i);
+			CompoundTag blockTag = tags.getCompound(i);
 			BlockPos newPos = new BlockPos(blockTag.getInt(Constants.NBT.X_COORD), blockTag.getInt(Constants.NBT.Y_COORD), blockTag.getInt(Constants.NBT.Z_COORD));
 			generalNodeList.add(newPos);
 		}
@@ -322,7 +322,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 		tags = tag.getList(Constants.NBT.ROUTING_MASTER_INPUT, 10);
 		for (int i = 0; i < tags.size(); i++)
 		{
-			CompoundNBT blockTag = tags.getCompound(i);
+			CompoundTag blockTag = tags.getCompound(i);
 			BlockPos newPos = new BlockPos(blockTag.getInt(Constants.NBT.X_COORD), blockTag.getInt(Constants.NBT.Y_COORD), blockTag.getInt(Constants.NBT.Z_COORD));
 			inputNodeList.add(newPos);
 		}
@@ -330,7 +330,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 		tags = tag.getList(Constants.NBT.ROUTING_MASTER_OUTPUT, 10);
 		for (int i = 0; i < tags.size(); i++)
 		{
-			CompoundNBT blockTag = tags.getCompound(i);
+			CompoundTag blockTag = tags.getCompound(i);
 			BlockPos newPos = new BlockPos(blockTag.getInt(Constants.NBT.X_COORD), blockTag.getInt(Constants.NBT.Y_COORD), blockTag.getInt(Constants.NBT.Z_COORD));
 			outputNodeList.add(newPos);
 		}
@@ -344,7 +344,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 //        {
 //            return false;
 //        }
-		TileEntity tile = getLevel().getBlockEntity(nodePos);
+		BlockEntity tile = getLevel().getBlockEntity(nodePos);
 		if (!(tile instanceof IRoutingNode))
 		{
 //            connectionMap.remove(nodePos);
@@ -463,7 +463,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 	}
 
 	@Override
-	public void connectMasterToRemainingNode(World world, List<BlockPos> alreadyChecked, IMasterRoutingNode master)
+	public void connectMasterToRemainingNode(Level world, List<BlockPos> alreadyChecked, IMasterRoutingNode master)
 	{
 		return;
 	}
@@ -514,7 +514,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 		while (itr.hasNext())
 		{
 			BlockPos testPos = itr.next();
-			TileEntity tile = getLevel().getBlockEntity(testPos);
+			BlockEntity tile = getLevel().getBlockEntity(testPos);
 			if (tile instanceof IRoutingNode)
 			{
 				((IRoutingNode) tile).removeConnection(worldPosition);
@@ -553,15 +553,15 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 	}
 
 	@Override
-	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_)
+	public AbstractContainerMenu createMenu(int p_createMenu_1_, Inventory p_createMenu_2_, Player p_createMenu_3_)
 	{
 		assert level != null;
 		return new ContainerMasterRoutingNode(this, p_createMenu_1_, p_createMenu_2_);
 	}
 
 	@Override
-	public ITextComponent getDisplayName()
+	public Component getDisplayName()
 	{
-		return new StringTextComponent("Master Routing Node");
+		return new TextComponent("Master Routing Node");
 	}
 }

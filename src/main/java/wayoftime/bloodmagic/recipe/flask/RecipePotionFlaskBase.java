@@ -7,11 +7,11 @@ import javax.annotation.Nonnull;
 
 import com.google.common.base.Preconditions;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.item.potion.ItemAlchemyFlask;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
@@ -88,7 +88,7 @@ public abstract class RecipePotionFlaskBase extends BloodMagicRecipe
 	}
 
 	@Override
-	public void write(PacketBuffer buffer)
+	public void write(FriendlyByteBuf buffer)
 	{
 		buffer.writeInt(input.size());
 		for (int i = 0; i < input.size(); i++)
@@ -107,7 +107,7 @@ public abstract class RecipePotionFlaskBase extends BloodMagicRecipe
 //	}
 
 	@Override
-	public IRecipeType<RecipePotionFlaskBase> getType()
+	public RecipeType<RecipePotionFlaskBase> getType()
 	{
 		return BloodMagicRecipeType.POTIONFLASK;
 	}

@@ -3,8 +3,8 @@ package wayoftime.bloodmagic.potion;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.potion.EffectType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.effect.MobEffectCategory;
 
 public class PotionSuspended extends PotionBloodMagic
 {
@@ -12,7 +12,7 @@ public class PotionSuspended extends PotionBloodMagic
 
 	public PotionSuspended()
 	{
-		super(EffectType.NEUTRAL, 0x23DDE1);
+		super(MobEffectCategory.NEUTRAL, 0x23DDE1);
 	}
 
 	@Override

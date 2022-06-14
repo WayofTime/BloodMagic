@@ -6,22 +6,22 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootPoolEntryType;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.StandaloneLootEntry;
-import net.minecraft.loot.ValidationTracker;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.loot.functions.ILootFunction;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryType;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
+import net.minecraft.world.level.storage.loot.ValidationContext;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 
-public class BMTableLootEntry extends StandaloneLootEntry
+public class BMTableLootEntry extends LootPoolSingletonContainer
 {
 	private final ResourceLocation table;
 
-	private BMTableLootEntry(ResourceLocation tableIn, int weightIn, int qualityIn, ILootCondition[] conditionsIn, ILootFunction[] functionsIn)
+	private BMTableLootEntry(ResourceLocation tableIn, int weightIn, int qualityIn, LootItemCondition[] conditionsIn, LootItemFunction[] functionsIn)
 	{
 		super(weightIn, qualityIn, conditionsIn, functionsIn);
 		this.table = tableIn;
@@ -38,7 +38,7 @@ public class BMTableLootEntry extends StandaloneLootEntry
 		loottable.getRandomItemsRaw(context, stackConsumer);
 	}
 
-	public void validate(ValidationTracker p_225579_1_)
+	public void validate(ValidationContext p_225579_1_)
 	{
 		if (p_225579_1_.hasVisitedTable(this.table))
 		{
@@ -58,14 +58,14 @@ public class BMTableLootEntry extends StandaloneLootEntry
 		}
 	}
 
-	public static StandaloneLootEntry.Builder<?> builder(ResourceLocation tableIn)
+	public static LootPoolSingletonContainer.Builder<?> builder(ResourceLocation tableIn)
 	{
 		return simpleBuilder((weight, quality, conditions, functions) -> {
 			return new BMTableLootEntry(tableIn, weight, quality, conditions, functions);
 		});
 	}
 
-	public static class Serializer extends StandaloneLootEntry.Serializer<BMTableLootEntry>
+	public static class Serializer extends LootPoolSingletonContainer.Serializer<BMTableLootEntry>
 	{
 		public void serializeCustom(JsonObject object, BMTableLootEntry context, JsonSerializationContext conditions)
 		{
@@ -73,9 +73,9 @@ public class BMTableLootEntry extends StandaloneLootEntry
 			object.addProperty("name", context.table.toString());
 		}
 
-		protected BMTableLootEntry deserialize(JsonObject object, JsonDeserializationContext context, int weight, int quality, ILootCondition[] conditions, ILootFunction[] functions)
+		protected BMTableLootEntry deserialize(JsonObject object, JsonDeserializationContext context, int weight, int quality, LootItemCondition[] conditions, LootItemFunction[] functions)
 		{
-			ResourceLocation resourcelocation = new ResourceLocation(JSONUtils.getAsString(object, "name"));
+			ResourceLocation resourcelocation = new ResourceLocation(GsonHelper.getAsString(object, "name"));
 			return new BMTableLootEntry(resourcelocation, weight, quality, conditions, functions);
 		}
 	}

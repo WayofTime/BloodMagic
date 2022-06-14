@@ -1,18 +1,18 @@
 package wayoftime.bloodmagic.common.item.sigil;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IBucketPickupHandler;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.BucketPickup;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
@@ -28,36 +28,36 @@ public class ItemSigilVoid extends ItemSigilFluidBase
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
 		if (stack.getItem() instanceof ISigil.Holding)
 			stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
 		if (PlayerHelper.isFakePlayer(player))
-			return ActionResult.fail(stack);
+			return InteractionResultHolder.fail(stack);
 
 		if (!world.isClientSide && !isUnusable(stack))
 		{
-			RayTraceResult rayTrace = getPlayerPOVHitResult(world, player, RayTraceContext.FluidMode.SOURCE_ONLY);
+			HitResult rayTrace = getPlayerPOVHitResult(world, player, ClipContext.Fluid.SOURCE_ONLY);
 
-			if (rayTrace == null || rayTrace.getType() != RayTraceResult.Type.BLOCK)
+			if (rayTrace == null || rayTrace.getType() != HitResult.Type.BLOCK)
 			{
-				return ActionResult.fail(stack);
+				return InteractionResultHolder.fail(stack);
 			}
 
-			BlockRayTraceResult blockRayTrace = (BlockRayTraceResult) rayTrace;
+			BlockHitResult blockRayTrace = (BlockHitResult) rayTrace;
 			BlockPos blockPos = blockRayTrace.getBlockPos();
 			Direction sideHit = blockRayTrace.getDirection();
 
 			if (world.mayInteract(player, blockPos) && player.mayUseItemAt(blockPos, sideHit, stack))
 			{
 				BlockState blockState = world.getBlockState(blockPos);
-				if (blockState.getBlock() instanceof IBucketPickupHandler)
+				if (blockState.getBlock() instanceof BucketPickup)
 				{
 					if (NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess())
 					{
-						((IBucketPickupHandler) blockState.getBlock()).takeLiquid(world, blockPos, blockState);
-						return ActionResult.success(stack);
+						((BucketPickup) blockState.getBlock()).takeLiquid(world, blockPos, blockState);
+						return InteractionResultHolder.success(stack);
 					}
 				}
 				// Void is simpler than the other fluid sigils, because getFluidHandler grabs

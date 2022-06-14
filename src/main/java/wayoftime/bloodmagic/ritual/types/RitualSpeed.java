@@ -3,16 +3,16 @@ package wayoftime.bloodmagic.ritual.types;
 import java.util.List;
 import java.util.function.Consumer;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
@@ -46,7 +46,7 @@ public class RitualSpeed extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
+		Level world = masterRitualStone.getWorldObj();
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
 		if (currentEssence < getRefreshCost())
@@ -96,7 +96,7 @@ public class RitualSpeed extends Ritual
 				continue;
 			}
 
-			if (entity instanceof PlayerEntity && (transportChildren ^ transportAdults))
+			if (entity instanceof Player && (transportChildren ^ transportAdults))
 			{
 				continue;
 			}
@@ -130,7 +130,7 @@ public class RitualSpeed extends Ritual
 				speed += getAdditionalHorizontalSpeedForWill(corrosiveWill);
 			}
 
-			Vector3d motion = entity.getDeltaMovement();
+			Vec3 motion = entity.getDeltaMovement();
 
 			double motionX = motion.x();
 			double motionZ = motion.z();
@@ -163,15 +163,15 @@ public class RitualSpeed extends Ritual
 
 			if (steadfastWill >= steadfastWillDrain)
 			{
-				entity.addEffect(new EffectInstance(BloodMagicPotions.SOFT_FALL, 100, 0));
+				entity.addEffect(new MobEffectInstance(BloodMagicPotions.SOFT_FALL, 100, 0));
 				steadfastWill -= steadfastWillDrain;
 				steadfastDrain += steadfastWillDrain;
 			}
 
 			entity.setDeltaMovement(motionX, motionY, motionZ);
-			if (entity instanceof ServerPlayerEntity)
+			if (entity instanceof ServerPlayer)
 			{
-				BloodMagic.packetHandler.sendTo(new SetClientVelocityPacket(motionX, motionY, motionZ), (ServerPlayerEntity) entity);
+				BloodMagic.packetHandler.sendTo(new SetClientVelocityPacket(motionX, motionY, motionZ), (ServerPlayer) entity);
 			}
 		}
 
@@ -233,14 +233,14 @@ public class RitualSpeed extends Ritual
 	}
 
 	@Override
-	public ITextComponent[] provideInformationOfRitualToPlayer(PlayerEntity player)
+	public Component[] provideInformationOfRitualToPlayer(Player player)
 	{
-		return new ITextComponent[] { new TranslationTextComponent(this.getTranslationKey() + ".info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".default.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".corrosive.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".steadfast.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".destructive.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".vengeful.info") };
+		return new Component[] { new TranslatableComponent(this.getTranslationKey() + ".info"),
+				new TranslatableComponent(this.getTranslationKey() + ".default.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".corrosive.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".steadfast.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".destructive.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".vengeful.info") };
 	}
 
 	public double getVerticalSpeedForWill(double rawWill)

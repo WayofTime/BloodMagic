@@ -1,7 +1,7 @@
 package wayoftime.bloodmagic.event;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
 import wayoftime.bloodmagic.common.item.IBindable;
@@ -9,7 +9,7 @@ import wayoftime.bloodmagic.common.item.IBindable;
 @Cancelable
 public class ItemBindEvent extends Event
 {
-	private final PlayerEntity player;
+	private final Player player;
 	private final ItemStack itemStack;
 
 	/**
@@ -21,13 +21,13 @@ public class ItemBindEvent extends Event
 	 *                  <p>
 	 *                  This event is {@link Cancelable}.<br>
 	 */
-	public ItemBindEvent(PlayerEntity player, ItemStack itemStack)
+	public ItemBindEvent(Player player, ItemStack itemStack)
 	{
 		this.player = player;
 		this.itemStack = itemStack;
 	}
 
-	public PlayerEntity getNewOwner()
+	public Player getNewOwner()
 	{
 		return player;
 	}

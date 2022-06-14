@@ -13,9 +13,9 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.world.World;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.recipe.EffectHolder;
@@ -31,7 +31,7 @@ import wayoftime.bloodmagic.recipe.flask.RecipePotionFlaskBase;
 public class BloodMagicRecipeRegistrar
 {
 	@Nullable
-	public RecipeBloodAltar getBloodAltar(World world, @Nonnull ItemStack input)
+	public RecipeBloodAltar getBloodAltar(Level world, @Nonnull ItemStack input)
 	{
 		Preconditions.checkNotNull(input, "input cannot be null.");
 		if (input.isEmpty())
@@ -45,7 +45,7 @@ public class BloodMagicRecipeRegistrar
 		return null;
 	}
 
-	public RecipeARC getARC(World world, @Nonnull ItemStack input, @Nonnull ItemStack arcToolInput, @Nonnull FluidStack inputFluid)
+	public RecipeARC getARC(Level world, @Nonnull ItemStack input, @Nonnull ItemStack arcToolInput, @Nonnull FluidStack inputFluid)
 	{
 		Preconditions.checkNotNull(input, "input cannot be null.");
 		Preconditions.checkNotNull(arcToolInput, "tool cannot be null.");
@@ -80,7 +80,7 @@ public class BloodMagicRecipeRegistrar
 	}
 
 	@Nullable
-	public RecipeAlchemyTable getAlchemyTable(World world, @Nonnull List<ItemStack> input)
+	public RecipeAlchemyTable getAlchemyTable(Level world, @Nonnull List<ItemStack> input)
 	{
 		Preconditions.checkNotNull(input, "input cannot be null.");
 		if (input.isEmpty())
@@ -119,7 +119,7 @@ public class BloodMagicRecipeRegistrar
 	}
 
 	@Nullable
-	public RecipeMeteor getMeteor(World world, @Nonnull ItemStack input)
+	public RecipeMeteor getMeteor(Level world, @Nonnull ItemStack input)
 	{
 		Preconditions.checkNotNull(input, "input cannot be null.");
 		if (input.isEmpty())
@@ -135,7 +135,7 @@ public class BloodMagicRecipeRegistrar
 	}
 
 	@Nullable
-	public RecipePotionFlaskBase getPotionFlaskRecipe(World world, ItemStack flaskStack, @Nonnull List<EffectHolder> holderList, @Nonnull List<ItemStack> input)
+	public RecipePotionFlaskBase getPotionFlaskRecipe(Level world, ItemStack flaskStack, @Nonnull List<EffectHolder> holderList, @Nonnull List<ItemStack> input)
 	{
 		Preconditions.checkNotNull(input, "input cannot be null.");
 		if (input.isEmpty())
@@ -193,7 +193,7 @@ public class BloodMagicRecipeRegistrar
 	}
 
 	@Nullable
-	public RecipeTartaricForge getTartaricForge(World world, @Nonnull List<ItemStack> input)
+	public RecipeTartaricForge getTartaricForge(Level world, @Nonnull List<ItemStack> input)
 	{
 		Preconditions.checkNotNull(input, "input cannot be null.");
 		if (input.isEmpty())
@@ -240,7 +240,7 @@ public class BloodMagicRecipeRegistrar
 	 *         the returned recipe is a full match.
 	 */
 	@Nullable
-	public Pair<Boolean, RecipeAlchemyArray> getAlchemyArray(World world, @Nonnull ItemStack input, @Nonnull ItemStack catalyst)
+	public Pair<Boolean, RecipeAlchemyArray> getAlchemyArray(Level world, @Nonnull ItemStack input, @Nonnull ItemStack catalyst)
 	{
 		Preconditions.checkNotNull(input, "input cannot be null.");
 		if (input.isEmpty())
@@ -267,7 +267,7 @@ public class BloodMagicRecipeRegistrar
 	}
 
 	@Nullable
-	public RecipeLivingDowngrade getLivingDowngrade(World world, @Nonnull ItemStack input)
+	public RecipeLivingDowngrade getLivingDowngrade(Level world, @Nonnull ItemStack input)
 	{
 		Preconditions.checkNotNull(input, "input cannot be null.");
 		if (input.isEmpty())
@@ -281,37 +281,37 @@ public class BloodMagicRecipeRegistrar
 		return null;
 	}
 
-	public Set<RecipeBloodAltar> getAltarRecipes(World world)
+	public Set<RecipeBloodAltar> getAltarRecipes(Level world)
 	{
 		return ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ALTAR));
 	}
 
-	public Set<RecipeTartaricForge> getTartaricForgeRecipes(World world)
+	public Set<RecipeTartaricForge> getTartaricForgeRecipes(Level world)
 	{
 		return ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.TARTARICFORGE));
 	}
 
-	public Set<RecipeAlchemyArray> getAlchemyArrayRecipes(World world)
+	public Set<RecipeAlchemyArray> getAlchemyArrayRecipes(Level world)
 	{
 		return ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ARRAY));
 	}
 
-	public Set<RecipeARC> getARCRecipes(World world)
+	public Set<RecipeARC> getARCRecipes(Level world)
 	{
 		return ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ARC));
 	}
 
-	public Set<RecipeAlchemyTable> getAlchemyTableRecipes(World world)
+	public Set<RecipeAlchemyTable> getAlchemyTableRecipes(Level world)
 	{
 		return ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ALCHEMYTABLE));
 	}
 
-	public Set<RecipePotionFlaskBase> getPotionFlaskRecipes(World world)
+	public Set<RecipePotionFlaskBase> getPotionFlaskRecipes(Level world)
 	{
 		return ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.POTIONFLASK));
 	}
 
-	public Set<RecipeAlchemyArray> getCraftingAlchemyArrayRecipes(World world)
+	public Set<RecipeAlchemyArray> getCraftingAlchemyArrayRecipes(Level world)
 	{
 		Set<RecipeAlchemyArray> recipes = new HashSet<RecipeAlchemyArray>(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ARRAY));
 

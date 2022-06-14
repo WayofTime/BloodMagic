@@ -2,19 +2,19 @@ package wayoftime.bloodmagic.common.item;
 
 import java.util.List;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
@@ -37,21 +37,21 @@ public class ItemExperienceBook extends Item
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.experienceTome").withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.experienceTome").withStyle(ChatFormatting.GRAY));
 
 		if (!stack.hasTag())
 			return;
 
 		double storedExp = getStoredExperience(stack);
 
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.experienceTome.exp", (int) storedExp).withStyle(TextFormatting.GRAY));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.experienceTome.expLevel", getLevelForExperience(storedExp)).withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.experienceTome.exp", (int) storedExp).withStyle(ChatFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.experienceTome.expLevel", getLevelForExperience(storedExp)).withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
 		if (!world.isClientSide)
@@ -62,10 +62,10 @@ public class ItemExperienceBook extends Item
 				giveOneLevelExpToPlayer(stack, player);
 		}
 
-		return new ActionResult<>(ActionResultType.SUCCESS, stack);
+		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 	}
 
-	public void giveOneLevelExpToPlayer(ItemStack stack, PlayerEntity player)
+	public void giveOneLevelExpToPlayer(ItemStack stack, Player player)
 	{
 		float progress = player.experienceProgress;
 		int expToNext = getExperienceForNextLevel(player.experienceLevel);
@@ -92,7 +92,7 @@ public class ItemExperienceBook extends Item
 		}
 	}
 
-	public void absorbOneLevelExpFromPlayer(ItemStack stack, PlayerEntity player)
+	public void absorbOneLevelExpFromPlayer(ItemStack stack, Player player)
 	{
 		float progress = player.experienceProgress;
 
@@ -114,12 +114,12 @@ public class ItemExperienceBook extends Item
 
 	// Credits to Ender IO for some of the experience code, although now modified
 	// slightly for my convenience.
-	public static int getPlayerXP(PlayerEntity player)
+	public static int getPlayerXP(Player player)
 	{
 		return (int) (getExperienceForLevel(player.experienceLevel) + (player.experienceProgress * player.getXpNeededForNextLevel()));
 	}
 
-	public static void addPlayerXP(PlayerEntity player, int amount)
+	public static void addPlayerXP(Player player, int amount)
 	{
 		int experience = Math.max(0, getPlayerXP(player) + amount);
 		player.totalExperience = experience;
@@ -132,7 +132,7 @@ public class ItemExperienceBook extends Item
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putDouble("experience", exp);
 	}
@@ -141,7 +141,7 @@ public class ItemExperienceBook extends Item
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		return tag.getDouble("experience");
 	}
@@ -184,7 +184,7 @@ public class ItemExperienceBook extends Item
 		return res;
 	}
 
-	public static double getExperienceAcquiredToNext(PlayerEntity player)
+	public static double getExperienceAcquiredToNext(Player player)
 	{
 		return player.experienceProgress * player.getXpNeededForNextLevel();
 	}

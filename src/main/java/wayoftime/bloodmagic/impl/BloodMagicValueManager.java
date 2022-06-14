@@ -7,9 +7,9 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.api.IBloodMagicValueManager;
 import wayoftime.bloodmagic.incense.EnumTranquilityType;
 import wayoftime.bloodmagic.incense.TranquilityStack;

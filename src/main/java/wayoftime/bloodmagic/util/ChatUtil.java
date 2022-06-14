@@ -4,14 +4,14 @@ import java.text.DecimalFormat;
 import java.util.function.Supplier;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.NewChatGui;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.Util;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.components.ChatComponent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.Util;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.util.helper.TextHelper;
@@ -22,9 +22,9 @@ public class ChatUtil
 	private static int lastAdded;
 	public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("###,###.##");
 
-	private static void sendNoSpamMessages(ITextComponent[] messages)
+	private static void sendNoSpamMessages(Component[] messages)
 	{
-		NewChatGui chat = Minecraft.getInstance().gui.getChat();
+		ChatComponent chat = Minecraft.getInstance().gui.getChat();
 //		 Minecraft.getMinecraft().ingameGUI.getChatGUI();
 //		for (int i = DELETION_ID + messages.length - 1; i <= lastAdded; i++)
 //		{
@@ -45,17 +45,17 @@ public class ChatUtil
 	 * @param s The string to wrap.
 	 * @return An {@link ITextComponent} containing the string.
 	 */
-	public static ITextComponent wrap(String s)
+	public static Component wrap(String s)
 	{
-		return new StringTextComponent(s);
+		return new TextComponent(s);
 	}
 
 	/**
 	 * @see #wrap(String)
 	 */
-	public static ITextComponent[] wrap(String... s)
+	public static Component[] wrap(String... s)
 	{
-		ITextComponent[] ret = new ITextComponent[s.length];
+		Component[] ret = new Component[s.length];
 		for (int i = 0; i < ret.length; i++)
 		{
 			ret[i] = wrap(s[i]);
@@ -69,9 +69,9 @@ public class ChatUtil
 	 * @param s    The string to format
 	 * @param args The args to apply to the format
 	 */
-	public static ITextComponent wrapFormatted(String s, Object... args)
+	public static Component wrapFormatted(String s, Object... args)
 	{
-		return new TranslationTextComponent(s, args);
+		return new TranslatableComponent(s, args);
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class ChatUtil
 	 * @param player The player to send the chat to
 	 * @param lines  The lines to send
 	 */
-	public static void sendChat(PlayerEntity player, String... lines)
+	public static void sendChat(Player player, String... lines)
 	{
 		sendChat(player, wrap(lines));
 	}
@@ -90,7 +90,7 @@ public class ChatUtil
 	 *
 	 * @see #sendChat(EntityPlayer, String...)
 	 */
-	public static void sendChatUnloc(PlayerEntity player, String... unlocLines)
+	public static void sendChatUnloc(Player player, String... unlocLines)
 	{
 		sendChat(player, TextHelper.localizeAll(unlocLines));
 	}
@@ -101,9 +101,9 @@ public class ChatUtil
 	 * @param player The player to send the chat lines to.
 	 * @param lines  The {@link ITextComponent chat components} to send.yes
 	 */
-	public static void sendChat(PlayerEntity player, ITextComponent... lines)
+	public static void sendChat(Player player, Component... lines)
 	{
-		for (ITextComponent c : lines)
+		for (Component c : lines)
 		{
 //			BloodMagic.packetHandler.send
 			player.sendMessage(c, Util.NIL_UUID);
@@ -138,7 +138,7 @@ public class ChatUtil
 	 *
 	 * @see #sendNoSpam(ServerPlayerEntity, ITextComponent...)
 	 */
-	public static void sendNoSpamClient(ITextComponent... lines)
+	public static void sendNoSpamClient(Component... lines)
 	{
 		sendNoSpamMessages(lines);
 	}
@@ -148,7 +148,7 @@ public class ChatUtil
 	 *
 	 * @see #sendNoSpam(EntityPlayer, String...)
 	 */
-	public static void sendNoSpamUnloc(PlayerEntity player, String... unlocLines)
+	public static void sendNoSpamUnloc(Player player, String... unlocLines)
 	{
 		sendNoSpam(player, TextHelper.localizeAll(unlocLines));
 	}
@@ -157,7 +157,7 @@ public class ChatUtil
 	 * @see #wrap(String)
 	 * @see #sendNoSpam(EntityPlayer, ITextComponent...)
 	 */
-	public static void sendNoSpam(PlayerEntity player, String... lines)
+	public static void sendNoSpam(Player player, String... lines)
 	{
 		sendNoSpam(player, wrap(lines));
 	}
@@ -168,11 +168,11 @@ public class ChatUtil
 	 *
 	 * @see #sendNoSpam(ServerPlayerEntity, ITextComponent...)
 	 */
-	public static void sendNoSpam(PlayerEntity player, ITextComponent... lines)
+	public static void sendNoSpam(Player player, Component... lines)
 	{
-		if (player instanceof ServerPlayerEntity)
+		if (player instanceof ServerPlayer)
 		{
-			sendNoSpam((ServerPlayerEntity) player, lines);
+			sendNoSpam((ServerPlayer) player, lines);
 		}
 	}
 
@@ -181,7 +181,7 @@ public class ChatUtil
 	 *
 	 * @see #sendNoSpam(ServerPlayerEntity, String...)
 	 */
-	public static void sendNoSpamUnloc(ServerPlayerEntity player, String... unlocLines)
+	public static void sendNoSpamUnloc(ServerPlayer player, String... unlocLines)
 	{
 		sendNoSpam(player, TextHelper.localizeAll(unlocLines));
 	}
@@ -190,7 +190,7 @@ public class ChatUtil
 	 * @see #wrap(String)
 	 * @see #sendNoSpam(ServerPlayerEntity, ITextComponent...)
 	 */
-	public static void sendNoSpam(ServerPlayerEntity player, String... lines)
+	public static void sendNoSpam(ServerPlayer player, String... lines)
 	{
 		sendNoSpam(player, wrap(lines));
 	}
@@ -204,7 +204,7 @@ public class ChatUtil
 	 * @param player The player to send the chat message to
 	 * @param lines  The chat lines to send.
 	 */
-	public static void sendNoSpam(ServerPlayerEntity player, ITextComponent... lines)
+	public static void sendNoSpam(ServerPlayer player, Component... lines)
 	{
 		if (lines.length > 0)
 			BloodMagic.packetHandler.sendTo(new PacketNoSpamChat(lines), player);
@@ -217,36 +217,36 @@ public class ChatUtil
 	 */
 	public static class PacketNoSpamChat
 	{
-		private ITextComponent[] chatLines;
+		private Component[] chatLines;
 
 		public PacketNoSpamChat()
 		{
-			chatLines = new ITextComponent[0];
+			chatLines = new Component[0];
 		}
 
-		private PacketNoSpamChat(ITextComponent... lines)
+		private PacketNoSpamChat(Component... lines)
 		{
 			// this is guaranteed to be >1 length by accessing methods
 			this.chatLines = lines;
 		}
 
-		public static void encode(PacketNoSpamChat pkt, PacketBuffer buf)
+		public static void encode(PacketNoSpamChat pkt, FriendlyByteBuf buf)
 		{
 			buf.writeInt(pkt.chatLines.length);
-			for (ITextComponent c : pkt.chatLines)
+			for (Component c : pkt.chatLines)
 			{
 //				ByteBufUtils.writeUTF8String(buf, ITextComponent.Serializer.componentToJson(c));
-				buf.writeUtf(ITextComponent.Serializer.toJson(c));
+				buf.writeUtf(Component.Serializer.toJson(c));
 			}
 		}
 
-		public static PacketNoSpamChat decode(PacketBuffer buf)
+		public static PacketNoSpamChat decode(FriendlyByteBuf buf)
 		{
-			PacketNoSpamChat pkt = new PacketNoSpamChat(new ITextComponent[buf.readInt()]);
+			PacketNoSpamChat pkt = new PacketNoSpamChat(new Component[buf.readInt()]);
 			for (int i = 0; i < pkt.chatLines.length; i++)
 			{
 //				pkt.chatLines[i] = ITextComponent.Serializer.jsonToComponent(ByteBufUtils.readUTF8String(buf));
-				pkt.chatLines[i] = ITextComponent.Serializer.fromJsonLenient(buf.readUtf());
+				pkt.chatLines[i] = Component.Serializer.fromJsonLenient(buf.readUtf());
 			}
 			return pkt;
 		}

@@ -4,13 +4,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
@@ -46,7 +46,7 @@ public class RitualRegeneration extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
+		Level world = masterRitualStone.getWorldObj();
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
 		if (currentEssence < getRefreshCost())
@@ -81,18 +81,18 @@ public class RitualRegeneration extends Ritual
 		int maxAbsorption = 20;
 
 		AreaDescriptor healArea = masterRitualStone.getBlockRange(HEAL_RANGE);
-		AxisAlignedBB healRange = healArea.getAABB(pos);
+		AABB healRange = healArea.getAABB(pos);
 
 		AreaDescriptor damageArea = masterRitualStone.getBlockRange(VAMPIRE_RANGE);
-		AxisAlignedBB damageRange = damageArea.getAABB(pos);
+		AABB damageRange = damageArea.getAABB(pos);
 
 		List<LivingEntity> entities = world.getEntitiesOfClass(LivingEntity.class, healRange);
-		List<PlayerEntity> players = world.getEntitiesOfClass(PlayerEntity.class, healRange);
+		List<Player> players = world.getEntitiesOfClass(Player.class, healRange);
 		List<LivingEntity> damagedEntities = world.getEntitiesOfClass(LivingEntity.class, damageRange);
 
 		if (syphonHealth)
 		{
-			for (PlayerEntity player : players)
+			for (Player player : players)
 			{
 				if (player.getHealth() <= player.getMaxHealth() - 1)
 				{
@@ -100,7 +100,7 @@ public class RitualRegeneration extends Ritual
 					Collections.shuffle(damagedEntities);
 					for (LivingEntity damagedEntity : damagedEntities)
 					{
-						if (damagedEntity instanceof PlayerEntity)
+						if (damagedEntity instanceof Player)
 						{
 							continue;
 						}
@@ -128,9 +128,9 @@ public class RitualRegeneration extends Ritual
 			float health = entity.getHealth();
 			if (health <= entity.getMaxHealth() - 1)
 			{
-				if (entity.canBeAffected(new EffectInstance(Effects.REGENERATION)))
+				if (entity.canBeAffected(new MobEffectInstance(MobEffects.REGENERATION)))
 				{
-					if (entity instanceof PlayerEntity)
+					if (entity instanceof Player)
 					{
 						totalCost += getRefreshCost();
 						currentEssence -= getRefreshCost();
@@ -140,7 +140,7 @@ public class RitualRegeneration extends Ritual
 						currentEssence -= getRefreshCost() / 10;
 					}
 
-					entity.addEffect(new EffectInstance(Effects.REGENERATION, 50, 0, false, false));
+					entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 50, 0, false, false));
 
 					totalEffects++;
 
@@ -150,7 +150,7 @@ public class RitualRegeneration extends Ritual
 					}
 				}
 			}
-			if (applyAbsorption && entity instanceof PlayerEntity)
+			if (applyAbsorption && entity instanceof Player)
 			{
 				if (applyAbsorption)
 				{

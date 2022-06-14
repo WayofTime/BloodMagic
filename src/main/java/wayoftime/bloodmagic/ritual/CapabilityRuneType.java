@@ -2,9 +2,9 @@ package wayoftime.bloodmagic.ritual;
 
 import java.util.concurrent.Callable;
 
-import net.minecraft.nbt.ByteNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.util.Direction;
+import net.minecraft.nbt.ByteTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 
 public final class CapabilityRuneType
@@ -12,15 +12,15 @@ public final class CapabilityRuneType
 	public static class RuneTypeStorage implements Capability.IStorage<IRitualStone.Tile>
 	{
 		@Override
-		public INBT writeNBT(Capability<IRitualStone.Tile> capability, IRitualStone.Tile instance, Direction side)
+		public Tag writeNBT(Capability<IRitualStone.Tile> capability, IRitualStone.Tile instance, Direction side)
 		{
-			return ByteNBT.valueOf((byte) instance.getRuneType().ordinal());
+			return ByteTag.valueOf((byte) instance.getRuneType().ordinal());
 		}
 
 		@Override
-		public void readNBT(Capability<IRitualStone.Tile> capability, IRitualStone.Tile instance, Direction side, INBT nbt)
+		public void readNBT(Capability<IRitualStone.Tile> capability, IRitualStone.Tile instance, Direction side, Tag nbt)
 		{
-			instance.setRuneType(EnumRuneType.byMetadata(((ByteNBT) nbt).getAsByte()));
+			instance.setRuneType(EnumRuneType.byMetadata(((ByteTag) nbt).getAsByte()));
 		}
 	}
 

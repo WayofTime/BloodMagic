@@ -4,13 +4,13 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.NBTUtil;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraftforge.common.util.INBTSerializable;
 
-public class Binding implements INBTSerializable<CompoundNBT>
+public class Binding implements INBTSerializable<CompoundTag>
 {
 	private UUID uuid;
 	private String name;
@@ -27,19 +27,19 @@ public class Binding implements INBTSerializable<CompoundNBT>
 	}
 
 	@Override
-	public CompoundNBT serializeNBT()
+	public CompoundTag serializeNBT()
 	{
-		CompoundNBT tag = new CompoundNBT();
+		CompoundTag tag = new CompoundTag();
 //		tag.put("id", NBTUtil.writeUniqueId(uuid));
-		tag.put("id", NBTUtil.createUUID(uuid));
+		tag.put("id", NbtUtils.createUUID(uuid));
 		tag.putString("name", name);
 		return tag;
 	}
 
 	@Override
-	public void deserializeNBT(CompoundNBT nbt)
+	public void deserializeNBT(CompoundTag nbt)
 	{
-		this.uuid = NBTUtil.loadUUID(nbt.get("id"));
+		this.uuid = NbtUtils.loadUUID(nbt.get("id"));
 		this.name = nbt.getString("name");
 	}
 
@@ -71,13 +71,13 @@ public class Binding implements INBTSerializable<CompoundNBT>
 		if (!stack.hasTag()) // Definitely hasn't been bound yet.
 			return null;
 
-		INBT bindingTag = stack.getTag().get("binding");
+		Tag bindingTag = stack.getTag().get("binding");
 		if (bindingTag == null || bindingTag.getId() != 10) // Make sure it's both a tag compound and that it has actual
 															// data.
 			return null;
 
 		Binding binding = new Binding();
-		binding.deserializeNBT((CompoundNBT) bindingTag);
+		binding.deserializeNBT((CompoundTag) bindingTag);
 		return binding;
 	}
 

@@ -7,11 +7,11 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.common.block.BlockBloodRune;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.tile.TileAltar;
@@ -20,9 +20,9 @@ public class AltarUtil
 {
 
 	@Nonnull
-	public static AltarTier getTier(World world, BlockPos pos)
+	public static AltarTier getTier(Level world, BlockPos pos)
 	{
-		TileEntity tile = world.getBlockEntity(pos);
+		BlockEntity tile = world.getBlockEntity(pos);
 		if (!(tile instanceof TileAltar))
 			return AltarTier.ONE;
 
@@ -49,7 +49,7 @@ public class AltarUtil
 	}
 
 	@Nonnull
-	public static AltarUpgrade getUpgrades(World world, BlockPos pos, AltarTier currentTier)
+	public static AltarUpgrade getUpgrades(Level world, BlockPos pos, AltarTier currentTier)
 	{
 		AltarUpgrade upgrades = new AltarUpgrade();
 
@@ -68,7 +68,7 @@ public class AltarUtil
 	}
 
 	@Nullable
-	public static Pair<BlockPos, ComponentType> getFirstMissingComponent(World world, BlockPos pos, int altarTier)
+	public static Pair<BlockPos, ComponentType> getFirstMissingComponent(Level world, BlockPos pos, int altarTier)
 	{
 		if (altarTier >= AltarTier.MAXTIERS)
 			return null;

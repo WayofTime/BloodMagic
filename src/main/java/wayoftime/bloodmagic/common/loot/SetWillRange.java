@@ -7,27 +7,27 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootFunction;
-import net.minecraft.loot.LootFunctionType;
-import net.minecraft.loot.RandomValueRange;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.JSONUtils;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
+import net.minecraft.world.level.storage.loot.RandomValueBounds;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.util.GsonHelper;
 import wayoftime.bloodmagic.api.compat.IDemonWill;
 
-public class SetWillRange extends LootFunction
+public class SetWillRange extends LootItemConditionalFunction
 {
 	private static final Logger LOGGER = LogManager.getLogger();
-	private final RandomValueRange damageRange;
+	private final RandomValueBounds damageRange;
 
-	private SetWillRange(ILootCondition[] conditionsIn, RandomValueRange damageRangeIn)
+	private SetWillRange(LootItemCondition[] conditionsIn, RandomValueBounds damageRangeIn)
 	{
 		super(conditionsIn);
 		this.damageRange = damageRangeIn;
 	}
 
-	public LootFunctionType getType()
+	public LootItemFunctionType getType()
 	{
 		return BloodMagicLootFunctionManager.SET_WILL_RANGE;
 	}
@@ -46,14 +46,14 @@ public class SetWillRange extends LootFunction
 		return stack;
 	}
 
-	public static LootFunction.Builder<?> withRange(RandomValueRange p_215931_0_)
+	public static LootItemConditionalFunction.Builder<?> withRange(RandomValueBounds p_215931_0_)
 	{
 		return simpleBuilder((p_215930_1_) -> {
 			return new SetWillRange(p_215930_1_, p_215931_0_);
 		});
 	}
 
-	public static class Serializer extends LootFunction.Serializer<SetWillRange>
+	public static class Serializer extends LootItemConditionalFunction.Serializer<SetWillRange>
 	{
 		public void serialize(JsonObject p_230424_1_, SetWillRange p_230424_2_, JsonSerializationContext p_230424_3_)
 		{
@@ -61,9 +61,9 @@ public class SetWillRange extends LootFunction
 			p_230424_1_.add("damage", p_230424_3_.serialize(p_230424_2_.damageRange));
 		}
 
-		public SetWillRange deserialize(JsonObject object, JsonDeserializationContext deserializationContext, ILootCondition[] conditionsIn)
+		public SetWillRange deserialize(JsonObject object, JsonDeserializationContext deserializationContext, LootItemCondition[] conditionsIn)
 		{
-			return new SetWillRange(conditionsIn, JSONUtils.getAsObject(object, "damage", deserializationContext, RandomValueRange.class));
+			return new SetWillRange(conditionsIn, GsonHelper.getAsObject(object, "damage", deserializationContext, RandomValueBounds.class));
 		}
 	}
 }

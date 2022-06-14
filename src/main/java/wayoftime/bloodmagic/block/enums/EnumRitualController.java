@@ -2,10 +2,10 @@ package wayoftime.bloodmagic.block.enums;
 
 import java.util.Locale;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
 //TODO: Will want to probably discontinue this due to The Flattening
-public enum EnumRitualController implements IStringSerializable
+public enum EnumRitualController implements StringRepresentable
 {
 	MASTER,
 	IMPERFECT,

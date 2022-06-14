@@ -1,26 +1,26 @@
 package wayoftime.bloodmagic.common.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 import wayoftime.bloodmagic.util.Utils;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockAlchemyArray extends Block
 {
@@ -32,7 +32,7 @@ public class BlockAlchemyArray extends Block
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context)
 	{
 		return BODY;
 	}
@@ -44,21 +44,21 @@ public class BlockAlchemyArray extends Block
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world)
+	public BlockEntity createTileEntity(BlockState state, BlockGetter world)
 	{
 		return new TileAlchemyArray();
 	}
 
 	@Override
-	public BlockRenderType getRenderShape(BlockState state)
+	public RenderShape getRenderShape(BlockState state)
 	{
-		return BlockRenderType.ENTITYBLOCK_ANIMATED;
+		return RenderShape.ENTITYBLOCK_ANIMATED;
 	}
 
 	@Override
-	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity)
+	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity)
 	{
-		TileEntity tile = world.getBlockEntity(pos);
+		BlockEntity tile = world.getBlockEntity(pos);
 		if (tile instanceof TileAlchemyArray)
 		{
 			((TileAlchemyArray) tile).onEntityCollidedWithBlock(state, entity);
@@ -66,12 +66,12 @@ public class BlockAlchemyArray extends Block
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult blockRayTraceResult)
 	{
 		TileAlchemyArray array = (TileAlchemyArray) world.getBlockEntity(pos);
 
 		if (array == null || player.isShiftKeyDown())
-			return ActionResultType.FAIL;
+			return InteractionResult.FAIL;
 
 		ItemStack playerItem = player.getItemInHand(hand);
 
@@ -88,16 +88,16 @@ public class BlockAlchemyArray extends Block
 				world.sendBlockUpdated(pos, state, state, 3);
 			} else
 			{
-				return ActionResultType.SUCCESS;
+				return InteractionResult.SUCCESS;
 			}
 		}
 
 		world.sendBlockUpdated(pos, state, state, 3);
-		return ActionResultType.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 
 	@Override
-	public void destroy(IWorld world, BlockPos blockPos, BlockState blockState)
+	public void destroy(LevelAccessor world, BlockPos blockPos, BlockState blockState)
 	{
 		TileAlchemyArray alchemyArray = (TileAlchemyArray) world.getBlockEntity(blockPos);
 		if (alchemyArray != null)
@@ -107,11 +107,11 @@ public class BlockAlchemyArray extends Block
 	}
 
 	@Override
-	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{
 		if (!state.is(newState.getBlock()))
 		{
-			TileEntity tileentity = worldIn.getBlockEntity(pos);
+			BlockEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof TileAlchemyArray)
 			{
 				((TileAlchemyArray) tileentity).dropItems();

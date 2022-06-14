@@ -3,11 +3,11 @@ package wayoftime.bloodmagic.ritual.types;
 import java.util.List;
 import java.util.function.Consumer;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.network.SetClientVelocityPacket;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
@@ -35,7 +35,7 @@ public class RitualJumping extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
+		Level world = masterRitualStone.getWorldObj();
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
 		if (currentEssence < getRefreshCost())
@@ -64,7 +64,7 @@ public class RitualJumping extends Ritual
 				continue;
 			}
 
-			Vector3d motion = entity.getDeltaMovement();
+			Vec3 motion = entity.getDeltaMovement();
 
 			double motionX = motion.x();
 			double motionZ = motion.z();
@@ -72,9 +72,9 @@ public class RitualJumping extends Ritual
 			totalEffects++;
 
 			entity.setDeltaMovement(motionX, motionY, motionZ);
-			if (entity instanceof ServerPlayerEntity)
+			if (entity instanceof ServerPlayer)
 			{
-				BloodMagic.packetHandler.sendTo(new SetClientVelocityPacket(motionX, motionY, motionZ), (ServerPlayerEntity) entity);
+				BloodMagic.packetHandler.sendTo(new SetClientVelocityPacket(motionX, motionY, motionZ), (ServerPlayer) entity);
 			}
 		}
 

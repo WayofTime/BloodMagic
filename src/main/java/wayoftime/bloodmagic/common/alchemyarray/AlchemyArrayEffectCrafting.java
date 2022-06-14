@@ -1,9 +1,9 @@
 package wayoftime.bloodmagic.common.alchemyarray;
 
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 
 public class AlchemyArrayEffectCrafting extends AlchemyArrayEffect
@@ -50,13 +50,13 @@ public class AlchemyArrayEffectCrafting extends AlchemyArrayEffect
 	}
 
 	@Override
-	public void writeToNBT(CompoundNBT tag)
+	public void writeToNBT(CompoundTag tag)
 	{
 
 	}
 
 	@Override
-	public void readFromNBT(CompoundNBT tag)
+	public void readFromNBT(CompoundTag tag)
 	{
 
 	}

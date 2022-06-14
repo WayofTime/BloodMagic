@@ -7,18 +7,18 @@ import javax.annotation.Nonnull;
 
 import com.google.gson.JsonObject;
 
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameterSets;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.fml.RegistryObject;
@@ -39,7 +39,7 @@ public class GlobalLootModifier
 
 	private static class SilkTouchTestModifier extends LootModifier
 	{
-		public SilkTouchTestModifier(ILootCondition[] conditionsIn)
+		public SilkTouchTestModifier(LootItemCondition[] conditionsIn)
 		{
 			super(conditionsIn);
 //			System.out.println("Registering silk touch modifier");
@@ -49,7 +49,7 @@ public class GlobalLootModifier
 		@Override
 		public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context)
 		{
-			ItemStack ctxTool = context.getParamOrNull(LootParameters.TOOL);
+			ItemStack ctxTool = context.getParamOrNull(LootContextParams.TOOL);
 			// return early if silk-touch is already applied (otherwise we'll get stuck in
 			// an infinite loop).
 			if (EnchantmentHelper.getEnchantments(ctxTool).containsKey(Enchantments.SILK_TOUCH))
@@ -62,16 +62,16 @@ public class GlobalLootModifier
 			ItemStack fakeTool = ctxTool.copy();
 			fakeTool.enchant(Enchantments.SILK_TOUCH, 1);
 			LootContext.Builder builder = new LootContext.Builder(context);
-			builder.withParameter(LootParameters.TOOL, fakeTool);
-			LootContext ctx = builder.create(LootParameterSets.BLOCK);
-			LootTable loottable = context.getLevel().getServer().getLootTables().get(context.getParamOrNull(LootParameters.BLOCK_STATE).getBlock().getLootTable());
+			builder.withParameter(LootContextParams.TOOL, fakeTool);
+			LootContext ctx = builder.create(LootContextParamSets.BLOCK);
+			LootTable loottable = context.getLevel().getServer().getLootTables().get(context.getParamOrNull(LootContextParams.BLOCK_STATE).getBlock().getLootTable());
 			return loottable.getRandomItems(ctx);
 		}
 
 		private static class Serializer extends GlobalLootModifierSerializer<SilkTouchTestModifier>
 		{
 			@Override
-			public SilkTouchTestModifier read(ResourceLocation name, JsonObject json, ILootCondition[] conditionsIn)
+			public SilkTouchTestModifier read(ResourceLocation name, JsonObject json, LootItemCondition[] conditionsIn)
 			{
 				return new SilkTouchTestModifier(conditionsIn);
 			}
@@ -86,7 +86,7 @@ public class GlobalLootModifier
 
 	private static class FortuneModifier extends LootModifier
 	{
-		public FortuneModifier(ILootCondition[] conditionsIn)
+		public FortuneModifier(LootItemCondition[] conditionsIn)
 		{
 			super(conditionsIn);
 //			System.out.println("Registering silk touch modifier");
@@ -98,7 +98,7 @@ public class GlobalLootModifier
 		@Override
 		public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context)
 		{
-			ItemStack ctxTool = context.getParamOrNull(LootParameters.TOOL);
+			ItemStack ctxTool = context.getParamOrNull(LootContextParams.TOOL);
 			// return early if silk-touch is already applied (otherwise we'll get stuck in
 			// an infinite loop).
 			if (ctxTool.getTag() != null && ctxTool.getTag().getBoolean("bloodmagic:checked_fortune"))
@@ -131,16 +131,16 @@ public class GlobalLootModifier
 
 			fakeTool.enchant(Enchantments.BLOCK_FORTUNE, baseFortuneLevel + additionalFortune);
 			LootContext.Builder builder = new LootContext.Builder(context);
-			builder.withParameter(LootParameters.TOOL, fakeTool);
-			LootContext ctx = builder.create(LootParameterSets.BLOCK);
-			LootTable loottable = context.getLevel().getServer().getLootTables().get(context.getParamOrNull(LootParameters.BLOCK_STATE).getBlock().getLootTable());
+			builder.withParameter(LootContextParams.TOOL, fakeTool);
+			LootContext ctx = builder.create(LootContextParamSets.BLOCK);
+			LootTable loottable = context.getLevel().getServer().getLootTables().get(context.getParamOrNull(LootContextParams.BLOCK_STATE).getBlock().getLootTable());
 			return loottable.getRandomItems(ctx);
 		}
 
 		private static class Serializer extends GlobalLootModifierSerializer<FortuneModifier>
 		{
 			@Override
-			public FortuneModifier read(ResourceLocation name, JsonObject json, ILootCondition[] conditionsIn)
+			public FortuneModifier read(ResourceLocation name, JsonObject json, LootItemCondition[] conditionsIn)
 			{
 				return new FortuneModifier(conditionsIn);
 			}
@@ -155,7 +155,7 @@ public class GlobalLootModifier
 
 	private static class LootingModifier extends LootModifier
 	{
-		public LootingModifier(ILootCondition[] conditionsIn)
+		public LootingModifier(LootItemCondition[] conditionsIn)
 		{
 			super(conditionsIn);
 		}
@@ -221,7 +221,7 @@ public class GlobalLootModifier
 		private static class Serializer extends GlobalLootModifierSerializer<LootingModifier>
 		{
 			@Override
-			public LootingModifier read(ResourceLocation name, JsonObject json, ILootCondition[] conditionsIn)
+			public LootingModifier read(ResourceLocation name, JsonObject json, LootItemCondition[] conditionsIn)
 			{
 				return new LootingModifier(conditionsIn);
 			}
@@ -244,7 +244,7 @@ public class GlobalLootModifier
 
 	private static class SmeltingModifier extends LootModifier
 	{
-		public SmeltingModifier(ILootCondition[] conditionsIn)
+		public SmeltingModifier(LootItemCondition[] conditionsIn)
 		{
 			super(conditionsIn);
 		}
@@ -253,7 +253,7 @@ public class GlobalLootModifier
 		@Override
 		public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context)
 		{
-			ItemStack ctxTool = context.getParamOrNull(LootParameters.TOOL);
+			ItemStack ctxTool = context.getParamOrNull(LootContextParams.TOOL);
 			// return early if silk-touch is already applied (otherwise we'll get stuck in
 			// an infinite loop).
 			if (ctxTool.getTag() == null)
@@ -280,13 +280,13 @@ public class GlobalLootModifier
 
 		private static ItemStack smelt(ItemStack stack, LootContext context)
 		{
-			return context.getLevel().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new Inventory(stack), context.getLevel()).map(FurnaceRecipe::getResultItem).filter(itemStack -> !itemStack.isEmpty()).map(itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, stack.getCount() * itemStack.getCount())).orElse(stack);
+			return context.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), context.getLevel()).map(SmeltingRecipe::getResultItem).filter(itemStack -> !itemStack.isEmpty()).map(itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, stack.getCount() * itemStack.getCount())).orElse(stack);
 		}
 
 		private static class Serializer extends GlobalLootModifierSerializer<SmeltingModifier>
 		{
 			@Override
-			public SmeltingModifier read(ResourceLocation name, JsonObject json, ILootCondition[] conditionsIn)
+			public SmeltingModifier read(ResourceLocation name, JsonObject json, LootItemCondition[] conditionsIn)
 			{
 				return new SmeltingModifier(conditionsIn);
 			}

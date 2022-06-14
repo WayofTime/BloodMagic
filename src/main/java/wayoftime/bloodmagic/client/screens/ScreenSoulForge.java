@@ -1,13 +1,13 @@
 package wayoftime.bloodmagic.client.screens;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.tile.TileSoulForge;
 import wayoftime.bloodmagic.tile.container.ContainerSoulForge;
@@ -15,9 +15,9 @@ import wayoftime.bloodmagic.tile.container.ContainerSoulForge;
 public class ScreenSoulForge extends ScreenBase<ContainerSoulForge>
 {
 	private static final ResourceLocation background = new ResourceLocation(BloodMagic.MODID, "textures/gui/soulforge.png");
-	public IInventory tileSoulForge;
+	public Container tileSoulForge;
 
-	public ScreenSoulForge(ContainerSoulForge container, PlayerInventory playerInventory, ITextComponent title)
+	public ScreenSoulForge(ContainerSoulForge container, Inventory playerInventory, Component title)
 	{
 		super(container, playerInventory, title);
 		tileSoulForge = container.tileForge;
@@ -50,15 +50,15 @@ public class ScreenSoulForge extends ScreenBase<ContainerSoulForge>
 //	}
 //
 	@Override
-	protected void renderLabels(MatrixStack stack, int mouseX, int mouseY)
+	protected void renderLabels(PoseStack stack, int mouseX, int mouseY)
 	{
-		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.soulforge.name"), 8, 5, 4210752);
-		this.font.draw(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
+		this.font.draw(stack, new TranslatableComponent("tile.bloodmagic.soulforge.name"), 8, 5, 4210752);
+		this.font.draw(stack, new TranslatableComponent("container.inventory"), 8, 111, 4210752);
 	}
 
 //
 	@Override
-	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		getMinecraft().getTextureManager().bind(background);

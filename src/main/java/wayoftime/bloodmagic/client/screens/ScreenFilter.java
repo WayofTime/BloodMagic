@@ -5,23 +5,23 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.inventory.ContainerFilter;
@@ -32,16 +32,16 @@ import wayoftime.bloodmagic.util.GhostItemHelper;
 public class ScreenFilter extends ScreenBase<ContainerFilter>
 {
 	private static final ResourceLocation background = BloodMagic.rl("textures/gui/routingfilter.png");
-	public IInventory filterInventory;
-	private PlayerEntity player;
+	public Container filterInventory;
+	private Player player;
 	private int left, top;
 
-	private TextFieldWidget textBox;
+	private EditBox textBox;
 
 	private int numberOfAddedButtons = 0;
 	private List<String> buttonKeyList = new ArrayList<String>();
 
-	public ScreenFilter(ContainerFilter container, PlayerInventory playerInventory, ITextComponent title)
+	public ScreenFilter(ContainerFilter container, Inventory playerInventory, Component title)
 	{
 		super(container, playerInventory, title);
 		filterInventory = container.inventoryFilter;
@@ -57,7 +57,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		left = (this.width - this.imageWidth) / 2;
 		top = (this.height - this.imageHeight) / 2;
 
-		this.textBox = new TextFieldWidget(Minecraft.getInstance().font, left + 23, top + 19, 70, 12, new StringTextComponent("itemGroup.search"));
+		this.textBox = new EditBox(Minecraft.getInstance().font, left + 23, top + 19, 70, 12, new TextComponent("itemGroup.search"));
 		this.textBox.setBordered(false);
 //		this.textBox.setText("");
 		this.textBox.setMaxLength(50);
@@ -73,9 +73,9 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		if (filterStack.getItem() instanceof IItemFilterProvider)
 		{
 			IItemFilterProvider provider = (IItemFilterProvider) filterStack.getItem();
-			List<Pair<String, Button.IPressable>> buttonActionList = provider.getButtonAction(this.container);
+			List<Pair<String, Button.OnPress>> buttonActionList = provider.getButtonAction(this.container);
 
-			for (Pair<String, Button.IPressable> pair : buttonActionList)
+			for (Pair<String, Button.OnPress> pair : buttonActionList)
 			{
 				if (buttonKeyList.contains(pair.getKey()))
 				{
@@ -83,7 +83,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 				}
 				buttonKeyList.add(pair.getKey());
 				Pair<Integer, Integer> buttonLocation = getButtonLocation(numberOfAddedButtons);
-				Button addedButton = new Button(left + buttonLocation.getLeft(), top + buttonLocation.getRight(), 20, 20, new StringTextComponent(""), pair.getRight());
+				Button addedButton = new Button(left + buttonLocation.getLeft(), top + buttonLocation.getRight(), 20, 20, new TextComponent(""), pair.getRight());
 
 				if (!provider.isButtonGlobal(filterStack, pair.getKey()))
 				{
@@ -252,7 +252,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 
 	private void enableAllButtons()
 	{
-		for (Widget button : this.buttons)
+		for (AbstractWidget button : this.buttons)
 		{
 			button.active = true;
 		}
@@ -265,10 +265,10 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	}
 
 	@Override
-	protected void renderLabels(MatrixStack stack, int mouseX, int mouseY)
+	protected void renderLabels(PoseStack stack, int mouseX, int mouseY)
 	{
 //		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
-		this.font.draw(stack, new TranslationTextComponent("container.inventory"), 8, 93, 4210752);
+		this.font.draw(stack, new TranslatableComponent("container.inventory"), 8, 93, 4210752);
 		this.font.draw(stack, container.filterStack.getHoverName(), 8, 4, 4210752);
 
 		if (container.filterStack.getItem() instanceof IItemFilterProvider)
@@ -293,7 +293,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	}
 
 	@Override
-	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		getMinecraft().getTextureManager().bind(background);
@@ -320,7 +320,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		int x = (width - imageWidth) / 2;
 		int y = (height - imageHeight) / 2;
 		this.blit(stack, x, y, 0, 0, imageWidth, imageHeight);
-		ItemStack held = player.getItemInHand(Hand.MAIN_HAND);
+		ItemStack held = player.getItemInHand(InteractionHand.MAIN_HAND);
 		if (container.lastGhostSlotClicked >= 0)
 		{
 //            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -331,14 +331,14 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks)
+	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks)
 	{
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 		{
 			this.textBox.render(matrixStack, mouseX, mouseY, partialTicks);
 		}
 
-		List<ITextComponent> tooltip = new ArrayList<>();
+		List<Component> tooltip = new ArrayList<>();
 
 		if (container.filterStack.getItem() instanceof IItemFilterProvider)
 		{
@@ -353,7 +353,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 
 				if (mouseX >= x && mouseX < x + w && mouseY >= y && mouseY < y + h)
 				{
-					List<ITextComponent> components = ((IItemFilterProvider) container.filterStack.getItem()).getTextForHoverItem(container.filterStack, buttonKeyList.get(i), container.lastGhostSlotClicked);
+					List<Component> components = ((IItemFilterProvider) container.filterStack.getItem()).getTextForHoverItem(container.filterStack, buttonKeyList.get(i), container.lastGhostSlotClicked);
 					if (components != null && !components.isEmpty())
 						tooltip.addAll(components);
 				}

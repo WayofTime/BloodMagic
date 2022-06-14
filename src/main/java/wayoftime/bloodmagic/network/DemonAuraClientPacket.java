@@ -2,7 +2,7 @@ package wayoftime.bloodmagic.network;
 
 import java.util.function.Supplier;
 
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
@@ -24,7 +24,7 @@ public class DemonAuraClientPacket
 		this.currentWill = holder;
 	}
 
-	public static void encode(DemonAuraClientPacket pkt, PacketBuffer buf)
+	public static void encode(DemonAuraClientPacket pkt, FriendlyByteBuf buf)
 	{
 		for (EnumDemonWillType type : EnumDemonWillType.values())
 		{
@@ -39,7 +39,7 @@ public class DemonAuraClientPacket
 
 	}
 
-	public static DemonAuraClientPacket decode(PacketBuffer buf)
+	public static DemonAuraClientPacket decode(FriendlyByteBuf buf)
 	{
 		DemonAuraClientPacket pkt = new DemonAuraClientPacket();
 		for (EnumDemonWillType type : EnumDemonWillType.values())

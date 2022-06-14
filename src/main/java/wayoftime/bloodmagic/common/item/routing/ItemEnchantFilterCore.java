@@ -7,17 +7,17 @@ import java.util.Map.Entry;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.client.button.FilterButtonTogglePress;
@@ -36,10 +36,10 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack filterStack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack filterStack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
 //		super.addInformation(filterStack, world, tooltip, flag);
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.enchantfilter.desc").withStyle(TextFormatting.ITALIC).withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.enchantfilter.desc").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY));
 
 		if (filterStack.getTag() == null)
 		{
@@ -49,7 +49,7 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 		boolean sneaking = Screen.hasShiftDown();
 		if (!sneaking)
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.extraInfo").withStyle(TextFormatting.BLUE));
+			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.extraInfo").withStyle(ChatFormatting.BLUE));
 		} else
 		{
 			int whitelistState = this.getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
@@ -57,10 +57,10 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 
 			if (isWhitelist)
 			{
-				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist").withStyle(TextFormatting.GRAY));
+				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.whitelist").withStyle(ChatFormatting.GRAY));
 			} else
 			{
-				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist").withStyle(TextFormatting.GRAY));
+				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.blacklist").withStyle(ChatFormatting.GRAY));
 			}
 
 			ItemInventory inv = new InventoryFilter(filterStack);
@@ -72,24 +72,24 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 					continue;
 				}
 
-				List<ITextComponent> list = this.getTextForHoverItem(filterStack, Constants.BUTTONID.ENCHANT, i);
-				List<ITextComponent> fuzzyList = this.getTextForHoverItem(filterStack, Constants.BUTTONID.ENCHANT_LVL, i);
+				List<Component> list = this.getTextForHoverItem(filterStack, Constants.BUTTONID.ENCHANT, i);
+				List<Component> fuzzyList = this.getTextForHoverItem(filterStack, Constants.BUTTONID.ENCHANT_LVL, i);
 				if (list.size() <= 0 || fuzzyList.size() <= 0)
 				{
 					continue;
 				}
 
-				TranslationTextComponent fuzzyText = new TranslationTextComponent("tooltip.bloodmagic.filter.enchant_combination", fuzzyList.get(0), list.get(0));
+				TranslatableComponent fuzzyText = new TranslatableComponent("tooltip.bloodmagic.filter.enchant_combination", fuzzyList.get(0), list.get(0));
 
 				if (isWhitelist)
 				{
 					int amount = GhostItemHelper.getItemGhostAmount(stack);
 					if (amount > 0)
 					{
-						tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.count", amount, fuzzyText));
+						tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.count", amount, fuzzyText));
 					} else
 					{
-						tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.all", fuzzyText));
+						tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.all", fuzzyText));
 					}
 
 				} else
@@ -136,10 +136,10 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 
 	public int getEnchantmentIndex(ItemStack filterStack, int slot)
 	{
-		CompoundNBT tag = filterStack.getTag();
+		CompoundTag tag = filterStack.getTag();
 		if (tag == null)
 		{
-			tag = new CompoundNBT();
+			tag = new CompoundTag();
 			filterStack.setTag(tag);
 		}
 
@@ -148,10 +148,10 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 
 	public void setEnchantmentIndex(ItemStack filterStack, int slot, int index)
 	{
-		CompoundNBT tag = filterStack.getTag();
+		CompoundTag tag = filterStack.getTag();
 		if (tag == null)
 		{
-			tag = new CompoundNBT();
+			tag = new CompoundTag();
 			filterStack.setTag(tag);
 		}
 
@@ -219,10 +219,10 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 
 	public boolean getIsFuzzy(ItemStack filterStack, int slot)
 	{
-		CompoundNBT tag = filterStack.getTag();
+		CompoundTag tag = filterStack.getTag();
 		if (tag == null)
 		{
-			tag = new CompoundNBT();
+			tag = new CompoundTag();
 			filterStack.setTag(tag);
 		}
 
@@ -231,10 +231,10 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 
 	public void setIsFuzzy(ItemStack filterStack, int slot, boolean value)
 	{
-		CompoundNBT tag = filterStack.getTag();
+		CompoundTag tag = filterStack.getTag();
 		if (tag == null)
 		{
-			tag = new CompoundNBT();
+			tag = new CompoundTag();
 			filterStack.setTag(tag);
 		}
 
@@ -245,10 +245,10 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 	public int receiveButtonPress(ItemStack filterStack, String buttonKey, int ghostItemSlot, int currentButtonState)
 	{
 		// Returns new state that the pressed button is in. -1 for an invalid button.
-		CompoundNBT tag = filterStack.getTag();
+		CompoundTag tag = filterStack.getTag();
 		if (tag == null)
 		{
-			filterStack.setTag(new CompoundNBT());
+			filterStack.setTag(new CompoundTag());
 			tag = filterStack.getTag();
 		}
 
@@ -266,7 +266,7 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 	@Override
 	public int getCurrentButtonState(ItemStack filterStack, String buttonKey, int ghostItemSlot)
 	{
-		CompoundNBT tag = filterStack.getTag();
+		CompoundTag tag = filterStack.getTag();
 		if (tag != null)
 		{
 			if (buttonKey.equals(Constants.BUTTONID.ENCHANT))
@@ -283,9 +283,9 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 	}
 
 	@Override
-	public List<ITextComponent> getTextForHoverItem(ItemStack filterStack, String buttonKey, int ghostItemSlot)
+	public List<Component> getTextForHoverItem(ItemStack filterStack, String buttonKey, int ghostItemSlot)
 	{
-		List<ITextComponent> componentList = super.getTextForHoverItem(filterStack, buttonKey, ghostItemSlot);
+		List<Component> componentList = super.getTextForHoverItem(filterStack, buttonKey, ghostItemSlot);
 		if (ghostItemSlot < 0)
 		{
 			return componentList;
@@ -301,7 +301,7 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 				ItemStack ghostStack = inv.getItem(ghostItemSlot);
 				if (ghostStack.isEmpty())
 				{
-					componentList.add(new TranslationTextComponent("filter.bloodmagic.noenchant"));
+					componentList.add(new TranslatableComponent("filter.bloodmagic.noenchant"));
 					return componentList;
 				}
 
@@ -311,10 +311,10 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 				{
 					if (currentState == 0)
 					{
-						componentList.add(new TranslationTextComponent("filter.bloodmagic.anyenchant"));
+						componentList.add(new TranslatableComponent("filter.bloodmagic.anyenchant"));
 					} else
 					{
-						componentList.add(new TranslationTextComponent("filter.bloodmagic.allenchant"));
+						componentList.add(new TranslatableComponent("filter.bloodmagic.allenchant"));
 					}
 					for (Entry<Enchantment, Integer> entry : enchants.entrySet())
 					{
@@ -322,7 +322,7 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 					}
 				} else
 				{
-					componentList.add(new TranslationTextComponent("filter.bloodmagic.noenchant"));
+					componentList.add(new TranslatableComponent("filter.bloodmagic.noenchant"));
 					return componentList;
 				}
 			} else
@@ -338,10 +338,10 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 			boolean isFuzzy = this.getIsFuzzy(filterStack, ghostItemSlot);
 			if (isFuzzy)
 			{
-				componentList.add(new TranslationTextComponent("filter.bloodmagic.enchantfuzzy"));
+				componentList.add(new TranslatableComponent("filter.bloodmagic.enchantfuzzy"));
 			} else
 			{
-				componentList.add(new TranslationTextComponent("filter.bloodmagic.enchantnotfuzzy"));
+				componentList.add(new TranslatableComponent("filter.bloodmagic.enchantnotfuzzy"));
 			}
 		}
 
@@ -394,9 +394,9 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 //	}
 
 	@OnlyIn(Dist.CLIENT)
-	public List<Pair<String, Button.IPressable>> getButtonAction(ContainerFilter container)
+	public List<Pair<String, Button.OnPress>> getButtonAction(ContainerFilter container)
 	{
-		List<Pair<String, Button.IPressable>> buttonList = super.getButtonAction(container);
+		List<Pair<String, Button.OnPress>> buttonList = super.getButtonAction(container);
 		buttonList.add(Pair.of(Constants.BUTTONID.ENCHANT, new FilterButtonTogglePress(Constants.BUTTONID.ENCHANT, container)));
 		buttonList.add(Pair.of(Constants.BUTTONID.ENCHANT_LVL, new FilterButtonTogglePress(Constants.BUTTONID.ENCHANT_LVL, container)));
 		return buttonList;

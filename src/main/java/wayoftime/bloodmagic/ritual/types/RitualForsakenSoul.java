@@ -5,10 +5,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.ItemCrystalCatalyst;
@@ -42,7 +42,7 @@ public class RitualForsakenSoul extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
+		Level world = masterRitualStone.getWorldObj();
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 		BlockPos pos = masterRitualStone.getMasterBlockPos();
 
@@ -62,7 +62,7 @@ public class RitualForsakenSoul extends Ritual
 			return;
 		}
 
-		TileEntity tileInventory = world.getBlockEntity(chestList.get(0));
+		BlockEntity tileInventory = world.getBlockEntity(chestList.get(0));
 
 		if (tileInventory == null)
 			return;
@@ -79,7 +79,7 @@ public class RitualForsakenSoul extends Ritual
 		while (crystalRange.hasNext())
 		{
 			BlockPos nextPos = crystalRange.next().offset(pos);
-			TileEntity tile = world.getBlockEntity(nextPos);
+			BlockEntity tile = world.getBlockEntity(nextPos);
 			if (tile instanceof TileDemonCrystal)
 			{
 				crystalList.add((TileDemonCrystal) tile);

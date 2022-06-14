@@ -2,8 +2,8 @@ package wayoftime.bloodmagic.api;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Allows blacklisting of various objects from different Blood Magic systems.

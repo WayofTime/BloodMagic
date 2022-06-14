@@ -3,11 +3,11 @@ package wayoftime.bloodmagic.ritual.types;
 import java.util.List;
 import java.util.function.Consumer;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
@@ -32,12 +32,12 @@ public class RitualCondor extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		AxisAlignedBB aabb = masterRitualStone.getBlockRange(FLIGHT_RANGE).getAABB(masterRitualStone.getMasterBlockPos());
-		World world = masterRitualStone.getWorldObj();
+		AABB aabb = masterRitualStone.getBlockRange(FLIGHT_RANGE).getAABB(masterRitualStone.getMasterBlockPos());
+		Level world = masterRitualStone.getWorldObj();
 
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
-		List<PlayerEntity> playerEntitys = world.getEntitiesOfClass(PlayerEntity.class, aabb);
+		List<Player> playerEntitys = world.getEntitiesOfClass(Player.class, aabb);
 		int entityCount = playerEntitys.size();
 
 		if (currentEssence < getRefreshCost() * entityCount)
@@ -47,9 +47,9 @@ public class RitualCondor extends Ritual
 		} else
 		{
 			entityCount = 0;
-			for (PlayerEntity player : playerEntitys)
+			for (Player player : playerEntitys)
 			{
-				player.addEffect(new EffectInstance(BloodMagicPotions.FLIGHT, 20, 0, true, false));
+				player.addEffect(new MobEffectInstance(BloodMagicPotions.FLIGHT, 20, 0, true, false));
 			}
 		}
 

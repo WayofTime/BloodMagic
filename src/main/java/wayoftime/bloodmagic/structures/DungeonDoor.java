@@ -3,9 +3,9 @@ package wayoftime.bloodmagic.structures;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
 
 public class DungeonDoor
 {

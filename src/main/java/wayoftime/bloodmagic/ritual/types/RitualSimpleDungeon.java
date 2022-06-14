@@ -6,17 +6,17 @@ import java.util.function.Consumer;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ConfigManager;
 import wayoftime.bloodmagic.common.block.BlockInversionPillarEnd;
@@ -41,7 +41,7 @@ public class RitualSimpleDungeon extends Ritual
 		super("ritualSimpleDungeon", 0, 80000, "ritual." + BloodMagic.MODID + ".simpleDungeonRitual");
 	}
 
-	public boolean activateRitual(IMasterRitualStone masterRitualStone, PlayerEntity player, UUID owner)
+	public boolean activateRitual(IMasterRitualStone masterRitualStone, Player player, UUID owner)
 	{
 		if (ConfigManager.COMMON.makeDungeonRitualCreativeOnly.get())
 		{
@@ -60,14 +60,14 @@ public class RitualSimpleDungeon extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
+		Level world = masterRitualStone.getWorldObj();
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 		BlockPos masterPos = masterRitualStone.getMasterBlockPos();
 
-		if (!world.isClientSide && world instanceof ServerWorld)
+		if (!world.isClientSide && world instanceof ServerLevel)
 		{
 //			DungeonDimensionHelper.test(world);
-			ServerWorld dungeonWorld = DungeonDimensionHelper.getDungeonWorld(world);
+			ServerLevel dungeonWorld = DungeonDimensionHelper.getDungeonWorld(world);
 			if (dungeonWorld != null)
 			{
 				List<RitualComponent> components = Lists.newArrayList();
@@ -94,7 +94,7 @@ public class RitualSimpleDungeon extends Ritual
 				spawnPortalPillar(world, dungeonWorld, pillarPos, safePlayerPosition);
 				spawnPortalPillar(dungeonWorld, world, dungeonPortalPos, overworldPlayerPos);
 
-				LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
+				LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
 //				LightningBoltEntity lightning = new LightningBoltEntity(world, pos.getX() + dispX, pos.getY(), pos.getZ() + dispZ);
 				lightningboltentity.setPos(masterPos.getX(), masterPos.getY() + 1, masterPos.getZ());
 				lightningboltentity.setVisualOnly(true);
@@ -137,10 +137,10 @@ public class RitualSimpleDungeon extends Ritual
 		}
 	}
 
-	public void spawnPortalPillar(World spawnWorld, World destinationWorld, BlockPos pillarPos, BlockPos safePlayerPos)
+	public void spawnPortalPillar(Level spawnWorld, Level destinationWorld, BlockPos pillarPos, BlockPos safePlayerPos)
 	{
 		spawnWorld.setBlockAndUpdate(pillarPos, BloodMagicBlocks.INVERSION_PILLAR.get().defaultBlockState());
-		TileEntity tile = spawnWorld.getBlockEntity(pillarPos);
+		BlockEntity tile = spawnWorld.getBlockEntity(pillarPos);
 		if (tile instanceof TileInversionPillar)
 		{
 			TileInversionPillar tileInversion = (TileInversionPillar) tile;

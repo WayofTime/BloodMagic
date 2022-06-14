@@ -2,25 +2,25 @@ package wayoftime.bloodmagic.client.model;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.color.IBlockColor;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockDisplayReader;
+import net.minecraft.client.color.block.BlockColor;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockAndTintGetter;
 import wayoftime.bloodmagic.tile.TileMimic;
 
-public class MimicColor implements IBlockColor
+public class MimicColor implements BlockColor
 {
 	@Override
-	public int getColor(BlockState blockState, @Nullable IBlockDisplayReader world, @Nullable BlockPos pos, int tint)
+	public int getColor(BlockState blockState, @Nullable BlockAndTintGetter world, @Nullable BlockPos pos, int tint)
 	{
 		if (world == null)
 		{
 			return -1;
 		}
 
-		TileEntity te = world.getBlockEntity(pos);
+		BlockEntity te = world.getBlockEntity(pos);
 		if (te instanceof TileMimic)
 		{
 			TileMimic fancy = (TileMimic) te;

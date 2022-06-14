@@ -1,11 +1,11 @@
 package wayoftime.bloodmagic.util.helper;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.potion.Potion;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 import wayoftime.bloodmagic.ConfigHandler;
 import wayoftime.bloodmagic.altar.IBloodAltar;
@@ -17,18 +17,18 @@ public class PlayerSacrificeHelper
 	public static int soulFrayDuration = 400;
 	public static Potion soulFrayId;
 
-	public static double getPlayerIncense(PlayerEntity player)
+	public static double getPlayerIncense(Player player)
 	{
 //		return 0;
 		return IncenseHelper.getCurrentIncense(player);
 	}
 
-	public static void setPlayerIncense(PlayerEntity player, double amount)
+	public static void setPlayerIncense(Player player, double amount)
 	{
 		IncenseHelper.setCurrentIncense(player, amount);
 	}
 
-	public static boolean incrementIncense(PlayerEntity player, double min, double incenseAddition, double increment)
+	public static boolean incrementIncense(Player player, double min, double incenseAddition, double increment)
 	{
 //		return true;
 		double amount = getPlayerIncense(player);
@@ -57,7 +57,7 @@ public class PlayerSacrificeHelper
 	 * @param player - The player sacrificing
 	 * @return Whether or not the health sacrificing succeeded
 	 */
-	public static boolean sacrificePlayerHealth(PlayerEntity player)
+	public static boolean sacrificePlayerHealth(Player player)
 	{
 //		if (player.isPotionActive(soulFrayId))
 //		{
@@ -113,7 +113,7 @@ public class PlayerSacrificeHelper
 	 * @param isSacrifice       - Whether this is a Sacrifice or a Self-Sacrifice
 	 * @return Whether the altar is found and (attempted) filled
 	 */
-	public static boolean findAndFillAltar(World world, LivingEntity sacrificingEntity, int amount, boolean isSacrifice)
+	public static boolean findAndFillAltar(Level world, LivingEntity sacrificingEntity, int amount, boolean isSacrifice)
 	{
 		IBloodAltar altarEntity = getAltar(world, sacrificingEntity.blockPosition());
 
@@ -134,9 +134,9 @@ public class PlayerSacrificeHelper
 	 *                 radius from this)
 	 * @return The nearest altar, if no altar is found, then this will return null
 	 */
-	public static IBloodAltar getAltar(World world, BlockPos blockPos)
+	public static IBloodAltar getAltar(Level world, BlockPos blockPos)
 	{
-		TileEntity tileEntity;
+		BlockEntity tileEntity;
 
 		for (int x = -2; x <= 2; x++)
 		{

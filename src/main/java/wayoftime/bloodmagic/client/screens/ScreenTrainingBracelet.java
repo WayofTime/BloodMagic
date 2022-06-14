@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.ItemLivingTrainer;
@@ -30,8 +30,8 @@ import wayoftime.bloodmagic.network.LivingTrainerWhitelistPacket;
 public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet>
 {
 	private static final ResourceLocation background = BloodMagic.rl("textures/gui/trainingbracelet.png");
-	public IInventory trainerInventory;
-	private PlayerEntity player;
+	public Container trainerInventory;
+	private Player player;
 	private int left, top;
 
 	private List<String> buttonKeyList = new ArrayList<String>();
@@ -46,7 +46,7 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 
 	protected boolean isWhitelist = false;
 
-	public ScreenTrainingBracelet(ContainerTrainingBracelet container, PlayerInventory playerInventory, ITextComponent title)
+	public ScreenTrainingBracelet(ContainerTrainingBracelet container, Inventory playerInventory, Component title)
 	{
 		super(container, playerInventory, title);
 		trainerInventory = container.inventoryTrainer;
@@ -67,10 +67,10 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 
 		ItemStack filterStack = this.container.trainerStack;
 
-		this.addButton(new Button(left + 62 - 18, top + 34, 8, 20, new StringTextComponent(">"), new IncrementPress(this, 0)));
-		this.addButton(new Button(left + 34 - 18, top + 34, 8, 20, new StringTextComponent("<"), new IncrementPress(this, 1)));
+		this.addButton(new Button(left + 62 - 18, top + 34, 8, 20, new TextComponent(">"), new IncrementPress(this, 0)));
+		this.addButton(new Button(left + 34 - 18, top + 34, 8, 20, new TextComponent("<"), new IncrementPress(this, 1)));
 
-		this.addButton(new Button(left + whitelistButtonPosX, top + whitelistButtonPosY, 20, 20, new StringTextComponent(""), new WhitelistTogglePress(this)));
+		this.addButton(new Button(left + whitelistButtonPosX, top + whitelistButtonPosY, 20, 20, new TextComponent(""), new WhitelistTogglePress(this)));
 
 //		if (filterStack.getItem() instanceof IItemFilterProvider)
 //		{
@@ -190,13 +190,13 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 	}
 
 	@Override
-	protected void renderLabels(MatrixStack stack, int mouseX, int mouseY)
+	protected void renderLabels(PoseStack stack, int mouseX, int mouseY)
 	{
 		String textEntry = "" + getCurrentActiveSlotUpgradeLevel();
 		int offset = -3 * textEntry.length();
-		this.font.draw(stack, new StringTextComponent(textEntry), 45 - 18 + offset + 7.5f, 37 + 3, 0xFFFFFF);
+		this.font.draw(stack, new TextComponent(textEntry), 45 - 18 + offset + 7.5f, 37 + 3, 0xFFFFFF);
 //		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
-		this.font.draw(stack, new TranslationTextComponent("container.inventory"), 8, 93, 4210752);
+		this.font.draw(stack, new TranslatableComponent("container.inventory"), 8, 93, 4210752);
 		this.font.draw(stack, container.trainerStack.getHoverName(), 8, 4, 4210752);
 
 		int w = 20;
@@ -211,7 +211,7 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 	}
 
 	@Override
-	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		getMinecraft().getTextureManager().bind(background);
@@ -238,7 +238,7 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 		int x = (width - imageWidth) / 2;
 		int y = (height - imageHeight) / 2;
 		this.blit(stack, x, y, 0, 0, imageWidth, imageHeight);
-		ItemStack held = player.getItemInHand(Hand.MAIN_HAND);
+		ItemStack held = player.getItemInHand(InteractionHand.MAIN_HAND);
 		if (container.lastGhostSlotClicked >= 0)
 		{
 //            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -249,11 +249,11 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks)
+	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks)
 	{
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 
-		List<ITextComponent> tooltip = new ArrayList<>();
+		List<Component> tooltip = new ArrayList<>();
 
 		// TODO: Add hover text for button
 
@@ -265,7 +265,7 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 
 		if (mouseX >= x && mouseX < x + w && mouseY >= y && mouseY < y + h)
 		{
-			List<ITextComponent> components = getHoverTextForWhitelistButton();
+			List<Component> components = getHoverTextForWhitelistButton();
 			if (components != null && !components.isEmpty())
 				tooltip.addAll(components);
 		}
@@ -278,7 +278,7 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 
 		if (mouseX >= x && mouseX < x + w && mouseY >= y && mouseY < y + h)
 		{
-			List<ITextComponent> components = getHoverTextForNumber();
+			List<Component> components = getHoverTextForNumber();
 			if (components != null && !components.isEmpty())
 				tooltip.addAll(components);
 		}
@@ -296,24 +296,24 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 			GuiUtils.drawHoveringText(matrixStack, tooltip, mouseX, mouseY, width, height, -1, font);
 	}
 
-	private List<ITextComponent> getHoverTextForWhitelistButton()
+	private List<Component> getHoverTextForWhitelistButton()
 	{
-		List<ITextComponent> components = new ArrayList<>();
+		List<Component> components = new ArrayList<>();
 
 		if (isWhitelist)
 		{
-			components.add(new TranslationTextComponent("trainer.bloodmagic.whitelist"));
+			components.add(new TranslatableComponent("trainer.bloodmagic.whitelist"));
 		} else
 		{
-			components.add(new TranslationTextComponent("trainer.bloodmagic.blacklist"));
+			components.add(new TranslatableComponent("trainer.bloodmagic.blacklist"));
 		}
 
 		return components;
 	}
 
-	private List<ITextComponent> getHoverTextForNumber()
+	private List<Component> getHoverTextForNumber()
 	{
-		List<ITextComponent> components = new ArrayList<>();
+		List<Component> components = new ArrayList<>();
 
 		if (this.container.lastGhostSlotClicked == -1)
 		{
@@ -333,9 +333,9 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 					int level = entry.getKey().getLevel(entry.getValue().intValue());
 
 					if (level > 0)
-						components.add(new TranslationTextComponent("trainer.bloodmagic.allowupgrade", new TranslationTextComponent(entry.getKey().getTranslationKey()), new TranslationTextComponent("enchantment.level." + level)));
+						components.add(new TranslatableComponent("trainer.bloodmagic.allowupgrade", new TranslatableComponent(entry.getKey().getTranslationKey()), new TranslatableComponent("enchantment.level." + level)));
 					else
-						components.add(new TranslationTextComponent("trainer.bloodmagic.blockupgrade", new TranslationTextComponent(entry.getKey().getTranslationKey())));
+						components.add(new TranslatableComponent("trainer.bloodmagic.blockupgrade", new TranslatableComponent(entry.getKey().getTranslationKey())));
 				}
 			}
 		}
@@ -343,7 +343,7 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 		return components;
 	}
 
-	public class IncrementPress implements Button.IPressable
+	public class IncrementPress implements Button.OnPress
 	{
 		private final ScreenTrainingBracelet screen;
 		private final int id;
@@ -377,7 +377,7 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 		}
 	}
 
-	public class WhitelistTogglePress implements Button.IPressable
+	public class WhitelistTogglePress implements Button.OnPress
 	{
 		private final ScreenTrainingBracelet screen;
 

@@ -2,20 +2,20 @@ package wayoftime.bloodmagic.client.render;
 
 import java.util.Arrays;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.Direction.AxisDirection;
-import net.minecraft.util.math.vector.Matrix3f;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.math.vector.Vector3i;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.Direction.AxisDirection;
+import com.mojang.math.Matrix3f;
+import com.mojang.math.Matrix4f;
+import net.minecraft.world.phys.Vec3;
+import com.mojang.math.Vector3f;
+import net.minecraft.core.Vec3i;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer.Model3D;
 
 /**
@@ -30,7 +30,7 @@ public class RenderResizableCuboid
 	private static final int V_MIN = 2;
 	private static final int V_MAX = 3;
 
-	protected EntityRendererManager manager = Minecraft.getInstance().getEntityRenderDispatcher();
+	protected EntityRenderDispatcher manager = Minecraft.getInstance().getEntityRenderDispatcher();
 
 	private static Vector3f withValue(Vector3f vector, Axis axis, float value)
 	{
@@ -47,7 +47,7 @@ public class RenderResizableCuboid
 		throw new RuntimeException("Was given a null axis! That was probably not intentional, consider this a bug! (Vector = " + vector + ")");
 	}
 
-	public static double getValue(Vector3d vector, Axis axis)
+	public static double getValue(Vec3 vector, Axis axis)
 	{
 		if (axis == Axis.X)
 		{
@@ -62,16 +62,16 @@ public class RenderResizableCuboid
 		throw new RuntimeException("Was given a null axis! That was probably not intentional, consider this a bug! (Vector = " + vector + ")");
 	}
 
-	public void renderCube(Model3D cube, MatrixStack matrix, IVertexBuilder buffer, int argb, int light, int overlay)
+	public void renderCube(Model3D cube, PoseStack matrix, VertexConsumer buffer, int argb, int light, int overlay)
 	{
 		float red = BloodMagicRenderer.getRed(argb);
 		float green = BloodMagicRenderer.getGreen(argb);
 		float blue = BloodMagicRenderer.getBlue(argb);
 		float alpha = BloodMagicRenderer.getAlpha(argb);
-		Vector3d size = new Vector3d(cube.sizeX(), cube.sizeY(), cube.sizeZ());
+		Vec3 size = new Vec3(cube.sizeX(), cube.sizeY(), cube.sizeZ());
 		matrix.pushPose();
 		matrix.translate(cube.minX, cube.minY, cube.minZ);
-		MatrixStack.Entry lastMatrix = matrix.last();
+		PoseStack.Pose lastMatrix = matrix.last();
 		Matrix4f matrix4f = lastMatrix.pose();
 		Matrix3f normal = lastMatrix.normal();
 		for (Direction face : Direction.values())
@@ -144,14 +144,14 @@ public class RenderResizableCuboid
 		matrix.popPose();
 	}
 
-	private void renderPoint(Matrix4f matrix4f, Matrix3f normal, IVertexBuilder buffer, Direction face, Axis u, Axis v, float other, float[] uv, float[] xyz, boolean minU, boolean minV, float red, float green, float blue, float alpha, int light, int overlay)
+	private void renderPoint(Matrix4f matrix4f, Matrix3f normal, VertexConsumer buffer, Direction face, Axis u, Axis v, float other, float[] uv, float[] xyz, boolean minU, boolean minV, float red, float green, float blue, float alpha, int light, int overlay)
 	{
 		int U_ARRAY = minU ? U_MIN : U_MAX;
 		int V_ARRAY = minV ? V_MIN : V_MAX;
 		Vector3f vertex = withValue(VEC_ZERO, u, xyz[U_ARRAY]);
 		vertex = withValue(vertex, v, xyz[V_ARRAY]);
 		vertex = withValue(vertex, face.getAxis(), other);
-		Vector3i normalForFace = face.getNormal();
+		Vec3i normalForFace = face.getNormal();
 		// TODO: Figure out how and why this works, it gives about the same brightness
 		// as we used to have but I don't understand why/how
 		float adjustment = 2.5F;

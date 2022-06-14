@@ -2,34 +2,34 @@ package wayoftime.bloodmagic.tile.container;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.ITeleposerFocus;
 import wayoftime.bloodmagic.tile.TileTeleposer;
 
-public class ContainerTeleposer extends Container
+public class ContainerTeleposer extends AbstractContainerMenu
 {
 	public final TileTeleposer tileTeleposer;
 
-	public ContainerTeleposer(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
+	public ContainerTeleposer(int windowId, Inventory playerInventory, FriendlyByteBuf extraData)
 	{
 		this((TileTeleposer) playerInventory.player.level.getBlockEntity(extraData.readBlockPos()), windowId, playerInventory);
 	}
 
-	public ContainerTeleposer(@Nullable TileTeleposer tile, int windowId, PlayerInventory playerInventory)
+	public ContainerTeleposer(@Nullable TileTeleposer tile, int windowId, Inventory playerInventory)
 	{
 		super(BloodMagicBlocks.TELEPOSER_CONTAINER.get(), windowId);
 		this.tileTeleposer = tile;
 		this.setup(playerInventory, tile);
 	}
 
-	public void setup(PlayerInventory inventory, IInventory tileARC)
+	public void setup(Inventory inventory, Container tileARC)
 	{
 		this.addSlot(new SlotFocus(tileARC, TileTeleposer.FOCUS_SLOT, 80, 15));
 
@@ -48,7 +48,7 @@ public class ContainerTeleposer extends Container
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index)
+	public ItemStack quickMoveStack(Player playerIn, int index)
 	{
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
@@ -98,14 +98,14 @@ public class ContainerTeleposer extends Container
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity playerIn)
+	public boolean stillValid(Player playerIn)
 	{
 		return this.tileTeleposer.stillValid(playerIn);
 	}
 
 	private class SlotFocus extends Slot
 	{
-		public SlotFocus(IInventory inventory, int slotIndex, int x, int y)
+		public SlotFocus(Container inventory, int slotIndex, int x, int y)
 		{
 			super(inventory, slotIndex, x, y);
 		}

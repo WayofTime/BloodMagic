@@ -3,14 +3,14 @@ package wayoftime.bloodmagic.ritual.types;
 import java.util.List;
 import java.util.function.Consumer;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Food;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.FoodStats;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.food.FoodData;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
@@ -43,7 +43,7 @@ public class RitualFullStomach extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
+		Level world = masterRitualStone.getWorldObj();
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
 		BlockPos pos = masterRitualStone.getMasterBlockPos();
@@ -55,7 +55,7 @@ public class RitualFullStomach extends Ritual
 		}
 
 		AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
-		TileEntity tile = world.getBlockEntity(chestRange.getContainedPositions(pos).get(0));
+		BlockEntity tile = world.getBlockEntity(chestRange.getContainedPositions(pos).get(0));
 		if (tile == null)
 			return;
 
@@ -65,7 +65,7 @@ public class RitualFullStomach extends Ritual
 
 		int lastSlot = 0;
 		AreaDescriptor fillingRange = masterRitualStone.getBlockRange(FILL_RANGE);
-		List<PlayerEntity> playerList = world.getEntitiesOfClass(PlayerEntity.class, fillingRange.getAABB(pos));
+		List<Player> playerList = world.getEntitiesOfClass(Player.class, fillingRange.getAABB(pos));
 
 		// Check contained food level. If 0, grab a new food item to restock.
 
@@ -77,7 +77,7 @@ public class RitualFullStomach extends Ritual
 
 				if (!stack.isEmpty() && stack.getItem().isEdible())
 				{
-					Food food = stack.getItem().getFoodProperties();
+					FoodProperties food = stack.getItem().getFoodProperties();
 
 					foodLevel = food.getNutrition();
 					storedSaturation = food.getSaturationModifier();
@@ -95,9 +95,9 @@ public class RitualFullStomach extends Ritual
 			}
 		}
 
-		for (PlayerEntity player : playerList)
+		for (Player player : playerList)
 		{
-			FoodStats foodStats = player.getFoodData();
+			FoodData foodStats = player.getFoodData();
 			float satLevel = foodStats.getSaturationLevel();
 			float saturationAmount = storedSaturation * 1 * 2.0f;
 
@@ -114,14 +114,14 @@ public class RitualFullStomach extends Ritual
 		}
 	}
 
-	public void readFromNBT(CompoundNBT tag)
+	public void readFromNBT(CompoundTag tag)
 	{
 		super.readFromNBT(tag);
 		foodLevel = tag.getInt("foodLevel");
 		storedSaturation = tag.getFloat("storedSaturation");
 	}
 
-	public void writeToNBT(CompoundNBT tag)
+	public void writeToNBT(CompoundTag tag)
 	{
 		super.writeToNBT(tag);
 		tag.putInt("foodLevel", foodLevel);

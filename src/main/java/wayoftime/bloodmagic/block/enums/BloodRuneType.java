@@ -2,9 +2,9 @@ package wayoftime.bloodmagic.block.enums;
 
 import java.util.Locale;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
-public enum BloodRuneType implements IStringSerializable
+public enum BloodRuneType implements StringRepresentable
 {
 	BLANK,
 	SPEED,

@@ -2,14 +2,14 @@ package wayoftime.bloodmagic.common.routing;
 
 import java.util.List;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.common.item.routing.IFilterKey;
 
 public interface IItemFilter extends IRoutingFilter
 {
-	void initializeFilter(List<IFilterKey> filteredList, TileEntity tile, IItemHandler itemHandler, boolean isFilterOutput);
+	void initializeFilter(List<IFilterKey> filteredList, BlockEntity tile, IItemHandler itemHandler, boolean isFilterOutput);
 
 	void initializeFilter(List<IFilterKey> filteredList);
 

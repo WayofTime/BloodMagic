@@ -3,11 +3,11 @@ package wayoftime.bloodmagic.client.render.block;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.AtlasTexture;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.Tesselator;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 
 public class RenderFakeBlocks
 {
@@ -19,12 +19,12 @@ public class RenderFakeBlocks
 		double maxX = minX + 1;
 		double maxY = minY + 1;
 		double maxZ = minZ + 1;
-		Tessellator tessellator = Tessellator.getInstance();
+		Tesselator tessellator = Tesselator.getInstance();
 		BufferBuilder wr = tessellator.getBuilder();
 
-		Minecraft.getInstance().getTextureAtlas(AtlasTexture.LOCATION_BLOCKS).apply(texture.getName());
+		Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(texture.getName());
 
-		wr.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+		wr.begin(GL11.GL_QUADS, DefaultVertexFormat.POSITION_TEX);
 
 		float texMinU = texture.getU0();
 		float texMinV = texture.getV0();

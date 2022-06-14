@@ -7,12 +7,12 @@ import javax.annotation.Nonnull;
 
 import com.google.common.base.Preconditions;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 
@@ -81,7 +81,7 @@ public class RecipeAlchemyTable extends BloodMagicRecipe
 	}
 
 	@Override
-	public void write(PacketBuffer buffer)
+	public void write(FriendlyByteBuf buffer)
 	{
 		buffer.writeInt(input.size());
 		for (int i = 0; i < input.size(); i++)
@@ -95,13 +95,13 @@ public class RecipeAlchemyTable extends BloodMagicRecipe
 	}
 
 	@Override
-	public IRecipeSerializer<? extends RecipeAlchemyTable> getSerializer()
+	public RecipeSerializer<? extends RecipeAlchemyTable> getSerializer()
 	{
 		return BloodMagicRecipeSerializers.ALCHEMYTABLE.getRecipeSerializer();
 	}
 
 	@Override
-	public IRecipeType<RecipeAlchemyTable> getType()
+	public RecipeType<RecipeAlchemyTable> getType()
 	{
 		return BloodMagicRecipeType.ALCHEMYTABLE;
 	}

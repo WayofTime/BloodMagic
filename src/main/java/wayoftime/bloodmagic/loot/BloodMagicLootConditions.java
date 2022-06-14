@@ -1,13 +1,13 @@
 package wayoftime.bloodmagic.loot;
 
-import net.minecraft.loot.LootConditionType;
-import net.minecraft.loot.conditions.MatchTool;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
+import net.minecraft.world.level.storage.loot.predicates.MatchTool;
+import net.minecraft.core.Registry;
 import wayoftime.bloodmagic.BloodMagic;
 
 public class BloodMagicLootConditions
 {
-	public static final LootConditionType INVERTED = Registry.register(Registry.LOOT_CONDITION_TYPE, BloodMagic.rl("testing"), new LootConditionType(new MatchTool.Serializer()));
+	public static final LootItemConditionType INVERTED = Registry.register(Registry.LOOT_CONDITION_TYPE, BloodMagic.rl("testing"), new LootItemConditionType(new MatchTool.Serializer()));
 
 	static
 	{

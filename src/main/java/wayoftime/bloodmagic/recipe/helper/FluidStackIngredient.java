@@ -15,13 +15,13 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 
-import net.minecraft.fluid.Fluid;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.ITag;
-import net.minecraft.tags.TagCollectionManager;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.tags.Tag;
+import net.minecraft.tags.SerializationTags;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.util.Constants;
 
@@ -41,12 +41,12 @@ public abstract class FluidStackIngredient implements InputIngredient<FluidStack
 		return new Single(instance);
 	}
 
-	public static FluidStackIngredient from(@Nonnull ITag<Fluid> fluidTag, int minAmount)
+	public static FluidStackIngredient from(@Nonnull Tag<Fluid> fluidTag, int minAmount)
 	{
 		return new Tagged(fluidTag, minAmount);
 	}
 
-	public static FluidStackIngredient read(PacketBuffer buffer)
+	public static FluidStackIngredient read(FriendlyByteBuf buffer)
 	{
 		// TODO: Allow supporting serialization of different types than just the ones we
 		// implement?
@@ -106,7 +106,7 @@ public abstract class FluidStackIngredient implements InputIngredient<FluidStack
 				throw new JsonSyntaxException("Expected to receive a amount that is greater than zero");
 			}
 			JsonElement count = jsonObject.get(Constants.JSON.AMOUNT);
-			if (!JSONUtils.isNumberValue(count))
+			if (!GsonHelper.isNumberValue(count))
 			{
 				throw new JsonSyntaxException("Expected amount to be a number greater than zero.");
 			}
@@ -115,8 +115,8 @@ public abstract class FluidStackIngredient implements InputIngredient<FluidStack
 			{
 				throw new JsonSyntaxException("Expected amount to be greater than zero.");
 			}
-			ResourceLocation resourceLocation = new ResourceLocation(JSONUtils.getAsString(jsonObject, Constants.JSON.TAG));
-			ITag<Fluid> tag = TagCollectionManager.getInstance().getFluids().getTag(resourceLocation);
+			ResourceLocation resourceLocation = new ResourceLocation(GsonHelper.getAsString(jsonObject, Constants.JSON.TAG));
+			Tag<Fluid> tag = SerializationTags.getInstance().getFluids().getTag(resourceLocation);
 			if (tag == null)
 			{
 				throw new JsonSyntaxException("Unknown fluid tag '" + resourceLocation + "'");
@@ -192,7 +192,7 @@ public abstract class FluidStackIngredient implements InputIngredient<FluidStack
 		}
 
 		@Override
-		public void write(PacketBuffer buffer)
+		public void write(FriendlyByteBuf buffer)
 		{
 			buffer.writeEnum(IngredientType.SINGLE);
 			fluidInstance.writeToPacket(buffer);
@@ -212,7 +212,7 @@ public abstract class FluidStackIngredient implements InputIngredient<FluidStack
 			return json;
 		}
 
-		public static Single read(PacketBuffer buffer)
+		public static Single read(FriendlyByteBuf buffer)
 		{
 			return new Single(FluidStack.readFromPacket(buffer));
 		}
@@ -222,10 +222,10 @@ public abstract class FluidStackIngredient implements InputIngredient<FluidStack
 	{
 
 		@Nonnull
-		private final ITag<Fluid> tag;
+		private final Tag<Fluid> tag;
 		private final int amount;
 
-		public Tagged(@Nonnull ITag<Fluid> tag, int amount)
+		public Tagged(@Nonnull Tag<Fluid> tag, int amount)
 		{
 			this.tag = tag;
 			this.amount = amount;
@@ -269,10 +269,10 @@ public abstract class FluidStackIngredient implements InputIngredient<FluidStack
 		}
 
 		@Override
-		public void write(PacketBuffer buffer)
+		public void write(FriendlyByteBuf buffer)
 		{
 			buffer.writeEnum(IngredientType.TAGGED);
-			buffer.writeResourceLocation(TagCollectionManager.getInstance().getFluids().getIdOrThrow(tag));
+			buffer.writeResourceLocation(SerializationTags.getInstance().getFluids().getIdOrThrow(tag));
 			buffer.writeVarInt(amount);
 		}
 
@@ -282,11 +282,11 @@ public abstract class FluidStackIngredient implements InputIngredient<FluidStack
 		{
 			JsonObject json = new JsonObject();
 			json.addProperty(Constants.JSON.AMOUNT, amount);
-			json.addProperty(Constants.JSON.TAG, TagCollectionManager.getInstance().getFluids().getIdOrThrow(tag).toString());
+			json.addProperty(Constants.JSON.TAG, SerializationTags.getInstance().getFluids().getIdOrThrow(tag).toString());
 			return json;
 		}
 
-		public static Tagged read(PacketBuffer buffer)
+		public static Tagged read(FriendlyByteBuf buffer)
 		{
 			return new Tagged(FluidTags.bind(buffer.readResourceLocation().toString()), buffer.readVarInt());
 		}
@@ -342,7 +342,7 @@ public abstract class FluidStackIngredient implements InputIngredient<FluidStack
 		}
 
 		@Override
-		public void write(PacketBuffer buffer)
+		public void write(FriendlyByteBuf buffer)
 		{
 			buffer.writeEnum(IngredientType.MULTI);
 			buffer.writeVarInt(ingredients.length);
@@ -364,7 +364,7 @@ public abstract class FluidStackIngredient implements InputIngredient<FluidStack
 			return json;
 		}
 
-		public static FluidStackIngredient read(PacketBuffer buffer)
+		public static FluidStackIngredient read(FriendlyByteBuf buffer)
 		{
 			FluidStackIngredient[] ingredients = new FluidStackIngredient[buffer.readVarInt()];
 			for (int i = 0; i < ingredients.length; i++)

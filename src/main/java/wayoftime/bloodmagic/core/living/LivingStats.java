@@ -5,12 +5,12 @@ import java.util.Map;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 
 public class LivingStats
@@ -97,12 +97,12 @@ public class LivingStats
 		return this;
 	}
 
-	public CompoundNBT serialize()
+	public CompoundTag serialize()
 	{
-		CompoundNBT compound = new CompoundNBT();
-		ListNBT statList = new ListNBT();
+		CompoundTag compound = new CompoundTag();
+		ListTag statList = new ListTag();
 		upgrades.forEach((k, v) -> {
-			CompoundNBT upgrade = new CompoundNBT();
+			CompoundTag upgrade = new CompoundTag();
 			upgrade.putString("key", k.getKey().toString());
 			upgrade.putDouble("exp", v);
 			statList.add(upgrade);
@@ -114,51 +114,51 @@ public class LivingStats
 		return compound;
 	}
 
-	public void deserialize(CompoundNBT nbt)
+	public void deserialize(CompoundTag nbt)
 	{
-		ListNBT statList = nbt.getList("upgrades", 10);
+		ListTag statList = nbt.getList("upgrades", 10);
 		statList.forEach(tag -> {
-			if (!(tag instanceof CompoundNBT))
+			if (!(tag instanceof CompoundTag))
 				return;
 
-			LivingUpgrade upgrade = LivingArmorRegistrar.UPGRADE_MAP.getOrDefault(new ResourceLocation(((CompoundNBT) tag).getString("key")), LivingUpgrade.DUMMY);
+			LivingUpgrade upgrade = LivingArmorRegistrar.UPGRADE_MAP.getOrDefault(new ResourceLocation(((CompoundTag) tag).getString("key")), LivingUpgrade.DUMMY);
 			if (upgrade == LivingUpgrade.DUMMY)
 				return;
-			double experience = ((CompoundNBT) tag).getDouble("exp");
+			double experience = ((CompoundTag) tag).getDouble("exp");
 			upgrades.put(upgrade, experience);
 		});
 
 		maxPoints = nbt.getInt("maxPoints");
 	}
 
-	public static LivingStats fromNBT(CompoundNBT statTag)
+	public static LivingStats fromNBT(CompoundTag statTag)
 	{
 		LivingStats stats = new LivingStats();
 		stats.deserialize(statTag);
 		return stats;
 	}
 
-	public static LivingStats fromPlayer(PlayerEntity player)
+	public static LivingStats fromPlayer(Player player)
 	{
 		return fromPlayer(player, false);
 	}
 
-	public static LivingStats fromPlayer(PlayerEntity player, boolean createNew)
+	public static LivingStats fromPlayer(Player player, boolean createNew)
 	{
 		if (!LivingUtil.hasFullSet(player))
 			return null;
 
-		ItemStack chest = player.getItemBySlot(EquipmentSlotType.CHEST);
+		ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
 		LivingStats stats = ((ILivingContainer) chest.getItem()).getLivingStats(chest);
 		return stats == null && createNew ? new LivingStats() : stats;
 	}
 
-	public static void toPlayer(PlayerEntity player, LivingStats stats)
+	public static void toPlayer(Player player, LivingStats stats)
 	{
 		if (!LivingUtil.hasFullSet(player))
 			return;
 
-		ItemStack chest = player.getItemBySlot(EquipmentSlotType.CHEST);
+		ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
 		((ILivingContainer) chest.getItem()).updateLivingStats(chest, stats);
 	}
 }

@@ -1,15 +1,15 @@
 package wayoftime.bloodmagic.common.item;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.entity.projectile.AbstractEntityThrowingDagger;
 import wayoftime.bloodmagic.entity.projectile.EntityThrowingDaggerSyringe;
 
 public class ItemThrowingDaggerSyringe extends ItemThrowingDagger
 {
 	@Override
-	public AbstractEntityThrowingDagger getDagger(ItemStack stack, World world, PlayerEntity player)
+	public AbstractEntityThrowingDagger getDagger(ItemStack stack, Level world, Player player)
 	{
 		AbstractEntityThrowingDagger dagger = new EntityThrowingDaggerSyringe(stack, world, player);
 		dagger.shootFromRotation(player, player.xRot, player.yRot, 0.0F, 3F, 0.5F);

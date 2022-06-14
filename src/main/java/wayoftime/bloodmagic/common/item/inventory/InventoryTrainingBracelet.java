@@ -2,9 +2,9 @@ package wayoftime.bloodmagic.common.item.inventory;
 
 import java.util.UUID;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.item.ItemLivingTrainer;
 import wayoftime.bloodmagic.util.Constants;
@@ -17,7 +17,7 @@ public class InventoryTrainingBracelet extends ItemInventory
 		super(itemStack, ItemLivingTrainer.MAX_SIZE, "TrainingBracelet");
 	}
 
-	public void onGuiSaved(PlayerEntity entityPlayer)
+	public void onGuiSaved(Player entityPlayer)
 	{
 		masterStack = findParentStack(entityPlayer);
 
@@ -27,7 +27,7 @@ public class InventoryTrainingBracelet extends ItemInventory
 		}
 	}
 
-	public ItemStack findParentStack(PlayerEntity entityPlayer)
+	public ItemStack findParentStack(Player entityPlayer)
 	{
 		if (Utils.hasUUID(masterStack))
 		{
@@ -51,11 +51,11 @@ public class InventoryTrainingBracelet extends ItemInventory
 
 	public void save()
 	{
-		CompoundNBT nbtTagCompound = masterStack.getTag();
+		CompoundTag nbtTagCompound = masterStack.getTag();
 
 		if (nbtTagCompound == null)
 		{
-			nbtTagCompound = new CompoundNBT();
+			nbtTagCompound = new CompoundTag();
 
 			UUID uuid = UUID.randomUUID();
 			nbtTagCompound.putLong(Constants.NBT.MOST_SIG, uuid.getMostSignificantBits());

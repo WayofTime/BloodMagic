@@ -11,10 +11,10 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
@@ -62,12 +62,12 @@ public class BloodMagicJEIPlugin implements IModPlugin
 	@Override
 	public void registerRecipes(IRecipeRegistration registration)
 	{
-		ClientWorld world = Objects.requireNonNull(Minecraft.getInstance().level);
+		ClientLevel world = Objects.requireNonNull(Minecraft.getInstance().level);
 		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getTartaricForgeRecipes(world), TartaricForgeRecipeCategory.UID);
 		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAltarRecipes(world), BloodAltarRecipeCategory.UID);
 		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyArrayRecipes(world), AlchemyArrayCraftingCategory.UID);
 		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getARCRecipes(world), ARCRecipeCategory.UID);
-		registration.addRecipes(ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(IRecipeType.SMELTING)), ARCFurnaceRecipeCategory.UID);
+		registration.addRecipes(ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(RecipeType.SMELTING)), ARCFurnaceRecipeCategory.UID);
 		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyTableRecipes(world), AlchemyTableRecipeCategory.UID);
 		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getPotionFlaskRecipes(world), PotionRecipeCategory.UID);
 	}

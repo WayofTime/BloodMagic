@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -17,10 +17,10 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.recipe.RecipeBloodAltar;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
@@ -56,14 +56,14 @@ public class BloodAltarRecipeCategory implements IRecipeCategory<RecipeBloodAlta
 	}
 
 	@Override
-	public List<ITextComponent> getTooltipStrings(RecipeBloodAltar recipe, double mouseX, double mouseY)
+	public List<Component> getTooltipStrings(RecipeBloodAltar recipe, double mouseX, double mouseY)
 	{
-		List<ITextComponent> tooltip = Lists.newArrayList();
+		List<Component> tooltip = Lists.newArrayList();
 
 		if (mouseX >= 13 && mouseX <= 64 && mouseY >= 27 && mouseY <= 58)
 		{
-			tooltip.add(new TranslationTextComponent("jei.bloodmagic.recipe.consumptionrate", ChatUtil.DECIMAL_FORMAT.format(recipe.getConsumeRate())));
-			tooltip.add(new TranslationTextComponent("jei.bloodmagic.recipe.drainrate", ChatUtil.DECIMAL_FORMAT.format(recipe.getDrainRate())));
+			tooltip.add(new TranslatableComponent("jei.bloodmagic.recipe.consumptionrate", ChatUtil.DECIMAL_FORMAT.format(recipe.getConsumeRate())));
+			tooltip.add(new TranslatableComponent("jei.bloodmagic.recipe.drainrate", ChatUtil.DECIMAL_FORMAT.format(recipe.getDrainRate())));
 		}
 
 		return tooltip;
@@ -115,7 +115,7 @@ public class BloodAltarRecipeCategory implements IRecipeCategory<RecipeBloodAlta
 	}
 
 	@Override
-	public void draw(RecipeBloodAltar recipe, MatrixStack matrixStack, double mouseX, double mouseY)
+	public void draw(RecipeBloodAltar recipe, PoseStack matrixStack, double mouseX, double mouseY)
 	{
 		Minecraft mc = Minecraft.getInstance();
 		String[] infoString = new String[]

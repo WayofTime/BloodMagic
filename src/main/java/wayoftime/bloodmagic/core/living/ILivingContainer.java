@@ -2,12 +2,12 @@ package wayoftime.bloodmagic.core.living;
 
 import java.util.List;
 
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.util.Constants;
@@ -32,7 +32,7 @@ public interface ILivingContainer
 		}
 
 		if (!stack.hasTag())
-			stack.setTag(new CompoundNBT());
+			stack.setTag(new CompoundTag());
 
 		stack.getTag().put("livingStats", stats.serialize());
 	}
@@ -41,7 +41,7 @@ public interface ILivingContainer
 	{
 		if (!stack.hasTag())
 		{
-			stack.setTag(new CompoundNBT());
+			stack.setTag(new CompoundTag());
 		}
 
 		stack.getTag().putBoolean(Constants.NBT.UPGRADE_ZERO_DISPLAY, doDisplay);
@@ -58,12 +58,12 @@ public interface ILivingContainer
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	static void appendLivingTooltip(ItemStack stack, LivingStats stats, List<ITextComponent> tooltip, boolean trainable)
+	static void appendLivingTooltip(ItemStack stack, LivingStats stats, List<Component> tooltip, boolean trainable)
 	{
 		if (stats != null)
 		{
 			if (trainable)
-				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.livingarmour.upgrade.points", stats.getUsedPoints(), stats.getMaxPoints()).withStyle(TextFormatting.GOLD));
+				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.livingarmour.upgrade.points", stats.getUsedPoints(), stats.getMaxPoints()).withStyle(ChatFormatting.GOLD));
 
 			stats.getUpgrades().forEach((k, v) -> {
 				if (k.getLevel(v.intValue()) <= 0 && !displayIfLevelZero(stack))
@@ -75,11 +75,11 @@ public interface ILivingContainer
 				{
 					int level = k.getLevel(v.intValue());
 					if (level > 0)
-						tooltip.add(new TranslationTextComponent("%s %s", new TranslationTextComponent(k.getTranslationKey()), new TranslationTextComponent("enchantment.level." + level)).withStyle(TextFormatting.GRAY));
+						tooltip.add(new TranslatableComponent("%s %s", new TranslatableComponent(k.getTranslationKey()), new TranslatableComponent("enchantment.level." + level)).withStyle(ChatFormatting.GRAY));
 					else
-						tooltip.add(new TranslationTextComponent(k.getTranslationKey()).withStyle(TextFormatting.GRAY));
+						tooltip.add(new TranslatableComponent(k.getTranslationKey()).withStyle(ChatFormatting.GRAY));
 				} else
-					tooltip.add(new TranslationTextComponent("%s %s", new TranslationTextComponent(k.getTranslationKey()), (": " + v.intValue() + "/" + k.getNextRequirement(v.intValue()))).withStyle(TextFormatting.GRAY));
+					tooltip.add(new TranslatableComponent("%s %s", new TranslatableComponent(k.getTranslationKey()), (": " + v.intValue() + "/" + k.getNextRequirement(v.intValue()))).withStyle(ChatFormatting.GRAY));
 			});
 		}
 	}

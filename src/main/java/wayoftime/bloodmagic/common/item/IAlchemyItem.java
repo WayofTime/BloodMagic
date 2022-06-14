@@ -1,6 +1,6 @@
 package wayoftime.bloodmagic.common.item;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public interface IAlchemyItem
 {

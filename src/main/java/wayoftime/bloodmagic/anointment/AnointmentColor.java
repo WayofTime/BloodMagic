@@ -1,10 +1,10 @@
 package wayoftime.bloodmagic.anointment;
 
-import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.color.item.ItemColor;
+import net.minecraft.world.item.ItemStack;
 import wayoftime.bloodmagic.common.item.ItemAnointmentProvider;
 
-public class AnointmentColor implements IItemColor
+public class AnointmentColor implements ItemColor
 {
 	@Override
 	public int getColor(ItemStack stack, int layer)

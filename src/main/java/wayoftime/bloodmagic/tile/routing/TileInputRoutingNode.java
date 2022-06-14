@@ -1,15 +1,15 @@
 package wayoftime.bloodmagic.tile.routing;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
@@ -18,12 +18,12 @@ import wayoftime.bloodmagic.common.routing.IItemFilter;
 import wayoftime.bloodmagic.tile.container.ContainerItemRoutingNode;
 import wayoftime.bloodmagic.util.Utils;
 
-public class TileInputRoutingNode extends TileFilteredRoutingNode implements IInputItemRoutingNode, INamedContainerProvider
+public class TileInputRoutingNode extends TileFilteredRoutingNode implements IInputItemRoutingNode, MenuProvider
 {
 	@ObjectHolder("bloodmagic:inputroutingnode")
-	public static TileEntityType<TileInputRoutingNode> TYPE;
+	public static BlockEntityType<TileInputRoutingNode> TYPE;
 
-	public TileInputRoutingNode(TileEntityType<?> type)
+	public TileInputRoutingNode(BlockEntityType<?> type)
 	{
 		super(type, 6, "inputnode");
 	}
@@ -42,7 +42,7 @@ public class TileInputRoutingNode extends TileFilteredRoutingNode implements IIn
 	@Override
 	public IItemFilter getInputFilterForSide(Direction side)
 	{
-		TileEntity tile = getLevel().getBlockEntity(worldPosition.relative(side));
+		BlockEntity tile = getLevel().getBlockEntity(worldPosition.relative(side));
 		if (tile != null)
 		{
 			IItemHandler handler = Utils.getInventory(tile, side.getOpposite());
@@ -64,16 +64,16 @@ public class TileInputRoutingNode extends TileFilteredRoutingNode implements IIn
 	}
 
 	@Override
-	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_)
+	public AbstractContainerMenu createMenu(int p_createMenu_1_, Inventory p_createMenu_2_, Player p_createMenu_3_)
 	{
 		assert level != null;
 		return new ContainerItemRoutingNode(this, p_createMenu_1_, p_createMenu_2_);
 	}
 
 	@Override
-	public ITextComponent getDisplayName()
+	public Component getDisplayName()
 	{
-		return new StringTextComponent("Input Routing Node");
+		return new TextComponent("Input Routing Node");
 	}
 
 //    @Override

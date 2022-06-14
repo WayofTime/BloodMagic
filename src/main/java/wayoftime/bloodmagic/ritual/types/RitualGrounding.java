@@ -3,18 +3,18 @@ package wayoftime.bloodmagic.ritual.types;
 import java.util.List;
 import java.util.function.Consumer;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.boss.WitherEntity;
-import net.minecraft.entity.boss.dragon.EnderDragonEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.boss.wither.WitherBoss;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
@@ -46,7 +46,7 @@ public class RitualGrounding extends Ritual
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
 		/* Default Ritual Stuff */
-		World world = masterRitualStone.getWorldObj();
+		Level world = masterRitualStone.getWorldObj();
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 		BlockPos pos = masterRitualStone.getMasterBlockPos();
 
@@ -85,12 +85,12 @@ public class RitualGrounding extends Ritual
 				break;
 			}
 
-			if (entity instanceof PlayerEntity && ((PlayerEntity) entity).isCreative())
+			if (entity instanceof Player && ((Player) entity).isCreative())
 				continue;
 
 			totalEffects++;
 
-			if (entity instanceof PlayerEntity)
+			if (entity instanceof Player)
 			{
 				/* Raw will effect: Affects players */
 				if (world.getGameTime() % 10 == 0)
@@ -126,8 +126,8 @@ public class RitualGrounding extends Ritual
 				 */
 				if (steadfastWill >= willDrain)
 				{
-					if (entity instanceof WitherEntity || entity instanceof EnderDragonEntity)
-						entity.move(MoverType.SELF, new Vector3d(0, -0.05, 0)); // to work on Wither and EnderDragon
+					if (entity instanceof WitherBoss || entity instanceof EnderDragon)
+						entity.move(MoverType.SELF, new Vec3(0, -0.05, 0)); // to work on Wither and EnderDragon
 																				// without
 					// interfering with other mod author's decisions
 					// (looking at you, Vazkii)
@@ -183,13 +183,13 @@ public class RitualGrounding extends Ritual
 		return new RitualGrounding();
 	}
 
-	public double[] sharedWillEffects(World world, LivingEntity entity, double corrosiveWill, double destructiveWill, double vengefulWill, double corrosiveDrained, double destructiveDrained, double vengefulDrained)
+	public double[] sharedWillEffects(Level world, LivingEntity entity, double corrosiveWill, double destructiveWill, double vengefulWill, double corrosiveDrained, double destructiveDrained, double vengefulDrained)
 	{
 		/* Corrosive will effect: Suspension */
 		if (corrosiveWill >= willDrain)
 		{
 
-			entity.addEffect(new EffectInstance(BloodMagicPotions.SUSPENDED, 20, 0));
+			entity.addEffect(new MobEffectInstance(BloodMagicPotions.SUSPENDED, 20, 0));
 			corrosiveDrained += willDrain;
 
 			/* Vengeful will effect: Levitation */
@@ -197,12 +197,12 @@ public class RitualGrounding extends Ritual
 		{
 
 			vengefulDrained += willDrain;
-			entity.addEffect(new EffectInstance(Effects.LEVITATION, 20, 10));
+			entity.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 20, 10));
 
 		} else
 		{
-			entity.addEffect(new EffectInstance(BloodMagicPotions.GROUNDED, 20, 0));
-			entity.addEffect(new EffectInstance(BloodMagicPotions.GRAVITY, 20, 0));
+			entity.addEffect(new MobEffectInstance(BloodMagicPotions.GROUNDED, 20, 0));
+			entity.addEffect(new MobEffectInstance(BloodMagicPotions.GRAVITY, 20, 0));
 		}
 
 		/* Destructive will effect: Increased fall damage */
@@ -210,19 +210,19 @@ public class RitualGrounding extends Ritual
 		{
 			destructiveDrained += willDrain;
 
-			entity.addEffect(new EffectInstance(BloodMagicPotions.HEAVY_HEART, 100, 1));
+			entity.addEffect(new MobEffectInstance(BloodMagicPotions.HEAVY_HEART, 100, 1));
 		}
 		return new double[] { corrosiveDrained, destructiveDrained, vengefulDrained };
 	}
 
 	@Override
-	public ITextComponent[] provideInformationOfRitualToPlayer(PlayerEntity player)
+	public Component[] provideInformationOfRitualToPlayer(Player player)
 	{
-		return new ITextComponent[] { new TranslationTextComponent(this.getTranslationKey() + ".info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".default.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".corrosive.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".steadfast.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".destructive.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".vengeful.info") };
+		return new Component[] { new TranslatableComponent(this.getTranslationKey() + ".info"),
+				new TranslatableComponent(this.getTranslationKey() + ".default.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".corrosive.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".steadfast.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".destructive.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".vengeful.info") };
 	}
 }

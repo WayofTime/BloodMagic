@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IGrowable;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.util.DamageSourceBloodMagic;
 
@@ -20,7 +20,7 @@ public class BMPotionUtils
 
 	public static double damageMobAndGrowSurroundingPlants(LivingEntity entity, int horizontalRadius, int verticalRadius, double damageRatio, int maxPlantsGrown)
 	{
-		World world = entity.getCommandSenderWorld();
+		Level world = entity.getCommandSenderWorld();
 		if (world.isClientSide)
 		{
 			return 0;
@@ -42,7 +42,7 @@ public class BMPotionUtils
 
 			if (!BloodMagicAPI.INSTANCE.getBlacklist().getGreenGrove().contains(state))
 			{
-				if (state.getBlock() instanceof IGrowable)
+				if (state.getBlock() instanceof BonemealableBlock)
 				{
 					growList.add(blockPos);
 				}
@@ -56,7 +56,7 @@ public class BMPotionUtils
 			{
 				BlockState preBlockState = world.getBlockState(blockPos);
 				for (int n = 0; n < 10; n++)
-					block.randomTick(world.getBlockState(blockPos), (ServerWorld) world, blockPos, world.random);
+					block.randomTick(world.getBlockState(blockPos), (ServerLevel) world, blockPos, world.random);
 
 				BlockState newState = world.getBlockState(blockPos);
 				if (!newState.equals(preBlockState))

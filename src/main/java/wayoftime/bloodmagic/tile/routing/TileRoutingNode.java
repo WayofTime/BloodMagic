@@ -8,15 +8,15 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.Triple;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
@@ -29,17 +29,17 @@ import wayoftime.bloodmagic.common.routing.IRoutingNode;
 import wayoftime.bloodmagic.tile.TileInventory;
 import wayoftime.bloodmagic.util.Constants;
 
-public class TileRoutingNode extends TileInventory implements IRoutingNode, IItemRoutingNode, ITickableTileEntity
+public class TileRoutingNode extends TileInventory implements IRoutingNode, IItemRoutingNode, TickableBlockEntity
 {
 	@ObjectHolder("bloodmagic:itemroutingnode")
-	public static TileEntityType<TileRoutingNode> TYPE;
+	public static BlockEntityType<TileRoutingNode> TYPE;
 
 	private int currentInput;
 	private BlockPos masterPos = BlockPos.ZERO;
 	private List<BlockPos> connectionList = new LinkedList<>();
-	private AxisAlignedBB boundingBox;
+	private AABB boundingBox;
 
-	public TileRoutingNode(TileEntityType<?> type, int size, String name)
+	public TileRoutingNode(BlockEntityType<?> type, int size, String name)
 	{
 		super(type, size, name);
 	}
@@ -60,19 +60,19 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tag)
+	public CompoundTag serialize(CompoundTag tag)
 	{
 		super.serialize(tag);
-		CompoundNBT masterTag = new CompoundNBT();
+		CompoundTag masterTag = new CompoundTag();
 		masterTag.putInt(Constants.NBT.X_COORD, masterPos.getX());
 		masterTag.putInt(Constants.NBT.Y_COORD, masterPos.getY());
 		masterTag.putInt(Constants.NBT.Z_COORD, masterPos.getZ());
 		tag.put(Constants.NBT.ROUTING_MASTER, masterTag);
 
-		ListNBT tags = new ListNBT();
+		ListTag tags = new ListTag();
 		for (BlockPos pos : connectionList)
 		{
-			CompoundNBT posTag = new CompoundNBT();
+			CompoundTag posTag = new CompoundTag();
 			posTag.putInt(Constants.NBT.X_COORD, pos.getX());
 			posTag.putInt(Constants.NBT.Y_COORD, pos.getY());
 			posTag.putInt(Constants.NBT.Z_COORD, pos.getZ());
@@ -83,17 +83,17 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tag)
+	public void deserialize(CompoundTag tag)
 	{
 		super.deserialize(tag);
 		connectionList.clear();
-		CompoundNBT masterTag = tag.getCompound(Constants.NBT.ROUTING_MASTER);
+		CompoundTag masterTag = tag.getCompound(Constants.NBT.ROUTING_MASTER);
 		masterPos = new BlockPos(masterTag.getInt(Constants.NBT.X_COORD), masterTag.getInt(Constants.NBT.Y_COORD), masterTag.getInt(Constants.NBT.Z_COORD));
 
-		ListNBT tags = tag.getList(Constants.NBT.ROUTING_CONNECTION, 10);
+		ListTag tags = tag.getList(Constants.NBT.ROUTING_CONNECTION, 10);
 		for (int i = 0; i < tags.size(); i++)
 		{
-			CompoundNBT blockTag = tags.getCompound(i);
+			CompoundTag blockTag = tags.getCompound(i);
 			BlockPos newPos = new BlockPos(blockTag.getInt(Constants.NBT.X_COORD), blockTag.getInt(Constants.NBT.Y_COORD), blockTag.getInt(Constants.NBT.Z_COORD));
 			connectionList.add(newPos);
 		}
@@ -102,14 +102,14 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 	@Override
 	public void removeAllConnections()
 	{
-		TileEntity testTile = getLevel().getBlockEntity(getMasterPos());
+		BlockEntity testTile = getLevel().getBlockEntity(getMasterPos());
 		if (testTile instanceof IMasterRoutingNode)
 		{
 			((IMasterRoutingNode) testTile).removeConnection(worldPosition); // Remove this node from the master
 		}
 		for (BlockPos testPos : connectionList)
 		{
-			TileEntity tile = getLevel().getBlockEntity(testPos);
+			BlockEntity tile = getLevel().getBlockEntity(testPos);
 			if (tile instanceof IRoutingNode)
 			{
 				((IRoutingNode) tile).removeConnection(worldPosition);
@@ -121,7 +121,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 	}
 
 	@Override
-	public void connectMasterToRemainingNode(World world, List<BlockPos> alreadyChecked, IMasterRoutingNode master)
+	public void connectMasterToRemainingNode(Level world, List<BlockPos> alreadyChecked, IMasterRoutingNode master)
 	{
 		this.masterPos = master.getCurrentBlockPos();
 		List<BlockPos> connectedList = this.getConnected();
@@ -132,7 +132,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 				continue;
 			}
 			alreadyChecked.add(testPos);
-			TileEntity tile = world.getBlockEntity(testPos);
+			BlockEntity tile = world.getBlockEntity(testPos);
 			if (!(tile instanceof IRoutingNode))
 			{
 				continue;
@@ -170,7 +170,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 				continue;
 			}
 			alreadyChecked.add(testPos);
-			TileEntity tile = level.getBlockEntity(testPos);
+			BlockEntity tile = level.getBlockEntity(testPos);
 			if (!(tile instanceof IRoutingNode))
 			{
 				continue;
@@ -211,7 +211,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 		Triple<Boolean, List<BlockPos>, List<IRoutingNode>> recheckResult = recheckConnectionToMaster(posList, new LinkedList<IRoutingNode>());
 		if (!recheckResult.getLeft())
 		{
-			TileEntity testTile = level.getBlockEntity(masterPos);
+			BlockEntity testTile = level.getBlockEntity(masterPos);
 			IMasterRoutingNode masterNode = null;
 			if (testTile instanceof IMasterRoutingNode)
 			{
@@ -308,7 +308,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 	}
 
 	@Override
-	public AxisAlignedBB getRenderBoundingBox()
+	public AABB getRenderBoundingBox()
 	{
 		if (boundingBox == null)
 		{

@@ -2,19 +2,19 @@ package wayoftime.bloodmagic.tile.container;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.IBloodOrb;
 import wayoftime.bloodmagic.tile.TileAlchemyTable;
 
-public class ContainerAlchemyTable extends Container
+public class ContainerAlchemyTable extends AbstractContainerMenu
 {
 	public final TileAlchemyTable tileTable;
 
@@ -24,19 +24,19 @@ public class ContainerAlchemyTable extends Container
 //
 //	}
 
-	public ContainerAlchemyTable(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
+	public ContainerAlchemyTable(int windowId, Inventory playerInventory, FriendlyByteBuf extraData)
 	{
 		this((TileAlchemyTable) playerInventory.player.level.getBlockEntity(extraData.readBlockPos()), windowId, playerInventory);
 	}
 
-	public ContainerAlchemyTable(@Nullable TileAlchemyTable tile, int windowId, PlayerInventory playerInventory)
+	public ContainerAlchemyTable(@Nullable TileAlchemyTable tile, int windowId, Inventory playerInventory)
 	{
 		super(BloodMagicBlocks.ALCHEMY_TABLE_CONTAINER.get(), windowId);
 		this.tileTable = tile;
 		this.setup(playerInventory, tile);
 	}
 
-	public void setup(PlayerInventory inventory, IInventory tileForge)
+	public void setup(Inventory inventory, Container tileForge)
 	{
 		this.addSlot(new Slot(tileTable, 0, 62, 15));
 		this.addSlot(new Slot(tileTable, 1, 80, 51));
@@ -62,9 +62,9 @@ public class ContainerAlchemyTable extends Container
 	}
 
 	@Override
-	public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player)
+	public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, Player player)
 	{
-		PlayerInventory inventoryPlayer = player.inventory;
+		Inventory inventoryPlayer = player.inventory;
 
 		if (slotId <= TileAlchemyTable.outputSlot && slotId >= 0)
 		{
@@ -86,7 +86,7 @@ public class ContainerAlchemyTable extends Container
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index)
+	public ItemStack quickMoveStack(Player playerIn, int index)
 	{
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
@@ -141,14 +141,14 @@ public class ContainerAlchemyTable extends Container
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity playerIn)
+	public boolean stillValid(Player playerIn)
 	{
 		return this.tileTable.stillValid(playerIn);
 	}
 
 	private class SlotOrb extends Slot
 	{
-		public SlotOrb(IInventory inventory, int slotIndex, int x, int y)
+		public SlotOrb(Container inventory, int slotIndex, int x, int y)
 		{
 			super(inventory, slotIndex, x, y);
 		}
@@ -162,7 +162,7 @@ public class ContainerAlchemyTable extends Container
 
 	private class SlotOutput extends Slot
 	{
-		public SlotOutput(IInventory inventory, int slotIndex, int x, int y)
+		public SlotOutput(Container inventory, int slotIndex, int x, int y)
 		{
 			super(inventory, slotIndex, x, y);
 		}

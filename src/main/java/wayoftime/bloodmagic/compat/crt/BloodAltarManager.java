@@ -10,10 +10,10 @@ import com.blamejared.crafttweaker.impl.actions.recipes.ActionAddRecipe;
 import com.blamejared.crafttweaker.impl.actions.recipes.ActionRemoveRecipeByOutput;
 import com.blamejared.crafttweaker.impl.item.MCItemStackMutable;
 import com.blamejared.crafttweaker.impl.item.MCWeightedItemStack;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
 import org.openzen.zencode.java.ZenCodeType;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
@@ -46,7 +46,7 @@ public class BloodAltarManager implements IRecipeManager {
             public void apply() {
                 List<ResourceLocation> toRemove = new ArrayList<>();
                 for(ResourceLocation location : getManager().getRecipes().keySet()) {
-                    IRecipe<?> recipe = getManager().getRecipes().get(location);
+                    Recipe<?> recipe = getManager().getRecipes().get(location);
                     if(recipe instanceof RecipeBloodAltar) {
                         RecipeBloodAltar recipeBloodAltar = (RecipeBloodAltar) recipe;
                         ItemStack recOut = recipeBloodAltar.getOutput();
@@ -61,7 +61,7 @@ public class BloodAltarManager implements IRecipeManager {
     }
     
     @Override
-    public IRecipeType<RecipeBloodAltar> getRecipeType() {
+    public RecipeType<RecipeBloodAltar> getRecipeType() {
         return BloodMagicRecipeType.ALTAR;
     }
 }

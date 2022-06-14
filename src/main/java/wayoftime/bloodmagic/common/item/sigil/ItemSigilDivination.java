@@ -4,18 +4,18 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceContext.FluidMode;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.ClipContext.Fluid;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.altar.IBloodAltar;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.api.compat.IAltarReader;
@@ -38,19 +38,19 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
 		if (stack.getItem() instanceof ISigil.Holding)
 			stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
 		if (PlayerHelper.isFakePlayer(player))
-			return ActionResult.fail(stack);
+			return InteractionResultHolder.fail(stack);
 
 		if (!world.isClientSide)
 		{
-			RayTraceResult position = Item.getPlayerPOVHitResult(world, player, FluidMode.NONE);
+			HitResult position = Item.getPlayerPOVHitResult(world, player, Fluid.NONE);
 
-			if (position == null || position.getType() == RayTraceResult.Type.MISS)
+			if (position == null || position.getType() == HitResult.Type.MISS)
 			{
 				super.use(world, player, hand);
 
@@ -58,17 +58,17 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 				if (isSimple && binding != null)
 				{
 					int currentEssence = NetworkHelper.getSoulNetwork(binding).getCurrentEssence();
-					List<ITextComponent> toSend = Lists.newArrayList();
+					List<Component> toSend = Lists.newArrayList();
 					if (!binding.getOwnerId().equals(player.getGameProfile().getId()))
-						toSend.add(new TranslationTextComponent(tooltipBase + "otherNetwork", binding.getOwnerName()));
-					toSend.add(new TranslationTextComponent(tooltipBase + "currentEssence", currentEssence));
-					ChatUtil.sendNoSpam(player, toSend.toArray(new ITextComponent[toSend.size()]));
+						toSend.add(new TranslatableComponent(tooltipBase + "otherNetwork", binding.getOwnerName()));
+					toSend.add(new TranslatableComponent(tooltipBase + "currentEssence", currentEssence));
+					ChatUtil.sendNoSpam(player, toSend.toArray(new Component[toSend.size()]));
 				}
 			} else
 			{
-				if (position.getType() == RayTraceResult.Type.BLOCK)
+				if (position.getType() == HitResult.Type.BLOCK)
 				{
-					TileEntity tile = world.getBlockEntity(new BlockPos(position.getLocation()));
+					BlockEntity tile = world.getBlockEntity(new BlockPos(position.getLocation()));
 
 					if (tile != null && tile instanceof IBloodAltar)
 					{
@@ -79,17 +79,17 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 						altar.checkTier();
 						if (isSimple)
 						{
-							ChatUtil.sendNoSpam(player, new TranslationTextComponent(tooltipBase + "currentAltarTier", NumeralHelper.toRoman(tier)), new TranslationTextComponent(tooltipBase + "currentEssence", currentEssence), new TranslationTextComponent(tooltipBase + "currentAltarCapacity", capacity));
+							ChatUtil.sendNoSpam(player, new TranslatableComponent(tooltipBase + "currentAltarTier", NumeralHelper.toRoman(tier)), new TranslatableComponent(tooltipBase + "currentEssence", currentEssence), new TranslatableComponent(tooltipBase + "currentAltarCapacity", capacity));
 						} else
 						{
-							ChatUtil.sendNoSpam(player, new TranslationTextComponent(tooltipBase + "currentAltarTier", NumeralHelper.toRoman(tier)), new TranslationTextComponent(tooltipBase + "currentEssence", currentEssence), new TranslationTextComponent(tooltipBase + "currentAltarCapacity", capacity));
+							ChatUtil.sendNoSpam(player, new TranslatableComponent(tooltipBase + "currentAltarTier", NumeralHelper.toRoman(tier)), new TranslatableComponent(tooltipBase + "currentEssence", currentEssence), new TranslatableComponent(tooltipBase + "currentAltarCapacity", capacity));
 						}
 					} else if (tile != null && tile instanceof TileIncenseAltar)
 					{
 						TileIncenseAltar altar = (TileIncenseAltar) tile;
 						altar.recheckConstruction();
 						double tranquility = altar.tranquility;
-						ChatUtil.sendNoSpam(player, new TranslationTextComponent(tooltipBase + "currentTranquility", (int) ((100D * (int) (100 * tranquility)) / 100d)), new TranslationTextComponent(tooltipBase + "currentBonus", (int) (100 * altar.incenseAddition)));
+						ChatUtil.sendNoSpam(player, new TranslatableComponent(tooltipBase + "currentTranquility", (int) ((100D * (int) (100 * tranquility)) / 100d)), new TranslatableComponent(tooltipBase + "currentBonus", (int) (100 * altar.incenseAddition)));
 					}
 //                    else if (tile != null && tile instanceof TileInversionPillar)
 //                    {
@@ -103,11 +103,11 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 						if (binding != null)
 						{
 							int currentEssence = NetworkHelper.getSoulNetwork(binding).getCurrentEssence();
-							List<ITextComponent> toSend = Lists.newArrayList();
+							List<Component> toSend = Lists.newArrayList();
 							if (!binding.getOwnerId().equals(player.getGameProfile().getId()))
-								toSend.add(new TranslationTextComponent(tooltipBase + "otherNetwork", binding.getOwnerName()));
-							toSend.add(new TranslationTextComponent(tooltipBase + "currentEssence", currentEssence));
-							ChatUtil.sendNoSpam(player, toSend.toArray(new ITextComponent[toSend.size()]));
+								toSend.add(new TranslatableComponent(tooltipBase + "otherNetwork", binding.getOwnerName()));
+							toSend.add(new TranslatableComponent(tooltipBase + "currentEssence", currentEssence));
+							ChatUtil.sendNoSpam(player, toSend.toArray(new Component[toSend.size()]));
 						}
 					}
 				}

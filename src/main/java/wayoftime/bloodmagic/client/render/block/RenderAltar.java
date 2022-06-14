@@ -1,24 +1,24 @@
 package wayoftime.bloodmagic.client.render.block;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Atlases;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import com.mojang.blaze3d.platform.Lighting;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import com.mojang.math.Vector3f;
 import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer.Model3D;
@@ -26,9 +26,9 @@ import wayoftime.bloodmagic.client.render.RenderResizableCuboid;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.tile.TileAltar;
 
-public class RenderAltar extends TileEntityRenderer<TileAltar>
+public class RenderAltar extends BlockEntityRenderer<TileAltar>
 {
-	public RenderAltar(TileEntityRendererDispatcher rendererDispatcherIn)
+	public RenderAltar(BlockEntityRenderDispatcher rendererDispatcherIn)
 	{
 		super(rendererDispatcherIn);
 	}
@@ -37,7 +37,7 @@ public class RenderAltar extends TileEntityRenderer<TileAltar>
 	private static final float MAX_HEIGHT = 0.745f;
 
 	@Override
-	public void render(TileAltar tileAltar, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn)
+	public void render(TileAltar tileAltar, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn)
 	{
 		ItemStack inputStack = tileAltar.getItem(0);
 
@@ -51,7 +51,7 @@ public class RenderAltar extends TileEntityRenderer<TileAltar>
 //			renderHologram(tileAltar, tileAltar.getCurrentTierDisplayed(), partialTicks);
 	}
 
-	private void renderFluid(float fluidLevel, MatrixStack matrixStack, IRenderTypeBuffer renderer, int combinedLightIn, int combinedOverlayIn)
+	private void renderFluid(float fluidLevel, PoseStack matrixStack, MultiBufferSource renderer, int combinedLightIn, int combinedOverlayIn)
 	{
 		Fluid fluid = BloodMagicBlocks.LIFE_ESSENCE_FLUID.get();
 		FluidStack fluidStack = new FluidStack(fluid, 1000);
@@ -60,7 +60,7 @@ public class RenderAltar extends TileEntityRenderer<TileAltar>
 		matrixStack.pushPose();
 
 		Model3D model = getFluidModel(fluidLevel, data);
-		IVertexBuilder buffer = renderer.getBuffer(Atlases.translucentCullBlockSheet());
+		VertexConsumer buffer = renderer.getBuffer(Sheets.translucentCullBlockSheet());
 
 //		matrixStack.translate(data.loca, y, z);
 //		int glow = data.calculateGlowLight(0);
@@ -69,7 +69,7 @@ public class RenderAltar extends TileEntityRenderer<TileAltar>
 		matrixStack.popPose();
 	}
 
-	private void renderItem(ItemStack stack, TileAltar tileAltar, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn)
+	private void renderItem(ItemStack stack, TileAltar tileAltar, PoseStack matrixStack, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn)
 	{
 		matrixStack.pushPose();
 		Minecraft mc = Minecraft.getInstance();
@@ -83,10 +83,10 @@ public class RenderAltar extends TileEntityRenderer<TileAltar>
 
 			matrixStack.mulPose(Vector3f.YP.rotationDegrees(rotation));
 			matrixStack.scale(0.5F, 0.5F, 0.5F);
-			RenderHelper.turnBackOn();
-			IBakedModel ibakedmodel = itemRenderer.getModel(stack, tileAltar.getLevel(), (LivingEntity) null);
-			itemRenderer.render(stack, ItemCameraTransforms.TransformType.FIXED, true, matrixStack, buffer, combinedLightIn, combinedOverlayIn, ibakedmodel); // renderItem
-			RenderHelper.turnOff();
+			Lighting.turnBackOn();
+			BakedModel ibakedmodel = itemRenderer.getModel(stack, tileAltar.getLevel(), (LivingEntity) null);
+			itemRenderer.render(stack, ItemTransforms.TransformType.FIXED, true, matrixStack, buffer, combinedLightIn, combinedOverlayIn, ibakedmodel); // renderItem
+			Lighting.turnOff();
 
 			matrixStack.popPose();
 		}
@@ -125,7 +125,7 @@ public class RenderAltar extends TileEntityRenderer<TileAltar>
 
 		public TextureAtlasSprite getTexture()
 		{
-			return Minecraft.getInstance().getTextureAtlas(AtlasTexture.LOCATION_BLOCKS).apply(fluidType.getFluid().getAttributes().getStillTexture());
+			return Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(fluidType.getFluid().getAttributes().getStillTexture());
 		}
 
 		public boolean isGaseous()

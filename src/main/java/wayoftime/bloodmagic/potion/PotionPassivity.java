@@ -1,30 +1,30 @@
 package wayoftime.bloodmagic.potion;
 
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.TargetGoal;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.potion.EffectType;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.target.TargetGoal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.effect.MobEffectCategory;
 import wayoftime.bloodmagic.entity.goal.NearestAttackableDummyGoal;
 
 public class PotionPassivity extends PotionBloodMagic
 {
 	public PotionPassivity()
 	{
-		super(EffectType.HARMFUL, 0xFFFFFF);
+		super(MobEffectCategory.HARMFUL, 0xFFFFFF);
 	}
 
 	@Override
 	public void applyEffectTick(LivingEntity entity, int amplifier)
 	{
-		if (!(entity instanceof CreatureEntity))
+		if (!(entity instanceof PathfinderMob))
 		{
 			return;
 		}
 
-		CreatureEntity animal = (CreatureEntity) entity;
+		PathfinderMob animal = (PathfinderMob) entity;
 
-		TargetGoal goal = new NearestAttackableDummyGoal<>(animal, MonsterEntity.class, false);
+		TargetGoal goal = new NearestAttackableDummyGoal<>(animal, Monster.class, false);
 
 		animal.targetSelector.addGoal(0, goal);
 	}

@@ -1,18 +1,18 @@
 package wayoftime.bloodmagic.recipe;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 
 public class EffectHolder
 {
-	private final Effect potion;
+	private final MobEffect potion;
 	private int baseDuration;
 	private int amplifier;
 	private double ampDurationMod;
 	private double lengthDurationMod;
 
-	public EffectHolder(Effect potion, int baseDuration, int amplifier, double ampDurationMod, double lengthDurationMod)
+	public EffectHolder(MobEffect potion, int baseDuration, int amplifier, double ampDurationMod, double lengthDurationMod)
 	{
 		this.potion = potion;
 		this.baseDuration = baseDuration;
@@ -21,17 +21,17 @@ public class EffectHolder
 		this.lengthDurationMod = lengthDurationMod;
 	}
 
-	public EffectInstance getEffectInstance(boolean ambientIn, boolean showParticlesIn)
+	public MobEffectInstance getEffectInstance(boolean ambientIn, boolean showParticlesIn)
 	{
 		return getEffectInstance(1, ambientIn, showParticlesIn);
 	}
 
-	public EffectInstance getEffectInstance(double durationModifier, boolean ambientIn, boolean showParticlesIn)
+	public MobEffectInstance getEffectInstance(double durationModifier, boolean ambientIn, boolean showParticlesIn)
 	{
-		return new EffectInstance(potion, (int) (baseDuration * ampDurationMod * lengthDurationMod * durationModifier), amplifier, ambientIn, showParticlesIn);
+		return new MobEffectInstance(potion, (int) (baseDuration * ampDurationMod * lengthDurationMod * durationModifier), amplifier, ambientIn, showParticlesIn);
 	}
 
-	public Effect getPotion()
+	public MobEffect getPotion()
 	{
 		return potion;
 	}
@@ -76,14 +76,14 @@ public class EffectHolder
 		this.lengthDurationMod = lengthDurationMod;
 	}
 
-	public CompoundNBT write(CompoundNBT nbt)
+	public CompoundTag write(CompoundTag nbt)
 	{
-		nbt.putInt("Id", Effect.getId(this.getPotion()));
+		nbt.putInt("Id", MobEffect.getId(this.getPotion()));
 		this.writeInternal(nbt);
 		return nbt;
 	}
 
-	private void writeInternal(CompoundNBT nbt)
+	private void writeInternal(CompoundTag nbt)
 	{
 		nbt.putByte("Amplifier", (byte) getAmplifier());
 		nbt.putInt("Duration", getBaseDuration());
@@ -91,14 +91,14 @@ public class EffectHolder
 		nbt.putDouble("LengthDurationMod", getLengthDurationMod());
 	}
 
-	public static EffectHolder read(CompoundNBT nbt)
+	public static EffectHolder read(CompoundTag nbt)
 	{
 		int i = nbt.getInt("Id");
-		Effect effect = Effect.byId(i);
+		MobEffect effect = MobEffect.byId(i);
 		return effect == null ? null : readInternal(effect, nbt);
 	}
 
-	private static EffectHolder readInternal(Effect effect, CompoundNBT nbt)
+	private static EffectHolder readInternal(MobEffect effect, CompoundTag nbt)
 	{
 		int amplifier = nbt.getByte("Amplifier");
 		int baseDuration = nbt.getInt("Duration");

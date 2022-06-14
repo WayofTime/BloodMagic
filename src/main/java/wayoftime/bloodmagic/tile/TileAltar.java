@@ -3,11 +3,11 @@ package wayoftime.bloodmagic.tile;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -17,16 +17,16 @@ import wayoftime.bloodmagic.altar.BloodAltar;
 import wayoftime.bloodmagic.altar.IBloodAltar;
 import wayoftime.bloodmagic.common.block.BlockAltar;
 
-public class TileAltar extends TileInventory implements IBloodAltar, ITickableTileEntity
+public class TileAltar extends TileInventory implements IBloodAltar, TickableBlockEntity
 {
 	@ObjectHolder("bloodmagic:altar")
-	public static TileEntityType<TileAltar> TYPE;
+	public static BlockEntityType<TileAltar> TYPE;
 	private BloodAltar bloodAltar;
 
 	private LazyOptional fluidOptional;
 	private boolean isOutputOn;
 
-	public TileAltar(TileEntityType<?> type)
+	public TileAltar(BlockEntityType<?> type)
 	{
 		super(type, 1, "altar");
 		this.bloodAltar = new BloodAltar(this);
@@ -52,21 +52,21 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickableTi
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tagCompound)
+	public void deserialize(CompoundTag tagCompound)
 	{
 		super.deserialize(tagCompound);
 
-		CompoundNBT altarTag = tagCompound.getCompound("bloodAltar");
+		CompoundTag altarTag = tagCompound.getCompound("bloodAltar");
 
 		this.bloodAltar.readFromNBT(altarTag);
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tagCompound)
+	public CompoundTag serialize(CompoundTag tagCompound)
 	{
 		super.serialize(tagCompound);
 
-		CompoundNBT altarTag = new CompoundNBT();
+		CompoundTag altarTag = new CompoundTag();
 		this.bloodAltar.writeToNBT(altarTag);
 
 		tagCompound.put("bloodAltar", altarTag);

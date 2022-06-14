@@ -9,8 +9,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraftforge.fml.ModList;
 import wayoftime.bloodmagic.ritual.imperfect.ImperfectRitual;
 import wayoftime.bloodmagic.util.BMLog;

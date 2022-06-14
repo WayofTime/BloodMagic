@@ -3,8 +3,8 @@ package wayoftime.bloodmagic.client.render;
 import java.util.Arrays;
 
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 
 public class BloodMagicRenderer
 {

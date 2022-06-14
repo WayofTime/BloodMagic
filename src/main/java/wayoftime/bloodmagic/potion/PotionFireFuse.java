@@ -2,16 +2,16 @@ package wayoftime.bloodmagic.potion;
 
 import java.util.Random;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectType;
-import net.minecraft.world.Explosion;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.level.Explosion;
 
 public class PotionFireFuse extends PotionBloodMagic
 {
 	public PotionFireFuse()
 	{
-		super(EffectType.HARMFUL, 0xFF0000FF);
+		super(MobEffectCategory.HARMFUL, 0xFF0000FF);
 	}
 
 	@Override
@@ -29,9 +29,9 @@ public class PotionFireFuse extends PotionBloodMagic
 
 		if (entity.getEffect(BloodMagicPotions.FIRE_FUSE).getDuration() <= 3)
 		{
-			Explosion.Mode explosion$mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(entity.level, entity)
-					? Explosion.Mode.DESTROY
-					: Explosion.Mode.NONE;
+			Explosion.BlockInteraction explosion$mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(entity.level, entity)
+					? Explosion.BlockInteraction.DESTROY
+					: Explosion.BlockInteraction.NONE;
 			entity.getCommandSenderWorld().explode(null, entity.getX(), entity.getY(), entity.getZ(), radius, false, explosion$mode);
 		}
 	}

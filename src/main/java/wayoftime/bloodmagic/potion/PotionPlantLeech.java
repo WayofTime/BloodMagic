@@ -1,13 +1,13 @@
 package wayoftime.bloodmagic.potion;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.potion.EffectType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.effect.MobEffectCategory;
 
 public class PotionPlantLeech extends PotionBloodMagic
 {
 	public PotionPlantLeech()
 	{
-		super(EffectType.HARMFUL, 0x00FF00FF);
+		super(MobEffectCategory.HARMFUL, 0x00FF00FF);
 	}
 
 	@Override

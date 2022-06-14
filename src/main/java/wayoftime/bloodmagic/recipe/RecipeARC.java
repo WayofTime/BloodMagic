@@ -6,15 +6,15 @@ import java.util.Random;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
@@ -142,7 +142,7 @@ public class RecipeARC extends BloodMagicRecipe
 	}
 
 	@Override
-	public void write(PacketBuffer buffer)
+	public void write(FriendlyByteBuf buffer)
 	{
 		input.toNetwork(buffer);
 		arc_tool.toNetwork(buffer);
@@ -169,13 +169,13 @@ public class RecipeARC extends BloodMagicRecipe
 	}
 
 	@Override
-	public IRecipeSerializer<RecipeARC> getSerializer()
+	public RecipeSerializer<RecipeARC> getSerializer()
 	{
 		return BloodMagicRecipeSerializers.ARC.getRecipeSerializer();
 	}
 
 	@Override
-	public IRecipeType<RecipeARC> getType()
+	public RecipeType<RecipeARC> getType()
 	{
 		return BloodMagicRecipeType.ARC;
 	}

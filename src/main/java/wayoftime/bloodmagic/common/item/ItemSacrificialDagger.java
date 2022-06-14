@@ -2,22 +2,22 @@ package wayoftime.bloodmagic.common.item;
 
 import java.util.List;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.particles.RedstoneParticleData;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
@@ -41,21 +41,21 @@ public class ItemSacrificialDagger extends Item
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
 //		tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.sacrificialDagger.desc"))));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sacrificialdagger.desc").withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.sacrificialdagger.desc").withStyle(ChatFormatting.GRAY));
 
 //		if (stack.getItemDamage() == 1)
 //			list.add(TextHelper.localizeEffect("tooltip.bloodmagic.sacrificialDagger.creative"));
 	}
 
 	@Override
-	public void releaseUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft)
+	public void releaseUsing(ItemStack stack, Level worldIn, LivingEntity entityLiving, int timeLeft)
 	{
-		if (entityLiving instanceof PlayerEntity && !entityLiving.getCommandSenderWorld().isClientSide)
-			if (PlayerSacrificeHelper.sacrificePlayerHealth((PlayerEntity) entityLiving))
-				IncenseHelper.setHasMaxIncense(stack, (PlayerEntity) entityLiving, false);
+		if (entityLiving instanceof Player && !entityLiving.getCommandSenderWorld().isClientSide)
+			if (PlayerSacrificeHelper.sacrificePlayerHealth((Player) entityLiving))
+				IncenseHelper.setHasMaxIncense(stack, (Player) entityLiving, false);
 	}
 
 	@Override
@@ -71,13 +71,13 @@ public class ItemSacrificialDagger extends Item
 	}
 
 	@Override
-	public UseAction getUseAnimation(ItemStack stack)
+	public UseAnim getUseAnimation(ItemStack stack)
 	{
-		return UseAction.BOW;
+		return UseAnim.BOW;
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
 		if (PlayerHelper.isFakePlayer(player))
@@ -86,7 +86,7 @@ public class ItemSacrificialDagger extends Item
 		if (this.canUseForSacrifice(stack))
 		{
 			player.startUsingItem(hand);
-			return ActionResult.success(stack);
+			return InteractionResultHolder.success(stack);
 		}
 
 		int lpAdded = ConfigManager.COMMON.sacrificialDaggerConversion.get() * 2;
@@ -131,10 +131,10 @@ public class ItemSacrificialDagger extends Item
 		double posX = player.getX();
 		double posY = player.getY();
 		double posZ = player.getZ();
-		world.playSound(player, posX, posY, posZ, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.random.nextFloat() - world.random.nextFloat()) * 0.8F);
+		world.playSound(player, posX, posY, posZ, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (world.random.nextFloat() - world.random.nextFloat()) * 0.8F);
 
 		for (int l = 0; l < 8; ++l)
-			world.addParticle(RedstoneParticleData.REDSTONE, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), 0, 0, 0);
+			world.addParticle(DustParticleOptions.REDSTONE, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), 0, 0, 0);
 
 		if (!world.isClientSide && PlayerHelper.isFakePlayer(player))
 			return super.use(world, player, hand);
@@ -146,13 +146,13 @@ public class ItemSacrificialDagger extends Item
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected)
+	public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected)
 	{
-		if (!world.isClientSide && entity instanceof PlayerEntity)
-			this.setUseForSacrifice(stack, this.isPlayerPreparedForSacrifice(world, (PlayerEntity) entity));
+		if (!world.isClientSide && entity instanceof Player)
+			this.setUseForSacrifice(stack, this.isPlayerPreparedForSacrifice(world, (Player) entity));
 	}
 
-	public boolean isPlayerPreparedForSacrifice(World world, PlayerEntity player)
+	public boolean isPlayerPreparedForSacrifice(Level world, Player player)
 	{
 		return !world.isClientSide && (PlayerSacrificeHelper.getPlayerIncense(player) > 0);
 	}

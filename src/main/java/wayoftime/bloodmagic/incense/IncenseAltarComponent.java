@@ -1,8 +1,8 @@
 package wayoftime.bloodmagic.incense;
 
-import net.minecraft.block.Block;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 
 public class IncenseAltarComponent
 {

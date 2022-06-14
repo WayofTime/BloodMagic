@@ -1,10 +1,10 @@
 package wayoftime.bloodmagic.common.item.sigil;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.tile.TileSpectral;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 
@@ -16,7 +16,7 @@ public class ItemSigilSuppression extends ItemSigilToggleableBase
 	}
 
 	@Override
-	public void onSigilUpdate(ItemStack stack, World world, PlayerEntity player, int itemSlot, boolean isSelected)
+	public void onSigilUpdate(ItemStack stack, Level world, Player player, int itemSlot, boolean isSelected)
 	{
 		if (PlayerHelper.isFakePlayer(player))
 			return;

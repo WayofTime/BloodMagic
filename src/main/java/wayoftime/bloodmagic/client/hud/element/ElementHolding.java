@@ -2,13 +2,13 @@ package wayoftime.bloodmagic.client.hud.element;
 
 import java.util.List;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import com.mojang.blaze3d.platform.Lighting;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.client.Sprite;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
@@ -25,7 +25,7 @@ public class ElementHolding extends HUDElement
 	}
 
 	@Override
-	public void draw(MatrixStack matrixStack, float partialTicks, int drawX, int drawY)
+	public void draw(PoseStack matrixStack, float partialTicks, int drawX, int drawY)
 	{
 //		GlStateManager.color(1.0F, 1.0F, 1.0F);
 		matrixStack.pushPose();
@@ -43,7 +43,7 @@ public class ElementHolding extends HUDElement
 		int currentSlot = ItemSigilHolding.getCurrentItemOrdinal(sigilHolding);
 		SELECTED_OVERLAY.draw(matrixStack, drawX - 1 + (currentSlot * 20), drawY - 1);
 
-		RenderHelper.turnBackOn();
+		Lighting.turnBackOn();
 		List<ItemStack> inventory = ItemSigilHolding.getInternalInventory(sigilHolding);
 		int xOffset = 0;
 		for (ItemStack stack : inventory)
@@ -68,7 +68,7 @@ public class ElementHolding extends HUDElement
 		return true;
 	}
 
-	protected void renderHotbarItem(MatrixStack matrixStack, int x, int y, float partialTicks, PlayerEntity player, ItemStack stack)
+	protected void renderHotbarItem(PoseStack matrixStack, int x, int y, float partialTicks, Player player, ItemStack stack)
 	{
 		if (!stack.isEmpty())
 		{

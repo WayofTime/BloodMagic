@@ -2,11 +2,11 @@ package wayoftime.bloodmagic.common.recipe;
 
 import java.util.function.Consumer;
 
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.altar.AltarTier;
@@ -18,7 +18,7 @@ public class BloodAltarRecipeProvider implements ISubRecipeProvider
 {
 
 	@Override
-	public void addRecipes(Consumer<IFinishedRecipe> consumer)
+	public void addRecipes(Consumer<FinishedRecipe> consumer)
 	{
 		String basePath = "altar/";
 

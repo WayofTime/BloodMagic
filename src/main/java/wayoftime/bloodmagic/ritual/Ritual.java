@@ -10,14 +10,14 @@ import java.util.function.Consumer;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.will.DemonWillHolder;
@@ -58,9 +58,9 @@ public abstract class Ritual
 		this(name, crystalLevel, activationCost, null, unlocalizedName);
 	}
 
-	public void readFromNBT(CompoundNBT tag)
+	public void readFromNBT(CompoundTag tag)
 	{
-		ListNBT tags = tag.getList("areas", 10);
+		ListTag tags = tag.getList("areas", 10);
 		if (tags.isEmpty())
 		{
 			return;
@@ -68,10 +68,10 @@ public abstract class Ritual
 
 		for (int i = 0; i < tags.size(); i++)
 		{
-			CompoundNBT newTag = tags.getCompound(i);
+			CompoundTag newTag = tags.getCompound(i);
 			String rangeKey = newTag.getString("key");
 
-			CompoundNBT storedTag = newTag.getCompound("area");
+			CompoundTag storedTag = newTag.getCompound("area");
 			AreaDescriptor desc = this.getBlockRange(rangeKey);
 			if (desc != null)
 			{
@@ -80,15 +80,15 @@ public abstract class Ritual
 		}
 	}
 
-	public void writeToNBT(CompoundNBT tag)
+	public void writeToNBT(CompoundTag tag)
 	{
-		ListNBT tags = new ListNBT();
+		ListTag tags = new ListTag();
 
 		for (Entry<String, AreaDescriptor> entry : modableRangeMap.entrySet())
 		{
-			CompoundNBT newTag = new CompoundNBT();
+			CompoundTag newTag = new CompoundTag();
 			newTag.putString("key", entry.getKey());
-			CompoundNBT storedTag = new CompoundNBT();
+			CompoundTag storedTag = new CompoundTag();
 
 			entry.getValue().writeToNBT(storedTag);
 
@@ -113,7 +113,7 @@ public abstract class Ritual
 	 *                          reactivated.
 	 * @return - Whether activation was successful
 	 */
-	public boolean activateRitual(IMasterRitualStone masterRitualStone, PlayerEntity player, UUID owner)
+	public boolean activateRitual(IMasterRitualStone masterRitualStone, Player player, UUID owner)
 	{
 		return true;
 	}
@@ -256,12 +256,12 @@ public abstract class Ritual
 		return horizontalRangeMap.get(range);
 	}
 
-	public ITextComponent getErrorForBlockRangeOnFail(PlayerEntity player, String range, IMasterRitualStone master, BlockPos offset1, BlockPos offset2)
+	public Component getErrorForBlockRangeOnFail(Player player, String range, IMasterRitualStone master, BlockPos offset1, BlockPos offset2)
 	{
 		AreaDescriptor descriptor = this.getBlockRange(range);
 		if (descriptor == null)
 		{
-			return new TranslationTextComponent("ritual.bloodmagic.blockRange.tooBig", "?");
+			return new TranslatableComponent("ritual.bloodmagic.blockRange.tooBig", "?");
 		}
 
 		List<EnumDemonWillType> willConfig = master.getActiveWillConfig();
@@ -273,26 +273,26 @@ public abstract class Ritual
 
 		if (maxVolume > 0 && descriptor.getVolumeForOffsets(offset1, offset2) > maxVolume)
 		{
-			return new TranslationTextComponent("ritual.bloodmagic.blockRange.tooBig", maxVolume);
+			return new TranslatableComponent("ritual.bloodmagic.blockRange.tooBig", maxVolume);
 		} else
 		{
-			return new TranslationTextComponent("ritual.bloodmagic.blockRange.tooFar", maxVertical, maxHorizontal);
+			return new TranslatableComponent("ritual.bloodmagic.blockRange.tooFar", maxVertical, maxHorizontal);
 		}
 	}
 
-	public ITextComponent[] provideInformationOfRitualToPlayer(PlayerEntity player)
+	public Component[] provideInformationOfRitualToPlayer(Player player)
 	{
-		return new ITextComponent[] { new TranslationTextComponent(this.getTranslationKey() + ".info") };
+		return new Component[] { new TranslatableComponent(this.getTranslationKey() + ".info") };
 	}
 
-	public ITextComponent provideInformationOfRangeToPlayer(PlayerEntity player, String range)
+	public Component provideInformationOfRangeToPlayer(Player player, String range)
 	{
 		if (getListOfRanges().contains(range))
 		{
-			return new TranslationTextComponent(this.getTranslationKey() + "." + range + ".info");
+			return new TranslatableComponent(this.getTranslationKey() + "." + range + ".info");
 		} else
 		{
-			return new TranslationTextComponent("ritual.bloodmagic.blockRange.noRange");
+			return new TranslatableComponent("ritual.bloodmagic.blockRange.noRange");
 		}
 	}
 
@@ -331,7 +331,7 @@ public abstract class Ritual
 		addRune(components, 0, y, offset, rune);
 	}
 
-	public double getWillRespectingConfig(World world, BlockPos pos, EnumDemonWillType type, List<EnumDemonWillType> willConfig)
+	public double getWillRespectingConfig(Level world, BlockPos pos, EnumDemonWillType type, List<EnumDemonWillType> willConfig)
 	{
 		return willConfig.contains(type) ? WorldDemonWillHandler.getCurrentWill(world, pos, type) : 0;
 	}

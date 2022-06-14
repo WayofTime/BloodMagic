@@ -2,24 +2,24 @@ package wayoftime.bloodmagic.tile.container;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IntArray;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.tile.TileSoulForge;
 import wayoftime.bloodmagic.api.compat.IDemonWill;
 import wayoftime.bloodmagic.api.compat.IDemonWillGem;
 
-public class ContainerSoulForge extends Container
+public class ContainerSoulForge extends AbstractContainerMenu
 {
-	public final IInventory tileForge;
-	public final IIntArray data;
+	public final Container tileForge;
+	public final ContainerData data;
 
 //	public ContainerSoulForge(InventoryPlayer inventoryPlayer, IInventory tileForge)
 //	{
@@ -27,12 +27,12 @@ public class ContainerSoulForge extends Container
 //
 //	}
 
-	public ContainerSoulForge(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
+	public ContainerSoulForge(int windowId, Inventory playerInventory, FriendlyByteBuf extraData)
 	{
-		this((TileSoulForge) playerInventory.player.level.getBlockEntity(extraData.readBlockPos()), new IntArray(5), windowId, playerInventory);
+		this((TileSoulForge) playerInventory.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(5), windowId, playerInventory);
 	}
 
-	public ContainerSoulForge(@Nullable TileSoulForge tile, IIntArray data, int windowId, PlayerInventory playerInventory)
+	public ContainerSoulForge(@Nullable TileSoulForge tile, ContainerData data, int windowId, Inventory playerInventory)
 	{
 		super(BloodMagicBlocks.SOUL_FORGE_CONTAINER.get(), windowId);
 		this.tileForge = tile;
@@ -40,7 +40,7 @@ public class ContainerSoulForge extends Container
 		this.data = data;
 	}
 
-	public void setup(PlayerInventory inventory, IInventory tileForge)
+	public void setup(Inventory inventory, Container tileForge)
 	{
 		this.addSlot(new Slot(tileForge, 0, 8, 15));
 		this.addSlot(new Slot(tileForge, 1, 80, 15));
@@ -64,7 +64,7 @@ public class ContainerSoulForge extends Container
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index)
+	public ItemStack quickMoveStack(Player playerIn, int index)
 	{
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
@@ -119,14 +119,14 @@ public class ContainerSoulForge extends Container
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity playerIn)
+	public boolean stillValid(Player playerIn)
 	{
 		return this.tileForge.stillValid(playerIn);
 	}
 
 	private class SlotSoul extends Slot
 	{
-		public SlotSoul(IInventory inventory, int slotIndex, int x, int y)
+		public SlotSoul(Container inventory, int slotIndex, int x, int y)
 		{
 			super(inventory, slotIndex, x, y);
 		}
@@ -140,7 +140,7 @@ public class ContainerSoulForge extends Container
 
 	private class SlotOutput extends Slot
 	{
-		public SlotOutput(IInventory inventory, int slotIndex, int x, int y)
+		public SlotOutput(Container inventory, int slotIndex, int x, int y)
 		{
 			super(inventory, slotIndex, x, y);
 		}

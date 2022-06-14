@@ -11,10 +11,10 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.NonNullList;
 import wayoftime.bloodmagic.altar.ComponentType;
 import wayoftime.bloodmagic.api.IBloodMagicAPI;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
@@ -33,7 +33,7 @@ public class BloodMagicAPI implements IBloodMagicAPI
 	private final BloodMagicRecipeRegistrar recipeRegistrar;
 	private final BloodMagicValueManager valueManager;
 	private final Multimap<ComponentType, BlockState> altarComponents;
-	private final Map<String, Function<PlayerEntity, NonNullList<ItemStack>>> inventoryProvider;
+	private final Map<String, Function<Player, NonNullList<ItemStack>>> inventoryProvider;
 
 	public BloodMagicAPI()
 	{
@@ -41,7 +41,7 @@ public class BloodMagicAPI implements IBloodMagicAPI
 		this.recipeRegistrar = new BloodMagicRecipeRegistrar();
 		this.valueManager = new BloodMagicValueManager();
 		this.altarComponents = ArrayListMultimap.create();
-		this.inventoryProvider = new HashMap<String, Function<PlayerEntity, NonNullList<ItemStack>>>();
+		this.inventoryProvider = new HashMap<String, Function<Player, NonNullList<ItemStack>>>();
 	}
 
 	@Nonnull
@@ -66,7 +66,7 @@ public class BloodMagicAPI implements IBloodMagicAPI
 	}
 
 	@Nonnull
-	public Map<String, Function<PlayerEntity, NonNullList<ItemStack>>> getInventoryProvider()
+	public Map<String, Function<Player, NonNullList<ItemStack>>> getInventoryProvider()
 	{
 		return inventoryProvider;
 	}
@@ -114,13 +114,13 @@ public class BloodMagicAPI implements IBloodMagicAPI
 	}
 
 	@Override
-	public void registerInventoryProvider(String inventoryIdentifier, Function<PlayerEntity, NonNullList<ItemStack>> provider)
+	public void registerInventoryProvider(String inventoryIdentifier, Function<Player, NonNullList<ItemStack>> provider)
 	{
 		inventoryProvider.put(inventoryIdentifier, provider);
 	}
 
 	@Override
-	public double getTotalDemonWill(String willType, PlayerEntity player)
+	public double getTotalDemonWill(String willType, Player player)
 	{
 		return PlayerDemonWillHandler.getTotalDemonWill(EnumDemonWillType.getType(willType), player);
 	}

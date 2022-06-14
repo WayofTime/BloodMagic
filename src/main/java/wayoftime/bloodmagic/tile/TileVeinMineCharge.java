@@ -8,40 +8,40 @@ import java.util.Map;
 import com.mojang.datafixers.util.Pair;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3i;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.core.Vec3i;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
 
 public class TileVeinMineCharge extends TileExplosiveCharge
 {
 	@ObjectHolder("bloodmagic:veinmine_charge")
-	public static TileEntityType<TileVeinMineCharge> TYPE;
+	public static BlockEntityType<TileVeinMineCharge> TYPE;
 
 	private Map<BlockPos, Boolean> veinPartsMap;
 	private List<BlockPos> veinPartsCache;
 	private boolean finishedAnalysis;
 
-	private Vector3i[] diagonals = new Vector3i[] { new Vector3i(0, 1, 1), new Vector3i(0, 1, -1),
-			new Vector3i(0, -1, 1), new Vector3i(0, -1, -1), new Vector3i(1, 0, 1), new Vector3i(-1, 0, 1),
-			new Vector3i(1, 0, -1), new Vector3i(-1, 0, -1), new Vector3i(1, 1, 0), new Vector3i(-1, 1, 0),
-			new Vector3i(1, -1, 0), new Vector3i(-1, -1, 0) };
+	private Vec3i[] diagonals = new Vec3i[] { new Vec3i(0, 1, 1), new Vec3i(0, 1, -1),
+			new Vec3i(0, -1, 1), new Vec3i(0, -1, -1), new Vec3i(1, 0, 1), new Vec3i(-1, 0, 1),
+			new Vec3i(1, 0, -1), new Vec3i(-1, 0, -1), new Vec3i(1, 1, 0), new Vec3i(-1, 1, 0),
+			new Vec3i(1, -1, 0), new Vec3i(-1, -1, 0) };
 
 	public double internalCounter = 0;
 
@@ -49,7 +49,7 @@ public class TileVeinMineCharge extends TileExplosiveCharge
 
 	public int maxBlocks = 128;
 
-	public TileVeinMineCharge(TileEntityType<?> type, int maxBlocks)
+	public TileVeinMineCharge(BlockEntityType<?> type, int maxBlocks)
 	{
 		super(type);
 
@@ -131,7 +131,7 @@ public class TileVeinMineCharge extends TileExplosiveCharge
 
 				if (this.checkDiagonals())
 				{
-					for (Vector3i vec : this.diagonals)
+					for (Vec3i vec : this.diagonals)
 					{
 						BlockPos checkPos = currentPos.offset(vec);
 						if (veinPartsMap.containsKey(checkPos))
@@ -184,13 +184,13 @@ public class TileVeinMineCharge extends TileExplosiveCharge
 		if (internalCounter == 20)
 		{
 //			worldIn.playSound((PlayerEntity)null, tntentity.getPosX(), tntentity.getPosY(), tntentity.getPosZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
-			level.playSound((PlayerEntity) null, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, SoundEvents.FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, level.random.nextFloat() * 0.4F + 0.8F);
-			((ServerWorld) this.level).sendParticles(ParticleTypes.FLAME, worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5, 5, 0.02, 0.03, 0.02, 0);
+			level.playSound((Player) null, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.4F + 0.8F);
+			((ServerLevel) this.level).sendParticles(ParticleTypes.FLAME, worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5, 5, 0.02, 0.03, 0.02, 0);
 		}
 
 		if (internalCounter == 30)
 		{
-			level.playSound((PlayerEntity) null, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, SoundEvents.TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
+			level.playSound((Player) null, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
 		}
 
 		if (internalCounter < 30)
@@ -200,17 +200,17 @@ public class TileVeinMineCharge extends TileExplosiveCharge
 
 		if (level.random.nextDouble() < 0.3)
 		{
-			((ServerWorld) this.level).sendParticles(ParticleTypes.SMOKE, worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5, 1, 0.0D, 0.0D, 0.0D, 0);
+			((ServerLevel) this.level).sendParticles(ParticleTypes.SMOKE, worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5, 1, 0.0D, 0.0D, 0.0D, 0);
 		}
 
 		if (internalCounter == 100)
 		{
 			ItemStack toolStack = this.getHarvestingTool();
-			level.playSound((PlayerEntity) null, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, SoundEvents.GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.2F) * 0.7F);
+			level.playSound((Player) null, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F, (1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.2F) * 0.7F);
 
 			int numParticles = 10;
 
-			((ServerWorld) this.level).sendParticles(ParticleTypes.EXPLOSION, worldPosition.getX() + 0.5 + explosiveDirection.getStepX(), worldPosition.getY() + 0.5 + explosiveDirection.getStepY(), worldPosition.getZ() + 0.5 + explosiveDirection.getStepZ(), numParticles, 1.0D, 1.0D, 1.0D, 0);
+			((ServerLevel) this.level).sendParticles(ParticleTypes.EXPLOSION, worldPosition.getX() + 0.5 + explosiveDirection.getStepX(), worldPosition.getY() + 0.5 + explosiveDirection.getStepY(), worldPosition.getZ() + 0.5 + explosiveDirection.getStepZ(), numParticles, 1.0D, 1.0D, 1.0D, 0);
 
 			ObjectArrayList<Pair<ItemStack, BlockPos>> objectarraylist = new ObjectArrayList<>();
 
@@ -224,10 +224,10 @@ public class TileVeinMineCharge extends TileExplosiveCharge
 				{
 					BlockPos blockpos1 = blockPos.immutable();
 //				this.world.getProfiler().startSection("explosion_blocks");
-					if (this.level instanceof ServerWorld)
+					if (this.level instanceof ServerLevel)
 					{
-						TileEntity tileentity = blockstate.hasTileEntity() ? this.level.getBlockEntity(blockPos) : null;
-						LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) this.level)).withRandom(this.level.random).withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf(blockPos)).withParameter(LootParameters.TOOL, toolStack).withOptionalParameter(LootParameters.BLOCK_ENTITY, tileentity);
+						BlockEntity tileentity = blockstate.hasTileEntity() ? this.level.getBlockEntity(blockPos) : null;
+						LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerLevel) this.level)).withRandom(this.level.random).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockPos)).withParameter(LootContextParams.TOOL, toolStack).withOptionalParameter(LootContextParams.BLOCK_ENTITY, tileentity);
 //                  if (this.mode == Explosion.Mode.DESTROY) {
 //                     lootcontext$builder.withParameter(LootParameters.EXPLOSION_RADIUS, this.size);
 //                  }
@@ -254,14 +254,14 @@ public class TileVeinMineCharge extends TileExplosiveCharge
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tag)
+	public void deserialize(CompoundTag tag)
 	{
 		internalCounter = tag.getDouble("internalCounter");
 		maxBlocks = tag.getInt("maxBlocks");
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tag)
+	public CompoundTag serialize(CompoundTag tag)
 	{
 		tag.putDouble("internalCounter", internalCounter);
 		tag.putInt("maxBlocks", maxBlocks);

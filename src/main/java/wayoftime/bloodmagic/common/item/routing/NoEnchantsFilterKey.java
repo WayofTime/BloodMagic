@@ -2,9 +2,9 @@ package wayoftime.bloodmagic.common.item.routing;
 
 import java.util.Map;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.ItemStack;
 
 public class NoEnchantsFilterKey implements IFilterKey
 {

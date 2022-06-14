@@ -3,13 +3,13 @@ package wayoftime.bloodmagic.ritual.types;
 import java.util.List;
 import java.util.function.Consumer;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
@@ -44,7 +44,7 @@ public class RitualWellOfSuffering extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
+		Level world = masterRitualStone.getWorldObj();
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
 		if (currentEssence < getRefreshCost())
@@ -60,7 +60,7 @@ public class RitualWellOfSuffering extends Ritual
 
 		BlockPos altarPos = pos.offset(altarOffsetPos);
 
-		TileEntity tile = world.getBlockEntity(altarPos);
+		BlockEntity tile = world.getBlockEntity(altarPos);
 
 		AreaDescriptor altarRange = masterRitualStone.getBlockRange(ALTAR_RANGE);
 
@@ -68,7 +68,7 @@ public class RitualWellOfSuffering extends Ritual
 		{
 			for (BlockPos newPos : altarRange.getContainedPositions(pos))
 			{
-				TileEntity nextTile = world.getBlockEntity(newPos);
+				BlockEntity nextTile = world.getBlockEntity(newPos);
 				if (nextTile instanceof TileAltar)
 				{
 					tile = nextTile;
@@ -85,7 +85,7 @@ public class RitualWellOfSuffering extends Ritual
 			TileAltar tileAltar = (TileAltar) tile;
 
 			AreaDescriptor damageRange = masterRitualStone.getBlockRange(DAMAGE_RANGE);
-			AxisAlignedBB range = damageRange.getAABB(pos);
+			AABB range = damageRange.getAABB(pos);
 
 			List<LivingEntity> entities = world.getEntitiesOfClass(LivingEntity.class, range);
 
@@ -102,7 +102,7 @@ public class RitualWellOfSuffering extends Ritual
 				if (lifeEssenceRatio <= 0)
 					continue;
 
-				if (entity.isAlive() && !(entity instanceof PlayerEntity))
+				if (entity.isAlive() && !(entity instanceof Player))
 				{
 					if (entity.hurt(RitualManager.RITUAL_DAMAGE, 1))
 					{

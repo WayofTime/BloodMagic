@@ -2,17 +2,17 @@ package wayoftime.bloodmagic.ritual.types;
 
 import java.util.function.Consumer;
 
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
@@ -42,10 +42,10 @@ public class RitualPlacer extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
+		Level world = masterRitualStone.getWorldObj();
 		BlockPos masterPos = masterRitualStone.getMasterBlockPos();
 		AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
-		TileEntity tileEntity = world.getBlockEntity(chestRange.getContainedPositions(masterPos).get(0));
+		BlockEntity tileEntity = world.getBlockEntity(chestRange.getContainedPositions(masterPos).get(0));
 
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
@@ -68,7 +68,7 @@ public class RitualPlacer extends Ritual
 
 			posLoop: for (BlockPos blockPos : areaDescriptor.getContainedPositions(masterRitualStone.getMasterBlockPos()))
 			{
-				BlockItemUseContext ctx = new BlockItemUseContext(world, null, Hand.MAIN_HAND, ItemStack.EMPTY, BlockRayTraceResult.miss(new Vector3d(0, 0, 0), Direction.UP, blockPos));
+				BlockPlaceContext ctx = new BlockPlaceContext(world, null, InteractionHand.MAIN_HAND, ItemStack.EMPTY, BlockHitResult.miss(new Vec3(0, 0, 0), Direction.UP, blockPos));
 				if (!world.getBlockState(blockPos).canBeReplaced(ctx))
 					continue;
 
@@ -78,7 +78,7 @@ public class RitualPlacer extends Ritual
 					if (stack.isEmpty() || !(stack.getItem() instanceof BlockItem))
 						continue;
 
-					ActionResultType result = ((BlockItem) stack.getItem()).place(ctx);
+					InteractionResult result = ((BlockItem) stack.getItem()).place(ctx);
 					if (result.consumesAction())
 					{
 						itemHandler.extractItem(invSlot, 1, false);

@@ -2,36 +2,36 @@ package wayoftime.bloodmagic.tile;
 
 import java.util.UUID;
 
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.ICommandSource;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.CommandSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector2f;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.core.Registry;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.tile.base.TileBase;
 import wayoftime.bloodmagic.util.Constants;
 
-public class TileInversionPillar extends TileBase implements ICommandSource
+public class TileInversionPillar extends TileBase implements CommandSource
 {
 	@ObjectHolder("bloodmagic:inversion_pillar")
-	public static TileEntityType<TileInversionPillar> TYPE;
+	public static BlockEntityType<TileInversionPillar> TYPE;
 
 	protected BlockPos teleportPos = BlockPos.ZERO;
-	protected RegistryKey<World> destinationKey;
+	protected ResourceKey<Level> destinationKey;
 
-	public TileInversionPillar(TileEntityType<?> type)
+	public TileInversionPillar(BlockEntityType<?> type)
 	{
 		super(type);
 	}
@@ -41,34 +41,34 @@ public class TileInversionPillar extends TileBase implements ICommandSource
 		this(TYPE);
 	}
 
-	public void setDestination(World destinationWorld, BlockPos destinationPos)
+	public void setDestination(Level destinationWorld, BlockPos destinationPos)
 	{
 		this.destinationKey = destinationWorld.dimension();
 		this.teleportPos = destinationPos;
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tag)
+	public void deserialize(CompoundTag tag)
 	{
 		super.deserialize(tag);
 
-		CompoundNBT positionTag = tag.getCompound(Constants.NBT.DUNGEON_TELEPORT_POS);
+		CompoundTag positionTag = tag.getCompound(Constants.NBT.DUNGEON_TELEPORT_POS);
 		teleportPos = new BlockPos(positionTag.getInt(Constants.NBT.X_COORD), positionTag.getInt(Constants.NBT.Y_COORD), positionTag.getInt(Constants.NBT.Z_COORD));
 
 		if (tag.contains(Constants.NBT.DUNGEON_TELEPORT_KEY))
 		{
 			String key = tag.getString(Constants.NBT.DUNGEON_TELEPORT_KEY);
 //			System.out.println("Deserialized key: " + key);
-			destinationKey = RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(key));
+			destinationKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(key));
 		}
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tag)
+	public CompoundTag serialize(CompoundTag tag)
 	{
 		super.serialize(tag);
 
-		CompoundNBT positionTag = new CompoundNBT();
+		CompoundTag positionTag = new CompoundTag();
 		positionTag.putInt(Constants.NBT.X_COORD, teleportPos.getX());
 		positionTag.putInt(Constants.NBT.Y_COORD, teleportPos.getY());
 		positionTag.putInt(Constants.NBT.Z_COORD, teleportPos.getZ());
@@ -80,7 +80,7 @@ public class TileInversionPillar extends TileBase implements ICommandSource
 		return tag;
 	}
 
-	public void handlePlayerInteraction(PlayerEntity player)
+	public void handlePlayerInteraction(Player player)
 	{
 //		RegistryKey<World> key = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, BloodMagic.rl("dungeon"));
 		if (teleportPos.equals(BlockPos.ZERO))
@@ -88,15 +88,15 @@ public class TileInversionPillar extends TileBase implements ICommandSource
 			return;
 		}
 
-		teleportPlayerToLocation((ServerWorld) level, player, destinationKey, teleportPos);
+		teleportPlayerToLocation((ServerLevel) level, player, destinationKey, teleportPos);
 	}
 
-	public CommandSource getCommandSource(ServerWorld world)
+	public CommandSourceStack getCommandSource(ServerLevel world)
 	{
-		return new CommandSource(this, new Vector3d(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()), Vector2f.ZERO, world, 2, "Inversion Pillar", new StringTextComponent("Inversion Pillar"), world.getServer(), (Entity) null);
+		return new CommandSourceStack(this, new Vec3(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()), Vec2.ZERO, world, 2, "Inversion Pillar", new TextComponent("Inversion Pillar"), world.getServer(), (Entity) null);
 	}
 
-	public void teleportPlayerToLocation(ServerWorld serverWorld, PlayerEntity player, RegistryKey<World> destination, BlockPos destinationPos)
+	public void teleportPlayerToLocation(ServerLevel serverWorld, Player player, ResourceKey<Level> destination, BlockPos destinationPos)
 	{
 //		System.out.println("Key: " + destination.getLocation());
 //		String command = "execute in bloodmagic:dungeon run teleport Dev 0 100 0";
@@ -105,7 +105,7 @@ public class TileInversionPillar extends TileBase implements ICommandSource
 		mcServer.getCommands().performCommand(getCommandSource(serverWorld), command);
 	}
 
-	public String getTextCommandForTeleport(RegistryKey<World> destination, PlayerEntity player, double posX, double posY, double posZ)
+	public String getTextCommandForTeleport(ResourceKey<Level> destination, Player player, double posX, double posY, double posZ)
 	{
 		String playerName = player.getName().getString();
 //		System.out.println("Potential player name: " + playerName);
@@ -113,7 +113,7 @@ public class TileInversionPillar extends TileBase implements ICommandSource
 	}
 
 	@Override
-	public void sendMessage(ITextComponent component, UUID senderUUID)
+	public void sendMessage(Component component, UUID senderUUID)
 	{
 		// TODO Auto-generated method stub
 

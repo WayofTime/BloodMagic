@@ -2,10 +2,10 @@ package wayoftime.bloodmagic.common.recipe;
 
 import java.util.function.Consumer;
 
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
@@ -21,7 +21,7 @@ public class TartaricForgeRecipeProvider implements ISubRecipeProvider
 {
 
 	@Override
-	public void addRecipes(Consumer<IFinishedRecipe> consumer)
+	public void addRecipes(Consumer<FinishedRecipe> consumer)
 	{
 		String basePath = "soulforge/";
 		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.PETTY_GEM.get()), 1, 1, Ingredient.of(Tags.Items.DUSTS_REDSTONE), Ingredient.of(Tags.Items.INGOTS_GOLD), Ingredient.of(Tags.Items.GLASS), Ingredient.of(Tags.Items.GEMS_LAPIS)).build(consumer, BloodMagic.rl(basePath + "pettytartaricgem"));

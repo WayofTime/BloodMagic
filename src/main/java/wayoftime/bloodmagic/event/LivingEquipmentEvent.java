@@ -1,6 +1,6 @@
 package wayoftime.bloodmagic.event;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.eventbus.api.Event;
 import wayoftime.bloodmagic.core.living.LivingStats;
 import wayoftime.bloodmagic.core.living.LivingUpgrade;
@@ -28,16 +28,16 @@ public class LivingEquipmentEvent extends Event
 //		void levelUp(LevelUp event);
 //	}
 
-	private final PlayerEntity player;
+	private final Player player;
 	private final LivingStats stats;
 
-	private LivingEquipmentEvent(PlayerEntity player, LivingStats stats)
+	private LivingEquipmentEvent(Player player, LivingStats stats)
 	{
 		this.player = player;
 		this.stats = stats;
 	}
 
-	public PlayerEntity getPlayer()
+	public Player getPlayer()
 	{
 		return player;
 	}
@@ -53,7 +53,7 @@ public class LivingEquipmentEvent extends Event
 		private final LivingUpgrade upgrade;
 		private double experience;
 
-		public GainExperience(PlayerEntity player, LivingStats stats, LivingUpgrade upgrade, double experience)
+		public GainExperience(Player player, LivingStats stats, LivingUpgrade upgrade, double experience)
 		{
 			super(player, stats);
 			this.upgrade = upgrade;
@@ -81,7 +81,7 @@ public class LivingEquipmentEvent extends Event
 
 		private final LivingUpgrade upgrade;
 
-		public LevelUp(PlayerEntity player, LivingStats stats, LivingUpgrade upgrade)
+		public LevelUp(Player player, LivingStats stats, LivingUpgrade upgrade)
 		{
 			super(player, stats);
 

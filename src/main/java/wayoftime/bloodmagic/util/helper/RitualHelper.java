@@ -8,13 +8,13 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Tuple;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.util.LazyOptional;
@@ -46,7 +46,7 @@ public class RitualHelper
 	 * @param pos   - Location of the MasterRitualStone
 	 * @return The ID of the valid ritual
 	 */
-	public static String getValidRitual(World world, BlockPos pos)
+	public static String getValidRitual(Level world, BlockPos pos)
 	{
 		for (Ritual ritual : BloodMagic.RITUAL_MANAGER.getRituals())
 		{
@@ -62,7 +62,7 @@ public class RitualHelper
 		return "";
 	}
 
-	public static Direction getDirectionOfRitual(World world, BlockPos pos, Ritual ritual)
+	public static Direction getDirectionOfRitual(Level world, BlockPos pos, Ritual ritual)
 	{
 		for (int i = 0; i < 4; i++)
 		{
@@ -74,7 +74,7 @@ public class RitualHelper
 		return null;
 	}
 
-	public static boolean checkValidRitual(World world, BlockPos pos, Ritual ritual, Direction direction)
+	public static boolean checkValidRitual(Level world, BlockPos pos, Ritual ritual, Direction direction)
 	{
 		if (ritual == null)
 		{
@@ -94,12 +94,12 @@ public class RitualHelper
 		return true;
 	}
 
-	public static boolean isRuneType(World world, BlockPos pos, EnumRuneType type)
+	public static boolean isRuneType(Level world, BlockPos pos, EnumRuneType type)
 	{
 		if (world == null)
 			return false;
 		Block block = world.getBlockState(pos).getBlock();
-		TileEntity tile = world.getBlockEntity(pos);
+		BlockEntity tile = world.getBlockEntity(pos);
 
 		if (block instanceof IRitualStone)
 			return ((IRitualStone) block).isRuneType(world, pos, type);
@@ -111,12 +111,12 @@ public class RitualHelper
 		return false;
 	}
 
-	public static boolean isRune(World world, BlockPos pos)
+	public static boolean isRune(Level world, BlockPos pos)
 	{
 		if (world == null)
 			return false;
 		Block block = world.getBlockState(pos).getBlock();
-		TileEntity tile = world.getBlockEntity(pos);
+		BlockEntity tile = world.getBlockEntity(pos);
 
 		if (block instanceof IRitualStone)
 			return true;
@@ -127,12 +127,12 @@ public class RitualHelper
 
 	}
 
-	public static void setRuneType(World world, BlockPos pos, EnumRuneType type)
+	public static void setRuneType(Level world, BlockPos pos, EnumRuneType type)
 	{
 		if (world == null)
 			return;
 		BlockState state = world.getBlockState(pos);
-		TileEntity tile = world.getBlockEntity(pos);
+		BlockEntity tile = world.getBlockEntity(pos);
 
 		if (state.getBlock() instanceof IRitualStone)
 			((IRitualStone) state.getBlock()).setRuneType(world, pos, type);
@@ -150,7 +150,7 @@ public class RitualHelper
 		}
 	}
 
-	public static boolean createRitual(World world, BlockPos pos, Direction direction, Ritual ritual, boolean safe)
+	public static boolean createRitual(Level world, BlockPos pos, Direction direction, Ritual ritual, boolean safe)
 	{
 
 		List<RitualComponent> components = Lists.newArrayList();
@@ -166,7 +166,7 @@ public class RitualHelper
 		return true;
 	}
 
-	public static boolean abortConstruction(World world, BlockPos pos, Direction direction, boolean safe, List<RitualComponent> components)
+	public static boolean abortConstruction(Level world, BlockPos pos, Direction direction, boolean safe, List<RitualComponent> components)
 	{
 		// TODO: can be optimized to check only for the first and last component if
 		// every ritual has those at the highest and lowest y-level respectivly.
@@ -193,7 +193,7 @@ public class RitualHelper
 		} else
 			direction = tile.getDirection();
 
-		World world = tile.getLevel();
+		Level world = tile.getLevel();
 		BlockPos pos = tile.getBlockPos();
 
 		List<RitualComponent> components = Lists.newArrayList();
@@ -206,7 +206,7 @@ public class RitualHelper
 		return true;
 	}
 
-	public static void setRitualStones(Direction direction, World world, BlockPos pos, List<RitualComponent> gatheredComponents)
+	public static void setRitualStones(Direction direction, Level world, BlockPos pos, List<RitualComponent> gatheredComponents)
 	{
 		for (RitualComponent component : gatheredComponents)
 		{
@@ -219,7 +219,7 @@ public class RitualHelper
 	public static Pair<Ritual, Direction> getRitualFromRuins(TileMasterRitualStone tile)
 	{
 		BlockPos pos = tile.getBlockPos();
-		World world = tile.getLevel();
+		Level world = tile.getLevel();
 		Ritual possibleRitual = tile.getCurrentRitual();
 		Direction possibleDirection = tile.getDirection();
 		int highestCount = 0;

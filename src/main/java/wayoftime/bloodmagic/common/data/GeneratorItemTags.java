@@ -2,13 +2,13 @@ package wayoftime.bloodmagic.common.data;
 
 import java.nio.file.Path;
 
-import net.minecraft.data.BlockTagsProvider;
+import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.ItemTagsProvider;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.tags.ITag.INamedTag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.tags.Tag.Named;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
@@ -143,7 +143,7 @@ public class GeneratorItemTags extends ItemTagsProvider
 		this.registerTool(BloodMagicItems.INTERMEDIATE_CUTTING_FLUID.get(), BloodMagicTags.ARC_TOOL_CUTTINGFLUID);
 	}
 
-	public void registerTool(Item item, INamedTag<Item> tag)
+	public void registerTool(Item item, Named<Item> tag)
 	{
 		this.tag(tag).add(item);
 	}

@@ -1,17 +1,17 @@
 package wayoftime.bloodmagic.common.item;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.anointment.AnointmentData;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
@@ -36,10 +36,10 @@ public class ItemAnointmentProvider extends Item
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
-		ItemStack weaponStack = player.getItemInHand(hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND);
+		ItemStack weaponStack = player.getItemInHand(hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
 //		if (world.isRemote && !unusable)
 //		{
 //			Vector3d vec = player.getLookVec();
@@ -73,11 +73,11 @@ public class ItemAnointmentProvider extends Item
 //					if (world instanceof ServerWorld)
 					{
 						SoundEvent soundevent = SoundEvents.BOTTLE_EMPTY;
-						world.playSound(null, player.blockPosition(), soundevent, SoundCategory.BLOCKS, 1.0F, 1.0F);
+						world.playSound(null, player.blockPosition(), soundevent, SoundSource.BLOCKS, 1.0F, 1.0F);
 					}
 					stack.shrink(1);
 					holder.toItemStack(weaponStack);
-					return ActionResult.consume(stack);
+					return InteractionResultHolder.consume(stack);
 				}
 			}
 		} else
@@ -101,7 +101,7 @@ public class ItemAnointmentProvider extends Item
 								: ParticleTypes.ENTITY_EFFECT, player.getRandomX(0.3D), player.getRandomY(), player.getRandomZ(0.3D), d0, d1, d2);
 					}
 
-					return ActionResult.consume(stack);
+					return InteractionResultHolder.consume(stack);
 				}
 			}
 		}

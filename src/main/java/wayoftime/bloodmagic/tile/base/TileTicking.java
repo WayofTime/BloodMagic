@@ -1,20 +1,20 @@
 package wayoftime.bloodmagic.tile.base;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 /**
  * Base class for tiles that tick. Allows disabling the ticking
  * programmatically.
  */
 // TODO - Move implementations that depend on existed ticks to new methods from here.
-public abstract class TileTicking extends TileBase implements ITickableTileEntity
+public abstract class TileTicking extends TileBase implements TickableBlockEntity
 {
 	private int ticksExisted;
 	private boolean shouldTick = true;
 
-	public TileTicking(TileEntityType<?> type)
+	public TileTicking(BlockEntityType<?> type)
 	{
 		super(type);
 	}
@@ -30,14 +30,14 @@ public abstract class TileTicking extends TileBase implements ITickableTileEntit
 	}
 
 	@Override
-	void deserializeBase(CompoundNBT tagCompound)
+	void deserializeBase(CompoundTag tagCompound)
 	{
 		this.ticksExisted = tagCompound.getInt("ticksExisted");
 		this.shouldTick = tagCompound.getBoolean("shouldTick");
 	}
 
 	@Override
-	CompoundNBT serializeBase(CompoundNBT tagCompound)
+	CompoundTag serializeBase(CompoundTag tagCompound)
 	{
 		tagCompound.putInt("ticksExisted", getTicksExisted());
 		tagCompound.putBoolean("shouldTick", shouldTick());

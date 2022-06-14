@@ -2,18 +2,18 @@ package wayoftime.bloodmagic.common.item.routing;
 
 import java.util.List;
 
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -26,26 +26,26 @@ import wayoftime.bloodmagic.util.Utils;
 public class ItemStandardFilter extends ItemCompositeFilter
 {
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
 		if (!world.isClientSide)
 		{
 			Utils.setUUID(stack);
 
-			if (player instanceof ServerPlayerEntity)
+			if (player instanceof ServerPlayer)
 			{
-				NetworkHooks.openGui((ServerPlayerEntity) player, this, buf -> buf.writeItemStack(stack, false));
+				NetworkHooks.openGui((ServerPlayer) player, this, buf -> buf.writeItemStack(stack, false));
 			}
 		}
 
-		return new ActionResult<>(ActionResultType.SUCCESS, stack);
+		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack filterStack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack filterStack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.basicfilter.desc").withStyle(TextFormatting.ITALIC).withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.basicfilter.desc").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY));
 
 		if (filterStack.getTag() == null)
 		{
@@ -58,10 +58,10 @@ public class ItemStandardFilter extends ItemCompositeFilter
 			boolean sneaking = Screen.hasShiftDown();
 			if (!sneaking)
 			{
-				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.extraInfo").withStyle(TextFormatting.BLUE));
+				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.extraInfo").withStyle(ChatFormatting.BLUE));
 			} else
 			{
-				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.contained_filters").withStyle(TextFormatting.BLUE));
+				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.contained_filters").withStyle(ChatFormatting.BLUE));
 				for (ItemStack nestedStack : nestedFilters)
 				{
 					tooltip.add(nestedStack.getHoverName());
@@ -74,10 +74,10 @@ public class ItemStandardFilter extends ItemCompositeFilter
 
 		if (isWhitelist)
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist").withStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.whitelist").withStyle(ChatFormatting.GRAY));
 		} else
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist").withStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.blacklist").withStyle(ChatFormatting.GRAY));
 		}
 
 		ItemInventory inv = new InventoryFilter(filterStack);
@@ -94,10 +94,10 @@ public class ItemStandardFilter extends ItemCompositeFilter
 				int amount = GhostItemHelper.getItemGhostAmount(stack);
 				if (amount > 0)
 				{
-					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.count", amount, stack.getHoverName()));
+					tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.count", amount, stack.getHoverName()));
 				} else
 				{
-					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.all", stack.getHoverName()));
+					tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.all", stack.getHoverName()));
 				}
 			} else
 			{

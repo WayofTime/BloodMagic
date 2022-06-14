@@ -2,10 +2,10 @@ package wayoftime.bloodmagic.ritual.types;
 
 import java.util.function.Consumer;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
@@ -32,13 +32,13 @@ public class RitualSphereCreate extends Ritual
 		setMaximumVolumeAndDistanceOfRange(SPHEROID_RANGE, 0, 32, 70);
 	}
 
-	public void readFromNBT(CompoundNBT tag)
+	public void readFromNBT(CompoundTag tag)
 	{
 		super.readFromNBT(tag);
 		currentPos = new BlockPos(tag.getInt(Constants.NBT.X_COORD), tag.getInt(Constants.NBT.Y_COORD), tag.getInt(Constants.NBT.Z_COORD));
 	}
 
-	public void writeToNBT(CompoundNBT tag)
+	public void writeToNBT(CompoundTag tag)
 	{
 		super.writeToNBT(tag);
 		if (currentPos != null)
@@ -52,7 +52,7 @@ public class RitualSphereCreate extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
+		Level world = masterRitualStone.getWorldObj();
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
 		BlockPos masterPos = masterRitualStone.getMasterBlockPos();
@@ -64,7 +64,7 @@ public class RitualSphereCreate extends Ritual
 		}
 
 		AreaDescriptor sphereRange = masterRitualStone.getBlockRange(SPHEROID_RANGE);
-		AxisAlignedBB sphereBB = sphereRange.getAABB(masterPos);
+		AABB sphereBB = sphereRange.getAABB(masterPos);
 		int minX = (int) (masterPos.getX() - sphereBB.minX);
 		int maxX = (int) (sphereBB.maxX - masterPos.getX()) - 1;
 		int minY = (int) (masterPos.getY() - sphereBB.minY);

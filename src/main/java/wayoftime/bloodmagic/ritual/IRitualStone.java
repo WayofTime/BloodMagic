@@ -1,13 +1,13 @@
 package wayoftime.bloodmagic.ritual;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public interface IRitualStone
 {
-	boolean isRuneType(World world, BlockPos pos, EnumRuneType runeType);
+	boolean isRuneType(Level world, BlockPos pos, EnumRuneType runeType);
 
-	void setRuneType(World world, BlockPos pos, EnumRuneType runeType);
+	void setRuneType(Level world, BlockPos pos, EnumRuneType runeType);
 
 	interface Tile
 	{

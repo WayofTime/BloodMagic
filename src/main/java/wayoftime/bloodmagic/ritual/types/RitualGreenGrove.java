@@ -4,22 +4,22 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.CactusBlock;
-import net.minecraft.block.FarmlandBlock;
-import net.minecraft.block.IGrowable;
-import net.minecraft.block.SugarCaneBlock;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CactusBlock;
+import net.minecraft.world.level.block.FarmBlock;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.SugarCaneBlock;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
@@ -47,7 +47,7 @@ public class RitualGreenGrove extends Ritual
 	public static double steadfastWillDrain = 0.05;
 	public static int defaultRefreshTime = 20;
 	public static double defaultGrowthChance = 0.3;
-	public static BlockState farmlandState = Blocks.FARMLAND.defaultBlockState().setValue(FarmlandBlock.MOISTURE, 7);
+	public static BlockState farmlandState = Blocks.FARMLAND.defaultBlockState().setValue(FarmBlock.MOISTURE, 7);
 	public int refreshTime = 20;
 
 	public RitualGreenGrove()
@@ -64,13 +64,13 @@ public class RitualGreenGrove extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
-		if (!(world instanceof ServerWorld))
+		Level world = masterRitualStone.getWorldObj();
+		if (!(world instanceof ServerLevel))
 		{
 			return;
 		}
 
-		ServerWorld serverWorld = (ServerWorld) world;
+		ServerLevel serverWorld = (ServerLevel) world;
 		BlockPos pos = masterRitualStone.getMasterBlockPos();
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
@@ -114,7 +114,7 @@ public class RitualGreenGrove extends Ritual
 
 			if (!BloodMagicAPI.INSTANCE.getBlacklist().getGreenGrove().contains(state))
 			{
-				boolean flag = state.getBlock() instanceof IGrowable || state.getBlock() instanceof CactusBlock || state.getBlock() instanceof SugarCaneBlock;
+				boolean flag = state.getBlock() instanceof BonemealableBlock || state.getBlock() instanceof CactusBlock || state.getBlock() instanceof SugarCaneBlock;
 				if (flag)
 				{
 					if (world.random.nextDouble() < growthChance)
@@ -162,7 +162,7 @@ public class RitualGreenGrove extends Ritual
 		double steadfastDrain = 0;
 		if (steadfastWill > steadfastWillDrain)
 		{
-			AxisAlignedBB aabb = hydrateRange.getAABB(pos);
+			AABB aabb = hydrateRange.getAABB(pos);
 			steadfastDrain += steadfastWillDrain * Utils.plantSeedsInArea(world, aabb, 2, 1);
 			steadfastWill -= steadfastDrain;
 
@@ -183,7 +183,7 @@ public class RitualGreenGrove extends Ritual
 					hydratedBlock = true;
 				} else if (block == Blocks.FARMLAND)
 				{
-					int meta = state.getValue(FarmlandBlock.MOISTURE);
+					int meta = state.getValue(FarmBlock.MOISTURE);
 					if (meta < 7)
 					{
 						world.setBlockAndUpdate(newPos, farmlandState);
@@ -208,7 +208,7 @@ public class RitualGreenGrove extends Ritual
 		if (corrosiveWill > corrosiveWillDrain)
 		{
 			AreaDescriptor leechRange = masterRitualStone.getBlockRange(LEECH_RANGE);
-			AxisAlignedBB mobArea = leechRange.getAABB(pos);
+			AABB mobArea = leechRange.getAABB(pos);
 			List<LivingEntity> entityList = world.getEntitiesOfClass(LivingEntity.class, mobArea);
 			for (LivingEntity entityLiving : entityList)
 			{
@@ -217,17 +217,17 @@ public class RitualGreenGrove extends Ritual
 					break;
 				}
 
-				if (entityLiving instanceof PlayerEntity)
+				if (entityLiving instanceof Player)
 				{
 					continue;
 				}
 
-				if (entityLiving.hasEffect(BloodMagicPotions.PLANT_LEECH) || !entityLiving.canBeAffected(new EffectInstance(BloodMagicPotions.PLANT_LEECH)))
+				if (entityLiving.hasEffect(BloodMagicPotions.PLANT_LEECH) || !entityLiving.canBeAffected(new MobEffectInstance(BloodMagicPotions.PLANT_LEECH)))
 				{
 					continue;
 				}
 
-				entityLiving.addEffect(new EffectInstance(BloodMagicPotions.PLANT_LEECH, 200, 0));
+				entityLiving.addEffect(new MobEffectInstance(BloodMagicPotions.PLANT_LEECH, 200, 0));
 
 				corrosiveWill -= corrosiveWillDrain;
 				corrosiveDrain += corrosiveWillDrain;
@@ -327,14 +327,14 @@ public class RitualGreenGrove extends Ritual
 	}
 
 	@Override
-	public ITextComponent[] provideInformationOfRitualToPlayer(PlayerEntity player)
+	public Component[] provideInformationOfRitualToPlayer(Player player)
 	{
-		return new ITextComponent[] { new TranslationTextComponent(this.getTranslationKey() + ".info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".default.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".corrosive.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".steadfast.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".destructive.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".vengeful.info") };
+		return new Component[] { new TranslatableComponent(this.getTranslationKey() + ".info"),
+				new TranslatableComponent(this.getTranslationKey() + ".default.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".corrosive.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".steadfast.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".destructive.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".vengeful.info") };
 	}
 
 	@Override

@@ -3,12 +3,12 @@ package wayoftime.bloodmagic.client.hud.element;
 import java.util.List;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.util.Utils;
 import wayoftime.bloodmagic.util.handler.event.ClientHandler;
@@ -27,10 +27,10 @@ public class ElementDemonAura extends HUDElement
 	}
 
 	@Override
-	public void draw(MatrixStack matrixStack, float partialTicks, int drawX, int drawY)
+	public void draw(PoseStack matrixStack, float partialTicks, int drawX, int drawY)
 	{
 		Minecraft minecraft = Minecraft.getInstance();
-		PlayerEntity player = minecraft.player;
+		Player player = minecraft.player;
 
 		minecraft.getTextureManager().bind(BAR_LOCATION);
 //		GlStateManager.color(1.0F, 1.0F, 1.0F);

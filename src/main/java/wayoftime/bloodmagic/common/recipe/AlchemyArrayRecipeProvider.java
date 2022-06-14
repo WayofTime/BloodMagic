@@ -2,10 +2,10 @@ package wayoftime.bloodmagic.common.recipe;
 
 import java.util.function.Consumer;
 
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.data.recipe.builder.AlchemyArrayRecipeBuilder;
@@ -16,7 +16,7 @@ public class AlchemyArrayRecipeProvider implements ISubRecipeProvider
 {
 
 	@Override
-	public void addRecipes(Consumer<IFinishedRecipe> consumer)
+	public void addRecipes(Consumer<FinishedRecipe> consumer)
 	{
 		String basePath = "array/";
 //		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/airsigil.png"), Ingredient.fromItems(Items.STONE), Ingredient.fromItems(Items.STONE), new ItemStack(Items.DIAMOND)).build(consumer, BloodMagic.rl(basePath

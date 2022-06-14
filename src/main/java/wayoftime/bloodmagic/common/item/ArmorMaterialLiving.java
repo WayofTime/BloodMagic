@@ -1,42 +1,42 @@
 package wayoftime.bloodmagic.common.item;
 
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorMaterials;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.crafting.Ingredient;
 
-public class ArmorMaterialLiving implements IArmorMaterial
+public class ArmorMaterialLiving implements ArmorMaterial
 {
-	public static final IArmorMaterial INSTANCE = new ArmorMaterialLiving();
+	public static final ArmorMaterial INSTANCE = new ArmorMaterialLiving();
 
 	@Override
-	public int getDurabilityForSlot(EquipmentSlotType slot)
+	public int getDurabilityForSlot(EquipmentSlot slot)
 	{
-		return ArmorMaterial.DIAMOND.getDurabilityForSlot(slot);
+		return ArmorMaterials.DIAMOND.getDurabilityForSlot(slot);
 	}
 
 	@Override
-	public int getDefenseForSlot(EquipmentSlotType slot)
+	public int getDefenseForSlot(EquipmentSlot slot)
 	{
-		return ArmorMaterial.IRON.getDefenseForSlot(slot);
+		return ArmorMaterials.IRON.getDefenseForSlot(slot);
 	}
 
 	@Override
 	public int getEnchantmentValue()
 	{
-		return ArmorMaterial.IRON.getEnchantmentValue();
+		return ArmorMaterials.IRON.getEnchantmentValue();
 	}
 
 	@Override
-	public net.minecraft.util.SoundEvent getEquipSound()
+	public net.minecraft.sounds.SoundEvent getEquipSound()
 	{
-		return ArmorMaterial.IRON.getEquipSound();
+		return ArmorMaterials.IRON.getEquipSound();
 	}
 
 	@Override
 	public Ingredient getRepairIngredient()
 	{
-		return ArmorMaterial.IRON.getRepairIngredient();
+		return ArmorMaterials.IRON.getRepairIngredient();
 	}
 
 	@Override
@@ -48,12 +48,12 @@ public class ArmorMaterialLiving implements IArmorMaterial
 	@Override
 	public float getToughness()
 	{
-		return ArmorMaterial.IRON.getToughness();
+		return ArmorMaterials.IRON.getToughness();
 	}
 
 	@Override
 	public float getKnockbackResistance()
 	{
-		return ArmorMaterial.IRON.getKnockbackResistance();
+		return ArmorMaterials.IRON.getKnockbackResistance();
 	}
 }

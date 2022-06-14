@@ -3,16 +3,16 @@ package wayoftime.bloodmagic.tile;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Container;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.Containers;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -21,7 +21,7 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import wayoftime.bloodmagic.tile.base.TileBase;
 
-public class TileInventory extends TileBase implements IInventory
+public class TileInventory extends TileBase implements Container
 {
 	protected int[] syncedSlots = new int[0];
 	protected NonNullList<ItemStack> inventory;
@@ -36,7 +36,7 @@ public class TileInventory extends TileBase implements IInventory
 	// IInventory
 	private String name;
 
-	public TileInventory(TileEntityType<?> type, int size, String name)
+	public TileInventory(BlockEntityType<?> type, int size, String name)
 	{
 		super(type);
 		this.inventory = NonNullList.withSize(size, ItemStack.EMPTY);
@@ -58,13 +58,13 @@ public class TileInventory extends TileBase implements IInventory
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tagCompound)
+	public void deserialize(CompoundTag tagCompound)
 	{
 		super.deserialize(tagCompound);
 
 		this.inventory = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
 
-		ItemStackHelper.loadAllItems(tagCompound, this.inventory);
+		ContainerHelper.loadAllItems(tagCompound, this.inventory);
 
 //		ListNBT tags = tagCompound.getList("Items", 10);
 //		inventory = NonNullList.withSize(size, ItemStack.EMPTY);
@@ -90,11 +90,11 @@ public class TileInventory extends TileBase implements IInventory
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tagCompound)
+	public CompoundTag serialize(CompoundTag tagCompound)
 	{
 		super.serialize(tagCompound);
 
-		ItemStackHelper.saveAllItems(tagCompound, this.inventory);
+		ContainerHelper.saveAllItems(tagCompound, this.inventory);
 //		NBTTagList tags = new NBTTagList();
 //
 //		for (int i = 0; i < inventory.size(); i++)
@@ -114,7 +114,7 @@ public class TileInventory extends TileBase implements IInventory
 
 	public void dropItems()
 	{
-		InventoryHelper.dropContents(getLevel(), getBlockPos(), this);
+		Containers.dropContents(getLevel(), getBlockPos(), this);
 	}
 
 	@Override
@@ -183,13 +183,13 @@ public class TileInventory extends TileBase implements IInventory
 	}
 
 	@Override
-	public void startOpen(PlayerEntity player)
+	public void startOpen(Player player)
 	{
 
 	}
 
 	@Override
-	public void stopOpen(PlayerEntity player)
+	public void stopOpen(Player player)
 	{
 
 	}
@@ -236,7 +236,7 @@ public class TileInventory extends TileBase implements IInventory
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity player)
+	public boolean stillValid(Player player)
 	{
 		return true;
 	}
@@ -261,14 +261,14 @@ public class TileInventory extends TileBase implements IInventory
 
 	protected void initializeItemHandlers()
 	{
-		if (this instanceof ISidedInventory)
+		if (this instanceof WorldlyContainer)
 		{
-			handlerDown = LazyOptional.of(() -> new SidedInvWrapper((ISidedInventory) this, Direction.DOWN));
-			handlerUp = LazyOptional.of(() -> new SidedInvWrapper((ISidedInventory) this, Direction.UP));
-			handlerNorth = LazyOptional.of(() -> new SidedInvWrapper((ISidedInventory) this, Direction.NORTH));
-			handlerSouth = LazyOptional.of(() -> new SidedInvWrapper((ISidedInventory) this, Direction.SOUTH));
-			handlerWest = LazyOptional.of(() -> new SidedInvWrapper((ISidedInventory) this, Direction.WEST));
-			handlerEast = LazyOptional.of(() -> new SidedInvWrapper((ISidedInventory) this, Direction.EAST));
+			handlerDown = LazyOptional.of(() -> new SidedInvWrapper((WorldlyContainer) this, Direction.DOWN));
+			handlerUp = LazyOptional.of(() -> new SidedInvWrapper((WorldlyContainer) this, Direction.UP));
+			handlerNorth = LazyOptional.of(() -> new SidedInvWrapper((WorldlyContainer) this, Direction.NORTH));
+			handlerSouth = LazyOptional.of(() -> new SidedInvWrapper((WorldlyContainer) this, Direction.SOUTH));
+			handlerWest = LazyOptional.of(() -> new SidedInvWrapper((WorldlyContainer) this, Direction.WEST));
+			handlerEast = LazyOptional.of(() -> new SidedInvWrapper((WorldlyContainer) this, Direction.EAST));
 		} else
 		{
 			handlerDown = LazyOptional.of(() -> new InvWrapper(this));

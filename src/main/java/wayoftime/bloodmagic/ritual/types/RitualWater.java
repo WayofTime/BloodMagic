@@ -3,11 +3,11 @@ package wayoftime.bloodmagic.ritual.types;
 import java.util.List;
 import java.util.function.Consumer;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -42,7 +42,7 @@ public class RitualWater extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
+		Level world = masterRitualStone.getWorldObj();
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
 		if (currentEssence < getRefreshCost())
@@ -82,7 +82,7 @@ public class RitualWater extends Ritual
 		if (rawWill > 0)
 		{
 			AreaDescriptor chestRange = masterRitualStone.getBlockRange(WATER_TANK_RANGE);
-			TileEntity tile = world.getBlockEntity(chestRange.getContainedPositions(pos).get(0));
+			BlockEntity tile = world.getBlockEntity(chestRange.getContainedPositions(pos).get(0));
 			double drain = getWillCostForRawWill(rawWill);
 			int lpCost = getLPCostForRawWill(rawWill);
 

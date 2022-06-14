@@ -1,16 +1,16 @@
 package wayoftime.bloodmagic.tile;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 
 public class TileFungalCharge extends TileVeinMineCharge
 {
 	@ObjectHolder("bloodmagic:fungal_charge")
-	public static TileEntityType<TileFungalCharge> TYPE;
+	public static BlockEntityType<TileFungalCharge> TYPE;
 
-	public TileFungalCharge(TileEntityType<?> type, int maxBlocks)
+	public TileFungalCharge(BlockEntityType<?> type, int maxBlocks)
 	{
 		super(type, maxBlocks);
 	}

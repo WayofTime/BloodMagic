@@ -1,11 +1,11 @@
 package wayoftime.bloodmagic.common.block;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.BlockGetter;
 import wayoftime.bloodmagic.tile.TileVeinMineCharge;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockVeinMineCharge extends BlockShapedExplosive
 {
@@ -15,7 +15,7 @@ public class BlockVeinMineCharge extends BlockShapedExplosive
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world)
+	public BlockEntity createTileEntity(BlockState state, BlockGetter world)
 	{
 		return new TileVeinMineCharge();
 	}

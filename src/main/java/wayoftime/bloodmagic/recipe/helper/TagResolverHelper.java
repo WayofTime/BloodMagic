@@ -3,7 +3,7 @@ package wayoftime.bloodmagic.recipe.helper;
 import java.util.Collections;
 import java.util.List;
 
-import net.minecraft.tags.ITag;
+import net.minecraft.tags.Tag;
 
 /**
  * Copied from Mekanism, including the author's rant about tags.
@@ -11,7 +11,7 @@ import net.minecraft.tags.ITag;
 public class TagResolverHelper
 {
 
-	public static <TYPE> List<TYPE> getRepresentations(ITag<TYPE> tag)
+	public static <TYPE> List<TYPE> getRepresentations(Tag<TYPE> tag)
 	{
 		try
 		{

@@ -8,15 +8,15 @@ import java.util.function.Function;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import wayoftime.bloodmagic.client.Sprite;
 
-public abstract class ElementTileInformation<T extends TileEntity> extends HUDElement
+public abstract class ElementTileInformation<T extends BlockEntity> extends HUDElement
 {
 
 	protected final Class<T> tileClass;
@@ -35,13 +35,13 @@ public abstract class ElementTileInformation<T extends TileEntity> extends HUDEl
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void draw(MatrixStack matrixStack, float partialTicks, int drawX, int drawY)
+	public void draw(PoseStack matrixStack, float partialTicks, int drawX, int drawY)
 	{
-		RayTraceResult trace = Minecraft.getInstance().hitResult;
-		if (trace == null || trace.getType() != RayTraceResult.Type.BLOCK)
+		HitResult trace = Minecraft.getInstance().hitResult;
+		if (trace == null || trace.getType() != HitResult.Type.BLOCK)
 			return;
 
-		T tile = (T) Minecraft.getInstance().level.getBlockEntity(((BlockRayTraceResult) trace).getBlockPos());
+		T tile = (T) Minecraft.getInstance().level.getBlockEntity(((BlockHitResult) trace).getBlockPos());
 
 		int yOffset = 0;
 		for (Pair<Sprite, Function<T, String>> sprite : information)
@@ -58,11 +58,11 @@ public abstract class ElementTileInformation<T extends TileEntity> extends HUDEl
 	@Override
 	public boolean shouldRender(Minecraft minecraft)
 	{
-		RayTraceResult trace = Minecraft.getInstance().hitResult;
-		if (trace == null || trace.getType() != RayTraceResult.Type.BLOCK)
+		HitResult trace = Minecraft.getInstance().hitResult;
+		if (trace == null || trace.getType() != HitResult.Type.BLOCK)
 			return false;
 
-		TileEntity tile = Minecraft.getInstance().level.getBlockEntity(((BlockRayTraceResult) trace).getBlockPos());
+		BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(((BlockHitResult) trace).getBlockPos());
 		if (tile == null || !tileClass.isAssignableFrom(tile.getClass()))
 			return false;
 

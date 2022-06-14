@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import wayoftime.bloodmagic.util.Constants;
 
 public abstract class AreaDescriptor implements Iterator<BlockPos>
@@ -19,7 +19,7 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 		return new ArrayList<>();
 	}
 
-	public AxisAlignedBB getAABB(BlockPos pos)
+	public AABB getAABB(BlockPos pos)
 	{
 		return null;
 	}
@@ -30,12 +30,12 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 
 	public abstract void resetIterator();
 
-	public void readFromNBT(CompoundNBT tag)
+	public void readFromNBT(CompoundTag tag)
 	{
 
 	}
 
-	public void writeToNBT(CompoundNBT tag)
+	public void writeToNBT(CompoundTag tag)
 	{
 
 	}
@@ -66,7 +66,7 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 
 	public abstract AreaDescriptor offset(BlockPos offset);
 
-	public abstract AreaDescriptor rotateDescriptor(PlacementSettings settings);
+	public abstract AreaDescriptor rotateDescriptor(StructurePlaceSettings settings);
 
 	public static class Rectangle extends AreaDescriptor
 	{
@@ -138,9 +138,9 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 		}
 
 		@Override
-		public AxisAlignedBB getAABB(BlockPos pos)
+		public AABB getAABB(BlockPos pos)
 		{
-			AxisAlignedBB tempAABB = new AxisAlignedBB(minimumOffset, maximumOffset);
+			AABB tempAABB = new AABB(minimumOffset, maximumOffset);
 			return tempAABB.move(pos.getX(), pos.getY(), pos.getZ());
 		}
 
@@ -242,14 +242,14 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 		}
 
 		@Override
-		public void readFromNBT(CompoundNBT tag)
+		public void readFromNBT(CompoundTag tag)
 		{
 			minimumOffset = new BlockPos(tag.getInt(Constants.NBT.X_COORD + "min"), tag.getInt(Constants.NBT.Y_COORD + "min"), tag.getInt(Constants.NBT.Z_COORD + "min"));
 			maximumOffset = new BlockPos(tag.getInt(Constants.NBT.X_COORD + "max"), tag.getInt(Constants.NBT.Y_COORD + "max"), tag.getInt(Constants.NBT.Z_COORD + "max"));
 		}
 
 		@Override
-		public void writeToNBT(CompoundNBT tag)
+		public void writeToNBT(CompoundTag tag)
 		{
 			tag.putInt(Constants.NBT.X_COORD + "min", minimumOffset.getX());
 			tag.putInt(Constants.NBT.Y_COORD + "min", minimumOffset.getY());
@@ -321,10 +321,10 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 		}
 
 		@Override
-		public AreaDescriptor rotateDescriptor(PlacementSettings settings)
+		public AreaDescriptor rotateDescriptor(StructurePlaceSettings settings)
 		{
-			BlockPos rotatePos1 = Template.calculateRelativePosition(settings, minimumOffset);
-			BlockPos rotatePos2 = Template.calculateRelativePosition(settings, maximumOffset.offset(-1, -1, -1)); // It works,
+			BlockPos rotatePos1 = StructureTemplate.calculateRelativePosition(settings, minimumOffset);
+			BlockPos rotatePos2 = StructureTemplate.calculateRelativePosition(settings, maximumOffset.offset(-1, -1, -1)); // It works,
 																											// shut up!
 
 			AreaDescriptor.Rectangle rectangle = new AreaDescriptor.Rectangle(this.minimumOffset, 1);
@@ -421,7 +421,7 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 		 * Since you can't make a box using a sphere, this returns null
 		 */
 		@Override
-		public AxisAlignedBB getAABB(BlockPos pos)
+		public AABB getAABB(BlockPos pos)
 		{
 			return null;
 		}
@@ -505,7 +505,7 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 		}
 
 		@Override
-		public AreaDescriptor rotateDescriptor(PlacementSettings settings)
+		public AreaDescriptor rotateDescriptor(StructurePlaceSettings settings)
 		{
 			return this;
 		}
@@ -646,7 +646,7 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 		}
 
 		@Override
-		public AreaDescriptor rotateDescriptor(PlacementSettings settings)
+		public AreaDescriptor rotateDescriptor(StructurePlaceSettings settings)
 		{
 			return this;
 		}

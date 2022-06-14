@@ -1,22 +1,22 @@
 package wayoftime.bloodmagic.tile;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffect;
 import wayoftime.bloodmagic.core.registry.AlchemyArrayRegistry;
 import wayoftime.bloodmagic.util.Constants;
 
-public class TileAlchemyArray extends TileInventory implements ITickableTileEntity
+public class TileAlchemyArray extends TileInventory implements TickableBlockEntity
 {
 	@ObjectHolder("bloodmagic:alchemyarray")
-	public static TileEntityType<TileAlchemyArray> TYPE;
+	public static BlockEntityType<TileAlchemyArray> TYPE;
 
 	public boolean isActive = false;
 	public int activeCounter = 0;
@@ -27,7 +27,7 @@ public class TileAlchemyArray extends TileInventory implements ITickableTileEnti
 	public AlchemyArrayEffect arrayEffect;
 	private boolean doDropIngredients = true;
 
-	public TileAlchemyArray(TileEntityType<?> type)
+	public TileAlchemyArray(BlockEntityType<?> type)
 	{
 		super(type, 2, "alchemyarray");
 //		this.bloodAltar = new BloodAltar(this);
@@ -47,7 +47,7 @@ public class TileAlchemyArray extends TileInventory implements ITickableTileEnti
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tagCompound)
+	public void deserialize(CompoundTag tagCompound)
 	{
 		super.deserialize(tagCompound);
 		this.isActive = tagCompound.getBoolean("isActive");
@@ -62,7 +62,7 @@ public class TileAlchemyArray extends TileInventory implements ITickableTileEnti
 		}
 		this.rotation = Direction.from2DDataValue(tagCompound.getInt(Constants.NBT.DIRECTION));
 
-		CompoundNBT arrayTag = tagCompound.getCompound("arrayTag");
+		CompoundTag arrayTag = tagCompound.getCompound("arrayTag");
 //		arrayEffect = AlchemyArrayRegistry.getEffect(world, this.getStackInSlot(0), this.getStackInSlot(1));
 		if (arrayEffect != null)
 		{
@@ -76,7 +76,7 @@ public class TileAlchemyArray extends TileInventory implements ITickableTileEnti
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tagCompound)
+	public CompoundTag serialize(CompoundTag tagCompound)
 	{
 		super.serialize(tagCompound);
 		tagCompound.putBoolean("isActive", isActive);
@@ -85,7 +85,7 @@ public class TileAlchemyArray extends TileInventory implements ITickableTileEnti
 		tagCompound.putBoolean("doDropIngredients", doDropIngredients);
 		tagCompound.putInt(Constants.NBT.DIRECTION, rotation.get2DDataValue());
 
-		CompoundNBT arrayTag = new CompoundNBT();
+		CompoundTag arrayTag = new CompoundTag();
 		if (arrayEffect != null)
 		{
 			arrayEffect.writeToNBT(arrayTag);

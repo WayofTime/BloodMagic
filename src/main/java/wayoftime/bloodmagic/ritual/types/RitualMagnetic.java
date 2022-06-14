@@ -4,15 +4,15 @@ import java.util.function.Consumer;
 
 import com.mojang.authlib.GameProfile;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
@@ -44,8 +44,8 @@ public class RitualMagnetic extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
-		Vector3d MRSpos = new Vector3d(masterRitualStone.getMasterBlockPos().getX(), masterRitualStone.getMasterBlockPos().getY(), masterRitualStone.getMasterBlockPos().getZ());
+		Level world = masterRitualStone.getWorldObj();
+		Vec3 MRSpos = new Vec3(masterRitualStone.getMasterBlockPos().getX(), masterRitualStone.getMasterBlockPos().getY(), masterRitualStone.getMasterBlockPos().getZ());
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
 		if (currentEssence < getRefreshCost())
@@ -103,7 +103,7 @@ public class RitualMagnetic extends Ritual
 						}
 						checks++;
 						BlockPos newPos = pos.offset(i, j, k);
-						Vector3d newPosVector = new Vector3d(newPos.getX(), newPos.getY(), newPos.getZ());
+						Vec3 newPosVector = new Vec3(newPos.getX(), newPos.getY(), newPos.getZ());
 						BlockState state = world.getBlockState(newPos);
 //						RayTraceResult fakeRayTrace = world.rayTraceBlocks(MRSpos, newPosVector, false);
 //						ItemStack checkStack = state.getBlock().getPickBlock(state, fakeRayTrace, world, newPos, getFakePlayer((ServerWorld) world));
@@ -132,13 +132,13 @@ public class RitualMagnetic extends Ritual
 		}
 	}
 
-	public void readFromNBT(CompoundNBT tag)
+	public void readFromNBT(CompoundTag tag)
 	{
 		super.readFromNBT(tag);
 		lastPos = new BlockPos(tag.getInt(Constants.NBT.X_COORD), tag.getInt(Constants.NBT.Y_COORD), tag.getInt(Constants.NBT.Z_COORD));
 	}
 
-	public void writeToNBT(CompoundNBT tag)
+	public void writeToNBT(CompoundTag tag)
 	{
 		super.writeToNBT(tag);
 		if (lastPos != null)
@@ -196,7 +196,7 @@ public class RitualMagnetic extends Ritual
 		return new RitualMagnetic();
 	}
 
-	private FakePlayer getFakePlayer(ServerWorld world)
+	private FakePlayer getFakePlayer(ServerLevel world)
 	{
 		return fakePlayer == null
 				? fakePlayer = FakePlayerFactory.get(world, new GameProfile(null, BloodMagic.MODID + "_ritual_magnetic"))

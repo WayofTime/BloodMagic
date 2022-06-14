@@ -5,14 +5,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.core.living.ILivingContainer;
@@ -40,7 +40,7 @@ public class RitualUpgradeRemove extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
+		Level world = masterRitualStone.getWorldObj();
 
 		if (world.isClientSide)
 		{
@@ -51,15 +51,15 @@ public class RitualUpgradeRemove extends Ritual
 
 		AreaDescriptor checkRange = masterRitualStone.getBlockRange(CHECK_RANGE);
 
-		List<PlayerEntity> playerList = world.getEntitiesOfClass(PlayerEntity.class, checkRange.getAABB(pos));
+		List<Player> playerList = world.getEntitiesOfClass(Player.class, checkRange.getAABB(pos));
 
-		for (PlayerEntity player : playerList)
+		for (Player player : playerList)
 		{
 			if (LivingUtil.hasFullSet(player))
 			{
 				boolean removedUpgrade = false;
 
-				ItemStack chestStack = player.getItemBySlot(EquipmentSlotType.CHEST);
+				ItemStack chestStack = player.getItemBySlot(EquipmentSlot.CHEST);
 				LivingStats stats = LivingStats.fromPlayer(player);
 				if (stats != null)
 				{
@@ -121,7 +121,7 @@ public class RitualUpgradeRemove extends Ritual
 
 						masterRitualStone.setActive(false);
 
-						LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
+						LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
 //						LightningBoltEntity lightning = new LightningBoltEntity(world, pos.getX() + dispX, pos.getY(), pos.getZ() + dispZ);
 						lightningboltentity.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 						lightningboltentity.setVisualOnly(true);

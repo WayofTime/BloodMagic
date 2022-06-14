@@ -1,41 +1,41 @@
 package wayoftime.bloodmagic.common.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.AbstractFurnaceTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.NetworkHooks;
 import wayoftime.bloodmagic.tile.TileAlchemicalReactionChamber;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockAlchemicalReactionChamber extends Block
 {
-	public static final DirectionProperty FACING = HorizontalBlock.FACING;
+	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
 	public BlockAlchemicalReactionChamber()
@@ -51,13 +51,13 @@ public class BlockAlchemicalReactionChamber extends Block
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world)
+	public BlockEntity createTileEntity(BlockState state, BlockGetter world)
 	{
 		return new TileAlchemicalReactionChamber();
 	}
 
 	@Override
-	public void destroy(IWorld world, BlockPos blockPos, BlockState blockState)
+	public void destroy(LevelAccessor world, BlockPos blockPos, BlockState blockState)
 	{
 		TileAlchemicalReactionChamber arc = (TileAlchemicalReactionChamber) world.getBlockEntity(blockPos);
 		if (arc != null)
@@ -67,11 +67,11 @@ public class BlockAlchemicalReactionChamber extends Block
 	}
 
 	@Override
-	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{
 		if (!state.is(newState.getBlock()))
 		{
-			TileEntity tileentity = worldIn.getBlockEntity(pos);
+			BlockEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof TileAlchemicalReactionChamber)
 			{
 				((TileAlchemicalReactionChamber) tileentity).dropItems();
@@ -83,23 +83,23 @@ public class BlockAlchemicalReactionChamber extends Block
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult blockRayTraceResult)
 	{
 		if (world.isClientSide)
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 
-		TileEntity tile = world.getBlockEntity(pos);
+		BlockEntity tile = world.getBlockEntity(pos);
 		if (!(tile instanceof TileAlchemicalReactionChamber))
-			return ActionResultType.FAIL;
+			return InteractionResult.FAIL;
 
-		NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tile, pos);
+		NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) tile, pos);
 //			player.openGui(BloodMagic.instance, Constants.Gui.SOUL_FORGE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
 
-		return ActionResultType.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context)
+	public BlockState getStateForPlacement(BlockPlaceContext context)
 	{
 		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
@@ -109,14 +109,14 @@ public class BlockAlchemicalReactionChamber extends Block
 	 * logic
 	 */
 	@Override
-	public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
+	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
 	{
 		if (stack.hasCustomHoverName())
 		{
-			TileEntity tileentity = worldIn.getBlockEntity(pos);
-			if (tileentity instanceof AbstractFurnaceTileEntity)
+			BlockEntity tileentity = worldIn.getBlockEntity(pos);
+			if (tileentity instanceof AbstractFurnaceBlockEntity)
 			{
-				((AbstractFurnaceTileEntity) tileentity).setCustomName(stack.getHoverName());
+				((AbstractFurnaceBlockEntity) tileentity).setCustomName(stack.getHoverName());
 			}
 		}
 
@@ -149,15 +149,15 @@ public class BlockAlchemicalReactionChamber extends Block
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
 	{
 		builder.add(FACING, LIT);
 	}
 
-	public boolean triggerEvent(BlockState state, World worldIn, BlockPos pos, int id, int param)
+	public boolean triggerEvent(BlockState state, Level worldIn, BlockPos pos, int id, int param)
 	{
 		super.triggerEvent(state, worldIn, pos, id, param);
-		TileEntity tileentity = worldIn.getBlockEntity(pos);
+		BlockEntity tileentity = worldIn.getBlockEntity(pos);
 		return tileentity == null ? false : tileentity.triggerEvent(id, param);
 	}
 

@@ -2,9 +2,9 @@ package wayoftime.bloodmagic.common.recipe;
 
 import java.util.function.Consumer;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.data.recipe.builder.MeteorRecipeBuilder;
@@ -14,7 +14,7 @@ import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 public class MeteorRecipeProvider implements ISubRecipeProvider
 {
 	@Override
-	public void addRecipes(Consumer<IFinishedRecipe> consumer)
+	public void addRecipes(Consumer<FinishedRecipe> consumer)
 	{
 		String basePath = "meteor/";
 

@@ -1,13 +1,13 @@
 package wayoftime.bloodmagic.event;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
 
 @Cancelable
 public class SacrificeKnifeUsedEvent extends Event
 {
-	public final PlayerEntity player;
+	public final Player player;
 	public final int healthDrained;
 	public int lpAdded;
 	public boolean shouldDrainHealth;
@@ -26,7 +26,7 @@ public class SacrificeKnifeUsedEvent extends Event
 	 *                          <p>
 	 *                          This event is {@link Cancelable}.<br>
 	 */
-	public SacrificeKnifeUsedEvent(PlayerEntity player, boolean shouldDrainHealth, boolean shouldFillAltar, int hp, int lpAdded)
+	public SacrificeKnifeUsedEvent(Player player, boolean shouldDrainHealth, boolean shouldFillAltar, int hp, int lpAdded)
 	{
 		this.player = player;
 		this.shouldDrainHealth = shouldDrainHealth;

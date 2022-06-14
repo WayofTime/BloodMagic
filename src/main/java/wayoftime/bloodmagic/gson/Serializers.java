@@ -10,38 +10,38 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.IDataSerializer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.EntityDataSerializer;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
 public class Serializers
 {
 	// Data serializers
-	public static final IDataSerializer<EnumDemonWillType> WILL_TYPE_SERIALIZER = new IDataSerializer<EnumDemonWillType>()
+	public static final EntityDataSerializer<EnumDemonWillType> WILL_TYPE_SERIALIZER = new EntityDataSerializer<EnumDemonWillType>()
 	{
 		@Override
-		public void write(PacketBuffer buf, EnumDemonWillType value)
+		public void write(FriendlyByteBuf buf, EnumDemonWillType value)
 		{
 			buf.writeEnum(value);
 		}
 
 		@Override
-		public EnumDemonWillType read(PacketBuffer buf)
+		public EnumDemonWillType read(FriendlyByteBuf buf)
 		{
 			return buf.readEnum(EnumDemonWillType.class);
 		}
 
 		@Override
-		public DataParameter<EnumDemonWillType> createAccessor(int id)
+		public EntityDataAccessor<EnumDemonWillType> createAccessor(int id)
 		{
-			return new DataParameter<>(id, this);
+			return new EntityDataAccessor<>(id, this);
 		}
 
 		@Override
@@ -152,6 +152,6 @@ public class Serializers
 
 	static
 	{
-		DataSerializers.registerSerializer(WILL_TYPE_SERIALIZER);
+		EntityDataSerializers.registerSerializer(WILL_TYPE_SERIALIZER);
 	}
 }

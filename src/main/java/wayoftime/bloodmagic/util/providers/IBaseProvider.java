@@ -1,8 +1,8 @@
 package wayoftime.bloodmagic.util.providers;
 
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import wayoftime.bloodmagic.util.text.IHasTextComponent;
 import wayoftime.bloodmagic.util.text.IHasTranslationKey;
 
@@ -16,8 +16,8 @@ public interface IBaseProvider extends IHasTextComponent, IHasTranslationKey
 	}
 
 	@Override
-	default ITextComponent getTextComponent()
+	default Component getTextComponent()
 	{
-		return new TranslationTextComponent(getTranslationKey());
+		return new TranslatableComponent(getTranslationKey());
 	}
 }

@@ -2,22 +2,22 @@ package wayoftime.bloodmagic.client.screens;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
 import wayoftime.bloodmagic.network.ItemRoutingNodeButtonPacket;
@@ -34,14 +34,14 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 
 	private int left, top;
 
-	public ScreenItemRoutingNode(ContainerItemRoutingNode container, PlayerInventory playerInventory, ITextComponent title)
+	public ScreenItemRoutingNode(ContainerItemRoutingNode container, Inventory playerInventory, Component title)
 	{
 		super(container, playerInventory, title);
 		tileNode = container.tileNode;
 		this.imageWidth = 176;
 		this.imageHeight = 187;
 
-		Vector3d facingVec = Vector3d.directionFromRotation(playerInventory.player.getRotationVector());
+		Vec3 facingVec = Vec3.directionFromRotation(playerInventory.player.getRotationVector());
 		this.playerFacing = Direction.getNearest(facingVec.x, facingVec.y, facingVec.z);
 		this.horizontalFacing = playerInventory.player.getDirection();
 
@@ -65,7 +65,7 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 			{
 				dirName = "";
 			}
-			this.addButton(new Button(left + buttonLocation.getLeft(), top + buttonLocation.getRight(), 20, 20, new StringTextComponent(dirName), new DirectionalPress(this, tileNode, i, dir)));
+			this.addButton(new Button(left + buttonLocation.getLeft(), top + buttonLocation.getRight(), 20, 20, new TextComponent(dirName), new DirectionalPress(this, tileNode, i, dir)));
 
 			if (dir.ordinal() == tileNode.getCurrentActiveSlot())
 			{
@@ -73,8 +73,8 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 			}
 		}
 
-		this.addButton(new Button(left + 89, top + 50, 8, 20, new StringTextComponent(">"), new IncrementPress(tileNode, 6)));
-		this.addButton(new Button(left + 61, top + 50, 8, 20, new StringTextComponent("<"), new IncrementPress(tileNode, 7)));
+		this.addButton(new Button(left + 89, top + 50, 8, 20, new TextComponent(">"), new IncrementPress(tileNode, 6)));
+		this.addButton(new Button(left + 61, top + 50, 8, 20, new TextComponent("<"), new IncrementPress(tileNode, 7)));
 	}
 
 	/**
@@ -160,14 +160,14 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 	}
 
 	@Override
-	protected void renderLabels(MatrixStack stack, int mouseX, int mouseY)
+	protected void renderLabels(PoseStack stack, int mouseX, int mouseY)
 	{
-		this.font.draw(stack, new StringTextComponent("" + getCurrentActiveSlotPriority()), 71 + 5, 51 + 5, 0xFFFFFF);
+		this.font.draw(stack, new TextComponent("" + getCurrentActiveSlotPriority()), 71 + 5, 51 + 5, 0xFFFFFF);
 //		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.routingnode.name"), 8, 5, 4210752);
 //		this.font.draw(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
 
 		BlockPos tilePos = tileNode.getCurrentBlockPos();
-		World world = tileNode.getLevel();
+		Level world = tileNode.getLevel();
 
 		for (int i = 0; i < 6; i++)
 		{
@@ -218,7 +218,7 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 
 	private void enableAllDirectionalButtons()
 	{
-		for (Widget button : this.buttons)
+		for (AbstractWidget button : this.buttons)
 		{
 			button.active = true;
 		}
@@ -230,7 +230,7 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 	}
 
 	@Override
-	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		getMinecraft().getTextureManager().bind(background);
@@ -262,7 +262,7 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 //		this.getbl
 		this.setBlitOffset(1);
 		this.itemRenderer.blitOffset = 1;
-		net.minecraft.client.gui.FontRenderer font = stack.getItem().getFontRenderer(stack);
+		net.minecraft.client.gui.Font font = stack.getItem().getFontRenderer(stack);
 		if (font == null)
 			font = this.font;
 		this.itemRenderer.renderAndDecorateItem(stack, x, y);
@@ -272,7 +272,7 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 		this.itemRenderer.blitOffset = 0.0F;
 	}
 
-	public class DirectionalPress implements Button.IPressable
+	public class DirectionalPress implements Button.OnPress
 	{
 		private final ScreenItemRoutingNode screen;
 		private final TileFilteredRoutingNode node;
@@ -304,7 +304,7 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 		}
 	}
 
-	public class IncrementPress implements Button.IPressable
+	public class IncrementPress implements Button.OnPress
 	{
 		private final TileFilteredRoutingNode node;
 		private final int id;

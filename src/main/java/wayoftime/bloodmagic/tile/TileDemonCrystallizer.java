@@ -1,11 +1,11 @@
 package wayoftime.bloodmagic.tile;
 
-import net.minecraft.block.Block;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
@@ -17,7 +17,7 @@ import wayoftime.bloodmagic.api.compat.IDemonWillConduit;
 public class TileDemonCrystallizer extends TileTicking implements IDemonWillConduit
 {
 	@ObjectHolder("bloodmagic:demoncrystallizer")
-	public static TileEntityType<TileDemonCrystallizer> TYPE;
+	public static BlockEntityType<TileDemonCrystallizer> TYPE;
 
 	public static final int maxWill = 100;
 	public static final double drainRate = 1;
@@ -28,7 +28,7 @@ public class TileDemonCrystallizer extends TileTicking implements IDemonWillCond
 	public DemonWillHolder holder = new DemonWillHolder();
 	public double internalCounter = 0;
 
-	public TileDemonCrystallizer(TileEntityType<?> type)
+	public TileDemonCrystallizer(BlockEntityType<?> type)
 	{
 		super(type);
 	}
@@ -90,7 +90,7 @@ public class TileDemonCrystallizer extends TileTicking implements IDemonWillCond
 			break;
 		}
 		getLevel().setBlockAndUpdate(position, block.defaultBlockState());
-		TileEntity tile = getLevel().getBlockEntity(position);
+		BlockEntity tile = getLevel().getBlockEntity(position);
 		if (tile instanceof TileDemonCrystal)
 		{
 			((TileDemonCrystal) tile).setPlacement(Direction.UP);
@@ -106,14 +106,14 @@ public class TileDemonCrystallizer extends TileTicking implements IDemonWillCond
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tag)
+	public void deserialize(CompoundTag tag)
 	{
 		holder.readFromNBT(tag, "Will");
 		internalCounter = tag.getDouble("internalCounter");
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tag)
+	public CompoundTag serialize(CompoundTag tag)
 	{
 		holder.writeToNBT(tag, "Will");
 		tag.putDouble("internalCounter", internalCounter);

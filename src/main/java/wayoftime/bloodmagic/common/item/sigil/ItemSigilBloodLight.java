@@ -1,15 +1,15 @@
 package wayoftime.bloodmagic.common.item.sigil;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.core.data.SoulTicket;
@@ -29,29 +29,29 @@ public class ItemSigilBloodLight extends ItemSigilBase
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
+	public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected)
 	{
 		if (getCooldownRemainder(stack) > 0)
 			reduceCooldown(stack);
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
 		if (stack.getItem() instanceof ISigil.Holding)
 			stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
 		if (PlayerHelper.isFakePlayer(player))
-			return ActionResult.fail(stack);
+			return InteractionResultHolder.fail(stack);
 
-		RayTraceResult mop = getPlayerPOVHitResult(world, player, RayTraceContext.FluidMode.NONE);
+		HitResult mop = getPlayerPOVHitResult(world, player, ClipContext.Fluid.NONE);
 
 		if (getCooldownRemainder(stack) > 0)
 			return super.use(world, player, hand);
 
-		if (mop != null && mop.getType() == RayTraceResult.Type.BLOCK)
+		if (mop != null && mop.getType() == HitResult.Type.BLOCK)
 		{
-			BlockRayTraceResult blockRayTrace = (BlockRayTraceResult) mop;
+			BlockHitResult blockRayTrace = (BlockHitResult) mop;
 			BlockPos blockPos = blockRayTrace.getBlockPos().relative(blockRayTrace.getDirection());
 
 			if (world.isEmptyBlock(blockPos))

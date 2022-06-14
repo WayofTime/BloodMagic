@@ -1,37 +1,25 @@
-# General use .gitignore for Minecraft modding.
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
 
-# Directories
-/.gradle/
-/build/
-/eclipse
-/run/
-/out/
-/asm/
-/bin/
-/build/
-/config/
-crash-reports/
-/.idea/
-/.metadata/
-/libs/
-/saves/
-/resourcepacks/
-/logs/
-/mods/
-/screenshots/
-/classes/
-
-# File Extensions
-*.psd
-*.iml
+# idea
+out
 *.ipr
 *.iws
-*.classpath
-*.project
-*.launch
+*.iml
+.idea
 
-# Specific files
-Thumbs.db
-usernamecache.json
-options.txt
-usercache.json
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
+
+# Files from Forge MDK
+forge*changelog.txt

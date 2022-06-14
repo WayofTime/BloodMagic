@@ -3,14 +3,14 @@ package wayoftime.bloodmagic.tile;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.structures.DungeonSynthesizer;
 import wayoftime.bloodmagic.tile.base.TileBase;
@@ -19,7 +19,7 @@ import wayoftime.bloodmagic.util.Constants;
 public class TileDungeonSeal extends TileBase
 {
 	@ObjectHolder("bloodmagic:dungeon_seal")
-	public static TileEntityType<TileDungeonSeal> TYPE;
+	public static BlockEntityType<TileDungeonSeal> TYPE;
 
 	public BlockPos controllerPos = BlockPos.ZERO;
 	public BlockPos doorPos = BlockPos.ZERO;
@@ -28,7 +28,7 @@ public class TileDungeonSeal extends TileBase
 
 	public List<ResourceLocation> potentialRoomTypes = new ArrayList<>();
 
-	public TileDungeonSeal(TileEntityType<?> type)
+	public TileDungeonSeal(BlockEntityType<?> type)
 	{
 		super(type);
 	}
@@ -44,7 +44,7 @@ public class TileDungeonSeal extends TileBase
 			System.out.println("Potential rooms: " + potentialRoomTypes);
 		if (!level.isClientSide && !potentialRoomTypes.isEmpty())
 		{
-			TileEntity tile = level.getBlockEntity(controllerPos);
+			BlockEntity tile = level.getBlockEntity(controllerPos);
 			if (tile instanceof TileDungeonController)
 			{
 				TileDungeonController tileController = (TileDungeonController) tile;
@@ -72,12 +72,12 @@ public class TileDungeonSeal extends TileBase
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tag)
+	public void deserialize(CompoundTag tag)
 	{
-		CompoundNBT masterTag = tag.getCompound(Constants.NBT.DUNGEON_CONTROLLER);
+		CompoundTag masterTag = tag.getCompound(Constants.NBT.DUNGEON_CONTROLLER);
 		controllerPos = new BlockPos(masterTag.getInt(Constants.NBT.X_COORD), masterTag.getInt(Constants.NBT.Y_COORD), masterTag.getInt(Constants.NBT.Z_COORD));
 
-		CompoundNBT doorTag = tag.getCompound(Constants.NBT.DUNGEON_DOOR);
+		CompoundTag doorTag = tag.getCompound(Constants.NBT.DUNGEON_DOOR);
 		doorPos = new BlockPos(doorTag.getInt(Constants.NBT.X_COORD), doorTag.getInt(Constants.NBT.Y_COORD), doorTag.getInt(Constants.NBT.Z_COORD));
 
 		int dir = tag.getInt(Constants.NBT.DIRECTION);
@@ -88,11 +88,11 @@ public class TileDungeonSeal extends TileBase
 
 		doorDirection = Direction.values()[tag.getInt(Constants.NBT.DIRECTION)];
 
-		ListNBT listnbt = tag.getList(Constants.NBT.DOOR_TYPES, 10);
+		ListTag listnbt = tag.getList(Constants.NBT.DOOR_TYPES, 10);
 
 		for (int i = 0; i < listnbt.size(); ++i)
 		{
-			CompoundNBT compoundnbt = listnbt.getCompound(i);
+			CompoundTag compoundnbt = listnbt.getCompound(i);
 			String str = compoundnbt.getString(Constants.NBT.DOOR);
 			potentialRoomTypes.add(new ResourceLocation(str));
 		}
@@ -101,15 +101,15 @@ public class TileDungeonSeal extends TileBase
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tag)
+	public CompoundTag serialize(CompoundTag tag)
 	{
-		CompoundNBT masterTag = new CompoundNBT();
+		CompoundTag masterTag = new CompoundTag();
 		masterTag.putInt(Constants.NBT.X_COORD, controllerPos.getX());
 		masterTag.putInt(Constants.NBT.Y_COORD, controllerPos.getY());
 		masterTag.putInt(Constants.NBT.Z_COORD, controllerPos.getZ());
 		tag.put(Constants.NBT.DUNGEON_CONTROLLER, masterTag);
 
-		CompoundNBT doorTag = new CompoundNBT();
+		CompoundTag doorTag = new CompoundTag();
 		doorTag.putInt(Constants.NBT.X_COORD, doorPos.getX());
 		doorTag.putInt(Constants.NBT.Y_COORD, doorPos.getY());
 		doorTag.putInt(Constants.NBT.Z_COORD, doorPos.getZ());
@@ -117,11 +117,11 @@ public class TileDungeonSeal extends TileBase
 
 		tag.putInt(Constants.NBT.DIRECTION, doorDirection.get3DDataValue());
 
-		ListNBT listnbt = new ListNBT();
+		ListTag listnbt = new ListTag();
 		for (int i = 0; i < potentialRoomTypes.size(); ++i)
 		{
 			String str = potentialRoomTypes.get(i).toString();
-			CompoundNBT compoundnbt = new CompoundNBT();
+			CompoundTag compoundnbt = new CompoundTag();
 			compoundnbt.putString(Constants.NBT.DOOR, str);
 			listnbt.add(compoundnbt);
 		}

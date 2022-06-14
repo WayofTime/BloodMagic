@@ -7,22 +7,22 @@ import java.util.function.Consumer;
 
 import com.mojang.authlib.GameProfile;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import wayoftime.bloodmagic.BloodMagic;
@@ -74,7 +74,7 @@ public class RitualCrushing extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
+		Level world = masterRitualStone.getWorldObj();
 		if (world.isClientSide)
 		{
 			return;
@@ -97,7 +97,7 @@ public class RitualCrushing extends Ritual
 			return;
 		}
 
-		TileEntity tile = world.getBlockEntity(chestList.get(0));
+		BlockEntity tile = world.getBlockEntity(chestList.get(0));
 
 		if (tile != null && Utils.getNumberOfFreeSlots(tile, Direction.DOWN) < 1)
 		{
@@ -194,9 +194,9 @@ public class RitualCrushing extends Ritual
 
 			if (!isBlockClaimed && isSilkTouch)
 			{
-				LootContext.Builder lootBuilder = new LootContext.Builder((ServerWorld) world);
-				Vector3d blockCenter = new Vector3d(newPos.getX() + 0.5, newPos.getY() + 0.5, newPos.getZ() + 0.5);
-				List<ItemStack> silkDrops = state.getDrops(lootBuilder.withParameter(LootParameters.ORIGIN, blockCenter).withParameter(LootParameters.TOOL, mockPick));
+				LootContext.Builder lootBuilder = new LootContext.Builder((ServerLevel) world);
+				Vec3 blockCenter = new Vec3(newPos.getX() + 0.5, newPos.getY() + 0.5, newPos.getZ() + 0.5);
+				List<ItemStack> silkDrops = state.getDrops(lootBuilder.withParameter(LootContextParams.ORIGIN, blockCenter).withParameter(LootContextParams.TOOL, mockPick));
 
 				for (ItemStack item : silkDrops)
 				{
@@ -235,9 +235,9 @@ public class RitualCrushing extends Ritual
 				ItemStack mockFortunePick = new ItemStack(Items.DIAMOND_PICKAXE, 1);
 				mockFortunePick.enchant(Enchantments.BLOCK_FORTUNE, fortune);
 
-				LootContext.Builder lootBuilder = new LootContext.Builder((ServerWorld) world);
-				Vector3d blockCenter = new Vector3d(newPos.getX() + 0.5, newPos.getY() + 0.5, newPos.getZ() + 0.5);
-				List<ItemStack> stackList = state.getDrops(lootBuilder.withParameter(LootParameters.ORIGIN, blockCenter).withParameter(LootParameters.TOOL, mockFortunePick));
+				LootContext.Builder lootBuilder = new LootContext.Builder((ServerLevel) world);
+				Vec3 blockCenter = new Vec3(newPos.getX() + 0.5, newPos.getY() + 0.5, newPos.getZ() + 0.5);
+				List<ItemStack> stackList = state.getDrops(lootBuilder.withParameter(LootContextParams.ORIGIN, blockCenter).withParameter(LootContextParams.TOOL, mockFortunePick));
 //				List<ItemStack> stackList = Block.getDrops(state, world, newPos, world.getTileEntity(newPos));
 
 //				List<ItemStack> stackList = block.getDrops(world, newPos, state, fortune);
@@ -333,14 +333,14 @@ public class RitualCrushing extends Ritual
 	}
 
 	@Override
-	public ITextComponent[] provideInformationOfRitualToPlayer(PlayerEntity player)
+	public Component[] provideInformationOfRitualToPlayer(Player player)
 	{
-		return new ITextComponent[] { new TranslationTextComponent(this.getTranslationKey() + ".info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".default.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".corrosive.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".steadfast.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".destructive.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".vengeful.info") };
+		return new Component[] { new TranslatableComponent(this.getTranslationKey() + ".info"),
+				new TranslatableComponent(this.getTranslationKey() + ".default.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".corrosive.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".steadfast.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".destructive.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".vengeful.info") };
 	}
 
 	@Override
@@ -355,7 +355,7 @@ public class RitualCrushing extends Ritual
 		cuttingFluidWillMap.put(stack, willDrain);
 	}
 
-	private FakePlayer getFakePlayer(ServerWorld world)
+	private FakePlayer getFakePlayer(ServerLevel world)
 	{
 		return fakePlayer == null
 				? fakePlayer = FakePlayerFactory.get(world, new GameProfile(null, BloodMagic.MODID + "_ritual_crushing"))

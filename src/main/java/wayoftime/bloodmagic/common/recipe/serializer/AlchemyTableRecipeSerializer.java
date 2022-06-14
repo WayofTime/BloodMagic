@@ -9,18 +9,18 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
 import wayoftime.bloodmagic.util.Constants;
 
-public class AlchemyTableRecipeSerializer<RECIPE extends RecipeAlchemyTable> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RECIPE>
+public class AlchemyTableRecipeSerializer<RECIPE extends RecipeAlchemyTable> extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RECIPE>
 {
 
 	private final IFactory<RECIPE> factory;
@@ -36,9 +36,9 @@ public class AlchemyTableRecipeSerializer<RECIPE extends RecipeAlchemyTable> ext
 	{
 		List<Ingredient> inputList = new ArrayList<Ingredient>();
 
-		if (json.has(Constants.JSON.INPUT) && JSONUtils.isArrayNode(json, Constants.JSON.INPUT))
+		if (json.has(Constants.JSON.INPUT) && GsonHelper.isArrayNode(json, Constants.JSON.INPUT))
 		{
-			JsonArray mainArray = JSONUtils.getAsJsonArray(json, Constants.JSON.INPUT);
+			JsonArray mainArray = GsonHelper.getAsJsonArray(json, Constants.JSON.INPUT);
 
 			arrayLoop: for (JsonElement element : mainArray)
 			{
@@ -61,15 +61,15 @@ public class AlchemyTableRecipeSerializer<RECIPE extends RecipeAlchemyTable> ext
 
 		ItemStack output = SerializerHelper.getItemStack(json, Constants.JSON.OUTPUT);
 
-		int syphon = JSONUtils.getAsInt(json, Constants.JSON.SYPHON);
-		int ticks = JSONUtils.getAsInt(json, Constants.JSON.TICKS);
-		int minimumTier = JSONUtils.getAsInt(json, Constants.JSON.ALTAR_TIER);
+		int syphon = GsonHelper.getAsInt(json, Constants.JSON.SYPHON);
+		int ticks = GsonHelper.getAsInt(json, Constants.JSON.TICKS);
+		int minimumTier = GsonHelper.getAsInt(json, Constants.JSON.ALTAR_TIER);
 
 		return this.factory.create(recipeId, inputList, output, syphon, ticks, minimumTier);
 	}
 
 	@Override
-	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
+	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull FriendlyByteBuf buffer)
 	{
 		try
 		{
@@ -94,7 +94,7 @@ public class AlchemyTableRecipeSerializer<RECIPE extends RecipeAlchemyTable> ext
 	}
 
 	@Override
-	public void toNetwork(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
+	public void toNetwork(@Nonnull FriendlyByteBuf buffer, @Nonnull RECIPE recipe)
 	{
 		try
 		{

@@ -13,32 +13,32 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootFunction;
-import net.minecraft.loot.LootFunctionType;
-import net.minecraft.loot.RandomValueRange;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
+import net.minecraft.world.level.storage.loot.RandomValueBounds;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.core.living.ILivingContainer;
 import wayoftime.bloodmagic.core.living.LivingStats;
 import wayoftime.bloodmagic.util.Constants;
 
-public class SetLivingUpgrade extends LootFunction
+public class SetLivingUpgrade extends LootItemConditionalFunction
 {
 	private static final Logger LOGGER = LogManager.getLogger();
-	private final RandomValueRange pointsRange;
+	private final RandomValueBounds pointsRange;
 	private final List<ResourceLocation> livingUpgrades;
 
-	private SetLivingUpgrade(ILootCondition[] conditionsIn, List<ResourceLocation> livingUpgrades, RandomValueRange damageRangeIn)
+	private SetLivingUpgrade(LootItemCondition[] conditionsIn, List<ResourceLocation> livingUpgrades, RandomValueBounds damageRangeIn)
 	{
 		super(conditionsIn);
 		this.pointsRange = damageRangeIn;
 		this.livingUpgrades = livingUpgrades;
 	}
 
-	public LootFunctionType getType()
+	public LootItemFunctionType getType()
 	{
 		return BloodMagicLootFunctionManager.SET_LIVING_UPGRADE;
 	}
@@ -61,7 +61,7 @@ public class SetLivingUpgrade extends LootFunction
 		return stack;
 	}
 
-	public static LootFunction.Builder<?> withRange(RandomValueRange p_215931_0_, ResourceLocation... livingUpgrades)
+	public static LootItemConditionalFunction.Builder<?> withRange(RandomValueBounds p_215931_0_, ResourceLocation... livingUpgrades)
 	{
 		return simpleBuilder((p_215930_1_) -> {
 			List<ResourceLocation> list = new ArrayList<>();
@@ -73,7 +73,7 @@ public class SetLivingUpgrade extends LootFunction
 		});
 	}
 
-	public static class Serializer extends LootFunction.Serializer<SetLivingUpgrade>
+	public static class Serializer extends LootItemConditionalFunction.Serializer<SetLivingUpgrade>
 	{
 		public void serialize(JsonObject json, SetLivingUpgrade p_230424_2_, JsonSerializationContext context)
 		{
@@ -91,13 +91,13 @@ public class SetLivingUpgrade extends LootFunction
 			json.add("points", context.serialize(p_230424_2_.pointsRange));
 		}
 
-		public SetLivingUpgrade deserialize(JsonObject json, JsonDeserializationContext deserializationContext, ILootCondition[] conditionsIn)
+		public SetLivingUpgrade deserialize(JsonObject json, JsonDeserializationContext deserializationContext, LootItemCondition[] conditionsIn)
 		{
 			List<ResourceLocation> inputList = new ArrayList<ResourceLocation>();
 
-			if (json.has(Constants.JSON.UPGRADES) && JSONUtils.isArrayNode(json, Constants.JSON.UPGRADES))
+			if (json.has(Constants.JSON.UPGRADES) && GsonHelper.isArrayNode(json, Constants.JSON.UPGRADES))
 			{
-				JsonArray mainArray = JSONUtils.getAsJsonArray(json, Constants.JSON.UPGRADES);
+				JsonArray mainArray = GsonHelper.getAsJsonArray(json, Constants.JSON.UPGRADES);
 
 				for (JsonElement element : mainArray)
 				{
@@ -106,7 +106,7 @@ public class SetLivingUpgrade extends LootFunction
 				}
 			}
 
-			return new SetLivingUpgrade(conditionsIn, inputList, JSONUtils.getAsObject(json, "points", deserializationContext, RandomValueRange.class));
+			return new SetLivingUpgrade(conditionsIn, inputList, GsonHelper.getAsObject(json, "points", deserializationContext, RandomValueBounds.class));
 		}
 	}
 }

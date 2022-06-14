@@ -3,12 +3,12 @@ package wayoftime.bloodmagic.tile;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
@@ -16,16 +16,16 @@ import wayoftime.bloodmagic.api.compat.IDemonWillConduit;
 import wayoftime.bloodmagic.api.compat.IDemonWillGem;
 import wayoftime.bloodmagic.api.compat.IDiscreteDemonWill;
 
-public class TileDemonCrucible extends TileInventory implements ITickableTileEntity, IDemonWillConduit, ISidedInventory
+public class TileDemonCrucible extends TileInventory implements TickableBlockEntity, IDemonWillConduit, WorldlyContainer
 {
 	@ObjectHolder("bloodmagic:demoncrucible")
-	public static TileEntityType<TileDemonCrucible> TYPE;
+	public static BlockEntityType<TileDemonCrucible> TYPE;
 	public final int maxWill = 100;
 	public final double gemDrainRate = 10;
 	public HashMap<EnumDemonWillType, Double> willMap = new HashMap<>(); // TODO: Change to DemonWillHolder
 	public int internalCounter = 0;
 
-	public TileDemonCrucible(TileEntityType<?> type)
+	public TileDemonCrucible(BlockEntityType<?> type)
 	{
 		super(type, 1, "demoncrucible");
 	}
@@ -118,7 +118,7 @@ public class TileDemonCrucible extends TileInventory implements ITickableTileEnt
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tag)
+	public void deserialize(CompoundTag tag)
 	{
 		super.deserialize(tag);
 
@@ -135,7 +135,7 @@ public class TileDemonCrucible extends TileInventory implements ITickableTileEnt
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tag)
+	public CompoundTag serialize(CompoundTag tag)
 	{
 		super.serialize(tag);
 

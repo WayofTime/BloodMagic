@@ -7,37 +7,37 @@ import java.util.Map;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.NonNullList;
 import net.minecraft.util.Tuple;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
@@ -87,10 +87,10 @@ public class ItemRitualDiviner extends Item
 	{
 		if (!stack.hasTag())
 		{
-			stack.setTag(new CompoundNBT());
+			stack.setTag(new CompoundTag());
 		}
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putInt(Constants.NBT.X_COORD, pos.getX());
 		tag.putInt(Constants.NBT.Y_COORD, pos.getY());
@@ -101,24 +101,24 @@ public class ItemRitualDiviner extends Item
 	{
 		if (!stack.hasTag())
 		{
-			stack.setTag(new CompoundNBT());
+			stack.setTag(new CompoundTag());
 		}
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		return new BlockPos(tag.getInt(Constants.NBT.X_COORD), tag.getInt(Constants.NBT.Y_COORD), tag.getInt(Constants.NBT.Z_COORD));
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
+	public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected)
 	{
-		if (entityIn instanceof PlayerEntity && getActivated(stack))
+		if (entityIn instanceof Player && getActivated(stack))
 		{
 			if (entityIn.tickCount % 4 == 0)
 			{
 				BlockPos pos = getStoredPos(stack);
 
-				if (!addRuneToRitual(stack, worldIn, pos, (PlayerEntity) entityIn))
+				if (!addRuneToRitual(stack, worldIn, pos, (Player) entityIn))
 				{
 					setActivatedState(stack, false);
 				} else
@@ -146,7 +146,7 @@ public class ItemRitualDiviner extends Item
 //	}
 
 	@Override
-	public ActionResultType useOn(ItemUseContext context)
+	public InteractionResult useOn(UseOnContext context)
 	{
 		ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
 		if (context.getPlayer().isShiftKeyDown())
@@ -156,7 +156,7 @@ public class ItemRitualDiviner extends Item
 				trySetDisplayedRitual(stack, context.getLevel(), context.getClickedPos());
 			}
 
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		} else if (addRuneToRitual(stack, context.getLevel(), context.getClickedPos(), context.getPlayer()))
 		{
 			setStoredPos(stack, context.getClickedPos());
@@ -167,11 +167,11 @@ public class ItemRitualDiviner extends Item
 				spawnParticles(context.getLevel(), context.getClickedPos().relative(context.getClickedFace()), 15);
 			}
 
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 			// TODO: Have the diviner automagically build the ritual
 		}
 
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 
 	/**
@@ -183,9 +183,9 @@ public class ItemRitualDiviner extends Item
 	 * @param player - The Player attempting to place the ritual
 	 * @return - True if a rune was successfully added
 	 */
-	public boolean addRuneToRitual(ItemStack stack, World world, BlockPos pos, PlayerEntity player)
+	public boolean addRuneToRitual(ItemStack stack, Level world, BlockPos pos, Player player)
 	{
-		TileEntity tile = world.getBlockEntity(pos);
+		BlockEntity tile = world.getBlockEntity(pos);
 
 		if (tile instanceof TileMasterRitualStone)
 		{
@@ -221,7 +221,7 @@ public class ItemRitualDiviner extends Item
 						}
 					} else
 					{
-						BlockItemUseContext ctx = new BlockItemUseContext(world, null, Hand.MAIN_HAND, ItemStack.EMPTY, BlockRayTraceResult.miss(new Vector3d(0, 0, 0), Direction.UP, newPos));
+						BlockPlaceContext ctx = new BlockPlaceContext(world, null, InteractionHand.MAIN_HAND, ItemStack.EMPTY, BlockHitResult.miss(new Vec3(0, 0, 0), Direction.UP, newPos));
 
 						if (state.canBeReplaced(ctx))// || block.isReplaceable(world, newPos))
 						{
@@ -246,9 +246,9 @@ public class ItemRitualDiviner extends Item
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public void trySetDisplayedRitual(ItemStack itemStack, World world, BlockPos pos)
+	public void trySetDisplayedRitual(ItemStack itemStack, Level world, BlockPos pos)
 	{
-		TileEntity tile = world.getBlockEntity(pos);
+		BlockEntity tile = world.getBlockEntity(pos);
 
 		if (tile instanceof TileMasterRitualStone)
 		{
@@ -270,7 +270,7 @@ public class ItemRitualDiviner extends Item
 	}
 
 	// TODO: Make this work for any IRitualStone
-	public boolean consumeStone(ItemStack stack, World world, PlayerEntity player)
+	public boolean consumeStone(ItemStack stack, Level world, Player player)
 	{
 		if (player.isCreative())
 		{
@@ -302,7 +302,7 @@ public class ItemRitualDiviner extends Item
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
 		if (!stack.hasTag())
 			return;
@@ -310,7 +310,7 @@ public class ItemRitualDiviner extends Item
 		Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(this.getCurrentRitual(stack));
 		if (ritual != null)
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.diviner.currentRitual", new TranslationTextComponent(ritual.getTranslationKey())).withStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.diviner.currentRitual", new TranslatableComponent(ritual.getTranslationKey())).withStyle(ChatFormatting.GRAY));
 
 			boolean sneaking = Screen.hasShiftDown();
 //			boolean extraInfo = sneaking && Keyboard.isKeyDown(Keyboard.KEY_M);
@@ -318,19 +318,19 @@ public class ItemRitualDiviner extends Item
 
 			if (extraInfo)
 			{
-				tooltip.add(new StringTextComponent(""));
+				tooltip.add(new TextComponent(""));
 
 				for (EnumDemonWillType type : EnumDemonWillType.values())
 				{
 					if (TextHelper.canTranslate(ritual.getTranslationKey() + "." + type.name().toLowerCase(Locale.ROOT) + ".info"))
 					{
-						tooltip.add(new TranslationTextComponent(ritual.getTranslationKey() + "." + type.name().toLowerCase(Locale.ROOT) + ".info"));
+						tooltip.add(new TranslatableComponent(ritual.getTranslationKey() + "." + type.name().toLowerCase(Locale.ROOT) + ".info"));
 					}
 				}
 			} else if (sneaking)
 			{
-				tooltip.add(new TranslationTextComponent(tooltipBase + "currentDirection", Utils.toFancyCasing(getDirection(stack).name())).withStyle(TextFormatting.GRAY));
-				tooltip.add(new StringTextComponent(""));
+				tooltip.add(new TranslatableComponent(tooltipBase + "currentDirection", Utils.toFancyCasing(getDirection(stack).name())).withStyle(ChatFormatting.GRAY));
+				tooltip.add(new TextComponent(""));
 
 				Tuple<Integer, Map<EnumRuneType, Integer>> runeCount = RitualHelper.countRunes(ritual);
 				int totalRunes = runeCount.getA();
@@ -340,37 +340,37 @@ public class ItemRitualDiviner extends Item
 					int count = runeMap.getOrDefault(type, 0);
 					if (count > 0)
 					{
-						tooltip.add(new TranslationTextComponent(tooltipBase + type.translationKey, count).withStyle(type.colorCode));
+						tooltip.add(new TranslatableComponent(tooltipBase + type.translationKey, count).withStyle(type.colorCode));
 					}
 				}
-				tooltip.add(new StringTextComponent(""));
-				tooltip.add(new TranslationTextComponent(tooltipBase + "totalRune", totalRunes).withStyle(TextFormatting.GRAY));
+				tooltip.add(new TextComponent(""));
+				tooltip.add(new TranslatableComponent(tooltipBase + "totalRune", totalRunes).withStyle(ChatFormatting.GRAY));
 			} else
 			{
-				tooltip.add(new StringTextComponent(""));
+				tooltip.add(new TextComponent(""));
 				if (TextHelper.canTranslate(ritual.getTranslationKey() + ".info"))
 				{
-					tooltip.add(new TranslationTextComponent(ritual.getTranslationKey() + ".info").withStyle(TextFormatting.GRAY));
-					tooltip.add(new StringTextComponent(""));
+					tooltip.add(new TranslatableComponent(ritual.getTranslationKey() + ".info").withStyle(ChatFormatting.GRAY));
+					tooltip.add(new TextComponent(""));
 				}
 
-				tooltip.add(new TranslationTextComponent(tooltipBase + "extraInfo").withStyle(TextFormatting.BLUE));
-				tooltip.add(new TranslationTextComponent(tooltipBase + "extraExtraInfo").withStyle(TextFormatting.BLUE));
+				tooltip.add(new TranslatableComponent(tooltipBase + "extraInfo").withStyle(ChatFormatting.BLUE));
+				tooltip.add(new TranslatableComponent(tooltipBase + "extraExtraInfo").withStyle(ChatFormatting.BLUE));
 			}
 		}
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
 		setActivatedState(stack, false);
 
-		RayTraceResult ray = getPlayerPOVHitResult(world, player, RayTraceContext.FluidMode.NONE);
+		HitResult ray = getPlayerPOVHitResult(world, player, ClipContext.Fluid.NONE);
 
-		if (ray != null && ray.getType() == RayTraceResult.Type.BLOCK)
+		if (ray != null && ray.getType() == HitResult.Type.BLOCK)
 		{
-			return new ActionResult<>(ActionResultType.PASS, stack);
+			return new InteractionResultHolder<>(InteractionResult.PASS, stack);
 		}
 
 		if (player.isShiftKeyDown())
@@ -380,7 +380,7 @@ public class ItemRitualDiviner extends Item
 				cycleRitual(stack, player, false);
 			}
 
-			return new ActionResult<>(ActionResultType.SUCCESS, stack);
+			return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 		} else
 		{
 			if (!world.isClientSide)
@@ -389,20 +389,20 @@ public class ItemRitualDiviner extends Item
 			}
 		}
 
-		return new ActionResult<>(ActionResultType.PASS, stack);
+		return new InteractionResultHolder<>(InteractionResult.PASS, stack);
 	}
 
 	@Override
-	public void onUseTick(World worldIn, LivingEntity entityLiving, ItemStack stack, int count)
+	public void onUseTick(Level worldIn, LivingEntity entityLiving, ItemStack stack, int count)
 	{
 		setActivatedState(stack, false);
-		if (!entityLiving.level.isClientSide && entityLiving instanceof PlayerEntity)
+		if (!entityLiving.level.isClientSide && entityLiving instanceof Player)
 		{
-			PlayerEntity player = (PlayerEntity) entityLiving;
+			Player player = (Player) entityLiving;
 
-			RayTraceResult ray = getPlayerPOVHitResult(player.level, player, RayTraceContext.FluidMode.NONE);
+			HitResult ray = getPlayerPOVHitResult(player.level, player, ClipContext.Fluid.NONE);
 
-			if (ray != null && ray.getType() == RayTraceResult.Type.BLOCK)
+			if (ray != null && ray.getType() == HitResult.Type.BLOCK)
 			{
 				return;
 //				return false;
@@ -423,7 +423,7 @@ public class ItemRitualDiviner extends Item
 //		return false;
 	}
 
-	public void cycleDirection(ItemStack stack, PlayerEntity player)
+	public void cycleDirection(ItemStack stack, Player player)
 	{
 		Direction direction = getDirection(stack);
 		Direction newDirection;
@@ -449,19 +449,19 @@ public class ItemRitualDiviner extends Item
 		notifyDirectionChange(newDirection, player);
 	}
 
-	public void notifyDirectionChange(Direction direction, PlayerEntity player)
+	public void notifyDirectionChange(Direction direction, Player player)
 	{
-		player.displayClientMessage(new TranslationTextComponent(tooltipBase + "currentDirection", Utils.toFancyCasing(direction.name())), true);
+		player.displayClientMessage(new TranslatableComponent(tooltipBase + "currentDirection", Utils.toFancyCasing(direction.name())), true);
 	}
 
 	public void setDirection(ItemStack stack, Direction direction)
 	{
 		if (!stack.hasTag())
 		{
-			stack.setTag(new CompoundNBT());
+			stack.setTag(new CompoundTag());
 		}
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putInt(Constants.NBT.DIRECTION, direction.get3DDataValue());
 	}
@@ -470,11 +470,11 @@ public class ItemRitualDiviner extends Item
 	{
 		if (!stack.hasTag())
 		{
-			stack.setTag(new CompoundNBT());
+			stack.setTag(new CompoundTag());
 			return Direction.NORTH;
 		}
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		int dir = tag.getInt(Constants.NBT.DIRECTION);
 		if (dir == 0)
@@ -488,7 +488,7 @@ public class ItemRitualDiviner extends Item
 	/**
 	 * Cycles the ritual forward or backward
 	 */
-	public void cycleRitual(ItemStack stack, PlayerEntity player, boolean reverse)
+	public void cycleRitual(ItemStack stack, Player player, boolean reverse)
 	{
 		String key = getCurrentRitual(stack);
 		List<Ritual> rituals = BloodMagic.RITUAL_MANAGER.getSortedRituals();
@@ -552,12 +552,12 @@ public class ItemRitualDiviner extends Item
 		return true;
 	}
 
-	public void notifyRitualChange(String key, PlayerEntity player)
+	public void notifyRitualChange(String key, Player player)
 	{
 		Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(key);
 		if (ritual != null)
 		{
-			player.displayClientMessage(new TranslationTextComponent(ritual.getTranslationKey()), true);
+			player.displayClientMessage(new TranslatableComponent(ritual.getTranslationKey()), true);
 		}
 	}
 
@@ -565,10 +565,10 @@ public class ItemRitualDiviner extends Item
 	{
 		if (!stack.hasTag())
 		{
-			stack.setTag(new CompoundNBT());
+			stack.setTag(new CompoundTag());
 		}
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putString("current_ritual", key);
 	}
@@ -577,10 +577,10 @@ public class ItemRitualDiviner extends Item
 	{
 		if (!stack.hasTag())
 		{
-			stack.setTag(new CompoundNBT());
+			stack.setTag(new CompoundTag());
 		}
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		return tag.getString("current_ritual");
 	}
 
@@ -604,7 +604,7 @@ public class ItemRitualDiviner extends Item
 		return false;
 	}
 
-	public static void spawnParticles(World worldIn, BlockPos pos, int amount)
+	public static void spawnParticles(Level worldIn, BlockPos pos, int amount)
 	{
 		BlockState state = worldIn.getBlockState(pos);
 		Block block = worldIn.getBlockState(pos).getBlock();
@@ -630,8 +630,8 @@ public class ItemRitualDiviner extends Item
 		}
 	}
 
-	public void notifyBlockedBuild(PlayerEntity player, BlockPos pos)
+	public void notifyBlockedBuild(Player player, BlockPos pos)
 	{
-		player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.diviner.blockedBuild", pos.getX(), pos.getY(), pos.getZ()), true);
+		player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.diviner.blockedBuild", pos.getX(), pos.getY(), pos.getZ()), true);
 	}
 }

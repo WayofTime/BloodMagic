@@ -3,13 +3,13 @@ package wayoftime.bloodmagic.tile;
 import com.mojang.datafixers.util.Pair;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.Containers;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.BlockPos;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.tile.base.TileTicking;
 
@@ -17,7 +17,7 @@ public class TileExplosiveCharge extends TileTicking
 {
 	public AnointmentHolder anointmentHolder = new AnointmentHolder();
 
-	public TileExplosiveCharge(TileEntityType<?> type)
+	public TileExplosiveCharge(BlockEntityType<?> type)
 	{
 		super(type);
 	}
@@ -53,7 +53,7 @@ public class TileExplosiveCharge extends TileTicking
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tag)
+	public void deserialize(CompoundTag tag)
 	{
 		if (tag.contains("holder"))
 		{
@@ -63,7 +63,7 @@ public class TileExplosiveCharge extends TileTicking
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tag)
+	public CompoundTag serialize(CompoundTag tag)
 	{
 		if (anointmentHolder != null)
 		{
@@ -86,7 +86,7 @@ public class TileExplosiveCharge extends TileTicking
 			anointmentHolder.toItemStack(stack);
 		}
 
-		InventoryHelper.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), stack);
+		Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), stack);
 	}
 
 	@Override

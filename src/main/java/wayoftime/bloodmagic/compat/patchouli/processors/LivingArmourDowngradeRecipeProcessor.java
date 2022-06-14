@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.resources.ResourceLocation;
 import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
 import vazkii.patchouli.api.IVariableProvider;
@@ -34,10 +34,10 @@ public class LivingArmourDowngradeRecipeProcessor implements IComponentProcessor
 	public void setup(IVariableProvider variables)
 	{
 		ResourceLocation id = new ResourceLocation(variables.get("recipe").asString());
-		Optional<? extends IRecipe<?>> recipeHandler = Minecraft.getInstance().level.getRecipeManager().byKey(id);
+		Optional<? extends Recipe<?>> recipeHandler = Minecraft.getInstance().level.getRecipeManager().byKey(id);
 		if (recipeHandler.isPresent())
 		{
-			IRecipe<?> recipe = recipeHandler.get();
+			Recipe<?> recipe = recipeHandler.get();
 			if (recipe.getType().equals(BloodMagicRecipeType.LIVINGDOWNGRADE))
 			{
 				this.recipe = (RecipeLivingDowngrade) recipe;

@@ -17,7 +17,7 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.google.common.reflect.TypeToken;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.gson.Serializers;
 

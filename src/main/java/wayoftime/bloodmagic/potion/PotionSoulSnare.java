@@ -1,11 +1,11 @@
 package wayoftime.bloodmagic.potion;
 
-import net.minecraft.potion.EffectType;
+import net.minecraft.world.effect.MobEffectCategory;
 
 public class PotionSoulSnare extends PotionBloodMagic
 {
 	public PotionSoulSnare()
 	{
-		super(EffectType.NEUTRAL, 0xFFFFFF);
+		super(MobEffectCategory.NEUTRAL, 0xFFFFFF);
 	}
 }

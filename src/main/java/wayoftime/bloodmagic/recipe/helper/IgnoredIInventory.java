@@ -2,11 +2,11 @@ package wayoftime.bloodmagic.recipe.helper;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
 
-public final class IgnoredIInventory implements IInventory
+public final class IgnoredIInventory implements Container
 {
 	public static final IgnoredIInventory INSTANCE = new IgnoredIInventory();
 
@@ -55,7 +55,7 @@ public final class IgnoredIInventory implements IInventory
 	}
 
 	@Override
-	public boolean stillValid(@Nonnull PlayerEntity player)
+	public boolean stillValid(@Nonnull Player player)
 	{
 		return false;
 	}

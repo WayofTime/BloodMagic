@@ -8,30 +8,30 @@ import java.util.UUID;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.monster.SlimeEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.PickaxeItem;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Slime;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.PickaxeItem;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
@@ -98,7 +98,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 		}
 	}
 
-	public void recalculatePowers(ItemStack stack, World world, PlayerEntity player)
+	public void recalculatePowers(ItemStack stack, Level world, Player player)
 	{
 		EnumDemonWillType type = PlayerDemonWillHandler.getLargestWillType(player);
 		double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
@@ -187,12 +187,12 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 		}
 	}
 
-	public void applyEffectToEntity(EnumDemonWillType type, int willBracket, LivingEntity target, PlayerEntity attacker)
+	public void applyEffectToEntity(EnumDemonWillType type, int willBracket, LivingEntity target, Player attacker)
 	{
 		switch (type)
 		{
 		case CORROSIVE:
-			target.addEffect(new EffectInstance(Effects.WITHER, poisonTime[willBracket], poisonLevel[willBracket]));
+			target.addEffect(new MobEffectInstance(MobEffects.WITHER, poisonTime[willBracket], poisonLevel[willBracket]));
 			break;
 		case DEFAULT:
 			break;
@@ -202,7 +202,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 			if (!target.isAlive())
 			{
 				float absorption = attacker.getAbsorptionAmount();
-				attacker.addEffect(new EffectInstance(Effects.ABSORPTION, absorptionTime[willBracket], 127));
+				attacker.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, absorptionTime[willBracket], 127));
 				attacker.setAbsorptionAmount((float) Math.min(absorption + target.getMaxHealth() * 0.05f, maxAbsorptionHearts));
 			}
 			break;
@@ -216,9 +216,9 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	{
 		if (super.hurtEnemy(stack, target, attacker))
 		{
-			if (attacker instanceof PlayerEntity)
+			if (attacker instanceof Player)
 			{
-				PlayerEntity attackerPlayer = (PlayerEntity) attacker;
+				Player attackerPlayer = (Player) attacker;
 				this.recalculatePowers(stack, attackerPlayer.getCommandSenderWorld(), attackerPlayer);
 				EnumDemonWillType type = this.getCurrentType(stack);
 				double will = PlayerDemonWillHandler.getTotalDemonWill(type, attackerPlayer);
@@ -248,7 +248,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		if (!tag.contains(Constants.NBT.WILL_TYPE))
 		{
@@ -262,13 +262,13 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putString(Constants.NBT.WILL_TYPE, type.toString());
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		recalculatePowers(player.getItemInHand(hand), world, player);
 		return super.use(world, player, hand);
@@ -296,18 +296,18 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
 		if (!stack.hasTag())
 			return;
 
 //		tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.sentientSword.desc"))));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sentientPickaxe.desc").withStyle(TextFormatting.GRAY));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase(Locale.ROOT)).withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.sentientPickaxe.desc").withStyle(ChatFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override
-	public boolean onLeftClickEntity(ItemStack stack, PlayerEntity player, Entity entity)
+	public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity)
 	{
 		recalculatePowers(stack, player.getCommandSenderWorld(), player);
 
@@ -334,12 +334,12 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	{
 		List<ItemStack> soulList = new ArrayList<>();
 
-		if (killedEntity.getCommandSenderWorld().getDifficulty() != Difficulty.PEACEFUL && !(killedEntity instanceof IMob))
+		if (killedEntity.getCommandSenderWorld().getDifficulty() != Difficulty.PEACEFUL && !(killedEntity instanceof Enemy))
 		{
 			return soulList;
 		}
 
-		double willModifier = killedEntity instanceof SlimeEntity ? 0.67 : 1;
+		double willModifier = killedEntity instanceof Slime ? 0.67 : 1;
 
 		IDemonWill soul;
 
@@ -377,10 +377,10 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 
 	// TODO: Change attack speed.
 	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack)
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack)
 	{
 		Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create();
-		if (slot == EquipmentSlotType.MAINHAND)
+		if (slot == EquipmentSlot.MAINHAND)
 		{
 			multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", getDamageOfActivatedSword(stack), AttributeModifier.Operation.ADDITION));
 			multimap.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", this.getAttackSpeedOfSword(stack), AttributeModifier.Operation.ADDITION));
@@ -395,7 +395,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		return tag.getDouble(Constants.NBT.SOUL_SWORD_DAMAGE);
 	}
 
@@ -403,7 +403,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putDouble(Constants.NBT.SOUL_SWORD_DAMAGE, damage);
 	}
@@ -412,7 +412,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		return tag.getDouble(Constants.NBT.SOUL_SWORD_ACTIVE_DRAIN);
 	}
 
@@ -420,7 +420,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putDouble(Constants.NBT.SOUL_SWORD_ACTIVE_DRAIN, drain);
 	}
@@ -429,7 +429,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		return tag.getDouble(Constants.NBT.SOUL_SWORD_STATIC_DROP);
 	}
 
@@ -437,7 +437,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putDouble(Constants.NBT.SOUL_SWORD_STATIC_DROP, drop);
 	}
@@ -446,7 +446,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		return tag.getDouble(Constants.NBT.SOUL_SWORD_DROP);
 	}
 
@@ -454,7 +454,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putDouble(Constants.NBT.SOUL_SWORD_DROP, drop);
 	}
@@ -463,7 +463,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		return tag.getDouble(Constants.NBT.SOUL_SWORD_HEALTH);
 	}
 
@@ -471,7 +471,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putDouble(Constants.NBT.SOUL_SWORD_HEALTH, hp);
 	}
@@ -480,7 +480,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		return tag.getDouble(Constants.NBT.SOUL_SWORD_ATTACK_SPEED);
 	}
 
@@ -488,7 +488,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putDouble(Constants.NBT.SOUL_SWORD_ATTACK_SPEED, speed);
 	}
@@ -497,7 +497,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		return tag.getDouble(Constants.NBT.SOUL_SWORD_SPEED);
 	}
 
@@ -505,7 +505,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putDouble(Constants.NBT.SOUL_SWORD_SPEED, speed);
 	}
@@ -514,7 +514,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		return tag.getDouble(Constants.NBT.SOUL_SWORD_DIG_SPEED);
 	}
 
@@ -522,7 +522,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putDouble(Constants.NBT.SOUL_SWORD_DIG_SPEED, speed);
 	}

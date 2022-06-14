@@ -3,7 +3,7 @@ package wayoftime.bloodmagic.network;
 import java.util.function.Supplier;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
@@ -26,14 +26,14 @@ public class SetClientVelocityPacket
 		this.motionZ = motionZ;
 	}
 
-	public static void encode(SetClientVelocityPacket pkt, PacketBuffer buf)
+	public static void encode(SetClientVelocityPacket pkt, FriendlyByteBuf buf)
 	{
 		buf.writeDouble(pkt.motionX);
 		buf.writeDouble(pkt.motionY);
 		buf.writeDouble(pkt.motionZ);
 	}
 
-	public static SetClientVelocityPacket decode(PacketBuffer buf)
+	public static SetClientVelocityPacket decode(FriendlyByteBuf buf)
 	{
 		SetClientVelocityPacket pkt = new SetClientVelocityPacket(buf.readDouble(), buf.readDouble(), buf.readDouble());
 

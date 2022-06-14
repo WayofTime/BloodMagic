@@ -2,16 +2,16 @@ package wayoftime.bloodmagic.common.item.soul;
 
 import java.util.List;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
@@ -33,11 +33,11 @@ public class ItemMonsterSoul extends Item implements IDemonWill
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
 		if (!stack.hasTag())
 			return;
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.will", ChatUtil.DECIMAL_FORMAT.format(getWill(getType(stack), stack))).withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.will", ChatUtil.DECIMAL_FORMAT.format(getWill(getType(stack), stack))).withStyle(ChatFormatting.GRAY));
 
 		super.appendHoverText(stack, world, tooltip, flag);
 	}
@@ -58,13 +58,13 @@ public class ItemMonsterSoul extends Item implements IDemonWill
 
 		NBTHelper.checkNBT(soulStack);
 
-		CompoundNBT tag = soulStack.getTag();
+		CompoundTag tag = soulStack.getTag();
 
 		return tag.getDouble(Constants.NBT.SOULS);
 	}
 
 	@Override
-	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items)
+	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items)
 	{
 		if (this.allowdedIn(group))
 		{
@@ -83,7 +83,7 @@ public class ItemMonsterSoul extends Item implements IDemonWill
 		}
 
 		NBTHelper.checkNBT(soulStack);
-		CompoundNBT tag = soulStack.getTag();
+		CompoundTag tag = soulStack.getTag();
 		tag.putDouble(Constants.NBT.SOULS, souls);
 
 		return true;

@@ -2,7 +2,7 @@ package wayoftime.bloodmagic.common.recipe;
 
 import java.util.function.Consumer;
 
-import net.minecraft.data.IFinishedRecipe;
+import net.minecraft.data.recipes.FinishedRecipe;
 
 /**
  * Interface for helping split the recipe provider over multiple classes to make
@@ -10,5 +10,5 @@ import net.minecraft.data.IFinishedRecipe;
  */
 public interface ISubRecipeProvider
 {
-	void addRecipes(Consumer<IFinishedRecipe> consumer);
+	void addRecipes(Consumer<FinishedRecipe> consumer);
 }

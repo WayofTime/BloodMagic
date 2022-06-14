@@ -2,11 +2,11 @@ package wayoftime.bloodmagic.network;
 
 import java.util.function.Supplier;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
 import wayoftime.bloodmagic.tile.TileAlchemyTable;
 
@@ -30,7 +30,7 @@ public class AlchemyTableButtonPacket
 		this.enable = enable;
 	}
 
-	public static void encode(AlchemyTableButtonPacket pkt, PacketBuffer buf)
+	public static void encode(AlchemyTableButtonPacket pkt, FriendlyByteBuf buf)
 	{
 		buf.writeBlockPos(pkt.pos);
 		buf.writeInt(pkt.slot);
@@ -38,7 +38,7 @@ public class AlchemyTableButtonPacket
 		buf.writeBoolean(pkt.enable);
 	}
 
-	public static AlchemyTableButtonPacket decode(PacketBuffer buf)
+	public static AlchemyTableButtonPacket decode(FriendlyByteBuf buf)
 	{
 		AlchemyTableButtonPacket pkt = new AlchemyTableButtonPacket(buf.readBlockPos(), buf.readInt(), Direction.from3DDataValue(buf.readInt()), buf.readBoolean());
 
@@ -48,12 +48,12 @@ public class AlchemyTableButtonPacket
 	public static void handle(AlchemyTableButtonPacket message, Supplier<Context> context)
 	{
 		context.get().enqueueWork(() -> {
-			PlayerEntity player = context.get().getSender();
+			Player player = context.get().getSender();
 			if (player == null)
 			{
 				return;
 			}
-			TileEntity tile = player.getCommandSenderWorld().getBlockEntity(message.pos);
+			BlockEntity tile = player.getCommandSenderWorld().getBlockEntity(message.pos);
 			if (tile instanceof TileAlchemyTable)
 			{
 				((TileAlchemyTable) tile).setSlotEnabled(message.enable, message.slot, message.dir);

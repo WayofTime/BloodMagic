@@ -3,7 +3,7 @@ package wayoftime.bloodmagic.will;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
 public class DemonWillHolder
@@ -66,9 +66,9 @@ public class DemonWillHolder
 		return 0;
 	}
 
-	public void readFromNBT(CompoundNBT tag, String key)
+	public void readFromNBT(CompoundTag tag, String key)
 	{
-		CompoundNBT willTag = tag.getCompound(key);
+		CompoundTag willTag = tag.getCompound(key);
 
 		willMap.clear();
 
@@ -82,9 +82,9 @@ public class DemonWillHolder
 		}
 	}
 
-	public void writeToNBT(CompoundNBT tag, String key)
+	public void writeToNBT(CompoundTag tag, String key)
 	{
-		CompoundNBT willTag = new CompoundNBT();
+		CompoundTag willTag = new CompoundTag();
 		for (Entry<EnumDemonWillType, Double> entry : willMap.entrySet())
 		{
 			willTag.putDouble("EnumWill" + entry.getKey().name(), entry.getValue());

@@ -5,9 +5,9 @@ import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.client.render.alchemyarray.AlchemyArrayRenderer;
@@ -40,7 +40,7 @@ public class AlchemyArrayRendererRegistry
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public static AlchemyArrayRenderer getRenderer(World world, ResourceLocation rl, RecipeAlchemyArray recipe)
+	public static AlchemyArrayRenderer getRenderer(Level world, ResourceLocation rl, RecipeAlchemyArray recipe)
 	{
 		if (rendererMap.containsKey(rl))
 		{
@@ -58,7 +58,7 @@ public class AlchemyArrayRendererRegistry
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public static AlchemyArrayRenderer getRenderer(World world, ItemStack input, ItemStack catalyst)
+	public static AlchemyArrayRenderer getRenderer(Level world, ItemStack input, ItemStack catalyst)
 	{
 		Pair<Boolean, RecipeAlchemyArray> array = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyArray(world, input, catalyst);
 		if (array == null || array.getRight() == null)

@@ -2,9 +2,9 @@ package wayoftime.bloodmagic.network;
 
 import java.util.function.Supplier;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
 import wayoftime.bloodmagic.common.item.ItemLivingTrainer;
 
@@ -25,14 +25,14 @@ public class LivingTrainerPacket
 		this.level = level;
 	}
 
-	public static void encode(LivingTrainerPacket pkt, PacketBuffer buf)
+	public static void encode(LivingTrainerPacket pkt, FriendlyByteBuf buf)
 	{
 		buf.writeInt(pkt.slot);
 		buf.writeInt(pkt.ghostSlot);
 		buf.writeInt(pkt.level);
 	}
 
-	public static LivingTrainerPacket decode(PacketBuffer buf)
+	public static LivingTrainerPacket decode(FriendlyByteBuf buf)
 	{
 		LivingTrainerPacket pkt = new LivingTrainerPacket(buf.readInt(), buf.readInt(), buf.readInt());
 
@@ -45,7 +45,7 @@ public class LivingTrainerPacket
 		context.get().setPacketHandled(true);
 	}
 
-	public static void sendKeyToServer(LivingTrainerPacket msg, PlayerEntity playerEntity)
+	public static void sendKeyToServer(LivingTrainerPacket msg, Player playerEntity)
 	{
 		ItemStack itemStack = ItemStack.EMPTY;
 

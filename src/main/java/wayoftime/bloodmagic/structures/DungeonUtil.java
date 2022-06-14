@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 
 public class DungeonUtil
 {
@@ -22,7 +22,7 @@ public class DungeonUtil
 		return mirror.mirror(getOppositeRotation(rotation).rotate(original));
 	}
 
-	public static Direction getFacingForSettings(PlacementSettings settings, Direction original)
+	public static Direction getFacingForSettings(StructurePlaceSettings settings, Direction original)
 	{
 		return rotate(settings.getMirror(), settings.getRotation(), original);
 	}

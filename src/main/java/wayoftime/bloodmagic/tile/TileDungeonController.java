@@ -2,15 +2,15 @@ package wayoftime.bloodmagic.tile;
 
 import java.util.List;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.item.dungeon.IDungeonKey;
 import wayoftime.bloodmagic.structures.DungeonSynthesizer;
@@ -20,11 +20,11 @@ import wayoftime.bloodmagic.util.Constants;
 public class TileDungeonController extends TileBase
 {
 	@ObjectHolder("bloodmagic:dungeon_controller")
-	public static TileEntityType<TileDungeonController> TYPE;
+	public static BlockEntityType<TileDungeonController> TYPE;
 
 	private DungeonSynthesizer dungeon = null;
 
-	public TileDungeonController(TileEntityType<?> type)
+	public TileDungeonController(BlockEntityType<?> type)
 	{
 		super(type);
 	}
@@ -41,7 +41,7 @@ public class TileDungeonController extends TileBase
 
 	public int handleRequestForRoomPlacement(ItemStack keyStack, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, List<ResourceLocation> potentialRooms)
 	{
-		if (!level.isClientSide && level instanceof ServerWorld)
+		if (!level.isClientSide && level instanceof ServerLevel)
 		{
 			if (!keyStack.isEmpty() && keyStack.getItem() instanceof IDungeonKey)
 			{
@@ -50,12 +50,12 @@ public class TileDungeonController extends TileBase
 				{
 					return -1;
 				}
-				int placementState = dungeon.addNewRoomToExistingDungeon((ServerWorld) level, this.getBlockPos(), roomType, level.random, activatedDoorPos, doorFacing, activatedDoorType, potentialRooms);
+				int placementState = dungeon.addNewRoomToExistingDungeon((ServerLevel) level, this.getBlockPos(), roomType, level.random, activatedDoorPos, doorFacing, activatedDoorType, potentialRooms);
 				if (placementState == 0)
 				{
 					// Consume the key!
 					keyStack.shrink(1);
-					LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(level);
+					LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(level);
 //					LightningBoltEntity lightning = new LightningBoltEntity(world, pos.getX() + dispX, pos.getY(), pos.getZ() + dispZ);
 					lightningboltentity.setPos(activatedDoorPos.getX(), activatedDoorPos.getY(), activatedDoorPos.getZ());
 					lightningboltentity.setVisualOnly(true);
@@ -68,22 +68,22 @@ public class TileDungeonController extends TileBase
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tag)
+	public void deserialize(CompoundTag tag)
 	{
 		if (tag.contains(Constants.NBT.DUNGEON_CONTROLLER))
 		{
-			CompoundNBT synthesizerTag = tag.getCompound(Constants.NBT.DUNGEON_CONTROLLER);
+			CompoundTag synthesizerTag = tag.getCompound(Constants.NBT.DUNGEON_CONTROLLER);
 			dungeon = new DungeonSynthesizer();
 			dungeon.readFromNBT(synthesizerTag);
 		}
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tag)
+	public CompoundTag serialize(CompoundTag tag)
 	{
 		if (dungeon != null)
 		{
-			CompoundNBT synthesizerTag = new CompoundNBT();
+			CompoundTag synthesizerTag = new CompoundTag();
 			dungeon.writeToNBT(synthesizerTag);
 			tag.put(Constants.NBT.DUNGEON_CONTROLLER, synthesizerTag);
 		}

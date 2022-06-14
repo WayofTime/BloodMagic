@@ -2,7 +2,7 @@ package wayoftime.bloodmagic.demonaura;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class WillWorld
 {

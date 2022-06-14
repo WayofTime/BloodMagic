@@ -9,7 +9,7 @@ import java.util.Random;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class DungeonRoomRegistry
 {

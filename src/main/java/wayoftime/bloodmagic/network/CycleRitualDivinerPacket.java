@@ -2,9 +2,9 @@ package wayoftime.bloodmagic.network;
 
 import java.util.function.Supplier;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
 import wayoftime.bloodmagic.common.item.ItemRitualDiviner;
 
@@ -22,12 +22,12 @@ public class CycleRitualDivinerPacket
 
 	}
 
-	public static void encode(CycleRitualDivinerPacket pkt, PacketBuffer buf)
+	public static void encode(CycleRitualDivinerPacket pkt, FriendlyByteBuf buf)
 	{
 		buf.writeInt(pkt.slot);
 	}
 
-	public static CycleRitualDivinerPacket decode(PacketBuffer buf)
+	public static CycleRitualDivinerPacket decode(FriendlyByteBuf buf)
 	{
 		CycleRitualDivinerPacket pkt = new CycleRitualDivinerPacket(buf.readInt());
 
@@ -40,7 +40,7 @@ public class CycleRitualDivinerPacket
 		context.get().setPacketHandled(true);
 	}
 
-	public static void sendKeyToServer(CycleRitualDivinerPacket msg, PlayerEntity playerEntity)
+	public static void sendKeyToServer(CycleRitualDivinerPacket msg, Player playerEntity)
 	{
 		ItemStack itemStack = ItemStack.EMPTY;
 

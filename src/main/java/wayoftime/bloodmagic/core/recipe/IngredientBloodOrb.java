@@ -6,17 +6,17 @@ import java.util.stream.Stream;
 
 import com.google.gson.JsonObject;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
 import net.minecraftforge.common.crafting.VanillaIngredientSerializer;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
 import wayoftime.bloodmagic.common.item.BloodOrb;
 
-import net.minecraft.item.crafting.Ingredient.IItemList;
+import net.minecraft.world.item.crafting.Ingredient.Value;
 
 public class IngredientBloodOrb extends Ingredient
 {
@@ -45,7 +45,7 @@ public class IngredientBloodOrb extends Ingredient
 		return Serializer.INSTANCE;
 	}
 
-	private static class ItemList implements IItemList
+	private static class ItemList implements Value
 	{
 		private final int orbTier;
 
@@ -79,7 +79,7 @@ public class IngredientBloodOrb extends Ingredient
 		@Override
 		public Ingredient parse(JsonObject json)
 		{
-			return new IngredientBloodOrb(JSONUtils.getAsInt(json, "orb_tier"));
+			return new IngredientBloodOrb(GsonHelper.getAsInt(json, "orb_tier"));
 		}
 	}
 }

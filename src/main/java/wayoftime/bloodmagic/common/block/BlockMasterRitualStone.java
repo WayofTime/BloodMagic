@@ -1,22 +1,22 @@
 package wayoftime.bloodmagic.common.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolType;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.IBindable;
@@ -25,7 +25,7 @@ import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.tile.TileMasterRitualStone;
 import wayoftime.bloodmagic.util.helper.RitualHelper;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockMasterRitualStone extends Block
 {
@@ -38,17 +38,17 @@ public class BlockMasterRitualStone extends Block
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult)
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult blockRayTraceResult)
 	{
 		ItemStack heldItem = player.getItemInHand(hand);
-		TileEntity tile = world.getBlockEntity(pos);
+		BlockEntity tile = world.getBlockEntity(pos);
 
 		if (tile instanceof TileMasterRitualStone)
 		{
 			if (heldItem.getItem() instanceof ItemActivationCrystal)
 			{
 				if (((IBindable) heldItem.getItem()).getBinding(heldItem) == null)
-					return ActionResultType.FAIL;
+					return InteractionResult.FAIL;
 
 				String key = RitualHelper.getValidRitual(world, pos);
 				if (!key.isEmpty())
@@ -68,24 +68,24 @@ public class BlockMasterRitualStone extends Block
 							}
 						} else
 						{
-							player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
+							player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.ritual.notValid"), true);
 						}
 					} else
 					{
-						player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
+						player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.ritual.notValid"), true);
 					}
 				} else
 				{
-					player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.ritual.notValid"), true);
+					player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.ritual.notValid"), true);
 				}
 			}
 		}
 
-		return ActionResultType.FAIL;
+		return InteractionResult.FAIL;
 	}
 
 	@Override
-	public void destroy(IWorld world, BlockPos blockPos, BlockState blockState)
+	public void destroy(LevelAccessor world, BlockPos blockPos, BlockState blockState)
 	{
 		TileMasterRitualStone tile = (TileMasterRitualStone) world.getBlockEntity(blockPos);
 		if (tile != null)
@@ -95,11 +95,11 @@ public class BlockMasterRitualStone extends Block
 	}
 
 	@Override
-	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{
 		if (!state.is(newState.getBlock()))
 		{
-			TileEntity tile = worldIn.getBlockEntity(pos);
+			BlockEntity tile = worldIn.getBlockEntity(pos);
 			if (tile instanceof TileMasterRitualStone)
 			{
 				((TileMasterRitualStone) tile).stopRitual(Ritual.BreakType.BREAK_MRS);
@@ -110,9 +110,9 @@ public class BlockMasterRitualStone extends Block
 	}
 
 	@Override
-	public void wasExploded(World world, BlockPos pos, Explosion explosion)
+	public void wasExploded(Level world, BlockPos pos, Explosion explosion)
 	{
-		TileEntity tile = world.getBlockEntity(pos);
+		BlockEntity tile = world.getBlockEntity(pos);
 
 		if (tile instanceof TileMasterRitualStone)
 			((TileMasterRitualStone) tile).stopRitual(Ritual.BreakType.EXPLOSION);
@@ -125,7 +125,7 @@ public class BlockMasterRitualStone extends Block
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world)
+	public BlockEntity createTileEntity(BlockState state, BlockGetter world)
 	{
 		return new TileMasterRitualStone();
 	}

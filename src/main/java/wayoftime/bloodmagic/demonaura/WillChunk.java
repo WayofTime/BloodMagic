@@ -2,7 +2,7 @@ package wayoftime.bloodmagic.demonaura;
 
 import java.lang.ref.WeakReference;
 
-import net.minecraft.world.chunk.IChunk;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import wayoftime.bloodmagic.will.DemonWillHolder;
 
 public class WillChunk
@@ -10,14 +10,14 @@ public class WillChunk
 	PosXY loc;
 	private short base;
 	private DemonWillHolder currentWill = new DemonWillHolder();
-	private WeakReference<IChunk> chunkRef;
+	private WeakReference<ChunkAccess> chunkRef;
 
 	public WillChunk(PosXY loc)
 	{
 		this.loc = loc;
 	}
 
-	public WillChunk(IChunk chunk, short base, DemonWillHolder currentWill)
+	public WillChunk(ChunkAccess chunk, short base, DemonWillHolder currentWill)
 	{
 		this.loc = new PosXY(chunk.getPos().x, chunk.getPos().z);
 		this.chunkRef = new WeakReference(chunk);
@@ -60,12 +60,12 @@ public class WillChunk
 		this.currentWill = currentWill;
 	}
 
-	public WeakReference<IChunk> getChunkRef()
+	public WeakReference<ChunkAccess> getChunkRef()
 	{
 		return chunkRef;
 	}
 
-	public void setChunkRef(WeakReference<IChunk> chunkRef)
+	public void setChunkRef(WeakReference<ChunkAccess> chunkRef)
 	{
 		this.chunkRef = chunkRef;
 	}

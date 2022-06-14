@@ -4,27 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceContext.FluidMode;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.ClipContext.Fluid;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
@@ -54,37 +54,37 @@ public class ItemRitualReader extends Item
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
 		if (!stack.hasTag())
 			return;
 
 		EnumRitualReaderState state = this.getState(stack);
-		tooltip.add(new TranslationTextComponent(tooltipBase + "currentState", TextHelper.localizeEffect(tooltipBase + state.toString().toLowerCase(Locale.ROOT))).withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslatableComponent(tooltipBase + "currentState", TextHelper.localizeEffect(tooltipBase + state.toString().toLowerCase(Locale.ROOT))).withStyle(ChatFormatting.GRAY));
 
-		tooltip.add(new StringTextComponent(""));
+		tooltip.add(new TextComponent(""));
 
 		boolean sneaking = Screen.hasShiftDown();
 
 		if (sneaking)
 		{
-			tooltip.add(new TranslationTextComponent(tooltipBase + "desc." + state.toString().toLowerCase(Locale.ROOT)).withStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslatableComponent(tooltipBase + "desc." + state.toString().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GRAY));
 		} else
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.extraInfo").withStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.extraInfo").withStyle(ChatFormatting.GRAY));
 		}
 
 		super.appendHoverText(stack, world, tooltip, flag);
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
-		RayTraceResult ray = Item.getPlayerPOVHitResult(world, player, FluidMode.NONE);
-		if (ray != null && ray.getType() == RayTraceResult.Type.BLOCK)
+		HitResult ray = Item.getPlayerPOVHitResult(world, player, Fluid.NONE);
+		if (ray != null && ray.getType() == HitResult.Type.BLOCK)
 		{
-			return new ActionResult<>(ActionResultType.PASS, stack);
+			return new InteractionResultHolder<>(InteractionResult.PASS, stack);
 		}
 
 		if (player.isShiftKeyDown())
@@ -94,28 +94,28 @@ public class ItemRitualReader extends Item
 				cycleReader(stack, player);
 			}
 
-			return new ActionResult<>(ActionResultType.SUCCESS, stack);
+			return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 		}
 
-		return new ActionResult<>(ActionResultType.PASS, stack);
+		return new InteractionResultHolder<>(InteractionResult.PASS, stack);
 	}
 
 	@Override
-	public ActionResultType useOn(ItemUseContext context)
+	public InteractionResult useOn(UseOnContext context)
 	{
-		World world = context.getLevel();
+		Level world = context.getLevel();
 		BlockPos pos = context.getClickedPos();
 
-		PlayerEntity player = context.getPlayer();
+		Player player = context.getPlayer();
 		ItemStack stack = context.getItemInHand();
-		Hand hand = context.getHand();
+		InteractionHand hand = context.getHand();
 		Direction direction = context.getClickedFace();
 
 //		ItemStack stack = player.getHeldItem(hand);
 		if (!world.isClientSide)
 		{
 			EnumRitualReaderState state = this.getState(stack);
-			TileEntity tile = world.getBlockEntity(pos);
+			BlockEntity tile = world.getBlockEntity(pos);
 			if (tile instanceof IMasterRitualStone)
 			{
 				IMasterRitualStone master = (IMasterRitualStone) tile;
@@ -131,7 +131,7 @@ public class ItemRitualReader extends Item
 
 					break;
 				case SET_AREA:
-					if (player.isShiftKeyDown() && player.getItemInHand(Hand.OFF_HAND).getItem() instanceof ItemBloodOrb)
+					if (player.isShiftKeyDown() && player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof ItemBloodOrb)
 					{
 						Ritual ritual = master.getCurrentRitual();
 						for (String range : ritual.getListOfRanges())
@@ -180,7 +180,7 @@ public class ItemRitualReader extends Item
 					break;
 				}
 
-				return ActionResultType.FAIL;
+				return InteractionResult.FAIL;
 			} else
 			{
 				if (state == EnumRitualReaderState.SET_AREA)
@@ -193,7 +193,7 @@ public class ItemRitualReader extends Item
 						{
 							BlockPos pos1 = pos.subtract(masterPos);
 							this.setBlockPos(stack, pos1);
-							player.displayClientMessage(new TranslationTextComponent("ritual.bloodmagic.blockRange.firstBlock"), true);
+							player.displayClientMessage(new TranslatableComponent("ritual.bloodmagic.blockRange.firstBlock"), true);
 						} else
 						{
 							tile = world.getBlockEntity(masterPos);
@@ -219,16 +219,16 @@ public class ItemRitualReader extends Item
 								switch (master.setBlockRangeByBounds(player, range, containedPos, pos2))
 								{
 								case SUCCESS:
-									player.displayClientMessage(new TranslationTextComponent("ritual.bloodmagic.blockRange.success"), true);
+									player.displayClientMessage(new TranslatableComponent("ritual.bloodmagic.blockRange.success"), true);
 									break;
 								case NOT_WITHIN_BOUNDARIES:
-									player.displayClientMessage(new TranslationTextComponent("ritual.bloodmagic.blockRange.tooFar", maxVerticalRange, maxHorizontalRange), false);
+									player.displayClientMessage(new TranslatableComponent("ritual.bloodmagic.blockRange.tooFar", maxVerticalRange, maxHorizontalRange), false);
 									break;
 								case VOLUME_TOO_LARGE:
-									player.displayClientMessage(new TranslationTextComponent("ritual.bloodmagic.blockRange.tooBig", maxVolume), false);
+									player.displayClientMessage(new TranslatableComponent("ritual.bloodmagic.blockRange.tooBig", maxVolume), false);
 									break;
 								default:
-									player.displayClientMessage(new TranslationTextComponent("ritual.bloodmagic.blockRange.noRange"), false);
+									player.displayClientMessage(new TranslatableComponent("ritual.bloodmagic.blockRange.noRange"), false);
 									break;
 								}
 							}
@@ -243,7 +243,7 @@ public class ItemRitualReader extends Item
 
 			if (state == EnumRitualReaderState.SET_AREA)
 			{
-				TileEntity tile = world.getBlockEntity(pos);
+				BlockEntity tile = world.getBlockEntity(pos);
 				if (tile instanceof TileMasterRitualStone)
 				{
 
@@ -267,7 +267,7 @@ public class ItemRitualReader extends Item
 	public ItemStack setBlockPos(ItemStack stack, BlockPos pos)
 	{
 		stack = NBTHelper.checkNBT(stack);
-		CompoundNBT itemTag = stack.getTag();
+		CompoundTag itemTag = stack.getTag();
 		itemTag.putInt(Constants.NBT.X_COORD, pos.getX());
 		itemTag.putInt(Constants.NBT.Y_COORD, pos.getY());
 		itemTag.putInt(Constants.NBT.Z_COORD, pos.getZ());
@@ -283,7 +283,7 @@ public class ItemRitualReader extends Item
 	public ItemStack setMasterBlockPos(ItemStack stack, BlockPos pos)
 	{
 		stack = NBTHelper.checkNBT(stack);
-		CompoundNBT itemTag = stack.getTag();
+		CompoundTag itemTag = stack.getTag();
 		itemTag.putInt(Constants.NBT.X_COORD + "master", pos.getX());
 		itemTag.putInt(Constants.NBT.Y_COORD + "master", pos.getY());
 		itemTag.putInt(Constants.NBT.Z_COORD + "master", pos.getZ());
@@ -294,7 +294,7 @@ public class ItemRitualReader extends Item
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		return tag.getString("range");
 	}
@@ -303,12 +303,12 @@ public class ItemRitualReader extends Item
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putString("range", range);
 	}
 
-	public void cycleReader(ItemStack stack, PlayerEntity player)
+	public void cycleReader(ItemStack stack, Player player)
 	{
 		EnumRitualReaderState prevState = getState(stack);
 		int val = prevState.ordinal();
@@ -319,16 +319,16 @@ public class ItemRitualReader extends Item
 		notifyPlayerOfStateChange(nextState, player);
 	}
 
-	public void notifyPlayerOfStateChange(EnumRitualReaderState state, PlayerEntity player)
+	public void notifyPlayerOfStateChange(EnumRitualReaderState state, Player player)
 	{
-		ChatUtil.sendNoSpam(player, new TranslationTextComponent(tooltipBase + "currentState", new TranslationTextComponent(tooltipBase + state.toString().toLowerCase(Locale.ROOT))));
+		ChatUtil.sendNoSpam(player, new TranslatableComponent(tooltipBase + "currentState", new TranslatableComponent(tooltipBase + state.toString().toLowerCase(Locale.ROOT))));
 	}
 
 	public void setState(ItemStack stack, EnumRitualReaderState state)
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putInt(Constants.NBT.RITUAL_READER, state.ordinal());
 	}
@@ -337,11 +337,11 @@ public class ItemRitualReader extends Item
 	{
 		if (!stack.hasTag())
 		{
-			stack.setTag(new CompoundNBT());
+			stack.setTag(new CompoundTag());
 			return EnumRitualReaderState.INFORMATION;
 		}
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		return EnumRitualReaderState.values()[tag.getInt(Constants.NBT.RITUAL_READER)];
 	}

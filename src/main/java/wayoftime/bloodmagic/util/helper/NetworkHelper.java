@@ -4,10 +4,10 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.storage.DimensionSavedDataManager;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.storage.DimensionDataStorage;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import wayoftime.bloodmagic.common.item.BloodOrb;
@@ -38,7 +38,7 @@ public class NetworkHelper
 			if (ServerLifecycleHooks.getCurrentServer() == null)
 				return null;
 
-			DimensionSavedDataManager savedData = ServerLifecycleHooks.getCurrentServer().overworld().getDataStorage();
+			DimensionDataStorage savedData = ServerLifecycleHooks.getCurrentServer().overworld().getDataStorage();
 			dataHandler = savedData.computeIfAbsent(() -> new BMWorldSavedData(), BMWorldSavedData.ID);
 		}
 
@@ -58,7 +58,7 @@ public class NetworkHelper
 	 * @param player - The Player
 	 * @see NetworkHelper#getSoulNetwork(String)
 	 */
-	public static SoulNetwork getSoulNetwork(PlayerEntity player)
+	public static SoulNetwork getSoulNetwork(Player player)
 	{
 		return getSoulNetwork(PlayerHelper.getUUIDFromPlayer(player));
 	}
@@ -111,7 +111,7 @@ public class NetworkHelper
 	 *             {@link SoulNetwork#syphonAndDamage$(PlayerEntity, SoulTicket)}
 	 */
 	@Deprecated
-	public static boolean syphonAndDamage(SoulNetwork soulNetwork, PlayerEntity user, int toSyphon)
+	public static boolean syphonAndDamage(SoulNetwork soulNetwork, Player user, int toSyphon)
 	{
 
 //        if (soulNetwork.getNewOwner() == null)
@@ -189,7 +189,7 @@ public class NetworkHelper
 			if (ServerLifecycleHooks.getCurrentServer() == null)
 				return null;
 
-			DimensionSavedDataManager savedData = ServerLifecycleHooks.getCurrentServer().overworld().getDataStorage();
+			DimensionDataStorage savedData = ServerLifecycleHooks.getCurrentServer().overworld().getDataStorage();
 			dataHandler = savedData.computeIfAbsent(() -> new BMWorldSavedData(), BMWorldSavedData.ID);
 		}
 

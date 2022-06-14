@@ -2,7 +2,7 @@ package wayoftime.bloodmagic.common.registration.impl;
 
 import java.util.function.Supplier;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.common.registration.WrappedDeferredRegister;
 import wayoftime.bloodmagic.common.item.BloodOrb;
 

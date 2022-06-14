@@ -2,27 +2,27 @@ package wayoftime.bloodmagic.common.block;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.tile.TileMimic;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockMimic extends Block
 {
-	private static final VoxelShape SHAPE = VoxelShapes.box(0.01, 0, 0.01, 0.99, 1, 0.99);
+	private static final VoxelShape SHAPE = Shapes.box(0.01, 0, 0.01, 0.99, 1, 0.99);
 
 	public BlockMimic(Properties prop)
 	{
@@ -51,9 +51,9 @@ public class BlockMimic extends Block
 //	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context)
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext context)
 	{
-		TileEntity te = reader.getBlockEntity(pos);
+		BlockEntity te = reader.getBlockEntity(pos);
 		if (te instanceof TileMimic)
 		{
 			BlockState mimic = ((TileMimic) te).getMimic();
@@ -73,19 +73,19 @@ public class BlockMimic extends Block
 
 	@Nullable
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world)
+	public BlockEntity createTileEntity(BlockState state, BlockGetter world)
 	{
 		return new TileMimic();
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult trace)
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult trace)
 	{
 		TileMimic mimic = (TileMimic) world.getBlockEntity(pos);
 
 		return (mimic != null && mimic.onBlockActivated(world, pos, state, player, hand, player.getItemInHand(hand), trace.getDirection()))
-				? ActionResultType.SUCCESS
-				: ActionResultType.FAIL;
+				? InteractionResult.SUCCESS
+				: InteractionResult.FAIL;
 //		ItemStack item = player.getHeldItem(hand);
 //		if (!item.isEmpty() && item.getItem() instanceof BlockItem)
 //		{
@@ -109,7 +109,7 @@ public class BlockMimic extends Block
 //	}
 
 	@Override
-	public void destroy(IWorld world, BlockPos blockPos, BlockState blockState)
+	public void destroy(LevelAccessor world, BlockPos blockPos, BlockState blockState)
 	{
 		TileMimic altar = (TileMimic) world.getBlockEntity(blockPos);
 		if (altar != null)
@@ -119,11 +119,11 @@ public class BlockMimic extends Block
 	}
 
 	@Override
-	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{
 		if (!state.is(newState.getBlock()))
 		{
-			TileEntity tileentity = worldIn.getBlockEntity(pos);
+			BlockEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof TileMimic)
 			{
 				((TileMimic) tileentity).dropItems();

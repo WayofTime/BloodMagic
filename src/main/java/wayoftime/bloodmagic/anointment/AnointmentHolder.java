@@ -8,22 +8,22 @@ import java.util.Map.Entry;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
 import wayoftime.bloodmagic.anointment.Anointment.IDamageProvider;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.util.Constants;
@@ -99,7 +99,7 @@ public class AnointmentHolder
 		return 0;
 	}
 
-	public boolean consumeAnointmentDurabilityOnHit(ItemStack weaponStack, EquipmentSlotType type, LivingEntity user)
+	public boolean consumeAnointmentDurabilityOnHit(ItemStack weaponStack, EquipmentSlot type, LivingEntity user)
 	{
 //		System.out.println("Attempting consumption");
 		boolean didConsume = false;
@@ -127,7 +127,7 @@ public class AnointmentHolder
 		return didConsume;
 	}
 
-	public boolean consumeAnointmentDurabilityOnUseFinish(ItemStack weaponStack, EquipmentSlotType type, LivingEntity user)
+	public boolean consumeAnointmentDurabilityOnUseFinish(ItemStack weaponStack, EquipmentSlot type, LivingEntity user)
 	{
 		boolean didConsume = false;
 		List<Anointment> removedAnointments = new ArrayList<Anointment>();
@@ -154,7 +154,7 @@ public class AnointmentHolder
 		return didConsume;
 	}
 
-	public boolean consumeAnointmentDurabilityOnHarvest(ItemStack weaponStack, EquipmentSlotType type, LivingEntity user)
+	public boolean consumeAnointmentDurabilityOnHarvest(ItemStack weaponStack, EquipmentSlot type, LivingEntity user)
 	{
 		boolean didConsume = false;
 		List<Anointment> removedAnointments = new ArrayList<Anointment>();
@@ -183,17 +183,17 @@ public class AnointmentHolder
 
 	// Called when the specified anointment is to be removed. Occurs if the
 	// anointment runs out of uses or if removed via another source.
-	public boolean removeAnointment(ItemStack weaponStack, EquipmentSlotType type, Anointment anointment, LivingEntity user)
+	public boolean removeAnointment(ItemStack weaponStack, EquipmentSlot type, Anointment anointment, LivingEntity user)
 	{
 		anointments.remove(anointment);
 		anointment.removeAnointment(this, weaponStack, type);
 
 		SoundEvent soundevent = SoundEvents.SPLASH_POTION_BREAK;
-		user.level.playSound(null, user.blockPosition(), soundevent, SoundCategory.BLOCKS, 1.0F, 1.0F);
+		user.level.playSound(null, user.blockPosition(), soundevent, SoundSource.BLOCKS, 1.0F, 1.0F);
 
-		if (user.level instanceof ServerWorld)
+		if (user.level instanceof ServerLevel)
 		{
-			ServerWorld server = (ServerWorld) user.level;
+			ServerLevel server = (ServerLevel) user.level;
 			server.sendParticles(ParticleTypes.LARGE_SMOKE, user.getX(), user.getY() + 1, user.getZ(), 16, 0.3, 0, 0.3, 0);
 		}
 
@@ -205,7 +205,7 @@ public class AnointmentHolder
 		return ImmutableMap.copyOf(anointments);
 	}
 
-	public double getAdditionalDamage(PlayerEntity player, ItemStack weapon, double damage, LivingEntity attacked)
+	public double getAdditionalDamage(Player player, ItemStack weapon, double damage, LivingEntity attacked)
 	{
 		double additionalDamage = 0;
 		for (Entry<Anointment, AnointmentData> entry : anointments.entrySet())
@@ -219,12 +219,12 @@ public class AnointmentHolder
 		return additionalDamage;
 	}
 
-	public CompoundNBT serialize()
+	public CompoundTag serialize()
 	{
-		CompoundNBT compound = new CompoundNBT();
-		ListNBT statList = new ListNBT();
+		CompoundTag compound = new CompoundTag();
+		ListTag statList = new ListTag();
 		anointments.forEach((k, v) -> {
-			CompoundNBT anoint = new CompoundNBT();
+			CompoundTag anoint = new CompoundTag();
 			anoint.putString("key", k.getKey().toString());
 			anoint.putInt("level", v.getLevel());
 			anoint.putInt("damage", v.getDamage());
@@ -238,25 +238,25 @@ public class AnointmentHolder
 		return compound;
 	}
 
-	public void deserialize(CompoundNBT nbt)
+	public void deserialize(CompoundTag nbt)
 	{
-		ListNBT statList = nbt.getList("anointments", 10);
+		ListTag statList = nbt.getList("anointments", 10);
 		statList.forEach(tag -> {
-			if (!(tag instanceof CompoundNBT))
+			if (!(tag instanceof CompoundTag))
 				return;
-			Anointment anoint = AnointmentRegistrar.ANOINTMENT_MAP.getOrDefault(new ResourceLocation(((CompoundNBT) tag).getString("key")), Anointment.DUMMY);
+			Anointment anoint = AnointmentRegistrar.ANOINTMENT_MAP.getOrDefault(new ResourceLocation(((CompoundTag) tag).getString("key")), Anointment.DUMMY);
 //			LivingUpgrade upgrade = LivingArmorRegistrar.UPGRADE_MAP.getOrDefault(new ResourceLocation(((CompoundNBT) tag).getString("key")), LivingUpgrade.DUMMY);
 			if (anoint == Anointment.DUMMY)
 				return;
 //			double experience = ((CompoundNBT) tag).getDouble("exp");
-			AnointmentData data = new AnointmentData(((CompoundNBT) tag).getInt("level"), ((CompoundNBT) tag).getInt("damage"), ((CompoundNBT) tag).getInt("max_damage"));
+			AnointmentData data = new AnointmentData(((CompoundTag) tag).getInt("level"), ((CompoundTag) tag).getInt("damage"), ((CompoundTag) tag).getInt("max_damage"));
 			anointments.put(anoint, data);
 		});
 //
 //		maxPoints = nbt.getInt("maxPoints");
 	}
 
-	public static AnointmentHolder fromNBT(CompoundNBT holderTag)
+	public static AnointmentHolder fromNBT(CompoundTag holderTag)
 	{
 		AnointmentHolder holder = new AnointmentHolder();
 		holder.deserialize(holderTag);
@@ -265,13 +265,13 @@ public class AnointmentHolder
 
 	public static AnointmentHolder fromItemStack(ItemStack stack)
 	{
-		CompoundNBT nbtTag = stack.getTag();
+		CompoundTag nbtTag = stack.getTag();
 		if (nbtTag == null)
 		{
 			return null;
 		}
 
-		CompoundNBT holderTag = nbtTag.getCompound(Constants.NBT.ANOINTMENTS);
+		CompoundTag holderTag = nbtTag.getCompound(Constants.NBT.ANOINTMENTS);
 		if (holderTag != null)
 		{
 			return fromNBT(holderTag);
@@ -282,18 +282,18 @@ public class AnointmentHolder
 
 	public void toItemStack(ItemStack stack)
 	{
-		CompoundNBT nbtTag = stack.getOrCreateTag();
-		CompoundNBT childTag = this.serialize();
+		CompoundTag nbtTag = stack.getOrCreateTag();
+		CompoundTag childTag = this.serialize();
 
 		nbtTag.put(Constants.NBT.ANOINTMENTS, childTag);
 	}
 
-	public static AnointmentHolder fromPlayer(PlayerEntity player, Hand hand)
+	public static AnointmentHolder fromPlayer(Player player, InteractionHand hand)
 	{
 		return fromPlayer(player, hand, false);
 	}
 
-	public static AnointmentHolder fromPlayer(PlayerEntity player, Hand hand, boolean createNew)
+	public static AnointmentHolder fromPlayer(Player player, InteractionHand hand, boolean createNew)
 	{
 		ItemStack heldItem = player.getItemInHand(hand);
 
@@ -301,13 +301,13 @@ public class AnointmentHolder
 		return holder == null && createNew ? new AnointmentHolder() : holder;
 	}
 
-	public static void toPlayer(PlayerEntity player, Hand hand, AnointmentHolder holder)
+	public static void toPlayer(Player player, InteractionHand hand, AnointmentHolder holder)
 	{
 		ItemStack heldItem = player.getItemInHand(hand);
 		holder.toItemStack(heldItem);
 	}
 
-	public static void appendAnointmentTooltip(AnointmentHolder holder, List<ITextComponent> tooltip)
+	public static void appendAnointmentTooltip(AnointmentHolder holder, List<Component> tooltip)
 	{
 		if (holder != null)
 		{
@@ -322,9 +322,9 @@ public class AnointmentHolder
 				boolean sneaking = Screen.hasShiftDown();
 //				if (!InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), 340) || k.getNextRequirement(v) == 0)
 				if (!sneaking)
-					tooltip.add(new TranslationTextComponent("%s %s", new TranslationTextComponent(k.getTranslationKey()), new TranslationTextComponent("enchantment.level." + v.getLevel())));
+					tooltip.add(new TranslatableComponent("%s %s", new TranslatableComponent(k.getTranslationKey()), new TranslatableComponent("enchantment.level." + v.getLevel())));
 				else
-					tooltip.add(new TranslationTextComponent("%s %s", new TranslationTextComponent(k.getTranslationKey()), (": (" + v.getDamageString() + ")")));
+					tooltip.add(new TranslatableComponent("%s %s", new TranslatableComponent(k.getTranslationKey()), (": (" + v.getDamageString() + ")")));
 			});
 		}
 	}

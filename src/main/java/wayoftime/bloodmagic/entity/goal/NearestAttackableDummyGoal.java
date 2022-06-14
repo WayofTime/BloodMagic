@@ -1,13 +1,13 @@
 package wayoftime.bloodmagic.entity.goal;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 
 public class NearestAttackableDummyGoal<T extends LivingEntity> extends NearestAttackableTargetGoal<T>
 {
-	public NearestAttackableDummyGoal(MobEntity goalOwnerIn, Class<T> targetClassIn, boolean checkSight)
+	public NearestAttackableDummyGoal(Mob goalOwnerIn, Class<T> targetClassIn, boolean checkSight)
 	{
 		super(goalOwnerIn, targetClassIn, checkSight);
 	}

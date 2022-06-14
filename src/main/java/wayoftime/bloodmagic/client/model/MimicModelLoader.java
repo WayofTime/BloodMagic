@@ -3,8 +3,8 @@ package wayoftime.bloodmagic.client.model;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 
-import net.minecraft.resources.IResourceManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.IModelLoader;
 
 public class MimicModelLoader implements IModelLoader<MimicModelGeometry>
@@ -17,7 +17,7 @@ public class MimicModelLoader implements IModelLoader<MimicModelGeometry>
 	}
 
 	@Override
-	public void onResourceManagerReload(IResourceManager resourceManager)
+	public void onResourceManagerReload(ResourceManager resourceManager)
 	{
 
 	}

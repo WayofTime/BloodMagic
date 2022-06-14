@@ -23,17 +23,17 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.annotations.JsonAdapter;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Util;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.Util;
+import net.minecraft.core.Registry;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.core.living.LivingUpgrade.Level;
 
@@ -104,19 +104,19 @@ public class Anointment extends ForgeRegistryEntry<Anointment>
 		}
 
 		Multimap<Attribute, AttributeModifier> modifiers = HashMultimap.create();
-		modifiers.putAll(stack.getItem().getAttributeModifiers(EquipmentSlotType.MAINHAND, stack));
+		modifiers.putAll(stack.getItem().getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
 
 		this.getAttributeProvider().handleAttributes(holder, modifiers, UUID.nameUUIDFromBytes(this.getKey().toString().getBytes()), this, level);
 
 		for (Entry<Attribute, AttributeModifier> entry : modifiers.entries())
 		{
-			stack.addAttributeModifier(entry.getKey(), entry.getValue(), EquipmentSlotType.MAINHAND);
+			stack.addAttributeModifier(entry.getKey(), entry.getValue(), EquipmentSlot.MAINHAND);
 		}
 
 		return true;
 	}
 
-	public boolean removeAnointment(AnointmentHolder holder, ItemStack stack, EquipmentSlotType slot)
+	public boolean removeAnointment(AnointmentHolder holder, ItemStack stack, EquipmentSlot slot)
 	{
 		IAttributeProvider provider = this.getAttributeProvider();
 		if (provider != null)
@@ -127,12 +127,12 @@ public class Anointment extends ForgeRegistryEntry<Anointment>
 			if (stack.hasTag() && stack.getTag().contains("AttributeModifiers", 9))
 			{
 //		         multimap = HashMultimap.create();
-				ListNBT listnbt = stack.getTag().getList("AttributeModifiers", 10);
+				ListTag listnbt = stack.getTag().getList("AttributeModifiers", 10);
 				List<Integer> removeList = new ArrayList<Integer>();
 
 				for (int i = 0; i < listnbt.size(); i++)
 				{
-					CompoundNBT compoundnbt = listnbt.getCompound(i);
+					CompoundTag compoundnbt = listnbt.getCompound(i);
 					if (!compoundnbt.contains("Slot", 8) || compoundnbt.getString("Slot").equals(slot.getName()))
 					{
 						Optional<Attribute> optional = Registry.ATTRIBUTE.getOptional(ResourceLocation.tryParse(compoundnbt.getString("AttributeName")));
@@ -256,7 +256,7 @@ public class Anointment extends ForgeRegistryEntry<Anointment>
 
 	public interface IDamageProvider
 	{
-		double getAdditionalDamage(PlayerEntity player, ItemStack weapon, double damage, AnointmentHolder holder, LivingEntity attacked, Anointment anoint, int level);
+		double getAdditionalDamage(Player player, ItemStack weapon, double damage, AnointmentHolder holder, LivingEntity attacked, Anointment anoint, int level);
 	}
 
 	public static class Bonus

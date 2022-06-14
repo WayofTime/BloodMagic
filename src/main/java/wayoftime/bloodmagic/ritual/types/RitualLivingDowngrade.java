@@ -8,17 +8,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.entity.item.ItemFrameEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.decoration.ItemFrame;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -54,14 +54,14 @@ public class RitualLivingDowngrade extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
+		Level world = masterRitualStone.getWorldObj();
 		BlockPos masterPos = masterRitualStone.getMasterBlockPos();
 		Direction direction = masterRitualStone.getDirection();
 
-		PlayerEntity selectedPlayer = null;
+		Player selectedPlayer = null;
 		AreaDescriptor downgradeRange = masterRitualStone.getBlockRange(DOWNGRADE_RANGE);
 
-		for (PlayerEntity player : world.getEntitiesOfClass(PlayerEntity.class, downgradeRange.getAABB(masterRitualStone.getMasterBlockPos())))
+		for (Player player : world.getEntitiesOfClass(Player.class, downgradeRange.getAABB(masterRitualStone.getMasterBlockPos())))
 		{
 			if (!player.isCrouching() && LivingUtil.hasFullSet(player))
 			{
@@ -85,7 +85,7 @@ public class RitualLivingDowngrade extends Ritual
 
 		BlockPos chestPos = masterPos.offset(chestOffsetPos);
 
-		TileEntity tile = world.getBlockEntity(chestPos);
+		BlockEntity tile = world.getBlockEntity(chestPos);
 
 		if (tile == null)
 		{
@@ -131,11 +131,11 @@ public class RitualLivingDowngrade extends Ritual
 					}
 				}
 			}
-		} else if (tile instanceof IInventory)
+		} else if (tile instanceof Container)
 		{
-			for (int i = 0; i < ((IInventory) tile).getContainerSize(); i++)
+			for (int i = 0; i < ((Container) tile).getContainerSize(); i++)
 			{
-				ItemStack invStack = ((IInventory) tile).getItem(i);
+				ItemStack invStack = ((Container) tile).getItem(i);
 				availablePoints += getAvailablePointsFromStack(invStack);
 				LivingUpgrade downgrade = getDowngradeFromStack(world, invStack);
 				if (downgrade != null && downgrade != LivingUpgrade.DUMMY)
@@ -259,11 +259,11 @@ public class RitualLivingDowngrade extends Ritual
 					}
 				}
 			}
-		} else if (tile instanceof IInventory)
+		} else if (tile instanceof Container)
 		{
 			for (int i : slotOrderList)
 			{
-				ItemStack invStack = ((IInventory) tile).getItem(i);
+				ItemStack invStack = ((Container) tile).getItem(i);
 				if (!invStack.isEmpty() && invStack.getItem() instanceof ILivingUpgradePointsProvider)
 				{
 					int drainPoints = Math.min(((ILivingUpgradePointsProvider) invStack.getItem()).getAvailableUpgradePoints(invStack, requiredPoints), requiredPoints);
@@ -271,7 +271,7 @@ public class RitualLivingDowngrade extends Ritual
 					ItemStack newItemStack = ((ILivingUpgradePointsProvider) invStack.getItem()).getResultingStack(invStack, drainPoints);
 
 					requiredPoints -= (drainPoints - remainingPointsInItem);
-					((IInventory) tile).setItem(i, newItemStack);
+					((Container) tile).setItem(i, newItemStack);
 
 					if (requiredPoints <= 0)
 					{
@@ -298,7 +298,7 @@ public class RitualLivingDowngrade extends Ritual
 
 			masterRitualStone.setActive(false);
 
-			LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
+			LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
 			lightningboltentity.setPos(masterPos.getX() + 0.5, masterPos.getY(), masterPos.getZ() + 0.5);
 			world.addFreshEntity(lightningboltentity);
 		} else if (requiredPoints < initialRequiredPoints)
@@ -372,7 +372,7 @@ public class RitualLivingDowngrade extends Ritual
 		return 0;
 	}
 
-	public LivingUpgrade getDowngradeFromStack(World world, ItemStack focusStack)
+	public LivingUpgrade getDowngradeFromStack(Level world, ItemStack focusStack)
 	{
 		if (focusStack.isEmpty())
 		{
@@ -409,14 +409,14 @@ public class RitualLivingDowngrade extends Ritual
 //		return 0;
 //	}
 
-	public ItemStack getStackFromItemFrame(World world, BlockPos masterPos, Direction direction)
+	public ItemStack getStackFromItemFrame(Level world, BlockPos masterPos, Direction direction)
 	{
 		BlockPos offsetPos = new BlockPos(0, 3, 0);
 		offsetPos = offsetPos.relative(direction, 2);
 
-		AxisAlignedBB bb = new AxisAlignedBB(masterPos.offset(offsetPos));
-		List<ItemFrameEntity> frames = world.getEntitiesOfClass(ItemFrameEntity.class, bb);
-		for (ItemFrameEntity frame : frames)
+		AABB bb = new AABB(masterPos.offset(offsetPos));
+		List<ItemFrame> frames = world.getEntitiesOfClass(ItemFrame.class, bb);
+		for (ItemFrame frame : frames)
 		{
 			if (!frame.getItem().isEmpty())
 			{

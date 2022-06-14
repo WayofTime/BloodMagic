@@ -7,28 +7,28 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootFunction;
-import net.minecraft.loot.LootFunctionType;
-import net.minecraft.loot.RandomValueRange;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.JSONUtils;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
+import net.minecraft.world.level.storage.loot.RandomValueBounds;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.util.GsonHelper;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.api.compat.IDemonWillGem;
 
-public class SetWillFraction extends LootFunction
+public class SetWillFraction extends LootItemConditionalFunction
 {
 	private static final Logger LOGGER = LogManager.getLogger();
-	private final RandomValueRange damageRange;
+	private final RandomValueBounds damageRange;
 
-	private SetWillFraction(ILootCondition[] conditionsIn, RandomValueRange damageRangeIn)
+	private SetWillFraction(LootItemCondition[] conditionsIn, RandomValueBounds damageRangeIn)
 	{
 		super(conditionsIn);
 		this.damageRange = damageRangeIn;
 	}
 
-	public LootFunctionType getType()
+	public LootItemFunctionType getType()
 	{
 		return BloodMagicLootFunctionManager.SET_WILL_FRACTION;
 	}
@@ -48,14 +48,14 @@ public class SetWillFraction extends LootFunction
 		return stack;
 	}
 
-	public static LootFunction.Builder<?> withRange(RandomValueRange p_215931_0_)
+	public static LootItemConditionalFunction.Builder<?> withRange(RandomValueBounds p_215931_0_)
 	{
 		return simpleBuilder((p_215930_1_) -> {
 			return new SetWillFraction(p_215930_1_, p_215931_0_);
 		});
 	}
 
-	public static class Serializer extends LootFunction.Serializer<SetWillFraction>
+	public static class Serializer extends LootItemConditionalFunction.Serializer<SetWillFraction>
 	{
 		public void serialize(JsonObject p_230424_1_, SetWillFraction p_230424_2_, JsonSerializationContext p_230424_3_)
 		{
@@ -63,9 +63,9 @@ public class SetWillFraction extends LootFunction
 			p_230424_1_.add("damage", p_230424_3_.serialize(p_230424_2_.damageRange));
 		}
 
-		public SetWillFraction deserialize(JsonObject object, JsonDeserializationContext deserializationContext, ILootCondition[] conditionsIn)
+		public SetWillFraction deserialize(JsonObject object, JsonDeserializationContext deserializationContext, LootItemCondition[] conditionsIn)
 		{
-			return new SetWillFraction(conditionsIn, JSONUtils.getAsObject(object, "damage", deserializationContext, RandomValueRange.class));
+			return new SetWillFraction(conditionsIn, GsonHelper.getAsObject(object, "damage", deserializationContext, RandomValueBounds.class));
 		}
 	}
 }

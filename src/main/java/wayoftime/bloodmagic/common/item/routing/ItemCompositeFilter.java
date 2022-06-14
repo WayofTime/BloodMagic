@@ -5,22 +5,22 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.client.gui.widget.button.Button.IPressable;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Button.OnPress;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.IItemHandler;
@@ -34,7 +34,7 @@ import wayoftime.bloodmagic.common.routing.IItemFilter;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.GhostItemHelper;
 
-public class ItemCompositeFilter extends ItemRouterFilter implements INamedContainerProvider, ICompositeItemFilterProvider
+public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvider, ICompositeItemFilterProvider
 {
 	public ItemCompositeFilter()
 	{
@@ -43,9 +43,9 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack filterStack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack filterStack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.compositefilter.desc").withStyle(TextFormatting.ITALIC).withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.compositefilter.desc").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY));
 
 		if (filterStack.getTag() == null)
 		{
@@ -58,10 +58,10 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 			boolean sneaking = Screen.hasShiftDown();
 			if (!sneaking)
 			{
-				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.extraInfo").withStyle(TextFormatting.BLUE));
+				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.extraInfo").withStyle(ChatFormatting.BLUE));
 			} else
 			{
-				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.contained_filters").withStyle(TextFormatting.BLUE));
+				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.contained_filters").withStyle(ChatFormatting.BLUE));
 				for (ItemStack nestedStack : nestedFilters)
 				{
 					tooltip.add(nestedStack.getHoverName());
@@ -74,10 +74,10 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 
 		if (isWhitelist)
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist").withStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.whitelist").withStyle(ChatFormatting.GRAY));
 		} else
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist").withStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.blacklist").withStyle(ChatFormatting.GRAY));
 		}
 
 		ItemInventory inv = new InventoryFilter(filterStack);
@@ -94,10 +94,10 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 				int amount = GhostItemHelper.getItemGhostAmount(stack);
 				if (amount > 0)
 				{
-					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.count", amount, stack.getHoverName()));
+					tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.count", amount, stack.getHoverName()));
 				} else
 				{
-					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.all", stack.getHoverName()));
+					tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.all", stack.getHoverName()));
 				}
 			} else
 			{
@@ -109,7 +109,7 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
 		List<ItemStack> nestedFilters = getNestedFilters(stack);
@@ -118,7 +118,7 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 			return super.use(world, player, hand);
 		}
 
-		return new ActionResult<>(ActionResultType.SUCCESS, stack);
+		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 	}
 
 	protected IItemFilter getFilterTypeFromConfig(ItemStack filterStack)
@@ -139,7 +139,7 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 	}
 
 	@Override
-	public IItemFilter getInputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler)
+	public IItemFilter getInputItemFilter(ItemStack filterStack, BlockEntity tile, IItemHandler handler)
 	{
 		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
 
@@ -185,7 +185,7 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 	}
 
 	@Override
-	public IItemFilter getOutputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler)
+	public IItemFilter getOutputItemFilter(ItemStack filterStack, BlockEntity tile, IItemHandler handler)
 	{
 		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
 
@@ -240,10 +240,10 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 	public int receiveButtonPress(ItemStack filterStack, String buttonKey, int ghostItemSlot, int currentButtonState)
 	{
 		// Returns new state that the pressed button is in. -1 for an invalid button.
-		CompoundNBT tag = filterStack.getTag();
+		CompoundTag tag = filterStack.getTag();
 		if (tag == null)
 		{
-			filterStack.setTag(new CompoundNBT());
+			filterStack.setTag(new CompoundTag());
 			tag = filterStack.getTag();
 		}
 
@@ -280,7 +280,7 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 	@Override
 	public int getCurrentButtonState(ItemStack filterStack, String buttonKey, int ghostItemSlot)
 	{
-		CompoundNBT tag = filterStack.getTag();
+		CompoundTag tag = filterStack.getTag();
 		if (tag != null)
 		{
 			if (buttonKey.equals(Constants.BUTTONID.BLACKWHITELIST))
@@ -304,9 +304,9 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 	}
 
 	@Override
-	public List<ITextComponent> getTextForHoverItem(ItemStack filterStack, String buttonKey, int ghostItemSlot)
+	public List<Component> getTextForHoverItem(ItemStack filterStack, String buttonKey, int ghostItemSlot)
 	{
-		List<ITextComponent> componentList = new ArrayList<ITextComponent>();
+		List<Component> componentList = new ArrayList<Component>();
 
 		int currentState = getCurrentButtonState(filterStack, buttonKey, ghostItemSlot);
 		if (buttonKey.equals(Constants.BUTTONID.BLACKWHITELIST))
@@ -314,10 +314,10 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 			switch (currentState)
 			{
 			case 1:
-				componentList.add(new TranslationTextComponent("filter.bloodmagic.blacklist"));
+				componentList.add(new TranslatableComponent("filter.bloodmagic.blacklist"));
 				break;
 			default:
-				componentList.add(new TranslationTextComponent("filter.bloodmagic.whitelist"));
+				componentList.add(new TranslatableComponent("filter.bloodmagic.whitelist"));
 			}
 			return componentList;
 		}
@@ -332,16 +332,16 @@ public class ItemCompositeFilter extends ItemRouterFilter implements INamedConta
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public List<Pair<String, Button.IPressable>> getButtonAction(ContainerFilter container)
+	public List<Pair<String, Button.OnPress>> getButtonAction(ContainerFilter container)
 	{
-		List<Pair<String, Button.IPressable>> buttonList = new ArrayList<Pair<String, IPressable>>();
+		List<Pair<String, Button.OnPress>> buttonList = new ArrayList<Pair<String, OnPress>>();
 
 		buttonList.add(Pair.of(Constants.BUTTONID.BLACKWHITELIST, new FilterButtonTogglePress(Constants.BUTTONID.BLACKWHITELIST, container)));
 
 		List<ItemStack> nestedList = getNestedFilters(container.filterStack);
 		for (ItemStack nestedStack : nestedList)
 		{
-			List<Pair<String, Button.IPressable>> nestedButtonList = ((INestableItemFilterProvider) nestedStack.getItem()).getButtonAction(container);
+			List<Pair<String, Button.OnPress>> nestedButtonList = ((INestableItemFilterProvider) nestedStack.getItem()).getButtonAction(container);
 			buttonList.addAll(nestedButtonList);
 		}
 

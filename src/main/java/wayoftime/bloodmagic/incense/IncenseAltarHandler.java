@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public class IncenseAltarHandler
 {
@@ -38,7 +38,7 @@ public class IncenseAltarHandler
 		registerIncenseComponent(altarLevel, new IncenseAltarComponent(offsetPos, block));
 	}
 
-	public static double getMaxIncenseBonusFromComponents(World world, BlockPos pos)
+	public static double getMaxIncenseBonusFromComponents(Level world, BlockPos pos)
 	{
 		double accumulatedBonus = 0;
 		for (int i = 0; i < incenseBonuses.length; i++)
@@ -92,7 +92,7 @@ public class IncenseAltarHandler
 		return previousBonus;
 	}
 
-	public static double getIncenseBonusFromComponents(World world, BlockPos pos, double tranquility, int roads)
+	public static double getIncenseBonusFromComponents(Level world, BlockPos pos, double tranquility, int roads)
 	{
 		double maxBonus = Math.min(getMaxIncenseBonusFromComponents(world, pos), getMaxIncenseBonusFromRoads(roads));
 		double possibleBonus = 0;

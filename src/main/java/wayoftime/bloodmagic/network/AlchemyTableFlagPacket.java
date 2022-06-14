@@ -3,10 +3,10 @@ package wayoftime.bloodmagic.network;
 import java.util.function.Supplier;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
@@ -37,14 +37,14 @@ public class AlchemyTableFlagPacket
 		this.lpFlag = lpFlag;
 	}
 
-	public static void encode(AlchemyTableFlagPacket pkt, PacketBuffer buf)
+	public static void encode(AlchemyTableFlagPacket pkt, FriendlyByteBuf buf)
 	{
 		buf.writeBlockPos(pkt.pos);
 		buf.writeBoolean(pkt.orbFlag);
 		buf.writeBoolean(pkt.lpFlag);
 	}
 
-	public static AlchemyTableFlagPacket decode(PacketBuffer buf)
+	public static AlchemyTableFlagPacket decode(FriendlyByteBuf buf)
 	{
 		AlchemyTableFlagPacket pkt = new AlchemyTableFlagPacket(buf.readBlockPos(), buf.readBoolean(), buf.readBoolean());
 
@@ -60,8 +60,8 @@ public class AlchemyTableFlagPacket
 	@OnlyIn(Dist.CLIENT)
 	public static void updateTanks(BlockPos pos, boolean orbFlag, boolean lpFlag)
 	{
-		World world = Minecraft.getInstance().level;
-		TileEntity tile = world.getBlockEntity(pos);
+		Level world = Minecraft.getInstance().level;
+		BlockEntity tile = world.getBlockEntity(pos);
 		if (tile instanceof TileAlchemyTable)
 		{
 			((TileAlchemyTable) tile).setOrbFlagForGui(orbFlag);

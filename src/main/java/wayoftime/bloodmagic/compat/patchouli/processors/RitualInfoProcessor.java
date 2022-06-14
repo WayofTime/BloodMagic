@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.Tuple;
 import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;

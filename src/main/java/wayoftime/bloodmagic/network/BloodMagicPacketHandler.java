@@ -1,6 +1,6 @@
 package wayoftime.bloodmagic.network;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.util.ChatUtil;

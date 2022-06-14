@@ -1,14 +1,14 @@
 package wayoftime.bloodmagic.tile;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.block.BlockSpectral;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
@@ -18,11 +18,11 @@ import wayoftime.bloodmagic.tile.base.TileBase;
 public class TileSpectral extends TileBase
 {
 	@ObjectHolder("bloodmagic:spectral")
-	public static TileEntityType<TileSpectral> TYPE;
+	public static BlockEntityType<TileSpectral> TYPE;
 
 	public BlockState storedBlock;
 
-	public TileSpectral(TileEntityType<?> type)
+	public TileSpectral(BlockEntityType<?> type)
 	{
 		super(type);
 	}
@@ -32,7 +32,7 @@ public class TileSpectral extends TileBase
 		this(TYPE);
 	}
 
-	public static void createOrRefreshSpectralBlock(World world, BlockPos pos)
+	public static void createOrRefreshSpectralBlock(Level world, BlockPos pos)
 	{
 		if (world.isEmptyBlock(pos))
 		{
@@ -44,7 +44,7 @@ public class TileSpectral extends TileBase
 		if (isFluidBlock(potentialFluidBlockState.getBlock()))
 		{
 			world.setBlock(pos, BloodMagicBlocks.SPECTRAL.get().defaultBlockState(), 3);
-			TileEntity spectralTile = world.getBlockEntity(pos);
+			BlockEntity spectralTile = world.getBlockEntity(pos);
 			if (spectralTile instanceof TileSpectral)
 			{
 				((TileSpectral) spectralTile).setContainedBlockInfo(potentialFluidBlockState);
@@ -64,7 +64,7 @@ public class TileSpectral extends TileBase
 
 	public static boolean isFluidBlock(Block block)
 	{
-		return block instanceof FlowingFluidBlock;
+		return block instanceof LiquidBlock;
 	}
 
 	public void setContainedBlockInfo(BlockState state)
@@ -74,15 +74,15 @@ public class TileSpectral extends TileBase
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tag)
+	public void deserialize(CompoundTag tag)
 	{
-		storedBlock = NBTUtil.readBlockState(tag.getCompound("BlockState"));
+		storedBlock = NbtUtils.readBlockState(tag.getCompound("BlockState"));
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tag)
+	public CompoundTag serialize(CompoundTag tag)
 	{
-		tag.put("BlockState", NBTUtil.writeBlockState(storedBlock));
+		tag.put("BlockState", NbtUtils.writeBlockState(storedBlock));
 		return tag;
 	}
 }

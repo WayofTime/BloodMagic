@@ -5,20 +5,20 @@ import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -44,10 +44,10 @@ import wayoftime.bloodmagic.tile.container.ContainerAlchemyTable;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 
-public class TileAlchemyTable extends TileInventory implements ISidedInventory, ITickableTileEntity, INamedContainerProvider
+public class TileAlchemyTable extends TileInventory implements WorldlyContainer, TickableBlockEntity, MenuProvider
 {
 	@ObjectHolder("bloodmagic:alchemytable")
-	public static TileEntityType<TileAlchemyTable> TYPE;
+	public static BlockEntityType<TileAlchemyTable> TYPE;
 
 	public static final int orbSlot = 6;
 	public static final int outputSlot = 7;
@@ -72,7 +72,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 
 	public int activeSlot = -1;
 
-	public TileAlchemyTable(TileEntityType<?> type)
+	public TileAlchemyTable(BlockEntityType<?> type)
 	{
 		super(type, 8, "alchemytable");
 	}
@@ -166,7 +166,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tag)
+	public void deserialize(CompoundTag tag)
 	{
 		super.deserialize(tag);
 
@@ -192,7 +192,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tag)
+	public CompoundTag serialize(CompoundTag tag)
 	{
 		super.serialize(tag);
 
@@ -230,7 +230,7 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 		{
 			if (this.isSlave())
 			{
-				TileEntity tile = getLevel().getBlockEntity(connectedPos);
+				BlockEntity tile = getLevel().getBlockEntity(connectedPos);
 				if (tile instanceof TileAlchemyTable && !((TileAlchemyTable) tile).isSlave)
 				{
 					return (LazyOptional<T>) tile.getCapability(capability, facing);
@@ -743,15 +743,15 @@ public class TileAlchemyTable extends TileInventory implements ISidedInventory, 
 	}
 
 	@Override
-	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_)
+	public AbstractContainerMenu createMenu(int p_createMenu_1_, Inventory p_createMenu_2_, Player p_createMenu_3_)
 	{
 		assert level != null;
 		return new ContainerAlchemyTable(this, p_createMenu_1_, p_createMenu_2_);
 	}
 
 	@Override
-	public ITextComponent getDisplayName()
+	public Component getDisplayName()
 	{
-		return new StringTextComponent("Alchemy Table");
+		return new TextComponent("Alchemy Table");
 	}
 }

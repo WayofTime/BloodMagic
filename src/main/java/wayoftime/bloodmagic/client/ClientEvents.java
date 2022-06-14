@@ -3,20 +3,20 @@ package wayoftime.bloodmagic.client;
 import java.util.Map;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.client.renderer.entity.PlayerRenderer;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.IItemPropertyGetter;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemModelsProperties;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.client.renderer.item.ItemPropertyFunction;
+import net.minecraft.world.item.Item;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.InputEvent;
@@ -97,15 +97,15 @@ public class ClientEvents
 
 	public static void registerContainerScreens()
 	{
-		ScreenManager.register(BloodMagicBlocks.SOUL_FORGE_CONTAINER.get(), ScreenSoulForge::new);
-		ScreenManager.register(BloodMagicBlocks.ARC_CONTAINER.get(), ScreenAlchemicalReactionChamber::new);
-		ScreenManager.register(BloodMagicBlocks.ALCHEMY_TABLE_CONTAINER.get(), ScreenAlchemyTable::new);
-		ScreenManager.register(BloodMagicBlocks.HOLDING_CONTAINER.get(), ScreenHolding::new);
-		ScreenManager.register(BloodMagicBlocks.FILTER_CONTAINER.get(), ScreenFilter::new);
-		ScreenManager.register(BloodMagicBlocks.ROUTING_NODE_CONTAINER.get(), ScreenItemRoutingNode::new);
-		ScreenManager.register(BloodMagicBlocks.TRAINING_BRACELET_CONTAINER.get(), ScreenTrainingBracelet::new);
-		ScreenManager.register(BloodMagicBlocks.TELEPOSER_CONTAINER.get(), ScreenTeleposer::new);
-		ScreenManager.register(BloodMagicBlocks.MASTER_ROUTING_NODE_CONTAINER.get(), ScreenMasterRoutingNode::new);
+		MenuScreens.register(BloodMagicBlocks.SOUL_FORGE_CONTAINER.get(), ScreenSoulForge::new);
+		MenuScreens.register(BloodMagicBlocks.ARC_CONTAINER.get(), ScreenAlchemicalReactionChamber::new);
+		MenuScreens.register(BloodMagicBlocks.ALCHEMY_TABLE_CONTAINER.get(), ScreenAlchemyTable::new);
+		MenuScreens.register(BloodMagicBlocks.HOLDING_CONTAINER.get(), ScreenHolding::new);
+		MenuScreens.register(BloodMagicBlocks.FILTER_CONTAINER.get(), ScreenFilter::new);
+		MenuScreens.register(BloodMagicBlocks.ROUTING_NODE_CONTAINER.get(), ScreenItemRoutingNode::new);
+		MenuScreens.register(BloodMagicBlocks.TRAINING_BRACELET_CONTAINER.get(), ScreenTrainingBracelet::new);
+		MenuScreens.register(BloodMagicBlocks.TELEPOSER_CONTAINER.get(), ScreenTeleposer::new);
+		MenuScreens.register(BloodMagicBlocks.MASTER_ROUTING_NODE_CONTAINER.get(), ScreenMasterRoutingNode::new);
 
 	}
 
@@ -120,7 +120,7 @@ public class ClientEvents
 		event.getItemColors().register(new FlaskColor(), BloodMagicItems.ALCHEMY_FLASK_LINGERING.get());
 	}
 
-	public static void cycleSigil(ItemStack stack, PlayerEntity player, int dWheel)
+	public static void cycleSigil(ItemStack stack, Player player, int dWheel)
 	{
 		int mode = dWheel;
 		if (!ConfigManager.CLIENT.sigilHoldingSkipsEmptySlots.get())
@@ -132,13 +132,13 @@ public class ClientEvents
 		ItemSigilHolding.cycleToNextSigil(stack, mode);
 		BloodMagicPacketHandler.INSTANCE.sendToServer(new SigilHoldingPacket(player.inventory.selected, mode));
 		ItemStack newStack = ItemSigilHolding.getItemStackInSlot(stack, ItemSigilHolding.getCurrentItemOrdinal(stack));
-		player.displayClientMessage(newStack.isEmpty() ? new StringTextComponent("") : newStack.getDisplayName(), true);
+		player.displayClientMessage(newStack.isEmpty() ? new TextComponent("") : newStack.getDisplayName(), true);
 	}
 
 	@SubscribeEvent
 	public void onMouseEvent(InputEvent.MouseScrollEvent event)
 	{
-		ClientPlayerEntity player = Minecraft.getInstance().player;
+		LocalPlayer player = Minecraft.getInstance().player;
 
 		if (event.getScrollDelta() != 0 && player != null && player.isShiftKeyDown())
 		{
@@ -168,10 +168,10 @@ public class ClientEvents
 			int amount = GhostItemHelper.getItemGhostAmount(stack);
 			if (amount == 0)
 			{
-				event.getToolTip().add(new TranslationTextComponent("tooltip.bloodmagic.ghost.everything"));
+				event.getToolTip().add(new TranslatableComponent("tooltip.bloodmagic.ghost.everything"));
 			} else
 			{
-				event.getToolTip().add(new TranslationTextComponent("tooltip.bloodmagic.ghost.amount", amount));
+				event.getToolTip().add(new TranslatableComponent("tooltip.bloodmagic.ghost.amount", amount));
 			}
 		}
 	}
@@ -190,16 +190,16 @@ public class ClientEvents
 
 		DeferredWorkQueue.runLater(() -> {
 			RenderType rendertype = RenderType.cutoutMipped();
-			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.ALCHEMY_TABLE.get(), rendertype);
-			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.GROWING_DOUBT.get(), rendertype);
-			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.WEAK_TAU.get(), rendertype);
-			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.STRONG_TAU.get(), rendertype);
-			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.ROUTING_NODE_BLOCK.get(), RenderType.translucent());
-			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get(), RenderType.translucent());
-			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get(), RenderType.translucent());
-			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get(), RenderType.translucent());
-			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.SPIKES.get(), rendertype);
-			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.SPECTRAL.get(), RenderType.translucent());
+			ItemBlockRenderTypes.setRenderLayer(BloodMagicBlocks.ALCHEMY_TABLE.get(), rendertype);
+			ItemBlockRenderTypes.setRenderLayer(BloodMagicBlocks.GROWING_DOUBT.get(), rendertype);
+			ItemBlockRenderTypes.setRenderLayer(BloodMagicBlocks.WEAK_TAU.get(), rendertype);
+			ItemBlockRenderTypes.setRenderLayer(BloodMagicBlocks.STRONG_TAU.get(), rendertype);
+			ItemBlockRenderTypes.setRenderLayer(BloodMagicBlocks.ROUTING_NODE_BLOCK.get(), RenderType.translucent());
+			ItemBlockRenderTypes.setRenderLayer(BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get(), RenderType.translucent());
+			ItemBlockRenderTypes.setRenderLayer(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get(), RenderType.translucent());
+			ItemBlockRenderTypes.setRenderLayer(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get(), RenderType.translucent());
+			ItemBlockRenderTypes.setRenderLayer(BloodMagicBlocks.SPIKES.get(), rendertype);
+			ItemBlockRenderTypes.setRenderLayer(BloodMagicBlocks.SPECTRAL.get(), RenderType.translucent());
 
 			ClientEvents.registerContainerScreens();
 
@@ -219,17 +219,17 @@ public class ClientEvents
 			registerMultiWillTool(BloodMagicItems.GREATER_GEM.get());
 			registerSacrificialKnife(BloodMagicItems.SACRIFICIAL_DAGGER.get());
 
-			ItemModelsProperties.register(BloodMagicItems.SENTIENT_SWORD.get(), BloodMagic.rl("active"), new IItemPropertyGetter()
+			ItemProperties.register(BloodMagicItems.SENTIENT_SWORD.get(), BloodMagic.rl("active"), new ItemPropertyFunction()
 			{
 				@Override
-				public float call(ItemStack stack, ClientWorld world, LivingEntity entity)
+				public float call(ItemStack stack, ClientLevel world, LivingEntity entity)
 				{
 					return ((ItemSentientSword) stack.getItem()).getActivated(stack) ? 1 : 0;
 				}
 			});
 
 			Minecraft.getInstance().getBlockColors().register(new MimicColor(), BloodMagicBlocks.MIMIC.get());
-			RenderTypeLookup.setRenderLayer(BloodMagicBlocks.MIMIC.get(), (RenderType) -> true);
+			ItemBlockRenderTypes.setRenderLayer(BloodMagicBlocks.MIMIC.get(), (RenderType) -> true);
 		});
 
 		AlchemyArrayRendererRegistry.registerRenderer(BloodMagic.rl("array/movement"), new StaticAlchemyCircleRenderer(BloodMagic.rl("textures/models/alchemyarrays/movementarray.png")));
@@ -255,10 +255,10 @@ public class ClientEvents
 
 	public static void registerToggleableProperties(Item item)
 	{
-		ItemModelsProperties.register(item, BloodMagic.rl("active"), new IItemPropertyGetter()
+		ItemProperties.register(item, BloodMagic.rl("active"), new ItemPropertyFunction()
 		{
 			@Override
-			public float call(ItemStack stack, ClientWorld world, LivingEntity entity)
+			public float call(ItemStack stack, ClientLevel world, LivingEntity entity)
 			{
 				Item item = stack.getItem();
 				if (item instanceof ItemSigilToggleable)
@@ -272,10 +272,10 @@ public class ClientEvents
 
 	public static void registerMultiWillTool(Item item)
 	{
-		ItemModelsProperties.register(item, BloodMagic.rl("type"), new IItemPropertyGetter()
+		ItemProperties.register(item, BloodMagic.rl("type"), new ItemPropertyFunction()
 		{
 			@Override
-			public float call(ItemStack stack, ClientWorld world, LivingEntity entity)
+			public float call(ItemStack stack, ClientLevel world, LivingEntity entity)
 			{
 				Item item = stack.getItem();
 				if (item instanceof IMultiWillTool)
@@ -289,10 +289,10 @@ public class ClientEvents
 
 	public static void registerSacrificialKnife(Item item)
 	{
-		ItemModelsProperties.register(item, BloodMagic.rl("incense"), new IItemPropertyGetter()
+		ItemProperties.register(item, BloodMagic.rl("incense"), new ItemPropertyFunction()
 		{
 			@Override
-			public float call(ItemStack stack, ClientWorld world, LivingEntity entity)
+			public float call(ItemStack stack, ClientLevel world, LivingEntity entity)
 			{
 				Item item = stack.getItem();
 				if (item instanceof ItemSacrificialDagger)

@@ -14,11 +14,11 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
@@ -55,9 +55,9 @@ public class AlchemyTableRecipeCategory implements IRecipeCategory<RecipeAlchemy
 	}
 
 	@Override
-	public List<ITextComponent> getTooltipStrings(RecipeAlchemyTable recipe, double mouseX, double mouseY)
+	public List<Component> getTooltipStrings(RecipeAlchemyTable recipe, double mouseX, double mouseY)
 	{
-		List<ITextComponent> tooltip = Lists.newArrayList();
+		List<Component> tooltip = Lists.newArrayList();
 
 //		if (mouseX >= 13 && mouseX <= 64 && mouseY >= 27 && mouseY <= 58)
 //		{
@@ -67,9 +67,9 @@ public class AlchemyTableRecipeCategory implements IRecipeCategory<RecipeAlchemy
 
 		if (mouseX >= 58 && mouseX <= 78 && mouseY >= 21 && mouseY <= 34)
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.tier", ChatUtil.DECIMAL_FORMAT.format(recipe.getMinimumTier())));
-			tooltip.add(new TranslationTextComponent("jei.bloodmagic.recipe.lpDrained", ChatUtil.DECIMAL_FORMAT.format(recipe.getSyphon())));
-			tooltip.add(new TranslationTextComponent("jei.bloodmagic.recipe.ticksRequired", ChatUtil.DECIMAL_FORMAT.format(recipe.getTicks())));
+			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.tier", ChatUtil.DECIMAL_FORMAT.format(recipe.getMinimumTier())));
+			tooltip.add(new TranslatableComponent("jei.bloodmagic.recipe.lpDrained", ChatUtil.DECIMAL_FORMAT.format(recipe.getSyphon())));
+			tooltip.add(new TranslatableComponent("jei.bloodmagic.recipe.ticksRequired", ChatUtil.DECIMAL_FORMAT.format(recipe.getTicks())));
 		}
 
 		return tooltip;

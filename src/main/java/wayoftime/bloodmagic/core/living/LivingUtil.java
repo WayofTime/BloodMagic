@@ -7,15 +7,15 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.Multimap;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.MinecraftForge;
 import wayoftime.bloodmagic.common.item.ItemLivingTrainer;
 import wayoftime.bloodmagic.core.util.PlayerUtil;
@@ -25,7 +25,7 @@ public class LivingUtil
 {
 	// @return Pair containing the LivingStats of the player, and if the LivingStats
 	// upgraded due to the applied EXP.
-	public static Pair<LivingStats, Boolean> applyNewExperience(PlayerEntity player, LivingUpgrade upgrade, double experience)
+	public static Pair<LivingStats, Boolean> applyNewExperience(Player player, LivingUpgrade upgrade, double experience)
 	{
 		LivingStats stats = LivingStats.fromPlayer(player, true);
 		if (stats == null)
@@ -87,7 +87,7 @@ public class LivingUtil
 			MinecraftForge.EVENT_BUS.post(levelUpEvent);
 			didUpgrade = true;
 
-			player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.living_upgrade_level_increase", new TranslationTextComponent(upgrade.getTranslationKey()), newLevel), true);
+			player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.living_upgrade_level_increase", new TranslatableComponent(upgrade.getTranslationKey()), newLevel), true);
 		}
 
 //		System.out.println("Adding experience! Total experience is: " + currentExperience);
@@ -99,7 +99,7 @@ public class LivingUtil
 
 	// @return Pair containing the LivingStats of the player. Returned Double is the
 	// effective amount of exp that was applied.
-	public static Pair<LivingStats, Double> applyExperienceToUpgradeCap(PlayerEntity player, LivingUpgrade upgrade, double experience)
+	public static Pair<LivingStats, Double> applyExperienceToUpgradeCap(Player player, LivingUpgrade upgrade, double experience)
 	{
 //		System.out.println("Initial exp added: " + experience);
 		LivingStats stats = LivingStats.fromPlayer(player, true);
@@ -202,7 +202,7 @@ public class LivingUtil
 			MinecraftForge.EVENT_BUS.post(levelUpEvent);
 			didUpgrade = true;
 
-			player.displayClientMessage(new TranslationTextComponent("chat.bloodmagic.living_upgrade_level_increase", new TranslationTextComponent(upgrade.getTranslationKey()), newLevel), true);
+			player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.living_upgrade_level_increase", new TranslatableComponent(upgrade.getTranslationKey()), newLevel), true);
 		}
 
 //			System.out.println("Adding experience! Total experience is: " + currentExperience);
@@ -212,7 +212,7 @@ public class LivingUtil
 		return Pair.of(stats, experience / multiplicationFactor);
 	}
 
-	public static double getDamageReceivedForArmour(PlayerEntity player, DamageSource source, double damage)
+	public static double getDamageReceivedForArmour(Player player, DamageSource source, double damage)
 	{
 //		System.out.println("Initial damage from " + source + ": " + damage);
 		LivingStats stats = LivingStats.fromPlayer(player, true);
@@ -235,7 +235,7 @@ public class LivingUtil
 		return damage;
 	}
 
-	public static double getAdditionalDamage(PlayerEntity player, ItemStack weapon, LivingEntity attackedEntity, double damage)
+	public static double getAdditionalDamage(Player player, ItemStack weapon, LivingEntity attackedEntity, double damage)
 	{
 //		System.out.println("Initial damage from " + source + ": " + damage);
 		LivingStats stats = LivingStats.fromPlayer(player, true);
@@ -266,7 +266,7 @@ public class LivingUtil
 		return additionalDamage;
 	}
 
-	public static boolean canTrain(PlayerEntity player, LivingUpgrade upgrade, int currentLevel, int nextLevel)
+	public static boolean canTrain(Player player, LivingUpgrade upgrade, int currentLevel, int nextLevel)
 	{
 		ItemStack trainer = PlayerUtil.findItem(player, stack -> stack.getItem() instanceof ItemLivingTrainer && stack.hasTag() && stack.getTag().contains("livingStats"));
 
@@ -292,14 +292,14 @@ public class LivingUtil
 //		return true;
 	}
 
-	public static boolean hasFullSet(PlayerEntity player)
+	public static boolean hasFullSet(Player player)
 	{
 		for (ItemStack stack : player.inventory.armor)
 		{
 			if (stack.isEmpty() || !(stack.getItem() instanceof ILivingContainer))
 				return false;
 
-			if (stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlotType.CHEST)
+			if (stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlot.CHEST)
 			{
 				if (stack.getMaxDamage() - stack.getDamageValue() <= 1)
 				{
@@ -311,7 +311,7 @@ public class LivingUtil
 		return true;
 	}
 
-	public static void applyAttributes(Multimap<Attribute, AttributeModifier> attributes, ItemStack stack, PlayerEntity player, EquipmentSlotType slot)
+	public static void applyAttributes(Multimap<Attribute, AttributeModifier> attributes, ItemStack stack, Player player, EquipmentSlot slot)
 	{
 		if (player == null || !hasFullSet(player))
 			return;

@@ -4,7 +4,7 @@ import java.util.Map.Entry;
 
 import org.apache.logging.log4j.LogManager;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
 import vazkii.patchouli.api.IVariableProvider;

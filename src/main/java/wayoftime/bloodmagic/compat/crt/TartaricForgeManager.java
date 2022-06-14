@@ -10,10 +10,10 @@ import com.blamejared.crafttweaker.impl.actions.recipes.ActionAddRecipe;
 import com.blamejared.crafttweaker.impl.actions.recipes.ActionRemoveRecipeByOutput;
 import com.blamejared.crafttweaker.impl.item.MCItemStackMutable;
 import com.blamejared.crafttweaker.impl.item.MCWeightedItemStack;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
 import org.openzen.zencode.java.ZenCodeType;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
@@ -47,7 +47,7 @@ public class TartaricForgeManager implements IRecipeManager {
             public void apply() {
                 List<ResourceLocation> toRemove = new ArrayList<>();
                 for(ResourceLocation location : getManager().getRecipes().keySet()) {
-                    IRecipe<?> recipe = getManager().getRecipes().get(location);
+                    Recipe<?> recipe = getManager().getRecipes().get(location);
                     if(recipe instanceof RecipeTartaricForge) {
                         RecipeTartaricForge recipeTF = (RecipeTartaricForge) recipe;
                         ItemStack recipeOutput = recipeTF.getOutput();
@@ -62,7 +62,7 @@ public class TartaricForgeManager implements IRecipeManager {
     }
     
     @Override
-    public IRecipeType<RecipeTartaricForge> getRecipeType() {
+    public RecipeType<RecipeTartaricForge> getRecipeType() {
         return BloodMagicRecipeType.TARTARICFORGE;
     }
 }

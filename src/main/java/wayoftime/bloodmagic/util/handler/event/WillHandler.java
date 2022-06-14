@@ -4,24 +4,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.ChunkStatus;
-import net.minecraft.world.chunk.IChunk;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.chunk.ChunkStatus;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
@@ -53,7 +53,7 @@ public class WillHandler
 		ItemStack stack = event.getItem().getItem();
 		if (stack.getItem() instanceof IDemonWill)
 		{
-			PlayerEntity player = event.getPlayer();
+			Player player = event.getPlayer();
 			EnumDemonWillType pickupType = ((IDemonWill) stack.getItem()).getType(stack);
 			ItemStack remainder = PlayerDemonWillHandler.addDemonWill(player, stack);
 
@@ -88,10 +88,10 @@ public class WillHandler
 		DamageSource source = event.getSource();
 		Entity entity = source.getEntity();
 
-		if (attackedEntity.hasEffect(BloodMagicPotions.SOUL_SNARE) && (attackedEntity instanceof MobEntity
+		if (attackedEntity.hasEffect(BloodMagicPotions.SOUL_SNARE) && (attackedEntity instanceof Mob
 				|| attackedEntity.getCommandSenderWorld().getDifficulty() == Difficulty.PEACEFUL))
 		{
-			EffectInstance eff = attackedEntity.getEffect(BloodMagicPotions.SOUL_SNARE);
+			MobEffectInstance eff = attackedEntity.getEffect(BloodMagicPotions.SOUL_SNARE);
 			int lvl = eff.getAmplifier();
 
 			double amountOfSouls = attackedEntity.getCommandSenderWorld().random.nextDouble() * (lvl + 1) * (lvl + 1) * 4 + 1;
@@ -99,9 +99,9 @@ public class WillHandler
 			event.getDrops().add(new ItemEntity(attackedEntity.getCommandSenderWorld(), attackedEntity.getX(), attackedEntity.getY(), attackedEntity.getZ(), soulStack));
 		}
 
-		if (entity != null && entity instanceof PlayerEntity)
+		if (entity != null && entity instanceof Player)
 		{
-			PlayerEntity player = (PlayerEntity) entity;
+			Player player = (Player) entity;
 			ItemStack heldStack = player.getMainHandItem();
 			if (heldStack.getItem() instanceof IDemonWillWeapon && !player.getCommandSenderWorld().isClientSide)
 			{
@@ -152,7 +152,7 @@ public class WillHandler
 				{
 					for (PosXY pos : dirtyChunks)
 					{
-						IChunk chunk = event.world.getChunk(pos.x, pos.y, ChunkStatus.FULL, false);
+						ChunkAccess chunk = event.world.getChunk(pos.x, pos.y, ChunkStatus.FULL, false);
 						if (chunk != null)
 						{
 							chunk.setUnsaved(true);
@@ -168,19 +168,19 @@ public class WillHandler
 
 	}
 
-	public static boolean isBlockLoaded(IBlockReader world, BlockPos pos)
+	public static boolean isBlockLoaded(BlockGetter world, BlockPos pos)
 	{
-		if (world == null || !World.isInWorldBounds(pos))
+		if (world == null || !Level.isInWorldBounds(pos))
 		{
 			return false;
-		} else if (world instanceof IWorldReader)
+		} else if (world instanceof LevelReader)
 		{
 			// Note: We don't bother checking if it is a world and then isBlockPresent
 			// because
 			// all that does is also validate the y value is in bounds, and we already check
 			// to make
 			// sure the position is valid both in the y and xz directions
-			return ((IWorldReader) world).hasChunkAt(pos);
+			return ((LevelReader) world).hasChunkAt(pos);
 		}
 		return true;
 	}
@@ -188,16 +188,16 @@ public class WillHandler
 	@SubscribeEvent
 	public void chunkSave(ChunkDataEvent.Save event)
 	{
-		if (!(event.getWorld() instanceof World))
+		if (!(event.getWorld() instanceof Level))
 		{
 			return;
 		}
-		ResourceLocation rl = WorldDemonWillHandler.getDimensionResourceLocation((World) event.getWorld());
+		ResourceLocation rl = WorldDemonWillHandler.getDimensionResourceLocation((Level) event.getWorld());
 //		int dim = event.getWorld().provider.getDimension();
 
 		ChunkPos loc = event.getChunk().getPos();
 
-		CompoundNBT nbt = new CompoundNBT();
+		CompoundTag nbt = new CompoundTag();
 		event.getData().put("BloodMagic", nbt);
 
 		WillChunk ac = WorldDemonWillHandler.getWillChunk(rl, loc.x, loc.z);
@@ -214,22 +214,22 @@ public class WillHandler
 	@SubscribeEvent
 	public void chunkLoad(ChunkDataEvent.Load event)
 	{
-		if (!(event.getWorld() instanceof World))
+		if (!(event.getWorld() instanceof Level))
 		{
 			return;
 		}
-		ResourceLocation rl = WorldDemonWillHandler.getDimensionResourceLocation((World) event.getWorld());
+		ResourceLocation rl = WorldDemonWillHandler.getDimensionResourceLocation((Level) event.getWorld());
 //		int dim = event.getWorld().provider.getDimension();
 		if (event.getData().getCompound("BloodMagic").contains("base"))
 		{
-			CompoundNBT nbt = event.getData().getCompound("BloodMagic");
+			CompoundTag nbt = event.getData().getCompound("BloodMagic");
 			short base = nbt.getShort("base");
 			DemonWillHolder current = new DemonWillHolder();
 			current.readFromNBT(nbt, "current");
 			WorldDemonWillHandler.addWillChunk(rl, event.getChunk(), base, current);
 		} else
 		{
-			WorldDemonWillHandler.generateWill(event.getChunk(), (World) event.getWorld());
+			WorldDemonWillHandler.generateWill(event.getChunk(), (Level) event.getWorld());
 		}
 	}
 }

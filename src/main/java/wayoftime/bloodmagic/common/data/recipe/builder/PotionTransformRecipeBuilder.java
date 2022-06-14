@@ -11,31 +11,33 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.potion.Effect;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionTransform;
 import wayoftime.bloodmagic.util.Constants;
 
+import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder.RecipeResult;
+
 public class PotionTransformRecipeBuilder extends BloodMagicRecipeBuilder<PotionTransformRecipeBuilder>
 {
 	private final List<Ingredient> input;
-	private final List<Pair<Effect, Integer>> outputEffectList;
-	private final List<Effect> inputEffectList;
+	private final List<Pair<MobEffect, Integer>> outputEffectList;
+	private final List<MobEffect> inputEffectList;
 	private final int syphon;
 	private final int ticks;
 	private final int minimumTier;
 
-	protected PotionTransformRecipeBuilder(List<Ingredient> input, Effect outputEffect, int baseDuration, Effect inputEffect, int syphon, int ticks, int minimumTier)
+	protected PotionTransformRecipeBuilder(List<Ingredient> input, MobEffect outputEffect, int baseDuration, MobEffect inputEffect, int syphon, int ticks, int minimumTier)
 	{
 		this(input, new ArrayList<>(), new ArrayList<>(), syphon, ticks, minimumTier);
 		outputEffectList.add(Pair.of(outputEffect, baseDuration));
 		addInputEffect(inputEffect);
 	}
 
-	protected PotionTransformRecipeBuilder(List<Ingredient> input, List<Pair<Effect, Integer>> outputEffectList, List<Effect> inputEffectList, int syphon, int ticks, int minimumTier)
+	protected PotionTransformRecipeBuilder(List<Ingredient> input, List<Pair<MobEffect, Integer>> outputEffectList, List<MobEffect> inputEffectList, int syphon, int ticks, int minimumTier)
 	{
 		super(bmSerializer("flask_potiontransform"));
 		this.outputEffectList = outputEffectList;
@@ -46,7 +48,7 @@ public class PotionTransformRecipeBuilder extends BloodMagicRecipeBuilder<Potion
 		this.minimumTier = minimumTier;
 	}
 
-	public static PotionTransformRecipeBuilder potionTransform(Effect outputEffect, int baseDuration, Effect inputEffect, int syphon, int ticks, int minimumTier)
+	public static PotionTransformRecipeBuilder potionTransform(MobEffect outputEffect, int baseDuration, MobEffect inputEffect, int syphon, int ticks, int minimumTier)
 	{
 		List<Ingredient> inputList = new ArrayList<Ingredient>();
 
@@ -63,7 +65,7 @@ public class PotionTransformRecipeBuilder extends BloodMagicRecipeBuilder<Potion
 		return this;
 	}
 
-	public PotionTransformRecipeBuilder addInputEffect(Effect effect)
+	public PotionTransformRecipeBuilder addInputEffect(MobEffect effect)
 	{
 		if (!inputEffectList.contains(effect))
 			inputEffectList.add(effect);
@@ -103,7 +105,7 @@ public class PotionTransformRecipeBuilder extends BloodMagicRecipeBuilder<Potion
 			if (outputEffectList.size() > 0)
 			{
 				JsonArray mainArray = new JsonArray();
-				for (Pair<Effect, Integer> outputEffect : outputEffectList)
+				for (Pair<MobEffect, Integer> outputEffect : outputEffectList)
 				{
 					JsonObject jsonObj = new JsonObject();
 					jsonObj.addProperty(Constants.JSON.EFFECT, BloodMagicPotions.getRegistryName(outputEffect.getKey()).toString());

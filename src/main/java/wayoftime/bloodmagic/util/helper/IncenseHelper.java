@@ -1,16 +1,16 @@
 package wayoftime.bloodmagic.util.helper;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import wayoftime.bloodmagic.util.Constants;
 
 public class IncenseHelper
 {
 
-	public static double getCurrentIncense(PlayerEntity player)
+	public static double getCurrentIncense(Player player)
 	{
-		CompoundNBT data = player.getPersistentData();
+		CompoundTag data = player.getPersistentData();
 		if (data.contains(Constants.NBT.CURRENT_INCENSE))
 		{
 			return data.getDouble(Constants.NBT.CURRENT_INCENSE);
@@ -19,21 +19,21 @@ public class IncenseHelper
 		return 0;
 	}
 
-	public static void setCurrentIncense(PlayerEntity player, double amount)
+	public static void setCurrentIncense(Player player, double amount)
 	{
-		CompoundNBT data = player.getPersistentData();
+		CompoundTag data = player.getPersistentData();
 		data.putDouble(Constants.NBT.CURRENT_INCENSE, amount);
 	}
 
-	public static void setMaxIncense(PlayerEntity player, double amount)
+	public static void setMaxIncense(Player player, double amount)
 	{
-		CompoundNBT data = player.getPersistentData();
+		CompoundTag data = player.getPersistentData();
 		data.putDouble(Constants.NBT.MAX_INCENSE, amount);
 	}
 
-	public static double getMaxIncense(PlayerEntity player)
+	public static double getMaxIncense(Player player)
 	{
-		CompoundNBT data = player.getPersistentData();
+		CompoundTag data = player.getPersistentData();
 		if (data.contains(Constants.NBT.MAX_INCENSE))
 		{
 			return data.getDouble(Constants.NBT.MAX_INCENSE);
@@ -41,7 +41,7 @@ public class IncenseHelper
 		return 0;
 	}
 
-	public static void setHasMaxIncense(ItemStack stack, PlayerEntity player, boolean isMax)
+	public static void setHasMaxIncense(ItemStack stack, Player player, boolean isMax)
 	{
 		stack = NBTHelper.checkNBT(stack);
 		stack.getTag().putBoolean(Constants.NBT.HAS_MAX_INCENSE, isMax);

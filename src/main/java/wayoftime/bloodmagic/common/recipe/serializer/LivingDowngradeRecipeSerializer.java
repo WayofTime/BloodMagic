@@ -5,16 +5,16 @@ import javax.annotation.Nonnull;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.recipe.RecipeLivingDowngrade;
 import wayoftime.bloodmagic.util.Constants;
 
-public class LivingDowngradeRecipeSerializer<RECIPE extends RecipeLivingDowngrade> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RECIPE>
+public class LivingDowngradeRecipeSerializer<RECIPE extends RecipeLivingDowngrade> extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RECIPE>
 {
 	private final IFactory<RECIPE> factory;
 
@@ -27,18 +27,18 @@ public class LivingDowngradeRecipeSerializer<RECIPE extends RecipeLivingDowngrad
 	@Override
 	public RECIPE fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
 	{
-		JsonElement input = JSONUtils.isArrayNode(json, Constants.JSON.INPUT)
-				? JSONUtils.getAsJsonArray(json, Constants.JSON.INPUT)
-				: JSONUtils.getAsJsonObject(json, Constants.JSON.INPUT);
+		JsonElement input = GsonHelper.isArrayNode(json, Constants.JSON.INPUT)
+				? GsonHelper.getAsJsonArray(json, Constants.JSON.INPUT)
+				: GsonHelper.getAsJsonObject(json, Constants.JSON.INPUT);
 
 		Ingredient inputIng = Ingredient.fromJson(input);
-		ResourceLocation rl = new ResourceLocation(JSONUtils.getAsString(json, Constants.JSON.RESOURCE));
+		ResourceLocation rl = new ResourceLocation(GsonHelper.getAsString(json, Constants.JSON.RESOURCE));
 
 		return this.factory.create(recipeId, inputIng, rl);
 	}
 
 	@Override
-	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
+	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull FriendlyByteBuf buffer)
 	{
 		try
 		{
@@ -60,7 +60,7 @@ public class LivingDowngradeRecipeSerializer<RECIPE extends RecipeLivingDowngrad
 	}
 
 	@Override
-	public void toNetwork(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
+	public void toNetwork(@Nonnull FriendlyByteBuf buffer, @Nonnull RECIPE recipe)
 	{
 		try
 		{

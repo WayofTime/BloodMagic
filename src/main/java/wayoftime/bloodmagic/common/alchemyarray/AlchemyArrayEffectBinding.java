@@ -1,11 +1,11 @@
 package wayoftime.bloodmagic.common.alchemyarray;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.client.render.alchemyarray.BindingAlchemyCircleRenderer;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 
@@ -51,7 +51,7 @@ public class AlchemyArrayEffectBinding extends AlchemyArrayEffectCrafting
 		return false;
 	}
 
-	public void spawnLightningOnCircle(World world, BlockPos pos, int ticksActive)
+	public void spawnLightningOnCircle(Level world, BlockPos pos, int ticksActive)
 	{
 		if (ticksActive % 50 == 0)
 		{
@@ -62,7 +62,7 @@ public class AlchemyArrayEffectBinding extends AlchemyArrayEffectCrafting
 			double dispX = distance * Math.sin(angle);
 			double dispZ = -distance * Math.cos(angle);
 
-			LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
+			LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
 //			LightningBoltEntity lightning = new LightningBoltEntity(world, pos.getX() + dispX, pos.getY(), pos.getZ() + dispZ);
 			lightningboltentity.setPos(pos.getX() + dispX, pos.getY(), pos.getZ() + dispZ);
 			lightningboltentity.setVisualOnly(true);

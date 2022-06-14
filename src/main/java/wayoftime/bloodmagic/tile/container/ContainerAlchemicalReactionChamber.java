@@ -4,20 +4,20 @@ import java.util.Optional;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 import wayoftime.bloodmagic.tile.TileAlchemicalReactionChamber;
 
-public class ContainerAlchemicalReactionChamber extends Container
+public class ContainerAlchemicalReactionChamber extends AbstractContainerMenu
 {
 	public final TileAlchemicalReactionChamber tileARC;
 
@@ -27,19 +27,19 @@ public class ContainerAlchemicalReactionChamber extends Container
 //
 //	}
 
-	public ContainerAlchemicalReactionChamber(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
+	public ContainerAlchemicalReactionChamber(int windowId, Inventory playerInventory, FriendlyByteBuf extraData)
 	{
 		this((TileAlchemicalReactionChamber) playerInventory.player.level.getBlockEntity(extraData.readBlockPos()), windowId, playerInventory);
 	}
 
-	public ContainerAlchemicalReactionChamber(@Nullable TileAlchemicalReactionChamber tile, int windowId, PlayerInventory playerInventory)
+	public ContainerAlchemicalReactionChamber(@Nullable TileAlchemicalReactionChamber tile, int windowId, Inventory playerInventory)
 	{
 		super(BloodMagicBlocks.ARC_CONTAINER.get(), windowId);
 		this.tileARC = tile;
 		this.setup(playerInventory, tile);
 	}
 
-	public void setup(PlayerInventory inventory, IInventory tileARC)
+	public void setup(Inventory inventory, Container tileARC)
 	{
 		this.addSlot(new SlotARCTool(tileARC, TileAlchemicalReactionChamber.ARC_TOOL_SLOT, 35, 51));
 		for (int i = 0; i < TileAlchemicalReactionChamber.NUM_OUTPUTS; i++)
@@ -67,7 +67,7 @@ public class ContainerAlchemicalReactionChamber extends Container
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index)
+	public ItemStack quickMoveStack(Player playerIn, int index)
 	{
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
@@ -135,14 +135,14 @@ public class ContainerAlchemicalReactionChamber extends Container
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity playerIn)
+	public boolean stillValid(Player playerIn)
 	{
 		return this.tileARC.stillValid(playerIn);
 	}
 
 	private class SlotARCTool extends Slot
 	{
-		public SlotARCTool(IInventory inventory, int slotIndex, int x, int y)
+		public SlotARCTool(Container inventory, int slotIndex, int x, int y)
 		{
 			super(inventory, slotIndex, x, y);
 		}
@@ -158,7 +158,7 @@ public class ContainerAlchemicalReactionChamber extends Container
 	{
 		private final boolean needsFullBucket;
 
-		public SlotBucket(IInventory inventory, int slotIndex, int x, int y, boolean needsFullBucket)
+		public SlotBucket(Container inventory, int slotIndex, int x, int y, boolean needsFullBucket)
 		{
 			super(inventory, slotIndex, x, y);
 			this.needsFullBucket = needsFullBucket;
@@ -182,7 +182,7 @@ public class ContainerAlchemicalReactionChamber extends Container
 
 	private class SlotOutput extends Slot
 	{
-		public SlotOutput(IInventory inventory, int slotIndex, int x, int y)
+		public SlotOutput(Container inventory, int slotIndex, int x, int y)
 		{
 			super(inventory, slotIndex, x, y);
 		}

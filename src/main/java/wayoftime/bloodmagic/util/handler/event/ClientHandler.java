@@ -4,39 +4,39 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.renderer.Atlases;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.Camera;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.AtlasTexture;
+import com.mojang.blaze3d.vertex.Tesselator;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.inventory.container.PlayerContainer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import com.mojang.math.Matrix4f;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -101,7 +101,7 @@ public class ClientHandler
 
 	public static void bindAtlas()
 	{
-		mc().getTextureManager().bind(PlayerContainer.BLOCK_ATLAS);
+		mc().getTextureManager().bind(InventoryMenu.BLOCK_ATLAS);
 	}
 
 	public static ResourceLocation getResource(String path)
@@ -114,7 +114,7 @@ public class ClientHandler
 
 	public static TextureAtlasSprite getSprite(ResourceLocation rl)
 	{
-		return mc().getModelManager().getAtlas(PlayerContainer.BLOCK_ATLAS).getSprite(rl);
+		return mc().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).getSprite(rl);
 	}
 
 	@SubscribeEvent
@@ -142,8 +142,8 @@ public class ClientHandler
 	@SubscribeEvent
 	public static void render(RenderWorldLastEvent event)
 	{
-		ClientPlayerEntity player = minecraft.player;
-		World world = player.getCommandSenderWorld();
+		LocalPlayer player = minecraft.player;
+		Level world = player.getCommandSenderWorld();
 
 		if (mrsHoloTile != null)
 		{
@@ -151,8 +151,8 @@ public class ClientHandler
 			{
 				if (mrsHoloDisplay)
 				{
-					IRenderTypeBuffer.Impl buffers = Minecraft.getInstance().renderBuffers().bufferSource();
-					MatrixStack stack = event.getMatrixStack();
+					MultiBufferSource.BufferSource buffers = Minecraft.getInstance().renderBuffers().bufferSource();
+					PoseStack stack = event.getMatrixStack();
 					renderRitualStones(stack, buffers, mrsHoloTile, event.getPartialTicks());
 					RenderSystem.disableDepthTest();
 					buffers.endBatch();
@@ -170,8 +170,8 @@ public class ClientHandler
 			{
 				if (mrsRangeDisplay)
 				{
-					IRenderTypeBuffer.Impl buffers = Minecraft.getInstance().renderBuffers().bufferSource();
-					MatrixStack stack = event.getMatrixStack();
+					MultiBufferSource.BufferSource buffers = Minecraft.getInstance().renderBuffers().bufferSource();
+					PoseStack stack = event.getMatrixStack();
 					renderRangeHologram(stack, buffers, mrsRangeTile, event.getPartialTicks());
 					RenderSystem.disableDepthTest();
 					buffers.endBatch();
@@ -183,32 +183,32 @@ public class ClientHandler
 			}
 		}
 
-		if (minecraft.hitResult == null || minecraft.hitResult.getType() != RayTraceResult.Type.BLOCK)
+		if (minecraft.hitResult == null || minecraft.hitResult.getType() != HitResult.Type.BLOCK)
 			return;
 
-		TileEntity tileEntity = world.getBlockEntity(((BlockRayTraceResult) minecraft.hitResult).getBlockPos());
+		BlockEntity tileEntity = world.getBlockEntity(((BlockHitResult) minecraft.hitResult).getBlockPos());
 
 		if (tileEntity instanceof TileMasterRitualStone && !player.getMainHandItem().isEmpty() && player.getMainHandItem().getItem() instanceof ItemRitualDiviner)
 		{
-			IRenderTypeBuffer.Impl buffers = Minecraft.getInstance().renderBuffers().bufferSource();
-			MatrixStack stack = event.getMatrixStack();
+			MultiBufferSource.BufferSource buffers = Minecraft.getInstance().renderBuffers().bufferSource();
+			PoseStack stack = event.getMatrixStack();
 			renderRitualStones(stack, buffers, player, event.getPartialTicks());
 			RenderSystem.disableDepthTest();
 			buffers.endBatch();
 		}
 	}
 
-	private static TextureAtlasSprite forName(AtlasTexture textureMap, String name, String dir)
+	private static TextureAtlasSprite forName(TextureAtlas textureMap, String name, String dir)
 	{
 		return textureMap.getSprite(new ResourceLocation(BloodMagic.MODID + dir + "/" + name));
 	}
 
-	private static void renderRitualStones(MatrixStack stack, IRenderTypeBuffer renderer, ClientPlayerEntity player, float partialTicks)
+	private static void renderRitualStones(PoseStack stack, MultiBufferSource renderer, LocalPlayer player, float partialTicks)
 	{
-		ActiveRenderInfo activerenderinfo = Minecraft.getInstance().gameRenderer.getMainCamera();
-		Vector3d eyePos = activerenderinfo.getPosition();
-		IVertexBuilder buffer = renderer.getBuffer(Atlases.translucentCullBlockSheet());
-		World world = player.getCommandSenderWorld();
+		Camera activerenderinfo = Minecraft.getInstance().gameRenderer.getMainCamera();
+		Vec3 eyePos = activerenderinfo.getPosition();
+		VertexConsumer buffer = renderer.getBuffer(Sheets.translucentCullBlockSheet());
+		Level world = player.getCommandSenderWorld();
 		ItemRitualDiviner ritualDiviner = (ItemRitualDiviner) player.inventory.getSelected().getItem();
 		Direction direction = ritualDiviner.getDirection(player.inventory.getSelected());
 		Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(ritualDiviner.getCurrentRitual(player.inventory.getSelected()));
@@ -217,7 +217,7 @@ public class ClientHandler
 			return;
 
 		BlockPos vec3, vX;
-		vec3 = ((BlockRayTraceResult) minecraft.hitResult).getBlockPos();
+		vec3 = ((BlockHitResult) minecraft.hitResult).getBlockPos();
 
 		List<RitualComponent> components = Lists.newArrayList();
 		ritual.gatherComponents(components::add);
@@ -268,13 +268,13 @@ public class ClientHandler
 		}
 	}
 
-	public static void renderRitualStones(MatrixStack stack, IRenderTypeBuffer renderer, TileMasterRitualStone masterRitualStone, float partialTicks)
+	public static void renderRitualStones(PoseStack stack, MultiBufferSource renderer, TileMasterRitualStone masterRitualStone, float partialTicks)
 	{
-		ActiveRenderInfo activerenderinfo = Minecraft.getInstance().gameRenderer.getMainCamera();
-		Vector3d eyePos = activerenderinfo.getPosition();
-		IVertexBuilder buffer = renderer.getBuffer(Atlases.translucentCullBlockSheet());
-		ClientPlayerEntity player = minecraft.player;
-		World world = player.getCommandSenderWorld();
+		Camera activerenderinfo = Minecraft.getInstance().gameRenderer.getMainCamera();
+		Vec3 eyePos = activerenderinfo.getPosition();
+		VertexConsumer buffer = renderer.getBuffer(Sheets.translucentCullBlockSheet());
+		LocalPlayer player = minecraft.player;
+		Level world = player.getCommandSenderWorld();
 		Direction direction = mrsHoloDirection;
 		Ritual ritual = mrsHoloRitual;
 
@@ -337,13 +337,13 @@ public class ClientHandler
 		}
 	}
 
-	public static void renderRangeHologram(MatrixStack stack, IRenderTypeBuffer renderer, TileMasterRitualStone masterRitualStone, float partialTicks)
+	public static void renderRangeHologram(PoseStack stack, MultiBufferSource renderer, TileMasterRitualStone masterRitualStone, float partialTicks)
 	{
-		ActiveRenderInfo activerenderinfo = Minecraft.getInstance().gameRenderer.getMainCamera();
-		Vector3d eyePos = activerenderinfo.getPosition();
-		IVertexBuilder buffer = renderer.getBuffer(Atlases.translucentCullBlockSheet());
-		ClientPlayerEntity player = minecraft.player;
-		World world = player.getCommandSenderWorld();
+		Camera activerenderinfo = Minecraft.getInstance().gameRenderer.getMainCamera();
+		Vec3 eyePos = activerenderinfo.getPosition();
+		VertexConsumer buffer = renderer.getBuffer(Sheets.translucentCullBlockSheet());
+		LocalPlayer player = minecraft.player;
+		Level world = player.getCommandSenderWorld();
 
 		if (!player.getMainHandItem().isEmpty() && player.getMainHandItem().getItem() instanceof ItemRitualReader)
 		{
@@ -361,7 +361,7 @@ public class ClientHandler
 				stack.pushPose();
 				BlockPos vec3;
 				vec3 = masterRitualStone.getBlockPos();
-				AxisAlignedBB aabb = descriptor.getAABB(vec3);
+				AABB aabb = descriptor.getAABB(vec3);
 				double sizeOffset = -1d / 16d;
 				if (aabb.contains(eyePos))
 				{
@@ -385,7 +385,7 @@ public class ClientHandler
 	private static Model3D getBlockModel(ResourceLocation rl)
 	{
 		Model3D model = new BloodMagicRenderer.Model3D();
-		model.setTexture(Minecraft.getInstance().getTextureAtlas(AtlasTexture.LOCATION_BLOCKS).apply(rl));
+		model.setTexture(Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(rl));
 		model.minX = 0;
 		model.minY = 0;
 		model.minZ = 0;
@@ -399,7 +399,7 @@ public class ClientHandler
 	private static Model3D getBlockModelWithSize(ResourceLocation rl, double maxX, double maxY, double maxZ)
 	{
 		Model3D model = new BloodMagicRenderer.Model3D();
-		model.setTexture(Minecraft.getInstance().getTextureAtlas(AtlasTexture.LOCATION_BLOCKS).apply(rl));
+		model.setTexture(Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(rl));
 		model.minX = 0;
 		model.minY = 0;
 		model.minZ = 0;
@@ -438,17 +438,17 @@ public class ClientHandler
 		mrsRangeTile = null;
 	}
 
-	public static void handleGuiTank(MatrixStack transform, IFluidTank tank, int x, int y, int w, int h, int oX, int oY, int oW, int oH, int mX, int mY, String originalTexture, List<ITextComponent> tooltip)
+	public static void handleGuiTank(PoseStack transform, IFluidTank tank, int x, int y, int w, int h, int oX, int oY, int oW, int oH, int mX, int mY, String originalTexture, List<Component> tooltip)
 	{
 		handleGuiTank(transform, tank.getFluid(), tank.getCapacity(), x, y, w, h, oX, oY, oW, oH, mX, mY, originalTexture, tooltip);
 	}
 
-	public static void handleGuiTank(MatrixStack transform, FluidStack fluid, int capacity, int x, int y, int w, int h, int oX, int oY, int oW, int oH, int mX, int mY, String originalTexture, List<ITextComponent> tooltip)
+	public static void handleGuiTank(PoseStack transform, FluidStack fluid, int capacity, int x, int y, int w, int h, int oX, int oY, int oW, int oH, int mX, int mY, String originalTexture, List<Component> tooltip)
 	{
 		if (tooltip == null)
 		{
 			transform.pushPose();
-			IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.immediate(Tessellator.getInstance().getBuilder());
+			MultiBufferSource.BufferSource buffer = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
 			if (fluid != null && fluid.getFluid() != null)
 			{
 				int fluidHeight = (int) (h * (fluid.getAmount() / (float) capacity));
@@ -468,14 +468,14 @@ public class ClientHandler
 		}
 	}
 
-	public static void drawRepeatedFluidSpriteGui(IRenderTypeBuffer buffer, MatrixStack transform, FluidStack fluid, float x, float y, float w, float h)
+	public static void drawRepeatedFluidSpriteGui(MultiBufferSource buffer, PoseStack transform, FluidStack fluid, float x, float y, float w, float h)
 	{
-		RenderType renderType = BMRenderTypes.getGui(PlayerContainer.BLOCK_ATLAS);
-		IVertexBuilder builder = buffer.getBuffer(renderType);
+		RenderType renderType = BMRenderTypes.getGui(InventoryMenu.BLOCK_ATLAS);
+		VertexConsumer builder = buffer.getBuffer(renderType);
 		drawRepeatedFluidSprite(builder, transform, fluid, x, y, w, h);
 	}
 
-	public static void drawRepeatedFluidSprite(IVertexBuilder builder, MatrixStack transform, FluidStack fluid, float x, float y, float w, float h)
+	public static void drawRepeatedFluidSprite(VertexConsumer builder, PoseStack transform, FluidStack fluid, float x, float y, float w, float h)
 	{
 		TextureAtlasSprite sprite = getSprite(fluid.getFluid().getAttributes().getStillTexture(fluid));
 		int col = fluid.getFluid().getAttributes().getColor(fluid);
@@ -485,7 +485,7 @@ public class ClientHandler
 			drawRepeatedSprite(builder, transform, x, y, w, h, iW, iH, sprite.getU0(), sprite.getU1(), sprite.getV0(), sprite.getV1(), (col >> 16 & 255) / 255.0f, (col >> 8 & 255) / 255.0f, (col & 255) / 255.0f, 1);
 	}
 
-	public static void drawRepeatedSprite(IVertexBuilder builder, MatrixStack transform, float x, float y, float w, float h, int iconWidth, int iconHeight, float uMin, float uMax, float vMin, float vMax, float r, float g, float b, float alpha)
+	public static void drawRepeatedSprite(VertexConsumer builder, PoseStack transform, float x, float y, float w, float h, int iconWidth, int iconHeight, float uMin, float uMax, float vMin, float vMax, float r, float g, float b, float alpha)
 	{
 		int iterMaxW = (int) (w / iconWidth);
 		int iterMaxH = (int) (h / iconHeight);
@@ -509,7 +509,7 @@ public class ClientHandler
 		}
 	}
 
-	public static void drawTexturedRect(IVertexBuilder builder, MatrixStack transform, float x, float y, float w, float h, float r, float g, float b, float alpha, float u0, float u1, float v0, float v1)
+	public static void drawTexturedRect(VertexConsumer builder, PoseStack transform, float x, float y, float w, float h, float r, float g, float b, float alpha, float u0, float u1, float v0, float v1)
 	{
 		Matrix4f mat = transform.last().pose();
 		builder.vertex(mat, x, y + h, 0).color(r, g, b, alpha).uv(u0, v1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xf000f0).normal(1, 1, 1).endVertex();
@@ -518,45 +518,45 @@ public class ClientHandler
 		builder.vertex(mat, x, y, 0).color(r, g, b, alpha).uv(u0, v0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).normal(1, 1, 1).endVertex();
 	}
 
-	public static void drawTexturedRect(IVertexBuilder builder, MatrixStack transform, int x, int y, int w, int h, float picSize, int u0, int u1, int v0, int v1)
+	public static void drawTexturedRect(VertexConsumer builder, PoseStack transform, int x, int y, int w, int h, float picSize, int u0, int u1, int v0, int v1)
 	{
 		drawTexturedRect(builder, transform, x, y, w, h, 1, 1, 1, 1, u0 / picSize, u1 / picSize, v0 / picSize, v1 / picSize);
 	}
 
-	public static void addFluidTooltip(FluidStack fluid, List<ITextComponent> tooltip, int tankCapacity)
+	public static void addFluidTooltip(FluidStack fluid, List<Component> tooltip, int tankCapacity)
 	{
 		if (!fluid.isEmpty())
 			tooltip.add(applyFormat(fluid.getDisplayName(), fluid.getFluid().getAttributes().getRarity(fluid).color));
 		else
-			tooltip.add(new TranslationTextComponent("gui.bloodmagic.empty"));
+			tooltip.add(new TranslatableComponent("gui.bloodmagic.empty"));
 //		if (fluid.getFluid() instanceof IEFluid)
 //			((IEFluid) fluid.getFluid()).addTooltipInfo(fluid, null, tooltip);
 
 		if (mc().options.advancedItemTooltips && !fluid.isEmpty())
 		{
 			if (!Screen.hasShiftDown())
-				tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.holdShiftForInfo"));
+				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.holdShiftForInfo"));
 			else
 			{
 				// TODO translation keys
-				tooltip.add(applyFormat(new StringTextComponent("Fluid Registry: " + fluid.getFluid().getRegistryName()), TextFormatting.DARK_GRAY));
-				tooltip.add(applyFormat(new StringTextComponent("Density: " + fluid.getFluid().getAttributes().getDensity(fluid)), TextFormatting.DARK_GRAY));
-				tooltip.add(applyFormat(new StringTextComponent("Temperature: " + fluid.getFluid().getAttributes().getTemperature(fluid)), TextFormatting.DARK_GRAY));
-				tooltip.add(applyFormat(new StringTextComponent("Viscosity: " + fluid.getFluid().getAttributes().getViscosity(fluid)), TextFormatting.DARK_GRAY));
-				tooltip.add(applyFormat(new StringTextComponent("NBT Data: " + fluid.getTag()), TextFormatting.DARK_GRAY));
+				tooltip.add(applyFormat(new TextComponent("Fluid Registry: " + fluid.getFluid().getRegistryName()), ChatFormatting.DARK_GRAY));
+				tooltip.add(applyFormat(new TextComponent("Density: " + fluid.getFluid().getAttributes().getDensity(fluid)), ChatFormatting.DARK_GRAY));
+				tooltip.add(applyFormat(new TextComponent("Temperature: " + fluid.getFluid().getAttributes().getTemperature(fluid)), ChatFormatting.DARK_GRAY));
+				tooltip.add(applyFormat(new TextComponent("Viscosity: " + fluid.getFluid().getAttributes().getViscosity(fluid)), ChatFormatting.DARK_GRAY));
+				tooltip.add(applyFormat(new TextComponent("NBT Data: " + fluid.getTag()), ChatFormatting.DARK_GRAY));
 			}
 		}
 
 		if (tankCapacity > 0)
-			tooltip.add(applyFormat(new StringTextComponent(fluid.getAmount() + "/" + tankCapacity + "mB"), TextFormatting.GRAY));
+			tooltip.add(applyFormat(new TextComponent(fluid.getAmount() + "/" + tankCapacity + "mB"), ChatFormatting.GRAY));
 		else
-			tooltip.add(applyFormat(new StringTextComponent(fluid.getAmount() + "mB"), TextFormatting.GRAY));
+			tooltip.add(applyFormat(new TextComponent(fluid.getAmount() + "mB"), ChatFormatting.GRAY));
 	}
 
-	public static IFormattableTextComponent applyFormat(ITextComponent component, TextFormatting... color)
+	public static MutableComponent applyFormat(Component component, ChatFormatting... color)
 	{
 		Style style = component.getStyle();
-		for (TextFormatting format : color) style = style.applyFormat(format);
+		for (ChatFormatting format : color) style = style.applyFormat(format);
 		return component.copy().setStyle(style);
 	}
 

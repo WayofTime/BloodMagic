@@ -2,13 +2,13 @@ package wayoftime.bloodmagic.recipe;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 
@@ -73,7 +73,7 @@ public class RecipeAlchemyArray extends BloodMagicRecipe
 	}
 
 	@Override
-	public void write(PacketBuffer buffer)
+	public void write(FriendlyByteBuf buffer)
 	{
 		if (texture != null)
 		{
@@ -90,13 +90,13 @@ public class RecipeAlchemyArray extends BloodMagicRecipe
 	}
 
 	@Override
-	public IRecipeSerializer<RecipeAlchemyArray> getSerializer()
+	public RecipeSerializer<RecipeAlchemyArray> getSerializer()
 	{
 		return BloodMagicRecipeSerializers.ARRAY.getRecipeSerializer();
 	}
 
 	@Override
-	public IRecipeType<RecipeAlchemyArray> getType()
+	public RecipeType<RecipeAlchemyArray> getType()
 	{
 		return BloodMagicRecipeType.ARRAY;
 	}

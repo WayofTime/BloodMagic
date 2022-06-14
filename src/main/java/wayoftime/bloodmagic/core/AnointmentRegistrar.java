@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.anointment.Anointment;
 import wayoftime.bloodmagic.common.registration.impl.AnointmentDeferredRegister;

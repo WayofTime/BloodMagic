@@ -1,13 +1,13 @@
 package wayoftime.bloodmagic.structures;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import wayoftime.bloodmagic.BloodMagic;
 
 public class ItemDungeonTester extends Item
@@ -18,9 +18,9 @@ public class ItemDungeonTester extends Item
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
-		if (!world.isClientSide && world instanceof ServerWorld)
+		if (!world.isClientSide && world instanceof ServerLevel)
 		{
 //			System.out.println("Test");
 //			DungeonTester.testDungeonElementWithOutput((ServerWorld) world, player.getPosition());

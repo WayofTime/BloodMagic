@@ -2,17 +2,17 @@ package wayoftime.bloodmagic.structures;
 
 import java.util.Random;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 
 public class DungeonTester
 {
-	public static void testDungeonGeneration(ServerWorld world, BlockPos pos)
+	public static void testDungeonGeneration(ServerLevel world, BlockPos pos)
 	{
 
 	}
 
-	public static void testDungeonElementWithOutput(ServerWorld world, BlockPos pos)
+	public static void testDungeonElementWithOutput(ServerLevel world, BlockPos pos)
 	{
 		Dungeon.placeStructureAtPosition(new Random(), world, pos);
 //		ResourceLocation resource = new ResourceLocation(BloodMagic.MODID, "t_corridor");

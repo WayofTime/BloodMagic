@@ -7,7 +7,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -17,9 +17,9 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.recipe.RecipeARC;
@@ -106,7 +106,7 @@ public class ARCRecipeCategory implements IRecipeCategory<RecipeARC>
 	}
 
 	@Override
-	public void draw(RecipeARC recipe, MatrixStack matrixStack, double mouseX, double mouseY)
+	public void draw(RecipeARC recipe, PoseStack matrixStack, double mouseX, double mouseY)
 	{
 		Minecraft mc = Minecraft.getInstance();
 		double[] chanceArray = recipe.getAllOutputChances();
@@ -151,9 +151,9 @@ public class ARCRecipeCategory implements IRecipeCategory<RecipeARC>
 	}
 
 	@Override
-	public List<ITextComponent> getTooltipStrings(RecipeARC recipe, double mouseX, double mouseY)
+	public List<Component> getTooltipStrings(RecipeARC recipe, double mouseX, double mouseY)
 	{
-		List<ITextComponent> tooltip = new ArrayList<>();
+		List<Component> tooltip = new ArrayList<>();
 		FluidStack outputStack = recipe.getFluidOutput();
 		if (!outputStack.isEmpty())
 		{

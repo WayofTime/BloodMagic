@@ -3,40 +3,40 @@ package wayoftime.bloodmagic.client.screens;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
 import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.network.AlchemyTableButtonPacket;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
 import wayoftime.bloodmagic.tile.TileAlchemyTable;
 import wayoftime.bloodmagic.tile.container.ContainerAlchemyTable;
 
-import net.minecraft.client.gui.widget.button.Button.IPressable;
+import net.minecraft.client.gui.components.Button.OnPress;
 
 public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 {
 	private static final ResourceLocation background = new ResourceLocation(BloodMagic.MODID, "textures/gui/alchemytable.png");
-	private static final List<ITextComponent> orbError = new ArrayList<ITextComponent>();
-	private static final List<ITextComponent> lpError = new ArrayList<ITextComponent>();
+	private static final List<Component> orbError = new ArrayList<Component>();
+	private static final List<Component> lpError = new ArrayList<Component>();
 	public TileAlchemyTable tileTable;
 
 	private int left, top;
 
-	public ScreenAlchemyTable(ContainerAlchemyTable container, PlayerInventory playerInventory, ITextComponent title)
+	public ScreenAlchemyTable(ContainerAlchemyTable container, Inventory playerInventory, Component title)
 	{
 		super(container, playerInventory, title);
 		tileTable = container.tileTable;
@@ -44,11 +44,11 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 		this.imageHeight = 205;
 
 		orbError.clear();
-		orbError.add(new TranslationTextComponent("tooltip.bloodmagic.alchemytable.orberror.title").withStyle(TextFormatting.RED));
-		orbError.add(new TranslationTextComponent("tooltip.bloodmagic.alchemytable.orberror.text").withStyle(TextFormatting.GRAY));
+		orbError.add(new TranslatableComponent("tooltip.bloodmagic.alchemytable.orberror.title").withStyle(ChatFormatting.RED));
+		orbError.add(new TranslatableComponent("tooltip.bloodmagic.alchemytable.orberror.text").withStyle(ChatFormatting.GRAY));
 		lpError.clear();
-		lpError.add(new TranslationTextComponent("tooltip.bloodmagic.alchemytable.lperror.title").withStyle(TextFormatting.RED));
-		lpError.add(new TranslationTextComponent("tooltip.bloodmagic.alchemytable.lperror.text").withStyle(TextFormatting.GRAY));
+		lpError.add(new TranslatableComponent("tooltip.bloodmagic.alchemytable.lperror.title").withStyle(ChatFormatting.RED));
+		lpError.add(new TranslatableComponent("tooltip.bloodmagic.alchemytable.lperror.text").withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override
@@ -58,10 +58,10 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 	}
 
 	@Override
-	protected void renderLabels(MatrixStack stack, int mouseX, int mouseY)
+	protected void renderLabels(PoseStack stack, int mouseX, int mouseY)
 	{
-		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
-		this.font.draw(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
+		this.font.draw(stack, new TranslatableComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
+		this.font.draw(stack, new TranslatableComponent("container.inventory"), 8, 111, 4210752);
 	}
 
 	@Override
@@ -73,16 +73,16 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 
 		this.buttons.clear();
 //		this.buttons.add();
-		this.addButton(new Button(left + 135, top + 52, 14, 14, new StringTextComponent("D"), new DirectionalPress(tileTable, Direction.DOWN)));
-		this.addButton(new Button(left + 153, top + 52, 14, 14, new StringTextComponent("U"), new DirectionalPress(tileTable, Direction.UP)));
-		this.addButton(new Button(left + 135, top + 70, 14, 14, new StringTextComponent("N"), new DirectionalPress(tileTable, Direction.NORTH)));
-		this.addButton(new Button(left + 153, top + 70, 14, 14, new StringTextComponent("S"), new DirectionalPress(tileTable, Direction.SOUTH)));
-		this.addButton(new Button(left + 135, top + 88, 14, 14, new StringTextComponent("W"), new DirectionalPress(tileTable, Direction.WEST)));
-		this.addButton(new Button(left + 153, top + 88, 14, 14, new StringTextComponent("E"), new DirectionalPress(tileTable, Direction.EAST)));
+		this.addButton(new Button(left + 135, top + 52, 14, 14, new TextComponent("D"), new DirectionalPress(tileTable, Direction.DOWN)));
+		this.addButton(new Button(left + 153, top + 52, 14, 14, new TextComponent("U"), new DirectionalPress(tileTable, Direction.UP)));
+		this.addButton(new Button(left + 135, top + 70, 14, 14, new TextComponent("N"), new DirectionalPress(tileTable, Direction.NORTH)));
+		this.addButton(new Button(left + 153, top + 70, 14, 14, new TextComponent("S"), new DirectionalPress(tileTable, Direction.SOUTH)));
+		this.addButton(new Button(left + 135, top + 88, 14, 14, new TextComponent("W"), new DirectionalPress(tileTable, Direction.WEST)));
+		this.addButton(new Button(left + 153, top + 88, 14, 14, new TextComponent("E"), new DirectionalPress(tileTable, Direction.EAST)));
 	}
 
 	@Override
-	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		getMinecraft().getTextureManager().bind(background);
@@ -178,16 +178,16 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 	{
 		private static final int BUTTON_TEX_X = 200, BUTTON_TEX_Y = 60;
 
-		public DirectionalButton(int x, int y, int width, int height, ITextComponent title, IPressable pressedAction)
+		public DirectionalButton(int x, int y, int width, int height, Component title, OnPress pressedAction)
 		{
 			super(x, y, width, height, title, pressedAction);
 		}
 
 		@Override
-		public void renderButton(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks)
+		public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks)
 		{
 			Minecraft minecraft = Minecraft.getInstance();
-			FontRenderer fontrenderer = minecraft.font;
+			Font fontrenderer = minecraft.font;
 			minecraft.getTextureManager().bind(WIDGETS_LOCATION);
 
 			// Vanilla's method
@@ -234,7 +234,7 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 		}
 	}
 
-	public class DirectionalPress implements Button.IPressable
+	public class DirectionalPress implements Button.OnPress
 	{
 		private final TileAlchemyTable table;
 		private final Direction direction;

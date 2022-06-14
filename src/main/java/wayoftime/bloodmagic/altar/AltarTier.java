@@ -5,7 +5,7 @@ import java.util.function.Consumer;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 
 public enum AltarTier
 {

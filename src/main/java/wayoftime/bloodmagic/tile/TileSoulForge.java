@@ -3,17 +3,17 @@ package wayoftime.bloodmagic.tile;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ObjectHolder;
@@ -28,10 +28,10 @@ import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
 import wayoftime.bloodmagic.tile.container.ContainerSoulForge;
 import wayoftime.bloodmagic.util.Constants;
 
-public class TileSoulForge extends TileInventory implements ITickableTileEntity, INamedContainerProvider, IDemonWillConduit
+public class TileSoulForge extends TileInventory implements TickableBlockEntity, MenuProvider, IDemonWillConduit
 {
 	@ObjectHolder("bloodmagic:soulforge")
-	public static TileEntityType<TileSoulForge> TYPE;
+	public static BlockEntityType<TileSoulForge> TYPE;
 
 	public static final int ticksRequired = 100;
 	public static final double worldWillTransferRate = 1;
@@ -43,7 +43,7 @@ public class TileSoulForge extends TileInventory implements ITickableTileEntity,
 
 	public int burnTime = 0;
 
-	public TileSoulForge(TileEntityType<?> type)
+	public TileSoulForge(BlockEntityType<?> type)
 	{
 		super(type, 6, "soulforge");
 	}
@@ -54,7 +54,7 @@ public class TileSoulForge extends TileInventory implements ITickableTileEntity,
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tag)
+	public void deserialize(CompoundTag tag)
 	{
 		super.deserialize(tag);
 
@@ -62,7 +62,7 @@ public class TileSoulForge extends TileInventory implements ITickableTileEntity,
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tag)
+	public CompoundTag serialize(CompoundTag tag)
 	{
 		super.serialize(tag);
 
@@ -70,7 +70,7 @@ public class TileSoulForge extends TileInventory implements ITickableTileEntity,
 		return tag;
 	}
 
-	public final IIntArray TileData = new IIntArray()
+	public final ContainerData TileData = new ContainerData()
 	{
 		@Override
 		public int get(int index)
@@ -237,16 +237,16 @@ public class TileSoulForge extends TileInventory implements ITickableTileEntity,
 	}
 
 	@Override
-	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_)
+	public AbstractContainerMenu createMenu(int p_createMenu_1_, Inventory p_createMenu_2_, Player p_createMenu_3_)
 	{
 		assert level != null;
 		return new ContainerSoulForge(this, TileData, p_createMenu_1_, p_createMenu_2_);
 	}
 
 	@Override
-	public ITextComponent getDisplayName()
+	public Component getDisplayName()
 	{
-		return new StringTextComponent("Hellfire Forge");
+		return new TextComponent("Hellfire Forge");
 	}
 
 	public boolean hasSoulGemOrSoul()

@@ -2,7 +2,7 @@ package wayoftime.bloodmagic.common.item.dungeon;
 
 import java.util.List;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.common.item.ItemBase;
 
 public abstract class ItemDungeonKeyBase extends ItemBase implements IDungeonKey

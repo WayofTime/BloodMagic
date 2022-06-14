@@ -2,18 +2,18 @@ package wayoftime.bloodmagic.tile.container;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.routing.IRoutingFilterProvider;
 import wayoftime.bloodmagic.tile.routing.TileFilteredRoutingNode;
 
-public class ContainerItemRoutingNode extends Container
+public class ContainerItemRoutingNode extends AbstractContainerMenu
 {
 //	private final IInventory tileItemRoutingNode;
 	public final TileFilteredRoutingNode tileNode;
@@ -21,19 +21,19 @@ public class ContainerItemRoutingNode extends Container
 	// private final ItemInventory itemInventory;
 	private int slotsOccupied = 1;
 
-	public ContainerItemRoutingNode(int windowId, PlayerInventory playerInventory, PacketBuffer extraData)
+	public ContainerItemRoutingNode(int windowId, Inventory playerInventory, FriendlyByteBuf extraData)
 	{
 		this((TileFilteredRoutingNode) playerInventory.player.level.getBlockEntity(extraData.readBlockPos()), windowId, playerInventory);
 	}
 
-	public ContainerItemRoutingNode(@Nullable TileFilteredRoutingNode tile, int windowId, PlayerInventory playerInventory)
+	public ContainerItemRoutingNode(@Nullable TileFilteredRoutingNode tile, int windowId, Inventory playerInventory)
 	{
 		super(BloodMagicBlocks.ROUTING_NODE_CONTAINER.get(), windowId);
 		this.tileNode = tile;
 		this.setup(playerInventory, tile);
 	}
 
-	public void setup(PlayerInventory inventory, IInventory tileForge)
+	public void setup(Inventory inventory, Container tileForge)
 	{
 //		this.addSlot(new Slot(tileTable, 0, 62, 15));
 //		this.addSlot(new Slot(tileTable, 1, 80, 51));
@@ -66,7 +66,7 @@ public class ContainerItemRoutingNode extends Container
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index)
+	public ItemStack quickMoveStack(Player playerIn, int index)
 	{
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
@@ -125,7 +125,7 @@ public class ContainerItemRoutingNode extends Container
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity playerIn)
+	public boolean stillValid(Player playerIn)
 	{
 		return this.tileNode.stillValid(playerIn);
 	}
@@ -135,7 +135,7 @@ public class ContainerItemRoutingNode extends Container
 		public ContainerItemRoutingNode container;
 		public TileFilteredRoutingNode inventory;
 
-		public SlotItemFilter(ContainerItemRoutingNode container, IInventory inventory, int slotIndex, int x, int y)
+		public SlotItemFilter(ContainerItemRoutingNode container, Container inventory, int slotIndex, int x, int y)
 		{
 			super(inventory, slotIndex, x, y);
 			this.container = container;

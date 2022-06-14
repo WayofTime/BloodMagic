@@ -11,14 +11,14 @@ import javax.annotation.Nonnull;
 
 import com.google.common.base.Preconditions;
 
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.Explosion.Mode;
-import net.minecraft.world.World;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Explosion.BlockInteraction;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.common.meteor.MeteorLayer;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
@@ -49,10 +49,10 @@ public class RecipeMeteor extends BloodMagicRecipe
 		this.layerList = layerList;
 	}
 
-	public void spawnMeteorInWorld(World world, BlockPos centerPos)
+	public void spawnMeteorInWorld(Level world, BlockPos centerPos)
 	{
 		if (explosionRadius > 0)
-			world.explode(null, centerPos.getX(), centerPos.getY(), centerPos.getZ(), explosionRadius, true, Mode.DESTROY);
+			world.explode(null, centerPos.getX(), centerPos.getY(), centerPos.getZ(), explosionRadius, true, BlockInteraction.DESTROY);
 
 		Map<Integer, MeteorLayer> layerMap = new HashMap<>();
 		for (MeteorLayer layer : layerList)
@@ -87,7 +87,7 @@ public class RecipeMeteor extends BloodMagicRecipe
 	}
 
 	@Override
-	public void write(PacketBuffer buffer)
+	public void write(FriendlyByteBuf buffer)
 	{
 		input.toNetwork(buffer);
 		buffer.writeInt(getSyphon());
@@ -103,13 +103,13 @@ public class RecipeMeteor extends BloodMagicRecipe
 	}
 
 	@Override
-	public IRecipeSerializer<? extends RecipeMeteor> getSerializer()
+	public RecipeSerializer<? extends RecipeMeteor> getSerializer()
 	{
 		return BloodMagicRecipeSerializers.METEOR.getRecipeSerializer();
 	}
 
 	@Override
-	public IRecipeType<RecipeMeteor> getType()
+	public RecipeType<RecipeMeteor> getType()
 	{
 		return BloodMagicRecipeType.METEOR;
 	}

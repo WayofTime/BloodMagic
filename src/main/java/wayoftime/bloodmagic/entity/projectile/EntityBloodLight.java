@@ -1,22 +1,22 @@
 package wayoftime.bloodmagic.entity.projectile;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.IPacket;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ItemParticleData;
-import net.minecraft.particles.ParticleTypes;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -24,19 +24,19 @@ import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 
-public class EntityBloodLight extends ProjectileItemEntity
+public class EntityBloodLight extends ThrowableItemProjectile
 {
-	public EntityBloodLight(EntityType<EntityBloodLight> p_i50159_1_, World p_i50159_2_)
+	public EntityBloodLight(EntityType<EntityBloodLight> p_i50159_1_, Level p_i50159_2_)
 	{
 		super(p_i50159_1_, p_i50159_2_);
 	}
 
-	public EntityBloodLight(World worldIn, LivingEntity throwerIn)
+	public EntityBloodLight(Level worldIn, LivingEntity throwerIn)
 	{
 		super(BloodMagicEntityTypes.BLOOD_LIGHT.getEntityType(), throwerIn, worldIn);
 	}
 
-	public EntityBloodLight(World worldIn, double x, double y, double z)
+	public EntityBloodLight(Level worldIn, double x, double y, double z)
 	{
 		super(BloodMagicEntityTypes.BLOOD_LIGHT.getEntityType(), x, y, z, worldIn);
 	}
@@ -47,7 +47,7 @@ public class EntityBloodLight extends ProjectileItemEntity
 	}
 
 	@Override
-	public IPacket<?> getAddEntityPacket()
+	public Packet<?> getAddEntityPacket()
 	{
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
@@ -56,11 +56,11 @@ public class EntityBloodLight extends ProjectileItemEntity
 	public void tick()
 	{
 		super.tick();
-		RayTraceResult raytraceresult = ProjectileHelper.getHitResult(this, this::canHitEntity);
+		HitResult raytraceresult = ProjectileUtil.getHitResult(this, this::canHitEntity);
 //		boolean flag = false;
-		if (raytraceresult.getType() == RayTraceResult.Type.BLOCK)
+		if (raytraceresult.getType() == HitResult.Type.BLOCK)
 		{
-			BlockPos blockpos = ((BlockRayTraceResult) raytraceresult).getBlockPos().relative(((BlockRayTraceResult) raytraceresult).getDirection());
+			BlockPos blockpos = ((BlockHitResult) raytraceresult).getBlockPos().relative(((BlockHitResult) raytraceresult).getDirection());
 			BlockState blockstate = this.level.getBlockState(blockpos);
 			Material material = blockstate.getMaterial();
 			if (blockstate.isAir() || blockstate.is(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable())
@@ -77,11 +77,11 @@ public class EntityBloodLight extends ProjectileItemEntity
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	private IParticleData makeParticle()
+	private ParticleOptions makeParticle()
 	{
 		ItemStack itemstack = this.getItemRaw();
-		return (IParticleData) (itemstack.isEmpty() ? ParticleTypes.LAVA
-				: new ItemParticleData(ParticleTypes.ITEM, itemstack));
+		return (ParticleOptions) (itemstack.isEmpty() ? ParticleTypes.LAVA
+				: new ItemParticleOption(ParticleTypes.ITEM, itemstack));
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class EntityBloodLight extends ProjectileItemEntity
 	{
 		if (id == 3)
 		{
-			IParticleData iparticledata = this.makeParticle();
+			ParticleOptions iparticledata = this.makeParticle();
 
 			for (int i = 0; i < 8; ++i)
 			{

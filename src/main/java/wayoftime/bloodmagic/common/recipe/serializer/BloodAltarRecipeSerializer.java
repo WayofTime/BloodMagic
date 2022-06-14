@@ -5,19 +5,19 @@ import javax.annotation.Nonnull;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
 import wayoftime.bloodmagic.recipe.RecipeBloodAltar;
 import wayoftime.bloodmagic.util.Constants;
 
 public class BloodAltarRecipeSerializer<RECIPE extends RecipeBloodAltar>
-		extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RECIPE>
+		extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RECIPE>
 {
 	private final IFactory<RECIPE> factory;
 
@@ -30,22 +30,22 @@ public class BloodAltarRecipeSerializer<RECIPE extends RecipeBloodAltar>
 	@Override
 	public RECIPE fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
 	{
-		JsonElement input = JSONUtils.isArrayNode(json, Constants.JSON.INPUT)
-				? JSONUtils.getAsJsonArray(json, Constants.JSON.INPUT)
-				: JSONUtils.getAsJsonObject(json, Constants.JSON.INPUT);
+		JsonElement input = GsonHelper.isArrayNode(json, Constants.JSON.INPUT)
+				? GsonHelper.getAsJsonArray(json, Constants.JSON.INPUT)
+				: GsonHelper.getAsJsonObject(json, Constants.JSON.INPUT);
 
 		Ingredient inputIng = Ingredient.fromJson(input);
 		ItemStack output = SerializerHelper.getItemStack(json, Constants.JSON.OUTPUT);
-		int minimumTier = JSONUtils.getAsInt(json, Constants.JSON.ALTAR_TIER);
-		int syphon = JSONUtils.getAsInt(json, Constants.JSON.ALTAR_SYPHON);
-		int consumeRate = JSONUtils.getAsInt(json, Constants.JSON.ALTAR_CONSUMPTION_RATE);
-		int drainRate = JSONUtils.getAsInt(json, Constants.JSON.ALTAR_DRAIN_RATE);
+		int minimumTier = GsonHelper.getAsInt(json, Constants.JSON.ALTAR_TIER);
+		int syphon = GsonHelper.getAsInt(json, Constants.JSON.ALTAR_SYPHON);
+		int consumeRate = GsonHelper.getAsInt(json, Constants.JSON.ALTAR_CONSUMPTION_RATE);
+		int drainRate = GsonHelper.getAsInt(json, Constants.JSON.ALTAR_DRAIN_RATE);
 
 		return this.factory.create(recipeId, inputIng, output, minimumTier, syphon, consumeRate, drainRate);
 	}
 
 	@Override
-	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
+	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull FriendlyByteBuf buffer)
 	{
 		try
 		{
@@ -65,7 +65,7 @@ public class BloodAltarRecipeSerializer<RECIPE extends RecipeBloodAltar>
 	}
 
 	@Override
-	public void toNetwork(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
+	public void toNetwork(@Nonnull FriendlyByteBuf buffer, @Nonnull RECIPE recipe)
 	{
 		try
 		{

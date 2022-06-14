@@ -3,30 +3,30 @@ package wayoftime.bloodmagic.tile;
 import java.util.List;
 import java.util.UUID;
 
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.ICommandSource;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.CommandSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector2f;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.item.ITeleposerFocus;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
@@ -36,10 +36,10 @@ import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.Utils;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 
-public class TileTeleposer extends TileInventory implements ITickableTileEntity, INamedContainerProvider, ICommandSource
+public class TileTeleposer extends TileInventory implements TickableBlockEntity, MenuProvider, CommandSource
 {
 	@ObjectHolder("bloodmagic:teleposer")
-	public static TileEntityType<TileTeleposer> TYPE;
+	public static BlockEntityType<TileTeleposer> TYPE;
 
 	int previousInput = 0;
 
@@ -48,7 +48,7 @@ public class TileTeleposer extends TileInventory implements ITickableTileEntity,
 	public static final int MAX_UNIT_COST = 1000;
 	public static final int MAX_TOTAL_COST = 10000;
 
-	public TileTeleposer(TileEntityType<?> type)
+	public TileTeleposer(BlockEntityType<?> type)
 	{
 		super(type, 1, "teleposer");
 	}
@@ -81,7 +81,7 @@ public class TileTeleposer extends TileInventory implements ITickableTileEntity,
 
 	public void initiateTeleport()
 	{
-		if (!(level instanceof ServerWorld))
+		if (!(level instanceof ServerLevel))
 		{
 			return;
 		}
@@ -91,24 +91,24 @@ public class TileTeleposer extends TileInventory implements ITickableTileEntity,
 			return;
 		}
 
-		ServerWorld serverWorld = (ServerWorld) level;
+		ServerLevel serverWorld = (ServerLevel) level;
 
 		ItemStack focusStack = getItem(FOCUS_SLOT);
 		ITeleposerFocus focusItem = (ITeleposerFocus) focusStack.getItem();
 
-		World linkedWorld = focusItem.getStoredWorld(focusStack, level);
+		Level linkedWorld = focusItem.getStoredWorld(focusStack, level);
 		BlockPos linkedPos = focusItem.getStoredPos(focusStack);
 		if (linkedWorld == null || linkedPos.equals(worldPosition))
 		{
 			return;
 		}
 
-		RegistryKey<World> linkedKey = linkedWorld.dimension();
+		ResourceKey<Level> linkedKey = linkedWorld.dimension();
 
-		TileEntity boundTile = linkedWorld.getBlockEntity(linkedPos);
+		BlockEntity boundTile = linkedWorld.getBlockEntity(linkedPos);
 		if (boundTile instanceof TileTeleposer)
 		{
-			AxisAlignedBB entityRangeOffsetBB = focusItem.getEntityRangeOffset(linkedWorld, getBlockPos());
+			AABB entityRangeOffsetBB = focusItem.getEntityRangeOffset(linkedWorld, getBlockPos());
 			if (entityRangeOffsetBB == null)
 			{
 				return;
@@ -124,8 +124,8 @@ public class TileTeleposer extends TileInventory implements ITickableTileEntity,
 
 			// Teleports players from current teleposer
 
-			AxisAlignedBB originalBB = entityRangeOffsetBB.move(getBlockPos());
-			AxisAlignedBB focusBB = entityRangeOffsetBB.move(linkedPos);
+			AABB originalBB = entityRangeOffsetBB.move(getBlockPos());
+			AABB focusBB = entityRangeOffsetBB.move(linkedPos);
 
 			List<Entity> originalEntities = level.getEntitiesOfClass(Entity.class, originalBB);
 			List<Entity> focusEntities = level.getEntitiesOfClass(Entity.class, focusBB);
@@ -145,11 +145,11 @@ public class TileTeleposer extends TileInventory implements ITickableTileEntity,
 
 			for (Entity entity : originalEntities)
 			{
-				Vector3d newPosVec = entity.position().subtract(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()).add(linkedPos.getX(), linkedPos.getY(), linkedPos.getZ());
+				Vec3 newPosVec = entity.position().subtract(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()).add(linkedPos.getX(), linkedPos.getY(), linkedPos.getZ());
 
-				if (entity instanceof PlayerEntity && !(linkedWorld.equals(level)))
+				if (entity instanceof Player && !(linkedWorld.equals(level)))
 				{
-					teleportPlayerToLocation(serverWorld, (PlayerEntity) entity, linkedKey, newPosVec.x, newPosVec.y, newPosVec.z);
+					teleportPlayerToLocation(serverWorld, (Player) entity, linkedKey, newPosVec.x, newPosVec.y, newPosVec.z);
 				} else
 				{
 					entity.teleportTo(newPosVec.x, newPosVec.y, newPosVec.z);
@@ -161,11 +161,11 @@ public class TileTeleposer extends TileInventory implements ITickableTileEntity,
 
 			for (Entity entity : focusEntities)
 			{
-				Vector3d newPosVec = entity.position().add(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()).subtract(linkedPos.getX(), linkedPos.getY(), linkedPos.getZ());
+				Vec3 newPosVec = entity.position().add(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()).subtract(linkedPos.getX(), linkedPos.getY(), linkedPos.getZ());
 
-				if (entity instanceof PlayerEntity && !(linkedWorld.equals(level)))
+				if (entity instanceof Player && !(linkedWorld.equals(level)))
 				{
-					teleportPlayerToLocation(serverWorld, (PlayerEntity) entity, level.dimension(), newPosVec.x, newPosVec.y, newPosVec.z);
+					teleportPlayerToLocation(serverWorld, (Player) entity, level.dimension(), newPosVec.x, newPosVec.y, newPosVec.z);
 				} else
 				{
 					entity.teleportTo(newPosVec.x, newPosVec.y, newPosVec.z);
@@ -186,8 +186,8 @@ public class TileTeleposer extends TileInventory implements ITickableTileEntity,
 				}
 			}
 
-			level.playSound(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.BLOCKS, 1, 1);
-			linkedWorld.playSound(null, linkedPos.getX(), linkedPos.getY(), linkedPos.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.BLOCKS, 1, 1);
+			level.playSound(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.BLOCKS, 1, 1);
+			linkedWorld.playSound(null, linkedPos.getX(), linkedPos.getY(), linkedPos.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.BLOCKS, 1, 1);
 
 			network.syphon(SoulTicket.block(level, worldPosition, Math.min((int) (uses * transportCost), MAX_TOTAL_COST)));
 		}
@@ -212,7 +212,7 @@ public class TileTeleposer extends TileInventory implements ITickableTileEntity,
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tagCompound)
+	public void deserialize(CompoundTag tagCompound)
 	{
 		super.deserialize(tagCompound);
 
@@ -220,7 +220,7 @@ public class TileTeleposer extends TileInventory implements ITickableTileEntity,
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tagCompound)
+	public CompoundTag serialize(CompoundTag tagCompound)
 	{
 		super.serialize(tagCompound);
 
@@ -230,24 +230,24 @@ public class TileTeleposer extends TileInventory implements ITickableTileEntity,
 	}
 
 	@Override
-	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_)
+	public AbstractContainerMenu createMenu(int p_createMenu_1_, Inventory p_createMenu_2_, Player p_createMenu_3_)
 	{
 		assert level != null;
 		return new ContainerTeleposer(this, p_createMenu_1_, p_createMenu_2_);
 	}
 
 	@Override
-	public ITextComponent getDisplayName()
+	public Component getDisplayName()
 	{
-		return new StringTextComponent("Teleposer");
+		return new TextComponent("Teleposer");
 	}
 
-	public CommandSource getCommandSource(ServerWorld world)
+	public CommandSourceStack getCommandSource(ServerLevel world)
 	{
-		return new CommandSource(this, new Vector3d(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()), Vector2f.ZERO, world, 2, "Teleposer", new StringTextComponent("Teleposer"), world.getServer(), (Entity) null);
+		return new CommandSourceStack(this, new Vec3(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()), Vec2.ZERO, world, 2, "Teleposer", new TextComponent("Teleposer"), world.getServer(), (Entity) null);
 	}
 
-	public void teleportPlayerToLocation(ServerWorld serverWorld, PlayerEntity player, RegistryKey<World> destination, double x, double y, double z)
+	public void teleportPlayerToLocation(ServerLevel serverWorld, Player player, ResourceKey<Level> destination, double x, double y, double z)
 	{
 //		System.out.println("Key: " + destination.getLocation());
 //		String command = "execute in bloodmagic:dungeon run teleport Dev 0 100 0";
@@ -256,7 +256,7 @@ public class TileTeleposer extends TileInventory implements ITickableTileEntity,
 		mcServer.getCommands().performCommand(getCommandSource(serverWorld), command);
 	}
 
-	public String getTextCommandForTeleport(RegistryKey<World> destination, PlayerEntity player, double posX, double posY, double posZ)
+	public String getTextCommandForTeleport(ResourceKey<Level> destination, Player player, double posX, double posY, double posZ)
 	{
 		String playerName = player.getName().getString();
 //		System.out.println("Potential player name: " + playerName);
@@ -264,7 +264,7 @@ public class TileTeleposer extends TileInventory implements ITickableTileEntity,
 	}
 
 	@Override
-	public void sendMessage(ITextComponent component, UUID senderUUID)
+	public void sendMessage(Component component, UUID senderUUID)
 	{
 		// TODO Auto-generated method stub
 

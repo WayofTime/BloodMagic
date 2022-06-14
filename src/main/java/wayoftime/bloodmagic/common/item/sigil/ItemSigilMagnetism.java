@@ -2,12 +2,12 @@ package wayoftime.bloodmagic.common.item.sigil;
 
 import java.util.List;
 
-import net.minecraft.entity.item.ExperienceOrbEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 
 public class ItemSigilMagnetism extends ItemSigilToggleableBase
@@ -18,7 +18,7 @@ public class ItemSigilMagnetism extends ItemSigilToggleableBase
 	}
 
 	@Override
-	public void onSigilUpdate(ItemStack stack, World world, PlayerEntity player, int itemSlot, boolean isSelected)
+	public void onSigilUpdate(ItemStack stack, Level world, Player player, int itemSlot, boolean isSelected)
 	{
 		if (PlayerHelper.isFakePlayer(player))
 			return;
@@ -28,8 +28,8 @@ public class ItemSigilMagnetism extends ItemSigilToggleableBase
 		float posX = Math.round(player.getX());
 		float posY = (float) (player.getY() - player.getEyeHeight());
 		float posZ = Math.round(player.getZ());
-		List<ItemEntity> entities = player.getCommandSenderWorld().getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).inflate(range, verticalRange, range));
-		List<ExperienceOrbEntity> xpOrbs = player.getCommandSenderWorld().getEntitiesOfClass(ExperienceOrbEntity.class, new AxisAlignedBB(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).inflate(range, verticalRange, range));
+		List<ItemEntity> entities = player.getCommandSenderWorld().getEntitiesOfClass(ItemEntity.class, new AABB(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).inflate(range, verticalRange, range));
+		List<ExperienceOrb> xpOrbs = player.getCommandSenderWorld().getEntitiesOfClass(ExperienceOrb.class, new AABB(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).inflate(range, verticalRange, range));
 
 		for (ItemEntity entity : entities)
 		{
@@ -39,7 +39,7 @@ public class ItemSigilMagnetism extends ItemSigilToggleableBase
 			}
 		}
 
-		for (ExperienceOrbEntity xpOrb : xpOrbs)
+		for (ExperienceOrb xpOrb : xpOrbs)
 		{
 			if (xpOrb != null && !world.isClientSide)
 			{

@@ -1,6 +1,6 @@
 package wayoftime.bloodmagic.common.recipe;
 
-import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.world.item.crafting.RecipeType;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.recipe.RecipeARC;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
@@ -13,12 +13,12 @@ import wayoftime.bloodmagic.recipe.flask.RecipePotionFlaskBase;
 
 public class BloodMagicRecipeType
 {
-	public static final IRecipeType<RecipeBloodAltar> ALTAR = IRecipeType.register(BloodMagic.MODID + ":altar");
-	public static final IRecipeType<RecipeAlchemyArray> ARRAY = IRecipeType.register(BloodMagic.MODID + ":array");
-	public static final IRecipeType<RecipeTartaricForge> TARTARICFORGE = IRecipeType.register(BloodMagic.MODID + ":soulforge");
-	public static final IRecipeType<RecipeARC> ARC = IRecipeType.register(BloodMagic.MODID + ":arc");
-	public static final IRecipeType<RecipeAlchemyTable> ALCHEMYTABLE = IRecipeType.register(BloodMagic.MODID + ":alchemytable");
-	public static final IRecipeType<RecipeLivingDowngrade> LIVINGDOWNGRADE = IRecipeType.register(BloodMagic.MODID + ":livingdowngrade");
-	public static final IRecipeType<RecipePotionFlaskBase> POTIONFLASK = IRecipeType.register(BloodMagic.MODID + ":potionflask");
-	public static final IRecipeType<RecipeMeteor> METEOR = IRecipeType.register(BloodMagic.MODID + ":meteor");
+	public static final RecipeType<RecipeBloodAltar> ALTAR = RecipeType.register(BloodMagic.MODID + ":altar");
+	public static final RecipeType<RecipeAlchemyArray> ARRAY = RecipeType.register(BloodMagic.MODID + ":array");
+	public static final RecipeType<RecipeTartaricForge> TARTARICFORGE = RecipeType.register(BloodMagic.MODID + ":soulforge");
+	public static final RecipeType<RecipeARC> ARC = RecipeType.register(BloodMagic.MODID + ":arc");
+	public static final RecipeType<RecipeAlchemyTable> ALCHEMYTABLE = RecipeType.register(BloodMagic.MODID + ":alchemytable");
+	public static final RecipeType<RecipeLivingDowngrade> LIVINGDOWNGRADE = RecipeType.register(BloodMagic.MODID + ":livingdowngrade");
+	public static final RecipeType<RecipePotionFlaskBase> POTIONFLASK = RecipeType.register(BloodMagic.MODID + ":potionflask");
+	public static final RecipeType<RecipeMeteor> METEOR = RecipeType.register(BloodMagic.MODID + ":meteor");
 }

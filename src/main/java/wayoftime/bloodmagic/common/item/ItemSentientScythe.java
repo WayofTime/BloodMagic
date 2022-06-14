@@ -10,43 +10,43 @@ import java.util.UUID;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.monster.SlimeEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.HoeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.play.server.SEntityVelocityPacket;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Slime;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
@@ -113,7 +113,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 		}
 	}
 
-	public void recalculatePowers(ItemStack stack, World world, PlayerEntity player)
+	public void recalculatePowers(ItemStack stack, Level world, Player player)
 	{
 		EnumDemonWillType type = PlayerDemonWillHandler.getLargestWillType(player);
 		double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
@@ -223,9 +223,9 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	@Override
 	public boolean onEntitySwing(ItemStack stack, LivingEntity attacker)
 	{
-		if (attacker instanceof PlayerEntity)
+		if (attacker instanceof Player)
 		{
-			PlayerEntity attackerPlayer = (PlayerEntity) attacker;
+			Player attackerPlayer = (Player) attacker;
 			this.recalculatePowers(stack, attackerPlayer.getCommandSenderWorld(), attackerPlayer);
 			EnumDemonWillType type = this.getCurrentType(stack);
 			double will = PlayerDemonWillHandler.getTotalDemonWill(type, attackerPlayer);
@@ -240,26 +240,26 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 		return false;
 	}
 
-	public void attackEntitiesInAreaExcludingEntity(ItemStack stack, PlayerEntity attacker, EnumDemonWillType type, int willBracket, LivingEntity attackedEntity)
+	public void attackEntitiesInAreaExcludingEntity(ItemStack stack, Player attacker, EnumDemonWillType type, int willBracket, LivingEntity attackedEntity)
 	{
 //		System.out.println("Is client: " + attacker.world.isRemote);
 		double verticalRange = 2;
 		double horizontalRange = 2;
 		double range = 2;
 
-		AxisAlignedBB aabb = null;
+		AABB aabb = null;
 		List<Entity> list = null;
 
 		if (attackedEntity != null)
 		{
 			aabb = attackedEntity.getBoundingBox().expandTowards(horizontalRange, verticalRange, horizontalRange);
-			list = attacker.level.getEntities(attackedEntity, aabb, EntityPredicates.ENTITY_STILL_ALIVE);
+			list = attacker.level.getEntities(attackedEntity, aabb, EntitySelector.ENTITY_STILL_ALIVE);
 		} else
 		{
-			Vector3d eyeVec = attacker.getEyePosition(1).add(attacker.getLookAngle().scale(range));
-			aabb = new AxisAlignedBB(eyeVec.x() - horizontalRange, eyeVec.y() - verticalRange, eyeVec.z() - horizontalRange, eyeVec.x() + horizontalRange, eyeVec.y() + verticalRange, eyeVec.z() + horizontalRange);
+			Vec3 eyeVec = attacker.getEyePosition(1).add(attacker.getLookAngle().scale(range));
+			aabb = new AABB(eyeVec.x() - horizontalRange, eyeVec.y() - verticalRange, eyeVec.z() - horizontalRange, eyeVec.x() + horizontalRange, eyeVec.y() + verticalRange, eyeVec.z() + horizontalRange);
 //			List<Entity> list = attacker.world.getEntitiesInAABBexcluding(attacker, aabb, EntityPredicates.IS_ALIVE);
-			list = attacker.level.getEntities(attacker, aabb, EntityPredicates.ENTITY_STILL_ALIVE);
+			list = attacker.level.getEntities(attacker, aabb, EntitySelector.ENTITY_STILL_ALIVE);
 		}
 
 		list = attacker.level.getEntitiesOfClass(LivingEntity.class, aabb);
@@ -280,7 +280,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 
 		if (attacker.isSprinting() && flag)
 		{
-			attacker.level.playSound((PlayerEntity) null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, attacker.getSoundSource(), 1.0F, 1.0F);
+			attacker.level.playSound((Player) null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, attacker.getSoundSource(), 1.0F, 1.0F);
 			++i;
 			flag1 = true;
 		}
@@ -307,14 +307,14 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 						f1 = EnchantmentHelper.getDamageBonus(stack, ((LivingEntity) targetEntity).getMobType());
 					} else
 					{
-						f1 = EnchantmentHelper.getDamageBonus(stack, CreatureAttribute.UNDEFINED);
+						f1 = EnchantmentHelper.getDamageBonus(stack, MobType.UNDEFINED);
 					}
 
 					f1 = f1 * f2;
 
 					if (f > 0.0F || f1 > 0.0F)
 					{
-						boolean flag2 = flag && attacker.fallDistance > 0.0F && !attacker.isOnGround() && !attacker.onClimbable() && !attacker.isInWater() && !attacker.hasEffect(Effects.BLINDNESS) && !attacker.isPassenger() && targetEntity instanceof LivingEntity;
+						boolean flag2 = flag && attacker.fallDistance > 0.0F && !attacker.isOnGround() && !attacker.onClimbable() && !attacker.isInWater() && !attacker.hasEffect(MobEffects.BLINDNESS) && !attacker.isPassenger() && targetEntity instanceof LivingEntity;
 						flag2 = flag2 && !attacker.isSprinting();
 						net.minecraftforge.event.entity.player.CriticalHitEvent hitResult = net.minecraftforge.common.ForgeHooks.getCriticalHit(attacker, targetEntity, flag2, flag2
 								? 1.5F
@@ -342,7 +342,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 							}
 						}
 
-						Vector3d vector3d = targetEntity.getDeltaMovement();
+						Vec3 vector3d = targetEntity.getDeltaMovement();
 						boolean flag5 = targetEntity.hurt(DamageSource.playerAttack(attacker), f);
 
 						if (flag5)
@@ -352,10 +352,10 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 							{
 								if (targetEntity instanceof LivingEntity)
 								{
-									((LivingEntity) targetEntity).knockback((float) i * 0.5F, (double) MathHelper.sin(attacker.yRot * ((float) Math.PI / 180F)), (double) (-MathHelper.cos(attacker.yRot * ((float) Math.PI / 180F))));
+									((LivingEntity) targetEntity).knockback((float) i * 0.5F, (double) Mth.sin(attacker.yRot * ((float) Math.PI / 180F)), (double) (-Mth.cos(attacker.yRot * ((float) Math.PI / 180F))));
 								} else
 								{
-									targetEntity.push((double) (-MathHelper.sin(attacker.yRot * ((float) Math.PI / 180F)) * (float) i * 0.5F), 0.1D, (double) (MathHelper.cos(attacker.yRot * ((float) Math.PI / 180F)) * (float) i * 0.5F));
+									targetEntity.push((double) (-Mth.sin(attacker.yRot * ((float) Math.PI / 180F)) * (float) i * 0.5F), 0.1D, (double) (Mth.cos(attacker.yRot * ((float) Math.PI / 180F)) * (float) i * 0.5F));
 								}
 
 							}
@@ -379,9 +379,9 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 
 							attacker.sweepAttack();
 
-							if (targetEntity instanceof ServerPlayerEntity && targetEntity.hurtMarked)
+							if (targetEntity instanceof ServerPlayer && targetEntity.hurtMarked)
 							{
-								((ServerPlayerEntity) targetEntity).connection.send(new SEntityVelocityPacket(targetEntity));
+								((ServerPlayer) targetEntity).connection.send(new ClientboundSetEntityMotionPacket(targetEntity));
 								targetEntity.hurtMarked = false;
 								targetEntity.setDeltaMovement(vector3d);
 							}
@@ -427,8 +427,8 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 								itemstack1.hurtEnemy((LivingEntity) entity, attacker);
 								if (itemstack1.isEmpty())
 								{
-									net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(attacker, copy, Hand.MAIN_HAND);
-									attacker.setItemInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
+									net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(attacker, copy, InteractionHand.MAIN_HAND);
+									attacker.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
 								}
 							}
 
@@ -441,10 +441,10 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 									targetEntity.setSecondsOnFire(j * 4);
 								}
 
-								if (attacker.level instanceof ServerWorld && f5 > 2.0F)
+								if (attacker.level instanceof ServerLevel && f5 > 2.0F)
 								{
 									int k = (int) ((double) f5 * 0.5D);
-									((ServerWorld) attacker.level).sendParticles(ParticleTypes.DAMAGE_INDICATOR, targetEntity.getX(), targetEntity.getY(0.5D), targetEntity.getZ(), k, 0.1D, 0.0D, 0.1D, 0.2D);
+									((ServerLevel) attacker.level).sendParticles(ParticleTypes.DAMAGE_INDICATOR, targetEntity.getX(), targetEntity.getY(0.5D), targetEntity.getZ(), k, 0.1D, 0.0D, 0.1D, 0.2D);
 								}
 
 								applyEffectToEntity(type, willBracket, (LivingEntity) targetEntity, attacker);
@@ -474,30 +474,30 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 
 			attacker.causeFoodExhaustion(0.1F);
 
-			attacker.level.playSound((PlayerEntity) null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, attacker.getSoundSource(), 1.0F, 1.0F);
+			attacker.level.playSound((Player) null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, attacker.getSoundSource(), 1.0F, 1.0F);
 		}
 
 		if (noDamageHit)
 		{
-			attacker.level.playSound((PlayerEntity) null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.PLAYER_ATTACK_NODAMAGE, attacker.getSoundSource(), 1.0F, 1.0F);
+			attacker.level.playSound((Player) null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.PLAYER_ATTACK_NODAMAGE, attacker.getSoundSource(), 1.0F, 1.0F);
 		}
 
 		if (strongAttackHit)
 		{
-			attacker.level.playSound((PlayerEntity) null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.PLAYER_ATTACK_STRONG, attacker.getSoundSource(), 1.0F, 1.0F);
+			attacker.level.playSound((Player) null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.PLAYER_ATTACK_STRONG, attacker.getSoundSource(), 1.0F, 1.0F);
 		}
 		if (weakAttackHit)
 		{
-			attacker.level.playSound((PlayerEntity) null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.PLAYER_ATTACK_WEAK, attacker.getSoundSource(), 1.0F, 1.0F);
+			attacker.level.playSound((Player) null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.PLAYER_ATTACK_WEAK, attacker.getSoundSource(), 1.0F, 1.0F);
 		}
 	}
 
-	public void applyEffectToEntity(EnumDemonWillType type, int willBracket, LivingEntity target, PlayerEntity attacker)
+	public void applyEffectToEntity(EnumDemonWillType type, int willBracket, LivingEntity target, Player attacker)
 	{
 		switch (type)
 		{
 		case CORROSIVE:
-			target.addEffect(new EffectInstance(Effects.WITHER, poisonTime[willBracket], poisonLevel[willBracket]));
+			target.addEffect(new MobEffectInstance(MobEffects.WITHER, poisonTime[willBracket], poisonLevel[willBracket]));
 			break;
 		case DEFAULT:
 			break;
@@ -507,7 +507,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 			if (!target.isAlive())
 			{
 				float absorption = attacker.getAbsorptionAmount();
-				attacker.addEffect(new EffectInstance(Effects.ABSORPTION, absorptionTime[willBracket], 127, true, false));
+				attacker.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, absorptionTime[willBracket], 127, true, false));
 				attacker.setAbsorptionAmount((float) Math.min(absorption + target.getMaxHealth() * 0.05f, maxAbsorptionHearts));
 			}
 			break;
@@ -520,16 +520,16 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker)
 	{
 		stack.hurtAndBreak(1, attacker, (entity) -> {
-			entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
+			entity.broadcastBreakEvent(EquipmentSlot.MAINHAND);
 		});
 
 //		if (super.hitEntity(stack, target, attacker))
 //		{
-		if (attacker instanceof PlayerEntity)
+		if (attacker instanceof Player)
 		{
 			UUID id = attacker.getUUID();
 
-			PlayerEntity attackerPlayer = (PlayerEntity) attacker;
+			Player attackerPlayer = (Player) attacker;
 
 //			System.out.println("Hit map: " + hitMap.containsKey(id));
 
@@ -562,7 +562,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		if (!tag.contains(Constants.NBT.WILL_TYPE))
 		{
@@ -576,13 +576,13 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putString(Constants.NBT.WILL_TYPE, type.toString());
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		recalculatePowers(player.getItemInHand(hand), world, player);
 
@@ -611,17 +611,17 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
 		if (!stack.hasTag())
 			return;
 
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sentientAxe.desc").withStyle(TextFormatting.GRAY));
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase(Locale.ROOT)).withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.sentientAxe.desc").withStyle(ChatFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override
-	public boolean onLeftClickEntity(ItemStack stack, PlayerEntity player, Entity entity)
+	public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity)
 	{
 		recalculatePowers(stack, player.getCommandSenderWorld(), player);
 
@@ -648,12 +648,12 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	{
 		List<ItemStack> soulList = new ArrayList<>();
 
-		if (killedEntity.getCommandSenderWorld().getDifficulty() != Difficulty.PEACEFUL && !(killedEntity instanceof IMob))
+		if (killedEntity.getCommandSenderWorld().getDifficulty() != Difficulty.PEACEFUL && !(killedEntity instanceof Enemy))
 		{
 			return soulList;
 		}
 
-		double willModifier = killedEntity instanceof SlimeEntity ? 0.67 : 1;
+		double willModifier = killedEntity instanceof Slime ? 0.67 : 1;
 
 		IDemonWill soul;
 
@@ -691,10 +691,10 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 
 	// TODO: Change attack speed.
 	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack)
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack)
 	{
 		Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create();
-		if (slot == EquipmentSlotType.MAINHAND)
+		if (slot == EquipmentSlot.MAINHAND)
 		{
 			multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", getDamageOfActivatedSword(stack), AttributeModifier.Operation.ADDITION));
 			multimap.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", this.getAttackSpeedOfSword(stack), AttributeModifier.Operation.ADDITION));
@@ -709,7 +709,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		return tag.getDouble(Constants.NBT.SOUL_SWORD_DAMAGE);
 	}
 
@@ -717,7 +717,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putDouble(Constants.NBT.SOUL_SWORD_DAMAGE, damage);
 	}
@@ -726,7 +726,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		return tag.getDouble(Constants.NBT.SOUL_SWORD_ACTIVE_DRAIN);
 	}
 
@@ -734,7 +734,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putDouble(Constants.NBT.SOUL_SWORD_ACTIVE_DRAIN, drain);
 	}
@@ -743,7 +743,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		return tag.getDouble(Constants.NBT.SOUL_SWORD_STATIC_DROP);
 	}
 
@@ -751,7 +751,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putDouble(Constants.NBT.SOUL_SWORD_STATIC_DROP, drop);
 	}
@@ -760,7 +760,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		return tag.getDouble(Constants.NBT.SOUL_SWORD_DROP);
 	}
 
@@ -768,7 +768,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putDouble(Constants.NBT.SOUL_SWORD_DROP, drop);
 	}
@@ -777,7 +777,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		return tag.getDouble(Constants.NBT.SOUL_SWORD_HEALTH);
 	}
 
@@ -785,7 +785,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putDouble(Constants.NBT.SOUL_SWORD_HEALTH, hp);
 	}
@@ -794,7 +794,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		return tag.getDouble(Constants.NBT.SOUL_SWORD_ATTACK_SPEED);
 	}
 
@@ -802,7 +802,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putDouble(Constants.NBT.SOUL_SWORD_ATTACK_SPEED, speed);
 	}
@@ -811,7 +811,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		return tag.getDouble(Constants.NBT.SOUL_SWORD_SPEED);
 	}
 
@@ -819,7 +819,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putDouble(Constants.NBT.SOUL_SWORD_SPEED, speed);
 	}
@@ -828,7 +828,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		return tag.getDouble(Constants.NBT.SOUL_SWORD_DIG_SPEED);
 	}
 
@@ -836,7 +836,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	{
 		NBTHelper.checkNBT(stack);
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putDouble(Constants.NBT.SOUL_SWORD_DIG_SPEED, speed);
 	}

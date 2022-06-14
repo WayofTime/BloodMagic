@@ -2,15 +2,15 @@ package wayoftime.bloodmagic.common.data;
 
 import java.util.function.Consumer;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.data.CookingRecipeBuilder;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.ShapedRecipeBuilder;
-import net.minecraft.data.ShapelessRecipeBuilder;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
@@ -28,15 +28,15 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 	}
 
 	@Override
-	protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer)
+	protected void buildShapelessRecipes(Consumer<FinishedRecipe> consumer)
 	{
-		IRecipeSerializer d;
+		RecipeSerializer d;
 		addVanillaRecipes(consumer);
 		addVanillaSmithingRecipes(consumer);
 		addBloodOrbRecipes(consumer);
 	}
 
-	private void addVanillaRecipes(Consumer<IFinishedRecipe> consumer)
+	private void addVanillaRecipes(Consumer<FinishedRecipe> consumer)
 	{
 //		ConditionalRecipe.builder().addRecipe(ShapedRecipeBuilder.shapedRecipe(BloodMagicItems.SACRIFICIAL_DAGGER.get()).key('g', Tags.Items.GLASS).key('G', Tags.Items.INGOTS_GOLD).key('i', Tags.Items.INGOTS_IRON).patternLine("ggg").patternLine(" Gg").patternLine("i g").addCriterion("has_glass", hasItem(Items.GLASS))::build);
 		ShapedRecipeBuilder.shaped(BloodMagicItems.CORRUPTED_DUST.get()).define('s', BloodMagicTags.TINYDUST_CORRUPTED).pattern("sss").pattern("sss").pattern("sss").unlockedBy("has_tiny", has(BloodMagicItems.CORRUPTED_DUST_TINY.get())).save(consumer, BloodMagic.rl("corrupted_dust"));
@@ -73,17 +73,17 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 		ShapedRecipeBuilder.shaped(BloodMagicItems.SYNTHETIC_POINT.get(), 2).pattern("ifi").pattern("frf").pattern("ifi").define('f', Ingredient.of(Items.ROTTEN_FLESH, Items.PORKCHOP, Items.MUTTON, Items.BEEF, Items.TROPICAL_FISH, Items.COD, Items.PUFFERFISH, Items.SALMON, Items.CHICKEN, Items.SPIDER_EYE, Items.RABBIT, BloodMagicItems.STRONG_TAU_ITEM.get())).define('i', Tags.Items.NUGGETS_IRON).define('r', Tags.Items.DUSTS_REDSTONE).unlockedBy("has_nugget", has(Items.IRON_NUGGET)).save(consumer, BloodMagic.rl("synthetic_point"));
 	}
 
-	private void addVanillaSmithingRecipes(Consumer<IFinishedRecipe> consumer)
+	private void addVanillaSmithingRecipes(Consumer<FinishedRecipe> consumer)
 	{
 		String basePath = "smelting/";
-		CookingRecipeBuilder.smelting(Ingredient.of(BloodMagicTags.DUST_IRON), Items.IRON_INGOT, 0, 200).unlockedBy("has_iron_sand", has(BloodMagicItems.IRON_SAND.get())).save(consumer, BloodMagic.rl(basePath + "ingot_iron"));
-		CookingRecipeBuilder.smelting(Ingredient.of(BloodMagicTags.DUST_GOLD), Items.GOLD_INGOT, 0, 200).unlockedBy("has_gold_sand", has(BloodMagicItems.GOLD_SAND.get())).save(consumer, BloodMagic.rl(basePath + "ingot_gold"));
-		CookingRecipeBuilder.smelting(Ingredient.of(BloodMagicTags.DUST_NETHERITE_SCRAP), Items.NETHERITE_SCRAP, 0, 200).unlockedBy("has_netherite_dust", has(BloodMagicItems.NETHERITE_SCRAP_SAND.get())).save(consumer, BloodMagic.rl(basePath + "ingot_netherite_scrap"));
-		CookingRecipeBuilder.smelting(Ingredient.of(BloodMagicTags.DUST_HELLFORGED), BloodMagicItems.HELLFORGED_INGOT.get(), 0, 200).unlockedBy("has_hellforged_dust", has(BloodMagicItems.HELLFORGED_SAND.get())).save(consumer, BloodMagic.rl(basePath + "ingot_hellforged"));
-		CookingRecipeBuilder.smelting(Ingredient.of(BloodMagicItems.PLANT_OIL.get()), BloodMagicItems.SALTPETER.get(), 0, 200).unlockedBy("has_plant_oil", has(BloodMagicItems.PLANT_OIL.get())).save(consumer, BloodMagic.rl(basePath + "saltpeter"));
+		SimpleCookingRecipeBuilder.smelting(Ingredient.of(BloodMagicTags.DUST_IRON), Items.IRON_INGOT, 0, 200).unlockedBy("has_iron_sand", has(BloodMagicItems.IRON_SAND.get())).save(consumer, BloodMagic.rl(basePath + "ingot_iron"));
+		SimpleCookingRecipeBuilder.smelting(Ingredient.of(BloodMagicTags.DUST_GOLD), Items.GOLD_INGOT, 0, 200).unlockedBy("has_gold_sand", has(BloodMagicItems.GOLD_SAND.get())).save(consumer, BloodMagic.rl(basePath + "ingot_gold"));
+		SimpleCookingRecipeBuilder.smelting(Ingredient.of(BloodMagicTags.DUST_NETHERITE_SCRAP), Items.NETHERITE_SCRAP, 0, 200).unlockedBy("has_netherite_dust", has(BloodMagicItems.NETHERITE_SCRAP_SAND.get())).save(consumer, BloodMagic.rl(basePath + "ingot_netherite_scrap"));
+		SimpleCookingRecipeBuilder.smelting(Ingredient.of(BloodMagicTags.DUST_HELLFORGED), BloodMagicItems.HELLFORGED_INGOT.get(), 0, 200).unlockedBy("has_hellforged_dust", has(BloodMagicItems.HELLFORGED_SAND.get())).save(consumer, BloodMagic.rl(basePath + "ingot_hellforged"));
+		SimpleCookingRecipeBuilder.smelting(Ingredient.of(BloodMagicItems.PLANT_OIL.get()), BloodMagicItems.SALTPETER.get(), 0, 200).unlockedBy("has_plant_oil", has(BloodMagicItems.PLANT_OIL.get())).save(consumer, BloodMagic.rl(basePath + "saltpeter"));
 	}
 
-	private void addBloodOrbRecipes(Consumer<IFinishedRecipe> consumer)
+	private void addBloodOrbRecipes(Consumer<FinishedRecipe> consumer)
 	{
 		ShapedRecipeBuilder.shaped(BloodMagicBlocks.INCENSE_ALTAR.get()).define('s', Tags.Items.STONE).define('c', Tags.Items.COBBLESTONE).define('h', Items.CHARCOAL).define('o', IngredientBloodOrb.fromOrb(BloodMagicItems.ORB_WEAK.get())).pattern("s s").pattern("shs").pattern("coc").unlockedBy("has_weak_orb", has(BloodMagicItems.WEAK_BLOOD_ORB.get())).save(consumer, BloodMagic.rl("incense_altar"));
 

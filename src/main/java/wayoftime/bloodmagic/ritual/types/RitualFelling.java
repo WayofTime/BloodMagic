@@ -7,27 +7,27 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.particles.BlockParticleData;
-import net.minecraft.particles.ParticleTypes;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import wayoftime.bloodmagic.BloodMagic;
@@ -68,12 +68,12 @@ public class RitualFelling extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
+		Level world = masterRitualStone.getWorldObj();
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
 		BlockPos masterPos = masterRitualStone.getMasterBlockPos();
 		AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
-		TileEntity tileInventory = world.getBlockEntity(chestRange.getContainedPositions(masterPos).get(0));
+		BlockEntity tileInventory = world.getBlockEntity(chestRange.getContainedPositions(masterPos).get(0));
 
 		if (world.isClientSide)
 		{
@@ -114,20 +114,20 @@ public class RitualFelling extends Ritual
 			BlockState state = world.getBlockState(currentPos);
 			placeInInventory(state, world, currentPos, inventory);
 
-			BlockItemUseContext ctx = new BlockItemUseContext(world, null, Hand.MAIN_HAND, ItemStack.EMPTY, BlockRayTraceResult.miss(new Vector3d(0, 0, 0), Direction.UP, currentPos));
-			spawnParticlesAndSound((ServerWorld) world, currentPos, state, ctx);
+			BlockPlaceContext ctx = new BlockPlaceContext(world, null, InteractionHand.MAIN_HAND, ItemStack.EMPTY, BlockHitResult.miss(new Vec3(0, 0, 0), Direction.UP, currentPos));
+			spawnParticlesAndSound((ServerLevel) world, currentPos, state, ctx);
 
 			world.setBlockAndUpdate(currentPos, Blocks.AIR.defaultBlockState());
 			blockPosIterator.remove();
 		}
 	}
 
-	public void spawnParticlesAndSound(ServerWorld world, BlockPos pos, BlockState state, BlockItemUseContext context)
+	public void spawnParticlesAndSound(ServerLevel world, BlockPos pos, BlockState state, BlockPlaceContext context)
 	{
 		SoundType soundtype = state.getSoundType(world, pos, context.getPlayer());
-		world.playSound(context.getPlayer(), pos, state.getSoundType(world, pos, context.getPlayer()).getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
+		world.playSound(context.getPlayer(), pos, state.getSoundType(world, pos, context.getPlayer()).getPlaceSound(), SoundSource.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
 
-		BlockParticleData particleData = new BlockParticleData(ParticleTypes.BLOCK, state);
+		BlockParticleOption particleData = new BlockParticleOption(ParticleTypes.BLOCK, state);
 
 		world.sendParticles(particleData, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 8, 0.2, 0.2, 0.2, 0.03);
 	}
@@ -157,14 +157,14 @@ public class RitualFelling extends Ritual
 		return new RitualFelling();
 	}
 
-	private void placeInInventory(BlockState choppedState, World world, BlockPos choppedPos, @Nullable IItemHandler inventory)
+	private void placeInInventory(BlockState choppedState, Level world, BlockPos choppedPos, @Nullable IItemHandler inventory)
 	{
 		if (inventory == null)
 			return;
 
-		LootContext.Builder lootBuilder = new LootContext.Builder((ServerWorld) world);
-		Vector3d blockCenter = new Vector3d(choppedPos.getX() + 0.5, choppedPos.getY() + 0.5, choppedPos.getZ() + 0.5);
-		List<ItemStack> silkDrops = choppedState.getDrops(lootBuilder.withParameter(LootParameters.ORIGIN, blockCenter).withParameter(LootParameters.TOOL, mockAxe));
+		LootContext.Builder lootBuilder = new LootContext.Builder((ServerLevel) world);
+		Vec3 blockCenter = new Vec3(choppedPos.getX() + 0.5, choppedPos.getY() + 0.5, choppedPos.getZ() + 0.5);
+		List<ItemStack> silkDrops = choppedState.getDrops(lootBuilder.withParameter(LootContextParams.ORIGIN, blockCenter).withParameter(LootContextParams.TOOL, mockAxe));
 
 //		ItemHandlerHelper.insertItem(inventory, stack, simulate)
 		for (ItemStack stack : silkDrops)

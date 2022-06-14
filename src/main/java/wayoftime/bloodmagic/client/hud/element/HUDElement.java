@@ -1,10 +1,10 @@
 package wayoftime.bloodmagic.client.hud.element;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.util.math.vector.Vector2f;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.client.hud.ElementRegistry;
@@ -28,7 +28,7 @@ public abstract class HUDElement
 		return true;
 	}
 
-	public abstract void draw(MatrixStack matrixStack, float partialTicks, int drawX, int drawY);
+	public abstract void draw(PoseStack matrixStack, float partialTicks, int drawX, int drawY);
 
 	public final int getWidth()
 	{
@@ -54,15 +54,15 @@ public abstract class HUDElement
 //		tessellator.draw();
 //	}
 
-	public void blit(MatrixStack matrixStack, int x, int y, int uOffset, int vOffset, int uWidth, int vHeight)
+	public void blit(PoseStack matrixStack, int x, int y, int uOffset, int vOffset, int uWidth, int vHeight)
 	{
-		AbstractGui.blit(matrixStack, x, y, this.blitOffset, (float) uOffset, (float) vOffset, uWidth, vHeight, 256, 256);
+		GuiComponent.blit(matrixStack, x, y, this.blitOffset, (float) uOffset, (float) vOffset, uWidth, vHeight, 256, 256);
 	}
 
 	@Override
 	public String toString()
 	{
-		Vector2f point = ElementRegistry.getPosition(ElementRegistry.getKey(this));
+		Vec2 point = ElementRegistry.getPosition(ElementRegistry.getKey(this));
 		return ElementRegistry.getKey(this) + "@" + point.x + "," + point.y;
 	}
 }

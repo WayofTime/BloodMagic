@@ -1,14 +1,14 @@
 package wayoftime.bloodmagic.client.render.alchemyarray;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Quaternion;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import com.mojang.math.Quaternion;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer.Model2D;
 import wayoftime.bloodmagic.client.render.RenderResizableQuadrilateral;
@@ -57,7 +57,7 @@ public class StaticAlchemyCircleRenderer extends AlchemyArrayRenderer
 //		return -0.4f;
 //	}
 
-	public void renderAt(TileAlchemyArray tileArray, double x, double y, double z, float craftTime, MatrixStack matrixStack, IRenderTypeBuffer renderer, int combinedLightIn, int combinedOverlayIn)
+	public void renderAt(TileAlchemyArray tileArray, double x, double y, double z, float craftTime, PoseStack matrixStack, MultiBufferSource renderer, int combinedLightIn, int combinedOverlayIn)
 	{
 		matrixStack.pushPose();
 
@@ -79,7 +79,7 @@ public class StaticAlchemyCircleRenderer extends AlchemyArrayRenderer
 //		matrixStack.rotate(new Quaternion(Direction.NORTH.toVector3f(), secondaryRot, true));
 //		matrixStack.rotate(new Quaternion(Direction.EAST.toVector3f(), secondaryRot * 0.45812f, true));
 
-		IVertexBuilder twoDBuffer = renderer.getBuffer(RenderType.entityTranslucent(arrayResource));
+		VertexConsumer twoDBuffer = renderer.getBuffer(RenderType.entityTranslucent(arrayResource));
 		Model2D arrayModel = new BloodMagicRenderer.Model2D();
 		arrayModel.minX = -0.5;
 		arrayModel.maxX = +0.5;

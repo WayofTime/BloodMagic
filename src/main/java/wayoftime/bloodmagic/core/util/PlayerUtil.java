@@ -4,18 +4,18 @@ import java.util.function.Predicate;
 
 import com.google.common.collect.Multimap;
 
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
 import wayoftime.bloodmagic.common.item.ExpandedArmor;
 import wayoftime.bloodmagic.core.living.LivingUtil;
 
 public class PlayerUtil
 {
 
-	public static ItemStack findItem(PlayerEntity player, Predicate<ItemStack> requirements)
+	public static ItemStack findItem(Player player, Predicate<ItemStack> requirements)
 	{
 
 		// Check offhand first
@@ -34,15 +34,15 @@ public class PlayerUtil
 		return ItemStack.EMPTY;
 	}
 
-	public static Multimap<Attribute, AttributeModifier> handle(PlayerEntity player, Multimap<Attribute, AttributeModifier> existing)
+	public static Multimap<Attribute, AttributeModifier> handle(Player player, Multimap<Attribute, AttributeModifier> existing)
 	{
 
-		ItemStack chest = player.getItemBySlot(EquipmentSlotType.CHEST);
+		ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
 		boolean hasFullSet = LivingUtil.hasFullSet(player);
 
 		if (hasFullSet && existing == null)
 		{
-			existing = ((ExpandedArmor) chest.getItem()).getAttributeModifiers(EquipmentSlotType.CHEST, chest);
+			existing = ((ExpandedArmor) chest.getItem()).getAttributeModifiers(EquipmentSlot.CHEST, chest);
 			player.getAttributes().addTransientAttributeModifiers(existing);
 		}
 

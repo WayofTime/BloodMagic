@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.UsernameCache;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
@@ -19,7 +19,7 @@ public class PlayerHelper
 	 */
 	private static final ArrayList<String> knownFakePlayers = Lists.newArrayList();
 
-	public static PlayerEntity getPlayerFromId(UUID uuid)
+	public static Player getPlayerFromId(UUID uuid)
 	{
 		// TODO: Need to find a reliable way to get whether the side is Client or Server
 
@@ -33,12 +33,12 @@ public class PlayerHelper
 //		return FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(uuid);
 	}
 
-	public static PlayerEntity getPlayerFromUUID(UUID uuid)
+	public static Player getPlayerFromUUID(UUID uuid)
 	{
 		return getPlayerFromId(uuid);
 	}
 
-	public static UUID getUUIDFromPlayer(PlayerEntity player)
+	public static UUID getUUIDFromPlayer(Player player)
 	{
 		return player.getGameProfile().getId();
 	}
@@ -54,7 +54,7 @@ public class PlayerHelper
 	 * @param player - The player in question
 	 * @return If the player is fake or not
 	 */
-	public static boolean isFakePlayer(PlayerEntity player)
+	public static boolean isFakePlayer(Player player)
 	{
 		return player instanceof FakePlayer || (player != null && knownFakePlayers.contains(player.getClass().getCanonicalName()));
 	}

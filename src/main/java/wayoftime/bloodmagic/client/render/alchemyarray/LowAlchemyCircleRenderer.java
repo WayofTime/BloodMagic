@@ -1,6 +1,6 @@
 package wayoftime.bloodmagic.client.render.alchemyarray;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
 
 public class LowAlchemyCircleRenderer extends SingleAlchemyCircleRenderer

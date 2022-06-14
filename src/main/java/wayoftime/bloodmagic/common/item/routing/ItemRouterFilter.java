@@ -5,24 +5,24 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.client.gui.widget.button.Button.IPressable;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Button.OnPress;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -39,7 +39,7 @@ import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.GhostItemHelper;
 import wayoftime.bloodmagic.util.Utils;
 
-public class ItemRouterFilter extends Item implements INamedContainerProvider, IItemFilterProvider
+public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterProvider
 {
 	public static final int inventorySize = 9;
 	public static final int maxUpgrades = 9;
@@ -52,24 +52,24 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
 		if (!world.isClientSide)
 		{
 			Utils.setUUID(stack);
 
-			if (player instanceof ServerPlayerEntity)
+			if (player instanceof ServerPlayer)
 			{
-				NetworkHooks.openGui((ServerPlayerEntity) player, this, buf -> buf.writeItemStack(stack, false));
+				NetworkHooks.openGui((ServerPlayer) player, this, buf -> buf.writeItemStack(stack, false));
 			}
 		}
 
-		return new ActionResult<>(ActionResultType.SUCCESS, stack);
+		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 	}
 
 	@Override
-	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity player)
+	public AbstractContainerMenu createMenu(int p_createMenu_1_, Inventory p_createMenu_2_, Player player)
 	{
 		// TODO Auto-generated method stub
 		assert player.getCommandSenderWorld() != null;
@@ -77,10 +77,10 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 	}
 
 	@Override
-	public ITextComponent getDisplayName()
+	public Component getDisplayName()
 	{
 		// TODO Auto-generated method stub
-		return new StringTextComponent("Filter");
+		return new TextComponent("Filter");
 	}
 
 	@Override
@@ -110,7 +110,7 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 	}
 
 	@Override
-	public IItemFilter getInputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler)
+	public IItemFilter getInputItemFilter(ItemStack filterStack, BlockEntity tile, IItemHandler handler)
 	{
 		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
 
@@ -138,7 +138,7 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 	}
 
 	@Override
-	public IItemFilter getOutputItemFilter(ItemStack filterStack, TileEntity tile, IItemHandler handler)
+	public IItemFilter getOutputItemFilter(ItemStack filterStack, BlockEntity tile, IItemHandler handler)
 	{
 		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
 
@@ -187,10 +187,10 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 	public int receiveButtonPress(ItemStack filterStack, String buttonKey, int ghostItemSlot, int currentButtonState)
 	{
 		// Returns new state that the pressed button is in. -1 for an invalid button.
-		CompoundNBT tag = filterStack.getTag();
+		CompoundTag tag = filterStack.getTag();
 		if (tag == null)
 		{
-			filterStack.setTag(new CompoundNBT());
+			filterStack.setTag(new CompoundTag());
 			tag = filterStack.getTag();
 		}
 
@@ -217,7 +217,7 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 	@Override
 	public int getCurrentButtonState(ItemStack filterStack, String buttonKey, int ghostItemSlot)
 	{
-		CompoundNBT tag = filterStack.getTag();
+		CompoundTag tag = filterStack.getTag();
 		if (tag != null)
 		{
 			if (buttonKey.equals(Constants.BUTTONID.BLACKWHITELIST))
@@ -231,9 +231,9 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 	}
 
 	@Override
-	public List<ITextComponent> getTextForHoverItem(ItemStack filterStack, String buttonKey, int ghostItemSlot)
+	public List<Component> getTextForHoverItem(ItemStack filterStack, String buttonKey, int ghostItemSlot)
 	{
-		List<ITextComponent> componentList = new ArrayList<ITextComponent>();
+		List<Component> componentList = new ArrayList<Component>();
 
 		int currentState = getCurrentButtonState(filterStack, buttonKey, ghostItemSlot);
 		if (buttonKey.equals(Constants.BUTTONID.BLACKWHITELIST))
@@ -241,10 +241,10 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 			switch (currentState)
 			{
 			case 1:
-				componentList.add(new TranslationTextComponent("filter.bloodmagic.blacklist"));
+				componentList.add(new TranslatableComponent("filter.bloodmagic.blacklist"));
 				break;
 			default:
-				componentList.add(new TranslationTextComponent("filter.bloodmagic.whitelist"));
+				componentList.add(new TranslatableComponent("filter.bloodmagic.whitelist"));
 			}
 		}
 
@@ -252,9 +252,9 @@ public class ItemRouterFilter extends Item implements INamedContainerProvider, I
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public List<Pair<String, Button.IPressable>> getButtonAction(ContainerFilter container)
+	public List<Pair<String, Button.OnPress>> getButtonAction(ContainerFilter container)
 	{
-		List<Pair<String, Button.IPressable>> buttonList = new ArrayList<Pair<String, IPressable>>();
+		List<Pair<String, Button.OnPress>> buttonList = new ArrayList<Pair<String, OnPress>>();
 
 		buttonList.add(Pair.of(Constants.BUTTONID.BLACKWHITELIST, new FilterButtonTogglePress(Constants.BUTTONID.BLACKWHITELIST, container)));
 

@@ -14,10 +14,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import net.minecraft.client.MainWindow;
+import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector2f;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -39,7 +39,7 @@ public class ElementRegistry
 	private static final Map<HUDElement, ResourceLocation> REVERSE = Maps.newHashMap();
 	private static final Map<ResourceLocation, ElementInfo> ELEMENT_INFO = Maps.newHashMap();
 
-	public static void registerHandler(ResourceLocation key, HUDElement element, Vector2f defaultPosition)
+	public static void registerHandler(ResourceLocation key, HUDElement element, Vec2 defaultPosition)
 	{
 		HUD_ELEMENTS.put(key, element);
 		REVERSE.put(element, key);
@@ -67,12 +67,12 @@ public class ElementRegistry
 		return ELEMENT_INFO.getOrDefault(element, ElementInfo.DUMMY).getBoxColor();
 	}
 
-	public static Vector2f getPosition(ResourceLocation element)
+	public static Vec2 getPosition(ResourceLocation element)
 	{
 		return ELEMENT_INFO.get(element).getPosition();
 	}
 
-	public static void setPosition(ResourceLocation element, Vector2f point)
+	public static void setPosition(ResourceLocation element, Vec2 point)
 	{
 		ELEMENT_INFO.compute(element, (resourceLocation, elementInfo) -> {
 			if (elementInfo == null)
@@ -83,7 +83,7 @@ public class ElementRegistry
 		});
 	}
 
-	public static void save(Map<ResourceLocation, Vector2f> newLocations)
+	public static void save(Map<ResourceLocation, Vec2> newLocations)
 	{
 		newLocations.forEach((k, v) -> {
 			ElementInfo info = ELEMENT_INFO.get(k);
@@ -91,7 +91,7 @@ public class ElementRegistry
 				info.setPosition(v);
 		});
 
-		Map<String, Vector2f> toWrite = Maps.newHashMap();
+		Map<String, Vec2> toWrite = Maps.newHashMap();
 		for (Map.Entry<ResourceLocation, ElementInfo> entry : ELEMENT_INFO.entrySet())
 			toWrite.put(entry.getKey().toString(), entry.getValue().getPosition());
 
@@ -112,10 +112,10 @@ public class ElementRegistry
 
 		try (FileReader reader = new FileReader(CONFIG))
 		{
-			Map<String, Vector2f> toLoad = GSON.fromJson(reader, new TypeToken<Map<String, Vector2f>>()
+			Map<String, Vec2> toLoad = GSON.fromJson(reader, new TypeToken<Map<String, Vec2>>()
 			{
 			}.getType());
-			for (Map.Entry<String, Vector2f> entry : toLoad.entrySet())
+			for (Map.Entry<String, Vec2> entry : toLoad.entrySet())
 			{
 				ElementInfo info = ELEMENT_INFO.get(new ResourceLocation(entry.getKey()));
 				if (info != null)
@@ -133,7 +133,7 @@ public class ElementRegistry
 	{
 		if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR)
 		{
-			MainWindow window = event.getWindow();
+			Window window = event.getWindow();
 
 			for (HUDElement element : HUD_ELEMENTS.values())
 			{
@@ -155,7 +155,7 @@ public class ElementRegistry
 //
 //				element.draw(event.getResolution(), event.getPartialTicks(), xPos, yPos);
 
-				Vector2f position = ELEMENT_INFO.get(getKey(element)).getPosition();
+				Vec2 position = ELEMENT_INFO.get(getKey(element)).getPosition();
 				int xPos = (int) (window.getGuiScaledWidth() * position.x);
 				if (xPos - element.getWidth() < 0)
 					xPos *= 2;

@@ -1,7 +1,7 @@
 package wayoftime.bloodmagic.ritual;
 
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 
 /**
  * Used to set a {@link EnumRuneType} type to a given {@link BlockPos} for usage

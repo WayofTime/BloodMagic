@@ -2,21 +2,21 @@ package wayoftime.bloodmagic.common.block;
 
 import java.util.List;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.common.routing.IRoutingNode;
 import wayoftime.bloodmagic.tile.routing.TileRoutingNode;
 
 public class BlockItemRoutingNode extends BlockRoutingNode
 {
 	@Override
-	public void destroy(IWorld world, BlockPos blockPos, BlockState blockState)
+	public void destroy(LevelAccessor world, BlockPos blockPos, BlockState blockState)
 	{
-		TileEntity tile = world.getBlockEntity(blockPos);
+		BlockEntity tile = world.getBlockEntity(blockPos);
 		if (tile instanceof TileRoutingNode)
 		{
 			((TileRoutingNode) tile).removeAllConnections();
@@ -26,11 +26,11 @@ public class BlockItemRoutingNode extends BlockRoutingNode
 	}
 
 	@Override
-	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{
 		if (!state.is(newState.getBlock()))
 		{
-			TileEntity tile = worldIn.getBlockEntity(pos);
+			BlockEntity tile = worldIn.getBlockEntity(pos);
 			if (tile instanceof TileRoutingNode)
 			{
 				List<BlockPos> connectionList = ((TileRoutingNode) tile).getConnected();
@@ -44,7 +44,7 @@ public class BlockItemRoutingNode extends BlockRoutingNode
 //						continue;
 //					}
 
-					TileEntity connectedTile = worldIn.getBlockEntity(connectedPos);
+					BlockEntity connectedTile = worldIn.getBlockEntity(connectedPos);
 					if (connectedTile instanceof IRoutingNode)
 					{
 						List<BlockPos> checkResult = ((IRoutingNode) connectedTile).checkAndPurgeConnectionToMaster(pos);
@@ -68,7 +68,7 @@ public class BlockItemRoutingNode extends BlockRoutingNode
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world)
+	public BlockEntity createTileEntity(BlockState state, BlockGetter world)
 	{
 		return new TileRoutingNode();
 	}

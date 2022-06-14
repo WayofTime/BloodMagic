@@ -3,21 +3,21 @@ package wayoftime.bloodmagic.common.item;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
@@ -39,12 +39,12 @@ public class ItemTeleposerFocus extends ItemBindableBase implements ITeleposerFo
 	}
 
 	@Override
-	public ActionResultType useOn(ItemUseContext context)
+	public InteractionResult useOn(UseOnContext context)
 	{
 		ItemStack stack = context.getItemInHand();
 		BlockPos pos = context.getClickedPos();
-		World world = context.getLevel();
-		PlayerEntity player = context.getPlayer();
+		Level world = context.getLevel();
+		Player player = context.getPlayer();
 
 		if (world.getBlockEntity(pos) instanceof TileTeleposer)
 		{
@@ -63,17 +63,17 @@ public class ItemTeleposerFocus extends ItemBindableBase implements ITeleposerFo
 			}
 		}
 
-		return ActionResultType.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 
 	public void setStoredPos(ItemStack stack, BlockPos pos)
 	{
 		if (!stack.hasTag())
 		{
-			stack.setTag(new CompoundNBT());
+			stack.setTag(new CompoundTag());
 		}
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putInt(Constants.NBT.X_COORD, pos.getX());
 		tag.putInt(Constants.NBT.Y_COORD, pos.getY());
@@ -84,26 +84,26 @@ public class ItemTeleposerFocus extends ItemBindableBase implements ITeleposerFo
 	{
 		if (!stack.hasTag())
 		{
-			stack.setTag(new CompoundNBT());
+			stack.setTag(new CompoundTag());
 		}
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		return new BlockPos(tag.getInt(Constants.NBT.X_COORD), tag.getInt(Constants.NBT.Y_COORD), tag.getInt(Constants.NBT.Z_COORD));
 	}
 
-	public void setWorld(ItemStack stack, World world)
+	public void setWorld(ItemStack stack, Level world)
 	{
 		String worldKey = world.dimension().location().toString();
 		if (!stack.hasTag())
 		{
-			stack.setTag(new CompoundNBT());
+			stack.setTag(new CompoundTag());
 		}
 
 		stack.getTag().putString(Constants.NBT.WORLD, worldKey);
 	}
 
-	public RegistryKey<World> getStoredKey(ItemStack stack, World world)
+	public ResourceKey<Level> getStoredKey(ItemStack stack, Level world)
 	{
 		if (!stack.hasTag())
 		{
@@ -111,13 +111,13 @@ public class ItemTeleposerFocus extends ItemBindableBase implements ITeleposerFo
 		}
 
 		String worldKey = stack.getTag().getString(Constants.NBT.WORLD);
-		RegistryKey<World> registryKey = RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(worldKey));
+		ResourceKey<Level> registryKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(worldKey));
 		return registryKey;
 	}
 
-	public World getStoredWorld(ItemStack stack, World world)
+	public Level getStoredWorld(ItemStack stack, Level world)
 	{
-		RegistryKey<World> registryKey = getStoredKey(stack, world);
+		ResourceKey<Level> registryKey = getStoredKey(stack, world);
 		if (registryKey == null || world.getServer() == null)
 		{
 			return null;
@@ -128,27 +128,27 @@ public class ItemTeleposerFocus extends ItemBindableBase implements ITeleposerFo
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
 		super.appendHoverText(stack, world, tooltip, flag);
-		RegistryKey<World> storedKey = getStoredKey(stack, world);
+		ResourceKey<Level> storedKey = getStoredKey(stack, world);
 //		World storedWorld = getStoredWorld(stack, world);
 		if (storedKey != null)
 		{
 			BlockPos storedPos = getStoredPos(stack);
-			tooltip.add(new TranslationTextComponent(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionfocus.coords", storedPos.getX(), storedPos.getY(), storedPos.getZ())).withStyle(TextFormatting.GRAY));
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.telepositionfocus.world", new TranslationTextComponent(storedKey.location().toString())).withStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslatableComponent(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionfocus.coords", storedPos.getX(), storedPos.getY(), storedPos.getZ())).withStyle(ChatFormatting.GRAY));
+			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.telepositionfocus.world", new TranslatableComponent(storedKey.location().toString())).withStyle(ChatFormatting.GRAY));
 		}
 	}
 
 	@Override
-	public AxisAlignedBB getEntityRangeOffset(World world, BlockPos teleposerPos)
+	public AABB getEntityRangeOffset(Level world, BlockPos teleposerPos)
 	{
-		return new AxisAlignedBB(-range, 1, -range, range + 1, 2 * range + 2, range + 1);
+		return new AABB(-range, 1, -range, range + 1, 2 * range + 2, range + 1);
 	}
 
 	@Override
-	public List<BlockPos> getBlockListOffset(World world)
+	public List<BlockPos> getBlockListOffset(Level world)
 	{
 		List<BlockPos> posList = new ArrayList<>();
 

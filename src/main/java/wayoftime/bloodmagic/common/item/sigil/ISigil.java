@@ -2,17 +2,17 @@ package wayoftime.bloodmagic.common.item.sigil;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 /**
  * Used for all ItemSigils <b>EXCEPT</b> for Sigils of Holding.
  */
 public interface ISigil
 {
-	default boolean performArrayEffect(World world, BlockPos pos)
+	default boolean performArrayEffect(Level world, BlockPos pos)
 	{
 		return false;
 	}
@@ -25,6 +25,6 @@ public interface ISigil
 	interface Holding
 	{
 		@Nonnull
-		ItemStack getHeldItem(ItemStack holdingStack, PlayerEntity player);
+		ItemStack getHeldItem(ItemStack holdingStack, Player player);
 	}
 }

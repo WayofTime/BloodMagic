@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.text.WordUtils;
 
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.language.I18n;
 
 public class TextHelper
 {

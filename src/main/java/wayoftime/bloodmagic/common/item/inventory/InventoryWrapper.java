@@ -1,11 +1,11 @@
 package wayoftime.bloodmagic.common.item.inventory;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.NonNullList;
 
-public class InventoryWrapper implements IInventory
+public class InventoryWrapper implements Container
 {
 	protected int[] syncedSlots = new int[0];
 	protected NonNullList<ItemStack> inventory;
@@ -93,7 +93,7 @@ public class InventoryWrapper implements IInventory
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity player)
+	public boolean stillValid(Player player)
 	{
 		return false;
 	}

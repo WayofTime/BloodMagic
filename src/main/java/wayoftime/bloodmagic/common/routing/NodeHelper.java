@@ -1,18 +1,18 @@
 package wayoftime.bloodmagic.common.routing;
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public class NodeHelper
 {
-	public static boolean isNodeConnectionEnabled(World world, IRoutingNode node, BlockPos testPos)
+	public static boolean isNodeConnectionEnabled(Level world, IRoutingNode node, BlockPos testPos)
 	{
 		if (!node.isConnectionEnabled(testPos))
 		{
 			return false;
 		}
-		TileEntity tile = world.getBlockEntity(testPos);
+		BlockEntity tile = world.getBlockEntity(testPos);
 		if (!(tile instanceof IRoutingNode))
 		{
 			return false;

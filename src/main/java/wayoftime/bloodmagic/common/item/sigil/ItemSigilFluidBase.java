@@ -2,12 +2,12 @@ package wayoftime.bloodmagic.common.item.sigil;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -49,7 +49,7 @@ public abstract class ItemSigilFluidBase extends ItemSigilBase
 	 * the FluidUtil method of the same signature.
 	 */
 	@Nullable
-	protected IFluidHandler getFluidHandler(World world, BlockPos blockPos, @Nullable Direction side)
+	protected IFluidHandler getFluidHandler(Level world, BlockPos blockPos, @Nullable Direction side)
 	{
 		BlockState state = world.getBlockState(blockPos);
 		Block block = state.getBlock();
@@ -97,7 +97,7 @@ public abstract class ItemSigilFluidBase extends ItemSigilBase
 	 * otherwise false. This is the big troublesome one, oddly enough. It's
 	 * genericized in case anyone wants to create variant sigils with weird fluids.
 	 */
-	protected boolean tryPlaceSigilFluid(PlayerEntity player, World world, BlockPos blockPos)
+	protected boolean tryPlaceSigilFluid(Player player, Level world, BlockPos blockPos)
 	{
 		FluidStack resource = sigilFluid;
 		BlockState state = sigilFluid.getFluid().getAttributes().getBlock(world, blockPos, sigilFluid.getFluid().defaultFluidState());

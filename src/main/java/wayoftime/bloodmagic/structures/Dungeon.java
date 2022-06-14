@@ -10,18 +10,18 @@ import java.util.Random;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.server.level.ServerLevel;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.util.BMLog;
 
 public class Dungeon
 {
-	public static boolean placeStructureAtPosition(Random rand, ServerWorld world, BlockPos pos)
+	public static boolean placeStructureAtPosition(Random rand, ServerLevel world, BlockPos pos)
 	{
 		String initialDoorName = "default";
 
@@ -34,12 +34,12 @@ public class Dungeon
 //		Map<Direction, List<BlockPos>> availableDoorMap = new HashMap<>(); // Map of doors. The EnumFacing indicates
 		// what way this door faces.
 		List<AreaDescriptor> descriptorList = new ArrayList<>();
-		Map<BlockPos, Pair<DungeonRoom, PlacementSettings>> roomMap = new HashMap<>(); // Placement positions in terms
+		Map<BlockPos, Pair<DungeonRoom, StructurePlaceSettings>> roomMap = new HashMap<>(); // Placement positions in terms
 //																						// of actual positions
 
 //		List<Pair<BlockPos, Pair<DungeonRoom, PlacementSettings>>> roomList = new ArrayList<>();
 
-		PlacementSettings settings = new PlacementSettings();
+		StructurePlaceSettings settings = new StructurePlaceSettings();
 		Mirror mir = Mirror.NONE;
 
 		settings.setMirror(mir);
@@ -244,13 +244,13 @@ public class Dungeon
 
 		// Building what I've got
 //		n = 0;
-		for (Entry<BlockPos, Pair<DungeonRoom, PlacementSettings>> entry : roomMap.entrySet())
+		for (Entry<BlockPos, Pair<DungeonRoom, StructurePlaceSettings>> entry : roomMap.entrySet())
 //		for (Pair<BlockPos, Pair<DungeonRoom, PlacementSettings>> entry : roomList)
 		{
 //			n++;
 			BlockPos placementPos = entry.getKey();
 			DungeonRoom placedRoom = entry.getValue().getKey();
-			PlacementSettings placementSettings = entry.getValue().getValue();
+			StructurePlaceSettings placementSettings = entry.getValue().getValue();
 
 			placedRoom.placeStructureAtPosition(rand, placementSettings, world, placementPos);
 

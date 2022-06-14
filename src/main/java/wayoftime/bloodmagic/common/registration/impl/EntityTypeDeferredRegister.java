@@ -1,7 +1,7 @@
 package wayoftime.bloodmagic.common.registration.impl;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.common.registration.WrappedDeferredRegister;
 

@@ -1,18 +1,18 @@
 package wayoftime.bloodmagic.entity.projectile;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.IPacket;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ItemParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -20,19 +20,19 @@ import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 
-public class EntitySoulSnare extends ProjectileItemEntity
+public class EntitySoulSnare extends ThrowableItemProjectile
 {
-	public EntitySoulSnare(EntityType<EntitySoulSnare> p_i50159_1_, World p_i50159_2_)
+	public EntitySoulSnare(EntityType<EntitySoulSnare> p_i50159_1_, Level p_i50159_2_)
 	{
 		super(p_i50159_1_, p_i50159_2_);
 	}
 
-	public EntitySoulSnare(World worldIn, LivingEntity throwerIn)
+	public EntitySoulSnare(Level worldIn, LivingEntity throwerIn)
 	{
 		super(BloodMagicEntityTypes.SNARE.getEntityType(), throwerIn, worldIn);
 	}
 
-	public EntitySoulSnare(World worldIn, double x, double y, double z)
+	public EntitySoulSnare(Level worldIn, double x, double y, double z)
 	{
 		super(BloodMagicEntityTypes.SNARE.getEntityType(), x, y, z, worldIn);
 	}
@@ -43,7 +43,7 @@ public class EntitySoulSnare extends ProjectileItemEntity
 	}
 
 	@Override
-	public IPacket<?> getAddEntityPacket()
+	public Packet<?> getAddEntityPacket()
 	{
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
@@ -51,14 +51,14 @@ public class EntitySoulSnare extends ProjectileItemEntity
 	/**
 	 * Called when the arrow hits an entity
 	 */
-	protected void onHitEntity(EntityRayTraceResult result)
+	protected void onHitEntity(EntityHitResult result)
 	{
 		if (result.getEntity() == this.getOwner() || this.tickCount < 2 || getCommandSenderWorld().isClientSide)
 			return;
 
 		if (result.getEntity() instanceof LivingEntity)
 		{
-			((LivingEntity) result.getEntity()).addEffect(new EffectInstance(BloodMagicPotions.SOUL_SNARE, 300, 0));
+			((LivingEntity) result.getEntity()).addEffect(new MobEffectInstance(BloodMagicPotions.SOUL_SNARE, 300, 0));
 			result.getEntity().hurt(DamageSource.thrown(this, this.getOwner()), (float) 0);
 		}
 
@@ -66,11 +66,11 @@ public class EntitySoulSnare extends ProjectileItemEntity
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	private IParticleData makeParticle()
+	private ParticleOptions makeParticle()
 	{
 		ItemStack itemstack = this.getItemRaw();
-		return (IParticleData) (itemstack.isEmpty() ? ParticleTypes.ITEM_SNOWBALL
-				: new ItemParticleData(ParticleTypes.ITEM, itemstack));
+		return (ParticleOptions) (itemstack.isEmpty() ? ParticleTypes.ITEM_SNOWBALL
+				: new ItemParticleOption(ParticleTypes.ITEM, itemstack));
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class EntitySoulSnare extends ProjectileItemEntity
 	{
 		if (id == 3)
 		{
-			IParticleData iparticledata = this.makeParticle();
+			ParticleOptions iparticledata = this.makeParticle();
 
 			for (int i = 0; i < 8; ++i)
 			{

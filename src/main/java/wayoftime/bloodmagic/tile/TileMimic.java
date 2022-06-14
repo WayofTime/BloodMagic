@@ -6,27 +6,27 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Container;
+import net.minecraft.world.Containers;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.client.model.ModelDataManager;
 import net.minecraftforge.client.model.data.IModelData;
 import net.minecraftforge.client.model.data.ModelDataMap;
@@ -40,15 +40,15 @@ import wayoftime.bloodmagic.util.Utils;
 public class TileMimic extends TileInventory
 {
 	@ObjectHolder("bloodmagic:mimic")
-	public static TileEntityType<TileMimic> TYPE;
+	public static BlockEntityType<TileMimic> TYPE;
 
 	public static final ModelProperty<BlockState> MIMIC = new ModelProperty<>();
 
 	private BlockState mimic;
 
 	public boolean dropItemsOnBreak = true;
-	public CompoundNBT tileTag = new CompoundNBT();
-	public TileEntity mimicedTile = null;
+	public CompoundTag tileTag = new CompoundTag();
+	public BlockEntity mimicedTile = null;
 
 	public int playerCheckRadius = 5;
 	public int potionSpawnRadius = 5;
@@ -56,7 +56,7 @@ public class TileMimic extends TileInventory
 
 	private int internalCounter = 0;
 
-	public TileMimic(TileEntityType<?> type)
+	public TileMimic(BlockEntityType<?> type)
 	{
 		super(type, 2, "mimic");
 	}
@@ -66,18 +66,18 @@ public class TileMimic extends TileInventory
 		this(TYPE);
 	}
 
-	public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, ItemStack heldItem, Direction side)
+	public boolean onBlockActivated(Level world, BlockPos pos, BlockState state, Player player, InteractionHand hand, ItemStack heldItem, Direction side)
 	{
 		if (!heldItem.isEmpty() && player.isCreative())
 		{
-			List<EffectInstance> list = PotionUtils.getMobEffects(heldItem);
+			List<MobEffectInstance> list = PotionUtils.getMobEffects(heldItem);
 			if (!list.isEmpty())
 			{
 				if (!world.isClientSide)
 				{
 					setItem(1, heldItem.copy());
 					world.sendBlockUpdated(pos, state, state, 3);
-					ChatUtil.sendNoSpam(player, new TranslationTextComponent("chat.bloodmagic.mimic.potionSet"));
+					ChatUtil.sendNoSpam(player, new TranslatableComponent("chat.bloodmagic.mimic.potionSet"));
 				}
 				return true;
 			}
@@ -134,7 +134,7 @@ public class TileMimic extends TileInventory
 		return true;
 	}
 
-	public boolean performSpecialAbility(PlayerEntity player, Direction sideHit)
+	public boolean performSpecialAbility(Player player, Direction sideHit)
 	{
 		if (!player.isCreative())
 		{
@@ -151,11 +151,11 @@ public class TileMimic extends TileInventory
 				if (player.isShiftKeyDown())
 				{
 					potionSpawnRadius = Math.max(potionSpawnRadius - 1, 0);
-					ChatUtil.sendNoSpam(player, new TranslationTextComponent("chat.bloodmagic.mimic.potionSpawnRadius.down", potionSpawnRadius));
+					ChatUtil.sendNoSpam(player, new TranslatableComponent("chat.bloodmagic.mimic.potionSpawnRadius.down", potionSpawnRadius));
 				} else
 				{
 					potionSpawnRadius++;
-					ChatUtil.sendNoSpam(player, new TranslationTextComponent("chat.bloodmagic.mimic.potionSpawnRadius.up", potionSpawnRadius));
+					ChatUtil.sendNoSpam(player, new TranslatableComponent("chat.bloodmagic.mimic.potionSpawnRadius.up", potionSpawnRadius));
 				}
 				break;
 			case NORTH: // When the block is clicked on the NORTH or SOUTH side, detectRadius is edited.
@@ -163,11 +163,11 @@ public class TileMimic extends TileInventory
 				if (player.isShiftKeyDown())
 				{
 					playerCheckRadius = Math.max(playerCheckRadius - 1, 0);
-					ChatUtil.sendNoSpam(player, new TranslationTextComponent("chat.bloodmagic.mimic.detectRadius.down", playerCheckRadius));
+					ChatUtil.sendNoSpam(player, new TranslatableComponent("chat.bloodmagic.mimic.detectRadius.down", playerCheckRadius));
 				} else
 				{
 					playerCheckRadius++;
-					ChatUtil.sendNoSpam(player, new TranslationTextComponent("chat.bloodmagic.mimic.detectRadius.up", playerCheckRadius));
+					ChatUtil.sendNoSpam(player, new TranslatableComponent("chat.bloodmagic.mimic.detectRadius.up", playerCheckRadius));
 				}
 				break;
 			case UP: // When the block is clicked on the UP or DOWN side, potionSpawnInterval is
@@ -176,11 +176,11 @@ public class TileMimic extends TileInventory
 				if (player.isShiftKeyDown())
 				{
 					potionSpawnInterval = Math.max(potionSpawnInterval - 1, 1);
-					ChatUtil.sendNoSpam(player, new TranslationTextComponent("chat.bloodmagic.mimic.potionInterval.down", potionSpawnInterval));
+					ChatUtil.sendNoSpam(player, new TranslatableComponent("chat.bloodmagic.mimic.potionInterval.down", potionSpawnInterval));
 				} else
 				{
 					potionSpawnInterval++;
-					ChatUtil.sendNoSpam(player, new TranslationTextComponent("chat.bloodmagic.mimic.potionInterval.up", potionSpawnInterval));
+					ChatUtil.sendNoSpam(player, new TranslatableComponent("chat.bloodmagic.mimic.potionInterval.up", potionSpawnInterval));
 				}
 				break;
 			default:
@@ -205,14 +205,14 @@ public class TileMimic extends TileInventory
 
 	public void dropMimicedTileInventory()
 	{
-		if (!getLevel().isClientSide && mimicedTile instanceof IInventory)
+		if (!getLevel().isClientSide && mimicedTile instanceof Container)
 		{
-			InventoryHelper.dropContents(getLevel(), getBlockPos(), (IInventory) mimicedTile);
+			Containers.dropContents(getLevel(), getBlockPos(), (Container) mimicedTile);
 		}
 	}
 
 	@Nullable
-	public static TileEntity getTileFromStackWithTag(World world, BlockPos pos, ItemStack stack, @Nullable CompoundNBT tag, BlockState replacementState)
+	public static BlockEntity getTileFromStackWithTag(Level world, BlockPos pos, ItemStack stack, @Nullable CompoundTag tag, BlockState replacementState)
 	{
 		if (!stack.isEmpty() && stack.getItem() instanceof BlockItem)
 		{
@@ -220,14 +220,14 @@ public class TileMimic extends TileInventory
 			BlockState state = replacementState;
 			if (block.hasTileEntity(state))
 			{
-				TileEntity tile = block.createTileEntity(state, world);
+				BlockEntity tile = block.createTileEntity(state, world);
 
 				if (tile == null)
 					return null;
 
 				if (tag != null)
 				{
-					CompoundNBT copyTag = tag.copy();
+					CompoundTag copyTag = tag.copy();
 					copyTag.putInt("x", pos.getX());
 					copyTag.putInt("y", pos.getY());
 					copyTag.putInt("z", pos.getZ());
@@ -260,9 +260,9 @@ public class TileMimic extends TileInventory
 	// it hasn't seen before. i.e. the chunk is loaded
 
 	@Override
-	public CompoundNBT getUpdateTag()
+	public CompoundTag getUpdateTag()
 	{
-		CompoundNBT tag = super.getUpdateTag();
+		CompoundTag tag = super.getUpdateTag();
 		writeMimic(tag);
 		return tag;
 	}
@@ -275,16 +275,16 @@ public class TileMimic extends TileInventory
 
 	@Nullable
 	@Override
-	public SUpdateTileEntityPacket getUpdatePacket()
+	public ClientboundBlockEntityDataPacket getUpdatePacket()
 	{
-		return new SUpdateTileEntityPacket(worldPosition, 1, getUpdateTag());
+		return new ClientboundBlockEntityDataPacket(worldPosition, 1, getUpdateTag());
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
+	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt)
 	{
 		BlockState oldMimic = mimic;
-		CompoundNBT tag = pkt.getTag();
+		CompoundTag tag = pkt.getTag();
 		deserialize(tag);
 		if (!Objects.equals(oldMimic, mimic))
 		{
@@ -301,7 +301,7 @@ public class TileMimic extends TileInventory
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tag)
+	public void deserialize(CompoundTag tag)
 	{
 		super.deserialize(tag);
 
@@ -315,16 +315,16 @@ public class TileMimic extends TileInventory
 		potionSpawnInterval = Math.max(1, tag.getInt("potionSpawnInterval"));
 	}
 
-	private void readMimic(CompoundNBT tag)
+	private void readMimic(CompoundTag tag)
 	{
 		if (tag.contains("mimic"))
 		{
-			mimic = NBTUtil.readBlockState(tag.getCompound("mimic"));
+			mimic = NbtUtils.readBlockState(tag.getCompound("mimic"));
 		}
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tag)
+	public CompoundTag serialize(CompoundTag tag)
 	{
 		tag.putBoolean("dropItemsOnBreak", dropItemsOnBreak);
 		tag.put("tileTag", tileTag);
@@ -336,11 +336,11 @@ public class TileMimic extends TileInventory
 		return super.serialize(tag);
 	}
 
-	private void writeMimic(CompoundNBT tag)
+	private void writeMimic(CompoundTag tag)
 	{
 		if (mimic != null)
 		{
-			tag.put("mimic", NBTUtil.writeBlockState(mimic));
+			tag.put("mimic", NbtUtils.writeBlockState(mimic));
 		}
 	}
 
@@ -349,7 +349,7 @@ public class TileMimic extends TileInventory
 	{
 		if (dropItemsOnBreak)
 		{
-			InventoryHelper.dropContents(getLevel(), getBlockPos(), this);
+			Containers.dropContents(getLevel(), getBlockPos(), this);
 		}
 
 		dropMimicedTileInventory();

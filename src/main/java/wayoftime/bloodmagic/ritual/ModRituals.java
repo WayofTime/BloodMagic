@@ -1,6 +1,6 @@
 package wayoftime.bloodmagic.ritual;
 
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Blocks;
 import wayoftime.bloodmagic.ritual.harvest.HarvestHandlerPlantable;
 import wayoftime.bloodmagic.ritual.harvest.HarvestHandlerStem;
 import wayoftime.bloodmagic.ritual.harvest.HarvestHandlerTall;

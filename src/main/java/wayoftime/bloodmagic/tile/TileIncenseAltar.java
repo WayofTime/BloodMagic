@@ -5,17 +5,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.incense.EnumTranquilityType;
 import wayoftime.bloodmagic.api.compat.IIncensePath;
@@ -25,7 +25,7 @@ import wayoftime.bloodmagic.incense.TranquilityStack;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.util.helper.PlayerSacrificeHelper;
 
-public class TileIncenseAltar extends TileInventory implements ITickableTileEntity
+public class TileIncenseAltar extends TileInventory implements TickableBlockEntity
 {
 	public static int maxCheckRange = 5;
 	public AreaDescriptor incenseArea = new AreaDescriptor.Rectangle(new BlockPos(-5, -5, -5), 11);
@@ -36,9 +36,9 @@ public class TileIncenseAltar extends TileInventory implements ITickableTileEnti
 	public int roadDistance = 0; // Number of road blocks laid down
 
 	@ObjectHolder("bloodmagic:incensealtar")
-	public static TileEntityType<TileIncenseAltar> TYPE;
+	public static BlockEntityType<TileIncenseAltar> TYPE;
 
-	public TileIncenseAltar(TileEntityType<?> type)
+	public TileIncenseAltar(BlockEntityType<?> type)
 	{
 		super(type, 1, "incensealtar");
 	}
@@ -51,8 +51,8 @@ public class TileIncenseAltar extends TileInventory implements ITickableTileEnti
 	@Override
 	public void tick()
 	{
-		AxisAlignedBB aabb = incenseArea.getAABB(getBlockPos());
-		List<PlayerEntity> playerList = getLevel().getEntitiesOfClass(PlayerEntity.class, aabb);
+		AABB aabb = incenseArea.getAABB(getBlockPos());
+		List<Player> playerList = getLevel().getEntitiesOfClass(Player.class, aabb);
 		if (playerList.isEmpty())
 		{
 			return;
@@ -65,7 +65,7 @@ public class TileIncenseAltar extends TileInventory implements ITickableTileEnti
 
 		boolean hasPerformed = false;
 
-		for (PlayerEntity player : playerList)
+		for (Player player : playerList)
 		{
 			if (PlayerSacrificeHelper.incrementIncense(player, 0, incenseAddition, incenseAddition / 100))
 			{
@@ -75,16 +75,16 @@ public class TileIncenseAltar extends TileInventory implements ITickableTileEnti
 
 		if (hasPerformed)
 		{
-			if (getLevel().random.nextInt(4) == 0 && getLevel() instanceof ServerWorld)
+			if (getLevel().random.nextInt(4) == 0 && getLevel() instanceof ServerLevel)
 			{
-				ServerWorld server = (ServerWorld) getLevel();
+				ServerLevel server = (ServerLevel) getLevel();
 				server.sendParticles(ParticleTypes.FLAME, worldPosition.getX() + 0.5, worldPosition.getY() + 1.2, worldPosition.getZ() + 0.5, 1, 0.02, 0.03, 0.02, 0);
 			}
 		}
 	}
 
 	@Override
-	public void deserialize(CompoundNBT tag)
+	public void deserialize(CompoundTag tag)
 	{
 		super.deserialize(tag);
 		tranquility = tag.getDouble("tranquility");
@@ -92,7 +92,7 @@ public class TileIncenseAltar extends TileInventory implements ITickableTileEnti
 	}
 
 	@Override
-	public CompoundNBT serialize(CompoundNBT tag)
+	public CompoundTag serialize(CompoundTag tag)
 	{
 		super.serialize(tag);
 		tag.putDouble("tranquility", tranquility);

@@ -2,22 +2,22 @@ package wayoftime.bloodmagic.common.registration.impl;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.fml.RegistryObject;
 import wayoftime.bloodmagic.common.registration.WrappedRegistryObject;
 
-public class IRecipeSerializerRegistryObject<RECIPE extends IRecipe<?>>
-		extends WrappedRegistryObject<IRecipeSerializer<RECIPE>>
+public class IRecipeSerializerRegistryObject<RECIPE extends Recipe<?>>
+		extends WrappedRegistryObject<RecipeSerializer<RECIPE>>
 {
 
-	public IRecipeSerializerRegistryObject(RegistryObject<IRecipeSerializer<RECIPE>> registryObject)
+	public IRecipeSerializerRegistryObject(RegistryObject<RecipeSerializer<RECIPE>> registryObject)
 	{
 		super(registryObject);
 	}
 
 	@Nonnull
-	public IRecipeSerializer<RECIPE> getRecipeSerializer()
+	public RecipeSerializer<RECIPE> getRecipeSerializer()
 	{
 		return get();
 	}

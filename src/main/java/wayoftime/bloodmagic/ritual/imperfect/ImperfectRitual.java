@@ -2,8 +2,8 @@ package wayoftime.bloodmagic.ritual.imperfect;
 
 import java.util.function.Predicate;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.World;
 
 /**
@@ -47,7 +47,7 @@ public abstract class ImperfectRitual
 	 * @param player               - The player activating the ritual
 	 * @return - Whether activation was successful
 	 */
-	public abstract boolean onActivate(IImperfectRitualStone imperfectRitualStone, PlayerEntity player);
+	public abstract boolean onActivate(IImperfectRitualStone imperfectRitualStone, Player player);
 
 	public String getName()
 	{

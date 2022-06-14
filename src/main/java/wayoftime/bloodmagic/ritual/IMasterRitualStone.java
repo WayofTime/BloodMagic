@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.core.data.SoulTicket;
@@ -24,9 +24,9 @@ public interface IMasterRitualStone
 
 	SoulNetwork getOwnerNetwork();
 
-	boolean activateRitual(ItemStack activationCrystal, PlayerEntity activator, Ritual ritual);
+	boolean activateRitual(ItemStack activationCrystal, Player activator, Ritual ritual);
 
-	void performRitual(World world, BlockPos pos);
+	void performRitual(Level world, BlockPos pos);
 
 	void stopRitual(Ritual.BreakType breakType);
 
@@ -44,21 +44,21 @@ public interface IMasterRitualStone
 
 	int getRunningTime();
 
-	World getWorldObj();
+	Level getWorldObj();
 
 	BlockPos getMasterBlockPos();
 
 	String getNextBlockRange(String range);
 
-	void provideInformationOfRitualToPlayer(PlayerEntity player);
+	void provideInformationOfRitualToPlayer(Player player);
 
-	void provideInformationOfRangeToPlayer(PlayerEntity player, String range);
+	void provideInformationOfRangeToPlayer(Player player, String range);
 
-	void provideInformationOfWillConfigToPlayer(PlayerEntity player, List<EnumDemonWillType> typeList);
+	void provideInformationOfWillConfigToPlayer(Player player, List<EnumDemonWillType> typeList);
 
-	void setActiveWillConfig(PlayerEntity player, List<EnumDemonWillType> typeList);
+	void setActiveWillConfig(Player player, List<EnumDemonWillType> typeList);
 
-	EnumReaderBoundaries setBlockRangeByBounds(PlayerEntity player, String range, BlockPos offset1, BlockPos offset2);
+	EnumReaderBoundaries setBlockRangeByBounds(Player player, String range, BlockPos offset1, BlockPos offset2);
 
 	List<EnumDemonWillType> getActiveWillConfig();
 

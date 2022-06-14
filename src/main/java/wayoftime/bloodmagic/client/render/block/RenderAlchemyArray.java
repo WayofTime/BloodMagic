@@ -1,26 +1,26 @@
 package wayoftime.bloodmagic.client.render.block;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.world.item.ItemStack;
 import wayoftime.bloodmagic.client.render.alchemyarray.AlchemyArrayRenderer;
 import wayoftime.bloodmagic.core.registry.AlchemyArrayRendererRegistry;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 
-public class RenderAlchemyArray extends TileEntityRenderer<TileAlchemyArray>
+public class RenderAlchemyArray extends BlockEntityRenderer<TileAlchemyArray>
 {
 	public static final AlchemyArrayRenderer arrayRenderer = new AlchemyArrayRenderer();
 
-	public RenderAlchemyArray(TileEntityRendererDispatcher rendererDispatcherIn)
+	public RenderAlchemyArray(BlockEntityRenderDispatcher rendererDispatcherIn)
 	{
 		super(rendererDispatcherIn);
 	}
 
 	@Override
-	public void render(TileAlchemyArray tileArray, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn)
+	public void render(TileAlchemyArray tileArray, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn)
 	{
 		ItemStack inputStack = tileArray.getItem(0);
 		ItemStack catalystStack = tileArray.getItem(1);

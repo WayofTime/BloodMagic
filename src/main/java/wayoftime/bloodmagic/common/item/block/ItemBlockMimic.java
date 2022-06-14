@@ -1,23 +1,23 @@
 package wayoftime.bloodmagic.common.item.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ChestTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.tile.TileMimic;
 
-import net.minecraft.item.Item.Properties;
+import net.minecraft.world.item.Item.Properties;
 
 public class ItemBlockMimic extends BlockItem
 {
@@ -27,9 +27,9 @@ public class ItemBlockMimic extends BlockItem
 	}
 
 	@Override
-	public ActionResultType place(BlockItemUseContext context)
+	public InteractionResult place(BlockPlaceContext context)
 	{
-		PlayerEntity player = context.getPlayer();
+		Player player = context.getPlayer();
 		ItemStack stack = player.getItemInHand(context.getHand());
 
 		// If not sneaking, do normal item use
@@ -39,7 +39,7 @@ public class ItemBlockMimic extends BlockItem
 		}
 
 		BlockPos pos = context.getClickedPos().relative(context.getClickedFace().getOpposite());
-		World world = context.getLevel();
+		Level world = context.getLevel();
 		Direction direction = context.getClickedFace();
 
 		// IF sneaking and player has permission, replace the targeted block
@@ -62,17 +62,17 @@ public class ItemBlockMimic extends BlockItem
 			}
 
 			// Check if the tile entity, if any, can be replaced
-			TileEntity tileReplaced = world.getBlockEntity(pos);
+			BlockEntity tileReplaced = world.getBlockEntity(pos);
 			if (!canReplaceTile(tileReplaced))
 			{
-				return ActionResultType.FAIL;
+				return InteractionResult.FAIL;
 			}
 
 			// If tile can be replaced, store info about the tile
-			CompoundNBT tileTag = getTagFromTileEntity(tileReplaced);
+			CompoundTag tileTag = getTagFromTileEntity(tileReplaced);
 			if (tileReplaced != null)
 			{
-				CompoundNBT voidTag = new CompoundNBT();
+				CompoundTag voidTag = new CompoundTag();
 				voidTag.putInt("x", pos.getX());
 				voidTag.putInt("y", pos.getY());
 				voidTag.putInt("z", pos.getZ());
@@ -86,10 +86,10 @@ public class ItemBlockMimic extends BlockItem
 			world.setBlock(pos, mimicBlockstate, 3);
 			// Make placing sound
 			SoundType soundtype = mimicBlockstate.getSoundType(world, pos, context.getPlayer());
-			world.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
+			world.playSound(player, pos, soundtype.getPlaceSound(), SoundSource.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
 
 			// Replace the tile entity
-			TileEntity tile = world.getBlockEntity(pos);
+			BlockEntity tile = world.getBlockEntity(pos);
 			if (tile instanceof TileMimic)
 			{
 				TileMimic mimic = (TileMimic) tile;
@@ -104,16 +104,16 @@ public class ItemBlockMimic extends BlockItem
 					mimic.dropItemsOnBreak = false;
 				}
 			}
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 
-		return ActionResultType.FAIL;
+		return InteractionResult.FAIL;
 
 	}
 
-	public boolean canReplaceTile(TileEntity tile)
+	public boolean canReplaceTile(BlockEntity tile)
 	{
-		if (tile instanceof ChestTileEntity)
+		if (tile instanceof ChestBlockEntity)
 		{
 			return true;
 		}
@@ -121,14 +121,14 @@ public class ItemBlockMimic extends BlockItem
 		return tile == null;
 	}
 
-	public boolean canReplaceBlock(World world, BlockPos pos, BlockState state)
+	public boolean canReplaceBlock(Level world, BlockPos pos, BlockState state)
 	{
 		return state.getDestroySpeed(world, pos) != -1.0F;
 	}
 
-	public CompoundNBT getTagFromTileEntity(TileEntity tile)
+	public CompoundTag getTagFromTileEntity(BlockEntity tile)
 	{
-		CompoundNBT tag = new CompoundNBT();
+		CompoundTag tag = new CompoundTag();
 
 		if (tile != null)
 		{

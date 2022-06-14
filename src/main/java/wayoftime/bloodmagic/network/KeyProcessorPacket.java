@@ -2,9 +2,9 @@ package wayoftime.bloodmagic.network;
 
 import java.util.function.Supplier;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
 import wayoftime.bloodmagic.client.key.IKeybindable;
 import wayoftime.bloodmagic.client.key.KeyBindings;
@@ -25,13 +25,13 @@ public class KeyProcessorPacket
 		this(key.ordinal(), showInChat);
 	}
 
-	public static void encode(KeyProcessorPacket pkt, PacketBuffer buf)
+	public static void encode(KeyProcessorPacket pkt, FriendlyByteBuf buf)
 	{
 		buf.writeInt(pkt.keyId);
 		buf.writeBoolean(pkt.showInChat);
 	}
 
-	public static KeyProcessorPacket decode(PacketBuffer buf)
+	public static KeyProcessorPacket decode(FriendlyByteBuf buf)
 	{
 		KeyProcessorPacket pkt = new KeyProcessorPacket(buf.readInt(), buf.readBoolean());
 
@@ -44,7 +44,7 @@ public class KeyProcessorPacket
 		context.get().setPacketHandled(true);
 	}
 
-	public static void sendKeyToServer(KeyProcessorPacket msg, PlayerEntity playerEntity)
+	public static void sendKeyToServer(KeyProcessorPacket msg, Player playerEntity)
 	{
 		if (playerEntity != null)
 		{

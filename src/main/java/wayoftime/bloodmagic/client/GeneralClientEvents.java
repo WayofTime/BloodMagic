@@ -1,8 +1,8 @@
 package wayoftime.bloodmagic.client;
 
-import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
+import net.minecraft.client.Camera;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -13,7 +13,7 @@ import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 public class GeneralClientEvents {
     @SubscribeEvent
     public static void getFogDensity(EntityViewRenderEvent.FogDensity event) {
-        ActiveRenderInfo info = event.getInfo();
+        Camera info = event.getInfo();
         FluidState fluidState = info.getFluidInCamera();
         if (fluidState.isEmpty())
             return;
@@ -32,7 +32,7 @@ public class GeneralClientEvents {
 
     @SubscribeEvent
     public static void getFogColor(EntityViewRenderEvent.FogColors event) {
-        ActiveRenderInfo info = event.getInfo();
+        Camera info = event.getInfo();
         FluidState fluidState = info.getFluidInCamera();
         if (fluidState.isEmpty())
             return;

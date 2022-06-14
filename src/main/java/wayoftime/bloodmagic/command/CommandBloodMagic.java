@@ -3,12 +3,12 @@ package wayoftime.bloodmagic.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
-import net.minecraft.command.CommandSource;
+import net.minecraft.commands.CommandSourceStack;
 
 public class CommandBloodMagic
 {
-	public CommandBloodMagic(CommandDispatcher<CommandSource> dispatcher)
+	public CommandBloodMagic(CommandDispatcher<CommandSourceStack> dispatcher)
 	{
-		dispatcher.register(LiteralArgumentBuilder.<CommandSource>literal("bloodmagic"));
+		dispatcher.register(LiteralArgumentBuilder.<CommandSourceStack>literal("bloodmagic"));
 	}
 }

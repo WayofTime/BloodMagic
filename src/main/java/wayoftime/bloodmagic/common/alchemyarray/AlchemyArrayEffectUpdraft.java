@@ -1,11 +1,11 @@
 package wayoftime.bloodmagic.common.alchemyarray;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 
 public class AlchemyArrayEffectUpdraft extends AlchemyArrayEffect
@@ -23,7 +23,7 @@ public class AlchemyArrayEffectUpdraft extends AlchemyArrayEffect
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(TileAlchemyArray array, World world, BlockPos pos, BlockState state, Entity entity)
+	public void onEntityCollidedWithBlock(TileAlchemyArray array, Level world, BlockPos pos, BlockState state, Entity entity)
 	{
 		double motionY = 1;
 		double motionYGlowstoneMod = 0.1;
@@ -37,7 +37,7 @@ public class AlchemyArrayEffectUpdraft extends AlchemyArrayEffect
 //		entity.getMotion().y = motionY;
 		entity.fallDistance = 0;
 
-		entity.setDeltaMovement(new Vector3d(0, motionY, 0));
+		entity.setDeltaMovement(new Vec3(0, motionY, 0));
 
 	}
 
@@ -48,14 +48,14 @@ public class AlchemyArrayEffectUpdraft extends AlchemyArrayEffect
 	}
 
 	@Override
-	public void readFromNBT(CompoundNBT compound)
+	public void readFromNBT(CompoundTag compound)
 	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void writeToNBT(CompoundNBT compound)
+	public void writeToNBT(CompoundTag compound)
 	{
 		// TODO Auto-generated method stub
 

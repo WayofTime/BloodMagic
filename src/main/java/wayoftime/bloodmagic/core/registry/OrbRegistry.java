@@ -6,8 +6,8 @@ import java.util.List;
 
 import com.google.common.collect.ArrayListMultimap;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.altar.AltarTier;
 import wayoftime.bloodmagic.common.item.BloodOrb;

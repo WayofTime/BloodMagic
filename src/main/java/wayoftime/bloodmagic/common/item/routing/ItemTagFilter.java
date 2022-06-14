@@ -6,19 +6,19 @@ import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tags.ITag;
-import net.minecraft.tags.TagCollectionManager;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.tags.Tag;
+import net.minecraft.tags.SerializationTags;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.client.button.FilterButtonTogglePress;
@@ -46,9 +46,9 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack filterStack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack filterStack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.tagfilter.desc").withStyle(TextFormatting.ITALIC).withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.tagfilter.desc").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY));
 
 		if (filterStack.getTag() == null)
 		{
@@ -60,10 +60,10 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 
 		if (isWhitelist)
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.whitelist").withStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.whitelist").withStyle(ChatFormatting.GRAY));
 		} else
 		{
-			tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.blacklist").withStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.blacklist").withStyle(ChatFormatting.GRAY));
 		}
 
 		ItemInventory inv = new InventoryFilter(filterStack);
@@ -77,13 +77,13 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 
 			ResourceLocation tag = getItemTagResource(filterStack, i);
 
-			ITextComponent display = stack.getHoverName();
+			Component display = stack.getHoverName();
 			if (tag != null)
 			{
-				display = new StringTextComponent(tag.toString());
+				display = new TextComponent(tag.toString());
 			} else
 			{
-				display = new TranslationTextComponent("tooltip.bloodmagic.filter.anytag", display);
+				display = new TranslatableComponent("tooltip.bloodmagic.filter.anytag", display);
 			}
 
 			if (isWhitelist)
@@ -91,10 +91,10 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 				int amount = GhostItemHelper.getItemGhostAmount(stack);
 				if (amount > 0)
 				{
-					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.count", amount, display));
+					tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.count", amount, display));
 				} else
 				{
-					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.filter.all", display));
+					tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.all", display));
 				}
 			} else
 			{
@@ -109,14 +109,14 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 		int index = getItemTagIndex(filterStack, slot);
 		if (index == 0)
 		{
-			List<ITag<Item>> tagList = getAllItemTags(filterStack, slot);
+			List<Tag<Item>> tagList = getAllItemTags(filterStack, slot);
 			if (tagList != null && !tagList.isEmpty())
 			{
 				return new CollectionTagFilterKey(tagList, amount);
 			}
 		} else
 		{
-			ITag<Item> tag = getItemTag(filterStack, slot);
+			Tag<Item> tag = getItemTag(filterStack, slot);
 			if (tag != null)
 			{
 				return new TagFilterKey(tag, amount);
@@ -128,10 +128,10 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 
 	public int getItemTagIndex(ItemStack filterStack, int slot)
 	{
-		CompoundNBT tag = filterStack.getTag();
+		CompoundTag tag = filterStack.getTag();
 		if (tag == null)
 		{
-			tag = new CompoundNBT();
+			tag = new CompoundTag();
 			filterStack.setTag(tag);
 		}
 
@@ -140,10 +140,10 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 
 	public void setItemTagIndex(ItemStack filterStack, int slot, int index)
 	{
-		CompoundNBT tag = filterStack.getTag();
+		CompoundTag tag = filterStack.getTag();
 		if (tag == null)
 		{
-			tag = new CompoundNBT();
+			tag = new CompoundTag();
 			filterStack.setTag(tag);
 		}
 
@@ -172,7 +172,7 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 		setItemTagIndex(filterStack, slot, index);
 	}
 
-	public ITag<Item> getItemTag(ItemStack filterStack, int slot)
+	public Tag<Item> getItemTag(ItemStack filterStack, int slot)
 	{
 		ResourceLocation rl = getItemTagResource(filterStack, slot);
 		if (rl == null)
@@ -180,7 +180,7 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 			return null;
 		}
 
-		return TagCollectionManager.getInstance().getItems().getTag(rl);
+		return SerializationTags.getInstance().getItems().getTag(rl);
 	}
 
 	public ResourceLocation getItemTagResource(ItemStack filterStack, int slot)
@@ -213,7 +213,7 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 		return rl;
 	}
 
-	public List<ITag<Item>> getAllItemTags(ItemStack filterStack, int slot)
+	public List<Tag<Item>> getAllItemTags(ItemStack filterStack, int slot)
 	{
 		ItemInventory inv = new InventoryFilter(filterStack);
 
@@ -224,11 +224,11 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 		}
 
 		Set<ResourceLocation> tagRLs = ghostStack.getItem().getTags();
-		List<ITag<Item>> tagList = new ArrayList<ITag<Item>>();
+		List<Tag<Item>> tagList = new ArrayList<Tag<Item>>();
 
 		for (ResourceLocation rl : tagRLs)
 		{
-			tagList.add(TagCollectionManager.getInstance().getItems().getTag(rl));
+			tagList.add(SerializationTags.getInstance().getItems().getTag(rl));
 		}
 
 		return tagList;
@@ -238,10 +238,10 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 	public int receiveButtonPress(ItemStack filterStack, String buttonKey, int ghostItemSlot, int currentButtonState)
 	{
 		// Returns new state that the pressed button is in. -1 for an invalid button.
-		CompoundNBT tag = filterStack.getTag();
+		CompoundTag tag = filterStack.getTag();
 		if (tag == null)
 		{
-			filterStack.setTag(new CompoundNBT());
+			filterStack.setTag(new CompoundTag());
 			tag = filterStack.getTag();
 		}
 
@@ -256,7 +256,7 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 	@Override
 	public int getCurrentButtonState(ItemStack filterStack, String buttonKey, int ghostItemSlot)
 	{
-		CompoundNBT tag = filterStack.getTag();
+		CompoundTag tag = filterStack.getTag();
 		if (tag != null)
 		{
 			if (buttonKey.equals(Constants.BUTTONID.ITEMTAG))
@@ -270,9 +270,9 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 	}
 
 	@Override
-	public List<ITextComponent> getTextForHoverItem(ItemStack filterStack, String buttonKey, int ghostItemSlot)
+	public List<Component> getTextForHoverItem(ItemStack filterStack, String buttonKey, int ghostItemSlot)
 	{
-		List<ITextComponent> componentList = super.getTextForHoverItem(filterStack, buttonKey, ghostItemSlot);
+		List<Component> componentList = super.getTextForHoverItem(filterStack, buttonKey, ghostItemSlot);
 		if (ghostItemSlot < 0)
 		{
 			return componentList;
@@ -288,7 +288,7 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 				ItemStack ghostStack = inv.getItem(ghostItemSlot);
 				if (ghostStack.isEmpty())
 				{
-					componentList.add(new TranslationTextComponent("filter.bloodmagic.novalidtag"));
+					componentList.add(new TranslatableComponent("filter.bloodmagic.novalidtag"));
 					return componentList;
 				}
 
@@ -296,14 +296,14 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 
 				if (locations.size() > 0)
 				{
-					componentList.add(new TranslationTextComponent("filter.bloodmagic.anytag"));
+					componentList.add(new TranslatableComponent("filter.bloodmagic.anytag"));
 					for (ResourceLocation rl : locations)
 					{
-						componentList.add(new StringTextComponent(rl.toString()));
+						componentList.add(new TextComponent(rl.toString()));
 					}
 				} else
 				{
-					componentList.add(new TranslationTextComponent("filter.bloodmagic.novalidtag"));
+					componentList.add(new TranslatableComponent("filter.bloodmagic.novalidtag"));
 					return componentList;
 				}
 			} else
@@ -311,8 +311,8 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 				ResourceLocation rl = getItemTagResource(filterStack, ghostItemSlot);
 				if (rl != null)
 				{
-					componentList.add(new TranslationTextComponent("filter.bloodmagic.specifiedtag"));
-					componentList.add(new StringTextComponent(rl.toString()));
+					componentList.add(new TranslatableComponent("filter.bloodmagic.specifiedtag"));
+					componentList.add(new TextComponent(rl.toString()));
 				}
 			}
 		}
@@ -321,9 +321,9 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public List<Pair<String, Button.IPressable>> getButtonAction(ContainerFilter container)
+	public List<Pair<String, Button.OnPress>> getButtonAction(ContainerFilter container)
 	{
-		List<Pair<String, Button.IPressable>> buttonList = super.getButtonAction(container);
+		List<Pair<String, Button.OnPress>> buttonList = super.getButtonAction(container);
 		buttonList.add(Pair.of(Constants.BUTTONID.ITEMTAG, new FilterButtonTogglePress(Constants.BUTTONID.ITEMTAG, container)));
 		return buttonList;
 	}

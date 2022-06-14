@@ -1,8 +1,8 @@
 package wayoftime.bloodmagic.common.block.type;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
-public enum SpectralBlockType implements IStringSerializable
+public enum SpectralBlockType implements StringRepresentable
 {
 	SOLID("solid"),
 	LEAKING("leaking");

@@ -1,15 +1,15 @@
 package wayoftime.bloodmagic.client.render.entity;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.model.Model;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
@@ -22,13 +22,13 @@ public class EntityMeteorRenderer extends EntityRenderer<Entity>
 	private static final ResourceLocation COW_LOCATION = BloodMagic.rl("textures/models/meteor.png");
 	private float scale = 1.0f;
 
-	public EntityMeteorRenderer(EntityRendererManager renderManagerIn)
+	public EntityMeteorRenderer(EntityRenderDispatcher renderManagerIn)
 	{
 		super(renderManagerIn);
 		this.shadowRadius = 0.5F;
 	}
 
-	public void render(Entity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn)
+	public void render(Entity entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn)
 	{
 		matrixStackIn.pushPose();
 //	      matrixStackIn.translate(0.0D, 0.375D, 0.0D);
@@ -51,7 +51,7 @@ public class EntityMeteorRenderer extends EntityRenderer<Entity>
 //	      matrixStackIn.scale(-1.0F, -1.0F, 1.0F);
 //	      matrixStackIn.rotate(Vector3f.YP.rotationDegrees(90.0F));
 //	      this.modelBoat.setRotationAngles(entityIn, partialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
-		IVertexBuilder ivertexbuilder = bufferIn.getBuffer(this.model.renderType(this.getTextureLocation(entityIn)));
+		VertexConsumer ivertexbuilder = bufferIn.getBuffer(this.model.renderType(this.getTextureLocation(entityIn)));
 		this.model.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 //	      if (!entityIn.canSwim()) {
 //	         IVertexBuilder ivertexbuilder1 = bufferIn.getBuffer(RenderType.getWaterMask());

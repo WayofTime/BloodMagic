@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Triple;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public interface IRoutingNode
 {
-	void connectMasterToRemainingNode(World world, List<BlockPos> alreadyChecked, IMasterRoutingNode master);
+	void connectMasterToRemainingNode(Level world, List<BlockPos> alreadyChecked, IMasterRoutingNode master);
 
 	BlockPos getCurrentBlockPos();
 

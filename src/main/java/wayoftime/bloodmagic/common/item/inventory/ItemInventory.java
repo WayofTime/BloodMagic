@@ -1,15 +1,15 @@
 package wayoftime.bloodmagic.common.item.inventory;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.NonNullList;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.NonNullList;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 
-public class ItemInventory implements IInventory
+public class ItemInventory implements Container
 {
 	protected int[] syncedSlots = new int[0];
 	protected ItemStack masterStack;
@@ -47,16 +47,16 @@ public class ItemInventory implements IInventory
 		return false;
 	}
 
-	public void readFromNBT(CompoundNBT tagCompound)
+	public void readFromNBT(CompoundTag tagCompound)
 	{
 		this.inventory = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
 
-		ItemStackHelper.loadAllItems(tagCompound, this.inventory);
+		ContainerHelper.loadAllItems(tagCompound, this.inventory);
 	}
 
-	public void writeToNBT(CompoundNBT tagCompound)
+	public void writeToNBT(CompoundTag tagCompound)
 	{
-		ItemStackHelper.saveAllItems(tagCompound, this.inventory);
+		ContainerHelper.saveAllItems(tagCompound, this.inventory);
 //		ListNBT tags = new ListNBT();
 //
 //		for (int i = 0; i < inventory.size(); i++)
@@ -79,7 +79,7 @@ public class ItemInventory implements IInventory
 		if (masterStack != null)
 		{
 			NBTHelper.checkNBT(masterStack);
-			CompoundNBT tag = masterStack.getTag();
+			CompoundTag tag = masterStack.getTag();
 			readFromNBT(tag.getCompound(Constants.NBT.ITEM_INVENTORY + name));
 		}
 	}
@@ -89,8 +89,8 @@ public class ItemInventory implements IInventory
 		if (masterStack != null)
 		{
 			NBTHelper.checkNBT(masterStack);
-			CompoundNBT tag = masterStack.getTag();
-			CompoundNBT invTag = new CompoundNBT();
+			CompoundTag tag = masterStack.getTag();
+			CompoundTag invTag = new CompoundTag();
 			writeToNBT(invTag);
 			tag.put(Constants.NBT.ITEM_INVENTORY + name, invTag);
 		}
@@ -165,19 +165,19 @@ public class ItemInventory implements IInventory
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity player)
+	public boolean stillValid(Player player)
 	{
 		return true;
 	}
 
 	@Override
-	public void startOpen(PlayerEntity player)
+	public void startOpen(Player player)
 	{
 
 	}
 
 	@Override
-	public void stopOpen(PlayerEntity player)
+	public void stopOpen(Player player)
 	{
 
 	}

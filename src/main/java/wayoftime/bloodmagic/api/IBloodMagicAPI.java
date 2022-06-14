@@ -7,11 +7,11 @@ import javax.annotation.Nonnull;
 
 import org.apache.logging.log4j.LogManager;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.LazyValue;
-import net.minecraft.util.NonNullList;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.core.NonNullList;
 
 /**
  * The main interface between a plugin and Blood Magic's internals.
@@ -25,7 +25,7 @@ import net.minecraft.util.NonNullList;
  */
 public interface IBloodMagicAPI
 {
-	LazyValue<IBloodMagicAPI> INSTANCE = new LazyValue<>(() -> {
+	LazyLoadedValue<IBloodMagicAPI> INSTANCE = new LazyLoadedValue<>(() -> {
 		try
 		{
 			return (IBloodMagicAPI) Class.forName("wayoftime.bloodmagic.impl.BloodMagicAPI").getDeclaredField("INSTANCE").get(null);
@@ -135,7 +135,7 @@ public interface IBloodMagicAPI
 	 * @param function            Function which inputs a Player Entity and outputs
 	 *                            a NonNullList of ItemStacks.
 	 */
-	default void registerInventoryProvider(String inventoryIdentifier, Function<PlayerEntity, NonNullList<ItemStack>> provider)
+	default void registerInventoryProvider(String inventoryIdentifier, Function<Player, NonNullList<ItemStack>> provider)
 	{
 	}
 
@@ -151,7 +151,7 @@ public interface IBloodMagicAPI
 	 * <li>STEADFAST</li>
 	 * </ul>
 	 */
-	default double getTotalDemonWill(String willType, PlayerEntity player)
+	default double getTotalDemonWill(String willType, Player player)
 	{
 		return 0;
 	}

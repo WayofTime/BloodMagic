@@ -1,8 +1,8 @@
 package wayoftime.bloodmagic.util.text;
 
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.chat.Component;
 
 public interface IHasTextComponent
 {
-	ITextComponent getTextComponent();
+	Component getTextComponent();
 }

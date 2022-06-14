@@ -1,12 +1,12 @@
 package wayoftime.bloodmagic.command.sub;
 
-import net.minecraft.command.CommandException;
-import net.minecraft.command.CommandSource;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.commands.CommandRuntimeException;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.server.level.ServerPlayer;
 
 public class SubCommandBind
 {
-	public ServerPlayerEntity player;
+	public ServerPlayer player;
 
 //	static ArgumentBuilder<CommandSource, ?> register()
 //    {
@@ -53,8 +53,8 @@ public class SubCommandBind
 //		return 2;
 //	}
 
-	public static int execute(CommandSource source, String[] args)
-			throws CommandException
+	public static int execute(CommandSourceStack source, String[] args)
+			throws CommandRuntimeException
 	{
 //		if (args.length == 1 && (args[0].equals("?") || args[0].equals("help")))
 //		{

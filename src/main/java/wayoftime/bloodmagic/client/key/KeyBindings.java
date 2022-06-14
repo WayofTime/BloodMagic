@@ -3,9 +3,9 @@ package wayoftime.bloodmagic.client.key;
 import java.util.Locale;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.settings.IKeyConflictContext;
@@ -41,7 +41,7 @@ public enum KeyBindings
 		@Override
 		public void handleKeybind()
 		{
-			ClientPlayerEntity player = Minecraft.getInstance().player;
+			LocalPlayer player = Minecraft.getInstance().player;
 			if (player.getMainHandItem().getItem() instanceof ItemSigilHolding)
 				ClientEvents.cycleSigil(player.getMainHandItem(), player, -1);
 		}
@@ -52,7 +52,7 @@ public enum KeyBindings
 		@Override
 		public void handleKeybind()
 		{
-			ClientPlayerEntity player = Minecraft.getInstance().player;
+			LocalPlayer player = Minecraft.getInstance().player;
 			if (player.getMainHandItem().getItem() instanceof ItemSigilHolding)
 				ClientEvents.cycleSigil(player.getMainHandItem(), player, 1);
 		}
@@ -64,7 +64,7 @@ public enum KeyBindings
 	private final int keyCode;
 
 	@OnlyIn(Dist.CLIENT)
-	private KeyBinding key;
+	private KeyMapping key;
 
 	KeyBindings(IKeyConflictContext keyConflictContext, KeyModifier keyModifier, int keyCode)
 	{
@@ -92,7 +92,7 @@ public enum KeyBindings
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public KeyBinding getKey()
+	public KeyMapping getKey()
 	{
 		if (key == null)
 			key = new KeyBindingBloodMagic(this);
@@ -101,7 +101,7 @@ public enum KeyBindings
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public void setKey(KeyBinding key)
+	public void setKey(KeyMapping key)
 	{
 		this.key = key;
 	}

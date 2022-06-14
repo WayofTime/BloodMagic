@@ -1,12 +1,12 @@
 package wayoftime.bloodmagic.common.alchemyarray;
 
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 
 public class AlchemyArrayEffectNight extends AlchemyArrayEffect
@@ -26,7 +26,7 @@ public class AlchemyArrayEffectNight extends AlchemyArrayEffect
 //			return false;
 //		}
 
-		World world = tile.getLevel();
+		Level world = tile.getLevel();
 		if (ticksActive == 100)
 		{
 			startingTime = world.getDayTime();
@@ -40,22 +40,22 @@ public class AlchemyArrayEffectNight extends AlchemyArrayEffect
 
 		// TODO: Add recipe rechecking to verify nothing screwy is going on.
 
-		if (world.isClientSide && world instanceof ClientWorld)
+		if (world.isClientSide && world instanceof ClientLevel)
 		{
 			long finalTime = ((world.getDayTime() + 11000) / 24000) * 24000 + 13000;
 			long time = (finalTime - startingTime) * (ticksActive - 100) / 100 + startingTime;
 
-			((ClientWorld) world).getLevelData().setDayTime(time);
+			((ClientLevel) world).getLevelData().setDayTime(time);
 
 			return false;
 		}
 
-		if (world instanceof ServerWorld)
+		if (world instanceof ServerLevel)
 		{
 //			world.getDayTime()
 			long finalTime = ((world.getDayTime() + 11000) / 24000) * 24000 + 13000;
 			long time = (finalTime - startingTime) * (ticksActive - 100) / 100 + startingTime;
-			for (ServerWorld serverworld : world.getServer().getAllLevels())
+			for (ServerLevel serverworld : world.getServer().getAllLevels())
 			{
 				serverworld.setDayTime((long) time);
 			}
@@ -63,7 +63,7 @@ public class AlchemyArrayEffectNight extends AlchemyArrayEffect
 			if (ticksActive >= 200)
 			{
 				BlockPos pos = tile.getBlockPos();
-				LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
+				LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
 //				LightningBoltEntity lightning = new LightningBoltEntity(world, pos.getX() + dispX, pos.getY(), pos.getZ() + dispZ);
 				lightningboltentity.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 				lightningboltentity.setVisualOnly(true);
@@ -78,13 +78,13 @@ public class AlchemyArrayEffectNight extends AlchemyArrayEffect
 	}
 
 	@Override
-	public void writeToNBT(CompoundNBT tag)
+	public void writeToNBT(CompoundTag tag)
 	{
 
 	}
 
 	@Override
-	public void readFromNBT(CompoundNBT tag)
+	public void readFromNBT(CompoundTag tag)
 	{
 
 	}

@@ -2,9 +2,9 @@ package wayoftime.bloodmagic.api.compat;
 
 import java.util.Locale;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
-public enum EnumDemonWillType implements IStringSerializable
+public enum EnumDemonWillType implements StringRepresentable
 {
 	DEFAULT("default"),
 	CORROSIVE("corrosive"),

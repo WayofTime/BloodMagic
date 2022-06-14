@@ -1,12 +1,12 @@
 package wayoftime.bloodmagic.common.alchemyarray;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 
 public class AlchemyArrayEffectSpike extends AlchemyArrayEffect
@@ -23,7 +23,7 @@ public class AlchemyArrayEffectSpike extends AlchemyArrayEffect
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(TileAlchemyArray array, World world, BlockPos pos, BlockState state, Entity entity)
+	public void onEntityCollidedWithBlock(TileAlchemyArray array, Level world, BlockPos pos, BlockState state, Entity entity)
 	{
 		if (entity instanceof LivingEntity)
 		{
@@ -38,14 +38,14 @@ public class AlchemyArrayEffectSpike extends AlchemyArrayEffect
 	}
 
 	@Override
-	public void readFromNBT(CompoundNBT compound)
+	public void readFromNBT(CompoundTag compound)
 	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void writeToNBT(CompoundNBT compound)
+	public void writeToNBT(CompoundTag compound)
 	{
 		// TODO Auto-generated method stub
 

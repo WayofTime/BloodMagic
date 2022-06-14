@@ -1,12 +1,12 @@
 package wayoftime.bloodmagic.common.item;
 
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
@@ -162,10 +162,10 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> WEAK_BLOOD_SHARD = BASICITEMS.register("weakbloodshard", () -> new ItemBase());
 	public static final RegistryObject<Item> EXPERIENCE_TOME = BASICITEMS.register("experiencebook", () -> new ItemExperienceBook());
 
-	public static final RegistryObject<Item> LIVING_HELMET = BASICITEMS.register("livinghelmet", () -> new ItemLivingArmor(EquipmentSlotType.HEAD));
-	public static final RegistryObject<Item> LIVING_PLATE = BASICITEMS.register("livingplate", () -> new ItemLivingArmor(EquipmentSlotType.CHEST));
-	public static final RegistryObject<Item> LIVING_LEGGINGS = BASICITEMS.register("livingleggings", () -> new ItemLivingArmor(EquipmentSlotType.LEGS));
-	public static final RegistryObject<Item> LIVING_BOOTS = BASICITEMS.register("livingboots", () -> new ItemLivingArmor(EquipmentSlotType.FEET));
+	public static final RegistryObject<Item> LIVING_HELMET = BASICITEMS.register("livinghelmet", () -> new ItemLivingArmor(EquipmentSlot.HEAD));
+	public static final RegistryObject<Item> LIVING_PLATE = BASICITEMS.register("livingplate", () -> new ItemLivingArmor(EquipmentSlot.CHEST));
+	public static final RegistryObject<Item> LIVING_LEGGINGS = BASICITEMS.register("livingleggings", () -> new ItemLivingArmor(EquipmentSlot.LEGS));
+	public static final RegistryObject<Item> LIVING_BOOTS = BASICITEMS.register("livingboots", () -> new ItemLivingArmor(EquipmentSlot.FEET));
 
 	public static final RegistryObject<Item> LIVING_TOME = BASICITEMS.register("upgradetome", () -> new ItemLivingTome());
 	public static final RegistryObject<Item> LIVING_TRAINER = BASICITEMS.register("upgradetrainer", () -> new ItemLivingTrainer());

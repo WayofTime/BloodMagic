@@ -1,16 +1,16 @@
 package wayoftime.bloodmagic.client.screens;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.item.inventory.ContainerHolding;
@@ -19,10 +19,10 @@ import wayoftime.bloodmagic.common.item.sigil.ItemSigilHolding;
 public class ScreenHolding extends ScreenBase<ContainerHolding>
 {
 	private static final ResourceLocation background = BloodMagic.rl("gui/sigilholding.png");
-	public IInventory tileTable;
-	private PlayerEntity player;
+	public Container tileTable;
+	private Player player;
 
-	public ScreenHolding(ContainerHolding container, PlayerInventory playerInventory, ITextComponent title)
+	public ScreenHolding(ContainerHolding container, Inventory playerInventory, Component title)
 	{
 		super(container, playerInventory, title);
 		tileTable = container.inventoryHolding;
@@ -38,15 +38,15 @@ public class ScreenHolding extends ScreenBase<ContainerHolding>
 	}
 
 	@Override
-	protected void renderLabels(MatrixStack stack, int mouseX, int mouseY)
+	protected void renderLabels(PoseStack stack, int mouseX, int mouseY)
 	{
 //		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
 //		this.font.draw(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
-		this.font.draw(stack, new TranslationTextComponent("item.bloodmagic.sigilofholding"), 53, 4, 4210752);
+		this.font.draw(stack, new TranslatableComponent("item.bloodmagic.sigilofholding"), 53, 4, 4210752);
 	}
 
 	@Override
-	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		getMinecraft().getTextureManager().bind(background);
@@ -73,7 +73,7 @@ public class ScreenHolding extends ScreenBase<ContainerHolding>
 		int x = (width - imageWidth) / 2;
 		int y = (height - imageHeight) / 2;
 		this.blit(stack, x, y, 0, 0, imageWidth, imageHeight);
-		ItemStack held = player.getItemInHand(Hand.MAIN_HAND);
+		ItemStack held = player.getItemInHand(InteractionHand.MAIN_HAND);
 		if (!held.isEmpty() && held.getItem() == BloodMagicItems.HOLDING_SIGIL.get())
 		{
 //            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

@@ -5,15 +5,15 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.potion.Effect;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
@@ -152,9 +152,9 @@ public class BloodMagic
 		modBus.addListener(this::gatherData);
 
 		modBus.addGenericListener(Fluid.class, this::registerFluids);
-		modBus.addGenericListener(TileEntityType.class, this::registerTileEntityTypes);
-		modBus.addGenericListener(IRecipeSerializer.class, this::registerRecipes);
-		modBus.addGenericListener(Effect.class, BloodMagicPotions::registerPotions);
+		modBus.addGenericListener(BlockEntityType.class, this::registerTileEntityTypes);
+		modBus.addGenericListener(RecipeSerializer.class, this::registerRecipes);
+		modBus.addGenericListener(MobEffect.class, BloodMagicPotions::registerPotions);
 		modBus.addListener(ConfigManager::onCommonReload);
 
 		MinecraftForge.EVENT_BUS.register(new GenericHandler());
@@ -178,7 +178,7 @@ public class BloodMagic
 		ModDungeons.init();
 	}
 
-	private void registerRecipes(RegistryEvent.Register<IRecipeSerializer<?>> event)
+	private void registerRecipes(RegistryEvent.Register<RecipeSerializer<?>> event)
 	{
 //		System.out.println("Registering IngredientBloodOrb Serializer.");
 		CraftingHelper.register(IngredientBloodOrb.NAME, IngredientBloodOrb.Serializer.INSTANCE);
@@ -243,39 +243,39 @@ public class BloodMagic
 		}
 	}
 
-	public void registerTileEntityTypes(RegistryEvent.Register<TileEntityType<?>> event)
+	public void registerTileEntityTypes(RegistryEvent.Register<BlockEntityType<?>> event)
 	{
 		LOGGER.info("Attempting to register Tile Entities");
-		event.getRegistry().register(TileEntityType.Builder.of(TileAltar::new, BloodMagicBlocks.BLOOD_ALTAR.get()).build(null).setRegistryName("altar"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileAlchemyArray::new, BloodMagicBlocks.ALCHEMY_ARRAY.get()).build(null).setRegistryName("alchemyarray"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileSoulForge::new, BloodMagicBlocks.SOUL_FORGE.get()).build(null).setRegistryName("soulforge"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileSpikeTrap::new, BloodMagicBlocks.DUNGEON_SPIKE_TRAP.get()).build(null).setRegistryName("spiketrap"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileDungeonAlternator::new, BloodMagicBlocks.DUNGEON_ALTERNATOR.get()).build(null).setRegistryName("dungeonalternator"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileMasterRitualStone::new, BloodMagicBlocks.MASTER_RITUAL_STONE.get()).build(null).setRegistryName("masterritualstone"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileAlchemicalReactionChamber::new, BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER.get()).build(null).setRegistryName("alchemicalreactionchamber"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileAlchemyTable::new, BloodMagicBlocks.ALCHEMY_TABLE.get()).build(null).setRegistryName("alchemytable"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileDemonCrystal::new, BloodMagicBlocks.RAW_CRYSTAL_BLOCK.get(), BloodMagicBlocks.CORROSIVE_CRYSTAL_BLOCK.get(), BloodMagicBlocks.DESTRUCTIVE_CRYSTAL_BLOCK.get(), BloodMagicBlocks.VENGEFUL_CRYSTAL_BLOCK.get(), BloodMagicBlocks.STEADFAST_CRYSTAL_BLOCK.get()).build(null).setRegistryName("demoncrystal"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileDemonCrucible::new, BloodMagicBlocks.DEMON_CRUCIBLE.get()).build(null).setRegistryName("demoncrucible"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileDemonCrystallizer::new, BloodMagicBlocks.DEMON_CRYSTALLIZER.get()).build(null).setRegistryName("demoncrystallizer"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileDemonPylon::new, BloodMagicBlocks.DEMON_PYLON.get()).build(null).setRegistryName("demonpylon"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileIncenseAltar::new, BloodMagicBlocks.INCENSE_ALTAR.get()).build(null).setRegistryName("incensealtar"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileMimic::new, BloodMagicBlocks.MIMIC.get(), BloodMagicBlocks.ETHEREAL_MIMIC.get()).build(null).setRegistryName("mimic"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileShapedExplosive::new, BloodMagicBlocks.SHAPED_CHARGE.get()).build(null).setRegistryName("shaped_explosive"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileDeforesterCharge::new, BloodMagicBlocks.DEFORESTER_CHARGE.get()).build(null).setRegistryName("deforester_charge"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileVeinMineCharge::new, BloodMagicBlocks.VEINMINE_CHARGE.get()).build(null).setRegistryName("veinmine_charge"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileFungalCharge::new, BloodMagicBlocks.FUNGAL_CHARGE.get()).build(null).setRegistryName("fungal_charge"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileAltar::new, BloodMagicBlocks.BLOOD_ALTAR.get()).build(null).setRegistryName("altar"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileAlchemyArray::new, BloodMagicBlocks.ALCHEMY_ARRAY.get()).build(null).setRegistryName("alchemyarray"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileSoulForge::new, BloodMagicBlocks.SOUL_FORGE.get()).build(null).setRegistryName("soulforge"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileSpikeTrap::new, BloodMagicBlocks.DUNGEON_SPIKE_TRAP.get()).build(null).setRegistryName("spiketrap"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileDungeonAlternator::new, BloodMagicBlocks.DUNGEON_ALTERNATOR.get()).build(null).setRegistryName("dungeonalternator"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileMasterRitualStone::new, BloodMagicBlocks.MASTER_RITUAL_STONE.get()).build(null).setRegistryName("masterritualstone"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileAlchemicalReactionChamber::new, BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER.get()).build(null).setRegistryName("alchemicalreactionchamber"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileAlchemyTable::new, BloodMagicBlocks.ALCHEMY_TABLE.get()).build(null).setRegistryName("alchemytable"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileDemonCrystal::new, BloodMagicBlocks.RAW_CRYSTAL_BLOCK.get(), BloodMagicBlocks.CORROSIVE_CRYSTAL_BLOCK.get(), BloodMagicBlocks.DESTRUCTIVE_CRYSTAL_BLOCK.get(), BloodMagicBlocks.VENGEFUL_CRYSTAL_BLOCK.get(), BloodMagicBlocks.STEADFAST_CRYSTAL_BLOCK.get()).build(null).setRegistryName("demoncrystal"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileDemonCrucible::new, BloodMagicBlocks.DEMON_CRUCIBLE.get()).build(null).setRegistryName("demoncrucible"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileDemonCrystallizer::new, BloodMagicBlocks.DEMON_CRYSTALLIZER.get()).build(null).setRegistryName("demoncrystallizer"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileDemonPylon::new, BloodMagicBlocks.DEMON_PYLON.get()).build(null).setRegistryName("demonpylon"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileIncenseAltar::new, BloodMagicBlocks.INCENSE_ALTAR.get()).build(null).setRegistryName("incensealtar"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileMimic::new, BloodMagicBlocks.MIMIC.get(), BloodMagicBlocks.ETHEREAL_MIMIC.get()).build(null).setRegistryName("mimic"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileShapedExplosive::new, BloodMagicBlocks.SHAPED_CHARGE.get()).build(null).setRegistryName("shaped_explosive"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileDeforesterCharge::new, BloodMagicBlocks.DEFORESTER_CHARGE.get()).build(null).setRegistryName("deforester_charge"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileVeinMineCharge::new, BloodMagicBlocks.VEINMINE_CHARGE.get()).build(null).setRegistryName("veinmine_charge"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileFungalCharge::new, BloodMagicBlocks.FUNGAL_CHARGE.get()).build(null).setRegistryName("fungal_charge"));
 
-		event.getRegistry().register(TileEntityType.Builder.of(TileRoutingNode::new, BloodMagicBlocks.ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("itemroutingnode"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileInputRoutingNode::new, BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("inputroutingnode"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileOutputRoutingNode::new, BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("outputroutingnode"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileMasterRoutingNode::new, BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("masterroutingnode"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileRoutingNode::new, BloodMagicBlocks.ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("itemroutingnode"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileInputRoutingNode::new, BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("inputroutingnode"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileOutputRoutingNode::new, BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("outputroutingnode"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileMasterRoutingNode::new, BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get()).build(null).setRegistryName("masterroutingnode"));
 
-		event.getRegistry().register(TileEntityType.Builder.of(TileTeleposer::new, BloodMagicBlocks.TELEPOSER.get()).build(null).setRegistryName("teleposer"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileSpectral::new, BloodMagicBlocks.SPECTRAL.get()).build(null).setRegistryName("spectral"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileTeleposer::new, BloodMagicBlocks.TELEPOSER.get()).build(null).setRegistryName("teleposer"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileSpectral::new, BloodMagicBlocks.SPECTRAL.get()).build(null).setRegistryName("spectral"));
 
-		event.getRegistry().register(TileEntityType.Builder.of(TileDungeonController::new, BloodMagicBlocks.DUNGEON_CONTROLLER.get()).build(null).setRegistryName("dungeon_controller"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileDungeonSeal::new, BloodMagicBlocks.DUNGEON_SEAL.get()).build(null).setRegistryName("dungeon_seal"));
-		event.getRegistry().register(TileEntityType.Builder.of(TileInversionPillar::new, BloodMagicBlocks.INVERSION_PILLAR.get()).build(null).setRegistryName("inversion_pillar"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileDungeonController::new, BloodMagicBlocks.DUNGEON_CONTROLLER.get()).build(null).setRegistryName("dungeon_controller"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileDungeonSeal::new, BloodMagicBlocks.DUNGEON_SEAL.get()).build(null).setRegistryName("dungeon_seal"));
+		event.getRegistry().register(BlockEntityType.Builder.of(TileInversionPillar::new, BloodMagicBlocks.INVERSION_PILLAR.get()).build(null).setRegistryName("inversion_pillar"));
 
 	}
 
@@ -384,7 +384,7 @@ public class BloodMagic
 	}
 
 	// Custom ItemGroup TAB
-	public static final ItemGroup TAB = new ItemGroup("bloodmagictab")
+	public static final CreativeModeTab TAB = new CreativeModeTab("bloodmagictab")
 	{
 		@Override
 		public ItemStack makeIcon()

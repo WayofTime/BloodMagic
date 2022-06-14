@@ -9,24 +9,26 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.potion.Effect;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionEffect;
 import wayoftime.bloodmagic.util.Constants;
 
+import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder.RecipeResult;
+
 public class PotionEffectRecipeBuilder extends BloodMagicRecipeBuilder<PotionEffectRecipeBuilder>
 {
 	private final List<Ingredient> input;
-	private final Effect outputEffect;
+	private final MobEffect outputEffect;
 	private final int baseDuration;
 	private final int syphon;
 	private final int ticks;
 	private final int minimumTier;
 
-	protected PotionEffectRecipeBuilder(List<Ingredient> input, Effect outputEffect, int baseDuration, int syphon, int ticks, int minimumTier)
+	protected PotionEffectRecipeBuilder(List<Ingredient> input, MobEffect outputEffect, int baseDuration, int syphon, int ticks, int minimumTier)
 	{
 		super(bmSerializer("flask_potioneffect"));
 		this.outputEffect = outputEffect;
@@ -37,7 +39,7 @@ public class PotionEffectRecipeBuilder extends BloodMagicRecipeBuilder<PotionEff
 		this.minimumTier = minimumTier;
 	}
 
-	public static PotionEffectRecipeBuilder potionEffect(Effect outputEffect, int baseDuration, int syphon, int ticks, int minimumTier)
+	public static PotionEffectRecipeBuilder potionEffect(MobEffect outputEffect, int baseDuration, int syphon, int ticks, int minimumTier)
 	{
 		List<Ingredient> inputList = new ArrayList<Ingredient>();
 

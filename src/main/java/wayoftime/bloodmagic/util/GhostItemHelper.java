@@ -1,7 +1,7 @@
 package wayoftime.bloodmagic.util;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 
 public class GhostItemHelper
@@ -9,7 +9,7 @@ public class GhostItemHelper
 	public static void setItemGhostAmount(ItemStack stack, int amount)
 	{
 		NBTHelper.checkNBT(stack);
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		tag.putInt(Constants.NBT.GHOST_STACK_SIZE, amount);
 	}
@@ -17,7 +17,7 @@ public class GhostItemHelper
 	public static int getItemGhostAmount(ItemStack stack)
 	{
 		NBTHelper.checkNBT(stack);
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
 		return tag.getInt(Constants.NBT.GHOST_STACK_SIZE);
 	}
@@ -29,7 +29,7 @@ public class GhostItemHelper
 			return false;
 		}
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		return tag.contains(Constants.NBT.GHOST_STACK_SIZE);
 	}
 
@@ -51,7 +51,7 @@ public class GhostItemHelper
 	{
 		ItemStack newStack = ghostStack.copy();
 		NBTHelper.checkNBT(newStack);
-		CompoundNBT tag = newStack.getTag();
+		CompoundTag tag = newStack.getTag();
 		int amount = getItemGhostAmount(ghostStack);
 		tag.remove(Constants.NBT.GHOST_STACK_SIZE);
 		if (tag.isEmpty())
@@ -67,7 +67,7 @@ public class GhostItemHelper
 	{
 		ItemStack newStack = ghostStack.copy();
 		NBTHelper.checkNBT(newStack);
-		CompoundNBT tag = newStack.getTag();
+		CompoundTag tag = newStack.getTag();
 		tag.remove(Constants.NBT.GHOST_STACK_SIZE);
 		if (tag.isEmpty())
 		{

@@ -7,12 +7,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.server.level.ServerLevel;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 
 public class DungeonRoom
@@ -50,7 +50,7 @@ public class DungeonRoom
 	}
 
 	// REEEEEEEEEEEEEEEEE
-	public List<DungeonDoor> getPotentialConnectedRoomTypes(PlacementSettings settings, BlockPos offset)
+	public List<DungeonDoor> getPotentialConnectedRoomTypes(StructurePlaceSettings settings, BlockPos offset)
 	{
 		// This DungeonDoor is stored in the door block.
 		List<DungeonDoor> dungeonDoorList = new ArrayList<>();
@@ -80,7 +80,7 @@ public class DungeonRoom
 						List<String> roomTypeList = new ArrayList<String>();
 						for (BlockPos doorPos : doorList)
 						{
-							dungeonDoorList.add(new DungeonDoor(Template.calculateRelativePosition(settings, doorPos).offset(offset), rotatedFacing, doorType, roomTypeList));
+							dungeonDoorList.add(new DungeonDoor(StructureTemplate.calculateRelativePosition(settings, doorPos).offset(offset), rotatedFacing, doorType, roomTypeList));
 						}
 
 						continue;
@@ -94,7 +94,7 @@ public class DungeonRoom
 						{
 							if (doorList.contains(indexPos))
 							{
-								dungeonDoorList.add(new DungeonDoor(Template.calculateRelativePosition(settings, indexPos).offset(offset), rotatedFacing, doorType, roomTypeList));
+								dungeonDoorList.add(new DungeonDoor(StructureTemplate.calculateRelativePosition(settings, indexPos).offset(offset), rotatedFacing, doorType, roomTypeList));
 							}
 						}
 					}
@@ -124,7 +124,7 @@ public class DungeonRoom
 //
 //	}
 
-	public List<AreaDescriptor> getAreaDescriptors(PlacementSettings settings, BlockPos offset)
+	public List<AreaDescriptor> getAreaDescriptors(StructurePlaceSettings settings, BlockPos offset)
 	{
 		List<AreaDescriptor> newList = new ArrayList<>();
 
@@ -136,27 +136,27 @@ public class DungeonRoom
 		return newList;
 	}
 
-	public BlockPos getPlayerSpawnLocationForPlacement(PlacementSettings settings, BlockPos offset)
+	public BlockPos getPlayerSpawnLocationForPlacement(StructurePlaceSettings settings, BlockPos offset)
 	{
-		return Template.calculateRelativePosition(settings, spawnLocation).offset(offset);
+		return StructureTemplate.calculateRelativePosition(settings, spawnLocation).offset(offset);
 	}
 
-	public BlockPos getPortalOffsetLocationForPlacement(PlacementSettings settings, BlockPos offset)
+	public BlockPos getPortalOffsetLocationForPlacement(StructurePlaceSettings settings, BlockPos offset)
 	{
-		return Template.calculateRelativePosition(settings, portalOffset).offset(offset);
+		return StructureTemplate.calculateRelativePosition(settings, portalOffset).offset(offset);
 	}
 
-	public BlockPos getInitialSpawnOffsetForControllerPos(PlacementSettings settings, BlockPos controllerPos)
+	public BlockPos getInitialSpawnOffsetForControllerPos(StructurePlaceSettings settings, BlockPos controllerPos)
 	{
 		if (controllerOffset == null)
 		{
 			return controllerPos;
 		}
 
-		return controllerPos.subtract(Template.calculateRelativePosition(settings, controllerOffset));
+		return controllerPos.subtract(StructureTemplate.calculateRelativePosition(settings, controllerOffset));
 	}
 
-	public List<BlockPos> getDoorOffsetsForFacing(PlacementSettings settings, String doorType, Direction facing, BlockPos offset)
+	public List<BlockPos> getDoorOffsetsForFacing(StructurePlaceSettings settings, String doorType, Direction facing, BlockPos offset)
 	{
 		List<BlockPos> offsetList = new ArrayList<>();
 
@@ -171,7 +171,7 @@ public class DungeonRoom
 				List<BlockPos> doorList = doorDirMap.get(originalFacing);
 				for (BlockPos doorPos : doorList)
 				{
-					offsetList.add(Template.calculateRelativePosition(settings, doorPos).offset(offset));
+					offsetList.add(StructureTemplate.calculateRelativePosition(settings, doorPos).offset(offset));
 				}
 			}
 		}
@@ -179,7 +179,7 @@ public class DungeonRoom
 		return offsetList;
 	}
 
-	public Map<String, List<BlockPos>> getAllDoorOffsetsForFacing(PlacementSettings settings, Direction facing, BlockPos offset)
+	public Map<String, List<BlockPos>> getAllDoorOffsetsForFacing(StructurePlaceSettings settings, Direction facing, BlockPos offset)
 	{
 		Map<String, List<BlockPos>> offsetMap = new HashMap<>();
 
@@ -191,7 +191,7 @@ public class DungeonRoom
 		return offsetMap;
 	}
 
-	public boolean placeStructureAtPosition(Random rand, PlacementSettings settings, ServerWorld world, BlockPos pos)
+	public boolean placeStructureAtPosition(Random rand, StructurePlaceSettings settings, ServerLevel world, BlockPos pos)
 	{
 		Map<BlockPos, List<String>> compositeMap = new HashMap<>();
 		for (Entry<String, BlockPos> entry : structureMap.entrySet())
@@ -212,7 +212,7 @@ public class DungeonRoom
 		for (Entry<BlockPos, List<String>> entry : compositeMap.entrySet())
 		{
 			ResourceLocation location = new ResourceLocation(entry.getValue().get(rand.nextInt(entry.getValue().size())));
-			BlockPos offsetPos = Template.calculateRelativePosition(settings, entry.getKey());
+			BlockPos offsetPos = StructureTemplate.calculateRelativePosition(settings, entry.getKey());
 			DungeonStructure structure = new DungeonStructure(location);
 
 			structure.placeStructureAtPosition(rand, settings, world, pos.offset(offsetPos));

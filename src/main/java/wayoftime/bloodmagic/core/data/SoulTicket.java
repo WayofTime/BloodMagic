@@ -1,12 +1,12 @@
 package wayoftime.bloodmagic.core.data;
 
-import net.minecraft.command.ICommandSource;
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.commands.CommandSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
 
 /**
  * Wrapper for any interactions with the SoulNetwork
@@ -14,12 +14,12 @@ import net.minecraft.world.World;
  */
 public class SoulTicket
 {
-	private static final ITextComponent EMPTY = new StringTextComponent("");
+	private static final Component EMPTY = new TextComponent("");
 
-	private final ITextComponent description;
+	private final Component description;
 	private final int amount;
 
-	public SoulTicket(ITextComponent description, int amount)
+	public SoulTicket(Component description, int amount)
 	{
 		this.description = description;
 		this.amount = amount;
@@ -35,7 +35,7 @@ public class SoulTicket
 		return amount < 0;
 	}
 
-	public ITextComponent getDescription()
+	public Component getDescription()
 	{
 		return description;
 	}
@@ -48,10 +48,10 @@ public class SoulTicket
 	/**
 	 * @return A description in the format block|dimensionID|pos
 	 */
-	public static SoulTicket block(World world, BlockPos pos, int amount)
+	public static SoulTicket block(Level world, BlockPos pos, int amount)
 	{
 		// dimension() = getDimension
-		return new SoulTicket(new StringTextComponent("block|" + world.dimension().getRegistryName() + "|"
+		return new SoulTicket(new TextComponent("block|" + world.dimension().getRegistryName() + "|"
 				+ pos.asLong()), amount);
 	}
 
@@ -59,18 +59,18 @@ public class SoulTicket
 	 * @return A description in the format item|item registry
 	 *         name|dimensionID|entityName|entityPos
 	 */
-	public static SoulTicket item(ItemStack itemStack, World world, Entity entity, int amount)
+	public static SoulTicket item(ItemStack itemStack, Level world, Entity entity, int amount)
 	{
-		return new SoulTicket(new StringTextComponent("item|" + itemStack.getItem().getRegistryName() + "|"
+		return new SoulTicket(new TextComponent("item|" + itemStack.getItem().getRegistryName() + "|"
 				+ world.dimension().getRegistryName() + "|" + entity.getStringUUID()), amount);
 	}
 
 	/**
 	 * @return A description in the format item|item registry name|dimensionID|pos
 	 */
-	public static SoulTicket item(ItemStack itemStack, World world, BlockPos pos, int amount)
+	public static SoulTicket item(ItemStack itemStack, Level world, BlockPos pos, int amount)
 	{
-		return new SoulTicket(new StringTextComponent("item|" + itemStack.getItem().getRegistryName() + "|"
+		return new SoulTicket(new TextComponent("item|" + itemStack.getItem().getRegistryName() + "|"
 				+ world.dimension().getRegistryName() + "|" + pos.asLong()), amount);
 	}
 
@@ -79,12 +79,12 @@ public class SoulTicket
 	 */
 	public static SoulTicket item(ItemStack itemStack, int amount)
 	{
-		return new SoulTicket(new StringTextComponent("item|" + itemStack.getItem().getRegistryName()), amount);
+		return new SoulTicket(new TextComponent("item|" + itemStack.getItem().getRegistryName()), amount);
 	}
 
-	public static SoulTicket command(ICommandSource sender, String command, int amount)
+	public static SoulTicket command(CommandSource sender, String command, int amount)
 	{
-		return new SoulTicket(new StringTextComponent("command|" + command + "|" + sender.toString()), amount);
+		return new SoulTicket(new TextComponent("command|" + command + "|" + sender.toString()), amount);
 	}
 
 	// TODO maybe make it check the amount??

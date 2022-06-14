@@ -7,21 +7,21 @@ import java.util.function.Consumer;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.extensions.IForgeItem;
@@ -36,13 +36,13 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 
 	private static final int MAX_ABSORPTION = 100000;
 
-	public ItemLivingArmor(EquipmentSlotType slot)
+	public ItemLivingArmor(EquipmentSlot slot)
 	{
 		super(ArmorMaterialLiving.INSTANCE, slot, new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
 	}
 
 	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type)
+	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type)
 	{
 		if (this == BloodMagicItems.LIVING_PLATE.get() || this == BloodMagicItems.LIVING_HELMET.get() || this == BloodMagicItems.LIVING_BOOTS.get())
 		{
@@ -94,12 +94,12 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 	}
 
 	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack)
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack)
 	{
 //		Multimap<Attribute, AttributeModifier> modifiers = super.getAttributeModifiers(slot, stack);
 		Multimap<Attribute, AttributeModifier> modifiers = HashMultimap.create();
 		modifiers.putAll(super.getAttributeModifiers(slot, stack));
-		if (slot != EquipmentSlotType.CHEST)
+		if (slot != EquipmentSlot.CHEST)
 			return modifiers;
 
 		if (this.getMaxDamage(stack) - this.getDamage(stack) <= 1)
@@ -156,13 +156,13 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 //    }
 
 	@Override
-	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items)
+	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items)
 	{
 		if (!allowdedIn(group))
 			return;
 
 		ItemStack stack = new ItemStack(this);
-		if (slot == EquipmentSlotType.CHEST)
+		if (slot == EquipmentSlot.CHEST)
 			updateLivingStats(stack, new LivingStats());
 
 		items.add(stack);
@@ -184,9 +184,9 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 //	}
 
 	@Override
-	public void damageArmor(LivingEntity livingEntity, ItemStack stack, DamageSource source, float damage, EquipmentSlotType slot)
+	public void damageArmor(LivingEntity livingEntity, ItemStack stack, DamageSource source, float damage, EquipmentSlot slot)
 	{
-		if (slot == EquipmentSlotType.CHEST && damage > getMaxDamage() - stack.getDamageValue())
+		if (slot == EquipmentSlot.CHEST && damage > getMaxDamage() - stack.getDamageValue())
 		{
 //			livingEntity.attackEntityFrom(source, amount)
 //		}
@@ -199,7 +199,7 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
 		ILivingContainer.appendLivingTooltip(stack, getLivingStats(stack), tooltip, true);
 	}
@@ -214,14 +214,14 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 	public boolean elytraFlightTick(ItemStack stack, LivingEntity entity, int flightTicks)
 	{
 		if (!entity.level.isClientSide && (flightTicks + 1) % 40 == 0)
-			stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(net.minecraft.inventory.EquipmentSlotType.CHEST));
+			stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(net.minecraft.world.entity.EquipmentSlot.CHEST));
 		return true;
 	}
 
 	public boolean hasElytraUpgrade(ItemStack stack, LivingEntity entity)
 	{
-		if (stack.getItem() instanceof ItemLivingArmor && entity instanceof PlayerEntity && LivingUtil.hasFullSet((PlayerEntity) entity))
-			return LivingStats.fromPlayer((PlayerEntity) entity, true).getLevel(LivingArmorRegistrar.UPGRADE_ELYTRA.get().getKey()) > 0;
+		if (stack.getItem() instanceof ItemLivingArmor && entity instanceof Player && LivingUtil.hasFullSet((Player) entity))
+			return LivingStats.fromPlayer((Player) entity, true).getLevel(LivingArmorRegistrar.UPGRADE_ELYTRA.get().getKey()) > 0;
 		else
 			return false;
 	}

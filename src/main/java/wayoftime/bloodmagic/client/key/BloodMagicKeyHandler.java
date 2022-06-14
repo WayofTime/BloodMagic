@@ -5,8 +5,8 @@ import java.util.BitSet;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.client.util.InputMappings;
+import net.minecraft.client.KeyMapping;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -24,19 +24,19 @@ public class BloodMagicKeyHandler
 		MinecraftForge.EVENT_BUS.addListener(this::keyTick);
 	}
 
-	public static boolean isKeyDown(KeyBinding keyBinding)
+	public static boolean isKeyDown(KeyMapping keyBinding)
 	{
-		InputMappings.Input key = keyBinding.getKey();
+		InputConstants.Key key = keyBinding.getKey();
 		int keyCode = key.getValue();
-		if (keyCode != InputMappings.UNKNOWN.getValue())
+		if (keyCode != InputConstants.UNKNOWN.getValue())
 		{
 			long windowHandle = Minecraft.getInstance().getWindow().getWindow();
 			try
 			{
-				if (key.getType() == InputMappings.Type.KEYSYM)
+				if (key.getType() == InputConstants.Type.KEYSYM)
 				{
-					return InputMappings.isKeyDown(windowHandle, keyCode);
-				} else if (key.getType() == InputMappings.Type.MOUSE)
+					return InputConstants.isKeyDown(windowHandle, keyCode);
+				} else if (key.getType() == InputConstants.Type.MOUSE)
 				{
 					return GLFW.glfwGetMouseButton(windowHandle, keyCode) == GLFW.GLFW_PRESS;
 				}
@@ -53,7 +53,7 @@ public class BloodMagicKeyHandler
 		for (int i = 0; i < KeyBindings.values().length; i++)
 		{
 			KeyBindings keyBindings = KeyBindings.values()[i];
-			KeyBinding keyBinding = keyBindings.getKey();
+			KeyMapping keyBinding = keyBindings.getKey();
 			boolean state = keyBinding.isDown();
 			boolean lastState = keyDown.get(i);
 			if (state != lastState || (state && repeatings.get(i)))

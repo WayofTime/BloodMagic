@@ -3,16 +3,16 @@ package wayoftime.bloodmagic.ritual.types;
 import java.util.List;
 import java.util.function.Consumer;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
@@ -59,7 +59,7 @@ public class RitualYawningVoid extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
+		Level world = masterRitualStone.getWorldObj();
 //		Vector3d MRSpos = new Vector3d(masterRitualStone.getMasterBlockPos().getX(), masterRitualStone.getMasterBlockPos().getY(), masterRitualStone.getMasterBlockPos().getZ());
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
@@ -131,7 +131,7 @@ public class RitualYawningVoid extends Ritual
 		if (tryFilter)
 		{
 			AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
-			TileEntity tile = world.getBlockEntity(chestRange.getContainedPositions(pos).get(0));
+			BlockEntity tile = world.getBlockEntity(chestRange.getContainedPositions(pos).get(0));
 
 			if (tile != null)
 			{
@@ -256,13 +256,13 @@ public class RitualYawningVoid extends Ritual
 		}
 	}
 
-	public void readFromNBT(CompoundNBT tag)
+	public void readFromNBT(CompoundTag tag)
 	{
 		super.readFromNBT(tag);
 		lastPos = new BlockPos(tag.getInt(Constants.NBT.X_COORD), tag.getInt(Constants.NBT.Y_COORD), tag.getInt(Constants.NBT.Z_COORD));
 	}
 
-	public void writeToNBT(CompoundNBT tag)
+	public void writeToNBT(CompoundTag tag)
 	{
 		super.writeToNBT(tag);
 		if (lastPos != null)
@@ -274,12 +274,12 @@ public class RitualYawningVoid extends Ritual
 	}
 
 	@Override
-	public ITextComponent[] provideInformationOfRitualToPlayer(PlayerEntity player)
+	public Component[] provideInformationOfRitualToPlayer(Player player)
 	{
-		return new ITextComponent[] { new TranslationTextComponent(this.getTranslationKey() + ".info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".default.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".corrosive.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".steadfast.info") };
+		return new Component[] { new TranslatableComponent(this.getTranslationKey() + ".info"),
+				new TranslatableComponent(this.getTranslationKey() + ".default.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".corrosive.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".steadfast.info") };
 	}
 
 	public int getRefreshTimeForRawWill(double rawWill)

@@ -3,10 +3,10 @@ package wayoftime.bloodmagic.incense;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public class IncenseTranquilityRegistry
 {
@@ -17,7 +17,7 @@ public class IncenseTranquilityRegistry
 		handlerList.add(handler);
 	}
 
-	public static TranquilityStack getTranquilityOfBlock(World world, BlockPos pos, Block block, BlockState state)
+	public static TranquilityStack getTranquilityOfBlock(Level world, BlockPos pos, Block block, BlockState state)
 	{
 		for (ITranquilityHandler handler : handlerList)
 		{

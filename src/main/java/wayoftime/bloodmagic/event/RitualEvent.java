@@ -2,8 +2,8 @@ package wayoftime.bloodmagic.event;
 
 import java.util.UUID;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
@@ -50,11 +50,11 @@ public class RitualEvent extends Event
 	public static class RitualActivatedEvent extends RitualEvent
 	{
 
-		private final PlayerEntity player;
+		private final Player player;
 		private final ItemStack crystalStack;
 		private final int crystalTier;
 
-		public RitualActivatedEvent(IMasterRitualStone mrs, UUID ownerId, Ritual ritual, PlayerEntity player, ItemStack activationCrystal, int crystalTier)
+		public RitualActivatedEvent(IMasterRitualStone mrs, UUID ownerId, Ritual ritual, Player player, ItemStack activationCrystal, int crystalTier)
 		{
 			super(mrs, ownerId, ritual);
 
@@ -63,7 +63,7 @@ public class RitualEvent extends Event
 			this.crystalTier = crystalTier;
 		}
 
-		public PlayerEntity getPlayer()
+		public Player getPlayer()
 		{
 			return player;
 		}
@@ -123,10 +123,10 @@ public class RitualEvent extends Event
 	{
 
 		private final IImperfectRitualStone ims;
-		private final PlayerEntity activator;
+		private final Player activator;
 		private final ImperfectRitual imperfectRitual;
 
-		public ImperfectRitualActivatedEvent(IImperfectRitualStone ims, PlayerEntity activator, ImperfectRitual imperfectRitual)
+		public ImperfectRitualActivatedEvent(IImperfectRitualStone ims, Player activator, ImperfectRitual imperfectRitual)
 		{
 			this.ims = ims;
 			this.activator = activator;
@@ -138,7 +138,7 @@ public class RitualEvent extends Event
 			return ims;
 		}
 
-		public PlayerEntity getActivator()
+		public Player getActivator()
 		{
 			return activator;
 		}

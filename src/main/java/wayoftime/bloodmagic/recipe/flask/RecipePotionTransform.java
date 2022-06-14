@@ -5,13 +5,13 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.potion.Effect;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.common.item.potion.ItemAlchemyFlask;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
@@ -19,10 +19,10 @@ import wayoftime.bloodmagic.recipe.EffectHolder;
 
 public class RecipePotionTransform extends RecipePotionFlaskBase
 {
-	public List<Pair<Effect, Integer>> outputEffectList;
-	public List<Effect> inputEffectList;
+	public List<Pair<MobEffect, Integer>> outputEffectList;
+	public List<MobEffect> inputEffectList;
 
-	public RecipePotionTransform(ResourceLocation id, List<Ingredient> input, List<Pair<Effect, Integer>> outputEffectList, List<Effect> inputEffectList, int syphon, int ticks, int minimumTier)
+	public RecipePotionTransform(ResourceLocation id, List<Ingredient> input, List<Pair<MobEffect, Integer>> outputEffectList, List<MobEffect> inputEffectList, int syphon, int ticks, int minimumTier)
 	{
 		super(id, input, syphon, ticks, minimumTier);
 		this.outputEffectList = outputEffectList;
@@ -30,13 +30,13 @@ public class RecipePotionTransform extends RecipePotionFlaskBase
 	}
 
 	@Override
-	public IRecipeSerializer<? extends RecipePotionTransform> getSerializer()
+	public RecipeSerializer<? extends RecipePotionTransform> getSerializer()
 	{
 		return BloodMagicRecipeSerializers.POTIONTRANSFORM.getRecipeSerializer();
 	}
 
 	@Override
-	public IRecipeType<RecipePotionFlaskBase> getType()
+	public RecipeType<RecipePotionFlaskBase> getType()
 	{
 		return BloodMagicRecipeType.POTIONFLASK;
 	}
@@ -56,16 +56,16 @@ public class RecipePotionTransform extends RecipePotionFlaskBase
 			return false;
 		}
 
-		List<Effect> recipeInput = new ArrayList<>(inputEffectList);
+		List<MobEffect> recipeInput = new ArrayList<>(inputEffectList);
 
 		for (int i = 0; i < flaskEffectList.size(); i++)
 		{
-			Effect flaskEffect = flaskEffectList.get(i).getPotion();
+			MobEffect flaskEffect = flaskEffectList.get(i).getPotion();
 
 			boolean matched = false;
 			for (int j = 0; j < recipeInput.size(); j++)
 			{
-				Effect ingredient = recipeInput.get(j);
+				MobEffect ingredient = recipeInput.get(j);
 				if (ingredient.equals(flaskEffect))
 				{
 					recipeInput.remove(j);
@@ -86,16 +86,16 @@ public class RecipePotionTransform extends RecipePotionFlaskBase
 	protected int getDuplicateEffects(List<EffectHolder> flaskEffectList)
 	{
 		int duplicateCount = 0;
-		List<Pair<Effect, Integer>> recipeOutput = new ArrayList<>(outputEffectList);
+		List<Pair<MobEffect, Integer>> recipeOutput = new ArrayList<>(outputEffectList);
 
 		for (int i = 0; i < flaskEffectList.size(); i++)
 		{
-			Effect flaskEffect = flaskEffectList.get(i).getPotion();
+			MobEffect flaskEffect = flaskEffectList.get(i).getPotion();
 			int flaskBaseDuration = flaskEffectList.get(i).getBaseDuration();
 
 			for (int j = 0; j < recipeOutput.size(); j++)
 			{
-				Pair<Effect, Integer> output = recipeOutput.get(j);
+				Pair<MobEffect, Integer> output = recipeOutput.get(j);
 				if (output.getKey().equals(flaskEffect) && output.getValue() <= flaskBaseDuration)
 				{
 					recipeOutput.remove(j);
@@ -109,20 +109,20 @@ public class RecipePotionTransform extends RecipePotionFlaskBase
 	}
 
 	@Override
-	public void write(PacketBuffer buffer)
+	public void write(FriendlyByteBuf buffer)
 	{
 		super.write(buffer);
 		buffer.writeInt(outputEffectList.size());
-		for (Pair<Effect, Integer> effectHolder : outputEffectList)
+		for (Pair<MobEffect, Integer> effectHolder : outputEffectList)
 		{
-			buffer.writeInt(Effect.getId(effectHolder.getKey()));
+			buffer.writeInt(MobEffect.getId(effectHolder.getKey()));
 			buffer.writeInt(effectHolder.getValue());
 		}
 
 		buffer.writeInt(inputEffectList.size());
-		for (Effect effect : inputEffectList)
+		for (MobEffect effect : inputEffectList)
 		{
-			buffer.writeInt(Effect.getId(effect));
+			buffer.writeInt(MobEffect.getId(effect));
 		}
 	}
 
@@ -140,7 +140,7 @@ public class RecipePotionTransform extends RecipePotionFlaskBase
 		List<EffectHolder> flaskEffectCopyList = new ArrayList<>(flaskEffectList);
 		for (int i = 0; i < inputEffectList.size(); i++)
 		{
-			Effect inputEffect = inputEffectList.get(i);
+			MobEffect inputEffect = inputEffectList.get(i);
 //			int outputBaseDuration = outputEffectList.get(i).getValue();
 
 			for (int j = 0; j < flaskEffectCopyList.size(); j++)
@@ -167,7 +167,7 @@ public class RecipePotionTransform extends RecipePotionFlaskBase
 
 		outputLoop: for (int i = 0; i < outputEffectList.size(); i++)
 		{
-			Effect outputEffect = outputEffectList.get(i).getKey();
+			MobEffect outputEffect = outputEffectList.get(i).getKey();
 			int outputBaseDuration = outputEffectList.get(i).getValue();
 
 			for (int j = 0; j < flaskEffectCopyList.size(); j++)
@@ -221,7 +221,7 @@ public class RecipePotionTransform extends RecipePotionFlaskBase
 	public List<EffectHolder> getExampleEffectList()
 	{
 		List<EffectHolder> holderList = new ArrayList<>();
-		for (Effect inputEffect : inputEffectList)
+		for (MobEffect inputEffect : inputEffectList)
 		{
 			holderList.add(new EffectHolder(inputEffect, 3600, 0, 1, 1));
 		}

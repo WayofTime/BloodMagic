@@ -4,46 +4,46 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.potion.Potions;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.entity.projectile.EntityPotionFlask;
 import wayoftime.bloodmagic.recipe.EffectHolder;
 
 public class ItemAlchemyFlaskThrowable extends ItemAlchemyFlask
 {
 	@Override
-	public UseAction getUseAnimation(ItemStack stack)
+	public UseAnim getUseAnimation(ItemStack stack)
 	{
-		return UseAction.NONE;
+		return UseAnim.NONE;
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
 
 		if (getRemainingUses(stack) <= 0)
 		{
-			return ActionResult.pass(stack);
+			return InteractionResultHolder.pass(stack);
 		}
 
 		List<EffectHolder> holderList = getEffectHoldersOfFlask(stack);
 		if (holderList.size() <= 0)
 		{
-			return ActionResult.pass(stack);
+			return InteractionResultHolder.pass(stack);
 		}
 
-		world.playSound((PlayerEntity) null, player.getX(), player.getY(), player.getZ(), SoundEvents.SPLASH_POTION_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+		world.playSound((Player) null, player.getX(), player.getY(), player.getZ(), SoundEvents.SPLASH_POTION_THROW, SoundSource.PLAYERS, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
 
 		if (!world.isClientSide)
 		{
@@ -60,10 +60,10 @@ public class ItemAlchemyFlaskThrowable extends ItemAlchemyFlask
 			stack.setDamageValue(stack.getDamageValue() + 1);
 		}
 
-		return ActionResult.sidedSuccess(stack, world.isClientSide());
+		return InteractionResultHolder.sidedSuccess(stack, world.isClientSide());
 	}
 
-	public void prepPotionFlask(ItemStack stack, PlayerEntity player, EntityPotionFlask potionEntity)
+	public void prepPotionFlask(ItemStack stack, Player player, EntityPotionFlask potionEntity)
 	{
 
 	}
@@ -78,7 +78,7 @@ public class ItemAlchemyFlaskThrowable extends ItemAlchemyFlask
 	{
 		double durationModifier = getDurationModifier(stack);
 		List<EffectHolder> holderList = getEffectHoldersOfFlask(stack);
-		List<EffectInstance> effectList = new ArrayList<EffectInstance>();
+		List<MobEffectInstance> effectList = new ArrayList<MobEffectInstance>();
 
 		for (EffectHolder holder : holderList)
 		{
@@ -86,7 +86,7 @@ public class ItemAlchemyFlaskThrowable extends ItemAlchemyFlask
 		}
 
 		setEffectsOfFlask(stack, effectList);
-		Collection<EffectInstance> instanceList = PotionUtils.getMobEffects(stack);
+		Collection<MobEffectInstance> instanceList = PotionUtils.getMobEffects(stack);
 
 		int color = instanceList.isEmpty() ? PotionUtils.getColor(Potions.WATER)
 				: PotionUtils.getColor(instanceList);

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.io.IOUtils;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
 
 public class ResourceUtil

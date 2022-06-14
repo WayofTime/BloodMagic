@@ -2,18 +2,18 @@ package wayoftime.bloodmagic.common.item;
 
 import java.util.List;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public interface ITeleposerFocus extends IBindable
 {
-	public AxisAlignedBB getEntityRangeOffset(World world, BlockPos teleposerPos);
+	public AABB getEntityRangeOffset(Level world, BlockPos teleposerPos);
 
-	public List<BlockPos> getBlockListOffset(World world);
+	public List<BlockPos> getBlockListOffset(Level world);
 
 	public BlockPos getStoredPos(ItemStack stack);
 
-	public World getStoredWorld(ItemStack stack, World world);
+	public Level getStoredWorld(ItemStack stack, Level world);
 }

@@ -1,12 +1,12 @@
 package wayoftime.bloodmagic.common.alchemyarray;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.tile.TileAlchemyArray;
 
 public class AlchemyArrayEffectMovement extends AlchemyArrayEffect
@@ -24,7 +24,7 @@ public class AlchemyArrayEffectMovement extends AlchemyArrayEffect
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(TileAlchemyArray array, World world, BlockPos pos, BlockState state, Entity entity)
+	public void onEntityCollidedWithBlock(TileAlchemyArray array, Level world, BlockPos pos, BlockState state, Entity entity)
 	{
 		double motionY = 0.5;
 		double motionYGlowstoneMod = 0.05;
@@ -46,28 +46,28 @@ public class AlchemyArrayEffectMovement extends AlchemyArrayEffect
 //                entity.motionX = 0;
 //                entity.motionY = motionY;
 //                entity.motionZ = -speed;
-			entity.setDeltaMovement(new Vector3d(0, motionY, -speed));
+			entity.setDeltaMovement(new Vec3(0, motionY, -speed));
 			break;
 
 		case SOUTH:
 //                entity.motionX = 0;
 //                entity.motionY = motionY;
 //                entity.motionZ = speed;
-			entity.setDeltaMovement(new Vector3d(0, motionY, speed));
+			entity.setDeltaMovement(new Vec3(0, motionY, speed));
 			break;
 
 		case WEST:
 //                entity.motionX = -speed;
 //                entity.motionY = motionY;
 //                entity.motionZ = 0;
-			entity.setDeltaMovement(new Vector3d(-speed, motionY, 0));
+			entity.setDeltaMovement(new Vec3(-speed, motionY, 0));
 			break;
 
 		case EAST:
 //                entity.motionX = speed;
 //                entity.motionY = motionY;
 //                entity.motionZ = 0;
-			entity.setDeltaMovement(new Vector3d(speed, motionY, 0));
+			entity.setDeltaMovement(new Vec3(speed, motionY, 0));
 			break;
 		default:
 			break;
@@ -81,14 +81,14 @@ public class AlchemyArrayEffectMovement extends AlchemyArrayEffect
 	}
 
 	@Override
-	public void readFromNBT(CompoundNBT compound)
+	public void readFromNBT(CompoundTag compound)
 	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void writeToNBT(CompoundNBT compound)
+	public void writeToNBT(CompoundTag compound)
 	{
 		// TODO Auto-generated method stub
 

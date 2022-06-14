@@ -3,7 +3,7 @@ package wayoftime.bloodmagic.network;
 import java.util.function.Supplier;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
@@ -22,12 +22,12 @@ public class SetClientHealthPacket
 		this.health = health;
 	}
 
-	public static void encode(SetClientHealthPacket pkt, PacketBuffer buf)
+	public static void encode(SetClientHealthPacket pkt, FriendlyByteBuf buf)
 	{
 		buf.writeFloat(pkt.health);
 	}
 
-	public static SetClientHealthPacket decode(PacketBuffer buf)
+	public static SetClientHealthPacket decode(FriendlyByteBuf buf)
 	{
 		SetClientHealthPacket pkt = new SetClientHealthPacket(buf.readFloat());
 

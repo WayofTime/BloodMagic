@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 
 import com.google.gson.JsonElement;
 
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 
 public interface InputIngredient<TYPE> extends Predicate<TYPE>
 {
@@ -40,7 +40,7 @@ public interface InputIngredient<TYPE> extends Predicate<TYPE>
 	 *
 	 * @param buffer The buffer to write to.
 	 */
-	void write(PacketBuffer buffer);
+	void write(FriendlyByteBuf buffer);
 
 	/**
 	 * Serializes this ingredient to a JsonElement

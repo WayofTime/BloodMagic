@@ -3,10 +3,10 @@ package wayoftime.bloodmagic.common.routing;
 import java.util.Iterator;
 import java.util.List;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.common.item.routing.IFilterKey;
 import wayoftime.bloodmagic.util.Utils;
@@ -27,7 +27,7 @@ public class BasicItemFilter implements IItemFilter
 	 * filter, it keeps track of how many can be removed.
 	 */
 	protected List<IFilterKey> requestList;
-	protected TileEntity accessedTile;
+	protected BlockEntity accessedTile;
 	protected IItemHandler itemHandler;
 
 	/**
@@ -42,7 +42,7 @@ public class BasicItemFilter implements IItemFilter
 	 *                       should be initialized as an input filter.
 	 */
 	@Override
-	public void initializeFilter(List<IFilterKey> filteredList, TileEntity tile, IItemHandler itemHandler, boolean isFilterOutput)
+	public void initializeFilter(List<IFilterKey> filteredList, BlockEntity tile, IItemHandler itemHandler, boolean isFilterOutput)
 	{
 		this.accessedTile = tile;
 		this.itemHandler = itemHandler;
@@ -155,7 +155,7 @@ public class BasicItemFilter implements IItemFilter
 			}
 		}
 
-		World world = accessedTile.getLevel();
+		Level world = accessedTile.getLevel();
 		BlockPos pos = accessedTile.getBlockPos();
 		world.sendBlockUpdated(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 
@@ -227,7 +227,7 @@ public class BasicItemFilter implements IItemFilter
 				}
 			}
 
-			World world = accessedTile.getLevel();
+			Level world = accessedTile.getLevel();
 			BlockPos pos = accessedTile.getBlockPos();
 			world.sendBlockUpdated(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 

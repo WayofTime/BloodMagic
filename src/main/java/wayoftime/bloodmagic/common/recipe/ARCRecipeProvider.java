@@ -2,14 +2,14 @@ package wayoftime.bloodmagic.common.recipe;
 
 import java.util.function.Consumer;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.ITag;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.tags.Tag;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.NotCondition;
@@ -24,7 +24,7 @@ import wayoftime.bloodmagic.recipe.helper.FluidStackIngredient;
 public class ARCRecipeProvider implements ISubRecipeProvider
 {
 	@Override
-	public void addRecipes(Consumer<IFinishedRecipe> consumer)
+	public void addRecipes(Consumer<FinishedRecipe> consumer)
 	{
 		String basePath = "arc/";
 //		ARCRecipeBuilder.arc(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND), Ingredient.fromTag(Tags.Items.BONES), null, new ItemStack(BloodMagicBlocks.BLOOD_ALTAR.get()), null).addRandomOutput(new ItemStack(Items.DIAMOND, 2), 0.5).build(consumer, BloodMagic.rl(basePath + "test1"));
@@ -49,12 +49,12 @@ public class ARCRecipeProvider implements ISubRecipeProvider
 		addGravelRecipes(consumer);
 	}
 
-	private ICondition getTagCondition(ITag.INamedTag<Item> tag)
+	private ICondition getTagCondition(Tag.Named<Item> tag)
 	{
 		return new NotCondition(new TagEmptyCondition(tag.getName()));
 	}
 
-	private void addSandRecipes(Consumer<IFinishedRecipe> consumer)
+	private void addSandRecipes(Consumer<FinishedRecipe> consumer)
 	{
 		String basePath = "arc/dusts";
 
@@ -74,7 +74,7 @@ public class ARCRecipeProvider implements ISubRecipeProvider
 		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.GRAVEL_NETHERITE_SCRAP), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.NETHERITE_SCRAP_SAND.get()), null).build(consumer, BloodMagic.rl(basePath + "from_gravel_netherite_scrap"));
 	}
 
-	private void addFragmentRecipes(Consumer<IFinishedRecipe> consumer)
+	private void addFragmentRecipes(Consumer<FinishedRecipe> consumer)
 	{
 		String basePath = "arc/fragments";
 		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.ORES_IRON), Ingredient.of(BloodMagicTags.ARC_TOOL_EXPLOSIVE), null, new ItemStack(BloodMagicItems.IRON_FRAGMENT.get(), 3), null).build(consumer, BloodMagic.rl(basePath + "iron"));
@@ -82,7 +82,7 @@ public class ARCRecipeProvider implements ISubRecipeProvider
 		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.ORES_NETHERITE_SCRAP), Ingredient.of(BloodMagicTags.ARC_TOOL_EXPLOSIVE), null, new ItemStack(BloodMagicItems.NETHERITE_SCRAP_FRAGMENT.get(), 3), null).build(consumer, BloodMagic.rl(basePath + "netherite_scrap"));
 	}
 
-	private void addGravelRecipes(Consumer<IFinishedRecipe> consumer)
+	private void addGravelRecipes(Consumer<FinishedRecipe> consumer)
 	{
 		String basePath = "arc/gravels";
 		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.FRAGMENT_IRON), Ingredient.of(BloodMagicTags.ARC_TOOL_RESONATOR), null, new ItemStack(BloodMagicItems.IRON_GRAVEL.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.05).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.01).build(consumer, BloodMagic.rl(basePath + "iron"));
@@ -90,7 +90,7 @@ public class ARCRecipeProvider implements ISubRecipeProvider
 		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.FRAGMENT_NETHERITE_SCRAP), Ingredient.of(BloodMagicTags.ARC_TOOL_RESONATOR), null, new ItemStack(BloodMagicItems.NETHERITE_SCRAP_GRAVEL.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.05).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.01).build(consumer, BloodMagic.rl(basePath + "netherite_scrap"));
 	}
 
-	private void addReversionRecipes(Consumer<IFinishedRecipe> consumer)
+	private void addReversionRecipes(Consumer<FinishedRecipe> consumer)
 	{
 		String basePath = "arc/reversion/";
 		// ONE
@@ -106,7 +106,7 @@ public class ARCRecipeProvider implements ISubRecipeProvider
 		registerReversionRecipe(Ingredient.of(BloodMagicItems.MASTER_BLOOD_ORB.get()), new ItemStack(BloodMagicItems.WEAK_BLOOD_SHARD.get()), consumer, basePath + "master_blood_orb");
 	}
 
-	private void registerReversionRecipe(Ingredient input, ItemStack outputStack, Consumer<IFinishedRecipe> consumer, String path)
+	private void registerReversionRecipe(Ingredient input, ItemStack outputStack, Consumer<FinishedRecipe> consumer, String path)
 	{
 		ARCRecipeBuilder.arcConsume(input, Ingredient.of(BloodMagicTags.ARC_TOOL_REVERTER), null, outputStack, null).build(consumer, BloodMagic.rl(path));
 	}

@@ -3,13 +3,13 @@ package wayoftime.bloodmagic.recipe.flask;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 import wayoftime.bloodmagic.recipe.EffectHolder;
@@ -25,13 +25,13 @@ public class RecipePotionFlaskTransform extends RecipePotionFlaskBase
 	}
 
 	@Override
-	public IRecipeSerializer<? extends RecipePotionFlaskTransform> getSerializer()
+	public RecipeSerializer<? extends RecipePotionFlaskTransform> getSerializer()
 	{
 		return BloodMagicRecipeSerializers.POTIONFLASKTRANSFORM.getRecipeSerializer();
 	}
 
 	@Override
-	public IRecipeType<RecipePotionFlaskBase> getType()
+	public RecipeType<RecipePotionFlaskBase> getType()
 	{
 		return BloodMagicRecipeType.POTIONFLASK;
 	}
@@ -43,7 +43,7 @@ public class RecipePotionFlaskTransform extends RecipePotionFlaskBase
 	}
 
 	@Override
-	public void write(PacketBuffer buffer)
+	public void write(FriendlyByteBuf buffer)
 	{
 		super.write(buffer);
 		buffer.writeItem(output);
@@ -71,7 +71,7 @@ public class RecipePotionFlaskTransform extends RecipePotionFlaskBase
 	{
 		List<EffectHolder> holderList = new ArrayList<>();
 
-		holderList.add(new EffectHolder(Effects.MOVEMENT_SPEED, 3600, 0, 1, 1));
+		holderList.add(new EffectHolder(MobEffects.MOVEMENT_SPEED, 3600, 0, 1, 1));
 
 		return holderList;
 	}

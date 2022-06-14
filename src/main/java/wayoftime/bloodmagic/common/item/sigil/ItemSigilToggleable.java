@@ -1,16 +1,16 @@
 package wayoftime.bloodmagic.common.item.sigil;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.common.item.ItemSigil;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulTicket;
@@ -20,7 +20,7 @@ import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 
-import net.minecraft.item.Item.Properties;
+import net.minecraft.world.item.Item.Properties;
 import wayoftime.bloodmagic.common.item.sigil.ISigil.Holding;
 
 /**
@@ -53,13 +53,13 @@ public class ItemSigilToggleable extends ItemSigil implements IActivatable
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
 		if (stack.getItem() instanceof ISigil.Holding)
 			stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
 		if (PlayerHelper.isFakePlayer(player))
-			return ActionResult.fail(stack);
+			return InteractionResultHolder.fail(stack);
 
 		if (!world.isClientSide && !isUnusable(stack))
 		{
@@ -73,12 +73,12 @@ public class ItemSigilToggleable extends ItemSigil implements IActivatable
 	}
 
 	@Override
-	public ActionResultType useOn(ItemUseContext context)
+	public InteractionResult useOn(UseOnContext context)
 	{
-		World world = context.getLevel();
+		Level world = context.getLevel();
 		BlockPos blockpos = context.getClickedPos();
 
-		PlayerEntity player = context.getPlayer();
+		Player player = context.getPlayer();
 		ItemStack stack = context.getItemInHand();
 		if (stack.getItem() instanceof ISigil.Holding)
 			stack = ((Holding) stack.getItem()).getHeldItem(stack, player);
@@ -86,36 +86,36 @@ public class ItemSigilToggleable extends ItemSigil implements IActivatable
 		Binding binding = getBinding(stack);
 		if (binding == null || player.isShiftKeyDown()) // Make sure Sigils are bound before handling. Also ignores while
 													// toggling state
-			return ActionResultType.PASS;
+			return InteractionResult.PASS;
 
 		return onSigilUse(stack, player, world, blockpos, context.getClickedFace(), context.getClickLocation())
-				? ActionResultType.SUCCESS
-				: ActionResultType.FAIL;
+				? InteractionResult.SUCCESS
+				: InteractionResult.FAIL;
 	}
 
-	public boolean onSigilUse(ItemStack itemStack, PlayerEntity player, World world, BlockPos blockPos, Direction side, Vector3d hitVec)
+	public boolean onSigilUse(ItemStack itemStack, Player player, Level world, BlockPos blockPos, Direction side, Vec3 hitVec)
 	{
 		return false;
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
+	public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected)
 	{
-		if (!worldIn.isClientSide && entityIn instanceof PlayerEntity && getActivated(stack))
+		if (!worldIn.isClientSide && entityIn instanceof Player && getActivated(stack))
 		{
 			if (entityIn.tickCount % 100 == 0)
 			{
-				if (!NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage((PlayerEntity) entityIn, SoulTicket.item(stack, worldIn, entityIn, getLpUsed())).isSuccess())
+				if (!NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage((Player) entityIn, SoulTicket.item(stack, worldIn, entityIn, getLpUsed())).isSuccess())
 				{
 					setActivatedState(stack, false);
 				}
 			}
 
-			onSigilUpdate(stack, worldIn, (PlayerEntity) entityIn, itemSlot, isSelected);
+			onSigilUpdate(stack, worldIn, (Player) entityIn, itemSlot, isSelected);
 		}
 	}
 
-	public void onSigilUpdate(ItemStack stack, World world, PlayerEntity player, int itemSlot, boolean isSelected)
+	public void onSigilUpdate(ItemStack stack, Level world, Player player, int itemSlot, boolean isSelected)
 	{
 	}
 }

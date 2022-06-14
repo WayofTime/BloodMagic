@@ -1,7 +1,7 @@
 package wayoftime.bloodmagic.event;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
@@ -74,16 +74,16 @@ public class SoulNetworkEvent extends Event
 		public static class User extends Syphon
 		{
 
-			private final PlayerEntity user;
+			private final Player user;
 
-			public User(SoulNetwork network, SoulTicket ticket, PlayerEntity user)
+			public User(SoulNetwork network, SoulTicket ticket, Player user)
 			{
 				super(network, ticket);
 
 				this.user = user;
 			}
 
-			public PlayerEntity getUser()
+			public Player getUser()
 			{
 				return user;
 			}

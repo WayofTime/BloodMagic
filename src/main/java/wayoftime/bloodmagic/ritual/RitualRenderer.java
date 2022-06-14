@@ -1,7 +1,7 @@
 package wayoftime.bloodmagic.ritual;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public abstract class RitualRenderer
 {

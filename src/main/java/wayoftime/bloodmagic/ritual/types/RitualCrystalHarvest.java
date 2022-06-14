@@ -2,10 +2,10 @@ package wayoftime.bloodmagic.ritual.types;
 
 import java.util.function.Consumer;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
@@ -31,7 +31,7 @@ public class RitualCrystalHarvest extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
+		Level world = masterRitualStone.getWorldObj();
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 		BlockPos pos = masterRitualStone.getMasterBlockPos();
 
@@ -50,7 +50,7 @@ public class RitualCrystalHarvest extends Ritual
 		while (crystalRange.hasNext())
 		{
 			BlockPos nextPos = crystalRange.next().offset(pos);
-			TileEntity tile = world.getBlockEntity(nextPos);
+			BlockEntity tile = world.getBlockEntity(nextPos);
 			if (tile instanceof TileDemonCrystal)
 			{
 				TileDemonCrystal demonCrystal = (TileDemonCrystal) tile;

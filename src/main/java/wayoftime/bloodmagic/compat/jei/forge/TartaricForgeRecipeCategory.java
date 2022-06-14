@@ -14,11 +14,11 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
@@ -55,13 +55,13 @@ public class TartaricForgeRecipeCategory implements IRecipeCategory<RecipeTartar
 	}
 
 	@Override
-	public List<ITextComponent> getTooltipStrings(RecipeTartaricForge recipe, double mouseX, double mouseY)
+	public List<Component> getTooltipStrings(RecipeTartaricForge recipe, double mouseX, double mouseY)
 	{
-		List<ITextComponent> tooltip = Lists.newArrayList();
+		List<Component> tooltip = Lists.newArrayList();
 		if (mouseX >= 40 && mouseX <= 60 && mouseY >= 21 && mouseY <= 34)
 		{
-			tooltip.add(new TranslationTextComponent("jei.bloodmagic.recipe.minimumsouls", ChatUtil.DECIMAL_FORMAT.format(recipe.getMinimumSouls())));
-			tooltip.add(new TranslationTextComponent("jei.bloodmagic.recipe.soulsdrained", ChatUtil.DECIMAL_FORMAT.format(recipe.getSoulDrain())));
+			tooltip.add(new TranslatableComponent("jei.bloodmagic.recipe.minimumsouls", ChatUtil.DECIMAL_FORMAT.format(recipe.getMinimumSouls())));
+			tooltip.add(new TranslatableComponent("jei.bloodmagic.recipe.soulsdrained", ChatUtil.DECIMAL_FORMAT.format(recipe.getSoulDrain())));
 		}
 		return tooltip;
 	}

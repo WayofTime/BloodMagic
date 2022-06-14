@@ -1,6 +1,6 @@
 package wayoftime.bloodmagic.altar;
 
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 
 /**
  * Used for building the altar structure.

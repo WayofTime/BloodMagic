@@ -1,23 +1,23 @@
 package wayoftime.bloodmagic.client.render.entity;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.SpriteRenderer;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.IRendersAsItem;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.projectile.ItemSupplier;
 
-public class BloodLightRenderer<T extends Entity & IRendersAsItem> extends SpriteRenderer<T>
+public class BloodLightRenderer<T extends Entity & ItemSupplier> extends ThrownItemRenderer<T>
 {
-	public BloodLightRenderer(EntityRendererManager renderManagerIn)
+	public BloodLightRenderer(EntityRenderDispatcher renderManagerIn)
 	{
 		super(renderManagerIn, Minecraft.getInstance().getItemRenderer());
 	}
 
 	@Override
-	public void render(T entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn)
+	public void render(T entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn)
 	{
 		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 	}

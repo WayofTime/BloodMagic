@@ -2,8 +2,8 @@ package wayoftime.bloodmagic.common.registration.impl;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.fml.RegistryObject;
 import wayoftime.bloodmagic.util.providers.IEntityTypeProvider;
 import wayoftime.bloodmagic.common.registration.WrappedRegistryObject;

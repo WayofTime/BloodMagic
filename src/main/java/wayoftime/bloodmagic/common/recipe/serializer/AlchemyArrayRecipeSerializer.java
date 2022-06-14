@@ -5,19 +5,19 @@ import javax.annotation.Nonnull;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
 import wayoftime.bloodmagic.util.Constants;
 
 public class AlchemyArrayRecipeSerializer<RECIPE extends RecipeAlchemyArray>
-		extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RECIPE>
+		extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RECIPE>
 {
 	private final IFactory<RECIPE> factory;
 
@@ -30,26 +30,26 @@ public class AlchemyArrayRecipeSerializer<RECIPE extends RecipeAlchemyArray>
 	@Override
 	public RECIPE fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
 	{
-		JsonElement input1 = JSONUtils.isArrayNode(json, Constants.JSON.BASEINPUT)
-				? JSONUtils.getAsJsonArray(json, Constants.JSON.BASEINPUT)
-				: JSONUtils.getAsJsonObject(json, Constants.JSON.BASEINPUT);
+		JsonElement input1 = GsonHelper.isArrayNode(json, Constants.JSON.BASEINPUT)
+				? GsonHelper.getAsJsonArray(json, Constants.JSON.BASEINPUT)
+				: GsonHelper.getAsJsonObject(json, Constants.JSON.BASEINPUT);
 
-		JsonElement input2 = JSONUtils.isArrayNode(json, Constants.JSON.ADDEDINPUT)
-				? JSONUtils.getAsJsonArray(json, Constants.JSON.ADDEDINPUT)
-				: JSONUtils.getAsJsonObject(json, Constants.JSON.ADDEDINPUT);
+		JsonElement input2 = GsonHelper.isArrayNode(json, Constants.JSON.ADDEDINPUT)
+				? GsonHelper.getAsJsonArray(json, Constants.JSON.ADDEDINPUT)
+				: GsonHelper.getAsJsonObject(json, Constants.JSON.ADDEDINPUT);
 
 		Ingredient baseInput = Ingredient.fromJson(input1);
 		Ingredient addedInput = Ingredient.fromJson(input2);
 		ResourceLocation texture = null;
 		if (json.has(Constants.JSON.TEXTURE))
-			texture = new ResourceLocation(JSONUtils.getAsString(json, Constants.JSON.TEXTURE));
+			texture = new ResourceLocation(GsonHelper.getAsString(json, Constants.JSON.TEXTURE));
 		ItemStack output = SerializerHelper.getItemStack(json, Constants.JSON.OUTPUT);
 
 		return this.factory.create(recipeId, texture, baseInput, addedInput, output);
 	}
 
 	@Override
-	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
+	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull FriendlyByteBuf buffer)
 	{
 		try
 		{
@@ -69,7 +69,7 @@ public class AlchemyArrayRecipeSerializer<RECIPE extends RecipeAlchemyArray>
 	}
 
 	@Override
-	public void toNetwork(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
+	public void toNetwork(@Nonnull FriendlyByteBuf buffer, @Nonnull RECIPE recipe)
 	{
 		try
 		{

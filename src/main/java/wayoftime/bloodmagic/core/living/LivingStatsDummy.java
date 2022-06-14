@@ -4,9 +4,9 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.resources.ResourceLocation;
 
 public class LivingStatsDummy extends LivingStats
 {
@@ -27,12 +27,12 @@ public class LivingStatsDummy extends LivingStats
 		return this;
 	}
 
-	public CompoundNBT serialize()
+	public CompoundTag serialize()
 	{
-		CompoundNBT compound = new CompoundNBT();
-		ListNBT statList = new ListNBT();
+		CompoundTag compound = new CompoundTag();
+		ListTag statList = new ListTag();
 		upgrade_keys.forEach((k, v) -> {
-			CompoundNBT upgrade = new CompoundNBT();
+			CompoundTag upgrade = new CompoundTag();
 			upgrade.putString("key", k.toString());
 			upgrade.putDouble("exp", v);
 			statList.add(upgrade);

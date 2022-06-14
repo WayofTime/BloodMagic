@@ -1,13 +1,13 @@
 package wayoftime.bloodmagic.potion;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.potion.EffectType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.effect.MobEffectCategory;
 
 public class PotionSoftFall extends PotionBloodMagic
 {
 	public PotionSoftFall()
 	{
-		super(EffectType.BENEFICIAL, 0x4AEDD9);
+		super(MobEffectCategory.BENEFICIAL, 0x4AEDD9);
 	}
 
 	@Override

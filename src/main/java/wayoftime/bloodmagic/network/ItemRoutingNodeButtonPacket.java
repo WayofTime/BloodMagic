@@ -2,10 +2,10 @@ package wayoftime.bloodmagic.network;
 
 import java.util.function.Supplier;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
 import wayoftime.bloodmagic.tile.routing.TileFilteredRoutingNode;
 
@@ -25,13 +25,13 @@ public class ItemRoutingNodeButtonPacket
 		this.buttonPress = buttonPress;
 	}
 
-	public static void encode(ItemRoutingNodeButtonPacket pkt, PacketBuffer buf)
+	public static void encode(ItemRoutingNodeButtonPacket pkt, FriendlyByteBuf buf)
 	{
 		buf.writeBlockPos(pkt.pos);
 		buf.writeInt(pkt.buttonPress);
 	}
 
-	public static ItemRoutingNodeButtonPacket decode(PacketBuffer buf)
+	public static ItemRoutingNodeButtonPacket decode(FriendlyByteBuf buf)
 	{
 		ItemRoutingNodeButtonPacket pkt = new ItemRoutingNodeButtonPacket(buf.readBlockPos(), buf.readInt());
 
@@ -41,12 +41,12 @@ public class ItemRoutingNodeButtonPacket
 	public static void handle(ItemRoutingNodeButtonPacket message, Supplier<Context> context)
 	{
 		context.get().enqueueWork(() -> {
-			PlayerEntity player = context.get().getSender();
+			Player player = context.get().getSender();
 			if (player == null || player.level.isClientSide)
 			{
 				return;
 			}
-			TileEntity tile = player.getCommandSenderWorld().getBlockEntity(message.pos);
+			BlockEntity tile = player.getCommandSenderWorld().getBlockEntity(message.pos);
 			if (tile instanceof TileFilteredRoutingNode)
 			{
 				int buttonPress = message.buttonPress;

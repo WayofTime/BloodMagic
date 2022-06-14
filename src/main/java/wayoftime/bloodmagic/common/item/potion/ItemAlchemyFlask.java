@@ -7,25 +7,25 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.PotionUtils;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.DrinkHelper;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
@@ -39,9 +39,9 @@ public class ItemAlchemyFlask extends Item
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn)
 	{
-		tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.arctool.uses", getRemainingUses(stack)).withStyle(TextFormatting.GOLD));
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.arctool.uses", getRemainingUses(stack)).withStyle(ChatFormatting.GOLD));
 		PotionUtils.addPotionTooltip(stack, tooltip, 1.0F);
 	}
 
@@ -62,9 +62,9 @@ public class ItemAlchemyFlask extends Item
 	 * returns the action that specifies what animation to play when the items is
 	 * being used
 	 */
-	public UseAction getUseAnimation(ItemStack stack)
+	public UseAnim getUseAnimation(ItemStack stack)
 	{
-		return UseAction.DRINK;
+		return UseAnim.DRINK;
 	}
 
 //	@Override
@@ -84,7 +84,7 @@ public class ItemAlchemyFlask extends Item
 	public void resyncEffectInstances(ItemStack stack)
 	{
 		List<EffectHolder> holderList = getEffectHoldersOfFlask(stack);
-		List<EffectInstance> effectList = new ArrayList<EffectInstance>();
+		List<MobEffectInstance> effectList = new ArrayList<MobEffectInstance>();
 
 		for (EffectHolder holder : holderList)
 		{
@@ -94,19 +94,19 @@ public class ItemAlchemyFlask extends Item
 		setEffectsOfFlask(stack, effectList);
 	}
 
-	public ItemStack setEffectsOfFlask(ItemStack stack, Collection<EffectInstance> effects)
+	public ItemStack setEffectsOfFlask(ItemStack stack, Collection<MobEffectInstance> effects)
 	{
 		if (effects.isEmpty())
 		{
 			return stack;
 		} else
 		{
-			CompoundNBT compoundnbt = stack.getOrCreateTag();
-			ListNBT listnbt = new ListNBT();
+			CompoundTag compoundnbt = stack.getOrCreateTag();
+			ListTag listnbt = new ListTag();
 
-			for (EffectInstance effectinstance : effects)
+			for (MobEffectInstance effectinstance : effects)
 			{
-				listnbt.add(effectinstance.save(new CompoundNBT()));
+				listnbt.add(effectinstance.save(new CompoundTag()));
 			}
 
 			compoundnbt.put("CustomPotionEffects", listnbt);
@@ -121,12 +121,12 @@ public class ItemAlchemyFlask extends Item
 			return;
 		} else
 		{
-			CompoundNBT compoundnbt = stack.getOrCreateTag();
-			ListNBT listnbt = new ListNBT();
+			CompoundTag compoundnbt = stack.getOrCreateTag();
+			ListTag listnbt = new ListTag();
 
 			for (EffectHolder effectHolder : effects)
 			{
-				listnbt.add(effectHolder.write(new CompoundNBT()));
+				listnbt.add(effectHolder.write(new CompoundTag()));
 			}
 
 			compoundnbt.put("effectholder", listnbt);
@@ -136,8 +136,8 @@ public class ItemAlchemyFlask extends Item
 	public List<EffectHolder> getEffectHoldersOfFlask(ItemStack stack)
 	{
 		List<EffectHolder> holderList = new ArrayList<EffectHolder>();
-		CompoundNBT tag = stack.getTag();
-		ListNBT tags = tag.getList("effectholder", 10);
+		CompoundTag tag = stack.getTag();
+		ListTag tags = tag.getList("effectholder", 10);
 		if (tags.isEmpty())
 		{
 			return holderList;
@@ -145,7 +145,7 @@ public class ItemAlchemyFlask extends Item
 
 		for (int i = 0; i < tags.size(); i++)
 		{
-			CompoundNBT newTag = tags.getCompound(i);
+			CompoundTag newTag = tags.getCompound(i);
 			EffectHolder holder = EffectHolder.read(newTag);
 			if (holder != null)
 			{
@@ -157,36 +157,36 @@ public class ItemAlchemyFlask extends Item
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn)
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn)
 	{
 		ItemStack heldStack = playerIn.getItemInHand(handIn);
 		if (getRemainingUses(heldStack) <= 0)
 		{
-			return ActionResult.pass(heldStack);
+			return InteractionResultHolder.pass(heldStack);
 		}
 
-		return DrinkHelper.useDrink(worldIn, playerIn, handIn);
+		return ItemUtils.useDrink(worldIn, playerIn, handIn);
 	}
 
 	@Override
-	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving)
+	public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving)
 	{
-		PlayerEntity playerentity = entityLiving instanceof PlayerEntity ? (PlayerEntity) entityLiving : null;
-		if (playerentity instanceof ServerPlayerEntity)
+		Player playerentity = entityLiving instanceof Player ? (Player) entityLiving : null;
+		if (playerentity instanceof ServerPlayer)
 		{
-			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) playerentity, stack);
+			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) playerentity, stack);
 		}
 
 		if (!worldIn.isClientSide)
 		{
-			for (EffectInstance effectinstance : PotionUtils.getMobEffects(stack))
+			for (MobEffectInstance effectinstance : PotionUtils.getMobEffects(stack))
 			{
 				if (effectinstance.getEffect().isInstantenous())
 				{
 					effectinstance.getEffect().applyInstantenousEffect(playerentity, playerentity, entityLiving, effectinstance.getAmplifier(), 1.0D);
 				} else
 				{
-					entityLiving.addEffect(new EffectInstance(effectinstance));
+					entityLiving.addEffect(new MobEffectInstance(effectinstance));
 				}
 			}
 		}

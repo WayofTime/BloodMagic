@@ -2,26 +2,26 @@ package wayoftime.bloodmagic.ritual;
 
 import java.util.Locale;
 
-import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.ChatFormatting;
 
-public enum EnumRuneType implements IStringSerializable
+public enum EnumRuneType implements StringRepresentable
 {
-	BLANK(TextFormatting.GRAY),
-	WATER(TextFormatting.AQUA),
-	FIRE(TextFormatting.RED),
-	EARTH(TextFormatting.GREEN),
-	AIR(TextFormatting.WHITE),
-	DUSK(TextFormatting.DARK_GRAY),
-	DAWN(TextFormatting.GOLD);
+	BLANK(ChatFormatting.GRAY),
+	WATER(ChatFormatting.AQUA),
+	FIRE(ChatFormatting.RED),
+	EARTH(ChatFormatting.GREEN),
+	AIR(ChatFormatting.WHITE),
+	DUSK(ChatFormatting.DARK_GRAY),
+	DAWN(ChatFormatting.GOLD);
 
-	public final TextFormatting colorCode; // Ritual Diviner's tooltip Color
+	public final ChatFormatting colorCode; // Ritual Diviner's tooltip Color
 	public final String translationKey = this.name().toLowerCase(Locale.ROOT) + "Rune"; // Suffix for translation.
 	public final String patchouliColor = "$(" + this.name().toLowerCase(Locale.ROOT) + ")"; // Patchouli Guidebook's
 																							// color code
 	// (set in book.json).
 
-	EnumRuneType(TextFormatting colorCode)
+	EnumRuneType(ChatFormatting colorCode)
 	{
 		this.colorCode = colorCode;
 	}

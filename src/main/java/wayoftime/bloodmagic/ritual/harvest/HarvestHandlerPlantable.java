@@ -5,20 +5,20 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.CropsBlock;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
@@ -66,14 +66,14 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 	}
 
 	@Override
-	public boolean harvest(World world, BlockPos pos, BlockState state, List<ItemStack> drops)
+	public boolean harvest(Level world, BlockPos pos, BlockState state, List<ItemStack> drops)
 	{
 //		NonNullList<ItemStack> blockDrops = NonNullList.create();
 //		state.getBlock().getDrops(blockDrops, world, pos, state, 0);
 		boolean foundSeed = false;
-		LootContext.Builder lootBuilder = new LootContext.Builder((ServerWorld) world);
-		Vector3d blockCenter = new Vector3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
-		List<ItemStack> blockDrops = state.getDrops(lootBuilder.withParameter(LootParameters.ORIGIN, blockCenter).withParameter(LootParameters.TOOL, mockHoe));
+		LootContext.Builder lootBuilder = new LootContext.Builder((ServerLevel) world);
+		Vec3 blockCenter = new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+		List<ItemStack> blockDrops = state.getDrops(lootBuilder.withParameter(LootContextParams.ORIGIN, blockCenter).withParameter(LootContextParams.TOOL, mockHoe));
 
 //		System.out.println("Size of list: " + blockDrops.size());
 
@@ -112,10 +112,10 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 	}
 
 	@Override
-	public boolean test(World world, BlockPos pos, BlockState state)
+	public boolean test(Level world, BlockPos pos, BlockState state)
 	{
 //		state.hasProperty(null);
-		return HarvestRegistry.getStandardCrops().containsKey(state.getBlock()) && state.getBlock() instanceof CropsBlock && ((CropsBlock) state.getBlock()).isMaxAge(state);
+		return HarvestRegistry.getStandardCrops().containsKey(state.getBlock()) && state.getBlock() instanceof CropBlock && ((CropBlock) state.getBlock()).isMaxAge(state);
 //		return HarvestRegistry.getStandardCrops().containsKey(state.getBlock()) && state.getBlock().getMetaFromState(state) == HarvestRegistry.getStandardCrops().get(state.getBlock());
 	}
 
@@ -141,7 +141,7 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 			Method getCrop = pamRegistry.getMethod("getCrop", String.class);
 			for (String name : (String[]) names.get(null))
 			{
-				CropsBlock crop = (CropsBlock) getCrop.invoke(null, name);
+				CropBlock crop = (CropBlock) getCrop.invoke(null, name);
 				HarvestRegistry.registerStandardCrop(crop, crop.getMaxAge());
 			}
 		} catch (ClassNotFoundException e)
@@ -177,7 +177,7 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 
 			for (Object maCrop : crops)
 			{
-				CropsBlock crop = (CropsBlock) getCrop.invoke(maCrop);
+				CropBlock crop = (CropBlock) getCrop.invoke(maCrop);
 				HarvestRegistry.registerStandardCrop(crop, crop.getMaxAge());
 			}
 		} catch (ClassNotFoundException e)

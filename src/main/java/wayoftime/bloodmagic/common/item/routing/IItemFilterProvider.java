@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.IItemHandler;
@@ -16,9 +16,9 @@ import wayoftime.bloodmagic.common.routing.IItemFilter;
 
 public interface IItemFilterProvider extends IRoutingFilterProvider
 {
-	IItemFilter getInputItemFilter(ItemStack stack, TileEntity tile, IItemHandler handler);
+	IItemFilter getInputItemFilter(ItemStack stack, BlockEntity tile, IItemHandler handler);
 
-	IItemFilter getOutputItemFilter(ItemStack stack, TileEntity tile, IItemHandler handler);
+	IItemFilter getOutputItemFilter(ItemStack stack, BlockEntity tile, IItemHandler handler);
 
 	// Only used for filters that check ItemStacks and do not transfer items to/from
 	// a connected inventory.
@@ -26,13 +26,13 @@ public interface IItemFilterProvider extends IRoutingFilterProvider
 
 	void setGhostItemAmount(ItemStack filterStack, int ghostItemSlot, int amount);
 
-	List<ITextComponent> getTextForHoverItem(ItemStack filterStack, String buttonKey, int ghostItemSlot);
+	List<Component> getTextForHoverItem(ItemStack filterStack, String buttonKey, int ghostItemSlot);
 
 	// -1 equals an invalid button input;
 	int getCurrentButtonState(ItemStack filterStack, String buttonKey, int ghostItemSlot);
 
 	@OnlyIn(Dist.CLIENT)
-	List<Pair<String, Button.IPressable>> getButtonAction(ContainerFilter container);
+	List<Pair<String, Button.OnPress>> getButtonAction(ContainerFilter container);
 
 	Pair<Integer, Integer> getTexturePositionForState(ItemStack filterStack, String buttonKey, int currentButtonState);
 

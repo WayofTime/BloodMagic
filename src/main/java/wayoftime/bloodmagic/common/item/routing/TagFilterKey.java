@@ -1,15 +1,15 @@
 package wayoftime.bloodmagic.common.item.routing;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tags.ITag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.tags.Tag;
 
 public class TagFilterKey implements IFilterKey
 {
-	private ITag<Item> itemTag;
+	private Tag<Item> itemTag;
 	private int count;
 
-	public TagFilterKey(ITag<Item> itemTag, int count)
+	public TagFilterKey(Tag<Item> itemTag, int count)
 	{
 		this.itemTag = itemTag;
 		this.count = count;

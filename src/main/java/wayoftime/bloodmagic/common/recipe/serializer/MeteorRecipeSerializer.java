@@ -9,17 +9,17 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.common.meteor.MeteorLayer;
 import wayoftime.bloodmagic.recipe.RecipeMeteor;
 import wayoftime.bloodmagic.util.Constants;
 
-public class MeteorRecipeSerializer<RECIPE extends RecipeMeteor> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RECIPE>
+public class MeteorRecipeSerializer<RECIPE extends RecipeMeteor> extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RECIPE>
 {
 	private final IFactory<RECIPE> factory;
 
@@ -33,19 +33,19 @@ public class MeteorRecipeSerializer<RECIPE extends RecipeMeteor> extends ForgeRe
 	public RECIPE fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
 	{
 
-		JsonElement input = JSONUtils.isArrayNode(json, Constants.JSON.INPUT)
-				? JSONUtils.getAsJsonArray(json, Constants.JSON.INPUT)
-				: JSONUtils.getAsJsonObject(json, Constants.JSON.INPUT);
+		JsonElement input = GsonHelper.isArrayNode(json, Constants.JSON.INPUT)
+				? GsonHelper.getAsJsonArray(json, Constants.JSON.INPUT)
+				: GsonHelper.getAsJsonObject(json, Constants.JSON.INPUT);
 
 		Ingredient inputIng = Ingredient.fromJson(input);
 
-		int syphon = JSONUtils.getAsInt(json, Constants.JSON.SYPHON);
-		float explosionRadius = JSONUtils.getAsInt(json, Constants.JSON.EXPLOSION);
+		int syphon = GsonHelper.getAsInt(json, Constants.JSON.SYPHON);
+		float explosionRadius = GsonHelper.getAsInt(json, Constants.JSON.EXPLOSION);
 
 		List<MeteorLayer> layerList = new ArrayList<>();
-		if (json.has(Constants.JSON.LAYER) && JSONUtils.isArrayNode(json, Constants.JSON.LAYER))
+		if (json.has(Constants.JSON.LAYER) && GsonHelper.isArrayNode(json, Constants.JSON.LAYER))
 		{
-			JsonArray mainArray = JSONUtils.getAsJsonArray(json, Constants.JSON.LAYER);
+			JsonArray mainArray = GsonHelper.getAsJsonArray(json, Constants.JSON.LAYER);
 
 			for (JsonElement element : mainArray)
 			{
@@ -60,7 +60,7 @@ public class MeteorRecipeSerializer<RECIPE extends RecipeMeteor> extends ForgeRe
 	}
 
 	@Override
-	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
+	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull FriendlyByteBuf buffer)
 	{
 		try
 		{
@@ -84,7 +84,7 @@ public class MeteorRecipeSerializer<RECIPE extends RecipeMeteor> extends ForgeRe
 	}
 
 	@Override
-	public void toNetwork(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
+	public void toNetwork(@Nonnull FriendlyByteBuf buffer, @Nonnull RECIPE recipe)
 	{
 		try
 		{

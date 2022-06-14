@@ -9,14 +9,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ShapedRecipe;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.JsonToNBT;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.TagParser;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.util.Constants;
@@ -48,7 +48,7 @@ public class SerializerHelper
 	public static ItemStack getItemStack(@Nonnull JsonObject json, @Nonnull String key)
 	{
 		validateKey(json, key);
-		return ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, key));
+		return ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, key));
 	}
 
 	public static JsonElement serializeItemStack(@Nonnull ItemStack stack)
@@ -69,7 +69,7 @@ public class SerializerHelper
 	public static FluidStack getFluidStack(@Nonnull JsonObject json, @Nonnull String key)
 	{
 		validateKey(json, key);
-		return deserializeFluid(JSONUtils.getAsJsonObject(json, key));
+		return deserializeFluid(GsonHelper.getAsJsonObject(json, key));
 	}
 
 	public static FluidStack deserializeFluid(@Nonnull JsonObject json)
@@ -79,7 +79,7 @@ public class SerializerHelper
 			throw new JsonSyntaxException("Expected to receive a amount that is greater than zero");
 		}
 		JsonElement count = json.get(Constants.JSON.AMOUNT);
-		if (!JSONUtils.isNumberValue(count))
+		if (!GsonHelper.isNumberValue(count))
 		{
 			throw new JsonSyntaxException("Expected amount to be a number greater than zero.");
 		}
@@ -88,13 +88,13 @@ public class SerializerHelper
 		{
 			throw new JsonSyntaxException("Expected amount to be greater than zero.");
 		}
-		ResourceLocation resourceLocation = new ResourceLocation(JSONUtils.getAsString(json, Constants.JSON.FLUID));
+		ResourceLocation resourceLocation = new ResourceLocation(GsonHelper.getAsString(json, Constants.JSON.FLUID));
 		Fluid fluid = ForgeRegistries.FLUIDS.getValue(resourceLocation);
 		if (fluid == null || fluid == Fluids.EMPTY)
 		{
 			throw new JsonSyntaxException("Invalid fluid type '" + resourceLocation + "'");
 		}
-		CompoundNBT nbt = null;
+		CompoundTag nbt = null;
 		if (json.has(Constants.JSON.NBT))
 		{
 			JsonElement jsonNBT = json.get(Constants.JSON.NBT);
@@ -102,10 +102,10 @@ public class SerializerHelper
 			{
 				if (jsonNBT.isJsonObject())
 				{
-					nbt = JsonToNBT.parseTag(GSON.toJson(jsonNBT));
+					nbt = TagParser.parseTag(GSON.toJson(jsonNBT));
 				} else
 				{
-					nbt = JsonToNBT.parseTag(JSONUtils.convertToString(jsonNBT, Constants.JSON.NBT));
+					nbt = TagParser.parseTag(GsonHelper.convertToString(jsonNBT, Constants.JSON.NBT));
 				}
 			} catch (CommandSyntaxException e)
 			{

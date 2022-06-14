@@ -3,13 +3,13 @@ package wayoftime.bloodmagic.client.screens;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.tile.TileAlchemicalReactionChamber;
@@ -21,7 +21,7 @@ public class ScreenAlchemicalReactionChamber extends ScreenBase<ContainerAlchemi
 	private static final ResourceLocation background = new ResourceLocation(BloodMagic.MODID, "textures/gui/arc_gui.png");
 	public TileAlchemicalReactionChamber tileARC;
 
-	public ScreenAlchemicalReactionChamber(ContainerAlchemicalReactionChamber container, PlayerInventory playerInventory, ITextComponent title)
+	public ScreenAlchemicalReactionChamber(ContainerAlchemicalReactionChamber container, Inventory playerInventory, Component title)
 	{
 		super(container, playerInventory, title);
 		tileARC = container.tileARC;
@@ -46,10 +46,10 @@ public class ScreenAlchemicalReactionChamber extends ScreenBase<ContainerAlchemi
 //	}
 //
 	@Override
-	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks)
+	public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks)
 	{
 		super.render(stack, mouseX, mouseY, partialTicks);
-		List<ITextComponent> tooltip = new ArrayList<>();
+		List<Component> tooltip = new ArrayList<>();
 //		FluidTank inputTank = new FluidTank(FluidAttributes.BUCKET_VOLUME * 2);
 //		inputTank.fill(new FluidStack(Fluids.WATER, 1000), FluidAction.EXECUTE);
 
@@ -64,15 +64,15 @@ public class ScreenAlchemicalReactionChamber extends ScreenBase<ContainerAlchemi
 
 //
 	@Override
-	protected void renderLabels(MatrixStack stack, int mouseX, int mouseY)
+	protected void renderLabels(PoseStack stack, int mouseX, int mouseY)
 	{
-		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.arc.name"), 8, 5, 4210752);
-		this.font.draw(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
+		this.font.draw(stack, new TranslatableComponent("tile.bloodmagic.arc.name"), 8, 5, 4210752);
+		this.font.draw(stack, new TranslatableComponent("container.inventory"), 8, 111, 4210752);
 	}
 
 //
 	@Override
-	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		getMinecraft().getTextureManager().bind(background);

@@ -1,8 +1,8 @@
 package wayoftime.bloodmagic.will;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.NonNullList;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.api.compat.IDemonWill;
 import wayoftime.bloodmagic.api.compat.IDemonWillGem;
@@ -24,7 +24,7 @@ public class PlayerDemonWillHandler
 	 * @param player - The player to check the will of
 	 * @return - The amount of will the player contains
 	 */
-	public static double getTotalDemonWill(EnumDemonWillType type, PlayerEntity player)
+	public static double getTotalDemonWill(EnumDemonWillType type, Player player)
 	{
 
 		NonNullList<ItemStack> inventory = InventoryHelper.getAllInventories(player);
@@ -44,7 +44,7 @@ public class PlayerDemonWillHandler
 		return souls;
 	}
 
-	public static EnumDemonWillType getLargestWillType(PlayerEntity player)
+	public static EnumDemonWillType getLargestWillType(Player player)
 	{
 		EnumDemonWillType type = EnumDemonWillType.DEFAULT;
 		double max = getTotalDemonWill(type, player);
@@ -68,7 +68,7 @@ public class PlayerDemonWillHandler
 	 * @param player - The player to check the Will of
 	 * @return - True if all Will containers are full, false if not.
 	 */
-	public static boolean isDemonWillFull(EnumDemonWillType type, PlayerEntity player)
+	public static boolean isDemonWillFull(EnumDemonWillType type, Player player)
 	{
 		NonNullList<ItemStack> inventory = InventoryHelper.getAllInventories(player);
 
@@ -93,7 +93,7 @@ public class PlayerDemonWillHandler
 	 * @param amount - The amount of will to consume
 	 * @return - The amount of will consumed.
 	 */
-	public static double consumeDemonWill(EnumDemonWillType type, PlayerEntity player, double amount)
+	public static double consumeDemonWill(EnumDemonWillType type, Player player, double amount)
 	{
 		double consumed = 0;
 
@@ -127,7 +127,7 @@ public class PlayerDemonWillHandler
 	 * @param willStack - ItemStack that contains an IDemonWill to be added
 	 * @return - The modified willStack
 	 */
-	public static ItemStack addDemonWill(PlayerEntity player, ItemStack willStack)
+	public static ItemStack addDemonWill(Player player, ItemStack willStack)
 	{
 		if (willStack.isEmpty())
 			return ItemStack.EMPTY;
@@ -156,7 +156,7 @@ public class PlayerDemonWillHandler
 	 * @param amount - The amount of will to add
 	 * @return - The amount of will added
 	 */
-	public static double addDemonWill(EnumDemonWillType type, PlayerEntity player, double amount)
+	public static double addDemonWill(EnumDemonWillType type, Player player, double amount)
 	{
 		NonNullList<ItemStack> inventory = InventoryHelper.getAllInventories(player);
 		double remaining = amount;
@@ -184,7 +184,7 @@ public class PlayerDemonWillHandler
 	 * @param ignored - A stack to ignore
 	 * @return - The amount of will added
 	 */
-	public static double addDemonWill(EnumDemonWillType type, PlayerEntity player, double amount, ItemStack ignored)
+	public static double addDemonWill(EnumDemonWillType type, Player player, double amount, ItemStack ignored)
 	{
 		NonNullList<ItemStack> inventory = InventoryHelper.getAllInventories(player);
 		double remaining = amount;

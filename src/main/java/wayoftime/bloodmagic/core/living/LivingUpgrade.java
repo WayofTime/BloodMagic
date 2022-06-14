@@ -24,14 +24,14 @@ import com.google.gson.JsonParseException;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Util;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.Util;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 @JsonAdapter(LivingUpgrade.Deserializer.class)
@@ -200,12 +200,12 @@ public class LivingUpgrade extends ForgeRegistryEntry<LivingUpgrade>
 
 	public interface IArmorProvider
 	{
-		double getProtection(PlayerEntity player, LivingStats stats, DamageSource source, LivingUpgrade upgrade, int level);
+		double getProtection(Player player, LivingStats stats, DamageSource source, LivingUpgrade upgrade, int level);
 	}
 
 	public interface IDamageProvider
 	{
-		double getAdditionalDamage(PlayerEntity player, ItemStack weapon, double damage, LivingStats stats, LivingEntity attacked, LivingUpgrade upgrade, int level);
+		double getAdditionalDamage(Player player, ItemStack weapon, double damage, LivingStats stats, LivingEntity attacked, LivingUpgrade upgrade, int level);
 	}
 
 	public static class Level

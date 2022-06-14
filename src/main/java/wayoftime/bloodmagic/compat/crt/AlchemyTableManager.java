@@ -8,10 +8,10 @@ import com.blamejared.crafttweaker.api.managers.IRecipeManager;
 import com.blamejared.crafttweaker.impl.actions.recipes.ActionAddRecipe;
 import com.blamejared.crafttweaker.impl.actions.recipes.ActionRemoveRecipeByOutput;
 import com.blamejared.crafttweaker.impl.item.MCItemStackMutable;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.resources.ResourceLocation;
 import org.openzen.zencode.java.ZenCodeType;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
@@ -42,7 +42,7 @@ public class AlchemyTableManager implements IRecipeManager {
             public void apply() {
                 List<ResourceLocation> toRemove = new ArrayList<>();
                 for(ResourceLocation location : getManager().getRecipes().keySet()) {
-                    IRecipe<?> recipe = getManager().getRecipes().get(location);
+                    Recipe<?> recipe = getManager().getRecipes().get(location);
                     if(recipe instanceof RecipeAlchemyTable) {
                         RecipeAlchemyTable recipeAT = (RecipeAlchemyTable) recipe;
                         ItemStack recipeOutput = recipeAT.getOutput();
@@ -57,7 +57,7 @@ public class AlchemyTableManager implements IRecipeManager {
     }
     
     @Override
-    public IRecipeType<RecipeAlchemyTable> getRecipeType() {
+    public RecipeType<RecipeAlchemyTable> getRecipeType() {
         return BloodMagicRecipeType.ALCHEMYTABLE;
     }
 }

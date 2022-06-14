@@ -1,17 +1,17 @@
 package wayoftime.bloodmagic.common.block;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CropsBlock;
-import net.minecraft.item.Items;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
 
-public class BlockGrowingDoubt extends CropsBlock
+public class BlockGrowingDoubt extends CropBlock
 {
 	private static final VoxelShape[] SHAPES = new VoxelShape[] {
 			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D),
@@ -23,22 +23,22 @@ public class BlockGrowingDoubt extends CropsBlock
 			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D),
 			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D) };
 
-	public BlockGrowingDoubt(AbstractBlock.Properties properties)
+	public BlockGrowingDoubt(BlockBehaviour.Properties properties)
 	{
 		super(properties);
 	}
 
-	protected boolean mayPlaceOn(BlockState state, IBlockReader worldIn, BlockPos pos)
+	protected boolean mayPlaceOn(BlockState state, BlockGetter worldIn, BlockPos pos)
 	{
 		return state.is(BloodMagicBlocks.NETHER_SOIL.get());
 	}
 
-	protected IItemProvider getBaseSeedId()
+	protected ItemLike getBaseSeedId()
 	{
 		return Items.POTATO;
 	}
 
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context)
 	{
 		return SHAPES[state.getValue(this.getAgeProperty())];
 	}

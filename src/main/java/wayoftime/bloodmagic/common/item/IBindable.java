@@ -2,8 +2,8 @@ package wayoftime.bloodmagic.common.item;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import wayoftime.bloodmagic.core.data.Binding;
 
 /**
@@ -33,7 +33,7 @@ public interface IBindable
 	 * @param stack  - The ItemStack to attempt binding
 	 * @return If binding was successful.
 	 */
-	default boolean onBind(PlayerEntity player, ItemStack stack)
+	default boolean onBind(Player player, ItemStack stack)
 	{
 		return true;
 	}

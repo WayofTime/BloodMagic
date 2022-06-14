@@ -3,15 +3,15 @@ package wayoftime.bloodmagic.ritual.types;
 import java.util.List;
 import java.util.function.Consumer;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ConfigHandler;
 import wayoftime.bloodmagic.altar.IBloodAltar;
@@ -55,7 +55,7 @@ public class RitualFeatheredKnife extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
+		Level world = masterRitualStone.getWorldObj();
 //		if (world.isRemote)
 //		{
 //			return;
@@ -87,7 +87,7 @@ public class RitualFeatheredKnife extends Ritual
 
 		BlockPos altarPos = pos.offset(altarOffsetPos);
 
-		TileEntity tile = world.getBlockEntity(altarPos);
+		BlockEntity tile = world.getBlockEntity(altarPos);
 
 		AreaDescriptor altarRange = masterRitualStone.getBlockRange(ALTAR_RANGE);
 
@@ -95,7 +95,7 @@ public class RitualFeatheredKnife extends Ritual
 		{
 			for (BlockPos newPos : altarRange.getContainedPositions(pos))
 			{
-				TileEntity nextTile = world.getBlockEntity(newPos);
+				BlockEntity nextTile = world.getBlockEntity(newPos);
 				if (nextTile instanceof IBloodAltar)
 				{
 					tile = nextTile;
@@ -114,13 +114,13 @@ public class RitualFeatheredKnife extends Ritual
 			IBloodAltar tileAltar = (IBloodAltar) tile;
 
 			AreaDescriptor damageRange = masterRitualStone.getBlockRange(DAMAGE_RANGE);
-			AxisAlignedBB range = damageRange.getAABB(pos);
+			AABB range = damageRange.getAABB(pos);
 
 			double destructiveDrain = 0;
 
-			List<PlayerEntity> entities = world.getEntitiesOfClass(PlayerEntity.class, range);
+			List<Player> entities = world.getEntitiesOfClass(Player.class, range);
 
-			for (PlayerEntity player : entities)
+			for (Player player : entities)
 			{
 				float healthThreshold = steadfastWill >= steadfastWillThreshold ? 0.7f : 0.3f;
 
@@ -145,7 +145,7 @@ public class RitualFeatheredKnife extends Ritual
 						lpModifier *= PlayerSacrificeHelper.getModifier(incenseAmount);
 
 						PlayerSacrificeHelper.setPlayerIncense(player, 0);
-						player.addEffect(new EffectInstance(BloodMagicPotions.SOUL_FRAY, PlayerSacrificeHelper.soulFrayDuration));
+						player.addEffect(new MobEffectInstance(BloodMagicPotions.SOUL_FRAY, PlayerSacrificeHelper.soulFrayDuration));
 					}
 
 					if (destructiveWill >= destructiveWillDrain * sacrificedHealth)
@@ -173,7 +173,7 @@ public class RitualFeatheredKnife extends Ritual
 //					}
 
 					player.setHealth(health - sacrificedHealth);
-					BloodMagic.packetHandler.sendTo(new SetClientHealthPacket(health - sacrificedHealth), (ServerPlayerEntity) player);
+					BloodMagic.packetHandler.sendTo(new SetClientHealthPacket(health - sacrificedHealth), (ServerPlayer) player);
 
 					tileAltar.sacrificialDaggerCall((int) (ConfigHandler.values.sacrificialDaggerConversion * lpModifier * sacrificedHealth), false);
 
@@ -231,14 +231,14 @@ public class RitualFeatheredKnife extends Ritual
 	}
 
 	@Override
-	public ITextComponent[] provideInformationOfRitualToPlayer(PlayerEntity player)
+	public Component[] provideInformationOfRitualToPlayer(Player player)
 	{
-		return new ITextComponent[] { new TranslationTextComponent(this.getTranslationKey() + ".info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".default.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".corrosive.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".steadfast.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".destructive.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".vengeful.info") };
+		return new Component[] { new TranslatableComponent(this.getTranslationKey() + ".info"),
+				new TranslatableComponent(this.getTranslationKey() + ".default.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".corrosive.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".steadfast.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".destructive.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".vengeful.info") };
 	}
 
 	public double getLPModifierForWill(double destructiveWill)

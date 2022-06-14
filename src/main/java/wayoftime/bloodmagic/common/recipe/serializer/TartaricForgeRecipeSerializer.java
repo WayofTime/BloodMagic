@@ -8,19 +8,19 @@ import javax.annotation.Nonnull;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
 import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
 import wayoftime.bloodmagic.util.Constants;
 
 public class TartaricForgeRecipeSerializer<RECIPE extends RecipeTartaricForge>
-		extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RECIPE>
+		extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RECIPE>
 {
 
 	private final IFactory<RECIPE> factory;
@@ -39,23 +39,23 @@ public class TartaricForgeRecipeSerializer<RECIPE extends RecipeTartaricForge>
 		{
 			if (json.has(Constants.JSON.INPUT + i))
 			{
-				JsonElement input = JSONUtils.isArrayNode(json, Constants.JSON.INPUT + i)
-						? JSONUtils.getAsJsonArray(json, Constants.JSON.INPUT + i)
-						: JSONUtils.getAsJsonObject(json, Constants.JSON.INPUT + i);
+				JsonElement input = GsonHelper.isArrayNode(json, Constants.JSON.INPUT + i)
+						? GsonHelper.getAsJsonArray(json, Constants.JSON.INPUT + i)
+						: GsonHelper.getAsJsonObject(json, Constants.JSON.INPUT + i);
 				inputList.add(Ingredient.fromJson(input));
 			}
 		}
 
 		ItemStack output = SerializerHelper.getItemStack(json, Constants.JSON.OUTPUT);
 
-		float minimumSouls = JSONUtils.getAsFloat(json, Constants.JSON.TARTARIC_MINIMUM);
-		float soulDrain = JSONUtils.getAsFloat(json, Constants.JSON.TARTARIC_DRAIN);
+		float minimumSouls = GsonHelper.getAsFloat(json, Constants.JSON.TARTARIC_MINIMUM);
+		float soulDrain = GsonHelper.getAsFloat(json, Constants.JSON.TARTARIC_DRAIN);
 
 		return this.factory.create(recipeId, inputList, output, minimumSouls, soulDrain);
 	}
 
 	@Override
-	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer)
+	public RECIPE fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull FriendlyByteBuf buffer)
 	{
 		try
 		{
@@ -80,7 +80,7 @@ public class TartaricForgeRecipeSerializer<RECIPE extends RecipeTartaricForge>
 	}
 
 	@Override
-	public void toNetwork(@Nonnull PacketBuffer buffer, @Nonnull RECIPE recipe)
+	public void toNetwork(@Nonnull FriendlyByteBuf buffer, @Nonnull RECIPE recipe)
 	{
 		try
 		{

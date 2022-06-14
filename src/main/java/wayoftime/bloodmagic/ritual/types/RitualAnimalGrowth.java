@@ -3,16 +3,16 @@ package wayoftime.bloodmagic.ritual.types;
 import java.util.List;
 import java.util.function.Consumer;
 
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
@@ -52,7 +52,7 @@ public class RitualAnimalGrowth extends Ritual
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
-		World world = masterRitualStone.getWorldObj();
+		Level world = masterRitualStone.getWorldObj();
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
 		if (currentEssence < getRefreshCost())
@@ -66,7 +66,7 @@ public class RitualAnimalGrowth extends Ritual
 		BlockPos pos = masterRitualStone.getMasterBlockPos();
 
 		AreaDescriptor chestRange = masterRitualStone.getBlockRange(CHEST_RANGE);
-		TileEntity chest = world.getBlockEntity(chestRange.getContainedPositions(pos).get(0));
+		BlockEntity chest = world.getBlockEntity(chestRange.getContainedPositions(pos).get(0));
 		IItemHandler itemHandler = null;
 		if (chest != null)
 		{
@@ -94,12 +94,12 @@ public class RitualAnimalGrowth extends Ritual
 		boolean kamikaze = destructiveWill >= destructiveWillDrain;
 
 		AreaDescriptor growingRange = masterRitualStone.getBlockRange(GROWTH_RANGE);
-		AxisAlignedBB axis = growingRange.getAABB(masterRitualStone.getMasterBlockPos());
-		List<AnimalEntity> animalList = world.getEntitiesOfClass(AnimalEntity.class, axis);
+		AABB axis = growingRange.getAABB(masterRitualStone.getMasterBlockPos());
+		List<Animal> animalList = world.getEntitiesOfClass(Animal.class, axis);
 
 		boolean performedEffect = false;
 
-		for (AnimalEntity animal : animalList)
+		for (Animal animal : animalList)
 		{
 			if (animal.getAge() < 0)
 			{
@@ -129,7 +129,7 @@ public class RitualAnimalGrowth extends Ritual
 					{
 						if (!animal.hasEffect(BloodMagicPotions.SACRIFICIAL_LAMB))
 						{
-							animal.addEffect(new EffectInstance(BloodMagicPotions.SACRIFICIAL_LAMB, 1200));
+							animal.addEffect(new MobEffectInstance(BloodMagicPotions.SACRIFICIAL_LAMB, 1200));
 							destructiveDrain += destructiveWillDrain;
 							destructiveWill -= destructiveWillDrain;
 							performedEffect = true;
@@ -225,14 +225,14 @@ public class RitualAnimalGrowth extends Ritual
 	}
 
 	@Override
-	public ITextComponent[] provideInformationOfRitualToPlayer(PlayerEntity player)
+	public Component[] provideInformationOfRitualToPlayer(Player player)
 	{
-		return new ITextComponent[] { new TranslationTextComponent(this.getTranslationKey() + ".info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".default.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".corrosive.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".steadfast.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".destructive.info"),
-				new TranslationTextComponent(this.getTranslationKey() + ".vengeful.info") };
+		return new Component[] { new TranslatableComponent(this.getTranslationKey() + ".info"),
+				new TranslatableComponent(this.getTranslationKey() + ".default.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".corrosive.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".steadfast.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".destructive.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".vengeful.info") };
 	}
 
 	public int getBreedingDecreaseForWill(double vengefulWill)

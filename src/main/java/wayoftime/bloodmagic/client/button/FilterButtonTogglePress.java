@@ -1,12 +1,12 @@
 package wayoftime.bloodmagic.client.button;
 
-import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.gui.components.Button;
 import wayoftime.bloodmagic.common.item.inventory.ContainerFilter;
 import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
 import wayoftime.bloodmagic.network.FilterButtonPacket;
 
-public class FilterButtonTogglePress implements Button.IPressable
+public class FilterButtonTogglePress implements Button.OnPress
 {
 	private final String buttonKey;
 	private final ContainerFilter container;

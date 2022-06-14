@@ -1,10 +1,10 @@
 package wayoftime.bloodmagic.potion;
 
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -12,26 +12,26 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 public class BloodMagicPotions
 {
-	public static final Effect SOUL_SNARE = new PotionSoulSnare();
-	public static final Effect FIRE_FUSE = new PotionFireFuse();
-	public static final Effect SOUL_FRAY = new PotionBloodMagic(EffectType.HARMFUL, 0xFFFFFFFF);
-	public static final Effect PLANT_LEECH = new PotionPlantLeech();
-	public static final Effect SACRIFICIAL_LAMB = new PotionSacrificialLamb();
-	public static final Effect FLIGHT = new PotionBloodMagic(EffectType.BENEFICIAL, 0x23DDE1);
-	public static final Effect SPECTRAL_SIGHT = new PotionBloodMagic(EffectType.BENEFICIAL, 0x2FB813);
-	public static final Effect GRAVITY = new PotionBloodMagic(EffectType.HARMFUL, 0x800080);
-	public static final Effect HEAVY_HEART = new PotionHeavyHeart();
-	public static final Effect GROUNDED = new PotionBloodMagic(EffectType.HARMFUL, 0xBA855B);
-	public static final Effect SUSPENDED = new PotionSuspended();
-	public static final Effect PASSIVITY = new PotionPassivity();
-	public static final Effect BOUNCE = new PotionBloodMagic(EffectType.BENEFICIAL, 0x57FF2E);
-	public static final Effect OBSIDIAN_CLOAK = new PotionBloodMagic(EffectType.BENEFICIAL, 0x3C1A8D);
-	public static final Effect HARD_CLOAK = new PotionBloodMagic(EffectType.BENEFICIAL, 0x3C1A8D);
-	public static final Effect SOFT_FALL = new PotionSoftFall();
+	public static final MobEffect SOUL_SNARE = new PotionSoulSnare();
+	public static final MobEffect FIRE_FUSE = new PotionFireFuse();
+	public static final MobEffect SOUL_FRAY = new PotionBloodMagic(MobEffectCategory.HARMFUL, 0xFFFFFFFF);
+	public static final MobEffect PLANT_LEECH = new PotionPlantLeech();
+	public static final MobEffect SACRIFICIAL_LAMB = new PotionSacrificialLamb();
+	public static final MobEffect FLIGHT = new PotionBloodMagic(MobEffectCategory.BENEFICIAL, 0x23DDE1);
+	public static final MobEffect SPECTRAL_SIGHT = new PotionBloodMagic(MobEffectCategory.BENEFICIAL, 0x2FB813);
+	public static final MobEffect GRAVITY = new PotionBloodMagic(MobEffectCategory.HARMFUL, 0x800080);
+	public static final MobEffect HEAVY_HEART = new PotionHeavyHeart();
+	public static final MobEffect GROUNDED = new PotionBloodMagic(MobEffectCategory.HARMFUL, 0xBA855B);
+	public static final MobEffect SUSPENDED = new PotionSuspended();
+	public static final MobEffect PASSIVITY = new PotionPassivity();
+	public static final MobEffect BOUNCE = new PotionBloodMagic(MobEffectCategory.BENEFICIAL, 0x57FF2E);
+	public static final MobEffect OBSIDIAN_CLOAK = new PotionBloodMagic(MobEffectCategory.BENEFICIAL, 0x3C1A8D);
+	public static final MobEffect HARD_CLOAK = new PotionBloodMagic(MobEffectCategory.BENEFICIAL, 0x3C1A8D);
+	public static final MobEffect SOFT_FALL = new PotionSoftFall();
 
-	public static void registerPotions(RegistryEvent.Register<Effect> evt)
+	public static void registerPotions(RegistryEvent.Register<MobEffect> evt)
 	{
-		IForgeRegistry<Effect> reg = evt.getRegistry();
+		IForgeRegistry<MobEffect> reg = evt.getRegistry();
 		reg.register(SOUL_SNARE.setRegistryName("soulsnare"));
 		reg.register(FIRE_FUSE.setRegistryName("firefuse"));
 		reg.register(SOUL_FRAY.setRegistryName("soulfray"));
@@ -51,12 +51,12 @@ public class BloodMagicPotions
 
 	}
 
-	public static Effect getEffect(ResourceLocation rl)
+	public static MobEffect getEffect(ResourceLocation rl)
 	{
 		return ForgeRegistries.POTIONS.getValue(rl);
 	}
 
-	public static ResourceLocation getRegistryName(Effect effect)
+	public static ResourceLocation getRegistryName(MobEffect effect)
 	{
 		return ForgeRegistries.POTIONS.getKey(effect);
 	}

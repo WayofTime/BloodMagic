@@ -1,6 +1,6 @@
 package wayoftime.bloodmagic.tile;
 
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.tile.base.TileTicking;
 
@@ -11,9 +11,9 @@ public class TileDungeonAlternator extends TileTicking {
 	private int cooldown = 0;
 	
 	@ObjectHolder("bloodmagic:dungeonalternator")
-	public static TileEntityType<TileDungeonAlternator> TYPE;
+	public static BlockEntityType<TileDungeonAlternator> TYPE;
 	
-	public TileDungeonAlternator(TileEntityType<?> type) {
+	public TileDungeonAlternator(BlockEntityType<?> type) {
 		super(type);
 	}
 	
