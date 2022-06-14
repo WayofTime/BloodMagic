@@ -3,7 +3,7 @@
   "input": {
     "tag": "forge:dusts/glowstone"
   },
-  "syphon": 0,
+  "syphon": 1000000,
   "explosion": 12.0,
   "layers": [
     {

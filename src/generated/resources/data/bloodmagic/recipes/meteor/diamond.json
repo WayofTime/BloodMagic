@@ -3,7 +3,7 @@
   "input": {
     "tag": "forge:gems/diamond"
   },
-  "syphon": 0,
+  "syphon": 1000000,
   "explosion": 8.0,
   "layers": [
     {

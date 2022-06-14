@@ -50,7 +50,7 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
 			currentActiveSlot = 0;
 			for (Direction dir : Direction.values())
 			{
-				BlockPos offsetPos = this.getBlockPos().offset(dir);
+				BlockPos offsetPos = this.getCurrentBlockPos().offset(dir);
 				TileEntity tile = world.getTileEntity(offsetPos);
 				if (tile != null)
 				{

@@ -11,7 +11,7 @@ public interface IRoutingNode
 {
 	void connectMasterToRemainingNode(World world, List<BlockPos> alreadyChecked, IMasterRoutingNode master);
 
-	BlockPos getBlockPos();
+	BlockPos getCurrentBlockPos();
 
 	List<BlockPos> getConnected();
 

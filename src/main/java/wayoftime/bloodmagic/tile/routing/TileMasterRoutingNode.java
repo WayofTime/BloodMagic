@@ -390,7 +390,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 	@Override
 	public void addNodeToList(IRoutingNode node)
 	{
-		BlockPos newPos = node.getBlockPos();
+		BlockPos newPos = node.getCurrentBlockPos();
 		if (!generalNodeList.contains(newPos))
 		{
 			generalNodeList.add(newPos);
@@ -469,7 +469,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 	}
 
 	@Override
-	public BlockPos getBlockPos()
+	public BlockPos getCurrentBlockPos()
 	{
 		return this.getPos();
 	}

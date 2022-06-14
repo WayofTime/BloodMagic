@@ -32,7 +32,7 @@ Version 3.1.11
 -> Ritual of the High Jump
 -> Laying of the Filler
 -> Convocation of the Damned (reworked)
--> Force of the Ground (renamed from "Ritual of Grounding")
+-> The Sinner's Burden (renamed from "Ritual of Grounding")
 -> Mark of the Falling Tower (New meteor system! Oooh, sparkley~!)
 
 - Added a new ritual, Yawning of the Void. Used to completely clear large areas of blocks.

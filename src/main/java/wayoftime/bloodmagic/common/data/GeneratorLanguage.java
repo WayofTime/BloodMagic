@@ -232,7 +232,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.downgradeRitual", "Penance of the Leadened Soul");
 		add("ritual.bloodmagic.condorRitual", "Reverence of the Condor");
 		add("ritual.bloodmagic.yawningVoidRitual", "Yawning of the Void");
-		add("ritual.bloodmagic.groundingRitual", "Force of the Ground");
+		add("ritual.bloodmagic.groundingRitual", "The Sinner's Burden");
 
 		add("ritual.bloodmagic.cobblestoneRitual", "Le Vulcanos Frigius");
 		add("ritual.bloodmagic.placerRitual", "Domain of The Filler");

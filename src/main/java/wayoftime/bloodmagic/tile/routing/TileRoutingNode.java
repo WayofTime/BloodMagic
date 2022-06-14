@@ -123,7 +123,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 	@Override
 	public void connectMasterToRemainingNode(World world, List<BlockPos> alreadyChecked, IMasterRoutingNode master)
 	{
-		this.masterPos = master.getBlockPos();
+		this.masterPos = master.getCurrentBlockPos();
 		List<BlockPos> connectedList = this.getConnected();
 		for (BlockPos testPos : connectedList)
 		{
@@ -146,7 +146,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 			}
 		}
 
-		master.addConnections(this.getBlockPos(), connectedList);
+		master.addConnections(this.getCurrentBlockPos(), connectedList);
 	}
 
 	// Returns true if the node is connected to the contained IMasterRoutingNode,
@@ -216,14 +216,14 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 			if (testTile instanceof IMasterRoutingNode)
 			{
 				masterNode = (IMasterRoutingNode) testTile;
-				masterNode.removeConnection(getBlockPos());
+				masterNode.removeConnection(getCurrentBlockPos());
 			}
 			for (IRoutingNode node : recheckResult.getRight())
 			{
 				BlockPos masterPos = node.getMasterPos();
 				node.removeConnection(masterPos);
 				if (masterNode != null)
-					masterNode.removeConnection(node.getBlockPos());
+					masterNode.removeConnection(node.getCurrentBlockPos());
 			}
 
 			return recheckResult.getMiddle();
@@ -233,7 +233,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 	}
 
 	@Override
-	public BlockPos getBlockPos()
+	public BlockPos getCurrentBlockPos()
 	{
 		return this.getPos();
 	}
@@ -253,7 +253,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 	@Override
 	public boolean isMaster(IMasterRoutingNode master)
 	{
-		BlockPos checkPos = master.getBlockPos();
+		BlockPos checkPos = master.getCurrentBlockPos();
 		return checkPos.equals(getMasterPos());
 	}
 

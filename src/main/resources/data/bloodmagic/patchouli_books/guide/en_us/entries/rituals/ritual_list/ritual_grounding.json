@@ -1,11 +1,11 @@
 {
-  "name": "Ritual of Grounding",
+  "name": "The Sinner's Burden",
   "icon": "minecraft:dirt",
   "category": "bloodmagic:rituals/ritual_list",
   "pages": [
     {
       "type": "multiblock",
-      "name": "Ritual of Grounding",
+      "name": "The Sinner's Burden",
       "multiblock_id": "bloodmagic:grounding",
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$(/l) for easier construction."
     },

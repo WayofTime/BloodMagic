@@ -61,7 +61,7 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 			Direction dir = getFilterDirectionForButton(i);
 			Pair<Integer, Integer> buttonLocation = getButtonLocation(i);
 			String dirName = getStringForDirection(dir);
-			if (!tileNode.getWorld().isAirBlock(tileNode.getBlockPos().offset(dir)))
+			if (!tileNode.getWorld().isAirBlock(tileNode.getCurrentBlockPos().offset(dir)))
 			{
 				dirName = "";
 			}
@@ -166,7 +166,7 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 //		this.font.func_243248_b(stack, new TranslationTextComponent("tile.bloodmagic.routingnode.name"), 8, 5, 4210752);
 //		this.font.func_243248_b(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
 
-		BlockPos tilePos = tileNode.getBlockPos();
+		BlockPos tilePos = tileNode.getCurrentBlockPos();
 		World world = tileNode.getWorld();
 
 		for (int i = 0; i < 6; i++)

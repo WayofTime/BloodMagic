@@ -20,6 +20,6 @@ public class NodeHelper
 
 		IRoutingNode testNode = (IRoutingNode) tile;
 
-		return testNode.isConnectionEnabled(node.getBlockPos());
+		return testNode.isConnectionEnabled(node.getCurrentBlockPos());
 	}
 }
