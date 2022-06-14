@@ -1,0 +1,13 @@
+{
+  "type": "bloodmagic:array",
+  "texture": "bloodmagic:textures/models/alchemyarrays/teleportation.png",
+  "baseinput": {
+    "item": "bloodmagic:reagentteleposition"
+  },
+  "addedinput": {
+    "item": "bloodmagic:demonslate"
+  },
+  "output": {
+    "item": "bloodmagic:telepositionsigil"
+  }
+}

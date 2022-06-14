@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:teleposer"
+    },
+    {
+      "tag": "forge:ingots/gold"
+    },
+    {
+      "item": "minecraft:ender_pearl"
+    },
+    {
+      "item": "minecraft:chorus_fruit"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:reagentteleposition"
+  },
+  "syphon": 10000,
+  "ticks": 200,
+  "upgradeLevel": 4
+}

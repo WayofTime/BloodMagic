@@ -16,7 +16,7 @@
       "type": "crafting_altar",
       "heading": "Teleposition Focus",
       "recipe": "bloodmagic:altar/teleposer_focus",
-      "text": "The basic $(item)Teleposer Focus$() will swap anything in a 1x1x2 block area above the two teleposers."
+      "text": "The basic $(item)Teleposer Focus$() will swap anything in a 1x1x1 block area above the two teleposers."
     },
     {
       "type": "crafting_altar",

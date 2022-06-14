@@ -203,6 +203,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> REAGENT_BINDING = BASICITEMS.register("reagentbinding", () -> new ItemBase());
 	public static final RegistryObject<Item> REAGENT_HOLDING = BASICITEMS.register("reagentholding", () -> new ItemBase());
 	public static final RegistryObject<Item> REAGENT_SUPPRESSION = BASICITEMS.register("reagentsuppression", () -> new ItemBase());
+	public static final RegistryObject<Item> REAGENT_TELEPOSITION = BASICITEMS.register("reagentteleposition", () -> new ItemBase());
 
 	// Tartaric Gems
 	public static final RegistryObject<Item> PETTY_GEM = ITEMS.register("soulgempetty", () -> new ItemSoulGem("petty", 64));
