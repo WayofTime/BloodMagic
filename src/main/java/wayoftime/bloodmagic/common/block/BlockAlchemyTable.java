@@ -1,37 +1,40 @@
 package wayoftime.bloodmagic.common.block;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.network.NetworkHooks;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.tile.TileAlchemyTable;
 
-public class BlockAlchemyTable extends Block// implements IBMBlock
+public class BlockAlchemyTable extends Block implements EntityBlock// implements IBMBlock
 {
 	public static final DirectionProperty DIRECTION = DirectionProperty.create("direction", Direction.Plane.HORIZONTAL);
 	public static final BooleanProperty INVISIBLE = BooleanProperty.create("invisible");
@@ -39,7 +42,8 @@ public class BlockAlchemyTable extends Block// implements IBMBlock
 
 	public BlockAlchemyTable()
 	{
-		super(BlockBehaviour.Properties.of(Material.METAL).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1).noOcclusion().isRedstoneConductor(BlockAlchemyTable::isntSolid).isViewBlocking(BlockAlchemyTable::isntSolid));
+		super(BlockBehaviour.Properties.of(Material.METAL).strength(2.0F, 5.0F).noOcclusion().isRedstoneConductor(BlockAlchemyTable::isntSolid).isViewBlocking(BlockAlchemyTable::isntSolid));
+//		.harvestTool(ToolType.PICKAXE).harvestLevel(1)
 	}
 
 	private static boolean isntSolid(BlockState state, BlockGetter reader, BlockPos pos)
@@ -59,15 +63,20 @@ public class BlockAlchemyTable extends Block// implements IBMBlock
 	}
 
 	@Override
-	public boolean hasTileEntity(BlockState state)
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
-		return true;
+		return new TileAlchemyTable(pos, state);
 	}
 
 	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world)
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type)
 	{
-		return new TileAlchemyTable();
+		return (level1, blockPos, blockState, tile) -> {
+			if (tile instanceof TileAlchemyTable)
+			{
+				((TileAlchemyTable) tile).tick();
+			}
+		};
 	}
 
 	@Override
@@ -121,11 +130,11 @@ public class BlockAlchemyTable extends Block// implements IBMBlock
 		{
 			BlockPos connectedPos = tile.getConnectedPos();
 			BlockEntity connectedTile = world.getBlockEntity(connectedPos);
-			if (!(connectedTile instanceof TileAlchemyTable
-					&& ((TileAlchemyTable) connectedTile).getConnectedPos().equals(pos)))
+			if (!(connectedTile instanceof TileAlchemyTable && ((TileAlchemyTable) connectedTile).getConnectedPos().equals(pos)))
 			{
 				this.destroy(tile.getLevel(), pos, state);
-				this.removedByPlayer(state, tile.getLevel(), pos, null, true, this.getFluidState(state));
+//				this.removedByPlayer(state, tile.getLevel(), pos, null, true, this.getFluidState(state));
+				this.playerDestroy(tile.getLevel(), null, pos, state, tile, ItemStack.EMPTY);
 			}
 		}
 	}

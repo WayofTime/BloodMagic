@@ -13,14 +13,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
-import net.minecraft.world.level.storage.loot.RandomValueBounds;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import wayoftime.bloodmagic.core.living.ILivingContainer;
 import wayoftime.bloodmagic.core.living.LivingStats;
 import wayoftime.bloodmagic.util.Constants;
@@ -28,10 +28,10 @@ import wayoftime.bloodmagic.util.Constants;
 public class SetLivingUpgrade extends LootItemConditionalFunction
 {
 	private static final Logger LOGGER = LogManager.getLogger();
-	private final RandomValueBounds pointsRange;
+	private final UniformGenerator pointsRange;
 	private final List<ResourceLocation> livingUpgrades;
 
-	private SetLivingUpgrade(LootItemCondition[] conditionsIn, List<ResourceLocation> livingUpgrades, RandomValueBounds damageRangeIn)
+	private SetLivingUpgrade(LootItemCondition[] conditionsIn, List<ResourceLocation> livingUpgrades, UniformGenerator damageRangeIn)
 	{
 		super(conditionsIn);
 		this.pointsRange = damageRangeIn;
@@ -49,7 +49,7 @@ public class SetLivingUpgrade extends LootItemConditionalFunction
 		{
 			Collections.shuffle(livingUpgrades);
 			ResourceLocation upgrade = livingUpgrades.get(0);
-			float points = pointsRange.getFloat(context.getRandom());
+			float points = pointsRange.getFloat(context);
 			LivingStats stats = new LivingStats();
 			stats.addExperience(upgrade, points);
 			((ILivingContainer) stack.getItem()).updateLivingStats(stack, stats);
@@ -61,7 +61,7 @@ public class SetLivingUpgrade extends LootItemConditionalFunction
 		return stack;
 	}
 
-	public static LootItemConditionalFunction.Builder<?> withRange(RandomValueBounds p_215931_0_, ResourceLocation... livingUpgrades)
+	public static LootItemConditionalFunction.Builder<?> withRange(UniformGenerator p_215931_0_, ResourceLocation... livingUpgrades)
 	{
 		return simpleBuilder((p_215930_1_) -> {
 			List<ResourceLocation> list = new ArrayList<>();
@@ -106,7 +106,7 @@ public class SetLivingUpgrade extends LootItemConditionalFunction
 				}
 			}
 
-			return new SetLivingUpgrade(conditionsIn, inputList, GsonHelper.getAsObject(json, "points", deserializationContext, RandomValueBounds.class));
+			return new SetLivingUpgrade(conditionsIn, inputList, GsonHelper.getAsObject(json, "points", deserializationContext, UniformGenerator.class));
 		}
 	}
 }

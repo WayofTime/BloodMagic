@@ -1,23 +1,24 @@
 package wayoftime.bloodmagic.common.block;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.BlockHitResult;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.ItemActivationCrystal;
@@ -25,16 +26,15 @@ import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.tile.TileMasterRitualStone;
 import wayoftime.bloodmagic.util.helper.RitualHelper;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
-public class BlockMasterRitualStone extends Block
+public class BlockMasterRitualStone extends Block implements EntityBlock
 {
 	public final boolean isInverted;
 
 	public BlockMasterRitualStone(boolean isInverted)
 	{
-		super(Properties.of(Material.STONE).sound(SoundType.STONE).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(2));
+		super(Properties.of(Material.STONE).sound(SoundType.STONE).strength(2.0F, 5.0F));
 		this.isInverted = isInverted;
+//	.harvestTool(ToolType.PICKAXE).harvestLevel(2)
 	}
 
 	@Override
@@ -119,14 +119,19 @@ public class BlockMasterRitualStone extends Block
 	}
 
 	@Override
-	public boolean hasTileEntity(BlockState state)
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
-		return true;
+		return new TileMasterRitualStone(pos, state);
 	}
 
 	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world)
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type)
 	{
-		return new TileMasterRitualStone();
+		return (level1, blockPos, blockState, tile) -> {
+			if (tile instanceof TileMasterRitualStone)
+			{
+				((TileMasterRitualStone) tile).tick();
+			}
+		};
 	}
 }

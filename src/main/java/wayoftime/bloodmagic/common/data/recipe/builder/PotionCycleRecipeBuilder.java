@@ -9,13 +9,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.Ingredient;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionFill;
 import wayoftime.bloodmagic.util.Constants;
-
-import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder.RecipeResult;
 
 public class PotionCycleRecipeBuilder extends BloodMagicRecipeBuilder<PotionCycleRecipeBuilder>
 {

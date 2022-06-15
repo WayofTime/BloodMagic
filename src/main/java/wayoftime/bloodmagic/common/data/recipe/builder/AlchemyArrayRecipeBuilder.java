@@ -4,14 +4,12 @@ import javax.annotation.Nonnull;
 
 import com.google.gson.JsonObject;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder;
 import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
 import wayoftime.bloodmagic.util.Constants;
-
-import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder.RecipeResult;
 
 public class AlchemyArrayRecipeBuilder extends BloodMagicRecipeBuilder<AlchemyArrayRecipeBuilder>
 {

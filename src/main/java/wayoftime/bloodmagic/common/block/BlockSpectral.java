@@ -2,24 +2,23 @@ package wayoftime.bloodmagic.common.block;
 
 import java.util.Random;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.server.level.ServerLevel;
 import wayoftime.bloodmagic.common.block.type.SpectralBlockType;
 import wayoftime.bloodmagic.tile.TileSpectral;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
-public class BlockSpectral extends Block
+public class BlockSpectral extends Block implements EntityBlock
 {
 	public static final EnumProperty<SpectralBlockType> SPECTRAL_STATE = EnumProperty.create("spectral", SpectralBlockType.class);
 	public static final int DECAY_RATE = 100;
@@ -37,7 +36,7 @@ public class BlockSpectral extends Block
 		{
 		case SOLID:
 			world.setBlock(pos, state.setValue(SPECTRAL_STATE, SpectralBlockType.LEAKING), 3);
-			world.getBlockTicks().scheduleTick(pos, this, BlockSpectral.DECAY_RATE);
+			world.scheduleTick(pos, this, BlockSpectral.DECAY_RATE);
 			break;
 		case LEAKING:
 			BlockEntity tile = world.getBlockEntity(pos);
@@ -67,17 +66,13 @@ public class BlockSpectral extends Block
 		return false;
 	}
 
+	
 	@Override
-	public boolean hasTileEntity(BlockState state)
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
-		return true;
+		return new TileSpectral(pos, state);
 	}
 
-	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world)
-	{
-		return new TileSpectral();
-	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context)

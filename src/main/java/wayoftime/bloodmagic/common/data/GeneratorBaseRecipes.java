@@ -2,16 +2,15 @@ package wayoftime.bloodmagic.common.data;
 
 import java.util.function.Consumer;
 
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
@@ -28,9 +27,8 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 	}
 
 	@Override
-	protected void buildShapelessRecipes(Consumer<FinishedRecipe> consumer)
+	protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer)
 	{
-		RecipeSerializer d;
 		addVanillaRecipes(consumer);
 		addVanillaSmithingRecipes(consumer);
 		addBloodOrbRecipes(consumer);

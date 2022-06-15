@@ -4,38 +4,40 @@ import java.util.EnumMap;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ToolType;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.item.ItemDemonCrystal;
 import wayoftime.bloodmagic.tile.TileDemonCrystal;
 import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
 
-public class BlockDemonCrystal extends Block
+public class BlockDemonCrystal extends Block implements EntityBlock
 {
 	public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 6);
 //	public static final EnumProperty<EnumDemonWillType> TYPE = EnumProperty.create("type", EnumDemonWillType.class);
@@ -45,35 +47,30 @@ public class BlockDemonCrystal extends Block
 	public final EnumDemonWillType type;
 
 	// Bounding / Collision boxes
-	private static final VoxelShape[] UP = { Block.box(6, 0, 5, 10, 13, 9),
-			Block.box(7, 0, 0, 13, 6, 5), Block.box(9, 0, 9, 13, 5, 14),
-			Block.box(2, 0, 1, 7, 6, 7), Block.box(5, 0, 9, 9, 7, 15),
+	private static final VoxelShape[] UP = { Block.box(6, 0, 5, 10, 13, 9), Block.box(7, 0, 0, 13, 6, 5),
+			Block.box(9, 0, 9, 13, 5, 14), Block.box(2, 0, 1, 7, 6, 7), Block.box(5, 0, 9, 9, 7, 15),
 			Block.box(0, 0, 7, 6, 6, 10), Block.box(10, 0, 6, 15, 6, 9) };
-	private static final VoxelShape[] DOWN = { Block.box(6, 3, 7, 10, 16, 11),
-			Block.box(7, 10, 11, 13, 16, 16), Block.box(9, 11, 2, 13, 16, 7),
-			Block.box(2, 9, 11, 7, 16, 15), Block.box(5, 9, 1, 9, 16, 7),
+	private static final VoxelShape[] DOWN = { Block.box(6, 3, 7, 10, 16, 11), Block.box(7, 10, 11, 13, 16, 16),
+			Block.box(9, 11, 2, 13, 16, 7), Block.box(2, 9, 11, 7, 16, 15), Block.box(5, 9, 1, 9, 16, 7),
 			Block.box(0, 10, 6, 6, 16, 9), Block.box(10, 11, 7, 15, 16, 10) };
-	private static final VoxelShape[] NORTH = { Block.box(6, 5, 3, 10, 9, 16),
-			Block.box(9, 0, 6, 13, 5, 16), Block.box(8, 9, 11, 13, 14, 16),
-			Block.box(2, 1, 9, 7, 7, 16), Block.box(5, 9, 9, 9, 15, 16),
+	private static final VoxelShape[] NORTH = { Block.box(6, 5, 3, 10, 9, 16), Block.box(9, 0, 6, 13, 5, 16),
+			Block.box(8, 9, 11, 13, 14, 16), Block.box(2, 1, 9, 7, 7, 16), Block.box(5, 9, 9, 9, 15, 16),
 			Block.box(0, 7, 10, 6, 10, 16), Block.box(10, 7, 10, 15, 9, 15), };
-	private static final VoxelShape[] SOUTH = { Block.box(6, 7, 0, 10, 11, 13),
-			Block.box(7, 11, 0, 13, 16, 6), Block.box(8, 2, 9, 13, 7, 14),
-			Block.box(2, 9, 1, 7, 14, 7), Block.box(5, 1, 9, 9, 7, 9),
+	private static final VoxelShape[] SOUTH = { Block.box(6, 7, 0, 10, 11, 13), Block.box(7, 11, 0, 13, 16, 6),
+			Block.box(8, 2, 9, 13, 7, 14), Block.box(2, 9, 1, 7, 14, 7), Block.box(5, 1, 9, 9, 7, 9),
 			Block.box(0, 6, 1, 6, 9, 7), Block.box(10, 8, 1, 15, 10, 6) };
-	private static final VoxelShape[] EAST = { Block.box(0, 6, 5, 13, 10, 9),
-			Block.box(0, 3, 0, 6, 9, 5), Block.box(0, 3, 9, 5, 8, 14),
-			Block.box(1, 9, 1, 7, 13, 7), Block.box(1, 0, 9, 7, 11, 15),
+	private static final VoxelShape[] EAST = { Block.box(0, 6, 5, 13, 10, 9), Block.box(0, 3, 0, 6, 9, 5),
+			Block.box(0, 3, 9, 5, 8, 14), Block.box(1, 9, 1, 7, 13, 7), Block.box(1, 0, 9, 7, 11, 15),
 			Block.box(0, 10, 7, 6, 16, 10), Block.box(0, 1, 6, 5, 6, 9) };
-	private static final VoxelShape[] WEST = { Block.box(3, 6, 5, 16, 10, 9),
-			Block.box(9, 7, 0, 16, 12, 5), Block.box(11, 4, 9, 16, 13, 14),
-			Block.box(9, 3, 1, 16, 8, 7), Block.box(9, 6, 9, 16, 8, 15),
+	private static final VoxelShape[] WEST = { Block.box(3, 6, 5, 16, 10, 9), Block.box(9, 7, 0, 16, 12, 5),
+			Block.box(11, 4, 9, 16, 13, 14), Block.box(9, 3, 1, 16, 8, 7), Block.box(9, 6, 9, 16, 8, 15),
 			Block.box(10, 1, 7, 16, 6, 10), Block.box(10, 6, 6, 15, 15, 9) };
 
 	public BlockDemonCrystal(EnumDemonWillType type)
 	{
-		super(BlockBehaviour.Properties.of(Material.METAL).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(2));
+		super(BlockBehaviour.Properties.of(Material.METAL).strength(2.0F, 5.0F));
 		this.type = type;
+//.harvestTool(ToolType.PICKAXE).harvestLevel(2)
 
 		this.registerDefaultState(this.stateDefinition.any().setValue(ATTACHED, Direction.UP).setValue(AGE, Integer.valueOf(0)));
 //		this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, EnumDemonWillType.DEFAULT).withProperty(ATTACHED, Direction.UP));
@@ -238,15 +235,19 @@ public class BlockDemonCrystal extends Block
 //	}
 
 	@Override
-	public boolean hasTileEntity(BlockState state)
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
-		return true;
+		return new TileDemonCrystal(type, pos, state);
 	}
 
-	@Nullable
 	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world)
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type)
 	{
-		return new TileDemonCrystal(type);
+		return (level1, blockPos, blockState, tile) -> {
+			if (tile instanceof TileDemonCrystal)
+			{
+				((TileDemonCrystal) tile).tick();
+			}
+		};
 	}
 }

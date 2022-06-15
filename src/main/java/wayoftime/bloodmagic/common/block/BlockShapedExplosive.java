@@ -2,28 +2,29 @@ package wayoftime.bloodmagic.common.block;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import wayoftime.bloodmagic.tile.TileExplosiveCharge;
 import wayoftime.bloodmagic.tile.TileShapedExplosive;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
-public class BlockShapedExplosive extends Block
+public class BlockShapedExplosive extends Block implements EntityBlock
 {
 	private static final VoxelShape UP = Block.box(2, 0, 2, 14, 7, 14);
 	private static final VoxelShape DOWN = Block.box(2, 9, 2, 14, 16, 14);
@@ -41,6 +42,23 @@ public class BlockShapedExplosive extends Block
 		this.explosionSize = explosionSize;
 
 		this.registerDefaultState(this.stateDefinition.any().setValue(ATTACHED, Direction.UP));
+	}
+
+	@Override
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
+	{
+		return new TileShapedExplosive(pos, state);
+	}
+
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type)
+	{
+		return (level1, blockPos, blockState, tile) -> {
+			if (tile instanceof TileShapedExplosive)
+			{
+				((TileShapedExplosive) tile).tick();
+			}
+		};
 	}
 
 	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos)
@@ -96,18 +114,6 @@ public class BlockShapedExplosive extends Block
 		default:
 			return UP;
 		}
-	}
-
-	@Override
-	public boolean hasTileEntity(BlockState state)
-	{
-		return true;
-	}
-
-	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world)
-	{
-		return new TileShapedExplosive();
 	}
 
 	@Override

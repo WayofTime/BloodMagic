@@ -20,6 +20,8 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -27,7 +29,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.network.NetworkHooks;
 import wayoftime.bloodmagic.tile.TileAlchemicalReactionChamber;
 
@@ -38,14 +39,26 @@ public class BlockAlchemicalReactionChamber extends Block implements EntityBlock
 
 	public BlockAlchemicalReactionChamber()
 	{
-		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(2).sound(SoundType.STONE));
+		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE));
 		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, Boolean.valueOf(false)));
+//		.harvestTool(ToolType.PICKAXE).harvestLevel(2)
 	}
 
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
-		return new TileAlchemicalReactionChamber();
+		return new TileAlchemicalReactionChamber(pos, state);
+	}
+
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type)
+	{
+		return (level1, blockPos, blockState, tile) -> {
+			if (tile instanceof TileAlchemicalReactionChamber)
+			{
+				((TileAlchemicalReactionChamber) tile).tick();
+			}
+		};
 	}
 
 	@Override

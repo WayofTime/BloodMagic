@@ -7,22 +7,22 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
-import net.minecraft.world.level.storage.loot.RandomValueBounds;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.api.compat.IDemonWillGem;
 
 public class SetWillFraction extends LootItemConditionalFunction
 {
 	private static final Logger LOGGER = LogManager.getLogger();
-	private final RandomValueBounds damageRange;
+	private final UniformGenerator damageRange;
 
-	private SetWillFraction(LootItemCondition[] conditionsIn, RandomValueBounds damageRangeIn)
+	private SetWillFraction(LootItemCondition[] conditionsIn, UniformGenerator damageRangeIn)
 	{
 		super(conditionsIn);
 		this.damageRange = damageRangeIn;
@@ -38,7 +38,7 @@ public class SetWillFraction extends LootItemConditionalFunction
 		if (stack.getItem() instanceof IDemonWillGem)
 		{
 			int maxWill = ((IDemonWillGem) stack.getItem()).getMaxWill(EnumDemonWillType.DEFAULT, stack);
-			float f = 1.0F - this.damageRange.getFloat(context.getRandom());
+			float f = 1.0F - this.damageRange.getFloat();
 			((IDemonWillGem) stack.getItem()).setWill(EnumDemonWillType.DEFAULT, stack, maxWill * f);
 		} else
 		{
@@ -48,7 +48,7 @@ public class SetWillFraction extends LootItemConditionalFunction
 		return stack;
 	}
 
-	public static LootItemConditionalFunction.Builder<?> withRange(RandomValueBounds p_215931_0_)
+	public static LootItemConditionalFunction.Builder<?> withRange(UniformGenerator p_215931_0_)
 	{
 		return simpleBuilder((p_215930_1_) -> {
 			return new SetWillFraction(p_215930_1_, p_215931_0_);
@@ -65,7 +65,7 @@ public class SetWillFraction extends LootItemConditionalFunction
 
 		public SetWillFraction deserialize(JsonObject object, JsonDeserializationContext deserializationContext, LootItemCondition[] conditionsIn)
 		{
-			return new SetWillFraction(conditionsIn, GsonHelper.getAsObject(object, "damage", deserializationContext, RandomValueBounds.class));
+			return new SetWillFraction(conditionsIn, GsonHelper.getAsObject(object, "damage", deserializationContext, UniformGenerator.class));
 		}
 	}
 }

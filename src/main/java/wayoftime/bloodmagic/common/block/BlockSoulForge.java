@@ -1,35 +1,36 @@
 package wayoftime.bloodmagic.common.block;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 import wayoftime.bloodmagic.tile.TileSoulForge;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
-public class BlockSoulForge extends Block// implements IBMBlock
+public class BlockSoulForge extends Block implements EntityBlock// implements IBMBlock
 {
 	protected static final VoxelShape BODY = Block.box(1, 0, 1, 15, 12, 15);
 
 	public BlockSoulForge()
 	{
-		super(Properties.of(Material.METAL).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1));
+		super(Properties.of(Material.METAL).strength(2.0F, 5.0F));
+//	.harvestTool(ToolType.PICKAXE).harvestLevel(1)
 	}
 
 	@Override
@@ -39,15 +40,20 @@ public class BlockSoulForge extends Block// implements IBMBlock
 	}
 
 	@Override
-	public boolean hasTileEntity(BlockState state)
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
-		return true;
+		return new TileSoulForge(pos, state);
 	}
 
 	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world)
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type)
 	{
-		return new TileSoulForge();
+		return (level1, blockPos, blockState, tile) -> {
+			if (tile instanceof TileSoulForge)
+			{
+				((TileSoulForge) tile).tick();
+			}
+		};
 	}
 
 	@Override

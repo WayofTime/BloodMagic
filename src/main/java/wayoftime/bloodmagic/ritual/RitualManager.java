@@ -45,7 +45,9 @@ public class RitualManager
 				{
 					try
 					{
-						Class<?> clazz = Class.forName(a.getClassType().getClassName());
+
+//						Class<?> clazz = Class.forName(a.getClassType().getClassName());
+						Class<?> clazz = Class.forName(a.annotationType().getClassName());
 						RitualRegister ritualRegister = clazz.getAnnotation(RitualRegister.class);
 						String id = ritualRegister.value();
 						if (Ritual.class.isAssignableFrom(clazz))
@@ -73,7 +75,8 @@ public class RitualManager
 					try
 					{
 
-						Class<?> clazz = Class.forName(a.getClassType().getClassName());
+//						Class<?> clazz = Class.forName(a.getClassType().getClassName());
+						Class<?> clazz = Class.forName(a.annotationType().getClassName());
 						RitualRegister.Imperfect ritualRegister = clazz.getAnnotation(RitualRegister.Imperfect.class);
 						String id = ritualRegister.value();
 						if (ImperfectRitual.class.isAssignableFrom(clazz))

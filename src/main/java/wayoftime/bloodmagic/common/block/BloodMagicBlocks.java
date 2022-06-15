@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Material;
+import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.DeferredRegister;
@@ -144,15 +145,15 @@ public class BloodMagicBlocks
 	public static RegistryObject<Item> LIFE_ESSENCE_BUCKET = ITEMS.register("life_essence_bucket", () -> new BucketItem(LIFE_ESSENCE_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(BloodMagic.TAB)));
 	public static RegistryObject<Item> DOUBT_BUCKET = ITEMS.register("doubt_bucket", () -> new BucketItem(DOUBT_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(BloodMagic.TAB)));
 
-	public static final RegistryObject<MenuType<ContainerSoulForge>> SOUL_FORGE_CONTAINER = CONTAINERS.register("soul_forge_container", () -> IForgeContainerType.create(ContainerSoulForge::new));
-	public static final RegistryObject<MenuType<ContainerAlchemicalReactionChamber>> ARC_CONTAINER = CONTAINERS.register("arc_container", () -> IForgeContainerType.create(ContainerAlchemicalReactionChamber::new));
-	public static final RegistryObject<MenuType<ContainerAlchemyTable>> ALCHEMY_TABLE_CONTAINER = CONTAINERS.register("alchemy_table_container", () -> IForgeContainerType.create(ContainerAlchemyTable::new));
-	public static final RegistryObject<MenuType<ContainerHolding>> HOLDING_CONTAINER = CONTAINERS.register("holding_container", () -> IForgeContainerType.create(ContainerHolding::new));
-	public static final RegistryObject<MenuType<ContainerTeleposer>> TELEPOSER_CONTAINER = CONTAINERS.register("teleposer_container", () -> IForgeContainerType.create(ContainerTeleposer::new));
-	public static final RegistryObject<MenuType<ContainerFilter>> FILTER_CONTAINER = CONTAINERS.register("filter_container", () -> IForgeContainerType.create(ContainerFilter::new));
-	public static final RegistryObject<MenuType<ContainerItemRoutingNode>> ROUTING_NODE_CONTAINER = CONTAINERS.register("routing_node_container", () -> IForgeContainerType.create(ContainerItemRoutingNode::new));
-	public static final RegistryObject<MenuType<ContainerTrainingBracelet>> TRAINING_BRACELET_CONTAINER = CONTAINERS.register("training_bracelet_container", () -> IForgeContainerType.create(ContainerTrainingBracelet::new));
-	public static final RegistryObject<MenuType<ContainerMasterRoutingNode>> MASTER_ROUTING_NODE_CONTAINER = CONTAINERS.register("master_routing_node_container", () -> IForgeContainerType.create(ContainerMasterRoutingNode::new));
+	public static final RegistryObject<MenuType<ContainerSoulForge>> SOUL_FORGE_CONTAINER = CONTAINERS.register("soul_forge_container", () -> IForgeMenuType.create(ContainerSoulForge::new));
+	public static final RegistryObject<MenuType<ContainerAlchemicalReactionChamber>> ARC_CONTAINER = CONTAINERS.register("arc_container", () -> IForgeMenuType.create(ContainerAlchemicalReactionChamber::new));
+	public static final RegistryObject<MenuType<ContainerAlchemyTable>> ALCHEMY_TABLE_CONTAINER = CONTAINERS.register("alchemy_table_container", () -> IForgeMenuType.create(ContainerAlchemyTable::new));
+	public static final RegistryObject<MenuType<ContainerHolding>> HOLDING_CONTAINER = CONTAINERS.register("holding_container", () -> IForgeMenuType.create(ContainerHolding::new));
+	public static final RegistryObject<MenuType<ContainerTeleposer>> TELEPOSER_CONTAINER = CONTAINERS.register("teleposer_container", () -> IForgeMenuType.create(ContainerTeleposer::new));
+	public static final RegistryObject<MenuType<ContainerFilter>> FILTER_CONTAINER = CONTAINERS.register("filter_container", () -> IForgeMenuType.create(ContainerFilter::new));
+	public static final RegistryObject<MenuType<ContainerItemRoutingNode>> ROUTING_NODE_CONTAINER = CONTAINERS.register("routing_node_container", () -> IForgeMenuType.create(ContainerItemRoutingNode::new));
+	public static final RegistryObject<MenuType<ContainerTrainingBracelet>> TRAINING_BRACELET_CONTAINER = CONTAINERS.register("training_bracelet_container", () -> IForgeMenuType.create(ContainerTrainingBracelet::new));
+	public static final RegistryObject<MenuType<ContainerMasterRoutingNode>> MASTER_ROUTING_NODE_CONTAINER = CONTAINERS.register("master_routing_node_container", () -> IForgeMenuType.create(ContainerMasterRoutingNode::new));
 
 	// Dungeon Blocks
 	public static final RegistryObject<Block> DUNGEON_BRICK_1 = DUNGEONBLOCKS.register("dungeon_brick1", () -> new Block(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));

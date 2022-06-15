@@ -10,17 +10,15 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder;
 import wayoftime.bloodmagic.recipe.RecipeARC;
 import wayoftime.bloodmagic.recipe.helper.FluidStackIngredient;
 import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
 import wayoftime.bloodmagic.util.Constants;
-
-import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder.RecipeResult;
 
 public class ARCRecipeBuilder extends BloodMagicRecipeBuilder<ARCRecipeBuilder>
 {

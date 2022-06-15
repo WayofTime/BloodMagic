@@ -2,16 +2,18 @@ package wayoftime.bloodmagic.common.block;
 
 import java.util.List;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import wayoftime.bloodmagic.common.routing.IRoutingNode;
 import wayoftime.bloodmagic.tile.routing.TileRoutingNode;
 
-public class BlockItemRoutingNode extends BlockRoutingNode
+public class BlockItemRoutingNode extends BlockRoutingNode implements EntityBlock
 {
 	@Override
 	public void destroy(LevelAccessor world, BlockPos blockPos, BlockState blockState)
@@ -62,14 +64,19 @@ public class BlockItemRoutingNode extends BlockRoutingNode
 	}
 
 	@Override
-	public boolean hasTileEntity(BlockState state)
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
-		return true;
+		return new TileRoutingNode(pos, state);
 	}
 
 	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world)
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type)
 	{
-		return new TileRoutingNode();
+		return (level1, blockPos, blockState, tile) -> {
+			if (tile instanceof TileRoutingNode)
+			{
+				((TileRoutingNode) tile).tick();
+			}
+		};
 	}
 }

@@ -1,11 +1,9 @@
 package wayoftime.bloodmagic.common.block;
 
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.state.BlockState;
 import wayoftime.bloodmagic.tile.TileDeforesterCharge;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockDeforesterCharge extends BlockShapedExplosive
 {
@@ -15,8 +13,8 @@ public class BlockDeforesterCharge extends BlockShapedExplosive
 	}
 
 	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world)
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
-		return new TileDeforesterCharge();
+		return new TileDeforesterCharge(pos, state);
 	}
 }

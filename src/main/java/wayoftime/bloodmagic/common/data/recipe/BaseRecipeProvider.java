@@ -25,8 +25,9 @@ public abstract class BaseRecipeProvider extends RecipeProvider
 		return super.getName() + modid;
 	}
 
+//	protected void buildShapelessRecipes(Consumer<FinishedRecipe> consumer)
 	@Override
-	protected void buildShapelessRecipes(Consumer<FinishedRecipe> consumer)
+	protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer)
 	{
 		getSubRecipeProviders().forEach(subRecipeProvider -> subRecipeProvider.addRecipes(consumer));
 	}

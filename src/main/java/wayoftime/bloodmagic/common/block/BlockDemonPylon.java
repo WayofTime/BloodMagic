@@ -1,26 +1,28 @@
 package wayoftime.bloodmagic.common.block;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraftforge.common.ToolType;
 import wayoftime.bloodmagic.tile.TileDemonPylon;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
-public class BlockDemonPylon extends Block
+public class BlockDemonPylon extends Block implements EntityBlock
 {
 	protected static final VoxelShape BODY = Block.box(2, 2, 2, 14, 16, 14);
 
 	public BlockDemonPylon()
 	{
-		super(Properties.of(Material.METAL).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1));
+		super(Properties.of(Material.METAL).strength(2.0F, 5.0F));
+//		.harvestTool(ToolType.PICKAXE).harvestLevel(1)
 	}
 
 	@Override
@@ -30,15 +32,20 @@ public class BlockDemonPylon extends Block
 	}
 
 	@Override
-	public boolean hasTileEntity(BlockState state)
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
-		return true;
+		return new TileDemonPylon(pos, state);
 	}
 
 	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world)
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type)
 	{
-		return new TileDemonPylon();
+		return (level1, blockPos, blockState, tile) -> {
+			if (tile instanceof TileDemonPylon)
+			{
+				((TileDemonPylon) tile).tick();
+			}
+		};
 	}
 
 	@Override

@@ -4,23 +4,20 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.ritual.IRitualStone;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockRitualStone extends Block implements IRitualStone
 {
@@ -28,8 +25,9 @@ public class BlockRitualStone extends Block implements IRitualStone
 
 	public BlockRitualStone(EnumRuneType type)
 	{
-		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(2).requiresCorrectToolForDrops());
+		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops());
 		this.type = type;
+//	.harvestTool(ToolType.PICKAXE).harvestLevel(2)
 	}
 
 	@Override

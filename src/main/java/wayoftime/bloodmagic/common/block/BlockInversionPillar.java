@@ -1,22 +1,21 @@
 package wayoftime.bloodmagic.common.block;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.tile.TileInversionPillar;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
-public class BlockInversionPillar extends Block
+public class BlockInversionPillar extends Block implements EntityBlock
 {
 	protected static final VoxelShape BODY = Block.box(2, 1, 2, 14, 15, 14);
 
@@ -32,15 +31,9 @@ public class BlockInversionPillar extends Block
 	}
 
 	@Override
-	public boolean hasTileEntity(BlockState state)
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
-		return true;
-	}
-
-	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world)
-	{
-		return new TileInversionPillar();
+		return new TileInversionPillar(pos, state);
 	}
 
 	@Override

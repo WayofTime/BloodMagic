@@ -1,29 +1,30 @@
 package wayoftime.bloodmagic.common.block;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ToolType;
 import wayoftime.bloodmagic.tile.TileIncenseAltar;
 import wayoftime.bloodmagic.tile.TileSoulForge;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
-public class BlockIncenseAltar extends Block
+public class BlockIncenseAltar extends Block implements EntityBlock
 {
 	protected static final VoxelShape BODY = Block.box(5, 0, 5, 12, 16, 12);
 
 	public BlockIncenseAltar()
 	{
-		super(Properties.of(Material.METAL).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0));
+		super(Properties.of(Material.METAL).strength(2.0F, 5.0F));
+//		.harvestTool(ToolType.PICKAXE).harvestLevel(0)
 	}
 
 	@Override
@@ -59,15 +60,20 @@ public class BlockIncenseAltar extends Block
 	}
 
 	@Override
-	public boolean hasTileEntity(BlockState state)
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
-		return true;
+		return new TileIncenseAltar(pos, state);
 	}
 
 	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world)
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type)
 	{
-		return new TileIncenseAltar();
+		return (level1, blockPos, blockState, tile) -> {
+			if (tile instanceof TileIncenseAltar)
+			{
+				((TileIncenseAltar) tile).tick();
+			}
+		};
 	}
 
 	@Override
