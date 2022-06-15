@@ -2,14 +2,14 @@ package wayoftime.bloodmagic.tile.container;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.FriendlyByteBuf;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.IBloodOrb;
 import wayoftime.bloodmagic.tile.TileAlchemyTable;
@@ -62,14 +62,14 @@ public class ContainerAlchemyTable extends AbstractContainerMenu
 	}
 
 	@Override
-	public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, Player player)
+	public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player)
 	{
-		Inventory inventoryPlayer = player.inventory;
+		Inventory inventoryPlayer = player.getInventory();
 
 		if (slotId <= TileAlchemyTable.outputSlot && slotId >= 0)
 		{
 			Slot slot = this.getSlot(slotId);
-			if (!slot.hasItem() && inventoryPlayer.getCarried().isEmpty())
+			if (!slot.hasItem() && inventoryPlayer.getSelected().isEmpty())
 			{
 //				((TileAlchemyTable) tileTable).toggleInputSlotAccessible(slotId);
 				if (tileTable.activeSlot == slotId)
@@ -82,7 +82,7 @@ public class ContainerAlchemyTable extends AbstractContainerMenu
 			}
 		}
 
-		return super.clicked(slotId, dragType, clickTypeIn, player);
+		super.clicked(slotId, dragType, clickTypeIn, player);
 	}
 
 	@Override

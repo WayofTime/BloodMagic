@@ -5,10 +5,10 @@ import java.util.function.Supplier;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
+import net.minecraftforge.network.NetworkEvent.Context;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.util.handler.event.ClientHandler;
 import wayoftime.bloodmagic.will.DemonWillHolder;
-import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
 public class DemonAuraClientPacket
 {

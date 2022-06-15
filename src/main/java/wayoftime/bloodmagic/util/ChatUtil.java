@@ -3,16 +3,16 @@ package wayoftime.bloodmagic.util;
 import java.text.DecimalFormat;
 import java.util.function.Supplier;
 
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ChatComponent;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.network.NetworkEvent.Context;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.util.helper.TextHelper;
 

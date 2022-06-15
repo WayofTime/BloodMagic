@@ -8,7 +8,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.UsernameCache;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
+import net.minecraftforge.server.ServerLifecycleHooks;
 
 public class PlayerHelper
 {

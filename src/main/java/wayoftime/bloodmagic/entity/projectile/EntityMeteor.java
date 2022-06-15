@@ -1,16 +1,16 @@
 package wayoftime.bloodmagic.entity.projectile;
 
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.network.NetworkHooks;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.recipe.RecipeMeteor;

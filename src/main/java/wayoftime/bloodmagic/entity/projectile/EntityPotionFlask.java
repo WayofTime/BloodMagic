@@ -5,37 +5,37 @@ import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 
 @OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
 public class EntityPotionFlask extends ThrowableItemProjectile implements ItemSupplier
@@ -138,7 +138,7 @@ public class EntityPotionFlask extends ThrowableItemProjectile implements ItemSu
 
 			int i = potion.hasInstantEffects() ? 2007 : 2002;
 			this.level.levelEvent(i, this.blockPosition(), PotionUtils.getColor(itemstack));
-			this.remove();
+			this.remove(RemovalReason.KILLED);
 		}
 	}
 
@@ -244,7 +244,7 @@ public class EntityPotionFlask extends ThrowableItemProjectile implements ItemSu
 		} else if (CampfireBlock.isLitCampfire(blockstate))
 		{
 			this.level.levelEvent((Player) null, 1009, pos, 0);
-			CampfireBlock.dowse(this.level, pos, blockstate);
+			CampfireBlock.dowse(null, this.level, pos, blockstate);
 			this.level.setBlockAndUpdate(pos, blockstate.setValue(CampfireBlock.LIT, Boolean.valueOf(false)));
 		}
 

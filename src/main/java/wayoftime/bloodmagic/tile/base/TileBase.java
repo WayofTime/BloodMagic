@@ -1,11 +1,12 @@
 package wayoftime.bloodmagic.tile.base;
 
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -16,28 +17,28 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 public abstract class TileBase extends BlockEntity
 {
-	public TileBase(BlockEntityType<?> type)
+	public TileBase(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
-		super(type);
+		super(type, pos, state);
 	}
 
 	/**
 	 * read method
 	 */
 	@Override
-	public final void load(BlockState state, CompoundTag compound)
+	public void load(CompoundTag compound)
 	{
-		super.load(state, compound);
+		super.load(compound);
 		deserializeBase(compound);
 		deserialize(compound);
 	}
 
 	@Override
-	public final CompoundTag save(CompoundTag compound)
+	public void saveAdditional(CompoundTag compound)
 	{
-		super.save(compound);
+		super.saveAdditional(compound);
 		serializeBase(compound);
-		return serialize(compound);
+		serialize(compound);
 	}
 
 	/**

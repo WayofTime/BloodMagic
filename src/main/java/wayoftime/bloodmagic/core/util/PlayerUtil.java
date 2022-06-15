@@ -4,10 +4,10 @@ import java.util.function.Predicate;
 
 import com.google.common.collect.Multimap;
 
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import wayoftime.bloodmagic.common.item.ExpandedArmor;
 import wayoftime.bloodmagic.core.living.LivingUtil;
@@ -24,9 +24,9 @@ public class PlayerUtil
 			return offHand;
 
 		// Check inventory next
-		for (int slot = 0; slot < player.inventory.getContainerSize(); slot++)
+		for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++)
 		{
-			ItemStack foundStack = player.inventory.getItem(slot);
+			ItemStack foundStack = player.getInventory().getItem(slot);
 			if (!foundStack.isEmpty() && requirements.test(foundStack))
 				return foundStack;
 		}

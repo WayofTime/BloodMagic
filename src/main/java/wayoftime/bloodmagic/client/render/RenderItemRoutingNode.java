@@ -4,34 +4,34 @@ import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
-import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
 import com.mojang.math.Matrix3f;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ConfigManager;
 import wayoftime.bloodmagic.common.routing.INodeRenderer;
 import wayoftime.bloodmagic.tile.routing.TileRoutingNode;
 
-public class RenderItemRoutingNode extends BlockEntityRenderer<TileRoutingNode>
+public class RenderItemRoutingNode implements BlockEntityRenderer<TileRoutingNode>
 {
 	private static final ResourceLocation beamTexture = new ResourceLocation(BloodMagic.MODID, "textures/entities/nodebeam.png");
 	private static final Minecraft mc = Minecraft.getInstance();
 
 	public RenderItemRoutingNode(BlockEntityRenderDispatcher rendererDispatcherIn)
 	{
-		super(rendererDispatcherIn);
+//		super(rendererDispatcherIn);
 	}
 
 	public void render(TileRoutingNode tileNode, float partialTicks, PoseStack matrixStack, MultiBufferSource renderer, int combinedLightIn, int combinedOverlayIn)
