@@ -3,45 +3,42 @@ package wayoftime.bloodmagic.tile;
 import com.mojang.datafixers.util.Pair;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
 
 public class TileShapedExplosive extends TileExplosiveCharge
 {
-	@ObjectHolder("bloodmagic:shaped_explosive")
-	public static BlockEntityType<TileShapedExplosive> TYPE;
-
 	public double internalCounter = 0;
 	public int explosionRadius;
 	public int explosionDepth;
 
-	public TileShapedExplosive(BlockEntityType<?> type, int explosionRadius, int explosionDepth)
+	public TileShapedExplosive(BlockEntityType<?> type, int explosionRadius, int explosionDepth, BlockPos pos, BlockState state)
 	{
-		super(type);
+		super(type, pos, state);
 		this.explosionRadius = explosionRadius;
 		this.explosionDepth = explosionDepth;
 	}
 
-	public TileShapedExplosive()
+	public TileShapedExplosive(BlockPos pos, BlockState state)
 	{
-		this(TYPE, 2, 5);
+		this(BloodMagicTileEntities.SHAPED_EXPLOSIVE_TYPE.get(), 2, 5, pos, state);
 	}
 
 	@Override
@@ -122,13 +119,14 @@ public class TileShapedExplosive extends TileExplosiveCharge
 
 						BlockState blockstate = this.level.getBlockState(blockpos);
 						Block block = blockstate.getBlock();
-						if (!blockstate.isAir(this.level, blockpos) && blockstate.getDestroySpeed(level, blockpos) != -1.0F)
+						if (!blockstate.isAir() && blockstate.getDestroySpeed(level, blockpos) != -1.0F)
 						{
 							BlockPos blockpos1 = blockpos.immutable();
 //							this.world.getProfiler().startSection("explosion_blocks");
 							if (this.level instanceof ServerLevel)
 							{
-								BlockEntity tileentity = blockstate.hasTileEntity() ? this.level.getBlockEntity(blockpos)
+								BlockEntity tileentity = blockstate.getBlock() instanceof EntityBlock
+										? this.level.getBlockEntity(blockpos)
 										: null;
 								LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerLevel) this.level)).withRandom(this.level.random).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockpos)).withParameter(LootContextParams.TOOL, toolStack).withOptionalParameter(LootContextParams.BLOCK_ENTITY, tileentity);
 //			                  if (this.mode == Explosion.Mode.DESTROY) {

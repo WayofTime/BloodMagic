@@ -15,13 +15,13 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.Tag;
-import net.minecraft.tags.SerializationTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.util.Constants;
 
@@ -41,7 +41,7 @@ public abstract class FluidStackIngredient implements InputIngredient<FluidStack
 		return new Single(instance);
 	}
 
-	public static FluidStackIngredient from(@Nonnull Tag<Fluid> fluidTag, int minAmount)
+	public static FluidStackIngredient from(@Nonnull TagKey<Fluid> fluidTag, int minAmount)
 	{
 		return new Tagged(fluidTag, minAmount);
 	}
@@ -222,10 +222,10 @@ public abstract class FluidStackIngredient implements InputIngredient<FluidStack
 	{
 
 		@Nonnull
-		private final Tag<Fluid> tag;
+		private final TagKey<Fluid> tag;
 		private final int amount;
 
-		public Tagged(@Nonnull Tag<Fluid> tag, int amount)
+		public Tagged(@Nonnull TagKey<Fluid> tag, int amount)
 		{
 			this.tag = tag;
 			this.amount = amount;

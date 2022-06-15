@@ -3,39 +3,39 @@ package wayoftime.bloodmagic.tile;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.altar.AltarTier;
 import wayoftime.bloodmagic.altar.BloodAltar;
 import wayoftime.bloodmagic.altar.IBloodAltar;
 import wayoftime.bloodmagic.common.block.BlockAltar;
 
-public class TileAltar extends TileInventory implements IBloodAltar, TickableBlockEntity
+public class TileAltar extends TileInventory implements IBloodAltar
 {
-	@ObjectHolder("bloodmagic:altar")
-	public static BlockEntityType<TileAltar> TYPE;
 	private BloodAltar bloodAltar;
 
 	private LazyOptional fluidOptional;
 	private boolean isOutputOn;
 
-	public TileAltar(BlockEntityType<?> type)
+	public TileAltar(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
-		super(type, 1, "altar");
+		super(type, 1, "altar", pos, state);
 		this.bloodAltar = new BloodAltar(this);
 		this.isOutputOn = false;
 	}
 
-	public TileAltar()
+	public TileAltar(BlockPos pos, BlockState state)
 	{
-		this(TYPE);
+		this(BloodMagicTileEntities.ALTAR_TYPE.get(), pos, state);
 	}
 
 	public boolean getOutputState()
@@ -73,10 +73,16 @@ public class TileAltar extends TileInventory implements IBloodAltar, TickableBlo
 		return tagCompound;
 	}
 
-	@Override
-	public void tick()
+//	@Override
+//	public void tick()
+//	{
+//		bloodAltar.update();
+//	}
+
+	public static <T extends BlockEntity> void tick(Level level, BlockPos pos, BlockState state, T te)
 	{
-		bloodAltar.update();
+		TileAltar tile = (TileAltar) te;
+		tile.bloodAltar.update();
 	}
 
 	@Override
@@ -244,7 +250,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, TickableBlo
 	}
 
 	@Override
-	protected void invalidateCaps()
+	public void invalidateCaps()
 	{
 		super.invalidateCaps();
 		if (fluidOptional != null)

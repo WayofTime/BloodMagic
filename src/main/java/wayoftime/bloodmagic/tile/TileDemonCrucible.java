@@ -3,39 +3,36 @@ package wayoftime.bloodmagic.tile;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
-import net.minecraftforge.registries.ObjectHolder;
-import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
+import net.minecraft.world.level.block.state.BlockState;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.api.compat.IDemonWillConduit;
 import wayoftime.bloodmagic.api.compat.IDemonWillGem;
 import wayoftime.bloodmagic.api.compat.IDiscreteDemonWill;
+import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 
-public class TileDemonCrucible extends TileInventory implements TickableBlockEntity, IDemonWillConduit, WorldlyContainer
+public class TileDemonCrucible extends TileInventory implements IDemonWillConduit, WorldlyContainer
 {
-	@ObjectHolder("bloodmagic:demoncrucible")
-	public static BlockEntityType<TileDemonCrucible> TYPE;
 	public final int maxWill = 100;
 	public final double gemDrainRate = 10;
 	public HashMap<EnumDemonWillType, Double> willMap = new HashMap<>(); // TODO: Change to DemonWillHolder
 	public int internalCounter = 0;
 
-	public TileDemonCrucible(BlockEntityType<?> type)
+	public TileDemonCrucible(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
-		super(type, 1, "demoncrucible");
+		super(type, 1, "demoncrucible", pos, state);
 	}
 
-	public TileDemonCrucible()
+	public TileDemonCrucible(BlockPos pos, BlockState state)
 	{
-		this(TYPE);
+		this(BloodMagicTileEntities.DEMON_CRUCIBLE_TYPE.get(), pos, state);
 	}
 
-	@Override
 	public void tick()
 	{
 		if (getLevel().isClientSide)
@@ -252,15 +249,13 @@ public class TileDemonCrucible extends TileInventory implements TickableBlockEnt
 	@Override
 	public int[] getSlotsForFace(Direction side)
 	{
-		return new int[]
-		{ 0 };
+		return new int[] { 0 };
 	}
 
 	@Override
 	public boolean canPlaceItemThroughFace(int index, ItemStack stack, Direction direction)
 	{
-		return !stack.isEmpty() && inventory.get(0).isEmpty()
-				&& (stack.getItem() instanceof IDemonWillGem || stack.getItem() instanceof IDiscreteDemonWill);
+		return !stack.isEmpty() && inventory.get(0).isEmpty() && (stack.getItem() instanceof IDemonWillGem || stack.getItem() instanceof IDiscreteDemonWill);
 	}
 
 	@Override

@@ -5,27 +5,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.registries.ObjectHolder;
-import wayoftime.bloodmagic.incense.EnumTranquilityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import wayoftime.bloodmagic.api.compat.IIncensePath;
+import wayoftime.bloodmagic.incense.EnumTranquilityType;
 import wayoftime.bloodmagic.incense.IncenseAltarHandler;
 import wayoftime.bloodmagic.incense.IncenseTranquilityRegistry;
 import wayoftime.bloodmagic.incense.TranquilityStack;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.util.helper.PlayerSacrificeHelper;
 
-public class TileIncenseAltar extends TileInventory implements TickableBlockEntity
+public class TileIncenseAltar extends TileInventory
 {
 	public static int maxCheckRange = 5;
 	public AreaDescriptor incenseArea = new AreaDescriptor.Rectangle(new BlockPos(-5, -5, -5), 11);
@@ -35,20 +33,16 @@ public class TileIncenseAltar extends TileInventory implements TickableBlockEnti
 	public double tranquility = 0;
 	public int roadDistance = 0; // Number of road blocks laid down
 
-	@ObjectHolder("bloodmagic:incensealtar")
-	public static BlockEntityType<TileIncenseAltar> TYPE;
-
-	public TileIncenseAltar(BlockEntityType<?> type)
+	public TileIncenseAltar(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
-		super(type, 1, "incensealtar");
+		super(type, 1, "incensealtar", pos, state);
 	}
 
-	public TileIncenseAltar()
+	public TileIncenseAltar(BlockPos pos, BlockState state)
 	{
-		this(TYPE);
+		this(BloodMagicTileEntities.INCENSE_ALTAR_TYPE.get(), pos, state);
 	}
 
-	@Override
 	public void tick()
 	{
 		AABB aabb = incenseArea.getAABB(getBlockPos());

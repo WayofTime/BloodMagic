@@ -1,23 +1,19 @@
 package wayoftime.bloodmagic.tile;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraft.world.level.block.state.BlockState;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffect;
 import wayoftime.bloodmagic.core.registry.AlchemyArrayRegistry;
 import wayoftime.bloodmagic.util.Constants;
 
-public class TileAlchemyArray extends TileInventory implements TickableBlockEntity
+public class TileAlchemyArray extends TileInventory
 {
-	@ObjectHolder("bloodmagic:alchemyarray")
-	public static BlockEntityType<TileAlchemyArray> TYPE;
-
 	public boolean isActive = false;
 	public int activeCounter = 0;
 	public Direction rotation = Direction.from2DDataValue(0);
@@ -27,15 +23,14 @@ public class TileAlchemyArray extends TileInventory implements TickableBlockEnti
 	public AlchemyArrayEffect arrayEffect;
 	private boolean doDropIngredients = true;
 
-	public TileAlchemyArray(BlockEntityType<?> type)
+	public TileAlchemyArray(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
-		super(type, 2, "alchemyarray");
-//		this.bloodAltar = new BloodAltar(this);
+		super(type, 2, "alchemyarray", pos, state);
 	}
 
-	public TileAlchemyArray()
+	public TileAlchemyArray(BlockPos pos, BlockState state)
 	{
-		this(TYPE);
+		this(BloodMagicTileEntities.ALCHEMY_ARRAY_TYPE.get(), pos, state);
 	}
 
 	public void onEntityCollidedWithBlock(BlockState state, Entity entity)
@@ -95,7 +90,6 @@ public class TileAlchemyArray extends TileInventory implements TickableBlockEnti
 		return tagCompound;
 	}
 
-	@Override
 	public void tick()
 	{
 //		System.out.println("Active counter: " + this.activeCounter);

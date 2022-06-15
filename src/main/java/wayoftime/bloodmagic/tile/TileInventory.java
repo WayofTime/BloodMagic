@@ -3,16 +3,18 @@ package wayoftime.bloodmagic.tile;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.Container;
-import net.minecraft.world.WorldlyContainer;
-import net.minecraft.world.Containers;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.Containers;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -36,9 +38,9 @@ public class TileInventory extends TileBase implements Container
 	// IInventory
 	private String name;
 
-	public TileInventory(BlockEntityType<?> type, int size, String name)
+	public TileInventory(BlockEntityType<?> type, int size, String name, BlockPos pos, BlockState state)
 	{
-		super(type);
+		super(type, pos, state);
 		this.inventory = NonNullList.withSize(size, ItemStack.EMPTY);
 		this.size = size;
 		this.name = name;
@@ -310,7 +312,7 @@ public class TileInventory extends TileBase implements Container
 	}
 
 	@Override
-	protected void invalidateCaps()
+	public void invalidateCaps()
 	{
 		super.invalidateCaps();
 		if (handlerDown != null)

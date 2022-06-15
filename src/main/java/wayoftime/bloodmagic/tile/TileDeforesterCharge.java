@@ -8,32 +8,29 @@ import java.util.Map;
 import com.mojang.datafixers.util.Pair;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
 
 public class TileDeforesterCharge extends TileExplosiveCharge
 {
-	@ObjectHolder("bloodmagic:deforester_charge")
-	public static BlockEntityType<TileDeforesterCharge> TYPE;
-
 	private Map<BlockPos, Boolean> treePartsMap;
 	private List<BlockPos> treePartsCache;
 	private boolean finishedAnalysis;
@@ -47,16 +44,16 @@ public class TileDeforesterCharge extends TileExplosiveCharge
 
 	public int maxLogs = 128;
 
-	public TileDeforesterCharge(BlockEntityType<?> type, int maxLogs)
+	public TileDeforesterCharge(BlockEntityType<?> type, int maxLogs, BlockPos pos, BlockState state)
 	{
-		super(type);
+		super(type, pos, state);
 
 		this.maxLogs = maxLogs;
 	}
 
-	public TileDeforesterCharge()
+	public TileDeforesterCharge(BlockPos pos, BlockState state)
 	{
-		this(TYPE, 128);
+		this(BloodMagicTileEntities.DEFORESTER_CHARGE_TYPE.get(), 128, pos, state);
 	}
 
 	@Override
@@ -70,7 +67,7 @@ public class TileDeforesterCharge extends TileExplosiveCharge
 
 		Direction explosiveDirection = this.getBlockState().getValue(BlockShapedExplosive.ATTACHED).getOpposite();
 		BlockState attachedState = level.getBlockState(worldPosition.relative(explosiveDirection));
-		if (!BlockTags.LOGS.contains(attachedState.getBlock()) && !BlockTags.LEAVES.contains(attachedState.getBlock()))
+		if (!attachedState.is(BlockTags.LOGS) && !attachedState.is(BlockTags.LEAVES))
 		{
 			return;
 		}
@@ -107,12 +104,12 @@ public class TileDeforesterCharge extends TileExplosiveCharge
 					{
 						continue;
 					}
-					if (BlockTags.LOGS.contains(checkState.getBlock()))
+					if (checkState.is(BlockTags.LOGS))
 					{
 						currentLogs++;
 						isTree = true;
 
-					} else if (BlockTags.LEAVES.contains(checkState.getBlock()))
+					} else if (checkState.is(BlockTags.LEAVES))
 					{
 						isTree = true;
 					}
@@ -183,13 +180,15 @@ public class TileDeforesterCharge extends TileExplosiveCharge
 
 				BlockState blockstate = this.level.getBlockState(blockPos);
 				Block block = blockstate.getBlock();
-				if (!blockstate.isAir(this.level, blockPos))
+				if (!blockstate.isAir())
 				{
 					BlockPos blockpos1 = blockPos.immutable();
 //				this.world.getProfiler().startSection("explosion_blocks");
 					if (this.level instanceof ServerLevel)
 					{
-						BlockEntity tileentity = blockstate.hasTileEntity() ? this.level.getBlockEntity(blockPos) : null;
+						BlockEntity tileentity = blockstate.getBlock() instanceof EntityBlock
+								? this.level.getBlockEntity(blockPos)
+								: null;
 						LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerLevel) this.level)).withRandom(this.level.random).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockPos)).withParameter(LootContextParams.TOOL, toolStack).withOptionalParameter(LootContextParams.BLOCK_ENTITY, tileentity);
 //                  if (this.mode == Explosion.Mode.DESTROY) {
 //                     lootcontext$builder.withParameter(LootParameters.EXPLOSION_RADIUS, this.size);

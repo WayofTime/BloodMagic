@@ -1,24 +1,21 @@
 package wayoftime.bloodmagic.tile;
 
-import net.minecraft.world.level.block.Block;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraft.world.level.block.state.BlockState;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
+import wayoftime.bloodmagic.api.compat.IDemonWillConduit;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.tile.base.TileTicking;
 import wayoftime.bloodmagic.will.DemonWillHolder;
-import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
-import wayoftime.bloodmagic.api.compat.IDemonWillConduit;
 
 public class TileDemonCrystallizer extends TileTicking implements IDemonWillConduit
 {
-	@ObjectHolder("bloodmagic:demoncrystallizer")
-	public static BlockEntityType<TileDemonCrystallizer> TYPE;
-
 	public static final int maxWill = 100;
 	public static final double drainRate = 1;
 	public static final double willToFormCrystal = 99;
@@ -28,14 +25,14 @@ public class TileDemonCrystallizer extends TileTicking implements IDemonWillCond
 	public DemonWillHolder holder = new DemonWillHolder();
 	public double internalCounter = 0;
 
-	public TileDemonCrystallizer(BlockEntityType<?> type)
+	public TileDemonCrystallizer(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
-		super(type);
+		super(type, pos, state);
 	}
 
-	public TileDemonCrystallizer()
+	public TileDemonCrystallizer(BlockPos pos, BlockState state)
 	{
-		this(TYPE);
+		this(BloodMagicTileEntities.DEMON_CRYSTALLIZER_TYPE.get(), pos, state);
 	}
 
 	@Override

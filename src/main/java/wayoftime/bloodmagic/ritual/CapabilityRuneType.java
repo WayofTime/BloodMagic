@@ -2,9 +2,9 @@ package wayoftime.bloodmagic.ritual;
 
 import java.util.concurrent.Callable;
 
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.ByteTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 
 public final class CapabilityRuneType

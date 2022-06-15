@@ -4,15 +4,15 @@ import java.util.function.Consumer;
 
 import com.mojang.authlib.GameProfile;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.level.Level;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
@@ -208,7 +208,7 @@ public class RitualMagnetic extends Ritual
 		if (stack.isEmpty())
 			return false;
 
-		return stack.getItem().is(Tags.Items.ORES);
+		return stack.is(Tags.Items.ORES);
 
 //		for(ResourceLocation rl :  stack.getItem().getTags())
 //		{

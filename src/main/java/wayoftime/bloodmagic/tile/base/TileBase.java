@@ -108,7 +108,8 @@ public abstract class TileBase extends BlockEntity
 	@Override
 	public ClientboundBlockEntityDataPacket getUpdatePacket()
 	{
-		return new ClientboundBlockEntityDataPacket(getBlockPos(), -999, getUpdateTag());
+//		return new ClientboundBlockEntityDataPacket(getBlockPos(), -999, getUpdateTag());
+		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 //	@Override
@@ -122,18 +123,18 @@ public abstract class TileBase extends BlockEntity
 	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt)
 	{
 		super.onDataPacket(net, pkt);
-		handleUpdateTag(getBlockState(), pkt.getTag());
+		handleUpdateTag(pkt.getTag());
 	}
 
 	@Override
 	public CompoundTag getUpdateTag()
 	{
-		return save(new CompoundTag());
+		return serialize(new CompoundTag());
 	}
 
 	@Override
-	public void handleUpdateTag(BlockState state, CompoundTag tag)
+	public void handleUpdateTag(CompoundTag tag)
 	{
-		load(state, tag);
+		deserialize(tag);
 	}
 }

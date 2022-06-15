@@ -3,9 +3,10 @@ package wayoftime.bloodmagic.ritual.types;
 import java.util.List;
 import java.util.function.Consumer;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.entity.projectile.EntityMeteor;
@@ -75,7 +76,7 @@ public class RitualMeteor extends Ritual
 				world.addFreshEntity(meteor);
 
 				if (stack.isEmpty())
-					entityItem.remove();
+					entityItem.remove(RemovalReason.KILLED);
 
 //				entityItem.getItem().setCount(newStack.getCount());
 

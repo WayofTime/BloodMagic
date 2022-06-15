@@ -2,13 +2,13 @@ package wayoftime.bloodmagic.structures;
 
 import java.util.Random;
 
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
-import net.minecraft.server.level.ServerLevel;
 import wayoftime.bloodmagic.util.BMLog;
 
 public class DungeonStructure
@@ -42,6 +42,8 @@ public class DungeonStructure
 		BlockPos offset = StructureTemplate.calculateRelativePosition(settings, new BlockPos(0, 0, 0));
 		BlockPos finalPos = pos.offset(offset);
 //		template.addBlocksToWorldChunk(world, finalPos, settings);
+
+//		placeInWorld
 		template.placeInWorldChunk(world, finalPos, settings, rand);
 //		template.placeInWorld(world, finalPos, settings, rand);
 

@@ -3,12 +3,13 @@ package wayoftime.bloodmagic.ritual.types;
 import java.util.List;
 import java.util.function.Consumer;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
@@ -70,14 +71,14 @@ public class RitualZephyr extends Ritual
 				{
 					count++;
 					if (newStack.isEmpty())
-						entityItem.remove();
+						entityItem.remove(RemovalReason.KILLED);
 
 					entityItem.getItem().setCount(newStack.getCount());
 				}
 //
 				if (newStack.isEmpty())
 				{
-					entityItem.remove();
+					entityItem.remove(RemovalReason.KILLED);
 				}
 			}
 

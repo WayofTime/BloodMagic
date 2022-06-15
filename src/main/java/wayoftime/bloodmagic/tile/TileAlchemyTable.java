@@ -5,26 +5,25 @@ import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.WorldlyContainer;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.event.BloodMagicCraftedEvent;
 import wayoftime.bloodmagic.common.item.BloodOrb;
@@ -44,11 +43,8 @@ import wayoftime.bloodmagic.tile.container.ContainerAlchemyTable;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 
-public class TileAlchemyTable extends TileInventory implements WorldlyContainer, TickableBlockEntity, MenuProvider
+public class TileAlchemyTable extends TileInventory implements WorldlyContainer, MenuProvider
 {
-	@ObjectHolder("bloodmagic:alchemytable")
-	public static BlockEntityType<TileAlchemyTable> TYPE;
-
 	public static final int orbSlot = 6;
 	public static final int outputSlot = 7;
 
@@ -72,14 +68,14 @@ public class TileAlchemyTable extends TileInventory implements WorldlyContainer,
 
 	public int activeSlot = -1;
 
-	public TileAlchemyTable(BlockEntityType<?> type)
+	public TileAlchemyTable(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
-		super(type, 8, "alchemytable");
+		super(type, 8, "alchemytable", pos, state);
 	}
 
-	public TileAlchemyTable()
+	public TileAlchemyTable(BlockPos pos, BlockState state)
 	{
-		this(TYPE);
+		this(BloodMagicTileEntities.ALCHEMY_TABLE_TYPE.get(), pos, state);
 	}
 
 	public void setInitialTableParameters(Direction direction, boolean isSlave, BlockPos connectedPos)
@@ -336,7 +332,6 @@ public class TileAlchemyTable extends TileInventory implements WorldlyContainer,
 		return list;
 	}
 
-	@Override
 	public void tick()
 	{
 		if (isSlave())

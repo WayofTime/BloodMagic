@@ -16,8 +16,8 @@ import com.google.common.collect.Sets;
 
 import net.minecraft.world.level.block.AttachedStemBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.StemBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.block.StemBlock;
 
 public class HarvestRegistry
 {

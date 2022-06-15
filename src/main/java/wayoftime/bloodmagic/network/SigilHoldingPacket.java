@@ -48,7 +48,7 @@ public class SigilHoldingPacket
 
 		if (msg.slot > -1 && msg.slot < 9)
 		{
-			itemStack = playerEntity.inventory.getItem(msg.slot);
+			itemStack = playerEntity.getInventory().getItem(msg.slot);
 		}
 
 		if (!itemStack.isEmpty())

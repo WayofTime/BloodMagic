@@ -3,20 +3,20 @@ package wayoftime.bloodmagic.tile;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.api.compat.IDemonWill;
 import wayoftime.bloodmagic.api.compat.IDemonWillConduit;
@@ -28,10 +28,10 @@ import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
 import wayoftime.bloodmagic.tile.container.ContainerSoulForge;
 import wayoftime.bloodmagic.util.Constants;
 
-public class TileSoulForge extends TileInventory implements TickableBlockEntity, MenuProvider, IDemonWillConduit
+public class TileSoulForge extends TileInventory implements MenuProvider, IDemonWillConduit
 {
-	@ObjectHolder("bloodmagic:soulforge")
-	public static BlockEntityType<TileSoulForge> TYPE;
+//	@ObjectHolder("bloodmagic:soulforge")
+//	public static BlockEntityType<TileSoulForge> TYPE;
 
 	public static final int ticksRequired = 100;
 	public static final double worldWillTransferRate = 1;
@@ -43,14 +43,14 @@ public class TileSoulForge extends TileInventory implements TickableBlockEntity,
 
 	public int burnTime = 0;
 
-	public TileSoulForge(BlockEntityType<?> type)
+	public TileSoulForge(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
-		super(type, 6, "soulforge");
+		super(type, 6, "soulforge", pos, state);
 	}
 
-	public TileSoulForge()
+	public TileSoulForge(BlockPos pos, BlockState state)
 	{
-		this(TYPE);
+		this(BloodMagicTileEntities.SOUL_FORGE_TYPE.get(), pos, state);
 	}
 
 	@Override
@@ -101,7 +101,6 @@ public class TileSoulForge extends TileInventory implements TickableBlockEntity,
 		}
 	};
 
-	@Override
 	public void tick()
 	{
 		if (!hasSoulGemOrSoul())

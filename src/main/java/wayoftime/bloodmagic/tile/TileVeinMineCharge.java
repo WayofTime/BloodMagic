@@ -8,40 +8,36 @@ import java.util.Map;
 import com.mojang.datafixers.util.Pair;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.core.Vec3i;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
 
 public class TileVeinMineCharge extends TileExplosiveCharge
 {
-	@ObjectHolder("bloodmagic:veinmine_charge")
-	public static BlockEntityType<TileVeinMineCharge> TYPE;
-
 	private Map<BlockPos, Boolean> veinPartsMap;
 	private List<BlockPos> veinPartsCache;
 	private boolean finishedAnalysis;
 
-	private Vec3i[] diagonals = new Vec3i[] { new Vec3i(0, 1, 1), new Vec3i(0, 1, -1),
-			new Vec3i(0, -1, 1), new Vec3i(0, -1, -1), new Vec3i(1, 0, 1), new Vec3i(-1, 0, 1),
-			new Vec3i(1, 0, -1), new Vec3i(-1, 0, -1), new Vec3i(1, 1, 0), new Vec3i(-1, 1, 0),
-			new Vec3i(1, -1, 0), new Vec3i(-1, -1, 0) };
+	private Vec3i[] diagonals = new Vec3i[] { new Vec3i(0, 1, 1), new Vec3i(0, 1, -1), new Vec3i(0, -1, 1),
+			new Vec3i(0, -1, -1), new Vec3i(1, 0, 1), new Vec3i(-1, 0, 1), new Vec3i(1, 0, -1), new Vec3i(-1, 0, -1),
+			new Vec3i(1, 1, 0), new Vec3i(-1, 1, 0), new Vec3i(1, -1, 0), new Vec3i(-1, -1, 0) };
 
 	public double internalCounter = 0;
 
@@ -49,16 +45,16 @@ public class TileVeinMineCharge extends TileExplosiveCharge
 
 	public int maxBlocks = 128;
 
-	public TileVeinMineCharge(BlockEntityType<?> type, int maxBlocks)
+	public TileVeinMineCharge(BlockEntityType<?> type, int maxBlocks, BlockPos pos, BlockState state)
 	{
-		super(type);
+		super(type, pos, state);
 
 		this.maxBlocks = maxBlocks;
 	}
 
-	public TileVeinMineCharge()
+	public TileVeinMineCharge(BlockPos pos, BlockState state)
 	{
-		this(TYPE, 64 * 3);
+		this(BloodMagicTileEntities.VEINMINE_CHARGE_TYPE.get(), 64 * 3, pos, state);
 	}
 
 	@Override
@@ -220,13 +216,15 @@ public class TileVeinMineCharge extends TileExplosiveCharge
 
 				BlockState blockstate = this.level.getBlockState(blockPos);
 				Block block = blockstate.getBlock();
-				if (!blockstate.isAir(this.level, blockPos))
+				if (!blockstate.isAir())
 				{
 					BlockPos blockpos1 = blockPos.immutable();
 //				this.world.getProfiler().startSection("explosion_blocks");
 					if (this.level instanceof ServerLevel)
 					{
-						BlockEntity tileentity = blockstate.hasTileEntity() ? this.level.getBlockEntity(blockPos) : null;
+						BlockEntity tileentity = blockstate.getBlock() instanceof EntityBlock
+								? this.level.getBlockEntity(blockPos)
+								: null;
 						LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerLevel) this.level)).withRandom(this.level.random).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockPos)).withParameter(LootContextParams.TOOL, toolStack).withOptionalParameter(LootContextParams.BLOCK_ENTITY, tileentity);
 //                  if (this.mode == Explosion.Mode.DESTROY) {
 //                     lootcontext$builder.withParameter(LootParameters.EXPLOSION_RADIUS, this.size);

@@ -3,14 +3,14 @@ package wayoftime.bloodmagic.client.screens;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.fml.client.gui.GuiUtils;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraftforge.client.gui.GuiUtils;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.tile.TileAlchemicalReactionChamber;
 import wayoftime.bloodmagic.tile.container.ContainerAlchemicalReactionChamber;
@@ -53,10 +53,8 @@ public class ScreenAlchemicalReactionChamber extends ScreenBase<ContainerAlchemi
 //		FluidTank inputTank = new FluidTank(FluidAttributes.BUCKET_VOLUME * 2);
 //		inputTank.fill(new FluidStack(Fluids.WATER, 1000), FluidAction.EXECUTE);
 
-		ClientHandler.handleGuiTank(stack, tileARC.inputTank, this.leftPos + 8, this.topPos
-				+ 40, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), tooltip);
-		ClientHandler.handleGuiTank(stack, tileARC.outputTank, this.leftPos + 152, this.topPos
-				+ 15, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), tooltip);
+		ClientHandler.handleGuiTank(stack, tileARC.inputTank, this.leftPos + 8, this.topPos + 40, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), tooltip);
+		ClientHandler.handleGuiTank(stack, tileARC.outputTank, this.leftPos + 152, this.topPos + 15, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), tooltip);
 
 		if (!tooltip.isEmpty())
 			GuiUtils.drawHoveringText(stack, tooltip, mouseX, mouseY, width, height, -1, font);
@@ -83,10 +81,8 @@ public class ScreenAlchemicalReactionChamber extends ScreenBase<ContainerAlchemi
 //		FluidTank inputTank = new FluidTank(FluidAttributes.BUCKET_VOLUME * 2);
 //		inputTank.fill(new FluidStack(Fluids.WATER, 1000), FluidAction.EXECUTE);
 
-		ClientHandler.handleGuiTank(stack, tileARC.inputTank, this.leftPos + 8, this.topPos
-				+ 40, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), null);
-		ClientHandler.handleGuiTank(stack, tileARC.outputTank, this.leftPos + 152, this.topPos
-				+ 15, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), null);
+		ClientHandler.handleGuiTank(stack, tileARC.inputTank, this.leftPos + 8, this.topPos + 40, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), null);
+		ClientHandler.handleGuiTank(stack, tileARC.outputTank, this.leftPos + 152, this.topPos + 15, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), null);
 
 		int w = this.getCookProgressScaled(38);
 //		FurnaceTileEntity d;

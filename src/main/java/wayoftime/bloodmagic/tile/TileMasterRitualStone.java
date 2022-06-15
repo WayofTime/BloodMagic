@@ -12,16 +12,16 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Strings;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.item.IBindable;
@@ -46,8 +46,6 @@ import wayoftime.bloodmagic.will.DemonWillHolder;
 
 public class TileMasterRitualStone extends TileTicking implements IMasterRitualStone
 {
-	@ObjectHolder("bloodmagic:masterritualstone")
-	public static BlockEntityType<TileMasterRitualStone> TYPE;
 	protected final Map<String, AreaDescriptor> modableRangeMap = new HashMap<>();
 	private UUID owner;
 	private SoulNetwork cachedNetwork;
@@ -60,14 +58,14 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 	private boolean inverted;
 	private List<EnumDemonWillType> currentActiveWillConfig = new ArrayList<>();
 
-	public TileMasterRitualStone(BlockEntityType<?> type)
+	public TileMasterRitualStone(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
-		super(type);
+		super(type, pos, state);
 	}
 
-	public TileMasterRitualStone()
+	public TileMasterRitualStone(BlockPos pos, BlockState state)
 	{
-		this(TYPE);
+		this(BloodMagicTileEntities.MASTER_RITUAL_STONE_TYPE.get(), pos, state);
 	}
 
 	@Override

@@ -2,9 +2,8 @@ package wayoftime.bloodmagic.ritual.imperfect;
 
 import java.util.function.Predicate;
 
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Abstract class for creating new imperfect rituals. To register, annotate your

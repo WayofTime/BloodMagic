@@ -1,11 +1,11 @@
 package wayoftime.bloodmagic.impl;
 
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.GrassBlock;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.LeavesBlock;
-import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import wayoftime.bloodmagic.altar.ComponentType;
 import wayoftime.bloodmagic.api.IBloodMagicAPI;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
@@ -37,7 +37,8 @@ public class BloodMagicCorePlugin
 		apiInterface.registerTranquilityHandler(state -> state.getBlock() instanceof LeavesBlock, EnumTranquilityType.PLANT.name(), 1.0D);
 		apiInterface.registerTranquilityHandler(state -> state.getBlock() instanceof FireBlock, EnumTranquilityType.FIRE.name(), 1.0D);
 		apiInterface.registerTranquilityHandler(state -> state.getBlock() instanceof GrassBlock, EnumTranquilityType.EARTHEN.name(), 0.5D);
-		apiInterface.registerTranquilityHandler(state -> BlockTags.LOGS.contains(state.getBlock()), EnumTranquilityType.TREE.name(), 1.0D);
+
+		apiInterface.registerTranquilityHandler(state -> state.is(BlockTags.LOGS), EnumTranquilityType.TREE.name(), 1.0D);
 		apiInterface.registerTranquilityHandler(state -> state.getBlock() instanceof SimpleWaterloggedBlock && state.getFluidState().isSource(), EnumTranquilityType.WATER.name(), 1.0D);
 
 		IncenseTranquilityRegistry.registerTranquilityHandler((world, pos, block, state) -> BloodMagicAPI.INSTANCE.getValueManager().getTranquility().get(state));
@@ -59,8 +60,8 @@ public class BloodMagicCorePlugin
 		apiInterface.registerAltarComponent(BloodMagicBlocks.ACCELERATION_RUNE.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
 		apiInterface.registerAltarComponent(BloodMagicBlocks.CHARGING_RUNE.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
 
-		apiInterface.registerInventoryProvider("mainInventory", player -> player.inventory.items);
-		apiInterface.registerInventoryProvider("armorInventory", player -> player.inventory.armor);
-		apiInterface.registerInventoryProvider("offHandInventory", player -> player.inventory.offhand);
+		apiInterface.registerInventoryProvider("mainInventory", player -> player.getInventory().items);
+		apiInterface.registerInventoryProvider("armorInventory", player -> player.getInventory().armor);
+		apiInterface.registerInventoryProvider("offHandInventory", player -> player.getInventory().offhand);
 	}
 }

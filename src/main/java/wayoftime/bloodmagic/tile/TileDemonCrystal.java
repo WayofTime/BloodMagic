@@ -2,13 +2,13 @@ package wayoftime.bloodmagic.tile;
 
 import java.util.Locale;
 
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraft.world.level.block.state.BlockState;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.block.BlockDemonCrystal;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
@@ -33,23 +33,20 @@ public class TileDemonCrystal extends TileTicking
 
 	public EnumDemonWillType willType;
 
-	@ObjectHolder("bloodmagic:demoncrystal")
-	public static BlockEntityType<TileDemonCrystal> TYPE;
-
-	public TileDemonCrystal(BlockEntityType<?> type, EnumDemonWillType willType)
+	public TileDemonCrystal(BlockEntityType<?> type, EnumDemonWillType willType, BlockPos pos, BlockState state)
 	{
-		super(type);
+		super(type, pos, state);
 		this.willType = willType;
 	}
 
-	public TileDemonCrystal(EnumDemonWillType willType)
+	public TileDemonCrystal(EnumDemonWillType willType, BlockPos pos, BlockState state)
 	{
-		this(TYPE, willType);
+		this(BloodMagicTileEntities.DEMON_CRYSTAL_TYPE.get(), willType, pos, state);
 	}
 
-	public TileDemonCrystal()
+	public TileDemonCrystal(BlockPos pos, BlockState state)
 	{
-		this(TYPE, EnumDemonWillType.DEFAULT);
+		this(BloodMagicTileEntities.DEMON_CRYSTAL_TYPE.get(), EnumDemonWillType.DEFAULT, pos, state);
 	}
 
 	@Override

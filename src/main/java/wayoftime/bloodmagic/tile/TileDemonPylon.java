@@ -1,10 +1,10 @@
 package wayoftime.bloodmagic.tile;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraft.world.level.block.state.BlockState;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.api.compat.IDemonWillConduit;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
@@ -13,21 +13,18 @@ import wayoftime.bloodmagic.will.DemonWillHolder;
 
 public class TileDemonPylon extends TileTicking implements IDemonWillConduit
 {
-	@ObjectHolder("bloodmagic:demonpylon")
-	public static BlockEntityType<TileDemonPylon> TYPE;
-
 	public final int maxWill = 100;
 	public final double drainRate = 1;
 	public DemonWillHolder holder = new DemonWillHolder();
 
-	public TileDemonPylon(BlockEntityType<?> type)
+	public TileDemonPylon(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
-		super(type);
+		super(type, pos, state);
 	}
 
-	public TileDemonPylon()
+	public TileDemonPylon(BlockPos pos, BlockState state)
 	{
-		this(TYPE);
+		this(BloodMagicTileEntities.DEMON_PYLON_TYPE.get(), pos, state);
 	}
 
 	@Override

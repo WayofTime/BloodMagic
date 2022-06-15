@@ -1,10 +1,10 @@
 package wayoftime.bloodmagic.potion;
 
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -53,11 +53,11 @@ public class BloodMagicPotions
 
 	public static MobEffect getEffect(ResourceLocation rl)
 	{
-		return ForgeRegistries.POTIONS.getValue(rl);
+		return ForgeRegistries.MOB_EFFECTS.getValue(rl);
 	}
 
 	public static ResourceLocation getRegistryName(MobEffect effect)
 	{
-		return ForgeRegistries.POTIONS.getKey(effect);
+		return ForgeRegistries.MOB_EFFECTS.getKey(effect);
 	}
 }

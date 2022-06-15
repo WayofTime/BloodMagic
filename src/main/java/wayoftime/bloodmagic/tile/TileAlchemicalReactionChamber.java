@@ -7,22 +7,23 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.WorldlyContainer;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.SmeltingRecipe;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -33,7 +34,6 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.arc.IARCTool;
 import wayoftime.bloodmagic.common.item.inventory.InventoryWrapper;
@@ -46,13 +46,8 @@ import wayoftime.bloodmagic.tile.container.ContainerAlchemicalReactionChamber;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.MultiSlotItemHandler;
 
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-
-public class TileAlchemicalReactionChamber extends TileInventory implements TickableBlockEntity, MenuProvider, WorldlyContainer, IFluidHandler
+public class TileAlchemicalReactionChamber extends TileInventory implements MenuProvider, WorldlyContainer, IFluidHandler
 {
-	@ObjectHolder("bloodmagic:alchemicalreactionchamber")
-	public static BlockEntityType<TileAlchemicalReactionChamber> TYPE;
-
 	public static final int ARC_TOOL_SLOT = 0;
 	public static final int OUTPUT_SLOT = 1;
 	public static final int NUM_OUTPUTS = 5;
@@ -68,15 +63,15 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Tick
 
 	private LazyOptional fluidOptional;
 
-	public TileAlchemicalReactionChamber(BlockEntityType<?> type)
+	public TileAlchemicalReactionChamber(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
-		super(type, 9, "alchemicalreactionchamber");
+		super(type, 9, "alchemicalreactionchamber", pos, state);
 		this.initializeFluidCapabilities();
 	}
 
-	public TileAlchemicalReactionChamber()
+	public TileAlchemicalReactionChamber(BlockPos pos, BlockState state)
 	{
-		this(TYPE);
+		this(BloodMagicTileEntities.ARC_TYPE.get(), pos, state);
 	}
 
 	@Override
@@ -111,7 +106,6 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Tick
 		return tag;
 	}
 
-	@Override
 	public void tick()
 	{
 //		if (world.isRemote)
@@ -129,8 +123,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Tick
 		ItemStack fullBucketStack = this.getItem(INPUT_BUCKET_SLOT);
 		ItemStack emptyBucketStack = this.getItem(OUTPUT_BUCKET_SLOT);
 
-		ItemStack[] outputInventory = new ItemStack[] { getItem(1), getItem(2), getItem(3),
-				getItem(4), getItem(5) };
+		ItemStack[] outputInventory = new ItemStack[] { getItem(1), getItem(2), getItem(3), getItem(4), getItem(5) };
 
 		MultiSlotItemHandler outputSlotHandler = new MultiSlotItemHandler(outputInventory, 64);
 
@@ -223,7 +216,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Tick
 			}
 		} else
 		{
-			if (toolStack.getItem().is(BloodMagicTags.ARC_TOOL_FURNACE))
+			if (toolStack.is(BloodMagicTags.ARC_TOOL_FURNACE))
 			{
 				InventoryWrapper invWrapper = new InventoryWrapper(1);
 				invWrapper.setItem(0, inputStack.copy());
@@ -417,7 +410,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Tick
 
 		if (index == ARC_TOOL_SLOT)
 		{
-			return itemStack.getItem().is(BloodMagicTags.ARC_TOOL);
+			return itemStack.is(BloodMagicTags.ARC_TOOL);
 		}
 
 		return true;
@@ -447,7 +440,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Tick
 	}
 
 	@Override
-	protected void invalidateCaps()
+	public void invalidateCaps()
 	{
 		super.invalidateCaps();
 		if (fluidOptional != null)

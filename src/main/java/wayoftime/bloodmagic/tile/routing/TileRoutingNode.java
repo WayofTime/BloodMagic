@@ -8,48 +8,42 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.Triple;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.routing.IItemRoutingNode;
 import wayoftime.bloodmagic.common.routing.IMasterRoutingNode;
 import wayoftime.bloodmagic.common.routing.IRoutingNode;
+import wayoftime.bloodmagic.tile.BloodMagicTileEntities;
 import wayoftime.bloodmagic.tile.TileInventory;
 import wayoftime.bloodmagic.util.Constants;
 
-public class TileRoutingNode extends TileInventory implements IRoutingNode, IItemRoutingNode, TickableBlockEntity
+public class TileRoutingNode extends TileInventory implements IRoutingNode, IItemRoutingNode
 {
-	@ObjectHolder("bloodmagic:itemroutingnode")
-	public static BlockEntityType<TileRoutingNode> TYPE;
-
 	private int currentInput;
 	private BlockPos masterPos = BlockPos.ZERO;
 	private List<BlockPos> connectionList = new LinkedList<>();
 	private AABB boundingBox;
 
-	public TileRoutingNode(BlockEntityType<?> type, int size, String name)
+	public TileRoutingNode(BlockEntityType<?> type, int size, String name, BlockPos pos, BlockState state)
 	{
-		super(type, size, name);
+		super(type, size, name, pos, state);
 	}
 
-	public TileRoutingNode()
+	public TileRoutingNode(BlockPos pos, BlockState state)
 	{
-		this(TYPE, 1, "routingnode");
+		this(BloodMagicTileEntities.ROUTING_NODE_TYPE.get(), 1, "routingnode", pos, state);
 	}
 
-	@Override
 	public void tick()
 	{
 		if (!getLevel().isClientSide)
@@ -300,12 +294,12 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 		return 0;
 	}
 
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public double getViewDistance()
-	{
-		return 10000;
-	}
+//	@Override
+//	@OnlyIn(Dist.CLIENT)
+//	public double getViewDistance()
+//	{
+//		return 10000;
+//	}
 
 	@Override
 	public AABB getRenderBoundingBox()

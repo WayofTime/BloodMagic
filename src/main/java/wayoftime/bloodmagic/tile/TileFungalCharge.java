@@ -1,23 +1,20 @@
 package wayoftime.bloodmagic.tile;
 
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraft.world.level.block.state.BlockState;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 
 public class TileFungalCharge extends TileVeinMineCharge
 {
-	@ObjectHolder("bloodmagic:fungal_charge")
-	public static BlockEntityType<TileFungalCharge> TYPE;
-
-	public TileFungalCharge(BlockEntityType<?> type, int maxBlocks)
+	public TileFungalCharge(BlockEntityType<?> type, int maxBlocks, BlockPos pos, BlockState state)
 	{
-		super(type, maxBlocks);
+		super(type, maxBlocks, pos, state);
 	}
 
-	public TileFungalCharge()
+	public TileFungalCharge(BlockPos pos, BlockState state)
 	{
-		this(TYPE, 64 * 3);
+		this(BloodMagicTileEntities.FUNGAL_CHARGE_TYPE.get(), 64 * 3, pos, state);
 	}
 
 	@Override
@@ -29,7 +26,7 @@ public class TileFungalCharge extends TileVeinMineCharge
 	@Override
 	public boolean isValidStartingBlock(BlockState originalBlockState)
 	{
-		return BloodMagicTags.Blocks.MUSHROOM_HYPHAE.contains(originalBlockState.getBlock()) || BloodMagicTags.Blocks.MUSHROOM_STEM.contains(originalBlockState.getBlock());
+		return originalBlockState.is(BloodMagicTags.Blocks.MUSHROOM_HYPHAE) || originalBlockState.is(BloodMagicTags.Blocks.MUSHROOM_STEM);
 	}
 
 	@Override

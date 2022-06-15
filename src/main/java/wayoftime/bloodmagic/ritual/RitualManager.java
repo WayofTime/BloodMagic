@@ -9,8 +9,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fml.ModList;
 import wayoftime.bloodmagic.ritual.imperfect.ImperfectRitual;
 import wayoftime.bloodmagic.util.BMLog;
@@ -41,11 +41,10 @@ public class RitualManager
 	{
 		ModList.get().getAllScanData().forEach(scan -> {
 			scan.getAnnotations().forEach(a -> {
-				if (a.getAnnotationType().getClassName().equals(RitualRegister.class.getName()))
+				if (a.annotationType().getClassName().equals(RitualRegister.class.getName()))
 				{
 					try
 					{
-
 						Class<?> clazz = Class.forName(a.getClassType().getClassName());
 						RitualRegister ritualRegister = clazz.getAnnotation(RitualRegister.class);
 						String id = ritualRegister.value();
@@ -69,7 +68,7 @@ public class RitualManager
 
 		ModList.get().getAllScanData().forEach(scan -> {
 			scan.getAnnotations().forEach(a -> {
-				if (a.getAnnotationType().getClassName().equals(RitualRegister.Imperfect.class.getName()))
+				if (a.annotationType().getClassName().equals(RitualRegister.Imperfect.class.getName()))
 				{
 					try
 					{

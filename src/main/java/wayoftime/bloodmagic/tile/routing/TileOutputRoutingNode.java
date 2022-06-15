@@ -1,36 +1,35 @@
 package wayoftime.bloodmagic.tile.routing;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
 import wayoftime.bloodmagic.common.routing.IItemFilter;
 import wayoftime.bloodmagic.common.routing.IOutputItemRoutingNode;
+import wayoftime.bloodmagic.tile.BloodMagicTileEntities;
 import wayoftime.bloodmagic.tile.container.ContainerItemRoutingNode;
 import wayoftime.bloodmagic.util.Utils;
 
 public class TileOutputRoutingNode extends TileFilteredRoutingNode implements IOutputItemRoutingNode, MenuProvider
 {
-	@ObjectHolder("bloodmagic:outputroutingnode")
-	public static BlockEntityType<TileOutputRoutingNode> TYPE;
-
-	public TileOutputRoutingNode(BlockEntityType<?> type)
+	public TileOutputRoutingNode(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
-		super(type, 6, "outputnode");
+		super(type, 6, "outputnode", pos, state);
 	}
 
-	public TileOutputRoutingNode()
+	public TileOutputRoutingNode(BlockPos pos, BlockState state)
 	{
-		this(TYPE);
+		this(BloodMagicTileEntities.OUTPUT_ROUTING_NODE_TYPE.get(), pos, state);
 	}
 
 	@Override

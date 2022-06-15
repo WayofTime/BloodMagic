@@ -1,13 +1,13 @@
 package wayoftime.bloodmagic.tile.routing;
 
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -20,9 +20,9 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements WorldlyC
 
 //	public ItemInventory itemInventory = new ItemInventory(ItemStack.EMPTY, 9, "");
 
-	public TileFilteredRoutingNode(BlockEntityType<?> type, int size, String name)
+	public TileFilteredRoutingNode(BlockEntityType<?> type, int size, String name, BlockPos pos, BlockState state)
 	{
-		super(type, size, name);
+		super(type, size, name, pos, state);
 	}
 
 	public ItemStack getFilterStack(Direction side)

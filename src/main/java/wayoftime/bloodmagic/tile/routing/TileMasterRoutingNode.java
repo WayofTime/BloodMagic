@@ -12,25 +12,24 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.Triple;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.item.routing.IRouterUpgrade;
 import wayoftime.bloodmagic.common.routing.IInputItemRoutingNode;
@@ -40,15 +39,13 @@ import wayoftime.bloodmagic.common.routing.IOutputItemRoutingNode;
 import wayoftime.bloodmagic.common.routing.IRoutingNode;
 import wayoftime.bloodmagic.common.routing.NodeHelper;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
+import wayoftime.bloodmagic.tile.BloodMagicTileEntities;
 import wayoftime.bloodmagic.tile.TileInventory;
 import wayoftime.bloodmagic.tile.container.ContainerMasterRoutingNode;
 import wayoftime.bloodmagic.util.Constants;
 
-public class TileMasterRoutingNode extends TileInventory implements IMasterRoutingNode, TickableBlockEntity, MenuProvider
+public class TileMasterRoutingNode extends TileInventory implements IMasterRoutingNode, MenuProvider
 {
-	@ObjectHolder("bloodmagic:masterroutingnode")
-	public static BlockEntityType<TileMasterRoutingNode> TYPE;
-
 	public static final int tickRate = 20;
 	private int currentInput;
 	// A list of connections
@@ -60,17 +57,16 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 
 	public static final int SLOT = 0;
 
-	public TileMasterRoutingNode(BlockEntityType<?> type)
+	public TileMasterRoutingNode(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
-		super(type, 1, "masterroutingnode");
+		super(type, 1, "masterroutingnode", pos, state);
 	}
 
-	public TileMasterRoutingNode()
+	public TileMasterRoutingNode(BlockPos pos, BlockState state)
 	{
-		this(TYPE);
+		this(BloodMagicTileEntities.MASTER_ROUTING_NODE_TYPE.get(), pos, state);
 	}
 
-	@Override
 	public void tick()
 	{
 

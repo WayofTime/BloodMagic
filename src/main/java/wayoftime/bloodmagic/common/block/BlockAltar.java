@@ -1,37 +1,35 @@
 package wayoftime.bloodmagic.common.block;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.RedstoneLampBlock;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.RedstoneLampBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ToolType;
 import wayoftime.bloodmagic.api.compat.IAltarReader;
 import wayoftime.bloodmagic.tile.TileAltar;
 import wayoftime.bloodmagic.util.Utils;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
-public class BlockAltar extends Block
+public class BlockAltar extends Block implements EntityBlock
 {
 	protected static final VoxelShape BODY = Block.box(0, 0, 0, 16, 12, 16);
 	public boolean isRedstoneActive = false;
 
 	public BlockAltar()
 	{
-		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).harvestTool(ToolType.PICKAXE).harvestLevel(1));
+		super(Properties.of(Material.STONE).strength(2.0F, 5.0F));
 	}
 
 	@Override
@@ -41,15 +39,9 @@ public class BlockAltar extends Block
 	}
 
 	@Override
-	public boolean hasTileEntity(BlockState state)
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
-		return true;
-	}
-
-	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world)
-	{
-		return new TileAltar();
+		return new TileAltar(pos, state);
 	}
 
 	@Override

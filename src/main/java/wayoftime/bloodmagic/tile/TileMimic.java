@@ -6,42 +6,38 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.Container;
-import net.minecraft.world.Containers;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.Connection;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.Container;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.ModelDataManager;
 import net.minecraftforge.client.model.data.IModelData;
 import net.minecraftforge.client.model.data.ModelDataMap;
 import net.minecraftforge.client.model.data.ModelProperty;
-import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.registries.ObjectHolder;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.Utils;
 
 public class TileMimic extends TileInventory
 {
-	@ObjectHolder("bloodmagic:mimic")
-	public static BlockEntityType<TileMimic> TYPE;
-
 	public static final ModelProperty<BlockState> MIMIC = new ModelProperty<>();
 
 	private BlockState mimic;
@@ -56,14 +52,14 @@ public class TileMimic extends TileInventory
 
 	private int internalCounter = 0;
 
-	public TileMimic(BlockEntityType<?> type)
+	public TileMimic(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
-		super(type, 2, "mimic");
+		super(type, 2, "mimic", pos, state);
 	}
 
-	public TileMimic()
+	public TileMimic(BlockPos pos, BlockState state)
 	{
-		this(TYPE);
+		this(BloodMagicTileEntities.MIMIC_TYPE.get(), pos, state);
 	}
 
 	public boolean onBlockActivated(Level world, BlockPos pos, BlockState state, Player player, InteractionHand hand, ItemStack heldItem, Direction side)
@@ -218,9 +214,9 @@ public class TileMimic extends TileInventory
 		{
 			Block block = ((BlockItem) stack.getItem()).getBlock();
 			BlockState state = replacementState;
-			if (block.hasTileEntity(state))
+			if (block instanceof EntityBlock)
 			{
-				BlockEntity tile = block.createTileEntity(state, world);
+				BlockEntity tile = ((EntityBlock) block).newBlockEntity(pos, state);
 
 				if (tile == null)
 					return null;
@@ -234,7 +230,8 @@ public class TileMimic extends TileInventory
 					tile.deserializeNBT(copyTag);
 				}
 
-				tile.setLevelAndPosition(world, pos);
+				tile.setLevel(world);
+//				tile.setLevelAndPosition(world, pos);
 
 				return tile;
 			}
@@ -247,7 +244,7 @@ public class TileMimic extends TileInventory
 	{
 		this.mimic = mimic;
 		setChanged();
-		level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS);
+		level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
 	}
 
 	public BlockState getMimic()
@@ -277,7 +274,7 @@ public class TileMimic extends TileInventory
 	@Override
 	public ClientboundBlockEntityDataPacket getUpdatePacket()
 	{
-		return new ClientboundBlockEntityDataPacket(worldPosition, 1, getUpdateTag());
+		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 	@Override
@@ -289,7 +286,7 @@ public class TileMimic extends TileInventory
 		if (!Objects.equals(oldMimic, mimic))
 		{
 			ModelDataManager.requestModelDataRefresh(this);
-			level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS);
+			level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
 		}
 	}
 

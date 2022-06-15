@@ -9,14 +9,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
-import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.TagParser;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.util.Constants;
@@ -48,7 +48,7 @@ public class SerializerHelper
 	public static ItemStack getItemStack(@Nonnull JsonObject json, @Nonnull String key)
 	{
 		validateKey(json, key);
-		return ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, key));
+		return ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, key));
 	}
 
 	public static JsonElement serializeItemStack(@Nonnull ItemStack stack)
