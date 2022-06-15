@@ -19,13 +19,13 @@ import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.altar.IBloodAltar;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.api.compat.IAltarReader;
-import wayoftime.bloodmagic.tile.TileIncenseAltar;
 import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.NumeralHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 
 import wayoftime.bloodmagic.common.item.sigil.ISigil.Holding;
+import wayoftime.bloodmagic.common.tile.TileIncenseAltar;
 
 public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 {

@@ -12,8 +12,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.container.item.ContainerHolding;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
-import wayoftime.bloodmagic.common.item.inventory.ContainerHolding;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilHolding;
 
 public class ScreenHolding extends ScreenBase<ContainerHolding>

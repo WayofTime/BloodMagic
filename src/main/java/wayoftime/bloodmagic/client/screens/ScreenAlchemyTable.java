@@ -20,11 +20,10 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.container.tile.ContainerAlchemyTable;
+import wayoftime.bloodmagic.common.tile.TileAlchemyTable;
 import wayoftime.bloodmagic.network.AlchemyTableButtonPacket;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
-import wayoftime.bloodmagic.tile.TileAlchemyTable;
-import wayoftime.bloodmagic.tile.container.ContainerAlchemyTable;
-
 import net.minecraft.client.gui.components.Button.OnPress;
 
 public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>

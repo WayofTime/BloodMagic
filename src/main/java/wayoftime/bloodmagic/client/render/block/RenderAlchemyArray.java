@@ -7,8 +7,8 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.world.item.ItemStack;
 import wayoftime.bloodmagic.client.render.alchemyarray.AlchemyArrayRenderer;
+import wayoftime.bloodmagic.common.tile.TileAlchemyArray;
 import wayoftime.bloodmagic.core.registry.AlchemyArrayRendererRegistry;
-import wayoftime.bloodmagic.tile.TileAlchemyArray;
 
 public class RenderAlchemyArray extends BlockEntityRenderer<TileAlchemyArray>
 {

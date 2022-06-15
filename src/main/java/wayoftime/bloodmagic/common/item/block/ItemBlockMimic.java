@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.common.item.block;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import wayoftime.bloodmagic.common.tile.TileMimic;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -15,8 +16,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import wayoftime.bloodmagic.tile.TileMimic;
-
 import net.minecraft.world.item.Item.Properties;
 
 public class ItemBlockMimic extends BlockItem

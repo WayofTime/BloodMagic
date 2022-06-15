@@ -1,7 +1,7 @@
 package wayoftime.bloodmagic.client.button;
 
 import net.minecraft.client.gui.components.Button;
-import wayoftime.bloodmagic.common.item.inventory.ContainerFilter;
+import wayoftime.bloodmagic.common.container.item.ContainerFilter;
 import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
 import wayoftime.bloodmagic.network.FilterButtonPacket;

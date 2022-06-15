@@ -23,7 +23,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.block.BlockDemonCrystal;
-import wayoftime.bloodmagic.tile.TileDemonCrystal;
+import wayoftime.bloodmagic.common.tile.TileDemonCrystal;
 
 public class ItemCrystalCatalyst extends Item
 {

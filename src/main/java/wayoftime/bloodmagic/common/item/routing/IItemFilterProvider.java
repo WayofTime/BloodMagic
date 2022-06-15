@@ -11,7 +11,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.IItemHandler;
-import wayoftime.bloodmagic.common.item.inventory.ContainerFilter;
+import wayoftime.bloodmagic.common.container.item.ContainerFilter;
 import wayoftime.bloodmagic.common.routing.IItemFilter;
 
 public interface IItemFilterProvider extends IRoutingFilterProvider

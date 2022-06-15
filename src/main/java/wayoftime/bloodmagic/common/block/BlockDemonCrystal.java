@@ -34,7 +34,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.item.ItemDemonCrystal;
-import wayoftime.bloodmagic.tile.TileDemonCrystal;
+import wayoftime.bloodmagic.common.tile.TileDemonCrystal;
 import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
 
 public class BlockDemonCrystal extends Block implements EntityBlock

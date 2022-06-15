@@ -7,13 +7,13 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.tile.TileDemonCrystal;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.ritual.IMasterRitualStone;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.ritual.RitualRegister;
-import wayoftime.bloodmagic.tile.TileDemonCrystal;
 
 @RitualRegister("crystal_harvest")
 public class RitualCrystalHarvest extends Ritual

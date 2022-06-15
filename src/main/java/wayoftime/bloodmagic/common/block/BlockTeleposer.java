@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
-import wayoftime.bloodmagic.tile.TileTeleposer;
+import wayoftime.bloodmagic.common.tile.TileTeleposer;
 
 public class BlockTeleposer extends Block implements EntityBlock
 {

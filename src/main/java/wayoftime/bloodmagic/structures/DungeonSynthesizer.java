@@ -24,10 +24,10 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.server.level.ServerLevel;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.common.tile.TileDungeonController;
+import wayoftime.bloodmagic.common.tile.TileDungeonSeal;
 import wayoftime.bloodmagic.gson.Serializers;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
-import wayoftime.bloodmagic.tile.TileDungeonController;
-import wayoftime.bloodmagic.tile.TileDungeonSeal;
 import wayoftime.bloodmagic.util.Constants;
 
 public class DungeonSynthesizer

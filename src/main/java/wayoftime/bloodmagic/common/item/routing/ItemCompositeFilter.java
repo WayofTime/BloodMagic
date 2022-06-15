@@ -25,7 +25,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.client.button.FilterButtonTogglePress;
-import wayoftime.bloodmagic.common.item.inventory.ContainerFilter;
+import wayoftime.bloodmagic.common.container.item.ContainerFilter;
 import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
 import wayoftime.bloodmagic.common.item.inventory.ItemInventory;
 import wayoftime.bloodmagic.common.routing.BasicItemFilter;

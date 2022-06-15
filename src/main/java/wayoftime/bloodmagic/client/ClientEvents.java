@@ -66,16 +66,16 @@ import wayoftime.bloodmagic.common.item.sigil.ItemSigilHolding;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilToggleable;
 import wayoftime.bloodmagic.common.item.soul.ItemSentientSword;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
+import wayoftime.bloodmagic.common.tile.TileAlchemyArray;
+import wayoftime.bloodmagic.common.tile.TileAltar;
+import wayoftime.bloodmagic.common.tile.TileDemonCrucible;
+import wayoftime.bloodmagic.common.tile.routing.TileInputRoutingNode;
+import wayoftime.bloodmagic.common.tile.routing.TileOutputRoutingNode;
+import wayoftime.bloodmagic.common.tile.routing.TileRoutingNode;
 import wayoftime.bloodmagic.core.registry.AlchemyArrayRendererRegistry;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
 import wayoftime.bloodmagic.network.SigilHoldingPacket;
 import wayoftime.bloodmagic.potion.FlaskColor;
-import wayoftime.bloodmagic.tile.TileAlchemyArray;
-import wayoftime.bloodmagic.tile.TileAltar;
-import wayoftime.bloodmagic.tile.TileDemonCrucible;
-import wayoftime.bloodmagic.tile.routing.TileInputRoutingNode;
-import wayoftime.bloodmagic.tile.routing.TileOutputRoutingNode;
-import wayoftime.bloodmagic.tile.routing.TileRoutingNode;
 import wayoftime.bloodmagic.util.GhostItemHelper;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = BloodMagic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)

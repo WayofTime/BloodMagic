@@ -22,8 +22,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.ItemActivationCrystal;
+import wayoftime.bloodmagic.common.tile.TileMasterRitualStone;
 import wayoftime.bloodmagic.ritual.Ritual;
-import wayoftime.bloodmagic.tile.TileMasterRitualStone;
 import wayoftime.bloodmagic.util.helper.RitualHelper;
 
 public class BlockMasterRitualStone extends Block implements EntityBlock

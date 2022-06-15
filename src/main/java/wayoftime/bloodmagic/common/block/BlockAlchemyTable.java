@@ -32,7 +32,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
-import wayoftime.bloodmagic.tile.TileAlchemyTable;
+import wayoftime.bloodmagic.common.tile.TileAlchemyTable;
 
 public class BlockAlchemyTable extends Block implements EntityBlock// implements IBMBlock
 {

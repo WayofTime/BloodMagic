@@ -8,8 +8,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.tile.TileTeleposer;
-import wayoftime.bloodmagic.tile.container.ContainerTeleposer;
+import wayoftime.bloodmagic.common.container.tile.ContainerTeleposer;
+import wayoftime.bloodmagic.common.tile.TileTeleposer;
 
 public class ScreenTeleposer extends ScreenBase<ContainerTeleposer>
 {

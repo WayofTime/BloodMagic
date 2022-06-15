@@ -20,7 +20,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import wayoftime.bloodmagic.tile.TileAlchemyArray;
+import wayoftime.bloodmagic.common.tile.TileAlchemyArray;
 import wayoftime.bloodmagic.util.Utils;
 
 public class BlockAlchemyArray extends Block implements EntityBlock

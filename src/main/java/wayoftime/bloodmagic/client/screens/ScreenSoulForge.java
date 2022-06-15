@@ -9,8 +9,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.tile.TileSoulForge;
-import wayoftime.bloodmagic.tile.container.ContainerSoulForge;
+import wayoftime.bloodmagic.common.container.tile.ContainerSoulForge;
+import wayoftime.bloodmagic.common.tile.TileSoulForge;
 
 public class ScreenSoulForge extends ScreenBase<ContainerSoulForge>
 {

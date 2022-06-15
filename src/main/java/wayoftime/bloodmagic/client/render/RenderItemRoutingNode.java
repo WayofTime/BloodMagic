@@ -22,7 +22,7 @@ import net.minecraft.util.Mth;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ConfigManager;
 import wayoftime.bloodmagic.common.routing.INodeRenderer;
-import wayoftime.bloodmagic.tile.routing.TileRoutingNode;
+import wayoftime.bloodmagic.common.tile.routing.TileRoutingNode;
 
 public class RenderItemRoutingNode implements BlockEntityRenderer<TileRoutingNode>
 {

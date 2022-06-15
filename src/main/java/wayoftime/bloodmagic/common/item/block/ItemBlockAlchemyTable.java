@@ -15,8 +15,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.common.block.BlockAlchemyTable;
-import wayoftime.bloodmagic.tile.TileAlchemyTable;
-
+import wayoftime.bloodmagic.common.tile.TileAlchemyTable;
 import net.minecraft.world.item.Item.Properties;
 
 public class ItemBlockAlchemyTable extends BlockItem

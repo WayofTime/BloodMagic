@@ -13,8 +13,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.common.block.BlockBloodRune;
+import wayoftime.bloodmagic.common.tile.TileAltar;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
-import wayoftime.bloodmagic.tile.TileAltar;
 
 public class AltarUtil
 {

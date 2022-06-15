@@ -33,17 +33,17 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.block.enums.BloodRuneType;
 import wayoftime.bloodmagic.common.block.base.BlockPillarCap;
+import wayoftime.bloodmagic.common.container.item.ContainerFilter;
+import wayoftime.bloodmagic.common.container.item.ContainerHolding;
+import wayoftime.bloodmagic.common.container.item.ContainerTrainingBracelet;
+import wayoftime.bloodmagic.common.container.tile.ContainerAlchemicalReactionChamber;
+import wayoftime.bloodmagic.common.container.tile.ContainerAlchemyTable;
+import wayoftime.bloodmagic.common.container.tile.ContainerItemRoutingNode;
+import wayoftime.bloodmagic.common.container.tile.ContainerMasterRoutingNode;
+import wayoftime.bloodmagic.common.container.tile.ContainerSoulForge;
+import wayoftime.bloodmagic.common.container.tile.ContainerTeleposer;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
-import wayoftime.bloodmagic.common.item.inventory.ContainerFilter;
-import wayoftime.bloodmagic.common.item.inventory.ContainerHolding;
-import wayoftime.bloodmagic.common.item.inventory.ContainerTrainingBracelet;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
-import wayoftime.bloodmagic.tile.container.ContainerAlchemicalReactionChamber;
-import wayoftime.bloodmagic.tile.container.ContainerAlchemyTable;
-import wayoftime.bloodmagic.tile.container.ContainerItemRoutingNode;
-import wayoftime.bloodmagic.tile.container.ContainerMasterRoutingNode;
-import wayoftime.bloodmagic.tile.container.ContainerSoulForge;
-import wayoftime.bloodmagic.tile.container.ContainerTeleposer;
 
 public class BloodMagicBlocks
 {
@@ -145,6 +145,7 @@ public class BloodMagicBlocks
 	public static RegistryObject<Item> LIFE_ESSENCE_BUCKET = ITEMS.register("life_essence_bucket", () -> new BucketItem(LIFE_ESSENCE_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(BloodMagic.TAB)));
 	public static RegistryObject<Item> DOUBT_BUCKET = ITEMS.register("doubt_bucket", () -> new BucketItem(DOUBT_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(BloodMagic.TAB)));
 
+	// TODO: Move these to a dedicated class?
 	public static final RegistryObject<MenuType<ContainerSoulForge>> SOUL_FORGE_CONTAINER = CONTAINERS.register("soul_forge_container", () -> IForgeMenuType.create(ContainerSoulForge::new));
 	public static final RegistryObject<MenuType<ContainerAlchemicalReactionChamber>> ARC_CONTAINER = CONTAINERS.register("arc_container", () -> IForgeMenuType.create(ContainerAlchemicalReactionChamber::new));
 	public static final RegistryObject<MenuType<ContainerAlchemyTable>> ALCHEMY_TABLE_CONTAINER = CONTAINERS.register("alchemy_table_container", () -> IForgeMenuType.create(ContainerAlchemyTable::new));

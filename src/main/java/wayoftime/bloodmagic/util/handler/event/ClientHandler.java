@@ -51,11 +51,11 @@ import wayoftime.bloodmagic.client.render.RenderResizableCuboid;
 import wayoftime.bloodmagic.client.utils.BMRenderTypes;
 import wayoftime.bloodmagic.common.item.ItemRitualDiviner;
 import wayoftime.bloodmagic.common.item.ItemRitualReader;
+import wayoftime.bloodmagic.common.tile.TileMasterRitualStone;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.ritual.EnumRitualReaderState;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
-import wayoftime.bloodmagic.tile.TileMasterRitualStone;
 import wayoftime.bloodmagic.will.DemonWillHolder;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID, value = Dist.CLIENT)

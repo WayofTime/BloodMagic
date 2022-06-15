@@ -20,7 +20,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import wayoftime.bloodmagic.api.compat.IDemonWillGem;
 import wayoftime.bloodmagic.api.compat.IDiscreteDemonWill;
-import wayoftime.bloodmagic.tile.TileDemonCrucible;
+import wayoftime.bloodmagic.common.tile.TileDemonCrucible;
 import wayoftime.bloodmagic.util.Utils;
 
 public class BlockDemonCrucible extends Block implements EntityBlock

@@ -30,7 +30,7 @@ import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
-import wayoftime.bloodmagic.tile.TileExplosiveCharge;
+import wayoftime.bloodmagic.common.tile.TileExplosiveCharge;
 
 public class EntityShapedCharge extends ThrowableProjectile
 {

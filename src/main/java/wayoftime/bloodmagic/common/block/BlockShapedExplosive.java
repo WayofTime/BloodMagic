@@ -21,8 +21,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import wayoftime.bloodmagic.tile.TileExplosiveCharge;
-import wayoftime.bloodmagic.tile.TileShapedExplosive;
+import wayoftime.bloodmagic.common.tile.TileExplosiveCharge;
+import wayoftime.bloodmagic.common.tile.TileShapedExplosive;
 
 public class BlockShapedExplosive extends Block implements EntityBlock
 {

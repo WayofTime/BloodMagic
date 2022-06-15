@@ -1,13 +1,13 @@
 package wayoftime.bloodmagic.common.alchemyarray;
 
 import net.minecraft.world.level.block.state.BlockState;
+import wayoftime.bloodmagic.common.tile.TileAlchemyArray;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import wayoftime.bloodmagic.tile.TileAlchemyArray;
 
 public class AlchemyArrayEffectSpike extends AlchemyArrayEffect
 {

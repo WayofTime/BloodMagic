@@ -8,7 +8,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.network.NetworkEvent.Context;
-import wayoftime.bloodmagic.tile.TileAlchemyTable;
+import wayoftime.bloodmagic.common.tile.TileAlchemyTable;
 
 public class AlchemyTableButtonPacket
 {

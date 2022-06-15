@@ -14,8 +14,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import wayoftime.bloodmagic.tile.TileIncenseAltar;
-import wayoftime.bloodmagic.tile.TileSoulForge;
+import wayoftime.bloodmagic.common.tile.TileIncenseAltar;
+import wayoftime.bloodmagic.common.tile.TileSoulForge;
 
 public class BlockIncenseAltar extends Block implements EntityBlock
 {

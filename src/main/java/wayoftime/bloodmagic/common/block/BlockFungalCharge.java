@@ -3,7 +3,7 @@ package wayoftime.bloodmagic.common.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import wayoftime.bloodmagic.tile.TileFungalCharge;
+import wayoftime.bloodmagic.common.tile.TileFungalCharge;
 
 public class BlockFungalCharge extends BlockShapedExplosive
 {

@@ -2,9 +2,9 @@ package wayoftime.bloodmagic.common.alchemyarray;
 
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import wayoftime.bloodmagic.common.tile.TileAlchemyArray;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.BlockPos;
-import wayoftime.bloodmagic.tile.TileAlchemyArray;
 
 public class AlchemyArrayEffectCrafting extends AlchemyArrayEffect
 {

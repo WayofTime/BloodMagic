@@ -38,7 +38,7 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import wayoftime.bloodmagic.api.compat.IDemonWillViewer;
-import wayoftime.bloodmagic.tile.TileInventory;
+import wayoftime.bloodmagic.common.tile.TileInventory;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 
 public class Utils

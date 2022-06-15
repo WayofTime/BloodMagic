@@ -28,7 +28,6 @@ import net.minecraftforge.common.MinecraftForge;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.event.ItemBindEvent;
-import wayoftime.bloodmagic.tile.TileTeleposer;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.BindableHelper;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
@@ -36,6 +35,7 @@ import wayoftime.bloodmagic.util.helper.PlayerHelper;
 import wayoftime.bloodmagic.util.helper.TextHelper;
 
 import wayoftime.bloodmagic.common.item.sigil.ISigil.Holding;
+import wayoftime.bloodmagic.common.tile.TileTeleposer;
 
 public class ItemSigilTeleposition extends ItemSigilBase
 {

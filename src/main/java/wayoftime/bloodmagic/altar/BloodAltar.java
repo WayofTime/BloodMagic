@@ -25,10 +25,10 @@ import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodOrb;
 import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.IBloodOrb;
+import wayoftime.bloodmagic.common.tile.TileAltar;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.recipe.RecipeBloodAltar;
-import wayoftime.bloodmagic.tile.TileAltar;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 

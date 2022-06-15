@@ -30,7 +30,7 @@ import net.minecraftforge.client.model.data.IDynamicBakedModel;
 import net.minecraftforge.client.model.data.IModelData;
 import net.minecraftforge.client.model.pipeline.BakedQuadBuilder;
 import wayoftime.bloodmagic.common.block.BlockMimic;
-import wayoftime.bloodmagic.tile.TileMimic;
+import wayoftime.bloodmagic.common.tile.TileMimic;
 
 public class MimicBakedModel implements IDynamicBakedModel
 {

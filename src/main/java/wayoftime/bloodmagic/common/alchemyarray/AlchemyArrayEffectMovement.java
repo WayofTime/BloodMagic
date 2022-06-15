@@ -6,8 +6,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
+import wayoftime.bloodmagic.common.tile.TileAlchemyArray;
 import net.minecraft.world.level.Level;
-import wayoftime.bloodmagic.tile.TileAlchemyArray;
 
 public class AlchemyArrayEffectMovement extends AlchemyArrayEffect
 {

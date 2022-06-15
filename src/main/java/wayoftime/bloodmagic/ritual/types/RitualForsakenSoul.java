@@ -12,13 +12,13 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.ItemCrystalCatalyst;
+import wayoftime.bloodmagic.common.tile.TileDemonCrystal;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.ritual.IMasterRitualStone;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.ritual.RitualRegister;
-import wayoftime.bloodmagic.tile.TileDemonCrystal;
 import wayoftime.bloodmagic.util.Utils;
 
 @RitualRegister("forsaken_soul")

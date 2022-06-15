@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import wayoftime.bloodmagic.tile.TileInversionPillar;
+import wayoftime.bloodmagic.common.tile.TileInversionPillar;
 
 public class BlockInversionPillar extends Block implements EntityBlock
 {

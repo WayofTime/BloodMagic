@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.client.render.alchemyarray.BindingAlchemyCircleRenderer;
-import wayoftime.bloodmagic.tile.TileAlchemyArray;
+import wayoftime.bloodmagic.common.tile.TileAlchemyArray;
 
 public class AlchemyArrayEffectBinding extends AlchemyArrayEffectCrafting
 {

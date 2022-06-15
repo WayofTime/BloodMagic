@@ -12,8 +12,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.client.gui.GuiUtils;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.tile.TileAlchemicalReactionChamber;
-import wayoftime.bloodmagic.tile.container.ContainerAlchemicalReactionChamber;
+import wayoftime.bloodmagic.common.container.tile.ContainerAlchemicalReactionChamber;
+import wayoftime.bloodmagic.common.tile.TileAlchemicalReactionChamber;
 import wayoftime.bloodmagic.util.handler.event.ClientHandler;
 
 public class ScreenAlchemicalReactionChamber extends ScreenBase<ContainerAlchemicalReactionChamber>

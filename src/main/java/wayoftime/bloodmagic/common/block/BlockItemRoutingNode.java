@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import wayoftime.bloodmagic.common.routing.IRoutingNode;
-import wayoftime.bloodmagic.tile.routing.TileRoutingNode;
+import wayoftime.bloodmagic.common.tile.routing.TileRoutingNode;
 
 public class BlockItemRoutingNode extends BlockRoutingNode implements EntityBlock
 {

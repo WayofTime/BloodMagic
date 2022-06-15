@@ -54,6 +54,7 @@ import wayoftime.bloodmagic.common.loot.BloodMagicLootFunctionManager;
 import wayoftime.bloodmagic.common.loot.BloodMagicLootTypeManager;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
+import wayoftime.bloodmagic.common.tile.BloodMagicTileEntities;
 import wayoftime.bloodmagic.compat.CuriosCompat;
 import wayoftime.bloodmagic.compat.patchouli.RegisterPatchouliMultiblocks;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
@@ -69,7 +70,6 @@ import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.ritual.ModRituals;
 import wayoftime.bloodmagic.ritual.RitualManager;
 import wayoftime.bloodmagic.structures.ModDungeons;
-import wayoftime.bloodmagic.tile.BloodMagicTileEntities;
 import wayoftime.bloodmagic.util.handler.event.GenericHandler;
 import wayoftime.bloodmagic.util.handler.event.WillHandler;
 

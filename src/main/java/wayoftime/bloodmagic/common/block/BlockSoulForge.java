@@ -21,7 +21,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
-import wayoftime.bloodmagic.tile.TileSoulForge;
+import wayoftime.bloodmagic.common.tile.TileSoulForge;
 
 public class BlockSoulForge extends Block implements EntityBlock// implements IBMBlock
 {

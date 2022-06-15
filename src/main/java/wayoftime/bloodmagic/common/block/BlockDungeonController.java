@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import wayoftime.bloodmagic.tile.TileDungeonController;
+import wayoftime.bloodmagic.common.tile.TileDungeonController;
 
 public class BlockDungeonController extends Block implements EntityBlock
 {

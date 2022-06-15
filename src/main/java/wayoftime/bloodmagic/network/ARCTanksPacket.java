@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkEvent.Context;
-import wayoftime.bloodmagic.tile.TileAlchemicalReactionChamber;
+import wayoftime.bloodmagic.common.tile.TileAlchemicalReactionChamber;
 
 public class ARCTanksPacket
 {

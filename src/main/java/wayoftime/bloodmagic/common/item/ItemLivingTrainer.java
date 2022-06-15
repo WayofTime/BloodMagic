@@ -27,7 +27,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.common.item.inventory.ContainerTrainingBracelet;
+import wayoftime.bloodmagic.common.container.item.ContainerTrainingBracelet;
 import wayoftime.bloodmagic.common.item.inventory.InventoryTrainingBracelet;
 import wayoftime.bloodmagic.core.living.ILivingContainer;
 import wayoftime.bloodmagic.core.living.LivingStats;

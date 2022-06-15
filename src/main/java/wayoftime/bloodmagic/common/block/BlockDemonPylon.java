@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import wayoftime.bloodmagic.tile.TileDemonPylon;
+import wayoftime.bloodmagic.common.tile.TileDemonPylon;
 
 public class BlockDemonPylon extends Block implements EntityBlock
 {

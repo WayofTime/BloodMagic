@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import wayoftime.bloodmagic.tile.TileSpikeTrap;
+import wayoftime.bloodmagic.common.tile.TileSpikeTrap;
 
 public class BlockSpikeTrap extends Block implements EntityBlock
 {

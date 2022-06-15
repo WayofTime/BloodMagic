@@ -19,10 +19,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.container.tile.ContainerItemRoutingNode;
+import wayoftime.bloodmagic.common.tile.routing.TileFilteredRoutingNode;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
 import wayoftime.bloodmagic.network.ItemRoutingNodeButtonPacket;
-import wayoftime.bloodmagic.tile.container.ContainerItemRoutingNode;
-import wayoftime.bloodmagic.tile.routing.TileFilteredRoutingNode;
 
 public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 {

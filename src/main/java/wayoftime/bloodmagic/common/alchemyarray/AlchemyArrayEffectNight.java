@@ -6,8 +6,8 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import wayoftime.bloodmagic.common.tile.TileAlchemyArray;
 import net.minecraft.server.level.ServerLevel;
-import wayoftime.bloodmagic.tile.TileAlchemyArray;
 
 public class AlchemyArrayEffectNight extends AlchemyArrayEffect
 {

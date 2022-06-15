@@ -14,8 +14,8 @@ import wayoftime.bloodmagic.client.Sprite;
 import wayoftime.bloodmagic.client.hud.element.ElementDemonAura;
 import wayoftime.bloodmagic.client.hud.element.ElementDivinedInformation;
 import wayoftime.bloodmagic.client.hud.element.ElementHolding;
-import wayoftime.bloodmagic.tile.TileAltar;
-import wayoftime.bloodmagic.tile.TileIncenseAltar;
+import wayoftime.bloodmagic.common.tile.TileAltar;
+import wayoftime.bloodmagic.common.tile.TileIncenseAltar;
 import wayoftime.bloodmagic.util.helper.NumeralHelper;
 
 public class Elements

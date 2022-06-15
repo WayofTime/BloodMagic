@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
-import wayoftime.bloodmagic.tile.routing.TileInputRoutingNode;
+import wayoftime.bloodmagic.common.tile.routing.TileInputRoutingNode;
 
 public class BlockInputRoutingNode extends BlockItemRoutingNode
 {

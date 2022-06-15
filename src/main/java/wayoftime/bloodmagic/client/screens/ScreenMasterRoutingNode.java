@@ -8,8 +8,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.tile.container.ContainerMasterRoutingNode;
-import wayoftime.bloodmagic.tile.routing.TileMasterRoutingNode;
+import wayoftime.bloodmagic.common.container.tile.ContainerMasterRoutingNode;
+import wayoftime.bloodmagic.common.tile.routing.TileMasterRoutingNode;
 
 public class ScreenMasterRoutingNode extends ScreenBase<ContainerMasterRoutingNode>
 {

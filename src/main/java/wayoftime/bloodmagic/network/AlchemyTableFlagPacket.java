@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkEvent.Context;
-import wayoftime.bloodmagic.tile.TileAlchemyTable;
+import wayoftime.bloodmagic.common.tile.TileAlchemyTable;
 
 public class AlchemyTableFlagPacket
 {

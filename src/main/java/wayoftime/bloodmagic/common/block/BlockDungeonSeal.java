@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
-import wayoftime.bloodmagic.tile.TileDungeonSeal;
+import wayoftime.bloodmagic.common.tile.TileDungeonSeal;
 
 public class BlockDungeonSeal extends Block implements EntityBlock
 {

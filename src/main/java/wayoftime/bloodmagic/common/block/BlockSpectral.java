@@ -16,7 +16,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import wayoftime.bloodmagic.common.block.type.SpectralBlockType;
-import wayoftime.bloodmagic.tile.TileSpectral;
+import wayoftime.bloodmagic.common.tile.TileSpectral;
 
 public class BlockSpectral extends Block implements EntityBlock
 {

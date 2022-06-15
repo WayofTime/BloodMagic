@@ -12,8 +12,9 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import wayoftime.bloodmagic.common.tile.TileDemonCrucible;
+
 import com.mojang.math.Vector3f;
-import wayoftime.bloodmagic.tile.TileDemonCrucible;
 
 public class RenderDemonCrucible extends BlockEntityRenderer<TileDemonCrucible>
 {

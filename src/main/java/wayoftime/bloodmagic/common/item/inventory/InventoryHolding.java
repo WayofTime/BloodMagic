@@ -2,9 +2,9 @@ package wayoftime.bloodmagic.common.item.inventory;
 
 import java.util.UUID;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
 import wayoftime.bloodmagic.common.item.sigil.ISigil;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilHolding;
 import wayoftime.bloodmagic.util.Constants;
@@ -34,9 +34,9 @@ public class InventoryHolding extends ItemInventory
 		if (Utils.hasUUID(masterStack))
 		{
 			UUID parentStackUUID = new UUID(masterStack.getTag().getLong(Constants.NBT.MOST_SIG), masterStack.getTag().getLong(Constants.NBT.LEAST_SIG));
-			for (int i = 0; i < entityPlayer.inventory.getContainerSize(); i++)
+			for (int i = 0; i < entityPlayer.getInventory().getContainerSize(); i++)
 			{
-				ItemStack itemStack = entityPlayer.inventory.getItem(i);
+				ItemStack itemStack = entityPlayer.getInventory().getItem(i);
 
 				if (!itemStack.isEmpty() && Utils.hasUUID(itemStack))
 				{

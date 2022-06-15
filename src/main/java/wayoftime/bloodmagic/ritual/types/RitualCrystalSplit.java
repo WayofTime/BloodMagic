@@ -13,12 +13,12 @@ import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.common.tile.TileDemonCrystal;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.ritual.IMasterRitualStone;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.ritual.RitualRegister;
-import wayoftime.bloodmagic.tile.TileDemonCrystal;
 
 @RitualRegister("crystal_split")
 public class RitualCrystalSplit extends Ritual

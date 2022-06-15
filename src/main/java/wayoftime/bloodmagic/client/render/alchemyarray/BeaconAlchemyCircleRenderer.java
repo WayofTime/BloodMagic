@@ -10,8 +10,8 @@ import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Quaternion;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer.Model2D;
+import wayoftime.bloodmagic.common.tile.TileAlchemyArray;
 import wayoftime.bloodmagic.client.render.RenderResizableQuadrilateral;
-import wayoftime.bloodmagic.tile.TileAlchemyArray;
 
 public class BeaconAlchemyCircleRenderer extends AlchemyArrayRenderer
 {

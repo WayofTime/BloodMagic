@@ -13,9 +13,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
+import wayoftime.bloodmagic.common.tile.TileExplosiveCharge;
 import wayoftime.bloodmagic.entity.projectile.EntityShapedCharge;
-import wayoftime.bloodmagic.tile.TileExplosiveCharge;
-
 import net.minecraft.world.item.Item.Properties;
 
 public class ItemBlockShapedCharge extends BlockItem

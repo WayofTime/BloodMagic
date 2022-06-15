@@ -20,7 +20,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
-import wayoftime.bloodmagic.tile.TileAlchemyArray;
+import wayoftime.bloodmagic.common.tile.TileAlchemyArray;
 
 public class ItemArcaneAshes extends Item
 {

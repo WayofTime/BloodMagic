@@ -30,7 +30,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
-import wayoftime.bloodmagic.tile.TileAlchemicalReactionChamber;
+import wayoftime.bloodmagic.common.tile.TileAlchemicalReactionChamber;
 
 public class BlockAlchemicalReactionChamber extends Block implements EntityBlock
 {

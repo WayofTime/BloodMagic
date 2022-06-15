@@ -24,7 +24,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.gui.GuiUtils;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.common.item.inventory.ContainerFilter;
+import wayoftime.bloodmagic.common.container.item.ContainerFilter;
 import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
 import wayoftime.bloodmagic.network.RouterFilterPacket;
 import wayoftime.bloodmagic.util.GhostItemHelper;

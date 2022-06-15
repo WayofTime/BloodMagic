@@ -3,12 +3,12 @@ package wayoftime.bloodmagic.client.model;
 import javax.annotation.Nullable;
 
 import net.minecraft.world.level.block.state.BlockState;
+import wayoftime.bloodmagic.common.tile.TileMimic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockAndTintGetter;
-import wayoftime.bloodmagic.tile.TileMimic;
 
 public class MimicColor implements BlockColor
 {

@@ -3,7 +3,7 @@ package wayoftime.bloodmagic.common.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import wayoftime.bloodmagic.tile.TileVeinMineCharge;
+import wayoftime.bloodmagic.common.tile.TileVeinMineCharge;
 
 public class BlockVeinMineCharge extends BlockShapedExplosive
 {

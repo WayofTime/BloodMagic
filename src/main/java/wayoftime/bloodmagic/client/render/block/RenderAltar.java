@@ -24,7 +24,7 @@ import wayoftime.bloodmagic.client.render.BloodMagicRenderer;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer.Model3D;
 import wayoftime.bloodmagic.client.render.RenderResizableCuboid;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
-import wayoftime.bloodmagic.tile.TileAltar;
+import wayoftime.bloodmagic.common.tile.TileAltar;
 
 public class RenderAltar extends BlockEntityRenderer<TileAltar>
 {

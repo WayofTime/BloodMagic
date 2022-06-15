@@ -21,7 +21,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import wayoftime.bloodmagic.api.compat.IAltarReader;
-import wayoftime.bloodmagic.tile.TileAltar;
+import wayoftime.bloodmagic.common.tile.TileAltar;
 import wayoftime.bloodmagic.util.Utils;
 
 public class BlockAltar extends Block implements EntityBlock

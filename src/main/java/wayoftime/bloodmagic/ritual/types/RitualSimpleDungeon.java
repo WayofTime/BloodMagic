@@ -24,13 +24,13 @@ import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.block.type.PillarCapType;
 import wayoftime.bloodmagic.common.dimension.DungeonDimensionHelper;
 import wayoftime.bloodmagic.common.item.ItemActivationCrystal;
+import wayoftime.bloodmagic.common.tile.TileInversionPillar;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.ritual.IMasterRitualStone;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.ritual.RitualRegister;
 import wayoftime.bloodmagic.structures.DungeonSynthesizer;
-import wayoftime.bloodmagic.tile.TileInversionPillar;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 
 @RitualRegister("simple_dungeon")

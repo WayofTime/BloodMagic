@@ -20,12 +20,12 @@ import net.minecraftforge.common.util.LazyOptional;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BlockRitualStone;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.common.tile.TileMasterRitualStone;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.ritual.IRitualStone;
 import wayoftime.bloodmagic.ritual.IRitualStone.Tile;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
-import wayoftime.bloodmagic.tile.TileMasterRitualStone;
 
 public class RitualHelper
 {
