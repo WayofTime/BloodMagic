@@ -15,9 +15,15 @@
     },
     {
       "type": "crafting_soulforge",
+      "heading": "Demon Crucible",
+      "recipe": "bloodmagic:soulforge/demon_crucible",
+      "text": "This will consume will fom whatever item is fed into it, and pump it into the $(thing)chunk$(). If it completely exhausts a piece of Demon Will or a Demon Crystal, it will destroy it once it's empty. Will Crystals will only be consumed when there is space in the aura for them. Other sources will be burned a bit at a time."
+    },
+    {
+      "type": "crafting_soulforge",
       "heading": "Demon Crystallizer",
       "recipe": "bloodmagic:soulforge/demon_crystallizer",
-      "text": "This will slowly consume $(l:bloodmagic:demon_will/will_manipulation/demon_will)Demon Will$() from the $(l:bloodmagic:demon_will/will_manipulation/aura)Aura$() to produce $(item)Will Crystals$(). The first spire costs 100 $(raw)Will$() to form, and all subsequent spires cost 40 each, but can be burned for 50 in the $(item)Demon Crucible$(), for a net gain of 10. The largest $(item)Crystal Cluster$() can be up to 7 spires."
+      "text": "This will slowly consume $(l:bloodmagic:demon_will/will_manipulation/demon_will)Demon Will$() from the $(l:bloodmagic:demon_will/will_manipulation/aura)Aura$() to produce $(item)Will Crystals$(). The first spire costs 100 $(raw)Will$() to form, and all subsequent spires cost 45 each, but can be burned for 50 in the $(item)Demon Crucible$(), for a net gain of 5. The largest $(item)Crystal Cluster$() can be up to 7 spires."
     },
     {
       "type": "text",
