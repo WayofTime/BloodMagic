@@ -21,17 +21,24 @@
     {
       "type": "bloodmagic:ritual_data",
       "ritual": "grounding",
-      "page_type": "corrosive"
+      "page_type": "corrosive",
+      "text":"Behaves similarly to the $(l:bloodmagic:alchemy_table/potion_flasks/blood_magic/suspended)Suspended$() effect."
     },
     {
       "type": "bloodmagic:ritual_data",
       "ritual": "grounding",
-      "page_type": "vengeful"
+      "page_type": "vengeful",
+      "text_overrides": [
+        ["Levitation", "l:bloodmagic:alchemy_table/potion_flasks/vanilla/levitation"]
+      ]
     },
     {
       "type": "bloodmagic:ritual_data",
       "ritual": "grounding",
-      "page_type": "destructive"
+      "page_type": "destructive",
+      "text_overrides": [
+        ["Heavy Heart", "l:bloodmagic:alchemy_table/potion_flasks/blood_magic/heavy_heart"]
+      ]
     },
     {
       "type": "bloodmagic:ritual_data",
