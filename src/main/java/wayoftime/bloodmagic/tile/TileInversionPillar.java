@@ -2,43 +2,40 @@ package wayoftime.bloodmagic.tile;
 
 import java.util.UUID;
 
-import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.CommandSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.Vec2;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.core.Registry;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.world.level.Level;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
 import wayoftime.bloodmagic.tile.base.TileBase;
 import wayoftime.bloodmagic.util.Constants;
 
 public class TileInversionPillar extends TileBase implements CommandSource
 {
-	@ObjectHolder("bloodmagic:inversion_pillar")
-	public static BlockEntityType<TileInversionPillar> TYPE;
-
 	protected BlockPos teleportPos = BlockPos.ZERO;
 	protected ResourceKey<Level> destinationKey;
 
-	public TileInversionPillar(BlockEntityType<?> type)
+	public TileInversionPillar(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
-		super(type);
+		super(type, pos, state);
 	}
 
-	public TileInversionPillar()
+	public TileInversionPillar(BlockPos pos, BlockState state)
 	{
-		this(TYPE);
+		this(BloodMagicTileEntities.INVERSION_PILLAR_TYPE.get(), pos, state);
 	}
 
 	public void setDestination(Level destinationWorld, BlockPos destinationPos)

@@ -4,13 +4,13 @@ import java.util.Optional;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
@@ -88,7 +88,7 @@ public class ContainerAlchemicalReactionChamber extends AbstractContainerMenu
 				slot.onQuickCraft(itemstack1, itemstack);
 			} else if (index >= 9) // Attempting to transfer from main inventory
 			{
-				if (itemstack1.getItem().is(BloodMagicTags.ARC_TOOL)) // Try the tool slot first
+				if (itemstack1.is(BloodMagicTags.ARC_TOOL)) // Try the tool slot first
 				{
 					if (!this.moveItemStackTo(itemstack1, 0, 1, false))
 					{
@@ -150,7 +150,7 @@ public class ContainerAlchemicalReactionChamber extends AbstractContainerMenu
 		@Override
 		public boolean mayPlace(ItemStack itemStack)
 		{
-			return itemStack.getItem().is(BloodMagicTags.ARC_TOOL);
+			return itemStack.is(BloodMagicTags.ARC_TOOL);
 		}
 	}
 

@@ -1,14 +1,14 @@
 package wayoftime.bloodmagic.tile;
 
-import static net.minecraft.state.properties.BlockStateProperties.FACING;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.registries.ObjectHolder;
+import wayoftime.bloodmagic.common.block.BlockSpikeTrap;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.tile.base.TileTicking;
 
@@ -38,17 +38,17 @@ public class TileSpikeTrap extends TileTicking
 			return;
 		if (!level.isClientSide)
 		{
-			boolean flag = getBlockState().getValue(ACTIVE);
-			BlockPos newPos = worldPosition.relative(getBlockState().getValue(FACING));
+			boolean flag = getBlockState().getValue(BlockSpikeTrap.ACTIVE);
+			BlockPos newPos = worldPosition.relative(getBlockState().getValue(BlockStateProperties.FACING));
 			if (flag != level.hasNeighborSignal(worldPosition))
 			{
-				level.setBlock(worldPosition, getBlockState().cycle(ACTIVE), 2);
+				level.setBlock(worldPosition, getBlockState().cycle(BlockSpikeTrap.ACTIVE), 2);
 			}
 			if (flag)
 			{
 				if (level.getBlockState(newPos).isAir())
 				{
-					level.setBlockAndUpdate(newPos, BloodMagicBlocks.SPIKES.get().defaultBlockState().setValue(FACING, getBlockState().getValue(FACING)));
+					level.setBlockAndUpdate(newPos, BloodMagicBlocks.SPIKES.get().defaultBlockState().setValue(BlockStateProperties.FACING, getBlockState().getValue(BlockStateProperties.FACING)));
 					level.playSound(null, worldPosition, SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.3f, 0.6f);
 				}
 			} else if (level.getBlockState(newPos).getBlock() == BloodMagicBlocks.SPIKES.get())

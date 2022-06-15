@@ -40,10 +40,10 @@ public class BloodMagicTileEntities
 	public static final RegistryObject<BlockEntityType<TileOutputRoutingNode>> OUTPUT_ROUTING_NODE_TYPE = TILE_ENTITIES.register("outputroutingnode", () -> BlockEntityType.Builder.of(TileOutputRoutingNode::new, BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get()).build(null));
 	public static final RegistryObject<BlockEntityType<TileMasterRoutingNode>> MASTER_ROUTING_NODE_TYPE = TILE_ENTITIES.register("masterroutingnode", () -> BlockEntityType.Builder.of(TileMasterRoutingNode::new, BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get()).build(null));
 
-//	event.getRegistry().register(BlockEntityType.Builder.of(TileTeleposer::new, BloodMagicBlocks.TELEPOSER.get()).build(null).setRegistryName("teleposer"));
-//	event.getRegistry().register(BlockEntityType.Builder.of(TileSpectral::new, BloodMagicBlocks.SPECTRAL.get()).build(null).setRegistryName("spectral"));
-//
-//	event.getRegistry().register(BlockEntityType.Builder.of(TileDungeonController::new, BloodMagicBlocks.DUNGEON_CONTROLLER.get()).build(null).setRegistryName("dungeon_controller"));
-//	event.getRegistry().register(BlockEntityType.Builder.of(TileDungeonSeal::new, BloodMagicBlocks.DUNGEON_SEAL.get()).build(null).setRegistryName("dungeon_seal"));
-//	event.getRegistry().register(BlockEntityType.Builder.of(TileInversionPillar::new, BloodMagicBlocks.INVERSION_PILLAR.get()).build(null).setRegistryName("inversion_pillar"));
+	public static final RegistryObject<BlockEntityType<TileTeleposer>> TELEPOSER_TYPE = TILE_ENTITIES.register("teleposer", () -> BlockEntityType.Builder.of(TileTeleposer::new, BloodMagicBlocks.TELEPOSER.get()).build(null));
+	public static final RegistryObject<BlockEntityType<TileSpectral>> SPECTRAL_TYPE = TILE_ENTITIES.register("spectral", () -> BlockEntityType.Builder.of(TileSpectral::new, BloodMagicBlocks.SPECTRAL.get()).build(null));
+
+	public static final RegistryObject<BlockEntityType<TileDungeonController>> DUNGEON_CONTROLLER_TYPE = TILE_ENTITIES.register("dungeon_controller", () -> BlockEntityType.Builder.of(TileDungeonController::new, BloodMagicBlocks.DUNGEON_CONTROLLER.get()).build(null));
+	public static final RegistryObject<BlockEntityType<TileDungeonSeal>> DUNGEON_SEAL_TYPE = TILE_ENTITIES.register("dungeon_seal", () -> BlockEntityType.Builder.of(TileDungeonSeal::new, BloodMagicBlocks.DUNGEON_SEAL.get()).build(null));
+	public static final RegistryObject<BlockEntityType<TileInversionPillar>> INVERSION_PILLAR_TYPE = TILE_ENTITIES.register("inversion_pillar", () -> BlockEntityType.Builder.of(TileInversionPillar::new, BloodMagicBlocks.INVERSION_PILLAR.get()).build(null));
 }

@@ -3,24 +3,21 @@ package wayoftime.bloodmagic.tile;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.BlockPos;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraft.world.level.block.state.BlockState;
 import wayoftime.bloodmagic.structures.DungeonSynthesizer;
 import wayoftime.bloodmagic.tile.base.TileBase;
 import wayoftime.bloodmagic.util.Constants;
 
 public class TileDungeonSeal extends TileBase
 {
-	@ObjectHolder("bloodmagic:dungeon_seal")
-	public static BlockEntityType<TileDungeonSeal> TYPE;
-
 	public BlockPos controllerPos = BlockPos.ZERO;
 	public BlockPos doorPos = BlockPos.ZERO;
 	public Direction doorDirection = Direction.NORTH;
@@ -28,14 +25,14 @@ public class TileDungeonSeal extends TileBase
 
 	public List<ResourceLocation> potentialRoomTypes = new ArrayList<>();
 
-	public TileDungeonSeal(BlockEntityType<?> type)
+	public TileDungeonSeal(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
-		super(type);
+		super(type, pos, state);
 	}
 
-	public TileDungeonSeal()
+	public TileDungeonSeal(BlockPos pos, BlockState state)
 	{
-		this(TYPE);
+		this(BloodMagicTileEntities.DUNGEON_SEAL_TYPE.get(), pos, state);
 	}
 
 	public int requestRoomFromController(ItemStack heldStack)

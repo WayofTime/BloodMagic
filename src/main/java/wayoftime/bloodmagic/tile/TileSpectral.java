@@ -1,15 +1,14 @@
 package wayoftime.bloodmagic.tile;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraft.world.level.block.state.BlockState;
 import wayoftime.bloodmagic.common.block.BlockSpectral;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.block.type.SpectralBlockType;
@@ -17,19 +16,16 @@ import wayoftime.bloodmagic.tile.base.TileBase;
 
 public class TileSpectral extends TileBase
 {
-	@ObjectHolder("bloodmagic:spectral")
-	public static BlockEntityType<TileSpectral> TYPE;
-
 	public BlockState storedBlock;
 
-	public TileSpectral(BlockEntityType<?> type)
+	public TileSpectral(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
-		super(type);
+		super(type, pos, state);
 	}
 
-	public TileSpectral()
+	public TileSpectral(BlockPos pos, BlockState state)
 	{
-		this(TYPE);
+		this(BloodMagicTileEntities.SPECTRAL_TYPE.get(), pos, state);
 	}
 
 	public static void createOrRefreshSpectralBlock(Level world, BlockPos pos)

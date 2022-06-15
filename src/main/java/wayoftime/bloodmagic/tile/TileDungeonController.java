@@ -2,16 +2,16 @@ package wayoftime.bloodmagic.tile;
 
 import java.util.List;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraft.world.level.block.state.BlockState;
 import wayoftime.bloodmagic.common.item.dungeon.IDungeonKey;
 import wayoftime.bloodmagic.structures.DungeonSynthesizer;
 import wayoftime.bloodmagic.tile.base.TileBase;
@@ -19,19 +19,16 @@ import wayoftime.bloodmagic.util.Constants;
 
 public class TileDungeonController extends TileBase
 {
-	@ObjectHolder("bloodmagic:dungeon_controller")
-	public static BlockEntityType<TileDungeonController> TYPE;
-
 	private DungeonSynthesizer dungeon = null;
 
-	public TileDungeonController(BlockEntityType<?> type)
+	public TileDungeonController(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
-		super(type);
+		super(type, pos, state);
 	}
 
-	public TileDungeonController()
+	public TileDungeonController(BlockPos pos, BlockState state)
 	{
-		this(TYPE);
+		this(BloodMagicTileEntities.DUNGEON_CONTROLLER_TYPE.get(), pos, state);
 	}
 
 	public void setDungeonSynthesizer(DungeonSynthesizer dungeon)

@@ -3,31 +3,30 @@ package wayoftime.bloodmagic.tile;
 import java.util.List;
 import java.util.UUID;
 
-import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.CommandSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.phys.AABB;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.Vec2;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.world.level.Level;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
 import wayoftime.bloodmagic.common.item.ITeleposerFocus;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.core.data.SoulTicket;
@@ -36,11 +35,8 @@ import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.Utils;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 
-public class TileTeleposer extends TileInventory implements TickableBlockEntity, MenuProvider, CommandSource
+public class TileTeleposer extends TileInventory implements MenuProvider, CommandSource
 {
-	@ObjectHolder("bloodmagic:teleposer")
-	public static BlockEntityType<TileTeleposer> TYPE;
-
 	int previousInput = 0;
 
 	public static final int FOCUS_SLOT = 0;
@@ -48,17 +44,16 @@ public class TileTeleposer extends TileInventory implements TickableBlockEntity,
 	public static final int MAX_UNIT_COST = 1000;
 	public static final int MAX_TOTAL_COST = 10000;
 
-	public TileTeleposer(BlockEntityType<?> type)
+	public TileTeleposer(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
-		super(type, 1, "teleposer");
+		super(type, 1, "teleposer", pos, state);
 	}
 
-	public TileTeleposer()
+	public TileTeleposer(BlockPos pos, BlockState state)
 	{
-		this(TYPE);
+		this(BloodMagicTileEntities.TELEPOSER_TYPE.get(), pos, state);
 	}
 
-	@Override
 	public void tick()
 	{
 		if (level.isClientSide)
@@ -153,7 +148,7 @@ public class TileTeleposer extends TileInventory implements TickableBlockEntity,
 				} else
 				{
 					entity.teleportTo(newPosVec.x, newPosVec.y, newPosVec.z);
-					entity.setLevel(linkedWorld);
+					entity.level = linkedWorld;
 				}
 
 				uses++;
@@ -169,7 +164,8 @@ public class TileTeleposer extends TileInventory implements TickableBlockEntity,
 				} else
 				{
 					entity.teleportTo(newPosVec.x, newPosVec.y, newPosVec.z);
-					entity.setLevel(level);
+//					entity.setLevel(level);
+					entity.level = level;
 				}
 
 				uses++;
