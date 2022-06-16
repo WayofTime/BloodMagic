@@ -16,6 +16,11 @@
     {
       "type": "bloodmagic:ritual_data",
       "ritual": "felling",
+      "page_type": "fellingRange"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "felling",
       "page_type": "chest"
     }
   ]
