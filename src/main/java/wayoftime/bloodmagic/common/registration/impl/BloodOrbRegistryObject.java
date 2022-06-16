@@ -1,8 +1,8 @@
 package wayoftime.bloodmagic.common.registration.impl;
 
-import net.minecraftforge.fml.RegistryObject;
-import wayoftime.bloodmagic.common.registration.WrappedRegistryObject;
+import net.minecraftforge.registries.RegistryObject;
 import wayoftime.bloodmagic.common.item.BloodOrb;
+import wayoftime.bloodmagic.common.registration.WrappedRegistryObject;
 
 public class BloodOrbRegistryObject<ORB extends BloodOrb> extends WrappedRegistryObject<ORB>
 {

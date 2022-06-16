@@ -2,23 +2,22 @@ package wayoftime.bloodmagic.client.render.block;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.ItemRenderer;
-import com.mojang.blaze3d.platform.Lighting;
-import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
-import com.mojang.math.Vector3f;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer.Model3D;
@@ -26,11 +25,17 @@ import wayoftime.bloodmagic.client.render.RenderResizableCuboid;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.tile.TileAltar;
 
-public class RenderAltar extends BlockEntityRenderer<TileAltar>
+//public class BeaconRenderer implements BlockEntityRenderer<BeaconBlockEntity> {
+//	   public static final ResourceLocation BEAM_LOCATION = new ResourceLocation("textures/entity/beacon_beam.png");
+//	   public static final int MAX_RENDER_Y = 1024;
+//
+//	   public BeaconRenderer(BlockEntityRendererProvider.Context p_173529_) {
+
+public class RenderAltar implements BlockEntityRenderer<TileAltar>
 {
-	public RenderAltar(BlockEntityRenderDispatcher rendererDispatcherIn)
+	public RenderAltar(BlockEntityRendererProvider.Context context)
 	{
-		super(rendererDispatcherIn);
+//		super(rendererDispatcherIn);
 	}
 
 	private static final float MIN_HEIGHT = 0.499f;
@@ -83,10 +88,15 @@ public class RenderAltar extends BlockEntityRenderer<TileAltar>
 
 			matrixStack.mulPose(Vector3f.YP.rotationDegrees(rotation));
 			matrixStack.scale(0.5F, 0.5F, 0.5F);
-			Lighting.turnBackOn();
-			BakedModel ibakedmodel = itemRenderer.getModel(stack, tileAltar.getLevel(), (LivingEntity) null);
+//			Lighting.turnBackOn();
+			BakedModel ibakedmodel = itemRenderer.getModel(stack, tileAltar.getLevel(), (LivingEntity) null, 1);
 			itemRenderer.render(stack, ItemTransforms.TransformType.FIXED, true, matrixStack, buffer, combinedLightIn, combinedOverlayIn, ibakedmodel); // renderItem
-			Lighting.turnOff();
+
+//			int k = this.getLightVal(p_115076_, 15728880, p_115081_);
+//            p_115079_.scale(0.5F, 0.5F, 0.5F);
+//            this.itemRenderer.renderStatic(itemstack, ItemTransforms.TransformType.FIXED, k, OverlayTexture.NO_OVERLAY, p_115079_, p_115080_, p_115076_.getId());
+
+//			Lighting.turnOff();
 
 			matrixStack.popPose();
 		}
@@ -158,8 +168,7 @@ public class RenderAltar extends BlockEntityRenderer<TileAltar>
 		@Override
 		public boolean equals(Object data)
 		{
-			return super.equals(data) && data instanceof FluidRenderData
-					&& fluidType.isFluidEqual(((FluidRenderData) data).fluidType);
+			return super.equals(data) && data instanceof FluidRenderData && fluidType.isFluidEqual(((FluidRenderData) data).fluidType);
 		}
 	}
 //

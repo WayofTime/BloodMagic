@@ -5,31 +5,29 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SplashPotionItem;
 import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -45,19 +43,18 @@ import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
+import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.event.world.BlockEvent.BlockToolInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
-import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodOrb;
 import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.IBloodOrb;
 import wayoftime.bloodmagic.common.item.ItemExperienceBook;
-import wayoftime.bloodmagic.common.item.ItemLivingArmor;
+import wayoftime.bloodmagic.common.item.ItemLavaCrystal;
 import wayoftime.bloodmagic.common.item.ItemRitualDiviner;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
@@ -82,6 +79,16 @@ import wayoftime.bloodmagic.will.DemonWillHolder;
 public class GenericHandler
 {
 	public static Map<UUID, Double> bounceMap = new HashMap<>();
+
+	@SubscribeEvent
+	public void onItemBurn(FurnaceFuelBurnTimeEvent event)
+	{
+		ItemStack burnStack = event.getItemStack();
+		if (!burnStack.isEmpty() && burnStack.getItem() instanceof ItemLavaCrystal)
+		{
+			event.setBurnTime(((ItemLavaCrystal) burnStack.getItem()).getBurnTime(burnStack));
+		}
+	}
 
 	@SubscribeEvent
 	public void onLivingFall(LivingFallEvent event)
@@ -181,7 +188,7 @@ public class GenericHandler
 	{
 		if (event.getItemStack().getItem() instanceof ItemRitualDiviner)
 		{
-			BloodMagicPacketHandler.INSTANCE.sendToServer(new CycleRitualDivinerPacket(event.getPlayer().inventory.selected));
+			BloodMagicPacketHandler.INSTANCE.sendToServer(new CycleRitualDivinerPacket(event.getPlayer().getInventory().selected));
 		}
 	}
 
@@ -378,14 +385,18 @@ public class GenericHandler
 		}
 	}
 
-	@SubscribeEvent
-	public void onHoe(BlockToolInteractEvent event)
-	{
-		if (event.getToolType() == ToolType.HOE && Tags.Blocks.NETHERRACK.contains(event.getState().getBlock()))
-		{
-			event.setFinalState(BloodMagicBlocks.NETHER_SOIL.get().defaultBlockState());
-		}
-	}
+//	@SubscribeEvent
+//	public void onHoe(BlockToolModificationEvent event)
+//	{
+//		if(!event.isSimulated())
+//		{
+//			if (event.getToolType() == ToolType.HOE && Tags.Blocks.NETHERRACK.contains(event.getState().getBlock()))
+//			{
+//				event.setFinalState(BloodMagicBlocks.NETHER_SOIL.get().defaultBlockState());
+//			}
+//		}
+//		
+//	}
 
 	// Experience Tome
 	@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -488,14 +499,14 @@ public class GenericHandler
 		if (event.getPotionEffect().getEffect() == BloodMagicPotions.FLIGHT && event.getEntityLiving() instanceof Player)
 		{
 			Player player = (Player) event.getEntityLiving();
-			player.abilities.mayfly = true;
+			player.getAbilities().mayfly = true;
 			if (!prevFlySpeedMap.containsKey(player.getUUID()))
 			{
-				prevFlySpeedMap.put(player.getUUID(), player.abilities.getFlyingSpeed());
+				prevFlySpeedMap.put(player.getUUID(), player.getAbilities().getFlyingSpeed());
 			}
 
 			if (event.getEntity().level.isClientSide)
-				player.abilities.setFlyingSpeed(getFlySpeedForFlightLevel(event.getPotionEffect().getAmplifier()));
+				player.getAbilities().setFlyingSpeed(getFlySpeedForFlightLevel(event.getPotionEffect().getAmplifier()));
 			player.onUpdateAbilities();
 		}
 
@@ -506,12 +517,12 @@ public class GenericHandler
 	{
 		if (event.getPotionEffect().getEffect() == BloodMagicPotions.FLIGHT && event.getEntityLiving() instanceof Player)
 		{
-			((Player) event.getEntityLiving()).abilities.mayfly = ((Player) event.getEntityLiving()).isCreative();
-			((Player) event.getEntityLiving()).abilities.flying = false;
+			((Player) event.getEntityLiving()).getAbilities().mayfly = ((Player) event.getEntityLiving()).isCreative();
+			((Player) event.getEntityLiving()).getAbilities().flying = false;
 
 			if (event.getEntity().level.isClientSide)
 			{
-				((Player) event.getEntityLiving()).abilities.setFlyingSpeed(prevFlySpeedMap.getOrDefault((((Player) event.getEntityLiving()).getUUID()), getFlySpeedForFlightLevel(-1)));
+				((Player) event.getEntityLiving()).getAbilities().setFlyingSpeed(prevFlySpeedMap.getOrDefault((((Player) event.getEntityLiving()).getUUID()), getFlySpeedForFlightLevel(-1)));
 				prevFlySpeedMap.remove(((Player) event.getEntityLiving()).getUUID());
 			}
 
@@ -559,12 +570,12 @@ public class GenericHandler
 			if (player.hasEffect(BloodMagicPotions.FLIGHT))
 			{
 				player.fallDistance = 0;
-				if (!player.abilities.mayfly || !prevFlySpeedMap.containsKey(player.getUUID()))
+				if (!player.getAbilities().mayfly || !prevFlySpeedMap.containsKey(player.getUUID()))
 				{
-					prevFlySpeedMap.put(player.getUUID(), player.abilities.getFlyingSpeed());
-					player.abilities.mayfly = true;
+					prevFlySpeedMap.put(player.getUUID(), player.getAbilities().getFlyingSpeed());
+					player.getAbilities().mayfly = true;
 					if (player.level.isClientSide)
-						player.abilities.setFlyingSpeed(getFlySpeedForFlightLevel(player.getEffect(BloodMagicPotions.FLIGHT).getAmplifier()));
+						player.getAbilities().setFlyingSpeed(getFlySpeedForFlightLevel(player.getEffect(BloodMagicPotions.FLIGHT).getAmplifier()));
 					player.onUpdateAbilities();
 				}
 			}
@@ -1056,38 +1067,37 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onLivingEquipmentChange(LivingEquipmentChangeEvent event)
 	{
-
-		if (BloodMagic.curiosLoaded)
-		{ // Without Curios, there is nothing this cares about.
-			if (event.getFrom().getItem() instanceof ItemLivingArmor || event.getTo().getItem() instanceof ItemLivingArmor)
-			{ // Armor change involves Living Armor
-				LivingEntity entity = event.getEntityLiving();
-				if (entity instanceof Player)
-				{ // is a player
-					Player player = (Player) entity;
-					UUID uuid = player.getUUID();
-					if (LivingUtil.hasFullSet(player))
-					{ // Player has a full set
-						LivingStats stats = LivingStats.fromPlayer(player);
-						if (stats != null)
-						{
-							int curiosLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_CURIOS_SOCKET.get().getKey());
-							if (curiosLevelMap.getOrDefault(uuid, 0) != curiosLevel)
-							{ // Cache level does not match new level
-								curiosLevelMap.put(uuid, BloodMagic.curiosCompat.recalculateCuriosSlots(player));
-							}
-						} else if (curiosLevelMap.getOrDefault(uuid, 0) != 0)
-						{
-							curiosLevelMap.put(uuid, 0);
-						}
-
-					} else if (curiosLevelMap.getOrDefault(uuid, 0) != 0)
-					{ // cache has an upgrade that needs to be removed
-						curiosLevelMap.put(uuid, BloodMagic.curiosCompat.recalculateCuriosSlots(player));
-					}
-				}
-			}
-		}
+//		if (BloodMagic.curiosLoaded)
+//		{ // Without Curios, there is nothing this cares about.
+//			if (event.getFrom().getItem() instanceof ItemLivingArmor || event.getTo().getItem() instanceof ItemLivingArmor)
+//			{ // Armor change involves Living Armor
+//				LivingEntity entity = event.getEntityLiving();
+//				if (entity instanceof Player)
+//				{ // is a player
+//					Player player = (Player) entity;
+//					UUID uuid = player.getUUID();
+//					if (LivingUtil.hasFullSet(player))
+//					{ // Player has a full set
+//						LivingStats stats = LivingStats.fromPlayer(player);
+//						if (stats != null)
+//						{
+//							int curiosLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_CURIOS_SOCKET.get().getKey());
+//							if (curiosLevelMap.getOrDefault(uuid, 0) != curiosLevel)
+//							{ // Cache level does not match new level
+//								curiosLevelMap.put(uuid, BloodMagic.curiosCompat.recalculateCuriosSlots(player));
+//							}
+//						} else if (curiosLevelMap.getOrDefault(uuid, 0) != 0)
+//						{
+//							curiosLevelMap.put(uuid, 0);
+//						}
+//
+//					} else if (curiosLevelMap.getOrDefault(uuid, 0) != 0)
+//					{ // cache has an upgrade that needs to be removed
+//						curiosLevelMap.put(uuid, BloodMagic.curiosCompat.recalculateCuriosSlots(player));
+//					}
+//				}
+//			}
+//		}
 	}
 
 	private static float getCharge(int useTime, ItemStack stack)

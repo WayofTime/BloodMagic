@@ -35,6 +35,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -128,29 +129,28 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 //		super.tick();
 		this.baseTick();
 		boolean flag = this.getNoClip();
-		flag = false;
-		Vec3 vector3d = this.getDeltaMovement();
+		Vec3 vec3 = this.getDeltaMovement();
 		if (this.xRotO == 0.0F && this.yRotO == 0.0F)
 		{
-			float f = Mth.sqrt(getHorizontalDistanceSqr(vector3d));
-			this.yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (double) (180F / (float) Math.PI));
-			this.xRot = (float) (Mth.atan2(vector3d.y, (double) f) * (double) (180F / (float) Math.PI));
-			this.yRotO = this.yRot;
-			this.xRotO = this.xRot;
+			double d0 = vec3.horizontalDistance();
+			this.setYRot((float) (Mth.atan2(vec3.x, vec3.z) * (double) (180F / (float) Math.PI)));
+			this.setXRot((float) (Mth.atan2(vec3.y, d0) * (double) (180F / (float) Math.PI)));
+			this.yRotO = this.getYRot();
+			this.xRotO = this.getXRot();
 		}
 
 		BlockPos blockpos = this.blockPosition();
 		BlockState blockstate = this.level.getBlockState(blockpos);
-		if (!blockstate.isAir(this.level, blockpos) && !flag)
+		if (!blockstate.isAir() && !flag)
 		{
 			VoxelShape voxelshape = blockstate.getCollisionShape(this.level, blockpos);
 			if (!voxelshape.isEmpty())
 			{
-				Vec3 vector3d1 = this.position();
+				Vec3 vec31 = this.position();
 
-				for (AABB axisalignedbb : voxelshape.toAabbs())
+				for (AABB aabb : voxelshape.toAabbs())
 				{
-					if (axisalignedbb.move(blockpos).contains(vector3d1))
+					if (aabb.move(blockpos).contains(vec31))
 					{
 						this.inGround = true;
 						break;
@@ -164,12 +164,10 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 			--this.arrowShake;
 		}
 
-		if (this.isInWaterOrRain())
+		if (this.isInWaterOrRain() || blockstate.is(Blocks.POWDER_SNOW))
 		{
 			this.clearFire();
 		}
-
-//		this.inBlockState.getBlock()
 
 		if (this.inGround && !flag)
 		{
@@ -185,97 +183,246 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 		} else
 		{
 			this.timeInGround = 0;
-			Vec3 vector3d2 = this.position();
-			Vec3 vector3d3 = vector3d2.add(vector3d);
-			HitResult raytraceresult = this.level.clip(new ClipContext(vector3d2, vector3d3, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
-			if (raytraceresult.getType() != HitResult.Type.MISS)
+			Vec3 vec32 = this.position();
+			Vec3 vec33 = vec32.add(vec3);
+			HitResult hitresult = this.level.clip(new ClipContext(vec32, vec33, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+			if (hitresult.getType() != HitResult.Type.MISS)
 			{
-				vector3d3 = raytraceresult.getLocation();
+				vec33 = hitresult.getLocation();
 			}
 
-			while (!this.removed)
+			while (!this.isRemoved())
 			{
-				EntityHitResult entityraytraceresult = this.rayTraceEntities(vector3d2, vector3d3);
-				if (entityraytraceresult != null)
+				EntityHitResult entityhitresult = this.rayTraceEntities(vec32, vec33);
+				if (entityhitresult != null)
 				{
-					raytraceresult = entityraytraceresult;
+					hitresult = entityhitresult;
 				}
 
-				if (raytraceresult != null && raytraceresult.getType() == HitResult.Type.ENTITY)
+				if (hitresult != null && hitresult.getType() == HitResult.Type.ENTITY)
 				{
-					Entity entity = ((EntityHitResult) raytraceresult).getEntity();
+					Entity entity = ((EntityHitResult) hitresult).getEntity();
 					Entity entity1 = this.getOwner();
 					if (entity instanceof Player && entity1 instanceof Player && !((Player) entity1).canHarmPlayer((Player) entity))
 					{
-						raytraceresult = null;
-						entityraytraceresult = null;
+						hitresult = null;
+						entityhitresult = null;
 					}
 				}
 
-				if (raytraceresult != null && raytraceresult.getType() != HitResult.Type.MISS && !flag && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult))
+				if (hitresult != null && hitresult.getType() != HitResult.Type.MISS && !flag && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, hitresult))
 				{
-					this.onHit(raytraceresult);
+					this.onHit(hitresult);
 					this.hasImpulse = true;
 				}
 
-				if (entityraytraceresult == null || this.getPierceLevel() <= 0)
+				if (entityhitresult == null || this.getPierceLevel() <= 0)
 				{
 					break;
 				}
 
-				raytraceresult = null;
+				hitresult = null;
 			}
 
-			vector3d = this.getDeltaMovement();
-			double d3 = vector3d.x;
-			double d4 = vector3d.y;
-			double d0 = vector3d.z;
+			vec3 = this.getDeltaMovement();
+			double d5 = vec3.x;
+			double d6 = vec3.y;
+			double d1 = vec3.z;
 			if (this.getIsCritical())
 			{
 				for (int i = 0; i < 4; ++i)
 				{
-					this.level.addParticle(ParticleTypes.CRIT, this.getX() + d3 * (double) i / 4.0D, this.getY() + d4 * (double) i / 4.0D, this.getZ() + d0 * (double) i / 4.0D, -d3, -d4 + 0.2D, -d0);
+					this.level.addParticle(ParticleTypes.CRIT, this.getX() + d5 * (double) i / 4.0D, this.getY() + d6 * (double) i / 4.0D, this.getZ() + d1 * (double) i / 4.0D, -d5, -d6 + 0.2D, -d1);
 				}
 			}
 
-			double d5 = this.getX() + d3;
-			double d1 = this.getY() + d4;
-			double d2 = this.getZ() + d0;
-			float f1 = Mth.sqrt(getHorizontalDistanceSqr(vector3d));
+			double d7 = this.getX() + d5;
+			double d2 = this.getY() + d6;
+			double d3 = this.getZ() + d1;
+			double d4 = vec3.horizontalDistance();
 			if (flag)
 			{
-				this.yRot = (float) (Mth.atan2(-d3, -d0) * (double) (180F / (float) Math.PI));
+				this.setYRot((float) (Mth.atan2(-d5, -d1) * (double) (180F / (float) Math.PI)));
 			} else
 			{
-				this.yRot = (float) (Mth.atan2(d3, d0) * (double) (180F / (float) Math.PI));
+				this.setYRot((float) (Mth.atan2(d5, d1) * (double) (180F / (float) Math.PI)));
 			}
 
-			this.xRot = (float) (Mth.atan2(d4, (double) f1) * (double) (180F / (float) Math.PI));
-			this.xRot = lerpRotation(this.xRotO, this.xRot);
-			this.yRot = lerpRotation(this.yRotO, this.yRot);
-			float f2 = 0.99F;
-			float f3 = 0.05F;
+			this.setXRot((float) (Mth.atan2(d6, d4) * (double) (180F / (float) Math.PI)));
+			this.setXRot(lerpRotation(this.xRotO, this.getXRot()));
+			this.setYRot(lerpRotation(this.yRotO, this.getYRot()));
+			float f = 0.99F;
+			float f1 = 0.05F;
 			if (this.isInWater())
 			{
 				for (int j = 0; j < 4; ++j)
 				{
-					float f4 = 0.25F;
-					this.level.addParticle(ParticleTypes.BUBBLE, d5 - d3 * 0.25D, d1 - d4 * 0.25D, d2 - d0 * 0.25D, d3, d4, d0);
+					float f2 = 0.25F;
+					this.level.addParticle(ParticleTypes.BUBBLE, d7 - d5 * 0.25D, d2 - d6 * 0.25D, d3 - d1 * 0.25D, d5, d6, d1);
 				}
 
-				f2 = this.getWaterDrag();
+				f = this.getWaterDrag();
 			}
 
-			this.setDeltaMovement(vector3d.scale((double) f2));
+			this.setDeltaMovement(vec3.scale((double) f));
 			if (!this.isNoGravity() && !flag)
 			{
-				Vec3 vector3d4 = this.getDeltaMovement();
-				this.setDeltaMovement(vector3d4.x, vector3d4.y - (double) 0.05F, vector3d4.z);
+				Vec3 vec34 = this.getDeltaMovement();
+				this.setDeltaMovement(vec34.x, vec34.y - (double) 0.05F, vec34.z);
 			}
 
-			this.setPos(d5, d1, d2);
+			this.setPos(d7, d2, d3);
 			this.checkInsideBlocks();
 		}
+//		boolean flag = this.getNoClip();
+//		flag = false;
+//		Vec3 vector3d = this.getDeltaMovement();
+//		if (this.xRotO == 0.0F && this.yRotO == 0.0F)
+//		{
+//			float f = Mth.sqrt(getHorizontalDistanceSqr(vector3d));
+//			this.yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (double) (180F / (float) Math.PI));
+//			this.xRot = (float) (Mth.atan2(vector3d.y, (double) f) * (double) (180F / (float) Math.PI));
+//			this.yRotO = this.yRot;
+//			this.xRotO = this.xRot;
+//		}
+//
+//		BlockPos blockpos = this.blockPosition();
+//		BlockState blockstate = this.level.getBlockState(blockpos);
+//		if (!blockstate.isAir(this.level, blockpos) && !flag)
+//		{
+//			VoxelShape voxelshape = blockstate.getCollisionShape(this.level, blockpos);
+//			if (!voxelshape.isEmpty())
+//			{
+//				Vec3 vector3d1 = this.position();
+//
+//				for (AABB axisalignedbb : voxelshape.toAabbs())
+//				{
+//					if (axisalignedbb.move(blockpos).contains(vector3d1))
+//					{
+//						this.inGround = true;
+//						break;
+//					}
+//				}
+//			}
+//		}
+//
+//		if (this.arrowShake > 0)
+//		{
+//			--this.arrowShake;
+//		}
+//
+//		if (this.isInWaterOrRain())
+//		{
+//			this.clearFire();
+//		}
+//
+////		this.inBlockState.getBlock()
+//
+//		if (this.inGround && !flag)
+//		{
+//			if (this.inBlockState != blockstate && this.shouldFall())
+//			{
+//				this.startFalling();
+//			} else if (!this.level.isClientSide)
+//			{
+//				this.tickDespawn();
+//			}
+//
+//			++this.timeInGround;
+//		} else
+//		{
+//			this.timeInGround = 0;
+//			Vec3 vector3d2 = this.position();
+//			Vec3 vector3d3 = vector3d2.add(vector3d);
+//			HitResult raytraceresult = this.level.clip(new ClipContext(vector3d2, vector3d3, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+//			if (raytraceresult.getType() != HitResult.Type.MISS)
+//			{
+//				vector3d3 = raytraceresult.getLocation();
+//			}
+//
+//			while (!this.removed)
+//			{
+//				EntityHitResult entityraytraceresult = this.rayTraceEntities(vector3d2, vector3d3);
+//				if (entityraytraceresult != null)
+//				{
+//					raytraceresult = entityraytraceresult;
+//				}
+//
+//				if (raytraceresult != null && raytraceresult.getType() == HitResult.Type.ENTITY)
+//				{
+//					Entity entity = ((EntityHitResult) raytraceresult).getEntity();
+//					Entity entity1 = this.getOwner();
+//					if (entity instanceof Player && entity1 instanceof Player && !((Player) entity1).canHarmPlayer((Player) entity))
+//					{
+//						raytraceresult = null;
+//						entityraytraceresult = null;
+//					}
+//				}
+//
+//				if (raytraceresult != null && raytraceresult.getType() != HitResult.Type.MISS && !flag && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult))
+//				{
+//					this.onHit(raytraceresult);
+//					this.hasImpulse = true;
+//				}
+//
+//				if (entityraytraceresult == null || this.getPierceLevel() <= 0)
+//				{
+//					break;
+//				}
+//
+//				raytraceresult = null;
+//			}
+//
+//			vector3d = this.getDeltaMovement();
+//			double d3 = vector3d.x;
+//			double d4 = vector3d.y;
+//			double d0 = vector3d.z;
+//			if (this.getIsCritical())
+//			{
+//				for (int i = 0; i < 4; ++i)
+//				{
+//					this.level.addParticle(ParticleTypes.CRIT, this.getX() + d3 * (double) i / 4.0D, this.getY() + d4 * (double) i / 4.0D, this.getZ() + d0 * (double) i / 4.0D, -d3, -d4 + 0.2D, -d0);
+//				}
+//			}
+//
+//			double d5 = this.getX() + d3;
+//			double d1 = this.getY() + d4;
+//			double d2 = this.getZ() + d0;
+//			float f1 = Mth.sqrt(getHorizontalDistanceSqr(vector3d));
+//			if (flag)
+//			{
+//				this.yRot = (float) (Mth.atan2(-d3, -d0) * (double) (180F / (float) Math.PI));
+//			} else
+//			{
+//				this.yRot = (float) (Mth.atan2(d3, d0) * (double) (180F / (float) Math.PI));
+//			}
+//
+//			this.xRot = (float) (Mth.atan2(d4, (double) f1) * (double) (180F / (float) Math.PI));
+//			this.xRot = lerpRotation(this.xRotO, this.xRot);
+//			this.yRot = lerpRotation(this.yRotO, this.yRot);
+//			float f2 = 0.99F;
+//			float f3 = 0.05F;
+//			if (this.isInWater())
+//			{
+//				for (int j = 0; j < 4; ++j)
+//				{
+//					float f4 = 0.25F;
+//					this.level.addParticle(ParticleTypes.BUBBLE, d5 - d3 * 0.25D, d1 - d4 * 0.25D, d2 - d0 * 0.25D, d3, d4, d0);
+//				}
+//
+//				f2 = this.getWaterDrag();
+//			}
+//
+//			this.setDeltaMovement(vector3d.scale((double) f2));
+//			if (!this.isNoGravity() && !flag)
+//			{
+//				Vec3 vector3d4 = this.getDeltaMovement();
+//				this.setDeltaMovement(vector3d4.x, vector3d4.y - (double) 0.05F, vector3d4.z);
+//			}
+//
+//			this.setPos(d5, d1, d2);
+//			this.checkInsideBlocks();
+//		}
 	}
 
 	@Override
@@ -381,7 +528,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 
 			if (this.piercedEntities.size() >= this.getPierceLevel() + 1)
 			{
-				this.remove();
+				this.discard();
 				return;
 			}
 
@@ -465,13 +612,13 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 			this.playSound(this.hitSound, 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
 			if (this.getPierceLevel() <= 0)
 			{
-				this.remove();
+				this.discard();
 			}
 		} else
 		{
 			entity.setRemainingFireTicks(k);
 			this.setDeltaMovement(this.getDeltaMovement().scale(-0.1D));
-			this.yRot += 180.0F;
+			this.setYRot(this.getYRot() + 180.0F);
 			this.yRotO += 180.0F;
 			if (!this.level.isClientSide && this.getDeltaMovement().lengthSqr() < 1.0E-7D)
 			{
@@ -480,7 +627,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 					this.spawnAtLocation(this.getArrowStack(), 0.1F);
 				}
 
-				this.remove();
+				this.discard();
 			}
 		}
 
@@ -494,8 +641,8 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 	{
 		if (!this.level.isClientSide && (this.inGround || this.getNoClip()) && this.arrowShake <= 0)
 		{
-			boolean flag = this.pickupStatus == AbstractArrow.Pickup.ALLOWED || this.pickupStatus == AbstractArrow.Pickup.CREATIVE_ONLY && entityIn.abilities.instabuild || this.getNoClip() && this.getOwner().getUUID() == entityIn.getUUID();
-			if (this.pickupStatus == AbstractArrow.Pickup.ALLOWED && !entityIn.inventory.add(this.getArrowStack()))
+			boolean flag = this.pickupStatus == AbstractArrow.Pickup.ALLOWED || this.pickupStatus == AbstractArrow.Pickup.CREATIVE_ONLY && entityIn.getAbilities().instabuild || this.getNoClip() && this.getOwner().getUUID() == entityIn.getUUID();
+			if (this.pickupStatus == AbstractArrow.Pickup.ALLOWED && !entityIn.getInventory().add(this.getArrowStack()))
 			{
 				flag = false;
 			}
@@ -506,7 +653,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 
 //				entityIn.onItemPickup(this, 1);
 				level.playSound(null, entityIn.getX(), entityIn.getY() + 0.5, entityIn.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, ((level.random.nextFloat() - level.random.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-				this.remove();
+				this.discard();
 			}
 
 		}
@@ -555,7 +702,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 		++this.ticksInGround;
 		if (this.ticksInGround >= 1200)
 		{
-			this.remove();
+			this.discard();
 		}
 
 	}

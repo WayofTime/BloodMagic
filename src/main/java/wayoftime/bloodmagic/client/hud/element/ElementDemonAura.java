@@ -4,15 +4,14 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.util.Utils;
 import wayoftime.bloodmagic.util.handler.event.ClientHandler;
-import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
 public class ElementDemonAura extends HUDElement
 {
@@ -32,7 +31,7 @@ public class ElementDemonAura extends HUDElement
 		Minecraft minecraft = Minecraft.getInstance();
 		Player player = minecraft.player;
 
-		minecraft.getTextureManager().bind(BAR_LOCATION);
+		minecraft.getTextureManager().bindForSetup(BAR_LOCATION);
 //		GlStateManager.color(1.0F, 1.0F, 1.0F);
 		this.blit(matrixStack, drawX, drawY, 0, 210, 80, 46);
 
@@ -43,7 +42,7 @@ public class ElementDemonAura extends HUDElement
 		{
 			i++;
 //			GlStateManager.color(1.0F, 1.0F, 1.0F);
-			minecraft.getTextureManager().bind(BAR_LOCATION);
+			minecraft.getTextureManager().bindForSetup(BAR_LOCATION);
 			int textureXOffset = (i > 3) ? (i - 3) : (3 - i);
 			int maxBarSize = 30 - 2 * textureXOffset;
 
@@ -69,7 +68,7 @@ public class ElementDemonAura extends HUDElement
 				matrixStack.translate(x - 2 * textureXOffset + 70, (y - 2), 0);
 				matrixStack.scale(0.5f, 0.5f, 1f);
 				minecraft.font.drawShadow(matrixStack, String.valueOf((int) amount), 0, 2, 0xffffffff);
-				RenderSystem.clearTexGen();
+//				RenderSystem.clearTexGen();
 				matrixStack.popPose();
 			}
 		}

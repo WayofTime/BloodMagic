@@ -23,7 +23,6 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -55,8 +54,6 @@ import wayoftime.bloodmagic.common.loot.BloodMagicLootTypeManager;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 import wayoftime.bloodmagic.common.tile.BloodMagicTileEntities;
-import wayoftime.bloodmagic.compat.CuriosCompat;
-import wayoftime.bloodmagic.compat.patchouli.RegisterPatchouliMultiblocks;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.recipe.IngredientBloodOrb;
@@ -86,8 +83,8 @@ public class BloodMagic
 	public static final BloodMagicPacketHandler packetHandler = new BloodMagicPacketHandler();
 	public static final RitualManager RITUAL_MANAGER = new RitualManager();
 
-	public static Boolean curiosLoaded;
-	public static final CuriosCompat curiosCompat = new CuriosCompat();
+//	public static Boolean curiosLoaded;
+//	public static final CuriosCompat curiosCompat = new CuriosCompat();
 
 	public BloodMagic()
 	{
@@ -191,14 +188,14 @@ public class BloodMagic
 		AlchemyArrayRegistry.registerBaseArrays();
 		handleConfigValues(BloodMagicAPI.INSTANCE);
 
-		if (curiosLoaded)
-		{
-			curiosCompat.registerInventory();
-		}
-		if (ModList.get().isLoaded("patchouli"))
-		{
-			new RegisterPatchouliMultiblocks();
-		}
+//		if (curiosLoaded)
+//		{
+//			curiosCompat.registerInventory();
+//		}
+//		if (ModList.get().isLoaded("patchouli"))
+//		{
+//			new RegisterPatchouliMultiblocks();
+//		}
 	}
 
 	public static void handleConfigValues(BloodMagicAPI api)
@@ -292,7 +289,7 @@ public class BloodMagic
 //		LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
 		packetHandler.initialize();
 
-		curiosLoaded = ModList.get().isLoaded("curios");
+//		curiosLoaded = ModList.get().isLoaded("curios" );
 	}
 
 //	@OnlyIn(Dist.CLIENT)
@@ -324,10 +321,10 @@ public class BloodMagic
 //			return "Hello world";
 //		});
 
-		if (curiosLoaded)
-		{
-			curiosCompat.setupSlots(event);
-		}
+//		if (curiosLoaded)
+//		{
+//			curiosCompat.setupSlots(event);
+//		}
 	}
 
 	private void processIMC(final InterModProcessEvent event)

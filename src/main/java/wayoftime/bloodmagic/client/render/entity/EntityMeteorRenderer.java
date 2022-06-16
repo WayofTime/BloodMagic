@@ -3,13 +3,13 @@ package wayoftime.bloodmagic.client.render.entity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.client.model.Model;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
@@ -22,9 +22,9 @@ public class EntityMeteorRenderer extends EntityRenderer<Entity>
 	private static final ResourceLocation COW_LOCATION = BloodMagic.rl("textures/models/meteor.png");
 	private float scale = 1.0f;
 
-	public EntityMeteorRenderer(EntityRenderDispatcher renderManagerIn)
+	public EntityMeteorRenderer(EntityRendererProvider.Context renderManager)
 	{
-		super(renderManagerIn);
+		super(renderManager);
 		this.shadowRadius = 0.5F;
 	}
 

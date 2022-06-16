@@ -1,18 +1,17 @@
 package wayoftime.bloodmagic.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
 import com.mojang.math.Vector3f;
+
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import wayoftime.bloodmagic.entity.projectile.AbstractEntityThrowingDagger;
 
 public class EntityThrowingDaggerRenderer<T extends AbstractEntityThrowingDagger> extends EntityRenderer<T>
@@ -21,17 +20,17 @@ public class EntityThrowingDaggerRenderer<T extends AbstractEntityThrowingDagger
 	private final float scale;
 	private final boolean fullBright;
 
-	public EntityThrowingDaggerRenderer(EntityRenderDispatcher p_i226035_1_, net.minecraft.client.renderer.entity.ItemRenderer p_i226035_2_, float p_i226035_3_, boolean p_i226035_4_)
+	public EntityThrowingDaggerRenderer(EntityRendererProvider.Context renderManager, float p_i226035_3_, boolean p_i226035_4_)
 	{
-		super(p_i226035_1_);
-		this.itemRenderer = p_i226035_2_;
+		super(renderManager);
+		this.itemRenderer = renderManager.getItemRenderer();
 		this.scale = p_i226035_3_;
 		this.fullBright = p_i226035_4_;
 	}
 
-	public EntityThrowingDaggerRenderer(EntityRenderDispatcher renderManagerIn)
+	public EntityThrowingDaggerRenderer(EntityRendererProvider.Context renderManager)
 	{
-		this(renderManagerIn, Minecraft.getInstance().getItemRenderer(), 1.0F, false);
+		this(renderManager, 1.0F, false);
 	}
 
 	protected int getBlockLightLevel(T entityIn, BlockPos partialTicks)
@@ -47,10 +46,10 @@ public class EntityThrowingDaggerRenderer<T extends AbstractEntityThrowingDagger
 //			ArrowRenderer<?> d;
 			matrixStackIn.pushPose();
 			matrixStackIn.scale(this.scale, this.scale, this.scale);
-			matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(partialTicks, entityIn.yRotO, entityIn.yRot) - 90.0F));
-			matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(partialTicks, entityIn.xRotO, entityIn.xRot) - 45F));
+			matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(partialTicks, entityIn.yRotO, entityIn.getYRot()) - 90.0F));
+			matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(partialTicks, entityIn.xRotO, entityIn.getXRot()) - 45F));
 
-			this.itemRenderer.renderStatic(entityIn.getItem(), ItemTransforms.TransformType.GROUND, packedLightIn, OverlayTexture.NO_OVERLAY, matrixStackIn, bufferIn);
+			this.itemRenderer.renderStatic(entityIn.getItem(), ItemTransforms.TransformType.GROUND, packedLightIn, OverlayTexture.NO_OVERLAY, matrixStackIn, bufferIn, 1);
 			matrixStackIn.popPose();
 			super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 		}

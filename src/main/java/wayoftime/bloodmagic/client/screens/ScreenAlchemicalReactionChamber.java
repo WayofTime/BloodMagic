@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.client.screens;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -10,7 +11,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraftforge.client.gui.GuiUtils;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.container.tile.ContainerAlchemicalReactionChamber;
 import wayoftime.bloodmagic.common.tile.TileAlchemicalReactionChamber;
@@ -57,7 +57,8 @@ public class ScreenAlchemicalReactionChamber extends ScreenBase<ContainerAlchemi
 		ClientHandler.handleGuiTank(stack, tileARC.outputTank, this.leftPos + 152, this.topPos + 15, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), tooltip);
 
 		if (!tooltip.isEmpty())
-			GuiUtils.drawHoveringText(stack, tooltip, mouseX, mouseY, width, height, -1, font);
+			this.renderTooltip(stack, tooltip, Optional.empty(), mouseX, mouseY, font);
+//			GuiUtils.drawHoveringText(stack, tooltip, mouseX, mouseY, width, height, -1, font);
 	}
 
 //
@@ -72,8 +73,8 @@ public class ScreenAlchemicalReactionChamber extends ScreenBase<ContainerAlchemi
 	@Override
 	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
 	{
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		getMinecraft().getTextureManager().bind(background);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		getMinecraft().getTextureManager().bindForSetup(background);
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
 		this.blit(stack, i, j, 0, 0, this.imageWidth, this.imageHeight);

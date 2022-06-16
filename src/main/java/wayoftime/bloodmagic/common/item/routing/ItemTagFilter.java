@@ -2,22 +2,21 @@ package wayoftime.bloodmagic.common.item.routing;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.tags.Tag;
-import net.minecraft.tags.SerializationTags;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -109,14 +108,14 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 		int index = getItemTagIndex(filterStack, slot);
 		if (index == 0)
 		{
-			List<Tag<Item>> tagList = getAllItemTags(filterStack, slot);
+			List<TagKey<Item>> tagList = getAllItemTags(filterStack, slot);
 			if (tagList != null && !tagList.isEmpty())
 			{
 				return new CollectionTagFilterKey(tagList, amount);
 			}
 		} else
 		{
-			Tag<Item> tag = getItemTag(filterStack, slot);
+			TagKey<Item> tag = getItemTag(filterStack, slot);
 			if (tag != null)
 			{
 				return new TagFilterKey(tag, amount);
@@ -161,10 +160,10 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 		}
 
 		int index = getItemTagIndex(filterStack, slot);
-		Set<ResourceLocation> tagRLs = ghostStack.getItem().getTags();
+		List<TagKey<Item>> tags = getAllItemTags(ghostStack);
 		index++;
 
-		if (index > tagRLs.size())
+		if (index > tags.size())
 		{
 			index = 0;
 		}
@@ -172,19 +171,16 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 		setItemTagIndex(filterStack, slot, index);
 	}
 
-	public Tag<Item> getItemTag(ItemStack filterStack, int slot)
+	public TagKey<Item> getItemTag(ItemStack filterStack, int slot)
 	{
-		ResourceLocation rl = getItemTagResource(filterStack, slot);
-		if (rl == null)
-		{
-			return null;
-		}
+//		ResourceLocation rl = getItemTagResource(filterStack, slot);
+//		if (rl == null)
+//		{
+//			return null;
+//		}
+//
+//		return SerializationTags.getInstance().getItems().getTag(rl);
 
-		return SerializationTags.getInstance().getItems().getTag(rl);
-	}
-
-	public ResourceLocation getItemTagResource(ItemStack filterStack, int slot)
-	{
 		int index = getItemTagIndex(filterStack, slot);
 		if (index <= 0)
 		{
@@ -201,35 +197,55 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 			return null;
 		}
 
-		List<ResourceLocation> tagRLs = new ArrayList<ResourceLocation>(ghostStack.getItem().getTags());
+//		List<ResourceLocation> tagRLs = new ArrayList<ResourceLocation>(ghostStack.getItem().getTags());
 
-		if (tagRLs.size() < index)
+		List<TagKey<Item>> tags = getAllItemTags(ghostStack);
+
+		if (tags.size() < index)
 		{
 			return null;
 		}
 
-		ResourceLocation rl = tagRLs.get(index);
-
-		return rl;
+		return tags.get(index);
 	}
 
-	public List<Tag<Item>> getAllItemTags(ItemStack filterStack, int slot)
+	public ResourceLocation getItemTagResource(ItemStack filterStack, int slot)
+	{
+		TagKey<Item> tag = getItemTag(filterStack, slot);
+		if (tag == null)
+		{
+			return null;
+		}
+
+		return tag.location();
+	}
+
+	public List<TagKey<Item>> getAllItemTags(ItemStack filterStack, int slot)
 	{
 		ItemInventory inv = new InventoryFilter(filterStack);
 
 		ItemStack ghostStack = inv.getItem(slot);
 		if (ghostStack.isEmpty())
 		{
-			return null;
+			return new ArrayList<>();
 		}
 
-		Set<ResourceLocation> tagRLs = ghostStack.getItem().getTags();
-		List<Tag<Item>> tagList = new ArrayList<Tag<Item>>();
+		return getAllItemTags(ghostStack);
+	}
 
-		for (ResourceLocation rl : tagRLs)
+	public List<TagKey<Item>> getAllItemTags(ItemStack ghostStack)
+	{
+		if (ghostStack.isEmpty())
 		{
-			tagList.add(SerializationTags.getInstance().getItems().getTag(rl));
+			return new ArrayList<>();
 		}
+
+		List<TagKey<Item>> tagList = new ArrayList<>();
+		Stream<TagKey<Item>> stream = ghostStack.getTags();
+
+		stream.forEach(a -> {
+			tagList.add(a);
+		});
 
 		return tagList;
 	}
@@ -292,7 +308,14 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 					return componentList;
 				}
 
-				Set<ResourceLocation> locations = ghostStack.getItem().getTags();
+				Stream<TagKey<Item>> stream = ghostStack.getTags();
+
+				List<ResourceLocation> locations = new ArrayList<>();
+				stream.forEach(a -> {
+					locations.add(a.registry().location());
+				});
+
+//				Set<ResourceLocation> locations = ghostStack.getItem().getTags();
 
 				if (locations.size() > 0)
 				{

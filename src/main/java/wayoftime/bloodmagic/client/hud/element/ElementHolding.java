@@ -2,13 +2,13 @@ package wayoftime.bloodmagic.client.hud.element;
 
 import java.util.List;
 
+import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
-import com.mojang.blaze3d.platform.Lighting;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.client.Sprite;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
@@ -43,7 +43,8 @@ public class ElementHolding extends HUDElement
 		int currentSlot = ItemSigilHolding.getCurrentItemOrdinal(sigilHolding);
 		SELECTED_OVERLAY.draw(matrixStack, drawX - 1 + (currentSlot * 20), drawY - 1);
 
-		Lighting.turnBackOn();
+		Lighting.setupForFlatItems();
+//		Lighting.turnBackOn();
 		List<ItemStack> inventory = ItemSigilHolding.getInternalInventory(sigilHolding);
 		int xOffset = 0;
 		for (ItemStack stack : inventory)
@@ -86,7 +87,7 @@ public class ElementHolding extends HUDElement
 //				RenderSystem.translatef((float) (-(x + 8)), (float) (-(y + 12)), 0.0F);
 			}
 
-			Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(player, stack, x, y);
+			Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(player, stack, x, y, 1);
 
 			if (animation > 0.0F)
 				matrixStack.popPose();

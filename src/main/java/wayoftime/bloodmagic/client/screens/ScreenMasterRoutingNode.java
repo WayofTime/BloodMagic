@@ -1,12 +1,12 @@
 package wayoftime.bloodmagic.client.screens;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.container.tile.ContainerMasterRoutingNode;
 import wayoftime.bloodmagic.common.tile.routing.TileMasterRoutingNode;
@@ -51,8 +51,8 @@ public class ScreenMasterRoutingNode extends ScreenBase<ContainerMasterRoutingNo
 	@Override
 	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
 	{
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		getMinecraft().getTextureManager().bind(background);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		getMinecraft().getTextureManager().bindForSetup(background);
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
 		this.blit(stack, i, j, 0, 0, this.imageWidth, this.imageHeight);

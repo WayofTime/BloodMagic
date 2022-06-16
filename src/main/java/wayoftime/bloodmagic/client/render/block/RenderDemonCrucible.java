@@ -1,26 +1,24 @@
 package wayoftime.bloodmagic.client.render.block;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.ItemRenderer;
-import com.mojang.blaze3d.platform.Lighting;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import wayoftime.bloodmagic.common.tile.TileDemonCrucible;
 
-import com.mojang.math.Vector3f;
-
-public class RenderDemonCrucible extends BlockEntityRenderer<TileDemonCrucible>
+public class RenderDemonCrucible implements BlockEntityRenderer<TileDemonCrucible>
 {
-	public RenderDemonCrucible(BlockEntityRenderDispatcher rendererDispatcherIn)
+	public RenderDemonCrucible(BlockEntityRendererProvider.Context context)
 	{
-		super(rendererDispatcherIn);
+
 	}
 
 	@Override
@@ -45,10 +43,10 @@ public class RenderDemonCrucible extends BlockEntityRenderer<TileDemonCrucible>
 
 			matrixStack.mulPose(Vector3f.YP.rotationDegrees(rotation));
 			matrixStack.scale(0.5F, 0.5F, 0.5F);
-			Lighting.turnBackOn();
-			BakedModel ibakedmodel = itemRenderer.getModel(stack, tileAltar.getLevel(), (LivingEntity) null);
+//			Lighting.turnBackOn();
+			BakedModel ibakedmodel = itemRenderer.getModel(stack, tileAltar.getLevel(), (LivingEntity) null, 1);
 			itemRenderer.render(stack, ItemTransforms.TransformType.FIXED, true, matrixStack, buffer, combinedLightIn, combinedOverlayIn, ibakedmodel); // renderItem
-			Lighting.turnOff();
+//			Lighting.turnOff();
 
 			matrixStack.popPose();
 		}

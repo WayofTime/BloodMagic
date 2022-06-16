@@ -6,16 +6,16 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Maps;
+import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.phys.Vec2;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.Vec2;
 import wayoftime.bloodmagic.client.hud.element.HUDElement;
 
 public class GuiEditHUD extends Screen
@@ -38,7 +38,7 @@ public class GuiEditHUD extends Screen
 	{
 		super.init();
 
-		addButton(new Button(width / 2 - 155, height - 30, 70, 20, new TranslatableComponent("gui.bloodmagic.toggle"), b -> {
+		addWidget(new Button(width / 2 - 155, height - 30, 70, 20, new TranslatableComponent("gui.bloodmagic.toggle"), b -> {
 			Minecraft.getInstance().setScreen(parent);
 		})
 		{
@@ -46,16 +46,16 @@ public class GuiEditHUD extends Screen
 				active = false;
 			}
 		});
-		addButton(new Button(width / 2 - 75, height - 30, 70, 20, new TranslatableComponent("gui.bloodmagic.default"), b -> {
+		addWidget(new Button(width / 2 - 75, height - 30, 70, 20, new TranslatableComponent("gui.bloodmagic.default"), b -> {
 			currentOverrides.clear();
 			ElementRegistry.resetPos();
 			changes = false;
 		}));
-		addButton(new Button(width / 2 + 5, height - 30, 70, 20, new TranslatableComponent("gui.bloodmagic.save"), b -> {
+		addWidget(new Button(width / 2 + 5, height - 30, 70, 20, new TranslatableComponent("gui.bloodmagic.save"), b -> {
 			ElementRegistry.save(currentOverrides);
 			Minecraft.getInstance().setScreen(parent);
 		}));
-		addButton(new Button(width / 2 + 90, height - 30, 70, 20, new TranslatableComponent("gui.bloodmagic.cancel"), b -> {
+		addWidget(new Button(width / 2 + 90, height - 30, 70, 20, new TranslatableComponent("gui.bloodmagic.cancel"), b -> {
 			currentOverrides.clear();
 			Minecraft.getInstance().setScreen(parent);
 		}));

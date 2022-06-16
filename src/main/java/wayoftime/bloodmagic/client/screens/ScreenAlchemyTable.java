@@ -2,29 +2,29 @@ package wayoftime.bloodmagic.client.screens;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
 import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.Slot;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.container.tile.ContainerAlchemyTable;
 import wayoftime.bloodmagic.common.tile.TileAlchemyTable;
 import wayoftime.bloodmagic.network.AlchemyTableButtonPacket;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
-import net.minecraft.client.gui.components.Button.OnPress;
 
 public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 {
@@ -70,21 +70,21 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 		left = (this.width - this.imageWidth) / 2;
 		top = (this.height - this.imageHeight) / 2;
 
-		this.buttons.clear();
+		this.clearWidgets();
 //		this.buttons.add();
-		this.addButton(new Button(left + 135, top + 52, 14, 14, new TextComponent("D"), new DirectionalPress(tileTable, Direction.DOWN)));
-		this.addButton(new Button(left + 153, top + 52, 14, 14, new TextComponent("U"), new DirectionalPress(tileTable, Direction.UP)));
-		this.addButton(new Button(left + 135, top + 70, 14, 14, new TextComponent("N"), new DirectionalPress(tileTable, Direction.NORTH)));
-		this.addButton(new Button(left + 153, top + 70, 14, 14, new TextComponent("S"), new DirectionalPress(tileTable, Direction.SOUTH)));
-		this.addButton(new Button(left + 135, top + 88, 14, 14, new TextComponent("W"), new DirectionalPress(tileTable, Direction.WEST)));
-		this.addButton(new Button(left + 153, top + 88, 14, 14, new TextComponent("E"), new DirectionalPress(tileTable, Direction.EAST)));
+		this.addWidget(new Button(left + 135, top + 52, 14, 14, new TextComponent("D"), new DirectionalPress(tileTable, Direction.DOWN)));
+		this.addWidget(new Button(left + 153, top + 52, 14, 14, new TextComponent("U"), new DirectionalPress(tileTable, Direction.UP)));
+		this.addWidget(new Button(left + 135, top + 70, 14, 14, new TextComponent("N"), new DirectionalPress(tileTable, Direction.NORTH)));
+		this.addWidget(new Button(left + 153, top + 70, 14, 14, new TextComponent("S"), new DirectionalPress(tileTable, Direction.SOUTH)));
+		this.addWidget(new Button(left + 135, top + 88, 14, 14, new TextComponent("W"), new DirectionalPress(tileTable, Direction.WEST)));
+		this.addWidget(new Button(left + 153, top + 88, 14, 14, new TextComponent("E"), new DirectionalPress(tileTable, Direction.EAST)));
 	}
 
 	@Override
 	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
 	{
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		getMinecraft().getTextureManager().bind(background);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		getMinecraft().getTextureManager().bindForSetup(background);
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
 		this.blit(stack, i, j, 0, 0, this.imageWidth, this.imageHeight);
@@ -96,12 +96,13 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 		{
 			this.blit(stack, i + 106, j + 24, 194, 55, 18, 18);
 			if (mouseX >= i + 106 && mouseX < i + 106 + 18 && mouseY >= j + 24 && mouseY < j + 24 + 18)
-				this.renderWrappedToolTip(stack, orbError, mouseX, mouseY, font);
+				this.renderTooltip(stack, orbError, Optional.empty(), mouseY, mouseY, font);
+//				this.renderWrappedToolTip(stack, orbError,Optional.empty(), mouseX, mouseY, font);
 		} else if (this.getLPFlag())
 		{
 			this.blit(stack, i + 106, j + 24, 194, 73, 18, 18);
 			if (mouseX >= i + 106 && mouseX < i + 106 + 18 && mouseY >= j + 24 && mouseY < j + 24 + 18)
-				this.renderWrappedToolTip(stack, lpError, mouseX, mouseY, font);
+				this.renderTooltip(stack, lpError, Optional.empty(), mouseX, mouseY, font);
 		}
 
 		int slotId = tileTable.activeSlot;
@@ -187,7 +188,7 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 		{
 			Minecraft minecraft = Minecraft.getInstance();
 			Font fontrenderer = minecraft.font;
-			minecraft.getTextureManager().bind(WIDGETS_LOCATION);
+			minecraft.getTextureManager().bindForSetup(WIDGETS_LOCATION);
 
 			// Vanilla's method
 //			RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
@@ -202,7 +203,7 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 //			drawCenteredString(matrixStack, fontrenderer, this.getMessage(), this.x + this.width / 2, this.y + (this.height - 8) / 2, j | MathHelper.ceil(this.alpha * 255.0F) << 24);
 
 			// Mekanism's method
-			int i = this.getYImage(this.isHovered());
+			int i = this.getYImage(this.isHoveredOrFocused());
 			RenderSystem.enableBlend();
 			RenderSystem.blendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
 			RenderSystem.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
@@ -226,7 +227,7 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 			renderBg(matrixStack, minecraft, mouseX, mouseY);
 			RenderSystem.disableBlend();
 
-			if (this.isHovered())
+			if (this.isHoveredOrFocused())
 			{
 				this.renderToolTip(matrixStack, mouseX, mouseY);
 			}

@@ -10,10 +10,10 @@ import com.google.common.io.Resources;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeMod;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.registration.impl.LivingUpgradeDeferredRegister;
@@ -190,8 +190,8 @@ public class LivingArmorRegistrar
 		registerUpgrade(UPGRADE_KNOCKBACK_RESIST.get());
 		registerUpgrade(UPGRADE_FIRE_RESIST.get());
 		registerUpgrade(UPGRADE_ELYTRA.get());
-		if (BloodMagic.curiosLoaded)
-			registerUpgrade(UPGRADE_CURIOS_SOCKET.get());
+//		if (BloodMagic.curiosLoaded)
+//			registerUpgrade(UPGRADE_CURIOS_SOCKET.get());
 		registerUpgrade(UPGRADE_DIAMOND.get());
 		registerUpgrade(UPGRADE_MELEE_DAMAGE.get());
 		registerUpgrade(UPGRADE_REPAIR.get());

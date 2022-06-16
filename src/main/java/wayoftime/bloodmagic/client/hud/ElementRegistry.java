@@ -13,8 +13,8 @@ import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-
 import com.mojang.blaze3d.platform.Window;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec2;
@@ -131,7 +131,8 @@ public class ElementRegistry
 	@SubscribeEvent
 	public static void onRenderOverlay(RenderGameOverlayEvent.Pre event)
 	{
-		if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR)
+//		if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR)
+		if (event.getType() == RenderGameOverlayEvent.ElementType.LAYER)
 		{
 			Window window = event.getWindow();
 

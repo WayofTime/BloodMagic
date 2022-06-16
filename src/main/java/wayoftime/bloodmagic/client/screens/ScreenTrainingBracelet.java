@@ -3,21 +3,21 @@ package wayoftime.bloodmagic.client.screens;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Optional;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.Container;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.fml.client.gui.GuiUtils;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.Container;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.container.item.ContainerTrainingBracelet;
 import wayoftime.bloodmagic.common.item.ItemLivingTrainer;
@@ -67,10 +67,10 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 
 		ItemStack filterStack = this.container.trainerStack;
 
-		this.addButton(new Button(left + 62 - 18, top + 34, 8, 20, new TextComponent(">"), new IncrementPress(this, 0)));
-		this.addButton(new Button(left + 34 - 18, top + 34, 8, 20, new TextComponent("<"), new IncrementPress(this, 1)));
+		this.addWidget(new Button(left + 62 - 18, top + 34, 8, 20, new TextComponent(">"), new IncrementPress(this, 0)));
+		this.addWidget(new Button(left + 34 - 18, top + 34, 8, 20, new TextComponent("<"), new IncrementPress(this, 1)));
 
-		this.addButton(new Button(left + whitelistButtonPosX, top + whitelistButtonPosY, 20, 20, new TextComponent(""), new WhitelistTogglePress(this)));
+		this.addWidget(new Button(left + whitelistButtonPosX, top + whitelistButtonPosY, 20, 20, new TextComponent(""), new WhitelistTogglePress(this)));
 
 //		if (filterStack.getItem() instanceof IItemFilterProvider)
 //		{
@@ -92,7 +92,7 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 //					addedButton.active = false;
 //				}
 //
-//				this.addButton(addedButton);
+//				this.addWidget(addedButton);
 //				numberOfAddedButtons++;
 //			}
 //		}
@@ -205,16 +205,16 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 		int xl = whitelistButtonPosX;
 		int yl = whitelistButtonPosY;
 
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		getMinecraft().getTextureManager().bind(background);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		getMinecraft().getTextureManager().bindForSetup(background);
 		this.blit(stack, +xl, +yl, 176, isWhitelist ? 0 : 20, w, h);
 	}
 
 	@Override
 	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
 	{
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		getMinecraft().getTextureManager().bind(background);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		getMinecraft().getTextureManager().bindForSetup(background);
 //		int i = (this.width - this.xSize) / 2;
 //		int j = (this.height - this.ySize) / 2;
 //		this.blit(stack, i, j, 0, 0, this.xSize, this.ySize);
@@ -234,7 +234,7 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 
 		// draw your Gui here, only thing you need to change is the path
 //        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-//        this.mc.getTextureManager().bindTexture(texture);
+//        this.mc.getTextureManager().bindForSetupTexture(texture);
 		int x = (width - imageWidth) / 2;
 		int y = (height - imageHeight) / 2;
 		this.blit(stack, x, y, 0, 0, imageWidth, imageHeight);
@@ -242,7 +242,7 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 		if (container.lastGhostSlotClicked >= 0)
 		{
 //            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 			this.blit(stack, 85 + x + 21 * (container.lastGhostSlotClicked % 4), y + 11 + 21 * (container.lastGhostSlotClicked / 4), 0, 187, 24, 24);
 		}
 
@@ -293,7 +293,8 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 //		}
 
 		if (!tooltip.isEmpty())
-			GuiUtils.drawHoveringText(matrixStack, tooltip, mouseX, mouseY, width, height, -1, font);
+			this.renderTooltip(matrixStack, tooltip, Optional.empty(), mouseX, mouseY, font);
+//			GuiUtils.drawHoveringText(matrixStack, tooltip, mouseX, mouseY, width, height, -1, font);
 	}
 
 	private List<Component> getHoverTextForWhitelistButton()
@@ -367,12 +368,12 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 				int currentLevel = getCurrentActiveSlotUpgradeLevel();
 				int newLevel = setCurrentActiveSlotUpgradeLevel(currentLevel + 1);
 //				System.out.println("Sending incrementation packet with new level of: " + newLevel);
-				BloodMagic.packetHandler.sendToServer(new LivingTrainerPacket(player.inventory.selected, screen.container.lastGhostSlotClicked, newLevel));
+				BloodMagic.packetHandler.sendToServer(new LivingTrainerPacket(player.getInventory().selected, screen.container.lastGhostSlotClicked, newLevel));
 			} else if (id == 1)
 			{
 				int currentLevel = getCurrentActiveSlotUpgradeLevel();
 				int newLevel = setCurrentActiveSlotUpgradeLevel(currentLevel - 1);
-				BloodMagic.packetHandler.sendToServer(new LivingTrainerPacket(player.inventory.selected, screen.container.lastGhostSlotClicked, newLevel));
+				BloodMagic.packetHandler.sendToServer(new LivingTrainerPacket(player.getInventory().selected, screen.container.lastGhostSlotClicked, newLevel));
 			}
 		}
 	}
@@ -393,7 +394,7 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 
 			screen.isWhitelist = newWhitelistState;
 			((ItemLivingTrainer) screen.container.trainerStack.getItem()).setIsWhitelist(screen.container.trainerStack, newWhitelistState);
-			BloodMagic.packetHandler.sendToServer(new LivingTrainerWhitelistPacket(player.inventory.selected, newWhitelistState));
+			BloodMagic.packetHandler.sendToServer(new LivingTrainerWhitelistPacket(player.getInventory().selected, newWhitelistState));
 
 		}
 	}

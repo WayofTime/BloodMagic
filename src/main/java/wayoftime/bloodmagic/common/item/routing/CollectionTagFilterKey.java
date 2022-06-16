@@ -2,27 +2,27 @@ package wayoftime.bloodmagic.common.item.routing;
 
 import java.util.List;
 
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.tags.Tag;
 
 public class CollectionTagFilterKey implements IFilterKey
 {
-	private List<Tag<Item>> itemTags;
+	private List<TagKey<Item>> itemTags;
 	private int count;
 
-	public CollectionTagFilterKey(List<Tag<Item>> itemTags, int count)
+	public CollectionTagFilterKey(List<TagKey<Item>> tagList, int count)
 	{
-		this.itemTags = itemTags;
+		this.itemTags = tagList;
 		this.count = count;
 	}
 
 	@Override
 	public boolean doesStackMatch(ItemStack testStack)
 	{
-		for (Tag<Item> tag : itemTags)
+		for (TagKey<Item> tag : itemTags)
 		{
-			if (tag.contains(testStack.getItem()))
+			if (testStack.is(tag))
 			{
 				return true;
 			}

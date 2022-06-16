@@ -1,6 +1,6 @@
 package wayoftime.bloodmagic.common.registration.impl;
 
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
 import wayoftime.bloodmagic.anointment.Anointment;
 import wayoftime.bloodmagic.common.registration.WrappedRegistryObject;
 

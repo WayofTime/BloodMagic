@@ -7,15 +7,15 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.Multimap;
 
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.MinecraftForge;
 import wayoftime.bloodmagic.common.item.ItemLivingTrainer;
 import wayoftime.bloodmagic.core.util.PlayerUtil;
@@ -294,7 +294,7 @@ public class LivingUtil
 
 	public static boolean hasFullSet(Player player)
 	{
-		for (ItemStack stack : player.inventory.armor)
+		for (ItemStack stack : player.getInventory().armor)
 		{
 			if (stack.isEmpty() || !(stack.getItem() instanceof ILivingContainer))
 				return false;

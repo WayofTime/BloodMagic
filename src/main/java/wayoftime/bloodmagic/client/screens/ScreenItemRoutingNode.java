@@ -1,23 +1,27 @@
 package wayoftime.bloodmagic.client.screens;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.container.tile.ContainerItemRoutingNode;
 import wayoftime.bloodmagic.common.tile.routing.TileFilteredRoutingNode;
@@ -33,6 +37,8 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 	private Direction horizontalFacing;
 
 	private int left, top;
+
+	private List<Button> buttonList = new ArrayList<>();
 
 	public ScreenItemRoutingNode(ContainerItemRoutingNode container, Inventory playerInventory, Component title)
 	{
@@ -54,7 +60,7 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 		left = (this.width - this.imageWidth) / 2;
 		top = (this.height - this.imageHeight) / 2;
 
-		this.buttons.clear();
+		this.clearWidgets();
 
 		for (int i = 0; i < 6; i++)
 		{
@@ -65,7 +71,10 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 			{
 				dirName = "";
 			}
-			this.addButton(new Button(left + buttonLocation.getLeft(), top + buttonLocation.getRight(), 20, 20, new TextComponent(dirName), new DirectionalPress(this, tileNode, i, dir)));
+
+			Button button = new Button(left + buttonLocation.getLeft(), top + buttonLocation.getRight(), 20, 20, new TextComponent(dirName), new DirectionalPress(this, tileNode, i, dir));
+			this.addWidget(button);
+			this.buttonList.add(button);
 
 			if (dir.ordinal() == tileNode.getCurrentActiveSlot())
 			{
@@ -73,8 +82,8 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 			}
 		}
 
-		this.addButton(new Button(left + 89, top + 50, 8, 20, new TextComponent(">"), new IncrementPress(tileNode, 6)));
-		this.addButton(new Button(left + 61, top + 50, 8, 20, new TextComponent("<"), new IncrementPress(tileNode, 7)));
+		this.addWidget(new Button(left + 89, top + 50, 8, 20, new TextComponent(">"), new IncrementPress(tileNode, 6)));
+		this.addWidget(new Button(left + 61, top + 50, 8, 20, new TextComponent("<"), new IncrementPress(tileNode, 7)));
 	}
 
 	/**
@@ -218,7 +227,7 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 
 	private void enableAllDirectionalButtons()
 	{
-		for (AbstractWidget button : this.buttons)
+		for (AbstractWidget button : this.buttonList)
 		{
 			button.active = true;
 		}
@@ -226,14 +235,14 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 
 	private void disableDirectionalButton(int id)
 	{
-		this.buttons.get(id).active = false;
+		this.buttonList.get(id).active = false;
 	}
 
 	@Override
 	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
 	{
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		getMinecraft().getTextureManager().bind(background);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		getMinecraft().getTextureManager().bindForSetup(background);
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
 		this.blit(stack, i, j, 0, 0, this.imageWidth, this.imageHeight);
@@ -258,11 +267,12 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 	 */
 	private void drawItemStack(ItemStack stack, int x, int y, String altText)
 	{
-		RenderSystem.translatef(0.0F, 0.0F, 32.0F);
+//		RenderSystem.translatef(0.0F, 0.0F, 32.0F);
 //		this.getbl
 		this.setBlitOffset(1);
 		this.itemRenderer.blitOffset = 1;
-		net.minecraft.client.gui.Font font = stack.getItem().getFontRenderer(stack);
+//		net.minecraft.client.gui.Font font = stack.getItem().getFontRenderer(stack);
+		Font font = null;
 		if (font == null)
 			font = this.font;
 		this.itemRenderer.renderAndDecorateItem(stack, x, y);

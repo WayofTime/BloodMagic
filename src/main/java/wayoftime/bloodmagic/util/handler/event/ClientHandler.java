@@ -38,7 +38,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.client.event.RenderLevelLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidStack;
@@ -96,12 +96,12 @@ public class ClientHandler
 
 	public static void bindTexture(String path)
 	{
-		mc().getTextureManager().bind(getResource(path));
+		mc().getTextureManager().bindForSetup(getResource(path));
 	}
 
 	public static void bindAtlas()
 	{
-		mc().getTextureManager().bind(InventoryMenu.BLOCK_ATLAS);
+		mc().getTextureManager().bindForSetup(InventoryMenu.BLOCK_ATLAS);
 	}
 
 	public static ResourceLocation getResource(String path)
@@ -131,16 +131,16 @@ public class ClientHandler
 //		ritualStoneDawn = forName(event.getMap(), "lightritualstone", BLOCKS);
 //		ritualStoneDusk = forName(event.getMap(), "duskritualstone", BLOCKS);
 
-		blankBloodRune = forName(event.getMap(), "blankrune", BLOCKS);
-		stoneBrick = event.getMap().getSprite(new ResourceLocation("minecraft:block/stonebrick"));
-		glowstone = event.getMap().getSprite(new ResourceLocation("minecraft:block/glowstone"));
+		blankBloodRune = forName(event.getAtlas(), "blankrune", BLOCKS);
+		stoneBrick = event.getAtlas().getSprite(new ResourceLocation("minecraft:block/stonebrick"));
+		glowstone = event.getAtlas().getSprite(new ResourceLocation("minecraft:block/glowstone"));
 //		bloodStoneBrick = forName(event.getMap(), "BloodStoneBrick", BLOCKS);
-		beacon = event.getMap().getSprite(new ResourceLocation("minecraft:block/beacon"));
+		beacon = event.getAtlas().getSprite(new ResourceLocation("minecraft:block/beacon"));
 //		crystalCluster = forName(event.getMap(), "ShardCluster", BLOCKS);
 	}
 
 	@SubscribeEvent
-	public static void render(RenderWorldLastEvent event)
+	public static void render(RenderLevelLastEvent event)
 	{
 		LocalPlayer player = minecraft.player;
 		Level world = player.getCommandSenderWorld();
@@ -209,9 +209,9 @@ public class ClientHandler
 		Vec3 eyePos = activerenderinfo.getPosition();
 		VertexConsumer buffer = renderer.getBuffer(Sheets.translucentCullBlockSheet());
 		Level world = player.getCommandSenderWorld();
-		ItemRitualDiviner ritualDiviner = (ItemRitualDiviner) player.inventory.getSelected().getItem();
-		Direction direction = ritualDiviner.getDirection(player.inventory.getSelected());
-		Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(ritualDiviner.getCurrentRitual(player.inventory.getSelected()));
+		ItemRitualDiviner ritualDiviner = (ItemRitualDiviner) player.getInventory().getSelected().getItem();
+		Direction direction = ritualDiviner.getDirection(player.getInventory().getSelected());
+		Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(ritualDiviner.getCurrentRitual(player.getInventory().getSelected()));
 
 		if (ritual == null)
 			return;

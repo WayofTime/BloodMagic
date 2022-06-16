@@ -4,19 +4,19 @@ import java.util.Random;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.entity.projectile.EntityShapedCharge;
@@ -24,12 +24,13 @@ import wayoftime.bloodmagic.entity.projectile.EntityShapedCharge;
 @OnlyIn(Dist.CLIENT)
 public class EntityShapedChargeRenderer extends EntityRenderer<EntityShapedCharge>
 {
-	public EntityShapedChargeRenderer(EntityRenderDispatcher renderManagerIn)
+	public EntityShapedChargeRenderer(EntityRendererProvider.Context renderManager)
 	{
-		super(renderManagerIn);
+		super(renderManager);
 		this.shadowRadius = 0.5F;
 	}
 
+	// If this doesn't work, check the FallingBlock renderer again.
 	public void render(EntityShapedCharge entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn)
 	{
 //		System.out.println("Testing~");
@@ -47,11 +48,11 @@ public class EntityShapedChargeRenderer extends EntityRenderer<EntityShapedCharg
 				{
 					if (ItemBlockRenderTypes.canRenderInLayer(blockstate, type))
 					{
-						net.minecraftforge.client.ForgeHooksClient.setRenderLayer(type);
+						net.minecraftforge.client.ForgeHooksClient.setRenderType(type);
 						blockrendererdispatcher.getModelRenderer().tesselateBlock(world, blockrendererdispatcher.getBlockModel(blockstate), blockstate, blockpos, matrixStackIn, bufferIn.getBuffer(type), false, new Random(), 0, OverlayTexture.NO_OVERLAY);
 					}
 				}
-				net.minecraftforge.client.ForgeHooksClient.setRenderLayer(null);
+				net.minecraftforge.client.ForgeHooksClient.setRenderType(null);
 				matrixStackIn.popPose();
 				super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 			}

@@ -27,7 +27,7 @@ public class FilterButtonTogglePress implements Button.OnPress
 			{
 				int currentButtonState = ((IItemFilterProvider) container.filterStack.getItem()).getCurrentButtonState(container.filterStack, buttonKey, currentGhostSlot);
 
-				BloodMagicPacketHandler.INSTANCE.sendToServer(new FilterButtonPacket(container.player.inventory.selected, currentGhostSlot, buttonKey, currentButtonState));
+				BloodMagicPacketHandler.INSTANCE.sendToServer(new FilterButtonPacket(container.player.getInventory().selected, currentGhostSlot, buttonKey, currentButtonState));
 
 				((IItemFilterProvider) container.filterStack.getItem()).receiveButtonPress(container.filterStack, buttonKey, currentGhostSlot, currentButtonState);
 			}

@@ -20,13 +20,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DeferredWorkQueue;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import wayoftime.bloodmagic.BloodMagic;
@@ -95,6 +95,20 @@ public class ClientEvents
 //		ClientRegistry.bindTileEntityRenderer(TileSoulForge.TYPE, RenderAlchemyArray::new);
 	}
 
+	@SubscribeEvent
+	public static void registerModels(EntityRenderersEvent.RegisterRenderers event)
+	{
+		event.registerEntityRenderer(BloodMagicEntityTypes.SNARE.getEntityType(), SoulSnareRenderer::new);
+		event.registerEntityRenderer(BloodMagicEntityTypes.THROWING_DAGGER.getEntityType(), EntityThrowingDaggerRenderer::new);
+		event.registerEntityRenderer(BloodMagicEntityTypes.THROWING_DAGGER_SYRINGE.getEntityType(), EntityThrowingDaggerRenderer::new);
+		event.registerEntityRenderer(BloodMagicEntityTypes.BLOOD_LIGHT.getEntityType(), BloodLightRenderer::new);
+		event.registerEntityRenderer(BloodMagicEntityTypes.SHAPED_CHARGE.getEntityType(), EntityShapedChargeRenderer::new);
+		event.registerEntityRenderer(BloodMagicEntityTypes.METEOR.getEntityType(), EntityMeteorRenderer::new);
+
+		event.registerEntityRenderer(BloodMagicEntityTypes.FLASK.getEntityType(), SoulSnareRenderer::new);
+//		event.registerBlockEntityRenderer(BloodMagicTileEntities.ALTAR_TYPE, RenderAltar::new);
+	}
+
 	public static void registerContainerScreens()
 	{
 		MenuScreens.register(BloodMagicBlocks.SOUL_FORGE_CONTAINER.get(), ScreenSoulForge::new);
@@ -130,7 +144,7 @@ public class ClientEvents
 		}
 
 		ItemSigilHolding.cycleToNextSigil(stack, mode);
-		BloodMagicPacketHandler.INSTANCE.sendToServer(new SigilHoldingPacket(player.inventory.selected, mode));
+		BloodMagicPacketHandler.INSTANCE.sendToServer(new SigilHoldingPacket(player.getInventory().selected, mode));
 		ItemStack newStack = ItemSigilHolding.getItemStackInSlot(stack, ItemSigilHolding.getCurrentItemOrdinal(stack));
 		player.displayClientMessage(newStack.isEmpty() ? new TextComponent("") : newStack.getDisplayName(), true);
 	}
@@ -179,15 +193,6 @@ public class ClientEvents
 	@SuppressWarnings("deprecation")
 	public static void initClientEvents(FMLClientSetupEvent event)
 	{
-		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.SNARE.getEntityType(), SoulSnareRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.THROWING_DAGGER.getEntityType(), EntityThrowingDaggerRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.THROWING_DAGGER_SYRINGE.getEntityType(), EntityThrowingDaggerRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.BLOOD_LIGHT.getEntityType(), BloodLightRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.SHAPED_CHARGE.getEntityType(), EntityShapedChargeRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.METEOR.getEntityType(), EntityMeteorRenderer::new);
-
-		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.FLASK.getEntityType(), SoulSnareRenderer::new);
-
 		DeferredWorkQueue.runLater(() -> {
 			RenderType rendertype = RenderType.cutoutMipped();
 			ItemBlockRenderTypes.setRenderLayer(BloodMagicBlocks.ALCHEMY_TABLE.get(), rendertype);
@@ -258,7 +263,7 @@ public class ClientEvents
 		ItemProperties.register(item, BloodMagic.rl("active"), new ItemPropertyFunction()
 		{
 			@Override
-			public float call(ItemStack stack, ClientLevel world, LivingEntity entity)
+			public float call(ItemStack stack, ClientLevel world, LivingEntity entity, int val)
 			{
 				Item item = stack.getItem();
 				if (item instanceof ItemSigilToggleable)
@@ -275,7 +280,7 @@ public class ClientEvents
 		ItemProperties.register(item, BloodMagic.rl("type"), new ItemPropertyFunction()
 		{
 			@Override
-			public float call(ItemStack stack, ClientLevel world, LivingEntity entity)
+			public float call(ItemStack stack, ClientLevel world, LivingEntity entity, int val)
 			{
 				Item item = stack.getItem();
 				if (item instanceof IMultiWillTool)
@@ -292,7 +297,7 @@ public class ClientEvents
 		ItemProperties.register(item, BloodMagic.rl("incense"), new ItemPropertyFunction()
 		{
 			@Override
-			public float call(ItemStack stack, ClientLevel world, LivingEntity entity)
+			public float call(ItemStack stack, ClientLevel world, LivingEntity entity, int val)
 			{
 				Item item = stack.getItem();
 				if (item instanceof ItemSacrificialDagger)

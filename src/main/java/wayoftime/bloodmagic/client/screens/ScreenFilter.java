@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.client.screens;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -22,7 +23,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.gui.GuiUtils;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.container.item.ContainerFilter;
 import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
@@ -40,6 +40,8 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 
 	private int numberOfAddedButtons = 0;
 	private List<String> buttonKeyList = new ArrayList<String>();
+
+	private List<Button> buttonList = new ArrayList<>();
 
 	public ScreenFilter(ContainerFilter container, Inventory playerInventory, Component title)
 	{
@@ -90,7 +92,8 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 					addedButton.active = false;
 				}
 
-				this.addButton(addedButton);
+				this.addWidget(addedButton);
+				buttonList.add(addedButton);
 				numberOfAddedButtons++;
 			}
 		}
@@ -107,9 +110,9 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	}
 
 	@Override
-	public void tick()
+	protected void containerTick()
 	{
-		super.tick();
+		super.containerTick();
 		this.textBox.tick();
 	}
 
@@ -210,7 +213,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 			}
 		}
 
-		BloodMagic.packetHandler.sendToServer(new RouterFilterPacket(player.inventory.selected, ghostItemSlot, amount));
+		BloodMagic.packetHandler.sendToServer(new RouterFilterPacket(player.getInventory().selected, ghostItemSlot, amount));
 	}
 
 	/**
@@ -252,7 +255,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 
 	private void enableAllButtons()
 	{
-		for (AbstractWidget button : this.buttons)
+		for (AbstractWidget button : buttonList)
 		{
 			button.active = true;
 		}
@@ -285,8 +288,8 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 				int xl = buttonLocation.getLeft();
 				int yl = buttonLocation.getRight();
 
-				RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-				getMinecraft().getTextureManager().bind(background);
+				RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+				getMinecraft().getTextureManager().bindForSetup(background);
 				this.blit(stack, +xl, +yl, textureLocation.getLeft(), textureLocation.getRight(), w, h);
 			}
 		}
@@ -295,8 +298,8 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	@Override
 	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
 	{
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		getMinecraft().getTextureManager().bind(background);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		getMinecraft().getTextureManager().bindForSetup(background);
 //		int i = (this.width - this.xSize) / 2;
 //		int j = (this.height - this.ySize) / 2;
 //		this.blit(stack, i, j, 0, 0, this.xSize, this.ySize);
@@ -324,7 +327,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		if (container.lastGhostSlotClicked >= 0)
 		{
 //            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 			this.blit(stack, 106 + x + 21 * (container.lastGhostSlotClicked % 3), y + 11 + 21 * (container.lastGhostSlotClicked / 3), 0, 187, 24, 24);
 		}
 
@@ -361,7 +364,8 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		}
 
 		if (!tooltip.isEmpty())
-			GuiUtils.drawHoveringText(matrixStack, tooltip, mouseX, mouseY, width, height, -1, font);
+			this.renderTooltip(matrixStack, tooltip, Optional.empty(), mouseX, mouseY, font);
+//			GuiUtils.drawHoveringText(matrixStack, tooltip, mouseX, mouseY, width, height, -1, font);
 	}
 
 }

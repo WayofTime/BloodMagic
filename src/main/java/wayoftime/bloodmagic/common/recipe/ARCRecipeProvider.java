@@ -2,14 +2,14 @@ package wayoftime.bloodmagic.common.recipe;
 
 import java.util.function.Consumer;
 
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.world.level.material.Fluids;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.tags.Tag;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.NotCondition;
@@ -49,9 +49,9 @@ public class ARCRecipeProvider implements ISubRecipeProvider
 		addGravelRecipes(consumer);
 	}
 
-	private ICondition getTagCondition(Tag.Named<Item> tag)
+	private ICondition getTagCondition(TagKey<Item> tag)
 	{
-		return new NotCondition(new TagEmptyCondition(tag.getName()));
+		return new NotCondition(new TagEmptyCondition(tag.location()));
 	}
 
 	private void addSandRecipes(Consumer<FinishedRecipe> consumer)

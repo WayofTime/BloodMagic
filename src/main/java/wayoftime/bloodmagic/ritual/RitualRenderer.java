@@ -9,6 +9,6 @@ public abstract class RitualRenderer
 
 	protected void bindTexture(ResourceLocation resourceLocation)
 	{
-		Minecraft.getInstance().getTextureManager().bind(resourceLocation);
+		Minecraft.getInstance().getTextureManager().bindForSetup(resourceLocation);
 	}
 }

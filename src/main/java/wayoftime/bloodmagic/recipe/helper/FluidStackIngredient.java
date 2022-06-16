@@ -9,6 +9,8 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -17,12 +19,13 @@ import com.google.gson.JsonSyntaxException;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.tags.ITag;
+import net.minecraftforge.registries.tags.ITagManager;
 import wayoftime.bloodmagic.util.Constants;
 
 /**
@@ -116,7 +119,10 @@ public abstract class FluidStackIngredient implements InputIngredient<FluidStack
 				throw new JsonSyntaxException("Expected amount to be greater than zero.");
 			}
 			ResourceLocation resourceLocation = new ResourceLocation(GsonHelper.getAsString(jsonObject, Constants.JSON.TAG));
-			Tag<Fluid> tag = SerializationTags.getInstance().getFluids().getTag(resourceLocation);
+
+			ITagManager<Fluid> tagManager = ForgeRegistries.FLUIDS.tags();
+
+			TagKey<Fluid> tag = tagManager.createTagKey(resourceLocation);
 			if (tag == null)
 			{
 				throw new JsonSyntaxException("Unknown fluid tag '" + resourceLocation + "'");
@@ -220,76 +226,149 @@ public abstract class FluidStackIngredient implements InputIngredient<FluidStack
 
 	public static class Tagged extends FluidStackIngredient
 	{
-
-		@Nonnull
-		private final TagKey<Fluid> tag;
+		private final ITag<Fluid> tag;
 		private final int amount;
 
-		public Tagged(@Nonnull TagKey<Fluid> tag, int amount)
+		private Tagged(TagKey<Fluid> tag, int amount)
+		{
+//			this(TagUtils.tag(ForgeRegistries.FLUIDS, tag), amount);
+			this(ForgeRegistries.FLUIDS.tags().getTag(tag), amount);
+		}
+
+		private Tagged(ITag<Fluid> tag, int amount)
 		{
 			this.tag = tag;
 			this.amount = amount;
 		}
 
 		@Override
-		public boolean test(@Nonnull FluidStack fluidStack)
+		public boolean test(FluidStack fluidStack)
 		{
 			return testType(fluidStack) && fluidStack.getAmount() >= amount;
 		}
 
 		@Override
-		public boolean testType(@Nonnull FluidStack fluidStack)
+		public boolean testType(FluidStack fluidStack)
 		{
-			return Objects.requireNonNull(fluidStack).getFluid().is(tag);
+			return tag.contains(Objects.requireNonNull(fluidStack).getFluid());
 		}
 
-		@Nonnull
 		@Override
-		public FluidStack getMatchingInstance(@Nonnull FluidStack fluidStack)
+		public FluidStack getMatchingInstance(FluidStack fluidStack)
 		{
 			if (test(fluidStack))
 			{
-				// Our fluid is in the tag so we make a new stack with the given amount
+				// Our fluid is in the tag, so we make a new stack with the given amount
 				return new FluidStack(fluidStack, amount);
 			}
 			return FluidStack.EMPTY;
 		}
 
-		@Nonnull
 		@Override
-		public List<FluidStack> getRepresentations()
+		public List<@NonNull FluidStack> getRepresentations()
 		{
 			// TODO: Can this be cached some how
-			List<FluidStack> representations = new ArrayList<>();
-			for (Fluid fluid : TagResolverHelper.getRepresentations(tag))
+			List<@NonNull FluidStack> representations = new ArrayList<>();
+			for (Fluid fluid : tag)
 			{
 				representations.add(new FluidStack(fluid, amount));
 			}
 			return representations;
 		}
 
+		/**
+		 * For use in recipe input caching.
+		 */
+		public Iterable<Fluid> getRawInput()
+		{
+			return tag;
+		}
+
 		@Override
 		public void write(FriendlyByteBuf buffer)
 		{
 			buffer.writeEnum(IngredientType.TAGGED);
-			buffer.writeResourceLocation(SerializationTags.getInstance().getFluids().getIdOrThrow(tag));
+			buffer.writeResourceLocation(tag.getKey().location());
 			buffer.writeVarInt(amount);
 		}
 
-		@Nonnull
 		@Override
 		public JsonElement serialize()
 		{
 			JsonObject json = new JsonObject();
 			json.addProperty(Constants.JSON.AMOUNT, amount);
-			json.addProperty(Constants.JSON.TAG, SerializationTags.getInstance().getFluids().getIdOrThrow(tag).toString());
+			json.addProperty(Constants.JSON.TAG, tag.getKey().location().toString());
 			return json;
 		}
-
-		public static Tagged read(FriendlyByteBuf buffer)
-		{
-			return new Tagged(FluidTags.bind(buffer.readResourceLocation().toString()), buffer.readVarInt());
-		}
+//		@Nonnull
+//		private final TagKey<Fluid> tag;
+//		private final int amount;
+//
+//		public Tagged(@Nonnull TagKey<Fluid> tag, int amount)
+//		{
+//			this.tag = tag;
+//			this.amount = amount;
+//		}
+//
+//		@Override
+//		public boolean test(@Nonnull FluidStack fluidStack)
+//		{
+//			return testType(fluidStack) && fluidStack.getAmount() >= amount;
+//		}
+//
+//		@Override
+//		public boolean testType(@Nonnull FluidStack fluidStack)
+//		{
+//			return Objects.requireNonNull(fluidStack).getFluid().is(tag);
+//		}
+//
+//		@Nonnull
+//		@Override
+//		public FluidStack getMatchingInstance(@Nonnull FluidStack fluidStack)
+//		{
+//			if (test(fluidStack))
+//			{
+//				// Our fluid is in the tag so we make a new stack with the given amount
+//				return new FluidStack(fluidStack, amount);
+//			}
+//			return FluidStack.EMPTY;
+//		}
+//
+//		@Nonnull
+//		@Override
+//		public List<FluidStack> getRepresentations()
+//		{
+//			// TODO: Can this be cached some how
+//			List<FluidStack> representations = new ArrayList<>();
+//			for (Fluid fluid : TagResolverHelper.getRepresentations(tag))
+//			{
+//				representations.add(new FluidStack(fluid, amount));
+//			}
+//			return representations;
+//		}
+//
+//		@Override
+//		public void write(FriendlyByteBuf buffer)
+//		{
+//			buffer.writeEnum(IngredientType.TAGGED);
+//			buffer.writeResourceLocation(SerializationTags.getInstance().getFluids().getIdOrThrow(tag));
+//			buffer.writeVarInt(amount);
+//		}
+//
+//		@Nonnull
+//		@Override
+//		public JsonElement serialize()
+//		{
+//			JsonObject json = new JsonObject();
+//			json.addProperty(Constants.JSON.AMOUNT, amount);
+//			json.addProperty(Constants.JSON.TAG, SerializationTags.getInstance().getFluids().getIdOrThrow(tag).toString());
+//			return json;
+//		}
+//
+//		public static Tagged read(FriendlyByteBuf buffer)
+//		{
+//			return new Tagged(FluidTags.bind(buffer.readResourceLocation().toString()), buffer.readVarInt());
+//		}
 	}
 
 	public static class Multi extends FluidStackIngredient
