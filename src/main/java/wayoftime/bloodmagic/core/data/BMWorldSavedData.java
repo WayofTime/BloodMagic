@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.saveddata.SavedData;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 
@@ -21,7 +21,7 @@ public class BMWorldSavedData extends SavedData
 
 	public BMWorldSavedData(String id)
 	{
-		super(id);
+//		super(id);
 	}
 
 	public BMWorldSavedData()
@@ -41,21 +41,39 @@ public class BMWorldSavedData extends SavedData
 		return soulNetworks.get(playerId);
 	}
 
-	@Override
-	public void load(CompoundTag tagCompound)
+	public static BMWorldSavedData load(CompoundTag tagCompound)
 	{
+		BMWorldSavedData worldData = new BMWorldSavedData();
 		ListTag networkData = tagCompound.getList("networkData", 10);
 
 		for (int i = 0; i < networkData.size(); i++)
 		{
 			CompoundTag data = networkData.getCompound(i);
 			SoulNetwork network = SoulNetwork.fromNBT(data);
-			network.setParent(this);
-			soulNetworks.put(network.getPlayerId(), network);
+			network.setParent(worldData);
+			worldData.soulNetworks.put(network.getPlayerId(), network);
 		}
 
-		numberOfDungeons = tagCompound.getInt("numberOfDungeons");
+		worldData.numberOfDungeons = tagCompound.getInt("numberOfDungeons");
+
+		return worldData;
 	}
+
+//	@Override
+//	public void load(CompoundTag tagCompound)
+//	{
+//		ListTag networkData = tagCompound.getList("networkData", 10);
+//
+//		for (int i = 0; i < networkData.size(); i++)
+//		{
+//			CompoundTag data = networkData.getCompound(i);
+//			SoulNetwork network = SoulNetwork.fromNBT(data);
+//			network.setParent(this);
+//			soulNetworks.put(network.getPlayerId(), network);
+//		}
+//
+//		numberOfDungeons = tagCompound.getInt("numberOfDungeons");
+//	}
 
 	@Override
 	public CompoundTag save(CompoundTag tagCompound)

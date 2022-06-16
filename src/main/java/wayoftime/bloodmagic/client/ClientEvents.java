@@ -1,14 +1,11 @@
 package wayoftime.bloodmagic.client;
 
-import java.util.Map;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.network.chat.TextComponent;
@@ -18,15 +15,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import wayoftime.bloodmagic.BloodMagic;
@@ -49,7 +43,6 @@ import wayoftime.bloodmagic.client.render.entity.EntityMeteorRenderer;
 import wayoftime.bloodmagic.client.render.entity.EntityShapedChargeRenderer;
 import wayoftime.bloodmagic.client.render.entity.EntityThrowingDaggerRenderer;
 import wayoftime.bloodmagic.client.render.entity.SoulSnareRenderer;
-import wayoftime.bloodmagic.client.render.entity.layers.BloodElytraLayer;
 import wayoftime.bloodmagic.client.screens.ScreenAlchemicalReactionChamber;
 import wayoftime.bloodmagic.client.screens.ScreenAlchemyTable;
 import wayoftime.bloodmagic.client.screens.ScreenFilter;
@@ -66,12 +59,7 @@ import wayoftime.bloodmagic.common.item.sigil.ItemSigilHolding;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilToggleable;
 import wayoftime.bloodmagic.common.item.soul.ItemSentientSword;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
-import wayoftime.bloodmagic.common.tile.TileAlchemyArray;
-import wayoftime.bloodmagic.common.tile.TileAltar;
-import wayoftime.bloodmagic.common.tile.TileDemonCrucible;
-import wayoftime.bloodmagic.common.tile.routing.TileInputRoutingNode;
-import wayoftime.bloodmagic.common.tile.routing.TileOutputRoutingNode;
-import wayoftime.bloodmagic.common.tile.routing.TileRoutingNode;
+import wayoftime.bloodmagic.common.tile.BloodMagicTileEntities;
 import wayoftime.bloodmagic.core.registry.AlchemyArrayRendererRegistry;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
 import wayoftime.bloodmagic.network.SigilHoldingPacket;
@@ -81,23 +69,33 @@ import wayoftime.bloodmagic.util.GhostItemHelper;
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = BloodMagic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientEvents
 {
-	@SubscribeEvent
-	public static void registerModels(ModelRegistryEvent event)
-	{
-		ClientRegistry.bindTileEntityRenderer(TileAltar.TYPE, RenderAltar::new);
-		ClientRegistry.bindTileEntityRenderer(TileAlchemyArray.TYPE, RenderAlchemyArray::new);
-		ClientRegistry.bindTileEntityRenderer(TileDemonCrucible.TYPE, RenderDemonCrucible::new);
-
-		ClientRegistry.bindTileEntityRenderer(TileRoutingNode.TYPE, RenderItemRoutingNode::new);
-		ClientRegistry.bindTileEntityRenderer(TileInputRoutingNode.TYPE, RenderItemRoutingNode::new);
-		ClientRegistry.bindTileEntityRenderer(TileOutputRoutingNode.TYPE, RenderItemRoutingNode::new);
-
-//		ClientRegistry.bindTileEntityRenderer(TileSoulForge.TYPE, RenderAlchemyArray::new);
-	}
+//	@SubscribeEvent
+//	public static void registerModels(ModelRegistryEvent event)
+//	{
+//
+//
+////		ClientRegistry.bindTileEntityRenderer(TileSoulForge.TYPE, RenderAlchemyArray::new);
+//	}
 
 	@SubscribeEvent
 	public static void registerModels(EntityRenderersEvent.RegisterRenderers event)
 	{
+		event.registerBlockEntityRenderer(BloodMagicTileEntities.ALTAR_TYPE.get(), RenderAltar::new);
+		event.registerBlockEntityRenderer(BloodMagicTileEntities.ALCHEMY_ARRAY_TYPE.get(), RenderAlchemyArray::new);
+		event.registerBlockEntityRenderer(BloodMagicTileEntities.DEMON_CRUCIBLE_TYPE.get(), RenderDemonCrucible::new);
+
+		event.registerBlockEntityRenderer(BloodMagicTileEntities.ROUTING_NODE_TYPE.get(), RenderItemRoutingNode::new);
+		event.registerBlockEntityRenderer(BloodMagicTileEntities.INPUT_ROUTING_NODE_TYPE.get(), RenderItemRoutingNode::new);
+		event.registerBlockEntityRenderer(BloodMagicTileEntities.OUTPUT_ROUTING_NODE_TYPE.get(), RenderItemRoutingNode::new);
+
+//		ClientRegistry.bindTileEntityRenderer(TileAltar.TYPE, RenderAltar::new);
+//		ClientRegistry.bindTileEntityRenderer(TileAlchemyArray.TYPE, RenderAlchemyArray::new);
+//		ClientRegistry.bindTileEntityRenderer(TileDemonCrucible.TYPE, RenderDemonCrucible::new);
+//
+//		ClientRegistry.bindTileEntityRenderer(TileRoutingNode.TYPE, RenderItemRoutingNode::new);
+//		ClientRegistry.bindTileEntityRenderer(TileInputRoutingNode.TYPE, RenderItemRoutingNode::new);
+//		ClientRegistry.bindTileEntityRenderer(TileOutputRoutingNode.TYPE, RenderItemRoutingNode::new);
+
 		event.registerEntityRenderer(BloodMagicEntityTypes.SNARE.getEntityType(), SoulSnareRenderer::new);
 		event.registerEntityRenderer(BloodMagicEntityTypes.THROWING_DAGGER.getEntityType(), EntityThrowingDaggerRenderer::new);
 		event.registerEntityRenderer(BloodMagicEntityTypes.THROWING_DAGGER_SYRINGE.getEntityType(), EntityThrowingDaggerRenderer::new);
@@ -190,10 +188,20 @@ public class ClientEvents
 		}
 	}
 
+	@SubscribeEvent
+	public static void initRenderLayer(EntityRenderersEvent.AddLayers event)
+	{
+//		LivingEntityRenderer<? extends Player, ? extends EntityModel<? extends Player>> d = event.getSkin("default");
+//		event.
+//		heh I just did this for the pneumatic armor, yeah you can interate the skinMap to get the player renderers and add your elytra layer as appropriate
+//		and that's in EntityRenderersEvent.AddLayers event handler (iterate over event.getSkins())
+	}
+
 	@SuppressWarnings("deprecation")
 	public static void initClientEvents(FMLClientSetupEvent event)
 	{
-		DeferredWorkQueue.runLater(() -> {
+//		DeferredWorkQueue.runLater(() -> {
+		event.enqueueWork(() -> {
 			RenderType rendertype = RenderType.cutoutMipped();
 			ItemBlockRenderTypes.setRenderLayer(BloodMagicBlocks.ALCHEMY_TABLE.get(), rendertype);
 			ItemBlockRenderTypes.setRenderLayer(BloodMagicBlocks.GROWING_DOUBT.get(), rendertype);
@@ -227,7 +235,7 @@ public class ClientEvents
 			ItemProperties.register(BloodMagicItems.SENTIENT_SWORD.get(), BloodMagic.rl("active"), new ItemPropertyFunction()
 			{
 				@Override
-				public float call(ItemStack stack, ClientLevel world, LivingEntity entity)
+				public float call(ItemStack stack, ClientLevel world, LivingEntity entity, int value)
 				{
 					return ((ItemSentientSword) stack.getItem()).getActivated(stack) ? 1 : 0;
 				}
@@ -245,12 +253,19 @@ public class ClientEvents
 		AlchemyArrayRendererRegistry.registerRenderer(BloodMagic.rl("array/grove"), new BeaconAlchemyCircleRenderer(BloodMagic.rl("textures/models/alchemyarrays/growthsigil.png")));
 		AlchemyArrayRendererRegistry.registerRenderer(BloodMagic.rl("array/bounce"), new LowStaticAlchemyCircleRenderer(BloodMagic.rl("textures/models/alchemyarrays/bouncearray.png")));
 
-		Map<String, PlayerRenderer> skinMap = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
-		PlayerRenderer render;
-		render = skinMap.get("default");
-		render.addLayer(new BloodElytraLayer(render));
-		render = skinMap.get("slim");
-		render.addLayer(new BloodElytraLayer(render));
+//		Map<String, PlayerRenderer> skinMap = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
+//		PlayerRenderer render;
+//		render = skinMap.get("default");
+//		render.addLayer(new BloodElytraLayer(render));
+//		render = skinMap.get("slim");
+//		render.addLayer(new BloodElytraLayer(render));
+//		
+//		Map<String, EntityRenderer<? extends Player>> skinMap = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
+//		PlayerRenderer render;
+//		render = skinMap.get("default");
+//		render.addLayer(new BloodElytraLayer(render));
+//		render = skinMap.get("slim");
+//		render.addLayer(new BloodElytraLayer(render));
 	}
 
 	public static void registerItemModelProperties(FMLClientSetupEvent event)

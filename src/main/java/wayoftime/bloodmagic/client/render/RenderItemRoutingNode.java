@@ -12,8 +12,8 @@ import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,7 +29,7 @@ public class RenderItemRoutingNode implements BlockEntityRenderer<TileRoutingNod
 	private static final ResourceLocation beamTexture = new ResourceLocation(BloodMagic.MODID, "textures/entities/nodebeam.png");
 	private static final Minecraft mc = Minecraft.getInstance();
 
-	public RenderItemRoutingNode(BlockEntityRenderDispatcher rendererDispatcherIn)
+	public RenderItemRoutingNode(BlockEntityRendererProvider.Context context)
 	{
 //		super(rendererDispatcherIn);
 	}
