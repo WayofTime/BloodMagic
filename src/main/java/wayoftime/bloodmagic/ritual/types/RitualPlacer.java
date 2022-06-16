@@ -2,6 +2,8 @@ package wayoftime.bloodmagic.ritual.types;
 
 import java.util.function.Consumer;
 
+import com.mojang.authlib.GameProfile;
+
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
@@ -13,6 +15,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
@@ -28,6 +33,8 @@ public class RitualPlacer extends Ritual
 {
 	public static final String PLACER_RANGE = "placerRange";
 	public static final String CHEST_RANGE = "chest";
+
+	private static FakePlayer fakePlayer = null;
 
 	public RitualPlacer()
 	{
@@ -68,7 +75,7 @@ public class RitualPlacer extends Ritual
 
 			posLoop: for (BlockPos blockPos : areaDescriptor.getContainedPositions(masterRitualStone.getMasterBlockPos()))
 			{
-				BlockItemUseContext ctx = new BlockItemUseContext(world, null, Hand.MAIN_HAND, ItemStack.EMPTY, BlockRayTraceResult.createMiss(new Vector3d(0, 0, 0), Direction.UP, blockPos));
+				BlockItemUseContext ctx = new BlockItemUseContext(world, getFakePlayer((ServerWorld) world), Hand.MAIN_HAND, ItemStack.EMPTY, BlockRayTraceResult.createMiss(new Vector3d(0, 0, 0), Direction.UP, blockPos));
 				if (!world.getBlockState(blockPos).isReplaceable(ctx))
 					continue;
 
@@ -129,5 +136,12 @@ public class RitualPlacer extends Ritual
 	public Ritual getNewCopy()
 	{
 		return new RitualPlacer();
+	}
+
+	private FakePlayer getFakePlayer(ServerWorld world)
+	{
+		return fakePlayer == null
+				? fakePlayer = FakePlayerFactory.get(world, new GameProfile(null, BloodMagic.MODID + "_ritual_filling"))
+				: fakePlayer;
 	}
 }
