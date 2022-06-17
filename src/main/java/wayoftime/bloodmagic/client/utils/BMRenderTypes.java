@@ -42,10 +42,11 @@ public class BMRenderTypes
 //		POSITION_COLOR_LIGHTMAP = RenderType.create(BloodMagic.MODID + ":pos_color_lightmap", DefaultVertexFormat.POSITION_COLOR_LIGHTMAP, GL11.GL_QUADS, 256, RenderType.CompositeState.builder().setTextureState(new TextureStateShard()).setLightmapState(new LightmapStateShard(true)).createCompositeState(false));
 //		ITEM_DAMAGE_BAR = RenderType.create(BloodMagic.MODID + ":item_damage_bar", DefaultVertexFormat.POSITION_COLOR, GL11.GL_QUADS, 256, RenderType.CompositeState.builder().setDepthTestState(DEPTH_ALWAYS).setTextureState(new TextureStateShard()).setAlphaState(new AlphaStateShard(0)).setTransparencyState(NO_TRANSPARENCY).createCompositeState(false));
 //	}
-//
+////
 //	public static RenderType getGui(ResourceLocation texture)
 //	{
-//		return RenderType.create("gui_" + texture, DefaultVertexFormat.POSITION_COLOR_TEX, GL11.GL_QUADS, 256, RenderType.CompositeState.builder().setTextureState(new TextureStateShard(texture, false, false)).setAlphaState(new AlphaStateShard(0.5F)).createCompositeState(false));
+////		setTransparencyState(RenderStateShard.TransparencyStateShard
+//		return RenderType.create("gui_" + texture, DefaultVertexFormat.POSITION_COLOR_TEX, VertexFormat.Mode.QUADS, 256, RenderType.CompositeState.builder().setTextureState(new TextureStateShard(texture, false, false)).createCompositeState(false));
 //	}
 //
 //	public static RenderType getLines(float lineWidth)

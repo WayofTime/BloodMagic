@@ -23,6 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.NetherPortalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -175,10 +176,15 @@ public class Utils
 		BlockEntity finalTile = finalWorld.getBlockEntity(finalPos);
 		CompoundTag initialTag = new CompoundTag();
 		CompoundTag finalTag = new CompoundTag();
+//		if (initialTile != null)
+//			initialTile.save(initialTag);
+//		if (finalTile != null)
+//			finalTile.save(finalTag);
+
 		if (initialTile != null)
-			initialTile.save(initialTag);
+			initialTag = initialTile.saveWithoutMetadata();
 		if (finalTile != null)
-			finalTile.save(finalTag);
+			finalTag = finalTile.saveWithoutMetadata();
 
 		BlockState initialState = initialWorld.getBlockState(initialPos);
 		BlockState finalState = finalWorld.getBlockState(finalPos);
@@ -193,9 +199,9 @@ public class Utils
 		}
 
 		// Finally, we get to do something! (CLEARING TILES)
-		if (finalState.getBlock().hasTileEntity(finalState))
+		if (finalState.getBlock() instanceof EntityBlock)
 			finalWorld.removeBlockEntity(finalPos);
-		if (initialState.getBlock().hasTileEntity(initialState))
+		if (initialState.getBlock() instanceof EntityBlock)
 			initialWorld.removeBlockEntity(initialPos);
 
 		// TILES CLEARED
@@ -206,11 +212,11 @@ public class Utils
 		if (initialTile != null)
 		{
 //			TileEntity newTileInitial = TileEntity.create(finalWorld, initialTag);
-			BlockEntity newTileInitial = BlockEntity.loadStatic(finalBlockState, initialTag);
+			BlockEntity newTileInitial = BlockEntity.loadStatic(finalPos, finalBlockState, initialTag);
 
-			finalWorld.setBlockEntity(finalPos, newTileInitial);
+			finalWorld.setBlockEntity(newTileInitial);
 //			newTileInitial.setPos(finalPos);
-			newTileInitial.setLevelAndPosition(finalWorld, finalPos);
+			newTileInitial.setLevel(finalWorld);
 		}
 
 		initialWorld.setBlock(initialPos, finalBlockState, 3);
@@ -218,11 +224,11 @@ public class Utils
 		if (finalTile != null)
 		{
 //			TileEntity newTileFinal = TileEntity.create(initialWorld, finalTag);
-			BlockEntity newTileFinal = BlockEntity.loadStatic(initialBlockState, finalTag);
+			BlockEntity newTileFinal = BlockEntity.loadStatic(initialPos, initialBlockState, finalTag);
 
-			initialWorld.setBlockEntity(initialPos, newTileFinal);
+			initialWorld.setBlockEntity(newTileFinal);
 //			newTileFinal.setPos(initialPos);
-			newTileFinal.setLevelAndPosition(initialWorld, initialPos);
+			newTileFinal.setLevel(initialWorld);
 		}
 
 		initialWorld.updateNeighborsAt(initialPos, finalState.getBlock());
@@ -231,12 +237,12 @@ public class Utils
 		// Block tick scheduling
 		if (initialWorld.getBlockTicks().hasScheduledTick(initialPos, initialState.getBlock()))
 		{
-			finalWorld.getBlockTicks().scheduleTick(finalPos, initialState.getBlock(), 20);
+			finalWorld.scheduleTick(finalPos, initialState.getBlock(), 20);
 		}
 
 		if (finalWorld.getBlockTicks().hasScheduledTick(finalPos, finalState.getBlock()))
 		{
-			initialWorld.getBlockTicks().scheduleTick(initialPos, finalState.getBlock(), 20);
+			initialWorld.scheduleTick(initialPos, finalState.getBlock(), 20);
 		}
 
 		return true;

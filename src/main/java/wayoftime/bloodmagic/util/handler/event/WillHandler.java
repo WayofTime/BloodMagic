@@ -168,7 +168,8 @@ public class WillHandler
 
 	public static boolean isBlockLoaded(BlockGetter world, BlockPos pos)
 	{
-		if (world == null || !Level.isInWorldBounds(pos))
+
+		if (world == null || pos.getY() < world.getMinBuildHeight() || pos.getY() > world.getMaxBuildHeight())
 		{
 			return false;
 		} else if (world instanceof LevelReader)
@@ -204,8 +205,27 @@ public class WillHandler
 			nbt.putShort("base", ac.getBase());
 			ac.getCurrentWill().writeToNBT(nbt, "current");
 //			if (event.getChunk() instanceof Chunk && !((Chunk) event.getChunk()).setLoaded(loaded);)
-			if (!event.getWorld().getChunkSource().isEntityTickingChunk(event.getChunk().getPos()))
-				WorldDemonWillHandler.removeWillChunk(rl, loc.x, loc.z);
+//			event.getWorld().getChunkSource().getChunk(p_62228_, p_62229_, p_62230_)
+//			if (!event.getWorld().getChunkSource().isEntityTickingChunk(event.getChunk().getPos()))
+//				WorldDemonWillHandler.removeWillChunk(rl, loc.x, loc.z);
+		}
+	}
+
+	@SubscribeEvent
+	public void chunkUnload(ChunkDataEvent.Unload event)
+	{
+		if (!(event.getWorld() instanceof Level))
+		{
+			return;
+		}
+		ResourceLocation rl = WorldDemonWillHandler.getDimensionResourceLocation((Level) event.getWorld());
+
+		ChunkPos loc = event.getChunk().getPos();
+
+		WillChunk ac = WorldDemonWillHandler.getWillChunk(rl, loc.x, loc.z);
+		if (ac != null)
+		{
+			WorldDemonWillHandler.removeWillChunk(rl, loc.x, loc.z);
 		}
 	}
 

@@ -9,12 +9,4 @@ public interface IRitualStone
 
 	void setRuneType(Level world, BlockPos pos, EnumRuneType runeType);
 
-	interface Tile
-	{
-		boolean isRuneType(EnumRuneType runeType);
-
-		EnumRuneType getRuneType();
-
-		void setRuneType(EnumRuneType runeType);
-	}
 }

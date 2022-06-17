@@ -1,17 +1,22 @@
 package wayoftime.bloodmagic.common.item;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.anointment.AnointmentData;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
@@ -39,7 +44,8 @@ public class ItemAnointmentProvider extends Item
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
-		ItemStack weaponStack = player.getItemInHand(hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+		ItemStack weaponStack = player.getItemInHand(hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND
+				: InteractionHand.MAIN_HAND);
 //		if (world.isRemote && !unusable)
 //		{
 //			Vector3d vec = player.getLookVec();
@@ -116,12 +122,31 @@ public class ItemAnointmentProvider extends Item
 
 	public static boolean isItemTool(ItemStack stack)
 	{
-		return !stack.getItem().getToolTypes(stack).isEmpty();
+		for (ToolAction action : validToolActions())
+		{
+			if (stack.canPerformAction(action))
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean isItemSword(ItemStack stack)
 	{
 		return stack.getItem() instanceof SwordItem;
+	}
+
+	public static List<ToolAction> validToolActions()
+	{
+		List<ToolAction> actionList = new ArrayList<>();
+		actionList.add(ToolActions.AXE_DIG);
+		actionList.add(ToolActions.SHOVEL_DIG);
+		actionList.add(ToolActions.SWORD_DIG);
+		actionList.add(ToolActions.PICKAXE_DIG);
+		actionList.add(ToolActions.HOE_DIG);
+		return actionList;
 	}
 
 	public int getColor()

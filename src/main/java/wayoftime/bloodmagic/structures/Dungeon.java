@@ -10,12 +10,12 @@ import java.util.Random;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import net.minecraft.server.level.ServerLevel;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.util.BMLog;
 
@@ -34,7 +34,8 @@ public class Dungeon
 //		Map<Direction, List<BlockPos>> availableDoorMap = new HashMap<>(); // Map of doors. The EnumFacing indicates
 		// what way this door faces.
 		List<AreaDescriptor> descriptorList = new ArrayList<>();
-		Map<BlockPos, Pair<DungeonRoom, StructurePlaceSettings>> roomMap = new HashMap<>(); // Placement positions in terms
+		Map<BlockPos, Pair<DungeonRoom, StructurePlaceSettings>> roomMap = new HashMap<>(); // Placement positions in
+																							// terms
 //																						// of actual positions
 
 //		List<Pair<BlockPos, Pair<DungeonRoom, PlacementSettings>>> roomList = new ArrayList<>();
@@ -48,7 +49,7 @@ public class Dungeon
 
 		settings.setRotation(rot);
 		settings.setIgnoreEntities(true);
-		settings.setChunkPos(null);
+//		settings.setChunkPos(null);
 
 		settings.addProcessor(new StoneToOreProcessor(0.0f));
 

@@ -4,7 +4,10 @@ import wayoftime.bloodmagic.BloodMagic;
 
 public class Constants
 {
-	public static final String SPEED_RUNE = "speed_rune";
+	public static class NAMES
+	{
+		public static final String RUNE_CAPABILITY_NAME = "rune_capability";
+	}
 
 	public static class NBT
 	{

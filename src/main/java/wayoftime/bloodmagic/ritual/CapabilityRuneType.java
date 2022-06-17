@@ -1,30 +1,76 @@
 package wayoftime.bloodmagic.ritual;
 
-import java.util.concurrent.Callable;
-
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.ByteTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.CapabilityToken;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.common.util.LazyOptional;
+import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.util.Constants;
 
-public final class CapabilityRuneType
+public final class CapabilityRuneType implements ICapabilitySerializable<CompoundTag>, IRitualStoneTile
 {
-	public static class RuneTypeStorage implements Capability.IStorage<IRitualStone.Tile>
+	// So... the Tile would need to implement this?
+	public static final Capability<CapabilityRuneType> INSTANCE = CapabilityManager.get(new CapabilityToken<>()
 	{
-		@Override
-		public Tag writeNBT(Capability<IRitualStone.Tile> capability, IRitualStone.Tile instance, Direction side)
-		{
-			return ByteTag.valueOf((byte) instance.getRuneType().ordinal());
-		}
+	});
+	public static final ResourceLocation ID = new ResourceLocation(BloodMagic.MODID, Constants.NAMES.RUNE_CAPABILITY_NAME);
 
-		@Override
-		public void readNBT(Capability<IRitualStone.Tile> capability, IRitualStone.Tile instance, Direction side, Tag nbt)
-		{
-			instance.setRuneType(EnumRuneType.byMetadata(((ByteTag) nbt).getAsByte()));
-		}
+	private IRitualStoneTile instance;
+
+	public CapabilityRuneType()
+	{
+		this.instance = new RuneTypeWrapper();
 	}
 
-	public static class RuneTypeWrapper implements IRitualStone.Tile
+	public CapabilityRuneType(IRitualStoneTile rune)
+	{
+		this.instance = rune;
+	}
+
+	@Override
+	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side)
+	{
+		// TODO Auto-generated method stub
+		return LazyOptional.of(() -> this).cast();
+	}
+
+	@Override
+	public CompoundTag serializeNBT()
+	{
+		CompoundTag tag = new CompoundTag();
+		tag.putByte("rune", (byte) instance.getRuneType().ordinal());
+		return tag;
+	}
+
+	@Override
+	public void deserializeNBT(CompoundTag tag)
+	{
+		instance.setRuneType(EnumRuneType.byMetadata(tag.getByte("rune")));
+	}
+
+	@Override
+	public boolean isRuneType(EnumRuneType runeType)
+	{
+		return instance.isRuneType(runeType);
+	}
+
+	@Override
+	public EnumRuneType getRuneType()
+	{
+		return instance.getRuneType();
+	}
+
+	@Override
+	public void setRuneType(EnumRuneType runeType)
+	{
+		instance.setRuneType(runeType);
+	}
+
+	public static class RuneTypeWrapper implements IRitualStoneTile
 	{
 		private EnumRuneType type = EnumRuneType.BLANK;
 
@@ -43,16 +89,6 @@ public final class CapabilityRuneType
 		public void setRuneType(EnumRuneType runeType)
 		{
 			type = runeType;
-		}
-	}
-
-	public static class Factory implements Callable<IRitualStone.Tile>
-	{
-		@Override
-		public IRitualStone.Tile call()
-				throws Exception
-		{
-			return new RuneTypeWrapper();
 		}
 	}
 }

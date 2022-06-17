@@ -3,7 +3,9 @@ package wayoftime.bloodmagic.client.render.entity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.Model;
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -13,12 +15,21 @@ import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.client.render.model.ModelMeteor;
 
 @OnlyIn(Dist.CLIENT)
 public class EntityMeteorRenderer extends EntityRenderer<Entity>
 {
-	public Model model = new ModelMeteor();
+//	 private static final ResourceLocation COW_LOCATION = new ResourceLocation("textures/entity/cow/cow.png");
+//
+//	   public CowRenderer(EntityRendererProvider.Context p_173956_) {
+//	      super(p_173956_, new CowModel<>(p_173956_.bakeLayer(ModelLayers.COW)), 0.7F);
+//	   }
+//
+//	   public ResourceLocation getTextureLocation(Cow p_114029_) {
+//	      return COW_LOCATION;
+//	   }
+
+	public Model model;
 	private static final ResourceLocation COW_LOCATION = BloodMagic.rl("textures/models/meteor.png");
 	private float scale = 1.0f;
 
@@ -26,6 +37,7 @@ public class EntityMeteorRenderer extends EntityRenderer<Entity>
 	{
 		super(renderManager);
 		this.shadowRadius = 0.5F;
+		this.model = new CowModel<>(renderManager.bakeLayer(ModelLayers.COW));
 	}
 
 	public void render(Entity entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn)

@@ -48,7 +48,6 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer.Model3D;
 import wayoftime.bloodmagic.client.render.RenderResizableCuboid;
-import wayoftime.bloodmagic.client.utils.BMRenderTypes;
 import wayoftime.bloodmagic.common.item.ItemRitualDiviner;
 import wayoftime.bloodmagic.common.item.ItemRitualReader;
 import wayoftime.bloodmagic.common.tile.TileMasterRitualStone;
@@ -453,11 +452,12 @@ public class ClientHandler
 			{
 				int fluidHeight = (int) (h * (fluid.getAmount() / (float) capacity));
 				drawRepeatedFluidSpriteGui(buffer, transform, fluid, x, y + h - fluidHeight, w, fluidHeight);
-				RenderSystem.color3f(1, 1, 1);
+				RenderSystem.setShaderColor(1, 1, 1, 1);
 			}
 			int xOff = (w - oW) / 2;
 			int yOff = (h - oH) / 2;
-			RenderType renderType = BMRenderTypes.getGui(new ResourceLocation(originalTexture));
+//			RenderSystem.setShaderTe
+			RenderType renderType = RenderType.solid();
 			drawTexturedRect(buffer.getBuffer(renderType), transform, x + xOff, y + yOff, oW, oH, 256f, oX, oX + oW, oY, oY + oH);
 			buffer.endBatch(renderType);
 			transform.popPose();
@@ -470,7 +470,8 @@ public class ClientHandler
 
 	public static void drawRepeatedFluidSpriteGui(MultiBufferSource buffer, PoseStack transform, FluidStack fluid, float x, float y, float w, float h)
 	{
-		RenderType renderType = BMRenderTypes.getGui(InventoryMenu.BLOCK_ATLAS);
+//		RenderType renderType = BMRenderTypes.getGui(InventoryMenu.BLOCK_ATLAS);
+		RenderType renderType = RenderType.solid();
 		VertexConsumer builder = buffer.getBuffer(renderType);
 		drawRepeatedFluidSprite(builder, transform, fluid, x, y, w, h);
 	}

@@ -1,5 +1,6 @@
 package wayoftime.bloodmagic.structures;
 
+import java.util.Optional;
 import java.util.Random;
 
 import net.minecraft.core.BlockPos;
@@ -28,9 +29,9 @@ public class DungeonStructure
 		MinecraftServer minecraftserver = world.getServer();
 		StructureManager templatemanager = world.getStructureManager();
 
-		StructureTemplate template = templatemanager.get(resource);
+		Optional<StructureTemplate> template = templatemanager.get(resource);
 
-		if (template == null)
+		if (template.isEmpty())
 		{
 			System.out.println("Invalid template for location: " + resource);
 			BMLog.DEBUG.warn("Invalid template for location: " + resource);
@@ -44,7 +45,9 @@ public class DungeonStructure
 //		template.addBlocksToWorldChunk(world, finalPos, settings);
 
 //		placeInWorld
-		template.placeInWorldChunk(world, finalPos, settings, rand);
+
+//		template.get().placeInWorldChunk(world, finalPos, settings, rand);
+		template.get().placeInWorld(world, finalPos, finalPos, settings, rand, 2);
 //		template.placeInWorld(world, finalPos, settings, rand);
 
 		return true;

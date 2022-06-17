@@ -15,23 +15,20 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BlockRitualStone;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.tile.TileMasterRitualStone;
+import wayoftime.bloodmagic.ritual.CapabilityRuneType;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.ritual.IRitualStone;
-import wayoftime.bloodmagic.ritual.IRitualStone.Tile;
+import wayoftime.bloodmagic.ritual.IRitualStoneTile;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 
 public class RitualHelper
 {
-	@CapabilityInject(IRitualStone.Tile.class)
-	static Capability<IRitualStone.Tile> RUNE_CAPABILITY = null;
-
 	public static boolean canCrystalActivate(Ritual ritual, int crystalLevel)
 	{
 		return ritual.getCrystalLevel() <= crystalLevel && BloodMagic.RITUAL_MANAGER.enabled(BloodMagic.RITUAL_MANAGER.getId(ritual), false);
@@ -102,10 +99,10 @@ public class RitualHelper
 
 		if (block instanceof IRitualStone)
 			return ((IRitualStone) block).isRuneType(world, pos, type);
-		else if (tile instanceof IRitualStone.Tile)
-			return ((IRitualStone.Tile) tile).isRuneType(type);
-		else if (tile != null && tile.getCapability(RUNE_CAPABILITY, null).isPresent())
-			return tile.getCapability(RUNE_CAPABILITY, null).resolve().get().isRuneType(type);
+		else if (tile instanceof IRitualStoneTile)
+			return ((IRitualStoneTile) tile).isRuneType(type);
+		else if (tile != null && tile.getCapability(CapabilityRuneType.INSTANCE, null).isPresent())
+			return tile.getCapability(CapabilityRuneType.INSTANCE, null).resolve().get().isRuneType(type);
 
 		return false;
 	}
@@ -119,10 +116,10 @@ public class RitualHelper
 
 		if (block instanceof IRitualStone)
 			return true;
-		else if (tile instanceof IRitualStone.Tile)
+		else if (tile instanceof IRitualStoneTile)
 			return true;
 		else
-			return tile != null && tile.getCapability(RUNE_CAPABILITY, null).isPresent();
+			return tile != null && tile.getCapability(CapabilityRuneType.INSTANCE, null).isPresent();
 
 	}
 
@@ -135,11 +132,11 @@ public class RitualHelper
 
 		if (state.getBlock() instanceof IRitualStone)
 			((IRitualStone) state.getBlock()).setRuneType(world, pos, type);
-		else if (tile instanceof IRitualStone.Tile)
-			((IRitualStone.Tile) tile).setRuneType(type);
+		else if (tile instanceof IRitualStoneTile)
+			((IRitualStoneTile) tile).setRuneType(type);
 		else
 		{
-			LazyOptional<Tile> cap = tile.getCapability(RUNE_CAPABILITY, null);
+			LazyOptional<CapabilityRuneType> cap = tile.getCapability(CapabilityRuneType.INSTANCE, null);
 			if (cap.isPresent())
 			{
 				cap.resolve().get().setRuneType(type);

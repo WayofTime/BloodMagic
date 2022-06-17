@@ -11,17 +11,17 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.reflect.TypeToken;
 
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.Mirror;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.tile.TileDungeonController;
@@ -102,7 +102,7 @@ public class DungeonSynthesizer
 
 		settings.setRotation(rot);
 		settings.setIgnoreEntities(true);
-		settings.setChunkPos(null);
+//		settings.setChunkPos(null);
 //		settings.addProcessor(new StoneToOreProcessor(0.0f));
 		settings.setKnownShape(true);
 
@@ -271,7 +271,7 @@ public class DungeonSynthesizer
 
 		settings.setRotation(rot);
 		settings.setIgnoreEntities(false);
-		settings.setChunkPos(null);
+//		settings.setChunkPos(null);
 //		settings.addProcessor(new StoneToOreProcessor(0.0f));
 		settings.setKnownShape(true);
 
@@ -383,7 +383,7 @@ public class DungeonSynthesizer
 
 		settings.setRotation(rot);
 		settings.setIgnoreEntities(false);
-		settings.setChunkPos(null);
+//		settings.setChunkPos(null);
 //		settings.addProcessor(new StoneToOreProcessor(0.0f));
 		settings.setKnownShape(true);
 		settings.setRotation(rotation);
@@ -468,7 +468,7 @@ public class DungeonSynthesizer
 
 		settings.setRotation(rot);
 		settings.setIgnoreEntities(false);
-		settings.setChunkPos(null);
+//		settings.setChunkPos(null);
 //		settings.addProcessor(new StoneToOreProcessor(0.0f));
 		settings.setKnownShape(true);
 

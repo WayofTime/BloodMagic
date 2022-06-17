@@ -19,6 +19,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -64,6 +65,7 @@ import wayoftime.bloodmagic.impl.BloodMagicCorePlugin;
 import wayoftime.bloodmagic.loot.GlobalLootModifier;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
+import wayoftime.bloodmagic.ritual.CapabilityRuneType;
 import wayoftime.bloodmagic.ritual.ModRituals;
 import wayoftime.bloodmagic.ritual.RitualManager;
 import wayoftime.bloodmagic.structures.ModDungeons;
@@ -127,6 +129,7 @@ public class BloodMagic
 		modBus.addListener(this::doClientStuff);
 		modBus.addListener(this::loadModels);
 		modBus.addListener(this::gatherData);
+		modBus.addListener(this::onRegisterCapabilities);
 
 		modBus.addGenericListener(Fluid.class, this::registerFluids);
 		modBus.addGenericListener(BlockEntityType.class, this::registerTileEntityTypes);
@@ -167,6 +170,11 @@ public class BloodMagic
 //        event.getRegistry().registerAll(
 //                new SewingRecipe.Serializer().setRegistryName("sewing")
 //        );
+	}
+
+	private void onRegisterCapabilities(RegisterCapabilitiesEvent event)
+	{
+		event.register(CapabilityRuneType.class);
 	}
 
 	public static ResourceLocation rl(String name)
