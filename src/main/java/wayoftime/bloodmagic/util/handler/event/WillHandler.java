@@ -4,24 +4,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.chunk.ChunkStatus;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
@@ -30,15 +30,15 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
+import wayoftime.bloodmagic.api.compat.IDemonWill;
+import wayoftime.bloodmagic.api.compat.IDemonWillWeapon;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.demonaura.PosXY;
 import wayoftime.bloodmagic.demonaura.WillChunk;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.will.DemonWillHolder;
-import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
-import wayoftime.bloodmagic.api.compat.IDemonWill;
-import wayoftime.bloodmagic.api.compat.IDemonWillWeapon;
 import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -57,8 +57,7 @@ public class WillHandler
 			EnumDemonWillType pickupType = ((IDemonWill) stack.getItem()).getType(stack);
 			ItemStack remainder = PlayerDemonWillHandler.addDemonWill(player, stack);
 
-			if (remainder == null || ((IDemonWill) stack.getItem()).getWill(pickupType, stack) < 0.0001
-					|| PlayerDemonWillHandler.isDemonWillFull(pickupType, player))
+			if (remainder == null || ((IDemonWill) stack.getItem()).getWill(pickupType, stack) < 0.0001 || PlayerDemonWillHandler.isDemonWillFull(pickupType, player))
 			{
 				stack.setCount(0);
 				event.setResult(Event.Result.ALLOW);
@@ -88,8 +87,7 @@ public class WillHandler
 		DamageSource source = event.getSource();
 		Entity entity = source.getEntity();
 
-		if (attackedEntity.hasEffect(BloodMagicPotions.SOUL_SNARE) && (attackedEntity instanceof Mob
-				|| attackedEntity.getCommandSenderWorld().getDifficulty() == Difficulty.PEACEFUL))
+		if (attackedEntity.hasEffect(BloodMagicPotions.SOUL_SNARE) && (attackedEntity instanceof Mob || attackedEntity.getCommandSenderWorld().getDifficulty() == Difficulty.PEACEFUL))
 		{
 			MobEffectInstance eff = attackedEntity.getEffect(BloodMagicPotions.SOUL_SNARE);
 			int lvl = eff.getAmplifier();

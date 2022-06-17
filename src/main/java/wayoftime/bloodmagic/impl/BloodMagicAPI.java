@@ -11,13 +11,22 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.NonNullList;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.util.Lazy;
+import net.minecraftforge.registries.IForgeRegistryEntry;
+import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.altar.ComponentType;
+import wayoftime.bloodmagic.anointment.Anointment;
 import wayoftime.bloodmagic.api.IBloodMagicAPI;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
+import wayoftime.bloodmagic.common.item.BloodOrb;
+import wayoftime.bloodmagic.core.living.LivingUpgrade;
 import wayoftime.bloodmagic.incense.EnumTranquilityType;
 import wayoftime.bloodmagic.incense.IncenseTranquilityRegistry;
 import wayoftime.bloodmagic.incense.TranquilityStack;
@@ -26,7 +35,6 @@ import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
 
 public class BloodMagicAPI implements IBloodMagicAPI
 {
-
 	public static final BloodMagicAPI INSTANCE = new BloodMagicAPI();
 
 	private final BloodMagicBlacklist blacklist;
@@ -35,6 +43,13 @@ public class BloodMagicAPI implements IBloodMagicAPI
 	private final Multimap<ComponentType, BlockState> altarComponents;
 	private final Map<String, Function<Player, NonNullList<ItemStack>>> inventoryProvider;
 
+	@Nonnull
+	private static final Lazy<ResourceKey<? extends Registry<Anointment>>> ANOINTMENT_REGISTRY_NAME = registryKey(Anointment.class, "anointment");
+	@Nonnull
+	private static final Lazy<ResourceKey<? extends Registry<BloodOrb>>> BLOOD_ORB_REGISTRY_NAME = registryKey(BloodOrb.class, "bloodorbs");
+	@Nonnull
+	private static final Lazy<ResourceKey<? extends Registry<LivingUpgrade>>> LIVING_UPGRADE_REGISTRY_NAME = registryKey(LivingUpgrade.class, "upgrades");
+
 	public BloodMagicAPI()
 	{
 		this.blacklist = new BloodMagicBlacklist();
@@ -42,6 +57,31 @@ public class BloodMagicAPI implements IBloodMagicAPI
 		this.valueManager = new BloodMagicValueManager();
 		this.altarComponents = ArrayListMultimap.create();
 		this.inventoryProvider = new HashMap<String, Function<Player, NonNullList<ItemStack>>>();
+	}
+
+	// Copied from Mekanism. Again.
+	@Nonnull
+	private static <T extends IForgeRegistryEntry<T>> Lazy<ResourceKey<? extends Registry<T>>> registryKey(@SuppressWarnings("unused") @Nonnull Class<T> compileTimeTypeValidator, @Nonnull String path)
+	{
+		return Lazy.of(() -> ResourceKey.createRegistryKey(new ResourceLocation(BloodMagic.MODID, path)));
+	}
+
+	@Nonnull
+	public static ResourceKey<? extends Registry<Anointment>> anointmentRegistryName()
+	{
+		return ANOINTMENT_REGISTRY_NAME.get();
+	}
+
+	@Nonnull
+	public static ResourceKey<? extends Registry<BloodOrb>> bloodOrbRegistryName()
+	{
+		return BLOOD_ORB_REGISTRY_NAME.get();
+	}
+
+	@Nonnull
+	public static ResourceKey<? extends Registry<LivingUpgrade>> LivingUpgradeRegistryName()
+	{
+		return LIVING_UPGRADE_REGISTRY_NAME.get();
 	}
 
 	@Nonnull

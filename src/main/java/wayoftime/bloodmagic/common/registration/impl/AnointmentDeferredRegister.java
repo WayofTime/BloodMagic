@@ -4,12 +4,13 @@ import java.util.function.Supplier;
 
 import wayoftime.bloodmagic.anointment.Anointment;
 import wayoftime.bloodmagic.common.registration.WrappedDeferredRegister;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
 
 public class AnointmentDeferredRegister extends WrappedDeferredRegister<Anointment>
 {
 	public AnointmentDeferredRegister(String modid)
 	{
-		super(modid, Anointment.class);
+		super(modid, BloodMagicAPI.anointmentRegistryName());
 	}
 
 	public <AN extends Anointment> AnointmentRegistryObject<AN> register(String name, Supplier<? extends AN> sup)

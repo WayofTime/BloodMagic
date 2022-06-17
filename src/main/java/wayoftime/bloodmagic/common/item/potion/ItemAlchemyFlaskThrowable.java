@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.stats.Stats;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.entity.projectile.EntityPotionFlask;
 import wayoftime.bloodmagic.recipe.EffectHolder;
@@ -43,19 +43,19 @@ public class ItemAlchemyFlaskThrowable extends ItemAlchemyFlask
 			return InteractionResultHolder.pass(stack);
 		}
 
-		world.playSound((Player) null, player.getX(), player.getY(), player.getZ(), SoundEvents.SPLASH_POTION_THROW, SoundSource.PLAYERS, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+		world.playSound((Player) null, player.getX(), player.getY(), player.getZ(), SoundEvents.SPLASH_POTION_THROW, SoundSource.PLAYERS, 0.5F, 0.4F / (world.random.nextFloat() * 0.4F + 0.8F));
 
 		if (!world.isClientSide)
 		{
 			EntityPotionFlask potionentity = new EntityPotionFlask(world, player);
 			potionentity.setItem(stack);
-			potionentity.shootFromRotation(player, player.xRot, player.yRot, -20.0F, 0.5F, 1.0F);
+			potionentity.shootFromRotation(player, player.getXRot(), player.getYRot(), -20.0F, 0.5F, 1.0F);
 			prepPotionFlask(stack, player, potionentity);
 			world.addFreshEntity(potionentity);
 		}
 
 		player.awardStat(Stats.ITEM_USED.get(this));
-		if (!player.abilities.instabuild)
+		if (!player.getAbilities().instabuild)
 		{
 			stack.setDamageValue(stack.getDamageValue() + 1);
 		}
@@ -88,8 +88,7 @@ public class ItemAlchemyFlaskThrowable extends ItemAlchemyFlask
 		setEffectsOfFlask(stack, effectList);
 		Collection<MobEffectInstance> instanceList = PotionUtils.getMobEffects(stack);
 
-		int color = instanceList.isEmpty() ? PotionUtils.getColor(Potions.WATER)
-				: PotionUtils.getColor(instanceList);
+		int color = instanceList.isEmpty() ? PotionUtils.getColor(Potions.WATER) : PotionUtils.getColor(instanceList);
 		stack.getTag().putInt("CustomPotionColor", color);
 	}
 }

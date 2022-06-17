@@ -1,24 +1,22 @@
 package wayoftime.bloodmagic.common.item.sigil;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.BucketPickup;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BucketPickup;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
-
-import wayoftime.bloodmagic.common.item.sigil.ISigil.Holding;
 
 public class ItemSigilVoid extends ItemSigilFluidBase
 {
@@ -56,7 +54,7 @@ public class ItemSigilVoid extends ItemSigilFluidBase
 				{
 					if (NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess())
 					{
-						((BucketPickup) blockState.getBlock()).takeLiquid(world, blockPos, blockState);
+						((BucketPickup) blockState.getBlock()).pickupBlock(world, blockPos, blockState);
 						return InteractionResultHolder.success(stack);
 					}
 				}

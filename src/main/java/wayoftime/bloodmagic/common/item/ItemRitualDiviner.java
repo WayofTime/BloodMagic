@@ -7,37 +7,37 @@ import java.util.Map;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Tuple;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.core.NonNullList;
-import net.minecraft.util.Tuple;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
@@ -277,7 +277,7 @@ public class ItemRitualDiviner extends Item
 			return true;
 		}
 
-		NonNullList<ItemStack> inventory = player.inventory.items;
+		NonNullList<ItemStack> inventory = player.getInventory().items;
 		for (ItemStack newStack : inventory)
 		{
 			if (newStack.isEmpty())
@@ -609,23 +609,23 @@ public class ItemRitualDiviner extends Item
 		BlockState state = worldIn.getBlockState(pos);
 		Block block = worldIn.getBlockState(pos).getBlock();
 
-		if (block.isAir(state, worldIn, pos))
+		if (state.isAir())
 		{
 			for (int i = 0; i < amount; ++i)
 			{
-				double d0 = random.nextGaussian() * 0.02D;
-				double d1 = random.nextGaussian() * 0.02D;
-				double d2 = random.nextGaussian() * 0.02D;
-				worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, (double) ((float) pos.getX() + random.nextFloat()), (double) pos.getY() + (double) random.nextFloat(), (double) ((float) pos.getZ() + random.nextFloat()), d0, d1, d2);
+				double d0 = worldIn.random.nextGaussian() * 0.02D;
+				double d1 = worldIn.random.nextGaussian() * 0.02D;
+				double d2 = worldIn.random.nextGaussian() * 0.02D;
+				worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, (double) ((float) pos.getX() + worldIn.random.nextFloat()), (double) pos.getY() + (double) worldIn.random.nextFloat(), (double) ((float) pos.getZ() + worldIn.random.nextFloat()), d0, d1, d2);
 			}
 		} else
 		{
 			for (int i1 = 0; i1 < amount; ++i1)
 			{
-				double d0 = random.nextGaussian() * 0.02D;
-				double d1 = random.nextGaussian() * 0.02D;
-				double d2 = random.nextGaussian() * 0.02D;
-				worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, (double) ((float) pos.getX() + random.nextFloat() * 3.0f - 1), (double) pos.getY() + (double) random.nextFloat() * 3.0f - 1, (double) ((float) pos.getZ() + random.nextFloat() * 3.0f - 1), d0, d1, d2);
+				double d0 = worldIn.random.nextGaussian() * 0.02D;
+				double d1 = worldIn.random.nextGaussian() * 0.02D;
+				double d2 = worldIn.random.nextGaussian() * 0.02D;
+				worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, (double) ((float) pos.getX() + worldIn.random.nextFloat() * 3.0f - 1), (double) pos.getY() + (double) worldIn.random.nextFloat() * 3.0f - 1, (double) ((float) pos.getZ() + worldIn.random.nextFloat() * 3.0f - 1), d0, d1, d2);
 			}
 		}
 	}

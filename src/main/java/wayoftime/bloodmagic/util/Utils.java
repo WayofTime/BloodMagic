@@ -6,28 +6,28 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.level.block.NetherPortalBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Container;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.Container;
-import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.NetherPortalBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.IFluidBlock;
@@ -464,7 +464,7 @@ public class Utils
 
 	public static boolean canPlayerSeeDemonWill(Player player)
 	{
-		IItemHandler inventory = new PlayerMainInvWrapper(player.inventory);
+		IItemHandler inventory = new PlayerMainInvWrapper(player.getInventory());
 
 		for (int i = 0; i < inventory.getSlots(); i++)
 		{
@@ -491,7 +491,7 @@ public class Utils
 
 	public static double getDemonWillResolution(Player player)
 	{
-		IItemHandler inventory = new PlayerMainInvWrapper(player.inventory);
+		IItemHandler inventory = new PlayerMainInvWrapper(player.getInventory());
 
 		for (int i = 0; i < inventory.getSlots(); i++)
 		{
@@ -602,7 +602,7 @@ public class Utils
 
 		if (stack.isEmpty())
 		{
-			itemEntity.remove();
+			itemEntity.discard();
 		}
 
 		return planted;

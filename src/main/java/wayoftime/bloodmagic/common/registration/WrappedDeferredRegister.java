@@ -11,7 +11,6 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class WrappedDeferredRegister<T>
 {
-
 	protected final DeferredRegister<T> internal;
 
 	protected WrappedDeferredRegister(DeferredRegister<T> internal)

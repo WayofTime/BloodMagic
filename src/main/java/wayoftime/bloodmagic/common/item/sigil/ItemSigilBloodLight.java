@@ -1,15 +1,15 @@
 package wayoftime.bloodmagic.common.item.sigil;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.core.data.SoulTicket;
@@ -18,8 +18,6 @@ import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
-
-import wayoftime.bloodmagic.common.item.sigil.ISigil.Holding;
 
 public class ItemSigilBloodLight extends ItemSigilBase
 {
@@ -72,7 +70,7 @@ public class ItemSigilBloodLight extends ItemSigilBase
 			{
 				SoulNetwork network = NetworkHelper.getSoulNetwork(getBinding(stack));
 				EntityBloodLight light = new EntityBloodLight(world, player);
-				light.shootFromRotation(player, player.xRot, player.yRot, 0.0F, 1.5F, 1.0F);
+				light.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
 				world.addFreshEntity(light);
 				network.syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed()));
 			}

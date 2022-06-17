@@ -3,20 +3,20 @@ package wayoftime.bloodmagic.common.item.soul;
 import java.util.List;
 import java.util.Locale;
 
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.core.NonNullList;
-import net.minecraft.util.Mth;
-import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -86,13 +86,13 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 	}
 
 	@Override
-	public boolean showDurabilityBar(ItemStack stack)
+	public boolean isBarVisible(ItemStack stack)
 	{
 		return true;
 	}
 
 	@Override
-	public double getDurabilityForDisplay(ItemStack stack)
+	public int getBarWidth(ItemStack stack)
 	{
 		EnumDemonWillType type = this.getCurrentType(stack);
 		double maxWill = getMaxWill(type, stack);
@@ -100,11 +100,11 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 		{
 			return 1;
 		}
-		return 1.0 - (getWill(type, stack) / maxWill);
+		return (int) (13.0F - (getWill(type, stack) * 13.0F / maxWill));
 	}
 
 	@Override
-	public int getRGBDurabilityForDisplay(ItemStack stack)
+	public int getBarColor(ItemStack stack)
 	{
 		EnumDemonWillType type = this.getCurrentType(stack);
 		double maxWill = getMaxWill(type, stack);

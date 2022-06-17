@@ -38,7 +38,7 @@ public class SetWillFraction extends LootItemConditionalFunction
 		if (stack.getItem() instanceof IDemonWillGem)
 		{
 			int maxWill = ((IDemonWillGem) stack.getItem()).getMaxWill(EnumDemonWillType.DEFAULT, stack);
-			float f = 1.0F - this.damageRange.getFloat();
+			float f = 1.0F - this.damageRange.getFloat(context);
 			((IDemonWillGem) stack.getItem()).setWill(EnumDemonWillType.DEFAULT, stack, maxWill * f);
 		} else
 		{

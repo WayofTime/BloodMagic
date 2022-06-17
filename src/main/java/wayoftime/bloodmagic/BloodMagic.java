@@ -97,9 +97,14 @@ public class BloodMagic
 		BloodMagicItems.ITEMS.register(modBus);
 
 //		RegistrarBloodMagic.BLOOD_ORBS.createAndRegister(modBus, "bloodorbs");
-		BloodMagicItems.BLOOD_ORBS.createAndRegister(modBus, "bloodorbs");
-		LivingArmorRegistrar.UPGRADES.createAndRegister(modBus, "upgrades");
-		AnointmentRegistrar.ANOINTMENTS.createAndRegister(modBus, "anointments");
+//		BloodMagicItems.BLOOD_ORBS.createAndRegister(modBus, "bloodorbs");
+//		LivingArmorRegistrar.UPGRADES.createAndRegister(modBus, "upgrades");
+//		AnointmentRegistrar.ANOINTMENTS.createAndRegister(modBus, "anointments");
+
+		BloodMagicItems.BLOOD_ORBS.register(modBus);
+		LivingArmorRegistrar.UPGRADES.register(modBus);
+		AnointmentRegistrar.ANOINTMENTS.register(modBus);
+
 		BloodMagicItems.BASICITEMS.register(modBus);
 		BloodMagicBlocks.BASICBLOCKS.register(modBus);
 		BloodMagicBlocks.DUNGEONBLOCKS.register(modBus);

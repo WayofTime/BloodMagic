@@ -1,26 +1,22 @@
 package wayoftime.bloodmagic.common.item.sigil;
 
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CauldronBlock;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import wayoftime.bloodmagic.common.item.IAlchemyItem;
 import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
-
-import wayoftime.bloodmagic.common.item.sigil.ISigil.Holding;
 
 public class ItemSigilWater extends ItemSigilFluidBase implements IAlchemyItem
 {
@@ -73,12 +69,12 @@ public class ItemSigilWater extends ItemSigilFluidBase implements IAlchemyItem
 						return InteractionResultHolder.success(stack);
 				}
 
-				// Special vanilla cauldron handling, yay.
-				if (world.getBlockState(blockPos).getBlock() == Blocks.CAULDRON && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess())
-				{
-					world.setBlockAndUpdate(blockPos, Blocks.CAULDRON.defaultBlockState().setValue(CauldronBlock.LEVEL, 3));
-					return InteractionResultHolder.success(stack);
-				}
+//				// Special vanilla cauldron handling, yay.
+//				if (world.getBlockState(blockPos).getBlock() == Blocks.CAULDRON && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess())
+//				{
+//					world.setBlockAndUpdate(blockPos, Blocks.CAULDRON.defaultBlockState().setValue(CauldronBlock., 3));
+//					return InteractionResultHolder.success(stack);
+//				}
 
 				// Case for if block at blockPos is not a tank
 				// Place fluid in world

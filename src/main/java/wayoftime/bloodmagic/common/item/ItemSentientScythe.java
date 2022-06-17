@@ -10,43 +10,43 @@ import java.util.UUID;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.entity.MobType;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.stats.Stats;
+import net.minecraft.util.Mth;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.stats.Stats;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.EntitySelector;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.util.Mth;
-import net.minecraft.world.phys.Vec3;
-import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.Difficulty;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
@@ -97,7 +97,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	@Override
 	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair)
 	{
-		return BloodMagicTags.CRYSTAL_DEMON.contains(repair.getItem()) || super.isValidRepairItem(toRepair, repair);
+		return repair.is(BloodMagicTags.CRYSTAL_DEMON) || super.isValidRepairItem(toRepair, repair);
 	}
 
 	@Override
@@ -262,7 +262,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 			list = attacker.level.getEntities(attacker, aabb, EntitySelector.ENTITY_STILL_ALIVE);
 		}
 
-		list = attacker.level.getEntitiesOfClass(LivingEntity.class, aabb);
+		list = attacker.level.getEntitiesOfClass(Entity.class, aabb);
 
 		// TODO: check if we actually hit something first, 'kay?
 		float f = (float) attacker.getAttributeValue(Attributes.ATTACK_DAMAGE);
@@ -352,10 +352,10 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 							{
 								if (targetEntity instanceof LivingEntity)
 								{
-									((LivingEntity) targetEntity).knockback((float) i * 0.5F, (double) Mth.sin(attacker.yRot * ((float) Math.PI / 180F)), (double) (-Mth.cos(attacker.yRot * ((float) Math.PI / 180F))));
+									((LivingEntity) targetEntity).knockback((float) i * 0.5F, (double) Mth.sin(attacker.getYRot() * ((float) Math.PI / 180F)), (double) (-Mth.cos(attacker.getYRot() * ((float) Math.PI / 180F))));
 								} else
 								{
-									targetEntity.push((double) (-Mth.sin(attacker.yRot * ((float) Math.PI / 180F)) * (float) i * 0.5F), 0.1D, (double) (Mth.cos(attacker.yRot * ((float) Math.PI / 180F)) * (float) i * 0.5F));
+									targetEntity.push((double) (-Mth.sin(attacker.getYRot() * ((float) Math.PI / 180F)) * (float) i * 0.5F), 0.1D, (double) (Mth.cos(attacker.getYRot() * ((float) Math.PI / 180F)) * (float) i * 0.5F));
 								}
 
 							}

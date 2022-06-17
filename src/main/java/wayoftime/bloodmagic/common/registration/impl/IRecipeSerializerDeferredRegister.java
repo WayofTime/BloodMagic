@@ -12,11 +12,10 @@ public class IRecipeSerializerDeferredRegister extends WrappedDeferredRegister<R
 
 	public IRecipeSerializerDeferredRegister(String modid)
 	{
-		super(modid, ForgeRegistries.RECIPE_SERIALIZERS);
+		super(modid, ForgeRegistries.Keys.RECIPE_SERIALIZERS);
 	}
 
-	public <RECIPE extends Recipe<?>> IRecipeSerializerRegistryObject<RECIPE> register(String name,
-			Supplier<RecipeSerializer<RECIPE>> sup)
+	public <RECIPE extends Recipe<?>> IRecipeSerializerRegistryObject<RECIPE> register(String name, Supplier<RecipeSerializer<RECIPE>> sup)
 	{
 		return register(name, sup, IRecipeSerializerRegistryObject::new);
 	}

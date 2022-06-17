@@ -2,11 +2,11 @@ package wayoftime.bloodmagic.common.meteor;
 
 import java.util.Random;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.tags.Tag;
-import net.minecraft.tags.SerializationTags;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public abstract class RandomBlockContainer
@@ -26,7 +26,9 @@ public abstract class RandomBlockContainer
 
 			int index = -1;
 			String tagName = splitStr[1];
-			Tag<Block> tag = SerializationTags.getInstance().getBlocks().getTag(new ResourceLocation(tagName));
+//			ForgeRegistries.BLOCKS.tags().tag
+			TagKey<Block> tag = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(tagName));
+//			TagKey<Block> tag = SerializationTags.getInstance().getBlocks().getTag(new ResourceLocation(tagName));
 
 			if (splitStr.length > 2)
 			{

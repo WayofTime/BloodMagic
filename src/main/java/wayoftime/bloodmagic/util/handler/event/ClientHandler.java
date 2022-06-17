@@ -152,8 +152,8 @@ public class ClientHandler
 				if (mrsHoloDisplay)
 				{
 					MultiBufferSource.BufferSource buffers = Minecraft.getInstance().renderBuffers().bufferSource();
-					PoseStack stack = event.getMatrixStack();
-					renderRitualStones(stack, buffers, mrsHoloTile, event.getPartialTicks());
+					PoseStack stack = event.getPoseStack();
+					renderRitualStones(stack, buffers, mrsHoloTile, event.getPartialTick());
 					RenderSystem.disableDepthTest();
 					buffers.endBatch();
 				} else
@@ -171,8 +171,8 @@ public class ClientHandler
 				if (mrsRangeDisplay)
 				{
 					MultiBufferSource.BufferSource buffers = Minecraft.getInstance().renderBuffers().bufferSource();
-					PoseStack stack = event.getMatrixStack();
-					renderRangeHologram(stack, buffers, mrsRangeTile, event.getPartialTicks());
+					PoseStack stack = event.getPoseStack();
+					renderRangeHologram(stack, buffers, mrsRangeTile, event.getPartialTick());
 					RenderSystem.disableDepthTest();
 					buffers.endBatch();
 				} else
@@ -191,8 +191,8 @@ public class ClientHandler
 		if (tileEntity instanceof TileMasterRitualStone && !player.getMainHandItem().isEmpty() && player.getMainHandItem().getItem() instanceof ItemRitualDiviner)
 		{
 			MultiBufferSource.BufferSource buffers = Minecraft.getInstance().renderBuffers().bufferSource();
-			PoseStack stack = event.getMatrixStack();
-			renderRitualStones(stack, buffers, player, event.getPartialTicks());
+			PoseStack stack = event.getPoseStack();
+			renderRitualStones(stack, buffers, player, event.getPartialTick());
 			RenderSystem.disableDepthTest();
 			buffers.endBatch();
 		}

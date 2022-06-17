@@ -13,20 +13,20 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.tags.Tag;
-import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.util.Constants;
 
 public class MeteorLayer
@@ -54,12 +54,12 @@ public class MeteorLayer
 		this(layerRadius, additionalMaxWeight, new ArrayList<>(), new StaticBlockContainer(fillBlock));
 	}
 
-	public MeteorLayer(int layerRadius, int additionalMaxWeight, Tag<Block> fillTag)
+	public MeteorLayer(int layerRadius, int additionalMaxWeight, TagKey<Block> fillTag)
 	{
 		this(layerRadius, additionalMaxWeight, fillTag, -1);
 	}
 
-	public MeteorLayer(int layerRadius, int additionalMaxWeight, Tag<Block> fillTag, int staticIndex)
+	public MeteorLayer(int layerRadius, int additionalMaxWeight, TagKey<Block> fillTag, int staticIndex)
 	{
 		this(layerRadius, additionalMaxWeight, new ArrayList<>(), new RandomBlockTagContainer(fillTag, staticIndex));
 	}
@@ -70,12 +70,12 @@ public class MeteorLayer
 		return this;
 	}
 
-	public MeteorLayer addShellBlock(Tag<Block> tag)
+	public MeteorLayer addShellBlock(TagKey<Block> tag)
 	{
 		return addShellBlock(tag, -1);
 	}
 
-	public MeteorLayer addShellBlock(Tag<Block> tag, int staticIndex)
+	public MeteorLayer addShellBlock(TagKey<Block> tag, int staticIndex)
 	{
 		return addShellBlock(new RandomBlockTagContainer(tag, staticIndex));
 	}
@@ -85,12 +85,12 @@ public class MeteorLayer
 		return addShellBlock(new StaticBlockContainer(block));
 	}
 
-	public MeteorLayer addWeightedTag(Tag<Block> tag, int weight)
+	public MeteorLayer addWeightedTag(TagKey<Block> tag, int weight)
 	{
 		return addWeightedTag(tag, weight, -1);
 	}
 
-	public MeteorLayer addWeightedTag(Tag<Block> tag, int weight, int staticIndex)
+	public MeteorLayer addWeightedTag(TagKey<Block> tag, int weight, int staticIndex)
 	{
 		weightList.add(Pair.of(new RandomBlockTagContainer(tag, staticIndex), weight));
 		return this;

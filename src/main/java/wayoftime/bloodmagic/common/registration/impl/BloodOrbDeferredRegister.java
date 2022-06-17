@@ -3,18 +3,18 @@ package wayoftime.bloodmagic.common.registration.impl;
 import java.util.function.Supplier;
 
 import net.minecraft.resources.ResourceLocation;
-import wayoftime.bloodmagic.common.registration.WrappedDeferredRegister;
 import wayoftime.bloodmagic.common.item.BloodOrb;
+import wayoftime.bloodmagic.common.registration.WrappedForgeDeferredRegister;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
 
-public class BloodOrbDeferredRegister extends WrappedDeferredRegister<BloodOrb>
+public class BloodOrbDeferredRegister extends WrappedForgeDeferredRegister<BloodOrb>
 {
 	public BloodOrbDeferredRegister(String modid)
 	{
-		super(modid, BloodOrb.class);
+		super(modid, BloodMagicAPI.bloodOrbRegistryName());
 	}
 
-	public BloodOrbRegistryObject<BloodOrb> register(String name, ResourceLocation rl, int tier, int capacity,
-			int fillRate)
+	public BloodOrbRegistryObject<BloodOrb> register(String name, ResourceLocation rl, int tier, int capacity, int fillRate)
 	{
 		return register(name, () -> new BloodOrb(rl, tier, capacity, fillRate));
 	}

@@ -4,12 +4,13 @@ import java.util.function.Supplier;
 
 import wayoftime.bloodmagic.common.registration.WrappedDeferredRegister;
 import wayoftime.bloodmagic.core.living.LivingUpgrade;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
 
 public class LivingUpgradeDeferredRegister extends WrappedDeferredRegister<LivingUpgrade>
 {
 	public LivingUpgradeDeferredRegister(String modid)
 	{
-		super(modid, LivingUpgrade.class);
+		super(modid, BloodMagicAPI.LivingUpgradeRegistryName());
 	}
 
 //	public BloodOrbRegistryObject<BloodOrb> register(String name, ResourceLocation rl, int tier, int capacity,
