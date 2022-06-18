@@ -32,7 +32,7 @@ public class BlockMasterRitualStone extends Block implements EntityBlock
 
 	public BlockMasterRitualStone(boolean isInverted)
 	{
-		super(Properties.of(Material.STONE).sound(SoundType.STONE).strength(2.0F, 5.0F));
+		super(Properties.of(Material.STONE).sound(SoundType.STONE).strength(2.0F, 5.0F).requiresCorrectToolForDrops());
 		this.isInverted = isInverted;
 //	.harvestTool(ToolType.PICKAXE).harvestLevel(2)
 	}

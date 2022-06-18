@@ -29,7 +29,7 @@ public class BlockDemonCrucible extends Block implements EntityBlock
 
 	public BlockDemonCrucible()
 	{
-		super(Properties.of(Material.STONE).strength(2.0F, 5.0F));
+		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).requiresCorrectToolForDrops());
 //		.harvestTool(ToolType.PICKAXE).harvestLevel(1)
 	}
 

@@ -1082,8 +1082,12 @@ ca758f49ba878f8e498fe156d4916c1e332d552c data/forge/tags/items/ingots/hellforged
 4f84e4469650316777482889b269aad432a06d45 data/forge/tags/items/pickaxes.json
 4e3965798f4b18aab0edd5856646ace81780f131 data/forge/tags/items/shovels.json
 8464f5918830fa341ea9d2b31183e7272aa6f347 data/forge/tags/items/swords.json
+01e5ecb6b61f5c3e7b6898ca92f0ec7ca19977e9 data/minecraft/tags/blocks/mineable/axe.json
+e57c11fa4afc8279fbda39501bb2e47d2aefb513 data/minecraft/tags/blocks/mineable/pickaxe.json
 d348e6ef5f30db7c6c6ef2aac89c45e9c4c6fef7 data/minecraft/tags/blocks/mushroom_hyphae.json
 95fd3a7b178a92c5aecdd097fec5359f14a06c13 data/minecraft/tags/blocks/mushroom_stem.json
+eb16ce9c9bff56f5aeb327de260c2306aa26ff7d data/minecraft/tags/blocks/needs_diamond_tool.json
+1e4fbf71a56c95a099c6e83a089c2d3b24a35741 data/minecraft/tags/blocks/needs_stone_tool.json
 5a1165917e00c56c4d86810d3296399a505f8df2 data/minecraft/tags/blocks/stone_unpolished.json
 2ba6f93ee0567360afa3ae9999027b839ed06532 data/minecraft/tags/blocks/walls.json
 d348e6ef5f30db7c6c6ef2aac89c45e9c4c6fef7 data/minecraft/tags/items/mushroom_hyphae.json

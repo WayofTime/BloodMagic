@@ -42,6 +42,7 @@ public class ConfigManager
 		{
 			builder.comment("Stops the listed entities from being used in the Well of Suffering.", "Use the registry name of the entity. Vanilla entities do not require the modid.").push("Blacklist");
 			wellOfSuffering = builder.defineList("wellOfSuffering", ImmutableList.of(), obj -> true);
+
 			builder.pop();
 
 			builder.comment("Amount of LP the Sacrificial Dagger should provide for each damage dealt.").push("Config Values");

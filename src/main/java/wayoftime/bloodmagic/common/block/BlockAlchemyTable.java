@@ -42,7 +42,7 @@ public class BlockAlchemyTable extends Block implements EntityBlock// implements
 
 	public BlockAlchemyTable()
 	{
-		super(BlockBehaviour.Properties.of(Material.METAL).strength(2.0F, 5.0F).noOcclusion().isRedstoneConductor(BlockAlchemyTable::isntSolid).isViewBlocking(BlockAlchemyTable::isntSolid));
+		super(BlockBehaviour.Properties.of(Material.METAL).strength(2.0F, 5.0F).noOcclusion().isRedstoneConductor(BlockAlchemyTable::isntSolid).isViewBlocking(BlockAlchemyTable::isntSolid).requiresCorrectToolForDrops());
 //		.harvestTool(ToolType.PICKAXE).harvestLevel(1)
 	}
 

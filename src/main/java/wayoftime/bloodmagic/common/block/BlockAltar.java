@@ -31,7 +31,7 @@ public class BlockAltar extends Block implements EntityBlock
 
 	public BlockAltar()
 	{
-		super(Properties.of(Material.STONE).strength(2.0F, 5.0F));
+		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).requiresCorrectToolForDrops());
 	}
 
 	@Override

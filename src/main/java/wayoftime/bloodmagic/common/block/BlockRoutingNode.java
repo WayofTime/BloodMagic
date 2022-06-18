@@ -27,7 +27,7 @@ public class BlockRoutingNode extends Block
 
 	public BlockRoutingNode()
 	{
-		super(BlockBehaviour.Properties.of(Material.METAL).strength(2.0F, 5.0F));
+		super(BlockBehaviour.Properties.of(Material.METAL).strength(2.0F, 5.0F).requiresCorrectToolForDrops());
 //.harvestTool(ToolType.PICKAXE).harvestLevel(2)
 
 		this.registerDefaultState(this.stateDefinition.any().setValue(DOWN, false).setValue(UP, false).setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false).setValue(WEST, false));

@@ -39,7 +39,7 @@ public class BlockAlchemicalReactionChamber extends Block implements EntityBlock
 
 	public BlockAlchemicalReactionChamber()
 	{
-		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE));
+		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops());
 		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, Boolean.valueOf(false)));
 //		.harvestTool(ToolType.PICKAXE).harvestLevel(2)
 	}

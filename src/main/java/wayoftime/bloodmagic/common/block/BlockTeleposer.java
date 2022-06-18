@@ -24,7 +24,7 @@ public class BlockTeleposer extends Block implements EntityBlock
 {
 	public BlockTeleposer()
 	{
-		super(BlockBehaviour.Properties.of(Material.METAL).strength(2.0F, 5.0F));
+		super(BlockBehaviour.Properties.of(Material.METAL).strength(2.0F, 5.0F).requiresCorrectToolForDrops());
 //.harvestTool(ToolType.PICKAXE).harvestLevel(2)
 //		this.setDefaultState(this.stateContainer.getBaseState().with(DOWN, false).with(UP, false).with(NORTH, false).with(EAST, false).with(SOUTH, false).with(WEST, false));
 	}

@@ -29,7 +29,7 @@ public class BlockSoulForge extends Block implements EntityBlock// implements IB
 
 	public BlockSoulForge()
 	{
-		super(Properties.of(Material.METAL).strength(2.0F, 5.0F));
+		super(Properties.of(Material.METAL).strength(2.0F, 5.0F).requiresCorrectToolForDrops());
 //	.harvestTool(ToolType.PICKAXE).harvestLevel(1)
 	}
 

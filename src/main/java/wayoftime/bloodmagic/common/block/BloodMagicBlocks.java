@@ -108,17 +108,17 @@ public class BloodMagicBlocks
 
 	public static final RegistryObject<Block> TELEPOSER = BLOCKS.register("teleposer", () -> new BlockTeleposer());
 
-	public static final RegistryObject<Block> WOOD_PATH = BASICBLOCKS.register("woodbrickpath", () -> new BlockPath(2, BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F, 5.0F)));
-	public static final RegistryObject<Block> WOOD_TILE_PATH = BASICBLOCKS.register("woodtilepath", () -> new BlockPath(2, BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F, 5.0F)));
-	public static final RegistryObject<Block> STONE_PATH = BASICBLOCKS.register("stonebrickpath", () -> new BlockPath(4, BlockBehaviour.Properties.of(Material.STONE).strength(2.0F, 5.0F)));
-	public static final RegistryObject<Block> STONE_TILE_PATH = BASICBLOCKS.register("stonetilepath", () -> new BlockPath(4, BlockBehaviour.Properties.of(Material.STONE).strength(2.0F, 5.0F)));
-	public static final RegistryObject<Block> WORN_STONE_PATH = BASICBLOCKS.register("wornstonebrickpath", () -> new BlockPath(6, BlockBehaviour.Properties.of(Material.STONE).strength(2.0F, 5.0F)));
-	public static final RegistryObject<Block> WORN_STONE_TILE_PATH = BASICBLOCKS.register("wornstonetilepath", () -> new BlockPath(6, BlockBehaviour.Properties.of(Material.STONE).strength(2.0F, 5.0F)));
-	public static final RegistryObject<Block> OBSIDIAN_PATH = BASICBLOCKS.register("obsidianbrickpath", () -> new BlockPath(8, BlockBehaviour.Properties.of(Material.STONE).strength(2.0F, 5.0F)));
-	public static final RegistryObject<Block> OBSIDIAN_TILE_PATH = BASICBLOCKS.register("obsidiantilepath", () -> new BlockPath(8, BlockBehaviour.Properties.of(Material.STONE).strength(2.0F, 5.0F)));
+	public static final RegistryObject<Block> WOOD_PATH = BASICBLOCKS.register("woodbrickpath", () -> new BlockPath(2, BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F, 5.0F).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> WOOD_TILE_PATH = BASICBLOCKS.register("woodtilepath", () -> new BlockPath(2, BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F, 5.0F).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> STONE_PATH = BASICBLOCKS.register("stonebrickpath", () -> new BlockPath(4, BlockBehaviour.Properties.of(Material.STONE).strength(2.0F, 5.0F).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> STONE_TILE_PATH = BASICBLOCKS.register("stonetilepath", () -> new BlockPath(4, BlockBehaviour.Properties.of(Material.STONE).strength(2.0F, 5.0F).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> WORN_STONE_PATH = BASICBLOCKS.register("wornstonebrickpath", () -> new BlockPath(6, BlockBehaviour.Properties.of(Material.STONE).strength(2.0F, 5.0F).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> WORN_STONE_TILE_PATH = BASICBLOCKS.register("wornstonetilepath", () -> new BlockPath(6, BlockBehaviour.Properties.of(Material.STONE).strength(2.0F, 5.0F).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> OBSIDIAN_PATH = BASICBLOCKS.register("obsidianbrickpath", () -> new BlockPath(8, BlockBehaviour.Properties.of(Material.STONE).strength(2.0F, 5.0F).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> OBSIDIAN_TILE_PATH = BASICBLOCKS.register("obsidiantilepath", () -> new BlockPath(8, BlockBehaviour.Properties.of(Material.STONE).strength(2.0F, 5.0F).requiresCorrectToolForDrops()));
 
-	public static final RegistryObject<Block> MIMIC = BLOCKS.register("mimic", () -> new BlockMimic(Properties.of(Material.METAL).sound(SoundType.METAL).strength(2.0f).isRedstoneConductor(BloodMagicBlocks::isntSolid).isSuffocating(BloodMagicBlocks::isntSolid).isViewBlocking(BloodMagicBlocks::isntSolid).noOcclusion()));
-	public static final RegistryObject<Block> ETHEREAL_MIMIC = BLOCKS.register("ethereal_mimic", () -> new BlockMimic(Properties.of(Material.METAL).sound(SoundType.METAL).strength(2.0f).isRedstoneConductor(BloodMagicBlocks::isntSolid).isSuffocating(BloodMagicBlocks::isntSolid).isViewBlocking(BloodMagicBlocks::isntSolid).noOcclusion().noCollission()));
+	public static final RegistryObject<Block> MIMIC = BLOCKS.register("mimic", () -> new BlockMimic(Properties.of(Material.METAL).requiresCorrectToolForDrops().sound(SoundType.METAL).strength(2.0f).isRedstoneConductor(BloodMagicBlocks::isntSolid).isSuffocating(BloodMagicBlocks::isntSolid).isViewBlocking(BloodMagicBlocks::isntSolid).noOcclusion()));
+	public static final RegistryObject<Block> ETHEREAL_MIMIC = BLOCKS.register("ethereal_mimic", () -> new BlockMimic(Properties.of(Material.METAL).requiresCorrectToolForDrops().sound(SoundType.METAL).strength(2.0f).isRedstoneConductor(BloodMagicBlocks::isntSolid).isSuffocating(BloodMagicBlocks::isntSolid).isViewBlocking(BloodMagicBlocks::isntSolid).noOcclusion().noCollission()));
 
 	public static final RegistryObject<Block> SPECTRAL = BLOCKS.register("spectral", () -> new BlockSpectral(Properties.of(Material.STONE).sound(SoundType.METAL).strength(100.0f).isRedstoneConductor(BloodMagicBlocks::isntSolid).isSuffocating(BloodMagicBlocks::isntSolid).isViewBlocking(BloodMagicBlocks::isntSolid).noOcclusion().noCollission()));
 

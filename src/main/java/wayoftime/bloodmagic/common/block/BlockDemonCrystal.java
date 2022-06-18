@@ -68,7 +68,7 @@ public class BlockDemonCrystal extends Block implements EntityBlock
 
 	public BlockDemonCrystal(EnumDemonWillType type)
 	{
-		super(BlockBehaviour.Properties.of(Material.METAL).strength(2.0F, 5.0F));
+		super(BlockBehaviour.Properties.of(Material.METAL).strength(2.0F, 5.0F).requiresCorrectToolForDrops());
 		this.type = type;
 //.harvestTool(ToolType.PICKAXE).harvestLevel(2)
 

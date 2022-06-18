@@ -24,7 +24,7 @@ public class BlockBloodRune extends Block implements IBloodRune
 
 	public BlockBloodRune(BloodRuneType type)
 	{
-		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE));
+		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops());
 		this.type = type;
 //	.harvestTool(ToolType.PICKAXE).harvestLevel(2)
 	}
