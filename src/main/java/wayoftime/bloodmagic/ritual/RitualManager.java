@@ -47,7 +47,7 @@ public class RitualManager
 					{
 
 //						Class<?> clazz = Class.forName(a.getClassType().getClassName());
-						Class<?> clazz = Class.forName(a.annotationType().getClassName());
+						Class<?> clazz = Class.forName(a.clazz().getClassName());
 						RitualRegister ritualRegister = clazz.getAnnotation(RitualRegister.class);
 						String id = ritualRegister.value();
 						if (Ritual.class.isAssignableFrom(clazz))
