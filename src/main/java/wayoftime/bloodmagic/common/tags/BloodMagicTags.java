@@ -26,23 +26,55 @@ public class BloodMagicTags
 	public static final ITag.INamedTag<Item> MUSHROOM_STEM = ItemTags.makeWrapperTag("minecraft:mushroom_stem");
 	public static final ITag.INamedTag<Item> MUSHROOM_HYPHAE = ItemTags.makeWrapperTag("minecraft:mushroom_hyphae");
 
-	// Ores
-	public static final ITag.INamedTag<Item> ORE_COPPER = getForgeOreTag("copper");
-	public static final ITag.INamedTag<Item> ORE_TIN = getForgeOreTag("tin");
-	public static final ITag.INamedTag<Item> ORE_LEAD = getForgeOreTag("lead");
-	public static final ITag.INamedTag<Item> ORE_OSMIUM = getForgeOreTag("osmium");
-	public static final ITag.INamedTag<Item> ORE_SILVER = getForgeOreTag("silver");
+	// Storage Blocks
+	public static final ITag.INamedTag<Block> BLOCK_QUARTZ = getForgeBlockStorageTag("quartz");
+	public static final ITag.INamedTag<Block> BLOCK_URANIUM = getForgeBlockStorageTag("uranium");
+	public static final ITag.INamedTag<Block> BLOCK_SLAG = getForgeBlockStorageTag("slag");
+	public static final ITag.INamedTag<Block> BLOCK_FLUIX = BlockTags.makeWrapperTag("appliedenergistics2:fluix_block"); //ae2 forgot to tag this one
+	public static final ITag.INamedTag<Block> BLOCK_SKY_STONE = BlockTags.makeWrapperTag("appliedenergistics2:sky_stone_block"); //ae2 forgot to tag this one
 
-	public static final ITag.INamedTag<Block> BLOCK_ORE_COPPER = getForgeBlockOreTag("copper");
-	public static final ITag.INamedTag<Block> BLOCK_ORE_TIN = getForgeBlockOreTag("tin");
-	public static final ITag.INamedTag<Block> BLOCK_ORE_LEAD = getForgeBlockOreTag("lead");
-	public static final ITag.INamedTag<Block> BLOCK_ORE_OSMIUM = getForgeBlockOreTag("osmium");
-	public static final ITag.INamedTag<Block> BLOCK_ORE_SILVER = getForgeBlockOreTag("silver");
+	// Ores
+	public static final ITag.INamedTag<Item> ORE_ALUMINUM = getForgeOreTag("aluminum");
+	public static final ITag.INamedTag<Item> ORE_APATITE = getForgeOreTag("apatite");
+	public static final ITag.INamedTag<Item> ORE_CERTUS_QUARTZ = getForgeOreTag("certus_quartz");
+	public static final ITag.INamedTag<Item> ORE_CINNABAR = getForgeOreTag("cinnabar");
+	public static final ITag.INamedTag<Item> ORE_COPPER = getForgeOreTag("copper");
+	public static final ITag.INamedTag<Item> ORE_FLUORITE = getForgeOreTag("fluorite");
+	public static final ITag.INamedTag<Item> ORE_INFERIUM = getForgeOreTag("inferium");
+	public static final ITag.INamedTag<Item> ORE_LEAD = getForgeOreTag("lead");
+	public static final ITag.INamedTag<Item> ORE_NICKEL = getForgeOreTag("nickel");
+	public static final ITag.INamedTag<Item> ORE_NITER = getForgeOreTag("niter");
+	public static final ITag.INamedTag<Item> ORE_OSMIUM = getForgeOreTag("osmium");
+	public static final ITag.INamedTag<Item> ORE_PROSPERITY = getForgeOreTag("propserity");
+	public static final ITag.INamedTag<Item> ORE_RUBY = getForgeOreTag("ruby");
+	public static final ITag.INamedTag<Item> ORE_SAPPHIRE = getForgeOreTag("sapphire");
+	public static final ITag.INamedTag<Item> ORE_SILVER = getForgeOreTag("silver");
+	public static final ITag.INamedTag<Item> ORE_SOULIUM = getForgeOreTag("soulium");
+	public static final ITag.INamedTag<Item> ORE_SULFUR = getForgeOreTag("sulfur");
+	public static final ITag.INamedTag<Item> ORE_TIN = getForgeOreTag("tin");
+	public static final ITag.INamedTag<Item> ORE_URANIUM = getForgeOreTag("uranium");
+	public static final ITag.INamedTag<Item> ORE_ZINC = getForgeOreTag("zinc");
+
+	public static final ITag.INamedTag<Block> BLOCK_ORE_ALUMINUM = getForgeBlockOreTag("aluminum");
 	public static final ITag.INamedTag<Block> BLOCK_ORE_APATITE = getForgeBlockOreTag("apatite");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_CERTUS_QUARTZ = getForgeBlockOreTag("certus_quartz");
 	public static final ITag.INamedTag<Block> BLOCK_ORE_CINNABAR = getForgeBlockOreTag("cinnabar");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_COPPER = getForgeBlockOreTag("copper");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_FLUORITE = getForgeBlockOreTag("fluorite");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_INFERIUM = getForgeBlockOreTag("inferium");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_LEAD = getForgeBlockOreTag("lead");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_NICKEL = getForgeBlockOreTag("nickel");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_NITER = getForgeBlockOreTag("niter");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_OSMIUM = getForgeBlockOreTag("osmium");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_PROSPERITY = getForgeBlockOreTag("propserity");
 	public static final ITag.INamedTag<Block> BLOCK_ORE_RUBY = getForgeBlockOreTag("ruby");
 	public static final ITag.INamedTag<Block> BLOCK_ORE_SAPPHIRE = getForgeBlockOreTag("sapphire");
-
+	public static final ITag.INamedTag<Block> BLOCK_ORE_SILVER = getForgeBlockOreTag("silver");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_SOULIUM = getForgeBlockOreTag("soulium");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_SULFUR = getForgeBlockOreTag("sulfur");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_TIN = getForgeBlockOreTag("tin");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_URANIUM = getForgeBlockOreTag("uranium");
+	public static final ITag.INamedTag<Block> BLOCK_ORE_ZINC = getForgeBlockOreTag("zinc");
 	public static final ITag.INamedTag<Block> BLOCK_STONE_UNPOLISHED = BlockTags.makeWrapperTag("minecraft:stone_unpolished");
 
 	// Ingots
@@ -76,8 +108,20 @@ public class BloodMagicTags
 	public static final ITag.INamedTag<Item> PICKAXES = ItemTags.makeWrapperTag("forge:pickaxes");
 	public static final ITag.INamedTag<Item> HOES = ItemTags.makeWrapperTag("forge:hoes");
 
+	//Modded (for meteor rituals)
+	public static final ITag.INamedTag<Item> ADVANCED_ALLOY = getForgeAlloyTag("advanced");
+	public static final ITag.INamedTag<Item> ANDESITE_ALLOY = ItemTags.makeWrapperTag("create:andesite_alloy");
+	public static final ITag.INamedTag<Item> DRAGON_BONE = getForgeBoneTag("dragon");
+	public static final ITag.INamedTag<Item> GEM_CERTUS_QUARTZ = getForgeGemTag("certus_quartz");
+	public static final ITag.INamedTag<Item> PROSPERITY_SHARD = ItemTags.makeWrapperTag("mysticalagriculture:prosperity_shard");
+	public static final ITag.INamedTag<Item> RF_COIL = ItemTags.makeWrapperTag("thermal:rf_coil");
+	public static final ITag.INamedTag<Item> WIRECOIL_COPPER = ItemTags.makeWrapperTag("immersiveengineering:wirecoil_copper");
+
 	public static class Blocks
 	{
+		public static final ITag.INamedTag<Block> ANDESITE = BlockTags.makeWrapperTag("minecraft:andesite");
+		public static final ITag.INamedTag<Block> SOUL_SAND = BlockTags.makeWrapperTag("minecraft:soul_sand");
+		public static final ITag.INamedTag<Block> SOUL_SOIL = BlockTags.makeWrapperTag("minecraft:soul_soil");
 		public static final ITag.INamedTag<Block> MUSHROOM_STEM = BlockTags.makeWrapperTag("minecraft:mushroom_stem");
 		public static final ITag.INamedTag<Block> MUSHROOM_HYPHAE = BlockTags.makeWrapperTag("minecraft:mushroom_hyphae");
 		public static final ITag.INamedTag<Block> BLOCK_TELEPOSER_BLACKLIST = BlockTags.makeWrapperTag("bloodmagic:teleposer_blacklist");
@@ -92,6 +136,27 @@ public class BloodMagicTags
 	{
 		return BlockTags.makeWrapperTag("forge:ores/" + name);
 	}
+
+	public static ITag.INamedTag<Block> getForgeBlockStorageTag(String name)
+	{
+		return BlockTags.makeWrapperTag("forge:storage_blocks/" + name);
+	}
+
+	public static ITag.INamedTag<Item> getForgeGemTag(String name)
+	{
+		return ItemTags.makeWrapperTag("forge:gems/" + name);
+	}
+
+	public static ITag.INamedTag<Item> getForgeAlloyTag(String name)
+	{
+		return ItemTags.makeWrapperTag("forge:alloys/" + name);
+	}
+
+	public static ITag.INamedTag<Item> getForgeBoneTag(String name)
+	{
+		return ItemTags.makeWrapperTag("forge:bones/" + name);
+	}
+
 
 	public static ITag.INamedTag<Item> getForgeIngotTag(String name)
 	{
