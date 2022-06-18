@@ -39,6 +39,7 @@ public class GeneratorBlockTags extends BlockTagsProvider
 
 		getOrCreateBuilder(BloodMagicTags.BLOCK_STONE_UNPOLISHED).add(Blocks.STONE, Blocks.ANDESITE, Blocks.DIORITE, Blocks.GRANITE);
 
+		getOrCreateBuilder(BloodMagicTags.Blocks.BLOCK_TELEPOSER_BLACKLIST).add(Blocks.BEDROCK);
 	}
 
 	/**

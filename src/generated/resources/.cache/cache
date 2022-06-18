@@ -1049,6 +1049,7 @@ a06bb2d29cfa5d9c38092e93196bed7f331bcc97 data/bloodmagic/recipes/soulforge/vein_
 4fb74119a65f488cdf157559b95d33c2af4127a7 data/bloodmagic/recipes/synthetic_point.json
 f9c16229858e1158c457e2f0c49e20b176d21014 data/bloodmagic/recipes/teleposer.json
 d7d993bb729284a5201c164ea81fbe1d8e4e4750 data/bloodmagic/recipes/weak_activation_crystal.json
+579d90d478fc161d55fa0998a26c83a0b7fe93d4 data/bloodmagic/tags/blocks/teleposer_blacklist.json
 46d015a4e8542d768f5c76cd7c9a54e74a3de0d6 data/bloodmagic/tags/items/arc/cuttingfluid.json
 54a0fcc973590c80a4d3cd6b82f5602ba7208438 data/bloodmagic/tags/items/arc/explosive.json
 331b978ba851ae3c48390c5d992bcd5f28ac644d data/bloodmagic/tags/items/arc/furnace.json

@@ -36,12 +36,16 @@ public class ConfigManager
 		public final ConfigValue<List<? extends String>> wellOfSuffering;
 		public final ForgeConfigSpec.IntValue sacrificialDaggerConversion;
 		public final ConfigValue<List<? extends String>> sacrificialValues;
+		public final ConfigValue<List<? extends String>> teleposerBlacklist;
 		public final ForgeConfigSpec.BooleanValue makeDungeonRitualCreativeOnly;
 
 		CommonConfig(ForgeConfigSpec.Builder builder)
 		{
 			builder.comment("Stops the listed entities from being used in the Well of Suffering.", "Use the registry name of the entity. Vanilla entities do not require the modid.").push("Blacklist");
 			wellOfSuffering = builder.defineList("wellOfSuffering", ImmutableList.of(), obj -> true);
+
+			builder.comment("Stops the listed blocks from being teleported using the Teleposer and similar means.", "Use the registry name of the block. Vanilla blocks do not require the modid.", "Pack makers or mod makers can also add blocks to the blacklist by adding them to the Tag \"bloodmagic:teleposer_blacklist\".");
+			teleposerBlacklist = builder.defineList("teleposerBlacklist", ImmutableList.of(), obj -> true);
 			builder.pop();
 
 			builder.comment("Amount of LP the Sacrificial Dagger should provide for each damage dealt.").push("Config Values");

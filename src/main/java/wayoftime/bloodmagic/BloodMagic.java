@@ -35,6 +35,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.client.ClientEvents;
 import wayoftime.bloodmagic.client.hud.Elements;
 import wayoftime.bloodmagic.client.key.BloodMagicKeyHandler;
@@ -235,6 +236,17 @@ public class BloodMagic
 				continue;
 
 			api.getValueManager().setSacrificialValue(new ResourceLocation(split[0]), Integer.parseInt(split[1]));
+		}
+
+		for (String value : ConfigManager.COMMON.teleposerBlacklist.get())
+		{
+			Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(value));
+			if (block == null)
+			{
+				continue;
+			}
+
+			api.getBlacklist().addTeleposer(block);
 		}
 
 		for (String value : ConfigManager.COMMON.wellOfSuffering.get())

@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.util;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
@@ -38,6 +39,8 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import wayoftime.bloodmagic.api.compat.IDemonWillViewer;
+import wayoftime.bloodmagic.common.tags.BloodMagicTags;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.tile.TileInventory;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 
@@ -171,6 +174,18 @@ public class Utils
 
 	public static boolean swapLocations(World initialWorld, BlockPos initialPos, World finalWorld, BlockPos finalPos, boolean playSound)
 	{
+		BlockState initialState = initialWorld.getBlockState(initialPos);
+		BlockState finalState = finalWorld.getBlockState(finalPos);
+
+		if ((initialState.getBlock().equals(Blocks.AIR) && finalState.getBlock().equals(Blocks.AIR)) || initialState.getBlock() instanceof NetherPortalBlock || finalState.getBlock() instanceof NetherPortalBlock)
+			return false;
+
+		Set<BlockState> blacklist = BloodMagicAPI.INSTANCE.getBlacklist().getTeleposer();
+		if (blacklist.contains(initialState) || blacklist.contains(finalState) || BloodMagicTags.Blocks.BLOCK_TELEPOSER_BLACKLIST.contains(initialState.getBlock()) || BloodMagicTags.Blocks.BLOCK_TELEPOSER_BLACKLIST.contains(finalState.getBlock()))
+		{
+			return false;
+		}
+
 		TileEntity initialTile = initialWorld.getTileEntity(initialPos);
 		TileEntity finalTile = finalWorld.getTileEntity(finalPos);
 		CompoundNBT initialTag = new CompoundNBT();
@@ -179,12 +194,6 @@ public class Utils
 			initialTile.write(initialTag);
 		if (finalTile != null)
 			finalTile.write(finalTag);
-
-		BlockState initialState = initialWorld.getBlockState(initialPos);
-		BlockState finalState = finalWorld.getBlockState(finalPos);
-
-		if ((initialState.getBlock().equals(Blocks.AIR) && finalState.getBlock().equals(Blocks.AIR)) || initialState.getBlock() instanceof NetherPortalBlock || finalState.getBlock() instanceof NetherPortalBlock)
-			return false;
 
 		if (playSound)
 		{

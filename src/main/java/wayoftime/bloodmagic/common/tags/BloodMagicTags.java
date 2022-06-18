@@ -80,6 +80,7 @@ public class BloodMagicTags
 	{
 		public static final ITag.INamedTag<Block> MUSHROOM_STEM = BlockTags.makeWrapperTag("minecraft:mushroom_stem");
 		public static final ITag.INamedTag<Block> MUSHROOM_HYPHAE = BlockTags.makeWrapperTag("minecraft:mushroom_hyphae");
+		public static final ITag.INamedTag<Block> BLOCK_TELEPOSER_BLACKLIST = BlockTags.makeWrapperTag("bloodmagic:teleposer_blacklist");
 	}
 
 	public static ITag.INamedTag<Item> getForgeOreTag(String name)
