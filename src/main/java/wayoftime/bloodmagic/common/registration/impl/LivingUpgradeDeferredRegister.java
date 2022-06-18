@@ -2,11 +2,11 @@ package wayoftime.bloodmagic.common.registration.impl;
 
 import java.util.function.Supplier;
 
-import wayoftime.bloodmagic.common.registration.WrappedDeferredRegister;
+import wayoftime.bloodmagic.common.registration.WrappedForgeDeferredRegister;
 import wayoftime.bloodmagic.core.living.LivingUpgrade;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 
-public class LivingUpgradeDeferredRegister extends WrappedDeferredRegister<LivingUpgrade>
+public class LivingUpgradeDeferredRegister extends WrappedForgeDeferredRegister<LivingUpgrade>
 {
 	public LivingUpgradeDeferredRegister(String modid)
 	{

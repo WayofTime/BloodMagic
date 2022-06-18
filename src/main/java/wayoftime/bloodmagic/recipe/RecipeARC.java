@@ -6,15 +6,15 @@ import java.util.Random;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
 import org.apache.commons.lang3.tuple.Pair;
 
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
@@ -177,6 +177,6 @@ public class RecipeARC extends BloodMagicRecipe
 	@Override
 	public RecipeType<RecipeARC> getType()
 	{
-		return BloodMagicRecipeType.ARC;
+		return BloodMagicRecipeType.ARC.get();
 	}
 }

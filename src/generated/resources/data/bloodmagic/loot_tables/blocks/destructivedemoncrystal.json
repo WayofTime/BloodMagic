@@ -3,6 +3,7 @@
   "pools": [
     {
       "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
@@ -18,7 +19,8 @@
           "functions": [
             {
               "function": "minecraft:set_count",
-              "count": 1
+              "count": 1.0,
+              "add": false
             }
           ],
           "name": "bloodmagic:destructivecrystal"
@@ -27,6 +29,7 @@
     },
     {
       "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
@@ -42,7 +45,8 @@
           "functions": [
             {
               "function": "minecraft:set_count",
-              "count": 2
+              "count": 2.0,
+              "add": false
             }
           ],
           "name": "bloodmagic:destructivecrystal"
@@ -51,6 +55,7 @@
     },
     {
       "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
@@ -66,7 +71,8 @@
           "functions": [
             {
               "function": "minecraft:set_count",
-              "count": 3
+              "count": 3.0,
+              "add": false
             }
           ],
           "name": "bloodmagic:destructivecrystal"
@@ -75,6 +81,7 @@
     },
     {
       "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
@@ -90,7 +97,8 @@
           "functions": [
             {
               "function": "minecraft:set_count",
-              "count": 4
+              "count": 4.0,
+              "add": false
             }
           ],
           "name": "bloodmagic:destructivecrystal"
@@ -99,6 +107,7 @@
     },
     {
       "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
@@ -114,7 +123,8 @@
           "functions": [
             {
               "function": "minecraft:set_count",
-              "count": 5
+              "count": 5.0,
+              "add": false
             }
           ],
           "name": "bloodmagic:destructivecrystal"
@@ -123,6 +133,7 @@
     },
     {
       "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
@@ -138,7 +149,8 @@
           "functions": [
             {
               "function": "minecraft:set_count",
-              "count": 6
+              "count": 6.0,
+              "add": false
             }
           ],
           "name": "bloodmagic:destructivecrystal"
@@ -147,6 +159,7 @@
     },
     {
       "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
@@ -162,7 +175,8 @@
           "functions": [
             {
               "function": "minecraft:set_count",
-              "count": 7
+              "count": 7.0,
+              "add": false
             }
           ],
           "name": "bloodmagic:destructivecrystal"

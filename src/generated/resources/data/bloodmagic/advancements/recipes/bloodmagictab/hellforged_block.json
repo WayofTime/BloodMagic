@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "bloodmagic:ingot_hellforged"
+            "items": [
+              "bloodmagic:ingot_hellforged"
+            ]
           }
         ]
       }

@@ -3,10 +3,10 @@ package wayoftime.bloodmagic.common.registration.impl;
 import java.util.function.Supplier;
 
 import wayoftime.bloodmagic.anointment.Anointment;
-import wayoftime.bloodmagic.common.registration.WrappedDeferredRegister;
+import wayoftime.bloodmagic.common.registration.WrappedForgeDeferredRegister;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 
-public class AnointmentDeferredRegister extends WrappedDeferredRegister<Anointment>
+public class AnointmentDeferredRegister extends WrappedForgeDeferredRegister<Anointment>
 {
 	public AnointmentDeferredRegister(String modid)
 	{

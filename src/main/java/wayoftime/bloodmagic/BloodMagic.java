@@ -34,6 +34,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
+import wayoftime.bloodmagic.anointment.Anointment;
 import wayoftime.bloodmagic.client.ClientEvents;
 import wayoftime.bloodmagic.client.hud.Elements;
 import wayoftime.bloodmagic.client.key.BloodMagicKeyHandler;
@@ -50,13 +51,14 @@ import wayoftime.bloodmagic.common.data.GeneratorLanguage;
 import wayoftime.bloodmagic.common.data.GeneratorLootTable;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeProvider;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
-import wayoftime.bloodmagic.common.loot.BloodMagicLootFunctionManager;
-import wayoftime.bloodmagic.common.loot.BloodMagicLootTypeManager;
+import wayoftime.bloodmagic.common.item.BloodOrb;
+import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 import wayoftime.bloodmagic.common.tile.BloodMagicTileEntities;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
+import wayoftime.bloodmagic.core.living.LivingUpgrade;
 import wayoftime.bloodmagic.core.recipe.IngredientBloodOrb;
 import wayoftime.bloodmagic.core.registry.AlchemyArrayRegistry;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
@@ -95,6 +97,13 @@ public class BloodMagic
 		modBus.addListener(this::setup);
 		modBus.addListener(this::onLoadComplete);
 
+//		BloodMagicItems.BLOOD_ORBS.register(modBus);
+//		LivingArmorRegistrar.UPGRADES.register(modBus);
+//		AnointmentRegistrar.ANOINTMENTS.register(modBus);
+		BloodMagicItems.BLOOD_ORBS.createAndRegister(modBus, BloodOrb.class);
+		LivingArmorRegistrar.UPGRADES.createAndRegister(modBus, LivingUpgrade.class);
+		AnointmentRegistrar.ANOINTMENTS.createAndRegister(modBus, Anointment.class);
+
 		BloodMagicBlocks.BLOCKS.register(modBus);
 		BloodMagicItems.ITEMS.register(modBus);
 
@@ -102,10 +111,6 @@ public class BloodMagic
 //		BloodMagicItems.BLOOD_ORBS.createAndRegister(modBus, "bloodorbs");
 //		LivingArmorRegistrar.UPGRADES.createAndRegister(modBus, "upgrades");
 //		AnointmentRegistrar.ANOINTMENTS.createAndRegister(modBus, "anointments");
-
-		BloodMagicItems.BLOOD_ORBS.register(modBus);
-		LivingArmorRegistrar.UPGRADES.register(modBus);
-		AnointmentRegistrar.ANOINTMENTS.register(modBus);
 
 		BloodMagicItems.BASICITEMS.register(modBus);
 		BloodMagicBlocks.BASICBLOCKS.register(modBus);
@@ -118,6 +123,7 @@ public class BloodMagic
 		GlobalLootModifier.GLM.register(modBus);
 
 		BloodMagicRecipeSerializers.RECIPE_SERIALIZERS.register(modBus);
+		BloodMagicRecipeType.RECIPE_TYPES.register(modBus);
 
 		// Register the setup method for modloading
 		modBus.addListener(this::setup);
@@ -152,8 +158,8 @@ public class BloodMagic
 		context.registerConfig(ModConfig.Type.CLIENT, ConfigManager.CLIENT_SPEC);
 		context.registerConfig(ModConfig.Type.COMMON, ConfigManager.COMMON_SPEC);
 
-		BloodMagicLootFunctionManager.register();
-		BloodMagicLootTypeManager.register();
+//		BloodMagicLootFunctionManager.register();
+//		BloodMagicLootTypeManager.register();
 
 		ModDungeons.init();
 	}
@@ -357,6 +363,11 @@ public class BloodMagic
 		{
 			// register a new block here
 //			LOGGER.info("HELLO from Register Block");
+		}
+
+		public static void onRecipeTypeRegister()
+		{
+
 		}
 	}
 

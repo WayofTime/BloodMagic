@@ -4,6 +4,7 @@
     {
       "name": "bloodmagic:inversion_pillar",
       "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": []
     }
   ]

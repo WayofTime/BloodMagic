@@ -21,6 +21,7 @@ public class BloodOrbDeferredRegister extends WrappedForgeDeferredRegister<Blood
 
 	public <ORB extends BloodOrb> BloodOrbRegistryObject<ORB> register(String name, Supplier<? extends ORB> sup)
 	{
+//		System.out.println("Adding a Blood Orbz");
 		return register(name, sup, BloodOrbRegistryObject::new);
 	}
 }

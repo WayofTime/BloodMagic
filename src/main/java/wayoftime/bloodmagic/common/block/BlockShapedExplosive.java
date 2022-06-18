@@ -31,7 +31,7 @@ public class BlockShapedExplosive extends Block implements EntityBlock
 	private static final VoxelShape NORTH = Block.box(2, 2, 7, 14, 14, 16);
 	private static final VoxelShape SOUTH = Block.box(2, 2, 0, 14, 14, 7);
 	private static final VoxelShape EAST = Block.box(0, 2, 2, 7, 14, 14);
-	private static final VoxelShape WEST = Block.box(16, 2, 2, 9, 14, 14);
+	private static final VoxelShape WEST = Block.box(9, 2, 2, 16, 14, 14);
 
 	public static final EnumProperty<Direction> ATTACHED = EnumProperty.create("attached", Direction.class);
 	protected final int explosionSize;
@@ -54,9 +54,9 @@ public class BlockShapedExplosive extends Block implements EntityBlock
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type)
 	{
 		return (level1, blockPos, blockState, tile) -> {
-			if (tile instanceof TileShapedExplosive)
+			if (tile instanceof TileExplosiveCharge)
 			{
-				((TileShapedExplosive) tile).tick();
+				((TileExplosiveCharge) tile).tick();
 			}
 		};
 	}

@@ -5,13 +5,13 @@ import javax.annotation.Nonnull;
 
 import com.google.common.base.Preconditions;
 
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 
@@ -112,6 +112,6 @@ public class RecipeBloodAltar extends BloodMagicRecipe
 	@Override
 	public RecipeType<RecipeBloodAltar> getType()
 	{
-		return BloodMagicRecipeType.ALTAR;
+		return BloodMagicRecipeType.ALTAR.get();
 	}
 }

@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "bloodmagic:apprenticebloodorb"
+            "items": [
+              "bloodmagic:apprenticebloodorb"
+            ]
           }
         ]
       }

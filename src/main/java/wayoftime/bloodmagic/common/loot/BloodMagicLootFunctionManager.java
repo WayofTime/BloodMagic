@@ -1,10 +1,10 @@
 package wayoftime.bloodmagic.common.loot;
 
-import net.minecraft.world.level.storage.loot.Serializer;
-import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
-import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.loot.Serializer;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 
 public class BloodMagicLootFunctionManager
 {
@@ -19,8 +19,8 @@ public class BloodMagicLootFunctionManager
 		SET_LIVING_UPGRADE = registerLootFunction("bloodmagic:set_living_upgrade", new SetLivingUpgrade.Serializer());
 	}
 
-	private static LootItemFunctionType registerLootFunction(String p_237451_0_, Serializer<? extends LootItemFunction> p_237451_1_)
+	private static LootItemFunctionType registerLootFunction(String name, Serializer<? extends LootItemFunction> function)
 	{
-		return Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(p_237451_0_), new LootItemFunctionType(p_237451_1_));
+		return Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(name), new LootItemFunctionType(function));
 	}
 }

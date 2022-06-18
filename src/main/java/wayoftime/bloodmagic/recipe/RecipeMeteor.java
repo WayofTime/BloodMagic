@@ -11,12 +11,12 @@ import javax.annotation.Nonnull;
 
 import com.google.common.base.Preconditions;
 
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Explosion.BlockInteraction;
 import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.common.meteor.MeteorLayer;
@@ -111,6 +111,6 @@ public class RecipeMeteor extends BloodMagicRecipe
 	@Override
 	public RecipeType<RecipeMeteor> getType()
 	{
-		return BloodMagicRecipeType.METEOR;
+		return BloodMagicRecipeType.METEOR.get();
 	}
 }

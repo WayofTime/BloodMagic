@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "bloodmagic:demonslate"
+            "items": [
+              "bloodmagic:demonslate"
+            ]
           }
         ]
       }

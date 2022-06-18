@@ -14,7 +14,7 @@
   },
   "output": {
     "item": "bloodmagic:veinmine_charge",
-    "nbt": "{anointment_holder:{anointments:[{damage:1,max_damage:1,level:1,key:\"bloodmagic:fortune\"}]}}"
+    "nbt": "{anointment_holder:{anointments:[{damage:1,key:\"bloodmagic:fortune\",level:1,max_damage:1}]}}"
   },
   "minimumDrain": 60.0,
   "drain": 1.0
