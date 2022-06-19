@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
@@ -139,6 +140,7 @@ public class BloodMagic
 		modBus.addListener(this::processIMC);
 		// Register the doClientStuff method for modloading
 		modBus.addListener(this::doClientStuff);
+		modBus.addListener(this::initRenderLayer);
 		modBus.addListener(this::loadModels);
 		modBus.addListener(this::gatherData);
 		modBus.addListener(this::onRegisterCapabilities);
@@ -330,6 +332,11 @@ public class BloodMagic
 		new BloodMagicKeyHandler();
 //		IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 //		
+	}
+
+	private void initRenderLayer(EntityRenderersEvent.AddLayers event)
+	{
+		ClientEvents.initRenderLayer(event);
 	}
 
 	private void registerColors(final ColorHandlerEvent event)

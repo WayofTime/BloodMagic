@@ -6,6 +6,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.network.chat.TextComponent;
@@ -43,6 +44,7 @@ import wayoftime.bloodmagic.client.render.entity.EntityMeteorRenderer;
 import wayoftime.bloodmagic.client.render.entity.EntityShapedChargeRenderer;
 import wayoftime.bloodmagic.client.render.entity.EntityThrowingDaggerRenderer;
 import wayoftime.bloodmagic.client.render.entity.SoulSnareRenderer;
+import wayoftime.bloodmagic.client.render.entity.layers.BloodElytraLayer;
 import wayoftime.bloodmagic.client.screens.ScreenAlchemicalReactionChamber;
 import wayoftime.bloodmagic.client.screens.ScreenAlchemyTable;
 import wayoftime.bloodmagic.client.screens.ScreenFilter;
@@ -191,10 +193,10 @@ public class ClientEvents
 	@SubscribeEvent
 	public static void initRenderLayer(EntityRenderersEvent.AddLayers event)
 	{
-//		LivingEntityRenderer<? extends Player, ? extends EntityModel<? extends Player>> d = event.getSkin("default");
-//		event.
-//		heh I just did this for the pneumatic armor, yeah you can interate the skinMap to get the player renderers and add your elytra layer as appropriate
-//		and that's in EntityRenderersEvent.AddLayers event handler (iterate over event.getSkins())
+		PlayerRenderer render = event.getSkin("default");
+		render.addLayer(new BloodElytraLayer(render, event.getEntityModels()));
+		render = event.getSkin("slim");
+		render.addLayer(new BloodElytraLayer(render, event.getEntityModels()));
 	}
 
 	@SuppressWarnings("deprecation")
