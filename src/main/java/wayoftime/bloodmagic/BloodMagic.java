@@ -24,6 +24,7 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -56,6 +57,7 @@ import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 import wayoftime.bloodmagic.common.tile.BloodMagicTileEntities;
+import wayoftime.bloodmagic.compat.patchouli.RegisterPatchouliMultiblocks;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.living.LivingUpgrade;
@@ -211,10 +213,10 @@ public class BloodMagic
 //		{
 //			curiosCompat.registerInventory();
 //		}
-//		if (ModList.get().isLoaded("patchouli"))
-//		{
-//			new RegisterPatchouliMultiblocks();
-//		}
+		if (ModList.get().isLoaded("patchouli"))
+		{
+			new RegisterPatchouliMultiblocks();
+		}
 	}
 
 	public static void handleConfigValues(BloodMagicAPI api)

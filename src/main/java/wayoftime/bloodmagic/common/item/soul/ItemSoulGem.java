@@ -98,9 +98,9 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 		double maxWill = getMaxWill(type, stack);
 		if (maxWill <= 0)
 		{
-			return 1;
+			return 0;
 		}
-		return (int) (13.0F - (getWill(type, stack) * 13.0F / maxWill));
+		return (int) ((getWill(type, stack) * 13.0F / maxWill));
 	}
 
 	@Override
