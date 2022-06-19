@@ -72,12 +72,12 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 
 		this.clearWidgets();
 //		this.buttons.add();
-		this.addWidget(new Button(left + 135, top + 52, 14, 14, new TextComponent("D"), new DirectionalPress(tileTable, Direction.DOWN)));
-		this.addWidget(new Button(left + 153, top + 52, 14, 14, new TextComponent("U"), new DirectionalPress(tileTable, Direction.UP)));
-		this.addWidget(new Button(left + 135, top + 70, 14, 14, new TextComponent("N"), new DirectionalPress(tileTable, Direction.NORTH)));
-		this.addWidget(new Button(left + 153, top + 70, 14, 14, new TextComponent("S"), new DirectionalPress(tileTable, Direction.SOUTH)));
-		this.addWidget(new Button(left + 135, top + 88, 14, 14, new TextComponent("W"), new DirectionalPress(tileTable, Direction.WEST)));
-		this.addWidget(new Button(left + 153, top + 88, 14, 14, new TextComponent("E"), new DirectionalPress(tileTable, Direction.EAST)));
+		this.addRenderableWidget(new Button(left + 135, top + 52, 14, 14, new TextComponent("D"), new DirectionalPress(tileTable, Direction.DOWN)));
+		this.addRenderableWidget(new Button(left + 153, top + 52, 14, 14, new TextComponent("U"), new DirectionalPress(tileTable, Direction.UP)));
+		this.addRenderableWidget(new Button(left + 135, top + 70, 14, 14, new TextComponent("N"), new DirectionalPress(tileTable, Direction.NORTH)));
+		this.addRenderableWidget(new Button(left + 153, top + 70, 14, 14, new TextComponent("S"), new DirectionalPress(tileTable, Direction.SOUTH)));
+		this.addRenderableWidget(new Button(left + 135, top + 88, 14, 14, new TextComponent("W"), new DirectionalPress(tileTable, Direction.WEST)));
+		this.addRenderableWidget(new Button(left + 153, top + 88, 14, 14, new TextComponent("E"), new DirectionalPress(tileTable, Direction.EAST)));
 	}
 
 	@Override

@@ -92,7 +92,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 					addedButton.active = false;
 				}
 
-				this.addWidget(addedButton);
+				this.addRenderableWidget(addedButton);
 				buttonList.add(addedButton);
 				numberOfAddedButtons++;
 			}

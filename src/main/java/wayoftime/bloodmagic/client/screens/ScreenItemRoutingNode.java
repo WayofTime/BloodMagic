@@ -73,7 +73,7 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 			}
 
 			Button button = new Button(left + buttonLocation.getLeft(), top + buttonLocation.getRight(), 20, 20, new TextComponent(dirName), new DirectionalPress(this, tileNode, i, dir));
-			this.addWidget(button);
+			this.addRenderableWidget(button);
 			this.buttonList.add(button);
 
 			if (dir.ordinal() == tileNode.getCurrentActiveSlot())
@@ -82,8 +82,8 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 			}
 		}
 
-		this.addWidget(new Button(left + 89, top + 50, 8, 20, new TextComponent(">"), new IncrementPress(tileNode, 6)));
-		this.addWidget(new Button(left + 61, top + 50, 8, 20, new TextComponent("<"), new IncrementPress(tileNode, 7)));
+		this.addRenderableWidget(new Button(left + 89, top + 50, 8, 20, new TextComponent(">"), new IncrementPress(tileNode, 6)));
+		this.addRenderableWidget(new Button(left + 61, top + 50, 8, 20, new TextComponent("<"), new IncrementPress(tileNode, 7)));
 	}
 
 	/**

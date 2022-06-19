@@ -67,10 +67,10 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 
 		ItemStack filterStack = this.container.trainerStack;
 
-		this.addWidget(new Button(left + 62 - 18, top + 34, 8, 20, new TextComponent(">"), new IncrementPress(this, 0)));
-		this.addWidget(new Button(left + 34 - 18, top + 34, 8, 20, new TextComponent("<"), new IncrementPress(this, 1)));
+		this.addRenderableWidget(new Button(left + 62 - 18, top + 34, 8, 20, new TextComponent(">"), new IncrementPress(this, 0)));
+		this.addRenderableWidget(new Button(left + 34 - 18, top + 34, 8, 20, new TextComponent("<"), new IncrementPress(this, 1)));
 
-		this.addWidget(new Button(left + whitelistButtonPosX, top + whitelistButtonPosY, 20, 20, new TextComponent(""), new WhitelistTogglePress(this)));
+		this.addRenderableWidget(new Button(left + whitelistButtonPosX, top + whitelistButtonPosY, 20, 20, new TextComponent(""), new WhitelistTogglePress(this)));
 
 //		if (filterStack.getItem() instanceof IItemFilterProvider)
 //		{
