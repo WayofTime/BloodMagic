@@ -71,6 +71,11 @@ public class BlockAlchemyTable extends Block implements EntityBlock// implements
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type)
 	{
+		if (state.getValue(INVISIBLE))
+		{
+			return null;
+		}
+
 		return (level1, blockPos, blockState, tile) -> {
 			if (tile instanceof TileAlchemyTable)
 			{
