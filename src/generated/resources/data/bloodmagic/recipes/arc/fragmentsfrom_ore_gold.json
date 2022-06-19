@@ -1,22 +1,22 @@
 {
   "type": "bloodmagic:arc",
   "input": {
-    "tag": "forge:raw_materials/iron"
+    "tag": "forge:ores/gold"
   },
   "tool": {
     "tag": "bloodmagic:arc/explosive"
   },
   "addedoutput": [
     {
-      "chance": 0.25,
+      "chance": 0.5,
       "type": {
-        "item": "bloodmagic:ironfragment"
+        "item": "bloodmagic:goldfragment"
       }
     }
   ],
   "output": {
-    "item": "bloodmagic:ironfragment",
-    "count": 2
+    "item": "bloodmagic:goldfragment",
+    "count": 4
   },
   "consumeingredient": false
 }

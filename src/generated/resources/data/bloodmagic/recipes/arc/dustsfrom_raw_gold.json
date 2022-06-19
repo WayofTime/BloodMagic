@@ -4,19 +4,18 @@
     "tag": "forge:raw_materials/gold"
   },
   "tool": {
-    "tag": "bloodmagic:arc/explosive"
+    "tag": "bloodmagic:arc/cuttingfluid"
   },
   "addedoutput": [
     {
-      "chance": 0.25,
+      "chance": 0.5,
       "type": {
-        "item": "bloodmagic:goldfragment"
+        "item": "bloodmagic:goldsand"
       }
     }
   ],
   "output": {
-    "item": "bloodmagic:goldfragment",
-    "count": 2
+    "item": "bloodmagic:goldsand"
   },
   "consumeingredient": false
 }

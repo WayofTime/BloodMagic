@@ -1,0 +1,21 @@
+{
+  "type": "bloodmagic:arc",
+  "input": {
+    "tag": "forge:raw_materials/copper"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc/cuttingfluid"
+  },
+  "addedoutput": [
+    {
+      "chance": 0.5,
+      "type": {
+        "item": "bloodmagic:coppersand"
+      }
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:coppersand"
+  },
+  "consumeingredient": false
+}

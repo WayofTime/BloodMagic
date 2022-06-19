@@ -337,16 +337,19 @@ public class BloodMagicItems
 	// Fragments
 	public static final RegistryObject<Item> IRON_FRAGMENT = BASICITEMS.register("ironfragment", () -> new ItemBase());
 	public static final RegistryObject<Item> GOLD_FRAGMENT = BASICITEMS.register("goldfragment", () -> new ItemBase());
+	public static final RegistryObject<Item> COPPER_FRAGMENT = BASICITEMS.register("copperfragment", () -> new ItemBase());
 	public static final RegistryObject<Item> NETHERITE_SCRAP_FRAGMENT = BASICITEMS.register("fragment_netherite_scrap", () -> new ItemBase());
 
 	// Gravels
 	public static final RegistryObject<Item> IRON_GRAVEL = BASICITEMS.register("irongravel", () -> new ItemBase());
 	public static final RegistryObject<Item> GOLD_GRAVEL = BASICITEMS.register("goldgravel", () -> new ItemBase());
+	public static final RegistryObject<Item> COPPER_GRAVEL = BASICITEMS.register("coppergravel", () -> new ItemBase());
 	public static final RegistryObject<Item> NETHERITE_SCRAP_GRAVEL = BASICITEMS.register("gravel_netherite_scrap", () -> new ItemBase());
 
 	// Sands
 	public static final RegistryObject<Item> IRON_SAND = BASICITEMS.register("ironsand", () -> new ItemBase());
 	public static final RegistryObject<Item> GOLD_SAND = BASICITEMS.register("goldsand", () -> new ItemBase());
+	public static final RegistryObject<Item> COPPER_SAND = BASICITEMS.register("coppersand", () -> new ItemBase());
 	public static final RegistryObject<Item> COAL_SAND = BASICITEMS.register("coalsand", () -> new ItemBase());
 	public static final RegistryObject<Item> NETHERITE_SCRAP_SAND = BASICITEMS.register("sand_netherite", () -> new ItemBase());
 	public static final RegistryObject<Item> CORRUPTED_DUST = BASICITEMS.register("corrupted_dust", () -> new ItemBase());

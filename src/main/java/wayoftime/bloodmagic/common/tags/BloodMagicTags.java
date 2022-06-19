@@ -52,6 +52,7 @@ public class BloodMagicTags
 	// Dusts (/Sands)
 	public static final TagKey<Item> DUST_IRON = getForgeDustTag("iron");
 	public static final TagKey<Item> DUST_GOLD = getForgeDustTag("gold");
+	public static final TagKey<Item> DUST_COPPER = getForgeDustTag("copper");
 	public static final TagKey<Item> DUST_COAL = getForgeDustTag("coal");
 	public static final TagKey<Item> DUST_SALTPETER = getForgeDustTag("saltpeter");
 	public static final TagKey<Item> DUST_SULFUR = getForgeDustTag("sulfur");
@@ -63,11 +64,13 @@ public class BloodMagicTags
 	// Fragments
 	public static final TagKey<Item> FRAGMENT_IRON = getFragmentTag("iron");
 	public static final TagKey<Item> FRAGMENT_GOLD = getFragmentTag("gold");
+	public static final TagKey<Item> FRAGMENT_COPPER = getFragmentTag("copper");
 	public static final TagKey<Item> FRAGMENT_NETHERITE_SCRAP = getFragmentTag("netherite_scrap");
 
 	// Gravels
 	public static final TagKey<Item> GRAVEL_IRON = getGravelTag("iron");
 	public static final TagKey<Item> GRAVEL_GOLD = getGravelTag("gold");
+	public static final TagKey<Item> GRAVEL_COPPER = getGravelTag("copper");
 	public static final TagKey<Item> GRAVEL_NETHERITE_SCRAP = getGravelTag("netherite_scrap");
 
 	// Vanilla

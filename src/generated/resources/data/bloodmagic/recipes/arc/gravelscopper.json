@@ -1,0 +1,27 @@
+{
+  "type": "bloodmagic:arc",
+  "input": {
+    "tag": "bloodmagic:fragments/copper"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc/resonator"
+  },
+  "addedoutput": [
+    {
+      "chance": 0.05,
+      "type": {
+        "item": "bloodmagic:corrupted_tinydust"
+      }
+    },
+    {
+      "chance": 0.01,
+      "type": {
+        "item": "bloodmagic:corrupted_tinydust"
+      }
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:coppergravel"
+  },
+  "consumeingredient": false
+}

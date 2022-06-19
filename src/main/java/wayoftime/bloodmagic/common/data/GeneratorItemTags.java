@@ -83,6 +83,7 @@ public class GeneratorItemTags extends ItemTagsProvider
 	{
 		tag(BloodMagicTags.DUST_IRON).add(BloodMagicItems.IRON_SAND.get());
 		tag(BloodMagicTags.DUST_GOLD).add(BloodMagicItems.GOLD_SAND.get());
+		tag(BloodMagicTags.DUST_COPPER).add(BloodMagicItems.COPPER_SAND.get());
 		tag(BloodMagicTags.DUST_COAL).add(BloodMagicItems.COAL_SAND.get());
 		tag(BloodMagicTags.DUST_NETHERITE_SCRAP).add(BloodMagicItems.NETHERITE_SCRAP_SAND.get());
 		tag(BloodMagicTags.DUST_HELLFORGED).add(BloodMagicItems.HELLFORGED_SAND.get());
@@ -94,6 +95,7 @@ public class GeneratorItemTags extends ItemTagsProvider
 	{
 		tag(BloodMagicTags.FRAGMENT_IRON).add(BloodMagicItems.IRON_FRAGMENT.get());
 		tag(BloodMagicTags.FRAGMENT_GOLD).add(BloodMagicItems.GOLD_FRAGMENT.get());
+		tag(BloodMagicTags.FRAGMENT_COPPER).add(BloodMagicItems.COPPER_FRAGMENT.get());
 		tag(BloodMagicTags.FRAGMENT_NETHERITE_SCRAP).add(BloodMagicItems.NETHERITE_SCRAP_FRAGMENT.get());
 	}
 
@@ -101,6 +103,7 @@ public class GeneratorItemTags extends ItemTagsProvider
 	{
 		tag(BloodMagicTags.GRAVEL_IRON).add(BloodMagicItems.IRON_GRAVEL.get());
 		tag(BloodMagicTags.GRAVEL_GOLD).add(BloodMagicItems.GOLD_GRAVEL.get());
+		tag(BloodMagicTags.GRAVEL_COPPER).add(BloodMagicItems.COPPER_GRAVEL.get());
 		tag(BloodMagicTags.GRAVEL_NETHERITE_SCRAP).add(BloodMagicItems.NETHERITE_SCRAP_GRAVEL.get());
 	}
 

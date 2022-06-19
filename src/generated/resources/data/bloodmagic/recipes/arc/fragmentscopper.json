@@ -1,7 +1,7 @@
 {
   "type": "bloodmagic:arc",
   "input": {
-    "tag": "forge:raw_materials/iron"
+    "tag": "forge:raw_materials/copper"
   },
   "tool": {
     "tag": "bloodmagic:arc/explosive"
@@ -10,12 +10,12 @@
     {
       "chance": 0.25,
       "type": {
-        "item": "bloodmagic:ironfragment"
+        "item": "bloodmagic:copperfragment"
       }
     }
   ],
   "output": {
-    "item": "bloodmagic:ironfragment",
+    "item": "bloodmagic:copperfragment",
     "count": 2
   },
   "consumeingredient": false

@@ -4,19 +4,18 @@
     "tag": "forge:raw_materials/iron"
   },
   "tool": {
-    "tag": "bloodmagic:arc/explosive"
+    "tag": "bloodmagic:arc/cuttingfluid"
   },
   "addedoutput": [
     {
-      "chance": 0.25,
+      "chance": 0.5,
       "type": {
-        "item": "bloodmagic:ironfragment"
+        "item": "bloodmagic:ironsand"
       }
     }
   ],
   "output": {
-    "item": "bloodmagic:ironfragment",
-    "count": 2
+    "item": "bloodmagic:ironsand"
   },
   "consumeingredient": false
 }

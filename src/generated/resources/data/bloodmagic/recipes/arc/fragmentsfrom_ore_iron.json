@@ -1,14 +1,14 @@
 {
   "type": "bloodmagic:arc",
   "input": {
-    "tag": "forge:raw_materials/iron"
+    "tag": "forge:ores/iron"
   },
   "tool": {
     "tag": "bloodmagic:arc/explosive"
   },
   "addedoutput": [
     {
-      "chance": 0.25,
+      "chance": 0.5,
       "type": {
         "item": "bloodmagic:ironfragment"
       }
@@ -16,7 +16,7 @@
   ],
   "output": {
     "item": "bloodmagic:ironfragment",
-    "count": 2
+    "count": 4
   },
   "consumeingredient": false
 }
