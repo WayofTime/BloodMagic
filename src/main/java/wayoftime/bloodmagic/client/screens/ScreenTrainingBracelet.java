@@ -206,7 +206,7 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 		int yl = whitelistButtonPosY;
 
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		getMinecraft().getTextureManager().bindForSetup(background);
+		RenderSystem.setShaderTexture(0, background);
 		this.blit(stack, +xl, +yl, 176, isWhitelist ? 0 : 20, w, h);
 	}
 
@@ -214,7 +214,7 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		getMinecraft().getTextureManager().bindForSetup(background);
+		RenderSystem.setShaderTexture(0, background);
 //		int i = (this.width - this.xSize) / 2;
 //		int j = (this.height - this.ySize) / 2;
 //		this.blit(stack, i, j, 0, 0, this.xSize, this.ySize);

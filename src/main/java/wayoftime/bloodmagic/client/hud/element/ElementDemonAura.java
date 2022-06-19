@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.client.hud.element;
 import java.util.List;
 
 import com.google.common.collect.Lists;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
@@ -31,7 +32,7 @@ public class ElementDemonAura extends HUDElement
 		Minecraft minecraft = Minecraft.getInstance();
 		Player player = minecraft.player;
 
-		minecraft.getTextureManager().bindForSetup(BAR_LOCATION);
+		RenderSystem.setShaderTexture(0, BAR_LOCATION);
 //		GlStateManager.color(1.0F, 1.0F, 1.0F);
 		this.blit(matrixStack, drawX, drawY, 0, 210, 80, 46);
 
@@ -42,7 +43,7 @@ public class ElementDemonAura extends HUDElement
 		{
 			i++;
 //			GlStateManager.color(1.0F, 1.0F, 1.0F);
-			minecraft.getTextureManager().bindForSetup(BAR_LOCATION);
+			RenderSystem.setShaderTexture(0, BAR_LOCATION);
 			int textureXOffset = (i > 3) ? (i - 3) : (3 - i);
 			int maxBarSize = 30 - 2 * textureXOffset;
 

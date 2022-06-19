@@ -74,7 +74,7 @@ public class ScreenAlchemicalReactionChamber extends ScreenBase<ContainerAlchemi
 	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		getMinecraft().getTextureManager().bindForSetup(background);
+		RenderSystem.setShaderTexture(0, background);
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
 		this.blit(stack, i, j, 0, 0, this.imageWidth, this.imageHeight);

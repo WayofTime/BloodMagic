@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.ritual;
 
-import net.minecraft.client.Minecraft;
+import com.mojang.blaze3d.systems.RenderSystem;
+
 import net.minecraft.resources.ResourceLocation;
 
 public abstract class RitualRenderer
@@ -9,6 +10,6 @@ public abstract class RitualRenderer
 
 	protected void bindTexture(ResourceLocation resourceLocation)
 	{
-		Minecraft.getInstance().getTextureManager().bindForSetup(resourceLocation);
+		RenderSystem.setShaderTexture(0, resourceLocation);
 	}
 }

@@ -95,12 +95,12 @@ public class ClientHandler
 
 	public static void bindTexture(String path)
 	{
-		mc().getTextureManager().bindForSetup(getResource(path));
+		RenderSystem.setShaderTexture(0, getResource(path));
 	}
 
 	public static void bindAtlas()
 	{
-		mc().getTextureManager().bindForSetup(InventoryMenu.BLOCK_ATLAS);
+		RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
 	}
 
 	public static ResourceLocation getResource(String path)
