@@ -973,7 +973,7 @@ d9086862ecec2b754f24be895e12ad1c64de9715 data/bloodmagic/recipes/flask/suspended
 63bca28ba5eebb9c488c819bcb117595eadb877d data/bloodmagic/recipes/largebloodstonebrick.json
 9dedad36e9d2ab6688e069c2e6df3851c395b583 data/bloodmagic/recipes/lava_crystal.json
 c3a696a2e5ba89d2f9a48a8a1e29e5ac5bf5b3d1 data/bloodmagic/recipes/meteor/diamond.json
-1899f6c4fe9942df5d13deacafcd5b0f23456748 data/bloodmagic/recipes/meteor/iron.json
+285cb2ed4c6247370aee0572e88ddc4ce88fbc28 data/bloodmagic/recipes/meteor/iron.json
 26065f551d4b7112c078352fca33d77067e06cf2 data/bloodmagic/recipes/meteor/nether.json
 4ca2844bc53614c3009b42b5dc6d97adaed7884b data/bloodmagic/recipes/meteor/stone.json
 50d84717ac673875e4b52522b583f564a8a75e8e data/bloodmagic/recipes/path/path_stone.json

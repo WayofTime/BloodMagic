@@ -30,6 +30,7 @@ import wayoftime.bloodmagic.anointment.AnointmentColor;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.api.compat.IMultiWillTool;
 import wayoftime.bloodmagic.client.model.MimicColor;
+import wayoftime.bloodmagic.client.render.BloodMagicModelLayerLocations;
 import wayoftime.bloodmagic.client.render.RenderItemRoutingNode;
 import wayoftime.bloodmagic.client.render.alchemyarray.BeaconAlchemyCircleRenderer;
 import wayoftime.bloodmagic.client.render.alchemyarray.DayAlchemyCircleRenderer;
@@ -45,6 +46,7 @@ import wayoftime.bloodmagic.client.render.entity.EntityShapedChargeRenderer;
 import wayoftime.bloodmagic.client.render.entity.EntityThrowingDaggerRenderer;
 import wayoftime.bloodmagic.client.render.entity.SoulSnareRenderer;
 import wayoftime.bloodmagic.client.render.entity.layers.BloodElytraLayer;
+import wayoftime.bloodmagic.client.render.model.ModelMeteor;
 import wayoftime.bloodmagic.client.screens.ScreenAlchemicalReactionChamber;
 import wayoftime.bloodmagic.client.screens.ScreenAlchemyTable;
 import wayoftime.bloodmagic.client.screens.ScreenFilter;
@@ -78,6 +80,12 @@ public class ClientEvents
 //
 ////		ClientRegistry.bindTileEntityRenderer(TileSoulForge.TYPE, RenderAlchemyArray::new);
 //	}
+
+	@SubscribeEvent
+	public static void registerLayerDefinition(EntityRenderersEvent.RegisterLayerDefinitions event)
+	{
+		event.registerLayerDefinition(BloodMagicModelLayerLocations.METEOR_LOC, ModelMeteor::createBodyLayer);
+	}
 
 	@SubscribeEvent
 	public static void registerModels(EntityRenderersEvent.RegisterRenderers event)
