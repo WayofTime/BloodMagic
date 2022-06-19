@@ -13,8 +13,10 @@ import com.mojang.math.Matrix4f;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
@@ -113,7 +115,8 @@ public class ClientHandler
 
 	public static TextureAtlasSprite getSprite(ResourceLocation rl)
 	{
-		return mc().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).getSprite(rl);
+		return Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(rl);
+//		return mc().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).getSprite(rl);
 	}
 
 	@SubscribeEvent
@@ -447,6 +450,8 @@ public class ClientHandler
 		if (tooltip == null)
 		{
 			transform.pushPose();
+			RenderSystem.setShader(GameRenderer::getPositionTexShader);
+			RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
 			MultiBufferSource.BufferSource buffer = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
 			if (fluid != null && fluid.getFluid() != null)
 			{
@@ -457,9 +462,13 @@ public class ClientHandler
 			int xOff = (w - oW) / 2;
 			int yOff = (h - oH) / 2;
 //			RenderSystem.setShaderTe
-			RenderType renderType = RenderType.solid();
-			drawTexturedRect(buffer.getBuffer(renderType), transform, x + xOff, y + yOff, oW, oH, 256f, oX, oX + oW, oY, oY + oH);
+			RenderType renderType = RenderType.translucent();
+//			drawTexturedRect(buffer.getBuffer(renderType), transform, x + xOff, y + yOff, oW, oH, 256f, oX, oX + oW, oY, oY + oH);
 			buffer.endBatch(renderType);
+
+			RenderSystem.setShaderTexture(0, new ResourceLocation(originalTexture));
+			blit(transform, x + xOff, y + yOff, oX, oY, oW, oH, 32);
+
 			transform.popPose();
 		} else
 		{
@@ -468,10 +477,15 @@ public class ClientHandler
 		}
 	}
 
+	public static void blit(PoseStack p_93229_, int p_93230_, int p_93231_, int p_93232_, int p_93233_, int p_93234_, int p_93235_, int blitOffset)
+	{
+		GuiComponent.blit(p_93229_, p_93230_, p_93231_, blitOffset, (float) p_93232_, (float) p_93233_, p_93234_, p_93235_, 256, 256);
+	}
+
 	public static void drawRepeatedFluidSpriteGui(MultiBufferSource buffer, PoseStack transform, FluidStack fluid, float x, float y, float w, float h)
 	{
 //		RenderType renderType = BMRenderTypes.getGui(InventoryMenu.BLOCK_ATLAS);
-		RenderType renderType = RenderType.solid();
+		RenderType renderType = RenderType.translucent();
 		VertexConsumer builder = buffer.getBuffer(renderType);
 		drawRepeatedFluidSprite(builder, transform, fluid, x, y, w, h);
 	}
@@ -479,6 +493,7 @@ public class ClientHandler
 	public static void drawRepeatedFluidSprite(VertexConsumer builder, PoseStack transform, FluidStack fluid, float x, float y, float w, float h)
 	{
 		TextureAtlasSprite sprite = getSprite(fluid.getFluid().getAttributes().getStillTexture(fluid));
+//		Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(spriteLocation);
 		int col = fluid.getFluid().getAttributes().getColor(fluid);
 		int iW = sprite.getWidth();
 		int iH = sprite.getHeight();
