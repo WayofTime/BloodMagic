@@ -30,7 +30,7 @@ public class SetWillFraction extends LootItemConditionalFunction
 
 	public LootItemFunctionType getType()
 	{
-		return BloodMagicLootFunctionManager.SET_WILL_FRACTION;
+		return BloodMagicLootFunctionManager.SET_WILL_FRACTION.get();
 	}
 
 	public ItemStack run(ItemStack stack, LootContext context)

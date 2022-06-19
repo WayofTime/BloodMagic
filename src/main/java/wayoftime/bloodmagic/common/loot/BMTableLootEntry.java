@@ -6,16 +6,16 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.entries.LootPoolEntryType;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraft.world.level.storage.loot.ValidationContext;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryType;
+import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
 public class BMTableLootEntry extends LootPoolSingletonContainer
 {
@@ -29,7 +29,7 @@ public class BMTableLootEntry extends LootPoolSingletonContainer
 
 	public LootPoolEntryType getType()
 	{
-		return BloodMagicLootTypeManager.LOOT_TABLE;
+		return BloodMagicLootTypeManager.LOOT_TABLE.get();
 	}
 
 	public void createItemStack(Consumer<ItemStack> stackConsumer, LootContext context)

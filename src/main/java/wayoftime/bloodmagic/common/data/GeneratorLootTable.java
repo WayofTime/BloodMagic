@@ -77,7 +77,7 @@ public class GeneratorLootTable extends LootTableProvider
 		@Override
 		public void accept(BiConsumer<ResourceLocation, LootTable.Builder> acceptor)
 		{
-//			generateSimpleDungeonLoot(acceptor);
+			generateSimpleDungeonLoot(acceptor);
 		}
 
 		private void generateSimpleDungeonLoot(BiConsumer<ResourceLocation, LootTable.Builder> acceptor)

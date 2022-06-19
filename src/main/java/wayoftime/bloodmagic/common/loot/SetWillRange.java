@@ -29,7 +29,7 @@ public class SetWillRange extends LootItemConditionalFunction
 
 	public LootItemFunctionType getType()
 	{
-		return BloodMagicLootFunctionManager.SET_WILL_RANGE;
+		return BloodMagicLootFunctionManager.SET_WILL_RANGE.get();
 	}
 
 	public ItemStack run(ItemStack stack, LootContext context)

@@ -53,6 +53,8 @@ import wayoftime.bloodmagic.common.data.GeneratorLootTable;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeProvider;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.item.BloodOrb;
+import wayoftime.bloodmagic.common.loot.BloodMagicLootFunctionManager;
+import wayoftime.bloodmagic.common.loot.BloodMagicLootTypeManager;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
@@ -123,6 +125,8 @@ public class BloodMagic
 		BloodMagicTileEntities.TILE_ENTITIES.register(modBus);
 
 		GlobalLootModifier.GLM.register(modBus);
+		BloodMagicLootTypeManager.ENTRY_TYPES.register(modBus);
+		BloodMagicLootFunctionManager.LOOT_FUNCTIONS.register(modBus);
 
 		BloodMagicRecipeSerializers.RECIPE_SERIALIZERS.register(modBus);
 		BloodMagicRecipeType.RECIPE_TYPES.register(modBus);

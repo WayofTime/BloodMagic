@@ -40,7 +40,7 @@ public class SetLivingUpgrade extends LootItemConditionalFunction
 
 	public LootItemFunctionType getType()
 	{
-		return BloodMagicLootFunctionManager.SET_LIVING_UPGRADE;
+		return BloodMagicLootFunctionManager.SET_LIVING_UPGRADE.get();
 	}
 
 	public ItemStack run(ItemStack stack, LootContext context)

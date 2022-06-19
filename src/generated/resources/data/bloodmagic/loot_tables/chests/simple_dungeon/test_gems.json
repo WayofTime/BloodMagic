@@ -1,0 +1,83 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 1.0,
+        "max": 2.0
+      },
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "functions": [
+            {
+              "function": "bloodmagic:set_will_fraction",
+              "damage": {
+                "type": "minecraft:uniform",
+                "min": 0.5,
+                "max": 0.7
+              }
+            }
+          ],
+          "name": "bloodmagic:soulgempetty"
+        }
+      ]
+    },
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 1.0,
+        "max": 2.0
+      },
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "functions": [
+            {
+              "function": "bloodmagic:set_will_range",
+              "damage": {
+                "type": "minecraft:uniform",
+                "min": 20.0,
+                "max": 50.0
+              }
+            }
+          ],
+          "name": "bloodmagic:basemonstersoul"
+        }
+      ]
+    },
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 1.0,
+        "max": 2.0
+      },
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "bloodmagic:set_living_upgrade",
+              "upgrades": [
+                "bloodmagic:health"
+              ],
+              "points": {
+                "type": "minecraft:uniform",
+                "min": 300.0,
+                "max": 600.0
+              }
+            }
+          ],
+          "name": "bloodmagic:upgradetome"
+        }
+      ]
+    }
+  ]
+}
