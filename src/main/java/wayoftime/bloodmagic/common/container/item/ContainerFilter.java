@@ -80,6 +80,7 @@ public class ContainerFilter extends AbstractContainerMenu
 	@Override
 	public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player)
 	{
+
 		Inventory inventoryPlayer = player.getInventory();
 //      if (!player.worldObj.isRemote)
 		{
@@ -93,7 +94,7 @@ public class ContainerFilter extends AbstractContainerMenu
 					if ((dragType == 0 || dragType == 1))
 					{
 						ItemStack slotStack = slot.getItem();
-						ItemStack heldStack = inventoryPlayer.getSelected();
+						ItemStack heldStack = this.getCarried();
 
 						if (dragType == 0) // Left mouse click-eth
 						{

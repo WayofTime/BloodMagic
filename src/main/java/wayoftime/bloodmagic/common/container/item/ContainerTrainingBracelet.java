@@ -93,7 +93,7 @@ public class ContainerTrainingBracelet extends AbstractContainerMenu
 					if ((dragType == 0 || dragType == 1))
 					{
 						ItemStack slotStack = slot.getItem();
-						ItemStack heldStack = inventoryPlayer.getSelected();
+						ItemStack heldStack = this.getCarried();
 
 						if (dragType == 0) // Left mouse click-eth
 						{

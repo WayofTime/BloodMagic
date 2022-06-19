@@ -64,12 +64,10 @@ public class ContainerAlchemyTable extends AbstractContainerMenu
 	@Override
 	public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player)
 	{
-		Inventory inventoryPlayer = player.getInventory();
-
 		if (slotId <= TileAlchemyTable.outputSlot && slotId >= 0)
 		{
 			Slot slot = this.getSlot(slotId);
-			if (!slot.hasItem() && inventoryPlayer.getSelected().isEmpty())
+			if (!slot.hasItem() && this.getCarried().isEmpty())
 			{
 //				((TileAlchemyTable) tileTable).toggleInputSlotAccessible(slotId);
 				if (tileTable.activeSlot == slotId)
