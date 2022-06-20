@@ -1,8 +1,14 @@
 package wayoftime.bloodmagic.common.block;
 
+import java.util.Random;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -30,6 +36,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.tile.TileAlchemicalReactionChamber;
 
 public class BlockAlchemicalReactionChamber extends Block implements EntityBlock
@@ -41,7 +48,6 @@ public class BlockAlchemicalReactionChamber extends Block implements EntityBlock
 	{
 		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops());
 		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, Boolean.valueOf(false)));
-//		.harvestTool(ToolType.PICKAXE).harvestLevel(2)
 	}
 
 	@Override
@@ -124,7 +130,6 @@ public class BlockAlchemicalReactionChamber extends Block implements EntityBlock
 				((AbstractFurnaceBlockEntity) tileentity).setCustomName(stack.getHoverName());
 			}
 		}
-
 	}
 
 	/**
@@ -166,4 +171,33 @@ public class BlockAlchemicalReactionChamber extends Block implements EntityBlock
 		return tileentity == null ? false : tileentity.triggerEvent(id, param);
 	}
 
+	public void animateTick(BlockState state, Level level, BlockPos pos, Random rand)
+	{
+		if (state.getValue(LIT))
+		{
+			double d0 = (double) pos.getX() + 0.5D;
+			double d1 = (double) pos.getY();
+			double d2 = (double) pos.getZ() + 0.5D;
+			if (rand.nextDouble() < 0.1D)
+			{
+				level.playLocalSound(d0, d1, d2, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
+			}
+
+			Direction direction = state.getValue(FACING);
+			Direction.Axis direction$axis = direction.getAxis();
+			double d3 = 0.52D;
+			double d4 = rand.nextDouble() * 0.6D - 0.3D;
+			double d5 = direction$axis == Direction.Axis.X ? (double) direction.getStepX() * 0.52D : d4;
+			double d6 = rand.nextDouble() * 6.0D / 16.0D;
+			double d7 = direction$axis == Direction.Axis.Z ? (double) direction.getStepZ() * 0.52D : d4;
+			ItemParticleOption particleData = new ItemParticleOption(ParticleTypes.ITEM, getCrystalStack());
+
+			level.addParticle(particleData, d0 + d5, d1 + d6, d2 + d7, (double) direction.getStepX() * 0.03, 0.1, (double) direction.getStepZ() * 0.03D);
+		}
+	}
+
+	private ItemStack getCrystalStack()
+	{
+		return BlockDemonCrystal.getItemStackDropped(EnumDemonWillType.DEFAULT, 1);
+	}
 }

@@ -22,6 +22,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -35,6 +36,7 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.ItemHandlerHelper;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.block.BlockAlchemicalReactionChamber;
 import wayoftime.bloodmagic.common.container.tile.ContainerAlchemicalReactionChamber;
 import wayoftime.bloodmagic.common.item.arc.IARCTool;
 import wayoftime.bloodmagic.common.item.inventory.InventoryWrapper;
@@ -203,6 +205,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 		if (canCraft(recipe, outputSlotHandler))
 		{
 			// We have enough fluid (if applicable) and the theoretical outputs can fit.
+			setIsCrafting(level, getBlockPos(), getBlockState(), true);
 			currentProgress += craftingMultiplier * DEFAULT_SPEED;
 			if (currentProgress >= 1)
 			{
@@ -245,10 +248,12 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 				} else
 				{
 					currentProgress = 0;
+					setIsCrafting(level, getBlockPos(), getBlockState(), false);
 				}
 			} else
 			{
 				currentProgress = 0;
+				setIsCrafting(level, getBlockPos(), getBlockState(), false);
 			}
 		}
 
@@ -261,6 +266,15 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 		}
 
 //		FluidUtil.tryEmptyContainer(container, fluidDestination, maxAmount, player, doDrain)
+	}
+
+	public void setIsCrafting(Level world, BlockPos pos, BlockState state, boolean isCrafting)
+	{
+		boolean isCurrentlyCrafting = state.getValue(BlockAlchemicalReactionChamber.LIT);
+		if (isCurrentlyCrafting != isCrafting)
+		{
+			world.setBlock(pos, state.setValue(BlockAlchemicalReactionChamber.LIT, isCrafting), 2);
+		}
 	}
 
 	private boolean canCraft(RecipeARC recipe, MultiSlotItemHandler outputSlotHandler)

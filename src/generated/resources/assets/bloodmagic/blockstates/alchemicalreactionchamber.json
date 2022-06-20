@@ -16,18 +16,18 @@
       "y": 90
     },
     "facing=north,lit=true": {
-      "model": "bloodmagic:block/alchemicalreactionchamber"
+      "model": "bloodmagic:block/alchemicalreactionchamber_lit"
     },
     "facing=south,lit=true": {
-      "model": "bloodmagic:block/alchemicalreactionchamber",
+      "model": "bloodmagic:block/alchemicalreactionchamber_lit",
       "y": 180
     },
     "facing=west,lit=true": {
-      "model": "bloodmagic:block/alchemicalreactionchamber",
+      "model": "bloodmagic:block/alchemicalreactionchamber_lit",
       "y": 270
     },
     "facing=east,lit=true": {
-      "model": "bloodmagic:block/alchemicalreactionchamber",
+      "model": "bloodmagic:block/alchemicalreactionchamber_lit",
       "y": 90
     }
   }
