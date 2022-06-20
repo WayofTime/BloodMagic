@@ -2,33 +2,46 @@ package wayoftime.bloodmagic.common.item.arc;
 
 import java.util.List;
 
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.util.ChatUtil;
 
 public class ItemARCToolBase extends Item implements IARCTool
 {
 	private final double craftingMultiplier;
 	private final double additionalOutputChance;
+	private final EnumDemonWillType dominantWillType;
 
 	public ItemARCToolBase(int maxDamage, double craftingMultiplier)
 	{
 		this(maxDamage, craftingMultiplier, 1);
 	}
 
+	public ItemARCToolBase(int maxDamage, double craftingMultiplier, EnumDemonWillType type)
+	{
+		this(maxDamage, craftingMultiplier, 1, type);
+	}
+
 	public ItemARCToolBase(int maxDamage, double craftingMultiplier, double additionalOutputChance)
+	{
+		this(maxDamage, craftingMultiplier, additionalOutputChance, EnumDemonWillType.DEFAULT);
+	}
+
+	public ItemARCToolBase(int maxDamage, double craftingMultiplier, double additionalOutputChance, EnumDemonWillType type)
 	{
 		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB).durability(maxDamage));
 		this.craftingMultiplier = craftingMultiplier;
 		this.additionalOutputChance = additionalOutputChance;
+		this.dominantWillType = type;
 	}
 
 	@Override
@@ -56,5 +69,11 @@ public class ItemARCToolBase extends Item implements IARCTool
 	public double getAdditionalOutputChanceMultiplier(ItemStack stack)
 	{
 		return additionalOutputChance;
+	}
+
+	@Override
+	public EnumDemonWillType getDominantWillType(ItemStack stack)
+	{
+		return dominantWillType;
 	}
 }

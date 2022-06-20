@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "side": "bloodmagic:block/arc_side_v_lit",
+    "front": "bloodmagic:block/arc_front_v_lit",
+    "bottom": "bloodmagic:block/arc_bottom",
+    "top": "bloodmagic:block/arc_top_v"
+  }
+}

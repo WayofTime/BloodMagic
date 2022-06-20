@@ -36,6 +36,7 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.ItemHandlerHelper;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.block.BlockAlchemicalReactionChamber;
 import wayoftime.bloodmagic.common.container.tile.ContainerAlchemicalReactionChamber;
 import wayoftime.bloodmagic.common.item.arc.IARCTool;
@@ -196,16 +197,19 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 		ItemStack toolStack = this.getItem(ARC_TOOL_SLOT);
 
 		double craftingMultiplier = 1;
+		EnumDemonWillType type = EnumDemonWillType.DEFAULT;
 		if (toolStack.getItem() instanceof IARCTool)
 		{
 			craftingMultiplier = ((IARCTool) toolStack.getItem()).getCraftingSpeedMultiplier(toolStack);
+			type = ((IARCTool) toolStack.getItem()).getDominantWillType(toolStack);
 		}
 
 		RecipeARC recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getARC(level, inputStack, toolStack, inputTank.getFluid());
 		if (canCraft(recipe, outputSlotHandler))
 		{
 			// We have enough fluid (if applicable) and the theoretical outputs can fit.
-			setIsCrafting(level, getBlockPos(), getBlockState(), true);
+			setIsCrafting(level, worldPosition, getBlockState(), true);
+			setDisplayedType(level, worldPosition, getBlockState(), type);
 			currentProgress += craftingMultiplier * DEFAULT_SPEED;
 			if (currentProgress >= 1)
 			{
@@ -233,6 +237,8 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 					ItemStack outputStack = furnaceRecipe.get().assemble(invWrapper);
 					if (canCraftFurnace(outputStack, outputSlotHandler))
 					{
+						setIsCrafting(level, worldPosition, getBlockState(), true);
+						setDisplayedType(level, worldPosition, getBlockState(), type);
 						currentProgress += craftingMultiplier * DEFAULT_SPEED;
 						if (currentProgress >= 1)
 						{
@@ -249,11 +255,13 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 				{
 					currentProgress = 0;
 					setIsCrafting(level, getBlockPos(), getBlockState(), false);
+					setDisplayedType(level, worldPosition, getBlockState(), type);
 				}
 			} else
 			{
 				currentProgress = 0;
 				setIsCrafting(level, getBlockPos(), getBlockState(), false);
+				setDisplayedType(level, worldPosition, getBlockState(), type);
 			}
 		}
 
@@ -274,6 +282,15 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 		if (isCurrentlyCrafting != isCrafting)
 		{
 			world.setBlock(pos, state.setValue(BlockAlchemicalReactionChamber.LIT, isCrafting), 2);
+		}
+	}
+
+	public void setDisplayedType(Level world, BlockPos pos, BlockState state, EnumDemonWillType type)
+	{
+		EnumDemonWillType currentType = state.getValue(BlockAlchemicalReactionChamber.TYPE);
+		if (type != currentType)
+		{
+			world.setBlock(pos, state.setValue(BlockAlchemicalReactionChamber.TYPE, type), 2);
 		}
 	}
 

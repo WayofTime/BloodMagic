@@ -1,5 +1,9 @@
 package wayoftime.bloodmagic.common.data;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -25,6 +29,7 @@ import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.block.BlockAlchemicalReactionChamber;
 import wayoftime.bloodmagic.common.block.BlockDemonCrystal;
 import wayoftime.bloodmagic.common.block.BlockInversionPillarEnd;
@@ -524,21 +529,48 @@ public class GeneratorBlockStates extends BlockStateProvider
 
 	private void buildFurnace(Block block)
 	{
-//		ConfiguredModel[] furnaceModel = ConfiguredModel.builder().modelFile().build();
-		ModelFile furnace_off = models().orientableWithBottom("alchemicalreactionchamber", BloodMagic.rl("block/arc_side"), BloodMagic.rl("block/arc_front"), BloodMagic.rl("block/arc_bottom"), BloodMagic.rl("block/arc_top"));
-		ModelFile furnace_on = models().orientableWithBottom("alchemicalreactionchamber_lit", BloodMagic.rl("block/arc_side_lit"), BloodMagic.rl("block/arc_front_lit"), BloodMagic.rl("block/arc_bottom"), BloodMagic.rl("block/arc_top"));
-//		getVariantBuilder(block).addModels(block.getDefaultState().with(BlockAlchemicalReactionChamber.FACING, Direction.NORTH).with(BlockAlchemicalReactionChamber.LIT, false), furnaceModel);
-
 		VariantBlockStateBuilder builder = getVariantBuilder(block);
 
-		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.NORTH).with(BlockAlchemicalReactionChamber.LIT, false).modelForState().modelFile(furnace_off).addModel();
-		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.EAST).with(BlockAlchemicalReactionChamber.LIT, false).modelForState().modelFile(furnace_off).rotationY(90).addModel();
-		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.SOUTH).with(BlockAlchemicalReactionChamber.LIT, false).modelForState().modelFile(furnace_off).rotationY(180).addModel();
-		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.WEST).with(BlockAlchemicalReactionChamber.LIT, false).modelForState().modelFile(furnace_off).rotationY(270).addModel();
-		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.NORTH).with(BlockAlchemicalReactionChamber.LIT, true).modelForState().modelFile(furnace_on).addModel();
-		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.EAST).with(BlockAlchemicalReactionChamber.LIT, true).modelForState().modelFile(furnace_on).rotationY(90).addModel();
-		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.SOUTH).with(BlockAlchemicalReactionChamber.LIT, true).modelForState().modelFile(furnace_on).rotationY(180).addModel();
-		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.WEST).with(BlockAlchemicalReactionChamber.LIT, true).modelForState().modelFile(furnace_on).rotationY(270).addModel();
+		Map<EnumDemonWillType, String> suffixMap = new HashMap<>();
+
+		suffixMap.put(EnumDemonWillType.DEFAULT, "");
+		suffixMap.put(EnumDemonWillType.CORROSIVE, "_c");
+		suffixMap.put(EnumDemonWillType.VENGEFUL, "_v");
+		suffixMap.put(EnumDemonWillType.DESTRUCTIVE, "");
+		suffixMap.put(EnumDemonWillType.STEADFAST, "");
+
+		for (Entry<EnumDemonWillType, String> entry : suffixMap.entrySet())
+		{
+			EnumDemonWillType type = entry.getKey();
+			String suffix = entry.getValue();
+
+			ModelFile furnace_off = models().orientableWithBottom("alchemicalreactionchamber" + suffix, BloodMagic.rl("block/arc_side" + suffix), BloodMagic.rl("block/arc_front" + suffix), BloodMagic.rl("block/arc_bottom"), BloodMagic.rl("block/arc_top" + suffix));
+			ModelFile furnace_on = models().orientableWithBottom("alchemicalreactionchamber" + suffix + "_lit", BloodMagic.rl("block/arc_side" + suffix + "_lit"), BloodMagic.rl("block/arc_front" + suffix + "_lit"), BloodMagic.rl("block/arc_bottom"), BloodMagic.rl("block/arc_top" + suffix));
+//			getVariantBuilder(block).addModels(block.getDefaultState().with(BlockAlchemicalReactionChamber.FACING, Direction.NORTH).with(BlockAlchemicalReactionChamber.LIT, false), furnaceModel);
+
+			builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.NORTH).with(BlockAlchemicalReactionChamber.LIT, false).with(BlockAlchemicalReactionChamber.TYPE, type).modelForState().modelFile(furnace_off).addModel();
+			builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.EAST).with(BlockAlchemicalReactionChamber.LIT, false).with(BlockAlchemicalReactionChamber.TYPE, type).modelForState().modelFile(furnace_off).rotationY(90).addModel();
+			builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.SOUTH).with(BlockAlchemicalReactionChamber.LIT, false).with(BlockAlchemicalReactionChamber.TYPE, type).modelForState().modelFile(furnace_off).rotationY(180).addModel();
+			builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.WEST).with(BlockAlchemicalReactionChamber.LIT, false).with(BlockAlchemicalReactionChamber.TYPE, type).modelForState().modelFile(furnace_off).rotationY(270).addModel();
+			builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.NORTH).with(BlockAlchemicalReactionChamber.LIT, true).with(BlockAlchemicalReactionChamber.TYPE, type).modelForState().modelFile(furnace_on).addModel();
+			builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.EAST).with(BlockAlchemicalReactionChamber.LIT, true).with(BlockAlchemicalReactionChamber.TYPE, type).modelForState().modelFile(furnace_on).rotationY(90).addModel();
+			builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.SOUTH).with(BlockAlchemicalReactionChamber.LIT, true).with(BlockAlchemicalReactionChamber.TYPE, type).modelForState().modelFile(furnace_on).rotationY(180).addModel();
+			builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.WEST).with(BlockAlchemicalReactionChamber.LIT, true).with(BlockAlchemicalReactionChamber.TYPE, type).modelForState().modelFile(furnace_on).rotationY(270).addModel();
+
+		}
+////		ConfiguredModel[] furnaceModel = ConfiguredModel.builder().modelFile().build();
+//		ModelFile furnace_off = models().orientableWithBottom("alchemicalreactionchamber", BloodMagic.rl("block/arc_side"), BloodMagic.rl("block/arc_front"), BloodMagic.rl("block/arc_bottom"), BloodMagic.rl("block/arc_top"));
+//		ModelFile furnace_on = models().orientableWithBottom("alchemicalreactionchamber_lit", BloodMagic.rl("block/arc_side_lit"), BloodMagic.rl("block/arc_front_lit"), BloodMagic.rl("block/arc_bottom"), BloodMagic.rl("block/arc_top"));
+////		getVariantBuilder(block).addModels(block.getDefaultState().with(BlockAlchemicalReactionChamber.FACING, Direction.NORTH).with(BlockAlchemicalReactionChamber.LIT, false), furnaceModel);
+//
+//		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.NORTH).with(BlockAlchemicalReactionChamber.LIT, false).modelForState().modelFile(furnace_off).addModel();
+//		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.EAST).with(BlockAlchemicalReactionChamber.LIT, false).modelForState().modelFile(furnace_off).rotationY(90).addModel();
+//		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.SOUTH).with(BlockAlchemicalReactionChamber.LIT, false).modelForState().modelFile(furnace_off).rotationY(180).addModel();
+//		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.WEST).with(BlockAlchemicalReactionChamber.LIT, false).modelForState().modelFile(furnace_off).rotationY(270).addModel();
+//		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.NORTH).with(BlockAlchemicalReactionChamber.LIT, true).modelForState().modelFile(furnace_on).addModel();
+//		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.EAST).with(BlockAlchemicalReactionChamber.LIT, true).modelForState().modelFile(furnace_on).rotationY(90).addModel();
+//		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.SOUTH).with(BlockAlchemicalReactionChamber.LIT, true).modelForState().modelFile(furnace_on).rotationY(180).addModel();
+//		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.WEST).with(BlockAlchemicalReactionChamber.LIT, true).modelForState().modelFile(furnace_on).rotationY(270).addModel();
 
 //		getVariantBuilder(block).
 	}
