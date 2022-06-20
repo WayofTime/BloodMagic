@@ -1,6 +1,8 @@
 package wayoftime.bloodmagic.ritual;
 
 import net.minecraft.world.level.block.Blocks;
+import wayoftime.bloodmagic.ritual.harvest.HarvestHandlerBerryBush;
+import wayoftime.bloodmagic.ritual.harvest.HarvestHandlerGlowberry;
 import wayoftime.bloodmagic.ritual.harvest.HarvestHandlerPlantable;
 import wayoftime.bloodmagic.ritual.harvest.HarvestHandlerStem;
 import wayoftime.bloodmagic.ritual.harvest.HarvestHandlerTall;
@@ -17,6 +19,8 @@ public class ModRituals
 		HarvestRegistry.registerHandler(new HarvestHandlerPlantable());
 		HarvestRegistry.registerHandler(new HarvestHandlerTall());
 		HarvestRegistry.registerHandler(new HarvestHandlerStem());
+		HarvestRegistry.registerHandler(new HarvestHandlerGlowberry());
+		HarvestRegistry.registerHandler(new HarvestHandlerBerryBush());
 	}
 //
 //    public static void initCuttingFluids() {

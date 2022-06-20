@@ -79,6 +79,7 @@ public class ARCRecipeProvider implements ISubRecipeProvider
 		// Gravel to dust
 		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.GRAVEL_IRON), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.IRON_SAND.get()), null).build(consumer, BloodMagic.rl(basePath + "from_gravel_iron"));
 		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.GRAVEL_GOLD), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.GOLD_SAND.get()), null).build(consumer, BloodMagic.rl(basePath + "from_gravel_gold"));
+		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.GRAVEL_COPPER), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.COPPER_SAND.get()), null).build(consumer, BloodMagic.rl(basePath + "from_gravel_copper"));
 		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.GRAVEL_NETHERITE_SCRAP), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.NETHERITE_SCRAP_SAND.get()), null).build(consumer, BloodMagic.rl(basePath + "from_gravel_netherite_scrap"));
 	}
 
