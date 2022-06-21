@@ -56,7 +56,7 @@ public class PotionRecipeProvider implements ISubRecipeProvider
 		PotionTransformRecipeBuilder.potionTransform(Effects.INSTANT_DAMAGE, 0, Effects.POISON, 500, 200, 1).addIngredient(Ingredient.fromItems(Items.FERMENTED_SPIDER_EYE)).build(consumer, BloodMagic.rl(basePath + "poison_to_harm"));
 		PotionTransformRecipeBuilder.potionTransform(Effects.INVISIBILITY, 3600, Effects.NIGHT_VISION, 500, 200, 1).addIngredient(Ingredient.fromItems(Items.FERMENTED_SPIDER_EYE)).build(consumer, BloodMagic.rl(basePath + "night_to_invis"));
 		PotionTransformRecipeBuilder.potionTransform(Effects.LEVITATION, 3600, Effects.SLOW_FALLING, 500, 200, 1).addIngredient(Ingredient.fromItems(Items.FERMENTED_SPIDER_EYE)).build(consumer, BloodMagic.rl(basePath + "fall_to_levitation"));
-		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.SPECTRAL_SIGHT, 3600, Effects.NIGHT_VISION, 500, 200, 1).addIngredient(Ingredient.fromItems(Items.GLOWSTONE_DUST)).build(consumer, BloodMagic.rl(basePath + "night_to_spectral"));
+//		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.SPECTRAL_SIGHT, 3600, Effects.NIGHT_VISION, 500, 200, 1).addIngredient(Ingredient.fromItems(Items.GLOWSTONE_DUST)).build(consumer, BloodMagic.rl(basePath + "night_to_spectral"));
 		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.HEAVY_HEART, 1800, BloodMagicPotions.GRAVITY, 1000, 200, 1).addInputEffect(Effects.INSTANT_HEALTH).addIngredient(Ingredient.fromItems(BloodMagicItems.COMBINATIONAL_CATALYST.get())).build(consumer, BloodMagic.rl(basePath + "gravity_to_heart"));
 		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.OBSIDIAN_CLOAK, 3600, BloodMagicPotions.HARD_CLOAK, 1000, 200, 1).addIngredient(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND)).addIngredient(Ingredient.fromItems(Items.CRYING_OBSIDIAN)).build(consumer, BloodMagic.rl(basePath + "hard_to_obsidian"));
 
@@ -79,7 +79,7 @@ public class PotionRecipeProvider implements ISubRecipeProvider
 		addPotionModifiers(consumer, BloodMagicPotions.OBSIDIAN_CLOAK, "obsidian_cloak");
 		addPotionModifiers(consumer, BloodMagicPotions.GRAVITY, "gravity");
 		addPotionModifiers(consumer, BloodMagicPotions.FLIGHT, "flight");
-		addPotionModifiers(consumer, BloodMagicPotions.SPECTRAL_SIGHT, "spectral_sight");
+//		addPotionModifiers(consumer, BloodMagicPotions.SPECTRAL_SIGHT, "spectral_sight");
 
 //		addPotionModifiers(consumer, Effects.SLOW_FALLING, "slow_fall");
 
