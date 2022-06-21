@@ -1,4 +1,19 @@
 ------------------------------------------------------
+Version 3.2.0
+------------------------------------------------------
+- Initial release of 1.18.2.
+- Changed the ARC so that the texture changes based on the tool used and when it is active.
+- Rebalanced some recipes due to Raw Materials dropping from base ores.
+- Added copper ore processing.
+- Added Glowberries and Berry bush handling to the Reap of the Harvest Moon.
+
+
+Known issues
+- Ingame guide is broken in a few places, primarily when viewing mod recipes such as Blood Altar crafting..
+- Life Essence blocks do not have the proper overlay when submersed in liquid.
+
+
+------------------------------------------------------
 Version 3.1.11
 ------------------------------------------------------
 - Reworked and implemented the Potion Flask system! Quite a bit different than previous versions, so make sure to check the guide.

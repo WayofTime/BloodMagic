@@ -18,7 +18,7 @@ apply plugin: 'maven-publish'
 apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
 
 
-version = '1.18.2-3.2.0-34'
+version = '1.18.2-3.2.0-35'
 group = 'com.yourname.modid' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'BloodMagic'
 
@@ -44,13 +44,16 @@ minecraft {
         client {
             workingDirectory project.file('run')
             
-            properties 'mixin.env.disableRefMap': 'true'
+//            properties 'mixin.env.disableRefMap': 'true'
 
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
+            
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
                 bloodmagic {
@@ -62,13 +65,16 @@ minecraft {
         server {
             workingDirectory project.file('run')
             
-            properties 'mixin.env.disableRefMap': 'true'
+//            properties 'mixin.env.disableRefMap': 'true'
 
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
+            
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
                 bloodmagic {
@@ -80,7 +86,7 @@ minecraft {
         data {
             workingDirectory project.file('run')
             
-            properties 'mixin.env.disableRefMap': 'true'
+//            properties 'mixin.env.disableRefMap': 'true'
 
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'

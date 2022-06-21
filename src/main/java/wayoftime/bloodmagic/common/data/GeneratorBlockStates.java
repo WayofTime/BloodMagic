@@ -536,8 +536,8 @@ public class GeneratorBlockStates extends BlockStateProvider
 		suffixMap.put(EnumDemonWillType.DEFAULT, "");
 		suffixMap.put(EnumDemonWillType.CORROSIVE, "_c");
 		suffixMap.put(EnumDemonWillType.VENGEFUL, "_v");
-		suffixMap.put(EnumDemonWillType.DESTRUCTIVE, "");
-		suffixMap.put(EnumDemonWillType.STEADFAST, "");
+		suffixMap.put(EnumDemonWillType.DESTRUCTIVE, "_d");
+		suffixMap.put(EnumDemonWillType.STEADFAST, "_s");
 
 		for (Entry<EnumDemonWillType, String> entry : suffixMap.entrySet())
 		{

@@ -1,5 +1,7 @@
 package wayoftime.bloodmagic.common.block;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.core.BlockPos;
@@ -45,6 +47,7 @@ public class BlockAlchemicalReactionChamber extends Block implements EntityBlock
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;
 	public static final EnumProperty<EnumDemonWillType> TYPE = EnumProperty.create("type", EnumDemonWillType.class);
+	public static final Map<EnumDemonWillType, ItemParticleOption> PARTICLE_MAP = new HashMap<>();
 
 	public BlockAlchemicalReactionChamber()
 	{
@@ -192,14 +195,19 @@ public class BlockAlchemicalReactionChamber extends Block implements EntityBlock
 			double d5 = direction$axis == Direction.Axis.X ? (double) direction.getStepX() * 0.52D : d4;
 			double d6 = rand.nextDouble() * 6.0D / 16.0D;
 			double d7 = direction$axis == Direction.Axis.Z ? (double) direction.getStepZ() * 0.52D : d4;
-			ItemParticleOption particleData = new ItemParticleOption(ParticleTypes.ITEM, getCrystalStack());
+			ItemParticleOption particleData = getParticleData(state.getValue(TYPE));
 
 			level.addParticle(particleData, d0 + d5, d1 + d6, d2 + d7, (double) direction.getStepX() * 0.03, 0.1, (double) direction.getStepZ() * 0.03D);
 		}
 	}
 
-	private ItemStack getCrystalStack()
+	private ItemParticleOption getParticleData(EnumDemonWillType type)
 	{
-		return BlockDemonCrystal.getItemStackDropped(EnumDemonWillType.DEFAULT, 1);
+		if (!PARTICLE_MAP.containsKey(type))
+		{
+			PARTICLE_MAP.put(type, new ItemParticleOption(ParticleTypes.ITEM, BlockDemonCrystal.getItemStackDropped(type, 1)));
+		}
+
+		return PARTICLE_MAP.get(type);
 	}
 }
