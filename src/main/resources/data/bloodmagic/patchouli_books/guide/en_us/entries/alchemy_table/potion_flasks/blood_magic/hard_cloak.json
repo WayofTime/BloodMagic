@@ -4,11 +4,11 @@
   "category": "bloodmagic:alchemy_table/potion_flasks/blood_magic",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "$(thing)Hard Cloak$() provides 3 points of Armour Toughness per level when used."
     },
     {
-      "type": "3x_crafting_flask",
+      "type": "bloodmagic:3x_crafting_flask",
       "a.heading": "Hard Cloak (3:00)",
       "a.recipe": "bloodmagic:flask/hard_cloak",
       "b.heading": "Hard Cloak (8:00)",

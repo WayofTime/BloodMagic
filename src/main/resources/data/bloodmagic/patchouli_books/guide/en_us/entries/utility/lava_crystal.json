@@ -4,7 +4,7 @@
   "category": "bloodmagic:utility",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "The $(item)Lava Crystal$() is a source of great heat. Between the $(fire)lava$() used in its creation and the power of your $(l:bloodmagic:altar/soul_network)Soul Network$(), you feel confident that it will never cool.$(br2) Pressing [$(k:use)] while looking at any block in the world will ignite it, at a cost of 100 LP."
     },
     {

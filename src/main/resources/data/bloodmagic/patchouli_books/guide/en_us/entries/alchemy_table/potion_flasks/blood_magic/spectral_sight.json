@@ -4,11 +4,11 @@
   "category": "bloodmagic:alchemy_table/potion_flasks/blood_magic",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "$(thing)Spectral Sight$() illuminates nearby creatures as though they had the Glowing buff. The base range is 24 blocks, and higher levels increase the range by an additional 32 blocks per level."
     },
     {
-      "type": "3x_crafting_flask",
+      "type": "bloodmagic:3x_crafting_flask",
       "a.heading": "Spectral Sight (3:00)",
       "a.recipe": "bloodmagic:flask/night_to_spectral",
       "b.heading": "Spectral Sight (8:00)",

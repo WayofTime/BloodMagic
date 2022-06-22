@@ -4,11 +4,11 @@
   "category": "bloodmagic:alchemy_table/potion_flasks/blood_magic",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "$(thing)Suspended$() prevents the target from jumping, falling, or being affected by gravity in any way whatsoever. They can still move, however, sliding about as though on a flat, never-ending plane of ice."
     },
     {
-      "type": "2x_crafting_flask",
+      "type": "bloodmagic:2x_crafting_flask",
       "a.heading": "Suspended (3:00)",
       "a.recipe": "bloodmagic:flask/gravity_to_suspended",
       "b.heading": "Suspended (8:00)",

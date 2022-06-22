@@ -4,11 +4,11 @@
   "category": "bloodmagic:alchemy_table/potion_flasks/blood_magic",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "$(thing)Heavy Heart$() drags the target steadily downwards, making flying and swimming significantly more difficult."
     },
     {
-      "type": "3x_crafting_flask",
+      "type": "bloodmagic:3x_crafting_flask",
       "a.heading": "Heavy Heart (3:00)",
       "a.recipe": "bloodmagic:flask/gravity_to_heart",
       "b.heading": "Heavy Heart (8:00)",

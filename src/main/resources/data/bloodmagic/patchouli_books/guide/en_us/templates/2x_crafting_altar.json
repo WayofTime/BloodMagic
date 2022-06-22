@@ -1,13 +1,13 @@
 {
   "include": [
     {
-      "template": "crafting_altar",
+      "template": "bloodmagic:crafting_altar",
       "as": "a",
       "x": 0,
       "y": 0
     },
     {
-      "template": "crafting_altar",
+      "template": "bloodmagic:crafting_altar",
       "as": "b",
       "x": 0,
       "y": 75

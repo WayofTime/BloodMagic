@@ -4,7 +4,7 @@
   "category": "bloodmagic:altar/blood_rune",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "The $(item)Rune of Augmented Capacity$() increases the capacity of the $(l:bloodmagic:altar/blood_altar)Blood Altar$(/l) by a multiplicative +7.5% per rune. The Augmented Capacity runes apply $(o)after$() the regular $(l:bloodmagic:altar/blood_rune/capacity_rune)Capacity runes$()."
     },
     {

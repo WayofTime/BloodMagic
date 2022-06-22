@@ -2,13 +2,13 @@
   "processor": "wayoftime.bloodmagic.compat.patchouli.processors.TartaricForgeProcessor",
   "components": [
     {
-      "type": "header",
+      "type": "patchouli:header",
       "text": "#heading",
       "x": -1,
       "y": -6
     },
     {
-      "type": "image",
+      "type": "patchouli:image",
       "image": "bloodmagic:textures/gui/patchouli_book/crafting.png",
       "x": 11,
       "y": 4,
@@ -20,50 +20,50 @@
       "height": 43
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#input1",
       "x": 15,
       "y": 8
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#input2",
       "x": 34,
       "y": 8
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#input3",
       "x": 15,
       "y": 27
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#input4",
       "x": 34,
       "y": 27
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#will",
       "x": 59,
       "y": 27
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#output",
       "link_recipe": "true",
       "x": 84,
       "y": 8
     },
 	{
-      "type": "item",
+      "type": "patchouli:item",
       "item": "bloodmagic:soulforge",
       "x": 84,
       "y": 27
     },
     {
-      "type": "tooltip",
+      "type": "patchouli:tooltip",
       "tooltip": ["Minimum: #willrequired# Will", "Drained: #willdrain# Will"],
       "x": 59,
       "y": 8,
@@ -71,13 +71,13 @@
       "height": 16
     },
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "Will",
       "x": 61,
       "y": 6
     },
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "#text",
       "y": 51
     }

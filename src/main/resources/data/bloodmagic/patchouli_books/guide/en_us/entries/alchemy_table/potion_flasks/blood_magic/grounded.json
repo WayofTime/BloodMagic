@@ -4,11 +4,11 @@
   "category": "bloodmagic:alchemy_table/potion_flasks/blood_magic",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "$(thing)Grounded$() prevents the target from jumping. Swimming is unaffected, however."
     },
     {
-      "type": "2x_crafting_flask",
+      "type": "bloodmagic:2x_crafting_flask",
       "a.heading": "Grounded (3:00)",
       "a.recipe": "bloodmagic:flask/jump_to_grounded",
       "b.heading": "Grounded (8:00)",

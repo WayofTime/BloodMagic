@@ -4,11 +4,11 @@
   "category": "bloodmagic:alchemy_array/living_equipment/armor_downgrades",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "Makes you wildly inaccurate when shooting bows and crossbows."
     },
     {
-      "type": "living_armour_downgrade",
+      "type": "bloodmagic:living_armour_downgrade",
       "a.recipe": "bloodmagic:downgrade/storm_trooper",
       "b.upgrade": "bloodmagic:storm_trooper"
     }

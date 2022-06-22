@@ -14,7 +14,7 @@
       "ritual": "meteor"
     },
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "TODO: automatic(?) entries for meteors, with support for custom meteors added by other mods / modpack makers / etc."
     }
   ]

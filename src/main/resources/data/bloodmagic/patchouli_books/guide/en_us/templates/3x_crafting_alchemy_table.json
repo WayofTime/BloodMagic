@@ -1,19 +1,19 @@
 {
   "include": [
     {
-      "template": "crafting_alchemy_table",
+      "template": "bloodmagic:crafting_alchemy_table",
       "as": "a",
       "x": 0,
       "y": 0
     },
     {
-      "template": "crafting_alchemy_table",
+      "template": "bloodmagic:crafting_alchemy_table",
       "as": "b",
       "x": 0,
       "y": 53
     },
     {
-      "template": "crafting_alchemy_table",
+      "template": "bloodmagic:crafting_alchemy_table",
       "as": "c",
       "x": 0,
       "y": 106

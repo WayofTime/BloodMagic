@@ -7,7 +7,7 @@
   ],
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "[WIP Notes]$(br)[Not Yet Implemented]$(br2)Frostwalker Enchantment as a Sigil."
     }
   ]

@@ -4,7 +4,7 @@
   "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "Effect: Protects you from non-projectile harm. $(br2)Trained by: Taking damage from anything but projectiles. $(br2)Maximum level: 10"
     },
     {

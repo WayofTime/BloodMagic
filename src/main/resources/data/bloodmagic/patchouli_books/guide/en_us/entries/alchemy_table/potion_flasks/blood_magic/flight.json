@@ -4,11 +4,11 @@
   "category": "bloodmagic:alchemy_table/potion_flasks/blood_magic",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "$(thing)Flight$() gives the target a temporary dose of creative-style Flight, similar to if they were within the range of the $(l:bloodmagic:rituals/ritual_list/ritual_condor)Reverence of the Condor$() ritual. Higher levels increase flight speed."
     },
     {
-      "type": "3x_crafting_flask",
+      "type": "bloodmagic:3x_crafting_flask",
       "a.heading": "Flight (3:00)",
       "a.recipe": "bloodmagic:flask/suspended_to_flight",
       "b.heading": "Flight (8:00)",

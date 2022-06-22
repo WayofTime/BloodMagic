@@ -2,13 +2,13 @@
   "processor": "wayoftime.bloodmagic.compat.patchouli.processors.LivingArmourDowngradeRecipeProcessor",
   "components": [
     {
-      "type": "header",
+      "type": "patchouli:header",
       "text": "#heading",
       "x": -1,
       "y": -6
     },
     {
-      "type": "image",
+      "type": "patchouli:image",
       "image": "patchouli:textures/gui/crafting.png",
       "x": 25,
       "y": 4,
@@ -20,19 +20,19 @@
       "height": 26
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "bloodmagic:upgradescraps",
       "x": 90,
       "y": 9
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#input",
       "x": 50,
       "y": 9
     },
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "#text",
       "y": 30
     }

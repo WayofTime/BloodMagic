@@ -4,11 +4,11 @@
   "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "$(thing)Regeneration$() heals the target over time. Higher levels increase the rate of healing."
     },
     {
-      "type": "3x_crafting_flask",
+      "type": "bloodmagic:3x_crafting_flask",
       "a.heading": "Regeneration (3:00)",
       "a.recipe": "bloodmagic:flask/regen",
       "b.heading": "Regeneration (8:00)",

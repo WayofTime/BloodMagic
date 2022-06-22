@@ -4,11 +4,11 @@
   "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "$(thing)Weakness$() decreases the target's attack damage by 4 points per level."
     },
     {
-      "type": "3x_crafting_flask",
+      "type": "bloodmagic:3x_crafting_flask",
       "a.heading": "Weakness (3:00)",
       "a.recipe": "bloodmagic:flask/weakness",
       "b.heading": "Weakness (8:00)",

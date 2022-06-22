@@ -4,11 +4,11 @@
   "category": "bloodmagic:alchemy_table/potion_flasks/blood_magic",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "$(thing)Gravity$() cause the target to fall faster and take more damage on landing. It does not reduce jump height, however."
     },
     {
-      "type": "3x_crafting_flask",
+      "type": "bloodmagic:3x_crafting_flask",
       "a.heading": "Gravity (3:00)",
       "a.recipe": "bloodmagic:flask/gravity",
       "b.heading": "Gravity (8:00)",

@@ -4,11 +4,11 @@
   "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "$(thing)Instant Damage$() inflicts 6 points of $(thing)Magic Damage$() to the target per level. If the target is $(thing)Undead$(), they will be healed for 6 points per level instead."
     },
     {
-      "type": "3x_crafting_flask",
+      "type": "bloodmagic:3x_crafting_flask",
       "a.heading": "Damage from Health",
       "a.recipe": "bloodmagic:flask/health_to_harm",
       "b.heading": "Damage from Poison",

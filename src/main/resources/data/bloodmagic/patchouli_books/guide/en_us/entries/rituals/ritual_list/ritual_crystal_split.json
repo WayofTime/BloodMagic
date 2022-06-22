@@ -18,11 +18,11 @@
       ]
     },
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "This ritual takes a well grown (at least 5 spires) $(l:bloodmagic:demon_will/will_manipulation/crystallized_will)Raw Crystal Cluster$(/l) located 2 blocks above the $(item)Master Ritual Stone$(), and splits it into new single spires of each $(l:bloodmagic:demon_will/will_manipulation/aspected_will)Aspected Will$(/l) Crystal Clusters located directly above the 4 elemental Ritual Stones. This spacing is designed to accommodate a $(item)Demon Crystallizer$() on top of the $(item)Master Ritual Stone$().$(br2)For information on growing Demon Will Crystals, please see $(l:bloodmagic:demon_will/will_manipulation/crystallized_will)Crystallized Will$(/l)."
     },
     {
-      "type": "image",
+      "type": "patchouli:image",
       "title": "Ritual Setup",
       "images": ["bloodmagic:images/entries/demon_will/will_splitting.png"],
       "border": true,

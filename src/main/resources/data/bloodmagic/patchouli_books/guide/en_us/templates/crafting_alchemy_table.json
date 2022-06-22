@@ -2,19 +2,19 @@
   "processor": "wayoftime.bloodmagic.compat.patchouli.processors.AlchemyTableProcessor",
   "components": [
     {
-      "type": "header",
+      "type": "patchouli:header",
       "text": "#heading",
       "x": -1,
       "y": -6
     },
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "#text",
       "x": 0,
       "y": 51
     },
     {
-      "type": "image",
+      "type": "patchouli:image",
       "image": "bloodmagic:textures/gui/patchouli_book/crafting.png",
       "x": 2,
       "y": 4,
@@ -26,7 +26,7 @@
       "height": 43
     },
     {
-     "type": "image",
+     "type": "patchouli:image",
      "image": "bloodmagic:textures/gui/patchouli_book/crafting.png",
       "x": 65,
       "y": 4,
@@ -38,55 +38,55 @@
       "height": 43
     },
 	{
-      "type": "item",
+      "type": "patchouli:item",
       "item": "bloodmagic:alchemytable",
       "x": 94,
       "y": 27
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#input1",
       "x": 6,
       "y": 8
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#input2",
       "x": 25,
       "y": 8
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#input3",
       "x": 44,
       "y": 8
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#input4",
       "x": 6,
       "y": 27
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#input5",
       "x": 25,
       "y": 27
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#input6",
       "x": 44,
       "y": 27
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#orb",
       "x": 69,
       "y": 27
     },
     {
-      "type": "tooltip",
+      "type": "patchouli:tooltip",
       "tooltip": ["Cost: #syphon# LP", "Duration: #time# Ticks", "Tier: #tier#+"],
       "x": 69,
       "y": 8,
@@ -94,13 +94,13 @@
       "height": 16
     },
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "LP",
       "x": 74,
       "y": 6
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#output",
       "link_recipe": "true",
       "x": 94,

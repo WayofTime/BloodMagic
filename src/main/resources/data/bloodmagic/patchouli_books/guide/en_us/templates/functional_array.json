@@ -2,13 +2,13 @@
   "processor": "wayoftime.bloodmagic.compat.patchouli.processors.AlchemyArrayProcessor",
   "components": [
     {
-      "type": "header",
+      "type": "patchouli:header",
       "text": "#heading",
       "x": -1,
       "y": -6
     },
     {
-      "type": "image",
+      "type": "patchouli:image",
       "image": "bloodmagic:textures/gui/patchouli_book/crafting.png",
       "x": 3,
       "y": 4,
@@ -20,7 +20,7 @@
       "height": 50
     },
     {
-      "type": "image",
+      "type": "patchouli:image",
       "image": "bloodmagic:textures/gui/patchouli_book/crafting.png",
       "x": 71,
       "y": 9,
@@ -32,30 +32,30 @@
       "height": 40
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#baseinput",
       "x": 20,
       "y": 22
     },
 	{
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#addedinput",
       "x": 55,
       "y": 10
     },
 	{
-      "type": "item",
+      "type": "patchouli:item",
       "item": "bloodmagic:arcaneashes",
       "x": 55,
       "y": 35
     },
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "#text",
       "y": 58
     },
     {
-      "type": "image",
+      "type": "patchouli:image",
       "image": "bloodmagic:textures/models/alchemyarrays/#image#",
       "x": 75,
       "y": 13,

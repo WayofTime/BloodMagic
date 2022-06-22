@@ -15,7 +15,7 @@
       "ritual": "downgrade"
     },
     {
-      "type": "text",
+      "type": "patchouli:text",
       "anchor": "downgrades",
       "text": "This ritual consumes excess $(thing)Upgrade Points$() (in the form of $(item)Tomes$(), $(item)Scraps$(), and $(item)Synthetic Upgrade Points$()) in order to apply Downgrades to your $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$(). These downgrades will harshly limit your abilities, but will provide you with a wealth of additional $(thing)Upgrade Points$() to play around with, allowing for much more specialisation than was previously available to you."
     },
@@ -25,17 +25,17 @@
       "text": "If you do not have enough points avaliable to you, you can craft Synthetic Upgrade Points. Each one of these is worth a single Upgrade Point. "
     },
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "To use the ritual, simply place your tomes (or other sources of Upgrade Points) and the required Item(s) for the particular downgrade you have in mind into the attached chest (see the previous page), while wearing your Living Armour. The ritual will consume the points and apply the downgrade to your armour. The order of consumption is $(item)Living Armour Upgrade Scraps$(), then $(item)Living Armour Upgrade Tomes$(), and finally $(item)Synthetic Upgrade Points$()."
     },
     {
-    "type": "spotlight",
+    "type": "patchouli:spotlight",
     "item": "bloodmagic:upgradescraps",
     "title": "LA Upgrade Scraps",
     "text": "Excess points will be returned in the form of $(item)Living Armour Upgrade Scraps$()."
     },
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "The downgrades applied to your armour depends on what Item(s) you place in the chest. Each item that matches a particular downgrade will increase the desired downgrade's level by one. In this manner, multiple downgrades can be applied at once with a single ritual activation."
     }
   ]

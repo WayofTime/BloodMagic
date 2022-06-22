@@ -4,11 +4,11 @@
   "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "$(thing)Poison$() deals damage over time to the target, but cannot kill them on its own. Higher levels deal faster damage."
     },
     {
-      "type": "3x_crafting_flask",
+      "type": "bloodmagic:3x_crafting_flask",
       "a.heading": "Poison (3:00)",
       "a.recipe": "bloodmagic:flask/poison",
       "b.heading": "Poison (8:00)",

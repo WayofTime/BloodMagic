@@ -4,18 +4,18 @@
   "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "$(thing)Slowness$() decreases the target's movement speed by 15% per level. $(br2)See overleaf for Catalyst Combinations"
     },
     {
-      "type": "2x_crafting_flask",
+      "type": "bloodmagic:2x_crafting_flask",
       "a.heading": "Slowness from Speed",
       "a.recipe": "bloodmagic:flask/speed_to_slow",
       "b.heading": "Slowness from Jump Boost",
       "b.recipe": "bloodmagic:flask/jump_to_slow"
     },
     {
-      "type": "2x_crafting_flask",
+      "type": "bloodmagic:2x_crafting_flask",
       "a.heading": "Slowness (8:00)",
       "a.recipe": "bloodmagic:flask/length_slowness",
       "b.heading": "Slowness II (1:30)",

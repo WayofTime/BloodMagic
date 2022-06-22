@@ -4,7 +4,7 @@
   "category": "bloodmagic:utility",
   "pages":[
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "$(item)Bloodstone Bricks$() are a decorative block, and used as the $(thing)capstones$() for the Tier-4 $(l:bloodmagic:altar/blood_altar)Blood Altar$()."
     },
     {

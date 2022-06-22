@@ -4,11 +4,11 @@
   "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "$(thing)Night Vision$() increases the target's ability to see in darkness and underwater."
     },
     {
-      "type": "2x_crafting_flask",
+      "type": "bloodmagic:2x_crafting_flask",
       "a.heading": "Night Vision (3:00)",
       "a.recipe": "bloodmagic:flask/night_vision",
       "b.heading": "Night Vision (8:00)",

@@ -1,13 +1,13 @@
 {
   "include": [
     {
-      "template": "crafting_alchemy_table",
+      "template": "bloodmagic:crafting_alchemy_table",
       "as": "a",
       "x": 0,
       "y": 0
     },
     {
-      "template": "living_armour_upgrade_table",
+      "template": "bloodmagic:living_armour_upgrade_table",
       "as": "b",
       "x": 0,
       "y": 53

@@ -4,11 +4,11 @@
   "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "$(thing)Levitation$() causes the target to float up into the air."
     },
     {
-      "type": "3x_crafting_flask",
+      "type": "bloodmagic:3x_crafting_flask",
       "a.heading": "Levitation (3:00)",
       "a.recipe": "bloodmagic:flask/fall_to_levitation",
       "b.heading": "Levitation (8:00)",

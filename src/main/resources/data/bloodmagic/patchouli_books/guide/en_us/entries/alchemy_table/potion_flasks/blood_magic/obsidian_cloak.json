@@ -4,11 +4,11 @@
   "category": "bloodmagic:alchemy_table/potion_flasks/blood_magic",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "$(thing)Obsidian Cloak$() reduces all damage taken from non-magical sources by 20% per level."
     },
     {
-      "type": "3x_crafting_flask",
+      "type": "bloodmagic:3x_crafting_flask",
       "a.heading": "Obsidian Cloak (3:00)",
       "a.recipe": "bloodmagic:flask/hard_to_obsidian",
       "b.heading": "Obsidian Cloak (8:00)",

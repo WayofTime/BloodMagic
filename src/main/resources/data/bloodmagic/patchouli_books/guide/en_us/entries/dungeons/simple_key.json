@@ -4,11 +4,11 @@
   "category": "bloodmagic:dungeons",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "Simple Keys are the primary way of navigating $(thing)Dungeons$(). They can be found inside dungeon chests within the Demon Realm, or they can be crafted."
     },
     {
-      "type": "crafting_soulforge",
+      "type": "bloodmagic:crafting_soulforge",
       "heading": "Simple Key",
       "recipe": "bloodmagic:soulforge/simple_key",
       "text": "$(italic)If it's so simple, why can't we just pick the lock?$()"

@@ -19,7 +19,7 @@ import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
  * Example Page:
  * 
  * {
- *   "type": "crafting_array",    // Corresponding Template.
+ *   "type": "bloodmagic:crafting_array",    // Corresponding Template.
  *   "heading": "Title",    // (Optional) Title.
  *   "recipe": "recipe_id",    // Recipe ID.
  *   "text": "Extra text."    // (Optional) Extra text to go under the entry.

@@ -4,7 +4,7 @@
   "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "Effect: Grants Knockback Resistance and bonus Health. Caps out at 100% Resistance and 10 half-hearts of health. $(br2)Trained by: Eating food. $(br2)Maximum level: 5"
     },
     {

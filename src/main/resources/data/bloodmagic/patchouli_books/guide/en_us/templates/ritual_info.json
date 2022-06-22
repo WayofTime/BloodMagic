@@ -2,7 +2,7 @@
   "processor": "wayoftime.bloodmagic.compat.patchouli.processors.RitualInfoProcessor",
   "components": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "#auto_text",
       "y": 0
     }

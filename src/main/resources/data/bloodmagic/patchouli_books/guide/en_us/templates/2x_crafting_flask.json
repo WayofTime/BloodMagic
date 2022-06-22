@@ -1,13 +1,13 @@
 {
   "include": [
     {
-      "template": "crafting_flask",
+      "template": "bloodmagic:crafting_flask",
       "as": "a",
       "x": 0,
       "y": 0
     },
     {
-      "template": "crafting_flask",
+      "template": "bloodmagic:crafting_flask",
       "as": "b",
       "x": 0,
       "y": 53

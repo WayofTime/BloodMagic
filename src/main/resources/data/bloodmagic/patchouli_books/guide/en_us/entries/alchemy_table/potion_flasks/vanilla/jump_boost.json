@@ -4,11 +4,11 @@
   "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "$(thing)Jump Boost$() increases the target's jump height by 50% per level. It also reduces fall damage by 1 point per level."
     },
     {
-      "type": "3x_crafting_flask",
+      "type": "bloodmagic:3x_crafting_flask",
       "a.heading": "Jump Boost (3:00)",
       "a.recipe": "bloodmagic:flask/jump_boost",
       "b.heading": "Jump Boost (8:00)",

@@ -2,7 +2,7 @@
   "processor": "wayoftime.bloodmagic.compat.patchouli.processors.LivingArmourUpgradeInfoTable",
   "components": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "#table",
       "y": 0
     }

@@ -19,7 +19,7 @@ import wayoftime.bloodmagic.recipe.RecipeLivingDowngrade;
  * Example Page:
  * 
  * {
- *   "type": "crafting_downgrade",    // Corresponding Template.
+ *   "type": "bloodmagic:crafting_downgrade",    // Corresponding Template.
  *   "heading": "Title",    // (Optional) Title.
  *   "recipe": "recipe_id",    // Recipe ID.
  *   "text":  "Extra text."    //(Optional) Extra text to go under the entry.

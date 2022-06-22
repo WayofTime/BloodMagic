@@ -4,11 +4,11 @@
   "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "$(thing)Slow Falling$() causes the target to fall slowly and take no fall damage, akin to a $(thing)chicken$()."
     },
     {
-      "type": "2x_crafting_flask",
+      "type": "bloodmagic:2x_crafting_flask",
       "a.heading": "Slow Falling (3:00)",
       "a.recipe": "bloodmagic:flask/slow_fall",
       "b.heading": "Slow Falling (8:00)",

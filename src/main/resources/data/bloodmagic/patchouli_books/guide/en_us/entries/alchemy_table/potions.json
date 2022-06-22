@@ -4,21 +4,21 @@
   "category": "bloodmagic:alchemy_table",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "The basics of $(thing)Potion Crafting$() are known to all and sundry throughout the land. Even common Clerics and Witches have a firm grasp of the basics of brewing - take a handful of semi-rare ingredients, mix them together in the correct proportions, and consume the result (while holding your nose, if needed)."
     },
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "The addition of $(blood)Life Essence$() and some frankly ingenious Sanguimancy has allowed you to turbocharge the practice, however. $(br2)By imbuing ordinary $(item)Glass Bottles$() with your powers, you are able to hold far more than a single swig of liquid, and with the use of various $(item)Catalysts$() you have figured out how to combine multiple effects in one flask without them muddying together and cancelling out."
     },
     {
-      "type": "crafting_altar",
+      "type": "bloodmagic:crafting_altar",
       "heading": "Alchemy Flask",
       "recipe": "bloodmagic:altar/alchemy_flask",
       "text": "A sturdy Flask that is far more capacious than any measly bottle!"
     },
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "Of course, a bottle, no matter how advanced, is all but useless without something to fill it. $(br2)Alongside all the usual well known $(thing)Effects$() such as Water Breathing, Regeneration, or Night Vision, we have also perfected a variety of other, more specialised recipes, such as Flight, Obsidian Cloak, or even Passive. These potions and many more are documented further on in the book."
     },
     {
@@ -27,7 +27,7 @@
       "text": "Once you have used up any kind of alchemy flask, simply wash out and refill it with water, to get a fresh new flask ready for use. $(br2)Flasks also have their equivalent to $(thing)Splash$() and $(thing)Lingering Potions$()."
     },
     {
-      "type": "2x_crafting_flask",
+      "type": "bloodmagic:2x_crafting_flask",
       "a.heading": "Splash Alchemy Flask",
       "a.recipe": "bloodmagic:flask/flask_splash",
       "b.heading": "Lingering Alchemy Flask",
@@ -35,45 +35,45 @@
       "text": "Flasks also have their equivalent to $(thing)Splash$() and $(thing)Lingering Potions$(), as seen overleaf. "
     },
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "You may recall me mentioning the ability to make multiple effects in a single Flask. Luckily, this process couldn't be easier. Simply brew up a potion, and use the resulting $(item)Flask$() in place of your empty Flask in the second brewing. For example, if you made a Flask of $(thing)Bounce$(), then took that flask and used it as an ingredient in a flask of $(thing)Night Vision$(), you'd end up with an 8-dose Flask that gives you Bounce and Night Vision with every swig!"
     },
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "Next up, we have $(item)Catalysts$(). There are a few kinds of catalyst, with a few different effects, so let's start off with the simplest three - $(item)Simple Catalyst$(), $(item)Small Power Catalyst$(), and $(item)Small Lengthening Catalyst$(). Of these, the first is the most straightforward - it provides a base to almost every Alchemical Potion, much as $(item)Nether Wart$() does for standard Potions."
     },
     {
-      "type": "crafting_alchemy_table",
+      "type": "bloodmagic:crafting_alchemy_table",
       "heading": "Simple Catalyst",
       "recipe": "bloodmagic:alchemytable/simple_catalyst",
       "text": "A good base for nearly any effect. Stock up, you'll want a lot of these."
     },
     {
-      "type": "crafting_alchemy_table",
+      "type": "bloodmagic:crafting_alchemy_table",
       "heading": "Small Power Catalyst",
       "recipe": "bloodmagic:alchemytable/mundane_power",
       "text": "Power Catalysts increase the potency of the topmost effect inside the Flask, while decreasing the duration of the effect. It is roughly analogous to $(item)Glowstone$() in more standard potions. If the most recently applied effect cannot accept the catalyst, it will attempt to boost the second topmost, and so on."
     },
     {
-      "type": "crafting_alchemy_table",
+      "type": "bloodmagic:crafting_alchemy_table",
       "heading": "Small Lengthening Catalyst",
       "recipe": "bloodmagic:alchemytable/mundane_lengthening",
       "text": "Lengthening Catalysts increase the duration of the topmost effect inside the Flask. It is roughly analogous to $(item)Redstone$() in more standard potions. If the most recently applied effect cannot accept the catalyst, it will attempt to boost the second topmost, and so on."
     },
     {
-      "type": "crafting_alchemy_table",
+      "type": "bloodmagic:crafting_alchemy_table",
       "heading": "Combinational Catalyst",
       "recipe": "bloodmagic:alchemytable/combinational",
       "text": "Combinational Catalysts are a little more niche - they take two defined effects and synthesise a third, related effect from them. For example, a Flask with $(thing)Suspended$() and $(thing)Levitation$() would, when brewed with this catalyst, produce a Flask of $(thing)Flight$()."
     },
     {
-      "type": "crafting_alchemy_table",
+      "type": "bloodmagic:crafting_alchemy_table",
       "heading": "Weak Filling Agent",
       "recipe": "bloodmagic:alchemytable/weak_filling",
       "text": "Filling Agents can be used to refresh the contents of a Flask, at the cost of losing some of the effects - the Weak Filling Agent can only preserve the topmost effect on the Flask. If you wish to preserve a different effect, consider using the $(item)Simple Cycling Catalyst.$()"
     },
     {
-      "type": "crafting_alchemy_table",
+      "type": "bloodmagic:crafting_alchemy_table",
       "heading": "Simple Cycling Catalyst",
       "recipe": "bloodmagic:alchemytable/cycling_catalyst",
       "text": "The Cycling Catalyst can be used to alter the order of effects inside the Flask, and thus change which effect is altered by another Catalyst or Agent."

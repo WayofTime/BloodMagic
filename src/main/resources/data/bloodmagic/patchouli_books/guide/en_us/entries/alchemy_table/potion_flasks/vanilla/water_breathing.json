@@ -4,11 +4,11 @@
   "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "$(thing)Water Breathing$() allows the target to breathe underwater."
     },
     {
-      "type": "2x_crafting_flask",
+      "type": "bloodmagic:2x_crafting_flask",
       "a.heading": "Water Breathing (3:00)",
       "a.recipe": "bloodmagic:flask/water_breathing",
       "b.heading": "Water Breathing (8:00)",

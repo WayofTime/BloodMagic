@@ -4,11 +4,11 @@
   "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "$(thing)Fire Resistance$() makes the target immune to most fire-based damage."
     },
     {
-      "type": "2x_crafting_flask",
+      "type": "bloodmagic:2x_crafting_flask",
       "a.heading": "Fire Resistance (3:00)",
       "a.recipe": "bloodmagic:flask/fire_resist",
       "b.heading": "Fire Resistance (8:00)",
