@@ -1,7 +1,8 @@
 {
+  "key": null,
   "dungeonWeight": 1,
   "structureMap": {
-    "bloodmagic:t3_entrance": {
+    "bloodmagic:mini_dungeon/farm": {
       "x": 0,
       "y": 0,
       "z": 0
@@ -12,29 +13,8 @@
       "north": [
         {
           "x": 8,
-          "y": 1,
+          "y": 0,
           "z": 0
-        }
-      ],
-      "east": [
-        {
-          "x": 16,
-          "y": 1,
-          "z": 8
-        }
-      ],
-      "west": [
-        {
-          "x": 0,
-          "y": 1,
-          "z": 8
-        }
-      ],
-      "south": [
-        {
-          "x": 8,
-          "y": 1,
-          "z": 16
         }
       ]
     }
@@ -48,7 +28,7 @@
       },
       "maximumOffset": {
         "x": 17,
-        "y": 8,
+        "y": 9,
         "z": 17
       },
       "currentPosition": null,
@@ -59,41 +39,26 @@
   ],
   "oreDensity": 0.0,
   "spawnLocation": {
-    "x": 8,
-    "y": 2,
-    "z": 4
+    "x": 0,
+    "y": 0,
+    "z": 0
   },
   "controllerOffset": {
-    "x": 8,
-    "y": 6,
-    "z": 8
+    "x": 0,
+    "y": 0,
+    "z": 0
   },
   "portalOffset": {
-    "x": 8,
-    "y": 4,
-    "z": 8
+    "x": 0,
+    "y": 0,
+    "z": 0
   },
   "indexToDoorMap": {
     "1": [
       {
         "x": 8,
-        "y": 1,
+        "y": 0,
         "z": 0
-      },
-      {
-        "x": 8,
-        "y": 1,
-        "z": 16
-      },
-      {
-        "x": 16,
-        "y": 1,
-        "z": 8
-      },
-      {
-        "x": 0,
-        "y": 1,
-        "z": 8
       }
     ]
   },

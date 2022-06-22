@@ -1,7 +1,8 @@
 {
+  "key": null,
   "dungeonWeight": 1,
   "structureMap": {
-    "bloodmagic:mini_dungeon/portal_nether": {
+    "bloodmagic:mini_dungeon/library": {
       "x": 0,
       "y": 0,
       "z": 0
@@ -12,7 +13,7 @@
       "north": [
         {
           "x": 8,
-          "y": 5,
+          "y": 0,
           "z": 0
         }
       ]
@@ -27,7 +28,7 @@
       },
       "maximumOffset": {
         "x": 17,
-        "y": 15,
+        "y": 7,
         "z": 17
       },
       "currentPosition": null,
@@ -38,20 +39,25 @@
   ],
   "oreDensity": 0.0,
   "spawnLocation": {
-    "x": 8,
-    "y": 1,
-    "z": 6
+    "x": 0,
+    "y": 0,
+    "z": 0
   },
   "controllerOffset": {
-    "x": 8,
-    "y": 4,
-    "z": 8
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "portalOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
   },
   "indexToDoorMap": {
     "1": [
       {
         "x": 8,
-        "y": 5,
+        "y": 0,
         "z": 0
       }
     ]

@@ -1,6 +1,6 @@
 {
-  "dungeonWeight": 4,
-  "oreDensity": 0.2,
+  "key": null,
+  "dungeonWeight": 1,
   "structureMap": {
     "bloodmagic:ore_hold_1": {
       "x": 0,
@@ -9,48 +9,48 @@
     }
   },
   "doorMap": {
-  "default": {
-    "north": [
-      {
-        "x": 5,
-        "y": 0,
-        "z": 0
-      },
-      {
-        "x": 2,
-        "y": 5,
-        "z": 0
-      },
-      {
-        "x": 12,
-        "y": 5,
-        "z": 0
-      }
-    ],
-    "south": [
-      {
-        "x": 5,
-        "y": 0,
-        "z": 14
-      },
-      {
-        "x": 2,
-        "y": 5,
-        "z": 14
-      },
-      {
-        "x": 12,
-        "y": 5,
-        "z": 14
-      }
-    ],
-    "west": [
-      {
-        "x": 0,
-        "y": 5,
-        "z": 7
-      }
-    ]
+    "default": {
+      "north": [
+        {
+          "x": 5,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 2,
+          "y": 5,
+          "z": 0
+        },
+        {
+          "x": 12,
+          "y": 5,
+          "z": 0
+        }
+      ],
+      "south": [
+        {
+          "x": 5,
+          "y": 0,
+          "z": 14
+        },
+        {
+          "x": 2,
+          "y": 5,
+          "z": 14
+        },
+        {
+          "x": 12,
+          "y": 5,
+          "z": 14
+        }
+      ],
+      "west": [
+        {
+          "x": 0,
+          "y": 5,
+          "z": 7
+        }
+      ]
     }
   },
   "descriptorList": [
@@ -65,10 +65,28 @@
         "y": 12,
         "z": 15
       },
+      "currentPosition": null,
       "blockPosCache": [],
+      "cachedPosition": null,
       "cache": true
     }
   ],
+  "oreDensity": 0.0,
+  "spawnLocation": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "controllerOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "portalOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
   "indexToDoorMap": {
     "1": [
       {

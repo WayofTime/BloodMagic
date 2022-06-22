@@ -63,6 +63,7 @@ import wayoftime.bloodmagic.common.tile.BloodMagicTileEntities;
 import wayoftime.bloodmagic.compat.patchouli.RegisterPatchouliMultiblocks;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
+import wayoftime.bloodmagic.core.data.DungeonRoomProvider;
 import wayoftime.bloodmagic.core.living.LivingUpgrade;
 import wayoftime.bloodmagic.core.recipe.IngredientBloodOrb;
 import wayoftime.bloodmagic.core.registry.AlchemyArrayRegistry;
@@ -294,6 +295,7 @@ public class BloodMagic
 			gen.addProvider(new BloodMagicRecipeProvider(gen));
 			gen.addProvider(new GeneratorBaseRecipes(gen));
 			gen.addProvider(new GeneratorLootTable(gen));
+			gen.addProvider(new DungeonRoomProvider(gen));
 
 			GeneratorBlockTags bmBlockTags = new GeneratorBlockTags(gen, event.getExistingFileHelper());
 			gen.addProvider(bmBlockTags);

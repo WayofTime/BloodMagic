@@ -7,12 +7,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraft.server.level.ServerLevel;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 
 public class DungeonRoom
@@ -47,6 +47,81 @@ public class DungeonRoom
 		this.structureMap = structureMap;
 		this.doorMap = doorMap;
 		this.descriptorList = descriptorList;
+	}
+
+	public DungeonRoom()
+	{
+		this(new HashMap<>(), new HashMap<>(), new ArrayList<>());
+	}
+
+	public DungeonRoom addStructure(String location, BlockPos pos)
+	{
+		structureMap.put(location, pos);
+		return this;
+	}
+
+	public DungeonRoom addAreaDescriptor(AreaDescriptor.Rectangle descriptor)
+	{
+		descriptorList.add(descriptor);
+		return this;
+	}
+
+	public DungeonRoom addDoor(BlockPos pos, Direction dir, String doorType, int index)
+	{
+		if (!doorMap.containsKey(doorType))
+		{
+			doorMap.put(doorType, new HashMap<>());
+		}
+
+		Map<Direction, List<BlockPos>> dirMap = doorMap.get(doorType);
+		if (!dirMap.containsKey(dir))
+		{
+			dirMap.put(dir, new ArrayList<>());
+		}
+
+		dirMap.get(dir).add(pos);
+
+		if (!indexToDoorMap.containsKey(index))
+		{
+			indexToDoorMap.put(index, new ArrayList<>());
+		}
+
+		indexToDoorMap.get(index).add(pos);
+
+		return this;
+	}
+
+	public DungeonRoom addDoors(Direction dir, String doorType, int index, BlockPos... positions)
+	{
+		if (positions.length <= 0)
+		{
+			return this;
+		}
+
+		for (int i = 0; i < positions.length; i++)
+		{
+			addDoor(positions[i], dir, doorType, index);
+		}
+
+		return this;
+	}
+
+	public DungeonRoom addRoomPool(int index, String roomPool)
+	{
+		if (!indexToRoomTypeMap.containsKey(index))
+		{
+			indexToRoomTypeMap.put(index, new ArrayList<>());
+		}
+
+		indexToRoomTypeMap.get(index).add(roomPool);
+
+		return this;
+	}
+
+	public DungeonRoom setOreDensity(float oreDensity)
+	{
+		this.oreDensity = oreDensity;
+		return this;
 	}
 
 	// REEEEEEEEEEEEEEEEE

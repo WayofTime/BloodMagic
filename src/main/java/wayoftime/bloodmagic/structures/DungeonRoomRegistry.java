@@ -75,7 +75,7 @@ public class DungeonRoomRegistry
 			if (DungeonSynthesizer.displayDetailedInformation)
 				System.out.println("Room name: " + entry.getLeft());
 
-			if (wantedWeight <= 0)
+			if (wantedWeight < 0)
 			{
 				ResourceLocation dungeonName = entry.getKey();
 				if (DungeonSynthesizer.displayDetailedInformation)

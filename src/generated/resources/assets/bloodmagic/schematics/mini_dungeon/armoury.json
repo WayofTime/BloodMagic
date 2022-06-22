@@ -1,4 +1,5 @@
 {
+  "key": null,
   "dungeonWeight": 1,
   "structureMap": {
     "bloodmagic:mini_dungeon/armoury": {
@@ -38,14 +39,19 @@
   ],
   "oreDensity": 0.0,
   "spawnLocation": {
-    "x": 8,
-    "y": 1,
-    "z": 6
+    "x": 0,
+    "y": 0,
+    "z": 0
   },
   "controllerOffset": {
-    "x": 8,
-    "y": 4,
-    "z": 8
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "portalOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
   },
   "indexToDoorMap": {
     "1": [
