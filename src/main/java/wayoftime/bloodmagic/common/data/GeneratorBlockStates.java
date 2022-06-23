@@ -120,10 +120,13 @@ public class GeneratorBlockStates extends BlockStateProvider
 		buildCrossCrop(BloodMagicBlocks.WEAK_TAU.get(), CropBlock.AGE, 7, modLoc("block/weak_tau_1"), modLoc("block/weak_tau_2"), modLoc("block/weak_tau_3"), modLoc("block/weak_tau_4"), modLoc("block/weak_tau_5"), modLoc("block/weak_tau_6"), modLoc("block/weak_tau_7"), modLoc("block/weak_tau_8"));
 		buildCrossCrop(BloodMagicBlocks.STRONG_TAU.get(), CropBlock.AGE, 7, modLoc("block/weak_tau_1"), modLoc("block/strong_tau_2"), modLoc("block/strong_tau_3"), modLoc("block/strong_tau_4"), modLoc("block/strong_tau_5"), modLoc("block/strong_tau_6"), modLoc("block/strong_tau_7"), modLoc("block/strong_tau_8"));
 
-		buildOrientable(BloodMagicBlocks.SHAPED_CHARGE.get(), "shaped_charge", modLoc("block/sub/shaped_charge"), modLoc("block/dungeon/dungeon_stone"), modLoc("block/dungeon/dungeon_tile"), modLoc("block/blankrune"), modLoc("block/largebloodstonebrick"), modLoc("models/defaultcrystal"));
-		buildOrientable(BloodMagicBlocks.DEFORESTER_CHARGE.get(), "deforester_charge", modLoc("block/sub/shaped_charge"), new ResourceLocation("block/oak_log_top"), new ResourceLocation("block/oak_log_top"), modLoc("block/blankrune"), new ResourceLocation("block/oak_planks"), modLoc("models/defaultcrystal"));
-		buildOrientable(BloodMagicBlocks.VEINMINE_CHARGE.get(), "veinmine_charge", modLoc("block/sub/shaped_charge"), new ResourceLocation("block/sandstone_bottom"), new ResourceLocation("block/sandstone_bottom"), modLoc("block/blankrune"), new ResourceLocation("block/sand"), modLoc("models/defaultcrystal"));
-		buildOrientable(BloodMagicBlocks.FUNGAL_CHARGE.get(), "fungal_charge", modLoc("block/sub/shaped_charge"), new ResourceLocation("block/nether_wart_block"), new ResourceLocation("block/crimson_planks"), modLoc("block/blankrune"), new ResourceLocation("block/crimson_stem"), modLoc("models/defaultcrystal"));
+//		buildOrientable(BloodMagicBlocks.SHAPED_CHARGE.get(), "shaped_charge", modLoc("block/sub/shaped_charge"), modLoc("block/dungeon/dungeon_stone"), modLoc("block/dungeon/dungeon_tile"), new ResourceLocation("block/copper_block"), modLoc("block/largebloodstonebrick"), modLoc("models/defaultcrystal"));
+//		buildShapedCharge(BloodMagicBlocks.SHAPED_CHARGE.get(), "shaped_charge", modLoc("block/sub/shaped_charge"), modLoc("block/dungeon/dungeon_stone"), modLoc("block/dungeon/dungeon_tile"), modLoc("block/blankrune"), modLoc("block/largebloodstonebrick"), modLoc("models/defaultcrystal"));
+		buildShapedCharge(BloodMagicBlocks.DEFORESTER_CHARGE.get(), "deforester_charge", modLoc("block/sub/shaped_charge"), new ResourceLocation("block/oak_log_top"), new ResourceLocation("block/oak_log_top"), modLoc("block/blankrune"), new ResourceLocation("block/oak_planks"), modLoc("models/defaultcrystal"));
+		buildShapedCharge(BloodMagicBlocks.VEINMINE_CHARGE.get(), "veinmine_charge", modLoc("block/sub/shaped_charge"), new ResourceLocation("block/sandstone_bottom"), new ResourceLocation("block/sandstone_bottom"), modLoc("block/blankrune"), new ResourceLocation("block/sand"), modLoc("models/defaultcrystal"));
+		buildShapedCharge(BloodMagicBlocks.FUNGAL_CHARGE.get(), "fungal_charge", modLoc("block/sub/shaped_charge"), new ResourceLocation("block/nether_wart_block"), new ResourceLocation("block/crimson_planks"), modLoc("block/blankrune"), new ResourceLocation("block/crimson_stem"), modLoc("models/defaultcrystal"));
+
+		buildAugmentedShapedCharge(BloodMagicBlocks.SHAPED_CHARGE.get(), "shaped_charge", modLoc("block/sub/augment_shaped_charge"), modLoc("block/dungeon/dungeon_stone"), modLoc("block/dungeon/dungeon_tile"), modLoc("block/blankrune"), modLoc("block/largebloodstonebrick"), modLoc("models/defaultcrystal"), modLoc("models/copper_trim"));
 
 		getVariantBuilder(BloodMagicBlocks.INVERSION_PILLAR.get()).forAllStates(state -> {
 			Builder builder = ConfiguredModel.builder();
@@ -145,11 +148,27 @@ public class GeneratorBlockStates extends BlockStateProvider
 		builder.partialState().with(BlockInversionPillarEnd.TYPE, PillarCapType.TOP).modelForState().modelFile(topModel).addModel();
 	}
 
-	private void buildOrientable(Block block, String name, ResourceLocation modelPath, ResourceLocation base, ResourceLocation edges, ResourceLocation centerCap, ResourceLocation binding, ResourceLocation core)
+	private void buildShapedCharge(Block block, String name, ResourceLocation modelPath, ResourceLocation base, ResourceLocation edges, ResourceLocation centerCap, ResourceLocation binding, ResourceLocation core)
 	{
 //		ModelFile furnace_off = models().orientableWithBottom("alchemicalreactionchamber", BloodMagic.rl("block/arc_side"), BloodMagic.rl("block/arc_front"), BloodMagic.rl("block/arc_bottom"), BloodMagic.rl("block/arc_top"));
 //		getVariantBuilder(block).addModels(block.getDefaultState().with(BlockAlchemicalReactionChamber.FACING, Direction.NORTH).with(BlockAlchemicalReactionChamber.LIT, false), furnaceModel);
 		ModelFile model = models().withExistingParent(name, modelPath).texture("1", edges).texture("3", base).texture("4", centerCap).texture("5", binding).texture("6", core).texture("particle", core);
+
+		VariantBlockStateBuilder builder = getVariantBuilder(block);
+
+		builder.partialState().with(BlockShapedExplosive.ATTACHED, Direction.UP).modelForState().modelFile(model).addModel();
+		builder.partialState().with(BlockShapedExplosive.ATTACHED, Direction.DOWN).modelForState().modelFile(model).rotationX(180).addModel();
+		builder.partialState().with(BlockShapedExplosive.ATTACHED, Direction.EAST).modelForState().modelFile(model).rotationX(90).rotationY(90).addModel();
+		builder.partialState().with(BlockShapedExplosive.ATTACHED, Direction.WEST).modelForState().modelFile(model).rotationX(90).rotationY(270).addModel();
+		builder.partialState().with(BlockShapedExplosive.ATTACHED, Direction.NORTH).modelForState().modelFile(model).rotationX(90).addModel();
+		builder.partialState().with(BlockShapedExplosive.ATTACHED, Direction.SOUTH).modelForState().modelFile(model).rotationX(270).addModel();
+	}
+
+	private void buildAugmentedShapedCharge(Block block, String name, ResourceLocation modelPath, ResourceLocation base, ResourceLocation edges, ResourceLocation centerCap, ResourceLocation binding, ResourceLocation core, ResourceLocation bracket)
+	{
+//		ModelFile furnace_off = models().orientableWithBottom("alchemicalreactionchamber", BloodMagic.rl("block/arc_side"), BloodMagic.rl("block/arc_front"), BloodMagic.rl("block/arc_bottom"), BloodMagic.rl("block/arc_top"));
+//		getVariantBuilder(block).addModels(block.getDefaultState().with(BlockAlchemicalReactionChamber.FACING, Direction.NORTH).with(BlockAlchemicalReactionChamber.LIT, false), furnaceModel);
+		ModelFile model = models().withExistingParent(name, modelPath).texture("1", edges).texture("3", base).texture("4", centerCap).texture("5", binding).texture("2", core).texture("7", bracket).texture("particle", core);
 
 		VariantBlockStateBuilder builder = getVariantBuilder(block);
 
