@@ -66,5 +66,6 @@
     "1": [
       "bloodmagic:room_pools/tier1/mini_dungeon"
     ]
-  }
+  },
+  "requiredDoorMap": {}
 }

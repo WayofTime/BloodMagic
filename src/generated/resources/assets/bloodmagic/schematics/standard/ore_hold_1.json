@@ -10,23 +10,6 @@
   },
   "doorMap": {
     "default": {
-      "north": [
-        {
-          "x": 5,
-          "y": 0,
-          "z": 0
-        },
-        {
-          "x": 2,
-          "y": 5,
-          "z": 0
-        },
-        {
-          "x": 12,
-          "y": 5,
-          "z": 0
-        }
-      ],
       "south": [
         {
           "x": 5,
@@ -49,6 +32,23 @@
           "x": 0,
           "y": 5,
           "z": 7
+        }
+      ],
+      "north": [
+        {
+          "x": 5,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 2,
+          "y": 5,
+          "z": 0
+        },
+        {
+          "x": 12,
+          "y": 5,
+          "z": 0
         }
       ]
     }
@@ -131,5 +131,6 @@
       "bloodmagic:room_pools/tier2/standard_rooms",
       "#bloodmagic:room_pools/tier2/mine_entrances"
     ]
-  }
+  },
+  "requiredDoorMap": {}
 }

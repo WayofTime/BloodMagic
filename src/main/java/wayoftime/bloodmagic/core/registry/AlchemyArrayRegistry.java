@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.alchemyarray.AlchemyArrayEffect;
@@ -70,6 +70,8 @@ public class AlchemyArrayRegistry
 		Pair<Boolean, RecipeAlchemyArray> array = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyArray(world, input, catalyst);
 		if (array == null || array.getRight() == null || !array.getLeft())
 			return null;
+
+		System.out.println("Recipe: " + array.getRight());
 
 		return getEffect(world, array.getRight().getId(), array.getRight());
 	}

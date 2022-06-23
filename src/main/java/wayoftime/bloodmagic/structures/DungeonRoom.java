@@ -42,6 +42,8 @@ public class DungeonRoom
 	public Map<Integer, List<BlockPos>> indexToDoorMap = new HashMap<>();
 	public Map<Integer, List<String>> indexToRoomTypeMap = new HashMap<>();
 
+	public Map<BlockPos, String> requiredDoorMap = new HashMap<>();
+
 	public DungeonRoom(Map<String, BlockPos> structureMap, Map<String, Map<Direction, List<BlockPos>>> doorMap, List<AreaDescriptor.Rectangle> descriptorList)
 	{
 		this.structureMap = structureMap;
@@ -141,6 +143,8 @@ public class DungeonRoom
 		{
 
 			Map<Direction, List<BlockPos>> doorDirMap = entry.getValue();
+
+			// TODO: Change this to instead store the door type that you want to connect to?
 			String doorType = entry.getKey();
 
 			for (int i = 0; i < 4; i++)

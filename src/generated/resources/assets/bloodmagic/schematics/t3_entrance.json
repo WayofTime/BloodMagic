@@ -10,13 +10,6 @@
   },
   "doorMap": {
     "default": {
-      "north": [
-        {
-          "x": 8,
-          "y": 1,
-          "z": 0
-        }
-      ],
       "south": [
         {
           "x": 8,
@@ -24,16 +17,23 @@
           "z": 16
         }
       ],
-      "east": [
+      "west": [
         {
-          "x": 16,
+          "x": 0,
           "y": 1,
           "z": 8
         }
       ],
-      "west": [
+      "north": [
         {
-          "x": 0,
+          "x": 8,
+          "y": 1,
+          "z": 0
+        }
+      ],
+      "east": [
+        {
+          "x": 16,
           "y": 1,
           "z": 8
         }
@@ -102,5 +102,6 @@
     "1": [
       "bloodmagic:room_pools/tier1/mini_dungeon"
     ]
-  }
+  },
+  "requiredDoorMap": {}
 }
