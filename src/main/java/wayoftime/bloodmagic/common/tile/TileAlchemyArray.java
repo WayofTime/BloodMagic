@@ -117,7 +117,6 @@ public class TileAlchemyArray extends TileInventory
 		} else
 		{
 			AlchemyArrayEffect effect = AlchemyArrayRegistry.getEffect(level, this.getItem(0), this.getItem(1));
-			System.out.println("Effect: " + effect);
 			if (effect == null)
 			{
 //				key = effect.i

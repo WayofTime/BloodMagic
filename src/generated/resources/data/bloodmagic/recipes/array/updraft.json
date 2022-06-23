@@ -8,6 +8,6 @@
     "tag": "forge:dusts/glowstone"
   },
   "output": {
-    "item": "minecraft:air"
+    "item": "minecraft:bedrock"
   }
 }

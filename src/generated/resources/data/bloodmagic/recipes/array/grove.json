@@ -8,6 +8,6 @@
     "tag": "forge:bones"
   },
   "output": {
-    "item": "minecraft:air"
+    "item": "minecraft:bedrock"
   }
 }

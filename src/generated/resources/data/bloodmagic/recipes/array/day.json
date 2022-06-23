@@ -8,6 +8,6 @@
     "item": "minecraft:coal"
   },
   "output": {
-    "item": "minecraft:air"
+    "item": "minecraft:bedrock"
   }
 }

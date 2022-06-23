@@ -71,8 +71,6 @@ public class AlchemyArrayRegistry
 		if (array == null || array.getRight() == null || !array.getLeft())
 			return null;
 
-		System.out.println("Recipe: " + array.getRight());
-
 		return getEffect(world, array.getRight().getId(), array.getRight());
 	}
 

@@ -8,6 +8,6 @@
     "tag": "forge:ingots/iron"
   },
   "output": {
-    "item": "minecraft:air"
+    "item": "minecraft:bedrock"
   }
 }
