@@ -180,39 +180,14 @@ public class DungeonRoomLoader
 	public static void loadDungeons()
 	{
 		loadRoomPools();
-//		Map<String, BlockPos> structureMap = new HashMap<>();
-//
-//		Map<String, Map<Direction, List<BlockPos>>> doorMap = new HashMap<>(); // Map of doors. The EnumFacing
-//																				// indicates what way
-//		// this door faces.
-//		List<AreaDescriptor.Rectangle> descriptorList = new ArrayList<>();
-//		Map<Direction, List<BlockPos>> defaultList = new HashMap<>();
-//		List<BlockPos> northList = new ArrayList<>();
-//		northList.add(new BlockPos(0, 0, 0));
-//		northList.add(new BlockPos(1, 1, 1));
-//
-//		List<BlockPos> eastList = new ArrayList<>();
-//		eastList.add(new BlockPos(1, 2, 3));
-//		eastList.add(new BlockPos(4, 5, 6));
-//		defaultList.put(Direction.NORTH, northList);
-//		defaultList.put(Direction.EAST, eastList);
-//
-//		doorMap.put("default", defaultList);
-//
-//		DungeonRoom testRoom = new DungeonRoom(structureMap, doorMap, descriptorList);
-//
-//		DungeonRoomLoader.saveSingleDungeon(testRoom);
+
 		try
 		{
 //			System.out.println("LOADING DEMON DUNGEONS");
 
-			URL schematicURL = DungeonRoomLoader.class.getResource(resLocToResourcePath(new ResourceLocation("bloodmagic:schematics")));
-			List<String> schematics = Serializers.GSON.fromJson(Resources.toString(schematicURL, Charsets.UTF_8), new TypeToken<List<String>>()
+			for (ResourceLocation schematic : DungeonRoomRegistry.unloadedDungeonRooms)
 			{
-			}.getType());
-			for (String schematicKey : schematics)
-			{
-				ResourceLocation schematic = new ResourceLocation(schematicKey);
+//				ResourceLocation schematic = new ResourceLocation(schematicKey);
 				URL dungeonURL = DungeonRoomLoader.class.getResource(resLocToResourcePath(schematic));
 				System.out.println("Loading schematic: " + schematic);
 				DungeonRoom dungeonRoom = Serializers.GSON.fromJson(Resources.toString(dungeonURL, Charsets.UTF_8), DungeonRoom.class);
@@ -220,27 +195,7 @@ public class DungeonRoomLoader
 				DungeonRoomRegistry.registerDungeonRoom(schematic, dungeonRoom, Math.max(1, dungeonRoom.dungeonWeight));
 			}
 
-			System.out.println("# schematics: " + schematics.size());
-
-			URL starter_schematicURL = DungeonRoomLoader.class.getResource(resLocToResourcePath(new ResourceLocation("bloodmagic:starter_schematics")));
-			List<String> starter_schematics = Serializers.GSON.fromJson(Resources.toString(starter_schematicURL, Charsets.UTF_8), new TypeToken<List<String>>()
-			{
-			}.getType());
-			for (String schematicKey : starter_schematics)
-			{
-				if (!schematicKey.contains(";"))
-				{
-					continue;
-				}
-
-				String[] keys = schematicKey.split(";");
-				String key = keys[0];
-				String schematicSubkey = keys[1];
-				ResourceLocation schematic = new ResourceLocation(schematicSubkey);
-				URL dungeonURL = DungeonRoomLoader.class.getResource(resLocToResourcePath(schematic));
-				DungeonRoom dungeonRoom = Serializers.GSON.fromJson(Resources.toString(dungeonURL, Charsets.UTF_8), DungeonRoom.class);
-				DungeonRoomRegistry.registerStarterDungeonRoom(dungeonRoom, key);
-			}
+			System.out.println("# schematics: " + DungeonRoomRegistry.unloadedDungeonRooms.size());
 
 		} catch (Exception e)
 		{

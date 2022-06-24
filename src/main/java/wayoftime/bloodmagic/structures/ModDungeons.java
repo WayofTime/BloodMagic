@@ -1,5 +1,7 @@
 package wayoftime.bloodmagic.structures;
 
+import wayoftime.bloodmagic.BloodMagic;
+
 public class ModDungeons
 {
 	public static void init()
@@ -23,6 +25,25 @@ public class ModDungeons
 //
 //        DungeonRoomLoader.saveDungeons();
 
+		registerDungeonRooms();
 		DungeonRoomLoader.loadDungeons();
+	}
+
+	public static void registerDungeonRooms()
+	{
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("t_corridor"));
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("four_way_corridor_loot"));
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("four_way_corridor"));
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("standard/ore_hold_1"));
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("standard/mine_entrance"));
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("straight_corridor"));
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("spiral_staircase"));
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("t3_entrance"));
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("standard_entrance"));
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("mini_dungeon/library"));
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("mini_dungeon/armoury"));
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("mini_dungeon/farm"));
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("mini_dungeon/portal_nether"));
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("mini_dungeon/crypt"));
 	}
 }

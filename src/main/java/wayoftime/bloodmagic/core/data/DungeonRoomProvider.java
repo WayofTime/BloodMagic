@@ -64,6 +64,15 @@ public class DungeonRoomProvider implements DataProvider
 		overlapped_corridor.addDoors(Direction.WEST, "default", 1, new BlockPos(0, 4, 5));
 		overlapped_corridor.addDoors(Direction.EAST, "default", 1, new BlockPos(10, 4, 5));
 
+		DungeonRoom straightCorridor = new DungeonRoom().addStructure("bloodmagic:straight_corridor", BlockPos.ZERO).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(11, 5, 5)));
+		straightCorridor.addDoor(new BlockPos(0, 0, 2), Direction.WEST, "default", 1);
+		straightCorridor.addDoor(new BlockPos(10, 0, 2), Direction.EAST, "default", 1);
+
+		DungeonRoom tCorridor = new DungeonRoom().addStructure("bloodmagic:t_corridor", BlockPos.ZERO).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(11, 5, 8)));
+		tCorridor.addDoor(new BlockPos(5, 0, 0), Direction.NORTH, "default", 1);
+		tCorridor.addDoor(new BlockPos(0, 0, 5), Direction.WEST, "default", 1);
+		tCorridor.addDoor(new BlockPos(10, 0, 5), Direction.EAST, "default", 1);
+
 		DungeonRoom oreHold = new DungeonRoom().addStructure("bloodmagic:ore_hold_1", new BlockPos(0, 0, 0));
 		oreHold.addDoors(Direction.NORTH, "default", 1, new BlockPos(5, 0, 0), new BlockPos(2, 5, 0), new BlockPos(12, 5, 0));
 		oreHold.addDoors(Direction.SOUTH, "default", 1, new BlockPos(5, 0, 14), new BlockPos(2, 5, 14), new BlockPos(12, 5, 14));
@@ -71,7 +80,13 @@ public class DungeonRoomProvider implements DataProvider
 		oreHold.addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(15, 12, 15)));
 		oreHold.addRoomPool(1, "bloodmagic:room_pools/tier2/standard_rooms");
 		oreHold.addRoomPool(1, "#bloodmagic:room_pools/tier2/mine_entrances");
-//		Serializers.GSON.toJson(room, DungeonRoom.class);
+
+		DungeonRoom mineEntrance = new DungeonRoom().addStructure("bloodmagic:standard/mine_entrance", new BlockPos(0, 0, 0)).addStructure("bloodmagic:standard/mine_entrance2", new BlockPos(0, 0, 32));
+		mineEntrance.addDoor(new BlockPos(0, 12, 38), Direction.WEST, "default", 1);
+		mineEntrance.addDoor(new BlockPos(22, 1, 0), Direction.NORTH, "mine", 2);
+		mineEntrance.addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(21, 18, 43)));
+		mineEntrance.addRoomPool(1, "bloodmagic:room_pools/tier2/standard_rooms");
+		mineEntrance.addRoomPool(2, "bloodmagic:room_pools/tier2/standard_rooms");
 
 		addDungeonRoom(cache, miniArmoury, BloodMagic.rl("mini_dungeon/armoury"));
 		addDungeonRoom(cache, miniCrypt, BloodMagic.rl("mini_dungeon/crypt"));
@@ -82,8 +97,11 @@ public class DungeonRoomProvider implements DataProvider
 		addDungeonRoom(cache, fourWayCorridor, BloodMagic.rl("four_way_corridor"));
 		addDungeonRoom(cache, fourWayCorridorLoot, BloodMagic.rl("four_way_corridor_loot"));
 		addDungeonRoom(cache, overlapped_corridor, BloodMagic.rl("overlapped_corridor"));
+		addDungeonRoom(cache, straightCorridor, BloodMagic.rl("straight_corridor"));
+		addDungeonRoom(cache, straightCorridor, BloodMagic.rl("t_corridor"));
 
 		addDungeonRoom(cache, oreHold, BloodMagic.rl("standard/ore_hold_1"));
+		addDungeonRoom(cache, mineEntrance, BloodMagic.rl("standard/mine_entrance"));
 //		DungeonRoom dungeonRoom = Serializers.GSON.fromJson(Resources.toString(dungeonURL, Charsets.UTF_8), DungeonRoom.class);
 
 		registerStarterRooms(cache);
@@ -101,7 +119,18 @@ public class DungeonRoomProvider implements DataProvider
 		miniDungeon.controllerOffset = new BlockPos(8, 6, 8);
 		miniDungeon.portalOffset = new BlockPos(8, 4, 8);
 
+		DungeonRoom starterDungeon = new DungeonRoom().addStructure("bloodmagic:standard/standard_entrance", BlockPos.ZERO).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(19, 9, 19)));
+		starterDungeon.addDoors(Direction.NORTH, "default", 1, new BlockPos(9, 1, 0));
+		starterDungeon.addDoors(Direction.SOUTH, "default", 1, new BlockPos(9, 1, 18));
+		starterDungeon.addDoors(Direction.EAST, "default", 1, new BlockPos(18, 1, 9));
+		starterDungeon.addDoors(Direction.WEST, "default", 1, new BlockPos(0, 1, 9));
+		starterDungeon.addRoomPool(1, "bloodmagic:room_pools/tier2/standard_rooms");
+		starterDungeon.spawnLocation = new BlockPos(9, 2, 4);
+		starterDungeon.controllerOffset = new BlockPos(9, 6, 9);
+		starterDungeon.portalOffset = new BlockPos(9, 4, 9);
+
 		addDungeonRoom(cache, miniDungeon, BloodMagic.rl("t3_entrance"));
+		addDungeonRoom(cache, starterDungeon, BloodMagic.rl("standard_entrance"));
 
 	}
 

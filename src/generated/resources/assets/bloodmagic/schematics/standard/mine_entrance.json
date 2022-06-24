@@ -1,40 +1,34 @@
 {
+  "key": null,
   "dungeonWeight": 1,
   "structureMap": {
-    "bloodmagic:standard/standard_entrance": {
+    "bloodmagic:standard/mine_entrance2": {
+      "x": 0,
+      "y": 0,
+      "z": 32
+    },
+    "bloodmagic:standard/mine_entrance": {
       "x": 0,
       "y": 0,
       "z": 0
     }
   },
   "doorMap": {
-    "default": {
+    "mine": {
       "north": [
         {
-          "x": 9,
+          "x": 22,
           "y": 1,
           "z": 0
         }
-      ],
-      "east": [
-        {
-          "x": 18,
-          "y": 1,
-          "z": 9
-        }
-      ],
+      ]
+    },
+    "default": {
       "west": [
         {
           "x": 0,
-          "y": 1,
-          "z": 9
-        }
-      ],
-      "south": [
-        {
-          "x": 9,
-          "y": 1,
-          "z": 18
+          "y": 12,
+          "z": 38
         }
       ]
     }
@@ -47,9 +41,9 @@
         "z": 0
       },
       "maximumOffset": {
-        "x": 19,
-        "y": 9,
-        "z": 19
+        "x": 21,
+        "y": 18,
+        "z": 43
       },
       "currentPosition": null,
       "blockPosCache": [],
@@ -59,47 +53,43 @@
   ],
   "oreDensity": 0.0,
   "spawnLocation": {
-    "x": 9,
-    "y": 2,
-    "z": 4
+    "x": 0,
+    "y": 0,
+    "z": 0
   },
   "controllerOffset": {
-    "x": 9,
-    "y": 6,
-    "z": 9
+    "x": 0,
+    "y": 0,
+    "z": 0
   },
   "portalOffset": {
-    "x": 9,
-    "y": 4,
-    "z": 9
+    "x": 0,
+    "y": 0,
+    "z": 0
   },
   "indexToDoorMap": {
     "1": [
       {
-        "x": 9,
+        "x": 0,
+        "y": 12,
+        "z": 38
+      }
+    ],
+    "2": [
+      {
+        "x": 22,
         "y": 1,
         "z": 0
-      },
-      {
-        "x": 9,
-        "y": 1,
-        "z": 18
-      },
-      {
-        "x": 18,
-        "y": 1,
-        "z": 9
-      },
-      {
-        "x": 0,
-        "y": 1,
-        "z": 9
       }
     ]
   },
   "indexToRoomTypeMap": {
     "1": [
       "bloodmagic:room_pools/tier2/standard_rooms"
+    ],
+    "2": [
+      "bloodmagic:room_pools/tier2/standard_rooms"
     ]
-  }
+  },
+  "requiredDoorMap": {}
 }

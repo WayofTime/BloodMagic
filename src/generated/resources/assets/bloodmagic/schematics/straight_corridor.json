@@ -2,7 +2,7 @@
   "key": null,
   "dungeonWeight": 1,
   "structureMap": {
-    "bloodmagic:overlapped_corridor": {
+    "bloodmagic:straight_corridor": {
       "x": 0,
       "y": 0,
       "z": 0
@@ -13,29 +13,15 @@
       "east": [
         {
           "x": 10,
-          "y": 4,
-          "z": 5
-        }
-      ],
-      "north": [
-        {
-          "x": 5,
           "y": 0,
-          "z": 0
+          "z": 2
         }
       ],
       "west": [
         {
           "x": 0,
-          "y": 4,
-          "z": 5
-        }
-      ],
-      "south": [
-        {
-          "x": 5,
           "y": 0,
-          "z": 10
+          "z": 2
         }
       ]
     }
@@ -43,30 +29,14 @@
   "descriptorList": [
     {
       "minimumOffset": {
-        "x": 3,
+        "x": 0,
         "y": 0,
         "z": 0
       },
       "maximumOffset": {
-        "x": 8,
-        "y": 5,
-        "z": 11
-      },
-      "currentPosition": null,
-      "blockPosCache": [],
-      "cachedPosition": null,
-      "cache": true
-    },
-    {
-      "minimumOffset": {
-        "x": 0,
-        "y": 4,
-        "z": 3
-      },
-      "maximumOffset": {
         "x": 11,
-        "y": 9,
-        "z": 8
+        "y": 5,
+        "z": 5
       },
       "currentPosition": null,
       "blockPosCache": [],
@@ -93,24 +63,14 @@
   "indexToDoorMap": {
     "1": [
       {
-        "x": 5,
-        "y": 0,
-        "z": 0
-      },
-      {
-        "x": 5,
-        "y": 0,
-        "z": 10
-      },
-      {
         "x": 0,
-        "y": 4,
-        "z": 5
+        "y": 0,
+        "z": 2
       },
       {
         "x": 10,
-        "y": 4,
-        "z": 5
+        "y": 0,
+        "z": 2
       }
     ]
   },
