@@ -70,7 +70,7 @@ public class RitualMeteor extends Ritual
 				if (syphonAmount > 0)
 					masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(syphonAmount));
 
-				EntityMeteor meteor = new EntityMeteor(world, masterRitualStone.getMasterBlockPos().getX() + 0.5, 260, masterRitualStone.getMasterBlockPos().getZ() + 0.5);
+				EntityMeteor meteor = new EntityMeteor(world, masterRitualStone.getMasterBlockPos().getX() + 0.5, world.getMaxBuildHeight() + 10, masterRitualStone.getMasterBlockPos().getZ() + 0.5);
 				meteor.lerpMotion(0, -0.1, 0);
 				meteor.setContainedStack(stack.split(1));
 				world.addFreshEntity(meteor);

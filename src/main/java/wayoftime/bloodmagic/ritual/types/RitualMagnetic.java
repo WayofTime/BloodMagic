@@ -90,7 +90,7 @@ public class RitualMagnetic extends Ritual
 				k = Math.min(radius, Math.max(-radius, lastPos.getZ()));
 			}
 
-			while (j + pos.getY() >= 0)
+			while (j + pos.getY() >= world.getMinBuildHeight())
 			{
 				while (i <= radius)
 				{
