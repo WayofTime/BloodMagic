@@ -16,6 +16,7 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.gson.Serializers;
 import wayoftime.bloodmagic.ritual.AreaDescriptor.Rectangle;
 import wayoftime.bloodmagic.structures.DungeonRoom;
+import wayoftime.bloodmagic.structures.ModDungeons;
 
 public class DungeonRoomProvider implements DataProvider
 {
@@ -88,20 +89,20 @@ public class DungeonRoomProvider implements DataProvider
 		mineEntrance.addRoomPool(1, "bloodmagic:room_pools/tier2/standard_rooms");
 		mineEntrance.addRoomPool(2, "bloodmagic:room_pools/tier2/standard_rooms");
 
-		addDungeonRoom(cache, miniArmoury, BloodMagic.rl("mini_dungeon/armoury"));
-		addDungeonRoom(cache, miniCrypt, BloodMagic.rl("mini_dungeon/crypt"));
-		addDungeonRoom(cache, miniFarm, BloodMagic.rl("mini_dungeon/farm"));
-		addDungeonRoom(cache, miniLibrary, BloodMagic.rl("mini_dungeon/library"));
-		addDungeonRoom(cache, miniPortalRoom, BloodMagic.rl("mini_dungeon/portal_nether"));
+		addDungeonRoom(cache, miniArmoury, ModDungeons.MINI_ARMOURY);
+		addDungeonRoom(cache, miniCrypt, ModDungeons.MINI_CRYPT);
+		addDungeonRoom(cache, miniFarm, ModDungeons.MINI_FARM);
+		addDungeonRoom(cache, miniLibrary, ModDungeons.MINI_LIBRARY);
+		addDungeonRoom(cache, miniPortalRoom, ModDungeons.MINI_PORTAL);
 
-		addDungeonRoom(cache, fourWayCorridor, BloodMagic.rl("four_way_corridor"));
-		addDungeonRoom(cache, fourWayCorridorLoot, BloodMagic.rl("four_way_corridor_loot"));
-		addDungeonRoom(cache, overlapped_corridor, BloodMagic.rl("overlapped_corridor"));
-		addDungeonRoom(cache, straightCorridor, BloodMagic.rl("straight_corridor"));
-		addDungeonRoom(cache, straightCorridor, BloodMagic.rl("t_corridor"));
+		addDungeonRoom(cache, fourWayCorridor, ModDungeons.FOUR_WAY_CORRIDOR);
+		addDungeonRoom(cache, fourWayCorridorLoot, ModDungeons.FOUR_WAY_CORRIDOR_LOOT);
+		addDungeonRoom(cache, overlapped_corridor, ModDungeons.OVERLAPPED_CORRIDOR);
+		addDungeonRoom(cache, straightCorridor, ModDungeons.STRAIGHT_CORRIDOR);
+		addDungeonRoom(cache, straightCorridor, ModDungeons.T_CORRIDOR);
 
-		addDungeonRoom(cache, oreHold, BloodMagic.rl("standard/ore_hold_1"));
-		addDungeonRoom(cache, mineEntrance, BloodMagic.rl("standard/mine_entrance"));
+		addDungeonRoom(cache, oreHold, ModDungeons.ORE_HOLD_1);
+		addDungeonRoom(cache, mineEntrance, ModDungeons.MINE_ENTRANCE);
 //		DungeonRoom dungeonRoom = Serializers.GSON.fromJson(Resources.toString(dungeonURL, Charsets.UTF_8), DungeonRoom.class);
 
 		registerStarterRooms(cache);
@@ -129,8 +130,8 @@ public class DungeonRoomProvider implements DataProvider
 		starterDungeon.controllerOffset = new BlockPos(9, 6, 9);
 		starterDungeon.portalOffset = new BlockPos(9, 4, 9);
 
-		addDungeonRoom(cache, miniDungeon, BloodMagic.rl("t3_entrance"));
-		addDungeonRoom(cache, starterDungeon, BloodMagic.rl("standard_entrance"));
+		addDungeonRoom(cache, miniDungeon, ModDungeons.MINI_ENTRANCE);
+		addDungeonRoom(cache, starterDungeon, ModDungeons.STANDARD_ENTRANCE);
 
 	}
 

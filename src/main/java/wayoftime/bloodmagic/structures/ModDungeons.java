@@ -1,49 +1,50 @@
 package wayoftime.bloodmagic.structures;
 
+import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
 
 public class ModDungeons
 {
+	public static ResourceLocation T_CORRIDOR = BloodMagic.rl("t_corridor");
+	public static ResourceLocation FOUR_WAY_CORRIDOR_LOOT = BloodMagic.rl("four_way_corridor_loot");
+	public static ResourceLocation FOUR_WAY_CORRIDOR = BloodMagic.rl("four_way_corridor");
+	public static ResourceLocation OVERLAPPED_CORRIDOR = BloodMagic.rl("overlapped_corridor");
+	public static ResourceLocation ORE_HOLD_1 = BloodMagic.rl("standard/ore_hold_1");
+	public static ResourceLocation MINE_ENTRANCE = BloodMagic.rl("standard/mine_entrance");
+	public static ResourceLocation STRAIGHT_CORRIDOR = BloodMagic.rl("straight_corridor");
+	public static ResourceLocation SPIRAL_STAIRCASE = BloodMagic.rl("spiral_staircase");
+	public static ResourceLocation MINI_LIBRARY = BloodMagic.rl("mini_dungeon/library");
+	public static ResourceLocation MINI_ARMOURY = BloodMagic.rl("mini_dungeon/armoury");
+	public static ResourceLocation MINI_FARM = BloodMagic.rl("mini_dungeon/farm");
+	public static ResourceLocation MINI_PORTAL = BloodMagic.rl("mini_dungeon/portal_nether");
+	public static ResourceLocation MINI_CRYPT = BloodMagic.rl("mini_dungeon/crypt");
+	public static ResourceLocation MINI_ENTRANCE = BloodMagic.rl("t3_entrance");
+	public static ResourceLocation STANDARD_ENTRANCE = BloodMagic.rl("standard_entrance");
+
 	public static void init()
 	{
-//        ResourceLocation resource = new ResourceLocation(Constants.Mod.MODID, "HallChest1");
-//
-//        Map<String, BlockPos> structureMap = new HashMap<String, BlockPos>();
-//        structureMap.put(resource.toString(), new BlockPos(0, 0, 0));
-//
-//        Map<EnumFacing, List<BlockPos>> doorMap = new HashMap<EnumFacing, List<BlockPos>>();
-//        List<AreaDescriptor.Rectangle> descriptorList = new ArrayList<AreaDescriptor.Rectangle>();
-//        descriptorList.add(new AreaDescriptor.Rectangle(new BlockPos(0, 0, 0), 12, 5, 9));
-//
-//        DungeonUtil.addRoom(doorMap, EnumFacing.EAST, new BlockPos(11, 0, 4));
-//        DungeonUtil.addRoom(doorMap, EnumFacing.WEST, new BlockPos(0, 0, 4));
-//
-//        DungeonRoom room = new DungeonRoom(structureMap, doorMap, descriptorList);
-//        DungeonRoomLoader.saveSingleDungeon(room);
-//
-//        DungeonRoomRegistry.registerDungeonRoom(room, 1);
-//
-//        DungeonRoomLoader.saveDungeons();
-
 		registerDungeonRooms();
 		DungeonRoomLoader.loadDungeons();
 	}
 
 	public static void registerDungeonRooms()
 	{
-		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("t_corridor"));
-		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("four_way_corridor_loot"));
-		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("four_way_corridor"));
-		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("standard/ore_hold_1"));
-		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("standard/mine_entrance"));
-		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("straight_corridor"));
-		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("spiral_staircase"));
-		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("t3_entrance"));
-		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("standard_entrance"));
-		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("mini_dungeon/library"));
-		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("mini_dungeon/armoury"));
-		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("mini_dungeon/farm"));
-		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("mini_dungeon/portal_nether"));
-		DungeonRoomRegistry.registerUnloadedDungeonRoom(BloodMagic.rl("mini_dungeon/crypt"));
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(T_CORRIDOR);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(FOUR_WAY_CORRIDOR_LOOT);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(FOUR_WAY_CORRIDOR);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(ORE_HOLD_1);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINE_ENTRANCE);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(STRAIGHT_CORRIDOR);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(OVERLAPPED_CORRIDOR);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(SPIRAL_STAIRCASE);
+
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINI_LIBRARY);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINI_ARMOURY);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINI_FARM);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINI_PORTAL);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINI_CRYPT);
+
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINI_ENTRANCE);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(STANDARD_ENTRANCE);
 	}
 }

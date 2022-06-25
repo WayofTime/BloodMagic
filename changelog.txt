@@ -1,4 +1,13 @@
 ------------------------------------------------------
+Version 3.2.1
+------------------------------------------------------
+- Fixed in-game guide so that recipes properly load.
+- Fixed non-crafting Alchemy Arrays.
+- Fixed the Mark of the Falling Tower and Ritual of Magnetism to respect the current world's build limit.
+- Changed a few textures such as the ore fragments.
+
+
+------------------------------------------------------
 Version 3.2.0
 ------------------------------------------------------
 - Initial release of 1.18.2.
