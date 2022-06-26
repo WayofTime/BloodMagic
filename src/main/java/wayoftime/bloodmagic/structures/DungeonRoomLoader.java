@@ -124,13 +124,13 @@ public class DungeonRoomLoader
 		{
 //			System.out.println("LOADING DEMON DUNGEONS");
 
-			URL schematicURL = DungeonRoomLoader.class.getResource(resLocToResourcePath(new ResourceLocation("bloodmagic:room_pools")));
-			List<String> schematics = Serializers.GSON.fromJson(Resources.toString(schematicURL, Charsets.UTF_8), new TypeToken<List<String>>()
+//			URL schematicURL = DungeonRoomLoader.class.getResource(resLocToResourcePath(new ResourceLocation("bloodmagic:room_pools")));
+//			List<String> schematics = Serializers.GSON.fromJson(Resources.toString(schematicURL, Charsets.UTF_8), new TypeToken<List<String>>()
+//			{
+//			}.getType());
+			for (ResourceLocation schematic : DungeonRoomRegistry.unloadedDungeonRoomPools)
 			{
-			}.getType());
-			for (String schematicKey : schematics)
-			{
-				ResourceLocation schematic = new ResourceLocation(schematicKey);
+//				ResourceLocation schematic = new ResourceLocation(schematicKey);
 				URL roomPoolURL = DungeonRoomLoader.class.getResource(resLocToResourcePath(schematic));
 				List<String> roomPoolList = Serializers.GSON.fromJson(Resources.toString(roomPoolURL, Charsets.UTF_8), new TypeToken<List<String>>()
 				{
@@ -179,7 +179,6 @@ public class DungeonRoomLoader
 
 	public static void loadDungeons()
 	{
-		loadRoomPools();
 
 		try
 		{

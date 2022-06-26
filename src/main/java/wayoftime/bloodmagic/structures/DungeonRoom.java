@@ -108,6 +108,16 @@ public class DungeonRoom
 		return this;
 	}
 
+	public DungeonRoom addNormalRoomPool(int index, ResourceLocation roomPool)
+	{
+		return this.addRoomPool(index, roomPool.toString());
+	}
+
+	public DungeonRoom addSpecialRoomPool(int index, ResourceLocation roomPool)
+	{
+		return this.addRoomPool(index, "#" + roomPool.toString());
+	}
+
 	public DungeonRoom addRoomPool(int index, String roomPool)
 	{
 		if (!indexToRoomTypeMap.containsKey(index))

@@ -4,6 +4,11 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 
 import net.minecraft.core.BlockPos;
@@ -17,6 +22,7 @@ import wayoftime.bloodmagic.gson.Serializers;
 import wayoftime.bloodmagic.ritual.AreaDescriptor.Rectangle;
 import wayoftime.bloodmagic.structures.DungeonRoom;
 import wayoftime.bloodmagic.structures.ModDungeons;
+import wayoftime.bloodmagic.structures.ModRoomPools;
 
 public class DungeonRoomProvider implements DataProvider
 {
@@ -27,25 +33,64 @@ public class DungeonRoomProvider implements DataProvider
 		this.generator = gen;
 	}
 
+	public void loadRoomPools(HashCache cache)
+	{
+		Map<ResourceLocation, Integer> connectiveCorridors = new HashMap<>();
+		connectiveCorridors.put(ModDungeons.T_CORRIDOR, 2);
+		connectiveCorridors.put(ModDungeons.FOUR_WAY_CORRIDOR_LOOT, 1);
+		connectiveCorridors.put(ModDungeons.FOUR_WAY_CORRIDOR, 2);
+		connectiveCorridors.put(ModDungeons.STRAIGHT_CORRIDOR, 4);
+		connectiveCorridors.put(ModDungeons.OVERLAPPED_CORRIDOR, 3);
+
+		Map<ResourceLocation, Integer> miniDungeonRooms = new HashMap<>();
+		miniDungeonRooms.put(ModDungeons.MINI_ARMOURY, 1);
+		miniDungeonRooms.put(ModDungeons.MINI_CRYPT, 1);
+		miniDungeonRooms.put(ModDungeons.MINI_FARM, 1);
+		miniDungeonRooms.put(ModDungeons.MINI_PORTAL, 1);
+		miniDungeonRooms.put(ModDungeons.MINI_LIBRARY, 1);
+
+		Map<ResourceLocation, Integer> standardDungeonRooms = new HashMap<>();
+		standardDungeonRooms.put(ModDungeons.ORE_HOLD_1, 1);
+
+		// Special RoomPools
+		Map<ResourceLocation, Integer> mineEntrances = new HashMap<>();
+		mineEntrances.put(ModDungeons.MINE_ENTRANCE, 1);
+
+		// Entrances
+		Map<ResourceLocation, Integer> miniDungeonEntrances = new HashMap<>();
+		miniDungeonEntrances.put(ModDungeons.MINI_ENTRANCE, 1);
+
+		Map<ResourceLocation, Integer> standardDungeonEntrances = new HashMap<>();
+		standardDungeonEntrances.put(ModDungeons.STANDARD_ENTRANCE, 1);
+
+		// Registration
+		addRoomPool(cache, connectiveCorridors, ModRoomPools.CONNECTIVE_CORRIDORS);
+		addRoomPool(cache, miniDungeonRooms, ModRoomPools.MINI_DUNGEON);
+		addRoomPool(cache, standardDungeonRooms, ModRoomPools.STANDARD_ROOMS);
+
+		addRoomPool(cache, mineEntrances, ModRoomPools.MINE_ENTRANCES);
+
+		addRoomPool(cache, miniDungeonEntrances, ModRoomPools.MINI_DUNGEON_ENTRANCES);
+		addRoomPool(cache, standardDungeonEntrances, ModRoomPools.STANDARD_DUNGEON_ENTRANCES);
+	}
+
 	public void loadDungeons(HashCache cache)
 	{
-		String basePath = "bloodmagic:schematics";
-
 		DungeonRoom miniArmoury = new DungeonRoom().addStructure("bloodmagic:mini_dungeon/armoury", new BlockPos(0, 0, 0)).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(17, 8, 17)));
 		miniArmoury.addDoor(new BlockPos(8, 0, 0), Direction.NORTH, "default", 1);
-		miniArmoury.addRoomPool(1, "bloodmagic:room_pools/tier1/mini_dungeon");
+		miniArmoury.addNormalRoomPool(1, ModRoomPools.MINI_DUNGEON);
 		DungeonRoom miniCrypt = new DungeonRoom().addStructure("bloodmagic:mini_dungeon/crypt", new BlockPos(0, 0, 0)).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(17, 10, 17)));
 		miniCrypt.addDoor(new BlockPos(8, 0, 0), Direction.NORTH, "default", 1);
-		miniCrypt.addRoomPool(1, "bloodmagic:room_pools/tier1/mini_dungeon");
+		miniCrypt.addNormalRoomPool(1, ModRoomPools.MINI_DUNGEON);
 		DungeonRoom miniFarm = new DungeonRoom().addStructure("bloodmagic:mini_dungeon/farm", new BlockPos(0, 0, 0)).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(17, 9, 17)));
 		miniFarm.addDoor(new BlockPos(8, 0, 0), Direction.NORTH, "default", 1);
-		miniFarm.addRoomPool(1, "bloodmagic:room_pools/tier1/mini_dungeon");
+		miniFarm.addNormalRoomPool(1, ModRoomPools.MINI_DUNGEON);
 		DungeonRoom miniLibrary = new DungeonRoom().addStructure("bloodmagic:mini_dungeon/library", new BlockPos(0, 0, 0)).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(17, 7, 17)));
 		miniLibrary.addDoor(new BlockPos(8, 0, 0), Direction.NORTH, "default", 1);
-		miniLibrary.addRoomPool(1, "bloodmagic:room_pools/tier1/mini_dungeon");
+		miniLibrary.addNormalRoomPool(1, ModRoomPools.MINI_DUNGEON);
 		DungeonRoom miniPortalRoom = new DungeonRoom().addStructure("bloodmagic:mini_dungeon/portal_nether", new BlockPos(0, 0, 0)).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(17, 7, 17)));
 		miniPortalRoom.addDoor(new BlockPos(8, 5, 0), Direction.NORTH, "default", 1);
-		miniPortalRoom.addRoomPool(1, "bloodmagic:room_pools/tier1/mini_dungeon");
+		miniPortalRoom.addNormalRoomPool(1, ModRoomPools.MINI_DUNGEON);
 
 		DungeonRoom fourWayCorridor = new DungeonRoom().addStructure("bloodmagic:four_way_corridor", new BlockPos(0, 0, 0)).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(11, 6, 11)));
 		fourWayCorridor.addDoors(Direction.NORTH, "default", 1, new BlockPos(5, 0, 0));
@@ -79,15 +124,15 @@ public class DungeonRoomProvider implements DataProvider
 		oreHold.addDoors(Direction.SOUTH, "default", 1, new BlockPos(5, 0, 14), new BlockPos(2, 5, 14), new BlockPos(12, 5, 14));
 		oreHold.addDoors(Direction.WEST, "default", 1, new BlockPos(0, 5, 7));
 		oreHold.addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(15, 12, 15)));
-		oreHold.addRoomPool(1, "bloodmagic:room_pools/tier2/standard_rooms");
-		oreHold.addRoomPool(1, "#bloodmagic:room_pools/tier2/mine_entrances");
+		oreHold.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
+		oreHold.addSpecialRoomPool(1, ModRoomPools.MINE_ENTRANCES);
 
 		DungeonRoom mineEntrance = new DungeonRoom().addStructure("bloodmagic:standard/mine_entrance", new BlockPos(0, 0, 0)).addStructure("bloodmagic:standard/mine_entrance2", new BlockPos(0, 0, 32));
 		mineEntrance.addDoor(new BlockPos(0, 12, 38), Direction.WEST, "default", 1);
 		mineEntrance.addDoor(new BlockPos(22, 1, 0), Direction.NORTH, "mine", 2);
 		mineEntrance.addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(21, 18, 43)));
-		mineEntrance.addRoomPool(1, "bloodmagic:room_pools/tier2/standard_rooms");
-		mineEntrance.addRoomPool(2, "bloodmagic:room_pools/tier2/standard_rooms");
+		mineEntrance.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
+		mineEntrance.addNormalRoomPool(2, ModRoomPools.STANDARD_ROOMS);
 
 		addDungeonRoom(cache, miniArmoury, ModDungeons.MINI_ARMOURY);
 		addDungeonRoom(cache, miniCrypt, ModDungeons.MINI_CRYPT);
@@ -115,7 +160,7 @@ public class DungeonRoomProvider implements DataProvider
 		miniDungeon.addDoors(Direction.SOUTH, "default", 1, new BlockPos(8, 1, 16));
 		miniDungeon.addDoors(Direction.EAST, "default", 1, new BlockPos(16, 1, 8));
 		miniDungeon.addDoors(Direction.WEST, "default", 1, new BlockPos(0, 1, 8));
-		miniDungeon.addRoomPool(1, "bloodmagic:room_pools/tier1/mini_dungeon");
+		miniDungeon.addNormalRoomPool(1, ModRoomPools.MINI_DUNGEON);
 		miniDungeon.spawnLocation = new BlockPos(8, 2, 4);
 		miniDungeon.controllerOffset = new BlockPos(8, 6, 8);
 		miniDungeon.portalOffset = new BlockPos(8, 4, 8);
@@ -125,7 +170,7 @@ public class DungeonRoomProvider implements DataProvider
 		starterDungeon.addDoors(Direction.SOUTH, "default", 1, new BlockPos(9, 1, 18));
 		starterDungeon.addDoors(Direction.EAST, "default", 1, new BlockPos(18, 1, 9));
 		starterDungeon.addDoors(Direction.WEST, "default", 1, new BlockPos(0, 1, 9));
-		starterDungeon.addRoomPool(1, "bloodmagic:room_pools/tier2/standard_rooms");
+		starterDungeon.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
 		starterDungeon.spawnLocation = new BlockPos(9, 2, 4);
 		starterDungeon.controllerOffset = new BlockPos(9, 6, 9);
 		starterDungeon.portalOffset = new BlockPos(9, 4, 9);
@@ -138,6 +183,28 @@ public class DungeonRoomProvider implements DataProvider
 	public void addDungeonRoom(HashCache cache, DungeonRoom room, ResourceLocation schematicName)
 	{
 		String json = Serializers.GSON.toJson(room);
+
+		Path mainOutput = generator.getOutputFolder();
+		String pathSuffix = "assets/" + schematicName.getNamespace() + "/schematics/" + schematicName.getPath() + ".json";
+		Path outputPath = mainOutput.resolve(pathSuffix);
+		try
+		{
+			save(cache, json, outputPath);
+		} catch (IOException e)
+		{
+			BloodMagic.LOGGER.error("Couldn't save schematic to {}", outputPath, e);
+		}
+	}
+
+	public void addRoomPool(HashCache cache, Map<ResourceLocation, Integer> roomPool, ResourceLocation schematicName)
+	{
+		List<String> roomStringList = new ArrayList<>();
+		for (Entry<ResourceLocation, Integer> roomEntry : roomPool.entrySet())
+		{
+			roomStringList.add(roomEntry.getValue() + ";" + roomEntry.getKey().toString());
+		}
+
+		String json = Serializers.GSON.toJson(roomStringList);
 
 		Path mainOutput = generator.getOutputFolder();
 		String pathSuffix = "assets/" + schematicName.getNamespace() + "/schematics/" + schematicName.getPath() + ".json";
@@ -193,6 +260,7 @@ public class DungeonRoomProvider implements DataProvider
 	public void run(HashCache cache)
 			throws IOException
 	{
+		loadRoomPools(cache);
 		loadDungeons(cache);
 	}
 

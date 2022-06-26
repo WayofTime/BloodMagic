@@ -22,6 +22,7 @@ public class DungeonRoomRegistry
 	private static Map<ResourceLocation, Integer> totalWeightMap = new HashMap<>();
 
 	public static List<ResourceLocation> unloadedDungeonRooms = new ArrayList<>();
+	public static List<ResourceLocation> unloadedDungeonRoomPools = new ArrayList<>();
 
 	public static void registerDungeonRoom(ResourceLocation res, DungeonRoom room, int weight)
 	{
@@ -34,6 +35,11 @@ public class DungeonRoomRegistry
 	public static void registerUnloadedDungeonRoom(ResourceLocation res)
 	{
 		unloadedDungeonRooms.add(res);
+	}
+
+	public static void registerUnloadedDungeonRoomPool(ResourceLocation res)
+	{
+		unloadedDungeonRoomPools.add(res);
 	}
 
 	public static void registerDungeomRoomPool(ResourceLocation poolRes, List<Pair<ResourceLocation, Integer>> pool)

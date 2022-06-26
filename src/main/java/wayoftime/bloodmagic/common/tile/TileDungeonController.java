@@ -36,7 +36,7 @@ public class TileDungeonController extends TileBase
 		this.dungeon = dungeon;
 	}
 
-	public int handleRequestForRoomPlacement(ItemStack keyStack, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, List<ResourceLocation> potentialRooms)
+	public int handleRequestForRoomPlacement(ItemStack keyStack, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, int activatedRoomDepth, int highestBranchRoomDepth, List<ResourceLocation> potentialRooms)
 	{
 		if (!level.isClientSide && level instanceof ServerLevel)
 		{
@@ -47,7 +47,7 @@ public class TileDungeonController extends TileBase
 				{
 					return -1;
 				}
-				int placementState = dungeon.addNewRoomToExistingDungeon((ServerLevel) level, this.getBlockPos(), roomType, level.random, activatedDoorPos, doorFacing, activatedDoorType, potentialRooms);
+				int placementState = dungeon.addNewRoomToExistingDungeon((ServerLevel) level, this.getBlockPos(), roomType, level.random, activatedDoorPos, doorFacing, activatedDoorType, potentialRooms, activatedRoomDepth, highestBranchRoomDepth);
 				if (placementState == 0)
 				{
 					// Consume the key!

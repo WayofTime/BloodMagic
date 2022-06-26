@@ -159,6 +159,8 @@ public class Constants
 		public static final String DOOR_TYPES = "door_types";
 		public static final String DOOR = "door";
 		public static final String TYPE = "type";
+		public static final String DEPTH = "room_depth";
+		public static final String MAX_DEPTH = "max_room_depth";
 
 		public static final String ITEM = "item";
 

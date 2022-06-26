@@ -22,6 +22,8 @@ public class TileDungeonSeal extends TileBase
 	public BlockPos doorPos = BlockPos.ZERO;
 	public Direction doorDirection = Direction.NORTH;
 	public String doorType = "";
+	public int activatedRoomDepth;
+	public int highestBranchRoomDepth;
 
 	public List<ResourceLocation> potentialRoomTypes = new ArrayList<>();
 
@@ -45,7 +47,7 @@ public class TileDungeonSeal extends TileBase
 			if (tile instanceof TileDungeonController)
 			{
 				TileDungeonController tileController = (TileDungeonController) tile;
-				int state = tileController.handleRequestForRoomPlacement(heldStack, doorPos, doorDirection, doorType, potentialRoomTypes);
+				int state = tileController.handleRequestForRoomPlacement(heldStack, doorPos, doorDirection, doorType, activatedRoomDepth, highestBranchRoomDepth, potentialRoomTypes);
 
 //				System.out.println("State is: " + state);
 //				System.out.println("")
@@ -59,13 +61,17 @@ public class TileDungeonSeal extends TileBase
 		return 3;
 	}
 
-	public void acceptDoorInformation(BlockPos controllerPos, BlockPos doorPos, Direction doorDirection, String doorType, List<ResourceLocation> potentialRoomTypes)
+	public void acceptDoorInformation(BlockPos controllerPos, BlockPos doorPos, Direction doorDirection, String doorType, int activatedRoomDepth, int highestBranchRoomDepth, List<ResourceLocation> potentialRoomTypes)
 	{
 		this.controllerPos = controllerPos;
 		this.doorPos = doorPos;
 		this.doorDirection = doorDirection;
 		this.doorType = doorType;
 		this.potentialRoomTypes = potentialRoomTypes;
+		this.activatedRoomDepth = activatedRoomDepth;
+		this.highestBranchRoomDepth = highestBranchRoomDepth;
+
+		System.out.println("New block room depth info: " + activatedRoomDepth + "/" + highestBranchRoomDepth);
 	}
 
 	@Override
@@ -95,6 +101,8 @@ public class TileDungeonSeal extends TileBase
 		}
 
 		this.doorType = tag.getString(Constants.NBT.TYPE);
+		activatedRoomDepth = tag.getInt(Constants.NBT.DEPTH);
+		highestBranchRoomDepth = tag.getInt(Constants.NBT.MAX_DEPTH);
 	}
 
 	@Override
@@ -129,6 +137,9 @@ public class TileDungeonSeal extends TileBase
 		}
 
 		tag.putString(Constants.NBT.TYPE, doorType);
+
+		tag.putInt(Constants.NBT.DEPTH, activatedRoomDepth);
+		tag.putInt(Constants.NBT.MAX_DEPTH, highestBranchRoomDepth);
 
 		return tag;
 	}

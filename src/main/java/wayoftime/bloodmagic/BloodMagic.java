@@ -77,6 +77,7 @@ import wayoftime.bloodmagic.ritual.CapabilityRuneType;
 import wayoftime.bloodmagic.ritual.ModRituals;
 import wayoftime.bloodmagic.ritual.RitualManager;
 import wayoftime.bloodmagic.structures.ModDungeons;
+import wayoftime.bloodmagic.structures.ModRoomPools;
 import wayoftime.bloodmagic.util.handler.event.GenericHandler;
 import wayoftime.bloodmagic.util.handler.event.WillHandler;
 
@@ -171,6 +172,7 @@ public class BloodMagic
 //		BloodMagicLootTypeManager.register();
 
 		ModDungeons.init();
+		ModRoomPools.init();
 	}
 
 	private void registerRecipes(RegistryEvent.Register<RecipeSerializer<?>> event)
