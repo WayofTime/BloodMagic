@@ -74,7 +74,10 @@ public class DungeonRoomRegistry
 		if (roomPool == null)
 		{
 			if (DungeonSynthesizer.displayDetailedInformation)
-				System.out.println("There's nothing here...");
+			{
+				System.out.println("There's nothing here... No room pool!");
+				System.out.println("Number of registered room pools: " + roomPoolTable.size());
+			}
 			return null;
 		}
 

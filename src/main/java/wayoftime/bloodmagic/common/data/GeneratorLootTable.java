@@ -355,6 +355,7 @@ public class GeneratorLootTable extends LootTableProvider
 
 			registerNoDropLootTable(BloodMagicBlocks.DUNGEON_CONTROLLER.get());
 			registerNoDropLootTable(BloodMagicBlocks.DUNGEON_SEAL.get());
+			registerNoDropLootTable(BloodMagicBlocks.SPECIAL_DUNGEON_SEAL.get());
 
 			dropSelf(BloodMagicBlocks.TELEPOSER.get());
 

@@ -10,10 +10,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import wayoftime.bloodmagic.common.item.dungeon.IDungeonKey;
 import wayoftime.bloodmagic.common.tile.base.TileBase;
+import wayoftime.bloodmagic.structures.DungeonRoom;
 import wayoftime.bloodmagic.structures.DungeonSynthesizer;
 import wayoftime.bloodmagic.util.Constants;
 
@@ -62,6 +64,34 @@ public class TileDungeonController extends TileBase
 			}
 		}
 		return -1;
+	}
+
+	public int handleRequestForPredesignatedRoomPlacement(ItemStack keyStack, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, int activatedRoomDepth, int highestBranchRoomDepth, List<ResourceLocation> potentialRooms, DungeonRoom room, Rotation rotation, BlockPos roomLocation)
+	{
+		if (!level.isClientSide && level instanceof ServerLevel)
+		{
+			if (!keyStack.isEmpty() && keyStack.getItem() instanceof IDungeonKey)
+			{
+//				ResourceLocation roomType = ((IDungeonKey) keyStack.getItem()).getValidResourceLocation(potentialRooms);
+//				if (roomType == null)
+//				{
+//					return -1;
+//				}
+				boolean didPlace = dungeon.forcePlacementOfRoom((ServerLevel) level, this.getBlockPos(), doorFacing, activatedDoorPos, activatedDoorType, activatedRoomDepth, highestBranchRoomDepth, room, rotation, roomLocation);
+				if (didPlace)
+				{
+					// Consume the key!
+					keyStack.shrink(1);
+					LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(level);
+//					LightningBoltEntity lightning = new LightningBoltEntity(world, pos.getX() + dispX, pos.getY(), pos.getZ() + dispZ);
+					lightningboltentity.setPos(activatedDoorPos.getX(), activatedDoorPos.getY(), activatedDoorPos.getZ());
+					lightningboltentity.setVisualOnly(true);
+					level.addFreshEntity(lightningboltentity);
+				}
+			}
+		}
+
+		return 1;
 	}
 
 	@Override

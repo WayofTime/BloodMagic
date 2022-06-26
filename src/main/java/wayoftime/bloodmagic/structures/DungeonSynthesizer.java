@@ -23,17 +23,17 @@ import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.tile.TileDungeonController;
 import wayoftime.bloodmagic.common.tile.TileDungeonSeal;
+import wayoftime.bloodmagic.common.tile.TileSpecialRoomDungeonSeal;
 import wayoftime.bloodmagic.gson.Serializers;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.util.Constants;
 
 public class DungeonSynthesizer
 {
-	public static boolean displayDetailedInformation = false;
+	public static boolean displayDetailedInformation = true;
 
 	public Map<String, Map<Direction, List<BlockPos>>> availableDoorMasterMap = new HashMap<>(); // Map of doors. The
 																									// Direction
@@ -44,7 +44,7 @@ public class DungeonSynthesizer
 	public List<AreaDescriptor> descriptorList = new ArrayList<>();
 
 	private int activatedDoors = 0;
-	private ResourceLocation specialRoomPool = BloodMagic.rl("room_pools/tier2/mine_entrances");
+//	private ResourceLocation specialRoomPool = BloodMagic.rl("room_pools/tier2/mine_entrances");
 
 	private List<ResourceLocation> specialRoomBuffer = new ArrayList<>();
 	private Map<ResourceLocation, Integer> placementsSinceLastSpecial = new HashMap<>();
@@ -61,12 +61,38 @@ public class DungeonSynthesizer
 			CompoundTag compoundnbt = new CompoundTag();
 			desc.writeToNBT(compoundnbt);
 			listnbt.add(compoundnbt);
-
 		}
 
 		if (!listnbt.isEmpty())
 		{
 			tag.put(Constants.NBT.AREA_DESCRIPTORS, listnbt);
+		}
+
+		ListTag bufferNBTList = new ListTag();
+		for (int i = 0; i < specialRoomBuffer.size(); i++)
+		{
+			CompoundTag compoundnbt = new CompoundTag();
+			compoundnbt.putString(Constants.NBT.ROOM_POOL, specialRoomBuffer.get(i).toString());
+			bufferNBTList.add(compoundnbt);
+		}
+
+		if (!bufferNBTList.isEmpty())
+		{
+			tag.put(Constants.NBT.ROOM_POOL_BUFFER, bufferNBTList);
+		}
+
+		ListTag placementNBTList = new ListTag();
+		for (Entry<ResourceLocation, Integer> entry : placementsSinceLastSpecial.entrySet())
+		{
+			CompoundTag compoundnbt = new CompoundTag();
+			compoundnbt.putString(Constants.NBT.ROOM_POOL, entry.getKey().toString());
+			compoundnbt.putInt(Constants.NBT.VALUE, entry.getValue());
+			placementNBTList.add(compoundnbt);
+		}
+
+		if (!placementNBTList.isEmpty())
+		{
+			tag.put(Constants.NBT.ROOM_POOL_TRACKER, placementNBTList);
 		}
 	}
 
@@ -81,13 +107,19 @@ public class DungeonSynthesizer
 		}
 
 		ListTag listnbt = tag.getList(Constants.NBT.AREA_DESCRIPTORS, 10);
-
-		for (int i = 0; i < listnbt.size(); ++i)
+		for (int i = 0; i < listnbt.size(); i++)
 		{
 			CompoundTag compoundnbt = listnbt.getCompound(i);
 			AreaDescriptor.Rectangle rec = new AreaDescriptor.Rectangle(BlockPos.ZERO, 0);
 			rec.readFromNBT(compoundnbt);
 			descriptorList.add(rec);
+		}
+
+		ListTag bufferNBTList = tag.getList(Constants.NBT.ROOM_POOL_BUFFER, 10);
+		for (int i = 0; i < bufferNBTList.size(); i++)
+		{
+			CompoundTag compoundnbt = listnbt.getCompound(i);
+			specialRoomBuffer.add(new ResourceLocation(compoundnbt.getString(Constants.NBT.ROOM_POOL)));
 		}
 	}
 
@@ -351,7 +383,16 @@ public class DungeonSynthesizer
 		// TODO: Change to a Door Block that contains this info.
 		// Make sure to store the `specialRoomType` for the key to check against; the
 		// '#' character is removed.
-		forcePlacementOfRoom(world, controllerPos, doorFacing, activatedDoorPos, activatedDoorType, roomDepth, highestBranchRoomDepth, room, rotation, roomLocation);
+
+		world.setBlock(doorBlockOffsetPos, BloodMagicBlocks.SPECIAL_DUNGEON_SEAL.get().defaultBlockState(), 3);
+		BlockEntity tile = world.getBlockEntity(doorBlockOffsetPos);
+		if (tile instanceof TileSpecialRoomDungeonSeal)
+		{
+			((TileSpecialRoomDungeonSeal) tile).acceptSpecificDoorInformation(world, controllerPos, specialRoomType, doorFacing, activatedDoorPos, activatedDoorType, roomDepth, highestBranchRoomDepth, room, rotation, roomLocation);
+		}
+
+//		forcePlacementOfRoom(world, controllerPos, doorFacing, activatedDoorPos, activatedDoorType, roomDepth, highestBranchRoomDepth, room, rotation, roomLocation);
+		world.setBlock(activatedDoorPos.below(), Blocks.REDSTONE_BLOCK.defaultBlockState(), 3);
 	}
 
 	/**
@@ -639,10 +680,23 @@ public class DungeonSynthesizer
 
 		if (displayDetailedInformation)
 			System.out.println("Number of activated doors: " + activatedDoors);
-		if (activatedDoors == 3)
+//		if (activatedDoors == 3)
+//		{
+////			specialRoomBuffer.add(specialRoomPool);
+//		}
+		List<ResourceLocation> newSpecialPools = SpecialDungeonRoomPoolRegistry.getSpecialRooms(activatedDoors, currentRoomDepth, placementsSinceLastSpecial, specialRoomBuffer);
+		if (displayDetailedInformation)
+			System.out.println("Number of added pools: " + newSpecialPools.size());
+
+		for (ResourceLocation newSpecialPool : newSpecialPools)
 		{
-//			specialRoomBuffer.add(specialRoomPool);
+			if (!specialRoomBuffer.contains(newSpecialPool))
+			{
+				specialRoomBuffer.add(newSpecialPool);
+			}
 		}
+
+//		specialRoomBuffer.addAll(newSpecialPools);
 	}
 
 	public static DungeonRoom getRandomRoom(ResourceLocation roomType, Random rand)

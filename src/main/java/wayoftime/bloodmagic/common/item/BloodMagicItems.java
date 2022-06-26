@@ -397,6 +397,7 @@ public class BloodMagicItems
 
 	public static final RegistryObject<Item> DUNGEON_CONTROLLER_BLOCK = ITEMS.register("dungeon_controller", () -> new BlockItem(BloodMagicBlocks.DUNGEON_CONTROLLER.get(), new Item.Properties().tab(BloodMagic.TAB)));
 	public static final RegistryObject<Item> DUNGEON_SEAL_BLOCK = ITEMS.register("dungeon_seal", () -> new BlockItem(BloodMagicBlocks.DUNGEON_SEAL.get(), new Item.Properties().tab(BloodMagic.TAB)));
+	public static final RegistryObject<Item> SPECIAL_DUNGEON_SEAL_BLOCK = ITEMS.register("special_dungeon_seal", () -> new BlockItem(BloodMagicBlocks.SPECIAL_DUNGEON_SEAL.get(), new Item.Properties().tab(BloodMagic.TAB)));
 
 	public static final RegistryObject<Item> DUNGEON_TESTER = BASICITEMS.register("dungeon_tester", ItemDungeonTester::new);
 	public static final RegistryObject<Item> DUNGEON_SIMPLE_KEY = BASICITEMS.register("simplekey", () -> new ItemDungeonKey("simplekey", "tier1"));

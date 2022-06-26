@@ -199,6 +199,7 @@ public class BloodMagicBlocks
 
 	public static final RegistryObject<Block> DUNGEON_CONTROLLER = BLOCKS.register("dungeon_controller", () -> new BlockDungeonController());
 	public static final RegistryObject<Block> DUNGEON_SEAL = BLOCKS.register("dungeon_seal", () -> new BlockDungeonSeal());
+	public static final RegistryObject<Block> SPECIAL_DUNGEON_SEAL = BLOCKS.register("special_dungeon_seal", () -> new BlockSpecialDungeonSeal());
 	public static final RegistryObject<Block> SPIKES = BLOCKS.register("spikes", () -> new BlockSpikes(Properties.of(Material.METAL).strength(2.0F, 5.0F).sound(SoundType.CHAIN).noOcclusion().noCollission().requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> DUNGEON_SPIKE_TRAP = BLOCKS.register("dungeon_spike_trap", () -> new BlockSpikeTrap(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 

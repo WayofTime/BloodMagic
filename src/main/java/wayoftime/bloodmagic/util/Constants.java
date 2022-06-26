@@ -161,6 +161,15 @@ public class Constants
 		public static final String TYPE = "type";
 		public static final String DEPTH = "room_depth";
 		public static final String MAX_DEPTH = "max_room_depth";
+		public static final String ROOM_POOL_BUFFER = "room_pool_buffer";
+		public static final String ROOM_POOL_TRACKER = "room_pool_tracker";
+		public static final String ROOM_POOL = "room_pool";
+
+		public static final String ROOM_LOCATION = "room_location";
+		public static final String ROOM_NAME = "room_name";
+		public static final String ROTATION = "rotation";
+
+		public static final String VALUE = "value";
 
 		public static final String ITEM = "item";
 

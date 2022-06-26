@@ -45,5 +45,6 @@ public class BloodMagicTileEntities
 
 	public static final RegistryObject<BlockEntityType<TileDungeonController>> DUNGEON_CONTROLLER_TYPE = TILE_ENTITIES.register("dungeon_controller", () -> BlockEntityType.Builder.of(TileDungeonController::new, BloodMagicBlocks.DUNGEON_CONTROLLER.get()).build(null));
 	public static final RegistryObject<BlockEntityType<TileDungeonSeal>> DUNGEON_SEAL_TYPE = TILE_ENTITIES.register("dungeon_seal", () -> BlockEntityType.Builder.of(TileDungeonSeal::new, BloodMagicBlocks.DUNGEON_SEAL.get()).build(null));
+	public static final RegistryObject<BlockEntityType<TileSpecialRoomDungeonSeal>> SPECIAL_DUNGEON_SEAL_TYPE = TILE_ENTITIES.register("special_dungeon_seal", () -> BlockEntityType.Builder.of(TileSpecialRoomDungeonSeal::new, BloodMagicBlocks.DUNGEON_SEAL.get()).build(null));
 	public static final RegistryObject<BlockEntityType<TileInversionPillar>> INVERSION_PILLAR_TYPE = TILE_ENTITIES.register("inversion_pillar", () -> BlockEntityType.Builder.of(TileInversionPillar::new, BloodMagicBlocks.INVERSION_PILLAR.get()).build(null));
 }

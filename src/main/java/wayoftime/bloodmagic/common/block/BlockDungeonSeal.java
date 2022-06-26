@@ -40,19 +40,7 @@ public class BlockDungeonSeal extends Block implements EntityBlock
 		ItemStack playerItem = player.getItemInHand(hand);
 
 		int result = seal.requestRoomFromController(playerItem);
-//
-//		if (playerItem.getItem() instanceof IAltarReader)// || playerItem.getItem() instanceof IAltarManipulator)
-//		{
-//			playerItem.getItem().onItemRightClick(world, player, hand);
-//			return ActionResultType.SUCCESS;
-//		}
-//
-//		if (Utils.insertItemToTile(altar, player))
-//			altar.startCycle();
-//		else
-//			altar.setActive();
-//
-//		world.notifyBlockUpdate(pos, state, state, 3);
+
 		return InteractionResult.SUCCESS;
 	}
 }
