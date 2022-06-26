@@ -7,6 +7,7 @@
   "creative_tab": "bloodmagictab",
   "model": "bloodmagic:book",
   "show_progress": false,
+  "use_resource_pack": true,
   "macros": {
 	"$(water)": "$(#0000AA)",
 	"$(air)": "$(#AAAA00)",
