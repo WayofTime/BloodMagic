@@ -29,6 +29,7 @@ import wayoftime.bloodmagic.common.tile.TileDungeonSeal;
 import wayoftime.bloodmagic.common.tile.TileSpecialRoomDungeonSeal;
 import wayoftime.bloodmagic.gson.Serializers;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
+import wayoftime.bloodmagic.structures.rooms.DungeonRoomPlacement;
 import wayoftime.bloodmagic.util.Constants;
 
 public class DungeonSynthesizer
@@ -574,7 +575,7 @@ public class DungeonSynthesizer
 		return true;
 	}
 
-	public boolean attemptPlacementOfRandomRoom(ServerLevel world, BlockPos controllerPos, ResourceLocation roomType, Random rand, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, int previousRoomDepth, int previousMaxDepth, List<ResourceLocation> potentialRooms, boolean extendCorriDoors)
+	public DungeonRoomPlacement getRandomPlacement(ServerLevel world, BlockPos controllerPos, ResourceLocation roomType, Random rand, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, int previousRoomDepth, int previousMaxDepth, List<ResourceLocation> potentialRooms, boolean extendCorriDoors)
 	{
 		StructurePlaceSettings settings = new StructurePlaceSettings();
 		Mirror mir = Mirror.NONE;
@@ -590,7 +591,7 @@ public class DungeonSynthesizer
 		settings.setKnownShape(true);
 
 		DungeonRoom placedRoom = null;
-		Pair<Direction, BlockPos> activatedDoor = Pair.of(doorFacing, activatedDoorPos);
+
 		Pair<Direction, BlockPos> addedDoor = null;
 		BlockPos roomLocation = null;
 
@@ -634,27 +635,45 @@ public class DungeonSynthesizer
 				settings.addProcessor(new StoneToOreProcessor(testingRoom.oreDensity));
 
 //				roomMap.put(roomLocation, Pair.of(testingRoom, settings.copy()));
-				descriptorList.addAll(descriptors);
+
 				addedDoor = Pair.of(oppositeDoorFacing, testDoor.offset(roomLocation));
 
 				placedRoom = testingRoom;
 
-				break;
+				return new DungeonRoomPlacement(testingRoom, world, settings, roomLocation, addedDoor);
+//				break;
 			}
 		}
 
 		if (placedRoom == null)
 		{
 			// Did not manage to place the room.
+			return null;
+		}
+
+		return null;
+	}
+
+	public boolean attemptPlacementOfRandomRoom(ServerLevel world, BlockPos controllerPos, ResourceLocation roomType, Random rand, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, int previousRoomDepth, int previousMaxDepth, List<ResourceLocation> potentialRooms, boolean extendCorriDoors)
+	{
+		Pair<Direction, BlockPos> activatedDoor = Pair.of(doorFacing, activatedDoorPos);
+
+		DungeonRoomPlacement placement = this.getRandomPlacement(world, controllerPos, roomType, rand, activatedDoorPos, doorFacing, activatedDoorType, previousRoomDepth, previousMaxDepth, potentialRooms, extendCorriDoors);
+		if (placement == null)
+		{
 			return false;
 		}
 
-		placedRoom.placeStructureAtPosition(rand, settings, world, roomLocation);
+		Pair<Direction, BlockPos> addedDoor = placement.getEntrance();
+
+		descriptorList.addAll(placement.getAreaDescriptors());
+
+		placement.placeStructure();
 
 		activatedDoors++;
 		checkSpecialRoomRequirements(previousRoomDepth);
 
-		for (String doorType : placedRoom.doorMap.keySet())
+		for (String doorType : placement.getAllRoomTypes())
 		{
 			if (!availableDoorMasterMap.containsKey(doorType))
 			{
@@ -670,7 +689,8 @@ public class DungeonSynthesizer
 				}
 
 				List<BlockPos> doorList = availableDoorMap.get(facing);
-				doorList.addAll(placedRoom.getDoorOffsetsForFacing(settings, doorType, facing, roomLocation));
+//				doorList.addAll(placedRoom.getDoorOffsetsForFacing(settings, doorType, facing, roomLocation));
+				doorList.addAll(placement.getDoorOffsetsForFacing(doorType, facing));
 			}
 
 			if (doorType.equals(activatedDoorType))
@@ -689,7 +709,8 @@ public class DungeonSynthesizer
 			}
 		}
 
-		List<DungeonDoor> doorTypeMap = placedRoom.getPotentialConnectedRoomTypes(settings, roomLocation);
+//		List<DungeonDoor> doorTypeMap = placedRoom.getPotentialConnectedRoomTypes(settings, roomLocation);
+		List<DungeonDoor> doorTypeMap = placement.getPotentialConnectedRoomTypes();
 
 		Collections.shuffle(doorTypeMap);
 		boolean addedHigherPath = false;
