@@ -188,7 +188,7 @@ public class DungeonSynthesizer
 //		System.out.println("Size of doorTypeMap: " + doorTypeMap.size());
 		for (DungeonDoor dungeonDoor : doorTypeMap)
 		{
-			this.addNewDoorBlock(world, spawningPosition, dungeonDoor.doorPos, dungeonDoor.doorDir, dungeonDoor.doorType, 0, 0, dungeonDoor.getRoomList(), dungeonDoor.getSpecialRoomList());
+			this.addNewDoorBlock(dungeonDoor, world, spawningPosition, dungeonDoor.doorPos, dungeonDoor.doorDir, dungeonDoor.doorType, 0, 0, dungeonDoor.getRoomList(), dungeonDoor.getSpecialRoomList());
 		}
 
 		BlockPos playerPos = initialRoom.getPlayerSpawnLocationForPlacement(settings, roomPlacementPosition);
@@ -235,7 +235,7 @@ public class DungeonSynthesizer
 		return false;
 	}
 
-	public boolean addNewDoorBlock(ServerLevel world, BlockPos controllerPos, BlockPos doorBlockPos, Direction doorFacing, String doorType, int newRoomDepth, int highestBranchRoomDepth, List<ResourceLocation> potentialRoomTypes, List<ResourceLocation> specialRoomTypes)
+	public boolean addNewDoorBlock(DungeonDoor door, ServerLevel world, BlockPos controllerPos, BlockPos doorBlockPos, Direction doorFacing, String doorType, int newRoomDepth, int highestBranchRoomDepth, List<ResourceLocation> potentialRoomTypes, List<ResourceLocation> specialRoomTypes)
 	{
 		if (highestBranchRoomDepth < newRoomDepth)
 		{
@@ -244,26 +244,29 @@ public class DungeonSynthesizer
 
 		BlockPos doorBlockOffsetPos = doorBlockPos.relative(doorFacing).relative(Direction.UP, 2);
 
-		List<BlockPos> fillerList = new ArrayList<>();
-
 //		if (isBlockInDescriptor(doorBlockOffsetPos))
 //		{
 //			return false;
 //		}
 //		world.setBlockState(doorBlockOffsetPos, Blocks.REDSTONE_BLOCK.getDefaultState(), 3);
-		Direction rightDirection = doorFacing.getClockWise();
-		for (int i = -1; i <= 1; i++)
-		{
-			for (int j = -1; j <= 1; j++)
-			{
-				if (i == 0 && j == 0)
-				{
-					continue;
-				}
 
-				fillerList.add(doorBlockOffsetPos.relative(rightDirection, i).relative(Direction.UP, j));
-			}
-		}
+//		List<BlockPos> fillerList = new ArrayList<>();
+//		Direction rightDirection = doorFacing.getClockWise();
+//		for (int i = -1; i <= 1; i++)
+//		{
+//			for (int j = -1; j <= 1; j++)
+//			{
+//				if (i == 0 && j == 0)
+//				{
+//					continue;
+//				}
+//
+//				fillerList.add(doorBlockOffsetPos.relative(rightDirection, i).relative(Direction.UP, j));
+//			}
+//		}
+
+		List<BlockPos> fillerList = door.descriptor.getContainedPositions(doorBlockOffsetPos);
+		System.out.println("Area descriptor: " + door.descriptor.getAABB(BlockPos.ZERO) + "\nFiller list size: " + fillerList.size());
 
 		boolean doPlaceDoor = !isAnyBlockInDescriptor(fillerList);
 		if (!doPlaceDoor)
@@ -568,7 +571,7 @@ public class DungeonSynthesizer
 			{
 				if (displayDetailedInformation)
 					System.out.println("Room list: " + dungeonDoor.getRoomList());
-				this.addNewDoorBlock(world, controllerPos, dungeonDoor.doorPos, dungeonDoor.doorDir, dungeonDoor.doorType, newRoomDepth, previousMaxDepth, dungeonDoor.getRoomList(), dungeonDoor.getSpecialRoomList());
+				this.addNewDoorBlock(dungeonDoor, world, controllerPos, dungeonDoor.doorPos, dungeonDoor.doorDir, dungeonDoor.doorType, newRoomDepth, previousMaxDepth, dungeonDoor.getRoomList(), dungeonDoor.getSpecialRoomList());
 			}
 		}
 
@@ -724,7 +727,7 @@ public class DungeonSynthesizer
 
 			if (extendCorriDoors)
 			{
-				this.addNewDoorBlock(world, controllerPos, dungeonDoor.doorPos, dungeonDoor.doorDir, activatedDoorType, previousRoomDepth, previousMaxDepth, potentialRooms, new ArrayList<>());
+				this.addNewDoorBlock(dungeonDoor, world, controllerPos, dungeonDoor.doorPos, dungeonDoor.doorDir, activatedDoorType, previousRoomDepth, previousMaxDepth, potentialRooms, new ArrayList<>());
 			} else
 			{
 				int newRoomDepth = previousRoomDepth + (addedHigherPath ? world.random.nextInt(2) * 2 - 1 : 1);
@@ -732,7 +735,11 @@ public class DungeonSynthesizer
 				if (displayDetailedInformation)
 					System.out.println("Room list: " + dungeonDoor.getRoomList());
 
-				if (this.addNewDoorBlock(world, controllerPos, dungeonDoor.doorPos, dungeonDoor.doorDir, dungeonDoor.doorType, newRoomDepth, previousMaxDepth, dungeonDoor.getRoomList(), dungeonDoor.getSpecialRoomList()))
+				List<ResourceLocation> roomList = dungeonDoor.isDeadend(newRoomDepth, previousMaxDepth)
+						? dungeonDoor.getDeadendRoomList()
+						: dungeonDoor.getRoomList();
+
+				if (this.addNewDoorBlock(dungeonDoor, world, controllerPos, dungeonDoor.doorPos, dungeonDoor.doorDir, dungeonDoor.doorType, newRoomDepth, previousMaxDepth, roomList, dungeonDoor.getSpecialRoomList()))
 				{
 					addedHigherPath = true;
 				} else

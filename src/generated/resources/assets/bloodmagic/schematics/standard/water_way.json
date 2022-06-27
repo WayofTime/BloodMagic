@@ -1,0 +1,161 @@
+{
+  "key": null,
+  "dungeonWeight": 1,
+  "structureMap": {
+    "bloodmagic:standard/test_waterway": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  },
+  "doorMap": {
+    "default": {
+      "east": [
+        {
+          "x": 11,
+          "y": 3,
+          "z": 5
+        }
+      ]
+    },
+    "waterway_l": {
+      "south": [
+        {
+          "x": 6,
+          "y": 3,
+          "z": 10
+        }
+      ]
+    },
+    "waterway_r": {
+      "north": [
+        {
+          "x": 6,
+          "y": 3,
+          "z": 0
+        }
+      ]
+    }
+  },
+  "descriptorList": [
+    {
+      "minimumOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "maximumOffset": {
+        "x": 12,
+        "y": 8,
+        "z": 11
+      },
+      "currentPosition": null,
+      "blockPosCache": [],
+      "cachedPosition": null,
+      "cache": true
+    }
+  ],
+  "oreDensity": 0.0,
+  "spawnLocation": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "controllerOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "portalOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "indexToDoorMap": {
+    "1": [
+      {
+        "x": 11,
+        "y": 3,
+        "z": 5
+      }
+    ],
+    "2": [
+      {
+        "x": 6,
+        "y": 3,
+        "z": 0
+      }
+    ],
+    "3": [
+      {
+        "x": 6,
+        "y": 3,
+        "z": 10
+      }
+    ]
+  },
+  "indexToRoomTypeMap": {
+    "1": [
+      "bloodmagic:room_pools/tier2/standard_rooms",
+      "#bloodmagic:room_pools/tier2/mine_entrances"
+    ],
+    "2": [
+      "bloodmagic:room_pools/tier2/standard_rooms",
+      "#bloodmagic:room_pools/tier2/mine_entrances"
+    ],
+    "3": [
+      "bloodmagic:room_pools/tier2/standard_rooms",
+      "#bloodmagic:room_pools/tier2/mine_entrances"
+    ]
+  },
+  "requiredDoorMap": {
+    "waterway_l": [
+      {
+        "x": 6,
+        "y": 3,
+        "z": 0
+      }
+    ],
+    "waterway_r": [
+      {
+        "x": 6,
+        "y": 3,
+        "z": 10
+      }
+    ]
+  },
+  "doorCoverMap": {
+    "2": {
+      "minimumOffset": {
+        "x": -6,
+        "y": -4,
+        "z": 0
+      },
+      "maximumOffset": {
+        "x": 2,
+        "y": 4,
+        "z": 1
+      },
+      "currentPosition": null,
+      "blockPosCache": [],
+      "cachedPosition": null,
+      "cache": true
+    },
+    "3": {
+      "minimumOffset": {
+        "x": -1,
+        "y": -4,
+        "z": 0
+      },
+      "maximumOffset": {
+        "x": 7,
+        "y": 4,
+        "z": 1
+      },
+      "currentPosition": null,
+      "blockPosCache": [],
+      "cachedPosition": null,
+      "cache": true
+    }
+  }
+}

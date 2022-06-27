@@ -11,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
@@ -42,7 +43,8 @@ public class DungeonRoom
 	public Map<Integer, List<BlockPos>> indexToDoorMap = new HashMap<>();
 	public Map<Integer, List<String>> indexToRoomTypeMap = new HashMap<>();
 
-	public Map<BlockPos, String> requiredDoorMap = new HashMap<>();
+	public Map<String, List<BlockPos>> requiredDoorMap = new HashMap<>();
+	public Map<Integer, AreaDescriptor.Rectangle> doorCoverMap = new HashMap<>();
 
 	public DungeonRoom(Map<String, BlockPos> structureMap, Map<String, Map<Direction, List<BlockPos>>> doorMap, List<AreaDescriptor.Rectangle> descriptorList)
 	{
@@ -66,6 +68,16 @@ public class DungeonRoom
 	{
 		descriptorList.add(descriptor);
 		return this;
+	}
+
+	public DungeonRoom addNonstandardDoor(BlockPos pos, Direction dir, String thisDoorType, int index, String wantedDoorType)
+	{
+		if (!requiredDoorMap.containsKey(wantedDoorType))
+		{
+			requiredDoorMap.put(wantedDoorType, new ArrayList<>());
+		}
+		requiredDoorMap.get(wantedDoorType).add(pos);
+		return addDoor(pos, dir, thisDoorType, index);
 	}
 
 	public DungeonRoom addDoor(BlockPos pos, Direction dir, String doorType, int index)
@@ -118,6 +130,11 @@ public class DungeonRoom
 		return this.addRoomPool(index, "#" + roomPool.toString());
 	}
 
+	public DungeonRoom addDeadendRoomPool(int index, ResourceLocation roomPool)
+	{
+		return this.addRoomPool(index, "$" + roomPool.toString());
+	}
+
 	public DungeonRoom addRoomPool(int index, String roomPool)
 	{
 		if (!indexToRoomTypeMap.containsKey(index))
@@ -136,18 +153,84 @@ public class DungeonRoom
 		return this;
 	}
 
+	public BlockPos getOriginalBlockPos(BlockPos worldDoorPos, StructurePlaceSettings settings, BlockPos offset)
+	{
+		StructurePlaceSettings oppositeSettings = settings.copy();
+		switch (settings.getRotation())
+		{
+		case CLOCKWISE_90:
+			oppositeSettings.setRotation(Rotation.COUNTERCLOCKWISE_90);
+			break;
+		case COUNTERCLOCKWISE_90:
+			oppositeSettings.setRotation(Rotation.CLOCKWISE_90);
+			break;
+		default:
+			break;
+		}
+
+		return StructureTemplate.calculateRelativePosition(oppositeSettings, worldDoorPos).subtract(offset);
+	}
+
+	public int getIndexForDoor(BlockPos originalDoorPos)
+	{
+		for (Entry<Integer, List<BlockPos>> entry : indexToDoorMap.entrySet())
+		{
+			if (entry.getValue().contains(originalDoorPos))
+			{
+				return entry.getKey();
+			}
+		}
+
+		return 1;
+	}
+
+	public DungeonRoom registerDoorFill(int index, AreaDescriptor.Rectangle desc)
+	{
+		doorCoverMap.put(index, desc);
+		return this;
+	}
+
+	public AreaDescriptor getDoorFillDescriptor(BlockPos originalDoorPos)
+	{
+		int index = getIndexForDoor(originalDoorPos);
+		if (doorCoverMap.containsKey(index))
+		{
+			return doorCoverMap.get(index);
+		}
+
+		return new AreaDescriptor.Rectangle(new BlockPos(-1, -1, 0), 3, 3, 1);
+	}
+
+	public AreaDescriptor getDoorFillDescriptor(StructurePlaceSettings settings, BlockPos originalDoorPos, BlockPos newDoorPos, Direction dir)
+	{
+		StructurePlaceSettings rotatedSettings = settings.copy();
+		rotatedSettings.setRotation(rotatedSettings.getRotation().getRotated(getRotationForDirectionFromNorth(dir)));
+		AreaDescriptor desc = getDoorFillDescriptor(originalDoorPos);
+
+		return desc.rotateDescriptor(rotatedSettings);
+	}
+
+	public Rotation getRotationForDirectionFromNorth(Direction dir)
+	{
+		switch (dir)
+		{
+		case EAST:
+			return Rotation.CLOCKWISE_90;
+		case SOUTH:
+			return Rotation.CLOCKWISE_180;
+		case WEST:
+			return Rotation.COUNTERCLOCKWISE_90;
+		default:
+			return Rotation.NONE;
+		}
+	}
+
 	// REEEEEEEEEEEEEEEEE
+	// Change this to have the stored `doorType` be the one it wants to connect to
 	public List<DungeonDoor> getPotentialConnectedRoomTypes(StructurePlaceSettings settings, BlockPos offset)
 	{
 		// This DungeonDoor is stored in the door block.
 		List<DungeonDoor> dungeonDoorList = new ArrayList<>();
-
-//		Map<Integer, List<BlockPos>> rotatedIndexToDoorMap = new HashMap<>();
-//		for (Entry<Integer, List<BlockPos>> entry : indexToDoorMap.entrySet())
-//		{
-//			List<BlockPos> rotatedBlockPosList = new ArrayList<>();
-//			
-//		}
 
 		for (Entry<String, Map<Direction, List<BlockPos>>> entry : doorMap.entrySet())
 		{
@@ -169,7 +252,8 @@ public class DungeonRoom
 						List<String> roomTypeList = new ArrayList<String>();
 						for (BlockPos doorPos : doorList)
 						{
-							dungeonDoorList.add(new DungeonDoor(StructureTemplate.calculateRelativePosition(settings, doorPos).offset(offset), rotatedFacing, doorType, roomTypeList));
+							BlockPos newDoorPos = StructureTemplate.calculateRelativePosition(settings, doorPos).offset(offset);
+							dungeonDoorList.add(new DungeonDoor(newDoorPos, rotatedFacing, doorType, roomTypeList, getDoorFillDescriptor(settings, doorPos, newDoorPos, originalFacing)));
 						}
 
 						continue;
@@ -181,26 +265,16 @@ public class DungeonRoom
 						List<BlockPos> indexedDoorList = rotatedIndexEntry.getValue();
 						for (BlockPos indexPos : indexedDoorList)
 						{
+							// Check if we are on the right Type
 							if (doorList.contains(indexPos))
 							{
-								dungeonDoorList.add(new DungeonDoor(StructureTemplate.calculateRelativePosition(settings, indexPos).offset(offset), rotatedFacing, doorType, roomTypeList));
+								String requiredType = getRequiredDoorType(doorType, indexPos);
+
+								BlockPos newDoorPos = StructureTemplate.calculateRelativePosition(settings, indexPos).offset(offset);
+								dungeonDoorList.add(new DungeonDoor(newDoorPos, rotatedFacing, requiredType, roomTypeList, getDoorFillDescriptor(settings, indexPos, newDoorPos, originalFacing)));
 							}
 						}
 					}
-
-//					for (BlockPos doorPos : doorList)
-//					{
-//						int roomTypeIndex = doorToIndexMap == null ? -1 : doorToIndexMap.get(doorPos);
-//						if (roomTypeIndex == -1)
-//						{
-//							dungeonDoorList.add(new DungeonDoor(Template.transformedBlockPos(settings, doorPos).add(offset), rotatedFacing, doorType, new ArrayList<>()));
-////							offsetMap.put(Pair.of(rotatedFacing, Template.transformedBlockPos(settings, doorPos).add(offset)), new ArrayList<>());
-//							continue;
-//						}
-//						List<String> roomTypeList = indexToRoomTypeMap.get(roomTypeIndex);
-////						offsetMap.put(Pair.of(rotatedFacing, Template.transformedBlockPos(settings, doorPos).add(offset)), roomTypeList);
-//						dungeonDoorList.add(new DungeonDoor(Template.transformedBlockPos(settings, doorPos).add(offset), rotatedFacing, doorType, roomTypeList));
-//					}
 				}
 			}
 		}
@@ -208,10 +282,19 @@ public class DungeonRoom
 		return dungeonDoorList;
 	}
 
-//	public Pair<Rotation, DungeonDoor> getRandomDoor(BlockPos doorPos, Direction doorDir, String doorType)
-//	{
-//
-//	}
+	public String getRequiredDoorType(String type, BlockPos indexPos)
+	{
+
+		for (Entry<String, List<BlockPos>> entry : requiredDoorMap.entrySet())
+		{
+			if (entry.getValue().contains(indexPos))
+			{
+				return entry.getKey();
+			}
+		}
+
+		return type;
+	}
 
 	public List<AreaDescriptor> getAreaDescriptors(StructurePlaceSettings settings, BlockPos offset)
 	{

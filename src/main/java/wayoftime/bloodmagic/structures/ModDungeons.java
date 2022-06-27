@@ -18,8 +18,12 @@ public class ModDungeons
 	public static ResourceLocation MINI_FARM = BloodMagic.rl("mini_dungeon/farm");
 	public static ResourceLocation MINI_PORTAL = BloodMagic.rl("mini_dungeon/portal_nether");
 	public static ResourceLocation MINI_CRYPT = BloodMagic.rl("mini_dungeon/crypt");
+	public static ResourceLocation WATER_WAY = BloodMagic.rl("standard/water_way");
+
 	public static ResourceLocation MINI_ENTRANCE = BloodMagic.rl("t3_entrance");
 	public static ResourceLocation STANDARD_ENTRANCE = BloodMagic.rl("standard_entrance");
+
+	public static ResourceLocation DEFAULT_DEADEND = BloodMagic.rl("default_deadend");
 
 	public static void init()
 	{
@@ -37,6 +41,7 @@ public class ModDungeons
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(STRAIGHT_CORRIDOR);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(OVERLAPPED_CORRIDOR);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(SPIRAL_STAIRCASE);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(WATER_WAY);
 
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINI_LIBRARY);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINI_ARMOURY);
@@ -46,5 +51,7 @@ public class ModDungeons
 
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINI_ENTRANCE);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(STANDARD_ENTRANCE);
+
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(DEFAULT_DEADEND);
 	}
 }

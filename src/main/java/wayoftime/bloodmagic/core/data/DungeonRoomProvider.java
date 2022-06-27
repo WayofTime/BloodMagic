@@ -19,6 +19,7 @@ import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.gson.Serializers;
+import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.ritual.AreaDescriptor.Rectangle;
 import wayoftime.bloodmagic.structures.DungeonRoom;
 import wayoftime.bloodmagic.structures.ModDungeons;
@@ -51,6 +52,7 @@ public class DungeonRoomProvider implements DataProvider
 
 		Map<ResourceLocation, Integer> standardDungeonRooms = new HashMap<>();
 		standardDungeonRooms.put(ModDungeons.ORE_HOLD_1, 1);
+		standardDungeonRooms.put(ModDungeons.WATER_WAY, 1);
 
 		// Special RoomPools
 		Map<ResourceLocation, Integer> mineEntrances = new HashMap<>();
@@ -63,6 +65,10 @@ public class DungeonRoomProvider implements DataProvider
 		Map<ResourceLocation, Integer> standardDungeonEntrances = new HashMap<>();
 		standardDungeonEntrances.put(ModDungeons.STANDARD_ENTRANCE, 1);
 
+		// Deadends
+		Map<ResourceLocation, Integer> defaultDeadends = new HashMap<>();
+		defaultDeadends.put(ModDungeons.DEFAULT_DEADEND, 1);
+
 		// Registration
 		addRoomPool(cache, connectiveCorridors, ModRoomPools.CONNECTIVE_CORRIDORS);
 		addRoomPool(cache, miniDungeonRooms, ModRoomPools.MINI_DUNGEON);
@@ -72,6 +78,8 @@ public class DungeonRoomProvider implements DataProvider
 
 		addRoomPool(cache, miniDungeonEntrances, ModRoomPools.MINI_DUNGEON_ENTRANCES);
 		addRoomPool(cache, standardDungeonEntrances, ModRoomPools.STANDARD_DUNGEON_ENTRANCES);
+
+		addRoomPool(cache, defaultDeadends, ModRoomPools.DEFAULT_DEADEND);
 	}
 
 	public void loadDungeons(HashCache cache)
@@ -134,6 +142,22 @@ public class DungeonRoomProvider implements DataProvider
 		mineEntrance.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
 		mineEntrance.addNormalRoomPool(2, ModRoomPools.STANDARD_ROOMS);
 
+		DungeonRoom waterway = new DungeonRoom().addStructure("bloodmagic:standard/test_waterway", new BlockPos(0, 0, 0)).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(12, 8, 11)));
+		waterway.addDoor(new BlockPos(11, 3, 5), Direction.EAST, "default", 1);
+		waterway.addNonstandardDoor(new BlockPos(6, 3, 0), Direction.NORTH, "waterway_r", 2, "waterway_l");
+		waterway.addNonstandardDoor(new BlockPos(6, 3, 10), Direction.SOUTH, "waterway_l", 3, "waterway_r");
+		waterway.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
+		waterway.addSpecialRoomPool(1, ModRoomPools.MINE_ENTRANCES);
+		waterway.addNormalRoomPool(2, ModRoomPools.STANDARD_ROOMS);
+		waterway.addSpecialRoomPool(2, ModRoomPools.MINE_ENTRANCES);
+		waterway.addNormalRoomPool(3, ModRoomPools.STANDARD_ROOMS);
+		waterway.addSpecialRoomPool(3, ModRoomPools.MINE_ENTRANCES);
+		waterway.registerDoorFill(2, new AreaDescriptor.Rectangle(new BlockPos(-6, -4, 0), 8, 8, 1));
+		waterway.registerDoorFill(3, new AreaDescriptor.Rectangle(new BlockPos(-1, -4, 0), 8, 8, 1));
+
+		DungeonRoom defaultDeadend = new DungeonRoom().addStructure("bloodmagic:standard/default_deadend", new BlockPos(0, 0, 0)).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(7, 6, 7)));
+		defaultDeadend.addDoor(new BlockPos(3, 0, 0), Direction.NORTH, "default", 1);
+
 		addDungeonRoom(cache, miniArmoury, ModDungeons.MINI_ARMOURY);
 		addDungeonRoom(cache, miniCrypt, ModDungeons.MINI_CRYPT);
 		addDungeonRoom(cache, miniFarm, ModDungeons.MINI_FARM);
@@ -147,7 +171,10 @@ public class DungeonRoomProvider implements DataProvider
 		addDungeonRoom(cache, straightCorridor, ModDungeons.T_CORRIDOR);
 
 		addDungeonRoom(cache, oreHold, ModDungeons.ORE_HOLD_1);
+		addDungeonRoom(cache, waterway, ModDungeons.WATER_WAY);
 		addDungeonRoom(cache, mineEntrance, ModDungeons.MINE_ENTRANCE);
+
+		addDungeonRoom(cache, defaultDeadend, ModDungeons.DEFAULT_DEADEND);
 //		DungeonRoom dungeonRoom = Serializers.GSON.fromJson(Resources.toString(dungeonURL, Charsets.UTF_8), DungeonRoom.class);
 
 		registerStarterRooms(cache);

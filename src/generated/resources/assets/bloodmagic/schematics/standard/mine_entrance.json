@@ -91,5 +91,6 @@
       "bloodmagic:room_pools/tier2/standard_rooms"
     ]
   },
-  "requiredDoorMap": {}
+  "requiredDoorMap": {},
+  "doorCoverMap": {}
 }
