@@ -2,40 +2,26 @@
   "key": null,
   "dungeonWeight": 1,
   "structureMap": {
-    "bloodmagic:four_way_corridor": {
+    "bloodmagic:standard/mine_pit": {
       "x": 0,
       "y": 0,
       "z": 0
     }
   },
   "doorMap": {
-    "default": {
+    "mine": {
       "south": [
         {
-          "x": 5,
-          "y": 0,
-          "z": 10
-        }
-      ],
-      "east": [
-        {
-          "x": 10,
-          "y": 0,
-          "z": 5
+          "x": 9,
+          "y": 8,
+          "z": 21
         }
       ],
       "north": [
         {
-          "x": 5,
-          "y": 0,
+          "x": 9,
+          "y": 8,
           "z": 0
-        }
-      ],
-      "west": [
-        {
-          "x": 0,
-          "y": 0,
-          "z": 5
         }
       ]
     }
@@ -48,9 +34,9 @@
         "z": 0
       },
       "maximumOffset": {
-        "x": 11,
-        "y": 6,
-        "z": 11
+        "x": 19,
+        "y": 16,
+        "z": 22
       },
       "currentPosition": null,
       "blockPosCache": [],
@@ -58,7 +44,7 @@
       "cache": true
     }
   ],
-  "oreDensity": 0.0,
+  "oreDensity": 0.1,
   "spawnLocation": {
     "x": 0,
     "y": 0,
@@ -77,28 +63,39 @@
   "indexToDoorMap": {
     "1": [
       {
-        "x": 5,
-        "y": 0,
+        "x": 9,
+        "y": 8,
         "z": 0
       },
       {
-        "x": 5,
-        "y": 0,
-        "z": 10
-      },
-      {
-        "x": 0,
-        "y": 0,
-        "z": 5
-      },
-      {
-        "x": 10,
-        "y": 0,
-        "z": 5
+        "x": 9,
+        "y": 8,
+        "z": 21
       }
     ]
   },
-  "indexToRoomTypeMap": {},
+  "indexToRoomTypeMap": {
+    "1": [
+      "bloodmagic:room_pools/tier2/mine_rooms"
+    ]
+  },
   "requiredDoorMap": {},
-  "doorCoverMap": {}
+  "doorCoverMap": {
+    "1": {
+      "minimumOffset": {
+        "x": -2,
+        "y": -2,
+        "z": 0
+      },
+      "maximumOffset": {
+        "x": 3,
+        "y": 3,
+        "z": 1
+      },
+      "currentPosition": null,
+      "blockPosCache": [],
+      "cachedPosition": null,
+      "cache": true
+    }
+  }
 }

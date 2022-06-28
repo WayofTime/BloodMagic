@@ -88,7 +88,7 @@
       "bloodmagic:room_pools/tier2/standard_rooms"
     ],
     "2": [
-      "bloodmagic:room_pools/tier2/standard_rooms"
+      "bloodmagic:room_pools/tier2/mine_rooms"
     ]
   },
   "requiredDoorMap": {},

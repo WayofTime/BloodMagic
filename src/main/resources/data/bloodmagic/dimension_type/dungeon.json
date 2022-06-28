@@ -13,5 +13,6 @@
   "bed_works": true,
   "has_skylight": true,
   "has_ceiling": false,
-  "ultrawarm": false
+  "ultrawarm": false,
+  "fixed_time" : 18000
 }

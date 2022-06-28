@@ -13,6 +13,8 @@ public class ModRoomPools
 	public static ResourceLocation MINE_ENTRANCES = BloodMagic.rl("room_pools/tier2/mine_entrances");
 	public static ResourceLocation STANDARD_DEADEND = BloodMagic.rl("room_pools/tier2/standard_deadend");
 
+	public static ResourceLocation MINE_ROOMS = BloodMagic.rl("room_pools/tier2/mine_rooms");
+
 	public static final ResourceLocation DEFAULT_DEADEND = STANDARD_DEADEND;
 
 	public static void init()
@@ -29,6 +31,8 @@ public class ModRoomPools
 		DungeonRoomRegistry.registerUnloadedDungeonRoomPool(MINI_DUNGEON);
 		DungeonRoomRegistry.registerUnloadedDungeonRoomPool(STANDARD_ROOMS);
 		DungeonRoomRegistry.registerUnloadedDungeonRoomPool(MINE_ENTRANCES);
+
+		DungeonRoomRegistry.registerUnloadedDungeonRoomPool(MINE_ROOMS);
 
 		DungeonRoomRegistry.registerUnloadedDungeonRoomPool(DEFAULT_DEADEND);
 	}

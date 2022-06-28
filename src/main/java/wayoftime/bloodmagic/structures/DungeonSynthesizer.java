@@ -760,15 +760,15 @@ public class DungeonSynthesizer
 			placementsSinceLastSpecial.put(res, placementsSinceLastSpecial.get(res) + 1);
 		}
 
-		if (displayDetailedInformation)
-			System.out.println("Number of activated doors: " + activatedDoors);
+//		if (displayDetailedInformation)
+//			System.out.println("Number of activated doors: " + activatedDoors);
 //		if (activatedDoors == 3)
 //		{
 ////			specialRoomBuffer.add(specialRoomPool);
 //		}
 		List<ResourceLocation> newSpecialPools = SpecialDungeonRoomPoolRegistry.getSpecialRooms(activatedDoors, currentRoomDepth, placementsSinceLastSpecial, specialRoomBuffer);
-		if (displayDetailedInformation)
-			System.out.println("Number of added pools: " + newSpecialPools.size());
+//		if (displayDetailedInformation)
+//			System.out.println("Number of added pools: " + newSpecialPools.size());
 
 		for (ResourceLocation newSpecialPool : newSpecialPools)
 		{
@@ -778,7 +778,7 @@ public class DungeonSynthesizer
 			}
 		}
 
-//		specialRoomBuffer.addAll(newSpecialPools);
+		specialRoomBuffer.addAll(newSpecialPools);
 	}
 
 	public static DungeonRoom getRandomRoom(ResourceLocation roomType, Random rand)
