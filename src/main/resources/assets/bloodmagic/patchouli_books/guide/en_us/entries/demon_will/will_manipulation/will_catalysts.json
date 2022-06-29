@@ -61,7 +61,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Fortunately, there's a ritual for that too! the $(l:bloodmagic:rituals/ritual_list/ritual_crystal_grow)Gathering of the Forsaken Souls$() will automatically apply catalysts to any crystals in its area of effect. With a few farms and a very, very clever $(thing)Routing Node$() setup, you can automate the whole thing, top to bottom... But as they say, that's left as an exercise for the reader."
+      "text": "Fortunately, there's a ritual for that too! the $(l:bloodmagic:rituals/ritual_list/ritual_crystal_catalyst)Gathering of the Forsaken Souls$() will automatically apply catalysts to any crystals in its area of effect. With a few farms and a very, very clever $(thing)Routing Node$() setup, you can automate the whole thing, top to bottom... But as they say, that's left as an exercise for the reader."
     }
   ]
 }
