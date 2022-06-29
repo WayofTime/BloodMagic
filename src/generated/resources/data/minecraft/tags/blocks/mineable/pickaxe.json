@@ -79,6 +79,10 @@
     "bloodmagic:spikes",
     "bloodmagic:dungeon_spike_trap",
     "bloodmagic:inversion_pillar_cap",
-    "bloodmagic:inversion_pillar"
+    "bloodmagic:inversion_pillar",
+    "bloodmagic:deforester_charge",
+    "bloodmagic:veinmine_charge",
+    "bloodmagic:shaped_charge",
+    "bloodmagic:fungal_charge"
   ]
 }

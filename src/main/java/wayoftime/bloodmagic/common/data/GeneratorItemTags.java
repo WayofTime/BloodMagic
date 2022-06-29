@@ -39,6 +39,7 @@ public class GeneratorItemTags extends ItemTagsProvider
 		registerCuttingFluids();
 
 		registerVanillaTools();
+		registerModdedItems();
 
 		this.tag(BloodMagicTags.DUST_SULFUR).add(BloodMagicItems.SULFUR.get());
 		this.tag(BloodMagicTags.DUST_SALTPETER).add(BloodMagicItems.SALTPETER.get());
@@ -59,9 +60,9 @@ public class GeneratorItemTags extends ItemTagsProvider
 		this.copy(BloodMagicTags.Blocks.MUSHROOM_STEM, BloodMagicTags.MUSHROOM_STEM);
 		this.copy(BloodMagicTags.Blocks.MUSHROOM_HYPHAE, BloodMagicTags.MUSHROOM_HYPHAE);
 
-//		this.getOrCreateBuilder(GOORESISTANT).addTag(BlockTags.DOORS);
-//		this.getOrCreateBuilder(GOORESISTANT).addTag(BlockTags.BEDS);
-//		this.getOrCreateBuilder(GOORESISTANT).add(Blocks.PISTON, Blocks.PISTON_HEAD, Blocks.STICKY_PISTON, Blocks.MOVING_PISTON);
+//		this.tag(GOORESISTANT).addTag(BlockTags.DOORS);
+//		this.tag(GOORESISTANT).addTag(BlockTags.BEDS);
+//		this.tag(GOORESISTANT).add(Blocks.PISTON, Blocks.PISTON_HEAD, Blocks.STICKY_PISTON, Blocks.MOVING_PISTON);
 
 	}
 
@@ -72,11 +73,26 @@ public class GeneratorItemTags extends ItemTagsProvider
 
 	private void registerOres()
 	{
+		tag(BloodMagicTags.ORE_ALUMINUM);
+		tag(BloodMagicTags.ORE_APATITE);
+		tag(BloodMagicTags.ORE_CERTUS_QUARTZ);
+		tag(BloodMagicTags.ORE_CINNABAR);
 		tag(BloodMagicTags.ORE_COPPER);
+		tag(BloodMagicTags.ORE_FLUORITE);
+		tag(BloodMagicTags.ORE_INFERIUM);
 		tag(BloodMagicTags.ORE_LEAD);
+		tag(BloodMagicTags.ORE_NICKEL);
+		tag(BloodMagicTags.ORE_NITER);
 		tag(BloodMagicTags.ORE_OSMIUM);
+		tag(BloodMagicTags.ORE_PROSPERITY);
+		tag(BloodMagicTags.ORE_RUBY);
+		tag(BloodMagicTags.ORE_SAPPHIRE);
 		tag(BloodMagicTags.ORE_SILVER);
+		tag(BloodMagicTags.ORE_SOULIUM);
+		tag(BloodMagicTags.ORE_SULFUR);
 		tag(BloodMagicTags.ORE_TIN);
+		tag(BloodMagicTags.ORE_URANIUM);
+		tag(BloodMagicTags.ORE_ZINC);
 	}
 
 	private void registerDusts()
@@ -158,6 +174,17 @@ public class GeneratorItemTags extends ItemTagsProvider
 		tag(BloodMagicTags.SHOVELS).add(Items.DIAMOND_SHOVEL, Items.GOLDEN_SHOVEL, Items.IRON_SHOVEL, Items.NETHERITE_SHOVEL, Items.STONE_SHOVEL, Items.WOODEN_SHOVEL, BloodMagicItems.SENTIENT_SHOVEL.get());
 		tag(BloodMagicTags.PICKAXES).add(Items.DIAMOND_PICKAXE, Items.GOLDEN_PICKAXE, Items.IRON_PICKAXE, Items.NETHERITE_PICKAXE, Items.STONE_PICKAXE, Items.WOODEN_PICKAXE, BloodMagicItems.SENTIENT_PICKAXE.get());
 		tag(BloodMagicTags.HOES).add(Items.DIAMOND_HOE, Items.GOLDEN_HOE, Items.IRON_HOE, Items.NETHERITE_HOE, Items.STONE_HOE, Items.WOODEN_HOE, BloodMagicItems.SENTIENT_SCYTHE.get());
+	}
+
+	private void registerModdedItems()
+	{
+		tag(BloodMagicTags.ADVANCED_ALLOY);
+		tag(BloodMagicTags.ANDESITE_ALLOY);
+		tag(BloodMagicTags.DRAGON_BONE);
+		tag(BloodMagicTags.GEM_CERTUS_QUARTZ);
+		tag(BloodMagicTags.PROSPERITY_SHARD);
+		tag(BloodMagicTags.RF_COIL);
+		tag(BloodMagicTags.WIRECOIL_COPPER);
 	}
 
 	/**

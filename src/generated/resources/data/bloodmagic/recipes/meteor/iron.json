@@ -3,7 +3,7 @@
   "input": {
     "tag": "forge:storage_blocks/iron"
   },
-  "syphon": 0,
+  "syphon": 1000000,
   "explosion": 14.0,
   "layers": [
     {
