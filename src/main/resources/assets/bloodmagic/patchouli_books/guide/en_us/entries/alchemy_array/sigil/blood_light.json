@@ -2,10 +2,6 @@
   "name": "Sigil of the Blood Lamp",
   "icon": "bloodmagic:bloodlightsigil",
   "category": "bloodmagic:alchemy_array/sigil",
-  "extra_recipe_mappings":[
-    ["bloodmagic:reagentbloodlight", 1],
-    ["bloodmagic:bloodlightsigil", 1]
-  ],
   "pages": [
     {
       "type": "patchouli:text",

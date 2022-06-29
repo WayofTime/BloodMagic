@@ -2,9 +2,9 @@
   "name": "Throwing Daggers",
   "icon": "bloodmagic:throwing_dagger",
   "category": "bloodmagic:demon_will/demonic_items",
-  "extra_recipe_mappings":[
-    ["bloodmagic:slate_ampoule", 3]
-  ],
+  "extra_recipe_mappings": {
+    "bloodmagic:slate_ampoule": 3
+  },
   "pages":[
     {
       "type": "patchouli:text",

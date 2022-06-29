@@ -2,9 +2,9 @@
   "name": "Tau Fruit",
   "icon": "bloodmagic:weak_tau",
   "category": "bloodmagic:dungeons",
-  "extra_recipe_mappings":[
-    ["bloodmagic:weak_tau", 0]
-  ],
+  "extra_recipe_mappings": {
+    "bloodmagic:weak_tau": 0
+  },
     "pages": [
     {
       "type": "patchouli:text",

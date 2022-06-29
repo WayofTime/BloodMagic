@@ -2,7 +2,9 @@
   "name": "Demon Will",
   "icon": "bloodmagic:basemonstersoul",
   "category": "bloodmagic:demon_will/will_manipulation",
-  "extra_recipe_mappings":[["bloodmagic:basemonstersoul", 0]],
+  "extra_recipe_mappings": {
+    "bloodmagic:basemonstersoul": 0
+  },
   "pages": [
     {
       "type": "patchouli:text",

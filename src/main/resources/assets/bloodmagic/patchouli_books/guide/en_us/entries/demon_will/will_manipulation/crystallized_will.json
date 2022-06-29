@@ -2,12 +2,12 @@
   "name": "Crystallized Will",
   "icon": "bloodmagic:defaultcrystal",
   "category": "bloodmagic:demon_will/will_manipulation",
-  "extra_recipe_mappings":[
-    ["bloodmagic:demoncrucible", 1],
-    ["bloodmagic:demoncrystallizer", 1],
-    ["bloodmagic:rawdemoncrystal", 1],
-    ["bloodmagic:defaultcrystal", 1]
-  ],
+  "extra_recipe_mappings": {
+    "bloodmagic:demoncrucible": 1,
+    "bloodmagic:demoncrystallizer": 1,
+    "bloodmagic:rawdemoncrystal": 1,
+    "bloodmagic:defaultcrystal": 1
+  },
   "pages": [
     {
       "type": "patchouli:text",

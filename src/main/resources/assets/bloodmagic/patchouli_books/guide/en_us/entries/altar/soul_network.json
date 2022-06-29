@@ -2,12 +2,6 @@
   "name": "Soul Network",
   "icon": "bloodmagic:weakbloodorb",
   "category": "bloodmagic:altar",
-  "extra_recipe_mappings":[
-    ["bloodmagic:weakbloodorb", 3],
-    ["bloodmagic:apprenticebloodorb", 3],
-    ["bloodmagic:magicianbloodorb", 4],
-    ["bloodmagic:masterbloodorb", 4]
-  ],
   "pages": [
     {
       "type": "patchouli:text",

@@ -2,7 +2,6 @@
   "name": "Alchemy Array Basics",
   "icon": "bloodmagic:arcaneashes",
   "category": "bloodmagic:alchemy_array/functional_array",
-  "extra_recipe_mappings":[["bloodmagic:arcaneashes", 1]],
   "pages": [
     {
       "type": "patchouli:text",

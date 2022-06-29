@@ -2,12 +2,12 @@
   "name": "Tiers of Slates",
   "icon": "bloodmagic:blankslate",
   "category": "bloodmagic:altar",
-  "extra_recipe_mappings":[
-    ["bloodmagic:blankslate", 1],
-    ["bloodmagic:reinforcedslate", 1],
-    ["bloodmagic:infusedslate", 2],
-    ["bloodmagic:demonslate", 2]
-  ],
+  "extra_recipe_mappings": {
+    "bloodmagic:blankslate": 1,
+    "bloodmagic:reinforcedslate": 1,
+    "bloodmagic:infusedslate": 2,
+    "bloodmagic:demonslate": 2
+  },
   "pages": [
     {
       "type": "patchouli:text",

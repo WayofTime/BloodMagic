@@ -2,20 +2,20 @@
   "name": "Demon Will Aspects",
   "icon": "bloodmagic:vengefulcrystal",
   "category": "bloodmagic:demon_will/will_manipulation",
-  "extra_recipe_mappings":[
-    ["bloodmagic:steadfastdemoncrystal", 2],
-    ["bloodmagic:corrosivedemoncrystal", 2],
-    ["bloodmagic:destructivedemoncrystal", 2],
-    ["bloodmagic:vengefuldemoncrystal", 2],
-    ["bloodmagic:steadfastcrystal", 2],
-    ["bloodmagic:corrosivecrystal", 2],
-    ["bloodmagic:destructivecrystal", 2],
-    ["bloodmagic:vengefulcrystal", 2],
-    ["bloodmagic:basemonstersoul_vengeful", 2],
-    ["bloodmagic:basemonstersoul_corrosive", 2],
-    ["bloodmagic:basemonstersoul_steadfast", 2],
-    ["bloodmagic:basemonstersoul_destructive", 2]
-  ],
+  "extra_recipe_mappings": {
+    "bloodmagic:steadfastdemoncrystal": 2,
+    "bloodmagic:corrosivedemoncrystal": 2,
+    "bloodmagic:destructivedemoncrystal": 2,
+    "bloodmagic:vengefuldemoncrystal": 2,
+    "bloodmagic:steadfastcrystal": 2,
+    "bloodmagic:corrosivecrystal": 2,
+    "bloodmagic:destructivecrystal": 2,
+    "bloodmagic:vengefulcrystal": 2,
+    "bloodmagic:basemonstersoul_vengeful": 2,
+    "bloodmagic:basemonstersoul_corrosive": 2,
+    "bloodmagic:basemonstersoul_steadfast": 2,
+    "bloodmagic:basemonstersoul_destructive": 2
+  },
   "pages": [
     {
       "type": "patchouli:text",

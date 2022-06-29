@@ -2,13 +2,16 @@
   "name": "Basic Ore Processing",
   "icon": "bloodmagic:basiccuttingfluid",
   "category": "bloodmagic:utility",
-  "extra_recipe_mappings":[
-    ["bloodmagic:goldfragment", 7],
-    ["bloodmagic:fragment_netherite_scrap", 7],
-    ["bloodmagic:goldgravel", 9],
-    ["bloodmagic:gravel_netherite_scrap", 9],
-    ["bloodmagic:sand_netherite", 7]
-  ],
+  "extra_recipe_mappings": {
+    "bloodmagic:copperfragment": 7,
+    "bloodmagic:goldfragment": 7,
+    "bloodmagic:fragment_netherite_scrap": 7,
+    "bloodmagic:coppergravel": 9,
+    "bloodmagic:goldgravel": 9,
+    "bloodmagic:gravel_netherite_scrap": 9,
+    "bloodmagic:coppersand": 7,
+    "bloodmagic:sand_netherite": 7
+      },
   "pages": [
     {
       "type": "patchouli:text",

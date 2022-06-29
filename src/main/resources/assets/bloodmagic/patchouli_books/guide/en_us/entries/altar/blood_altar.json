@@ -3,9 +3,9 @@
   "icon": "bloodmagic:altar",
   "category": "bloodmagic:altar",
   "priority": "true",
-  "extra_recipe_mappings":[
-    ["bloodmagic:daggerofsacrifice", 13]
-    ],
+  "extra_recipe_mappings": {
+    "bloodmagic:daggerofsacrifice": 13
+    },
   "pages": [
     {
       "type": "patchouli:text",

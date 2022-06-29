@@ -2,7 +2,9 @@
   "name": "Penance of the Leaden Soul",
   "icon": "bloodmagic:upgradescraps",
   "category": "bloodmagic:rituals/ritual_list",
-  "extra_recipe_mappings":[["bloodmagic:upgradescraps", 5]],
+  "extra_recipe_mappings": {
+    "bloodmagic:upgradescraps": 5
+  },
   "pages": [
     {
       "type": "multiblock",
