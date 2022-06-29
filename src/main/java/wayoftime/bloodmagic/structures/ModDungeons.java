@@ -22,6 +22,7 @@ public class ModDungeons
 
 	public static ResourceLocation MINI_ENTRANCE = BloodMagic.rl("t3_entrance");
 	public static ResourceLocation MINE_PIT = BloodMagic.rl("mines/pit");
+	public static ResourceLocation MINE_CORNER_ZOMBIE_TRAP = BloodMagic.rl("mines/corner_zombie_trap");
 	public static ResourceLocation STANDARD_ENTRANCE = BloodMagic.rl("standard_entrance");
 
 	public static ResourceLocation DEFAULT_DEADEND = BloodMagic.rl("default_deadend");
@@ -44,6 +45,7 @@ public class ModDungeons
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(SPIRAL_STAIRCASE);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(WATER_WAY);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINE_PIT);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINE_CORNER_ZOMBIE_TRAP);
 
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINI_LIBRARY);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINI_ARMOURY);

@@ -1,11 +1,11 @@
 package wayoftime.bloodmagic.structures;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.TreeMap;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -20,9 +20,9 @@ public class DungeonRoom
 {
 	public ResourceLocation key;
 	public int dungeonWeight = 1;
-	public Map<String, BlockPos> structureMap = new HashMap<>();
+	public Map<String, BlockPos> structureMap = new TreeMap<>();
 
-	public Map<String, Map<Direction, List<BlockPos>>> doorMap = new HashMap<>(); // Map of doors. The EnumFacing
+	public Map<String, Map<Direction, List<BlockPos>>> doorMap = new TreeMap<>(); // Map of doors. The EnumFacing
 																					// indicates what way
 																					// this door faces.
 	public List<AreaDescriptor.Rectangle> descriptorList = new ArrayList<>();
@@ -40,11 +40,11 @@ public class DungeonRoom
 	// BlockPos) can link to. Defined in this manner to reduce the file size of the
 	// DungeonRoom.
 //	public Map<BlockPos, Integer> doorToIndexMap = new TreeMap<>();
-	public Map<Integer, List<BlockPos>> indexToDoorMap = new HashMap<>();
-	public Map<Integer, List<String>> indexToRoomTypeMap = new HashMap<>();
+	public Map<Integer, List<BlockPos>> indexToDoorMap = new TreeMap<>();
+	public Map<Integer, List<String>> indexToRoomTypeMap = new TreeMap<>();
 
-	public Map<String, List<BlockPos>> requiredDoorMap = new HashMap<>();
-	public Map<Integer, AreaDescriptor.Rectangle> doorCoverMap = new HashMap<>();
+	public Map<String, List<BlockPos>> requiredDoorMap = new TreeMap<>();
+	public Map<Integer, AreaDescriptor.Rectangle> doorCoverMap = new TreeMap<>();
 
 	public DungeonRoom(Map<String, BlockPos> structureMap, Map<String, Map<Direction, List<BlockPos>>> doorMap, List<AreaDescriptor.Rectangle> descriptorList)
 	{
@@ -55,7 +55,7 @@ public class DungeonRoom
 
 	public DungeonRoom()
 	{
-		this(new HashMap<>(), new HashMap<>(), new ArrayList<>());
+		this(new TreeMap<>(), new TreeMap<>(), new ArrayList<>());
 	}
 
 	public DungeonRoom addStructure(String location, BlockPos pos)
@@ -84,7 +84,7 @@ public class DungeonRoom
 	{
 		if (!doorMap.containsKey(doorType))
 		{
-			doorMap.put(doorType, new HashMap<>());
+			doorMap.put(doorType, new TreeMap<>());
 		}
 
 		Map<Direction, List<BlockPos>> dirMap = doorMap.get(doorType);
@@ -353,7 +353,7 @@ public class DungeonRoom
 
 	public Map<String, List<BlockPos>> getAllDoorOffsetsForFacing(StructurePlaceSettings settings, Direction facing, BlockPos offset)
 	{
-		Map<String, List<BlockPos>> offsetMap = new HashMap<>();
+		Map<String, List<BlockPos>> offsetMap = new TreeMap<>();
 
 		for (String type : doorMap.keySet())
 		{
@@ -365,7 +365,7 @@ public class DungeonRoom
 
 	public boolean placeStructureAtPosition(Random rand, StructurePlaceSettings settings, ServerLevel world, BlockPos pos)
 	{
-		Map<BlockPos, List<String>> compositeMap = new HashMap<>();
+		Map<BlockPos, List<String>> compositeMap = new TreeMap<>();
 		for (Entry<String, BlockPos> entry : structureMap.entrySet())
 		{
 			BlockPos key = entry.getValue();

@@ -56,6 +56,7 @@ public class DungeonRoomProvider implements DataProvider
 
 		Map<ResourceLocation, Integer> mineDungeonRooms = new HashMap<>();
 		mineDungeonRooms.put(ModDungeons.MINE_PIT, 1);
+		mineDungeonRooms.put(ModDungeons.MINE_CORNER_ZOMBIE_TRAP, 2);
 
 		// Special RoomPools
 		Map<ResourceLocation, Integer> mineEntrances = new HashMap<>();
@@ -166,6 +167,13 @@ public class DungeonRoomProvider implements DataProvider
 		minePit.registerDoorFill(1, new AreaDescriptor.Rectangle(new BlockPos(-2, -2, 0), 5, 5, 1));
 		minePit.oreDensity = 0.1f;
 
+		DungeonRoom mineCornerZombieTrap = new DungeonRoom().addStructure("bloodmagic:standard/corner_zombie_trap", new BlockPos(0, 0, 0)).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(17, 9, 17))).addAreaDescriptor(new Rectangle(new BlockPos(4, 9, 2), 7, 4, 7));
+		mineCornerZombieTrap.addDoor(new BlockPos(13, 2, 0), Direction.NORTH, "mine", 1);
+		mineCornerZombieTrap.addDoor(new BlockPos(0, 2, 13), Direction.WEST, "mine", 1);
+		mineCornerZombieTrap.addNormalRoomPool(1, ModRoomPools.MINE_ROOMS);
+		mineCornerZombieTrap.registerDoorFill(1, new AreaDescriptor.Rectangle(new BlockPos(-2, -2, 0), 5, 5, 1));
+		mineCornerZombieTrap.oreDensity = 0.1f;
+
 		DungeonRoom defaultDeadend = new DungeonRoom().addStructure("bloodmagic:standard/default_deadend", new BlockPos(0, 0, 0)).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(7, 6, 7)));
 		defaultDeadend.addDoor(new BlockPos(3, 0, 0), Direction.NORTH, "default", 1);
 
@@ -186,6 +194,7 @@ public class DungeonRoomProvider implements DataProvider
 		addDungeonRoom(cache, mineEntrance, ModDungeons.MINE_ENTRANCE);
 
 		addDungeonRoom(cache, minePit, ModDungeons.MINE_PIT);
+		addDungeonRoom(cache, mineCornerZombieTrap, ModDungeons.MINE_CORNER_ZOMBIE_TRAP);
 
 		addDungeonRoom(cache, defaultDeadend, ModDungeons.DEFAULT_DEADEND);
 //		DungeonRoom dungeonRoom = Serializers.GSON.fromJson(Resources.toString(dungeonURL, Charsets.UTF_8), DungeonRoom.class);
