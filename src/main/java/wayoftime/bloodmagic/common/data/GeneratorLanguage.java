@@ -494,6 +494,9 @@ public class GeneratorLanguage extends LanguageProvider
 		add("guide.patchouli.bloodmagic.ritual_info.info_formatter", "%s$(br)%s$(br2)%s$(br)%s%s%s");
 		add("guide.patchouli.bloodmagic.ritual_info.range_formatter", "$(br) $(li)Max Volume: %s$(li)Horizontal Radius: %s$(li)Vertical Radius: %s");
 		add("guide.patchouli.bloodmagic.ritual_info.full_range", "Full Range");
+		add("guide.patchouli.bloodmagic.meteor.shell", "Shell");
+		add("guide.patchouli.bloodmagic.meteor.syphon", "Syphon: %,d LP");
+		add("guide.patchouli.bloodmagic.meteor.radius", "Radius: %,d");
 
 		// Keybinds
 		add("bloodmagic.keybind.open_holding", "Open Sigil of Holding");

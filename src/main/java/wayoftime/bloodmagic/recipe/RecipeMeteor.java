@@ -86,6 +86,11 @@ public class RecipeMeteor extends BloodMagicRecipe
 		return syphon;
 	}
 
+	public List<MeteorLayer> getLayerList()
+	{
+		return layerList;
+	}
+
 	@Override
 	public void write(PacketBuffer buffer)
 	{
