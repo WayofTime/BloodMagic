@@ -1,26 +1,26 @@
 {
-  "name": "Crash of the Timberman",
-  "icon": "minecraft:oak_sapling",
+  "name": "Domain of the Filler",
+  "icon": "minecraft:dispenser",
   "category": "bloodmagic:rituals/ritual_list",
   "pages": [
     {
-      "type": "multiblock",
-      "name": "Crash of the Timberman",
-      "multiblock_id": "bloodmagic:felling",
+      "type": "patchouli:multiblock",
+      "name": "Domain of the Filler",
+      "multiblock_id": "bloodmagic:placer",
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$(/l) for easier construction."
     },
     {
       "type": "bloodmagic:ritual_info",
-      "ritual": "felling"
+      "ritual": "placer"
     },
     {
       "type": "bloodmagic:ritual_data",
-      "ritual": "felling",
-      "page_type": "fellingRange"
+      "ritual": "placer",
+      "page_type": "placerRange"
     },
     {
       "type": "bloodmagic:ritual_data",
-      "ritual": "felling",
+      "ritual": "placer",
       "page_type": "chest"
     }
   ]

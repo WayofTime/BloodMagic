@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "$(blood)Blood Magic 3$()'s progression is still being reworked, and the first few steps are significantly different from $(blood)Blood Magic 2$()'s. $(br2)We do plan on adding better guidance, such as entry unlocking, but we are waiting until the progression is locked down. In the meantime, here is a quick overview on how to progress in this alpha version of $(blood)Blood Magic 3$()."
+      "text": "$(blood)Blood Magic 3$()'s progression is still being reworked, and the first few steps are significantly different from $(blood)Blood Magic 2$()'s. $(br2)We are still retooling our guidance, but we are waiting until the progression is locked down. In the meantime, here is a quick overview on how to progress in $(blood)Blood Magic 3$()."
     },
     {
       "type": "patchouli:spotlight",
@@ -40,6 +40,12 @@
     },
     {
       "type": "patchouli:spotlight",
+      "item": "bloodmagic:alchemy_flask",
+      "title": "Potioncrafting (Tier-2)",
+      "text": "If building your $(l:bloodmagic:altar/blood_altar)Altar$() is getting tiresome and you feel in need of a distraction, why not try out the newly available $(l:bloodmagic:alchemy_table/potions)Potioncrafting$() system?  you will be able to craft $(thing)Alchemy Flasks$() and imbue them with literally dozens of effects."
+    },
+    {
+      "type": "patchouli:spotlight",
       "item": "bloodmagic:ritualdiviner",
       "title": "Tier Three",
       "text": "By this point, you will have the ability to create some basic $(l:bloodmagic:rituals/ritual_basics)Rituals$() and $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$() as well. This armour is very versatile, though you'll have to work hard to unlock its full potential. At this point you should look into upgrading your $(l:bloodmagic:altar/blood_altar)Altar$() and your $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$() to unlock more powerful $(thing)Rituals$()."
@@ -54,7 +60,7 @@
       "type": "patchouli:spotlight",
       "item": "bloodmagic:activationcrystalawakened",
       "title": "Tier Five",
-      "text": "Currently, this is just a myth. Nothing's implemented at this stage."
+      "text": "While the altar itself can be upgraded to this point, Currently, everything else about this tier is just a myth. Nothing's implemented at this stage."
     },
     {
       "type": "patchouli:spotlight",

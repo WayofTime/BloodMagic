@@ -8,7 +8,7 @@
       "text": "The $(item)Rune of Capacity$() increases the capacity of the $(l:bloodmagic:altar/blood_altar)Blood Altar$(/l) by an additive +20% per rune."
     },
     {
-      "type": "crafting",
+      "type": "patchouli:crafting",
       "recipe": "bloodmagic:blood_rune_capacity"
     }
   ]

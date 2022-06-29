@@ -8,7 +8,7 @@
       "text": "$(item)Teleposers$() allow for a form of $(fire)Redstone Controlled$() teleportation. Simply craft a $(item)Teleposition Focus$() (overleaf), bind it to your target teleposer, place it in another teleposer, and apply a redstone signal to the teleposer with a focus in it. Anything - blocks, items, entities, players - in a defined area above the two teleposers will be swapped."
     },
     {
-      "type": "crafting",
+      "type": "patchouli:crafting",
       "recipe": "bloodmagic:teleposer",
       "text":"Nothing comes for free, however; transporting blocks or entities via the teleposer will cost $(blood)1 LP$() each for every two blocks traversed, to a maximum of $(blood)1,000 LP$() per block/entity, or $(blood)10,000 LP$() total."
     },
@@ -25,7 +25,7 @@
       "text": "The $(item)Enhanced Teleposer Focus$() will swap anything in a 3x3x3 block area centred directly above the two teleposers."
     },
     {
-      "type": "crafting",
+      "type": "patchouli:crafting",
       "recipe": "bloodmagic:enhanced_teleposer_focus",
       "text": "The $(item)Reinforced Teleposer Focus$() will swap anything in a 5x5x5 block area centred directly above the two teleposers."
     },

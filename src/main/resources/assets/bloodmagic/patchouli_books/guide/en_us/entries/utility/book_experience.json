@@ -8,7 +8,7 @@
       "text": "The $(item)Tome of Peritia$() allows you to safely store your $(thing)experience$(). $(br2)pressing [$(k:sneak)] and [$(k:use)] with the Tome in hand stores $(thing)one level of XP$(). Pressing [$(k:use)] $(thing)retrieves a level$(). Hold [$(k:use)] to $(thing)store/retrieve multiple levels$()."
     },
     {
-      "type": "crafting",
+      "type": "patchouli:crafting",
       "recipe": "bloodmagic:experience_tome"
     },
     {

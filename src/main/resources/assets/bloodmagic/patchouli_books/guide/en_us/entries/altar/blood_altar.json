@@ -12,7 +12,7 @@
       "text": "The $(item)Blood Altar$() is the central block of the mod, able to convert raw $(blood)blood$() into pure $(blood)Life Essence$(). While it may start off small and insignificant, its strength and size grows throughout the mod, acting as a cornerstone for most of your power."
     },
     {
-      "type": "crafting",
+      "type": "patchouli:crafting",
       "recipe": "bloodmagic:blood_altar"
     },
     {
@@ -30,7 +30,7 @@
       "text": "In order for you to add $(blood)Life Essence$(), measured as \"$(blood)LP$()\", you first have to craft a $(item)Sacrificial Knife$(). By pressing [$(k:use)] while aiming at air with the knife, you can \"extract\" $(blood)200 LP$() for the cost of one heart, placing it into a nearby Altar. The Altar starts with a maximum capacity of 10,000LP, and the blood level in the basin indicates the percentage filled. The $(l:bloodmagic:alchemy_array/sigil/divination)Divination Sigil$(/l) allows more detailed information about the Altar."
     },
     {
-      "type": "crafting",
+      "type": "patchouli:crafting",
       "recipe": "bloodmagic:sacrificial_dagger",
       "anchor": "knife",
       "text": "Keep in mind that 10% of the total $(blood)LP$() the altar can hold will be absorbed into an invisible internal 'tank' used for extracting and inserting $(blood)Life Essence$() into the Altar."
@@ -49,7 +49,7 @@
       "text": "To upgrade the Blood Altar, you need to craft $(item)Blood Runes$() and place them around the Altar. Blood Runes act as upgrades to the Altar, and by using more advanced versions of the Blood Runes you can confer different effects on the Altar. The basic version, the $(item)Blank Rune$(), does not give any upgrades - it's only use is to upgrade the Tier of the Altar."
     },
     {
-      "type": "crafting",
+      "type": "patchouli:crafting",
       "recipe": "bloodmagic:blood_rune_blank"
     },
     {

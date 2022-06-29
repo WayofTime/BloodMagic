@@ -22,7 +22,7 @@
       "text": "This ritual consumes excess $(thing)Upgrade Points$() (in the form of $(item)Tomes$(), $(item)Scraps$(), and $(item)Synthetic Upgrade Points$()) in order to apply Downgrades to your $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$(). These downgrades will harshly limit your abilities, but will provide you with a wealth of additional $(thing)Upgrade Points$() to play around with, allowing for much more specialisation than was previously available to you."
     },
     {
-      "type": "crafting",
+      "type": "patchouli:crafting",
       "recipe": "bloodmagic:synthetic_point",
       "text": "If you do not have enough points avaliable to you, you can craft Synthetic Upgrade Points. Each one of these is worth a single Upgrade Point. "
     },

@@ -8,7 +8,7 @@
       "text": "The $(item)Displacement Rune$() increases the flow rate of $(blood)Life Essence$() into and out of the altar when pumping to and from an external Tank."
     },
     {
-      "type": "crafting",
+      "type": "patchouli:crafting",
       "recipe": "bloodmagic:blood_rune_displacement"
     }
   ]

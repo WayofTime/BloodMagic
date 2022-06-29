@@ -8,7 +8,7 @@
       "text": "The $(item)Alchemy Table$() crafts items using $(blood)LP$() from a $(l:bloodmagic:altar/soul_network)Soul Network$(/l). The $(thing)Soul Network$() used and Tier of recipes available are determined by the $(item)Blood Orb$() inserted on the right side of the GUI. $(br2)The $(item)Alchemy Table$() is used to craft a handful of $(6)Blood Magic$() components, and provides alternate recipes for some vanilla items as well."
     },
     {
-      "type": "crafting",
+      "type": "patchouli:crafting",
       "recipe": "bloodmagic:alchemy_table",
       "text": "When looking at $(item)Alchemy Table$() recipes in this book (or in $(thing)JEI$()), please hover over the arrow with an \"LP\" label to view Time, $(blood)LP$() drain, and Tier information."
     },

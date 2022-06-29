@@ -22,7 +22,7 @@
       "text": "Of course, a bottle, no matter how advanced, is all but useless without something to fill it. $(br2)Alongside all the usual well known $(thing)Effects$() such as $(l:bloodmagic:alchemy_table/potion_flasks/vanilla/water_breathing)Water Breathing$(), $(l:bloodmagic:alchemy_table/potion_flasks/vanilla/regeneration)Regeneration$(), or $(l:bloodmagic:alchemy_table/potion_flasks/vanilla/night_vision)Night Vision$(), we have also perfected a variety of other, more specialised recipes, such as $(l:bloodmagic:alchemy_table/potion_flasks/blood_magic/flight)Flight$(), $(l:bloodmagic:alchemy_table/potion_flasks/blood_magic/obsidian_cloak)Obsidian Cloak$(), or even $(l:bloodmagic:alchemy_table/potion_flasks/blood_magic/passive)Passive$(). These potions and many more are documented further on in the book."
     },
     {
-      "type": "crafting",
+      "type": "patchouli:crafting",
       "recipe": "bloodmagic:alchemy_flask",
       "text": "Once you have used up any kind of alchemy flask, simply wash out and refill it with water, to get a fresh new flask ready for use. $(br2)Flasks also have their equivalent to $(thing)Splash$() and $(thing)Lingering Potions$()."
     },

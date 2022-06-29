@@ -83,7 +83,7 @@
       "b.recipe": "bloodmagic:arc/dustsfrom_ore_iron"
     },
     {
-      "type": "crafting",
+      "type": "patchouli:crafting",
       "heading": "Fuel Cell (Furnace)",
       "recipe": "bloodmagic:primitive_furnace_cell",
       "text": "The $(item)ARC$() also functions as a $(thing)Furnace$(), but the only fuel sources it accepts is the $(item)Primitive Fuel Cell$() or a $(l:bloodmagic:utility/lava_crystal)Lava Crystal$(/l)."

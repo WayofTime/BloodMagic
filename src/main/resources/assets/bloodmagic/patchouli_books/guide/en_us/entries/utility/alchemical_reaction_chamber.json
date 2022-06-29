@@ -8,7 +8,7 @@
       "text": "The $(item)Alchemical Reaction Chamber$() isn't fully implemented yet, but among other things it can function as a $(thing)Furnace$(), offers a form of $(l:bloodmagic:utility/ore_processing)Ore-Tripling$(), revert $(l:bloodmagic:altar/soul_network)Blood Orbs$(), and is currently the only way to get $(blood)Weak Blood Shards$(), specifically from a $(l:bloodmagic:dungeons/tau_fruit)Saturated Tau$()."
     },
     {
-      "type": "crafting",
+      "type": "patchouli:crafting",
       "recipe": "bloodmagic:arc"
     },
     {
@@ -39,7 +39,7 @@
       "type": "empty"
     },
     {
-      "type": "crafting",
+      "type": "patchouli:crafting",
       "heading": "Hydration Cell",
       "recipe": "bloodmagic:primitive_hydration_cell",
       "text": "The Hydration Cell is used to make Clay, the Cornerstone of Balance."

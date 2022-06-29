@@ -1,27 +1,27 @@
 {
-  "name": "Crash of the Timberman",
-  "icon": "minecraft:oak_sapling",
+  "name": "Ritual of the High Jump",
+  "icon": "minecraft:diamond_boots",
   "category": "bloodmagic:rituals/ritual_list",
   "pages": [
     {
-      "type": "multiblock",
-      "name": "Crash of the Timberman",
-      "multiblock_id": "bloodmagic:felling",
+      "type": "patchouli:multiblock",
+      "name": "Ritual of the High Jump",
+      "multiblock_id": "bloodmagic:jumping",
       "text": "Use a $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$(/l) for easier construction."
     },
     {
       "type": "bloodmagic:ritual_info",
-      "ritual": "felling"
+      "ritual": "jumping"
     },
     {
       "type": "bloodmagic:ritual_data",
-      "ritual": "felling",
-      "page_type": "fellingRange"
+      "ritual": "jumping",
+      "page_type": "jumpRange"
     },
     {
       "type": "bloodmagic:ritual_data",
-      "ritual": "felling",
-      "page_type": "chest"
+      "ritual": "jumping",
+      "page_type": "jumpPower"
     }
   ]
 }

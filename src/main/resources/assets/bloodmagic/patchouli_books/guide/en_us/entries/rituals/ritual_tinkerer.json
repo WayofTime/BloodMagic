@@ -9,7 +9,7 @@
       "text": "The $(item)Ritual Tinkerer$() is an essential tool for the advanced sanguimancer who is looking for all they can get out of their $(thing)Rituals$(). It has three main modes, as described overleaf. You can cycle between them by pressing [$(k:sneak)] and [$(k:use)]."
     },
     {
-      "type": "crafting",
+      "type": "patchouli:crafting",
       "recipe": "bloodmagic:ritual_reader"
     },
     {
