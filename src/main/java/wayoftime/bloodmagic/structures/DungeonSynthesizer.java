@@ -34,7 +34,7 @@ import wayoftime.bloodmagic.util.Constants;
 
 public class DungeonSynthesizer
 {
-	public static boolean displayDetailedInformation = true;
+	public static boolean displayDetailedInformation = false;
 
 	public Map<String, Map<Direction, List<BlockPos>>> availableDoorMasterMap = new HashMap<>(); // Map of doors. The
 																									// Direction
@@ -235,6 +235,19 @@ public class DungeonSynthesizer
 		return false;
 	}
 
+	public boolean doesDescriptorIntersect(AreaDescriptor desc)
+	{
+		for (AreaDescriptor descriptor : this.descriptorList)
+		{
+			if (descriptor.intersects(desc))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public boolean addNewDoorBlock(DungeonDoor door, ServerLevel world, BlockPos controllerPos, BlockPos doorBlockPos, Direction doorFacing, String doorType, int newRoomDepth, int highestBranchRoomDepth, List<ResourceLocation> potentialRoomTypes, List<ResourceLocation> specialRoomTypes)
 	{
 		if (highestBranchRoomDepth < newRoomDepth)
@@ -265,10 +278,12 @@ public class DungeonSynthesizer
 //			}
 //		}
 
-		List<BlockPos> fillerList = door.descriptor.getContainedPositions(doorBlockOffsetPos);
-		System.out.println("Area descriptor: " + door.descriptor.getAABB(BlockPos.ZERO) + "\nFiller list size: " + fillerList.size());
+		AreaDescriptor desc = door.descriptor;
+		List<BlockPos> fillerList = desc.getContainedPositions(doorBlockOffsetPos);
 
-		boolean doPlaceDoor = !isAnyBlockInDescriptor(fillerList);
+//		System.out.println("Area descriptor: " + door.descriptor.getAABB(BlockPos.ZERO) + "\nFiller list size: " + fillerList.size());
+
+		boolean doPlaceDoor = !doesDescriptorIntersect(desc);
 		if (!doPlaceDoor)
 		{
 			// TODO: Don't place if we're right next to an empty door.
@@ -298,6 +313,7 @@ public class DungeonSynthesizer
 				{
 					removeSpecialRoom(specialRoomType);
 					world.setBlock(doorBlockOffsetPos.below(), Blocks.REDSTONE_BLOCK.defaultBlockState(), 3);
+					System.out.println("Spawned a special room!!");
 					return true;
 				}
 			} else
@@ -351,6 +367,8 @@ public class DungeonSynthesizer
 		{
 			specialRoomBuffer.remove(resource);
 		}
+
+		placementsSinceLastSpecial.put(resource, 0);
 	}
 
 	// TODO: Check the door that is going to be placed here. If the door can be

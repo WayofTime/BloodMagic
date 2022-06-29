@@ -21,6 +21,7 @@ public class ModRoomPools
 	{
 		registerDungeonRooms();
 		DungeonRoomLoader.loadRoomPools();
+		registerSpecialRooms();
 	}
 
 	public static void registerDungeonRooms()
@@ -35,5 +36,10 @@ public class ModRoomPools
 		DungeonRoomRegistry.registerUnloadedDungeonRoomPool(MINE_ROOMS);
 
 		DungeonRoomRegistry.registerUnloadedDungeonRoomPool(DEFAULT_DEADEND);
+	}
+
+	public static void registerSpecialRooms()
+	{
+		SpecialDungeonRoomPoolRegistry.registerUniqueRoomPool(MINE_ENTRANCES, 1, 5);
 	}
 }

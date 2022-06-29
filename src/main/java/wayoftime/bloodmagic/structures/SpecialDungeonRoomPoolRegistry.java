@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.BiPredicate;
 
 import net.minecraft.resources.ResourceLocation;
@@ -14,8 +15,25 @@ public class SpecialDungeonRoomPoolRegistry
 
 	public static List<ResourceLocation> getSpecialRooms(int minimumRooms, int minimumDepth, Map<ResourceLocation, Integer> timeSincePlacement, List<ResourceLocation> bufferRoomPools)
 	{
+		// CHeck that it is not in the buffer first
 		List<ResourceLocation> specialRoomPools = new ArrayList<>();
-		specialRoomPools.add(ModRoomPools.MINE_ENTRANCES);
+
+		for (Entry<ResourceLocation, BiPredicate<Integer, Integer>> entry : predicateMap.entrySet())
+		{
+			ResourceLocation roomPool = entry.getKey();
+			if (bufferRoomPools.contains(roomPool) || timeSincePlacement.containsKey(roomPool))
+			{
+				continue;
+			}
+
+			if (entry.getValue().test(minimumRooms, minimumDepth))
+			{
+				System.out.println("Added special room!");
+				specialRoomPools.add(roomPool);
+			}
+		}
+
+//		specialRoomPools.add(ModRoomPools.MINE_ENTRANCES);
 		return specialRoomPools;
 	}
 

@@ -52,7 +52,7 @@ public class DungeonRoomProvider implements DataProvider
 
 		Map<ResourceLocation, Integer> standardDungeonRooms = new HashMap<>();
 		standardDungeonRooms.put(ModDungeons.ORE_HOLD_1, 1);
-		standardDungeonRooms.put(ModDungeons.WATER_WAY, 1);
+//		standardDungeonRooms.put(ModDungeons.WATER_WAY, 1);
 
 		Map<ResourceLocation, Integer> mineDungeonRooms = new HashMap<>();
 		mineDungeonRooms.put(ModDungeons.MINE_PIT, 1);

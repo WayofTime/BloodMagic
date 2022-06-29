@@ -71,7 +71,7 @@ public class TileDungeonSeal extends TileBase
 		this.activatedRoomDepth = activatedRoomDepth;
 		this.highestBranchRoomDepth = highestBranchRoomDepth;
 
-		System.out.println("New block room depth info: " + activatedRoomDepth + "/" + highestBranchRoomDepth);
+		System.out.println("New block room depth info: " + activatedRoomDepth + "/" + highestBranchRoomDepth + ", pos: " + doorPos);
 	}
 
 	@Override
