@@ -20,8 +20,7 @@
     {
       "type": "bloodmagic:meteor",
       "recipe": "bloodmagic:meteor/iron",
-      "heading": "Iron",
-      "text": "Test text"
+      "heading": "Iron"
     },
     {
       "type": "bloodmagic:meteor",
@@ -37,6 +36,36 @@
       "type": "bloodmagic:meteor",
       "recipe": "bloodmagic:meteor/stone",
       "heading": "Stone"
+    },
+    {
+      "flag": "mod:appliedenergistics2",
+      "type": "bloodmagic:meteor",
+      "recipe": "bloodmagic:meteor/ae2",
+      "heading": "Applied Energistics 2"
+    },
+    {
+      "flag": "mod:create",
+      "type": "bloodmagic:meteor",
+      "recipe": "bloodmagic:meteor/create",
+      "heading": "Create"
+    },
+    {
+      "flag": "mod:immersiveengineering",
+      "type": "bloodmagic:meteor",
+      "recipe": "bloodmagic:meteor/immersive_engineering",
+      "heading": "Immersive Engineering"
+    },
+    {
+      "flag": "mod:mysticalagriculture",
+      "type": "bloodmagic:meteor",
+      "recipe": "bloodmagic:meteor/myst_ag",
+      "heading": "Mystical Agriculture"
+    },
+    {
+      "flag": "mod:thermal",
+      "type": "bloodmagic:meteor",
+      "recipe": "bloodmagic:meteor/thermal",
+      "heading": "Thermal Series"
     }
   ]
 }
