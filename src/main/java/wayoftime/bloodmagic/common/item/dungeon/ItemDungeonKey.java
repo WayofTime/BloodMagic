@@ -8,12 +8,12 @@ import net.minecraft.resources.ResourceLocation;
 
 public class ItemDungeonKey extends ItemDungeonKeyBase
 {
-	private String resourceKey;
+	private String[] resourceKeys;
 
-	public ItemDungeonKey(String desc, String resourceKey)
+	public ItemDungeonKey(String desc, String... resourceKeys)
 	{
 		super(desc);
-		this.resourceKey = resourceKey;
+		this.resourceKeys = resourceKeys;
 	}
 
 	@Override
@@ -22,9 +22,12 @@ public class ItemDungeonKey extends ItemDungeonKeyBase
 		List<ResourceLocation> subList = new ArrayList<>();
 		for (ResourceLocation testLocation : list)
 		{
-//			if (testLocation.toString().contains(resourceKey))
+			for (String key : resourceKeys)
 			{
-				subList.add(testLocation);
+				if (testLocation.toString().contains(key))
+				{
+					subList.add(testLocation);
+				}
 			}
 		}
 

@@ -264,6 +264,51 @@ public class GeneratorLootTable extends LootTableProvider
 					Items.DIAMOND_HOE }, 1, 2, ConstantValue.exactly(1), EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(20, 25)).allowTreasure(), SetItemDamageFunction.setDamage(UniformGenerator.between(0.4F, 0.8F)));
 
 			acceptor.accept(BloodMagic.rl("chests/simple_dungeon/crypt"), LootTable.lootTable().withPool(desertPyramidPool).withPool(crypt_pool));
+
+			Item[] empoweredAnointments = new Item[] { BloodMagicItems.BOW_POWER_ANOINTMENT_2.get(),
+					BloodMagicItems.FORTUNE_ANOINTMENT_2.get(), BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT_2.get(),
+					BloodMagicItems.HOLY_WATER_ANOINTMENT_2.get(), BloodMagicItems.LOOTING_ANOINTMENT_2.get(),
+					BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_2.get(), BloodMagicItems.QUICK_DRAW_ANOINTMENT_2.get(),
+					BloodMagicItems.SILK_TOUCH_ANOINTMENT_L.get(), BloodMagicItems.SMELTING_ANOINTMENT_L.get() };
+
+			LootPool.Builder decent_loot = LootPool.lootPool().setRolls(UniformGenerator.between(3, 6));
+			decent_loot.add(LootItem.lootTableItem(Items.RAW_COPPER).setWeight(15).setQuality(-4).apply(SetItemCountFunction.setCount(UniformGenerator.between(8, 20))));
+			decent_loot.add(LootItem.lootTableItem(Items.RAW_IRON).setWeight(20).setQuality(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 8))));
+			decent_loot.add(LootItem.lootTableItem(Items.RAW_GOLD).setWeight(25).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 7))));
+			decent_loot.add(LootItem.lootTableItem(Items.DIAMOND).setWeight(5).setQuality(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 6))));
+			decent_loot.add(LootItem.lootTableItem(Items.EMERALD).setWeight(3).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 8))));
+			decent_loot.add(LootItem.lootTableItem(BloodMagicItems.STRONG_TAU_ITEM.get()).setWeight(6).setQuality(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 6))));
+			decent_loot = addMultipleItemsWithSameParams(decent_loot, empoweredAnointments, 1, UniformGenerator.between(2, 4));
+			addMultipleItemsWithQualitySameParams(decent_loot, new Item[] { Items.DIAMOND_BOOTS,
+					Items.DIAMOND_CHESTPLATE, Items.DIAMOND_HELMET,
+					Items.DIAMOND_LEGGINGS }, 3, 2, ConstantValue.exactly(1), EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(20, 39)).allowTreasure(), SetItemDamageFunction.setDamage(UniformGenerator.between(0.7F, 1.0F)));
+			addMultipleItemsWithQualitySameParams(decent_loot, new Item[] { Items.IRON_BOOTS, Items.IRON_CHESTPLATE,
+					Items.IRON_HELMET,
+					Items.IRON_LEGGINGS }, 4, 0, ConstantValue.exactly(1), EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(20, 39)).allowTreasure(), SetItemDamageFunction.setDamage(UniformGenerator.between(0.5F, 0.8F)));
+			decent_loot.add(LootItem.lootTableItem(BloodMagicItems.NETHERITE_SCRAP_SAND.get()).setWeight(4).setQuality(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 4))));
+			decent_loot.add(LootItem.lootTableItem(BloodMagicItems.HELLFORGED_SAND.get()).setWeight(3).setQuality(6).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
+
+			decent_loot.add(LootItem.lootTableItem(BloodMagicItems.MONSTER_SOUL_RAW.get()).setWeight(8).apply(SetWillRange.withRange(UniformGenerator.between(20, 50))));
+			decent_loot = addMultipleItemsWithSameParams(decent_loot, new Item[] {
+					BloodMagicItems.CORROSIVE_CRYSTAL.get(), BloodMagicItems.STEADFAST_CRYSTAL.get(),
+					BloodMagicItems.VENGEFUL_CRYSTAL.get(), BloodMagicItems.DESTRUCTIVE_CRYSTAL.get(),
+					BloodMagicItems.RAW_CRYSTAL.get() }, 2, UniformGenerator.between(2, 5));
+			decent_loot.add(LootItem.lootTableItem(BloodMagicItems.SYNTHETIC_POINT.get()).setWeight(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(7, 12))));
+			// Maybe make it include BuiltInLootTables.END_CITY_TREASURE
+			acceptor.accept(BloodMagic.rl("chests/standard_dungeon/decent_loot"), LootTable.lootTable().withPool(decent_loot));
+
+			LootPool.Builder mines_loot = LootPool.lootPool().setRolls(UniformGenerator.between(3, 6));
+			mines_loot.add(LootItem.lootTableItem(Items.RAW_COPPER).setWeight(15).setQuality(-4).apply(SetItemCountFunction.setCount(UniformGenerator.between(8, 20))));
+			mines_loot.add(LootItem.lootTableItem(Items.RAW_IRON).setWeight(20).setQuality(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 8))));
+			mines_loot.add(LootItem.lootTableItem(Items.RAW_GOLD).setWeight(25).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 7))));
+			mines_loot.add(LootItem.lootTableItem(Items.DIAMOND).setWeight(5).setQuality(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 6))));
+			mines_loot.add(LootItem.lootTableItem(Items.EMERALD).setWeight(3).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 8))));
+			mines_loot.add(LootItem.lootTableItem(BloodMagicItems.STRONG_TAU_ITEM.get()).setWeight(6).setQuality(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 6))));
+			mines_loot = addMultipleItemsWithSameParams(decent_loot, empoweredAnointments, 1, UniformGenerator.between(2, 4));
+
+			LootPool.Builder mines_key = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(BloodMagicItems.DUNGEON_MINE_ENTRANCE_KEY.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))));
+
+			acceptor.accept(BloodMagic.rl("chests/standard_dungeon/mines_key"), LootTable.lootTable().withPool(mines_loot).withPool(mines_key));
 		}
 
 		private LootPool.Builder addMultipleItemsWithSameParams(LootPool.Builder pool, Item[] items, int basicWeight, NumberProvider basicRange, Builder... functions)

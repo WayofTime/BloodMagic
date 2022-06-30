@@ -28,7 +28,7 @@ public class SpecialDungeonRoomPoolRegistry
 
 			if (entry.getValue().test(minimumRooms, minimumDepth))
 			{
-				System.out.println("Added special room!");
+				System.out.println("Added special room: " + roomPool);
 				specialRoomPools.add(roomPool);
 			}
 		}

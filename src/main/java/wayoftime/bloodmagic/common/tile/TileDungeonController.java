@@ -72,11 +72,11 @@ public class TileDungeonController extends TileBase
 		{
 			if (!keyStack.isEmpty() && keyStack.getItem() instanceof IDungeonKey)
 			{
-//				ResourceLocation roomType = ((IDungeonKey) keyStack.getItem()).getValidResourceLocation(potentialRooms);
-//				if (roomType == null)
-//				{
-//					return -1;
-//				}
+				ResourceLocation roomType = ((IDungeonKey) keyStack.getItem()).getValidResourceLocation(potentialRooms);
+				if (roomType == null)
+				{
+					return -1;
+				}
 				boolean didPlace = dungeon.forcePlacementOfRoom((ServerLevel) level, this.getBlockPos(), doorFacing, activatedDoorPos, activatedDoorType, activatedRoomDepth, highestBranchRoomDepth, room, rotation, roomLocation);
 				if (didPlace)
 				{

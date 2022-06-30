@@ -96,16 +96,16 @@
   },
   "indexToRoomTypeMap": {
     "1": [
-      "bloodmagic:room_pools/tier2/standard_rooms",
-      "#bloodmagic:room_pools/tier2/mine_entrances"
+      "bloodmagic:room_pools/standard/standard_rooms",
+      "#bloodmagic:room_pools/special/mine_entrances"
     ],
     "2": [
-      "bloodmagic:room_pools/tier2/standard_rooms",
-      "#bloodmagic:room_pools/tier2/mine_entrances"
+      "bloodmagic:room_pools/standard/standard_rooms",
+      "#bloodmagic:room_pools/special/mine_entrances"
     ],
     "3": [
-      "bloodmagic:room_pools/tier2/standard_rooms",
-      "#bloodmagic:room_pools/tier2/mine_entrances"
+      "bloodmagic:room_pools/standard/standard_rooms",
+      "#bloodmagic:room_pools/special/mine_entrances"
     ]
   },
   "requiredDoorMap": {

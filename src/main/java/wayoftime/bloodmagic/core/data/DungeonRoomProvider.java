@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.TreeMap;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -36,41 +36,44 @@ public class DungeonRoomProvider implements DataProvider
 
 	public void loadRoomPools(HashCache cache)
 	{
-		Map<ResourceLocation, Integer> connectiveCorridors = new HashMap<>();
+		Map<ResourceLocation, Integer> connectiveCorridors = new TreeMap<>();
 		connectiveCorridors.put(ModDungeons.T_CORRIDOR, 2);
 		connectiveCorridors.put(ModDungeons.FOUR_WAY_CORRIDOR_LOOT, 1);
 		connectiveCorridors.put(ModDungeons.FOUR_WAY_CORRIDOR, 2);
 		connectiveCorridors.put(ModDungeons.STRAIGHT_CORRIDOR, 4);
 		connectiveCorridors.put(ModDungeons.OVERLAPPED_CORRIDOR, 3);
 
-		Map<ResourceLocation, Integer> miniDungeonRooms = new HashMap<>();
+		Map<ResourceLocation, Integer> miniDungeonRooms = new TreeMap<>();
 		miniDungeonRooms.put(ModDungeons.MINI_ARMOURY, 1);
 		miniDungeonRooms.put(ModDungeons.MINI_CRYPT, 1);
 		miniDungeonRooms.put(ModDungeons.MINI_FARM, 1);
 		miniDungeonRooms.put(ModDungeons.MINI_PORTAL, 1);
 		miniDungeonRooms.put(ModDungeons.MINI_LIBRARY, 1);
 
-		Map<ResourceLocation, Integer> standardDungeonRooms = new HashMap<>();
+		Map<ResourceLocation, Integer> standardDungeonRooms = new TreeMap<>();
 		standardDungeonRooms.put(ModDungeons.ORE_HOLD_1, 1);
 //		standardDungeonRooms.put(ModDungeons.WATER_WAY, 1);
 
-		Map<ResourceLocation, Integer> mineDungeonRooms = new HashMap<>();
+		Map<ResourceLocation, Integer> mineDungeonRooms = new TreeMap<>();
 		mineDungeonRooms.put(ModDungeons.MINE_PIT, 1);
 		mineDungeonRooms.put(ModDungeons.MINE_CORNER_ZOMBIE_TRAP, 2);
 
 		// Special RoomPools
-		Map<ResourceLocation, Integer> mineEntrances = new HashMap<>();
+		Map<ResourceLocation, Integer> mineEntrances = new TreeMap<>();
 		mineEntrances.put(ModDungeons.MINE_ENTRANCE, 1);
 
+		Map<ResourceLocation, Integer> mineKey = new TreeMap<>();
+		mineKey.put(ModDungeons.MINE_KEY, 1);
+
 		// Entrances
-		Map<ResourceLocation, Integer> miniDungeonEntrances = new HashMap<>();
+		Map<ResourceLocation, Integer> miniDungeonEntrances = new TreeMap<>();
 		miniDungeonEntrances.put(ModDungeons.MINI_ENTRANCE, 1);
 
-		Map<ResourceLocation, Integer> standardDungeonEntrances = new HashMap<>();
+		Map<ResourceLocation, Integer> standardDungeonEntrances = new TreeMap<>();
 		standardDungeonEntrances.put(ModDungeons.STANDARD_ENTRANCE, 1);
 
 		// Deadends
-		Map<ResourceLocation, Integer> defaultDeadends = new HashMap<>();
+		Map<ResourceLocation, Integer> defaultDeadends = new TreeMap<>();
 		defaultDeadends.put(ModDungeons.DEFAULT_DEADEND, 1);
 
 		// Registration
@@ -79,6 +82,7 @@ public class DungeonRoomProvider implements DataProvider
 		addRoomPool(cache, standardDungeonRooms, ModRoomPools.STANDARD_ROOMS);
 
 		addRoomPool(cache, mineEntrances, ModRoomPools.MINE_ENTRANCES);
+		addRoomPool(cache, mineKey, ModRoomPools.MINE_KEY);
 		addRoomPool(cache, mineDungeonRooms, ModRoomPools.MINE_ROOMS);
 
 		addRoomPool(cache, miniDungeonEntrances, ModRoomPools.MINI_DUNGEON_ENTRANCES);
@@ -138,7 +142,8 @@ public class DungeonRoomProvider implements DataProvider
 		oreHold.addDoors(Direction.WEST, "default", 1, new BlockPos(0, 5, 7));
 		oreHold.addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(15, 12, 15)));
 		oreHold.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
-		oreHold.addSpecialRoomPool(1, ModRoomPools.MINE_ENTRANCES);
+//		oreHold.addSpecialRoomPool(1, ModRoomPools.MINE_ENTRANCES);
+		addDefaultSpecialRoomPools(oreHold, 1);
 
 		DungeonRoom mineEntrance = new DungeonRoom().addStructure("bloodmagic:standard/mine_entrance", new BlockPos(0, 0, 0)).addStructure("bloodmagic:standard/mine_entrance2", new BlockPos(0, 0, 32));
 		mineEntrance.addDoor(new BlockPos(0, 12, 38), Direction.WEST, "default", 1);
@@ -146,6 +151,10 @@ public class DungeonRoomProvider implements DataProvider
 		mineEntrance.addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(21, 18, 43)));
 		mineEntrance.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
 		mineEntrance.addNormalRoomPool(2, ModRoomPools.MINE_ROOMS);
+
+		DungeonRoom mineKey = new DungeonRoom().addStructure("bloodmagic:mines/mine_key", new BlockPos(0, 0, 0)).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(11, 8, 11)));
+		mineKey.addDoor(new BlockPos(5, 1, 0), Direction.NORTH, "default", 1);
+		mineKey.oreDensity = 0.2f;
 
 		DungeonRoom waterway = new DungeonRoom().addStructure("bloodmagic:standard/test_waterway", new BlockPos(0, 0, 0)).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(12, 8, 11)));
 		waterway.addDoor(new BlockPos(11, 3, 5), Direction.EAST, "default", 1);
@@ -192,6 +201,7 @@ public class DungeonRoomProvider implements DataProvider
 		addDungeonRoom(cache, oreHold, ModDungeons.ORE_HOLD_1);
 		addDungeonRoom(cache, waterway, ModDungeons.WATER_WAY);
 		addDungeonRoom(cache, mineEntrance, ModDungeons.MINE_ENTRANCE);
+		addDungeonRoom(cache, mineKey, ModDungeons.MINE_KEY);
 
 		addDungeonRoom(cache, minePit, ModDungeons.MINE_PIT);
 		addDungeonRoom(cache, mineCornerZombieTrap, ModDungeons.MINE_CORNER_ZOMBIE_TRAP);
@@ -200,6 +210,12 @@ public class DungeonRoomProvider implements DataProvider
 //		DungeonRoom dungeonRoom = Serializers.GSON.fromJson(Resources.toString(dungeonURL, Charsets.UTF_8), DungeonRoom.class);
 
 		registerStarterRooms(cache);
+	}
+
+	public void addDefaultSpecialRoomPools(DungeonRoom room, int index)
+	{
+		room.addSpecialRoomPool(index, ModRoomPools.MINE_ENTRANCES);
+		room.addSpecialRoomPool(index, ModRoomPools.MINE_KEY);
 	}
 
 	public void registerStarterRooms(HashCache cache)

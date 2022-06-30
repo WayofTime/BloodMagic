@@ -10,7 +10,6 @@ public class ModDungeons
 	public static ResourceLocation FOUR_WAY_CORRIDOR = BloodMagic.rl("four_way_corridor");
 	public static ResourceLocation OVERLAPPED_CORRIDOR = BloodMagic.rl("overlapped_corridor");
 	public static ResourceLocation ORE_HOLD_1 = BloodMagic.rl("standard/ore_hold_1");
-	public static ResourceLocation MINE_ENTRANCE = BloodMagic.rl("standard/mine_entrance");
 	public static ResourceLocation STRAIGHT_CORRIDOR = BloodMagic.rl("straight_corridor");
 	public static ResourceLocation SPIRAL_STAIRCASE = BloodMagic.rl("spiral_staircase");
 	public static ResourceLocation MINI_LIBRARY = BloodMagic.rl("mini_dungeon/library");
@@ -21,6 +20,10 @@ public class ModDungeons
 	public static ResourceLocation WATER_WAY = BloodMagic.rl("standard/water_way");
 
 	public static ResourceLocation MINI_ENTRANCE = BloodMagic.rl("t3_entrance");
+
+	public static ResourceLocation MINE_KEY = BloodMagic.rl("mines/mine_key");
+	public static ResourceLocation MINE_ENTRANCE = BloodMagic.rl("standard/mine_entrance");
+
 	public static ResourceLocation MINE_PIT = BloodMagic.rl("mines/pit");
 	public static ResourceLocation MINE_CORNER_ZOMBIE_TRAP = BloodMagic.rl("mines/corner_zombie_trap");
 	public static ResourceLocation STANDARD_ENTRANCE = BloodMagic.rl("standard_entrance");
@@ -39,11 +42,13 @@ public class ModDungeons
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(FOUR_WAY_CORRIDOR_LOOT);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(FOUR_WAY_CORRIDOR);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(ORE_HOLD_1);
-		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINE_ENTRANCE);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(STRAIGHT_CORRIDOR);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(OVERLAPPED_CORRIDOR);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(SPIRAL_STAIRCASE);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(WATER_WAY);
+
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINE_ENTRANCE);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINE_KEY);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINE_PIT);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINE_CORNER_ZOMBIE_TRAP);
 

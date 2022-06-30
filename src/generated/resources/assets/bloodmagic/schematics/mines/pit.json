@@ -76,7 +76,7 @@
   },
   "indexToRoomTypeMap": {
     "1": [
-      "bloodmagic:room_pools/tier2/mine_rooms"
+      "bloodmagic:room_pools/mines/mine_rooms"
     ]
   },
   "requiredDoorMap": {},

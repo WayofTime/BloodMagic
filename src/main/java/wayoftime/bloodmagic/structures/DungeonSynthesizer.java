@@ -796,7 +796,7 @@ public class DungeonSynthesizer
 			}
 		}
 
-		specialRoomBuffer.addAll(newSpecialPools);
+//		specialRoomBuffer.addAll(newSpecialPools);
 	}
 
 	public static DungeonRoom getRandomRoom(ResourceLocation roomType, Random rand)
