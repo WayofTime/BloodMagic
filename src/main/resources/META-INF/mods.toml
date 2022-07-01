@@ -51,7 +51,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis lacinia magn
 [[dependencies.bloodmagic]]
     modId="patchouli"
     mandatory=true
-    versionRange="[1.18.2-70,)"
+    versionRange="[1.18.2-71,)"
 
 [[dependencies.bloodmagic]]
     modId="minecraft"

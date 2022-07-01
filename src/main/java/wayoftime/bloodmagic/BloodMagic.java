@@ -218,6 +218,8 @@ public class BloodMagic
 		AlchemyArrayRegistry.registerBaseArrays();
 		handleConfigValues(BloodMagicAPI.INSTANCE);
 
+		ModRoomPools.registerSpecialRooms();
+
 //		if (curiosLoaded)
 //		{
 //			curiosCompat.registerInventory();

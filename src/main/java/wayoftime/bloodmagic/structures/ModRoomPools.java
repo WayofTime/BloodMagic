@@ -2,6 +2,9 @@ package wayoftime.bloodmagic.structures;
 
 import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.block.BlockSpecialDungeonSeal;
+import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.common.block.type.SpecialSealType;
 
 public class ModRoomPools
 {
@@ -23,7 +26,6 @@ public class ModRoomPools
 	{
 		registerDungeonRooms();
 		DungeonRoomLoader.loadRoomPools();
-		registerSpecialRooms();
 	}
 
 	public static void registerDungeonRooms()
@@ -43,7 +45,7 @@ public class ModRoomPools
 
 	public static void registerSpecialRooms()
 	{
-		SpecialDungeonRoomPoolRegistry.registerUniqueRoomPool(MINE_ENTRANCES, 1, 5);
+		SpecialDungeonRoomPoolRegistry.registerUniqueRoomPool(MINE_ENTRANCES, 1, 5, BloodMagicBlocks.SPECIAL_DUNGEON_SEAL.get().defaultBlockState().setValue(BlockSpecialDungeonSeal.SEAL, SpecialSealType.MINE_ENTRANCE));
 		SpecialDungeonRoomPoolRegistry.registerUniqueRoomPool(MINE_KEY, 1, 6);
 	}
 }

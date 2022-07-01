@@ -53,6 +53,7 @@ public class TileDungeonSeal extends TileBase
 //				System.out.println("")
 				if (state == -1)
 				{
+					return -1;
 					// TODO: Spawn smoke particles, since the used item does not work.
 				}
 			}
@@ -71,7 +72,7 @@ public class TileDungeonSeal extends TileBase
 		this.activatedRoomDepth = activatedRoomDepth;
 		this.highestBranchRoomDepth = highestBranchRoomDepth;
 
-		System.out.println("New block room depth info: " + activatedRoomDepth + "/" + highestBranchRoomDepth + ", pos: " + doorPos);
+//		System.out.println("New block room depth info: " + activatedRoomDepth + "/" + highestBranchRoomDepth + ", pos: " + doorPos);
 	}
 
 	@Override

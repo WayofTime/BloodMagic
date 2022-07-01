@@ -52,6 +52,8 @@ public class DungeonRoomProvider implements DataProvider
 
 		Map<ResourceLocation, Integer> standardDungeonRooms = new TreeMap<>();
 		standardDungeonRooms.put(ModDungeons.ORE_HOLD_1, 1);
+		standardDungeonRooms.put(ModDungeons.CHALLENGE_TOWER, 10);
+
 //		standardDungeonRooms.put(ModDungeons.WATER_WAY, 1);
 
 		Map<ResourceLocation, Integer> mineDungeonRooms = new TreeMap<>();
@@ -145,6 +147,18 @@ public class DungeonRoomProvider implements DataProvider
 //		oreHold.addSpecialRoomPool(1, ModRoomPools.MINE_ENTRANCES);
 		addDefaultSpecialRoomPools(oreHold, 1);
 
+		DungeonRoom challengeTower = new DungeonRoom().addStructure("bloodmagic:standard/challenge_tower_1", new BlockPos(0, 0, 0)).addStructure("bloodmagic:standard/challenge_tower_2", new BlockPos(0, 32, 0));
+		challengeTower.addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(25, 55, 25)));
+		challengeTower.addDoor(new BlockPos(24, 0, 12), Direction.EAST, "default", 1);
+		challengeTower.addNonstandardDoor(new BlockPos(12, 0, 0), Direction.NORTH, "none", 2, "default");
+		challengeTower.addNonstandardDoor(new BlockPos(12, 5, 24), Direction.SOUTH, "none", 2, "default");
+		challengeTower.addNonstandardDoor(new BlockPos(0, 17, 12), Direction.WEST, "none", 2, "default");
+		challengeTower.addNonstandardDoor(new BlockPos(24, 20, 12), Direction.EAST, "none", 2, "default");
+		challengeTower.addNonstandardDoor(new BlockPos(12, 24, 0), Direction.NORTH, "none", 2, "default");
+		challengeTower.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
+		challengeTower.addNormalRoomPool(2, ModRoomPools.STANDARD_ROOMS);
+		addDefaultSpecialRoomPools(challengeTower, 2);
+
 		DungeonRoom mineEntrance = new DungeonRoom().addStructure("bloodmagic:standard/mine_entrance", new BlockPos(0, 0, 0)).addStructure("bloodmagic:standard/mine_entrance2", new BlockPos(0, 0, 32));
 		mineEntrance.addDoor(new BlockPos(0, 12, 38), Direction.WEST, "default", 1);
 		mineEntrance.addDoor(new BlockPos(22, 1, 0), Direction.NORTH, "mine", 2);
@@ -197,6 +211,8 @@ public class DungeonRoomProvider implements DataProvider
 		addDungeonRoom(cache, overlapped_corridor, ModDungeons.OVERLAPPED_CORRIDOR);
 		addDungeonRoom(cache, straightCorridor, ModDungeons.STRAIGHT_CORRIDOR);
 		addDungeonRoom(cache, straightCorridor, ModDungeons.T_CORRIDOR);
+
+		addDungeonRoom(cache, challengeTower, ModDungeons.CHALLENGE_TOWER);
 
 		addDungeonRoom(cache, oreHold, ModDungeons.ORE_HOLD_1);
 		addDungeonRoom(cache, waterway, ModDungeons.WATER_WAY);

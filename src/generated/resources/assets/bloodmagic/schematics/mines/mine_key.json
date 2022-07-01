@@ -37,7 +37,7 @@
       "cache": true
     }
   ],
-  "oreDensity": 0.1,
+  "oreDensity": 0.2,
   "spawnLocation": {
     "x": 0,
     "y": 0,

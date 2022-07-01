@@ -1,0 +1,172 @@
+{
+  "key": null,
+  "dungeonWeight": 1,
+  "structureMap": {
+    "bloodmagic:standard/challenge_tower_1": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "bloodmagic:standard/challenge_tower_2": {
+      "x": 0,
+      "y": 32,
+      "z": 0
+    }
+  },
+  "doorMap": {
+    "default": {
+      "east": [
+        {
+          "x": 24,
+          "y": 0,
+          "z": 12
+        }
+      ]
+    },
+    "none": {
+      "north": [
+        {
+          "x": 12,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 12,
+          "y": 24,
+          "z": 0
+        }
+      ],
+      "south": [
+        {
+          "x": 12,
+          "y": 5,
+          "z": 24
+        }
+      ],
+      "west": [
+        {
+          "x": 0,
+          "y": 17,
+          "z": 12
+        }
+      ],
+      "east": [
+        {
+          "x": 24,
+          "y": 20,
+          "z": 12
+        }
+      ]
+    }
+  },
+  "descriptorList": [
+    {
+      "minimumOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "maximumOffset": {
+        "x": 25,
+        "y": 55,
+        "z": 25
+      },
+      "currentPosition": null,
+      "blockPosCache": [],
+      "cachedPosition": null,
+      "cache": true
+    }
+  ],
+  "oreDensity": 0.0,
+  "spawnLocation": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "controllerOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "portalOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "indexToDoorMap": {
+    "1": [
+      {
+        "x": 24,
+        "y": 0,
+        "z": 12
+      }
+    ],
+    "2": [
+      {
+        "x": 12,
+        "y": 0,
+        "z": 0
+      },
+      {
+        "x": 12,
+        "y": 5,
+        "z": 24
+      },
+      {
+        "x": 0,
+        "y": 17,
+        "z": 12
+      },
+      {
+        "x": 24,
+        "y": 20,
+        "z": 12
+      },
+      {
+        "x": 12,
+        "y": 24,
+        "z": 0
+      }
+    ]
+  },
+  "indexToRoomTypeMap": {
+    "1": [
+      "bloodmagic:room_pools/standard/standard_rooms"
+    ],
+    "2": [
+      "bloodmagic:room_pools/standard/standard_rooms",
+      "#bloodmagic:room_pools/special/mine_entrances",
+      "#bloodmagic:room_pools/standard/mine_key"
+    ]
+  },
+  "requiredDoorMap": {
+    "default": [
+      {
+        "x": 12,
+        "y": 0,
+        "z": 0
+      },
+      {
+        "x": 12,
+        "y": 5,
+        "z": 24
+      },
+      {
+        "x": 0,
+        "y": 17,
+        "z": 12
+      },
+      {
+        "x": 24,
+        "y": 20,
+        "z": 12
+      },
+      {
+        "x": 12,
+        "y": 24,
+        "z": 0
+      }
+    ]
+  },
+  "doorCoverMap": {}
+}

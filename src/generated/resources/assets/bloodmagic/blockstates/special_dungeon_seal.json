@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
-      "model": "bloodmagic:block/special_dungeon_seal"
+    "special=standard": {
+      "model": "bloodmagic:block/special_dungeon_seal_standard"
+    },
+    "special=mine_entrance": {
+      "model": "bloodmagic:block/special_dungeon_seal_mine_entrance"
     }
   }
 }

@@ -35,9 +35,11 @@ import wayoftime.bloodmagic.common.block.BlockDemonCrystal;
 import wayoftime.bloodmagic.common.block.BlockInversionPillarEnd;
 import wayoftime.bloodmagic.common.block.BlockRoutingNode;
 import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
+import wayoftime.bloodmagic.common.block.BlockSpecialDungeonSeal;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.block.base.BlockPillarCap;
 import wayoftime.bloodmagic.common.block.type.PillarCapType;
+import wayoftime.bloodmagic.common.block.type.SpecialSealType;
 
 public class GeneratorBlockStates extends BlockStateProvider
 {
@@ -115,7 +117,7 @@ public class GeneratorBlockStates extends BlockStateProvider
 
 		buildCubeAll(BloodMagicBlocks.DUNGEON_CONTROLLER.get());
 		buildCubeAll(BloodMagicBlocks.DUNGEON_SEAL.get());
-		buildCubeAll(BloodMagicBlocks.SPECIAL_DUNGEON_SEAL.get());
+		buildSpecialDungeonSeal(BloodMagicBlocks.SPECIAL_DUNGEON_SEAL.get());
 
 		buildCrop(BloodMagicBlocks.GROWING_DOUBT.get(), CropBlock.AGE, 7, BloodMagic.rl("block/creeping_doubt_1"), BloodMagic.rl("block/creeping_doubt_2"), BloodMagic.rl("block/creeping_doubt_3"), BloodMagic.rl("block/creeping_doubt_4"), BloodMagic.rl("block/creeping_doubt_5"), BloodMagic.rl("block/creeping_doubt_6"), BloodMagic.rl("block/creeping_doubt_7"), BloodMagic.rl("block/creeping_doubt_8"));
 		buildCrossCrop(BloodMagicBlocks.WEAK_TAU.get(), CropBlock.AGE, 7, modLoc("block/weak_tau_1"), modLoc("block/weak_tau_2"), modLoc("block/weak_tau_3"), modLoc("block/weak_tau_4"), modLoc("block/weak_tau_5"), modLoc("block/weak_tau_6"), modLoc("block/weak_tau_7"), modLoc("block/weak_tau_8"));
@@ -137,6 +139,18 @@ public class GeneratorBlockStates extends BlockStateProvider
 		});
 
 		buildInversionPillarCap(BloodMagicBlocks.INVERSION_PILLAR_CAP.get());
+	}
+
+	private void buildSpecialDungeonSeal(Block block)
+	{
+		String basePath = block.getRegistryName().getPath();
+		VariantBlockStateBuilder builder = getVariantBuilder(block);
+
+		for (SpecialSealType type : SpecialSealType.values())
+		{
+			ModelFile modelFile = models().cubeAll(basePath + "_" + type.name().toLowerCase(), modLoc("block/" + basePath + "_" + type.name().toLowerCase()));
+			builder.partialState().with(BlockSpecialDungeonSeal.SEAL, type).modelForState().modelFile(modelFile).addModel();
+		}
 	}
 
 	private void buildInversionPillarCap(Block block)

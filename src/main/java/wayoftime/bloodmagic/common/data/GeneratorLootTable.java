@@ -297,6 +297,28 @@ public class GeneratorLootTable extends LootTableProvider
 			// Maybe make it include BuiltInLootTables.END_CITY_TREASURE
 			acceptor.accept(BloodMagic.rl("chests/standard_dungeon/decent_loot"), LootTable.lootTable().withPool(decent_loot));
 
+			acceptor.accept(BloodMagic.rl("chests/standard_dungeon/great_loot"), LootTable.lootTable().withPool(decent_loot).withPool(decent_loot));
+
+			LootPool.Builder enchanting_loot = LootPool.lootPool().setRolls(UniformGenerator.between(3, 6));
+			enchanting_loot.add(LootItem.lootTableItem(Items.PAPER).setWeight(30).setQuality(-4).apply(SetItemCountFunction.setCount(UniformGenerator.between(10, 24))));
+			enchanting_loot.add(LootItem.lootTableItem(Items.BOOK).setWeight(15).setQuality(-2).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 10))));
+			enchanting_loot.add(LootItem.lootTableItem(Items.BOOK).setWeight(12).setQuality(1).apply(EnchantWithLevelsFunction.enchantWithLevels(ConstantValue.exactly(30.0F)).allowTreasure()));
+			enchanting_loot.add(LootItem.lootTableItem(Items.LAPIS_LAZULI).setWeight(18).setQuality(-2).apply(SetItemCountFunction.setCount(UniformGenerator.between(10, 22))));
+			enchanting_loot.add(LootItem.lootTableItem(Items.EXPERIENCE_BOTTLE).setWeight(10).setQuality(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 7))));
+			addMultipleItemsWithQualitySameParams(enchanting_loot, new Item[] { Items.DIAMOND_BOOTS,
+					Items.DIAMOND_CHESTPLATE, Items.DIAMOND_HELMET, Items.DIAMOND_LEGGINGS, Items.DIAMOND_PICKAXE,
+					Items.DIAMOND_AXE, Items.DIAMOND_SHOVEL,
+					Items.DIAMOND_SWORD }, 3, 2, ConstantValue.exactly(1), EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(25, 39)).allowTreasure());
+			addMultipleItemsWithQualitySameParams(enchanting_loot, new Item[] { BloodMagicItems.SENTIENT_SWORD.get(),
+					BloodMagicItems.SENTIENT_PICKAXE.get(), BloodMagicItems.SENTIENT_SCYTHE.get(),
+					BloodMagicItems.SENTIENT_AXE.get(),
+					BloodMagicItems.SENTIENT_SHOVEL.get() }, 3, 2, ConstantValue.exactly(1), EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(25, 39)).allowTreasure());
+			enchanting_loot.add(LootItem.lootTableItem(BloodMagicItems.LIVING_TOME.get()).setWeight(4).apply(SetLivingUpgrade.withRange(UniformGenerator.between(200, 400), LivingArmorRegistrar.UPGRADE_EXPERIENCE.get().getKey())));
+			enchanting_loot.add(LootItem.lootTableItem(BloodMagicItems.WEAK_TAU_ITEM.get()).setWeight(10).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 7))));
+			enchanting_loot.add(LootItem.lootTableItem(BloodMagicItems.STRONG_TAU_ITEM.get()).setWeight(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 7))));
+
+			acceptor.accept(BloodMagic.rl("chests/standard_dungeon/enchanting_loot"), LootTable.lootTable().withPool(enchanting_loot));
+
 			LootPool.Builder mines_loot = LootPool.lootPool().setRolls(UniformGenerator.between(3, 6));
 			mines_loot.add(LootItem.lootTableItem(Items.RAW_COPPER).setWeight(15).setQuality(-4).apply(SetItemCountFunction.setCount(UniformGenerator.between(8, 20))));
 			mines_loot.add(LootItem.lootTableItem(Items.RAW_IRON).setWeight(20).setQuality(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 8))));

@@ -21,6 +21,8 @@ public class ModDungeons
 
 	public static ResourceLocation MINI_ENTRANCE = BloodMagic.rl("t3_entrance");
 
+	public static ResourceLocation CHALLENGE_TOWER = BloodMagic.rl("standard/challenge_tower");
+
 	public static ResourceLocation MINE_KEY = BloodMagic.rl("mines/mine_key");
 	public static ResourceLocation MINE_ENTRANCE = BloodMagic.rl("standard/mine_entrance");
 
@@ -57,6 +59,8 @@ public class ModDungeons
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINI_FARM);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINI_PORTAL);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINI_CRYPT);
+
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(CHALLENGE_TOWER);
 
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINI_ENTRANCE);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(STANDARD_ENTRANCE);

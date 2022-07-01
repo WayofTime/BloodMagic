@@ -70,6 +70,7 @@ public class TileSpecialRoomDungeonSeal extends TileDungeonSeal
 //				System.out.println("")
 				if (state == -1)
 				{
+					return -1;
 					// TODO: Spawn smoke particles, since the used item does not work.
 				}
 			}

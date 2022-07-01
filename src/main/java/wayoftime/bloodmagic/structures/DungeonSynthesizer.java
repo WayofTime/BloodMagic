@@ -18,7 +18,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -119,8 +118,15 @@ public class DungeonSynthesizer
 		ListTag bufferNBTList = tag.getList(Constants.NBT.ROOM_POOL_BUFFER, 10);
 		for (int i = 0; i < bufferNBTList.size(); i++)
 		{
-			CompoundTag compoundnbt = listnbt.getCompound(i);
+			CompoundTag compoundnbt = bufferNBTList.getCompound(i);
 			specialRoomBuffer.add(new ResourceLocation(compoundnbt.getString(Constants.NBT.ROOM_POOL)));
+		}
+
+		ListTag trackerNBTList = tag.getList(Constants.NBT.ROOM_POOL_TRACKER, 10);
+		for (int i = 0; i < trackerNBTList.size(); i++)
+		{
+			CompoundTag compoundnbt = trackerNBTList.getCompound(i);
+			placementsSinceLastSpecial.put(new ResourceLocation(compoundnbt.getString(Constants.NBT.ROOM_POOL)), compoundnbt.getInt(Constants.NBT.VALUE));
 		}
 	}
 
@@ -312,8 +318,7 @@ public class DungeonSynthesizer
 				if (checkRequiredRoom(world, controllerPos, specialRoomType, doorBlockOffsetPos, randomRoom, world.random, doorBlockPos, doorFacing, doorType, newRoomDepth, highestBranchRoomDepth))
 				{
 					removeSpecialRoom(specialRoomType);
-					world.setBlock(doorBlockOffsetPos.below(), Blocks.REDSTONE_BLOCK.defaultBlockState(), 3);
-					System.out.println("Spawned a special room!!");
+
 					return true;
 				}
 			} else
@@ -461,7 +466,7 @@ public class DungeonSynthesizer
 		// Make sure to store the `specialRoomType` for the key to check against; the
 		// '#' character is removed.
 
-		world.setBlock(doorBlockOffsetPos, BloodMagicBlocks.SPECIAL_DUNGEON_SEAL.get().defaultBlockState(), 3);
+		world.setBlock(doorBlockOffsetPos, SpecialDungeonRoomPoolRegistry.getSealBlockState(specialRoomType), 3);
 		BlockEntity tile = world.getBlockEntity(doorBlockOffsetPos);
 		if (tile instanceof TileSpecialRoomDungeonSeal)
 		{
@@ -469,7 +474,7 @@ public class DungeonSynthesizer
 		}
 
 //		forcePlacementOfRoom(world, controllerPos, doorFacing, activatedDoorPos, activatedDoorType, roomDepth, highestBranchRoomDepth, room, rotation, roomLocation);
-		world.setBlock(activatedDoorPos.below(), Blocks.REDSTONE_BLOCK.defaultBlockState(), 3);
+//		world.setBlock(activatedDoorPos.below(), Blocks.REDSTONE_BLOCK.defaultBlockState(), 3);
 	}
 
 	/**
@@ -481,7 +486,7 @@ public class DungeonSynthesizer
 	 */
 	public int addNewRoomToExistingDungeon(ServerLevel world, BlockPos controllerPos, ResourceLocation roomType, Random rand, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, List<ResourceLocation> potentialRooms, int activatedRoomDepth, int highestBranchRoomDepth)
 	{
-		System.out.println("Current room's depth info: " + activatedRoomDepth + "/" + highestBranchRoomDepth);
+//		System.out.println("Current room's depth info: " + activatedRoomDepth + "/" + highestBranchRoomDepth);
 		for (int i = 0; i < 10; i++)
 		{
 			boolean testPlacement = attemptPlacementOfRandomRoom(world, controllerPos, roomType, rand, activatedDoorPos, doorFacing, activatedDoorType, activatedRoomDepth, highestBranchRoomDepth, potentialRooms, false);
