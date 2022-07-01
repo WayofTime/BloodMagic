@@ -80,6 +80,12 @@ public class GenericHandler
 {
 	public static Map<UUID, Double> bounceMap = new HashMap<>();
 
+//	@SubscribeEvent
+//	public void onCheckSpawn(LivingSpawnEvent.CheckSpawn event)
+//	{
+//		event.getWorld().reso
+//	}
+
 	@SubscribeEvent
 	public void onItemBurn(FurnaceFuelBurnTimeEvent event)
 	{

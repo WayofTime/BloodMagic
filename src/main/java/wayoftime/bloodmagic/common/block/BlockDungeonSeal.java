@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
+import wayoftime.bloodmagic.common.item.dungeon.IDungeonKey;
 import wayoftime.bloodmagic.common.tile.TileDungeonSeal;
 import wayoftime.bloodmagic.util.ChatUtil;
 
@@ -49,7 +50,7 @@ public class BlockDungeonSeal extends Block implements EntityBlock
 		ItemStack playerItem = player.getItemInHand(hand);
 
 		int result = seal.requestRoomFromController(playerItem);
-		if (result == -1)
+		if (result == -1 && !playerItem.isEmpty() && playerItem.getItem() instanceof IDungeonKey)
 		{
 			// Key didn't work
 			List<Component> toSend = Lists.newArrayList();

@@ -52,7 +52,9 @@ public class DungeonRoomProvider implements DataProvider
 
 		Map<ResourceLocation, Integer> standardDungeonRooms = new TreeMap<>();
 		standardDungeonRooms.put(ModDungeons.ORE_HOLD_1, 1);
-		standardDungeonRooms.put(ModDungeons.CHALLENGE_TOWER, 10);
+		standardDungeonRooms.put(ModDungeons.CHALLENGE_TOWER, 1);
+		standardDungeonRooms.put(ModDungeons.BIG_LIBRARY, 1);
+		standardDungeonRooms.put(ModDungeons.SMALL_CRANE, 20);
 
 //		standardDungeonRooms.put(ModDungeons.WATER_WAY, 1);
 
@@ -159,12 +161,28 @@ public class DungeonRoomProvider implements DataProvider
 		challengeTower.addNormalRoomPool(2, ModRoomPools.STANDARD_ROOMS);
 		addDefaultSpecialRoomPools(challengeTower, 2);
 
+		DungeonRoom bigLibrary = new DungeonRoom().addStructure("bloodmagic:standard/big_library_1", new BlockPos(0, 0, 0)).addStructure("bloodmagic:standard/big_library_2", new BlockPos(32, 0, 0));
+		bigLibrary.addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(33, 15, 25)));
+		bigLibrary.addDoors(Direction.NORTH, "default", 1, new BlockPos(16, 0, 0));
+		bigLibrary.addDoors(Direction.WEST, "default", 1, new BlockPos(0, 8, 8));
+		bigLibrary.addDoors(Direction.SOUTH, "default", 1, new BlockPos(8, 0, 24), new BlockPos(24, 0, 24));
+		bigLibrary.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
+		addDefaultSpecialRoomPools(bigLibrary, 1);
+
+		DungeonRoom smallCrane = new DungeonRoom().addStructure("bloodmagic:standard/small_crane", new BlockPos(0, 0, 0));
+		smallCrane.addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(17, 11, 17)));
+		smallCrane.addDoors(Direction.NORTH, "default", 1, new BlockPos(8, 0, 0));
+		smallCrane.addDoors(Direction.EAST, "default", 1, new BlockPos(16, 0, 8));
+		smallCrane.addDoors(Direction.WEST, "default", 1, new BlockPos(0, 0, 8));
+		smallCrane.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
+		addDefaultSpecialRoomPools(smallCrane, 1);
+
 		DungeonRoom mineEntrance = new DungeonRoom().addStructure("bloodmagic:standard/mine_entrance", new BlockPos(0, 0, 0)).addStructure("bloodmagic:standard/mine_entrance2", new BlockPos(0, 0, 32));
 		mineEntrance.addDoor(new BlockPos(0, 12, 38), Direction.WEST, "default", 1);
 		mineEntrance.addDoor(new BlockPos(22, 1, 0), Direction.NORTH, "mine", 2);
 		mineEntrance.addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(21, 18, 43)));
 		mineEntrance.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
-		mineEntrance.addNormalRoomPool(2, ModRoomPools.MINE_ROOMS);
+		mineEntrance.addNormalRoomPool(1, ModRoomPools.MINE_ROOMS);
 
 		DungeonRoom mineKey = new DungeonRoom().addStructure("bloodmagic:mines/mine_key", new BlockPos(0, 0, 0)).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(11, 8, 11)));
 		mineKey.addDoor(new BlockPos(5, 1, 0), Direction.NORTH, "default", 1);
@@ -213,6 +231,8 @@ public class DungeonRoomProvider implements DataProvider
 		addDungeonRoom(cache, straightCorridor, ModDungeons.T_CORRIDOR);
 
 		addDungeonRoom(cache, challengeTower, ModDungeons.CHALLENGE_TOWER);
+		addDungeonRoom(cache, bigLibrary, ModDungeons.BIG_LIBRARY);
+		addDungeonRoom(cache, smallCrane, ModDungeons.SMALL_CRANE);
 
 		addDungeonRoom(cache, oreHold, ModDungeons.ORE_HOLD_1);
 		addDungeonRoom(cache, waterway, ModDungeons.WATER_WAY);

@@ -2,33 +2,33 @@
   "key": null,
   "dungeonWeight": 1,
   "structureMap": {
-    "bloodmagic:standard/mine_entrance": {
+    "bloodmagic:standard/small_crane": {
       "x": 0,
       "y": 0,
       "z": 0
-    },
-    "bloodmagic:standard/mine_entrance2": {
-      "x": 0,
-      "y": 0,
-      "z": 32
     }
   },
   "doorMap": {
     "default": {
+      "north": [
+        {
+          "x": 8,
+          "y": 0,
+          "z": 0
+        }
+      ],
       "west": [
         {
           "x": 0,
-          "y": 12,
-          "z": 38
+          "y": 0,
+          "z": 8
         }
-      ]
-    },
-    "mine": {
-      "north": [
+      ],
+      "east": [
         {
-          "x": 22,
-          "y": 1,
-          "z": 0
+          "x": 16,
+          "y": 0,
+          "z": 8
         }
       ]
     }
@@ -41,9 +41,9 @@
         "z": 0
       },
       "maximumOffset": {
-        "x": 21,
-        "y": 18,
-        "z": 43
+        "x": 17,
+        "y": 11,
+        "z": 17
       },
       "currentPosition": null,
       "blockPosCache": [],
@@ -70,23 +70,27 @@
   "indexToDoorMap": {
     "1": [
       {
-        "x": 0,
-        "y": 12,
-        "z": 38
-      }
-    ],
-    "2": [
-      {
-        "x": 22,
-        "y": 1,
+        "x": 8,
+        "y": 0,
         "z": 0
+      },
+      {
+        "x": 16,
+        "y": 0,
+        "z": 8
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "z": 8
       }
     ]
   },
   "indexToRoomTypeMap": {
     "1": [
       "bloodmagic:room_pools/standard/standard_rooms",
-      "bloodmagic:room_pools/mines/mine_rooms"
+      "#bloodmagic:room_pools/special/mine_entrances",
+      "#bloodmagic:room_pools/standard/mine_key"
     ]
   },
   "requiredDoorMap": {},

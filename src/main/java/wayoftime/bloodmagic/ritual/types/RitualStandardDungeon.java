@@ -29,10 +29,11 @@ import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.ritual.IMasterRitualStone;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
+import wayoftime.bloodmagic.ritual.RitualRegister;
 import wayoftime.bloodmagic.structures.DungeonSynthesizer;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 
-//@RitualRegister("standard_dungeon")
+@RitualRegister("standard_dungeon")
 public class RitualStandardDungeon extends Ritual
 {
 	public RitualStandardDungeon()

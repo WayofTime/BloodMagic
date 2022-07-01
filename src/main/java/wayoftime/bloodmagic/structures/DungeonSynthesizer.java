@@ -49,6 +49,13 @@ public class DungeonSynthesizer
 	private List<ResourceLocation> specialRoomBuffer = new ArrayList<>();
 	private Map<ResourceLocation, Integer> placementsSinceLastSpecial = new HashMap<>();
 
+	public TileDungeonController tile;
+
+	public void setDungeonController(TileDungeonController tile)
+	{
+		this.tile = tile;
+	}
+
 	public void writeToNBT(CompoundTag tag)
 	{
 		String json = Serializers.GSON.toJson(availableDoorMasterMap);
@@ -374,6 +381,9 @@ public class DungeonSynthesizer
 		}
 
 		placementsSinceLastSpecial.put(resource, 0);
+		tile.setChanged();
+		System.out.println("Removing: " + resource);
+		System.out.println("Size of map: " + placementsSinceLastSpecial.size());
 	}
 
 	// TODO: Check the door that is going to be placed here. If the door can be
@@ -455,6 +465,7 @@ public class DungeonSynthesizer
 		spawnDoorBlock(world, controllerPos, specialRoomType, doorBlockOffsetPos, doorFacing, activatedDoorPos, activatedDoorType, newRoomDepth, highestBranchRoomDepth, room, finalRotation, roomLocation);
 
 		//
+		tile.setChanged();
 
 		return true;
 	}
@@ -492,6 +503,7 @@ public class DungeonSynthesizer
 			boolean testPlacement = attemptPlacementOfRandomRoom(world, controllerPos, roomType, rand, activatedDoorPos, doorFacing, activatedDoorType, activatedRoomDepth, highestBranchRoomDepth, potentialRooms, false);
 			if (testPlacement)
 			{
+				tile.setChanged();
 				return 0;
 			}
 		}
@@ -499,6 +511,7 @@ public class DungeonSynthesizer
 		ResourceLocation pathPool = new ResourceLocation("bloodmagic:room_pools/connective_corridors");
 		if (attemptPlacementOfRandomRoom(world, controllerPos, pathPool, rand, activatedDoorPos, doorFacing, activatedDoorType, activatedRoomDepth, highestBranchRoomDepth, potentialRooms, true))
 		{
+			tile.setChanged();
 			return 1;
 		}
 
@@ -597,6 +610,8 @@ public class DungeonSynthesizer
 				this.addNewDoorBlock(dungeonDoor, world, controllerPos, dungeonDoor.doorPos, dungeonDoor.doorDir, dungeonDoor.doorType, newRoomDepth, previousMaxDepth, dungeonDoor.getRoomList(), dungeonDoor.getSpecialRoomList());
 			}
 		}
+
+		tile.setChanged();
 
 		return true;
 	}
@@ -798,6 +813,7 @@ public class DungeonSynthesizer
 			if (!specialRoomBuffer.contains(newSpecialPool))
 			{
 				specialRoomBuffer.add(newSpecialPool);
+				tile.setChanged();
 			}
 		}
 

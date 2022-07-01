@@ -36,6 +36,8 @@ public class TileDungeonController extends TileBase
 	public void setDungeonSynthesizer(DungeonSynthesizer dungeon)
 	{
 		this.dungeon = dungeon;
+		this.dungeon.setDungeonController(this);
+		setChanged();
 	}
 
 	public int handleRequestForRoomPlacement(ItemStack keyStack, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, int activatedRoomDepth, int highestBranchRoomDepth, List<ResourceLocation> potentialRooms)
@@ -102,12 +104,18 @@ public class TileDungeonController extends TileBase
 			CompoundTag synthesizerTag = tag.getCompound(Constants.NBT.DUNGEON_CONTROLLER);
 			dungeon = new DungeonSynthesizer();
 			dungeon.readFromNBT(synthesizerTag);
+		} else
+		{
+			dungeon = new DungeonSynthesizer();
 		}
+
+		dungeon.setDungeonController(this);
 	}
 
 	@Override
 	public CompoundTag serialize(CompoundTag tag)
 	{
+		super.serialize(tag);
 		if (dungeon != null)
 		{
 			CompoundTag synthesizerTag = new CompoundTag();

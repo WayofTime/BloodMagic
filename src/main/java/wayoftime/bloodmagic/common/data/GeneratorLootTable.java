@@ -304,20 +304,44 @@ public class GeneratorLootTable extends LootTableProvider
 			enchanting_loot.add(LootItem.lootTableItem(Items.BOOK).setWeight(15).setQuality(-2).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 10))));
 			enchanting_loot.add(LootItem.lootTableItem(Items.BOOK).setWeight(12).setQuality(1).apply(EnchantWithLevelsFunction.enchantWithLevels(ConstantValue.exactly(30.0F)).allowTreasure()));
 			enchanting_loot.add(LootItem.lootTableItem(Items.LAPIS_LAZULI).setWeight(18).setQuality(-2).apply(SetItemCountFunction.setCount(UniformGenerator.between(10, 22))));
-			enchanting_loot.add(LootItem.lootTableItem(Items.EXPERIENCE_BOTTLE).setWeight(10).setQuality(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 7))));
+			enchanting_loot.add(LootItem.lootTableItem(Items.EXPERIENCE_BOTTLE).setWeight(10).setQuality(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 4))));
 			addMultipleItemsWithQualitySameParams(enchanting_loot, new Item[] { Items.DIAMOND_BOOTS,
 					Items.DIAMOND_CHESTPLATE, Items.DIAMOND_HELMET, Items.DIAMOND_LEGGINGS, Items.DIAMOND_PICKAXE,
 					Items.DIAMOND_AXE, Items.DIAMOND_SHOVEL,
-					Items.DIAMOND_SWORD }, 3, 2, ConstantValue.exactly(1), EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(25, 39)).allowTreasure());
+					Items.DIAMOND_SWORD }, 1, 2, ConstantValue.exactly(1), EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(25, 39)).allowTreasure());
 			addMultipleItemsWithQualitySameParams(enchanting_loot, new Item[] { BloodMagicItems.SENTIENT_SWORD.get(),
 					BloodMagicItems.SENTIENT_PICKAXE.get(), BloodMagicItems.SENTIENT_SCYTHE.get(),
 					BloodMagicItems.SENTIENT_AXE.get(),
-					BloodMagicItems.SENTIENT_SHOVEL.get() }, 3, 2, ConstantValue.exactly(1), EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(25, 39)).allowTreasure());
+					BloodMagicItems.SENTIENT_SHOVEL.get() }, 1, 2, ConstantValue.exactly(1), EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(25, 39)).allowTreasure());
 			enchanting_loot.add(LootItem.lootTableItem(BloodMagicItems.LIVING_TOME.get()).setWeight(4).apply(SetLivingUpgrade.withRange(UniformGenerator.between(200, 400), LivingArmorRegistrar.UPGRADE_EXPERIENCE.get().getKey())));
 			enchanting_loot.add(LootItem.lootTableItem(BloodMagicItems.WEAK_TAU_ITEM.get()).setWeight(10).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 7))));
 			enchanting_loot.add(LootItem.lootTableItem(BloodMagicItems.STRONG_TAU_ITEM.get()).setWeight(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 7))));
+			addMultipleItemsWithSameParams(enchanting_loot, new Item[] { BloodMagicItems.CORROSIVE_CRYSTAL.get(),
+					BloodMagicItems.STEADFAST_CRYSTAL.get(), BloodMagicItems.VENGEFUL_CRYSTAL.get(),
+					BloodMagicItems.DESTRUCTIVE_CRYSTAL.get(),
+					BloodMagicItems.RAW_CRYSTAL.get() }, 1, UniformGenerator.between(2, 5));
 
 			acceptor.accept(BloodMagic.rl("chests/standard_dungeon/enchanting_loot"), LootTable.lootTable().withPool(enchanting_loot));
+
+			LootPool.Builder poor_loot = LootPool.lootPool().setRolls(UniformGenerator.between(2, 4));
+			poor_loot.add(LootItem.lootTableItem(BloodMagicItems.COPPER_FRAGMENT.get()).setWeight(25).setQuality(-4).apply(SetItemCountFunction.setCount(UniformGenerator.between(6, 15))));
+			poor_loot.add(LootItem.lootTableItem(BloodMagicItems.IRON_FRAGMENT.get()).setWeight(20).setQuality(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 8))));
+			poor_loot.add(LootItem.lootTableItem(BloodMagicItems.GOLD_FRAGMENT.get()).setWeight(15).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 7))));
+			poor_loot.add(LootItem.lootTableItem(Items.DIAMOND).setWeight(3).setQuality(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 4))));
+			poor_loot.add(LootItem.lootTableItem(Items.EMERALD).setWeight(1).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 8))));
+			poor_loot.add(LootItem.lootTableItem(Items.WHEAT).setWeight(8).setQuality(-2).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 8))));
+			poor_loot.add(LootItem.lootTableItem(Items.FEATHER).setWeight(8).setQuality(-2).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 7))));
+			poor_loot.add(LootItem.lootTableItem(Items.ROTTEN_FLESH).setWeight(8).setQuality(-2).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 9))));
+			poor_loot.add(LootItem.lootTableItem(Items.GUNPOWDER).setWeight(8).setQuality(-2).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 8))));
+			poor_loot.add(LootItem.lootTableItem(Blocks.WARPED_STEM).setWeight(20).setQuality(-1).apply(SetItemCountFunction.setCount(UniformGenerator.between(8, 12))));
+			poor_loot.add(LootItem.lootTableItem(Items.STICK).setWeight(15).setQuality(-1).apply(SetItemCountFunction.setCount(UniformGenerator.between(9, 15))));
+			poor_loot.add(LootItem.lootTableItem(Items.SUGAR_CANE).setWeight(8).setQuality(-1).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 10))));
+			poor_loot.add(LootItem.lootTableItem(BloodMagicItems.SULFUR.get()).setWeight(6).setQuality(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 7))));
+			poor_loot.add(LootItem.lootTableItem(BloodMagicItems.DUNGEON_SIMPLE_KEY.get()).setWeight(3).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3))));
+			poor_loot.add(LootItem.lootTableItem(BloodMagicItems.STRONG_TAU_ITEM.get()).setWeight(3).setQuality(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 6))));
+			poor_loot.add(LootItem.lootTableItem(BloodMagicItems.WEAK_TAU_ITEM.get()).setWeight(5).setQuality(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 6))));
+
+			acceptor.accept(BloodMagic.rl("chests/standard_dungeon/poor_loot"), LootTable.lootTable().withPool(poor_loot));
 
 			LootPool.Builder mines_loot = LootPool.lootPool().setRolls(UniformGenerator.between(3, 6));
 			mines_loot.add(LootItem.lootTableItem(Items.RAW_COPPER).setWeight(15).setQuality(-4).apply(SetItemCountFunction.setCount(UniformGenerator.between(8, 20))));
