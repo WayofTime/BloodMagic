@@ -3,13 +3,13 @@ package wayoftime.bloodmagic.common.recipe;
 import java.util.function.Consumer;
 
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.data.recipe.builder.PotionCycleRecipeBuilder;
@@ -105,6 +105,7 @@ public class PotionRecipeProvider implements ISubRecipeProvider
 
 		String fillPath = "flask/fill_";
 		PotionFillRecipeBuilder.potionFill(1, 1000, 200, 0).addIngredient(Ingredient.of(BloodMagicItems.WEAK_FILLING_AGENT.get())).build(consumer, BloodMagic.rl(fillPath + "weak"));
+		PotionFillRecipeBuilder.potionFill(3, 3000, 200, 0).addIngredient(Ingredient.of(BloodMagicItems.AVERAGE_FILLING_AGENT.get())).build(consumer, BloodMagic.rl(fillPath + "standard"));
 
 		String flaskPath = "flask/flask_";
 		PotionFlaskTransformRecipeBuilder.flask(new ItemStack(BloodMagicItems.ALCHEMY_FLASK_THROWABLE.get()), 1000, 200, 1).addIngredient(Ingredient.of(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.of(Items.GUNPOWDER)).build(consumer, BloodMagic.rl(flaskPath + "splash"));

@@ -172,6 +172,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.contained_filters", "Contained Filters:");
 
 		add("tooltip.bloodmagic.simplekey", "A simple key that can open dungeon doors");
+		add("tooltip.bloodmagic.mineentrancekey", "A key used to gain access to the mines");
+		add("tooltip.bloodmagic.minekey", "Unlocks doors within the mines");
 
 		add("tooltip.bloodmagic.alchemytable.orberror.title", "Orb Error");
 		add("tooltip.bloodmagic.alchemytable.orberror.text", "Orb's Tier is not high enough for this recipe.");
@@ -740,6 +742,8 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.HELLFORGED_INGOT, "Hellforged Ingot");
 		addItem(BloodMagicItems.HELLFORGED_BLOCK, "Hellforged Block");
 		addItem(BloodMagicItems.DUNGEON_SIMPLE_KEY, "Iron Key");
+		addItem(BloodMagicItems.DUNGEON_MINE_ENTRANCE_KEY, "Foreman's Key");
+		addItem(BloodMagicItems.DUNGEON_MINE_KEY, "Miner's Key");
 
 		// Anointment Items
 		addItem(BloodMagicItems.SLATE_VIAL, "Slate-infused Vial");
@@ -785,6 +789,10 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.WEAK_FILLING_AGENT, "Weak Filling Agent");
 		addItem(BloodMagicItems.CYCLING_CATALYST, "Simple Cycling Catalyst");
 		addItem(BloodMagicItems.COMBINATIONAL_CATALYST, "Combinational Catalyst");
+
+		addItem(BloodMagicItems.AVERAGE_POWER_CATALYST, "Standard Lengthening Catalyst");
+		addItem(BloodMagicItems.AVERAGE_LENGTHENING_CATALYST, "Standard Lengthening Catalyst");
+		addItem(BloodMagicItems.AVERAGE_FILLING_AGENT, "Standard Filling Agent");
 
 		// Alchemy Items
 		addItem(BloodMagicItems.PLANT_OIL, "Plant Oil");

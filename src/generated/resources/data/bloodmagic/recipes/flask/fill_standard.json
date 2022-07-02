@@ -1,0 +1,12 @@
+{
+  "type": "bloodmagic:flask_potionfill",
+  "input": [
+    {
+      "item": "bloodmagic:standardfillingagent"
+    }
+  ],
+  "max": 3,
+  "syphon": 3000,
+  "ticks": 200,
+  "upgradeLevel": 0
+}

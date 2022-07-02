@@ -68,7 +68,7 @@
       "currentPosition": null,
       "blockPosCache": [],
       "cachedPosition": null,
-      "cache": true
+      "cache": false
     }
   ],
   "oreDensity": 0.0,

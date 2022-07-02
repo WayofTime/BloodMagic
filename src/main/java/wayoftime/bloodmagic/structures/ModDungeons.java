@@ -24,6 +24,7 @@ public class ModDungeons
 	public static ResourceLocation CHALLENGE_TOWER = BloodMagic.rl("standard/challenge_tower");
 	public static ResourceLocation BIG_LIBRARY = BloodMagic.rl("standard/big_library");
 	public static ResourceLocation SMALL_CRANE = BloodMagic.rl("standard/small_crane");
+	public static ResourceLocation SMALL_LIBRARY = BloodMagic.rl("standard/small_library");
 
 	public static ResourceLocation MINE_KEY = BloodMagic.rl("mines/mine_key");
 	public static ResourceLocation MINE_ENTRANCE = BloodMagic.rl("standard/mine_entrance");
@@ -65,6 +66,7 @@ public class ModDungeons
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(CHALLENGE_TOWER);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(BIG_LIBRARY);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(SMALL_CRANE);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(SMALL_LIBRARY);
 
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINI_ENTRANCE);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(STANDARD_ENTRANCE);

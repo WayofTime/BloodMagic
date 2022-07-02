@@ -66,6 +66,7 @@ public class DungeonRoom
 
 	public DungeonRoom addAreaDescriptor(AreaDescriptor.Rectangle descriptor)
 	{
+		descriptor.setDoCache(false);
 		descriptorList.add(descriptor);
 		return this;
 	}

@@ -213,7 +213,8 @@ public class ClientEvents
 //		DeferredWorkQueue.runLater(() -> {
 		event.enqueueWork(() -> {
 			RenderType rendertype = RenderType.cutoutMipped();
-			ItemBlockRenderTypes.setRenderLayer(BloodMagicBlocks.ALCHEMY_TABLE.get(), rendertype);
+//			ItemBlockRenderTypes.setRenderLayer(BloodMagicBlocks.ALCHEMY_TABLE.get(), RenderType.entityCutoutNoCull(BloodMagic.rl("models/alchemytable")));
+			ItemBlockRenderTypes.setRenderLayer(BloodMagicBlocks.ALCHEMY_TABLE.get(), RenderType.cutoutMipped());
 			ItemBlockRenderTypes.setRenderLayer(BloodMagicBlocks.GROWING_DOUBT.get(), rendertype);
 			ItemBlockRenderTypes.setRenderLayer(BloodMagicBlocks.WEAK_TAU.get(), rendertype);
 			ItemBlockRenderTypes.setRenderLayer(BloodMagicBlocks.STRONG_TAU.get(), rendertype);

@@ -284,6 +284,9 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> COMBINATIONAL_CATALYST = BASICITEMS.register("combinationalcatalyst", () -> new ItemBase());
 	public static final RegistryObject<Item> WEAK_FILLING_AGENT = BASICITEMS.register("weakfillingagent", () -> new ItemBase());
 	public static final RegistryObject<Item> CYCLING_CATALYST = BASICITEMS.register("cyclingcatalyst", () -> new ItemBase());
+	public static final RegistryObject<Item> AVERAGE_POWER_CATALYST = BASICITEMS.register("averagepowercatalyst", () -> new ItemBase());
+	public static final RegistryObject<Item> AVERAGE_LENGTHENING_CATALYST = BASICITEMS.register("averagelengtheningcatalyst", () -> new ItemBase());
+	public static final RegistryObject<Item> AVERAGE_FILLING_AGENT = BASICITEMS.register("standardfillingagent", () -> new ItemBase());
 
 	public static final RegistryObject<Item> RAW_CRYSTAL_CATALYST = BASICITEMS.register("rawcatalyst", () -> new ItemCrystalCatalyst(EnumDemonWillType.DEFAULT, 200, 10, 25, 400));
 	public static final RegistryObject<Item> CORROSIVE_CRYSTAL_CATALYST = BASICITEMS.register("corrosivecatalyst", () -> new ItemCrystalCatalyst(EnumDemonWillType.CORROSIVE, 200, 10, 25, 400));

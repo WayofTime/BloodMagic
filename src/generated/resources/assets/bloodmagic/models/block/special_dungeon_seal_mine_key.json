@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "bloodmagic:block/special_dungeon_seal_mine_key"
+  }
+}

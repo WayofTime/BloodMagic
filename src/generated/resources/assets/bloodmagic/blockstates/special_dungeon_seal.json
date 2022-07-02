@@ -5,6 +5,9 @@
     },
     "special=mine_entrance": {
       "model": "bloodmagic:block/special_dungeon_seal_mine_entrance"
+    },
+    "special=mine_key": {
+      "model": "bloodmagic:block/special_dungeon_seal_mine_key"
     }
   }
 }

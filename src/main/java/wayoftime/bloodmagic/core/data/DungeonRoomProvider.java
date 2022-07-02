@@ -54,7 +54,8 @@ public class DungeonRoomProvider implements DataProvider
 		standardDungeonRooms.put(ModDungeons.ORE_HOLD_1, 1);
 		standardDungeonRooms.put(ModDungeons.CHALLENGE_TOWER, 1);
 		standardDungeonRooms.put(ModDungeons.BIG_LIBRARY, 1);
-		standardDungeonRooms.put(ModDungeons.SMALL_CRANE, 20);
+		standardDungeonRooms.put(ModDungeons.SMALL_CRANE, 1);
+		standardDungeonRooms.put(ModDungeons.SMALL_LIBRARY, 20);
 
 //		standardDungeonRooms.put(ModDungeons.WATER_WAY, 1);
 
@@ -177,6 +178,14 @@ public class DungeonRoomProvider implements DataProvider
 		smallCrane.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
 		addDefaultSpecialRoomPools(smallCrane, 1);
 
+		DungeonRoom smallLibrary = new DungeonRoom().addStructure("bloodmagic:standard/small_library", new BlockPos(0, 0, 0));
+		smallLibrary.addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(17, 6, 18)));
+		smallLibrary.addDoors(Direction.NORTH, "default", 1, new BlockPos(8, 0, 0));
+		smallLibrary.addDoors(Direction.EAST, "default", 1, new BlockPos(16, 0, 8));
+		smallLibrary.addDoors(Direction.WEST, "default", 1, new BlockPos(0, 0, 8));
+		smallLibrary.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
+		addDefaultSpecialRoomPools(smallLibrary, 1);
+
 		DungeonRoom mineEntrance = new DungeonRoom().addStructure("bloodmagic:standard/mine_entrance", new BlockPos(0, 0, 0)).addStructure("bloodmagic:standard/mine_entrance2", new BlockPos(0, 0, 32));
 		mineEntrance.addDoor(new BlockPos(0, 12, 38), Direction.WEST, "default", 1);
 		mineEntrance.addDoor(new BlockPos(22, 1, 0), Direction.NORTH, "mine", 2);
@@ -233,6 +242,7 @@ public class DungeonRoomProvider implements DataProvider
 		addDungeonRoom(cache, challengeTower, ModDungeons.CHALLENGE_TOWER);
 		addDungeonRoom(cache, bigLibrary, ModDungeons.BIG_LIBRARY);
 		addDungeonRoom(cache, smallCrane, ModDungeons.SMALL_CRANE);
+		addDungeonRoom(cache, smallLibrary, ModDungeons.SMALL_LIBRARY);
 
 		addDungeonRoom(cache, oreHold, ModDungeons.ORE_HOLD_1);
 		addDungeonRoom(cache, waterway, ModDungeons.WATER_WAY);

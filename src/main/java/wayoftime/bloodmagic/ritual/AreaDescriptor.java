@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.phys.AABB;
 import wayoftime.bloodmagic.util.Constants;
 
 public abstract class AreaDescriptor implements Iterator<BlockPos>
@@ -187,16 +187,13 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 			int y = pos.getY();
 			int z = pos.getZ();
 
-			return x >= minimumOffset.getX() && x < maximumOffset.getX() && y >= minimumOffset.getY()
-					&& y < maximumOffset.getY() && z >= minimumOffset.getZ() && z < maximumOffset.getZ();
+			return x >= minimumOffset.getX() && x < maximumOffset.getX() && y >= minimumOffset.getY() && y < maximumOffset.getY() && z >= minimumOffset.getZ() && z < maximumOffset.getZ();
 		}
 
 		@Override
 		public boolean hasNext()
 		{
-			return currentPosition == null || !(currentPosition.getX() + 1 == maximumOffset.getX()
-					&& currentPosition.getY() + 1 == maximumOffset.getY()
-					&& currentPosition.getZ() + 1 == maximumOffset.getZ());
+			return currentPosition == null || !(currentPosition.getX() + 1 == maximumOffset.getX() && currentPosition.getY() + 1 == maximumOffset.getY() && currentPosition.getZ() + 1 == maximumOffset.getZ());
 		}
 
 		@Override
@@ -276,24 +273,19 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 			BlockPos minPos = new BlockPos(Math.min(offset1.getX(), offset2.getX()), Math.min(offset1.getY(), offset2.getY()), Math.min(offset1.getZ(), offset2.getZ()));
 			BlockPos maxPos = new BlockPos(Math.max(offset1.getX(), offset2.getX()), Math.max(offset1.getY(), offset2.getY()), Math.max(offset1.getZ(), offset2.getZ()));
 
-			return minPos.getY() >= -verticalLimit && maxPos.getY() <= verticalLimit
-					&& minPos.getX() >= -horizontalLimit && maxPos.getX() <= horizontalLimit
-					&& minPos.getZ() >= -horizontalLimit && maxPos.getZ() <= horizontalLimit;
+			return minPos.getY() >= -verticalLimit && maxPos.getY() <= verticalLimit && minPos.getX() >= -horizontalLimit && maxPos.getX() <= horizontalLimit && minPos.getZ() >= -horizontalLimit && maxPos.getZ() <= horizontalLimit;
 		}
 
 		@Override
 		public int getVolume()
 		{
-			return (maximumOffset.getX() - minimumOffset.getX()) * (maximumOffset.getY() - minimumOffset.getY())
-					* (maximumOffset.getZ() - minimumOffset.getZ());
+			return (maximumOffset.getX() - minimumOffset.getX()) * (maximumOffset.getY() - minimumOffset.getY()) * (maximumOffset.getZ() - minimumOffset.getZ());
 		}
 
 		@Override
 		public boolean isWithinRange(int verticalLimit, int horizontalLimit)
 		{
-			return minimumOffset.getY() >= -verticalLimit && maximumOffset.getY() <= verticalLimit + 1
-					&& minimumOffset.getX() >= -horizontalLimit && maximumOffset.getX() <= horizontalLimit + 1
-					&& minimumOffset.getZ() >= -horizontalLimit && maximumOffset.getZ() <= horizontalLimit + 1;
+			return minimumOffset.getY() >= -verticalLimit && maximumOffset.getY() <= verticalLimit + 1 && minimumOffset.getX() >= -horizontalLimit && maximumOffset.getX() <= horizontalLimit + 1 && minimumOffset.getZ() >= -horizontalLimit && maximumOffset.getZ() <= horizontalLimit + 1;
 		}
 
 		@Override
@@ -303,12 +295,7 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 			{
 				AreaDescriptor.Rectangle rectangle = (AreaDescriptor.Rectangle) descriptor;
 
-				return !(minimumOffset.getX() >= rectangle.maximumOffset.getX()
-						|| minimumOffset.getY() >= rectangle.maximumOffset.getY()
-						|| minimumOffset.getZ() >= rectangle.maximumOffset.getZ()
-						|| rectangle.minimumOffset.getX() >= maximumOffset.getX()
-						|| rectangle.minimumOffset.getY() >= maximumOffset.getY()
-						|| rectangle.minimumOffset.getZ() >= maximumOffset.getZ());
+				return !(minimumOffset.getX() >= rectangle.maximumOffset.getX() || minimumOffset.getY() >= rectangle.maximumOffset.getY() || minimumOffset.getZ() >= rectangle.maximumOffset.getZ() || rectangle.minimumOffset.getX() >= maximumOffset.getX() || rectangle.minimumOffset.getY() >= maximumOffset.getY() || rectangle.minimumOffset.getZ() >= maximumOffset.getZ());
 			}
 
 			return false;
@@ -324,13 +311,19 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 		public AreaDescriptor rotateDescriptor(StructurePlaceSettings settings)
 		{
 			BlockPos rotatePos1 = StructureTemplate.calculateRelativePosition(settings, minimumOffset);
-			BlockPos rotatePos2 = StructureTemplate.calculateRelativePosition(settings, maximumOffset.offset(-1, -1, -1)); // It works,
-																											// shut up!
+			BlockPos rotatePos2 = StructureTemplate.calculateRelativePosition(settings, maximumOffset.offset(-1, -1, -1)); // It
+																															// works,
+			// shut up!
 
 			AreaDescriptor.Rectangle rectangle = new AreaDescriptor.Rectangle(this.minimumOffset, 1);
 			rectangle.modifyAreaByBlockPositions(rotatePos1, rotatePos2);
 
 			return rectangle;
+		}
+
+		public void setDoCache(boolean doCache)
+		{
+			this.cache = doCache;
 		}
 	}
 
