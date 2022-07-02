@@ -405,6 +405,11 @@ public class GeneratorLootTable extends LootTableProvider
 			strong_potions_loot.add(LootItem.lootTableItem(Items.SPLASH_POTION).setWeight(3).apply(SetPotionFunction.setPotion(Potions.STRONG_REGENERATION)));
 			strong_potions_loot.add(LootItem.lootTableItem(Items.SPLASH_POTION).setWeight(4).apply(SetPotionFunction.setPotion(Potions.LONG_REGENERATION)));
 
+			addMultipleItemsWithQualitySameParams(strong_potions_loot, new Item[] {
+					BloodMagicItems.CORROSIVE_CRYSTAL.get(), BloodMagicItems.RAW_CRYSTAL.get(),
+					BloodMagicItems.STEADFAST_CRYSTAL.get(), BloodMagicItems.VENGEFUL_CRYSTAL.get(),
+					BloodMagicItems.DESTRUCTIVE_CRYSTAL.get() }, 2, 3, UniformGenerator.between(2, 5));
+
 			acceptor.accept(BloodMagic.rl("chests/standard_dungeon/strong_alchemy"), LootTable.lootTable().withPool(strong_potions_loot));
 
 			LootPool.Builder smithy_loot = LootPool.lootPool().setRolls(UniformGenerator.between(4, 7));
@@ -416,6 +421,7 @@ public class GeneratorLootTable extends LootTableProvider
 			smithy_loot.add(LootItem.lootTableItem(Items.EMERALD).setWeight(3).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 8))));
 			smithy_loot.add(LootItem.lootTableItem(BloodMagicItems.NETHERITE_SCRAP_SAND.get()).setWeight(4).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
 			smithy_loot.add(LootItem.lootTableItem(BloodMagicItems.HELLFORGED_SAND.get()).setWeight(3).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 4))));
+			smithy_loot.add(LootItem.lootTableItem(BloodMagicItems.CORRUPTED_DUST.get()).setWeight(6).setQuality(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
 			smithy_loot.add(LootItem.lootTableItem(BloodMagicItems.STRONG_TAU_ITEM.get()).setWeight(8).setQuality(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 4))));
 			smithy_loot.add(LootItem.lootTableItem(BloodMagicItems.PRIMITIVE_EXPLOSIVE_CELL.get()).setWeight(10).setQuality(5));
 
@@ -435,6 +441,10 @@ public class GeneratorLootTable extends LootTableProvider
 
 			smithy_loot.add(LootItem.lootTableItem(BloodMagicItems.LIVING_TOME.get()).setWeight(4).apply(SetLivingUpgrade.withRange(UniformGenerator.between(150, 225), LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())));
 			smithy_loot.add(LootItem.lootTableItem(BloodMagicItems.LIVING_TOME.get()).setWeight(4).apply(SetLivingUpgrade.withRange(UniformGenerator.between(250, 350), LivingArmorRegistrar.UPGRADE_MELEE_DAMAGE.get().getKey())));
+			addMultipleItemsWithQualitySameParams(smithy_loot, new Item[] { BloodMagicItems.CORROSIVE_CRYSTAL.get(),
+					BloodMagicItems.RAW_CRYSTAL.get(), BloodMagicItems.STEADFAST_CRYSTAL.get(),
+					BloodMagicItems.VENGEFUL_CRYSTAL.get(),
+					BloodMagicItems.DESTRUCTIVE_CRYSTAL.get() }, 2, 3, UniformGenerator.between(1, 3));
 
 			acceptor.accept(BloodMagic.rl("chests/standard_dungeon/decent_smithy"), LootTable.lootTable().withPool(smithy_loot));
 

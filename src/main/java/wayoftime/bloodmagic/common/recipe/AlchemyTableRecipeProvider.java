@@ -2,14 +2,14 @@ package wayoftime.bloodmagic.common.recipe;
 
 import java.util.function.Consumer;
 
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
@@ -118,6 +118,9 @@ public class AlchemyTableRecipeProvider implements ISubRecipeProvider
 
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.WEAK_FILLING_AGENT.get()), 2000, 100, 2).addIngredient(Ingredient.of(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.of(Items.SUGAR_CANE)).addIngredient(Ingredient.of(Items.CRIMSON_FUNGUS)).addIngredient(Ingredient.of(Items.WARPED_FUNGUS)).build(consumer, BloodMagic.rl(basePath + "weak_filling"));
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.CYCLING_CATALYST.get()), 1000, 100, 2).addIngredient(Ingredient.of(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.of(Tags.Items.GEMS_LAPIS)).addIngredient(Ingredient.of(Tags.Items.GEMS_LAPIS)).addIngredient(Ingredient.of(Tags.Items.DYES_GREEN)).addIngredient(Ingredient.of(Tags.Items.SAND)).build(consumer, BloodMagic.rl(basePath + "cycling_catalyst"));
+
+		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.HELLFORGED_SAND.get(), 2), 1000, 100, 5).addIngredient(Ingredient.of(BloodMagicItems.HELLFORGED_SAND.get())).addIngredient(Ingredient.of(BloodMagicItems.CORRUPTED_DUST.get())).addIngredient(Ingredient.of(BloodMagicTags.DUST_COPPER)).addIngredient(Ingredient.of(BloodMagicTags.DUST_GOLD)).build(consumer, BloodMagic.rl(basePath + "hellforged_sand"));
+
 		// Changed Recipes
 		{
 

@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:sand_hellforged"
+    },
+    {
+      "item": "bloodmagic:corrupted_dust"
+    },
+    {
+      "tag": "forge:dusts/copper"
+    },
+    {
+      "tag": "forge:dusts/gold"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:sand_hellforged",
+    "count": 2
+  },
+  "syphon": 1000,
+  "ticks": 100,
+  "upgradeLevel": 5
+}
