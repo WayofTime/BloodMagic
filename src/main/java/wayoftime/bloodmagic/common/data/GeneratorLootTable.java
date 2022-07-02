@@ -273,6 +273,11 @@ public class GeneratorLootTable extends LootTableProvider
 					BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_2.get(), BloodMagicItems.QUICK_DRAW_ANOINTMENT_2.get(),
 					BloodMagicItems.SILK_TOUCH_ANOINTMENT_L.get(), BloodMagicItems.SMELTING_ANOINTMENT_L.get() };
 
+			Item[] empoweredWeaponAnointments = new Item[] { BloodMagicItems.BOW_POWER_ANOINTMENT_2.get(),
+					BloodMagicItems.HOLY_WATER_ANOINTMENT_2.get(), BloodMagicItems.LOOTING_ANOINTMENT_2.get(),
+					BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_2.get(), BloodMagicItems.QUICK_DRAW_ANOINTMENT_2.get(),
+					BloodMagicItems.SMELTING_ANOINTMENT_L.get(), BloodMagicItems.BOW_VELOCITY_ANOINTMENT_2.get() };
+
 			LootPool.Builder decent_loot = LootPool.lootPool().setRolls(UniformGenerator.between(3, 6));
 			decent_loot.add(LootItem.lootTableItem(Items.RAW_COPPER).setWeight(15).setQuality(-4).apply(SetItemCountFunction.setCount(UniformGenerator.between(8, 20))));
 			decent_loot.add(LootItem.lootTableItem(Items.RAW_IRON).setWeight(20).setQuality(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 8))));
@@ -401,6 +406,37 @@ public class GeneratorLootTable extends LootTableProvider
 			strong_potions_loot.add(LootItem.lootTableItem(Items.SPLASH_POTION).setWeight(4).apply(SetPotionFunction.setPotion(Potions.LONG_REGENERATION)));
 
 			acceptor.accept(BloodMagic.rl("chests/standard_dungeon/strong_alchemy"), LootTable.lootTable().withPool(strong_potions_loot));
+
+			LootPool.Builder smithy_loot = LootPool.lootPool().setRolls(UniformGenerator.between(4, 7));
+			smithy_loot.add(LootItem.lootTableItem(Items.RAW_COPPER).setWeight(15).setQuality(-4).apply(SetItemCountFunction.setCount(UniformGenerator.between(8, 20))));
+			smithy_loot.add(LootItem.lootTableItem(Items.RAW_IRON).setWeight(20).setQuality(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(8, 12))));
+			smithy_loot.add(LootItem.lootTableItem(Items.RAW_GOLD).setWeight(16).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(5, 11))));
+			smithy_loot.add(LootItem.lootTableItem(Items.COAL).setWeight(20).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(8, 14))));
+			smithy_loot.add(LootItem.lootTableItem(Items.DIAMOND).setWeight(7).setQuality(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 6))));
+			smithy_loot.add(LootItem.lootTableItem(Items.EMERALD).setWeight(3).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 8))));
+			smithy_loot.add(LootItem.lootTableItem(BloodMagicItems.NETHERITE_SCRAP_SAND.get()).setWeight(4).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
+			smithy_loot.add(LootItem.lootTableItem(BloodMagicItems.HELLFORGED_SAND.get()).setWeight(3).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 4))));
+			smithy_loot.add(LootItem.lootTableItem(BloodMagicItems.STRONG_TAU_ITEM.get()).setWeight(8).setQuality(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 4))));
+			smithy_loot.add(LootItem.lootTableItem(BloodMagicItems.PRIMITIVE_EXPLOSIVE_CELL.get()).setWeight(10).setQuality(5));
+
+			addMultipleItemsWithSameParams(smithy_loot, empoweredWeaponAnointments, 3, UniformGenerator.between(1, 4));
+			smithy_loot.add(LootItem.lootTableItem(Items.IRON_NUGGET).setWeight(12).setQuality(-4).apply(SetItemCountFunction.setCount(UniformGenerator.between(20, 40))));
+			smithy_loot.add(LootItem.lootTableItem(Items.LEATHER).setWeight(14).setQuality(-4).apply(SetItemCountFunction.setCount(UniformGenerator.between(10, 20))));
+			smithy_loot.add(LootItem.lootTableItem(Items.GOLD_NUGGET).setWeight(6).setQuality(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 7))));
+
+			addMultipleItemsWithQualitySameParams(smithy_loot, new Item[] { Items.IRON_PICKAXE, Items.IRON_AXE,
+					Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_HOE, Items.IRON_HELMET, Items.IRON_CHESTPLATE,
+					Items.IRON_LEGGINGS,
+					Items.IRON_BOOTS }, 3, -2, ConstantValue.exactly(1), EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(10, 20)).allowTreasure(), SetItemDamageFunction.setDamage(UniformGenerator.between(0.9F, 1.0F)));
+			addMultipleItemsWithQualitySameParams(smithy_loot, new Item[] { Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE,
+					Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_HOE, Items.DIAMOND_HELMET,
+					Items.DIAMOND_CHESTPLATE, Items.DIAMOND_LEGGINGS,
+					Items.DIAMOND_BOOTS }, 1, 2, ConstantValue.exactly(1), EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(20, 25)).allowTreasure(), SetItemDamageFunction.setDamage(UniformGenerator.between(0.7F, 0.9F)));
+
+			smithy_loot.add(LootItem.lootTableItem(BloodMagicItems.LIVING_TOME.get()).setWeight(4).apply(SetLivingUpgrade.withRange(UniformGenerator.between(150, 225), LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())));
+			smithy_loot.add(LootItem.lootTableItem(BloodMagicItems.LIVING_TOME.get()).setWeight(4).apply(SetLivingUpgrade.withRange(UniformGenerator.between(250, 350), LivingArmorRegistrar.UPGRADE_MELEE_DAMAGE.get().getKey())));
+
+			acceptor.accept(BloodMagic.rl("chests/standard_dungeon/decent_smithy"), LootTable.lootTable().withPool(smithy_loot));
 
 			LootPool.Builder mines_loot = LootPool.lootPool().setRolls(UniformGenerator.between(3, 6));
 			mines_loot.add(LootItem.lootTableItem(Items.RAW_COPPER).setWeight(15).setQuality(-4).apply(SetItemCountFunction.setCount(UniformGenerator.between(8, 20))));
