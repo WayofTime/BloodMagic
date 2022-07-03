@@ -237,6 +237,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.condorRitual", "Reverence of the Condor");
 		add("ritual.bloodmagic.yawningVoidRitual", "Yawning of the Void");
 		add("ritual.bloodmagic.groundingRitual", "The Sinner's Burden");
+		add("ritual.bloodmagic.craftingRitual", "Rhythm of the Beating Anvil");
 
 		add("ritual.bloodmagic.cobblestoneRitual", "Le Vulcanos Frigius");
 		add("ritual.bloodmagic.placerRitual", "Domain of The Filler");
@@ -303,6 +304,11 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.yawningVoidRitual.default.info", "(Raw) Increases the speed of the ritual based on the total amount of Raw Will in the Aura.");
 		add("ritual.bloodmagic.yawningVoidRitual.corrosive.info", "(Corrosive) Destroys blocks that match the filter. Remaining are not destroyed.");
 		add("ritual.bloodmagic.yawningVoidRitual.steadfast.info", "(Steadfast) Non-destroyed blocks are placed in separate region. If no filter applied, all blocks are moved.");
+		add("ritual.bloodmagic.craftingRitual.info", "Crafts items based on the linked Item Filter using the connected Input inventory");
+		add("ritual.bloodmagic.craftingRitual.outputRange.info", "(Chest) Crafted items are inserted into the selected inventory, or spawned in the world if missing.");
+		add("ritual.bloodmagic.craftingRitual.inputRange.info", "(Chest) Items for crafting are taken from connected inventory.");
+		add("ritual.bloodmagic.craftingRitual.recipeRange.info", "(Item Frame/Chest) Uses Item Filter to determine shape of recipe and selected items.");
+		add("ritual.bloodmagic.craftingRitual.outputFilterRange.info", "(Item Frame/Chest) If present, recipe output selected based on filter, and crafts until selected amount in output inventory.");
 
 		add("ritual.bloodmagic.condorRitual.info", "Provides flight in an area around the ritual.");
 		add("ritual.bloodmagic.eternalSoulRitual.info", "Capable of transferring Life Essence from a Network back into an Altar at a cost.");

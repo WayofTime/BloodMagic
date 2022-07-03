@@ -221,6 +221,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 								addBlockRanges(ritual.getModableRangeMap());
 
 							notifyUpdate();
+							this.setChanged();
 							return true;
 						}
 					}

@@ -33,4 +33,10 @@ public interface IItemFilter extends IRoutingFilter
 	boolean doesStackPassFilter(ItemStack testStack);
 
 	boolean doStacksMatch(IFilterKey filterStack, ItemStack testStack);
+
+	/**
+	 * Called to get the filter list directly for testing from outside sources. No
+	 * items within this list, nor the list itself, may be modified!
+	 */
+	List<IFilterKey> getFilterList();
 }

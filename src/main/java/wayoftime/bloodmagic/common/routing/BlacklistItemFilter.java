@@ -3,10 +3,10 @@ package wayoftime.bloodmagic.common.routing;
 import java.util.Iterator;
 import java.util.List;
 
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.common.item.routing.IFilterKey;
 import wayoftime.bloodmagic.util.Utils;
@@ -277,5 +277,11 @@ public class BlacklistItemFilter implements IItemFilter
 	public void initializeFilter(List<IFilterKey> filteredList)
 	{
 		this.requestList = filteredList;
+	}
+
+	@Override
+	public List<IFilterKey> getFilterList()
+	{
+		return this.requestList;
 	}
 }

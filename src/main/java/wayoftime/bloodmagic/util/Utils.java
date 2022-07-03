@@ -264,11 +264,27 @@ public class Utils
 		return stack;
 	}
 
-	public static ItemStack insertStackIntoTile(ItemStack stack, IItemHandler handler)
+	public static ItemStack insertStackIntoTile(ItemStack stack, IItemHandler handler, boolean doCleanly)
 	{
 		int numberOfSlots = handler.getSlots();
 
 		ItemStack copyStack = stack.copy();
+
+		if (doCleanly)
+		{
+			for (int slot = 0; slot < numberOfSlots; slot++)
+			{
+				ItemStack containedStack = handler.getStackInSlot(slot);
+				if (ItemHandlerHelper.canItemStacksStack(stack, containedStack))
+				{
+					copyStack = handler.insertItem(slot, copyStack, false);
+					if (copyStack.isEmpty())
+					{
+						return ItemStack.EMPTY;
+					}
+				}
+			}
+		}
 
 		for (int slot = 0; slot < numberOfSlots; slot++)
 		{
@@ -280,6 +296,11 @@ public class Utils
 		}
 
 		return copyStack;
+	}
+
+	public static ItemStack insertStackIntoTile(ItemStack stack, IItemHandler handler)
+	{
+		return insertStackIntoTile(stack, handler, false);
 	}
 
 	public static int getNumberOfFreeSlots(BlockEntity tile, Direction dir)
@@ -354,6 +375,94 @@ public class Utils
 		}
 
 		return stack;
+	}
+
+	public static boolean canInsertStackFullyIntoInventory(ItemStack stack, IItemHandler itemHandler, boolean fillToLimit, int limit)
+	{
+		if (stack.isEmpty())
+		{
+			return true;
+		}
+
+		int itemsLeft = stack.getCount();
+
+		boolean[] canBeInserted = new boolean[itemHandler.getSlots()];
+
+//		if (inventory instanceof WorldlyContainer)
+//		{
+//			int[] array = ((WorldlyContainer) inventory).getSlotsForFace(dir);
+//			for (int in : array)
+//			{
+//				canBeInserted[in] = inventory.canPlaceItem(in, stack) && ((WorldlyContainer) inventory).canPlaceItemThroughFace(in, stack, dir);
+//			}
+//		} else
+		{
+			for (int i = 0; i < canBeInserted.length; i++)
+			{
+				canBeInserted[i] = itemHandler.isItemValid(i, stack);
+			}
+		}
+
+		int numberMatching = 0;
+
+		if (fillToLimit)
+		{
+			for (int i = 0; i < itemHandler.getSlots(); i++)
+			{
+				if (!canBeInserted[i])
+				{
+					continue;
+				}
+
+				ItemStack invStack = itemHandler.getStackInSlot(i);
+
+				if (!invStack.isEmpty() && ItemHandlerHelper.canItemStacksStack(stack, invStack))
+				{
+					numberMatching += invStack.getCount();
+				}
+			}
+		}
+
+		if (fillToLimit && limit < stack.getCount() + numberMatching)
+		{
+			return false;
+		}
+
+		for (int i = 0; i < itemHandler.getSlots(); i++)
+		{
+			if (!canBeInserted[i])
+			{
+				continue;
+			}
+
+			ItemStack invStack = itemHandler.getStackInSlot(i);
+			if (invStack.isEmpty())
+			{
+				itemsLeft = 0;
+			} else
+			{
+				boolean canCombine = ItemHandlerHelper.canItemStacksStack(stack, invStack);
+				if (canCombine)
+				{
+					if (invStack.isEmpty())
+					{
+						itemsLeft = 0;
+					} else
+					{
+						itemsLeft -= (Math.min(invStack.getMaxStackSize(), itemHandler.getSlotLimit(i)) - invStack.getCount());
+					}
+				}
+			}
+
+			if (itemsLeft <= 0)
+			{
+				return true;
+			}
+		}
+
+//		System.out.println("Items left: " + itemsLeft);
+
+		return false;
 	}
 
 	public static boolean canInsertStackFullyIntoInventory(ItemStack stack, Container inventory, Direction dir, boolean fillToLimit, int limit)
