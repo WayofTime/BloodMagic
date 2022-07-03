@@ -315,7 +315,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing)
 	{
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && facing != null)
 		{
 			return LazyOptional.empty();
 		}

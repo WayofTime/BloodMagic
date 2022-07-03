@@ -388,19 +388,9 @@ public class Utils
 
 		boolean[] canBeInserted = new boolean[itemHandler.getSlots()];
 
-//		if (inventory instanceof WorldlyContainer)
-//		{
-//			int[] array = ((WorldlyContainer) inventory).getSlotsForFace(dir);
-//			for (int in : array)
-//			{
-//				canBeInserted[in] = inventory.canPlaceItem(in, stack) && ((WorldlyContainer) inventory).canPlaceItemThroughFace(in, stack, dir);
-//			}
-//		} else
+		for (int i = 0; i < canBeInserted.length; i++)
 		{
-			for (int i = 0; i < canBeInserted.length; i++)
-			{
-				canBeInserted[i] = itemHandler.isItemValid(i, stack);
-			}
+			canBeInserted[i] = itemHandler.isItemValid(i, stack);
 		}
 
 		int numberMatching = 0;
@@ -459,8 +449,6 @@ public class Utils
 				return true;
 			}
 		}
-
-//		System.out.println("Items left: " + itemsLeft);
 
 		return false;
 	}

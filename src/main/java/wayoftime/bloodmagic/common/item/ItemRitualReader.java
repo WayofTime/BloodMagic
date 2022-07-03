@@ -216,6 +216,8 @@ public class ItemRitualReader extends Item
 								int maxVerticalRange = ritual.getMaxVerticalRadiusForRange(range, willConfig, holder);
 								int maxVolume = ritual.getMaxVolumeForRange(range, willConfig, holder);
 
+								System.out.println("Setting block range " + range + ": " + containedPos + ", " + pos2);
+
 								switch (master.setBlockRangeByBounds(player, range, containedPos, pos2))
 								{
 								case SUCCESS:

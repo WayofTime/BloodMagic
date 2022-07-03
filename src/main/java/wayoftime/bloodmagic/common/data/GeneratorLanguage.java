@@ -304,11 +304,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.yawningVoidRitual.default.info", "(Raw) Increases the speed of the ritual based on the total amount of Raw Will in the Aura.");
 		add("ritual.bloodmagic.yawningVoidRitual.corrosive.info", "(Corrosive) Destroys blocks that match the filter. Remaining are not destroyed.");
 		add("ritual.bloodmagic.yawningVoidRitual.steadfast.info", "(Steadfast) Non-destroyed blocks are placed in separate region. If no filter applied, all blocks are moved.");
-		add("ritual.bloodmagic.craftingRitual.info", "Crafts items based on the linked Item Filter using the connected Input inventory");
-		add("ritual.bloodmagic.craftingRitual.outputRange.info", "(Chest) Crafted items are inserted into the selected inventory, or spawned in the world if missing.");
-		add("ritual.bloodmagic.craftingRitual.inputRange.info", "(Chest) Items for crafting are taken from connected inventory.");
-		add("ritual.bloodmagic.craftingRitual.recipeRange.info", "(Item Frame/Chest) Uses Item Filter to determine shape of recipe and selected items.");
-		add("ritual.bloodmagic.craftingRitual.outputFilterRange.info", "(Item Frame/Chest) If present, recipe output selected based on filter, and crafts until selected amount in output inventory.");
+		add("ritual.bloodmagic.craftingRitual.steadfast.info", "(Steadfast) Ritual will instead craft using the linked Hellfire Forge.");
 
 		add("ritual.bloodmagic.condorRitual.info", "Provides flight in an area around the ritual.");
 		add("ritual.bloodmagic.eternalSoulRitual.info", "Capable of transferring Life Essence from a Network back into an Altar at a cost.");
@@ -392,6 +388,13 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.yawningVoidRitual.chest.info", "(Chest) Chooses the first Item Filter to determine which blocks to destroy.");
 		add("ritual.bloodmagic.yawningVoidRitual.quarryRange.info", "(Quarry) Blocks within range are destroyed.");
 		add("ritual.bloodmagic.yawningVoidRitual.placementRange.info", "(Placement) Based on Will config, blocks not destroyed are placed within range.");
+
+		add("ritual.bloodmagic.craftingRitual.info", "Crafts items based on the linked Item Filter using the connected Input inventory");
+		add("ritual.bloodmagic.craftingRitual.outputRange.info", "(Chest) Crafted items are inserted into the selected inventory, or spawned in the world if missing.");
+		add("ritual.bloodmagic.craftingRitual.inputRange.info", "(Chest) Items for crafting are taken from connected inventory.");
+		add("ritual.bloodmagic.craftingRitual.recipeRange.info", "(Item Frame/Chest) Uses Item Filter to determine shape of recipe and selected items.");
+		add("ritual.bloodmagic.craftingRitual.outputFilterRange.info", "(Item Frame/Chest) If present, recipe output selected based on filter, and crafts until selected amount in output inventory.");
+		add("ritual.bloodmagic.craftingRitual.hellforgedRange.info", "(Steadfast) Inserts and extracts items from the connected Hellfire Forge.");
 
 		add("tooltip.bloodmagic.ritualReader.currentState", "Current mode: %s");
 		add("tooltip.bloodmagic.ritualReader.set_area", "Define Area");

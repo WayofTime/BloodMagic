@@ -2,19 +2,19 @@ package wayoftime.bloodmagic.common.container.tile;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.Container;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
-import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
-import wayoftime.bloodmagic.common.tile.TileSoulForge;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import wayoftime.bloodmagic.api.compat.IDemonWill;
 import wayoftime.bloodmagic.api.compat.IDemonWillGem;
+import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.common.tile.TileSoulForge;
 
 public class ContainerSoulForge extends AbstractContainerMenu
 {
@@ -38,6 +38,7 @@ public class ContainerSoulForge extends AbstractContainerMenu
 		this.tileForge = tile;
 		this.setup(playerInventory, tile);
 		this.data = data;
+		this.addDataSlots(data);
 	}
 
 	public void setup(Inventory inventory, Container tileForge)

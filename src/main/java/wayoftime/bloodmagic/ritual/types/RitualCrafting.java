@@ -9,6 +9,8 @@ import java.util.function.Consumer;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -26,6 +28,10 @@ import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
 import wayoftime.bloodmagic.common.item.routing.IFilterKey;
 import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
 import wayoftime.bloodmagic.common.routing.IItemFilter;
+import wayoftime.bloodmagic.common.tile.TileSoulForge;
+import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
+import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.ritual.IMasterRitualStone;
@@ -43,6 +49,14 @@ public class RitualCrafting extends Ritual
 	public static final String RECIPE_CHEST_RANGE = "recipeRange";
 	public static final String OUTPUT_FILTER_RANGE = "outputFilterRange";
 
+	public static final String HELLFORGED_RANGE = "hellforgedRange";
+
+	public static final int CRAFTING_MODE = 0;
+	public static final int HELLFORGE_MODE = 1;
+
+	public static final double MAX_STEADFAST_DRAIN = 0.1;
+	public static final double steadfastWillDrain = 0.01;
+
 	public RitualCrafting()
 	{
 		super("ritualCrafting", 0, 15000, "ritual." + BloodMagic.MODID + ".craftingRitual");
@@ -52,11 +66,13 @@ public class RitualCrafting extends Ritual
 		addBlockRange(INPUT_CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
 		addBlockRange(RECIPE_CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 2, 0), 1));
 		addBlockRange(OUTPUT_FILTER_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 0, 0), 1));
+		addBlockRange(HELLFORGED_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 5, 0), 1));
 //
 		setMaximumVolumeAndDistanceOfRange(OUTPUT_CHEST_RANGE, 1, 7, 7);
 		setMaximumVolumeAndDistanceOfRange(INPUT_CHEST_RANGE, 1, 7, 7);
 		setMaximumVolumeAndDistanceOfRange(RECIPE_CHEST_RANGE, 1, 7, 7);
 		setMaximumVolumeAndDistanceOfRange(OUTPUT_FILTER_RANGE, 1, 7, 7);
+		setMaximumVolumeAndDistanceOfRange(HELLFORGED_RANGE, 1, 7, 7);
 	}
 
 	@Override
@@ -76,81 +92,281 @@ public class RitualCrafting extends Ritual
 		BlockPos pos = masterRitualStone.getMasterBlockPos();
 		List<EnumDemonWillType> willConfig = masterRitualStone.getActiveWillConfig();
 
-		ItemStack filterStack = ItemStack.EMPTY;
+		int mode = HELLFORGE_MODE;
+		double steadfastWill = this.getWillRespectingConfig(level, pos, EnumDemonWillType.STEADFAST, willConfig);
 
-		AreaDescriptor recipeDesc = this.getBlockRange(RECIPE_CHEST_RANGE);
-		List<ItemFrame> itemFrames = level.getEntitiesOfClass(ItemFrame.class, recipeDesc.getAABB(pos));
-		if (!itemFrames.isEmpty())
+		if (willConfig.contains(EnumDemonWillType.STEADFAST))
 		{
-			for (ItemFrame frame : itemFrames)
+			mode = HELLFORGE_MODE;
+			if (steadfastWill < MAX_STEADFAST_DRAIN)
 			{
-				ItemStack frameStack = frame.getItem();
-//				System.out.println("Frames aren't empty. Found: " + frameStack.getItem());
-				if (!frameStack.isEmpty() && frameStack.getItem() instanceof IItemFilterProvider)
-				{
-					filterStack = frameStack;
-				}
+				return;
 			}
-		} else
-		{
-			List<BlockPos> posList = recipeDesc.getContainedPositions(pos);
-			if (!posList.isEmpty())
-			{
-				BlockEntity tile = level.getBlockEntity(posList.get(0));
+		}
 
-				if (tile != null)
+		if (mode == CRAFTING_MODE)
+		{
+			attemptVanillaCrafting(masterRitualStone, level, pos);
+		}
+
+		if (mode == HELLFORGE_MODE)
+		{
+			AreaDescriptor forgeDesc = masterRitualStone.getBlockRange(HELLFORGED_RANGE);
+//			System.out.println("Desc: " + forgeDesc.getAABB(pos));
+			List<BlockPos> forgePosList = forgeDesc.getContainedPositions(pos);
+			if (!forgePosList.isEmpty())
+			{
+//				System.out.println("Pos: " + forgePosList.get(0));
+				BlockEntity forgeTile = level.getBlockEntity(forgePosList.get(0));
+				if (forgeTile instanceof TileSoulForge)
 				{
-					IItemHandler inv = Utils.getInventory(tile, null);
-					if (inv != null)
+//					System.out.println("Have a forge");
+					int operations = attemptHellforgedCrafting(masterRitualStone, level, pos, (TileSoulForge) forgeTile);
+					if (operations > 0)
 					{
-						for (int i = 0; i < inv.getSlots(); i++)
-						{
-							ItemStack frameStack = inv.getStackInSlot(i);
-							if (!frameStack.isEmpty() && frameStack.getItem() instanceof IItemFilterProvider)
-							{
-								filterStack = frameStack;
-								break;
-							}
-						}
+						double steadfastDrained = Math.min(operations * steadfastWillDrain, MAX_STEADFAST_DRAIN);
+						WorldDemonWillHandler.drainWill(level, pos, EnumDemonWillType.STEADFAST, steadfastDrained, true);
 					}
 				}
 			}
 		}
+	}
 
+	public int attemptHellforgedCrafting(IMasterRitualStone masterRitualStone, Level level, BlockPos pos, TileSoulForge soulForge)
+	{
+		ItemStack filterStack = getRecipeFilterStack(masterRitualStone, level, pos);
+		if (filterStack.isEmpty())
+		{
+			return 0;
+		}
+
+		IItemHandler inputInv = this.getInputInventory(masterRitualStone, level, pos);
+		if (inputInv == null)
+		{
+			return 0;
+		}
+
+		InventoryFilter filterInv = new InventoryFilter(filterStack);
+
+		List<ItemStack> inputList = new ArrayList<>(4);
+		int slotsFilled = 0;
+
+		for (int i = 0; i < filterInv.getContainerSize(); i++)
+		{
+			ItemStack containedStack = filterInv.getItem(i);
+			if (!containedStack.isEmpty())
+			{
+				inputList.add(containedStack);
+				if (slotsFilled >= 4)
+				{
+					break;
+				}
+			}
+		}
+
+		RecipeTartaricForge recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getTartaricForge(level, inputList);
+
+		if (recipe == null)
+		{
+			return 0;
+		}
+
+		int operations = 0;
+
+		// Need to take all of the "junk" before seeing if we can craft.
+
+		AreaDescriptor outputDesc = masterRitualStone.getBlockRange(OUTPUT_CHEST_RANGE);
+		List<BlockPos> outputPosList = outputDesc.getContainedPositions(pos);
+		BlockEntity outputTile = null;
+		IItemHandler outputInv = null;
+		BlockPos outputPos = pos;
+
+		if (!outputPosList.isEmpty())
+		{
+			outputPos = outputPosList.get(0);
+			outputTile = level.getBlockEntity(outputPos);
+		} else
+		{
+			outputPos = pos.above(2);
+		}
+
+		if (outputTile != null)
+		{
+			outputInv = Utils.getInventory(outputTile, null);
+		}
+
+		List<ItemStack> insertionList = new ArrayList<>();
+//		insertionList.add(resultStack);
+
+		IItemFilter itemRecipeFilter = ((IItemFilterProvider) filterStack.getItem()).getUninitializedItemFilter(filterStack);
+		List<IFilterKey> filterKeyList = itemRecipeFilter.getFilterList();
+//		int filterKeyIndex = 0;
+
+		for (int slot = 0; slot < 4; slot++)
+		{
+			boolean hasKey = filterKeyList.size() > slot;
+
+			ItemStack containedStack = soulForge.getItem(slot);
+
+			if (containedStack.isEmpty())
+			{
+				continue;
+			}
+
+			if (hasKey)
+			{
+				IFilterKey key = filterKeyList.get(slot);
+				if (!key.doesStackMatch(containedStack))
+				{
+					insertionList.add(soulForge.removeItem(slot, containedStack.getCount()));
+					operations++;
+				}
+			} else
+			{
+				insertionList.add(soulForge.removeItem(slot, containedStack.getCount()));
+				operations++;
+			}
+		}
+
+		ItemStack outputForgeStack = soulForge.getItem(TileSoulForge.outputSlot);
+		if (!outputForgeStack.isEmpty())
+		{
+			insertionList.add(soulForge.removeItem(TileSoulForge.outputSlot, outputForgeStack.getCount()));
+		}
+
+		ItemStack outputFilterStack = getOutputFilterStack(masterRitualStone, level, pos);
+		ItemStack recipeOutputStack = recipe.getOutput();
+
+		boolean doLimit = false;
+		int craftLimit = 0;
+
+		if (!outputFilterStack.isEmpty())
+		{
+			IItemFilter outputFilter = ((IItemFilterProvider) outputFilterStack.getItem()).getUninitializedItemFilter(outputFilterStack);
+
+			List<IFilterKey> keyList = outputFilter.getFilterList();
+			for (IFilterKey outputKey : keyList)
+			{
+				int count = outputKey.getCount();
+				if (count == 0)
+				{
+					doLimit = false;
+					break;
+				}
+
+				doLimit = true;
+
+				craftLimit += Math.abs(count);
+			}
+
+			if (doLimit)
+			{
+				craftLimit += (recipeOutputStack.getCount() - 2);
+			}
+		}
+
+		boolean doCraft = true;
+		if (outputInv != null)
+		{
+			doCraft = false;
+			if (Utils.canInsertStackFullyIntoInventory(recipeOutputStack, outputInv, doLimit, craftLimit))
+			{
+				doCraft = true;
+			}
+		}
+
+		if (outputInv != null)
+		{
+			for (ItemStack insertedStack : insertionList)
+			{
+				ItemStack remainder = Utils.insertStackIntoTile(insertedStack, outputInv, true);
+				if (!remainder.isEmpty())
+				{
+					Utils.spawnStackAtBlock(level, outputPos, Direction.UP, remainder);
+				}
+			}
+		} else
+		{
+			for (ItemStack insertedStack : insertionList)
+			{
+				Utils.spawnStackAtBlock(level, outputPos, Direction.UP, insertedStack);
+			}
+		}
+
+		if (!doCraft)
+		{
+			return operations;
+		}
+//		if(!Utils.canInsertStackFullyIntoInventory(recipeOutputStack, itemHandler, fillToLimit, limit))
+
+		// Map that stores the slots that are going to be syphoned from.
+//		Map<Integer, Integer> selectedMap = new HashMap<>();
+
+		int forgeSlot = 0;
+		for (IFilterKey filterKey : filterKeyList)
+		{
+			ItemStack forgeStack = soulForge.getItem(forgeSlot);
+			if (!forgeStack.isEmpty())
+			{
+				forgeSlot++;
+				continue;
+			}
+
+			boolean hasSucceeded = false;
+
+			for (int invSlot = 0; invSlot < inputInv.getSlots(); invSlot++)
+			{
+				ItemStack invStack = inputInv.getStackInSlot(invSlot);
+
+				if (filterKey.doesStackMatch(invStack))
+				{
+					ItemStack extractedStack = inputInv.extractItem(invSlot, 1, false);
+					if (extractedStack.isEmpty())
+					{
+						continue;
+					}
+
+					soulForge.setItem(forgeSlot, extractedStack);
+
+					operations++;
+					hasSucceeded = true;
+					break;
+				}
+
+			}
+
+			forgeSlot++;
+
+			if (!hasSucceeded)
+			{
+				return operations;
+			}
+		}
+
+		return operations;
+	}
+
+	public void attemptVanillaCrafting(IMasterRitualStone masterRitualStone, Level level, BlockPos pos)
+	{
+		ItemStack filterStack = getRecipeFilterStack(masterRitualStone, level, pos);
 		if (filterStack.isEmpty())
 		{
 			return;
 		}
 
-		AreaDescriptor inputDesc = getBlockRange(INPUT_CHEST_RANGE);
-		List<BlockPos> inputPosList = inputDesc.getContainedPositions(pos);
-		BlockEntity inputTile = null;
-		if (!inputPosList.isEmpty())
-		{
-			inputTile = level.getBlockEntity(inputPosList.get(0));
-		}
-
-		if (inputTile == null)
-		{
-			return;
-		}
-
-		IItemHandler inputInv = Utils.getInventory(inputTile, null);
+		IItemHandler inputInv = this.getInputInventory(masterRitualStone, level, pos);
 		if (inputInv == null)
 		{
 			return;
 		}
 
 		InventoryFilter filterInv = new InventoryFilter(filterStack);
-
 		CraftingContainer craftingContainer = makeContainer();
 
 		for (int i = 0; i < filterInv.getContainerSize(); i++)
 		{
 			craftingContainer.setItem(i, filterInv.getItem(i));
 		}
-
-//		InventoryWrapper invWrapper = new InventoryWrapper(9);
 
 		List<CraftingRecipe> craftingRecipes = level.getRecipeManager().getRecipesFor(RecipeType.CRAFTING, craftingContainer, level);
 
@@ -162,44 +378,7 @@ public class RitualCrafting extends Ritual
 
 		CraftingRecipe recipe = craftingRecipes.get(0);
 
-		AreaDescriptor outputFilterDesc = this.getBlockRange(OUTPUT_FILTER_RANGE);
-		ItemStack outputFilterStack = ItemStack.EMPTY;
-		List<ItemFrame> outputFrames = level.getEntitiesOfClass(ItemFrame.class, outputFilterDesc.getAABB(pos));
-		if (outputFrames != null)
-		{
-			for (ItemFrame frame : outputFrames)
-			{
-				ItemStack frameStack = frame.getItem();
-				if (!frameStack.isEmpty() && frameStack.getItem() instanceof IItemFilterProvider)
-				{
-					outputFilterStack = frameStack;
-				}
-			}
-		} else
-		{
-			List<BlockPos> posList = outputFilterDesc.getContainedPositions(pos);
-			if (!posList.isEmpty())
-			{
-				BlockEntity tile = level.getBlockEntity(posList.get(0));
-
-				if (tile != null)
-				{
-					IItemHandler inv = Utils.getInventory(tile, null);
-					if (inv != null)
-					{
-						for (int i = 0; i < inv.getSlots(); i++)
-						{
-							ItemStack frameStack = inv.getStackInSlot(i);
-							if (!frameStack.isEmpty() && frameStack.getItem() instanceof IItemFilterProvider)
-							{
-								outputFilterStack = frameStack;
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
+		ItemStack outputFilterStack = getOutputFilterStack(masterRitualStone, level, pos);
 
 		boolean doLimit = false;
 		int craftLimit = 0;
@@ -247,14 +426,8 @@ public class RitualCrafting extends Ritual
 			{
 				craftLimit += (recipe.getResultItem().getCount() - 1);
 			}
-//			outputFilter.
 		}
 
-//		System.out.println("Craft limit: " + craftLimit);
-
-//		System.out.println("Valid recipe! Result is: " + recipe.assemble(craftingContainer));
-
-		// TODO: Eventually select recipe based on output filter...
 		IItemFilter itemRecipeFilter = ((IItemFilterProvider) filterStack.getItem()).getUninitializedItemFilter(filterStack);
 
 		// Map that stores the slots that are going to be syphoned from.
@@ -277,6 +450,7 @@ public class RitualCrafting extends Ritual
 			}
 
 			boolean hasSucceeded = false;
+			IFilterKey filterKey = filterKeyList.get(filterKeyIndex);
 
 			for (int invSlot = 0; invSlot < inputInv.getSlots(); invSlot++)
 			{
@@ -287,7 +461,6 @@ public class RitualCrafting extends Ritual
 					continue;
 				}
 
-				IFilterKey filterKey = filterKeyList.get(filterKeyIndex);
 				if (filterKey.doesStackMatch(invStack))
 				{
 					ItemStack extractedStack = inputInv.extractItem(invSlot, 1, true);
@@ -314,7 +487,7 @@ public class RitualCrafting extends Ritual
 			}
 		}
 
-		AreaDescriptor outputDesc = getBlockRange(OUTPUT_CHEST_RANGE);
+		AreaDescriptor outputDesc = masterRitualStone.getBlockRange(OUTPUT_CHEST_RANGE);
 		List<BlockPos> outputPosList = outputDesc.getContainedPositions(pos);
 		BlockEntity outputTile = null;
 		IItemHandler outputInv = null;
@@ -392,9 +565,117 @@ public class RitualCrafting extends Ritual
 			}
 
 			masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
+
+//			return insertionList;
+		}
+	}
+
+	public ItemStack getRecipeFilterStack(IMasterRitualStone masterRitualStone, Level level, BlockPos masterPos)
+	{
+		ItemStack filterStack = ItemStack.EMPTY;
+
+		AreaDescriptor recipeDesc = masterRitualStone.getBlockRange(RECIPE_CHEST_RANGE);
+		List<ItemFrame> itemFrames = level.getEntitiesOfClass(ItemFrame.class, recipeDesc.getAABB(masterPos));
+		if (!itemFrames.isEmpty())
+		{
+			for (ItemFrame frame : itemFrames)
+			{
+				ItemStack frameStack = frame.getItem();
+//				System.out.println("Frames aren't empty. Found: " + frameStack.getItem());
+				if (!frameStack.isEmpty() && frameStack.getItem() instanceof IItemFilterProvider)
+				{
+					filterStack = frameStack;
+				}
+			}
+		} else
+		{
+			List<BlockPos> posList = recipeDesc.getContainedPositions(masterPos);
+			if (!posList.isEmpty())
+			{
+				BlockEntity tile = level.getBlockEntity(posList.get(0));
+
+				if (tile != null)
+				{
+					IItemHandler inv = Utils.getInventory(tile, null);
+					if (inv != null)
+					{
+						for (int i = 0; i < inv.getSlots(); i++)
+						{
+							ItemStack frameStack = inv.getStackInSlot(i);
+							if (!frameStack.isEmpty() && frameStack.getItem() instanceof IItemFilterProvider)
+							{
+								filterStack = frameStack;
+								break;
+							}
+						}
+					}
+				}
+			}
 		}
 
-//		
+		return filterStack;
+	}
+
+	public IItemHandler getInputInventory(IMasterRitualStone masterRitualStone, Level level, BlockPos masterPos)
+	{
+		AreaDescriptor inputDesc = masterRitualStone.getBlockRange(INPUT_CHEST_RANGE);
+		List<BlockPos> inputPosList = inputDesc.getContainedPositions(masterPos);
+		BlockEntity inputTile = null;
+		if (!inputPosList.isEmpty())
+		{
+			inputTile = level.getBlockEntity(inputPosList.get(0));
+		}
+
+		if (inputTile == null)
+		{
+			return null;
+		}
+
+		return Utils.getInventory(inputTile, null);
+	}
+
+	public ItemStack getOutputFilterStack(IMasterRitualStone masterRitualStone, Level level, BlockPos masterPos)
+	{
+		AreaDescriptor outputFilterDesc = masterRitualStone.getBlockRange(OUTPUT_FILTER_RANGE);
+		ItemStack outputFilterStack = ItemStack.EMPTY;
+		List<ItemFrame> outputFrames = level.getEntitiesOfClass(ItemFrame.class, outputFilterDesc.getAABB(masterPos));
+		if (outputFrames != null)
+		{
+			for (ItemFrame frame : outputFrames)
+			{
+				ItemStack frameStack = frame.getItem();
+				if (!frameStack.isEmpty() && frameStack.getItem() instanceof IItemFilterProvider)
+				{
+					outputFilterStack = frameStack;
+				}
+			}
+		} else
+		{
+			List<BlockPos> posList = outputFilterDesc.getContainedPositions(masterPos);
+			if (!posList.isEmpty())
+			{
+				BlockEntity tile = level.getBlockEntity(posList.get(0));
+
+				if (tile != null)
+				{
+					IItemHandler inv = Utils.getInventory(tile, null);
+					if (inv != null)
+					{
+						for (int i = 0; i < inv.getSlots(); i++)
+						{
+							ItemStack frameStack = inv.getStackInSlot(i);
+							if (!frameStack.isEmpty() && frameStack.getItem() instanceof IItemFilterProvider)
+							{
+								outputFilterStack = frameStack;
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return outputFilterStack;
 	}
 
 	private static CraftingContainer makeContainer()
@@ -452,5 +733,12 @@ public class RitualCrafting extends Ritual
 	public Ritual getNewCopy()
 	{
 		return new RitualCrafting();
+	}
+
+	@Override
+	public Component[] provideInformationOfRitualToPlayer(Player player)
+	{
+		return new Component[] { new TranslatableComponent(this.getTranslationKey() + ".info"),
+				new TranslatableComponent(this.getTranslationKey() + ".steadfast.info") };
 	}
 }
