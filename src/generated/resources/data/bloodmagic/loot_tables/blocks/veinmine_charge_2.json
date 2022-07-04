@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "name": "bloodmagic:veinmine_charge_2",
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": []
+    }
+  ]
+}

@@ -15,6 +15,6 @@ public class BlockVeinMineCharge extends BlockShapedExplosive
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
-		return new TileVeinMineCharge(pos, state);
+		return new TileVeinMineCharge(explosionSize, pos, state);
 	}
 }

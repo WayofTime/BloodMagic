@@ -82,7 +82,10 @@
     "bloodmagic:inversion_pillar",
     "bloodmagic:deforester_charge",
     "bloodmagic:veinmine_charge",
+    "bloodmagic:veinmine_charge_2",
     "bloodmagic:shaped_charge",
-    "bloodmagic:fungal_charge"
+    "bloodmagic:fungal_charge",
+    "bloodmagic:aug_shaped_charge",
+    "bloodmagic:shaped_charge_deep"
   ]
 }

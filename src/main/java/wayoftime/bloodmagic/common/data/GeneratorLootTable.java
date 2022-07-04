@@ -569,6 +569,10 @@ public class GeneratorLootTable extends LootTableProvider
 			registerNoDropLootTable(BloodMagicBlocks.VEINMINE_CHARGE.get());
 			registerNoDropLootTable(BloodMagicBlocks.FUNGAL_CHARGE.get());
 
+			registerNoDropLootTable(BloodMagicBlocks.AUG_SHAPED_CHARGE.get());
+			registerNoDropLootTable(BloodMagicBlocks.VEINMINE_CHARGE_2.get());
+			registerNoDropLootTable(BloodMagicBlocks.SHAPED_CHARGE_DEEP.get());
+
 			registerNoDropLootTable(BloodMagicBlocks.INVERSION_PILLAR.get());
 			registerNoDropLootTable(BloodMagicBlocks.INVERSION_PILLAR_CAP.get());
 		}

@@ -1,0 +1,12 @@
+{
+  "parent": "bloodmagic:block/sub/augment_shaped_charge",
+  "textures": {
+    "1": "bloodmagic:block/dungeon/dungeon_tile",
+    "3": "bloodmagic:block/dungeon/dungeon_stone",
+    "4": "bloodmagic:block/blankrune",
+    "5": "bloodmagic:block/largebloodstonebrick",
+    "2": "minecraft:block/iron_block",
+    "7": "bloodmagic:models/copper_trim",
+    "particle": "minecraft:block/iron_block"
+  }
+}

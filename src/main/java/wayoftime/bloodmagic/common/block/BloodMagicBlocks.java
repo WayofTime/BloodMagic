@@ -217,10 +217,15 @@ public class BloodMagicBlocks
 		return false;
 	}
 
-	public static final RegistryObject<Block> SHAPED_CHARGE = BLOCKS.register("shaped_charge", () -> new BlockShapedExplosive(3, Properties.of(Material.METAL).strength(2.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> DEFORESTER_CHARGE = BLOCKS.register("deforester_charge", () -> new BlockDeforesterCharge(3, Properties.of(Material.METAL).strength(2.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> VEINMINE_CHARGE = BLOCKS.register("veinmine_charge", () -> new BlockVeinMineCharge(3, Properties.of(Material.METAL).strength(2.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> FUNGAL_CHARGE = BLOCKS.register("fungal_charge", () -> new BlockFungalCharge(3, Properties.of(Material.METAL).strength(2.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> SHAPED_CHARGE = BLOCKS.register("shaped_charge", () -> new BlockShapedExplosive(2, Properties.of(Material.METAL).strength(2.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DEFORESTER_CHARGE = BLOCKS.register("deforester_charge", () -> new BlockDeforesterCharge(64 * 2, Properties.of(Material.METAL).strength(2.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> VEINMINE_CHARGE = BLOCKS.register("veinmine_charge", () -> new BlockVeinMineCharge(64 * 2, Properties.of(Material.METAL).strength(2.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> FUNGAL_CHARGE = BLOCKS.register("fungal_charge", () -> new BlockFungalCharge(64 * 2, Properties.of(Material.METAL).strength(2.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+
+	public static final RegistryObject<Block> AUG_SHAPED_CHARGE = BLOCKS.register("aug_shaped_charge", () -> new BlockShapedExplosive(3, Properties.of(Material.METAL).strength(2.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> VEINMINE_CHARGE_2 = BLOCKS.register("veinmine_charge_2", () -> new BlockVeinMineCharge(64 * 8, Properties.of(Material.METAL).strength(2.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+
+	public static final RegistryObject<Block> SHAPED_CHARGE_DEEP = BLOCKS.register("shaped_charge_deep", () -> new BlockRectangularShapedExplosive(2, 20, Properties.of(Material.METAL).strength(2.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 
 	//
 ////	private static <T extends Block> RegistryObject<T> register(String name, Supplier<? extends T> sup, Function<RegistryObject<T>, Supplier<? extends Item>> itemCreator) 

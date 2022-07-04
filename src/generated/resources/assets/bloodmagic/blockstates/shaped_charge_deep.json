@@ -1,0 +1,29 @@
+{
+  "variants": {
+    "attached=down": {
+      "model": "bloodmagic:block/shaped_charge_deep",
+      "x": 180
+    },
+    "attached=up": {
+      "model": "bloodmagic:block/shaped_charge_deep"
+    },
+    "attached=north": {
+      "model": "bloodmagic:block/shaped_charge_deep",
+      "x": 90
+    },
+    "attached=south": {
+      "model": "bloodmagic:block/shaped_charge_deep",
+      "x": 270
+    },
+    "attached=west": {
+      "model": "bloodmagic:block/shaped_charge_deep",
+      "x": 90,
+      "y": 270
+    },
+    "attached=east": {
+      "model": "bloodmagic:block/shaped_charge_deep",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

@@ -15,6 +15,6 @@ public class BlockDeforesterCharge extends BlockShapedExplosive
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
-		return new TileDeforesterCharge(pos, state);
+		return new TileDeforesterCharge(explosionSize, pos, state);
 	}
 }

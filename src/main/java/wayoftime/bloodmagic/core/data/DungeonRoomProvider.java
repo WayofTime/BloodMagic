@@ -192,7 +192,7 @@ public class DungeonRoomProvider implements DataProvider
 		DungeonRoom smallSmithy = new DungeonRoom().addStructure("bloodmagic:standard/small_smithy", new BlockPos(0, 0, 0));
 		smallSmithy.addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(20, 11, 20)));
 		smallSmithy.addDoors(Direction.NORTH, "default", 1, new BlockPos(9, 0, 0));
-		smallSmithy.addDoors(Direction.EAST, "default", 1, new BlockPos(19, 0, 9));
+		smallSmithy.addDoors(Direction.EAST, "default", 1, new BlockPos(19, 0, 10));
 		smallSmithy.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
 		addDefaultSpecialRoomPools(smallSmithy, 1);
 

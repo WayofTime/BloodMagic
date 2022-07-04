@@ -12,9 +12,14 @@ public class TileFungalCharge extends TileVeinMineCharge
 		super(type, maxBlocks, pos, state);
 	}
 
+	public TileFungalCharge(int maxBlocks, BlockPos pos, BlockState state)
+	{
+		this(BloodMagicTileEntities.FUNGAL_CHARGE_TYPE.get(), maxBlocks, pos, state);
+	}
+
 	public TileFungalCharge(BlockPos pos, BlockState state)
 	{
-		this(BloodMagicTileEntities.FUNGAL_CHARGE_TYPE.get(), 64 * 3, pos, state);
+		this(64 * 2, pos, state);
 	}
 
 	@Override

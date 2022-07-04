@@ -47,7 +47,7 @@ public class BlockShapedExplosive extends Block implements EntityBlock
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
-		return new TileShapedExplosive(pos, state);
+		return new TileShapedExplosive(explosionSize, explosionSize * 2 + 1, pos, state);
 	}
 
 	@Override

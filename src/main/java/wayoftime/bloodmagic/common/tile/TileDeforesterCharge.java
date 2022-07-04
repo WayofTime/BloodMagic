@@ -53,7 +53,12 @@ public class TileDeforesterCharge extends TileExplosiveCharge
 
 	public TileDeforesterCharge(BlockPos pos, BlockState state)
 	{
-		this(BloodMagicTileEntities.DEFORESTER_CHARGE_TYPE.get(), 128, pos, state);
+		this(128, pos, state);
+	}
+
+	public TileDeforesterCharge(int maxLogs, BlockPos pos, BlockState state)
+	{
+		this(BloodMagicTileEntities.DEFORESTER_CHARGE_TYPE.get(), maxLogs, pos, state);
 	}
 
 	@Override

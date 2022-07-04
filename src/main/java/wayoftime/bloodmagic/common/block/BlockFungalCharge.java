@@ -15,6 +15,6 @@ public class BlockFungalCharge extends BlockShapedExplosive
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
-		return new TileFungalCharge(pos, state);
+		return new TileFungalCharge(this.explosionSize, pos, state);
 	}
 }

@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "item": "bloodmagic:shaped_charge_deep"
+  },
+  "input1": {
+    "item": "bloodmagic:fortune_anointment_l"
+  },
+  "output": {
+    "item": "bloodmagic:shaped_charge_deep"
+  },
+  "minimumDrain": 300.0,
+  "drain": 4.0
+}

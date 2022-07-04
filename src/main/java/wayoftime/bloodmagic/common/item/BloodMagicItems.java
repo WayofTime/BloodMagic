@@ -125,6 +125,10 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> VEINMINE_CHARGE_ITEM = ITEMS.register("veinmine_charge", () -> new ItemBlockShapedCharge(BloodMagicBlocks.VEINMINE_CHARGE.get(), new Item.Properties().tab(BloodMagic.TAB)));
 	public static final RegistryObject<Item> FUNGAL_CHARGE_ITEM = ITEMS.register("fungal_charge", () -> new ItemBlockShapedCharge(BloodMagicBlocks.FUNGAL_CHARGE.get(), new Item.Properties().tab(BloodMagic.TAB)));
 
+	public static final RegistryObject<Item> AUG_SHAPED_CHARGE_ITEM = ITEMS.register("aug_shaped_charge", () -> new ItemBlockShapedCharge(BloodMagicBlocks.AUG_SHAPED_CHARGE.get(), new Item.Properties().tab(BloodMagic.TAB)));
+	public static final RegistryObject<Item> VEINMINE_CHARGE_2_ITEM = ITEMS.register("veinmine_charge_2", () -> new ItemBlockShapedCharge(BloodMagicBlocks.VEINMINE_CHARGE_2.get(), new Item.Properties().tab(BloodMagic.TAB)));
+	public static final RegistryObject<Item> SHAPED_CHARGE_DEEP_ITEM = ITEMS.register("shaped_charge_deep", () -> new ItemBlockShapedCharge(BloodMagicBlocks.SHAPED_CHARGE_DEEP.get(), new Item.Properties().tab(BloodMagic.TAB)));
+
 	// TODO: Need to rework the above instantiations for the ItemBlocks so that it's
 	// done with the Blocks.
 

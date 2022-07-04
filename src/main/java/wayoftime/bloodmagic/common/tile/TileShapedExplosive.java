@@ -38,7 +38,12 @@ public class TileShapedExplosive extends TileExplosiveCharge
 
 	public TileShapedExplosive(BlockPos pos, BlockState state)
 	{
-		this(BloodMagicTileEntities.SHAPED_EXPLOSIVE_TYPE.get(), 2, 5, pos, state);
+		this(2, 5, pos, state);
+	}
+
+	public TileShapedExplosive(int explosionRadius, int explosionDepth, BlockPos pos, BlockState state)
+	{
+		this(BloodMagicTileEntities.SHAPED_EXPLOSIVE_TYPE.get(), explosionRadius, explosionDepth, pos, state);
 	}
 
 	@Override

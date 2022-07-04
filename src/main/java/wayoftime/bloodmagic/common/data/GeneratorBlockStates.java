@@ -129,7 +129,10 @@ public class GeneratorBlockStates extends BlockStateProvider
 		buildShapedCharge(BloodMagicBlocks.VEINMINE_CHARGE.get(), "veinmine_charge", modLoc("block/sub/shaped_charge"), new ResourceLocation("block/sandstone_bottom"), new ResourceLocation("block/sandstone_bottom"), modLoc("block/blankrune"), new ResourceLocation("block/sand"), modLoc("models/defaultcrystal"));
 		buildShapedCharge(BloodMagicBlocks.FUNGAL_CHARGE.get(), "fungal_charge", modLoc("block/sub/shaped_charge"), new ResourceLocation("block/nether_wart_block"), new ResourceLocation("block/crimson_planks"), modLoc("block/blankrune"), new ResourceLocation("block/crimson_stem"), modLoc("models/defaultcrystal"));
 
-//		buildAugmentedShapedCharge(BloodMagicBlocks.SHAPED_CHARGE.get(), "shaped_charge", modLoc("block/sub/augment_shaped_charge"), modLoc("block/dungeon/dungeon_stone"), modLoc("block/dungeon/dungeon_tile"), modLoc("block/blankrune"), modLoc("block/largebloodstonebrick"), modLoc("models/defaultcrystal"), modLoc("models/copper_trim"));
+		buildAugmentedShapedCharge(BloodMagicBlocks.AUG_SHAPED_CHARGE.get(), "aug_shaped_charge", modLoc("block/sub/augment_shaped_charge"), modLoc("block/dungeon/dungeon_stone"), modLoc("block/dungeon/dungeon_tile"), modLoc("block/blankrune"), modLoc("block/largebloodstonebrick"), modLoc("models/defaultcrystal"), modLoc("models/copper_trim"));
+		buildAugmentedShapedCharge(BloodMagicBlocks.VEINMINE_CHARGE_2.get(), "veinmine_charge_2", modLoc("block/sub/augment_shaped_charge"), new ResourceLocation("block/sandstone_bottom"), new ResourceLocation("block/sandstone_bottom"), modLoc("block/blankrune"), new ResourceLocation("block/sand"), modLoc("models/defaultcrystal"), modLoc("models/copper_trim"));
+
+		buildAugmentedShapedCharge(BloodMagicBlocks.SHAPED_CHARGE_DEEP.get(), "shaped_charge_deep", modLoc("block/sub/augment_shaped_charge"), modLoc("block/dungeon/dungeon_stone"), modLoc("block/dungeon/dungeon_tile"), modLoc("block/blankrune"), modLoc("block/largebloodstonebrick"), new ResourceLocation("block/iron_block"), modLoc("models/copper_trim"));
 
 		getVariantBuilder(BloodMagicBlocks.INVERSION_PILLAR.get()).forAllStates(state -> {
 			Builder builder = ConfiguredModel.builder();
