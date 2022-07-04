@@ -125,7 +125,6 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 					{
 						for (int k = minimumOffset.getZ(); k < maximumOffset.getZ(); k++)
 						{
-							System.out.println("i: " + i + ", j: " + j + ", k: " + k);
 							posList.add(pos.offset(i, j, k));
 						}
 					}
@@ -178,7 +177,6 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 		@Override
 		public void resetCache()
 		{
-			System.out.println("Resetting cache");
 			this.blockPosCache = new ArrayList<>();
 		}
 
@@ -234,8 +232,6 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 		@Override
 		public void modifyAreaByBlockPositions(BlockPos pos1, BlockPos pos2)
 		{
-			System.out.println("Previous block pos: " + minimumOffset + ", " + maximumOffset);
-			System.out.println("New block pos: " + pos1 + ", " + pos2);
 			setOffsets(pos1, pos2);
 			maximumOffset = maximumOffset.offset(1, 1, 1);
 

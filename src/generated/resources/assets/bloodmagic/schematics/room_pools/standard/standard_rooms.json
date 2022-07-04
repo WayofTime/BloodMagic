@@ -2,7 +2,9 @@
   "1;bloodmagic:standard/big_library",
   "1;bloodmagic:standard/challenge_tower",
   "1;bloodmagic:standard/ore_hold_1",
+  "20;bloodmagic:standard/small_arena",
   "1;bloodmagic:standard/small_crane",
   "1;bloodmagic:standard/small_library",
-  "20;bloodmagic:standard/tall_spiral"
+  "20;bloodmagic:standard/small_smithy",
+  "1;bloodmagic:standard/tall_spiral"
 ]

@@ -56,7 +56,9 @@ public class DungeonRoomProvider implements DataProvider
 		standardDungeonRooms.put(ModDungeons.BIG_LIBRARY, 1);
 		standardDungeonRooms.put(ModDungeons.SMALL_CRANE, 1);
 		standardDungeonRooms.put(ModDungeons.SMALL_LIBRARY, 1);
-		standardDungeonRooms.put(ModDungeons.TALL_SPIRAL, 20);
+		standardDungeonRooms.put(ModDungeons.TALL_SPIRAL, 1);
+		standardDungeonRooms.put(ModDungeons.SMALL_SMITHY, 20);
+		standardDungeonRooms.put(ModDungeons.SMALL_ARENA, 20);
 
 //		standardDungeonRooms.put(ModDungeons.WATER_WAY, 1);
 
@@ -203,6 +205,15 @@ public class DungeonRoomProvider implements DataProvider
 		tallSpiral.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
 		addDefaultSpecialRoomPools(tallSpiral, 1);
 
+		DungeonRoom smallArena = new DungeonRoom().addStructure("bloodmagic:standard/small_arena", new BlockPos(0, 0, 0));
+		smallArena.addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(17, 13, 17)));
+		smallArena.addDoors(Direction.NORTH, "default", 1, new BlockPos(8, 2, 0));
+		smallArena.addDoors(Direction.EAST, "default", 1, new BlockPos(16, 2, 8));
+		smallArena.addDoors(Direction.WEST, "default", 1, new BlockPos(0, 2, 8));
+		smallArena.addDoors(Direction.SOUTH, "default", 1, new BlockPos(8, 2, 16));
+		smallArena.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
+		addDefaultSpecialRoomPools(smallArena, 1);
+
 		DungeonRoom mineEntrance = new DungeonRoom().addStructure("bloodmagic:standard/mine_entrance", new BlockPos(0, 0, 0)).addStructure("bloodmagic:standard/mine_entrance2", new BlockPos(0, 0, 32));
 		mineEntrance.addDoor(new BlockPos(0, 12, 38), Direction.WEST, "default", 1);
 		mineEntrance.addDoor(new BlockPos(22, 1, 0), Direction.NORTH, "mine", 2);
@@ -262,6 +273,7 @@ public class DungeonRoomProvider implements DataProvider
 		addDungeonRoom(cache, smallLibrary, ModDungeons.SMALL_LIBRARY);
 		addDungeonRoom(cache, smallSmithy, ModDungeons.SMALL_SMITHY);
 		addDungeonRoom(cache, tallSpiral, ModDungeons.TALL_SPIRAL);
+		addDungeonRoom(cache, smallArena, ModDungeons.SMALL_ARENA);
 
 		addDungeonRoom(cache, oreHold, ModDungeons.ORE_HOLD_1);
 		addDungeonRoom(cache, waterway, ModDungeons.WATER_WAY);

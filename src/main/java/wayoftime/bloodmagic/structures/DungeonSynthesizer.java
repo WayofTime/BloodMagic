@@ -18,6 +18,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -54,6 +55,19 @@ public class DungeonSynthesizer
 	public void setDungeonController(TileDungeonController tile)
 	{
 		this.tile = tile;
+	}
+
+	public boolean isAreaDescriptorInBounds(Level level, AreaDescriptor desc)
+	{
+		if (desc instanceof AreaDescriptor.Rectangle)
+		{
+			BlockPos maxOffset = ((AreaDescriptor.Rectangle) desc).getMaximumOffset();
+			BlockPos minOffset = ((AreaDescriptor.Rectangle) desc).getMinimumOffset();
+
+			return maxOffset.getY() < level.getMaxBuildHeight() && minOffset.getY() >= level.getMinBuildHeight();
+		}
+
+		return true;
 	}
 
 	public void writeToNBT(CompoundTag tag)
@@ -434,6 +448,11 @@ public class DungeonSynthesizer
 				List<AreaDescriptor> descriptors = room.getAreaDescriptors(settings, roomLocation);
 				for (AreaDescriptor testDesc : descriptors)
 				{
+					if (!this.isAreaDescriptorInBounds(world, testDesc))
+					{
+						break rotationCheck;
+					}
+
 					for (AreaDescriptor currentDesc : descriptorList)
 					{
 						if (testDesc.intersects(currentDesc))
@@ -662,6 +681,11 @@ public class DungeonSynthesizer
 				List<AreaDescriptor> descriptors = testingRoom.getAreaDescriptors(settings, roomLocation);
 				for (AreaDescriptor testDesc : descriptors)
 				{
+					if (!this.isAreaDescriptorInBounds(world, testDesc))
+					{
+						break rotationCheck;
+					}
+
 					for (AreaDescriptor currentDesc : descriptorList)
 					{
 						if (testDesc.intersects(currentDesc))
