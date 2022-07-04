@@ -1,0 +1,14 @@
+{
+  "components": [
+    {
+      "type": "header",
+      "text": "#heading",
+      "x": -1,
+      "y": 0
+    },
+    {
+      "type": "custom",
+      "class": "wayoftime.bloodmagic.compat.patchouli.components.Meteor"
+    }
+  ]
+}

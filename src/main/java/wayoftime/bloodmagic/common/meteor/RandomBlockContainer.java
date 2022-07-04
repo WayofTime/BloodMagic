@@ -1,5 +1,6 @@
 package wayoftime.bloodmagic.common.meteor;
 
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -17,6 +18,8 @@ public abstract class RandomBlockContainer
 	}
 
 	public abstract Block getRandomBlock(Random rand, World world);
+
+	public abstract List<Block> getAllBlocks();
 
 	public static RandomBlockContainer parseEntry(String str)
 	{

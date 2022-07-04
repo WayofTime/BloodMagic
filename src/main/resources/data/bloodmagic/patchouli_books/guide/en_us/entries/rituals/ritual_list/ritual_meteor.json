@@ -18,8 +18,54 @@
       "text": "Using the vast powers at your disposal, the most conclusion is that it is a good idea to summon a meteor from outer space to crash upon the world.$(br2)By dropping an appropriate offering on top of the MRS, the ritual will consume the item (plus a large amount of LP, default of a million LP) and summon a meteor at the build height of the map. Once the meteor hits something, it will detonate and leave behind many resources to mine and process."
     },
     {
-      "type": "text",
-      "text": "The size and resources gained vary based on the offering given. Normal offerings include: $(item)Diamond$(), $(item)Block of Iron$(), $(item)Glowstone Dust$(), and $(item)Stone$().$(br2)Mod items include: Ice and Fire $(item)Dragon Bones$(), AE2 $(item)Certus Quartz$(), Create $(item)Andesite Alloy$(), IE $(item)Copper Wire Coil$(), Mystical Agriculture $(item)Prosperity Shard$(), Thermal $(item)RF Coil$(), and Mekanism $(item)Advanced Alloy$()."
+      "type": "bloodmagic:meteor",
+      "recipe": "bloodmagic:meteor/iron",
+      "heading": "Iron"
+    },
+    {
+      "type": "bloodmagic:meteor",
+      "recipe": "bloodmagic:meteor/diamond",
+      "heading": "Diamond"
+    },
+    {
+      "type": "bloodmagic:meteor",
+      "recipe": "bloodmagic:meteor/nether",
+      "heading": "Nether"
+    },
+    {
+      "type": "bloodmagic:meteor",
+      "recipe": "bloodmagic:meteor/stone",
+      "heading": "Stone"
+    },
+    {
+      "flag": "mod:appliedenergistics2",
+      "type": "bloodmagic:meteor",
+      "recipe": "bloodmagic:meteor/ae2",
+      "heading": "Applied Energistics 2"
+    },
+    {
+      "flag": "mod:create",
+      "type": "bloodmagic:meteor",
+      "recipe": "bloodmagic:meteor/create",
+      "heading": "Create"
+    },
+    {
+      "flag": "mod:immersiveengineering",
+      "type": "bloodmagic:meteor",
+      "recipe": "bloodmagic:meteor/immersive_engineering",
+      "heading": "Immersive Engineering"
+    },
+    {
+      "flag": "mod:mysticalagriculture",
+      "type": "bloodmagic:meteor",
+      "recipe": "bloodmagic:meteor/myst_ag",
+      "heading": "Mystical Agriculture"
+    },
+    {
+      "flag": "mod:thermal",
+      "type": "bloodmagic:meteor",
+      "recipe": "bloodmagic:meteor/thermal",
+      "heading": "Thermal Series"
     }
   ]
 }

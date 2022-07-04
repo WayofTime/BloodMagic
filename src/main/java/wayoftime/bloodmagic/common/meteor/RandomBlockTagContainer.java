@@ -1,5 +1,7 @@
 package wayoftime.bloodmagic.common.meteor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -33,6 +35,24 @@ public class RandomBlockTagContainer extends RandomBlockContainer
 		}
 
 		return tag.getRandomElement(rand);
+	}
+
+	@Override
+	public List<Block> getAllBlocks()
+	{
+		if (tag.getAllElements().size() <= 0)
+		{
+			return null;
+		}
+
+		if (index >= 0 && index < tag.getAllElements().size())
+		{
+			List<Block> blockList = new ArrayList<Block>();
+			blockList.add(tag.getAllElements().get(index));
+			return blockList;
+		}
+
+		return tag.getAllElements();
 	}
 
 	@Override
