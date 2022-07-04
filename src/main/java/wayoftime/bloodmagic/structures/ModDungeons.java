@@ -28,6 +28,7 @@ public class ModDungeons
 	public static ResourceLocation SMALL_SMITHY = BloodMagic.rl("standard/small_smithy");
 	public static ResourceLocation TALL_SPIRAL = BloodMagic.rl("standard/tall_spiral");
 	public static ResourceLocation SMALL_ARENA = BloodMagic.rl("standard/small_arena");
+	public static ResourceLocation ANTECHAMBER = BloodMagic.rl("standard/antechamber");
 
 	public static ResourceLocation MINE_KEY = BloodMagic.rl("mines/mine_key");
 	public static ResourceLocation MINE_ENTRANCE = BloodMagic.rl("standard/mine_entrance");
@@ -73,6 +74,7 @@ public class ModDungeons
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(SMALL_SMITHY);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(TALL_SPIRAL);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(SMALL_ARENA);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(ANTECHAMBER);
 
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINI_ENTRANCE);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(STANDARD_ENTRANCE);

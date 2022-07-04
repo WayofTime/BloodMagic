@@ -54,11 +54,12 @@ public class DungeonRoomProvider implements DataProvider
 		standardDungeonRooms.put(ModDungeons.ORE_HOLD_1, 1);
 		standardDungeonRooms.put(ModDungeons.CHALLENGE_TOWER, 1);
 		standardDungeonRooms.put(ModDungeons.BIG_LIBRARY, 1);
-		standardDungeonRooms.put(ModDungeons.SMALL_CRANE, 1);
+		standardDungeonRooms.put(ModDungeons.SMALL_CRANE, 3);
 		standardDungeonRooms.put(ModDungeons.SMALL_LIBRARY, 1);
 		standardDungeonRooms.put(ModDungeons.TALL_SPIRAL, 1);
-		standardDungeonRooms.put(ModDungeons.SMALL_SMITHY, 20);
-		standardDungeonRooms.put(ModDungeons.SMALL_ARENA, 20);
+		standardDungeonRooms.put(ModDungeons.SMALL_SMITHY, 3);
+		standardDungeonRooms.put(ModDungeons.SMALL_ARENA, 3);
+		standardDungeonRooms.put(ModDungeons.ANTECHAMBER, 200);
 
 //		standardDungeonRooms.put(ModDungeons.WATER_WAY, 1);
 
@@ -214,6 +215,15 @@ public class DungeonRoomProvider implements DataProvider
 		smallArena.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
 		addDefaultSpecialRoomPools(smallArena, 1);
 
+		DungeonRoom antechamber = new DungeonRoom().addStructure("bloodmagic:standard/antechamber", new BlockPos(0, 0, 0));
+		antechamber.addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(31, 26, 31)));
+		antechamber.addDoors(Direction.NORTH, "default", 1, new BlockPos(15, 13, 0));
+		antechamber.addDoors(Direction.EAST, "default", 1, new BlockPos(30, 13, 15));
+		antechamber.addDoors(Direction.WEST, "default", 1, new BlockPos(0, 13, 15));
+		antechamber.addDoors(Direction.SOUTH, "default", 1, new BlockPos(15, 13, 30));
+		antechamber.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
+		addDefaultSpecialRoomPools(antechamber, 1);
+
 		DungeonRoom mineEntrance = new DungeonRoom().addStructure("bloodmagic:standard/mine_entrance", new BlockPos(0, 0, 0)).addStructure("bloodmagic:standard/mine_entrance2", new BlockPos(0, 0, 32));
 		mineEntrance.addDoor(new BlockPos(0, 12, 38), Direction.WEST, "default", 1);
 		mineEntrance.addDoor(new BlockPos(22, 1, 0), Direction.NORTH, "mine", 2);
@@ -274,6 +284,7 @@ public class DungeonRoomProvider implements DataProvider
 		addDungeonRoom(cache, smallSmithy, ModDungeons.SMALL_SMITHY);
 		addDungeonRoom(cache, tallSpiral, ModDungeons.TALL_SPIRAL);
 		addDungeonRoom(cache, smallArena, ModDungeons.SMALL_ARENA);
+		addDungeonRoom(cache, antechamber, ModDungeons.ANTECHAMBER);
 
 		addDungeonRoom(cache, oreHold, ModDungeons.ORE_HOLD_1);
 		addDungeonRoom(cache, waterway, ModDungeons.WATER_WAY);
