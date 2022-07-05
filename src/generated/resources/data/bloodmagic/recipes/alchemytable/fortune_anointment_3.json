@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:fortune_anointment"
+    },
+    {
+      "item": "bloodmagic:strong_tau"
+    },
+    {
+      "item": "bloodmagic:sand_hellforged"
+    },
+    {
+      "item": "bloodmagic:simplecatalyst"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:fortune_anointment_3"
+  },
+  "syphon": 2000,
+  "ticks": 100,
+  "upgradeLevel": 4
+}

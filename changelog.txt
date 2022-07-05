@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 3.2.3
+------------------------------------------------------
+- Fixed Fortuna Extract so that it properly applied its additional Fortune under certain conditions.
+
+------------------------------------------------------
 Version 3.2.2
 ------------------------------------------------------
 - Fixed in-game guide for real this time.

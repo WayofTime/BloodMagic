@@ -2,7 +2,7 @@
   "key": null,
   "dungeonWeight": 1,
   "structureMap": {
-    "bloodmagic:standard/ore_hold_1": {
+    "bloodmagic:standard/destroyed_portal": {
       "x": 0,
       "y": 0,
       "z": 0
@@ -10,37 +10,11 @@
   },
   "doorMap": {
     "default": {
-      "north": [
-        {
-          "x": 12,
-          "y": 5,
-          "z": 0
-        }
-      ],
-      "south": [
-        {
-          "x": 5,
-          "y": 0,
-          "z": 14
-        },
-        {
-          "x": 12,
-          "y": 5,
-          "z": 14
-        }
-      ],
-      "west": [
-        {
-          "x": 0,
-          "y": 5,
-          "z": 7
-        }
-      ],
       "east": [
         {
-          "x": 14,
+          "x": 15,
           "y": 0,
-          "z": 7
+          "z": 6
         }
       ]
     }
@@ -53,9 +27,9 @@
         "z": 0
       },
       "maximumOffset": {
-        "x": 15,
-        "y": 12,
-        "z": 15
+        "x": 16,
+        "y": 9,
+        "z": 13
       },
       "currentPosition": null,
       "blockPosCache": [],
@@ -63,7 +37,7 @@
       "cache": false
     }
   ],
-  "oreDensity": 0.1,
+  "oreDensity": 0.0,
   "spawnLocation": {
     "x": 0,
     "y": 0,
@@ -82,29 +56,9 @@
   "indexToDoorMap": {
     "1": [
       {
-        "x": 12,
-        "y": 5,
-        "z": 0
-      },
-      {
-        "x": 5,
+        "x": 15,
         "y": 0,
-        "z": 14
-      },
-      {
-        "x": 12,
-        "y": 5,
-        "z": 14
-      },
-      {
-        "x": 0,
-        "y": 5,
-        "z": 7
-      },
-      {
-        "x": 14,
-        "y": 0,
-        "z": 7
+        "z": 6
       }
     ]
   },

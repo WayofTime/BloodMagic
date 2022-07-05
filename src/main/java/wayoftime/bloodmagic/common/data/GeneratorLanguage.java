@@ -716,6 +716,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.PRIMITIVE_HYDRATION_CELL, "Primitive Hydration Cell");
 		addItem(BloodMagicItems.PRIMITIVE_EXPLOSIVE_CELL, "Primitive Explosive Cell");
 		addItem(BloodMagicItems.EXPLOSIVE_POWDER, "Explosive Powder");
+		addItem(BloodMagicItems.HELLFORGED_EXPLOSIVE_CELL, "Hellforged Explosive Cell");
 
 		addItem(BloodMagicItems.BASIC_CUTTING_FLUID, "Basic Cutting Fluid");
 		addItem(BloodMagicItems.INTERMEDIATE_CUTTING_FLUID, "Intermediate Cutting Fluid");
@@ -792,6 +793,15 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT_2, "Iron Tip II");
 		addItem(BloodMagicItems.LOOTING_ANOINTMENT_2, "Plunderer's Glint II");
 		addItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT_2, "Archer's Polish II");
+
+		addItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_3, "Honing Oil III");
+		addItem(BloodMagicItems.FORTUNE_ANOINTMENT_3, "Fortuna Extract III");
+		addItem(BloodMagicItems.HOLY_WATER_ANOINTMENT_3, "Holy Water III");
+		addItem(BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT_3, "Miner's Secrets III");
+		addItem(BloodMagicItems.QUICK_DRAW_ANOINTMENT_3, "Dexterity Alkahest III");
+		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT_3, "Iron Tip III");
+		addItem(BloodMagicItems.LOOTING_ANOINTMENT_3, "Plunderer's Glint III");
+		addItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT_3, "Archer's Polish III");
 
 		addItem(BloodMagicItems.ALCHEMY_FLASK, "Alchemy Flask");
 		addItem(BloodMagicItems.ALCHEMY_FLASK_THROWABLE, "Splash Alchemy Flask");

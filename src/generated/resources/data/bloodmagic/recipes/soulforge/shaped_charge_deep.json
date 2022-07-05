@@ -6,6 +6,12 @@
   "input1": {
     "item": "minecraft:charcoal"
   },
+  "input2": {
+    "tag": "forge:sand"
+  },
+  "input3": {
+    "tag": "forge:stone"
+  },
   "output": {
     "item": "bloodmagic:shaped_charge_deep",
     "count": 4

@@ -158,6 +158,15 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerMultiLayerItem(BloodMagicItems.BOW_POWER_ANOINTMENT_2.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_two"));
 		registerMultiLayerItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT_2.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_two"));
 
+		registerMultiLayerItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_3.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_three"));
+		registerMultiLayerItem(BloodMagicItems.FORTUNE_ANOINTMENT_3.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_three"));
+		registerMultiLayerItem(BloodMagicItems.HOLY_WATER_ANOINTMENT_3.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_three"));
+		registerMultiLayerItem(BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT_3.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_three"));
+		registerMultiLayerItem(BloodMagicItems.QUICK_DRAW_ANOINTMENT_3.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_three"));
+		registerMultiLayerItem(BloodMagicItems.LOOTING_ANOINTMENT_3.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_three"));
+		registerMultiLayerItem(BloodMagicItems.BOW_POWER_ANOINTMENT_3.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_three"));
+		registerMultiLayerItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT_3.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_three"));
+
 		registerMultiLayerItem(BloodMagicItems.ALCHEMY_FLASK.get(), modLoc("item/potionflask_underlay"), modLoc("item/potionflask_outline"), modLoc("item/potionflask_overlay"));
 		registerMultiLayerItem(BloodMagicItems.ALCHEMY_FLASK_THROWABLE.get(), modLoc("item/potionflask_underlay"), modLoc("item/potionflask_outline_throwable"), modLoc("item/potionflask_overlay_throwable"));
 		registerMultiLayerItem(BloodMagicItems.ALCHEMY_FLASK_LINGERING.get(), modLoc("item/potionflask_underlay"), modLoc("item/potionflask_outline_lingering"), modLoc("item/potionflask_overlay_lingering"));

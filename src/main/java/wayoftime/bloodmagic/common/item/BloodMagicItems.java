@@ -268,6 +268,8 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> PRIMITIVE_CRYSTALLINE_RESONATOR = BASICITEMS.register("primitive_crystalline_resonator", () -> new ItemARCToolBase(128, 1.25, EnumDemonWillType.VENGEFUL));
 	public static final RegistryObject<Item> CRYSTALLINE_RESONATOR = BASICITEMS.register("crystalline_resonator", () -> new ItemARCToolBase(512, 2, 2, EnumDemonWillType.VENGEFUL));
 
+	public static final RegistryObject<Item> HELLFORGED_EXPLOSIVE_CELL = BASICITEMS.register("hellforged_explosive_cell", () -> new ItemARCToolBase(1024, 2, EnumDemonWillType.DESTRUCTIVE));
+
 	// Alchemy Table items
 	public static final RegistryObject<Item> BASIC_CUTTING_FLUID = BASICITEMS.register("basiccuttingfluid", () -> new ItemARCToolBase(64, 1, EnumDemonWillType.CORROSIVE));
 	public static final RegistryObject<Item> INTERMEDIATE_CUTTING_FLUID = BASICITEMS.register("intermediatecuttingfluid", () -> new ItemARCToolBase(512, 1.25, EnumDemonWillType.CORROSIVE));
@@ -336,6 +338,15 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> LOOTING_ANOINTMENT_2 = ITEMS.register("looting_anointment_2", () -> new ItemAnointmentProvider(BloodMagic.rl("looting"), 0x6D2AFF, 2, 256));
 	public static final RegistryObject<Item> BOW_POWER_ANOINTMENT_2 = ITEMS.register("bow_power_anointment_2", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_power"), 0xD8D8D8, 2, 256, true));
 	public static final RegistryObject<Item> BOW_VELOCITY_ANOINTMENT_2 = ITEMS.register("bow_velocity_anointment_2", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_velocity"), 0xFFBE00, 2, 256, true));
+
+	public static final RegistryObject<Item> MELEE_DAMAGE_ANOINTMENT_3 = ITEMS.register("melee_anointment_3", () -> new ItemAnointmentProvider(BloodMagic.rl("melee_damage"), 0xFF0000, 3, 256));
+	public static final RegistryObject<Item> FORTUNE_ANOINTMENT_3 = ITEMS.register("fortune_anointment_3", () -> new ItemAnointmentProvider(BloodMagic.rl("fortune"), 3381504, 3, 256));
+	public static final RegistryObject<Item> HOLY_WATER_ANOINTMENT_3 = ITEMS.register("holy_water_anointment_3", () -> new ItemAnointmentProvider(BloodMagic.rl("holy_water"), 0xC6E6FB, 3, 256));
+	public static final RegistryObject<Item> HIDDEN_KNOWLEDGE_ANOINTMENT_3 = ITEMS.register("hidden_knowledge_anointment_3", () -> new ItemAnointmentProvider(BloodMagic.rl("hidden_knowledge"), 0xC8F902, 3, 256));
+	public static final RegistryObject<Item> QUICK_DRAW_ANOINTMENT_3 = ITEMS.register("quick_draw_anointment_3", () -> new ItemBowAnointmentProvider(BloodMagic.rl("quick_draw"), 0xF0E130, 3, 256, true));
+	public static final RegistryObject<Item> LOOTING_ANOINTMENT_3 = ITEMS.register("looting_anointment_3", () -> new ItemAnointmentProvider(BloodMagic.rl("looting"), 0x6D2AFF, 3, 256));
+	public static final RegistryObject<Item> BOW_POWER_ANOINTMENT_3 = ITEMS.register("bow_power_anointment_3", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_power"), 0xD8D8D8, 3, 256, true));
+	public static final RegistryObject<Item> BOW_VELOCITY_ANOINTMENT_3 = ITEMS.register("bow_velocity_anointment_3", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_velocity"), 0xFFBE00, 3, 256, true));
 
 	public static final RegistryObject<Item> ALCHEMY_FLASK = ITEMS.register("alchemy_flask", () -> new ItemAlchemyFlask());
 	public static final RegistryObject<Item> ALCHEMY_FLASK_THROWABLE = ITEMS.register("alchemy_flask_throwable", () -> new ItemAlchemyFlaskThrowable());

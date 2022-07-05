@@ -143,6 +143,7 @@ public class GeneratorItemTags extends ItemTagsProvider
 	{
 		this.registerTool(BloodMagicItems.EXPLOSIVE_POWDER.get(), BloodMagicTags.ARC_TOOL_EXPLOSIVE);
 		this.registerTool(BloodMagicItems.PRIMITIVE_EXPLOSIVE_CELL.get(), BloodMagicTags.ARC_TOOL_EXPLOSIVE);
+		this.registerTool(BloodMagicItems.HELLFORGED_EXPLOSIVE_CELL.get(), BloodMagicTags.ARC_TOOL_EXPLOSIVE);
 	}
 
 	private void registerHydration()

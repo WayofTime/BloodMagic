@@ -460,6 +460,77 @@ public class GeneratorLootTable extends LootTableProvider
 			LootPool.Builder mines_key = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(BloodMagicItems.DUNGEON_MINE_ENTRANCE_KEY.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))));
 
 			acceptor.accept(BloodMagic.rl("chests/standard_dungeon/mines_key"), LootTable.lootTable().withPool(mines_loot).withPool(mines_key));
+
+			// Fragment loot table that can be a base for stronger loot
+			LootPool.Builder fragmentLoot = LootPool.lootPool().setRolls(UniformGenerator.between(1, 2));
+			fragmentLoot.add(LootItem.lootTableItem(BloodMagicItems.COPPER_FRAGMENT.get()).setWeight(25).setQuality(-4).apply(SetItemCountFunction.setCount(UniformGenerator.between(15, 22))));
+			fragmentLoot.add(LootItem.lootTableItem(BloodMagicItems.IRON_FRAGMENT.get()).setWeight(20).setQuality(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(8, 15))));
+			fragmentLoot.add(LootItem.lootTableItem(BloodMagicItems.GOLD_FRAGMENT.get()).setWeight(15).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(8, 13))));
+			fragmentLoot.add(LootItem.lootTableItem(BloodMagicItems.NETHERITE_SCRAP_FRAGMENT.get()).setWeight(3).setQuality(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
+
+			LootPool.Builder miningOreLoot = LootPool.lootPool().setRolls(UniformGenerator.between(3, 5));
+			miningOreLoot.add(LootItem.lootTableItem(Items.RAW_COPPER).setWeight(15).setQuality(-4).apply(SetItemCountFunction.setCount(UniformGenerator.between(12, 26))));
+			miningOreLoot.add(LootItem.lootTableItem(Items.RAW_IRON).setWeight(20).setQuality(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(10, 15))));
+			miningOreLoot.add(LootItem.lootTableItem(Items.RAW_GOLD).setWeight(16).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(7, 14))));
+			miningOreLoot.add(LootItem.lootTableItem(Items.COAL).setWeight(20).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(10, 16))));
+			miningOreLoot.add(LootItem.lootTableItem(Items.DIAMOND).setWeight(7).setQuality(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 7))));
+			miningOreLoot.add(LootItem.lootTableItem(Items.EMERALD).setWeight(3).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 10))));
+			miningOreLoot.add(LootItem.lootTableItem(Items.REDSTONE).setWeight(3).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(10, 15))));
+			miningOreLoot.add(LootItem.lootTableItem(Items.GUNPOWDER).setWeight(3).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(6, 11))));
+			miningOreLoot.add(LootItem.lootTableItem(Items.LAPIS_LAZULI).setWeight(3).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(10, 15))));
+			miningOreLoot.add(LootItem.lootTableItem(BloodMagicItems.STRONG_TAU_ITEM.get()).setWeight(6).setQuality(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 8))));
+			miningOreLoot.add(LootItem.lootTableItem(BloodMagicItems.HELLFORGED_SAND.get()).setWeight(12).setQuality(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(5, 7))));
+			addMultipleItemsWithQualitySameParams(miningOreLoot, new Item[] { Items.IRON_PICKAXE,
+					Items.IRON_SHOVEL }, 4, 1, ConstantValue.exactly(1), EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(20, 40)).allowTreasure());
+			addMultipleItemsWithQualitySameParams(miningOreLoot, new Item[] { Items.DIAMOND_PICKAXE,
+					Items.DIAMOND_SHOVEL }, 3, 3, ConstantValue.exactly(1), EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(30, 40)).allowTreasure());
+			addMultipleItemsWithQualitySameParams(miningOreLoot, new Item[] { Items.NETHERITE_PICKAXE,
+					Items.NETHERITE_SHOVEL,
+					Items.NETHERITE_AXE }, 1, 6, ConstantValue.exactly(1), EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(30, 40)).allowTreasure());
+
+			addMultipleItemsWithQualitySameParams(miningOreLoot, new Item[] { BloodMagicItems.CORROSIVE_CRYSTAL.get(),
+					BloodMagicItems.RAW_CRYSTAL.get(), BloodMagicItems.STEADFAST_CRYSTAL.get(),
+					BloodMagicItems.VENGEFUL_CRYSTAL.get(),
+					BloodMagicItems.DESTRUCTIVE_CRYSTAL.get() }, 2, 3, UniformGenerator.between(2, 5));
+			miningOreLoot.add(LootItem.lootTableItem(BloodMagicItems.LIVING_TOME.get()).setWeight(4).apply(SetLivingUpgrade.withRange(UniformGenerator.between(200, 300), LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())));
+			miningOreLoot.add(LootItem.lootTableItem(BloodMagicBlocks.SHAPED_CHARGE_DEEP.get()).setWeight(4).setQuality(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 7))));
+			miningOreLoot.add(LootItem.lootTableItem(BloodMagicItems.FORTUNE_ANOINTMENT_2.get()).setWeight(4).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
+
+			acceptor.accept(BloodMagic.rl("chests/mines/ore_loot"), LootTable.lootTable().withPool(fragmentLoot).withPool(miningOreLoot));
+
+//			LootPool.Builder minesSmithyLoot = LootPool.lootPool().setRolls(UniformGenerator.between(3, 6));
+//			minesSmithyLoot.add(LootItem.lootTableItem(Items.RAW_COPPER).setWeight(15).setQuality(-4).apply(SetItemCountFunction.setCount(UniformGenerator.between(8, 20))));
+//			minesSmithyLoot.add(LootItem.lootTableItem(Items.RAW_IRON).setWeight(20).setQuality(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(8, 12))));
+//			minesSmithyLoot.add(LootItem.lootTableItem(Items.RAW_GOLD).setWeight(16).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(5, 11))));
+//			minesSmithyLoot.add(LootItem.lootTableItem(Items.COAL).setWeight(20).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(8, 14))));
+//			minesSmithyLoot.add(LootItem.lootTableItem(Items.DIAMOND).setWeight(7).setQuality(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 6))));
+//			minesSmithyLoot.add(LootItem.lootTableItem(Items.EMERALD).setWeight(3).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 8))));
+//			minesSmithyLoot.add(LootItem.lootTableItem(BloodMagicItems.NETHERITE_SCRAP_SAND.get()).setWeight(4).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
+//			minesSmithyLoot.add(LootItem.lootTableItem(BloodMagicItems.HELLFORGED_SAND.get()).setWeight(3).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 4))));
+//			minesSmithyLoot.add(LootItem.lootTableItem(BloodMagicItems.CORRUPTED_DUST.get()).setWeight(6).setQuality(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
+//			minesSmithyLoot.add(LootItem.lootTableItem(BloodMagicItems.STRONG_TAU_ITEM.get()).setWeight(8).setQuality(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 4))));
+//			minesSmithyLoot.add(LootItem.lootTableItem(BloodMagicItems.PRIMITIVE_EXPLOSIVE_CELL.get()).setWeight(10).setQuality(5));
+//
+//			addMultipleItemsWithSameParams(minesSmithyLoot, empoweredWeaponAnointments, 3, UniformGenerator.between(1, 4));
+//			smithy_loot.add(LootItem.lootTableItem(Items.IRON_NUGGET).setWeight(12).setQuality(-4).apply(SetItemCountFunction.setCount(UniformGenerator.between(20, 40))));
+//			smithy_loot.add(LootItem.lootTableItem(Items.LEATHER).setWeight(14).setQuality(-4).apply(SetItemCountFunction.setCount(UniformGenerator.between(10, 20))));
+//			smithy_loot.add(LootItem.lootTableItem(Items.GOLD_NUGGET).setWeight(6).setQuality(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 7))));
+//
+//			addMultipleItemsWithQualitySameParams(minesSmithyLoot, new Item[] { Items.IRON_PICKAXE, Items.IRON_AXE,
+//					Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_HOE, Items.IRON_HELMET, Items.IRON_CHESTPLATE,
+//					Items.IRON_LEGGINGS,
+//					Items.IRON_BOOTS }, 3, -2, ConstantValue.exactly(1), EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(10, 20)).allowTreasure(), SetItemDamageFunction.setDamage(UniformGenerator.between(0.9F, 1.0F)));
+//			addMultipleItemsWithQualitySameParams(minesSmithyLoot, new Item[] { Items.DIAMOND_PICKAXE,
+//					Items.DIAMOND_AXE, Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_HOE,
+//					Items.DIAMOND_HELMET, Items.DIAMOND_CHESTPLATE, Items.DIAMOND_LEGGINGS,
+//					Items.DIAMOND_BOOTS }, 1, 2, ConstantValue.exactly(1), EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(20, 25)).allowTreasure(), SetItemDamageFunction.setDamage(UniformGenerator.between(0.7F, 0.9F)));
+//
+//			minesSmithyLoot.add(LootItem.lootTableItem(BloodMagicItems.LIVING_TOME.get()).setWeight(4).apply(SetLivingUpgrade.withRange(UniformGenerator.between(150, 225), LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())));
+//			minesSmithyLoot.add(LootItem.lootTableItem(BloodMagicItems.LIVING_TOME.get()).setWeight(4).apply(SetLivingUpgrade.withRange(UniformGenerator.between(250, 350), LivingArmorRegistrar.UPGRADE_MELEE_DAMAGE.get().getKey())));
+//			addMultipleItemsWithQualitySameParams(minesSmithyLoot, new Item[] { BloodMagicItems.CORROSIVE_CRYSTAL.get(),
+//					BloodMagicItems.RAW_CRYSTAL.get(), BloodMagicItems.STEADFAST_CRYSTAL.get(),
+//					BloodMagicItems.VENGEFUL_CRYSTAL.get(),
+//					BloodMagicItems.DESTRUCTIVE_CRYSTAL.get() }, 2, 3, UniformGenerator.between(1, 3));
 		}
 
 		private LootPool.Builder addMultipleItemsWithSameParams(LootPool.Builder pool, Item[] items, int basicWeight, NumberProvider basicRange, Builder... functions)

@@ -38,7 +38,7 @@ public class DungeonRoomProvider implements DataProvider
 	{
 		Map<ResourceLocation, Integer> connectiveCorridors = new TreeMap<>();
 		connectiveCorridors.put(ModDungeons.T_CORRIDOR, 2);
-		connectiveCorridors.put(ModDungeons.FOUR_WAY_CORRIDOR_LOOT, 1);
+//		connectiveCorridors.put(ModDungeons.FOUR_WAY_CORRIDOR_LOOT, 1);
 		connectiveCorridors.put(ModDungeons.FOUR_WAY_CORRIDOR, 2);
 		connectiveCorridors.put(ModDungeons.STRAIGHT_CORRIDOR, 4);
 		connectiveCorridors.put(ModDungeons.OVERLAPPED_CORRIDOR, 3);
@@ -51,15 +51,17 @@ public class DungeonRoomProvider implements DataProvider
 		miniDungeonRooms.put(ModDungeons.MINI_LIBRARY, 1);
 
 		Map<ResourceLocation, Integer> standardDungeonRooms = new TreeMap<>();
-		standardDungeonRooms.put(ModDungeons.ORE_HOLD_1, 1);
+		standardDungeonRooms.put(ModDungeons.ORE_HOLD_1, 100);
 		standardDungeonRooms.put(ModDungeons.CHALLENGE_TOWER, 1);
 		standardDungeonRooms.put(ModDungeons.BIG_LIBRARY, 1);
 		standardDungeonRooms.put(ModDungeons.SMALL_CRANE, 3);
-		standardDungeonRooms.put(ModDungeons.SMALL_LIBRARY, 1);
+		standardDungeonRooms.put(ModDungeons.SMALL_LIBRARY, 3);
 		standardDungeonRooms.put(ModDungeons.TALL_SPIRAL, 1);
 		standardDungeonRooms.put(ModDungeons.SMALL_SMITHY, 3);
 		standardDungeonRooms.put(ModDungeons.SMALL_ARENA, 3);
-		standardDungeonRooms.put(ModDungeons.ANTECHAMBER, 200);
+		standardDungeonRooms.put(ModDungeons.ANTECHAMBER, 1);
+		standardDungeonRooms.put(ModDungeons.DESTROYED_END_PORTAL, 2);
+		standardDungeonRooms.put(ModDungeons.AUG_CORRIDOR_LOOT, 3);
 
 //		standardDungeonRooms.put(ModDungeons.WATER_WAY, 1);
 
@@ -145,14 +147,16 @@ public class DungeonRoomProvider implements DataProvider
 		tCorridor.addDoor(new BlockPos(0, 0, 5), Direction.WEST, "default", 1);
 		tCorridor.addDoor(new BlockPos(10, 0, 5), Direction.EAST, "default", 1);
 
-		DungeonRoom oreHold = new DungeonRoom().addStructure("bloodmagic:ore_hold_1", new BlockPos(0, 0, 0));
-		oreHold.addDoors(Direction.NORTH, "default", 1, new BlockPos(5, 0, 0), new BlockPos(2, 5, 0), new BlockPos(12, 5, 0));
-		oreHold.addDoors(Direction.SOUTH, "default", 1, new BlockPos(5, 0, 14), new BlockPos(2, 5, 14), new BlockPos(12, 5, 14));
+		DungeonRoom oreHold = new DungeonRoom().addStructure("bloodmagic:standard/ore_hold_1", new BlockPos(0, 0, 0));
+		oreHold.addDoors(Direction.NORTH, "default", 1, new BlockPos(12, 5, 0));
+		oreHold.addDoors(Direction.SOUTH, "default", 1, new BlockPos(5, 0, 14), new BlockPos(12, 5, 14));
 		oreHold.addDoors(Direction.WEST, "default", 1, new BlockPos(0, 5, 7));
+		oreHold.addDoors(Direction.EAST, "default", 1, new BlockPos(14, 0, 7));
 		oreHold.addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(15, 12, 15)));
 		oreHold.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
 //		oreHold.addSpecialRoomPool(1, ModRoomPools.MINE_ENTRANCES);
 		addDefaultSpecialRoomPools(oreHold, 1);
+		oreHold.oreDensity = 0.1f;
 
 		DungeonRoom challengeTower = new DungeonRoom().addStructure("bloodmagic:standard/challenge_tower_1", new BlockPos(0, 0, 0)).addStructure("bloodmagic:standard/challenge_tower_2", new BlockPos(0, 32, 0));
 		challengeTower.addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(25, 55, 25)));
@@ -224,6 +228,20 @@ public class DungeonRoomProvider implements DataProvider
 		antechamber.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
 		addDefaultSpecialRoomPools(antechamber, 1);
 
+		DungeonRoom destroyedEndPortal = new DungeonRoom().addStructure("bloodmagic:standard/destroyed_portal", new BlockPos(0, 0, 0));
+		destroyedEndPortal.addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(16, 9, 13)));
+		destroyedEndPortal.addDoor(new BlockPos(15, 0, 6), Direction.EAST, "default", 1);
+		destroyedEndPortal.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
+		addDefaultSpecialRoomPools(destroyedEndPortal, 1);
+
+		DungeonRoom augCorridorLoot = new DungeonRoom().addStructure("bloodmagic:standard/four_way_corridor_loot", BlockPos.ZERO).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(21, 11, 11)));
+		augCorridorLoot.addDoors(Direction.NORTH, "default", 1, new BlockPos(10, 5, 0));
+		augCorridorLoot.addDoors(Direction.SOUTH, "default", 1, new BlockPos(10, 5, 10));
+		augCorridorLoot.addDoors(Direction.WEST, "default", 1, new BlockPos(0, 5, 5));
+		augCorridorLoot.addDoors(Direction.EAST, "default", 1, new BlockPos(20, 5, 5));
+		augCorridorLoot.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
+		addDefaultSpecialRoomPools(augCorridorLoot, 1);
+
 		DungeonRoom mineEntrance = new DungeonRoom().addStructure("bloodmagic:standard/mine_entrance", new BlockPos(0, 0, 0)).addStructure("bloodmagic:standard/mine_entrance2", new BlockPos(0, 0, 32));
 		mineEntrance.addDoor(new BlockPos(0, 12, 38), Direction.WEST, "default", 1);
 		mineEntrance.addDoor(new BlockPos(22, 1, 0), Direction.NORTH, "mine", 2);
@@ -285,6 +303,8 @@ public class DungeonRoomProvider implements DataProvider
 		addDungeonRoom(cache, tallSpiral, ModDungeons.TALL_SPIRAL);
 		addDungeonRoom(cache, smallArena, ModDungeons.SMALL_ARENA);
 		addDungeonRoom(cache, antechamber, ModDungeons.ANTECHAMBER);
+		addDungeonRoom(cache, destroyedEndPortal, ModDungeons.DESTROYED_END_PORTAL);
+		addDungeonRoom(cache, augCorridorLoot, ModDungeons.AUG_CORRIDOR_LOOT);
 
 		addDungeonRoom(cache, oreHold, ModDungeons.ORE_HOLD_1);
 		addDungeonRoom(cache, waterway, ModDungeons.WATER_WAY);

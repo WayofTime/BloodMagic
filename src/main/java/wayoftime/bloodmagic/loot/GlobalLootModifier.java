@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.loot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 
@@ -12,6 +13,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -121,16 +123,16 @@ public class GlobalLootModifier
 				return generatedLoot;
 			}
 
-//			if (holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get()) > 0)
-//			{
-//				return generatedLoot;
-//			}
-
 			ItemStack fakeTool = ctxTool.copy();
 			fakeTool.getOrCreateTag().putBoolean("bloodmagic:checked_fortune", true);
 			int baseFortuneLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, ctxTool);
 
-			fakeTool.enchant(Enchantments.BLOCK_FORTUNE, baseFortuneLevel + additionalFortune);
+			Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(fakeTool);
+			enchants.put(Enchantments.BLOCK_FORTUNE, baseFortuneLevel + additionalFortune);
+			EnchantmentHelper.setEnchantments(enchants, fakeTool);
+
+//			EnchantmentHelper.setEnchantmentLevel(p_182441_, p_182442_);
+
 			LootContext.Builder builder = new LootContext.Builder(context);
 			builder.withParameter(LootContextParams.TOOL, fakeTool);
 			LootContext ctx = builder.create(LootContextParamSets.BLOCK);
