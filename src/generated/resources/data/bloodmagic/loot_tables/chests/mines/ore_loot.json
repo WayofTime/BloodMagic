@@ -82,8 +82,8 @@
     {
       "rolls": {
         "type": "minecraft:uniform",
-        "min": 3.0,
-        "max": 5.0
+        "min": 4.0,
+        "max": 6.0
       },
       "bonus_rolls": 0.0,
       "entries": [
@@ -174,7 +174,7 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
+          "weight": 4,
           "quality": 5,
           "functions": [
             {
@@ -191,7 +191,7 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
+          "weight": 10,
           "quality": 2,
           "functions": [
             {
@@ -208,7 +208,7 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
+          "weight": 4,
           "quality": 2,
           "functions": [
             {
@@ -225,7 +225,7 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
+          "weight": 10,
           "quality": 2,
           "functions": [
             {
@@ -547,20 +547,134 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
-          "quality": 5,
+          "weight": 2,
+          "quality": 3,
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 5.0
+                "min": 1.0,
+                "max": 3.0
               },
               "add": false
             }
           ],
-          "name": "bloodmagic:fortune_anointment_2"
+          "name": "bloodmagic:bow_power_anointment_3"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "quality": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1.0,
+                "max": 3.0
+              },
+              "add": false
+            }
+          ],
+          "name": "bloodmagic:holy_water_anointment_3"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "quality": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1.0,
+                "max": 3.0
+              },
+              "add": false
+            }
+          ],
+          "name": "bloodmagic:looting_anointment_3"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "quality": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1.0,
+                "max": 3.0
+              },
+              "add": false
+            }
+          ],
+          "name": "bloodmagic:melee_anointment_3"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "quality": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1.0,
+                "max": 3.0
+              },
+              "add": false
+            }
+          ],
+          "name": "bloodmagic:quick_draw_anointment_3"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "quality": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1.0,
+                "max": 3.0
+              },
+              "add": false
+            }
+          ],
+          "name": "bloodmagic:smelting_anointment_xl"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "quality": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1.0,
+                "max": 3.0
+              },
+              "add": false
+            }
+          ],
+          "name": "bloodmagic:bow_velocity_anointment_3"
+        },
+        {
+          "type": "minecraft:item",
+          "quality": 10,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 1.0,
+              "add": false
+            }
+          ],
+          "name": "bloodmagic:hellforgedparts"
         }
       ]
     }

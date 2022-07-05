@@ -278,6 +278,11 @@ public class GeneratorLootTable extends LootTableProvider
 					BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_2.get(), BloodMagicItems.QUICK_DRAW_ANOINTMENT_2.get(),
 					BloodMagicItems.SMELTING_ANOINTMENT_L.get(), BloodMagicItems.BOW_VELOCITY_ANOINTMENT_2.get() };
 
+			Item[] empoweredWeaponAnointments3 = new Item[] { BloodMagicItems.BOW_POWER_ANOINTMENT_3.get(),
+					BloodMagicItems.HOLY_WATER_ANOINTMENT_3.get(), BloodMagicItems.LOOTING_ANOINTMENT_3.get(),
+					BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_3.get(), BloodMagicItems.QUICK_DRAW_ANOINTMENT_3.get(),
+					BloodMagicItems.SMELTING_ANOINTMENT_XL.get(), BloodMagicItems.BOW_VELOCITY_ANOINTMENT_3.get() };
+
 			LootPool.Builder decent_loot = LootPool.lootPool().setRolls(UniformGenerator.between(3, 6));
 			decent_loot.add(LootItem.lootTableItem(Items.RAW_COPPER).setWeight(15).setQuality(-4).apply(SetItemCountFunction.setCount(UniformGenerator.between(8, 20))));
 			decent_loot.add(LootItem.lootTableItem(Items.RAW_IRON).setWeight(20).setQuality(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 8))));
@@ -468,16 +473,16 @@ public class GeneratorLootTable extends LootTableProvider
 			fragmentLoot.add(LootItem.lootTableItem(BloodMagicItems.GOLD_FRAGMENT.get()).setWeight(15).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(8, 13))));
 			fragmentLoot.add(LootItem.lootTableItem(BloodMagicItems.NETHERITE_SCRAP_FRAGMENT.get()).setWeight(3).setQuality(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
 
-			LootPool.Builder miningOreLoot = LootPool.lootPool().setRolls(UniformGenerator.between(3, 5));
+			LootPool.Builder miningOreLoot = LootPool.lootPool().setRolls(UniformGenerator.between(4, 6));
 			miningOreLoot.add(LootItem.lootTableItem(Items.RAW_COPPER).setWeight(15).setQuality(-4).apply(SetItemCountFunction.setCount(UniformGenerator.between(12, 26))));
 			miningOreLoot.add(LootItem.lootTableItem(Items.RAW_IRON).setWeight(20).setQuality(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(10, 15))));
 			miningOreLoot.add(LootItem.lootTableItem(Items.RAW_GOLD).setWeight(16).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(7, 14))));
 			miningOreLoot.add(LootItem.lootTableItem(Items.COAL).setWeight(20).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(10, 16))));
 			miningOreLoot.add(LootItem.lootTableItem(Items.DIAMOND).setWeight(7).setQuality(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 7))));
-			miningOreLoot.add(LootItem.lootTableItem(Items.EMERALD).setWeight(3).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 10))));
-			miningOreLoot.add(LootItem.lootTableItem(Items.REDSTONE).setWeight(3).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(10, 15))));
-			miningOreLoot.add(LootItem.lootTableItem(Items.GUNPOWDER).setWeight(3).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(6, 11))));
-			miningOreLoot.add(LootItem.lootTableItem(Items.LAPIS_LAZULI).setWeight(3).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(10, 15))));
+			miningOreLoot.add(LootItem.lootTableItem(Items.EMERALD).setWeight(4).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 10))));
+			miningOreLoot.add(LootItem.lootTableItem(Items.REDSTONE).setWeight(10).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(10, 15))));
+			miningOreLoot.add(LootItem.lootTableItem(Items.GUNPOWDER).setWeight(4).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(6, 11))));
+			miningOreLoot.add(LootItem.lootTableItem(Items.LAPIS_LAZULI).setWeight(10).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(10, 15))));
 			miningOreLoot.add(LootItem.lootTableItem(BloodMagicItems.STRONG_TAU_ITEM.get()).setWeight(6).setQuality(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 8))));
 			miningOreLoot.add(LootItem.lootTableItem(BloodMagicItems.HELLFORGED_SAND.get()).setWeight(12).setQuality(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(5, 7))));
 			addMultipleItemsWithQualitySameParams(miningOreLoot, new Item[] { Items.IRON_PICKAXE,
@@ -494,7 +499,9 @@ public class GeneratorLootTable extends LootTableProvider
 					BloodMagicItems.DESTRUCTIVE_CRYSTAL.get() }, 2, 3, UniformGenerator.between(2, 5));
 			miningOreLoot.add(LootItem.lootTableItem(BloodMagicItems.LIVING_TOME.get()).setWeight(4).apply(SetLivingUpgrade.withRange(UniformGenerator.between(200, 300), LivingArmorRegistrar.UPGRADE_DIGGING.get().getKey())));
 			miningOreLoot.add(LootItem.lootTableItem(BloodMagicBlocks.SHAPED_CHARGE_DEEP.get()).setWeight(4).setQuality(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 7))));
-			miningOreLoot.add(LootItem.lootTableItem(BloodMagicItems.FORTUNE_ANOINTMENT_2.get()).setWeight(4).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
+//			miningOreLoot.add(LootItem.lootTableItem(BloodMagicItems.FORTUNE_ANOINTMENT_2.get()).setWeight(4).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
+			addMultipleItemsWithQualitySameParams(miningOreLoot, empoweredWeaponAnointments3, 2, 3, UniformGenerator.between(1, 3));
+			miningOreLoot.add(LootItem.lootTableItem(BloodMagicItems.HELLFORGED_PARTS.get()).setWeight(1).setQuality(10).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))));
 
 			acceptor.accept(BloodMagic.rl("chests/mines/ore_loot"), LootTable.lootTable().withPool(fragmentLoot).withPool(miningOreLoot));
 

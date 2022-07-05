@@ -1,0 +1,26 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:holy_water_anointment"
+    },
+    {
+      "item": "bloodmagic:tauoil"
+    },
+    {
+      "item": "minecraft:glistering_melon_slice"
+    },
+    {
+      "item": "bloodmagic:sand_hellforged"
+    },
+    {
+      "item": "minecraft:amethyst_shard"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:holy_water_anointment_xl"
+  },
+  "syphon": 2000,
+  "ticks": 100,
+  "upgradeLevel": 4
+}

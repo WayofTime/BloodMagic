@@ -139,6 +139,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.modfilter.desc", "Filters based off of the source mod");
 		add("tooltip.bloodmagic.compositefilter.desc", "Filters based off of contained filters");
 
+		add("tooltip.bloodmagic.hellforgedparts", "These parts are currently beyond your crafting capabilities...");
+
 		add("filter.bloodmagic.whitelist", "Allow");
 		add("filter.bloodmagic.blacklist", "Deny");
 		add("filter.bloodmagic.specifiedtag", "Valid Tag:");
@@ -524,6 +526,16 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.ORB_RUNE, "Rune of the Orb");
 		addBlock(BloodMagicBlocks.ACCELERATION_RUNE, "Acceleration Rune");
 		addBlock(BloodMagicBlocks.CHARGING_RUNE, "Charging Rune");
+		addBlock(BloodMagicBlocks.SPEED_RUNE_2, "Reinforced Speed Rune");
+		addBlock(BloodMagicBlocks.SACRIFICE_RUNE_2, "Reinforced Rune of Sacrifice");
+		addBlock(BloodMagicBlocks.SELF_SACRIFICE_RUNE_2, "Reinforced Rune of Self Sacrifice");
+		addBlock(BloodMagicBlocks.DISPLACEMENT_RUNE_2, "Reinforced Displacement Rune");
+		addBlock(BloodMagicBlocks.CAPACITY_RUNE_2, "Reinforced Rune of Capacity");
+		addBlock(BloodMagicBlocks.AUGMENTED_CAPACITY_RUNE_2, "Reinforced Rune of Augmented Capacity");
+		addBlock(BloodMagicBlocks.ORB_RUNE_2, "Reinforced Rune of the Orb");
+		addBlock(BloodMagicBlocks.ACCELERATION_RUNE_2, "Reinforced Acceleration Rune");
+		addBlock(BloodMagicBlocks.CHARGING_RUNE_2, "Reinforced Charging Rune");
+
 		addBlock(BloodMagicBlocks.BLOOD_ALTAR, "Blood Altar");
 		addBlock(BloodMagicBlocks.SOUL_FORGE, "Hellfire Forge");
 		addBlock(BloodMagicBlocks.BLANK_RITUAL_STONE, "Ritual Stone");
@@ -723,6 +735,8 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addItem(BloodMagicItems.EXPERIENCE_TOME, "Tome of Peritia");
 
+		addItem(BloodMagicItems.HELLFORGED_PARTS, "Intricate Hellforged Parts");
+
 		addItem(BloodMagicItems.LIVING_HELMET, "Living Helmet");
 		addItem(BloodMagicItems.LIVING_PLATE, "Living Chestplate");
 		addItem(BloodMagicItems.LIVING_LEGGINGS, "Living Leggings");
@@ -793,6 +807,17 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT_2, "Iron Tip II");
 		addItem(BloodMagicItems.LOOTING_ANOINTMENT_2, "Plunderer's Glint II");
 		addItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT_2, "Archer's Polish II");
+
+		addItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_XL, "Honing Oil XL");
+		addItem(BloodMagicItems.SILK_TOUCH_ANOINTMENT_XL, "Soft Coating XL");
+		addItem(BloodMagicItems.FORTUNE_ANOINTMENT_XL, "Fortuna Extract XL");
+		addItem(BloodMagicItems.HOLY_WATER_ANOINTMENT_XL, "Holy Water XL");
+		addItem(BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT_XL, "Miner's Secrets XL");
+		addItem(BloodMagicItems.QUICK_DRAW_ANOINTMENT_XL, "Dexterity Alkahest XL");
+		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT_XL, "Iron Tip XL");
+		addItem(BloodMagicItems.LOOTING_ANOINTMENT_XL, "Plunderer's Glint XL");
+		addItem(BloodMagicItems.SMELTING_ANOINTMENT_XL, "Slow-burning Oil XL");
+		addItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT_XL, "Archer's Polish XL");
 
 		addItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_3, "Honing Oil III");
 		addItem(BloodMagicItems.FORTUNE_ANOINTMENT_3, "Fortuna Extract III");

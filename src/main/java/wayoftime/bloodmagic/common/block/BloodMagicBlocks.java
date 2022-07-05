@@ -72,6 +72,16 @@ public class BloodMagicBlocks
 	public static final RegistryObject<Block> ACCELERATION_RUNE = BASICBLOCKS.register("accelerationrune", () -> new BlockBloodRune(BloodRuneType.ACCELERATION));
 	public static final RegistryObject<Block> CHARGING_RUNE = BASICBLOCKS.register("chargingrune", () -> new BlockBloodRune(BloodRuneType.CHARGING));
 
+	public static final RegistryObject<Block> SELF_SACRIFICE_RUNE_2 = BASICBLOCKS.register("selfsacrificerune2", () -> new BlockBloodRune(BloodRuneType.SELF_SACRIFICE, 2));
+	public static final RegistryObject<Block> SPEED_RUNE_2 = BASICBLOCKS.register("speedrune2", () -> new BlockBloodRune(BloodRuneType.SPEED, 2));
+	public static final RegistryObject<Block> SACRIFICE_RUNE_2 = BASICBLOCKS.register("sacrificerune2", () -> new BlockBloodRune(BloodRuneType.SACRIFICE, 2));
+	public static final RegistryObject<Block> DISPLACEMENT_RUNE_2 = BASICBLOCKS.register("dislocationrune2", () -> new BlockBloodRune(BloodRuneType.DISPLACEMENT, 2));
+	public static final RegistryObject<Block> CAPACITY_RUNE_2 = BASICBLOCKS.register("altarcapacityrune2", () -> new BlockBloodRune(BloodRuneType.CAPACITY, 2));
+	public static final RegistryObject<Block> AUGMENTED_CAPACITY_RUNE_2 = BASICBLOCKS.register("bettercapacityrune2", () -> new BlockBloodRune(BloodRuneType.AUGMENTED_CAPACITY, 2));
+	public static final RegistryObject<Block> ORB_RUNE_2 = BASICBLOCKS.register("orbcapacityrune2", () -> new BlockBloodRune(BloodRuneType.ORB, 2));
+	public static final RegistryObject<Block> ACCELERATION_RUNE_2 = BASICBLOCKS.register("accelerationrune2", () -> new BlockBloodRune(BloodRuneType.ACCELERATION, 2));
+	public static final RegistryObject<Block> CHARGING_RUNE_2 = BASICBLOCKS.register("chargingrune2", () -> new BlockBloodRune(BloodRuneType.CHARGING, 2));
+
 	public static final RegistryObject<Block> BLOOD_ALTAR = BLOCKS.register("altar", () -> new BlockAltar());
 	public static final RegistryObject<Block> BLOOD_LIGHT = BLOCKS.register("bloodlight", () -> new BlockBloodLight());
 

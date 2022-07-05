@@ -1,0 +1,26 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:bow_velocity_anointment"
+    },
+    {
+      "item": "bloodmagic:tauoil"
+    },
+    {
+      "tag": "forge:nuggets/gold"
+    },
+    {
+      "item": "bloodmagic:sand_hellforged"
+    },
+    {
+      "item": "minecraft:amethyst_shard"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:bow_velocity_anointment_xl"
+  },
+  "syphon": 2000,
+  "ticks": 100,
+  "upgradeLevel": 4
+}

@@ -11,7 +11,10 @@
       "item": "bloodmagic:sand_hellforged"
     },
     {
-      "item": "bloodmagic:simplecatalyst"
+      "item": "minecraft:glow_berries"
+    },
+    {
+      "tag": "forge:dusts/coal"
     }
   ],
   "output": {

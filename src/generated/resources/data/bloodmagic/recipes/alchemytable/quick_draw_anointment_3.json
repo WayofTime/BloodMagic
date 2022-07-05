@@ -1,0 +1,26 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:quick_draw_anointment"
+    },
+    {
+      "item": "bloodmagic:strong_tau"
+    },
+    {
+      "item": "bloodmagic:sand_hellforged"
+    },
+    {
+      "item": "minecraft:glow_berries"
+    },
+    {
+      "item": "minecraft:spectral_arrow"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:quick_draw_anointment_3"
+  },
+  "syphon": 2000,
+  "ticks": 100,
+  "upgradeLevel": 4
+}

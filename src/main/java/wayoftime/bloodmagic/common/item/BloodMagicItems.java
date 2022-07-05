@@ -90,6 +90,16 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> DEMON_CRYSTALLIZER_ITEM = ITEMS.register("demoncrystallizer", () -> new BlockItem(BloodMagicBlocks.DEMON_CRYSTALLIZER.get(), new Item.Properties().tab(BloodMagic.TAB)));
 	public static final RegistryObject<Item> DEMON_PYLON_ITEM = ITEMS.register("demonpylon", () -> new BlockItem(BloodMagicBlocks.DEMON_PYLON.get(), new Item.Properties().tab(BloodMagic.TAB)));
 
+	public static final RegistryObject<Item> SPEED_RUNE_2_ITEM = ITEMS.register("speedrune2", () -> new BlockItem(BloodMagicBlocks.SPEED_RUNE_2.get(), new Item.Properties().tab(BloodMagic.TAB)));
+	public static final RegistryObject<Item> SACRIFICE_RUNE_2_ITEM = ITEMS.register("sacrificerune2", () -> new BlockItem(BloodMagicBlocks.SACRIFICE_RUNE_2.get(), new Item.Properties().tab(BloodMagic.TAB)));
+	public static final RegistryObject<Item> SELF_SACRIFICE_RUNE_2_ITEM = ITEMS.register("selfsacrificerune2", () -> new BlockItem(BloodMagicBlocks.SELF_SACRIFICE_RUNE_2.get(), new Item.Properties().tab(BloodMagic.TAB)));
+	public static final RegistryObject<Item> DISPLACEMENT_RUNE_2_ITEM = ITEMS.register("dislocationrune2", () -> new BlockItem(BloodMagicBlocks.DISPLACEMENT_RUNE_2.get(), new Item.Properties().tab(BloodMagic.TAB)));
+	public static final RegistryObject<Item> CAPACITY_RUNE_2_ITEM = ITEMS.register("altarcapacityrune2", () -> new BlockItem(BloodMagicBlocks.CAPACITY_RUNE_2.get(), new Item.Properties().tab(BloodMagic.TAB)));
+	public static final RegistryObject<Item> AUGMENTED_CAPACITY_RUNE_2_ITEM = ITEMS.register("bettercapacityrune2", () -> new BlockItem(BloodMagicBlocks.AUGMENTED_CAPACITY_RUNE_2.get(), new Item.Properties().tab(BloodMagic.TAB)));
+	public static final RegistryObject<Item> ORB_RUNE_2_ITEM = ITEMS.register("orbcapacityrune2", () -> new BlockItem(BloodMagicBlocks.ORB_RUNE_2.get(), new Item.Properties().tab(BloodMagic.TAB)));
+	public static final RegistryObject<Item> ACCELERATION_RUNE_2_ITEM = ITEMS.register("accelerationrune2", () -> new BlockItem(BloodMagicBlocks.ACCELERATION_RUNE_2.get(), new Item.Properties().tab(BloodMagic.TAB)));
+	public static final RegistryObject<Item> CHARGING_RUNE_2_ITEM = ITEMS.register("chargingrune2", () -> new BlockItem(BloodMagicBlocks.CHARGING_RUNE_2.get(), new Item.Properties().tab(BloodMagic.TAB)));
+
 	public static final RegistryObject<Item> BLOODSTONE_ITEM = ITEMS.register("largebloodstonebrick", () -> new BlockItem(BloodMagicBlocks.BLOODSTONE.get(), new Item.Properties().tab(BloodMagic.TAB)));
 	public static final RegistryObject<Item> BLOODSTONE_BRICK_ITEM = ITEMS.register("bloodstonebrick", () -> new BlockItem(BloodMagicBlocks.BLOODSTONE_BRICK.get(), new Item.Properties().tab(BloodMagic.TAB)));
 
@@ -260,6 +270,8 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> SYNTHETIC_POINT = BASICITEMS.register("syntheticpoint", () -> new ItemSyntheticPoint());
 	public static final RegistryObject<Item> UPGRADE_SCRAPS = BASICITEMS.register("upgradescraps", () -> new ItemLivingTomeScrap());
 
+	public static final RegistryObject<Item> HELLFORGED_PARTS = BASICITEMS.register("hellforgedparts", () -> new ItemBase("hellforgedparts"));
+
 	// ARC Tools
 	public static final RegistryObject<Item> SANGUINE_REVERTER = BASICITEMS.register("sanguinereverter", () -> new ItemARCToolBase(32, 2, EnumDemonWillType.STEADFAST));
 	public static final RegistryObject<Item> PRIMITIVE_FURNACE_CELL = BASICITEMS.register("furnacecell_primitive", () -> new ItemARCToolBase(128, 1.25));
@@ -338,6 +350,17 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> LOOTING_ANOINTMENT_2 = ITEMS.register("looting_anointment_2", () -> new ItemAnointmentProvider(BloodMagic.rl("looting"), 0x6D2AFF, 2, 256));
 	public static final RegistryObject<Item> BOW_POWER_ANOINTMENT_2 = ITEMS.register("bow_power_anointment_2", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_power"), 0xD8D8D8, 2, 256, true));
 	public static final RegistryObject<Item> BOW_VELOCITY_ANOINTMENT_2 = ITEMS.register("bow_velocity_anointment_2", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_velocity"), 0xFFBE00, 2, 256, true));
+
+	public static final RegistryObject<Item> MELEE_DAMAGE_ANOINTMENT_XL = ITEMS.register("melee_anointment_xl", () -> new ItemAnointmentProvider(BloodMagic.rl("melee_damage"), 0xFF0000, 1, 4096));
+	public static final RegistryObject<Item> SILK_TOUCH_ANOINTMENT_XL = ITEMS.register("silk_touch_anointment_xl", () -> new ItemAnointmentProvider(BloodMagic.rl("silk_touch"), 0x00B0FF, 1, 4096));
+	public static final RegistryObject<Item> FORTUNE_ANOINTMENT_XL = ITEMS.register("fortune_anointment_xl", () -> new ItemAnointmentProvider(BloodMagic.rl("fortune"), 3381504, 1, 4096));
+	public static final RegistryObject<Item> HOLY_WATER_ANOINTMENT_XL = ITEMS.register("holy_water_anointment_xl", () -> new ItemAnointmentProvider(BloodMagic.rl("holy_water"), 0xC6E6FB, 1, 4096));
+	public static final RegistryObject<Item> HIDDEN_KNOWLEDGE_ANOINTMENT_XL = ITEMS.register("hidden_knowledge_anointment_xl", () -> new ItemAnointmentProvider(BloodMagic.rl("hidden_knowledge"), 0xC8F902, 1, 4096));
+	public static final RegistryObject<Item> QUICK_DRAW_ANOINTMENT_XL = ITEMS.register("quick_draw_anointment_xl", () -> new ItemBowAnointmentProvider(BloodMagic.rl("quick_draw"), 0xF0E130, 1, 4096, true));
+	public static final RegistryObject<Item> LOOTING_ANOINTMENT_XL = ITEMS.register("looting_anointment_xl", () -> new ItemAnointmentProvider(BloodMagic.rl("looting"), 0x6D2AFF, 1, 4096));
+	public static final RegistryObject<Item> BOW_POWER_ANOINTMENT_XL = ITEMS.register("bow_power_anointment_xl", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_power"), 0xD8D8D8, 1, 4096, true));
+	public static final RegistryObject<Item> SMELTING_ANOINTMENT_XL = ITEMS.register("smelting_anointment_xl", () -> new ItemAnointmentProvider(BloodMagic.rl("smelting"), 0xCE2029, 1, 4096));
+	public static final RegistryObject<Item> BOW_VELOCITY_ANOINTMENT_XL = ITEMS.register("bow_velocity_anointment_xl", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_velocity"), 0xFFBE00, 1, 4096, true));
 
 	public static final RegistryObject<Item> MELEE_DAMAGE_ANOINTMENT_3 = ITEMS.register("melee_anointment_3", () -> new ItemAnointmentProvider(BloodMagic.rl("melee_damage"), 0xFF0000, 3, 256));
 	public static final RegistryObject<Item> FORTUNE_ANOINTMENT_3 = ITEMS.register("fortune_anointment_3", () -> new ItemAnointmentProvider(BloodMagic.rl("fortune"), 3381504, 3, 256));

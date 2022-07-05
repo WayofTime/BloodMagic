@@ -60,6 +60,16 @@ public class BloodMagicCorePlugin
 		apiInterface.registerAltarComponent(BloodMagicBlocks.ACCELERATION_RUNE.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
 		apiInterface.registerAltarComponent(BloodMagicBlocks.CHARGING_RUNE.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
 
+		apiInterface.registerAltarComponent(BloodMagicBlocks.SPEED_RUNE_2.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.SACRIFICE_RUNE_2.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.SELF_SACRIFICE_RUNE_2.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.DISPLACEMENT_RUNE_2.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.CAPACITY_RUNE_2.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.AUGMENTED_CAPACITY_RUNE_2.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.ORB_RUNE_2.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.ACCELERATION_RUNE_2.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.CHARGING_RUNE_2.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
+
 		apiInterface.registerInventoryProvider("mainInventory", player -> player.getInventory().items);
 		apiInterface.registerInventoryProvider("armorInventory", player -> player.getInventory().armor);
 		apiInterface.registerInventoryProvider("offHandInventory", player -> player.getInventory().offhand);

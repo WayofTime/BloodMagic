@@ -16,9 +16,9 @@ public class AltarUpgrade
 		this.upgradeLevels = Maps.newEnumMap(BloodRuneType.class);
 	}
 
-	public AltarUpgrade upgrade(BloodRuneType rune)
+	public AltarUpgrade upgrade(BloodRuneType rune, int count)
 	{
-		upgradeLevels.compute(rune, (r, l) -> l == null ? 1 : l + 1);
+		upgradeLevels.compute(rune, (r, l) -> l == null ? count : l + count);
 		return this;
 	}
 

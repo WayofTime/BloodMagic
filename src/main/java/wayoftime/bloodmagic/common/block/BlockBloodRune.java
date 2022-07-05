@@ -21,12 +21,18 @@ import wayoftime.bloodmagic.block.enums.BloodRuneType;
 public class BlockBloodRune extends Block implements IBloodRune
 {
 	private final BloodRuneType type;
+	private final int strength;
 
-	public BlockBloodRune(BloodRuneType type)
+	public BlockBloodRune(BloodRuneType type, int strength)
 	{
 		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops());
 		this.type = type;
-//	.harvestTool(ToolType.PICKAXE).harvestLevel(2)
+		this.strength = strength;
+	}
+
+	public BlockBloodRune(BloodRuneType type)
+	{
+		this(type, 1);
 	}
 
 	@Nullable
@@ -41,5 +47,11 @@ public class BlockBloodRune extends Block implements IBloodRune
 	{
 		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.decoration.safe").withStyle(ChatFormatting.GRAY));
 		super.appendHoverText(stack, world, tooltip, flag);
+	}
+
+	@Override
+	public int getRuneCount(Level world, BlockPos pos)
+	{
+		return strength;
 	}
 }

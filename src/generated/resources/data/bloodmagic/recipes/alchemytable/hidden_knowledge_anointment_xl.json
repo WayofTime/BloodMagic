@@ -1,0 +1,26 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:hidden_knowledge_anointment"
+    },
+    {
+      "item": "bloodmagic:tauoil"
+    },
+    {
+      "item": "minecraft:enchanted_book"
+    },
+    {
+      "item": "bloodmagic:sand_hellforged"
+    },
+    {
+      "item": "minecraft:amethyst_shard"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:hidden_knowledge_anointment_xl"
+  },
+  "syphon": 2000,
+  "ticks": 100,
+  "upgradeLevel": 4
+}

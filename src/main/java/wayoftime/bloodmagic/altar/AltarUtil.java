@@ -7,11 +7,11 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import wayoftime.bloodmagic.common.block.BlockBloodRune;
 import wayoftime.bloodmagic.common.tile.TileAltar;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
@@ -61,7 +61,7 @@ public class AltarUtil
 			BlockPos componentPos = pos.offset(component.getOffset());
 			BlockState state = world.getBlockState(componentPos);
 			if (state.getBlock() instanceof BlockBloodRune)
-				upgrades.upgrade(((BlockBloodRune) state.getBlock()).getBloodRune(world, componentPos));
+				upgrades.upgrade(((BlockBloodRune) state.getBlock()).getBloodRune(world, componentPos), ((BlockBloodRune) state.getBlock()).getRuneCount(world, componentPos));
 		}
 
 		return upgrades;
