@@ -7,6 +7,8 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import mezz.jei.api.constants.VanillaTypes;
@@ -109,20 +111,40 @@ public class ARCRecipeCategory implements IRecipeCategory<RecipeARC>
 	public void draw(RecipeARC recipe, PoseStack matrixStack, double mouseX, double mouseY)
 	{
 		Minecraft mc = Minecraft.getInstance();
-		double[] chanceArray = recipe.getAllOutputChances();
+		List<Pair<Double, Double>> chanceArray = recipe.getAllOutputChances();
 
-		String[] infoString = new String[chanceArray.length];
+//		double mainChance = recipe.getMainOutputChance();
+//		if (mainChance > 0)
+//		{
+//			String infoString = "+1";
+//			if (mainChance >= 1)
+//			{
+//				infoString = "+1";
+//			} else if (mainChance < 0.01)
+//			{
+//				infoString = "+<1%";
+//			} else
+//			{
+//				infoString = "+" + (int) (Math.round(mainChance * 100)) + "%";
+//			}
+//
+//			mc.font.drawShadow(matrixStack, infoString, 86 - 24 - mc.font.width(infoString) / 2, 5 + 0 * 32, Color.white.getRGB());
+//		}
+
+		String[] infoString = new String[chanceArray.size()];
 		for (int i = 0; i < infoString.length; i++)
 		{
-			if (chanceArray[i] >= 1)
+			Pair<Double, Double> chance = chanceArray.get(i);
+			double totalChance = chance.getLeft() + chance.getRight();
+			if (totalChance >= 1)
 			{
 				infoString[i] = "";
-			} else if (chanceArray[i] < 0.01)
+			} else if (totalChance < 0.01)
 			{
 				infoString[i] = "<1%";
 			} else
 			{
-				infoString[i] = "" + (int) (chanceArray[i] * 100) + "%";
+				infoString[i] = "" + (int) (Math.round(totalChance * 100)) + "%";
 			}
 
 			mc.font.drawShadow(matrixStack, infoString[i], 86 + 22 * i - mc.font.width(infoString[i]) / 2, 5, Color.white.getRGB());

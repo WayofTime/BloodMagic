@@ -58,9 +58,9 @@ public class ARCRecipeProvider implements ISubRecipeProvider
 	{
 		String basePath = "arc/dusts";
 
-		double rawToDustExtra = 0.5;
+		double rawToDustExtra = 0.17;
 		// raw to dust: 1.75x
-		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.RAW_MATERIALS_IRON), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.IRON_SAND.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.IRON_SAND.get()), rawToDustExtra).build(consumer, BloodMagic.rl(basePath + "from_raw_iron"));
+		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.RAW_MATERIALS_IRON), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.IRON_SAND.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.IRON_SAND.get()), 0.33, 0.17).build(consumer, BloodMagic.rl(basePath + "from_raw_iron"));
 		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.RAW_MATERIALS_GOLD), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.GOLD_SAND.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.GOLD_SAND.get()), rawToDustExtra).build(consumer, BloodMagic.rl(basePath + "from_raw_gold"));
 		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.RAW_MATERIALS_COPPER), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.COPPER_SAND.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.COPPER_SAND.get()), rawToDustExtra).build(consumer, BloodMagic.rl(basePath + "from_raw_copper"));
 

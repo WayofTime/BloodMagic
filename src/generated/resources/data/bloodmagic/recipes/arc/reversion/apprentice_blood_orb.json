@@ -9,5 +9,6 @@
   "output": {
     "item": "minecraft:redstone_block"
   },
-  "consumeingredient": true
+  "consumeingredient": true,
+  "mainoutputchance": 0.0
 }

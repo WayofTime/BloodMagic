@@ -27,10 +27,11 @@ public class ARCRecipeBuilder extends BloodMagicRecipeBuilder<ARCRecipeBuilder>
 	private final FluidStackIngredient inputFluid;
 	private final ItemStack output;
 	private final FluidStack outputFluid;
-	private final List<Pair<ItemStack, Double>> addedItems = new ArrayList<Pair<ItemStack, Double>>();
+	private final List<Pair<ItemStack, Pair<Double, Double>>> addedItems = new ArrayList<Pair<ItemStack, Pair<Double, Double>>>();
 	private final boolean consumeIngredient;
+	private double additionalMainOutputChance;
 
-	protected ARCRecipeBuilder(Ingredient input, Ingredient arcTool, FluidStackIngredient inputFluid, ItemStack output, FluidStack outputFluid, boolean consumeIngredient)
+	protected ARCRecipeBuilder(Ingredient input, Ingredient arcTool, FluidStackIngredient inputFluid, ItemStack output, FluidStack outputFluid, boolean consumeIngredient, double additionalMainOutputChance)
 	{
 		super(bmSerializer("arc"));
 		this.input = input;
@@ -39,26 +40,32 @@ public class ARCRecipeBuilder extends BloodMagicRecipeBuilder<ARCRecipeBuilder>
 		this.output = output;
 		this.outputFluid = outputFluid == null ? FluidStack.EMPTY : outputFluid;
 		this.consumeIngredient = consumeIngredient;
+		this.additionalMainOutputChance = additionalMainOutputChance;
 	}
 
 	public static ARCRecipeBuilder arc(Ingredient input, Ingredient arcTool, FluidStackIngredient inputFluid, ItemStack output, FluidStack outputFluid)
 	{
-		return new ARCRecipeBuilder(input, arcTool, inputFluid, output, outputFluid, false);
+		return new ARCRecipeBuilder(input, arcTool, inputFluid, output, outputFluid, false, 0);
 	}
 
 	public static ARCRecipeBuilder arcConsume(Ingredient input, Ingredient arcTool, FluidStackIngredient inputFluid, ItemStack output, FluidStack outputFluid)
 	{
-		return new ARCRecipeBuilder(input, arcTool, inputFluid, output, outputFluid, true);
+		return new ARCRecipeBuilder(input, arcTool, inputFluid, output, outputFluid, true, 0);
 	}
 
-	public ARCRecipeBuilder addRandomOutput(ItemStack stack, double chance)
+	public ARCRecipeBuilder addRandomOutput(ItemStack stack, double secondaryChance)
 	{
-		if (addedItems.size() >= RecipeARC.MAX_RANDOM_OUTPUTS || chance <= 0)
+		return addRandomOutput(stack, 0, secondaryChance);
+	}
+
+	public ARCRecipeBuilder addRandomOutput(ItemStack stack, double mainChance, double secondaryChance)
+	{
+		if (addedItems.size() >= RecipeARC.MAX_RANDOM_OUTPUTS || mainChance <= 0 || secondaryChance <= 0)
 		{
 			return this;
 		}
 
-		addedItems.add(Pair.of(stack, chance));
+		addedItems.add(Pair.of(stack, Pair.of(mainChance, secondaryChance)));
 
 		return this;
 	}
@@ -88,10 +95,11 @@ public class ARCRecipeBuilder extends BloodMagicRecipeBuilder<ARCRecipeBuilder>
 			if (addedItems.size() > 0)
 			{
 				JsonArray mainArray = new JsonArray();
-				for (Pair<ItemStack, Double> pair : addedItems)
+				for (Pair<ItemStack, Pair<Double, Double>> pair : addedItems)
 				{
 					JsonObject jsonObj = new JsonObject();
-					jsonObj.addProperty(Constants.JSON.CHANCE, pair.getValue().floatValue());
+					jsonObj.addProperty(Constants.JSON.MAIN_CHANCE, pair.getValue().getLeft().floatValue());
+					jsonObj.addProperty(Constants.JSON.CHANCE, pair.getValue().getRight().floatValue());
 					jsonObj.add(Constants.JSON.TYPE, SerializerHelper.serializeItemStack(pair.getKey()));
 					mainArray.add(jsonObj);
 				}
@@ -104,6 +112,7 @@ public class ARCRecipeBuilder extends BloodMagicRecipeBuilder<ARCRecipeBuilder>
 
 			json.add(Constants.JSON.OUTPUT, SerializerHelper.serializeItemStack(output));
 			json.addProperty("consumeingredient", consumeIngredient);
+			json.addProperty("mainoutputchance", additionalMainOutputChance);
 		}
 	}
 }

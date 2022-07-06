@@ -13,5 +13,6 @@
   "output": {
     "item": "minecraft:clay"
   },
-  "consumeingredient": false
+  "consumeingredient": false,
+  "mainoutputchance": 0.0
 }

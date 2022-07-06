@@ -10,5 +10,6 @@
     "item": "bloodmagic:goldsand",
     "count": 2
   },
-  "consumeingredient": false
+  "consumeingredient": false,
+  "mainoutputchance": 0.0
 }

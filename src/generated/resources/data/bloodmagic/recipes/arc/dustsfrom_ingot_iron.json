@@ -9,5 +9,6 @@
   "output": {
     "item": "bloodmagic:ironsand"
   },
-  "consumeingredient": false
+  "consumeingredient": false,
+  "mainoutputchance": 0.0
 }

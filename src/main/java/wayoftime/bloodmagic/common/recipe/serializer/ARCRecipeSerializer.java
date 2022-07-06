@@ -11,23 +11,22 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
-import wayoftime.bloodmagic.recipe.helper.FluidStackIngredient;
 import wayoftime.bloodmagic.recipe.RecipeARC;
+import wayoftime.bloodmagic.recipe.helper.FluidStackIngredient;
+import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
 import wayoftime.bloodmagic.util.Constants;
 
-public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistryEntry<RecipeSerializer<?>>
-		implements RecipeSerializer<RECIPE>
+public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RECIPE>
 {
 	private final IFactory<RECIPE> factory;
 
@@ -52,7 +51,7 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 		Ingredient toolIng = Ingredient.fromJson(tool);
 		ItemStack output = SerializerHelper.getItemStack(json, Constants.JSON.OUTPUT);
 
-		List<Pair<ItemStack, Double>> addedItems = new ArrayList<Pair<ItemStack, Double>>();
+		List<Pair<ItemStack, Pair<Double, Double>>> addedItems = new ArrayList<Pair<ItemStack, Pair<Double, Double>>>();
 		if (json.has(Constants.JSON.ADDEDOUTPUT) && GsonHelper.isArrayNode(json, Constants.JSON.ADDEDOUTPUT))
 		{
 			JsonArray mainArray = GsonHelper.getAsJsonArray(json, Constants.JSON.ADDEDOUTPUT);
@@ -66,10 +65,11 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 				if (element.isJsonObject())
 				{
 					JsonObject obj = element.getAsJsonObject();
-					double chance = GsonHelper.getAsFloat(obj, Constants.JSON.CHANCE);
+					double mainChance = GsonHelper.getAsFloat(obj, Constants.JSON.MAIN_CHANCE);
+					double secondaryChance = GsonHelper.getAsFloat(obj, Constants.JSON.CHANCE);
 					ItemStack extraDrop = SerializerHelper.getItemStack(obj, Constants.JSON.TYPE);
 
-					addedItems.add(Pair.of(extraDrop, chance));
+					addedItems.add(Pair.of(extraDrop, Pair.of(mainChance, secondaryChance)));
 				}
 			}
 		}
@@ -102,7 +102,7 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 	{
 		try
 		{
-			List<Pair<ItemStack, Double>> addedItems = new ArrayList<Pair<ItemStack, Double>>();
+			List<Pair<ItemStack, Pair<Double, Double>>> addedItems = new ArrayList<Pair<ItemStack, Pair<Double, Double>>>();
 			Ingredient inputIng = Ingredient.fromNetwork(buffer);
 			Ingredient toolIng = Ingredient.fromNetwork(buffer);
 			ItemStack output = buffer.readItem();
@@ -111,8 +111,9 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 			for (int i = 0; i < addedItemSize; i++)
 			{
 				ItemStack stack = buffer.readItem();
-				double chance = buffer.readDouble();
-				addedItems.add(Pair.of(stack, chance));
+				double mainChance = buffer.readDouble();
+				double secondaryChance = buffer.readDouble();
+				addedItems.add(Pair.of(stack, Pair.of(mainChance, secondaryChance)));
 			}
 
 			FluidStackIngredient inputFluid = null;
@@ -154,6 +155,6 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 	@FunctionalInterface
 	public interface IFactory<RECIPE extends RecipeARC>
 	{
-		RECIPE create(ResourceLocation id, Ingredient input, Ingredient arcTool, FluidStackIngredient inputFluid, ItemStack output, List<Pair<ItemStack, Double>> addedItems, FluidStack outputFluid, boolean consumeIngredient);
+		RECIPE create(ResourceLocation id, Ingredient input, Ingredient arcTool, FluidStackIngredient inputFluid, ItemStack output, List<Pair<ItemStack, Pair<Double, Double>>> addedItems, FluidStack outputFluid, boolean consumeIngredient);
 	}
 }

@@ -8,7 +8,8 @@
   },
   "addedoutput": [
     {
-      "chance": 0.5,
+      "mainchance": 0.33,
+      "chance": 0.17,
       "type": {
         "item": "bloodmagic:ironsand"
       }
@@ -17,5 +18,6 @@
   "output": {
     "item": "bloodmagic:ironsand"
   },
-  "consumeingredient": false
+  "consumeingredient": false,
+  "mainoutputchance": 0.0
 }

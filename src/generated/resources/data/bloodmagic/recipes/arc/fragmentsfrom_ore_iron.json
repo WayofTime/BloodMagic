@@ -6,17 +6,10 @@
   "tool": {
     "tag": "bloodmagic:arc/explosive"
   },
-  "addedoutput": [
-    {
-      "chance": 0.5,
-      "type": {
-        "item": "bloodmagic:ironfragment"
-      }
-    }
-  ],
   "output": {
     "item": "bloodmagic:ironfragment",
     "count": 4
   },
-  "consumeingredient": false
+  "consumeingredient": false,
+  "mainoutputchance": 0.0
 }

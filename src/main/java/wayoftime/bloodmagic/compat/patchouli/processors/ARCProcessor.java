@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 
 import net.minecraft.client.Minecraft;
@@ -70,9 +71,10 @@ public class ARCProcessor implements IComponentProcessor
 		} else if (key.startsWith("chance"))
 		{
 			int index = Integer.parseInt(key.substring(6)) - 2; // Index 0 = 2nd output.
-			if (recipe.getAllOutputChances().length > index)
+			if (recipe.getAllOutputChances().size() > index)
 			{
-				double chance = recipe.getAllOutputChances()[index] * 100;
+				Pair<Double, Double> chances = recipe.getAllOutputChances().get(index);
+				double chance = (chances.getLeft() + chances.getRight()) * 100;
 				if (chance < 1)
 				{
 					return IVariable.wrap("<1");
@@ -82,7 +84,7 @@ public class ARCProcessor implements IComponentProcessor
 		} else if (key.startsWith("show_chance"))
 		{
 			int index = Integer.parseInt(key.substring(11)) - 2; // Index 0 = 2nd output.
-			if (recipe.getAllOutputChances().length > index)
+			if (recipe.getAllOutputChances().size() > index)
 			{
 				return IVariable.wrap(true);
 			}

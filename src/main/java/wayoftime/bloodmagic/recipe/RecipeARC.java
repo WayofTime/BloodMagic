@@ -34,14 +34,14 @@ public class RecipeARC extends BloodMagicRecipe
 	private final FluidStack outputFluid;
 	private final boolean consumeIngredient;
 
-	private final List<Pair<ItemStack, Double>> addedItems;
+	private final List<Pair<ItemStack, Pair<Double, Double>>> addedItems;
 
 	public RecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, FluidStackIngredient inputFluid, ItemStack output, FluidStack outputFluid, boolean consumeIngredient)
 	{
-		this(id, input, arc_tool, inputFluid, output, new ArrayList<Pair<ItemStack, Double>>(), outputFluid, consumeIngredient);
+		this(id, input, arc_tool, inputFluid, output, new ArrayList<Pair<ItemStack, Pair<Double, Double>>>(), outputFluid, consumeIngredient);
 	}
 
-	public RecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, FluidStackIngredient inputFluid, ItemStack output, List<Pair<ItemStack, Double>> addedItems, FluidStack outputFluid, boolean consumeIngredient)
+	public RecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, FluidStackIngredient inputFluid, ItemStack output, List<Pair<ItemStack, Pair<Double, Double>>> addedItems, FluidStack outputFluid, boolean consumeIngredient)
 	{
 		super(id);
 		this.input = input;
@@ -53,16 +53,21 @@ public class RecipeARC extends BloodMagicRecipe
 		this.consumeIngredient = consumeIngredient;
 	}
 
-	public RecipeARC addRandomOutput(ItemStack stack, double chance)
+	public RecipeARC addRandomOutput(ItemStack stack, double base, double secondary)
 	{
 		if (addedItems.size() >= MAX_RANDOM_OUTPUTS)
 		{
 			return this;
 		}
 
-		addedItems.add(Pair.of(stack, chance));
+		addedItems.add(Pair.of(stack, Pair.of(base, secondary)));
 
 		return this;
+	}
+
+	public RecipeARC addRandomOutput(ItemStack stack, double secondary)
+	{
+		return addRandomOutput(stack, 0, secondary);
 	}
 
 	@Nonnull
@@ -101,7 +106,7 @@ public class RecipeARC extends BloodMagicRecipe
 		List<ItemStack> list = new ArrayList<ItemStack>();
 
 		list.add(output.copy());
-		for (Pair<ItemStack, Double> pair : addedItems)
+		for (Pair<ItemStack, Pair<Double, Double>> pair : addedItems)
 		{
 			list.add(pair.getLeft().copy());
 		}
@@ -109,31 +114,38 @@ public class RecipeARC extends BloodMagicRecipe
 		return list;
 	}
 
-	public List<ItemStack> getAllOutputs(Random rand)
+	public List<ItemStack> getAllOutputs(Random rand, double secondaryBonus)
 	{
 		List<ItemStack> list = new ArrayList<ItemStack>();
 
 		list.add(output.copy());
-		for (Pair<ItemStack, Double> pair : addedItems)
+
+		for (Pair<ItemStack, Pair<Double, Double>> pair : addedItems)
 		{
-			if (rand.nextDouble() < pair.getRight())
+			Pair<Double, Double> bonus = pair.getRight();
+			if (rand.nextDouble() < (bonus.getLeft() + secondaryBonus * bonus.getRight()))
 				list.add(pair.getLeft().copy());
 		}
 
 		return list;
 	}
 
-	public double[] getAllOutputChances()
+	public List<Pair<Double, Double>> getAllOutputChances()
 	{
-		int size = addedItems.size();
-
-		double[] chanceArray = new double[size];
-		for (int i = 0; i < size; i++)
+		List<Pair<Double, Double>> list = new ArrayList<>();
+		for (Pair<ItemStack, Pair<Double, Double>> entry : addedItems)
 		{
-			chanceArray[i] = addedItems.get(i).getRight();
+			list.add(entry.getRight());
 		}
+//		int size = addedItems.size();
 
-		return chanceArray;
+//		double[] chanceArray = new double[size];
+//		for (int i = 0; i < size; i++)
+//		{
+//			chanceArray[i] = addedItems.get(i).getRight();
+//		}
+
+		return list;
 	}
 
 	public boolean getConsumeIngredient()
@@ -148,10 +160,11 @@ public class RecipeARC extends BloodMagicRecipe
 		arc_tool.toNetwork(buffer);
 		buffer.writeItem(output);
 		buffer.writeInt(addedItems.size());
-		for (Pair<ItemStack, Double> pair : addedItems)
+		for (Pair<ItemStack, Pair<Double, Double>> pair : addedItems)
 		{
 			buffer.writeItem(pair.getLeft());
-			buffer.writeDouble(pair.getValue());
+			buffer.writeDouble(pair.getValue().getKey());
+			buffer.writeDouble(pair.getValue().getValue());
 		}
 
 		buffer.writeBoolean(inputFluid != null);

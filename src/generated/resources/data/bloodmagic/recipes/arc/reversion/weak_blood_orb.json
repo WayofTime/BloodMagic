@@ -9,5 +9,6 @@
   "output": {
     "item": "minecraft:diamond"
   },
-  "consumeingredient": true
+  "consumeingredient": true,
+  "mainoutputchance": 0.0
 }

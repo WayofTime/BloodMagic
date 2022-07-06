@@ -216,7 +216,13 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 				if (!level.isClientSide)
 				{
 					outputChanged = true;
-					craftItem(recipe, outputSlotHandler);
+					double bonusChance = 1;
+					if (toolStack.getItem() instanceof IARCTool)
+					{
+						bonusChance = ((IARCTool) toolStack.getItem()).getAdditionalOutputChanceMultiplier(toolStack);
+					}
+
+					craftItem(recipe, outputSlotHandler, bonusChance);
 				}
 
 				currentProgress = 0;
@@ -315,7 +321,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 		return false;
 	}
 
-	private void craftItem(RecipeARC recipe, MultiSlotItemHandler outputSlotHandler)
+	private void craftItem(RecipeARC recipe, MultiSlotItemHandler outputSlotHandler, double modifier)
 	{
 		if (this.canCraft(recipe, outputSlotHandler))
 		{
@@ -325,7 +331,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 				inputTank.drain(inputStack, FluidAction.EXECUTE);
 			}
 
-			outputSlotHandler.canTransferAllItemsToSlots(recipe.getAllOutputs(level.random), false);
+			outputSlotHandler.canTransferAllItemsToSlots(recipe.getAllOutputs(level.random, modifier), false);
 			outputTank.fill(recipe.getFluidOutput().copy(), FluidAction.EXECUTE);
 			consumeInventory(recipe.getConsumeIngredient());
 		}

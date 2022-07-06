@@ -9,5 +9,6 @@
   "output": {
     "item": "bloodmagic:coppersand"
   },
-  "consumeingredient": false
+  "consumeingredient": false,
+  "mainoutputchance": 0.0
 }

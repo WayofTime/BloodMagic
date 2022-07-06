@@ -199,6 +199,7 @@ public class Constants
 		public static final String TEXTURE = "texture";
 		public static final String CONDITIONS = "conditions";
 		public static final String CHANCE = "chance";
+		public static final String MAIN_CHANCE = "mainchance";
 		public static final String FLUID = "fluid";
 		public static final String AMOUNT = "amount";
 		public static final String INPUT_FLUID = "inputFluid";
