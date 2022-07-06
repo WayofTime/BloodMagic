@@ -107,6 +107,10 @@ public enum AltarTier
 			components.accept(new AltarComponent(new BlockPos(-8, -3, -8), ComponentType.BEACON));
 			components.accept(new AltarComponent(new BlockPos(8, -3, -8), ComponentType.BEACON));
 			components.accept(new AltarComponent(new BlockPos(8, -3, 8), ComponentType.BEACON));
+//			components.accept(new AltarComponent(new BlockPos(-8, -4, 8), ComponentType.HELLFORGED));
+//			components.accept(new AltarComponent(new BlockPos(-8, -4, -8), ComponentType.HELLFORGED));
+//			components.accept(new AltarComponent(new BlockPos(8, -4, -8), ComponentType.HELLFORGED));
+//			components.accept(new AltarComponent(new BlockPos(8, -4, 8), ComponentType.HELLFORGED));
 
 			for (int i = -6; i <= 6; i++)
 			{
