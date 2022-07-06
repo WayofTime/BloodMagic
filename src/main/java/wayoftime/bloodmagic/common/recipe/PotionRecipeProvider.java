@@ -89,6 +89,9 @@ public class PotionRecipeProvider implements ISubRecipeProvider
 		PotionIncreasePotencyRecipeBuilder.potionIncreasePotency(MobEffects.HEAL, 1, 0.5, 200, 100, 1).addIngredient(Ingredient.of(BloodMagicItems.MUNDANE_POWER_CATALYST.get())).build(consumer, BloodMagic.rl(potencyPath + "health"));
 		PotionIncreasePotencyRecipeBuilder.potionIncreasePotency(MobEffects.HARM, 1, 0.5, 200, 100, 1).addIngredient(Ingredient.of(BloodMagicItems.MUNDANE_POWER_CATALYST.get())).build(consumer, BloodMagic.rl(potencyPath + "harm"));
 
+		PotionIncreasePotencyRecipeBuilder.potionIncreasePotency(MobEffects.HEAL, 2, 0.25, 500, 100, 3).addIngredient(Ingredient.of(BloodMagicItems.AVERAGE_POWER_CATALYST.get())).build(consumer, BloodMagic.rl(potencyPath + "average_health"));
+		PotionIncreasePotencyRecipeBuilder.potionIncreasePotency(MobEffects.HARM, 2, 0.25, 500, 100, 3).addIngredient(Ingredient.of(BloodMagicItems.AVERAGE_POWER_CATALYST.get())).build(consumer, BloodMagic.rl(potencyPath + "average_harm"));
+
 		String lengthPath = "flask/length_";
 		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(MobEffects.FIRE_RESISTANCE, 2.6667, 200, 100, 1).addIngredient(Ingredient.of(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "fire_resist"));
 		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(MobEffects.WATER_BREATHING, 2.6667, 200, 100, 1).addIngredient(Ingredient.of(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "water_breathing"));
@@ -99,6 +102,16 @@ public class PotionRecipeProvider implements ISubRecipeProvider
 		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(BloodMagicPotions.BOUNCE, 2.6667, 200, 100, 1).addIngredient(Ingredient.of(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "bounce"));
 		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(BloodMagicPotions.GROUNDED, 2.6667, 200, 100, 1).addIngredient(Ingredient.of(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "grounded"));
 		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(BloodMagicPotions.SUSPENDED, 2.6667, 200, 100, 1).addIngredient(Ingredient.of(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "suspended"));
+
+		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(MobEffects.FIRE_RESISTANCE, 7.1112, 500, 100, 4).addIngredient(Ingredient.of(BloodMagicItems.AVERAGE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "average_fire_resist"));
+		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(MobEffects.WATER_BREATHING, 7.1112, 500, 100, 4).addIngredient(Ingredient.of(BloodMagicItems.AVERAGE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "average_water_breathing"));
+		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(MobEffects.NIGHT_VISION, 7.1112, 500, 100, 4).addIngredient(Ingredient.of(BloodMagicItems.AVERAGE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "average_night_vision"));
+		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(MobEffects.INVISIBILITY, 7.1112, 500, 100, 4).addIngredient(Ingredient.of(BloodMagicItems.AVERAGE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "average_invisibility"));
+		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(MobEffects.SLOW_FALLING, 7.1112, 500, 100, 4).addIngredient(Ingredient.of(BloodMagicItems.AVERAGE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "average_slow_fall"));
+		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(BloodMagicPotions.PASSIVITY, 7.1112, 500, 100, 4).addIngredient(Ingredient.of(BloodMagicItems.AVERAGE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "average_passivity"));
+		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(BloodMagicPotions.BOUNCE, 7.1112, 500, 100, 4).addIngredient(Ingredient.of(BloodMagicItems.AVERAGE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "average_bounce"));
+		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(BloodMagicPotions.GROUNDED, 7.1112, 500, 100, 4).addIngredient(Ingredient.of(BloodMagicItems.AVERAGE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "average_grounded"));
+		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(BloodMagicPotions.SUSPENDED, 7.1112, 500, 100, 4).addIngredient(Ingredient.of(BloodMagicItems.AVERAGE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "average_suspended"));
 
 //		String transformPath = "flask/transform_";
 //		PotionTransformRecipeBuilder.potionTransform(BloodMagicPotions.FLIGHT, 2400, Effects.SPEED, 100, 20, 2).addInputEffect(Effects.FIRE_RESISTANCE).addIngredient(Ingredient.fromTag(Tags.Items.FEATHERS)).build(consumer, BloodMagic.rl(transformPath + "flight"));
@@ -122,5 +135,8 @@ public class PotionRecipeProvider implements ISubRecipeProvider
 
 		PotionIncreasePotencyRecipeBuilder.potionIncreasePotency(effect, 1, 0.5, 200, 100, 1).addIngredient(Ingredient.of(BloodMagicItems.MUNDANE_POWER_CATALYST.get())).build(consumer, BloodMagic.rl(potencyPath + name));
 		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(effect, 2.6667, 200, 100, 1).addIngredient(Ingredient.of(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + name));
+
+		PotionIncreasePotencyRecipeBuilder.potionIncreasePotency(effect, 2, 0.25, 500, 100, 4).addIngredient(Ingredient.of(BloodMagicItems.AVERAGE_POWER_CATALYST.get())).build(consumer, BloodMagic.rl(potencyPath + "average_" + name));
+		PotionIncreaseLengthRecipeBuilder.potionIncreaseLength(effect, 7.1112, 500, 100, 4).addIngredient(Ingredient.of(BloodMagicItems.AVERAGE_LENGTHENING_CATALYST.get())).build(consumer, BloodMagic.rl(lengthPath + "average_" + name));
 	}
 }

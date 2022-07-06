@@ -1,0 +1,13 @@
+{
+  "type": "bloodmagic:flask_potionlength",
+  "input": [
+    {
+      "item": "bloodmagic:averagelengtheningcatalyst"
+    }
+  ],
+  "syphon": 500,
+  "ticks": 100,
+  "upgradeLevel": 4,
+  "effect": "minecraft:invisibility",
+  "lengthDurMod": 7.1112
+}

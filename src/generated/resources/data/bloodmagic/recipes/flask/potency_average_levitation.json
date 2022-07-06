@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:flask_potionpotency",
+  "input": [
+    {
+      "item": "bloodmagic:averagepowercatalyst"
+    }
+  ],
+  "syphon": 500,
+  "ticks": 100,
+  "upgradeLevel": 4,
+  "effect": "minecraft:levitation",
+  "amplifier": 2,
+  "ampDurMod": 0.25
+}
