@@ -16,6 +16,7 @@ import net.minecraftforge.common.crafting.conditions.NotCondition;
 import net.minecraftforge.common.crafting.conditions.TagEmptyCondition;
 import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.recipe.builder.ARCRecipeBuilder;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
@@ -32,8 +33,8 @@ public class ARCRecipeProvider implements ISubRecipeProvider
 //		ARCRecipeBuilder.arc(Ingredient.fromTag(Tags.Items.GEMS_DIAMOND), Ingredient.fromItems(Items.ACACIA_BOAT), FluidStackIngredient.from(Fluids.LAVA, 1000), new ItemStack(BloodMagicBlocks.BLOOD_ALTAR.get()), new FluidStack(Fluids.WATER, 100)).build(consumer, BloodMagic.rl(basePath + "test2"));
 //		ARCRecipeBuilder.arc(Ingredient.fromTag(Tags.Items.NETHERRACK), Ingredient.fromTag(BloodMagicTags.ARC_TOOL_REVERTER), FluidStackIngredient.from(Fluids.LAVA, 1000), new ItemStack(BloodMagicBlocks.BLOOD_ALTAR.get()), new FluidStack(Fluids.WATER, 100)).addRandomOutput(new ItemStack(BloodMagicItems.SLATE.get()), 0.2).addRandomOutput(new ItemStack(BloodMagicItems.REINFORCED_SLATE.get()), 0.1).addRandomOutput(new ItemStack(BloodMagicItems.IMBUED_SLATE.get()), 0.001).build(consumer, BloodMagic.rl(basePath + "test4"));
 
-		ARCRecipeBuilder.arc(Ingredient.of(Items.IRON_ORE), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.IRON_SAND.get(), 2), null).build(consumer, BloodMagic.rl(basePath + "ore/dustiron"));
-		ARCRecipeBuilder.arc(Ingredient.of(Items.GOLD_ORE), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.GOLD_SAND.get(), 2), null).build(consumer, BloodMagic.rl(basePath + "ore/dustgold"));
+		ARCRecipeBuilder.arc(Ingredient.of(Items.IRON_ORE), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.IRON_SAND.get(), 3), null).build(consumer, BloodMagic.rl(basePath + "ore/dustiron"));
+		ARCRecipeBuilder.arc(Ingredient.of(Items.GOLD_ORE), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.GOLD_SAND.get(), 3), null).build(consumer, BloodMagic.rl(basePath + "ore/dustgold"));
 		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.NETHERRACK), Ingredient.of(BloodMagicTags.ARC_TOOL_EXPLOSIVE), null, new ItemStack(BloodMagicItems.SULFUR.get()), new FluidStack(Fluids.LAVA, 50)).build(consumer, BloodMagic.rl(basePath + "netherrack_to_sulfer"));
 		ARCRecipeBuilder.arc(Ingredient.of(Items.TERRACOTTA), Ingredient.of(BloodMagicTags.ARC_TOOL_HYDRATE), FluidStackIngredient.from(Fluids.WATER, 200), new ItemStack(Blocks.CLAY), null).build(consumer, BloodMagic.rl(basePath + "clay_from_terracotta"));
 		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.SAND), Ingredient.of(BloodMagicTags.ARC_TOOL_HYDRATE), FluidStackIngredient.from(Fluids.WATER, 200), new ItemStack(Items.CLAY_BALL), null).addRandomOutput(new ItemStack(Items.CLAY_BALL), 0.5).build(consumer, BloodMagic.rl(basePath + "clay_from_sand"));
@@ -58,11 +59,10 @@ public class ARCRecipeProvider implements ISubRecipeProvider
 	{
 		String basePath = "arc/dusts";
 
-		double rawToDustExtra = 0.17;
-		// raw to dust: 1.75x
+		// raw to dust: 1.5x
 		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.RAW_MATERIALS_IRON), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.IRON_SAND.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.IRON_SAND.get()), 0.33, 0.17).build(consumer, BloodMagic.rl(basePath + "from_raw_iron"));
-		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.RAW_MATERIALS_GOLD), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.GOLD_SAND.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.GOLD_SAND.get()), rawToDustExtra).build(consumer, BloodMagic.rl(basePath + "from_raw_gold"));
-		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.RAW_MATERIALS_COPPER), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.COPPER_SAND.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.COPPER_SAND.get()), rawToDustExtra).build(consumer, BloodMagic.rl(basePath + "from_raw_copper"));
+		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.RAW_MATERIALS_GOLD), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.GOLD_SAND.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.GOLD_SAND.get()), 0.33, 0.17).build(consumer, BloodMagic.rl(basePath + "from_raw_gold"));
+		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.RAW_MATERIALS_COPPER), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.COPPER_SAND.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.COPPER_SAND.get()), 0.33, 0.17).build(consumer, BloodMagic.rl(basePath + "from_raw_copper"));
 
 		// Ore to dust
 		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.ORES_IRON), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.IRON_SAND.get(), 3), null).build(consumer, BloodMagic.rl(basePath + "from_ore_iron"));
@@ -105,10 +105,10 @@ public class ARCRecipeProvider implements ISubRecipeProvider
 	private void addGravelRecipes(Consumer<FinishedRecipe> consumer)
 	{
 		String basePath = "arc/gravels";
-		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.FRAGMENT_IRON), Ingredient.of(BloodMagicTags.ARC_TOOL_RESONATOR), null, new ItemStack(BloodMagicItems.IRON_GRAVEL.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.05).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.01).build(consumer, BloodMagic.rl(basePath + "iron"));
-		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.FRAGMENT_GOLD), Ingredient.of(BloodMagicTags.ARC_TOOL_RESONATOR), null, new ItemStack(BloodMagicItems.GOLD_GRAVEL.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.05).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.01).build(consumer, BloodMagic.rl(basePath + "gold"));
-		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.FRAGMENT_COPPER), Ingredient.of(BloodMagicTags.ARC_TOOL_RESONATOR), null, new ItemStack(BloodMagicItems.COPPER_GRAVEL.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.05).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.01).build(consumer, BloodMagic.rl(basePath + "copper"));
-		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.FRAGMENT_NETHERITE_SCRAP), Ingredient.of(BloodMagicTags.ARC_TOOL_RESONATOR), null, new ItemStack(BloodMagicItems.NETHERITE_SCRAP_GRAVEL.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.05).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.01).build(consumer, BloodMagic.rl(basePath + "netherite_scrap"));
+		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.FRAGMENT_IRON), Ingredient.of(BloodMagicTags.ARC_TOOL_RESONATOR), null, new ItemStack(BloodMagicItems.IRON_GRAVEL.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.5).build(consumer, BloodMagic.rl(basePath + "iron"));
+		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.FRAGMENT_GOLD), Ingredient.of(BloodMagicTags.ARC_TOOL_RESONATOR), null, new ItemStack(BloodMagicItems.GOLD_GRAVEL.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.5).build(consumer, BloodMagic.rl(basePath + "gold"));
+		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.FRAGMENT_COPPER), Ingredient.of(BloodMagicTags.ARC_TOOL_RESONATOR), null, new ItemStack(BloodMagicItems.COPPER_GRAVEL.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.25).build(consumer, BloodMagic.rl(basePath + "copper"));
+		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.FRAGMENT_NETHERITE_SCRAP), Ingredient.of(BloodMagicTags.ARC_TOOL_RESONATOR), null, new ItemStack(BloodMagicItems.NETHERITE_SCRAP_GRAVEL.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.5).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.5).build(consumer, BloodMagic.rl(basePath + "netherite_scrap"));
 	}
 
 	private void addReversionRecipes(Consumer<FinishedRecipe> consumer)
@@ -125,6 +125,17 @@ public class ARCRecipeProvider implements ISubRecipeProvider
 
 		// FOUR
 		registerReversionRecipe(Ingredient.of(BloodMagicItems.MASTER_BLOOD_ORB.get()), new ItemStack(BloodMagicItems.WEAK_BLOOD_SHARD.get()), consumer, basePath + "master_blood_orb");
+
+		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicBlocks.SELF_SACRIFICE_RUNE_2.get()), Ingredient.of(BloodMagicTags.ARC_TOOL_REVERTER), null, new ItemStack(BloodMagicBlocks.SELF_SACRIFICE_RUNE.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.HELLFORGED_PARTS.get()), 1, 0).addRandomOutput(new ItemStack(BloodMagicItems.DEMONIC_SLATE.get()), 1, 0).build(consumer, BloodMagic.rl(basePath + "self_sac"));
+		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicBlocks.ACCELERATION_RUNE_2.get()), Ingredient.of(BloodMagicTags.ARC_TOOL_REVERTER), null, new ItemStack(BloodMagicBlocks.ACCELERATION_RUNE.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.HELLFORGED_PARTS.get()), 1, 0).addRandomOutput(new ItemStack(BloodMagicItems.DEMONIC_SLATE.get()), 1, 0).build(consumer, BloodMagic.rl(basePath + "acceleration"));
+		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicBlocks.AUGMENTED_CAPACITY_RUNE_2.get()), Ingredient.of(BloodMagicTags.ARC_TOOL_REVERTER), null, new ItemStack(BloodMagicBlocks.AUGMENTED_CAPACITY_RUNE.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.HELLFORGED_PARTS.get()), 1, 0).addRandomOutput(new ItemStack(BloodMagicItems.DEMONIC_SLATE.get()), 1, 0).build(consumer, BloodMagic.rl(basePath + "aug_capacity"));
+		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicBlocks.CAPACITY_RUNE_2.get()), Ingredient.of(BloodMagicTags.ARC_TOOL_REVERTER), null, new ItemStack(BloodMagicBlocks.CAPACITY_RUNE.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.HELLFORGED_PARTS.get()), 1, 0).addRandomOutput(new ItemStack(BloodMagicItems.DEMONIC_SLATE.get()), 1, 0).build(consumer, BloodMagic.rl(basePath + "capacity"));
+		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicBlocks.CHARGING_RUNE_2.get()), Ingredient.of(BloodMagicTags.ARC_TOOL_REVERTER), null, new ItemStack(BloodMagicBlocks.CHARGING_RUNE.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.HELLFORGED_PARTS.get()), 1, 0).addRandomOutput(new ItemStack(BloodMagicItems.DEMONIC_SLATE.get()), 1, 0).build(consumer, BloodMagic.rl(basePath + "charging"));
+		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicBlocks.DISPLACEMENT_RUNE_2.get()), Ingredient.of(BloodMagicTags.ARC_TOOL_REVERTER), null, new ItemStack(BloodMagicBlocks.DISPLACEMENT_RUNE.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.HELLFORGED_PARTS.get()), 1, 0).addRandomOutput(new ItemStack(BloodMagicItems.DEMONIC_SLATE.get()), 1, 0).build(consumer, BloodMagic.rl(basePath + "displacement"));
+		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicBlocks.ORB_RUNE_2.get()), Ingredient.of(BloodMagicTags.ARC_TOOL_REVERTER), null, new ItemStack(BloodMagicBlocks.ORB_RUNE.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.HELLFORGED_PARTS.get()), 1, 0).addRandomOutput(new ItemStack(BloodMagicItems.DEMONIC_SLATE.get()), 1, 0).build(consumer, BloodMagic.rl(basePath + "orb_rune"));
+		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicBlocks.SPEED_RUNE_2.get()), Ingredient.of(BloodMagicTags.ARC_TOOL_REVERTER), null, new ItemStack(BloodMagicBlocks.SPEED_RUNE.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.HELLFORGED_PARTS.get()), 1, 0).addRandomOutput(new ItemStack(BloodMagicItems.DEMONIC_SLATE.get()), 1, 0).build(consumer, BloodMagic.rl(basePath + "speed"));
+		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicBlocks.SACRIFICE_RUNE_2.get()), Ingredient.of(BloodMagicTags.ARC_TOOL_REVERTER), null, new ItemStack(BloodMagicBlocks.SACRIFICE_RUNE.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.HELLFORGED_PARTS.get()), 1, 0).addRandomOutput(new ItemStack(BloodMagicItems.DEMONIC_SLATE.get()), 1, 0).build(consumer, BloodMagic.rl(basePath + "sac"));
+
 	}
 
 	private void registerReversionRecipe(Ingredient input, ItemStack outputStack, Consumer<FinishedRecipe> consumer, String path)

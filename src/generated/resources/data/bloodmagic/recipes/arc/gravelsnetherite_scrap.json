@@ -6,6 +6,22 @@
   "tool": {
     "tag": "bloodmagic:arc/resonator"
   },
+  "addedoutput": [
+    {
+      "mainchance": 0.0,
+      "chance": 0.5,
+      "type": {
+        "item": "bloodmagic:corrupted_tinydust"
+      }
+    },
+    {
+      "mainchance": 0.0,
+      "chance": 0.5,
+      "type": {
+        "item": "bloodmagic:corrupted_tinydust"
+      }
+    }
+  ],
   "output": {
     "item": "bloodmagic:gravel_netherite_scrap"
   },

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sps",
+    "drd",
+    "sos"
+  ],
+  "key": {
+    "r": {
+      "item": "bloodmagic:bettercapacityrune"
+    },
+    "s": {
+      "tag": "forge:stone"
+    },
+    "p": {
+      "item": "bloodmagic:hellforgedparts"
+    },
+    "d": {
+      "item": "bloodmagic:demonslate"
+    },
+    "o": {
+      "item": "bloodmagic:archmagebloodorb"
+    }
+  },
+  "result": {
+    "item": "bloodmagic:bettercapacityrune2"
+  }
+}

@@ -3,10 +3,10 @@ package wayoftime.bloodmagic.common.recipe;
 import java.util.function.Consumer;
 
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.altar.AltarTier;
@@ -66,6 +66,9 @@ public class BloodAltarRecipeProvider implements ISubRecipeProvider
 //		registrar.addBloodAltar(Ingredient.fromStacks(new ItemStack(RegistrarBloodMagicItems.TELEPOSITION_FOCUS)), new ItemStack(RegistrarBloodMagicItems.TELEPOSITION_FOCUS, 1, 1), AltarTier.FOUR.ordinal(), 10000, 20, 10);
 //
 //		// FIVE
+
+		BloodAltarRecipeBuilder.altar(Ingredient.of(BloodMagicBlocks.HELLFORGED_BLOCK.get()), new ItemStack(BloodMagicItems.ARCHMAGE_BLOOD_ORB.get()), AltarTier.FIVE.ordinal(), 80000, 50, 100);
+		BloodAltarRecipeBuilder.altar(Ingredient.of(BloodMagicItems.DEMONIC_SLATE.get()), new ItemStack(BloodMagicItems.ETHEREAL_SLATE.get()), AltarTier.FIVE.ordinal(), 30000, 40, 100);
 //		registrar.addBloodAltar(new OreIngredient("netherStar"), OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_ARCHMAGE), AltarTier.FIVE.ordinal(), 80000, 50, 100);
 //		registrar.addBloodAltar(Ingredient.fromStacks(ItemSlate.SlateType.DEMONIC.getStack()), ItemSlate.SlateType.ETHEREAL.getStack(), AltarTier.FIVE.ordinal(), 30000, 40, 100);
 	}

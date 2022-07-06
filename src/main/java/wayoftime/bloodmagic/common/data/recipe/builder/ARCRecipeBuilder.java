@@ -60,7 +60,7 @@ public class ARCRecipeBuilder extends BloodMagicRecipeBuilder<ARCRecipeBuilder>
 
 	public ARCRecipeBuilder addRandomOutput(ItemStack stack, double mainChance, double secondaryChance)
 	{
-		if (addedItems.size() >= RecipeARC.MAX_RANDOM_OUTPUTS || mainChance <= 0 || secondaryChance <= 0)
+		if (addedItems.size() >= RecipeARC.MAX_RANDOM_OUTPUTS || mainChance < 0 || secondaryChance < 0)
 		{
 			return this;
 		}

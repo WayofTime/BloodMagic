@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:blood_rune_capacity_2"
+    ]
+  },
+  "criteria": {
+    "has_hellforged_parts": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bloodmagic:hellforgedparts"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:blood_rune_capacity_2"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_hellforged_parts",
+      "has_the_recipe"
+    ]
+  ]
+}

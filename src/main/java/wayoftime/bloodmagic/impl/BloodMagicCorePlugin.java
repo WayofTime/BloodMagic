@@ -48,6 +48,7 @@ public class BloodMagicCorePlugin
 		apiInterface.registerAltarComponent(BloodMagicBlocks.BLOODSTONE.get().defaultBlockState(), ComponentType.BLOODSTONE.name());
 		apiInterface.registerAltarComponent(BloodMagicBlocks.BLOODSTONE_BRICK.get().defaultBlockState(), ComponentType.BLOODSTONE.name());
 		apiInterface.registerAltarComponent(Blocks.BEACON.defaultBlockState(), ComponentType.BEACON.name());
+		apiInterface.registerAltarComponent(BloodMagicBlocks.HELLFORGED_BLOCK.get().defaultBlockState(), ComponentType.HELLFORGED.name());
 
 		apiInterface.registerAltarComponent(BloodMagicBlocks.BLANK_RUNE.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
 		apiInterface.registerAltarComponent(BloodMagicBlocks.SPEED_RUNE.get().defaultBlockState(), ComponentType.BLOODRUNE.name());

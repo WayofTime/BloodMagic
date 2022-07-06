@@ -631,8 +631,9 @@ public class GeneratorLanguage extends LanguageProvider
 		// Item names
 		addItem(BloodMagicItems.WEAK_BLOOD_ORB, "Weak Blood Orb");
 		addItem(BloodMagicItems.APPRENTICE_BLOOD_ORB, "Apprentice Blood Orb");
-		addItem(BloodMagicItems.MAGICIAN_BLOOD_ORB, "Magician Blood Orb");
+		addItem(BloodMagicItems.MAGICIAN_BLOOD_ORB, "Magician's Blood Orb");
 		addItem(BloodMagicItems.MASTER_BLOOD_ORB, "Master Blood Orb");
+		addItem(BloodMagicItems.ARCHMAGE_BLOOD_ORB, "Archmage's Blood Orb");
 		addItem(BloodMagicItems.DIVINATION_SIGIL, "Divination Sigil");
 		addItem(BloodMagicItems.WATER_SIGIL, "Water Sigil");
 		addItem(BloodMagicItems.LAVA_SIGIL, "Lava Sigil");

@@ -148,6 +148,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> APPRENTICE_BLOOD_ORB = BASICITEMS.register("apprenticebloodorb", () -> new ItemBloodOrb(ORB_APPRENTICE));
 	public static final RegistryObject<Item> MAGICIAN_BLOOD_ORB = BASICITEMS.register("magicianbloodorb", () -> new ItemBloodOrb(ORB_MAGICIAN));
 	public static final RegistryObject<Item> MASTER_BLOOD_ORB = BASICITEMS.register("masterbloodorb", () -> new ItemBloodOrb(ORB_MASTER));
+	public static final RegistryObject<Item> ARCHMAGE_BLOOD_ORB = BASICITEMS.register("archmagebloodorb", () -> new ItemBloodOrb(ORB_ARCHMAGE));
 
 	public static final RegistryObject<Item> DIVINATION_SIGIL = BASICITEMS.register("divinationsigil", () -> new ItemSigilDivination(true));
 	public static final RegistryObject<Item> SEER_SIGIL = BASICITEMS.register("seersigil", () -> new ItemSigilDivination(false));

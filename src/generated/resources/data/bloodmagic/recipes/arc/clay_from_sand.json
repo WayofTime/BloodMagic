@@ -10,6 +10,15 @@
     "amount": 200,
     "fluid": "minecraft:water"
   },
+  "addedoutput": [
+    {
+      "mainchance": 0.0,
+      "chance": 0.5,
+      "type": {
+        "item": "minecraft:clay_ball"
+      }
+    }
+  ],
   "output": {
     "item": "minecraft:clay_ball"
   },

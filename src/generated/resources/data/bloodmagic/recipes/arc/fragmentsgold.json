@@ -6,6 +6,15 @@
   "tool": {
     "tag": "bloodmagic:arc/explosive"
   },
+  "addedoutput": [
+    {
+      "mainchance": 0.0,
+      "chance": 0.25,
+      "type": {
+        "item": "bloodmagic:goldfragment"
+      }
+    }
+  ],
   "output": {
     "item": "bloodmagic:goldfragment",
     "count": 2
