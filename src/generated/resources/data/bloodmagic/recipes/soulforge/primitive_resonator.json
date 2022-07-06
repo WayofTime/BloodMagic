@@ -1,7 +1,7 @@
 {
   "type": "bloodmagic:soulforge",
   "input0": {
-    "tag": "forge:stone"
+    "tag": "forge:gems/amethyst"
   },
   "input1": {
     "tag": "forge:ingots"
@@ -10,7 +10,7 @@
     "item": "bloodmagic:defaultcrystal"
   },
   "input3": {
-    "item": "bloodmagic:defaultcrystal"
+    "item": "bloodmagic:tauoil"
   },
   "output": {
     "item": "bloodmagic:primitive_crystalline_resonator",

@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "forge:gunpowder"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    },
+    {
+      "item": "bloodmagic:weak_tau"
+    },
+    {
+      "tag": "forge:dusts/coal"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:primitive_explosive_cell",
+    "nbt": "{Damage:0}"
+  },
+  "syphon": 1000,
+  "ticks": 200,
+  "upgradeLevel": 3
+}

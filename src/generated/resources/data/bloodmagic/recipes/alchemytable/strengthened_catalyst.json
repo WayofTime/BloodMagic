@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:simplecatalyst"
+    },
+    {
+      "tag": "forge:dusts/copper"
+    },
+    {
+      "item": "minecraft:glow_berries"
+    },
+    {
+      "item": "minecraft:cobbled_deepslate"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:strengthenedcatalyst"
+  },
+  "syphon": 1000,
+  "ticks": 100,
+  "upgradeLevel": 4
+}

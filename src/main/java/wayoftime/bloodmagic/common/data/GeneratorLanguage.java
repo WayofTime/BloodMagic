@@ -722,16 +722,19 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.SANGUINE_REVERTER, "Sanguine Reverter");
 		addItem(BloodMagicItems.PRIMITIVE_FURNACE_CELL, "Primitive Fuel Cell");
 
-		addItem(BloodMagicItems.PRIMITIVE_CRYSTALLINE_RESONATOR, "Primitive Resonator");
-		addItem(BloodMagicItems.CRYSTALLINE_RESONATOR, "Crystalline Resonator");
+		addItem(BloodMagicItems.RESONATOR, "Crystal Resonator");
+		addItem(BloodMagicItems.PRIMITIVE_CRYSTALLINE_RESONATOR, "Reinforced Resonator");
+		addItem(BloodMagicItems.HELLFORGED_RESONATOR, "Hellforged Resonator");
 
 		addItem(BloodMagicItems.PRIMITIVE_HYDRATION_CELL, "Primitive Hydration Cell");
-		addItem(BloodMagicItems.PRIMITIVE_EXPLOSIVE_CELL, "Primitive Explosive Cell");
+
 		addItem(BloodMagicItems.EXPLOSIVE_POWDER, "Explosive Powder");
+		addItem(BloodMagicItems.PRIMITIVE_EXPLOSIVE_CELL, "Reinforced Explosive Cell");
 		addItem(BloodMagicItems.HELLFORGED_EXPLOSIVE_CELL, "Hellforged Explosive Cell");
 
 		addItem(BloodMagicItems.BASIC_CUTTING_FLUID, "Basic Cutting Fluid");
 		addItem(BloodMagicItems.INTERMEDIATE_CUTTING_FLUID, "Intermediate Cutting Fluid");
+		addItem(BloodMagicItems.ADVANCED_CUTTING_FLUID, "Advanced Cutting Fluid");
 
 		addItem(BloodMagicItems.EXPERIENCE_TOME, "Tome of Peritia");
 
@@ -832,6 +835,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.ALCHEMY_FLASK_THROWABLE, "Splash Alchemy Flask");
 		addItem(BloodMagicItems.ALCHEMY_FLASK_LINGERING, "Lingering Alchemy Flask");
 		addItem(BloodMagicItems.SIMPLE_CATALYST, "Simple Catalyst");
+		addItem(BloodMagicItems.STRENGTHENED_CATALYST, "Strengthened Catalyst");
 		addItem(BloodMagicItems.MUNDANE_POWER_CATALYST, "Small Power Catalyst");
 		addItem(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST, "Small Lengthening Catalyst");
 		addItem(BloodMagicItems.WEAK_FILLING_AGENT, "Weak Filling Agent");

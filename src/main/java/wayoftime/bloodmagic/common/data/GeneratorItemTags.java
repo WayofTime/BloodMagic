@@ -153,14 +153,16 @@ public class GeneratorItemTags extends ItemTagsProvider
 
 	private void registerResonators()
 	{
+		this.registerTool(BloodMagicItems.RESONATOR.get(), BloodMagicTags.ARC_TOOL_RESONATOR);
 		this.registerTool(BloodMagicItems.PRIMITIVE_CRYSTALLINE_RESONATOR.get(), BloodMagicTags.ARC_TOOL_RESONATOR);
-		this.registerTool(BloodMagicItems.CRYSTALLINE_RESONATOR.get(), BloodMagicTags.ARC_TOOL_RESONATOR);
+		this.registerTool(BloodMagicItems.HELLFORGED_RESONATOR.get(), BloodMagicTags.ARC_TOOL_RESONATOR);
 	}
 
 	private void registerCuttingFluids()
 	{
 		this.registerTool(BloodMagicItems.BASIC_CUTTING_FLUID.get(), BloodMagicTags.ARC_TOOL_CUTTINGFLUID);
 		this.registerTool(BloodMagicItems.INTERMEDIATE_CUTTING_FLUID.get(), BloodMagicTags.ARC_TOOL_CUTTINGFLUID);
+		this.registerTool(BloodMagicItems.ADVANCED_CUTTING_FLUID.get(), BloodMagicTags.ARC_TOOL_CUTTINGFLUID);
 	}
 
 	public void registerTool(Item item, TagKey<Item> tag)

@@ -274,18 +274,22 @@ public class BloodMagicItems
 
 	// ARC Tools
 	public static final RegistryObject<Item> SANGUINE_REVERTER = BASICITEMS.register("sanguinereverter", () -> new ItemARCToolBase(32, 2, EnumDemonWillType.STEADFAST));
-	public static final RegistryObject<Item> PRIMITIVE_FURNACE_CELL = BASICITEMS.register("furnacecell_primitive", () -> new ItemARCToolBase(128, 1.25));
-	public static final RegistryObject<Item> PRIMITIVE_EXPLOSIVE_CELL = BASICITEMS.register("primitive_explosive_cell", () -> new ItemARCToolBase(256, 1.25, EnumDemonWillType.DESTRUCTIVE));
-	public static final RegistryObject<Item> PRIMITIVE_HYDRATION_CELL = BASICITEMS.register("primitive_hydration_cell", () -> new ItemARCToolBase(128, 1.25));
-	public static final RegistryObject<Item> PRIMITIVE_CRYSTALLINE_RESONATOR = BASICITEMS.register("primitive_crystalline_resonator", () -> new ItemARCToolBase(128, 1.25, EnumDemonWillType.VENGEFUL));
-	public static final RegistryObject<Item> CRYSTALLINE_RESONATOR = BASICITEMS.register("crystalline_resonator", () -> new ItemARCToolBase(512, 2, 2, EnumDemonWillType.VENGEFUL));
+	public static final RegistryObject<Item> PRIMITIVE_FURNACE_CELL = BASICITEMS.register("furnacecell_primitive", () -> new ItemARCToolBase(128, 3));
 
+	public static final RegistryObject<Item> EXPLOSIVE_POWDER = BASICITEMS.register("explosivepowder", () -> new ItemARCToolBase(64, 1, EnumDemonWillType.DESTRUCTIVE));
+	public static final RegistryObject<Item> PRIMITIVE_EXPLOSIVE_CELL = BASICITEMS.register("primitive_explosive_cell", () -> new ItemARCToolBase(256, 1.5, EnumDemonWillType.DESTRUCTIVE));
 	public static final RegistryObject<Item> HELLFORGED_EXPLOSIVE_CELL = BASICITEMS.register("hellforged_explosive_cell", () -> new ItemARCToolBase(1024, 2, EnumDemonWillType.DESTRUCTIVE));
+
+	public static final RegistryObject<Item> PRIMITIVE_HYDRATION_CELL = BASICITEMS.register("primitive_hydration_cell", () -> new ItemARCToolBase(128, 1.5));
+
+	public static final RegistryObject<Item> RESONATOR = BASICITEMS.register("resonator", () -> new ItemARCToolBase(64, 1, EnumDemonWillType.VENGEFUL));
+	public static final RegistryObject<Item> PRIMITIVE_CRYSTALLINE_RESONATOR = BASICITEMS.register("primitive_crystalline_resonator", () -> new ItemARCToolBase(256, 1.5, EnumDemonWillType.VENGEFUL));
+	public static final RegistryObject<Item> HELLFORGED_RESONATOR = BASICITEMS.register("hellforged_resonator", () -> new ItemARCToolBase(1024, 2, 2, EnumDemonWillType.VENGEFUL));
 
 	// Alchemy Table items
 	public static final RegistryObject<Item> BASIC_CUTTING_FLUID = BASICITEMS.register("basiccuttingfluid", () -> new ItemARCToolBase(64, 1, EnumDemonWillType.CORROSIVE));
 	public static final RegistryObject<Item> INTERMEDIATE_CUTTING_FLUID = BASICITEMS.register("intermediatecuttingfluid", () -> new ItemARCToolBase(512, 1.25, EnumDemonWillType.CORROSIVE));
-	public static final RegistryObject<Item> EXPLOSIVE_POWDER = BASICITEMS.register("explosivepowder", () -> new ItemARCToolBase(64, 1, EnumDemonWillType.DESTRUCTIVE));
+	public static final RegistryObject<Item> ADVANCED_CUTTING_FLUID = BASICITEMS.register("advancedcuttingfluid", () -> new ItemARCToolBase(2048, 2, EnumDemonWillType.CORROSIVE));
 
 	public static final RegistryObject<Item> SULFUR = BASICITEMS.register("sulfur", () -> new ItemBase());
 	public static final RegistryObject<Item> SALTPETER = BASICITEMS.register("saltpeter", () -> new ItemBase());
@@ -297,6 +301,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> SLATE_AMPOULE = BASICITEMS.register("slate_ampoule", () -> new ItemBloodProvider("slate", 500));
 
 	public static final RegistryObject<Item> SIMPLE_CATALYST = BASICITEMS.register("simplecatalyst", () -> new ItemBase());
+	public static final RegistryObject<Item> STRENGTHENED_CATALYST = BASICITEMS.register("strengthenedcatalyst", () -> new ItemBase());
 	public static final RegistryObject<Item> MUNDANE_POWER_CATALYST = BASICITEMS.register("mundanepowercatalyst", () -> new ItemBase());
 	public static final RegistryObject<Item> MUNDANE_LENGTHENING_CATALYST = BASICITEMS.register("mundanelengtheningcatalyst", () -> new ItemBase());
 	public static final RegistryObject<Item> COMBINATIONAL_CATALYST = BASICITEMS.register("combinationalcatalyst", () -> new ItemBase());

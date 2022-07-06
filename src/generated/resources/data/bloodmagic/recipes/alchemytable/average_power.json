@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:strong_tau"
+    },
+    {
+      "item": "bloodmagic:strengthenedcatalyst"
+    },
+    {
+      "tag": "forge:dusts/glowstone"
+    },
+    {
+      "tag": "forge:dusts/hellforged"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:averagepowercatalyst"
+  },
+  "syphon": 2000,
+  "ticks": 100,
+  "upgradeLevel": 4
+}
