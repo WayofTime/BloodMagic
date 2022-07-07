@@ -76,9 +76,17 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 		String basePath = "smelting/";
 		SimpleCookingRecipeBuilder.smelting(Ingredient.of(BloodMagicTags.DUST_IRON), Items.IRON_INGOT, 0, 200).unlockedBy("has_iron_sand", has(BloodMagicItems.IRON_SAND.get())).save(consumer, BloodMagic.rl(basePath + "ingot_iron"));
 		SimpleCookingRecipeBuilder.smelting(Ingredient.of(BloodMagicTags.DUST_GOLD), Items.GOLD_INGOT, 0, 200).unlockedBy("has_gold_sand", has(BloodMagicItems.GOLD_SAND.get())).save(consumer, BloodMagic.rl(basePath + "ingot_gold"));
+		SimpleCookingRecipeBuilder.smelting(Ingredient.of(BloodMagicTags.DUST_COPPER), Items.COPPER_INGOT, 0, 200).unlockedBy("has_copper_sand", has(BloodMagicItems.COPPER_SAND.get())).save(consumer, BloodMagic.rl(basePath + "ingot_copper"));
 		SimpleCookingRecipeBuilder.smelting(Ingredient.of(BloodMagicTags.DUST_NETHERITE_SCRAP), Items.NETHERITE_SCRAP, 0, 200).unlockedBy("has_netherite_dust", has(BloodMagicItems.NETHERITE_SCRAP_SAND.get())).save(consumer, BloodMagic.rl(basePath + "ingot_netherite_scrap"));
 		SimpleCookingRecipeBuilder.smelting(Ingredient.of(BloodMagicTags.DUST_HELLFORGED), BloodMagicItems.HELLFORGED_INGOT.get(), 0, 200).unlockedBy("has_hellforged_dust", has(BloodMagicItems.HELLFORGED_SAND.get())).save(consumer, BloodMagic.rl(basePath + "ingot_hellforged"));
 		SimpleCookingRecipeBuilder.smelting(Ingredient.of(BloodMagicItems.PLANT_OIL.get()), BloodMagicItems.SALTPETER.get(), 0, 200).unlockedBy("has_plant_oil", has(BloodMagicItems.PLANT_OIL.get())).save(consumer, BloodMagic.rl(basePath + "saltpeter"));
+
+		SimpleCookingRecipeBuilder.blasting(Ingredient.of(BloodMagicTags.DUST_IRON), Items.IRON_INGOT, 0, 100).unlockedBy("has_iron_sand", has(BloodMagicItems.IRON_SAND.get())).save(consumer, BloodMagic.rl(basePath + "blasting_ingot_iron"));
+		SimpleCookingRecipeBuilder.blasting(Ingredient.of(BloodMagicTags.DUST_GOLD), Items.GOLD_INGOT, 0, 100).unlockedBy("has_gold_sand", has(BloodMagicItems.GOLD_SAND.get())).save(consumer, BloodMagic.rl(basePath + "blasting_ingot_gold"));
+		SimpleCookingRecipeBuilder.blasting(Ingredient.of(BloodMagicTags.DUST_COPPER), Items.COPPER_INGOT, 0, 100).unlockedBy("has_copper_sand", has(BloodMagicItems.COPPER_SAND.get())).save(consumer, BloodMagic.rl(basePath + "blasting_ingot_copper"));
+		SimpleCookingRecipeBuilder.blasting(Ingredient.of(BloodMagicTags.DUST_NETHERITE_SCRAP), Items.NETHERITE_SCRAP, 0, 100).unlockedBy("has_netherite_dust", has(BloodMagicItems.NETHERITE_SCRAP_SAND.get())).save(consumer, BloodMagic.rl(basePath + "blasting_ingot_netherite_scrap"));
+		SimpleCookingRecipeBuilder.blasting(Ingredient.of(BloodMagicTags.DUST_HELLFORGED), BloodMagicItems.HELLFORGED_INGOT.get(), 0, 100).unlockedBy("has_hellforged_dust", has(BloodMagicItems.HELLFORGED_SAND.get())).save(consumer, BloodMagic.rl(basePath + "blasting_ingot_hellforged"));
+
 	}
 
 	private void addBloodOrbRecipes(Consumer<FinishedRecipe> consumer)
