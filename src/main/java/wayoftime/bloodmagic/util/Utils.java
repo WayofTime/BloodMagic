@@ -214,9 +214,12 @@ public class Utils
 //			TileEntity newTileInitial = TileEntity.create(finalWorld, initialTag);
 			BlockEntity newTileInitial = BlockEntity.loadStatic(finalPos, finalBlockState, initialTag);
 
-			finalWorld.setBlockEntity(newTileInitial);
-//			newTileInitial.setPos(finalPos);
-			newTileInitial.setLevel(finalWorld);
+			if (newTileInitial != null)
+			{
+				finalWorld.setBlockEntity(newTileInitial);
+//				newTileInitial.setPos(finalPos);
+				newTileInitial.setLevel(finalWorld);
+			}
 		}
 
 		initialWorld.setBlock(initialPos, finalBlockState, 3);
@@ -226,9 +229,12 @@ public class Utils
 //			TileEntity newTileFinal = TileEntity.create(initialWorld, finalTag);
 			BlockEntity newTileFinal = BlockEntity.loadStatic(initialPos, initialBlockState, finalTag);
 
-			initialWorld.setBlockEntity(newTileFinal);
-//			newTileFinal.setPos(initialPos);
-			newTileFinal.setLevel(initialWorld);
+			if (newTileFinal != null)
+			{
+				initialWorld.setBlockEntity(newTileFinal);
+//				newTileFinal.setPos(initialPos);
+				newTileFinal.setLevel(initialWorld);
+			}
 		}
 
 		initialWorld.updateNeighborsAt(initialPos, finalState.getBlock());
