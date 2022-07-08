@@ -1,0 +1,144 @@
+{
+  "key": null,
+  "dungeonWeight": 1,
+  "structureMap": {
+    "bloodmagic:standard/mine_station_1": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "bloodmagic:standard/mine_station_2": {
+      "x": 23,
+      "y": 4,
+      "z": 32
+    }
+  },
+  "doorMap": {
+    "mine": {
+      "south": [
+        {
+          "x": 3,
+          "y": 5,
+          "z": 31
+        }
+      ],
+      "west": [
+        {
+          "x": 0,
+          "y": 5,
+          "z": 4
+        },
+        {
+          "x": 0,
+          "y": 5,
+          "z": 16
+        }
+      ],
+      "east": [
+        {
+          "x": 31,
+          "y": 5,
+          "z": 36
+        }
+      ]
+    }
+  },
+  "descriptorList": [
+    {
+      "minimumOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "maximumOffset": {
+        "x": 32,
+        "y": 13,
+        "z": 32
+      },
+      "currentPosition": null,
+      "blockPosCache": [],
+      "cachedPosition": null,
+      "cache": false
+    },
+    {
+      "minimumOffset": {
+        "x": 23,
+        "y": 4,
+        "z": 32
+      },
+      "maximumOffset": {
+        "x": 32,
+        "y": 12,
+        "z": 41
+      },
+      "currentPosition": null,
+      "blockPosCache": [],
+      "cachedPosition": null,
+      "cache": false
+    }
+  ],
+  "oreDensity": 0.1,
+  "spawnLocation": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "controllerOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "portalOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "indexToDoorMap": {
+    "1": [
+      {
+        "x": 0,
+        "y": 5,
+        "z": 4
+      },
+      {
+        "x": 0,
+        "y": 5,
+        "z": 16
+      },
+      {
+        "x": 3,
+        "y": 5,
+        "z": 31
+      },
+      {
+        "x": 31,
+        "y": 5,
+        "z": 36
+      }
+    ]
+  },
+  "indexToRoomTypeMap": {
+    "1": [
+      "bloodmagic:room_pools/mines/mine_rooms"
+    ]
+  },
+  "requiredDoorMap": {},
+  "doorCoverMap": {
+    "1": {
+      "minimumOffset": {
+        "x": -2,
+        "y": -2,
+        "z": 0
+      },
+      "maximumOffset": {
+        "x": 3,
+        "y": 3,
+        "z": 1
+      },
+      "currentPosition": null,
+      "blockPosCache": [],
+      "cachedPosition": null,
+      "cache": true
+    }
+  }
+}

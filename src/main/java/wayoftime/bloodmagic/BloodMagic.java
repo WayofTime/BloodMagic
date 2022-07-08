@@ -210,6 +210,7 @@ public class BloodMagic
 		OrbRegistry.tierMap.put(BloodMagicItems.ORB_APPRENTICE.get().getTier(), new ItemStack(BloodMagicItems.APPRENTICE_BLOOD_ORB.get()));
 		OrbRegistry.tierMap.put(BloodMagicItems.ORB_MAGICIAN.get().getTier(), new ItemStack(BloodMagicItems.MAGICIAN_BLOOD_ORB.get()));
 		OrbRegistry.tierMap.put(BloodMagicItems.ORB_MASTER.get().getTier(), new ItemStack(BloodMagicItems.MASTER_BLOOD_ORB.get()));
+		OrbRegistry.tierMap.put(BloodMagicItems.ORB_ARCHMAGE.get().getTier(), new ItemStack(BloodMagicItems.ARCHMAGE_BLOOD_ORB.get()));
 		BloodMagicCorePlugin.INSTANCE.register(BloodMagicAPI.INSTANCE);
 		RITUAL_MANAGER.discover();
 		ModRituals.initHarvestHandlers();

@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:smelting/ingot_copper"
+    ]
+  },
+  "criteria": {
+    "has_copper_sand": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bloodmagic:coppersand"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:smelting/ingot_copper"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_copper_sand",
+      "has_the_recipe"
+    ]
+  ]
+}

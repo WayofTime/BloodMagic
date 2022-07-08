@@ -1,0 +1,18 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "forge:dusts/gold"
+    },
+    {
+      "item": "bloodmagic:corrupted_dust"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:goldsand",
+    "count": 2
+  },
+  "syphon": 300,
+  "ticks": 50,
+  "upgradeLevel": 3
+}

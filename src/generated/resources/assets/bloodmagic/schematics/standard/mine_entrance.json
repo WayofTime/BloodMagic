@@ -85,7 +85,9 @@
   },
   "indexToRoomTypeMap": {
     "1": [
-      "bloodmagic:room_pools/standard/standard_rooms",
+      "bloodmagic:room_pools/standard/standard_rooms"
+    ],
+    "2": [
       "bloodmagic:room_pools/mines/mine_rooms"
     ]
   },

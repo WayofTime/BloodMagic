@@ -1,0 +1,18 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "forge:dusts/copper"
+    },
+    {
+      "item": "bloodmagic:corrupted_dust"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:coppersand",
+    "count": 2
+  },
+  "syphon": 50,
+  "ticks": 50,
+  "upgradeLevel": 3
+}
