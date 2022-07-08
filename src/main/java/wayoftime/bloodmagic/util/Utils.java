@@ -182,9 +182,9 @@ public class Utils
 //			finalTile.save(finalTag);
 
 		if (initialTile != null)
-			initialTag = initialTile.saveWithoutMetadata();
+			initialTag = initialTile.saveWithFullMetadata();
 		if (finalTile != null)
-			finalTag = finalTile.saveWithoutMetadata();
+			finalTag = finalTile.saveWithFullMetadata();
 
 		BlockState initialState = initialWorld.getBlockState(initialPos);
 		BlockState finalState = finalWorld.getBlockState(finalPos);
@@ -208,32 +208,27 @@ public class Utils
 		BlockState initialBlockState = initialWorld.getBlockState(initialPos);
 		BlockState finalBlockState = finalWorld.getBlockState(finalPos);
 		finalWorld.setBlock(finalPos, initialBlockState, 3);
+		initialWorld.setBlock(initialPos, finalBlockState, 3);
 
 		if (initialTile != null)
 		{
-//			TileEntity newTileInitial = TileEntity.create(finalWorld, initialTag);
-			BlockEntity newTileInitial = BlockEntity.loadStatic(finalPos, finalBlockState, initialTag);
+			BlockEntity newTileInitial = finalWorld.getBlockEntity(finalPos);
 
+			// Just in case...
 			if (newTileInitial != null)
 			{
-				finalWorld.setBlockEntity(newTileInitial);
-//				newTileInitial.setPos(finalPos);
-				newTileInitial.setLevel(finalWorld);
+				newTileInitial.load(initialTag);
 			}
 		}
 
-		initialWorld.setBlock(initialPos, finalBlockState, 3);
-
 		if (finalTile != null)
 		{
-//			TileEntity newTileFinal = TileEntity.create(initialWorld, finalTag);
-			BlockEntity newTileFinal = BlockEntity.loadStatic(initialPos, initialBlockState, finalTag);
+			BlockEntity newTileFinal = initialWorld.getBlockEntity(initialPos);
 
+			// Just in case...
 			if (newTileFinal != null)
 			{
-				initialWorld.setBlockEntity(newTileFinal);
-//				newTileFinal.setPos(initialPos);
-				newTileFinal.setLevel(initialWorld);
+				newTileFinal.load(finalTag);
 			}
 		}
 
