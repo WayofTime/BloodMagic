@@ -2,6 +2,8 @@
 Version 3.2.3
 ------------------------------------------------------
 - Fixed Fortuna Extract so that it properly applied its additional Fortune under certain conditions.
+- Fixed a crash with the Teleposer that prevented Tile Entities from moving.
+- Added smelting recipe for copper sand > copper ingot, and blasting furnace recipes for all dusts.
 
 ------------------------------------------------------
 Version 3.2.2
