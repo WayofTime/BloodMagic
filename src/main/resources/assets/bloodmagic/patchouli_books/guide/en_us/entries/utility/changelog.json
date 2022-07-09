@@ -10,8 +10,27 @@
     },
     {
       "type": "patchouli:text",
-      "title": "3.1.12",
-      "text": "$(li)Updated the Mark of the Falling Tower guide entry to include the outputs and requirements of various Meteors."
+      "title": "3.2.3",
+      "text": "$(li)Fixed Fortuna Extract so that it properly applied its additional Fortune under certain conditions.$(li)Fixed a crash with the Teleposer that prevented Tile Entities from moving.$(li)Added smelting recipe for copper sand > copper ingot, and blasting furnace recipes for all dusts."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "3.2.2",
+      "text": "$(li)Fixed in-game guide for real this time."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "3.2.1",
+      "text": "$(li)Fixed in-game guide so that recipes properly load.$(li)Fixed non-crafting Alchemy Arrays.$(li)Fixed the Mark of the Falling Tower and Ritual of Magnetism to respect the current world's build limit.$(li)Changed a few textures such as the ore fragments."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "3.2.0",
+      "text": "$(li)Initial release of 1.18.2.$(li)Changed the ARC so that the texture changes based on the tool used and when it is active.$(li)Rebalanced some recipes due to Raw Materials dropping from base ores.$(li)Added copper ore processing.$(li)Added Glowberries and Berry bush handling to the Reap of the Harvest Moon."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Known issues:$(li)In-game guide is broken in a few places, primarily when viewing mod recipes such as Blood Altar crafting.$(li)Life Essence blocks do not have the proper overlay when submersed in liquid."
     },
     {
       "type": "patchouli:text",
