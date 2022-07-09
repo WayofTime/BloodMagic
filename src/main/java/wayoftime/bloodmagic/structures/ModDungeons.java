@@ -39,6 +39,9 @@ public class ModDungeons
 	public static ResourceLocation MINE_CORNER_ZOMBIE_TRAP = BloodMagic.rl("mines/corner_zombie_trap");
 	public static ResourceLocation MINE_SPLIT_ROAD = BloodMagic.rl("mines/split_road");
 	public static ResourceLocation MINE_STATION = BloodMagic.rl("mines/station");
+	public static ResourceLocation MINE_DOWNWARD_TUNNEL = BloodMagic.rl("mines/downward_tunnel");
+	public static ResourceLocation MINE_JUNCTION_STATION = BloodMagic.rl("mines/junction_station");
+	public static ResourceLocation MINE_BUILT_SHAFT = BloodMagic.rl("mines/downward_shaft");
 
 	public static ResourceLocation STANDARD_ENTRANCE = BloodMagic.rl("standard_entrance");
 
@@ -68,6 +71,9 @@ public class ModDungeons
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINE_CORNER_ZOMBIE_TRAP);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINE_SPLIT_ROAD);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINE_STATION);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINE_DOWNWARD_TUNNEL);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINE_JUNCTION_STATION);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINE_BUILT_SHAFT);
 
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINI_LIBRARY);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINI_ARMOURY);

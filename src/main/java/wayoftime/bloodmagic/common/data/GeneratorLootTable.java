@@ -600,6 +600,25 @@ public class GeneratorLootTable extends LootTableProvider
 
 			acceptor.accept(BloodMagic.rl("chests/mines/decent_loot"), LootTable.lootTable().withPool(minesRawLoot).withPool(minesDecentLoot));
 
+			LootPool.Builder minesFoodLoot = LootPool.lootPool().setRolls(UniformGenerator.between(3, 5));
+			addMultipleItemsWithSameParams(minesFoodLoot, new Item[] { Items.BEEF, Items.PORKCHOP, Items.CHICKEN,
+					Items.EGG, Items.MUTTON, Items.RABBIT }, 10, UniformGenerator.between(5, 10));
+			addMultipleItemsWithSameParams(minesFoodLoot, new Item[] { Items.FEATHER, Items.LEATHER, Items.WHITE_WOOL,
+					Items.BLACK_WOOL, Items.RABBIT_HIDE }, 5, UniformGenerator.between(4, 15));
+			addMultipleItemsWithSameParams(minesFoodLoot, new Item[] { Items.MELON_SEEDS, Items.PUMPKIN_SEEDS,
+					Items.WHEAT_SEEDS, Items.BEETROOT_SEEDS }, 5, UniformGenerator.between(5, 10));
+			minesFoodLoot.add(LootItem.lootTableItem(Items.LEAD).setWeight(6).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
+			minesFoodLoot.add(LootItem.lootTableItem(Items.RABBIT_FOOT).setWeight(2).setQuality(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3))));
+			minesFoodLoot.add(LootItem.lootTableItem(Items.NAME_TAG).setWeight(3).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))));
+			minesFoodLoot.add(LootItem.lootTableItem(Items.ROTTEN_FLESH).setWeight(6).apply(SetItemCountFunction.setCount(UniformGenerator.between(7, 11))));
+			minesFoodLoot.add(LootItem.lootTableItem(Items.BONE).setWeight(6).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 7))));
+			minesFoodLoot.add(LootItem.lootTableItem(BloodMagicItems.WEAK_TAU_ITEM.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(6, 11))));
+			minesFoodLoot.add(LootItem.lootTableItem(BloodMagicItems.STRONG_TAU_ITEM.get()).setWeight(6).apply(SetItemCountFunction.setCount(UniformGenerator.between(6, 11))));
+			minesFoodLoot.add(LootItem.lootTableItem(BloodMagicItems.PLANT_OIL.get()).setWeight(6).apply(SetItemCountFunction.setCount(UniformGenerator.between(6, 11))));
+			minesFoodLoot.add(LootItem.lootTableItem(BloodMagicItems.ADVANCED_CUTTING_FLUID.get()).setWeight(3).setQuality(5).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))));
+			minesFoodLoot.add(LootItem.lootTableItem(BloodMagicItems.HELLFORGED_PARTS.get()).setWeight(3).setQuality(10).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))));
+
+			acceptor.accept(BloodMagic.rl("chests/mines/food_loot"), LootTable.lootTable().withPool(fragmentLoot).withPool(minesFoodLoot));
 		}
 
 		private LootPool.Builder addMultipleItemsWithSameParams(LootPool.Builder pool, Item[] items, int basicWeight, NumberProvider basicRange, Builder... functions)
