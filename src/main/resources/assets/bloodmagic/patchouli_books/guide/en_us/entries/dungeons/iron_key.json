@@ -1,15 +1,15 @@
 {
-  "name": "Simple Keys",
+  "name": "Iron Keys",
   "icon": "bloodmagic:simplekey",
   "category": "bloodmagic:dungeons",
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Simple Keys are the primary way of navigating $(thing)Dungeons$(). They can be found inside dungeon chests within the Demon Realm, or they can be crafted."
+      "text": "Iron Keys are the primary way of navigating $(thing)Dungeons$(). They can be found inside Dungeon chests within the Demon Realm, or they can be crafted."
     },
     {
       "type": "bloodmagic:crafting_soulforge",
-      "heading": "Simple Key",
+      "heading": "Iron Key",
       "recipe": "bloodmagic:soulforge/simple_key",
       "text": "$(italic)If it's so simple, why can't we just pick the lock?$()"
     }
