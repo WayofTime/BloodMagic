@@ -10,6 +10,93 @@
     },
     {
       "type": "patchouli:text",
+      "title": "3.2.3",
+      "text": "$(li)Fixed Fortuna Extract so that it properly applied its additional Fortune under certain conditions.$(li)Fixed a crash with the Teleposer that prevented Tile Entities from moving.$(li)Added smelting recipe for copper sand > copper ingot, and blasting furnace recipes for all dusts."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "3.2.2",
+      "text": "$(li)Fixed in-game guide for real this time."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "3.2.1",
+      "text": "$(li)Fixed in-game guide so that recipes properly load.$(li)Fixed non-crafting Alchemy Arrays.$(li)Fixed the Mark of the Falling Tower and Ritual of Magnetism to respect the current world's build limit.$(li)Changed a few textures such as the ore fragments."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "3.2.0",
+      "text": "$(li)Initial release of 1.18.2.$(li)Changed the ARC so that the texture changes based on the tool used and when it is active.$(li)Rebalanced some recipes due to Raw Materials dropping from base ores.$(li)Added copper ore processing.$(li)Added Glowberries and Berry bush handling to the Reap of the Harvest Moon."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Known issues:$(li)In-game guide is broken in a few places, primarily when viewing mod recipes such as Blood Altar crafting.$(li)Life Essence blocks do not have the proper overlay when submersed in liquid."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "3.1.11",
+      "text": "$(li)Reworked and implemented the Potion Flask system! Quite a bit different than previous versions, so make sure to check the guide. $(li)New (and old) non-Vanilla potion effects include: $(li2)Bounce $(li2)Gravity $(li2)Grounded $(li2)Suspended $(li2)Heavy Heart $(li2)Passive"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li2)Spectral Sight $(li2)Hard Cloak $(li2)Obsidian Cloak $(li2)Flight $(li)Fixed server crash for the Reverence of the Condor ritual. $(li)Reimplemented Teleposers. Hurray! $(li)Reimplemented the Teleposition Sigil. $(li)Reimplemented the Sigil of Suppression. $(li)Reimplemented the Demon Pylon."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)Added Will Catalysts, which can be applied to Demon Will Clusters to dramatically increase their rate of growth. $(li)Changed the Hellfire Forge so that it can use Aspected Will in crafting operations. $(li)Modified the Ritual Diviner so that it can cycle through the ritual list backwards by left-clicking in the air. $(li)Added a new item, \"Basic Routing Logic Upgrade\", which increases the total throughput of the Master Routing Node's system."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)Reimplemented several rituals: $(li2)Crash of the Timberman $(li2)Dawn of the New Moon $(li2)Ritual of the Satiated Stomach $(li2)Speed Ritual $(li2)Ritual of the High Jump $(li2)Laying of the Filler $(li2)Convocation of the Damned (reworked) $(li2)The Sinner's Burden (renamed from \"Ritual of Grounding\")"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li2)Mark of the Falling Tower (New meteor system! Oooh, sparkley~!) $(li)Added a new ritual, Yawning of the Void. Used to completely clear large areas of blocks. $(li)Tweaked recipe for Frame Parts to make them cheaper."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "3.1.10-32",
+      "text": "$(li)Fixed recipe for the \"Brilliance\" Living Upgrade."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "3.1.10",
+      "text": "$(li)Fixed server-sided issue that prevented recipes from loading for certain types."
+    },    {
+      "type": "patchouli:text",
+      "title": "3.1.9",
+      "text": "$(li)Added the missing recipes for a couple of the Living Armour Downgrades. $(li2)Yes, Way is indeed blind."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "3.1.8",
+      "text": "$(li)Made Patchouli a required library. $(li)Reimplemented the Penance of the Leadened Soul ritual. Operates slightly differently than before. $(li)Reimplemented the following Living Armour Downgrades: $(li2)Storm Trooper $(li2)Battle Hungry $(li2)Quenched $(li2)Dulled Blade $(li2)Weakened Pick $(li2)Diseased"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li2)Crippled Arm $(li2)Limp Leg $(li)Reimplemented Repairing $(li)Added the following Living Armour Upgrades/Downgrades: $(li2)Brilliance (Increases armour and toughness values of Living Armour) $(li2)Concrete Shoes (Decreases swim speed) $(li)Decreased hardness of shaped charges."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Known issue: Desync between the server and client for the Living Armour chestpiece under certain conditions. Occurs when the item is shift-clicked out of the player's chestpiece slot. Does not occur when clicked without shift. $(li)Only causes a ghost item to appear in the client's inventory. Does not otherwise affect the performance of the armour."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "3.1.7",
+      "text": "$(li)Fixed another crash with the Living Armour. Maybe I got it this time!"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "3.1.6",
+      "text": "$(li)Increased range of the Tau plant to 3x1x3 centered on the plant, making it easier to farm the Saturated version. $(li)Fixed crash with the Living Armour under certain conditions.$(li)Fixed the Sacrificial Knife so it respects gravestone mods and other effects that occur on-death. $(li)Fixed the Dagger of sacrifice so that it similarly respects death events."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "3.1.5",
+      "text": "$(li)Fixes client-sided crash for the Alchemy Table when on servers. $(li)Made the Water Sigil not work in the nether (still drains LP on use)."
+    },
+    {
+      "type": "patchouli:text",
       "title": "3.1.4",
       "text": "$(li)Fixed a bug when removing max level upgrades from $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$(). $(li)Fixed a client-server desync with the $(item)item filter$() count $(li)Added an audible and visual indication for when an $(l:bloodmagic:alchemy_table/anointments)anointment$() on a $(item)tool$() runs out. $(li)Included warning flags in the $(l:bloodmagic:alchemy_table/alchemy_table#errors)Alchemy Table GUI$() that will state if there is not enough LP or if the orb is unbound/the wrong tier."
     },

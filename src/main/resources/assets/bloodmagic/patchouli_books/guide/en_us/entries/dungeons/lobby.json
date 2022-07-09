@@ -38,7 +38,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Upon performing the $(l:bloodmagic:rituals/ritual_list/ritual_simple_dungeon)Edge of the Hidden Realm$() ritual, you will find yourself looking at an $(thing)Inversion Pillar$(). Right click this pillar to be transported to the Antechamber, your first foray into the $(thing)Demon Realm.$() $(br)There are a few things of note in this first room: $(li)A single treasure chest containing some basic loot and, if you are lucky, a few $(l:bloodmagic:dungeons/simple_key)Simple Keys$()."
+      "text": "Upon performing the $(l:bloodmagic:rituals/ritual_list/ritual_simple_dungeon)Edge of the Hidden Realm$() ritual, you will find yourself looking at an $(thing)Inversion Pillar$(). Right click this pillar to be transported to the Antechamber, your first foray into the $(thing)Demon Realm.$() $(br)There are a few things of note in this first room: $(li)A single treasure chest containing some basic loot and, if you are lucky, a few $(l:bloodmagic:dungeons/iron_key)Iron Keys$()."
     },
     {
       "type": "patchouli:text",
