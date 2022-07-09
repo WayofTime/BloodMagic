@@ -49,7 +49,7 @@ public class BlockDungeonSeal extends Block implements EntityBlock
 //
 		ItemStack playerItem = player.getItemInHand(hand);
 
-		int result = seal.requestRoomFromController(playerItem);
+		int result = seal.requestRoomFromController(player, playerItem);
 		if (result == -1 && !playerItem.isEmpty() && playerItem.getItem() instanceof IDungeonKey)
 		{
 			// Key didn't work

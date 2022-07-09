@@ -183,6 +183,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.alchemytable.lperror.text", "Insufficient LP in Soul Network, or Blood Orb is not Bound.");
 
 		add("tooltip.bloodmagic.incorrectKey", "The key does not fit in this lock...");
+		add("tooltip.bloodmagic.specialspawn", "You feel a spatial distortion in this room...");
 
 		// Ritual info
 		add("tooltip.bloodmagic.diviner.currentRitual", "Current Ritual: %s");

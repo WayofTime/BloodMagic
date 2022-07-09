@@ -8,6 +8,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -46,7 +47,7 @@ public class TileSpecialRoomDungeonSeal extends TileDungeonSeal
 	}
 
 	@Override
-	public int requestRoomFromController(ItemStack heldStack)
+	public int requestRoomFromController(Player player, ItemStack heldStack)
 	{
 		if (DungeonSynthesizer.displayDetailedInformation)
 			System.out.println("Potential rooms: " + potentialRoomTypes);
@@ -64,7 +65,7 @@ public class TileSpecialRoomDungeonSeal extends TileDungeonSeal
 					return -1;
 				}
 
-				int state = tileController.handleRequestForPredesignatedRoomPlacement(heldStack, doorPos, doorDirection, doorType, activatedRoomDepth, highestBranchRoomDepth, potentialRoomTypes, room, rotation, roomLocation);
+				int state = tileController.handleRequestForPredesignatedRoomPlacement(player, heldStack, doorPos, doorDirection, doorType, activatedRoomDepth, highestBranchRoomDepth, potentialRoomTypes, room, rotation, roomLocation);
 
 //				System.out.println("State is: " + state);
 //				System.out.println("")

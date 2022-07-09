@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -40,7 +41,7 @@ public class TileDungeonController extends TileBase
 		setChanged();
 	}
 
-	public int handleRequestForRoomPlacement(ItemStack keyStack, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, int activatedRoomDepth, int highestBranchRoomDepth, List<ResourceLocation> potentialRooms)
+	public int handleRequestForRoomPlacement(Player player, ItemStack keyStack, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, int activatedRoomDepth, int highestBranchRoomDepth, List<ResourceLocation> potentialRooms)
 	{
 		if (!level.isClientSide && level instanceof ServerLevel)
 		{
@@ -51,7 +52,7 @@ public class TileDungeonController extends TileBase
 				{
 					return -1;
 				}
-				int placementState = dungeon.addNewRoomToExistingDungeon((ServerLevel) level, this.getBlockPos(), roomType, level.random, activatedDoorPos, doorFacing, activatedDoorType, potentialRooms, activatedRoomDepth, highestBranchRoomDepth);
+				int placementState = dungeon.addNewRoomToExistingDungeon(player, (ServerLevel) level, this.getBlockPos(), roomType, level.random, activatedDoorPos, doorFacing, activatedDoorType, potentialRooms, activatedRoomDepth, highestBranchRoomDepth);
 				if (placementState == 0)
 				{
 					// Consume the key!
@@ -68,7 +69,7 @@ public class TileDungeonController extends TileBase
 		return -1;
 	}
 
-	public int handleRequestForPredesignatedRoomPlacement(ItemStack keyStack, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, int activatedRoomDepth, int highestBranchRoomDepth, List<ResourceLocation> potentialRooms, DungeonRoom room, Rotation rotation, BlockPos roomLocation)
+	public int handleRequestForPredesignatedRoomPlacement(Player player, ItemStack keyStack, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, int activatedRoomDepth, int highestBranchRoomDepth, List<ResourceLocation> potentialRooms, DungeonRoom room, Rotation rotation, BlockPos roomLocation)
 	{
 		if (!level.isClientSide && level instanceof ServerLevel)
 		{
@@ -79,7 +80,7 @@ public class TileDungeonController extends TileBase
 				{
 					return -1;
 				}
-				boolean didPlace = dungeon.forcePlacementOfRoom((ServerLevel) level, this.getBlockPos(), doorFacing, activatedDoorPos, activatedDoorType, activatedRoomDepth, highestBranchRoomDepth, room, rotation, roomLocation);
+				boolean didPlace = dungeon.forcePlacementOfRoom(player, (ServerLevel) level, this.getBlockPos(), doorFacing, activatedDoorPos, activatedDoorType, activatedRoomDepth, highestBranchRoomDepth, room, rotation, roomLocation);
 				if (didPlace)
 				{
 					// Consume the key!

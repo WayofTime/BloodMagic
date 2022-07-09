@@ -10,14 +10,18 @@ import java.util.Random;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.google.common.collect.Lists;
 import com.google.common.reflect.TypeToken;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
@@ -30,6 +34,7 @@ import wayoftime.bloodmagic.common.tile.TileSpecialRoomDungeonSeal;
 import wayoftime.bloodmagic.gson.Serializers;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.structures.rooms.DungeonRoomPlacement;
+import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.Constants;
 
 public class DungeonSynthesizer
@@ -215,7 +220,7 @@ public class DungeonSynthesizer
 //		System.out.println("Size of doorTypeMap: " + doorTypeMap.size());
 		for (DungeonDoor dungeonDoor : doorTypeMap)
 		{
-			this.addNewDoorBlock(dungeonDoor, world, spawningPosition, dungeonDoor.doorPos, dungeonDoor.doorDir, dungeonDoor.doorType, 0, 0, dungeonDoor.getRoomList(), dungeonDoor.getSpecialRoomList());
+			this.addNewDoorBlock(null, dungeonDoor, world, spawningPosition, dungeonDoor.doorPos, dungeonDoor.doorDir, dungeonDoor.doorType, 0, 0, dungeonDoor.getRoomList(), dungeonDoor.getSpecialRoomList());
 		}
 
 		BlockPos playerPos = initialRoom.getPlayerSpawnLocationForPlacement(settings, roomPlacementPosition);
@@ -275,7 +280,7 @@ public class DungeonSynthesizer
 		return false;
 	}
 
-	public boolean addNewDoorBlock(DungeonDoor door, ServerLevel world, BlockPos controllerPos, BlockPos doorBlockPos, Direction doorFacing, String doorType, int newRoomDepth, int highestBranchRoomDepth, List<ResourceLocation> potentialRoomTypes, List<ResourceLocation> specialRoomTypes)
+	public boolean addNewDoorBlock(Player player, DungeonDoor door, ServerLevel world, BlockPos controllerPos, BlockPos doorBlockPos, Direction doorFacing, String doorType, int newRoomDepth, int highestBranchRoomDepth, List<ResourceLocation> potentialRoomTypes, List<ResourceLocation> specialRoomTypes)
 	{
 		if (highestBranchRoomDepth < newRoomDepth)
 		{
@@ -339,6 +344,15 @@ public class DungeonSynthesizer
 				if (checkRequiredRoom(world, controllerPos, specialRoomType, doorBlockOffsetPos, randomRoom, world.random, doorBlockPos, doorFacing, doorType, newRoomDepth, highestBranchRoomDepth))
 				{
 					removeSpecialRoom(specialRoomType);
+
+					if (player != null)
+					{
+						List<Component> toSend = Lists.newArrayList();
+//						if (!binding.getOwnerId().equals(player.getGameProfile().getId()))
+//							toSend.add(new TranslatableComponent(tooltipBase + "otherNetwork", binding.getOwnerName()));
+						toSend.add(new TranslatableComponent("tooltip.bloodmagic.specialspawn"));
+						ChatUtil.sendNoSpam(player, toSend.toArray(new Component[toSend.size()]));
+					}
 
 					return true;
 				}
@@ -514,12 +528,12 @@ public class DungeonSynthesizer
 	 * @param highestBranchRoomDepth The maximum depth for this path.
 	 * @return
 	 */
-	public int addNewRoomToExistingDungeon(ServerLevel world, BlockPos controllerPos, ResourceLocation roomType, Random rand, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, List<ResourceLocation> potentialRooms, int activatedRoomDepth, int highestBranchRoomDepth)
+	public int addNewRoomToExistingDungeon(Player player, ServerLevel world, BlockPos controllerPos, ResourceLocation roomType, Random rand, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, List<ResourceLocation> potentialRooms, int activatedRoomDepth, int highestBranchRoomDepth)
 	{
 //		System.out.println("Current room's depth info: " + activatedRoomDepth + "/" + highestBranchRoomDepth);
 		for (int i = 0; i < 10; i++)
 		{
-			boolean testPlacement = attemptPlacementOfRandomRoom(world, controllerPos, roomType, rand, activatedDoorPos, doorFacing, activatedDoorType, activatedRoomDepth, highestBranchRoomDepth, potentialRooms, false);
+			boolean testPlacement = attemptPlacementOfRandomRoom(player, world, controllerPos, roomType, rand, activatedDoorPos, doorFacing, activatedDoorType, activatedRoomDepth, highestBranchRoomDepth, potentialRooms, false);
 			if (testPlacement)
 			{
 				tile.setChanged();
@@ -528,7 +542,7 @@ public class DungeonSynthesizer
 		}
 
 		ResourceLocation pathPool = new ResourceLocation("bloodmagic:room_pools/connective_corridors");
-		if (attemptPlacementOfRandomRoom(world, controllerPos, pathPool, rand, activatedDoorPos, doorFacing, activatedDoorType, activatedRoomDepth, highestBranchRoomDepth, potentialRooms, true))
+		if (attemptPlacementOfRandomRoom(player, world, controllerPos, pathPool, rand, activatedDoorPos, doorFacing, activatedDoorType, activatedRoomDepth, highestBranchRoomDepth, potentialRooms, true))
 		{
 			tile.setChanged();
 			return 1;
@@ -537,7 +551,7 @@ public class DungeonSynthesizer
 		return 2;
 	}
 
-	public boolean forcePlacementOfRoom(ServerLevel world, BlockPos controllerPos, Direction doorFacing, BlockPos activatedDoorPos, String activatedDoorType, int previousRoomDepth, int previousMaxDepth, DungeonRoom room, Rotation rotation, BlockPos roomLocation)
+	public boolean forcePlacementOfRoom(Player player, ServerLevel world, BlockPos controllerPos, Direction doorFacing, BlockPos activatedDoorPos, String activatedDoorType, int previousRoomDepth, int previousMaxDepth, DungeonRoom room, Rotation rotation, BlockPos roomLocation)
 	{
 		if (displayDetailedInformation)
 			System.out.println("Forcing room! Room is: " + room);
@@ -626,7 +640,7 @@ public class DungeonSynthesizer
 			{
 				if (displayDetailedInformation)
 					System.out.println("Room list: " + dungeonDoor.getRoomList());
-				this.addNewDoorBlock(dungeonDoor, world, controllerPos, dungeonDoor.doorPos, dungeonDoor.doorDir, dungeonDoor.doorType, newRoomDepth, previousMaxDepth, dungeonDoor.getRoomList(), dungeonDoor.getSpecialRoomList());
+				this.addNewDoorBlock(player, dungeonDoor, world, controllerPos, dungeonDoor.doorPos, dungeonDoor.doorDir, dungeonDoor.doorType, newRoomDepth, previousMaxDepth, dungeonDoor.getRoomList(), dungeonDoor.getSpecialRoomList());
 			}
 		}
 
@@ -719,7 +733,7 @@ public class DungeonSynthesizer
 		return null;
 	}
 
-	public boolean attemptPlacementOfRandomRoom(ServerLevel world, BlockPos controllerPos, ResourceLocation roomType, Random rand, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, int previousRoomDepth, int previousMaxDepth, List<ResourceLocation> potentialRooms, boolean extendCorriDoors)
+	public boolean attemptPlacementOfRandomRoom(Player player, ServerLevel world, BlockPos controllerPos, ResourceLocation roomType, Random rand, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, int previousRoomDepth, int previousMaxDepth, List<ResourceLocation> potentialRooms, boolean extendCorriDoors)
 	{
 		Pair<Direction, BlockPos> activatedDoor = Pair.of(doorFacing, activatedDoorPos);
 
@@ -789,7 +803,7 @@ public class DungeonSynthesizer
 
 			if (extendCorriDoors)
 			{
-				this.addNewDoorBlock(dungeonDoor, world, controllerPos, dungeonDoor.doorPos, dungeonDoor.doorDir, activatedDoorType, previousRoomDepth, previousMaxDepth, potentialRooms, new ArrayList<>());
+				this.addNewDoorBlock(player, dungeonDoor, world, controllerPos, dungeonDoor.doorPos, dungeonDoor.doorDir, activatedDoorType, previousRoomDepth, previousMaxDepth, potentialRooms, new ArrayList<>());
 			} else
 			{
 				int newRoomDepth = previousRoomDepth + (addedHigherPath ? world.random.nextInt(2) * 2 - 1 : 1);
@@ -801,7 +815,7 @@ public class DungeonSynthesizer
 						? dungeonDoor.getDeadendRoomList()
 						: dungeonDoor.getRoomList();
 
-				if (this.addNewDoorBlock(dungeonDoor, world, controllerPos, dungeonDoor.doorPos, dungeonDoor.doorDir, dungeonDoor.doorType, newRoomDepth, previousMaxDepth, roomList, dungeonDoor.getSpecialRoomList()))
+				if (this.addNewDoorBlock(player, dungeonDoor, world, controllerPos, dungeonDoor.doorPos, dungeonDoor.doorDir, dungeonDoor.doorType, newRoomDepth, previousMaxDepth, roomList, dungeonDoor.getSpecialRoomList()))
 				{
 					addedHigherPath = true;
 				} else
