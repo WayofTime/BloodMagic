@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Version 3.1.13
+------------------------------------------------------
+- Fixed a server-sided crash with Mark of the Falling Tower.
+
+
+------------------------------------------------------
 Version 3.1.12
 ------------------------------------------------------
 - Updated the Mark of the Falling Tower guide entry to include the outputs and requirements of various Meteors.
