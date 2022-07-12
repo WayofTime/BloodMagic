@@ -184,6 +184,7 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("tooltip.bloodmagic.incorrectKey", "The key does not fit in this lock...");
 		add("tooltip.bloodmagic.specialspawn", "You feel a spatial distortion in this room...");
+		add("tooltip.bloodmagic.blockeddoor", "The lock breaks and fizzles out of existance!");
 
 		// Ritual info
 		add("tooltip.bloodmagic.diviner.currentRitual", "Current Ritual: %s");

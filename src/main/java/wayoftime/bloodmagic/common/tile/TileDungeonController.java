@@ -63,6 +63,7 @@ public class TileDungeonController extends TileBase
 					lightningboltentity.setVisualOnly(true);
 					level.addFreshEntity(lightningboltentity);
 				}
+
 				return placementState;
 			}
 		}

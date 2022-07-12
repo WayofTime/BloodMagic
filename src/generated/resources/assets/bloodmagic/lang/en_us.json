@@ -620,6 +620,7 @@
   "tooltip.bloodmagic.arctool.uses": "Uses remaining: %s",
   "tooltip.bloodmagic.basicfilter.desc": "Will make sure the items match",
   "tooltip.bloodmagic.basicnodeupgrade": "Increases a Master Routing Node's speed",
+  "tooltip.bloodmagic.blockeddoor": "The lock breaks and fizzles out of existance!",
   "tooltip.bloodmagic.blood_provider.slate.desc": "A simple ampoule containing 500LP",
   "tooltip.bloodmagic.compositefilter.desc": "Filters based off of contained filters",
   "tooltip.bloodmagic.config.disabled": "Currently disabled in the Config",

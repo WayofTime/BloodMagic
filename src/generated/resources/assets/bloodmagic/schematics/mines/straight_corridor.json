@@ -2,7 +2,7 @@
   "key": null,
   "dungeonWeight": 1,
   "structureMap": {
-    "bloodmagic:standard/corner_zombie_trap": {
+    "bloodmagic:standard/mine_straight_corridor": {
       "x": 0,
       "y": 0,
       "z": 0
@@ -12,16 +12,16 @@
     "mine": {
       "north": [
         {
-          "x": 13,
-          "y": 2,
+          "x": 3,
+          "y": 1,
           "z": 0
         }
       ],
-      "west": [
+      "south": [
         {
-          "x": 0,
-          "y": 2,
-          "z": 13
+          "x": 3,
+          "y": 1,
+          "z": 16
         }
       ]
     }
@@ -34,25 +34,9 @@
         "z": 0
       },
       "maximumOffset": {
-        "x": 17,
-        "y": 9,
+        "x": 7,
+        "y": 7,
         "z": 17
-      },
-      "currentPosition": null,
-      "blockPosCache": [],
-      "cachedPosition": null,
-      "cache": false
-    },
-    {
-      "minimumOffset": {
-        "x": 4,
-        "y": 9,
-        "z": 2
-      },
-      "maximumOffset": {
-        "x": 11,
-        "y": 13,
-        "z": 9
       },
       "currentPosition": null,
       "blockPosCache": [],
@@ -60,7 +44,7 @@
       "cache": false
     }
   ],
-  "oreDensity": 0.1,
+  "oreDensity": 0.05,
   "spawnLocation": {
     "x": 0,
     "y": 0,
@@ -79,20 +63,19 @@
   "indexToDoorMap": {
     "1": [
       {
-        "x": 13,
-        "y": 2,
+        "x": 3,
+        "y": 1,
         "z": 0
       },
       {
-        "x": 0,
-        "y": 2,
-        "z": 13
+        "x": 3,
+        "y": 1,
+        "z": 16
       }
     ]
   },
   "indexToRoomTypeMap": {
     "1": [
-      "bloodmagic:room_pools/mines/mine_corridors",
       "bloodmagic:room_pools/mines/mine_rooms",
       "$bloodmagic:room_pools/mines/mine_deadend"
     ]

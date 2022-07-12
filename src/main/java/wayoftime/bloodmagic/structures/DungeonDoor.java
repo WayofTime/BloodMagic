@@ -60,7 +60,7 @@ public class DungeonDoor
 		{
 			if (room.startsWith("$"))
 			{
-				String[] splitString = room.split("$");
+				String[] splitString = room.split("\\$");
 				rlRoomList.add(new ResourceLocation(splitString[1]));
 			}
 		}
@@ -75,6 +75,6 @@ public class DungeonDoor
 
 	public boolean isDeadend(int roomDepth, int maxRoomDepth)
 	{
-		return (roomDepth < maxRoomDepth - 2);
+		return (roomDepth < maxRoomDepth - 1);
 	}
 }

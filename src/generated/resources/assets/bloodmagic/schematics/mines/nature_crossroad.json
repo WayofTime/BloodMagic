@@ -2,7 +2,7 @@
   "key": null,
   "dungeonWeight": 1,
   "structureMap": {
-    "bloodmagic:standard/corner_zombie_trap": {
+    "bloodmagic:standard/mine_nature_crossroad": {
       "x": 0,
       "y": 0,
       "z": 0
@@ -12,16 +12,30 @@
     "mine": {
       "north": [
         {
-          "x": 13,
-          "y": 2,
+          "x": 6,
+          "y": 1,
           "z": 0
+        }
+      ],
+      "south": [
+        {
+          "x": 6,
+          "y": 1,
+          "z": 18
         }
       ],
       "west": [
         {
           "x": 0,
-          "y": 2,
-          "z": 13
+          "y": 1,
+          "z": 11
+        }
+      ],
+      "east": [
+        {
+          "x": 14,
+          "y": 1,
+          "z": 7
         }
       ]
     }
@@ -34,25 +48,9 @@
         "z": 0
       },
       "maximumOffset": {
-        "x": 17,
+        "x": 15,
         "y": 9,
-        "z": 17
-      },
-      "currentPosition": null,
-      "blockPosCache": [],
-      "cachedPosition": null,
-      "cache": false
-    },
-    {
-      "minimumOffset": {
-        "x": 4,
-        "y": 9,
-        "z": 2
-      },
-      "maximumOffset": {
-        "x": 11,
-        "y": 13,
-        "z": 9
+        "z": 19
       },
       "currentPosition": null,
       "blockPosCache": [],
@@ -60,7 +58,7 @@
       "cache": false
     }
   ],
-  "oreDensity": 0.1,
+  "oreDensity": 0.15,
   "spawnLocation": {
     "x": 0,
     "y": 0,
@@ -79,14 +77,24 @@
   "indexToDoorMap": {
     "1": [
       {
-        "x": 13,
-        "y": 2,
+        "x": 6,
+        "y": 1,
         "z": 0
       },
       {
+        "x": 14,
+        "y": 1,
+        "z": 7
+      },
+      {
+        "x": 6,
+        "y": 1,
+        "z": 18
+      },
+      {
         "x": 0,
-        "y": 2,
-        "z": 13
+        "y": 1,
+        "z": 11
       }
     ]
   },

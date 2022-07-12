@@ -83,7 +83,19 @@ public class GenericHandler
 //	@SubscribeEvent
 //	public void onCheckSpawn(LivingSpawnEvent.CheckSpawn event)
 //	{
-//		event.getWorld().reso
+//
+//		if (event.getSpawnReason() == MobSpawnType.SPAWNER)
+//		{
+//			ResourceKey<Level> key = ResourceKey.create(Registry.DIMENSION_REGISTRY, BloodMagic.rl("dungeon"));
+//			if (event.getEntityLiving().getLevel().dimension().equals(key))
+//			{
+//				System.out.println("Original: " + event.getResult());
+//				System.out.println("Enabling spawn from spawner");
+//				event.setResult(Result.ALLOW);
+//			}
+//
+//		}
+////		event.getWorld().reso
 //	}
 
 	@SubscribeEvent

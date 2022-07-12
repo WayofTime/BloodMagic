@@ -619,6 +619,10 @@ public class GeneratorLootTable extends LootTableProvider
 			minesFoodLoot.add(LootItem.lootTableItem(BloodMagicItems.HELLFORGED_PARTS.get()).setWeight(3).setQuality(10).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))));
 
 			acceptor.accept(BloodMagic.rl("chests/mines/food_loot"), LootTable.lootTable().withPool(fragmentLoot).withPool(minesFoodLoot));
+
+			LootPool.Builder mineKeyLoot = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(BloodMagicItems.DUNGEON_MINE_KEY.get()).setWeight(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3))));
+
+			acceptor.accept(BloodMagic.rl("chests/mines/mine_key_loot"), LootTable.lootTable().withPool(minesRawLoot).withPool(minesDecentLoot).withPool(mineKeyLoot));
 		}
 
 		private LootPool.Builder addMultipleItemsWithSameParams(LootPool.Builder pool, Item[] items, int basicWeight, NumberProvider basicRange, Builder... functions)

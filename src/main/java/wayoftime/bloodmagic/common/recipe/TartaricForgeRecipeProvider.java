@@ -120,6 +120,7 @@ public class TartaricForgeRecipeProvider implements ISubRecipeProvider
 			ItemStack shapedChargeDeepStack = new ItemStack(BloodMagicBlocks.SHAPED_CHARGE_DEEP.get());
 			AnointmentHolder holder = holderArray2[i];
 			holder.toItemStack(vein2Stack);
+			holder.toItemStack(shapedChargeDeepStack);
 
 			TartaricForgeRecipeBuilder.tartaricForge(vein2Stack, 300, 4, Ingredient.of(BloodMagicBlocks.VEINMINE_CHARGE_2.get()), ingredientArray2[i]).build(consumer, BloodMagic.rl(basePath + "vein_charge_2" + suffixArray2[i]));
 			TartaricForgeRecipeBuilder.tartaricForge(shapedChargeDeepStack, 300, 4, Ingredient.of(BloodMagicBlocks.SHAPED_CHARGE_DEEP.get()), ingredientArray2[i]).build(consumer, BloodMagic.rl(basePath + "shaped_charge_deep" + suffixArray2[i]));

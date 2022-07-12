@@ -2,7 +2,8 @@
   "2;bloodmagic:mines/corner_zombie_trap",
   "2;bloodmagic:mines/downward_shaft",
   "2;bloodmagic:mines/downward_tunnel",
-  "4;bloodmagic:mines/junction_station",
+  "3;bloodmagic:mines/junction_station",
+  "3;bloodmagic:mines/nature_crossroad",
   "3;bloodmagic:mines/pit",
   "2;bloodmagic:mines/split_road",
   "1;bloodmagic:mines/station"
