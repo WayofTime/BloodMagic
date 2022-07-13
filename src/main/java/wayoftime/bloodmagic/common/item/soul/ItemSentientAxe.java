@@ -215,19 +215,21 @@ public class ItemSentientAxe extends AxeItem implements IDemonWillWeapon, IMulti
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker)
 	{
-		if (super.hurtEnemy(stack, target, attacker))
+		stack.hurtAndBreak(1, attacker, (a) -> {
+			a.broadcastBreakEvent(EquipmentSlot.MAINHAND);
+		});
+
+		if (attacker instanceof Player)
 		{
-			if (attacker instanceof Player)
-			{
-				Player attackerPlayer = (Player) attacker;
-				this.recalculatePowers(stack, attackerPlayer.getCommandSenderWorld(), attackerPlayer);
-				EnumDemonWillType type = this.getCurrentType(stack);
-				double will = PlayerDemonWillHandler.getTotalDemonWill(type, attackerPlayer);
-				int willBracket = this.getLevel(stack, will);
+			Player attackerPlayer = (Player) attacker;
+			this.recalculatePowers(stack, attackerPlayer.getCommandSenderWorld(), attackerPlayer);
+			EnumDemonWillType type = this.getCurrentType(stack);
+			double will = PlayerDemonWillHandler.getTotalDemonWill(type, attackerPlayer);
+			int willBracket = this.getLevel(stack, will);
 
-				applyEffectToEntity(type, willBracket, target, attackerPlayer);
+			applyEffectToEntity(type, willBracket, target, attackerPlayer);
 
-				ItemStack offStack = attackerPlayer.getItemBySlot(EquipmentSlot.OFFHAND);
+//			ItemStack offStack = attackerPlayer.getItemBySlot(EquipmentSlot.OFFHAND);
 //				if (offStack.getItem() instanceof ISentientSwordEffectProvider)
 //				{
 //					ISentientSwordEffectProvider provider = (ISentientSwordEffectProvider) offStack.getItem();
@@ -236,12 +238,9 @@ public class ItemSentientAxe extends AxeItem implements IDemonWillWeapon, IMulti
 //						provider.applyOnHitEffect(type, stack, offStack, attacker, target);
 //					}
 //				}
-			}
-
-			return true;
 		}
 
-		return false;
+		return true;
 	}
 
 	@Override
