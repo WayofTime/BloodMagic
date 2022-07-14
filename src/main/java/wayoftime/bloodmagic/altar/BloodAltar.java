@@ -2,16 +2,16 @@ package wayoftime.bloodmagic.altar;
 
 import com.google.common.base.Enums;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.RedstoneLampBlock;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.RedstoneLampBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -31,8 +31,6 @@ import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.recipe.RecipeBloodAltar;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
-
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public class BloodAltar// implements IFluidHandler
 {
@@ -305,8 +303,10 @@ public class BloodAltar// implements IFluidHandler
 		if (!isActive)
 		{
 			if (cooldownAfterCrafting > 0)
+			{
 				cooldownAfterCrafting--;
-			return;
+				return;
+			}
 		}
 
 		if (!canBeFilled && recipe == null)
