@@ -201,7 +201,7 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 
 		List<TagKey<Item>> tags = getAllItemTags(ghostStack);
 
-		if (tags.size() < index)
+		if (tags.size() <= index)
 		{
 			return null;
 		}
