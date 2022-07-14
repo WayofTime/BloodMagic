@@ -305,8 +305,13 @@ public class BloodAltar// implements IFluidHandler
 			if (cooldownAfterCrafting > 0)
 			{
 				cooldownAfterCrafting--;
-				return;
+				if (cooldownAfterCrafting <= 0)
+				{
+					startCycle();
+				}
 			}
+
+			return;
 		}
 
 		if (!canBeFilled && recipe == null)
