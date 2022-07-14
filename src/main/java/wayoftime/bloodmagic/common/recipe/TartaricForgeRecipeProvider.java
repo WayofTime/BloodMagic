@@ -75,6 +75,9 @@ public class TartaricForgeRecipeProvider implements ISubRecipeProvider
 		AnointmentHolder silkHolder = new AnointmentHolder();
 		silkHolder.applyAnointment(stack, AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get(), new AnointmentData(1, 1, 1));
 
+		AnointmentHolder voidHolder = new AnointmentHolder();
+		voidHolder.applyAnointment(stack, AnointmentRegistrar.ANOINTMENT_VOIDING.get(), new AnointmentData(1, 1, 1));
+
 //		smeltingHolder.toItemStack(stack);
 
 		String[] suffixArray = new String[] { "_smelting", "_fortune_1", "_silk_touch" };
@@ -106,13 +109,15 @@ public class TartaricForgeRecipeProvider implements ISubRecipeProvider
 
 		}
 
-		String[] suffixArray2 = new String[] { "_smelting_l", "_fortune_1_l", "_fortune_2_l", "_silk_touch_l" };
+		String[] suffixArray2 = new String[] { "_smelting_l", "_fortune_1_l", "_fortune_2_l", "_silk_touch_l",
+				"_voiding" };
 		AnointmentHolder[] holderArray2 = new AnointmentHolder[] { smeltingHolder, fortune1Holder, fortune2Holder,
-				silkHolder };
+				silkHolder, voidHolder };
 		Ingredient[] ingredientArray2 = new Ingredient[] { Ingredient.of(BloodMagicItems.SMELTING_ANOINTMENT_L.get()),
 				Ingredient.of(BloodMagicItems.FORTUNE_ANOINTMENT_L.get()),
 				Ingredient.of(BloodMagicItems.FORTUNE_ANOINTMENT_2.get()),
-				Ingredient.of(BloodMagicItems.SILK_TOUCH_ANOINTMENT_L.get()) };
+				Ingredient.of(BloodMagicItems.SILK_TOUCH_ANOINTMENT_L.get()),
+				Ingredient.of(BloodMagicItems.VOIDING_ANOINTMENT.get()) };
 
 		for (int i = 0; i < suffixArray2.length; i++)
 		{

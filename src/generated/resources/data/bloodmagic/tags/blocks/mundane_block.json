@@ -5,6 +5,7 @@
     "#forge:stone",
     "#minecraft:sand",
     "#minecraft:dirt",
-    "minecraft:gravel"
+    "minecraft:gravel",
+    "minecraft:netherrack"
   ]
 }

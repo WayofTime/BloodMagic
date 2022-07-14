@@ -333,7 +333,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> BOW_POWER_ANOINTMENT = ITEMS.register("bow_power_anointment", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_power"), 0xD8D8D8, 1, 256, true));
 	public static final RegistryObject<Item> WILL_POWER_ANOINTMENT = ITEMS.register("will_power_anointment", () -> new ItemAnointmentProvider(BloodMagic.rl("will_power"), 0xD8D8D8, 1, 256));
 	public static final RegistryObject<Item> SMELTING_ANOINTMENT = ITEMS.register("smelting_anointment", () -> new ItemAnointmentProvider(BloodMagic.rl("smelting"), 0xCE2029, 1, 256));
-	public static final RegistryObject<Item> VOIDING_ANOINTMENT = ITEMS.register("voiding_anointment", () -> new ItemAnointmentProvider(BloodMagic.rl("voiding"), 0x722DF1, 1, 256));
+	public static final RegistryObject<Item> VOIDING_ANOINTMENT = ITEMS.register("voiding_anointment", () -> new ItemAnointmentProvider(BloodMagic.rl("voiding"), 0x451B52, 1, 256));
 	public static final RegistryObject<Item> BOW_VELOCITY_ANOINTMENT = ITEMS.register("bow_velocity_anointment", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_velocity"), 0xFFBE00, 1, 256, true));
 
 	public static final RegistryObject<Item> BOW_POWER_ANOINTMENT_STRONG = ITEMS.register("bow_power_anointment_strong", () -> new ItemBowAnointmentProvider(BloodMagic.rl("bow_power"), 0xD8D8D8, 2, 1024, true));
