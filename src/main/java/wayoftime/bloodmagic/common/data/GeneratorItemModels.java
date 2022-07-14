@@ -135,6 +135,7 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerMultiLayerItem(BloodMagicItems.WILL_POWER_ANOINTMENT.get(), modLoc("item/alchemic_vial_will"), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_ribbon_will"));
 		registerMultiLayerItem(BloodMagicItems.SMELTING_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
 		registerMultiLayerItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.VOIDING_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
 
 		registerMultiLayerItem(BloodMagicItems.BOW_POWER_ANOINTMENT_STRONG.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_two"));
 

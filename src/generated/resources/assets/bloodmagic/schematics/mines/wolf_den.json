@@ -1,0 +1,127 @@
+{
+  "key": null,
+  "dungeonWeight": 1,
+  "structureMap": {
+    "bloodmagic:standard/mine_wolf_den": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  },
+  "doorMap": {
+    "mine": {
+      "north": [
+        {
+          "x": 12,
+          "y": 10,
+          "z": 0
+        }
+      ],
+      "south": [
+        {
+          "x": 18,
+          "y": 10,
+          "z": 30
+        }
+      ],
+      "west": [
+        {
+          "x": 0,
+          "y": 16,
+          "z": 19
+        }
+      ],
+      "east": [
+        {
+          "x": 30,
+          "y": 10,
+          "z": 16
+        }
+      ]
+    }
+  },
+  "descriptorList": [
+    {
+      "minimumOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "maximumOffset": {
+        "x": 31,
+        "y": 24,
+        "z": 31
+      },
+      "currentPosition": null,
+      "blockPosCache": [],
+      "cachedPosition": null,
+      "cache": false
+    }
+  ],
+  "oreDensity": 0.1,
+  "spawnLocation": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "controllerOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "portalOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "indexToDoorMap": {
+    "1": [
+      {
+        "x": 12,
+        "y": 10,
+        "z": 0
+      },
+      {
+        "x": 30,
+        "y": 10,
+        "z": 16
+      },
+      {
+        "x": 18,
+        "y": 10,
+        "z": 30
+      },
+      {
+        "x": 0,
+        "y": 16,
+        "z": 19
+      }
+    ]
+  },
+  "indexToRoomTypeMap": {
+    "1": [
+      "bloodmagic:room_pools/mines/mine_corridors",
+      "bloodmagic:room_pools/mines/mine_rooms",
+      "$bloodmagic:room_pools/mines/mine_deadend"
+    ]
+  },
+  "requiredDoorMap": {},
+  "doorCoverMap": {
+    "1": {
+      "minimumOffset": {
+        "x": -2,
+        "y": -2,
+        "z": 0
+      },
+      "maximumOffset": {
+        "x": 3,
+        "y": 3,
+        "z": 1
+      },
+      "currentPosition": null,
+      "blockPosCache": [],
+      "cachedPosition": null,
+      "cache": true
+    }
+  }
+}

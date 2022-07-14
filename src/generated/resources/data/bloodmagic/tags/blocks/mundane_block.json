@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:cobblestone",
+    "#forge:stone",
+    "#minecraft:sand",
+    "#minecraft:dirt",
+    "minecraft:gravel"
+  ]
+}

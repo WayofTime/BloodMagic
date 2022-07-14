@@ -79,6 +79,8 @@ public class AnointmentRegistrar
 
 	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_SMELTING = ANOINTMENTS.register("smelting", () -> new Anointment(BloodMagic.rl("smelting")).setConsumeOnHarvest());
 
+	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_VOIDING = ANOINTMENTS.register("voiding", () -> new Anointment(BloodMagic.rl("voiding")).setConsumeOnHarvest());
+
 	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_BOW_VELOCITY = ANOINTMENTS.register("bow_velocity", () -> parseDefinition("bow_velocity").setConsumeOnUseFinish());
 
 	public static void register()
@@ -93,6 +95,7 @@ public class AnointmentRegistrar
 		registerAnointment(ANOINTMENT_BOW_POWER.get());
 		registerAnointment(ANOINTMENT_WILL_POWER.get());
 		registerAnointment(ANOINTMENT_SMELTING.get());
+		registerAnointment(ANOINTMENT_VOIDING.get());
 		registerAnointment(ANOINTMENT_BOW_VELOCITY.get());
 
 //		Registry.register(UPGRADES, UPGRADE_ARROW_PROTECT.getKey(), UPGRADE_ARROW_PROTECT);

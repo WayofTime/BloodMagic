@@ -7,6 +7,7 @@ import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
@@ -71,6 +72,8 @@ public class GeneratorBlockTags extends BlockTagsProvider
 		tag(BlockTags.NEEDS_STONE_TOOL).add(BloodMagicBlocks.DUNGEON_BRICK_1.get(), BloodMagicBlocks.DUNGEON_BRICK_2.get(), BloodMagicBlocks.DUNGEON_BRICK_3.get(), BloodMagicBlocks.DUNGEON_ORE.get(), BloodMagicBlocks.DUNGEON_STONE.get(), BloodMagicBlocks.DUNGEON_EYE.get(), BloodMagicBlocks.DUNGEON_EMITTER.get(), BloodMagicBlocks.DUNGEON_ALTERNATOR.get(), BloodMagicBlocks.DUNGEON_POLISHED_STONE.get(), BloodMagicBlocks.DUNGEON_TILE.get(), BloodMagicBlocks.DUNGEON_SMALL_BRICK.get(), BloodMagicBlocks.DUNGEON_TILE_SPECIAL.get(), BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get(), BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get(), BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get(), BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get(), BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get(), BloodMagicBlocks.DUNGEON_PILLAR_CAP.get(), BloodMagicBlocks.DUNGEON_BRICK_WALL.get(), BloodMagicBlocks.DUNGEON_POLISHED_WALL.get(), BloodMagicBlocks.DUNGEON_BRICK_GATE.get(), BloodMagicBlocks.DUNGEON_POLISHED_GATE.get(), BloodMagicBlocks.DUNGEON_BRICK_SLAB.get(), BloodMagicBlocks.DUNGEON_TILE_SLAB.get(), BloodMagicBlocks.HELLFORGED_BLOCK.get(), BloodMagicBlocks.DUNGEON_CRACKED_BRICK_1.get(), BloodMagicBlocks.DUNGEON_GLOWING_CRACKED_BRICK_1.get(), BloodMagicBlocks.DUNGEON_CONTROLLER.get(), BloodMagicBlocks.DUNGEON_SEAL.get(), BloodMagicBlocks.SPIKES.get(), BloodMagicBlocks.DUNGEON_SPIKE_TRAP.get(), BloodMagicBlocks.INVERSION_PILLAR_CAP.get(), BloodMagicBlocks.INVERSION_PILLAR.get());
 		tag(BlockTags.NEEDS_DIAMOND_TOOL).add(BloodMagicBlocks.OBSIDIAN_PATH.get(), BloodMagicBlocks.OBSIDIAN_TILE_PATH.get());
 		tag(BlockTags.BEACON_BASE_BLOCKS).add(BloodMagicBlocks.HELLFORGED_BLOCK.get());
+
+		tag(BloodMagicTags.Blocks.MUNDANE_BLOCK).addTag(Tags.Blocks.COBBLESTONE).addTag(Tags.Blocks.STONE).addTag(BlockTags.SAND).addTag(BlockTags.DIRT).add(Blocks.GRAVEL).add(Blocks.NETHERRACK);
 	}
 
 	/**

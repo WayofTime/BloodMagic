@@ -8,6 +8,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
+import wayoftime.bloodmagic.BloodMagic;
 
 public class BloodMagicTags
 {
@@ -130,6 +131,8 @@ public class BloodMagicTags
 		public static final TagKey<Block> SOUL_SAND = BlockTags.create(new ResourceLocation("minecraft:soul_sand"));
 		public static final TagKey<Block> SOUL_SOIL = BlockTags.create(new ResourceLocation("minecraft:soul_soil"));
 		public static final TagKey<Block> BLOCK_TELEPOSER_BLACKLIST = BlockTags.create(new ResourceLocation("bloodmagic:teleposer_blacklist"));
+
+		public static final TagKey<Block> MUNDANE_BLOCK = BlockTags.create(BloodMagic.rl("mundane_block"));
 	}
 
 	public static TagKey<Item> getForgeOreTag(String name)

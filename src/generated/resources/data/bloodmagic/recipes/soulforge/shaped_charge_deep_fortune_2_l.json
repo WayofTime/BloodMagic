@@ -7,7 +7,8 @@
     "item": "bloodmagic:fortune_anointment_2"
   },
   "output": {
-    "item": "bloodmagic:shaped_charge_deep"
+    "item": "bloodmagic:shaped_charge_deep",
+    "nbt": "{anointment_holder:{anointments:[{damage:1,key:\"bloodmagic:fortune\",level:2,max_damage:1}]}}"
   },
   "minimumDrain": 300.0,
   "drain": 4.0

@@ -16,6 +16,7 @@ import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -29,6 +30,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
+import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 
 public class GlobalLootModifier
@@ -39,6 +41,7 @@ public class GlobalLootModifier
 	public static final RegistryObject<FortuneModifier.Serializer> FORTUNE = GLM.register("fortune", FortuneModifier.Serializer::new);
 	public static final RegistryObject<LootingModifier.Serializer> LOOTING = GLM.register("looting", LootingModifier.Serializer::new);
 	public static final RegistryObject<SmeltingModifier.Serializer> SMELT = GLM.register("smelt", SmeltingModifier.Serializer::new);
+	public static final RegistryObject<VoidingModifier.Serializer> VOID = GLM.register("voiding", VoidingModifier.Serializer::new);
 
 	private static class SilkTouchTestModifier extends LootModifier
 	{
@@ -296,6 +299,67 @@ public class GlobalLootModifier
 
 			@Override
 			public JsonObject write(SmeltingModifier instance)
+			{
+				return makeConditions(instance.conditions);
+			}
+		}
+	}
+
+	private static class VoidingModifier extends LootModifier
+	{
+		public VoidingModifier(LootItemCondition[] conditionsIn)
+		{
+			super(conditionsIn);
+		}
+
+		@Nonnull
+		@Override
+		public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context)
+		{
+			System.out.println("Calling voiding");
+			BlockState blockState = context.getParamOrNull(LootContextParams.BLOCK_STATE).getBlock().defaultBlockState();
+			if (!blockState.is(BloodMagicTags.Blocks.MUNDANE_BLOCK))
+			{
+				System.out.println("I am not in the list");
+				return generatedLoot;
+			}
+
+			ItemStack ctxTool = context.getParamOrNull(LootContextParams.TOOL);
+			// return early if silk-touch is already applied (otherwise we'll get stuck in
+			// an infinite loop).
+			if (ctxTool.getTag() == null)
+			{
+				return generatedLoot;
+			}
+
+			AnointmentHolder holder = AnointmentHolder.fromItemStack(ctxTool);
+			if (holder == null)
+			{
+				return generatedLoot;
+			}
+
+			int voidingLevel = holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_VOIDING.get());
+			System.out.println("Voiding level: " + voidingLevel);
+			if (voidingLevel <= 0)
+			{
+				return generatedLoot;
+			}
+
+			ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+//			generatedLoot.forEach((stack) -> ret.add(smelt(stack, context)));
+			return ret;
+		}
+
+		private static class Serializer extends GlobalLootModifierSerializer<VoidingModifier>
+		{
+			@Override
+			public VoidingModifier read(ResourceLocation name, JsonObject json, LootItemCondition[] conditionsIn)
+			{
+				return new VoidingModifier(conditionsIn);
+			}
+
+			@Override
+			public JsonObject write(VoidingModifier instance)
 			{
 				return makeConditions(instance.conditions);
 			}

@@ -492,6 +492,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("anointment.bloodmagic.bow_velocity", "Sniping");
 		add("anointment.bloodmagic.looting", "Plundering");
 		add("anointment.bloodmagic.smelting", "Heated Tool");
+		add("anointment.bloodmagic.voiding", "Voiding");
 
 		// Guide
 		add("guide.bloodmagic.name", "Sanguine Scientiem");
@@ -790,6 +791,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT, "Iron Tip");
 		addItem(BloodMagicItems.LOOTING_ANOINTMENT, "Plunderer's Glint");
 		addItem(BloodMagicItems.SMELTING_ANOINTMENT, "Slow-burning Oil");
+		addItem(BloodMagicItems.VOIDING_ANOINTMENT, "Void Essence");
 		addItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT, "Archer's Polish");
 
 		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT_STRONG, "Iron Tip II");

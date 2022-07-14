@@ -43,9 +43,11 @@ public class ModDungeons
 	public static ResourceLocation MINE_JUNCTION_STATION = BloodMagic.rl("mines/junction_station");
 	public static ResourceLocation MINE_BUILT_SHAFT = BloodMagic.rl("mines/downward_shaft");
 	public static ResourceLocation MINE_NATURE_CROSSROAD = BloodMagic.rl("mines/nature_crossroad");
+	public static ResourceLocation MINE_WOLF_DEN = BloodMagic.rl("mines/wolf_den");
 
 	public static ResourceLocation MINE_STRAIGHT_CORRIDOR = BloodMagic.rl("mines/straight_corridor");
 	public static ResourceLocation MINE_BENT_CORRIDOR = BloodMagic.rl("mines/bent_corridor");
+	public static ResourceLocation MINE_FOURWAY_CORRIDOR = BloodMagic.rl("mines/fourway_corridor");
 
 	public static ResourceLocation STANDARD_ENTRANCE = BloodMagic.rl("standard_entrance");
 
@@ -80,9 +82,11 @@ public class ModDungeons
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINE_JUNCTION_STATION);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINE_BUILT_SHAFT);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINE_NATURE_CROSSROAD);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINE_WOLF_DEN);
 
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINE_STRAIGHT_CORRIDOR);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINE_BENT_CORRIDOR);
+		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINE_FOURWAY_CORRIDOR);
 
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINI_LIBRARY);
 		DungeonRoomRegistry.registerUnloadedDungeonRoom(MINI_ARMOURY);
