@@ -21,7 +21,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "If you have more than 1,024 total $(raw)Will$() in your inventory (Across any number of $(l:bloodmagic:demon_will/will_manipulation/soul_gem)Tartaric Gems$() and of any one type), you can harvest these crystals by right-clicking the spire with an empty hand. This will remove all but the central spire. $(br2)However, if you do not have enough $(raw)will$(), $(italic)really$() need that central spire's Crystal, or are just in a hurry, you can harvest the whole lot with a pickaxe."
+      "text": "If you have more than 512 total $(raw)Will$() in your inventory (Across any number of $(l:bloodmagic:demon_will/will_manipulation/soul_gem)Tartaric Gems$() and of any one type), you can harvest these crystals by right-clicking the spire with an empty hand. This will remove all but the central spire. $(br2)However, if you do not have enough $(raw)will$(), $(italic)really$() need that central spire's Crystal, or are just in a hurry, you can harvest the whole lot with a pickaxe."
     }
   ]
 }

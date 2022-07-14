@@ -141,7 +141,7 @@ public class BlockDemonCrystal extends Block implements EntityBlock
 				boolean isCreative = player.isCreative();
 				boolean holdsCrystal = player.getItemInHand(hand).getItem() instanceof ItemDemonCrystal;
 
-				if (PlayerDemonWillHandler.getTotalDemonWill(PlayerDemonWillHandler.getLargestWillType(player), player) > 1024 && !(holdsCrystal && isCreative))
+				if (PlayerDemonWillHandler.getTotalDemonWill(PlayerDemonWillHandler.getLargestWillType(player), player) > 512 && !(holdsCrystal && isCreative))
 				{
 					crystal.dropSingleCrystal();
 
