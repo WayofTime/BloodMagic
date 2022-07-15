@@ -55,6 +55,7 @@ import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.IBloodOrb;
 import wayoftime.bloodmagic.common.item.ItemExperienceBook;
 import wayoftime.bloodmagic.common.item.ItemLavaCrystal;
+import wayoftime.bloodmagic.common.item.ItemLivingArmor;
 import wayoftime.bloodmagic.common.item.ItemRitualDiviner;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
@@ -1085,37 +1086,37 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onLivingEquipmentChange(LivingEquipmentChangeEvent event)
 	{
-//		if (BloodMagic.curiosLoaded)
-//		{ // Without Curios, there is nothing this cares about.
-//			if (event.getFrom().getItem() instanceof ItemLivingArmor || event.getTo().getItem() instanceof ItemLivingArmor)
-//			{ // Armor change involves Living Armor
-//				LivingEntity entity = event.getEntityLiving();
-//				if (entity instanceof Player)
-//				{ // is a player
-//					Player player = (Player) entity;
-//					UUID uuid = player.getUUID();
-//					if (LivingUtil.hasFullSet(player))
-//					{ // Player has a full set
-//						LivingStats stats = LivingStats.fromPlayer(player);
-//						if (stats != null)
-//						{
-//							int curiosLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_CURIOS_SOCKET.get().getKey());
-//							if (curiosLevelMap.getOrDefault(uuid, 0) != curiosLevel)
-//							{ // Cache level does not match new level
-//								curiosLevelMap.put(uuid, BloodMagic.curiosCompat.recalculateCuriosSlots(player));
-//							}
-//						} else if (curiosLevelMap.getOrDefault(uuid, 0) != 0)
-//						{
-//							curiosLevelMap.put(uuid, 0);
-//						}
-//
-//					} else if (curiosLevelMap.getOrDefault(uuid, 0) != 0)
-//					{ // cache has an upgrade that needs to be removed
-//						curiosLevelMap.put(uuid, BloodMagic.curiosCompat.recalculateCuriosSlots(player));
-//					}
-//				}
-//			}
-//		}
+		if (BloodMagic.curiosLoaded)
+		{ // Without Curios, there is nothing this cares about.
+			if (event.getFrom().getItem() instanceof ItemLivingArmor || event.getTo().getItem() instanceof ItemLivingArmor)
+			{ // Armor change involves Living Armor
+				LivingEntity entity = event.getEntityLiving();
+				if (entity instanceof Player)
+				{ // is a player
+					Player player = (Player) entity;
+					UUID uuid = player.getUUID();
+					if (LivingUtil.hasFullSet(player))
+					{ // Player has a full set
+						LivingStats stats = LivingStats.fromPlayer(player);
+						if (stats != null)
+						{
+							int curiosLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_CURIOS_SOCKET.get().getKey());
+							if (curiosLevelMap.getOrDefault(uuid, 0) != curiosLevel)
+							{ // Cache level does not match new level
+								curiosLevelMap.put(uuid, BloodMagic.curiosCompat.recalculateCuriosSlots(player));
+							}
+						} else if (curiosLevelMap.getOrDefault(uuid, 0) != 0)
+						{
+							curiosLevelMap.put(uuid, 0);
+						}
+
+					} else if (curiosLevelMap.getOrDefault(uuid, 0) != 0)
+					{ // cache has an upgrade that needs to be removed
+						curiosLevelMap.put(uuid, BloodMagic.curiosCompat.recalculateCuriosSlots(player));
+					}
+				}
+			}
+		}
 	}
 
 	private static float getCharge(int useTime, ItemStack stack)

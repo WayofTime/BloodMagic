@@ -190,8 +190,8 @@ public class LivingArmorRegistrar
 		registerUpgrade(UPGRADE_KNOCKBACK_RESIST.get());
 		registerUpgrade(UPGRADE_FIRE_RESIST.get());
 		registerUpgrade(UPGRADE_ELYTRA.get());
-//		if (BloodMagic.curiosLoaded)
-//			registerUpgrade(UPGRADE_CURIOS_SOCKET.get());
+		if (BloodMagic.curiosLoaded)
+			registerUpgrade(UPGRADE_CURIOS_SOCKET.get());
 		registerUpgrade(UPGRADE_DIAMOND.get());
 		registerUpgrade(UPGRADE_MELEE_DAMAGE.get());
 		registerUpgrade(UPGRADE_REPAIR.get());

@@ -60,6 +60,7 @@ import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 import wayoftime.bloodmagic.common.tile.BloodMagicTileEntities;
+import wayoftime.bloodmagic.compat.CuriosCompat;
 import wayoftime.bloodmagic.compat.patchouli.RegisterPatchouliMultiblocks;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
@@ -94,8 +95,8 @@ public class BloodMagic
 	public static final BloodMagicPacketHandler packetHandler = new BloodMagicPacketHandler();
 	public static final RitualManager RITUAL_MANAGER = new RitualManager();
 
-//	public static Boolean curiosLoaded;
-//	public static final CuriosCompat curiosCompat = new CuriosCompat();
+	public static Boolean curiosLoaded;
+	public static final CuriosCompat curiosCompat = new CuriosCompat();
 
 	public BloodMagic()
 	{
@@ -221,10 +222,10 @@ public class BloodMagic
 
 		ModRoomPools.registerSpecialRooms();
 
-//		if (curiosLoaded)
-//		{
-//			curiosCompat.registerInventory();
-//		}
+		if (curiosLoaded)
+		{
+			curiosCompat.registerInventory();
+		}
 		if (ModList.get().isLoaded("patchouli"))
 		{
 			new RegisterPatchouliMultiblocks();
@@ -323,7 +324,7 @@ public class BloodMagic
 //		LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
 		packetHandler.initialize();
 
-//		curiosLoaded = ModList.get().isLoaded("curios" );
+		curiosLoaded = ModList.get().isLoaded("curios");
 	}
 
 //	@OnlyIn(Dist.CLIENT)
@@ -360,10 +361,10 @@ public class BloodMagic
 //			return "Hello world";
 //		});
 
-//		if (curiosLoaded)
-//		{
-//			curiosCompat.setupSlots(event);
-//		}
+		if (curiosLoaded)
+		{
+			curiosCompat.setupSlots(event);
+		}
 	}
 
 	private void processIMC(final InterModProcessEvent event)
