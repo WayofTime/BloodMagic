@@ -805,6 +805,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT_L, "Iron Tip L");
 		addItem(BloodMagicItems.LOOTING_ANOINTMENT_L, "Plunderer's Glint L");
 		addItem(BloodMagicItems.SMELTING_ANOINTMENT_L, "Slow-burning Oil L");
+		addItem(BloodMagicItems.VOIDING_ANOINTMENT_L, "Void Essence L");
 		addItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT_L, "Archer's Polish L");
 
 		addItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_2, "Honing Oil II");
@@ -825,6 +826,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT_XL, "Iron Tip XL");
 		addItem(BloodMagicItems.LOOTING_ANOINTMENT_XL, "Plunderer's Glint XL");
 		addItem(BloodMagicItems.SMELTING_ANOINTMENT_XL, "Slow-burning Oil XL");
+		addItem(BloodMagicItems.VOIDING_ANOINTMENT_XL, "Void Essence XL");
 		addItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT_XL, "Archer's Polish XL");
 
 		addItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_3, "Honing Oil III");

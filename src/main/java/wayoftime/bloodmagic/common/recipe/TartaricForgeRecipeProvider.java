@@ -117,7 +117,7 @@ public class TartaricForgeRecipeProvider implements ISubRecipeProvider
 				Ingredient.of(BloodMagicItems.FORTUNE_ANOINTMENT_L.get()),
 				Ingredient.of(BloodMagicItems.FORTUNE_ANOINTMENT_2.get()),
 				Ingredient.of(BloodMagicItems.SILK_TOUCH_ANOINTMENT_L.get()),
-				Ingredient.of(BloodMagicItems.VOIDING_ANOINTMENT.get()) };
+				Ingredient.of(BloodMagicItems.VOIDING_ANOINTMENT_L.get()) };
 
 		for (int i = 0; i < suffixArray2.length; i++)
 		{

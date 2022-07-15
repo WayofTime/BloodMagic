@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:voiding_anointment"
+    },
+    {
+      "item": "bloodmagic:tauoil"
+    },
+    {
+      "item": "minecraft:netherrack"
+    },
+    {
+      "item": "minecraft:cobbled_deepslate"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:voiding_anointment_l"
+  },
+  "syphon": 1000,
+  "ticks": 100,
+  "upgradeLevel": 3
+}

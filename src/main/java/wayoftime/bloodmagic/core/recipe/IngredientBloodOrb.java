@@ -6,17 +6,15 @@ import java.util.stream.Stream;
 
 import com.google.gson.JsonObject;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
 import net.minecraftforge.common.crafting.VanillaIngredientSerializer;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.core.registry.OrbRegistry;
 import wayoftime.bloodmagic.common.item.BloodOrb;
-
-import net.minecraft.world.item.crafting.Ingredient.Value;
+import wayoftime.bloodmagic.core.registry.OrbRegistry;
 
 public class IngredientBloodOrb extends Ingredient
 {

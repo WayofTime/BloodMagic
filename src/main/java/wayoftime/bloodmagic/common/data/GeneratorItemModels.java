@@ -148,6 +148,7 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerMultiLayerItem(BloodMagicItems.LOOTING_ANOINTMENT_L.get(), modLoc("item/alchemic_liquid"), modLoc("item/labeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
 		registerMultiLayerItem(BloodMagicItems.BOW_POWER_ANOINTMENT_L.get(), modLoc("item/alchemic_liquid"), modLoc("item/labeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
 		registerMultiLayerItem(BloodMagicItems.SMELTING_ANOINTMENT_L.get(), modLoc("item/alchemic_liquid"), modLoc("item/labeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.VOIDING_ANOINTMENT_L.get(), modLoc("item/alchemic_liquid"), modLoc("item/labeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
 		registerMultiLayerItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT_L.get(), modLoc("item/alchemic_liquid"), modLoc("item/labeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
 
 		registerMultiLayerItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_2.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_two"));
@@ -168,6 +169,7 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerMultiLayerItem(BloodMagicItems.LOOTING_ANOINTMENT_XL.get(), modLoc("item/alchemic_liquid"), modLoc("item/greenlabeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
 		registerMultiLayerItem(BloodMagicItems.BOW_POWER_ANOINTMENT_XL.get(), modLoc("item/alchemic_liquid"), modLoc("item/greenlabeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
 		registerMultiLayerItem(BloodMagicItems.SMELTING_ANOINTMENT_XL.get(), modLoc("item/alchemic_liquid"), modLoc("item/greenlabeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
+		registerMultiLayerItem(BloodMagicItems.VOIDING_ANOINTMENT_XL.get(), modLoc("item/alchemic_liquid"), modLoc("item/greenlabeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
 		registerMultiLayerItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT_XL.get(), modLoc("item/alchemic_liquid"), modLoc("item/greenlabeledalchemic_vial"), modLoc("item/alchemic_ribbon"));
 
 		registerMultiLayerItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_3.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon_three"));

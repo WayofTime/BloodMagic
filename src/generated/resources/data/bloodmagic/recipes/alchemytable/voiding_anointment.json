@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:slate_vial"
+    },
+    {
+      "tag": "forge:crops/nether_wart"
+    },
+    {
+      "item": "minecraft:netherrack"
+    },
+    {
+      "item": "minecraft:cobbled_deepslate"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:voiding_anointment"
+  },
+  "syphon": 500,
+  "ticks": 100,
+  "upgradeLevel": 1
+}
