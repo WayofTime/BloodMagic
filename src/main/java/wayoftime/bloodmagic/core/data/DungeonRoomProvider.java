@@ -51,16 +51,16 @@ public class DungeonRoomProvider implements DataProvider
 		miniDungeonRooms.put(ModDungeons.MINI_LIBRARY, 1);
 
 		Map<ResourceLocation, Integer> standardDungeonRooms = new TreeMap<>();
-		standardDungeonRooms.put(ModDungeons.ORE_HOLD_1, 1);
-		standardDungeonRooms.put(ModDungeons.CHALLENGE_TOWER, 1);
-		standardDungeonRooms.put(ModDungeons.BIG_LIBRARY, 1);
-		standardDungeonRooms.put(ModDungeons.SMALL_CRANE, 3);
+		standardDungeonRooms.put(ModDungeons.ORE_HOLD_1, 2);
+		standardDungeonRooms.put(ModDungeons.CHALLENGE_TOWER, 2);
+		standardDungeonRooms.put(ModDungeons.BIG_LIBRARY, 2);
+		standardDungeonRooms.put(ModDungeons.SMALL_CRANE, 4);
 		standardDungeonRooms.put(ModDungeons.SMALL_LIBRARY, 3);
 		standardDungeonRooms.put(ModDungeons.TALL_SPIRAL, 1);
 		standardDungeonRooms.put(ModDungeons.SMALL_SMITHY, 3);
-		standardDungeonRooms.put(ModDungeons.SMALL_ARENA, 3);
-		standardDungeonRooms.put(ModDungeons.ANTECHAMBER, 1);
-		standardDungeonRooms.put(ModDungeons.DESTROYED_END_PORTAL, 2);
+		standardDungeonRooms.put(ModDungeons.SMALL_ARENA, 4);
+		standardDungeonRooms.put(ModDungeons.ANTECHAMBER, 2);
+		standardDungeonRooms.put(ModDungeons.DESTROYED_END_PORTAL, 1);
 		standardDungeonRooms.put(ModDungeons.AUG_CORRIDOR_LOOT, 3);
 
 //		standardDungeonRooms.put(ModDungeons.WATER_WAY, 1);
@@ -75,6 +75,7 @@ public class DungeonRoomProvider implements DataProvider
 		mineDungeonRooms.put(ModDungeons.MINE_BUILT_SHAFT, 2);
 		mineDungeonRooms.put(ModDungeons.MINE_NATURE_CROSSROAD, 3);
 		mineDungeonRooms.put(ModDungeons.MINE_WOLF_DEN, 2);
+		mineDungeonRooms.put(ModDungeons.MINE_ORE_CAVERN, 2);
 
 		// Corridor
 		Map<ResourceLocation, Integer> mineCorridors = new TreeMap<>();
@@ -375,8 +376,18 @@ public class DungeonRoomProvider implements DataProvider
 		mineWolfDen.addDoor(new BlockPos(0, 16, 19), Direction.WEST, "mine", 1);
 		addMinesRoomPools(mineWolfDen, 1);
 		mineWolfDen.registerDoorFill(1, new AreaDescriptor.Rectangle(new BlockPos(-2, -2, 0), 5, 5, 1));
-		mineWolfDen.oreDensity = 0.10f;
+		mineWolfDen.oreDensity = 0.1f;
 		mineWolfDen.addDeadendRoomPool(1, ModRoomPools.MINE_DEADEND);
+
+		DungeonRoom mineOreCavern = new DungeonRoom().addStructure("bloodmagic:standard/mine_ore_cavern", new BlockPos(0, 0, 0));
+		mineOreCavern.addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(23, 19, 25)));
+		mineOreCavern.addDoor(new BlockPos(15, 8, 0), Direction.NORTH, "mine", 1);
+		mineOreCavern.addDoor(new BlockPos(22, 2, 13), Direction.EAST, "mine", 1);
+		mineOreCavern.addDoor(new BlockPos(15, 8, 24), Direction.SOUTH, "mine", 1);
+		addMinesRoomPools(mineOreCavern, 1);
+		mineOreCavern.registerDoorFill(1, new AreaDescriptor.Rectangle(new BlockPos(-2, -2, 0), 5, 5, 1));
+		mineOreCavern.oreDensity = 0.1f;
+		mineOreCavern.addDeadendRoomPool(1, ModRoomPools.MINE_DEADEND);
 
 		DungeonRoom defaultDeadend = new DungeonRoom().addStructure("bloodmagic:standard/default_deadend", new BlockPos(0, 0, 0)).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(7, 6, 7)));
 		defaultDeadend.addDoor(new BlockPos(3, 0, 0), Direction.NORTH, "default", 1);
@@ -452,6 +463,7 @@ public class DungeonRoomProvider implements DataProvider
 		addDungeonRoom(cache, mineBuiltShaft, ModDungeons.MINE_BUILT_SHAFT);
 		addDungeonRoom(cache, mineNatureCrossroad, ModDungeons.MINE_NATURE_CROSSROAD);
 		addDungeonRoom(cache, mineWolfDen, ModDungeons.MINE_WOLF_DEN);
+		addDungeonRoom(cache, mineOreCavern, ModDungeons.MINE_ORE_CAVERN);
 
 		addDungeonRoom(cache, mineStraightCorridor, ModDungeons.MINE_STRAIGHT_CORRIDOR);
 		addDungeonRoom(cache, mineBentCorridor, ModDungeons.MINE_BENT_CORRIDOR);

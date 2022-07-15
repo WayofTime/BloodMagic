@@ -49,7 +49,7 @@ public class ModRoomPools
 
 	public static void registerSpecialRooms()
 	{
-		SpecialDungeonRoomPoolRegistry.registerUniqueRoomPool(MINE_ENTRANCES, 1, 0, BloodMagicBlocks.SPECIAL_DUNGEON_SEAL.get().defaultBlockState().setValue(BlockSpecialDungeonSeal.SEAL, SpecialSealType.MINE_ENTRANCE));
+		SpecialDungeonRoomPoolRegistry.registerUniqueRoomPool(MINE_ENTRANCES, 1, 4, BloodMagicBlocks.SPECIAL_DUNGEON_SEAL.get().defaultBlockState().setValue(BlockSpecialDungeonSeal.SEAL, SpecialSealType.MINE_ENTRANCE));
 		SpecialDungeonRoomPoolRegistry.registerUniqueRoomPool(MINE_KEY, 1, 6, BloodMagicBlocks.SPECIAL_DUNGEON_SEAL.get().defaultBlockState().setValue(BlockSpecialDungeonSeal.SEAL, SpecialSealType.MINE_KEY));
 	}
 }
