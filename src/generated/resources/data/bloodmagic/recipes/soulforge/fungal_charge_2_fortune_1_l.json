@@ -1,0 +1,15 @@
+{
+  "type": "bloodmagic:soulforge",
+  "input0": {
+    "item": "bloodmagic:fungal_charge_2"
+  },
+  "input1": {
+    "item": "bloodmagic:fortune_anointment_l"
+  },
+  "output": {
+    "item": "bloodmagic:fungal_charge_2",
+    "nbt": "{anointment_holder:{anointments:[{damage:1,key:\"bloodmagic:fortune\",level:1,max_damage:1}]}}"
+  },
+  "minimumDrain": 300.0,
+  "drain": 4.0
+}

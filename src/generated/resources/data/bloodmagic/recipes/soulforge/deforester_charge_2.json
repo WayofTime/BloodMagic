@@ -7,14 +7,14 @@
     "item": "minecraft:charcoal"
   },
   "input2": {
-    "tag": "forge:sand"
+    "tag": "minecraft:logs"
   },
   "input3": {
-    "item": "minecraft:brick"
+    "tag": "minecraft:planks"
   },
   "output": {
-    "item": "bloodmagic:aug_shaped_charge",
-    "count": 6
+    "item": "bloodmagic:deforester_charge_2",
+    "count": 4
   },
   "minimumDrain": 80.0,
   "drain": 2.5

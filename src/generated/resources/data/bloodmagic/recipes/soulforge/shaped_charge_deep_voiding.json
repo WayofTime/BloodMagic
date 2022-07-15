@@ -4,7 +4,7 @@
     "item": "bloodmagic:shaped_charge_deep"
   },
   "input1": {
-    "item": "bloodmagic:voiding_anointment"
+    "item": "bloodmagic:voiding_anointment_l"
   },
   "output": {
     "item": "bloodmagic:shaped_charge_deep",

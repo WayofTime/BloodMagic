@@ -1,0 +1,12 @@
+{
+  "parent": "bloodmagic:block/sub/augment_shaped_charge",
+  "textures": {
+    "1": "minecraft:block/crimson_planks",
+    "3": "minecraft:block/nether_wart_block",
+    "4": "bloodmagic:block/blankrune",
+    "5": "minecraft:block/crimson_stem",
+    "2": "bloodmagic:models/defaultcrystal",
+    "7": "bloodmagic:models/copper_trim",
+    "particle": "bloodmagic:models/defaultcrystal"
+  }
+}

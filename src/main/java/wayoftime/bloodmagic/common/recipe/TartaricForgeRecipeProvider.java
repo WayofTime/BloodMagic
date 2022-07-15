@@ -7,6 +7,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.anointment.AnointmentData;
@@ -59,7 +60,10 @@ public class TartaricForgeRecipeProvider implements ISubRecipeProvider
 		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicBlocks.VEINMINE_CHARGE.get(), 8), 10, 0.5, Ingredient.of(Tags.Items.COBBLESTONE), Ingredient.of(Items.CHARCOAL), Ingredient.of(Tags.Items.SANDSTONE), Ingredient.of(Tags.Items.SAND)).build(consumer, BloodMagic.rl(basePath + "vein_charge"));
 		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicBlocks.FUNGAL_CHARGE.get(), 8), 10, 0.5, Ingredient.of(Tags.Items.COBBLESTONE), Ingredient.of(Items.CHARCOAL), Ingredient.of(BloodMagicTags.MUSHROOM_HYPHAE), Ingredient.of(Tags.Items.MUSHROOMS)).build(consumer, BloodMagic.rl(basePath + "fungal_charge"));
 
+		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicBlocks.DEFORESTER_CHARGE_2.get(), 4), 80, 2.5, Ingredient.of(Tags.Items.STORAGE_BLOCKS_COPPER), Ingredient.of(Items.CHARCOAL), Ingredient.of(ItemTags.LOGS), Ingredient.of(ItemTags.PLANKS)).build(consumer, BloodMagic.rl(basePath + "deforester_charge_2"));
 		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicBlocks.VEINMINE_CHARGE_2.get(), 4), 80, 2.5, Ingredient.of(Tags.Items.STORAGE_BLOCKS_COPPER), Ingredient.of(Items.CHARCOAL), Ingredient.of(Tags.Items.SANDSTONE), Ingredient.of(Tags.Items.SAND)).build(consumer, BloodMagic.rl(basePath + "vein_charge_2"));
+		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicBlocks.FUNGAL_CHARGE_2.get(), 4), 80, 2.5, Ingredient.of(Tags.Items.STORAGE_BLOCKS_COPPER), Ingredient.of(Items.CHARCOAL), Ingredient.of(BloodMagicTags.MUSHROOM_HYPHAE), Ingredient.of(Tags.Items.MUSHROOMS)).build(consumer, BloodMagic.rl(basePath + "fungal_charge_2"));
+		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicBlocks.AUG_SHAPED_CHARGE.get(), 6), 80, 2.5, Ingredient.of(Tags.Items.STORAGE_BLOCKS_COPPER), Ingredient.of(Items.CHARCOAL), Ingredient.of(Tags.Items.SAND), Ingredient.of(Items.BRICK)).build(consumer, BloodMagic.rl(basePath + "aug_shaped_charge"));
 		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicBlocks.SHAPED_CHARGE_DEEP.get(), 4), 80, 2.5, Ingredient.of(Tags.Items.STORAGE_BLOCKS_COPPER), Ingredient.of(Items.CHARCOAL), Ingredient.of(Tags.Items.SAND), Ingredient.of(Tags.Items.STONE)).build(consumer, BloodMagic.rl(basePath + "shaped_charge_deep"));
 
 		ItemStack stack = new ItemStack(BloodMagicBlocks.DEFORESTER_CHARGE.get());
@@ -80,14 +84,18 @@ public class TartaricForgeRecipeProvider implements ISubRecipeProvider
 
 //		smeltingHolder.toItemStack(stack);
 
-		String[] suffixArray = new String[] { "_smelting", "_fortune_1", "_silk_touch" };
-		AnointmentHolder[] holderArray = new AnointmentHolder[] { smeltingHolder, fortune1Holder, silkHolder };
+		String[] suffixArray = new String[] { "_smelting", "_fortune_1", "_silk_touch", "_voiding" };
+		AnointmentHolder[] holderArray = new AnointmentHolder[] { smeltingHolder, fortune1Holder, silkHolder,
+				voidHolder };
 		Ingredient[] firstIngredientArray = new Ingredient[] { Ingredient.of(Tags.Items.CROPS_NETHER_WART),
-				Ingredient.of(Tags.Items.CROPS_NETHER_WART), Ingredient.of(Tags.Items.CROPS_NETHER_WART) };
+				Ingredient.of(Tags.Items.CROPS_NETHER_WART), Ingredient.of(Tags.Items.CROPS_NETHER_WART),
+				Ingredient.of(Tags.Items.CROPS_NETHER_WART) };
 		Ingredient[] secondIngredientArray = new Ingredient[] { Ingredient.of(Items.FURNACE),
-				Ingredient.of(Tags.Items.DUSTS_REDSTONE), Ingredient.of(Items.COBWEB) };
+				Ingredient.of(Tags.Items.DUSTS_REDSTONE), Ingredient.of(Items.COBWEB),
+				Ingredient.of(Blocks.NETHERRACK) };
 		Ingredient[] thirdIngredientArray = new Ingredient[] { Ingredient.of(Items.CHARCOAL, Items.COAL),
-				Ingredient.of(BloodMagicTags.DUST_COAL), Ingredient.of(Tags.Items.NUGGETS_GOLD) };
+				Ingredient.of(BloodMagicTags.DUST_COAL), Ingredient.of(Tags.Items.NUGGETS_GOLD),
+				Ingredient.of(Blocks.COBBLED_DEEPSLATE) };
 
 		for (int i = 0; i < suffixArray.length; i++)
 		{
@@ -121,14 +129,23 @@ public class TartaricForgeRecipeProvider implements ISubRecipeProvider
 
 		for (int i = 0; i < suffixArray2.length; i++)
 		{
+			ItemStack deforester2Stack = new ItemStack(BloodMagicBlocks.DEFORESTER_CHARGE_2.get());
 			ItemStack vein2Stack = new ItemStack(BloodMagicBlocks.VEINMINE_CHARGE_2.get());
+			ItemStack fungal2Stack = new ItemStack(BloodMagicBlocks.FUNGAL_CHARGE_2.get());
 			ItemStack shapedChargeDeepStack = new ItemStack(BloodMagicBlocks.SHAPED_CHARGE_DEEP.get());
+			ItemStack augShapedStack = new ItemStack(BloodMagicBlocks.AUG_SHAPED_CHARGE.get());
 			AnointmentHolder holder = holderArray2[i];
+			holder.toItemStack(deforester2Stack);
 			holder.toItemStack(vein2Stack);
+			holder.toItemStack(fungal2Stack);
 			holder.toItemStack(shapedChargeDeepStack);
+			holder.toItemStack(augShapedStack);
 
+			TartaricForgeRecipeBuilder.tartaricForge(deforester2Stack, 300, 4, Ingredient.of(BloodMagicBlocks.DEFORESTER_CHARGE_2.get()), ingredientArray2[i]).build(consumer, BloodMagic.rl(basePath + "deforester_charge_2" + suffixArray2[i]));
 			TartaricForgeRecipeBuilder.tartaricForge(vein2Stack, 300, 4, Ingredient.of(BloodMagicBlocks.VEINMINE_CHARGE_2.get()), ingredientArray2[i]).build(consumer, BloodMagic.rl(basePath + "vein_charge_2" + suffixArray2[i]));
+			TartaricForgeRecipeBuilder.tartaricForge(fungal2Stack, 300, 4, Ingredient.of(BloodMagicBlocks.FUNGAL_CHARGE_2.get()), ingredientArray2[i]).build(consumer, BloodMagic.rl(basePath + "fungal_charge_2" + suffixArray2[i]));
 			TartaricForgeRecipeBuilder.tartaricForge(shapedChargeDeepStack, 300, 4, Ingredient.of(BloodMagicBlocks.SHAPED_CHARGE_DEEP.get()), ingredientArray2[i]).build(consumer, BloodMagic.rl(basePath + "shaped_charge_deep" + suffixArray2[i]));
+			TartaricForgeRecipeBuilder.tartaricForge(augShapedStack, 300, 4, Ingredient.of(BloodMagicBlocks.AUG_SHAPED_CHARGE.get()), ingredientArray2[i]).build(consumer, BloodMagic.rl(basePath + "aug_shaped_charge" + suffixArray2[i]));
 
 		}
 

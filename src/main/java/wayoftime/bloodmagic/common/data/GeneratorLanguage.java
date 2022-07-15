@@ -616,7 +616,9 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.VEINMINE_CHARGE, "Controlled Charge");
 		addBlock(BloodMagicBlocks.FUNGAL_CHARGE, "Fungal Charge");
 
+		addBlock(BloodMagicBlocks.DEFORESTER_CHARGE_2, "Deforester Charge II");
 		addBlock(BloodMagicBlocks.VEINMINE_CHARGE_2, "Controlled Charge II");
+		addBlock(BloodMagicBlocks.FUNGAL_CHARGE_2, "Fungal Charge II");
 		addBlock(BloodMagicBlocks.SHAPED_CHARGE_DEEP, "Tunneling Shaped Charge");
 		addBlock(BloodMagicBlocks.AUG_SHAPED_CHARGE, "Augmented Shaped Charge");
 

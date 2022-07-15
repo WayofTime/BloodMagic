@@ -118,8 +118,13 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerBlockModel(BloodMagicBlocks.FUNGAL_CHARGE.get());
 
 		registerBlockModel(BloodMagicBlocks.AUG_SHAPED_CHARGE.get());
+		registerBlockModel(BloodMagicBlocks.DEFORESTER_CHARGE_2.get());
 		registerBlockModel(BloodMagicBlocks.VEINMINE_CHARGE_2.get());
+		registerBlockModel(BloodMagicBlocks.FUNGAL_CHARGE_2.get());
 		registerBlockModel(BloodMagicBlocks.SHAPED_CHARGE_DEEP.get());
+
+		registerBlockModel(BloodMagicBlocks.INVERSION_PILLAR.get());
+		registerBlockModel(BloodMagicBlocks.INVERSION_PILLAR_CAP.get());
 
 //		registerBlockModel(BloodMagicBlocks.INVERSION_PILLAR.get());
 
