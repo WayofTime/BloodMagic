@@ -12,8 +12,7 @@ public enum ComponentType
 	BEACON,
 	BLOODRUNE,
 	CRYSTAL,
-	NOTAIR,
-	HELLFORGED;
+	NOTAIR;
 
 	private static final String BASE = "chat.bloodmagic.altar.comp.";
 	private String key;

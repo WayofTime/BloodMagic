@@ -103,14 +103,14 @@ public enum AltarTier
 		public void buildComponents(Consumer<AltarComponent> components)
 		{
 			FOUR.getAltarComponents().forEach(components);
-			components.accept(new AltarComponent(new BlockPos(-8, -3, 8), ComponentType.BEACON));
-			components.accept(new AltarComponent(new BlockPos(-8, -3, -8), ComponentType.BEACON));
-			components.accept(new AltarComponent(new BlockPos(8, -3, -8), ComponentType.BEACON));
-			components.accept(new AltarComponent(new BlockPos(8, -3, 8), ComponentType.BEACON));
-//			components.accept(new AltarComponent(new BlockPos(-8, -4, 8), ComponentType.HELLFORGED));
-//			components.accept(new AltarComponent(new BlockPos(-8, -4, -8), ComponentType.HELLFORGED));
-//			components.accept(new AltarComponent(new BlockPos(8, -4, -8), ComponentType.HELLFORGED));
-//			components.accept(new AltarComponent(new BlockPos(8, -4, 8), ComponentType.HELLFORGED));
+//			components.accept(new AltarComponent(new BlockPos(-8, -3, 8), ComponentType.BEACON));
+//			components.accept(new AltarComponent(new BlockPos(-8, -3, -8), ComponentType.BEACON));
+//			components.accept(new AltarComponent(new BlockPos(8, -3, -8), ComponentType.BEACON));
+//			components.accept(new AltarComponent(new BlockPos(8, -3, 8), ComponentType.BEACON));
+			components.accept(new AltarComponent(new BlockPos(-8, -4, 8), ComponentType.BEACON));
+			components.accept(new AltarComponent(new BlockPos(-8, -4, -8), ComponentType.BEACON));
+			components.accept(new AltarComponent(new BlockPos(8, -4, -8), ComponentType.BEACON));
+			components.accept(new AltarComponent(new BlockPos(8, -4, 8), ComponentType.BEACON));
 
 			for (int i = -6; i <= 6; i++)
 			{

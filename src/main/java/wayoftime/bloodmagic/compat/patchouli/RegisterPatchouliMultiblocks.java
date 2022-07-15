@@ -121,7 +121,7 @@ public class RegisterPatchouliMultiblocks
 			BMStateMatcher glowstoneSM = new BMStateMatcher(bmAPI.getComponentStates(ComponentType.GLOWSTONE));
 			BMStateMatcher bloodStoneSM = new BMStateMatcher(bmAPI.getComponentStates(ComponentType.BLOODSTONE));
 			BMStateMatcher beaconSM = new BMStateMatcher(bmAPI.getComponentStates(ComponentType.BEACON));
-			BMStateMatcher hellforgedSM = new BMStateMatcher(bmAPI.getComponentStates(ComponentType.HELLFORGED));
+//			BMStateMatcher hellforgedSM = new BMStateMatcher(bmAPI.getComponentStates(ComponentType.HELL));
 			BMStateMatcher crystalSM = new BMStateMatcher(bmAPI.getComponentStates(ComponentType.CRYSTAL));
 
 			// @formatter:off
@@ -132,7 +132,7 @@ public class RegisterPatchouliMultiblocks
 					'G', glowstoneSM,
 					'S', bloodStoneSM,
 					'B', beaconSM,
-					'H', hellforgedSM,
+//					'H', hellforgedSM,
 					'C', crystalSM,
 					'r', blankBloodRuneSM,
 					'0', BloodMagicBlocks.BLOOD_ALTAR.get()
