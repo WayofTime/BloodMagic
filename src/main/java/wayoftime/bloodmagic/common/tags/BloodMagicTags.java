@@ -80,6 +80,9 @@ public class BloodMagicTags
 
 	public static final TagKey<Block> BLOCK_STONE_UNPOLISHED = BlockTags.create(new ResourceLocation("minecraft:stone_unpolished"));
 
+	// Raw
+	public static final TagKey<Item> RAW_HELLFORGED = getForgeRawTag("hellforged");
+
 	// Ingots
 	public static final TagKey<Item> INGOT_HELLFORGED = getForgeIngotTag("hellforged");
 
@@ -168,6 +171,11 @@ public class BloodMagicTags
 	public static TagKey<Item> getForgeIngotTag(String name)
 	{
 		return ItemTags.create(new ResourceLocation("forge:ingots/" + name));
+	}
+
+	public static TagKey<Item> getForgeRawTag(String name)
+	{
+		return ItemTags.create(new ResourceLocation("forge:raw_materials/" + name));
 	}
 
 	public static TagKey<Item> getBMDustTag(String name)

@@ -740,6 +740,10 @@ public class GeneratorLootTable extends LootTableProvider
 
 			registerNoDropLootTable(BloodMagicBlocks.INVERSION_PILLAR.get());
 			registerNoDropLootTable(BloodMagicBlocks.INVERSION_PILLAR_CAP.get());
+
+			add(BloodMagicBlocks.DUNGEON_ORE.get(), (block) -> {
+				return createOreDrop(block, BloodMagicItems.DEMONITE_RAW.get());
+			});
 		}
 
 		private void registerNoDropLootTable(Block block)

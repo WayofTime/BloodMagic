@@ -183,8 +183,8 @@ public class DungeonRoomProvider implements DataProvider
 		challengeTower.addNonstandardDoor(new BlockPos(12, 0, 0), Direction.NORTH, "none", 2, "default");
 		challengeTower.addNonstandardDoor(new BlockPos(12, 5, 24), Direction.SOUTH, "none", 2, "default");
 		challengeTower.addNonstandardDoor(new BlockPos(0, 17, 12), Direction.WEST, "none", 2, "default");
-		challengeTower.addNonstandardDoor(new BlockPos(24, 20, 12), Direction.EAST, "none", 2, "default");
-		challengeTower.addNonstandardDoor(new BlockPos(12, 24, 0), Direction.NORTH, "none", 2, "default");
+		challengeTower.addNonstandardDoor(new BlockPos(24, 25, 12), Direction.EAST, "none", 2, "default");
+		challengeTower.addNonstandardDoor(new BlockPos(12, 29, 0), Direction.NORTH, "none", 2, "default");
 		challengeTower.addNormalRoomPool(1, ModRoomPools.STANDARD_ROOMS);
 		challengeTower.addNormalRoomPool(2, ModRoomPools.STANDARD_ROOMS);
 		addDefaultSpecialRoomPools(challengeTower, 2);

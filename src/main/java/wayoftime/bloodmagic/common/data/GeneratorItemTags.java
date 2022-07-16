@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
@@ -25,6 +26,7 @@ public class GeneratorItemTags extends ItemTagsProvider
 	public void addTags()
 	{
 		registerIngots();
+		registerRaw();
 		registerOres();
 		registerDusts();
 		registerFragments();
@@ -69,6 +71,13 @@ public class GeneratorItemTags extends ItemTagsProvider
 	private void registerIngots()
 	{
 		tag(BloodMagicTags.INGOT_HELLFORGED).add(BloodMagicItems.HELLFORGED_INGOT.get());
+		tag(Tags.Items.INGOTS).addTag(BloodMagicTags.INGOT_HELLFORGED);
+	}
+
+	private void registerRaw()
+	{
+		tag(BloodMagicTags.RAW_HELLFORGED).add(BloodMagicItems.DEMONITE_RAW.get());
+		tag(Tags.Items.RAW_MATERIALS).addTag(BloodMagicTags.RAW_HELLFORGED);
 	}
 
 	private void registerOres()

@@ -409,6 +409,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> HELLFORGED_SAND = BASICITEMS.register("sand_hellforged", () -> new ItemBase());
 
 	// Dungeons
+	public static final RegistryObject<Item> DEMONITE_RAW = BASICITEMS.register("rawdemonite", () -> new ItemBase());
 	public static final RegistryObject<Item> HELLFORGED_INGOT = BASICITEMS.register("ingot_hellforged", () -> new ItemBase());
 
 	public static final RegistryObject<Item> DUNGEON_BRICK_1_BLOCK = ITEMS.register("dungeon_brick1", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_1.get(), new Item.Properties().tab(BloodMagic.TAB)));

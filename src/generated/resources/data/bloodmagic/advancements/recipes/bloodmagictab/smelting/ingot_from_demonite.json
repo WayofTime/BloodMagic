@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:smelting/ingot_from_demonite"
+    ]
+  },
+  "criteria": {
+    "has_demonite": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bloodmagic:dungeon_ore"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:smelting/ingot_from_demonite"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_demonite",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -773,6 +773,7 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addItem(BloodMagicItems.FRAME_PARTS, "Filter Parts");
 
+		addItem(BloodMagicItems.DEMONITE_RAW, "Raw Demonite");
 		addItem(BloodMagicItems.HELLFORGED_SAND, "Hellforged Dust");
 		addItem(BloodMagicItems.CORRUPTED_DUST_TINY, "Tiny Corrupted Dust");
 		addItem(BloodMagicItems.CORRUPTED_DUST, "Corrupted Dust");

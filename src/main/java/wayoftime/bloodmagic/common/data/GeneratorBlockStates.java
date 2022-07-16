@@ -103,6 +103,7 @@ public class GeneratorBlockStates extends BlockStateProvider
 		buildPillarCap(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get(), BloodMagic.rl("block/dungeon/dungeon_pillarheart"), BloodMagic.rl("block/dungeon/dungeon_pillarbottom"), BloodMagic.rl("block/dungeon/dungeon_pillartop"));
 
 		buildAssortedBlock(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get(), modLoc("dungeon_brick1"), modLoc("dungeon_brick2"), modLoc("dungeon_brick3"));
+		buildDungeonBlock(BloodMagicBlocks.DUNGEON_ORE.get());
 
 		buildCubeAllWithTextureName("etherealopaquemimic");
 		buildCubeAllWithTextureName("sentientmimic");

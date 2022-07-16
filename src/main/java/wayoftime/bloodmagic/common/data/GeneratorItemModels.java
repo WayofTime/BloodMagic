@@ -87,6 +87,8 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerBlockModel(BloodMagicBlocks.DUNGEON_SEAL.get());
 		registerCustomBlockPath(BloodMagicBlocks.SPECIAL_DUNGEON_SEAL.get(), "special_dungeon_seal_standard");
 
+		registerBlockModel(BloodMagicBlocks.DUNGEON_ORE.get());
+
 		registerBlockModel(BloodMagicBlocks.TELEPOSER.get());
 
 		registerToggleableItem(BloodMagicItems.GREEN_GROVE_SIGIL.get());
