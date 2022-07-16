@@ -762,6 +762,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.THROWING_DAGGER, "Iron Throwing Dagger");
 		addItem(BloodMagicItems.THROWING_DAGGER_SYRINGE, "Syringe Throwing Dagger");
 		addItem(BloodMagicItems.THROWING_DAGGER_COPPER, "Amethyst Throwing Dagger");
+		addItem(BloodMagicItems.THROWING_DAGGER_COPPER_POTION, "Tipped Amethyst Throwing Dagger");
 		addItem(BloodMagicItems.SLATE_AMPOULE, "Slate Ampoule");
 
 		addItem(BloodMagicItems.NODE_ROUTER, "Node Router");
