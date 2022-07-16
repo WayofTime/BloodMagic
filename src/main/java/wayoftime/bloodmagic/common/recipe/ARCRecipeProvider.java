@@ -69,18 +69,21 @@ public class ARCRecipeProvider implements ISubRecipeProvider
 		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.ORES_IRON), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.IRON_SAND.get(), 3), null).build(consumer, BloodMagic.rl(basePath + "from_ore_iron"));
 		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.ORES_GOLD), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.GOLD_SAND.get(), 3), null).build(consumer, BloodMagic.rl(basePath + "from_ore_gold"));
 		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.ORES_COPPER), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.COPPER_SAND.get(), 3), null).build(consumer, BloodMagic.rl(basePath + "from_ore_copper"));
+		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.ORE_HELLFORGED), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.HELLFORGED_SAND.get(), 3), null).build(consumer, BloodMagic.rl(basePath + "from_ore_hellforged"));
 		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.ORES_NETHERITE_SCRAP), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.NETHERITE_SCRAP_SAND.get(), 2), null).build(consumer, BloodMagic.rl(basePath + "from_ore_netherite_scrap"));
 
 		// Ingot to dust
 		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.INGOTS_IRON), Ingredient.of(BloodMagicTags.ARC_TOOL_EXPLOSIVE), null, new ItemStack(BloodMagicItems.IRON_SAND.get()), null).build(consumer, BloodMagic.rl(basePath + "from_ingot_iron"));
 		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.INGOTS_GOLD), Ingredient.of(BloodMagicTags.ARC_TOOL_EXPLOSIVE), null, new ItemStack(BloodMagicItems.GOLD_SAND.get()), null).build(consumer, BloodMagic.rl(basePath + "from_ingot_gold"));
 		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.INGOTS_COPPER), Ingredient.of(BloodMagicTags.ARC_TOOL_EXPLOSIVE), null, new ItemStack(BloodMagicItems.COPPER_SAND.get()), null).build(consumer, BloodMagic.rl(basePath + "from_ingot_copper"));
+		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.INGOT_HELLFORGED), Ingredient.of(BloodMagicTags.ARC_TOOL_EXPLOSIVE), null, new ItemStack(BloodMagicItems.HELLFORGED_SAND.get()), null).build(consumer, BloodMagic.rl(basePath + "from_ingot_hellforged"));
 		ARCRecipeBuilder.arc(Ingredient.of(Items.NETHERITE_SCRAP), Ingredient.of(BloodMagicTags.ARC_TOOL_EXPLOSIVE), null, new ItemStack(BloodMagicItems.NETHERITE_SCRAP_SAND.get()), null).build(consumer, BloodMagic.rl(basePath + "from_ingot_netherite_scrap"));
 
 		// Gravel to dust
 		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.GRAVEL_IRON), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.IRON_SAND.get()), null).build(consumer, BloodMagic.rl(basePath + "from_gravel_iron"));
 		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.GRAVEL_GOLD), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.GOLD_SAND.get()), null).build(consumer, BloodMagic.rl(basePath + "from_gravel_gold"));
 		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.GRAVEL_COPPER), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.COPPER_SAND.get()), null).build(consumer, BloodMagic.rl(basePath + "from_gravel_copper"));
+		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.GRAVEL_DEMONITE), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.HELLFORGED_SAND.get()), null).build(consumer, BloodMagic.rl(basePath + "from_gravel_hellforged"));
 		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.GRAVEL_NETHERITE_SCRAP), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.NETHERITE_SCRAP_SAND.get()), null).build(consumer, BloodMagic.rl(basePath + "from_gravel_netherite_scrap"));
 	}
 
@@ -95,6 +98,7 @@ public class ARCRecipeProvider implements ISubRecipeProvider
 		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.RAW_MATERIALS_IRON), Ingredient.of(BloodMagicTags.ARC_TOOL_EXPLOSIVE), null, new ItemStack(BloodMagicItems.IRON_FRAGMENT.get(), 2), null).addRandomOutput(new ItemStack(BloodMagicItems.IRON_FRAGMENT.get()), rawToFragmentExtra).build(consumer, BloodMagic.rl(basePath + "iron"));
 		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.RAW_MATERIALS_GOLD), Ingredient.of(BloodMagicTags.ARC_TOOL_EXPLOSIVE), null, new ItemStack(BloodMagicItems.GOLD_FRAGMENT.get(), 2), null).addRandomOutput(new ItemStack(BloodMagicItems.GOLD_FRAGMENT.get()), rawToFragmentExtra).build(consumer, BloodMagic.rl(basePath + "gold"));
 		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.RAW_MATERIALS_COPPER), Ingredient.of(BloodMagicTags.ARC_TOOL_EXPLOSIVE), null, new ItemStack(BloodMagicItems.COPPER_FRAGMENT.get(), 2), null).addRandomOutput(new ItemStack(BloodMagicItems.COPPER_FRAGMENT.get()), rawToFragmentExtra).build(consumer, BloodMagic.rl(basePath + "copper"));
+		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.RAW_HELLFORGED), Ingredient.of(BloodMagicTags.ARC_TOOL_EXPLOSIVE), null, new ItemStack(BloodMagicItems.DEMONITE_FRAGMENT.get(), 2), null).addRandomOutput(new ItemStack(BloodMagicItems.DEMONITE_FRAGMENT.get()), rawToFragmentExtra).build(consumer, BloodMagic.rl(basePath + "hellforged"));
 
 		// ore to fragment: 4.5x
 		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.ORES_IRON), Ingredient.of(BloodMagicTags.ARC_TOOL_EXPLOSIVE), null, new ItemStack(BloodMagicItems.IRON_FRAGMENT.get(), 4), null).addRandomOutput(new ItemStack(BloodMagicItems.IRON_FRAGMENT.get()), oreToFragmentExtra).build(consumer, BloodMagic.rl(basePath + "from_ore_iron"));
@@ -109,6 +113,7 @@ public class ARCRecipeProvider implements ISubRecipeProvider
 		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.FRAGMENT_IRON), Ingredient.of(BloodMagicTags.ARC_TOOL_RESONATOR), null, new ItemStack(BloodMagicItems.IRON_GRAVEL.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.5).build(consumer, BloodMagic.rl(basePath + "iron"));
 		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.FRAGMENT_GOLD), Ingredient.of(BloodMagicTags.ARC_TOOL_RESONATOR), null, new ItemStack(BloodMagicItems.GOLD_GRAVEL.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.5).build(consumer, BloodMagic.rl(basePath + "gold"));
 		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.FRAGMENT_COPPER), Ingredient.of(BloodMagicTags.ARC_TOOL_RESONATOR), null, new ItemStack(BloodMagicItems.COPPER_GRAVEL.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.25).build(consumer, BloodMagic.rl(basePath + "copper"));
+		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.FRAGMENT_DEMONITE), Ingredient.of(BloodMagicTags.ARC_TOOL_RESONATOR), null, new ItemStack(BloodMagicItems.DEMONITE_GRAVEL.get()), null).build(consumer, BloodMagic.rl(basePath + "hellforged"));
 		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicTags.FRAGMENT_NETHERITE_SCRAP), Ingredient.of(BloodMagicTags.ARC_TOOL_RESONATOR), null, new ItemStack(BloodMagicItems.NETHERITE_SCRAP_GRAVEL.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.5).addRandomOutput(new ItemStack(BloodMagicItems.CORRUPTED_DUST_TINY.get()), 0.5).build(consumer, BloodMagic.rl(basePath + "netherite_scrap"));
 	}
 

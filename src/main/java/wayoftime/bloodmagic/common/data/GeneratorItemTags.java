@@ -102,6 +102,7 @@ public class GeneratorItemTags extends ItemTagsProvider
 		tag(BloodMagicTags.ORE_TIN);
 		tag(BloodMagicTags.ORE_URANIUM);
 		tag(BloodMagicTags.ORE_ZINC);
+		tag(BloodMagicTags.ORE_HELLFORGED).add(BloodMagicItems.DUNGEON_ORE_BLOCK.get());
 	}
 
 	private void registerDusts()
@@ -122,6 +123,8 @@ public class GeneratorItemTags extends ItemTagsProvider
 		tag(BloodMagicTags.FRAGMENT_GOLD).add(BloodMagicItems.GOLD_FRAGMENT.get());
 		tag(BloodMagicTags.FRAGMENT_COPPER).add(BloodMagicItems.COPPER_FRAGMENT.get());
 		tag(BloodMagicTags.FRAGMENT_NETHERITE_SCRAP).add(BloodMagicItems.NETHERITE_SCRAP_FRAGMENT.get());
+		tag(BloodMagicTags.FRAGMENT_DEMONITE).add(BloodMagicItems.DEMONITE_FRAGMENT.get());
+		tag(BloodMagicTags.FRAGMENTS).addTag(BloodMagicTags.FRAGMENT_IRON).addTag(BloodMagicTags.FRAGMENT_GOLD).addTag(BloodMagicTags.FRAGMENT_COPPER).addTag(BloodMagicTags.FRAGMENT_NETHERITE_SCRAP).addTag(BloodMagicTags.FRAGMENT_DEMONITE);
 	}
 
 	private void registerGravels()
@@ -130,6 +133,8 @@ public class GeneratorItemTags extends ItemTagsProvider
 		tag(BloodMagicTags.GRAVEL_GOLD).add(BloodMagicItems.GOLD_GRAVEL.get());
 		tag(BloodMagicTags.GRAVEL_COPPER).add(BloodMagicItems.COPPER_GRAVEL.get());
 		tag(BloodMagicTags.GRAVEL_NETHERITE_SCRAP).add(BloodMagicItems.NETHERITE_SCRAP_GRAVEL.get());
+		tag(BloodMagicTags.GRAVEL_DEMONITE).add(BloodMagicItems.DEMONITE_GRAVEL.get());
+		tag(BloodMagicTags.GRAVELS).addTag(BloodMagicTags.GRAVEL_IRON).addTag(BloodMagicTags.GRAVEL_GOLD).addTag(BloodMagicTags.GRAVEL_COPPER).addTag(BloodMagicTags.GRAVEL_NETHERITE_SCRAP).addTag(BloodMagicTags.GRAVEL_DEMONITE);
 	}
 
 	private void registerFurnaceCells()

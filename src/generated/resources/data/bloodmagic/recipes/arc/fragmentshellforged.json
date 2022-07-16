@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:arc",
+  "input": {
+    "tag": "forge:raw_materials/hellforged"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc/explosive"
+  },
+  "addedoutput": [
+    {
+      "mainchance": 0.0,
+      "chance": 0.25,
+      "type": {
+        "item": "bloodmagic:demonitefragment"
+      }
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:demonitefragment",
+    "count": 2
+  },
+  "consumeingredient": false,
+  "mainoutputchance": 0.0
+}

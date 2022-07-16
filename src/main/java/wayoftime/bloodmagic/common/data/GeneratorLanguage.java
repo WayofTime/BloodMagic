@@ -874,11 +874,13 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.GOLD_FRAGMENT, "Gold Fragment");
 		addItem(BloodMagicItems.COPPER_FRAGMENT, "Copper Fragment");
 		addItem(BloodMagicItems.NETHERITE_SCRAP_FRAGMENT, "Ancient Debris Fragment");
+		addItem(BloodMagicItems.DEMONITE_FRAGMENT, "Demonite Fragment");
 
 		// Gravels
 		addItem(BloodMagicItems.IRON_GRAVEL, "Iron Gravel");
 		addItem(BloodMagicItems.GOLD_GRAVEL, "Gold Gravel");
 		addItem(BloodMagicItems.COPPER_GRAVEL, "Copper Gravel");
+		addItem(BloodMagicItems.DEMONITE_GRAVEL, "Demonite Gravel");
 		addItem(BloodMagicItems.NETHERITE_SCRAP_GRAVEL, "Ancient Debris Gravel");
 
 //		addItem(BloodMagicItems , "");

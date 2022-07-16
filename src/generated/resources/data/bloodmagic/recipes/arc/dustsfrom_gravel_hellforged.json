@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:arc",
+  "input": {
+    "tag": "bloodmagic:gravels/hellforged"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc/cuttingfluid"
+  },
+  "output": {
+    "item": "bloodmagic:sand_hellforged"
+  },
+  "consumeingredient": false,
+  "mainoutputchance": 0.0
+}

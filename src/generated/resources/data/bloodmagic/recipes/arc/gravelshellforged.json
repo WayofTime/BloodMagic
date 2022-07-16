@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:arc",
+  "input": {
+    "tag": "bloodmagic:fragments/hellforged"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc/resonator"
+  },
+  "output": {
+    "item": "bloodmagic:demonitegravel"
+  },
+  "consumeingredient": false,
+  "mainoutputchance": 0.0
+}

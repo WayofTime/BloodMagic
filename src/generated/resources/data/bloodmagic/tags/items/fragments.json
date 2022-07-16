@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#bloodmagic:fragments/iron",
+    "#bloodmagic:fragments/gold",
+    "#bloodmagic:fragments/copper",
+    "#bloodmagic:fragments/netherite_scrap",
+    "#bloodmagic:fragments/hellforged"
+  ]
+}

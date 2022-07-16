@@ -80,6 +80,9 @@ public class BloodMagicTags
 
 	public static final TagKey<Block> BLOCK_STONE_UNPOLISHED = BlockTags.create(new ResourceLocation("minecraft:stone_unpolished"));
 
+	// Ore
+	public static final TagKey<Item> ORE_HELLFORGED = getForgeOreTag("hellforged");
+
 	// Raw
 	public static final TagKey<Item> RAW_HELLFORGED = getForgeRawTag("hellforged");
 
@@ -99,15 +102,19 @@ public class BloodMagicTags
 	public static final TagKey<Item> TINYDUST_CORRUPTED = getBMTinyDustTag("corrupted");
 
 	// Fragments
+	public static final TagKey<Item> FRAGMENTS = ItemTags.create(new ResourceLocation("bloodmagic:fragments"));
 	public static final TagKey<Item> FRAGMENT_IRON = getFragmentTag("iron");
 	public static final TagKey<Item> FRAGMENT_GOLD = getFragmentTag("gold");
 	public static final TagKey<Item> FRAGMENT_COPPER = getFragmentTag("copper");
+	public static final TagKey<Item> FRAGMENT_DEMONITE = getFragmentTag("hellforged");
 	public static final TagKey<Item> FRAGMENT_NETHERITE_SCRAP = getFragmentTag("netherite_scrap");
 
 	// Gravels
+	public static final TagKey<Item> GRAVELS = ItemTags.create(new ResourceLocation("bloodmagic:gravels"));
 	public static final TagKey<Item> GRAVEL_IRON = getGravelTag("iron");
 	public static final TagKey<Item> GRAVEL_GOLD = getGravelTag("gold");
 	public static final TagKey<Item> GRAVEL_COPPER = getGravelTag("copper");
+	public static final TagKey<Item> GRAVEL_DEMONITE = getGravelTag("hellforged");
 	public static final TagKey<Item> GRAVEL_NETHERITE_SCRAP = getGravelTag("netherite_scrap");
 
 	// Vanilla

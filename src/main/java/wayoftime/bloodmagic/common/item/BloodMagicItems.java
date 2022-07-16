@@ -391,12 +391,14 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> GOLD_FRAGMENT = BASICITEMS.register("goldfragment", () -> new ItemBase());
 	public static final RegistryObject<Item> COPPER_FRAGMENT = BASICITEMS.register("copperfragment", () -> new ItemBase());
 	public static final RegistryObject<Item> NETHERITE_SCRAP_FRAGMENT = BASICITEMS.register("fragment_netherite_scrap", () -> new ItemBase());
+	public static final RegistryObject<Item> DEMONITE_FRAGMENT = BASICITEMS.register("demonitefragment", () -> new ItemBase());
 
 	// Gravels
 	public static final RegistryObject<Item> IRON_GRAVEL = BASICITEMS.register("irongravel", () -> new ItemBase());
 	public static final RegistryObject<Item> GOLD_GRAVEL = BASICITEMS.register("goldgravel", () -> new ItemBase());
 	public static final RegistryObject<Item> COPPER_GRAVEL = BASICITEMS.register("coppergravel", () -> new ItemBase());
 	public static final RegistryObject<Item> NETHERITE_SCRAP_GRAVEL = BASICITEMS.register("gravel_netherite_scrap", () -> new ItemBase());
+	public static final RegistryObject<Item> DEMONITE_GRAVEL = BASICITEMS.register("demonitegravel", () -> new ItemBase());
 
 	// Sands
 	public static final RegistryObject<Item> IRON_SAND = BASICITEMS.register("ironsand", () -> new ItemBase());
