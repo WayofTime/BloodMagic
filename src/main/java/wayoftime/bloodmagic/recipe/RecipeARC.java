@@ -31,11 +31,11 @@ public class RecipeARC extends BloodMagicRecipe
 	private final Ingredient arc_tool;
 	private final FluidStackIngredient inputFluid;
 	@Nonnull
-	private final ItemStack output;
-	private final FluidStack outputFluid;
+	protected final ItemStack output;
+	protected final FluidStack outputFluid;
 	private final boolean consumeIngredient;
 
-	private final List<Pair<ItemStack, Pair<Double, Double>>> addedItems;
+	protected final List<Pair<ItemStack, Pair<Double, Double>>> addedItems;
 
 	public RecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, FluidStackIngredient inputFluid, ItemStack output, FluidStack outputFluid, boolean consumeIngredient)
 	{
@@ -165,6 +165,11 @@ public class RecipeARC extends BloodMagicRecipe
 		return consumeIngredient;
 	}
 
+	public boolean breakTool()
+	{
+		return true;
+	}
+
 	@Override
 	public void write(FriendlyByteBuf buffer)
 	{
@@ -195,7 +200,7 @@ public class RecipeARC extends BloodMagicRecipe
 	}
 
 	@Override
-	public RecipeSerializer<RecipeARC> getSerializer()
+	public RecipeSerializer<? extends RecipeARC> getSerializer()
 	{
 		return BloodMagicRecipeSerializers.ARC.getRecipeSerializer();
 	}

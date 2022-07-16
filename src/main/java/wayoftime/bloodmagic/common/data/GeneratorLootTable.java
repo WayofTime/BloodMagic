@@ -485,7 +485,7 @@ public class GeneratorLootTable extends LootTableProvider
 			fragmentLoot.add(LootItem.lootTableItem(BloodMagicItems.GOLD_FRAGMENT.get()).setWeight(15).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(8, 13))));
 			fragmentLoot.add(LootItem.lootTableItem(BloodMagicItems.NETHERITE_SCRAP_FRAGMENT.get()).setWeight(3).setQuality(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
 
-			LootPool.Builder miningOreLoot = LootPool.lootPool().setRolls(UniformGenerator.between(4, 6));
+			LootPool.Builder miningOreLoot = LootPool.lootPool().setRolls(UniformGenerator.between(3, 5));
 			miningOreLoot.add(LootItem.lootTableItem(Items.RAW_COPPER).setWeight(15).setQuality(-4).apply(SetItemCountFunction.setCount(UniformGenerator.between(12, 26))));
 			miningOreLoot.add(LootItem.lootTableItem(Items.RAW_IRON).setWeight(20).setQuality(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(10, 15))));
 			miningOreLoot.add(LootItem.lootTableItem(Items.RAW_GOLD).setWeight(16).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(7, 14))));
@@ -561,11 +561,11 @@ public class GeneratorLootTable extends LootTableProvider
 			acceptor.accept(BloodMagic.rl("chests/mines/smithy_loot"), LootTable.lootTable().withPool(fragmentLoot).withPool(minesSmithyLoot));
 
 			LootPool.Builder minesRawLoot = LootPool.lootPool().setRolls(UniformGenerator.between(1, 2));
-			minesRawLoot.add(LootItem.lootTableItem(Items.RAW_COPPER).setWeight(20).setQuality(-4).apply(SetItemCountFunction.setCount(UniformGenerator.between(12, 26))));
-			minesRawLoot.add(LootItem.lootTableItem(Items.RAW_IRON).setWeight(16).setQuality(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(10, 15))));
-			minesRawLoot.add(LootItem.lootTableItem(Items.RAW_GOLD).setWeight(14).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(7, 14))));
+			minesRawLoot.add(LootItem.lootTableItem(Items.RAW_COPPER).setWeight(20).setQuality(-4).apply(SetItemCountFunction.setCount(UniformGenerator.between(8, 20))));
+			minesRawLoot.add(LootItem.lootTableItem(Items.RAW_IRON).setWeight(16).setQuality(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 8))));
+			minesRawLoot.add(LootItem.lootTableItem(Items.RAW_GOLD).setWeight(14).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 7))));
 			minesRawLoot.add(LootItem.lootTableItem(Items.NETHERITE_SCRAP).setWeight(3).setQuality(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
-			minesRawLoot.add(LootItem.lootTableItem(BloodMagicItems.CORRUPTED_DUST.get()).setWeight(8).setQuality(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 7))));
+			minesRawLoot.add(LootItem.lootTableItem(BloodMagicItems.CORRUPTED_DUST.get()).setWeight(8).setQuality(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
 
 			LootPool.Builder minesDecentLoot = LootPool.lootPool().setRolls(UniformGenerator.between(3, 5));
 			minesDecentLoot.add(LootItem.lootTableItem(Items.COAL).setWeight(10).setQuality(-2).apply(SetItemCountFunction.setCount(UniformGenerator.between(12, 18))));

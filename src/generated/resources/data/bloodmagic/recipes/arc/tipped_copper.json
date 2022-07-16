@@ -1,0 +1,16 @@
+{
+  "type": "bloodmagic:arc_potion",
+  "input": {
+    "item": "bloodmagic:amethystthrowingdagger"
+  },
+  "inputsize": 8,
+  "tool": {
+    "item": "bloodmagic:alchemy_flask_lingering"
+  },
+  "output": {
+    "item": "bloodmagic:tippedamethystthrowingdagger",
+    "count": 8
+  },
+  "consumeingredient": false,
+  "mainoutputchance": 0.0
+}

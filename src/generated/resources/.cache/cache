@@ -1106,6 +1106,7 @@ cdc692c2777ab5a63022dbd73a3e12a430866025 data/bloodmagic/recipes/arc/reversion/o
 cc1f4e22fafacd5bca83919c89f9ee83b5e40586 data/bloodmagic/recipes/arc/reversion/self_sac.json
 dcee0841c16e20589de5ba1c235d1d00c7ef6d36 data/bloodmagic/recipes/arc/reversion/speed.json
 6e4772fc3280b118826c49ec4caa19062588bd46 data/bloodmagic/recipes/arc/reversion/weak_blood_orb.json
+517090aec6ed7c1fb550ef473d09b2a3a56bf143 data/bloodmagic/recipes/arc/tipped_copper.json
 5c941efb6a1f8e1ba32b7ffa4410ffe6ccfa31eb data/bloodmagic/recipes/arc/weakbloodshard_tau.json
 e1285ec51100f2336c1ea1a1a3057e74a0dd84d1 data/bloodmagic/recipes/array/airsigil.json
 d1ac23080f72f21adb5908befefe965ffb4efd4f data/bloodmagic/recipes/array/bloodlightsigil.json
@@ -1414,7 +1415,7 @@ a62b82e1f59284d230b4b983ffa4a4cecb288c0e data/bloodmagic/tags/items/arc/hydrate.
 9e65f916ad4ada75cbbe354bfb7bacd4bf6840f5 data/bloodmagic/tags/items/arc/resonator.json
 65326040c8974fcfcc8711d29040b4297ff55ec1 data/bloodmagic/tags/items/arc/reverter.json
 14fb88c612622be110e273818eee9512cd285d56 data/bloodmagic/tags/items/arc/sieve.json
-bcd2befe59cbb4931c8c9bed183d19b2a469e506 data/bloodmagic/tags/items/arc/tool.json
+58eef98379896f224a3868c47b4296dc757eaf87 data/bloodmagic/tags/items/arc/tool.json
 2bdc1397bd092d373f785f08a2befdce8c1c1e2e data/bloodmagic/tags/items/crystals/demon.json
 dab44ece8bcdf079b349fc4f49da67aafe9c4cf7 data/bloodmagic/tags/items/dusts/corrupted.json
 730f0aacdf446e9f4362de1f514192448684023f data/bloodmagic/tags/items/fragments.json

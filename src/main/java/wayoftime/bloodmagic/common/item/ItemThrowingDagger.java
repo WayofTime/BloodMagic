@@ -57,7 +57,7 @@ public class ItemThrowingDagger extends Item
 		AbstractEntityThrowingDagger dagger = new EntityThrowingDagger(stack, world, player);
 		dagger.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 3F, 0.5F);
 		dagger.setDamage(10);
-		dagger.setEffectsFromItem(stack);
+//		dagger.setEffectsFromItem(stack);
 		return dagger;
 	}
 

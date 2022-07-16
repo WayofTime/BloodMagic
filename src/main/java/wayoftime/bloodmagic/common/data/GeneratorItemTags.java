@@ -52,6 +52,7 @@ public class GeneratorItemTags extends ItemTagsProvider
 		this.tag(BloodMagicTags.ARC_TOOL).addTag(BloodMagicTags.ARC_TOOL_HYDRATE);
 		this.tag(BloodMagicTags.ARC_TOOL).addTag(BloodMagicTags.ARC_TOOL_RESONATOR);
 		this.tag(BloodMagicTags.ARC_TOOL).addTag(BloodMagicTags.ARC_TOOL_CUTTINGFLUID);
+		this.tag(BloodMagicTags.ARC_TOOL).add(BloodMagicItems.ALCHEMY_FLASK_LINGERING.get());
 
 		this.tag(BloodMagicTags.CRYSTAL_DEMON).add(BloodMagicItems.RAW_CRYSTAL.get());
 		this.tag(BloodMagicTags.CRYSTAL_DEMON).add(BloodMagicItems.CORROSIVE_CRYSTAL.get());

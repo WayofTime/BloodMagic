@@ -17,6 +17,7 @@ import net.minecraftforge.common.crafting.conditions.TagEmptyCondition;
 import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.common.data.recipe.builder.ARCPotionRecipeBuilder;
 import wayoftime.bloodmagic.common.data.recipe.builder.ARCRecipeBuilder;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
@@ -43,6 +44,8 @@ public class ARCRecipeProvider implements ISubRecipeProvider
 //		ARCRecipeBuilder.arc(Ingredient.fromItems(BloodMagicItems.IMBUED_SLATE.get()), Ingredient.fromTag(BloodMagicTags.ARC_TOOL_REVERTER), null, new ItemStack(BloodMagicItems.WEAK_BLOOD_SHARD.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.WEAK_BLOOD_SHARD.get()), 0.2).build(consumer, BloodMagic.rl(basePath + "weakbloodshard"));
 
 //		ConditionalRecipe.builder().addCondition(new TagEmptyCondition(Tags.Items.ORES_IRON.getName()));
+
+		ARCPotionRecipeBuilder.arc(Ingredient.of(BloodMagicItems.THROWING_DAGGER_COPPER.get()), Ingredient.of(BloodMagicItems.ALCHEMY_FLASK_LINGERING.get()), null, new ItemStack(BloodMagicItems.THROWING_DAGGER_COPPER_POTION.get(), 8), null).setRequiredInputCount(8).build(consumer, BloodMagic.rl(basePath + "tipped_copper"));
 
 		addReversionRecipes(consumer);
 		addSandRecipes(consumer);

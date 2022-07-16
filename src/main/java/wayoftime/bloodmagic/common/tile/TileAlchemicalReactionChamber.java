@@ -310,6 +310,11 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 			return false;
 		}
 
+		if (toolStack.isDamageableItem() && toolStack.getDamageValue() >= toolStack.getMaxDamage())
+		{
+			return false;
+		}
+
 		FluidStackIngredient inputFluidIngredient = recipe.getFluidIngredient();
 		if (inputFluidIngredient != null && !inputFluidIngredient.test(inputTank.getFluid()))
 		{
@@ -338,7 +343,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 
 			outputSlotHandler.canTransferAllItemsToSlots(recipe.getAllOutputs(level.random, inputStack, toolStack, modifier), false);
 			outputTank.fill(recipe.getFluidOutput().copy(), FluidAction.EXECUTE);
-			consumeInventory(recipe.getRequiredInputCount(), recipe.getConsumeIngredient());
+			consumeInventory(recipe.getRequiredInputCount(), recipe.getConsumeIngredient(), recipe.breakTool());
 		}
 	}
 
@@ -354,10 +359,10 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 		List<ItemStack> outputList = new ArrayList<>();
 		outputList.add(outputStack);
 		outputSlotHandler.canTransferAllItemsToSlots(outputList, false);
-		consumeInventory(1, false);
+		consumeInventory(1, false, false);
 	}
 
-	public void consumeInventory(int inputCount, boolean consumeInput)
+	public void consumeInventory(int inputCount, boolean consumeInput, boolean breakTool)
 	{
 		ItemStack inputStack = getItem(INPUT_SLOT);
 		if (!inputStack.isEmpty())
@@ -384,7 +389,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 				if (unbreakingLevel == 0 || level.random.nextInt(unbreakingLevel + 1) == 0)
 				{
 					toolStack.setDamageValue(toolStack.getDamageValue() + 1);
-					if (toolStack.getDamageValue() >= toolStack.getMaxDamage())
+					if (toolStack.getDamageValue() >= toolStack.getMaxDamage() && breakTool)
 					{
 						setItem(ARC_TOOL_SLOT, ItemStack.EMPTY);
 					}
