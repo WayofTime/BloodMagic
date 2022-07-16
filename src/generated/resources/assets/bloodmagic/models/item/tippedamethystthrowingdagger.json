@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "bloodmagic:item/amethystthrowingdagger_partial",
+    "layer1": "bloodmagic:item/dagger_potion"
+  }
+}

@@ -205,7 +205,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 		}
 
 		RecipeARC recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getARC(level, inputStack, toolStack, inputTank.getFluid());
-		if (canCraft(recipe, outputSlotHandler))
+		if (canCraft(recipe, inputStack, toolStack, outputSlotHandler))
 		{
 			// We have enough fluid (if applicable) and the theoretical outputs can fit.
 			setIsCrafting(level, worldPosition, getBlockState(), true);
@@ -222,7 +222,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 						bonusChance = ((IARCTool) toolStack.getItem()).getAdditionalOutputChanceMultiplier(toolStack);
 					}
 
-					craftItem(recipe, outputSlotHandler, bonusChance);
+					craftItem(recipe, inputStack, toolStack, outputSlotHandler, bonusChance);
 				}
 
 				currentProgress = 0;
@@ -300,10 +300,15 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 		}
 	}
 
-	private boolean canCraft(RecipeARC recipe, MultiSlotItemHandler outputSlotHandler)
+	private boolean canCraft(RecipeARC recipe, ItemStack inputStack, ItemStack toolStack, MultiSlotItemHandler outputSlotHandler)
 	{
 		if (recipe == null)
 			return false;
+
+		if (inputStack.getCount() < recipe.getRequiredInputCount())
+		{
+			return false;
+		}
 
 		FluidStackIngredient inputFluidIngredient = recipe.getFluidIngredient();
 		if (inputFluidIngredient != null && !inputFluidIngredient.test(inputTank.getFluid()))
@@ -321,19 +326,19 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 		return false;
 	}
 
-	private void craftItem(RecipeARC recipe, MultiSlotItemHandler outputSlotHandler, double modifier)
+	private void craftItem(RecipeARC recipe, ItemStack inputStack, ItemStack toolStack, MultiSlotItemHandler outputSlotHandler, double modifier)
 	{
-		if (this.canCraft(recipe, outputSlotHandler))
+		if (this.canCraft(recipe, inputStack, toolStack, outputSlotHandler))
 		{
 			if (recipe.getFluidIngredient() != null)
 			{
-				FluidStack inputStack = recipe.getFluidIngredient().getMatchingInstance(inputTank.getFluid());
-				inputTank.drain(inputStack, FluidAction.EXECUTE);
+				FluidStack inputFluidStack = recipe.getFluidIngredient().getMatchingInstance(inputTank.getFluid());
+				inputTank.drain(inputFluidStack, FluidAction.EXECUTE);
 			}
 
-			outputSlotHandler.canTransferAllItemsToSlots(recipe.getAllOutputs(level.random, modifier), false);
+			outputSlotHandler.canTransferAllItemsToSlots(recipe.getAllOutputs(level.random, inputStack, toolStack, modifier), false);
 			outputTank.fill(recipe.getFluidOutput().copy(), FluidAction.EXECUTE);
-			consumeInventory(recipe.getConsumeIngredient());
+			consumeInventory(recipe.getRequiredInputCount(), recipe.getConsumeIngredient());
 		}
 	}
 
@@ -349,10 +354,10 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 		List<ItemStack> outputList = new ArrayList<>();
 		outputList.add(outputStack);
 		outputSlotHandler.canTransferAllItemsToSlots(outputList, false);
-		consumeInventory(false);
+		consumeInventory(1, false);
 	}
 
-	public void consumeInventory(boolean consumeInput)
+	public void consumeInventory(int inputCount, boolean consumeInput)
 	{
 		ItemStack inputStack = getItem(INPUT_SLOT);
 		if (!inputStack.isEmpty())
@@ -362,7 +367,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 				setItem(INPUT_SLOT, inputStack.getItem().getContainerItem(inputStack));
 			} else
 			{
-				inputStack.shrink(1);
+				inputStack.shrink(inputCount);
 				if (inputStack.isEmpty())
 				{
 					setItem(INPUT_SLOT, ItemStack.EMPTY);

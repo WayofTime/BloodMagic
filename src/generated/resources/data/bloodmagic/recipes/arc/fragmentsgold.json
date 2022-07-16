@@ -3,6 +3,7 @@
   "input": {
     "tag": "forge:raw_materials/gold"
   },
+  "inputsize": 0,
   "tool": {
     "tag": "bloodmagic:arc/explosive"
   },

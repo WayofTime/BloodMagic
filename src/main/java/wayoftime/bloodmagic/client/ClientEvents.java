@@ -68,6 +68,7 @@ import wayoftime.bloodmagic.core.registry.AlchemyArrayRendererRegistry;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
 import wayoftime.bloodmagic.network.SigilHoldingPacket;
 import wayoftime.bloodmagic.potion.FlaskColor;
+import wayoftime.bloodmagic.potion.TippedDaggerColor;
 import wayoftime.bloodmagic.util.GhostItemHelper;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = BloodMagic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -142,6 +143,7 @@ public class ClientEvents
 		event.getItemColors().register(new FlaskColor(), BloodMagicItems.ALCHEMY_FLASK.get());
 		event.getItemColors().register(new FlaskColor(), BloodMagicItems.ALCHEMY_FLASK_THROWABLE.get());
 		event.getItemColors().register(new FlaskColor(), BloodMagicItems.ALCHEMY_FLASK_LINGERING.get());
+		event.getItemColors().register(new TippedDaggerColor(), BloodMagicItems.THROWING_DAGGER_COPPER_POTION.get());
 	}
 
 	public static void cycleSigil(ItemStack stack, Player player, int dWheel)

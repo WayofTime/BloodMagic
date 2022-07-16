@@ -3,6 +3,7 @@
   "input": {
     "tag": "forge:raw_materials/copper"
   },
+  "inputsize": 0,
   "tool": {
     "tag": "bloodmagic:arc/cuttingfluid"
   },

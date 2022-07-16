@@ -1,10 +1,13 @@
 package wayoftime.bloodmagic.entity.projectile;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.core.BlockPos;
@@ -13,15 +16,20 @@ import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -32,6 +40,9 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -68,6 +79,11 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 //	private ItemStack containedStack = ItemStack.EMPTY;
 	private double willDrop = 0;
 	private EnumDemonWillType willType = EnumDemonWillType.DEFAULT;
+
+	private static final EntityDataAccessor<Integer> ID_EFFECT_COLOR = SynchedEntityData.defineId(AbstractEntityThrowingDagger.class, EntityDataSerializers.INT);
+	private Potion potion = Potions.EMPTY;
+	private final Set<MobEffectInstance> effects = Sets.newHashSet();
+	private boolean fixedColor;
 
 	public AbstractEntityThrowingDagger(EntityType<? extends AbstractEntityThrowingDagger> type, Level world)
 	{
@@ -108,23 +124,101 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
+	public void setEffectsFromItem(ItemStack p_36879_)
+	{
+//		if (p_36879_.is(Items.TIPPED_ARROW))
+		{
+			this.potion = PotionUtils.getPotion(p_36879_);
+			Collection<MobEffectInstance> collection = PotionUtils.getCustomEffects(p_36879_);
+			if (!collection.isEmpty())
+			{
+				for (MobEffectInstance mobeffectinstance : collection)
+				{
+					this.effects.add(new MobEffectInstance(mobeffectinstance));
+				}
+			}
+
+			int i = getCustomColor(p_36879_);
+			if (i == -1)
+			{
+				this.updateColor();
+			} else
+			{
+				this.setFixedColor(i);
+			}
+		}
+//		else if (p_36879_.is(Items.ARROW))
+//		{
+//			this.potion = Potions.EMPTY;
+//			this.effects.clear();
+//			this.entityData.set(ID_EFFECT_COLOR, -1);
+//		}
+
+	}
+
+	private void setFixedColor(int p_36883_)
+	{
+		this.fixedColor = true;
+		this.entityData.set(ID_EFFECT_COLOR, p_36883_);
+	}
+
+	public static int getCustomColor(ItemStack p_36885_)
+	{
+		CompoundTag compoundtag = p_36885_.getTag();
+		return compoundtag != null && compoundtag.contains("CustomPotionColor", 99)
+				? compoundtag.getInt("CustomPotionColor")
+				: -1;
+	}
+
+	private void updateColor()
+	{
+		this.fixedColor = false;
+		if (this.potion == Potions.EMPTY && this.effects.isEmpty())
+		{
+			this.entityData.set(ID_EFFECT_COLOR, -1);
+		} else
+		{
+			this.entityData.set(ID_EFFECT_COLOR, PotionUtils.getColor(PotionUtils.getAllEffects(this.potion, this.effects)));
+		}
+
+	}
+
+	public void addEffect(MobEffectInstance p_36871_)
+	{
+		this.effects.add(p_36871_);
+		this.getEntityData().set(ID_EFFECT_COLOR, PotionUtils.getColor(PotionUtils.getAllEffects(this.potion, this.effects)));
+	}
+
+	protected void defineSynchedData()
+	{
+		super.defineSynchedData();
+		this.entityData.define(ID_EFFECT_COLOR, -1);
+	}
+
+	private void makeParticle(int p_36877_)
+	{
+		int i = this.getColor();
+		if (i != -1 && p_36877_ > 0)
+		{
+			double d0 = (double) (i >> 16 & 255) / 255.0D;
+			double d1 = (double) (i >> 8 & 255) / 255.0D;
+			double d2 = (double) (i >> 0 & 255) / 255.0D;
+
+			for (int j = 0; j < p_36877_; ++j)
+			{
+				this.level.addParticle(ParticleTypes.ENTITY_EFFECT, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), d0, d1, d2);
+			}
+		}
+	}
+
+	public int getColor()
+	{
+		return this.entityData.get(ID_EFFECT_COLOR);
+	}
+
 	@Override
 	public void tick()
 	{
-//		super.tick();
-//		RayTraceResult raytraceresult = ProjectileHelper.getHitResult(this, this::canHitEntity);
-////		boolean flag = false;
-//		if (raytraceresult.getType() == RayTraceResult.Type.BLOCK)
-//		{
-//			BlockPos blockpos = ((BlockRayTraceResult) raytraceresult).getPos().offset(((BlockRayTraceResult) raytraceresult).getFace());
-//			BlockState blockstate = this.world.getBlockState(blockpos);
-//			Material material = blockstate.getMaterial();
-//			if (blockstate.isAir() || blockstate.isIn(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable())
-//			{
-//				this.getEntityWorld().setBlockState(blockpos, BloodMagicBlocks.BLOOD_LIGHT.get().getDefaultState());
-//				this.setDead();
-//			}
-//		}
 
 //		super.tick();
 		this.baseTick();
@@ -274,155 +368,26 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 			this.setPos(d7, d2, d3);
 			this.checkInsideBlocks();
 		}
-//		boolean flag = this.getNoClip();
-//		flag = false;
-//		Vec3 vector3d = this.getDeltaMovement();
-//		if (this.xRotO == 0.0F && this.yRotO == 0.0F)
-//		{
-//			float f = Mth.sqrt(getHorizontalDistanceSqr(vector3d));
-//			this.yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (double) (180F / (float) Math.PI));
-//			this.xRot = (float) (Mth.atan2(vector3d.y, (double) f) * (double) (180F / (float) Math.PI));
-//			this.yRotO = this.yRot;
-//			this.xRotO = this.xRot;
-//		}
-//
-//		BlockPos blockpos = this.blockPosition();
-//		BlockState blockstate = this.level.getBlockState(blockpos);
-//		if (!blockstate.isAir(this.level, blockpos) && !flag)
-//		{
-//			VoxelShape voxelshape = blockstate.getCollisionShape(this.level, blockpos);
-//			if (!voxelshape.isEmpty())
-//			{
-//				Vec3 vector3d1 = this.position();
-//
-//				for (AABB axisalignedbb : voxelshape.toAabbs())
-//				{
-//					if (axisalignedbb.move(blockpos).contains(vector3d1))
-//					{
-//						this.inGround = true;
-//						break;
-//					}
-//				}
-//			}
-//		}
-//
-//		if (this.arrowShake > 0)
-//		{
-//			--this.arrowShake;
-//		}
-//
-//		if (this.isInWaterOrRain())
-//		{
-//			this.clearFire();
-//		}
-//
-////		this.inBlockState.getBlock()
-//
-//		if (this.inGround && !flag)
-//		{
-//			if (this.inBlockState != blockstate && this.shouldFall())
-//			{
-//				this.startFalling();
-//			} else if (!this.level.isClientSide)
-//			{
-//				this.tickDespawn();
-//			}
-//
-//			++this.timeInGround;
-//		} else
-//		{
-//			this.timeInGround = 0;
-//			Vec3 vector3d2 = this.position();
-//			Vec3 vector3d3 = vector3d2.add(vector3d);
-//			HitResult raytraceresult = this.level.clip(new ClipContext(vector3d2, vector3d3, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
-//			if (raytraceresult.getType() != HitResult.Type.MISS)
-//			{
-//				vector3d3 = raytraceresult.getLocation();
-//			}
-//
-//			while (!this.removed)
-//			{
-//				EntityHitResult entityraytraceresult = this.rayTraceEntities(vector3d2, vector3d3);
-//				if (entityraytraceresult != null)
-//				{
-//					raytraceresult = entityraytraceresult;
-//				}
-//
-//				if (raytraceresult != null && raytraceresult.getType() == HitResult.Type.ENTITY)
-//				{
-//					Entity entity = ((EntityHitResult) raytraceresult).getEntity();
-//					Entity entity1 = this.getOwner();
-//					if (entity instanceof Player && entity1 instanceof Player && !((Player) entity1).canHarmPlayer((Player) entity))
-//					{
-//						raytraceresult = null;
-//						entityraytraceresult = null;
-//					}
-//				}
-//
-//				if (raytraceresult != null && raytraceresult.getType() != HitResult.Type.MISS && !flag && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult))
-//				{
-//					this.onHit(raytraceresult);
-//					this.hasImpulse = true;
-//				}
-//
-//				if (entityraytraceresult == null || this.getPierceLevel() <= 0)
-//				{
-//					break;
-//				}
-//
-//				raytraceresult = null;
-//			}
-//
-//			vector3d = this.getDeltaMovement();
-//			double d3 = vector3d.x;
-//			double d4 = vector3d.y;
-//			double d0 = vector3d.z;
-//			if (this.getIsCritical())
-//			{
-//				for (int i = 0; i < 4; ++i)
-//				{
-//					this.level.addParticle(ParticleTypes.CRIT, this.getX() + d3 * (double) i / 4.0D, this.getY() + d4 * (double) i / 4.0D, this.getZ() + d0 * (double) i / 4.0D, -d3, -d4 + 0.2D, -d0);
-//				}
-//			}
-//
-//			double d5 = this.getX() + d3;
-//			double d1 = this.getY() + d4;
-//			double d2 = this.getZ() + d0;
-//			float f1 = Mth.sqrt(getHorizontalDistanceSqr(vector3d));
-//			if (flag)
-//			{
-//				this.yRot = (float) (Mth.atan2(-d3, -d0) * (double) (180F / (float) Math.PI));
-//			} else
-//			{
-//				this.yRot = (float) (Mth.atan2(d3, d0) * (double) (180F / (float) Math.PI));
-//			}
-//
-//			this.xRot = (float) (Mth.atan2(d4, (double) f1) * (double) (180F / (float) Math.PI));
-//			this.xRot = lerpRotation(this.xRotO, this.xRot);
-//			this.yRot = lerpRotation(this.yRotO, this.yRot);
-//			float f2 = 0.99F;
-//			float f3 = 0.05F;
-//			if (this.isInWater())
-//			{
-//				for (int j = 0; j < 4; ++j)
-//				{
-//					float f4 = 0.25F;
-//					this.level.addParticle(ParticleTypes.BUBBLE, d5 - d3 * 0.25D, d1 - d4 * 0.25D, d2 - d0 * 0.25D, d3, d4, d0);
-//				}
-//
-//				f2 = this.getWaterDrag();
-//			}
-//
-//			this.setDeltaMovement(vector3d.scale((double) f2));
-//			if (!this.isNoGravity() && !flag)
-//			{
-//				Vec3 vector3d4 = this.getDeltaMovement();
-//				this.setDeltaMovement(vector3d4.x, vector3d4.y - (double) 0.05F, vector3d4.z);
-//			}
-//
-//			this.setPos(d5, d1, d2);
-//			this.checkInsideBlocks();
-//		}
+
+		if (this.level.isClientSide)
+		{
+			if (this.inGround)
+			{
+				if (this.timeInGround % 5 == 0)
+				{
+					this.makeParticle(1);
+				}
+			} else
+			{
+				this.makeParticle(2);
+			}
+		} else if (this.inGround && this.timeInGround != 0 && !this.effects.isEmpty() && this.timeInGround >= 600)
+		{
+			this.level.broadcastEntityEvent(this, (byte) 0);
+			this.potion = Potions.EMPTY;
+			this.effects.clear();
+			this.entityData.set(ID_EFFECT_COLOR, -1);
+		}
 	}
 
 	@Override
@@ -456,6 +421,28 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 		compound.putDouble("willDrop", willDrop);
 //		this.containedStack.write(compound);
 		compound.putString("willType", this.willType.name);
+
+		if (this.potion != Potions.EMPTY)
+		{
+			compound.putString("Potion", Registry.POTION.getKey(this.potion).toString());
+		}
+
+		if (this.fixedColor)
+		{
+			compound.putInt("Color", this.getColor());
+		}
+
+		if (!this.effects.isEmpty())
+		{
+			ListTag listtag = new ListTag();
+
+			for (MobEffectInstance mobeffectinstance : this.effects)
+			{
+				listtag.add(mobeffectinstance.save(new CompoundTag()));
+			}
+
+			compound.put("CustomPotionEffects", listtag);
+		}
 	}
 
 	/**
@@ -496,6 +483,24 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 //	      }
 //
 //	      this.setShotFromCrossbow(compound.getBoolean("ShotFromCrossbow"));
+
+		if (compound.contains("Potion", 8))
+		{
+			this.potion = PotionUtils.getPotion(compound);
+		}
+
+		for (MobEffectInstance mobeffectinstance : PotionUtils.getCustomEffects(compound))
+		{
+			this.addEffect(mobeffectinstance);
+		}
+
+		if (compound.contains("Color", 99))
+		{
+			this.setFixedColor(compound.getInt("Color"));
+		} else
+		{
+			this.updateColor();
+		}
 	}
 
 	public void setDamage(double damage)
@@ -571,7 +576,9 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 
 			if (!entity.isAlive() && entity1 instanceof Player && entity instanceof LivingEntity)
 			{
-				PlayerDemonWillHandler.addDemonWill(willType, (Player) entity1, this.getWillDropForMobHealth(((LivingEntity) entity).getMaxHealth()));
+				double willAmount = this.getWillDropForMobHealth(((LivingEntity) entity).getMaxHealth());
+				if (willAmount > 0)
+					PlayerDemonWillHandler.addDemonWill(willType, (Player) entity1, willAmount);
 			}
 
 			if (entity instanceof LivingEntity)
@@ -709,6 +716,20 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 
 	protected void daggerHit(LivingEntity living)
 	{
+		Entity entity = this.getEffectSource();
+
+		for (MobEffectInstance mobeffectinstance : this.potion.getEffects())
+		{
+			living.addEffect(new MobEffectInstance(mobeffectinstance.getEffect(), Math.max(mobeffectinstance.getDuration() / 8, 1), mobeffectinstance.getAmplifier(), mobeffectinstance.isAmbient(), mobeffectinstance.isVisible()), entity);
+		}
+
+		if (!this.effects.isEmpty())
+		{
+			for (MobEffectInstance mobeffectinstance1 : this.effects)
+			{
+				living.addEffect(mobeffectinstance1, entity);
+			}
+		}
 	}
 
 	/**

@@ -186,6 +186,7 @@ public class Constants
 	public static class JSON
 	{
 		public static final String INPUT = "input";
+		public static final String INPUT_SIZE = "inputsize";
 		public static final String TOOL = "tool";
 		public static final String BASEINPUT = "baseinput";
 		public static final String ADDEDINPUT = "addedinput";

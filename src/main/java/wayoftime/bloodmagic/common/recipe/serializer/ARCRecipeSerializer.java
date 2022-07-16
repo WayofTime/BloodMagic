@@ -43,6 +43,8 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 				? GsonHelper.getAsJsonArray(json, Constants.JSON.INPUT)
 				: GsonHelper.getAsJsonObject(json, Constants.JSON.INPUT);
 
+		int inputSize = GsonHelper.getAsInt(json, Constants.JSON.INPUT_SIZE);
+
 		JsonElement tool = GsonHelper.isArrayNode(json, Constants.JSON.TOOL)
 				? GsonHelper.getAsJsonArray(json, Constants.JSON.TOOL)
 				: GsonHelper.getAsJsonObject(json, Constants.JSON.TOOL);
@@ -94,7 +96,7 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 
 		boolean consumeIngredient = GsonHelper.getAsBoolean(json, "consumeingredient");
 
-		return this.factory.create(recipeId, inputIng, toolIng, inputFluidIng, output, addedItems, outputFluidStack, consumeIngredient);
+		return this.factory.create(recipeId, inputIng, inputSize, toolIng, inputFluidIng, output, addedItems, outputFluidStack, consumeIngredient);
 	}
 
 	@Override
@@ -104,6 +106,7 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 		{
 			List<Pair<ItemStack, Pair<Double, Double>>> addedItems = new ArrayList<Pair<ItemStack, Pair<Double, Double>>>();
 			Ingredient inputIng = Ingredient.fromNetwork(buffer);
+			int inputSize = buffer.readInt();
 			Ingredient toolIng = Ingredient.fromNetwork(buffer);
 			ItemStack output = buffer.readItem();
 
@@ -131,7 +134,7 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 
 			boolean consumeIngredient = buffer.readBoolean();
 
-			return this.factory.create(recipeId, inputIng, toolIng, inputFluid, output, addedItems, outputFluid, consumeIngredient);
+			return this.factory.create(recipeId, inputIng, inputSize, toolIng, inputFluid, output, addedItems, outputFluid, consumeIngredient);
 		} catch (Exception e)
 		{
 			BloodMagic.LOGGER.error("Error reading ARC recipe from packet.", e);
@@ -155,6 +158,6 @@ public class ARCRecipeSerializer<RECIPE extends RecipeARC> extends ForgeRegistry
 	@FunctionalInterface
 	public interface IFactory<RECIPE extends RecipeARC>
 	{
-		RECIPE create(ResourceLocation id, Ingredient input, Ingredient arcTool, FluidStackIngredient inputFluid, ItemStack output, List<Pair<ItemStack, Pair<Double, Double>>> addedItems, FluidStack outputFluid, boolean consumeIngredient);
+		RECIPE create(ResourceLocation id, Ingredient input, int inputSize, Ingredient arcTool, FluidStackIngredient inputFluid, ItemStack output, List<Pair<ItemStack, Pair<Double, Double>>> addedItems, FluidStack outputFluid, boolean consumeIngredient);
 	}
 }

@@ -3,6 +3,7 @@
   "input": {
     "item": "bloodmagic:altarcapacityrune2"
   },
+  "inputsize": 0,
   "tool": {
     "tag": "bloodmagic:arc/reverter"
   },

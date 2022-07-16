@@ -3,6 +3,7 @@
   "input": {
     "item": "minecraft:netherite_scrap"
   },
+  "inputsize": 0,
   "tool": {
     "tag": "bloodmagic:arc/explosive"
   },

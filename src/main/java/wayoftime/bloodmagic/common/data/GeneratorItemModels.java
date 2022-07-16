@@ -191,6 +191,8 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerMultiLayerItem(BloodMagicItems.ALCHEMY_FLASK.get(), modLoc("item/potionflask_underlay"), modLoc("item/potionflask_outline"), modLoc("item/potionflask_overlay"));
 		registerMultiLayerItem(BloodMagicItems.ALCHEMY_FLASK_THROWABLE.get(), modLoc("item/potionflask_underlay"), modLoc("item/potionflask_outline_throwable"), modLoc("item/potionflask_overlay_throwable"));
 		registerMultiLayerItem(BloodMagicItems.ALCHEMY_FLASK_LINGERING.get(), modLoc("item/potionflask_underlay"), modLoc("item/potionflask_outline_lingering"), modLoc("item/potionflask_overlay_lingering"));
+
+		registerMultiLayerItem(BloodMagicItems.THROWING_DAGGER_COPPER_POTION.get(), modLoc("item/amethystthrowingdagger_partial"), modLoc("item/dagger_potion"));
 	}
 
 	private void registerCustomFullTexture(Block block, String texturePath)

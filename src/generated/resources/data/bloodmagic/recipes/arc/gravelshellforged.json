@@ -3,6 +3,7 @@
   "input": {
     "tag": "bloodmagic:fragments/hellforged"
   },
+  "inputsize": 0,
   "tool": {
     "tag": "bloodmagic:arc/resonator"
   },

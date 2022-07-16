@@ -3,6 +3,7 @@
   "input": {
     "tag": "bloodmagic:gravels/gold"
   },
+  "inputsize": 0,
   "tool": {
     "tag": "bloodmagic:arc/cuttingfluid"
   },

@@ -3,6 +3,7 @@
   "input": {
     "item": "bloodmagic:masterbloodorb"
   },
+  "inputsize": 0,
   "tool": {
     "tag": "bloodmagic:arc/reverter"
   },

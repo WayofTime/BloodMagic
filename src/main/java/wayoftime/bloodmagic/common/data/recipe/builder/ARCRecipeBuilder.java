@@ -23,6 +23,7 @@ import wayoftime.bloodmagic.util.Constants;
 public class ARCRecipeBuilder extends BloodMagicRecipeBuilder<ARCRecipeBuilder>
 {
 	private final Ingredient input;
+	private int inputSize;
 	private final Ingredient arcTool;
 	private final FluidStackIngredient inputFluid;
 	private final ItemStack output;
@@ -51,6 +52,14 @@ public class ARCRecipeBuilder extends BloodMagicRecipeBuilder<ARCRecipeBuilder>
 	public static ARCRecipeBuilder arcConsume(Ingredient input, Ingredient arcTool, FluidStackIngredient inputFluid, ItemStack output, FluidStack outputFluid)
 	{
 		return new ARCRecipeBuilder(input, arcTool, inputFluid, output, outputFluid, true, 0);
+	}
+
+	public ARCRecipeBuilder setRequiredInputCount(int inputSize)
+	{
+		if (inputSize > 0)
+			this.inputSize = inputSize;
+
+		return this;
 	}
 
 	public ARCRecipeBuilder addRandomOutput(ItemStack stack, double secondaryChance)
@@ -87,6 +96,7 @@ public class ARCRecipeBuilder extends BloodMagicRecipeBuilder<ARCRecipeBuilder>
 		public void serializeRecipeData(@Nonnull JsonObject json)
 		{
 			json.add(Constants.JSON.INPUT, input.toJson());
+			json.addProperty(Constants.JSON.INPUT_SIZE, inputSize);
 			json.add(Constants.JSON.TOOL, arcTool.toJson());
 
 			if (inputFluid != null)

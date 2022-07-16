@@ -26,6 +26,7 @@ public class RecipeARC extends BloodMagicRecipe
 
 	@Nonnull
 	private final Ingredient input;
+	private int inputSize = 1;
 	@Nonnull
 	private final Ingredient arc_tool;
 	private final FluidStackIngredient inputFluid;
@@ -38,10 +39,10 @@ public class RecipeARC extends BloodMagicRecipe
 
 	public RecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, FluidStackIngredient inputFluid, ItemStack output, FluidStack outputFluid, boolean consumeIngredient)
 	{
-		this(id, input, arc_tool, inputFluid, output, new ArrayList<Pair<ItemStack, Pair<Double, Double>>>(), outputFluid, consumeIngredient);
+		this(id, input, 1, arc_tool, inputFluid, output, new ArrayList<Pair<ItemStack, Pair<Double, Double>>>(), outputFluid, consumeIngredient);
 	}
 
-	public RecipeARC(ResourceLocation id, Ingredient input, Ingredient arc_tool, FluidStackIngredient inputFluid, ItemStack output, List<Pair<ItemStack, Pair<Double, Double>>> addedItems, FluidStack outputFluid, boolean consumeIngredient)
+	public RecipeARC(ResourceLocation id, Ingredient input, int inputSize, Ingredient arc_tool, FluidStackIngredient inputFluid, ItemStack output, List<Pair<ItemStack, Pair<Double, Double>>> addedItems, FluidStack outputFluid, boolean consumeIngredient)
 	{
 		super(id);
 		this.input = input;
@@ -51,6 +52,7 @@ public class RecipeARC extends BloodMagicRecipe
 		this.addedItems = addedItems;
 		this.outputFluid = outputFluid;
 		this.consumeIngredient = consumeIngredient;
+		this.inputSize = inputSize;
 	}
 
 	public RecipeARC addRandomOutput(ItemStack stack, double base, double secondary)
@@ -101,7 +103,17 @@ public class RecipeARC extends BloodMagicRecipe
 		return list;
 	}
 
+	public int getRequiredInputCount()
+	{
+		return this.inputSize;
+	}
+
 	public List<ItemStack> getAllListedOutputs()
+	{
+		return getAllListedOutputs(ItemStack.EMPTY, ItemStack.EMPTY);
+	}
+
+	public List<ItemStack> getAllListedOutputs(ItemStack inputStack, ItemStack toolStack)
 	{
 		List<ItemStack> list = new ArrayList<ItemStack>();
 
@@ -114,7 +126,7 @@ public class RecipeARC extends BloodMagicRecipe
 		return list;
 	}
 
-	public List<ItemStack> getAllOutputs(Random rand, double secondaryBonus)
+	public List<ItemStack> getAllOutputs(Random rand, ItemStack inputStack, ItemStack toolStack, double secondaryBonus)
 	{
 		List<ItemStack> list = new ArrayList<ItemStack>();
 
@@ -157,6 +169,7 @@ public class RecipeARC extends BloodMagicRecipe
 	public void write(FriendlyByteBuf buffer)
 	{
 		input.toNetwork(buffer);
+		buffer.writeInt(inputSize);
 		arc_tool.toNetwork(buffer);
 		buffer.writeItem(output);
 		buffer.writeInt(addedItems.size());

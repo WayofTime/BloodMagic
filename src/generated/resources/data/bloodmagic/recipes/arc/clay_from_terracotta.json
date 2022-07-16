@@ -3,6 +3,7 @@
   "input": {
     "item": "minecraft:terracotta"
   },
+  "inputsize": 0,
   "tool": {
     "tag": "bloodmagic:arc/hydrate"
   },

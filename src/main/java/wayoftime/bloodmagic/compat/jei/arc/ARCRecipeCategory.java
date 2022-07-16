@@ -12,17 +12,19 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
@@ -80,18 +82,28 @@ public class ARCRecipeCategory implements IRecipeCategory<RecipeARC>
 	}
 
 	@Override
-	public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull RecipeARC recipe, @Nonnull IIngredients ingredients)
+	public void setRecipe(@Nonnull IRecipeLayoutBuilder builder, @Nonnull RecipeARC recipe, @Nonnull IFocusGroup focuses)
 	{
-		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+		NonNullList<Ingredient> inputList = recipe.getIngredients();
 
-		recipeLayout.getItemStacks().init(OUTPUT_SLOT, false, 53, 16);
-		recipeLayout.getItemStacks().init(OUTPUT_SLOT + 1, false, 53 + 22 * 1, 16);
-		recipeLayout.getItemStacks().init(OUTPUT_SLOT + 2, false, 53 + 22 * 2, 16);
-		recipeLayout.getItemStacks().init(OUTPUT_SLOT + 3, false, 53 + 22 * 3, 16);
-		recipeLayout.getItemStacks().init(INPUT_SLOT, true, 0, 5);
-		recipeLayout.getItemStacks().init(CATALYST_SLOT, true, 21, 16);
+		int inputSize = recipe.getRequiredInputCount();
+		List<ItemStack> inputStackList = List.of(inputList.get(0).getItems());
+		if (inputSize > 1)
+		{
+			for (ItemStack stack : inputStackList)
+			{
+				stack.setCount(inputSize);
+			}
+		}
 
-		guiItemStacks.set(ingredients);
+		builder.addSlot(RecipeIngredientRole.INPUT, 1, 6).addIngredients(VanillaTypes.ITEM, inputStackList).setSlotName("input");
+		builder.addSlot(RecipeIngredientRole.INPUT, 22, 17).addIngredients(inputList.get(1)).setSlotName("tool");
+
+		List<ItemStack> outputList = recipe.getAllListedOutputs();
+		for (int i = 0; i < outputList.size(); i++)
+		{
+			builder.addSlot(RecipeIngredientRole.OUTPUT, 54 + i * 22, 17).addItemStack(outputList.get(i)).setSlotName("output");
+		}
 	}
 
 	@Override
@@ -101,35 +113,10 @@ public class ARCRecipeCategory implements IRecipeCategory<RecipeARC>
 	}
 
 	@Override
-	public void setIngredients(RecipeARC recipe, IIngredients ingredients)
-	{
-		ingredients.setInputIngredients(recipe.getIngredients());
-		ingredients.setOutputs(VanillaTypes.ITEM, recipe.getAllListedOutputs());
-	}
-
-	@Override
 	public void draw(RecipeARC recipe, PoseStack matrixStack, double mouseX, double mouseY)
 	{
 		Minecraft mc = Minecraft.getInstance();
 		List<Pair<Double, Double>> chanceArray = recipe.getAllOutputChances();
-
-//		double mainChance = recipe.getMainOutputChance();
-//		if (mainChance > 0)
-//		{
-//			String infoString = "+1";
-//			if (mainChance >= 1)
-//			{
-//				infoString = "+1";
-//			} else if (mainChance < 0.01)
-//			{
-//				infoString = "+<1%";
-//			} else
-//			{
-//				infoString = "+" + (int) (Math.round(mainChance * 100)) + "%";
-//			}
-//
-//			mc.font.drawShadow(matrixStack, infoString, 86 - 24 - mc.font.width(infoString) / 2, 5 + 0 * 32, Color.white.getRGB());
-//		}
 
 		String[] infoString = new String[chanceArray.size()];
 		for (int i = 0; i < infoString.length; i++)

@@ -3,6 +3,7 @@
   "input": {
     "tag": "forge:ingots/gold"
   },
+  "inputsize": 0,
   "tool": {
     "tag": "bloodmagic:arc/explosive"
   },

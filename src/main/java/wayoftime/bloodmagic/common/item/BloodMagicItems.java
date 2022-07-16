@@ -300,7 +300,9 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> TAU_OIL = BASICITEMS.register("tauoil", () -> new ItemBase());
 
 	public static final RegistryObject<Item> THROWING_DAGGER_SYRINGE = BASICITEMS.register("throwing_dagger_syringe", ItemThrowingDaggerSyringe::new);
-	public static final RegistryObject<Item> THROWING_DAGGER = BASICITEMS.register("throwing_dagger", ItemThrowingDagger::new);
+	public static final RegistryObject<Item> THROWING_DAGGER = BASICITEMS.register("throwing_dagger", ItemIronThrowingDagger::new);
+	public static final RegistryObject<Item> THROWING_DAGGER_COPPER = BASICITEMS.register("amethystthrowingdagger", ItemThrowingDagger::new);
+	public static final RegistryObject<Item> THROWING_DAGGER_COPPER_POTION = ITEMS.register("tippedamethystthrowingdagger", ItemThrowingDagger::new);
 	public static final RegistryObject<Item> SLATE_AMPOULE = BASICITEMS.register("slate_ampoule", () -> new ItemBloodProvider("slate", 500));
 
 	public static final RegistryObject<Item> SIMPLE_CATALYST = BASICITEMS.register("simplecatalyst", () -> new ItemBase());

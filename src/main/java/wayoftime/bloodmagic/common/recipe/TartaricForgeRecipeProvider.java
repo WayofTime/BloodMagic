@@ -150,6 +150,7 @@ public class TartaricForgeRecipeProvider implements ISubRecipeProvider
 		}
 
 		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.THROWING_DAGGER.get(), 16), 32, 5, Ingredient.of(Tags.Items.INGOTS_IRON), Ingredient.of(Tags.Items.INGOTS_IRON), Ingredient.of(Tags.Items.STRING)).build(consumer, BloodMagic.rl(basePath + "throwing_dagger"));
+		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.THROWING_DAGGER_COPPER.get(), 16), 32, 2, Ingredient.of(Tags.Items.INGOTS_COPPER), Ingredient.of(Tags.Items.INGOTS_COPPER), Ingredient.of(Tags.Items.GEMS_AMETHYST)).build(consumer, BloodMagic.rl(basePath + "throwing_dagger_copper"));
 		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.THROWING_DAGGER_SYRINGE.get(), 8), 10, 2, Ingredient.of(Tags.Items.STONE), Ingredient.of(Tags.Items.GLASS)).build(consumer, BloodMagic.rl(basePath + "throwing_dagger_syringe"));
 
 		TartaricForgeRecipeBuilder.tartaricForge(new ItemStack(BloodMagicItems.NODE_ROUTER.get()), 400, 5, Ingredient.of(Tags.Items.RODS_WOODEN), Ingredient.of(BloodMagicItems.REINFORCED_SLATE.get()), Ingredient.of(Tags.Items.GEMS_LAPIS), Ingredient.of(Tags.Items.GEMS_LAPIS)).build(consumer, BloodMagic.rl(basePath + "node_router"));
