@@ -316,11 +316,9 @@ public class GlobalLootModifier
 		@Override
 		public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context)
 		{
-			System.out.println("Calling voiding");
 			BlockState blockState = context.getParamOrNull(LootContextParams.BLOCK_STATE).getBlock().defaultBlockState();
 			if (!blockState.is(BloodMagicTags.Blocks.MUNDANE_BLOCK))
 			{
-				System.out.println("I am not in the list");
 				return generatedLoot;
 			}
 
@@ -339,7 +337,6 @@ public class GlobalLootModifier
 			}
 
 			int voidingLevel = holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_VOIDING.get());
-			System.out.println("Voiding level: " + voidingLevel);
 			if (voidingLevel <= 0)
 			{
 				return generatedLoot;

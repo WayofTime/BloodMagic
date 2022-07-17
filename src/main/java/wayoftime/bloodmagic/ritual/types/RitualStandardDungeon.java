@@ -38,7 +38,7 @@ public class RitualStandardDungeon extends Ritual
 {
 	public RitualStandardDungeon()
 	{
-		super("ritualStandardDungeon", 0, 80000, "ritual." + BloodMagic.MODID + ".standardDungeonRitual");
+		super("ritualStandardDungeon", 0, 150000, "ritual." + BloodMagic.MODID + ".standardDungeonRitual");
 	}
 
 	public boolean activateRitual(IMasterRitualStone masterRitualStone, Player player, UUID owner)
@@ -85,7 +85,7 @@ public class RitualStandardDungeon extends Ritual
 				ResourceLocation initialType = new ResourceLocation("bloodmagic:room_pools/entrances/standard_dungeon_entrances");
 				BlockPos[] positions = dungeon.generateInitialRoom(initialType, world.random, dungeonWorld, dungeonSpawnLocation);
 
-				BlockPos pillarPos = masterPos.relative(Direction.UP, 2);
+				BlockPos pillarPos = masterPos.relative(Direction.UP, 4);
 				BlockPos safePlayerPosition = positions[0];
 
 				BlockPos dungeonPortalPos = positions[1];
@@ -165,23 +165,71 @@ public class RitualStandardDungeon extends Ritual
 	@Override
 	public void gatherComponents(Consumer<RitualComponent> components)
 	{
-		addParallelRunes(components, 1, 4, EnumRuneType.AIR);
-		addParallelRunes(components, 2, 4, EnumRuneType.EARTH);
-		addCornerRunes(components, 1, 0, EnumRuneType.EARTH);
-		addParallelRunes(components, 2, 0, EnumRuneType.EARTH);
-		addCornerRunes(components, 2, 0, EnumRuneType.FIRE);
-		for (int i = -1; i <= 1; i++)
-		{
-			addRune(components, i, 0, 3, EnumRuneType.WATER);
-			addRune(components, i, 0, -3, EnumRuneType.WATER);
-			addRune(components, 3, 0, i, EnumRuneType.FIRE);
-			addRune(components, -3, 0, i, EnumRuneType.FIRE);
-		}
+//		addParallelRunes(components, 1, 4, EnumRuneType.AIR);
+//		addParallelRunes(components, 2, 4, EnumRuneType.EARTH);
+//		addCornerRunes(components, 1, 0, EnumRuneType.EARTH);
+//		addParallelRunes(components, 2, 0, EnumRuneType.EARTH);
+//		addCornerRunes(components, 2, 0, EnumRuneType.FIRE);
+//		for (int i = -1; i <= 1; i++)
+//		{
+//			addRune(components, i, 0, 3, EnumRuneType.WATER);
+//			addRune(components, i, 0, -3, EnumRuneType.WATER);
+//			addRune(components, 3, 0, i, EnumRuneType.FIRE);
+//			addRune(components, -3, 0, i, EnumRuneType.FIRE);
+//		}
+//
+//		for (int j = 1; j <= 4; j++)
+//		{
+//			addRune(components, 0, j, 0, EnumRuneType.DUSK);
+//		}
 
-		for (int j = 1; j <= 4; j++)
-		{
-			addRune(components, 0, j, 0, EnumRuneType.DUSK);
-		}
+		addRune(components, 0, 0, 1, EnumRuneType.FIRE);
+		addRune(components, -1, 0, 0, EnumRuneType.FIRE);
+		addRune(components, 0, 0, -1, EnumRuneType.WATER);
+		addRune(components, 1, 0, 0, EnumRuneType.WATER);
+		addRune(components, -1, 0, 1, EnumRuneType.DUSK);
+		addRune(components, 1, 0, -1, EnumRuneType.DUSK);
+
+		addRune(components, 2, 0, 2, EnumRuneType.WATER);
+		addRune(components, 2, 0, 1, EnumRuneType.WATER);
+		addRune(components, 1, 0, 2, EnumRuneType.WATER);
+		addRune(components, -2, 0, -2, EnumRuneType.FIRE);
+		addRune(components, -2, 0, -1, EnumRuneType.FIRE);
+		addRune(components, -1, 0, -2, EnumRuneType.FIRE);
+
+		addRune(components, -3, 0, 3, EnumRuneType.AIR);
+		addRune(components, -2, 0, 3, EnumRuneType.AIR);
+		addRune(components, -1, 0, 3, EnumRuneType.AIR);
+		addRune(components, -3, 0, 2, EnumRuneType.AIR);
+		addRune(components, -3, 0, 1, EnumRuneType.AIR);
+		addRune(components, 3, 0, -3, EnumRuneType.EARTH);
+		addRune(components, 2, 0, -3, EnumRuneType.EARTH);
+		addRune(components, 1, 0, -3, EnumRuneType.EARTH);
+		addRune(components, 3, 0, -2, EnumRuneType.EARTH);
+		addRune(components, 3, 0, -1, EnumRuneType.EARTH);
+
+		addRune(components, 3, 0, 3, EnumRuneType.DUSK);
+		addRune(components, 3, 0, 4, EnumRuneType.DUSK);
+		addRune(components, 4, 0, 3, EnumRuneType.DUSK);
+		addRune(components, 2, 0, 4, EnumRuneType.DUSK);
+		addRune(components, 4, 0, 2, EnumRuneType.DUSK);
+		addRune(components, -3, 0, -3, EnumRuneType.DUSK);
+		addRune(components, -3, 0, -4, EnumRuneType.DUSK);
+		addRune(components, -4, 0, -3, EnumRuneType.DUSK);
+		addRune(components, -2, 0, -4, EnumRuneType.DUSK);
+		addRune(components, -4, 0, -2, EnumRuneType.DUSK);
+
+		addCornerRunes(components, 3, 4, EnumRuneType.EARTH);
+		addOffsetRunes(components, 2, 3, 4, EnumRuneType.DUSK);
+		addOffsetRunes(components, 2, 4, 4, EnumRuneType.DUSK);
+		addOffsetRunes(components, 1, 4, 4, EnumRuneType.AIR);
+		addParallelRunes(components, 4, 4, EnumRuneType.AIR);
+
+		addRune(components, 0, 2, 0, EnumRuneType.EARTH);
+		addRune(components, 0, 3, 0, EnumRuneType.DUSK);
+		addRune(components, 0, 4, 0, EnumRuneType.DUSK);
+		addRune(components, 0, 5, 0, EnumRuneType.DUSK);
+		addRune(components, 0, 6, 0, EnumRuneType.AIR);
 	}
 
 	@Override
