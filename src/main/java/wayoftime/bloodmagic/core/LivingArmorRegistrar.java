@@ -20,6 +20,7 @@ import wayoftime.bloodmagic.common.registration.impl.LivingUpgradeDeferredRegist
 import wayoftime.bloodmagic.common.registration.impl.LivingUpgradeRegistryObject;
 import wayoftime.bloodmagic.core.living.LivingUpgrade;
 import wayoftime.bloodmagic.gson.Serializers;
+import wayoftime.bloodmagic.util.Utils;
 
 public class LivingArmorRegistrar
 {
@@ -100,7 +101,7 @@ public class LivingArmorRegistrar
 		return 0;
 	}));
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_PHYSICAL_PROTECT = UPGRADES.register("physical_protect", () -> parseDefinition("physical_protect").withArmorProvider((player, stats, source, upgrade, level) -> {
-		if (!source.isProjectile())
+		if (Utils.isMeleeDamage(source))
 		{
 			return upgrade.getBonusValue("protection", level).doubleValue();
 		}

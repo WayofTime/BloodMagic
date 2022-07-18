@@ -13,6 +13,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -886,5 +888,15 @@ public class Utils
 			stack.getTag().putLong(Constants.NBT.MOST_SIG, itemUUID.getMostSignificantBits());
 			stack.getTag().putLong(Constants.NBT.LEAST_SIG, itemUUID.getLeastSignificantBits());
 		}
+	}
+
+	public static boolean isMeleeDamage(DamageSource source)
+	{
+		if (source.isProjectile() || source.isExplosion() || source.isFall() || source.isFire())
+		{
+			return false;
+		}
+
+		return source instanceof EntityDamageSource;
 	}
 }

@@ -70,6 +70,7 @@ import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
 import wayoftime.bloodmagic.network.CycleRitualDivinerPacket;
 import wayoftime.bloodmagic.network.DemonAuraClientPacket;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
+import wayoftime.bloodmagic.util.Utils;
 import wayoftime.bloodmagic.util.helper.BindableHelper;
 import wayoftime.bloodmagic.util.helper.InventoryHelper;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
@@ -255,7 +256,7 @@ public class GenericHandler
 //					LivingStats stats = LivingStats.fromPlayer(player);
 //					stats.addExperience(LivingArmorRegistrar.TEST_UPGRADE.get().getKey(), 10);
 					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_ARROW_PROTECT.get(), event.getAmount() / factor);
-				} else
+				} else if (Utils.isMeleeDamage(event.getSource()))
 				{
 					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_PHYSICAL_PROTECT.get(), event.getAmount() / factor);
 				}
