@@ -46,7 +46,7 @@ public class AlchemyArrayRecipeProvider implements ISubRecipeProvider
 		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/spikearray.png"), Ingredient.of(Items.COBBLESTONE), Ingredient.of(Tags.Items.INGOTS_IRON), new ItemStack(Items.BEDROCK)).build(consumer, BloodMagic.rl(basePath + "spike"));
 		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/sunarray.png"), Ingredient.of(Items.COAL), Ingredient.of(Items.COAL), new ItemStack(Items.BEDROCK)).build(consumer, BloodMagic.rl(basePath + "day"));
 		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/moonarray.png"), Ingredient.of(Items.LAPIS_LAZULI), Ingredient.of(Items.LAPIS_LAZULI), new ItemStack(Items.BEDROCK)).build(consumer, BloodMagic.rl(basePath + "night"));
-		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/growthsigil.png"), Ingredient.of(Tags.Items.BONES), Ingredient.of(Tags.Items.BONES), new ItemStack(Items.BEDROCK)).build(consumer, BloodMagic.rl(basePath + "grove"));
+//		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/growthsigil.png"), Ingredient.of(Tags.Items.BONES), Ingredient.of(Tags.Items.BONES), new ItemStack(Items.BEDROCK)).build(consumer, BloodMagic.rl(basePath + "grove"));
 		AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/bouncearray.png"), Ingredient.of(Tags.Items.SLIMEBALLS), Ingredient.of(Tags.Items.DUSTS_REDSTONE), new ItemStack(Items.BEDROCK)).build(consumer, BloodMagic.rl(basePath + "bounce"));
 		// AlchemyArrayRecipeBuilder.array(BloodMagic.rl("textures/models/alchemyarrays/fastminersigil.png"),
 		// Ingredient.fromItems(BloodMagicItems.REAGENT_FAST_MINER.get()),

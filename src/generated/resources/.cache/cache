@@ -437,8 +437,6 @@ f68825f667ca73b4373fd5068a47f0d1ca9b2aad assets/bloodmagic/models/item/icesigil.
 59940408324c0379fa791a58f4a81781d06d1257 assets/bloodmagic/models/item/ingot_hellforged.json
 5b64dda6e9f010be049d7dcc133527e8dbcf9ee4 assets/bloodmagic/models/item/inputroutingnode.json
 74f15da27ece9c04c69e31cdf33631144a21c83e assets/bloodmagic/models/item/intermediatecuttingfluid.json
-6282cfd218c34818aa6300dab22c85ac5064ad93 assets/bloodmagic/models/item/inversion_pillar.json
-52624fba53901e0b9459966561c9733b9e61918c assets/bloodmagic/models/item/inversion_pillar_cap.json
 80c575c613c1696069284224fe2c711c343bb0be assets/bloodmagic/models/item/ironfragment.json
 4b803c1c838284d78474bab0f8ced938985dd958 assets/bloodmagic/models/item/irongravel.json
 d83040a473f44ff2fd9d290f3fd6ef0d8b9f3114 assets/bloodmagic/models/item/ironsand.json
@@ -1114,7 +1112,6 @@ d1ac23080f72f21adb5908befefe965ffb4efd4f data/bloodmagic/recipes/array/bloodligh
 94c427b456a6c7b78c1f39153ea32d758fe5dbbc data/bloodmagic/recipes/array/day.json
 1890706e5b93cd6df764b0419483c348e0d7f277 data/bloodmagic/recipes/array/divinationsigil.json
 4bd220ced486f1d8fc4468ebd61dac755670d716 data/bloodmagic/recipes/array/fastminersigil.json
-18a6a4deafee0c6a6c19024ee4733acb9d5bbfe4 data/bloodmagic/recipes/array/grove.json
 f191a3c9982b827b0b2ba93164a81fc4f8cb0959 data/bloodmagic/recipes/array/growthsigil.json
 4452b681c328ed01ec680b6b68cb2a0aee11ed3d data/bloodmagic/recipes/array/holdingsigil.json
 78c880321f0bfad14239d4b9d2edae170a7fa86e data/bloodmagic/recipes/array/lavasigil.json
