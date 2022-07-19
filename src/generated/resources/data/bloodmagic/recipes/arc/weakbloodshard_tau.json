@@ -3,7 +3,7 @@
   "input": {
     "item": "bloodmagic:strong_tau"
   },
-  "inputsize": 0,
+  "inputsize": 1,
   "tool": {
     "tag": "bloodmagic:arc/reverter"
   },

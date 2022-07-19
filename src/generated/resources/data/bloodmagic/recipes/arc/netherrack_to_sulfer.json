@@ -3,7 +3,7 @@
   "input": {
     "tag": "forge:netherrack"
   },
-  "inputsize": 0,
+  "inputsize": 1,
   "tool": {
     "tag": "bloodmagic:arc/explosive"
   },

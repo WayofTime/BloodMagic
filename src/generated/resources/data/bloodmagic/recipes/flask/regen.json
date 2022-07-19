@@ -12,5 +12,5 @@
   "ticks": 200,
   "upgradeLevel": 1,
   "effect": "minecraft:regeneration",
-  "baseDuration": 3600
+  "baseDuration": 900
 }

@@ -3,7 +3,7 @@
   "input": {
     "item": "minecraft:iron_ore"
   },
-  "inputsize": 0,
+  "inputsize": 1,
   "tool": {
     "tag": "bloodmagic:arc/cuttingfluid"
   },

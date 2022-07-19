@@ -23,7 +23,7 @@ import wayoftime.bloodmagic.util.Constants;
 public class ARCRecipeBuilder extends BloodMagicRecipeBuilder<ARCRecipeBuilder>
 {
 	private final Ingredient input;
-	private int inputSize;
+	private int inputSize = 1;
 	private final Ingredient arcTool;
 	private final FluidStackIngredient inputFluid;
 	private final ItemStack output;

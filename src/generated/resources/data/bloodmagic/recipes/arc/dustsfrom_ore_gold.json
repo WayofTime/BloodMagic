@@ -3,7 +3,7 @@
   "input": {
     "tag": "forge:ores/gold"
   },
-  "inputsize": 0,
+  "inputsize": 1,
   "tool": {
     "tag": "bloodmagic:arc/cuttingfluid"
   },
