@@ -44,6 +44,7 @@ public class Constants
 		public static final String SLOT = "Slot";
 		public static final String POINTS = "storedPoints";
 		public static final String REDSTONE = "redstone";
+		public static final String TAG = "tag";
 
 		public static final String ALTAR = "bloodAltar";
 		public static final String ALTAR_TIER = "upgradeLevel";

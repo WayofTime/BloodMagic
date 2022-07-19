@@ -8,6 +8,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -169,6 +170,22 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 		}
 
 		setItemTagIndex(filterStack, slot, index);
+
+		setItemTag(filterStack, slot, index > 0 ? tags.get(index - 1) : null);
+	}
+
+	public void setItemTag(ItemStack filterStack, int slot, TagKey<Item> tag)
+	{
+		CompoundTag nbt = filterStack.getOrCreateTag();
+		if (tag == null)
+		{
+			nbt.putString(Constants.NBT.TAG + slot, "");
+			return;
+		}
+
+		ResourceLocation rl = tag.location();
+
+		nbt.putString(Constants.NBT.TAG + slot, rl.toString());
 	}
 
 	public TagKey<Item> getItemTag(ItemStack filterStack, int slot)
@@ -199,14 +216,24 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 
 //		List<ResourceLocation> tagRLs = new ArrayList<ResourceLocation>(ghostStack.getItem().getTags());
 
-		List<TagKey<Item>> tags = getAllItemTags(ghostStack);
-
-		if (tags.size() <= index)
+		String tagName = filterStack.getOrCreateTag().getString(Constants.NBT.TAG + slot);
+		if (tagName.isEmpty())
 		{
-			return null;
-		}
+			List<TagKey<Item>> tags = getAllItemTags(ghostStack);
 
-		return tags.get(index);
+			if (tags.size() <= index)
+			{
+				return null;
+			}
+			TagKey<Item> tag = tags.get(index);
+			setItemTag(filterStack, slot, tag);
+			return tag;
+		} else
+		{
+			ResourceLocation rl = new ResourceLocation(tagName);
+			TagKey<Item> tag = TagKey.create(Registry.ITEM_REGISTRY, rl);
+			return tag;
+		}
 	}
 
 	public ResourceLocation getItemTagResource(ItemStack filterStack, int slot)
