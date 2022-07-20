@@ -608,6 +608,20 @@ public class GenericHandler
 			{
 				LivingStats stats = LivingStats.fromPlayer(player, true);
 				ItemStack chestStack = player.getItemBySlot(EquipmentSlot.CHEST);
+
+				if (!event.getEntity().level.isClientSide)
+				{
+					int currentFood = player.getFoodData().getFoodLevel();
+
+					if (foodMap.getOrDefault(player.getUUID(), 19) < currentFood)
+					{
+						LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_KNOCKBACK_RESIST.get(), currentFood - foodMap.getOrDefault(player.getUUID(), 19));
+						System.out.println("Current exp: " + LivingStats.fromPlayer(player).getUpgrades().getOrDefault(LivingArmorRegistrar.UPGRADE_KNOCKBACK_RESIST.get(), 0d));
+					}
+
+					foodMap.put(player.getUUID(), currentFood);
+				}
+
 //				percentIncrease += LivingArmorRegistrar.UPGRADE_SPEED.get().getBonusValue("speed_modifier", stats.getLevel(LivingArmorRegistrar.UPGRADE_SPEED.get().getKey())).doubleValue();
 				if (player.isSprinting())
 				{
@@ -626,20 +640,12 @@ public class GenericHandler
 					distance = Math.sqrt((player.getX() - posXMap.get(player.getUUID())) * (player.getX() - posXMap.get(player.getUUID())) + (player.getZ() - posZMap.get(player.getUUID())) * (player.getZ() - posZMap.get(player.getUUID())));
 				}
 
-				int currentFood = player.getFoodData().getFoodLevel();
-
-				if (foodMap.getOrDefault(player.getUUID(), 19) < currentFood)
-				{
-					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_KNOCKBACK_RESIST.get(), currentFood - foodMap.getOrDefault(player.getUUID(), 19));
-				}
-
-				foodMap.put(player.getUUID(), currentFood);
-
 //				System.out.println("Distance travelled: " + distance);
 				if (player.isOnGround() && distance > 0 && distance < 50)
 				{
 					distance *= (1 + percentIncrease);
 					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_SPEED.get(), distance);
+//					System.out.println("Current exp for speed: " + LivingStats.fromPlayer(player).getUpgrades().getOrDefault(LivingArmorRegistrar.UPGRADE_SPEED.get(), 0d));
 				}
 
 				if (!player.isOnGround() && player.getDeltaMovement().y() < 0)
