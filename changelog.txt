@@ -2,6 +2,7 @@
 Version 3.2.4
 ------------------------------------------------------
 - Fixed Blood Altar's delay after crafting. The delay between when an altar finishes a craft and attempts to start a new craft is now 30 ticks.
+- Fixed Body Builder so that it is properly obtainable.
 
 ------------------------------------------------------
 Version 3.2.3
