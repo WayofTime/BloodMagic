@@ -143,9 +143,10 @@ public class BlockDemonCrystal extends Block implements EntityBlock
 
 				if (PlayerDemonWillHandler.getTotalDemonWill(PlayerDemonWillHandler.getLargestWillType(player), player) > 512 && !(holdsCrystal && isCreative))
 				{
-					crystal.dropSingleCrystal();
-
-					return InteractionResult.SUCCESS;
+					if (crystal.dropSingleCrystal())
+					{
+						return InteractionResult.SUCCESS;
+					}
 				}
 				if (!crystal.getLevel().isClientSide && isCreative && holdsCrystal)
 				{

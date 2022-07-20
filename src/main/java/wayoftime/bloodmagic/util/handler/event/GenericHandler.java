@@ -616,7 +616,6 @@ public class GenericHandler
 					if (foodMap.getOrDefault(player.getUUID(), 19) < currentFood)
 					{
 						LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_KNOCKBACK_RESIST.get(), currentFood - foodMap.getOrDefault(player.getUUID(), 19));
-						System.out.println("Current exp: " + LivingStats.fromPlayer(player).getUpgrades().getOrDefault(LivingArmorRegistrar.UPGRADE_KNOCKBACK_RESIST.get(), 0d));
 					}
 
 					foodMap.put(player.getUUID(), currentFood);

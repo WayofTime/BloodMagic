@@ -206,6 +206,7 @@ public class TileDemonCrystal extends TileTicking
 				setCrystalCount(crystalCount - 1);
 				Containers.dropItemStack(getLevel(), worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), stack);
 				notifyUpdate();
+				setChanged();
 				return true;
 			}
 		}
