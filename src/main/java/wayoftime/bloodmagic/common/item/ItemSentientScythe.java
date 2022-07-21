@@ -245,23 +245,30 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 
 //			applyEffectToEntity(type, willBracket, target, attackerPlayer);
 			hitMap.put(id, true);
-			stack.hurtAndBreak(durabilityFromMob, attacker, (entity) -> {
-				entity.broadcastBreakEvent(EquipmentSlot.MAINHAND);
-			});
+
 			float f2 = ((Player) attacker).getAttackStrengthScale(0.5F);
-			attackEntitiesInAreaExcludingEntity(stack, attackerPlayer, type, willBracket, null, f2);
+			int attackCount = attackEntitiesInAreaExcludingEntity(stack, attackerPlayer, type, willBracket, null, f2);
+			if (attackCount > 0)
+			{
+				stack.hurtAndBreak(durabilityFromMob, attacker, (entity) -> {
+					entity.broadcastBreakEvent(EquipmentSlot.MAINHAND);
+				});
+			}
+
 			hitMap.remove(id);
 
 		}
 		return false;
 	}
 
-	public void attackEntitiesInAreaExcludingEntity(ItemStack stack, Player attacker, EnumDemonWillType type, int willBracket, LivingEntity attackedEntity, float scale)
+	public int attackEntitiesInAreaExcludingEntity(ItemStack stack, Player attacker, EnumDemonWillType type, int willBracket, LivingEntity attackedEntity, float scale)
 	{
 //		System.out.println("Is client: " + attacker.world.isRemote);
 		double verticalRange = 2;
 		double horizontalRange = 2;
 		double range = 2;
+
+		int count = 0;
 
 		AABB aabb = null;
 		List<Entity> list = null;
@@ -288,6 +295,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 //		System.out.println("f2: " + f2);
 //		float f2 = 1;
 		f = f * (0.2F + f2 * f2 * 0.8F);
+		f *= f2;
 		attacker.resetAttackStrengthTicker();
 //		f *= 5;
 
@@ -364,6 +372,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 
 						boolean flag5 = targetEntity.hurt(DamageSource.playerAttack(attacker), f);
 
+						count++;
 						if (flag5)
 						{
 							didHit = true;
@@ -509,6 +518,8 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 		{
 			attacker.level.playSound((Player) null, attacker.getX(), attacker.getY(), attacker.getZ(), SoundEvents.PLAYER_ATTACK_WEAK, attacker.getSoundSource(), 1.0F, 1.0F);
 		}
+
+		return count;
 	}
 
 	public void applyEffectToEntity(EnumDemonWillType type, int willBracket, LivingEntity target, Player attacker)
