@@ -82,6 +82,7 @@ public class TileSpectral extends TileBase
 	@Override
 	public CompoundNBT serialize(CompoundNBT tag)
 	{
+		assert storedBlock != null;
 		tag.put("BlockState", NBTUtil.writeBlockState(storedBlock));
 		return tag;
 	}
