@@ -426,40 +426,6 @@
         {
           "type": "minecraft:item",
           "weight": 5,
-          "quality": 5,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
-              },
-              "add": false
-            }
-          ],
-          "name": "bloodmagic:averagepowercatalyst"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 5,
-          "quality": 5,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
-              },
-              "add": false
-            }
-          ],
-          "name": "bloodmagic:averagelengtheningcatalyst"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 5,
           "functions": [
             {
               "function": "minecraft:set_potion",

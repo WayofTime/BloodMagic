@@ -390,8 +390,8 @@ public class GeneratorLootTable extends LootTableProvider
 			potions_loot.add(LootItem.lootTableItem(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get()).setWeight(10).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3))));
 			potions_loot.add(LootItem.lootTableItem(BloodMagicItems.COMBINATIONAL_CATALYST.get()).setWeight(7).setQuality(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3))));
 			potions_loot.add(LootItem.lootTableItem(BloodMagicItems.SIMPLE_CATALYST.get()).setWeight(10).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 7))));
-			potions_loot.add(LootItem.lootTableItem(BloodMagicItems.AVERAGE_POWER_CATALYST.get()).setWeight(5).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3))));
-			potions_loot.add(LootItem.lootTableItem(BloodMagicItems.AVERAGE_LENGTHENING_CATALYST.get()).setWeight(5).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3))));
+//			potions_loot.add(LootItem.lootTableItem(BloodMagicItems.AVERAGE_POWER_CATALYST.get()).setWeight(2).setQuality(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))));
+//			potions_loot.add(LootItem.lootTableItem(BloodMagicItems.AVERAGE_LENGTHENING_CATALYST.get()).setWeight(1).setQuality(5).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))));
 			potions_loot.add(LootItem.lootTableItem(Items.SPLASH_POTION).setWeight(5).apply(SetPotionFunction.setPotion(Potions.POISON)));
 
 			acceptor.accept(BloodMagic.rl("chests/standard_dungeon/decent_alchemy"), LootTable.lootTable().withPool(potions_loot));
@@ -408,13 +408,16 @@ public class GeneratorLootTable extends LootTableProvider
 			strong_potions_loot.add(LootItem.lootTableItem(Items.PHANTOM_MEMBRANE).setWeight(3).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
 			strong_potions_loot.add(LootItem.lootTableItem(Items.RABBIT_FOOT).setWeight(2).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
 			strong_potions_loot.add(LootItem.lootTableItem(Items.GHAST_TEAR).setWeight(5).setQuality(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
+			strong_potions_loot.add(LootItem.lootTableItem(Items.GLOW_BERRIES).setWeight(5).setQuality(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
+			strong_potions_loot.add(LootItem.lootTableItem(Items.AMETHYST_SHARD).setWeight(5).setQuality(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
 			strong_potions_loot.add(LootItem.lootTableItem(BloodMagicItems.STRONG_TAU_ITEM.get()).setWeight(8).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 9))));
 
 			strong_potions_loot.add(LootItem.lootTableItem(BloodMagicItems.MUNDANE_POWER_CATALYST.get()).setWeight(10).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
 			strong_potions_loot.add(LootItem.lootTableItem(BloodMagicItems.MUNDANE_LENGTHENING_CATALYST.get()).setWeight(10).setQuality(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
 			strong_potions_loot.add(LootItem.lootTableItem(BloodMagicItems.COMBINATIONAL_CATALYST.get()).setWeight(4).setQuality(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
-			strong_potions_loot.add(LootItem.lootTableItem(BloodMagicItems.AVERAGE_POWER_CATALYST.get()).setWeight(6).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
-			strong_potions_loot.add(LootItem.lootTableItem(BloodMagicItems.AVERAGE_LENGTHENING_CATALYST.get()).setWeight(6).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
+			strong_potions_loot.add(LootItem.lootTableItem(BloodMagicItems.AVERAGE_POWER_CATALYST.get()).setWeight(2).setQuality(5).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))));
+			strong_potions_loot.add(LootItem.lootTableItem(BloodMagicItems.AVERAGE_LENGTHENING_CATALYST.get()).setWeight(2).setQuality(5).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))));
+			strong_potions_loot.add(LootItem.lootTableItem(BloodMagicItems.STRENGTHENED_CATALYST.get()).setWeight(6).setQuality(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
 			strong_potions_loot.add(LootItem.lootTableItem(BloodMagicItems.AVERAGE_FILLING_AGENT.get()).setWeight(4).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
 			strong_potions_loot.add(LootItem.lootTableItem(BloodMagicItems.INTERMEDIATE_CUTTING_FLUID.get()).setWeight(9).setQuality(4));
 			strong_potions_loot.add(LootItem.lootTableItem(Items.SPLASH_POTION).setWeight(3).apply(SetPotionFunction.setPotion(Potions.STRONG_HEALING)));

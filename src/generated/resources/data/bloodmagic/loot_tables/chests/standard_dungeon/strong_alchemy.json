@@ -198,6 +198,40 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 5,
+          "quality": 4,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 2.0,
+                "max": 5.0
+              },
+              "add": false
+            }
+          ],
+          "name": "minecraft:glow_berries"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "quality": 4,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 2.0,
+                "max": 5.0
+              },
+              "add": false
+            }
+          ],
+          "name": "minecraft:amethyst_shard"
+        },
+        {
+          "type": "minecraft:item",
           "weight": 8,
           "quality": 2,
           "functions": [
@@ -266,16 +300,12 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 6,
+          "weight": 2,
           "quality": 5,
           "functions": [
             {
               "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 5.0
-              },
+              "count": 1.0,
               "add": false
             }
           ],
@@ -283,8 +313,21 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 6,
+          "weight": 2,
           "quality": 5,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 1.0,
+              "add": false
+            }
+          ],
+          "name": "bloodmagic:averagelengtheningcatalyst"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 6,
+          "quality": 1,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -296,7 +339,7 @@
               "add": false
             }
           ],
-          "name": "bloodmagic:averagelengtheningcatalyst"
+          "name": "bloodmagic:strengthenedcatalyst"
         },
         {
           "type": "minecraft:item",
