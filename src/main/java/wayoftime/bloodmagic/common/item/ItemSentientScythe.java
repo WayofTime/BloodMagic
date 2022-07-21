@@ -42,7 +42,9 @@ import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -86,6 +88,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 
 	public final static double baseAttackDamage = 4;
 	public final static double baseAttackSpeed = -3;
+	public final static int durabilityFromMob = 2;
 	private static Map<UUID, Boolean> hitMap = new HashMap<UUID, Boolean>();
 
 	public ItemSentientScythe()
@@ -98,6 +101,12 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair)
 	{
 		return repair.is(BloodMagicTags.CRYSTAL_DEMON) || super.isValidRepairItem(toRepair, repair);
+	}
+
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment)
+	{
+		return enchantment == Enchantments.SHARPNESS || enchantment.category.canEnchant(stack.getItem());
 	}
 
 	@Override
@@ -225,6 +234,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	{
 		if (attacker instanceof Player)
 		{
+			UUID id = attacker.getUUID();
 			Player attackerPlayer = (Player) attacker;
 			this.recalculatePowers(stack, attackerPlayer.getCommandSenderWorld(), attackerPlayer);
 			EnumDemonWillType type = this.getCurrentType(stack);
@@ -234,13 +244,19 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 			this.recalculatePowers(stack, attacker.level, attackerPlayer);
 
 //			applyEffectToEntity(type, willBracket, target, attackerPlayer);
+			hitMap.put(id, true);
+			stack.hurtAndBreak(durabilityFromMob, attacker, (entity) -> {
+				entity.broadcastBreakEvent(EquipmentSlot.MAINHAND);
+			});
+			float f2 = ((Player) attacker).getAttackStrengthScale(0.5F);
+			attackEntitiesInAreaExcludingEntity(stack, attackerPlayer, type, willBracket, null, f2);
+			hitMap.remove(id);
 
-			attackEntitiesInAreaExcludingEntity(stack, attackerPlayer, type, willBracket, null);
 		}
 		return false;
 	}
 
-	public void attackEntitiesInAreaExcludingEntity(ItemStack stack, Player attacker, EnumDemonWillType type, int willBracket, LivingEntity attackedEntity)
+	public void attackEntitiesInAreaExcludingEntity(ItemStack stack, Player attacker, EnumDemonWillType type, int willBracket, LivingEntity attackedEntity, float scale)
 	{
 //		System.out.println("Is client: " + attacker.world.isRemote);
 		double verticalRange = 2;
@@ -267,7 +283,9 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 		// TODO: check if we actually hit something first, 'kay?
 		float f = (float) attacker.getAttributeValue(Attributes.ATTACK_DAMAGE);
 
-		float f2 = attacker.getAttackStrengthScale(0.5F);
+//		float f2 = attacker.getAttackStrengthScale(0.5F);
+		float f2 = scale;
+//		System.out.println("f2: " + f2);
 //		float f2 = 1;
 		f = f * (0.2F + f2 * f2 * 0.8F);
 		attacker.resetAttackStrengthTicker();
@@ -343,6 +361,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 						}
 
 						Vec3 vector3d = targetEntity.getDeltaMovement();
+
 						boolean flag5 = targetEntity.hurt(DamageSource.playerAttack(attacker), f);
 
 						if (flag5)
@@ -519,14 +538,12 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker)
 	{
-		stack.hurtAndBreak(1, attacker, (entity) -> {
-			entity.broadcastBreakEvent(EquipmentSlot.MAINHAND);
-		});
 
 //		if (super.hitEntity(stack, target, attacker))
 //		{
 		if (attacker instanceof Player)
 		{
+
 			UUID id = attacker.getUUID();
 
 			Player attackerPlayer = (Player) attacker;
@@ -546,7 +563,10 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 				double will = PlayerDemonWillHandler.getTotalDemonWill(type, attackerPlayer);
 				int willBracket = this.getLevel(stack, will);
 				hitMap.put(id, true);
-				this.attackEntitiesInAreaExcludingEntity(stack, attackerPlayer, type, willBracket, target);
+				stack.hurtAndBreak(durabilityFromMob, attacker, (entity) -> {
+					entity.broadcastBreakEvent(EquipmentSlot.MAINHAND);
+				});
+				this.attackEntitiesInAreaExcludingEntity(stack, attackerPlayer, type, willBracket, target, 1);
 				hitMap.remove(id);
 			}
 		}
