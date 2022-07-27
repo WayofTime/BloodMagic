@@ -237,6 +237,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.crystalSplitRitual", "Resonance of the Faceted Crystal");
 		add("ritual.bloodmagic.ellipseRitual", "Focus of the Ellipsoid");
 		add("ritual.bloodmagic.simpleDungeonRitual", "Edge of the Hidden Realm");
+		add("ritual.bloodmagic.standardDungeonRitual", "Pathway to the Endless Realm");
 		add("ritual.bloodmagic.downgradeRitual", "Penance of the Leadened Soul");
 		add("ritual.bloodmagic.condorRitual", "Reverence of the Condor");
 		add("ritual.bloodmagic.yawningVoidRitual", "Yawning of the Void");
@@ -632,6 +633,9 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.WEAK_TAU, "Tau Fruit");
 		addBlock(BloodMagicBlocks.STRONG_TAU, "Saturated Tau");
 		addBlock(BloodMagicBlocks.GROWING_DOUBT, "Seeds of Doubt");
+
+		addBlock(BloodMagicBlocks.MIMIC, "Opaque Mimic");
+		addBlock(BloodMagicBlocks.ETHEREAL_MIMIC, "Ethereal Mimic");
 
 		// Item names
 		addItem(BloodMagicItems.WEAK_BLOOD_ORB, "Weak Blood Orb");
