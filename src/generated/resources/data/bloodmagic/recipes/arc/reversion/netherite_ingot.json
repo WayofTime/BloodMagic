@@ -1,7 +1,7 @@
 {
   "type": "bloodmagic:arc",
   "input": {
-    "item": "bloodmagic:dislocationrune2"
+    "item": "minecraft:netherite_ingot"
   },
   "inputsize": 1,
   "tool": {
@@ -12,20 +12,14 @@
       "mainchance": 1.0,
       "chance": 0.0,
       "type": {
-        "item": "bloodmagic:hellforgedparts"
-      }
-    },
-    {
-      "mainchance": 1.0,
-      "chance": 0.0,
-      "type": {
-        "item": "minecraft:netherite_scrap",
+        "item": "minecraft:gold_ingot",
         "count": 4
       }
     }
   ],
   "output": {
-    "item": "bloodmagic:dislocationrune"
+    "item": "minecraft:netherite_scrap",
+    "count": 4
   },
   "consumeingredient": false,
   "mainoutputchance": 0.0

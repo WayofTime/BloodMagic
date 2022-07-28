@@ -291,8 +291,8 @@ public class BloodMagicItems
 
 	// Alchemy Table items
 	public static final RegistryObject<Item> BASIC_CUTTING_FLUID = BASICITEMS.register("basiccuttingfluid", () -> new ItemARCToolBase(64, 1, EnumDemonWillType.CORROSIVE));
-	public static final RegistryObject<Item> INTERMEDIATE_CUTTING_FLUID = BASICITEMS.register("intermediatecuttingfluid", () -> new ItemARCToolBase(512, 1.5, EnumDemonWillType.CORROSIVE));
-	public static final RegistryObject<Item> ADVANCED_CUTTING_FLUID = BASICITEMS.register("advancedcuttingfluid", () -> new ItemARCToolBase(2048, 2, 2, EnumDemonWillType.CORROSIVE));
+	public static final RegistryObject<Item> INTERMEDIATE_CUTTING_FLUID = BASICITEMS.register("intermediatecuttingfluid", () -> new ItemARCToolBase(256, 1.5, EnumDemonWillType.CORROSIVE));
+	public static final RegistryObject<Item> ADVANCED_CUTTING_FLUID = BASICITEMS.register("advancedcuttingfluid", () -> new ItemARCToolBase(1024, 2, 2, EnumDemonWillType.CORROSIVE));
 
 	public static final RegistryObject<Item> SULFUR = BASICITEMS.register("sulfur", () -> new ItemBase());
 	public static final RegistryObject<Item> SALTPETER = BASICITEMS.register("saltpeter", () -> new ItemBase());

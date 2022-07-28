@@ -19,7 +19,8 @@
       "mainchance": 1.0,
       "chance": 0.0,
       "type": {
-        "item": "bloodmagic:demonslate"
+        "item": "minecraft:netherite_scrap",
+        "count": 4
       }
     }
   ],
