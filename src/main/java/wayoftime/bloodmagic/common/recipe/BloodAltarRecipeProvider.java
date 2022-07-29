@@ -67,8 +67,10 @@ public class BloodAltarRecipeProvider implements ISubRecipeProvider
 //
 //		// FIVE
 
-		BloodAltarRecipeBuilder.altar(Ingredient.of(BloodMagicBlocks.HELLFORGED_BLOCK.get()), new ItemStack(BloodMagicItems.ARCHMAGE_BLOOD_ORB.get()), AltarTier.FIVE.ordinal(), 80000, 50, 100);
-		BloodAltarRecipeBuilder.altar(Ingredient.of(BloodMagicItems.DEMONIC_SLATE.get()), new ItemStack(BloodMagicItems.ETHEREAL_SLATE.get()), AltarTier.FIVE.ordinal(), 30000, 40, 100);
+		BloodAltarRecipeBuilder.altar(Ingredient.of(BloodMagicBlocks.HELLFORGED_BLOCK.get()), new ItemStack(BloodMagicItems.ARCHMAGE_BLOOD_ORB.get()), AltarTier.FIVE.ordinal(), 80000, 50, 100).build(consumer, BloodMagic.rl(basePath + "archmagebloodorb"));
+		;
+		BloodAltarRecipeBuilder.altar(Ingredient.of(BloodMagicItems.DEMONIC_SLATE.get()), new ItemStack(BloodMagicItems.ETHEREAL_SLATE.get()), AltarTier.FIVE.ordinal(), 30000, 40, 100).build(consumer, BloodMagic.rl(basePath + "etherealslate"));
+		;
 //		registrar.addBloodAltar(new OreIngredient("netherStar"), OrbRegistry.getOrbStack(RegistrarBloodMagic.ORB_ARCHMAGE), AltarTier.FIVE.ordinal(), 80000, 50, 100);
 //		registrar.addBloodAltar(Ingredient.fromStacks(ItemSlate.SlateType.DEMONIC.getStack()), ItemSlate.SlateType.ETHEREAL.getStack(), AltarTier.FIVE.ordinal(), 30000, 40, 100);
 	}

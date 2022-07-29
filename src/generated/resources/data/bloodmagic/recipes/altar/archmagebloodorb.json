@@ -1,0 +1,13 @@
+{
+  "type": "bloodmagic:altar",
+  "input": {
+    "item": "bloodmagic:dungeon_metal"
+  },
+  "output": {
+    "item": "bloodmagic:archmagebloodorb"
+  },
+  "upgradeLevel": 4,
+  "altarSyphon": 80000,
+  "consumptionRate": 50,
+  "drainRate": 100
+}
