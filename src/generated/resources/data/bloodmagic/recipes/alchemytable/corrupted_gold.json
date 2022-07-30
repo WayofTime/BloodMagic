@@ -2,14 +2,14 @@
   "type": "bloodmagic:alchemytable",
   "input": [
     {
-      "tag": "forge:dusts/gold"
+      "tag": "bloodmagic:fragments/gold"
     },
     {
       "item": "bloodmagic:corrupted_dust"
     }
   ],
   "output": {
-    "item": "bloodmagic:goldsand",
+    "item": "bloodmagic:goldgravel",
     "count": 2
   },
   "syphon": 300,

@@ -2,7 +2,10 @@
   "type": "bloodmagic:alchemytable",
   "input": [
     {
-      "tag": "forge:dusts/netherite_scrap"
+      "tag": "bloodmagic:fragments/netherite_scrap"
+    },
+    {
+      "item": "bloodmagic:corrupted_dust"
     },
     {
       "item": "bloodmagic:corrupted_dust"
@@ -12,7 +15,7 @@
     }
   ],
   "output": {
-    "item": "bloodmagic:sand_netherite",
+    "item": "bloodmagic:gravel_netherite_scrap",
     "count": 2
   },
   "syphon": 1000,

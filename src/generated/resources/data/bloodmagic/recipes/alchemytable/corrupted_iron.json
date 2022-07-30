@@ -2,14 +2,14 @@
   "type": "bloodmagic:alchemytable",
   "input": [
     {
-      "tag": "forge:dusts/iron"
+      "tag": "bloodmagic:fragments/iron"
     },
     {
       "item": "bloodmagic:corrupted_dust"
     }
   ],
   "output": {
-    "item": "bloodmagic:ironsand",
+    "item": "bloodmagic:irongravel",
     "count": 2
   },
   "syphon": 100,

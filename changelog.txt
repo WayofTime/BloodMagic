@@ -7,6 +7,8 @@ Version 3.2.4
 -> The dungeons currently have two distinct regions: 
 ->> The "Entrance Zone", which contains a wide array of loot and monsters
 ->> The "Hidden Mines", containing a bountiful reserve of Demonite, which is used for advanced alchemy and for empowering the Blood Altar to Tier 5. Accessible by finding the "Foreman's Key" in the Entrance Zone.
+-> If you delve deep enough in the dungeon, a "Spatial Distortion" may occasionally form; this changes one of the doors within the room to one that leads to a rare dungeon room.
+- More rooms, room types, and special rooms to come to the Dungeon (eventually (soon (tm)))!
 
 - Added Demonite, which can be processed into Hellforged Sand and Hellforged Ingots.
 

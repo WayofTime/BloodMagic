@@ -2,14 +2,14 @@
   "type": "bloodmagic:alchemytable",
   "input": [
     {
-      "tag": "forge:dusts/copper"
+      "tag": "bloodmagic:fragments/copper"
     },
     {
       "item": "bloodmagic:corrupted_dust"
     }
   ],
   "output": {
-    "item": "bloodmagic:coppersand",
+    "item": "bloodmagic:coppergravel",
     "count": 2
   },
   "syphon": 50,
