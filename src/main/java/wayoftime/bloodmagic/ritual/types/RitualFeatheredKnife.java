@@ -3,15 +3,15 @@ package wayoftime.bloodmagic.ritual.types;
 import java.util.List;
 import java.util.function.Consumer;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.AABB;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ConfigHandler;
 import wayoftime.bloodmagic.altar.IBloodAltar;
@@ -49,7 +49,7 @@ public class RitualFeatheredKnife extends Ritual
 		addBlockRange(DAMAGE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-15, -20, -15), 31, 41, 31));
 
 		setMaximumVolumeAndDistanceOfRange(ALTAR_RANGE, 0, 10, 15);
-		setMaximumVolumeAndDistanceOfRange(DAMAGE_RANGE, 0, 25, 15);
+		setMaximumVolumeAndDistanceOfRange(DAMAGE_RANGE, 0, 25, 25);
 	}
 
 	@Override
