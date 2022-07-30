@@ -780,7 +780,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.FRAME_PARTS, "Filter Parts");
 
 		addItem(BloodMagicItems.DEMONITE_RAW, "Raw Demonite");
-		addItem(BloodMagicItems.HELLFORGED_SAND, "Hellforged Dust");
+		addItem(BloodMagicItems.HELLFORGED_SAND, "Hellforged Sand");
 		addItem(BloodMagicItems.CORRUPTED_DUST_TINY, "Tiny Corrupted Dust");
 		addItem(BloodMagicItems.CORRUPTED_DUST, "Corrupted Dust");
 		addItem(BloodMagicItems.HELLFORGED_INGOT, "Hellforged Ingot");
@@ -858,7 +858,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.CYCLING_CATALYST, "Simple Cycling Catalyst");
 		addItem(BloodMagicItems.COMBINATIONAL_CATALYST, "Combinational Catalyst");
 
-		addItem(BloodMagicItems.AVERAGE_POWER_CATALYST, "Standard Lengthening Catalyst");
+		addItem(BloodMagicItems.AVERAGE_POWER_CATALYST, "Standard Power Catalyst");
 		addItem(BloodMagicItems.AVERAGE_LENGTHENING_CATALYST, "Standard Lengthening Catalyst");
 		addItem(BloodMagicItems.AVERAGE_FILLING_AGENT, "Standard Filling Agent");
 

@@ -1,11 +1,46 @@
 ------------------------------------------------------
 Version 3.2.4
 ------------------------------------------------------
+- Implemented the "Pathway to the Endless Realm" ritual, which provides access to a larger version of the Demon Dungeons!
+-> "The Endless Realm" is a sprawling, procedurally generated dungeon, filled with chests bursting with loot and monsters that pack a serious punch!
+-> Those who successfully navigate its many chambers may find Demonite, an ore that cannot be found anywhere else. 
+-> The dungeons currently have two distinct regions: 
+->> The "Entrance Zone", which contains a wide array of loot and monsters
+->> The "Hidden Mines", containing a bountiful reserve of Demonite, which is used for advanced alchemy and for empowering the Blood Altar to Tier 5. Accessible by finding the "Foreman's Key" in the Entrance Zone.
+
+- Added Demonite, which can be processed into Hellforged Sand and Hellforged Ingots.
+
+- Added more advanced anointments, which offer either increased duration (XL) or a stronger effect (III).
+- Added the "Standard Lengthening Catalyst" and "Standard Power Catalyst", which further augment potion effects in the Alchemy Flask.
+- Added stronger Alchemic Reaction Chamber tools, which are both faster and longer-lasting than previous tools.
+-> Hellforged Resonator
+-> Hellforged Explosive Cell
+-> Advanced Cutting Fluid
+-> These tools also boost the chance for bonus outputs when used. For instance, an Intermediate Cutting Fluid will provide 1.5x Iron Sand per Raw Iron, whereas the Advanced Cutting Fluid provides 1.67x.
+
+- Added upgraded upgraded Explosive charges and tweaked the power of previous versions.
+-> Augmented Shaped Charge - breaks 7x7x7 cube of blocks.
+-> Tunneling Shaped Charge - breaks 5x5x20 long set of blocks.
+-> Augmented Controlled Charge - breaks up to 8x64 blocks of the same type.
+-> Augmented Deforester Charge - breaks up to 8x64 logs, clearing away connecting leaves.
+-> Augmented Fungal Charge - breaks up to 8x64 blocks related to Overworld and Nether big mushrooms.
+
+- Added Hellforged Parts, which can only be found through loot within the Hidden Mines.
+-> Used to reinforce Blood Runes, doubling the effect of the given rune.
+
+- Increased the rate of "Tiny Corrupted Dust" when using the Resonator in the Alchemic Reaction Chamber.
+-> Corrupted Dust can be used to increase the yield of the desired ore.
+
+- Updated several textures related to vanilla ore processing.
+- Added "Void Essence" Anointment, which destroys mundane blocks that are mined.
 - Fixed Blood Altar's delay after crafting. The delay between when an altar finishes a craft and attempts to start a new craft is now 30 ticks.
 - Fixed Body Builder so that it is properly obtainable.
 - Fixed Nether Wart handling for the Harvest ritual.
 - Fixed the Sentient Scythe so that it wasn't made out of paper. Also actually does damage now!
 - Allowed the Sentient Scythe to receive the Sharpness enchantment while enchanting.
+- Changed the Ritual of the Feathered Knife to interact with the "Tough Palms" Living Upgrade.
+- Added Amethyst Throwing Daggers, which do the same damage as Iron Throwing Daggers.
+-> Can be combined in an ARC with a Lingering Alchemy Flask to add potion effects to the thrown daggers.
 
 ------------------------------------------------------
 Version 3.2.3

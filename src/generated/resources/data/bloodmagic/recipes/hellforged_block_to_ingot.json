@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "bloodmagic:dungeon_metal"
+    }
+  ],
+  "result": {
+    "item": "bloodmagic:ingot_hellforged",
+    "count": 9
+  }
+}
