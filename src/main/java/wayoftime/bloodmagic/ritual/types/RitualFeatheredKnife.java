@@ -158,28 +158,12 @@ public class RitualFeatheredKnife extends Ritual
 						destructiveDrain += destructiveWillDrain * sacrificedHealth;
 					}
 
-//					if (LivingArmour.hasFullSet(player))
-//					{
-//						ItemStack chestStack = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
-//						LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
-//						if (armour != null)
-//						{
-//							LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(BloodMagic.MODID + ".upgrade.selfSacrifice", chestStack);
-//
-//							if (upgrade instanceof LivingArmourUpgradeSelfSacrifice)
-//							{
-//								double modifier = ((LivingArmourUpgradeSelfSacrifice) upgrade).getSacrificeModifier();
-//
-//								lpModifier *= (1 + modifier);
-//							}
-//						}
-//					}
 					if (LivingUtil.hasFullSet(player))
 					{
 						LivingStats stats = LivingStats.fromPlayer(player, true);
 						double bonus = LivingArmorRegistrar.UPGRADE_SELF_SACRIFICE.get().getBonusValue("self_mod", stats.getLevel(LivingArmorRegistrar.UPGRADE_SELF_SACRIFICE.get().getKey())).doubleValue();
 						lpModifier *= (1 + bonus);
-//						LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_SELF_SACRIFICE.get(), event.healthDrained);
+						LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_SELF_SACRIFICE.get(), sacrificedHealth);
 					}
 
 					player.setHealth(health - sacrificedHealth);
