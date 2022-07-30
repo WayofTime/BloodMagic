@@ -16,6 +16,9 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ConfigHandler;
 import wayoftime.bloodmagic.altar.IBloodAltar;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
+import wayoftime.bloodmagic.core.LivingArmorRegistrar;
+import wayoftime.bloodmagic.core.living.LivingStats;
+import wayoftime.bloodmagic.core.living.LivingUtil;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.network.SetClientHealthPacket;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
@@ -171,6 +174,13 @@ public class RitualFeatheredKnife extends Ritual
 //							}
 //						}
 //					}
+					if (LivingUtil.hasFullSet(player))
+					{
+						LivingStats stats = LivingStats.fromPlayer(player, true);
+						double bonus = LivingArmorRegistrar.UPGRADE_SELF_SACRIFICE.get().getBonusValue("self_mod", stats.getLevel(LivingArmorRegistrar.UPGRADE_SELF_SACRIFICE.get().getKey())).doubleValue();
+						lpModifier *= (1 + bonus);
+//						LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_SELF_SACRIFICE.get(), event.healthDrained);
+					}
 
 					player.setHealth(health - sacrificedHealth);
 					BloodMagic.packetHandler.sendTo(new SetClientHealthPacket(health - sacrificedHealth), (ServerPlayer) player);
