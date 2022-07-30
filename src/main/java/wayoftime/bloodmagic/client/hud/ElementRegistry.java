@@ -132,7 +132,7 @@ public class ElementRegistry
 	public static void onRenderOverlay(RenderGameOverlayEvent.Pre event)
 	{
 //		if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR)
-		if (event.getType() == RenderGameOverlayEvent.ElementType.LAYER)
+		if (event.getType() == RenderGameOverlayEvent.ElementType.CHAT)
 		{
 			Window window = event.getWindow();
 

@@ -90,6 +90,7 @@ public class TileVeinMineCharge extends TileExplosiveCharge
 			veinPartsCache = new LinkedList<BlockPos>();
 			veinPartsCache.add(worldPosition.relative(explosiveDirection));
 			internalCounter = 0;
+			currentBlocks = 1;
 //			veinPartsMap.add(pos.offset(explosiveDirection));
 		}
 
