@@ -38,7 +38,7 @@ public class GuiEditHUD extends Screen
 	{
 		super.init();
 
-		addWidget(new Button(width / 2 - 155, height - 30, 70, 20, new TranslatableComponent("gui.bloodmagic.toggle"), b -> {
+		addRenderableWidget(new Button(width / 2 - 155, height - 30, 70, 20, new TranslatableComponent("gui.bloodmagic.toggle"), b -> {
 			Minecraft.getInstance().setScreen(parent);
 		})
 		{
@@ -46,16 +46,16 @@ public class GuiEditHUD extends Screen
 				active = false;
 			}
 		});
-		addWidget(new Button(width / 2 - 75, height - 30, 70, 20, new TranslatableComponent("gui.bloodmagic.default"), b -> {
+		addRenderableWidget(new Button(width / 2 - 75, height - 30, 70, 20, new TranslatableComponent("gui.bloodmagic.default"), b -> {
 			currentOverrides.clear();
 			ElementRegistry.resetPos();
 			changes = false;
 		}));
-		addWidget(new Button(width / 2 + 5, height - 30, 70, 20, new TranslatableComponent("gui.bloodmagic.save"), b -> {
+		addRenderableWidget(new Button(width / 2 + 5, height - 30, 70, 20, new TranslatableComponent("gui.bloodmagic.save"), b -> {
 			ElementRegistry.save(currentOverrides);
 			Minecraft.getInstance().setScreen(parent);
 		}));
-		addWidget(new Button(width / 2 + 90, height - 30, 70, 20, new TranslatableComponent("gui.bloodmagic.cancel"), b -> {
+		addRenderableWidget(new Button(width / 2 + 90, height - 30, 70, 20, new TranslatableComponent("gui.bloodmagic.cancel"), b -> {
 			currentOverrides.clear();
 			Minecraft.getInstance().setScreen(parent);
 		}));
@@ -96,7 +96,6 @@ public class GuiEditHUD extends Screen
 	}
 
 	@Override
-//	protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick)
 	public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY)
 	{
 		if (dragged == null)
@@ -111,17 +110,6 @@ public class GuiEditHUD extends Screen
 		}
 
 		return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
-//		if (dragged != null)
-//			return false;
-//
-//		HUDElement element = getHoveredElement(mouseX, mouseY);
-//		if (element == null)
-//			return false;
-//
-//		if (button == 0)
-//			dragged = element;
-//
-//		return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
 	}
 
 	@Override
@@ -131,10 +119,11 @@ public class GuiEditHUD extends Screen
 		{
 			Window window = Minecraft.getInstance().getWindow();
 			Point bounded = getBoundedDrag(window, mouseX, mouseY);
-			float xPos = (float) ((bounded.x) / window.getGuiScaledWidth());
-			float yPos = (float) ((bounded.y) / window.getGuiScaledHeight());
+			float xPos = (((float) bounded.x) / window.getGuiScaledWidth());
+			float yPos = (((float) bounded.y) / window.getGuiScaledHeight());
 
 			currentOverrides.put(ElementRegistry.getKey(dragged), new Vec2(xPos, yPos));
+//			System.out.println("Size of overrides: " + currentOverrides.size());
 			changes = true;
 			dragged = null;
 //			return super;
@@ -142,38 +131,6 @@ public class GuiEditHUD extends Screen
 
 		return super.mouseReleased(mouseX, mouseY, state);
 	}
-
-//	@Override
-//	protected void actionPerformed(Button button)
-//	{
-//		switch (button.id)
-//		{
-//		case 0:
-//		{
-//			Minecraft.getInstance().displayGuiScreen(parent);
-//			break;
-//		}
-//		case 1:
-//		{
-//			currentOverrides.clear();
-//			ElementRegistry.resetPos();
-//			changes = false;
-//			break;
-//		}
-//		case 2:
-//		{
-//			ElementRegistry.save(currentOverrides);
-//			Minecraft.getInstance().displayGuiScreen(parent);
-//			break;
-//		}
-//		case 3:
-//		{
-//			currentOverrides.clear();
-//			Minecraft.getInstance().displayGuiScreen(parent);
-//			break;
-//		}
-//		}
-//	}
 
 	@Nullable
 	public HUDElement getHoveredElement(double mouseX, double mouseY)

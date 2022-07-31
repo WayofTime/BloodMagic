@@ -4,28 +4,30 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ClipContext.Fluid;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.altar.IBloodAltar;
-import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.api.compat.IAltarReader;
+import wayoftime.bloodmagic.client.hud.GuiEditHUD;
+import wayoftime.bloodmagic.common.tile.TileIncenseAltar;
+import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.NumeralHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
-
-import wayoftime.bloodmagic.common.item.sigil.ISigil.Holding;
-import wayoftime.bloodmagic.common.tile.TileIncenseAltar;
 
 public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 {
@@ -48,6 +50,11 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 
 		if (!world.isClientSide)
 		{
+			if (player.isShiftKeyDown())
+			{
+				return InteractionResultHolder.consume(stack);
+			}
+
 			HitResult position = Item.getPlayerPOVHitResult(world, player, Fluid.NONE);
 
 			if (position == null || position.getType() == HitResult.Type.MISS)
@@ -55,7 +62,7 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 				super.use(world, player, hand);
 
 				Binding binding = getBinding(stack);
-				if (isSimple && binding != null)
+				if (binding != null)
 				{
 					int currentEssence = NetworkHelper.getSoulNetwork(binding).getCurrentEssence();
 					List<Component> toSend = Lists.newArrayList();
@@ -113,8 +120,21 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 				}
 			}
 
+		} else
+		{
+			if (player.isShiftKeyDown())
+			{
+				openEditHUDScreen();
+				return InteractionResultHolder.consume(stack);
+			}
 		}
 
 		return super.use(world, player, hand);
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public void openEditHUDScreen()
+	{
+		Minecraft.getInstance().setScreen(new GuiEditHUD(null));
 	}
 }

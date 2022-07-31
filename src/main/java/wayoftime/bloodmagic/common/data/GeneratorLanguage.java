@@ -925,6 +925,10 @@ public class GeneratorLanguage extends LanguageProvider
 
 		// GUI
 		add("gui.bloodmagic.empty", "Empty");
+		add("gui.bloodmagic.save", "Save");
+		add("gui.bloodmagic.cancel", "Cancel");
+		add("gui.bloodmagic.default", "Default");
+		add("gui.bloodmagic.toggle", "Toggle");
 
 		// Potion Effects
 		add("effect.bloodmagic.flight", "Flight");

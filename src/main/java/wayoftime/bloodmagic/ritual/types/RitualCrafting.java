@@ -170,7 +170,7 @@ public class RitualCrafting extends Ritual
 						}
 					}
 
-					System.out.println("Have a table!");
+//					System.out.println("Have a table!");
 					int operations = attemptAlchemyTableCrafting(masterRitualStone, level, pos, (TileAlchemyTable) alchemyTile);
 					if (operations > 0)
 					{

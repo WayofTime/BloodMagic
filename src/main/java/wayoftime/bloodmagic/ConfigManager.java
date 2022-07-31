@@ -14,6 +14,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
+import wayoftime.bloodmagic.client.hud.ElementRegistry;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 
 @EventBusSubscriber(modid = BloodMagic.MODID, bus = Bus.MOD)
@@ -80,16 +81,16 @@ public class ConfigManager
 
 	public static class ClientConfig
 	{
-		public final ForgeConfigSpec.DoubleValue demonWillGaugeX;
-		public final ForgeConfigSpec.DoubleValue demonWillGaugeY;
-		public final ForgeConfigSpec.DoubleValue bloodAltarGaugeX;
-		public final ForgeConfigSpec.DoubleValue bloodAltarGaugeY;
-		public final ForgeConfigSpec.DoubleValue bloodAltarAdvGaugeX;
-		public final ForgeConfigSpec.DoubleValue bloodAltarAdvGaugeY;
-		public final ForgeConfigSpec.DoubleValue incenseGaugeX;
-		public final ForgeConfigSpec.DoubleValue incenseGaugeY;
-		public final ForgeConfigSpec.DoubleValue holdingX;
-		public final ForgeConfigSpec.DoubleValue holdingY;
+//		public final ForgeConfigSpec.DoubleValue demonWillGaugeX;
+//		public final ForgeConfigSpec.DoubleValue demonWillGaugeY;
+//		public final ForgeConfigSpec.DoubleValue bloodAltarGaugeX;
+//		public final ForgeConfigSpec.DoubleValue bloodAltarGaugeY;
+//		public final ForgeConfigSpec.DoubleValue bloodAltarAdvGaugeX;
+//		public final ForgeConfigSpec.DoubleValue bloodAltarAdvGaugeY;
+//		public final ForgeConfigSpec.DoubleValue incenseGaugeX;
+//		public final ForgeConfigSpec.DoubleValue incenseGaugeY;
+//		public final ForgeConfigSpec.DoubleValue holdingX;
+//		public final ForgeConfigSpec.DoubleValue holdingY;
 
 		public final ForgeConfigSpec.BooleanValue alwaysRenderRoutingLines;
 		public final ForgeConfigSpec.BooleanValue sigilHoldingSkipsEmptySlots;
@@ -103,27 +104,38 @@ public class ConfigManager
 			sigilHoldingSkipsEmptySlots = builder.define("sigilHoldingSkipsEmptySlots", false);
 			builder.pop();
 
-			builder.comment("Settings for the position of the Demon Will Gauge HUD element.").push("hud");
-			demonWillGaugeX = builder.defineInRange("DemonWillGaugePosX", 0.01, 0, 1);
-			demonWillGaugeY = builder.defineInRange("DemonWillGaugePosY", 0.01, 0, 1);
+//			builder.comment("Settings for the position of the Demon Will Gauge HUD element.").push("hud");
+//			demonWillGaugeX = builder.defineInRange("DemonWillGaugePosX", 0.01, 0, 1);
+//			demonWillGaugeY = builder.defineInRange("DemonWillGaugePosY", 0.01, 0, 1);
+//
+//			builder.comment("Settings for the position of the basic Blood Altar info HUD element.");
+//			bloodAltarGaugeX = builder.defineInRange("bloodAltarGaugeX", 0.01, 0, 1);
+//			bloodAltarGaugeY = builder.defineInRange("bloodAltarGaugeY", 0.01, 0, 1);
+//
+//			builder.comment("Settings for the position of the advanced Blood Altar info HUD element.");
+//			bloodAltarAdvGaugeX = builder.defineInRange("bloodAltarAdvGaugeX", 0.01, 0, 1);
+//			bloodAltarAdvGaugeY = builder.defineInRange("bloodAltarAdvGaugeY", 0.01, 0, 1);
+//
+//			builder.comment("Settings for the position of the Incense Altar info HUD element.");
+//			incenseGaugeX = builder.defineInRange("incenseGaugeX", 0.01, 0, 1);
+//			incenseGaugeY = builder.defineInRange("incenseGaugeY", 0.01, 0, 1);
+//
+//			builder.comment("Settings for the position of the Sigil of Holding info HUD element.");
+//			holdingX = builder.defineInRange("holdingX", 0.72f, 0, 1);
+//			holdingY = builder.defineInRange("holdingY", 1f, 0, 1);
 
-			builder.comment("Settings for the position of the basic Blood Altar info HUD element.");
-			bloodAltarGaugeX = builder.defineInRange("bloodAltarGaugeX", 0.01, 0, 1);
-			bloodAltarGaugeY = builder.defineInRange("bloodAltarGaugeY", 0.01, 0, 1);
+//			builder.pop();
+		}
 
-			builder.comment("Settings for the position of the advanced Blood Altar info HUD element.");
-			bloodAltarAdvGaugeX = builder.defineInRange("bloodAltarAdvGaugeX", 0.01, 0, 1);
-			bloodAltarAdvGaugeY = builder.defineInRange("bloodAltarAdvGaugeY", 0.01, 0, 1);
+	}
 
-			builder.comment("Settings for the position of the Incense Altar info HUD element.");
-			incenseGaugeX = builder.defineInRange("incenseGaugeX", 0.01, 0, 1);
-			incenseGaugeY = builder.defineInRange("incenseGaugeY", 0.01, 0, 1);
-
-			builder.comment("Settings for the position of the Sigil of Holding info HUD element.");
-			holdingX = builder.defineInRange("holdingX", 0.72f, 0, 1);
-			holdingY = builder.defineInRange("holdingY", 1f, 0, 1);
-
-			builder.pop();
+	@SubscribeEvent
+	public static void onClientReload(ModConfigEvent ev)
+	{
+		if (ev.getConfig().getSpec().equals(CLIENT_SPEC))
+		{
+			System.out.println("Reloading...?");
+			ElementRegistry.readConfig();
 		}
 	}
 }

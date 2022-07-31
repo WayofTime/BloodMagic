@@ -34,6 +34,10 @@
       "title": "Divination's Sigil Display",
       "border": true,
       "text": "The Divination Sigil displays this HUD when you are looking at a Blood Altar."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Finally, when holding down the sneak key and pressing [$(k:use)], a new interface opens displaying all available HUD elements from Blood Magic. An element can be selected and moved by clicking and dragging the element. Releasing the element and clicking \"Save\" will save the element's new location.$(br2)Selecting \"Default\" returns the elements to their default positions."
     }
   ]
 }

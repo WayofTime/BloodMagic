@@ -9,7 +9,6 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec2;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.ConfigManager;
 import wayoftime.bloodmagic.client.Sprite;
 import wayoftime.bloodmagic.client.hud.element.ElementDemonAura;
 import wayoftime.bloodmagic.client.hud.element.ElementDivinedInformation;
@@ -22,7 +21,7 @@ public class Elements
 {
 	public static void registerElements()
 	{
-		ElementRegistry.registerHandler(new ResourceLocation(BloodMagic.MODID, "demon_will_aura"), new ElementDemonAura(), new Vec2(ConfigManager.CLIENT.demonWillGaugeX.get().floatValue(), ConfigManager.CLIENT.demonWillGaugeY.get().floatValue()));
+		ElementRegistry.registerHandler(new ResourceLocation(BloodMagic.MODID, "demon_will_aura"), new ElementDemonAura(), new Vec2(0.01f, 0.01f));
 
 		ElementRegistry.registerHandler(BloodMagic.rl("blood_altar"), new ElementDivinedInformation<TileAltar>(2, true, TileAltar.class)
 		{
@@ -38,7 +37,7 @@ public class Elements
 						? 0
 						: altar.getCurrentBlood(), altar == null ? 10000 : altar.getCapacity())));
 			}
-		}, new Vec2(ConfigManager.CLIENT.bloodAltarGaugeX.get().floatValue(), ConfigManager.CLIENT.bloodAltarGaugeY.get().floatValue()));
+		}, new Vec2(0.01f, 0.01f));
 
 		ElementRegistry.registerHandler(new ResourceLocation(BloodMagic.MODID, "blood_altar_adv"), new ElementDivinedInformation<TileAltar>(5, false, TileAltar.class)
 		{
@@ -70,7 +69,7 @@ public class Elements
 						? "0"
 						: String.valueOf(altar.getTotalCharge())));
 			}
-		}, new Vec2(ConfigManager.CLIENT.bloodAltarAdvGaugeX.get().floatValue(), ConfigManager.CLIENT.bloodAltarAdvGaugeY.get().floatValue()));
+		}, new Vec2(0.01f, 0.01f));
 
 		ElementRegistry.registerHandler(new ResourceLocation(BloodMagic.MODID, "incense_altar"), new ElementDivinedInformation<TileIncenseAltar>(2, true, TileIncenseAltar.class)
 		{
@@ -86,8 +85,8 @@ public class Elements
 						? "0"
 						: String.valueOf((int) (100 * incense.incenseAddition))));
 			}
-		}, new Vec2(ConfigManager.CLIENT.incenseGaugeX.get().floatValue(), ConfigManager.CLIENT.incenseGaugeY.get().floatValue()));
+		}, new Vec2(0.01f, 0.01f));
 
-		ElementRegistry.registerHandler(new ResourceLocation(BloodMagic.MODID, "holding"), new ElementHolding(), new Vec2(0.72F, 1.0F));
+		ElementRegistry.registerHandler(new ResourceLocation(BloodMagic.MODID, "holding"), new ElementHolding(), new Vec2(0.72F, 0.9F));
 	}
 }

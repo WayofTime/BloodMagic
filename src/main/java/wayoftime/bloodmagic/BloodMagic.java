@@ -38,6 +38,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import wayoftime.bloodmagic.anointment.Anointment;
 import wayoftime.bloodmagic.client.ClientEvents;
+import wayoftime.bloodmagic.client.hud.ElementRegistry;
 import wayoftime.bloodmagic.client.hud.Elements;
 import wayoftime.bloodmagic.client.key.BloodMagicKeyHandler;
 import wayoftime.bloodmagic.client.key.KeyBindings;
@@ -153,6 +154,7 @@ public class BloodMagic
 		modBus.addGenericListener(RecipeSerializer.class, this::registerRecipes);
 		modBus.addGenericListener(MobEffect.class, BloodMagicPotions::registerPotions);
 		modBus.addListener(ConfigManager::onCommonReload);
+		modBus.addListener(ConfigManager::onClientReload);
 
 		MinecraftForge.EVENT_BUS.register(new GenericHandler());
 //		MinecraftForge.EVENT_BUS.register(new ClientHandler());
@@ -335,6 +337,7 @@ public class BloodMagic
 
 		ClientEvents.initClientEvents(event);
 		Elements.registerElements();
+		ElementRegistry.readConfig();
 		MinecraftForge.EVENT_BUS.register(new ClientEvents());
 		KeyBindings.initializeKeys();
 		new BloodMagicKeyHandler();

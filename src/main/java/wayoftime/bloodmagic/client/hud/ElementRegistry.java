@@ -141,33 +141,9 @@ public class ElementRegistry
 				if (!element.shouldRender(Minecraft.getInstance()))
 					continue;
 
-//				Vector2f position = ELEMENT_INFO.get(getKey(element)).getPosition();
-//				int xPos = (int) (resolution.getScaledWidth_double() * position.x);
-//				if (xPos - element.getWidth() < 0)
-//					xPos *= 2;
-//				if (xPos + element.getWidth() > resolution.getScaledWidth())
-//					xPos -= element.getWidth();
-//
-//				int yPos = (int) (resolution.getScaledHeight_double() * position.y);
-//				if (yPos - element.getHeight() < 0)
-//					yPos *= 2;
-//				if (yPos + element.getHeight() > resolution.getScaledHeight())
-//					yPos -= element.getHeight();
-//
-//				element.draw(event.getResolution(), event.getPartialTicks(), xPos, yPos);
-
 				Vec2 position = ELEMENT_INFO.get(getKey(element)).getPosition();
 				int xPos = (int) (window.getGuiScaledWidth() * position.x);
-				if (xPos - element.getWidth() < 0)
-					xPos *= 2;
-				if (xPos + element.getWidth() > window.getGuiScaledWidth())
-					xPos -= element.getWidth();
-
 				int yPos = (int) (window.getGuiScaledHeight() * position.y);
-				if (yPos - element.getHeight() < 0)
-					yPos *= 2;
-				if (yPos + element.getHeight() > window.getGuiScaledHeight())
-					yPos -= element.getHeight();
 
 				element.draw(event.getMatrixStack(), event.getPartialTicks(), xPos, yPos);
 			}

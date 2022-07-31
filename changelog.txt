@@ -33,6 +33,8 @@ Version 3.2.4
 - Increased the rate of "Tiny Corrupted Dust" when using the Resonator in the Alchemic Reaction Chamber.
 -> Corrupted Dust can be used to increase the yield of the desired ore.
 
+- Added a new feature to the Divination and Seer's Sigil: when sneaking and activating the sigil, a GUI will open which will allow you to drag individual HUD elements and save their new locations.
+
 - Updated several textures related to vanilla ore processing.
 - Added "Void Essence" Anointment, which destroys mundane blocks that are mined.
 - Fixed Blood Altar's delay after crafting. The delay between when an altar finishes a craft and attempts to start a new craft is now 30 ticks.
