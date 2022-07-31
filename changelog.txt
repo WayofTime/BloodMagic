@@ -45,6 +45,7 @@ Version 3.2.4
 - Changed the Ritual of the Feathered Knife to interact with the "Tough Palms" Living Upgrade.
 - Added Amethyst Throwing Daggers, which do the same damage as Iron Throwing Daggers.
 -> Can be combined in an ARC with a Lingering Alchemy Flask to add potion effects to the thrown daggers.
+- Changed the "Penance of the Leadened Soul" so that it respects any currently held Training Bracelets.
 
 ------------------------------------------------------
 Version 3.2.3
