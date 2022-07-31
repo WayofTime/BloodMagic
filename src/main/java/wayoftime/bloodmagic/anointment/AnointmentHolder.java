@@ -9,21 +9,21 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import wayoftime.bloodmagic.anointment.Anointment.IDamageProvider;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.util.Constants;
@@ -179,6 +179,23 @@ public class AnointmentHolder
 		}
 
 		return didConsume;
+	}
+
+	public boolean consumeAnointmentDurability(ItemStack stack, EquipmentSlot type, Anointment anointment, LivingEntity user)
+	{
+		if (anointments.containsKey(anointment))
+		{
+			AnointmentData data = anointments.get(anointment);
+			data.damage(1);
+			if (data.isMaxDamage())
+			{
+				removeAnointment(stack, type, anointment, user);
+			}
+
+			return true;
+		}
+
+		return false;
 	}
 
 	// Called when the specified anointment is to be removed. Occurs if the

@@ -35,6 +35,7 @@ Version 3.2.4
 
 - Added a new feature to the Divination and Seer's Sigil: when sneaking and activating the sigil, a GUI will open which will allow you to drag individual HUD elements and save their new locations.
 
+- Added new anointment, "Repairing Salve", which repairs a damaged tool slightly when the tool is used.
 - Updated several textures related to vanilla ore processing.
 - Added "Void Essence" Anointment, which destroys mundane blocks that are mined.
 - Fixed Blood Altar's delay after crafting. The delay between when an altar finishes a craft and attempts to start a new craft is now 30 ticks.

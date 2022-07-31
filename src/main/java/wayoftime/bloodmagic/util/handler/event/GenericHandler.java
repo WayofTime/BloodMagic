@@ -351,11 +351,39 @@ public class GenericHandler
 			AnointmentHolder holder = AnointmentHolder.fromItemStack(heldStack);
 //			AnointmentHolder holder = AnointmentHolder.fromPlayer(sourcePlayer, Hand.MAIN_HAND);
 
-//			System.out.println("Checking consumption. Holder is: " + holder);
-			if (holder != null && holder.consumeAnointmentDurabilityOnHit(heldStack, EquipmentSlot.MAINHAND, sourcePlayer))
+			if (holder != null)
 			{
-				holder.toItemStack(heldStack);
+				boolean hasAnointmentChanged = false;
+				int repairLevel = holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_WEAPON_REPAIR.get());
+				if (repairLevel > 0)
+				{
+					if (heldStack.isDamageableItem() && heldStack.isDamaged())
+					{
+						double expBonus = AnointmentRegistrar.ANOINTMENT_WEAPON_REPAIR.get().getBonusValue("exp", repairLevel).doubleValue();
+
+						double repairRatio = heldStack.getXpRepairRatio();
+						double durabilityBonus = Math.min(expBonus / repairRatio, heldStack.getDamageValue());
+						int durabilityAdded = (int) durabilityBonus + (durabilityBonus % 1 > sourcePlayer.level.getRandom().nextDouble()
+								? 1
+								: 0);
+						if (durabilityAdded > 0)
+							heldStack.setDamageValue(Math.max(0, heldStack.getDamageValue() - durabilityAdded));
+
+						if (holder.consumeAnointmentDurability(heldStack, EquipmentSlot.MAINHAND, AnointmentRegistrar.ANOINTMENT_WEAPON_REPAIR.get(), sourcePlayer))
+						{
+							hasAnointmentChanged = true;
+						}
+					}
+				}
+
+				if (holder.consumeAnointmentDurabilityOnHit(heldStack, EquipmentSlot.MAINHAND, sourcePlayer) || hasAnointmentChanged)
+				{
+					holder.toItemStack(heldStack);
+				}
 			}
+
+//			System.out.println("Checking consumption. Holder is: " + holder);
+
 		}
 
 //		if (living instanceof PlayerEntity)
@@ -829,7 +857,7 @@ public class GenericHandler
 		event.setNewSpeed((speedModifier) * event.getNewSpeed());
 	}
 
-	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void onBreakBlock(BlockEvent.BreakEvent event)
 	{
 		Player player = event.getPlayer();
@@ -851,6 +879,8 @@ public class GenericHandler
 
 			if (holder != null)
 			{
+				boolean hasAnointmentChanged = false;
+
 				if (holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get()) >= 1)
 				{
 					int bonusLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player.getMainHandItem());
@@ -862,11 +892,43 @@ public class GenericHandler
 				if (hiddenLevel > 0)
 				{
 					double expBonus = AnointmentRegistrar.ANOINTMENT_HIDDEN_KNOWLEDGE.get().getBonusValue("exp", hiddenLevel).doubleValue();
-					int expAdded = (int) expBonus + (expBonus % 1 > event.getWorld().getRandom().nextDouble() ? 1 : 0);
-					event.setExpToDrop(event.getExpToDrop() + expAdded);
+
+					if (event.getExpToDrop() > 0 && expBonus > 0)
+					{
+						int expAdded = (int) expBonus + (expBonus % 1 > event.getWorld().getRandom().nextDouble() ? 1
+								: 0);
+						event.setExpToDrop(event.getExpToDrop() + expAdded);
+
+						if (holder.consumeAnointmentDurability(heldStack, EquipmentSlot.MAINHAND, AnointmentRegistrar.ANOINTMENT_HIDDEN_KNOWLEDGE.get(), player))
+						{
+							hasAnointmentChanged = true;
+						}
+					}
 				}
 
-				if (holder.consumeAnointmentDurabilityOnHarvest(heldStack, EquipmentSlot.MAINHAND, player))
+				int repairLevel = holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_WEAPON_REPAIR.get());
+				if (repairLevel > 0)
+				{
+					if (heldStack.isDamageableItem() && heldStack.isDamaged())
+					{
+						double expBonus = AnointmentRegistrar.ANOINTMENT_WEAPON_REPAIR.get().getBonusValue("exp", repairLevel).doubleValue();
+
+						double repairRatio = heldStack.getXpRepairRatio();
+						double durabilityBonus = Math.min(expBonus / repairRatio, heldStack.getDamageValue());
+						int durabilityAdded = (int) durabilityBonus + (durabilityBonus % 1 > event.getWorld().getRandom().nextDouble()
+								? 1
+								: 0);
+						if (durabilityAdded > 0)
+							heldStack.setDamageValue(Math.max(0, heldStack.getDamageValue() - durabilityAdded));
+
+						if (holder.consumeAnointmentDurability(heldStack, EquipmentSlot.MAINHAND, AnointmentRegistrar.ANOINTMENT_WEAPON_REPAIR.get(), player))
+						{
+							hasAnointmentChanged = true;
+						}
+					}
+				}
+
+				if (holder.consumeAnointmentDurabilityOnHarvest(heldStack, EquipmentSlot.MAINHAND, player) || hasAnointmentChanged)
 					holder.toItemStack(heldStack);
 			}
 		}

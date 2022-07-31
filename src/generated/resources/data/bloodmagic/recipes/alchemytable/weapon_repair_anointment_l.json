@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:weapon_repair_anointment"
+    },
+    {
+      "item": "bloodmagic:tauoil"
+    },
+    {
+      "tag": "forge:ingots/copper"
+    },
+    {
+      "tag": "forge:dusts/gold"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:weapon_repair_anointment_l"
+  },
+  "syphon": 1000,
+  "ticks": 100,
+  "upgradeLevel": 3
+}

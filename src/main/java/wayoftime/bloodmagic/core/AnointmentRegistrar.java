@@ -29,6 +29,7 @@ public class AnointmentRegistrar
 		def.put("quick_draw", BloodMagic.rl("quick_draw"));
 		def.put("bow_power", BloodMagic.rl("bow_power"));
 		def.put("bow_velocity", BloodMagic.rl("bow_velocity"));
+		def.put("repairing", BloodMagic.rl("repairing"));
 //		def.put("arrow_shot", BloodMagic.rl("arrow_shot"));
 //		def.put("critical_strike", BloodMagic.rl("critical_strike"));
 //		def.put("digging", BloodMagic.rl("digging"));
@@ -67,7 +68,7 @@ public class AnointmentRegistrar
 			return 0;
 	}).setConsumeOnAttack().addIncompatibility(BloodMagic.rl("melee_damage")));
 
-	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_HIDDEN_KNOWLEDGE = ANOINTMENTS.register("hidden_knowledge", () -> parseDefinition("hidden_knowledge").setConsumeOnHarvest());
+	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_HIDDEN_KNOWLEDGE = ANOINTMENTS.register("hidden_knowledge", () -> parseDefinition("hidden_knowledge"));
 
 	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_QUICK_DRAW = ANOINTMENTS.register("quick_draw", () -> parseDefinition("quick_draw").setConsumeOnUseFinish());
 
@@ -83,6 +84,8 @@ public class AnointmentRegistrar
 
 	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_BOW_VELOCITY = ANOINTMENTS.register("bow_velocity", () -> parseDefinition("bow_velocity").setConsumeOnUseFinish());
 
+	public static final AnointmentRegistryObject<Anointment> ANOINTMENT_WEAPON_REPAIR = ANOINTMENTS.register("repairing", () -> parseDefinition("repairing").setConsumeOnUseFinish());
+
 	public static void register()
 	{
 		registerAnointment(ANOINTMENT_MELEE_DAMAGE.get());
@@ -97,6 +100,7 @@ public class AnointmentRegistrar
 		registerAnointment(ANOINTMENT_SMELTING.get());
 		registerAnointment(ANOINTMENT_VOIDING.get());
 		registerAnointment(ANOINTMENT_BOW_VELOCITY.get());
+		registerAnointment(ANOINTMENT_WEAPON_REPAIR.get());
 
 //		Registry.register(UPGRADES, UPGRADE_ARROW_PROTECT.getKey(), UPGRADE_ARROW_PROTECT);
 //		Registry.register(UPGRADES, UPGRADE_ARROW_SHOT.getKey(), UPGRADE_ARROW_SHOT);

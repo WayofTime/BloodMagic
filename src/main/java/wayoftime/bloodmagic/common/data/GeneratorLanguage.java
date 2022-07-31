@@ -494,6 +494,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("anointment.bloodmagic.looting", "Plundering");
 		add("anointment.bloodmagic.smelting", "Heated Tool");
 		add("anointment.bloodmagic.voiding", "Voiding");
+		add("anointment.bloodmagic.repairing", "Regular Maintenance");
 
 		// Guide
 		add("guide.bloodmagic.name", "Sanguine Scientiem");
@@ -802,6 +803,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.SMELTING_ANOINTMENT, "Slow-burning Oil");
 		addItem(BloodMagicItems.VOIDING_ANOINTMENT, "Void Essence");
 		addItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT, "Archer's Polish");
+		addItem(BloodMagicItems.WEAPON_REPAIR_ANOINTMENT, "Repairing Salve");
 
 		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT_STRONG, "Iron Tip II");
 
@@ -816,6 +818,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.SMELTING_ANOINTMENT_L, "Slow-burning Oil L");
 		addItem(BloodMagicItems.VOIDING_ANOINTMENT_L, "Void Essence L");
 		addItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT_L, "Archer's Polish L");
+		addItem(BloodMagicItems.WEAPON_REPAIR_ANOINTMENT_L, "Repairing Salve L");
 
 		addItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_2, "Honing Oil II");
 		addItem(BloodMagicItems.FORTUNE_ANOINTMENT_2, "Fortuna Extract II");
@@ -825,6 +828,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT_2, "Iron Tip II");
 		addItem(BloodMagicItems.LOOTING_ANOINTMENT_2, "Plunderer's Glint II");
 		addItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT_2, "Archer's Polish II");
+		addItem(BloodMagicItems.WEAPON_REPAIR_ANOINTMENT_2, "Repairing Salve II");
 
 		addItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_XL, "Honing Oil XL");
 		addItem(BloodMagicItems.SILK_TOUCH_ANOINTMENT_XL, "Soft Coating XL");
@@ -837,6 +841,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.SMELTING_ANOINTMENT_XL, "Slow-burning Oil XL");
 		addItem(BloodMagicItems.VOIDING_ANOINTMENT_XL, "Void Essence XL");
 		addItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT_XL, "Archer's Polish XL");
+		addItem(BloodMagicItems.WEAPON_REPAIR_ANOINTMENT_XL, "Repairing Salve XL");
 
 		addItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT_3, "Honing Oil III");
 		addItem(BloodMagicItems.FORTUNE_ANOINTMENT_3, "Fortuna Extract III");
@@ -846,6 +851,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.BOW_POWER_ANOINTMENT_3, "Iron Tip III");
 		addItem(BloodMagicItems.LOOTING_ANOINTMENT_3, "Plunderer's Glint III");
 		addItem(BloodMagicItems.BOW_VELOCITY_ANOINTMENT_3, "Archer's Polish III");
+		addItem(BloodMagicItems.WEAPON_REPAIR_ANOINTMENT_3, "Repairing Salve III");
 
 		addItem(BloodMagicItems.ALCHEMY_FLASK, "Alchemy Flask");
 		addItem(BloodMagicItems.ALCHEMY_FLASK_THROWABLE, "Splash Alchemy Flask");
