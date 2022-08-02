@@ -35,9 +35,12 @@ Version 3.2.4
 
 - Added a new feature to the Divination and Seer's Sigil: when sneaking and activating the sigil, a GUI will open which will allow you to drag individual HUD elements and save their new locations.
 
-- Added new anointment, "Repairing Salve", which repairs a damaged tool slightly when the tool is used.
+- Added new anointments:
+-> "Repairing Salve", which repairs a damaged tool slightly when the tool is used.
+-> "Void Essence", which destroys mundane blocks that are mined.
+- Also tweaked "Miner's Secrets" to only work on exp-providing blocks, while also only being used up when additional exp is provided.
+
 - Updated several textures related to vanilla ore processing.
-- Added "Void Essence" Anointment, which destroys mundane blocks that are mined.
 - Fixed Blood Altar's delay after crafting. The delay between when an altar finishes a craft and attempts to start a new craft is now 30 ticks.
 - Fixed Body Builder so that it is properly obtainable.
 - Fixed Nether Wart handling for the Harvest ritual.
@@ -46,7 +49,10 @@ Version 3.2.4
 - Changed the Ritual of the Feathered Knife to interact with the "Tough Palms" Living Upgrade.
 - Added Amethyst Throwing Daggers, which do the same damage as Iron Throwing Daggers.
 -> Can be combined in an ARC with a Lingering Alchemy Flask to add potion effects to the thrown daggers.
+
+- Added the reworked ritual "Rhythm of the Beating Anvil", which can autocraft vanilla recipes. When augmented, can also simplify automation of Hellfire Forge and Alchemy Table recipes.
 - Changed the "Penance of the Leadened Soul" so that it respects any currently held Training Bracelets.
+
 
 ------------------------------------------------------
 Version 3.2.3
