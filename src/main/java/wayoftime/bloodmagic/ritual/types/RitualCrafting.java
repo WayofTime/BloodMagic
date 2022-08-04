@@ -1003,6 +1003,7 @@ public class RitualCrafting extends Ritual
 	public Component[] provideInformationOfRitualToPlayer(Player player)
 	{
 		return new Component[] { new TranslatableComponent(this.getTranslationKey() + ".info"),
-				new TranslatableComponent(this.getTranslationKey() + ".steadfast.info") };
+				new TranslatableComponent(this.getTranslationKey() + ".steadfast.info"),
+				new TranslatableComponent(this.getTranslationKey() + ".corrosive.info") };
 	}
 }

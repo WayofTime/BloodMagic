@@ -310,6 +310,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.yawningVoidRitual.corrosive.info", "(Corrosive) Destroys blocks that match the filter. Remaining are not destroyed.");
 		add("ritual.bloodmagic.yawningVoidRitual.steadfast.info", "(Steadfast) Non-destroyed blocks are placed in separate region. If no filter applied, all blocks are moved.");
 		add("ritual.bloodmagic.craftingRitual.steadfast.info", "(Steadfast) Ritual will instead craft using the linked Hellfire Forge.");
+		add("ritual.bloodmagic.craftingRitual.corrosive.info", "(Steadfast) Ritual will instead craft using the linked Alchemy Table.");
 
 		add("ritual.bloodmagic.condorRitual.info", "Provides flight in an area around the ritual.");
 		add("ritual.bloodmagic.eternalSoulRitual.info", "Capable of transferring Life Essence from a Network back into an Altar at a cost.");
@@ -399,7 +400,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.craftingRitual.inputRange.info", "(Chest) Items for crafting are taken from connected inventory.");
 		add("ritual.bloodmagic.craftingRitual.recipeRange.info", "(Item Frame/Chest) Uses Item Filter to determine shape of recipe and selected items.");
 		add("ritual.bloodmagic.craftingRitual.outputFilterRange.info", "(Item Frame/Chest) If present, recipe output selected based on filter, and crafts until selected amount in output inventory.");
-		add("ritual.bloodmagic.craftingRitual.hellforgedRange.info", "(Steadfast) Inserts and extracts items from the connected Hellfire Forge.");
+		add("ritual.bloodmagic.craftingRitual.hellforgedRange.info", "(Steadfast/Corrosive) Inserts and extracts items from the connected Hellfire Forge or Alchemy Table.");
 
 		add("tooltip.bloodmagic.ritualReader.currentState", "Current mode: %s");
 		add("tooltip.bloodmagic.ritualReader.set_area", "Define Area");
