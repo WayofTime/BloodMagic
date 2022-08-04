@@ -379,7 +379,8 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("ritual.bloodmagic.sphereRitual.spheroidRange.info", "(Extraction) The range that the ritual will extract blocks from. The blocks are placed on the vertical opposite side of the MRS.");
 
-		add("ritual.bloodmagic.simpleDungeonRitual.info", "Summons an Inversion Pillar, a tenuous gateway to the Deamon Realm");
+		add("ritual.bloodmagic.simpleDungeonRitual.info", "Summons an Inversion Pillar, a tenuous gateway to the Demon Realm");
+		add("ritual.bloodmagic.standardDungeonRitual.info", "Summons an Inversion Pillar to go deeper into the Demon Realm");
 
 		add("ritual.bloodmagic.placerRitual.placerRange.info", "(Placement) The range that the ritual will place its blocks in.");
 		add("ritual.bloodmagic.placerRitual.chest.info", "(Chest) The location of the inventory that the ritual will grab blocks from to place in the world.");
