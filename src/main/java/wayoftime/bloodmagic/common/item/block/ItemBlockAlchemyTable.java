@@ -29,7 +29,7 @@ public class ItemBlockAlchemyTable extends BlockItem
 	{
 //		PlayerEntity player = context.getPlayer()
 //		float yaw = player.rotationYaw;
-		Direction direction = context.getHorizontalDirection();
+		Direction direction = context.getHorizontalDirection().getClockWise();
 		Player player = context.getPlayer();
 
 		if (direction.getStepY() != 0)
