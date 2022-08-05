@@ -20,6 +20,18 @@
       "heading": "Repairing Salve II",
       "recipe": "bloodmagic:alchemytable/weapon_repair_anointment_2",
       "text": "This upgraded version of the anointment increases the yield. $(br2)Applies: Regular Maintenance II (256 blocks)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "Repairing Salve XL",
+      "recipe": "bloodmagic:alchemytable/weapon_repair_anointment_xl",
+      "text": "This upgraded version of the anointment lasts sixteen times longer. $(br2)Applies: Regular Maintenance I (4096 blocks)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "Repairing Salve III",
+      "recipe": "bloodmagic:alchemytable/weapon_repair_anointment_3",
+      "text": "This upgraded version of the anointment increases the yield. $(br2)Applies: Regular Maintenance III (256 blocks)"
     }
   ]
 }

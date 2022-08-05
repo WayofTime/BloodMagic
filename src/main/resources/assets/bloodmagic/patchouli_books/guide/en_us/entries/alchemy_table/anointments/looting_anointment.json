@@ -20,6 +20,18 @@
       "heading": "Plunderer's Glint II",
       "recipe": "bloodmagic:alchemytable/looting_anointment_2",
       "text": "This upgraded version of the anointment further increases the drops from killed mobs. $(br2)Applies: Plundering II (256 hits)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "Plunderer's Glint XL",
+      "recipe": "bloodmagic:alchemytable/looting_anointment_xl",
+      "text": "This upgraded version of the anointment lasts sixteen times longer. $(br2)Applies: Plundering I (4096 hits)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "Plunderer's Glint III",
+      "recipe": "bloodmagic:alchemytable/looting_anointment_3",
+      "text": "This upgraded version of the anointment further increases the drops from killed mobs. $(br2)Applies: Plundering III (256 hits)"
     }
   ]
 }

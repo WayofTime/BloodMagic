@@ -14,6 +14,12 @@
       "heading": "Slow-burning Oil L",
       "recipe": "bloodmagic:alchemytable/smelting_anointment_l",
       "text": "This upgraded version of the anointment lasts four times longer. $(br2)Applies: Heated Tool I (1024 blocks)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "Slow-burning Oil XL",
+      "recipe": "bloodmagic:alchemytable/smelting_anointment_xl",
+      "text": "This upgraded version of the anointment lasts sixteen times longer. $(br2)Applies: Heated Tool I (4096 blocks)"
     }
   ]
 }

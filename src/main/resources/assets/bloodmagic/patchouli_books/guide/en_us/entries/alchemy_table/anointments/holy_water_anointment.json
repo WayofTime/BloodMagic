@@ -20,6 +20,18 @@
       "heading": "Holy Water II",
       "recipe": "bloodmagic:alchemytable/holy_water_anointment_2",
       "text": "This upgraded version of the anointment increases melee damage dealt to undead mobs by +10. $(br2)Applies: Holy Light II (256 hits)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "Holy Water XL",
+      "recipe": "bloodmagic:alchemytable/holy_water_anointment_xl",
+      "text": "This upgraded version of the anointment lasts sixteen times longer. $(br2)Applies: Holy Light I (4096 hits)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "Holy Water III",
+      "recipe": "bloodmagic:alchemytable/holy_water_anointment_3",
+      "text": "This upgraded version of the anointment increases melee damage dealt to undead mobs by +15. $(br2)Applies: Holy Light III (256 hits)"
     }
   ]
 }

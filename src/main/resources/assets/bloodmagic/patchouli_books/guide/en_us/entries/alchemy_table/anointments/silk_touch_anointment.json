@@ -14,6 +14,12 @@
       "heading": "Soft Coating L",
       "recipe": "bloodmagic:alchemytable/silk_touch_anointment_l",
       "text": "This upgraded version of the anointment lasts four times longer. $(br2)Applies: Soft Touch I (1024 blocks)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "Soft Coating XL",
+      "recipe": "bloodmagic:alchemytable/silk_touch_anointment_xl",
+      "text": "This upgraded version of the anointment lasts sixteen times longer. $(br2)Applies: Soft Touch I (4096 blocks)"
     }
   ]
 }

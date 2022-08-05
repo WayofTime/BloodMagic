@@ -20,6 +20,18 @@
       "heading": "Fortuna Extract II",
       "recipe": "bloodmagic:alchemytable/fortune_anointment_2",
       "text": "This upgraded version of the anointment increases the yield. $(br2)Applies: Fortunate II (256 blocks)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "Fortuna Extract XL",
+      "recipe": "bloodmagic:alchemytable/fortune_anointment_xl",
+      "text": "This upgraded version of the anointment lasts sixteen times longer. $(br2)Applies: Fortunate I (4096 blocks)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "Fortuna Extract III",
+      "recipe": "bloodmagic:alchemytable/fortune_anointment_3",
+      "text": "This upgraded version of the anointment increases the yield. $(br2)Applies: Fortunate III (256 blocks)"
     }
   ]
 }

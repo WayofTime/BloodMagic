@@ -2,9 +2,9 @@
   "id": "bloodmagic:quick_draw",
   "bonuses": {
     "speed": [
+      0.33,
       0.5,
-      1,
-      1.5
+      0.67
     ]
   }
 }

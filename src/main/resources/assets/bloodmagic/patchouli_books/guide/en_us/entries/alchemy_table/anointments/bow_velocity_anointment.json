@@ -20,6 +20,18 @@
       "heading": "Archer's Polish II",
       "recipe": "bloodmagic:alchemytable/bow_velocity_anointment_2",
       "text": "This upgraded version of the anointment increases the velocity by 100% instead. $(br2)Applies: Sniping II (256 shots)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "Archer's Polish XL",
+      "recipe": "bloodmagic:alchemytable/bow_velocity_anointment_xl",
+      "text": "This upgraded version of the anointment lasts sixteen times longer. $(br2)Applies: Sniping I (4096 shots)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "Archer's Polish III",
+      "recipe": "bloodmagic:alchemytable/bow_velocity_anointment_3",
+      "text": "This upgraded version of the anointment increases the velocity by 150% instead. $(br2)Applies: Sniping III (256 shots)"
     }
   ]
 }
