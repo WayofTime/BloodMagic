@@ -32,57 +32,57 @@ public class GeneratorLanguage extends LanguageProvider
 
 		// Blood Orb tooltips
 		add("tooltip.bloodmagic.extraInfo", "-Hold shift for more info-");
-		add("tooltip.bloodmagic.orb.desc", "Stores raw Life Essence");
-		add("tooltip.bloodmagic.orb.owner", "Added by: %s");
-		add("tooltip.bloodmagic.currentOwner", "Current owner: %s");
-		add("tooltip.bloodmagic.currentTier", "Current tier: %d");
-		add("tooltip.bloodmagic.config.disabled", "Currently disabled in the Config");
+		add("tooltip.bloodmagic.orb.desc", "Stores raw Life Essence.");
+		add("tooltip.bloodmagic.orb.owner", "Added by: %s.");
+		add("tooltip.bloodmagic.currentOwner", "Current owner: %s.");
+		add("tooltip.bloodmagic.currentTier", "Current tier: %d.");
+		add("tooltip.bloodmagic.config.disabled", "Currently disabled in the Config.");
 		add("tooltip.bloodmagic.tier", "Tier %d");
 
 		// Sigil tooltips
-		add("tooltip.bloodmagic.sigil.divination.desc", "Peer into the soul");
-		add("tooltip.bloodmagic.sigil.divination.otherNetwork", "Peering into the soul of %s");
-		add("tooltip.bloodmagic.sigil.divination.currentAltarTier", "Current Tier: %d");
-		add("tooltip.bloodmagic.sigil.divination.currentEssence", "Current Essence: %d LP");
-		add("tooltip.bloodmagic.sigil.divination.currentAltarCapacity", "Current Capacity: %d LP");
-		add("tooltip.bloodmagic.sigil.divination.currentTranquility", "Current Tranquility: %d");
-//		add("tooltip.bloodmagic.sigil.divination.currentInversion", "Current Inversion: %d");
-		add("tooltip.bloodmagic.sigil.divination.currentBonus", "Current Bonus: +%d%%");
+		add("tooltip.bloodmagic.sigil.divination.desc", "Peer into the soul.");
+		add("tooltip.bloodmagic.sigil.divination.otherNetwork", "Peering into the soul of %s.");
+		add("tooltip.bloodmagic.sigil.divination.currentAltarTier", "Current Tier: %d.");
+		add("tooltip.bloodmagic.sigil.divination.currentEssence", "Current Essence: %d LP.");
+		add("tooltip.bloodmagic.sigil.divination.currentAltarCapacity", "Current Capacity: %d LP.");
+		add("tooltip.bloodmagic.sigil.divination.currentTranquility", "Current Tranquility: %d.");
+//		add("tooltip.bloodmagic.sigil.divination.currentInversion", "Current Inversion: %d.");
+		add("tooltip.bloodmagic.sigil.divination.currentBonus", "Current Bonus: +%d%%.");
 
-		add("tooltip.bloodmagic.sigil.seer.desc", "When seeing all is not enough");
-		add("tooltip.bloodmagic.sigil.seer.currentAltarProgress", "Current Progress: %d LP/ %s LP");
-		add("tooltip.bloodmagic.sigil.seer.currentAltarProgress.percent", "Current Progress: %s");
-		add("tooltip.bloodmagic.sigil.seer.currentAltarConsumptionRate", "Consumption Rate: %d LP");
-		add("tooltip.bloodmagic.sigil.seer.currentAltarTier", "Current Tier: %d");
-		add("tooltip.bloodmagic.sigil.seer.currentEssence", "Current Essence: %d LP");
-		add("tooltip.bloodmagic.sigil.seer.currentAltarCapacity", "Current Capacity: %d LP");
-		add("tooltip.bloodmagic.sigil.seer.currentCharge", "Current Charge: %d");
-		add("tooltip.bloodmagic.sigil.seer.currentTranquility", "Current Tranquility: %d");
-		add("tooltip.bloodmagic.sigil.seer.currentBonus", "Current Bonus: +%d%%");
+		add("tooltip.bloodmagic.sigil.seer.desc", "When seeing all is not enough.");
+		add("tooltip.bloodmagic.sigil.seer.currentAltarProgress", "Current Progress: %d LP/ %s LP.");
+		add("tooltip.bloodmagic.sigil.seer.currentAltarProgress.percent", "Current Progress: %s.");
+		add("tooltip.bloodmagic.sigil.seer.currentAltarConsumptionRate", "Consumption Rate: %d LP.");
+		add("tooltip.bloodmagic.sigil.seer.currentAltarTier", "Current Tier: %d.");
+		add("tooltip.bloodmagic.sigil.seer.currentEssence", "Current Essence: %d LP.");
+		add("tooltip.bloodmagic.sigil.seer.currentAltarCapacity", "Current Capacity: %d LP.");
+		add("tooltip.bloodmagic.sigil.seer.currentCharge", "Current Charge: %d.");
+		add("tooltip.bloodmagic.sigil.seer.currentTranquility", "Current Tranquility: %d.");
+		add("tooltip.bloodmagic.sigil.seer.currentBonus", "Current Bonus: +%d%%.");
 
-		add("tooltip.bloodmagic.sigil.holding.press", "Press %s to modify");
+		add("tooltip.bloodmagic.sigil.holding.press", "Press %s to modify.");
 		add("tooltip.bloodmagic.sigil.holding.desc", "Sigil-ception");
-		add("tooltip.bloodmagic.sigil.holding.sigilInSlot", "Slot %d: %s");
+		add("tooltip.bloodmagic.sigil.holding.sigilInSlot", "Slot %d: %s.");
 
 		add("tooltip.bloodmagic.activated", "Activated");
 		add("tooltip.bloodmagic.deactivated", "Deactivated");
 
-		add("tooltip.bloodmagic.decoration.safe", "Safe for decoration");
-		add("tooltip.bloodmagic.decoration.notSafe", "Dangerous for decoration");
+		add("tooltip.bloodmagic.decoration.safe", "Safe for decoration.");
+		add("tooltip.bloodmagic.decoration.notSafe", "Dangerous for decoration!");
 
 		// General Tooltips
-		add("tooltip.bloodmagic.arcaneAshes", "Ashes used to draw an alchemy circle");
-		add("tooltip.bloodmagic.will", "Will Quality: %s");
+		add("tooltip.bloodmagic.arcaneAshes", "Ashes used to draw an alchemy circle.");
+		add("tooltip.bloodmagic.will", "Will Quality: %s.");
 		add("tooltip.bloodmagic.sentientSword.desc", "Uses demon will to unleash its full potential.");
 		add("tooltip.bloodmagic.sentientAxe.desc", "Uses demon will to unleash its full potential.");
 		add("tooltip.bloodmagic.sentientPickaxe.desc", "Uses demon will to unleash its full potential.");
 		add("tooltip.bloodmagic.sentientShovel.desc", "Uses demon will to unleash its full potential.");
-		add("tooltip.bloodmagic.soulGem.petty", "A gem used to contain a little will");
-		add("tooltip.bloodmagic.soulGem.lesser", "A gem used to contain some will");
-		add("tooltip.bloodmagic.soulGem.common", "A gem used to contain more will");
-		add("tooltip.bloodmagic.soulGem.greater", "A gem used to contain a greater amount of will");
-		add("tooltip.bloodmagic.soulGem.grand", "A gem used to contain a large amount of will");
-		add("tooltip.bloodmagic.soulSnare.desc", "Throw at a monster and then kill them to obtain their demonic will");
+		add("tooltip.bloodmagic.soulGem.petty", "A gem used to contain a little will.");
+		add("tooltip.bloodmagic.soulGem.lesser", "A gem used to contain some will.");
+		add("tooltip.bloodmagic.soulGem.common", "A gem used to contain more will.");
+		add("tooltip.bloodmagic.soulGem.greater", "A gem used to contain a greater amount of will.");
+		add("tooltip.bloodmagic.soulGem.grand", "A gem used to contain a large amount of will.");
+		add("tooltip.bloodmagic.soulSnare.desc", "Throw at a monster and then kill them to obtain their demonic will.");
 		add("tooltip.bloodmagic.willGauge", "A strange device that can measure the Demon Will in the Aura.");
 
 		add("tooltip.bloodmagic.syntheticpoint.desc", "A synthetic living armour point. It's... wriggling.");
@@ -99,7 +99,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.currentBaseType.vengeful", "Vengeful");
 		add("tooltip.bloodmagic.currentBaseType.steadfast", "Steadfast");
 		add("tooltip.bloodmagic.sacrificialdagger.desc", "Just a prick of the finger will suffice...");
-		add("tooltip.bloodmagic.slate.desc", "Infused stone inside of a Blood Altar");
+		add("tooltip.bloodmagic.slate.desc", "Infused stone inside of a Blood Altar.");
 		add("tooltip.bloodmagic.inscriber.desc", "The writing is on the wall...");
 
 		add("tooltip.bloodmagic.sigil.water.desc", "Infinite water, anyone?");
@@ -112,32 +112,32 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.sigil.bloodlight.desc", "I see a light!");
 		add("tooltip.bloodmagic.sigil.teleposition.desc", "Now you see me...!");
 
-		add("tooltip.bloodmagic.activationcrystal.weak", "Activates low-level rituals");
-		add("tooltip.bloodmagic.activationcrystal.awakened", "Activates more powerful rituals");
-		add("tooltip.bloodmagic.activationcrystal.creative", "Creative Only - Activates any ritual");
+		add("tooltip.bloodmagic.activationcrystal.weak", "Activates low-level rituals.");
+		add("tooltip.bloodmagic.activationcrystal.awakened", "Activates more powerful rituals.");
+		add("tooltip.bloodmagic.activationcrystal.creative", "Creative Only - Activates any ritual.");
 
-		add("tooltip.bloodmagic.arctool.additionaldrops", "Increases chance of additional outputs by: x%s");
-		add("tooltip.bloodmagic.arctool.craftspeed", "Increases crafting speed by: x%s");
-		add("tooltip.bloodmagic.arctool.uses", "Uses remaining: %s");
+		add("tooltip.bloodmagic.arctool.additionaldrops", "Increases chance of additional outputs by: x%s.");
+		add("tooltip.bloodmagic.arctool.craftspeed", "Increases crafting speed by: x%s.");
+		add("tooltip.bloodmagic.arctool.uses", "Uses remaining: %s.");
 
 		add("itemGroup.bloodmagictab", "Blood Magic");
 
-		add("tooltip.bloodmagic.experienceTome", "A book used to store experience");
+		add("tooltip.bloodmagic.experienceTome", "A book used to store experience.");
 		add("tooltip.bloodmagic.experienceTome.exp", "Exp: %0.3f");
 		add("tooltip.bloodmagic.experienceTome.expLevel", "Level: %d");
 
-		add("tooltip.bloodmagic.throwing_dagger.desc", "Not to be used in the kitchen");
+		add("tooltip.bloodmagic.throwing_dagger.desc", "Not to be used in the kitchen.");
 
 		add("key.bloodmagic.category", "Blood Magic");
 
 		add("tooltip.bloodmagic.ghost.everything", "Everything");
-		add("tooltip.bloodmagic.ghost.amount", "Ghost item amount: %d");
+		add("tooltip.bloodmagic.ghost.amount", "Ghost item amount: %d.");
 
-		add("tooltip.bloodmagic.basicfilter.desc", "Will make sure the items match");
-		add("tooltip.bloodmagic.tagfilter.desc", "Filters based off of an item's ItemTags");
-		add("tooltip.bloodmagic.enchantfilter.desc", "Filters based off of enchantments");
-		add("tooltip.bloodmagic.modfilter.desc", "Filters based off of the source mod");
-		add("tooltip.bloodmagic.compositefilter.desc", "Filters based off of contained filters");
+		add("tooltip.bloodmagic.basicfilter.desc", "Will make sure the items match.");
+		add("tooltip.bloodmagic.tagfilter.desc", "Filters based off of an item's ItemTags.");
+		add("tooltip.bloodmagic.enchantfilter.desc", "Filters based off of enchantments.");
+		add("tooltip.bloodmagic.modfilter.desc", "Filters based off of the source mod.");
+		add("tooltip.bloodmagic.compositefilter.desc", "Filters based off of contained filters.");
 
 		add("tooltip.bloodmagic.hellforgedparts", "These parts are currently beyond your crafting capabilities...");
 
@@ -166,16 +166,16 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.filter.enchant_combination", "%s: %s");
 		add("tooltip.bloodmagic.filter.from_mod", "From: %s");
 
-		add("tooltip.bloodmagic.trainer.whitelist", "Block other upgrades");
-		add("tooltip.bloodmagic.trainer.blacklist", "Allow other upgrades");
+		add("tooltip.bloodmagic.trainer.whitelist", "Block other upgrades.");
+		add("tooltip.bloodmagic.trainer.blacklist", "Allow other upgrades.");
 		add("tooltip.bloodmagic.trainer.deny", "Deny:");
 
 		add("tooltip.bloodmagic.filter.anytag", "Any Tag of %s");
 		add("tooltip.bloodmagic.contained_filters", "Contained Filters:");
 
-		add("tooltip.bloodmagic.simplekey", "A simple key that can open dungeon doors");
-		add("tooltip.bloodmagic.mineentrancekey", "A key used to gain access to the mines");
-		add("tooltip.bloodmagic.minekey", "Unlocks doors within the mines");
+		add("tooltip.bloodmagic.simplekey", "A simple key that can open dungeon doors.");
+		add("tooltip.bloodmagic.mineentrancekey", "A key used to gain access to the mines.");
+		add("tooltip.bloodmagic.minekey", "Unlocks doors within the mines.");
 
 		add("tooltip.bloodmagic.alchemytable.orberror.title", "Orb Error");
 		add("tooltip.bloodmagic.alchemytable.orberror.text", "Orb's Tier is not high enough for this recipe.");
@@ -184,7 +184,7 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("tooltip.bloodmagic.incorrectKey", "The key does not fit in this lock...");
 		add("tooltip.bloodmagic.specialspawn", "You feel a spatial distortion in this room...");
-		add("tooltip.bloodmagic.blockeddoor", "The lock breaks and fizzles out of existance!");
+		add("tooltip.bloodmagic.blockeddoor", "The lock breaks and fizzles out of existence!");
 
 		// Ritual info
 		add("tooltip.bloodmagic.diviner.currentRitual", "Current Ritual: %s");
@@ -196,11 +196,11 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.diviner.duskRune", "Dusk Runes: %d");
 		add("tooltip.bloodmagic.diviner.dawnRune", "Dawn Runes: %d");
 		add("tooltip.bloodmagic.diviner.totalRune", "Total Runes: %d");
-		add("tooltip.bloodmagic.diviner.extraInfo", "Press shift for extra info");
+		add("tooltip.bloodmagic.diviner.extraInfo", "Press shift for extra info.");
 		add("tooltip.bloodmagic.diviner.extraExtraInfo", "-Hold shift + alt for augmentation info-");
 		add("tooltip.bloodmagic.diviner.currentDirection", "Current Direction: %s");
 
-		add("tooltip.bloodmagic.holdShiftForInfo", "Press shift for extra info");
+		add("tooltip.bloodmagic.holdShiftForInfo", "Press shift for extra info.");
 
 		add("ritual.bloodmagic.blockRange.tooBig", "The block range given is too big! Needs to be at most %s blocks.");
 		add("ritual.bloodmagic.blockRange.tooFar", "The block range given is too far! Needs to be within a vertical range of %s blocks and a horizontal range of %s blocks.");
@@ -208,8 +208,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.blockRange.noRange", "The range was not properly chosen.");
 		add("ritual.bloodmagic.blockRange.firstBlock", "First block for new range stored.");
 		add("ritual.bloodmagic.blockRange.success", "New range successfully set!");
-		add("ritual.bloodmagic.willConfig.set", "The ritual will use these Demon Will types: %s");
-		add("ritual.bloodmagic.willConfig.void", "The ritual no longer uses Demon Will");
+		add("ritual.bloodmagic.willConfig.set", "The ritual will use these Demon Will types: %s.");
+		add("ritual.bloodmagic.willConfig.void", "The ritual no longer uses Demon Will.");
 
 		add("ritual.bloodmagic.testRitual", "Test Ritual");
 		add("ritual.bloodmagic.waterRitual", "Ritual of the Full Spring");
@@ -379,8 +379,8 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("ritual.bloodmagic.sphereRitual.spheroidRange.info", "(Extraction) The range that the ritual will extract blocks from. The blocks are placed on the vertical opposite side of the MRS.");
 
-		add("ritual.bloodmagic.simpleDungeonRitual.info", "Summons an Inversion Pillar, a tenuous gateway to the Demon Realm");
-		add("ritual.bloodmagic.standardDungeonRitual.info", "Summons an Inversion Pillar to go deeper into the Demon Realm");
+		add("ritual.bloodmagic.simpleDungeonRitual.info", "Summons an Inversion Pillar, a tenuous gateway to the Demon Realm.");
+		add("ritual.bloodmagic.standardDungeonRitual.info", "Summons an Inversion Pillar to go deeper into the Demon Realm.");
 
 		add("ritual.bloodmagic.placerRitual.placerRange.info", "(Placement) The range that the ritual will place its blocks in.");
 		add("ritual.bloodmagic.placerRitual.chest.info", "(Chest) The location of the inventory that the ritual will grab blocks from to place in the world.");
@@ -388,7 +388,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.fellingRitual.chest.info", "(Chest) The location of the inventory that the ritual will place the results into.");
 		add("ritual.bloodmagic.pumpRitual.pumpRange.info", "(Pump) The region that the ritual will look for fluids to grab from the world.");
 		add("ritual.bloodmagic.condorRitual.flightRange.info", "Players within this range will receive a Flight buff.");
-		add("ritual.bloodmagic.downgradeRitual.info", "Consumes items from a linked chest to forcefully downgrade worn armour");
+		add("ritual.bloodmagic.downgradeRitual.info", "Consumes items from a linked chest to forcefully downgrade worn Living Armour.");
 		add("ritual.bloodmagic.groundingRitual.groundingRange.info", "(Range) Affects entities within range.");
 
 		add("ritual.bloodmagic.yawningVoidRitual.info", "Destroys blocks within a large area.");
@@ -396,7 +396,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.yawningVoidRitual.quarryRange.info", "(Quarry) Blocks within range are destroyed.");
 		add("ritual.bloodmagic.yawningVoidRitual.placementRange.info", "(Placement) Based on Will config, blocks not destroyed are placed within range.");
 
-		add("ritual.bloodmagic.craftingRitual.info", "Crafts items based on the linked Item Filter using the connected Input inventory");
+		add("ritual.bloodmagic.craftingRitual.info", "Crafts items based on the linked Item Filter using the connected Input inventory.");
 		add("ritual.bloodmagic.craftingRitual.outputRange.info", "(Chest) Crafted items are inserted into the selected inventory, or spawned in the world if missing.");
 		add("ritual.bloodmagic.craftingRitual.inputRange.info", "(Chest) Items for crafting are taken from connected inventory.");
 		add("ritual.bloodmagic.craftingRitual.recipeRange.info", "(Item Frame/Chest) Uses Item Filter to determine shape of recipe and selected items.");
@@ -464,25 +464,25 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("tooltip.bloodmagic.livingarmour.extraExtraInfo", "&9-Hold shift + M for progress info-");
 
-		add("tooltip.bloodmagic.livingtomescrap.points", "Contained upgrade points: %s");
+		add("tooltip.bloodmagic.livingtomescrap.points", "Contained upgrade points: %s.");
 		add("tooltip.bloodmagic.livingtomescrap.desc", "Fragments of a living tome.");
 
-		add("tooltip.bloodmagic.slate_vial", "A glass vial infused with a simple slate");
-		add("tooltip.bloodmagic.blood_provider.slate.desc", "A simple ampoule containing 500LP");
+		add("tooltip.bloodmagic.slate_vial", "A glass vial infused with a simple slate.");
+		add("tooltip.bloodmagic.blood_provider.slate.desc", "A simple ampoule containing 500LP.");
 
-		add("tooltip.bloodmagic.basicnodeupgrade", "Increases a Master Routing Node's speed");
+		add("tooltip.bloodmagic.basicnodeupgrade", "Increases a Master Routing Node's speed.");
 
-		add("chat.bloodmagic.living_upgrade_level_increase", "%s has leveled up to %d");
+		add("chat.bloodmagic.living_upgrade_level_increase", "%s has leveled up to %d!");
 
-		add("chat.bloodmagic.routing.remove", "Removing contained location");
-		add("chat.bloodmagic.routing.set", "Setting node location");
+		add("chat.bloodmagic.routing.remove", "Removing contained location.");
+		add("chat.bloodmagic.routing.set", "Setting node location.");
 		add("chat.bloodmagic.routing.link.master", "Linked node to master!");
-		add("chat.bloodmagic.routing.link", "Linked nodes together");
+		add("chat.bloodmagic.routing.link", "Linked nodes together.");
 		add("chat.bloodmagic.routing.distance", "Invalid - link distance greater than 16 blocks!");
-		add("chat.bloodmagic.routing.same", "Invalid - cannot link a node with itself");
+		add("chat.bloodmagic.routing.same", "Invalid - cannot link a node with itself.");
 
-		add("tooltip.bloodmagic.telepositionfocus.coords", "Current coordinates: (%d, %d, %d)");
-		add("tooltip.bloodmagic.telepositionfocus.world", "World: %d");
+		add("tooltip.bloodmagic.telepositionfocus.coords", "Current coordinates: (%d, %d, %d).");
+		add("tooltip.bloodmagic.telepositionfocus.world", "World: %d.");
 
 		// Anointments. Doesn't have any spelling to be pedantic about.
 		add("anointment.bloodmagic.melee_damage", "Whetstone");
