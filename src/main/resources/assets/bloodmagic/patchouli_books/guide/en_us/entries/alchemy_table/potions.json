@@ -1,11 +1,11 @@
 {
-  "name": "Potion Crafting Basics",
+  "name": "Potion Crafting",
   "icon": "bloodmagic:alchemy_flask",
   "category": "bloodmagic:alchemy_table",
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "The basics of $(thing)Potion Crafting$() are known to all and sundry throughout the land. Even common Clerics and Witches have a firm grasp of the basics of brewing - take a handful of semi-rare ingredients, mix them together in the correct proportions, and consume the result (while holding your nose, if needed)."
+      "text": "The basics of $(thing)Potion Crafting$() are known to all and sundry throughout the land. Even common Clerics and Witches have a firm grasp of the basics of brewing - take a handful of semi-rare ingredients, mix them together in the correct proportions, and consume the result (while holding your nose, if needed), or throw it at your foes."
     },
     {
       "type": "patchouli:text",
@@ -77,6 +77,29 @@
       "heading": "Simple Cycling Catalyst",
       "recipe": "bloodmagic:alchemytable/cycling_catalyst",
       "text": "The Cycling Catalyst can be used to alter the order of effects inside the Flask, and thus change which effect is altered by another Catalyst or Agent."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Potion Crafting 201",
+      "text": "If the potions you've crafted so far just aren't enough for you, then perhaps you need to do a little exploring? With some $(item)Glow berries$(), some $(item)Cobbled Deepslate$() and a sprinkling of $()Hellforged Sand$()"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "Strengthened Catalyst",
+      "recipe": "bloodmagic:alchemytable/strengthened_catalyst",
+      "text": "A more potent base for more potent catalysts."
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "Standard Lengthening",
+      "recipe": "bloodmagic:alchemytable/average_lengthening",
+      "text": "The Standard Lengthening Catalyst will increase the duration of the topmost effect from 3:00 to 21:20. Multiply that by the 8 doses each flask provides, and that's a heck of a long time!"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "Standard Power Catalyst",
+      "recipe": "bloodmagic:alchemytable/average_power",
+      "text": "The Standard Power Catalyst is a souped-up version of the Small Power Catalyst, allowing you to get up to level III potion effects in your flask."
     }
   ]
 }
