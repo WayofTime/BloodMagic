@@ -265,7 +265,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.greenGroveRitual.info", "Grows crops within its area.");
 		add("ritual.bloodmagic.jumpRitual.info", "Causes entities to leap up into the air.");
 		add("ritual.bloodmagic.wellOfSufferingRitual.info", "Attacks mobs within its damage zone and puts the LP into a nearby blood altar.");
-		add("ritual.bloodmagic.featheredKnifeRitual.info", "Drains health from players in its area and puts the LP into a nearby blood altar. LP Gains are affected by Runes of Self Sacrifice.");
+		add("ritual.bloodmagic.featheredKnifeRitual.info", "Drains health from players in its area and puts the LP into a nearby blood altar. LP Gains are affected by Runes of Self Sacrifice and Tough Palms.");
 		add("ritual.bloodmagic.regenerationRitual.info", "Casts regeneration on entities within its range if they are missing health.");
 		add("ritual.bloodmagic.regenerationRitual.default.info", "(Raw)");
 		add("ritual.bloodmagic.regenerationRitual.corrosive.info", "(Corrosive) Steals health from non-players inside of its Vampirism range and directly heals players.");

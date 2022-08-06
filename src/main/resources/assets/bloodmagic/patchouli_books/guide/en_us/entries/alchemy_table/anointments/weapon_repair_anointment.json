@@ -19,7 +19,7 @@
       "type": "bloodmagic:crafting_alchemy_table",
       "heading": "Repairing Salve II",
       "recipe": "bloodmagic:alchemytable/weapon_repair_anointment_2",
-      "text": "This upgraded version of the anointment repairs the tool by 2 points for every point of damage taken. $(br2)Applies: Regular Maintenance II (256 blocks)"
+      "text": "This upgraded version of the anointment repairs the tool by 2 points for every point of damage taken. Does not activate if doing so would waste some of the repair bonus. $(br2)Applies: Regular Maintenance II (256 blocks)"
     },
     {
       "type": "bloodmagic:crafting_alchemy_table",
@@ -31,7 +31,7 @@
       "type": "bloodmagic:crafting_alchemy_table",
       "heading": "Repairing Salve III",
       "recipe": "bloodmagic:alchemytable/weapon_repair_anointment_3",
-      "text": "This upgraded version of the anointment repairs the tool by 3 points for every point of damage taken. $(br2)Applies: Regular Maintenance III (256 blocks)"
+      "text": "This upgraded version of the anointment repairs the tool by 3 points for every point of damage taken. Does not activate if doing so would waste some of the repair bonus. $(br2)Applies: Regular Maintenance III (256 blocks)"
     }
   ]
 }

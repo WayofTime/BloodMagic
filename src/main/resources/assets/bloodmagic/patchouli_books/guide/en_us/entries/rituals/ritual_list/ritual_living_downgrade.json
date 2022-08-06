@@ -39,6 +39,10 @@
     {
       "type": "patchouli:text",
       "text": "The downgrades applied to your armour depends on what Item(s) you place in the chest. Each item that matches a particular downgrade will increase the desired downgrade's level by one. In this manner, multiple downgrades can be applied at once with a single ritual activation."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The ritual will respect any settings you have configured on your $(l:bloodmagic:alchemy_array/living_equipment/training_bracelet)Living Armour Training Bracelet$(), so if you have it set to 'do not allow other upgrades' then the ritual will fail to apply the downgrades to you. If in doubt, put your Training Bracelet away!"
     }
   ]
 }

@@ -81,7 +81,7 @@
     {
       "type": "patchouli:text",
       "title": "Potion Crafting 201",
-      "text": "If the potions you've crafted so far just aren't enough for you, then perhaps you need to do a little exploring? With some $(item)Glow berries$(), some $(item)Cobbled Deepslate$() and a sprinkling of $()Hellforged Sand$()"
+      "text": "If the potions you've crafted so far just aren't enough for you, then perhaps you need to do a little exploring? With some $(item)Glow berries$(), some $(item)Cobbled Deepslate$() and a sprinkling of $()Hellforged Sand$(), you can boost the duration and power of your flasks significantly."
     },
     {
       "type": "bloodmagic:crafting_alchemy_table",
