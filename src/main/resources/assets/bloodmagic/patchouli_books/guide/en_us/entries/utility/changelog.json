@@ -10,6 +10,55 @@
     },
     {
       "type": "patchouli:text",
+      "title": "3.2.4",
+      "text": "$(li)Implemented the \"Pathway to the Endless Realm\" ritual, which provides access to a larger version of the Demon Dungeons! $(li2)\"The Endless Realm\" is a sprawling, procedurally generated dungeon, filled with chests bursting with loot and monsters that pack a serious punch! $(li2)Those who successfully navigate its many chambers may find Demonite, an ore that"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "cannot be found anywhere else. $(li2)The dungeons currently have two distinct regions: $(li3)The \"Entrance Zone\", which contains a wide array of loot and monsters $(li3)The \"Hidden Mines\", containing a bountiful reserve of Demonite, which is used for advanced alchemy and for empowering the Blood Altar to Tier 5. Accessible by finding the \"Foreman's Key\" in the Entrance Zone."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li2)If you delve deep enough in the dungeon, a \"Spatial Distortion\" may occasionally form; this changes one of the doors within the room to one that leads to a rare dungeon room. $(li)More rooms, room types, and special rooms to come to the Dungeon (eventually (soon (tm)))! $(li)Added Demonite, which can be processed into Hellforged Sand and Hellforged Ingots."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)Added more advanced anointments, which offer either increased duration (XL) or a stronger effect (III). $(li)Added the \"Standard Lengthening Catalyst\" and \"Standard Power Catalyst\", which further augment potion effects in the Alchemy Flask. $(li)Added stronger Alchemic Reaction Chamber tools, which are both faster and longer-lasting than previous tools. $(li2)Hellforged Resonator $(li2)Hellforged Explosive Cell $(li2)Advanced Cutting Fluid"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li2)These tools also boost the chance for bonus outputs when used. For instance, an Intermediate Cutting Fluid will provide 1.5x Iron Sand per Raw Iron, whereas the Advanced Cutting Fluid provides 1.67x.$(br2)$(li)Added Upgraded Explosive Charges and tweaked the power of previous versions. $(li2)Augmented Shaped Charge - breaks 7x7x7 cube of blocks."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li2)Tunneling Shaped Charge - breaks 5x5x20 long set of blocks. $(li2)Augmented Controlled Charge - breaks up to 8x64 blocks of the same type. $(li2)Augmented Deforester Charge - breaks up to 8x64 logs, clearing away connecting leaves. $(li2)Augmented Fungal Charge - breaks up to 8x64 blocks related to Overworld and Nether big mushrooms."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)Added Hellforged Parts, which can only be found through loot within the Hidden Mines. $(li2)Used to reinforce Blood Runes, doubling the effect of the given rune. $(li)Increased the rate of \"Tiny Corrupted Dust\" when using the Resonator in the Alchemic Reaction Chamber. $(li2)Corrupted Dust can be used to increase the yield of the desired ore."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)Added a new feature to the Divination and Seer's Sigil: when sneaking and activating the sigil, a GUI will open which will allow you to drag individual HUD elements and save their new locations. $(li)Added new anointments: $(li2)\"Repairing Salve\", which repairs a damaged tool slightly when the tool is used.$(li2)\"Void Essence\", which destroys mundane blocks that are mined."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)Also tweaked \"Miner's Secrets\" to only work on exp-providing blocks, while also only being used up when additional exp is provided. $(li)Updated several textures related to vanilla ore processing. $(li)Fixed Blood Altar's delay after crafting. The delay between when an altar finishes a craft and attempts to start a new craft is now 30 ticks. $(li)Fixed Body Builder so that it is properly obtainable."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)Fixed Nether Wart handling for the Harvest ritual. $(li)Fixed the Sentient Scythe so that it wasn't made out of paper. Also actually does damage now! $(li)Allowed the Sentient Scythe to receive the Sharpness enchantment while enchanting. $(li)Changed the Ritual of the Feathered Knife to interact with the \"Tough Palms\" Living Upgrade."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)Added Amethyst Throwing Daggers, which do the same damage as Iron Throwing Daggers. $(li2)Can be combined in an ARC with a Lingering Alchemy Flask to add potion effects to the thrown daggers. $(li)Added the reworked ritual \"Rhythm of the Beating Anvil\", which can autocraft vanilla recipes. When augmented, can also simplify automation of Hellfire Forge and Alchemy Table recipes."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)Changed the \"Penance of the Leadened Soul\" so that it respects any currently held Training Bracelets."
+    },
+    {
+      "type": "patchouli:text",
       "title": "3.2.3",
       "text": "$(li)Fixed Fortuna Extract so that it properly applied its additional Fortune under certain conditions.$(li)Fixed a crash with the Teleposer that prevented Tile Entities from moving.$(li)Added smelting recipe for copper sand > copper ingot, and blasting furnace recipes for all dusts."
     },
