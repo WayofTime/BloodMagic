@@ -46,7 +46,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Any additional rooms you open from this antecamber will contain some combination of loot, monsters, traps and possibly some unactivated rituals. Keep your eyes peeled! $(br2)A few examples of loot that you might find: $(li)Enchanted Books $(li)Enchanted Weapons and Armour $(li)$(l:bloodmagic:alchemy_table/anointments)Various Anointments$() $(li)$(l:bloodmagic:demon_will/will_manipulation/demon_will)Demon Will$() $(li)Potion Ingredients"
+      "text": "Any additional rooms you open from this antechamber will contain some combination of loot, monsters, traps and possibly some unactivated rituals. Keep your eyes peeled! $(br2)A few examples of loot that you might find: $(li)Enchanted Books $(li)Enchanted Weapons and Armour $(li)$(l:bloodmagic:alchemy_table/anointments)Various Anointments$() $(li)$(l:bloodmagic:demon_will/will_manipulation/demon_will)Demon Will$() $(li)Potion Ingredients"
     },
     {
       "type": "patchouli:text",
