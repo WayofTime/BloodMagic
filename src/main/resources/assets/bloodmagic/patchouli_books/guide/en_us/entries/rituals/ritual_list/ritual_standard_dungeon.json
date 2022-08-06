@@ -14,7 +14,8 @@
       "ritual": "standard_dungeon",
       "text_overrides": [
         ["Demon Realm", "thing"]
-      ]
+      ],
+      "text": "Beware, the Demon Realm is highly dangerous. Come prepared!"
     }
   ]
 }
