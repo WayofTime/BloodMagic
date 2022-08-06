@@ -19,7 +19,7 @@
       "type": "bloodmagic:crafting_alchemy_table",
       "heading": "Miner's Secrets II",
       "recipe": "bloodmagic:alchemytable/hidden_knowledge_anointment_2",
-      "text": "This upgraded version of the anointment increases the yield. $(br2)Applies: Miner's Secrets II (256 exp-dropping blocks)"
+      "text": "This upgraded version of the anointment increases the yield to +4exp per block. $(br2)Applies: Miner's Secrets II (256 exp-dropping blocks)"
     },
     {
       "type": "bloodmagic:crafting_alchemy_table",
@@ -31,7 +31,7 @@
       "type": "bloodmagic:crafting_alchemy_table",
       "heading": "Miner's Secrets III",
       "recipe": "bloodmagic:alchemytable/hidden_knowledge_anointment_3",
-      "text": "This upgraded version of the anointment increases the yield. $(br2)Applies: Miner's Secrets III (256 exp-dropping blocks)"
+      "text": "This upgraded version of the anointment increases the yield to +6exp per block. $(br2)Applies: Miner's Secrets III (256 exp-dropping blocks)"
     }
   ]
 }
