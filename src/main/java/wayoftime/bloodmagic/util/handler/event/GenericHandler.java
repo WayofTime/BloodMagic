@@ -363,15 +363,18 @@ public class GenericHandler
 
 						double repairRatio = heldStack.getXpRepairRatio();
 						double durabilityBonus = Math.min(expBonus / repairRatio, heldStack.getDamageValue());
-						int durabilityAdded = (int) durabilityBonus + (durabilityBonus % 1 > sourcePlayer.level.getRandom().nextDouble()
-								? 1
-								: 0);
-						if (durabilityAdded > 0)
-							heldStack.setDamageValue(Math.max(0, heldStack.getDamageValue() - durabilityAdded));
-
-						if (holder.consumeAnointmentDurability(heldStack, EquipmentSlot.MAINHAND, AnointmentRegistrar.ANOINTMENT_WEAPON_REPAIR.get(), sourcePlayer))
+						if (heldStack.getDamageValue() >= durabilityBonus)
 						{
-							hasAnointmentChanged = true;
+							int durabilityAdded = (int) durabilityBonus + (durabilityBonus % 1 > sourcePlayer.level.getRandom().nextDouble()
+									? 1
+									: 0);
+							if (durabilityAdded > 0)
+								heldStack.setDamageValue(Math.max(0, heldStack.getDamageValue() - durabilityAdded));
+
+							if (holder.consumeAnointmentDurability(heldStack, EquipmentSlot.MAINHAND, AnointmentRegistrar.ANOINTMENT_WEAPON_REPAIR.get(), sourcePlayer))
+							{
+								hasAnointmentChanged = true;
+							}
 						}
 					}
 				}
