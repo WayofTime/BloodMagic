@@ -57,6 +57,11 @@
       "recipe2": "bloodmagic:path/path_wornstonetile"
     },
     {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:path/path_obsidian",
+      "recipe2": "bloodmagic:path/path_obsidiantile"
+    },
+    {
       "type": "patchouli:text",
       "text": "Each new \"ring\" of path blocks follow a set of rules: $(li)All path blocks on the same ring have to be on the same y-level.$(li)The next ring of path blocks may not be more than 5 blocks higher/lower than the previous ring.$(li)The blocks that are the same level or up to two blocks above the path blocks' ring count towards the total $(thing)Tranquility$() - these are indicated by the glass blocks in the picture."
     },
@@ -92,7 +97,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Of course, your setup can be as steep or as shallow as you want (Within reason, as defined earlier in this entry). $(br2) It is important to note that the $(thing)Tranquility bonus$() is capped by the size of your Altar (and thus, the tier of path you are using). The caps are as follows: $(li) No Path: 20%. $(li) Wooden Path: 60%. $(li) Stone Path: 120%. $(li) Worn Stone Path: 200%. $(li) Obsidian Path: 300%. (Obsidian is NYI, sadly)"
+      "text": "Of course, your setup can be as steep or as shallow as you want (Within reason, as defined earlier in this entry). $(br2) It is important to note that the $(thing)Tranquility bonus$() is capped by the size of your Altar (and thus, the tier of path you are using). The caps are as follows: $(li) No Path: 20%. $(li) Wooden Path: 60%. $(li) Stone Path: 120%. $(li) Worn Stone Path: 200%. $(li) Obsidian Path: 300%."
     },
     {
       "type": "patchouli:image",

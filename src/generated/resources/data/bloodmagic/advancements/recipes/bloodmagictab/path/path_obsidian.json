@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:path/path_obsidian"
+    ]
+  },
+  "criteria": {
+    "has_archmage_orb": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bloodmagic:archmagebloodorb"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:path/path_obsidian"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_archmage_orb",
+      "has_the_recipe"
+    ]
+  ]
+}

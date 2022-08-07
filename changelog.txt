@@ -52,6 +52,7 @@ Version 3.2.4
 
 - Added the reworked ritual "Rhythm of the Beating Anvil", which can autocraft vanilla recipes. When augmented, can also simplify automation of Hellfire Forge and Alchemy Table recipes.
 - Changed the "Penance of the Leadened Soul" so that it respects any currently held Training Bracelets.
+- Reimplemented recipe for Obsidian Paths.
 
 
 ------------------------------------------------------

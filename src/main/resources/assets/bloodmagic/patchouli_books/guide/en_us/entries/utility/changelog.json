@@ -55,7 +55,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "$(li)Changed the \"Penance of the Leadened Soul\" so that it respects any currently held Training Bracelets."
+      "text": "$(li)Changed the \"Penance of the Leadened Soul\" so that it respects any currently held Training Bracelets.$(li)Reimplemented recipe for Obsidian Paths."
     },
     {
       "type": "patchouli:text",

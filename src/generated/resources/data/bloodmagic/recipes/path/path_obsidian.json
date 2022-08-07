@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:obsidian"
+    },
+    {
+      "item": "minecraft:obsidian"
+    },
+    {
+      "item": "minecraft:obsidian"
+    },
+    {
+      "item": "minecraft:obsidian"
+    },
+    {
+      "type": "bloodmagic:bloodorb",
+      "orb_tier": 5
+    }
+  ],
+  "result": {
+    "item": "bloodmagic:obsidianbrickpath",
+    "count": 4
+  }
+}
