@@ -348,7 +348,7 @@ public class DungeonRoomProvider implements DataProvider
 
 		DungeonRoom mineBuiltShaft = new DungeonRoom().addStructure("bloodmagic:standard/mine_built_shaft_1", new BlockPos(0, 0, 0));
 		mineBuiltShaft.addStructure("bloodmagic:standard/mine_built_shaft_2", new BlockPos(0, 32, 0));
-		mineBuiltShaft.addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(21, 7, 18)));
+		mineBuiltShaft.addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(31, 34, 21)));
 		mineBuiltShaft.addDoor(new BlockPos(22, 25, 0), Direction.NORTH, "mine", 1);
 		mineBuiltShaft.addDoor(new BlockPos(22, 25, 20), Direction.SOUTH, "mine", 1);
 		mineBuiltShaft.addDoor(new BlockPos(30, 1, 4), Direction.EAST, "mine", 1);
