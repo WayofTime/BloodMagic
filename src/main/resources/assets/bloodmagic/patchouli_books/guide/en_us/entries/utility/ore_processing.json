@@ -63,7 +63,7 @@
     {
       "type": "bloodmagic:crafting_soulforge",
       "heading": "Resonator",
-      "recipe": "bloodmagic:soulforge/primitive_crystalline_resonator",
+      "recipe": "bloodmagic:soulforge/resonator",
       "text": "The $(item)Resonator$() is used to turn $(item)Ore Fragments$() into the relevant $(item)Gravel$() for continued ore processing, and creates some $(item)tiny dusts$() that are NYI."
     },
     {

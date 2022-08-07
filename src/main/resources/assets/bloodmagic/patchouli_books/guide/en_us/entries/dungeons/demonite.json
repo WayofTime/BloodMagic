@@ -3,7 +3,8 @@
   "icon": "bloodmagic:dungeon_ore",
   "category": "bloodmagic:dungeons",
   "extra_recipe_mappings": {
-    "bloodmagic:dungeon_ore": 0
+    "bloodmagic:dungeon_ore": 0,
+    "bloodmagic:rawdemonite": 0
   },
   "pages": [
     {
@@ -13,8 +14,9 @@
     {
       "type": "patchouli:smelting",
       "heading": "Hellforged Ingot",
-      "recipe2": "bloodmagic:smelting/ingot_from_demonite",
-      "recipe": "bloodmagic:smelting/ingot_from_raw_hellforged"
+      "recipe": "bloodmagic:smelting/ingot_from_demonite",
+      "recipe2": "bloodmagic:smelting/ingot_from_raw_hellforged",
+      "recipe3": "bloodmagic:smelting/ingot_hellforged"
     },
     {
       "type": "patchouli:smelting",
@@ -33,6 +35,11 @@
       "a.heading": "Demonite Processing",
       "a.recipe": "bloodmagic:arc/fragmentshellforged",
       "b.recipe": "bloodmagic:arc/gravelshellforged"
+    },
+    {
+      "type": "patchouli:crafting",
+      "heading": "Hellforged Block",
+      "recipe": "bloodmagic:hellforged_block"
     }
   ]
 }

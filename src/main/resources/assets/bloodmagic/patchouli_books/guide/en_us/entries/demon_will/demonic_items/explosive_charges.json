@@ -9,7 +9,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Not only that, you can improve their functionality by $(item)Anointing$() them with certain ingredients and a little $(raw)Will$(), as described after each entry. $(br2)The currently available anointments are as follows: $(li)Fortunate - broken blocks are affected by $(thing)Fortune I$(). $(li)Heated Tool - Broken blocks are $(thing)Smelted$(). $(li)Soft Touch - Broken blocks are affected by $(thing)Silk Touch$()."
+      "text": "Not only that, you can improve their functionality by $(item)Anointing$() them with certain ingredients and a little $(raw)Will$(), as described after each entry.$(br2)The currently available anointments are as follows: $(li)Fortunate - broken blocks are affected by $(thing)Fortune$(). $(li)Heated Tool - Broken blocks are $(thing)Smelted$(). $(li)Soft Touch - Broken blocks are affected by $(thing)Silk Touch$(). $(li)Voiding - 'Junk' blocks are voided rather than dropping as items."
     },
     {
       "type": "bloodmagic:crafting_soulforge",
@@ -20,12 +20,63 @@
     },
     {
       "type": "bloodmagic:3x_crafting_soulforge",
-      "a.heading": "Fortunate",
-      "a.recipe": "bloodmagic:soulforge/shaped_charge_fortune_1",
+      "a.heading": "Voiding",
+      "a.recipe": "bloodmagic:soulforge/shaped_charge_voiding",
       "b.heading": "Heated Tool",
       "b.recipe": "bloodmagic:soulforge/shaped_charge_smelting",
       "c.heading": "Soft Touch",
       "c.recipe": "bloodmagic:soulforge/shaped_charge_silk_touch"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "Fortunate",
+      "recipe": "bloodmagic:soulforge/shaped_charge_fortune_1"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "Augmented Shaped Charge",
+      "recipe": "bloodmagic:soulforge/aug_shaped_charge",
+      "anchor":"shaped_charge_2",
+      "text": "The $(item)Augmented Shaped Charge$() is a direct upgrade from the standard Shaped Charge. It will destroy a 7x7x7 cube facing whichever side of a block it lands on, dropping all blocks as though mined with a pickaxe. It can also be anointed with $(thing)Fortune II$()."
+    },
+    {
+      "type": "bloodmagic:3x_crafting_soulforge",
+      "a.heading": "Voiding",
+      "a.recipe": "bloodmagic:soulforge/aug_shaped_charge_voiding",
+      "b.heading": "Heated Tool",
+      "b.recipe": "bloodmagic:soulforge/aug_shaped_charge_smelting_l",
+      "c.heading": "Soft Touch",
+      "c.recipe": "bloodmagic:soulforge/aug_shaped_charge_silk_touch_l"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_soulforge",
+      "a.heading": "Fortunate",
+      "a.recipe": "bloodmagic:soulforge/aug_shaped_charge_fortune_1_l",
+      "b.heading": "Fortunate II",
+      "b.recipe": "bloodmagic:soulforge/aug_shaped_charge_fortune_2_l"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "Tunneling Shaped Charge",
+      "recipe": "bloodmagic:soulforge/shaped_charge",
+      "anchor":"shaped_charge",
+      "text": "The $(item)Tunneling Shaped Charge$() will destroy a 5x5x20 tunnel facing whichever side of a block it lands on, dropping all blocks as though mined with a pickaxe. Good for mining."
+    },
+    {
+      "type": "bloodmagic:3x_crafting_soulforge",
+      "a.heading": "Voiding",
+      "a.recipe": "bloodmagic:soulforge/shaped_charge_deep_voiding",
+      "b.heading": "Heated Tool",
+      "b.recipe": "bloodmagic:soulforge/shaped_charge_deep_smelting_l",
+      "c.heading": "Soft Touch",
+      "c.recipe": "bloodmagic:soulforge/shaped_charge_deep_silk_touch_l"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_soulforge",
+      "a.heading": "Fortunate",
+      "a.recipe": "bloodmagic:soulforge/shaped_charge_deep_fortune_1_l",
+      "b.heading": "Fortunate II",
+      "b.recipe": "bloodmagic:soulforge/shaped_charge_deep_fortune_2_l"
     },
     {
       "type": "bloodmagic:crafting_soulforge",
@@ -36,8 +87,8 @@
     },
     {
       "type": "bloodmagic:3x_crafting_soulforge",
-      "a.heading": "Fortunate",
-      "a.recipe": "bloodmagic:soulforge/deforester_charge_fortune_1",
+      "a.heading": "Voiding",
+      "a.recipe": "bloodmagic:soulforge/deforester_charge_voiding",
       "b.heading": "Heated Tool",
       "b.recipe": "bloodmagic:soulforge/deforester_charge_smelting",
       "c.heading": "Soft Touch",
@@ -45,19 +96,75 @@
     },
     {
       "type": "bloodmagic:crafting_soulforge",
-      "heading": "Controlled Charge",
-      "recipe": "bloodmagic:soulforge/vein_charge",
-      "anchor":"controlled_charge",
-      "text": "The $(item)Controlled Charge$(), only destroys blocks $(thing)identical to the block it lands on$(). It will destroy up to $(item)Three stacks$() of blocks, seeking out from the original point. As with other charges, all mined blocks will be dropped."
+      "heading": "Fortunate",
+      "recipe": "bloodmagic:soulforge/deforester_charge_fortune_1"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "Deforester Charge II",
+      "recipe": "bloodmagic:soulforge/deforester_charge_2",
+      "anchor":"deforester_charge_2",
+      "text": "The $(item)Deforester Charge II$(), much like the standard Deforester Charge, is for breaking wood and trees. It can breaks up to 8x64 logs, clearing away aany connecting leaves. Excellent for making yourself a nice clearing in any Dark Oak Forest or Jungle you might happen to like the look of."
     },
     {
       "type": "bloodmagic:3x_crafting_soulforge",
+      "a.heading": "Voiding",
+      "a.recipe": "bloodmagic:soulforge/deforester_charge_voiding",
+      "b.heading": "Heated Tool",
+      "b.recipe": "bloodmagic:soulforge/deforester_charge_2_smelting_l",
+      "c.heading": "Soft Touch",
+      "c.recipe": "bloodmagic:soulforge/deforester_charge_2_silk_touch_l"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_soulforge",
       "a.heading": "Fortunate",
-      "a.recipe": "bloodmagic:soulforge/vein_charge_fortune_1",
+      "a.recipe": "bloodmagic:soulforge/deforester_charge_2_fortune_1_l",
+      "b.heading": "Fortunate II",
+      "b.recipe": "bloodmagic:soulforge/deforester_charge_2_fortune_2_l"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "Controlled Charge",
+      "recipe": "bloodmagic:soulforge/vein_charge",
+      "anchor":"controlled_charge",
+      "text": "The $(item)Controlled Charge$() only destroys blocks $(thing)identical to the block it lands on$(). It will destroy up to 3 stacks of blocks, seeking out from the original point. As with other charges, all mined blocks will be dropped."
+    },
+    {
+      "type": "bloodmagic:3x_crafting_soulforge",
+      "a.heading": "Voiding",
+      "a.recipe": "bloodmagic:soulforge/vein_charge_voiding",
       "b.heading": "Heated Tool",
       "b.recipe": "bloodmagic:soulforge/vein_charge_smelting",
       "c.heading": "Soft Touch",
       "c.recipe": "bloodmagic:soulforge/vein_charge_silk_touch"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "Fortunate",
+      "recipe": "bloodmagic:soulforge/vein_charge_fortune_1"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "Controlled Charge II",
+      "recipe": "bloodmagic:soulforge/vein_charge_2",
+      "anchor":"controlled_charge_2",
+      "text": "The $(item)Controlled Charge II$() behaves identically to the $(item)Controlled Charge$(), however It will destroy up to 8 stacks of blocks at a time."
+    },
+    {
+      "type": "bloodmagic:3x_crafting_soulforge",
+      "a.heading": "Voiding",
+      "a.recipe": "bloodmagic:soulforge/vein_charge_2_voiding",
+      "b.heading": "Heated Tool",
+      "b.recipe": "bloodmagic:soulforge/vein_charge_2_smelting_l",
+      "c.heading": "Soft Touch",
+      "c.recipe": "bloodmagic:soulforge/vein_charge_2_silk_touch_l"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_soulforge",
+      "a.heading": "Fortunate",
+      "a.recipe": "bloodmagic:soulforge/vein_charge_2_fortune_1_l",
+      "b.heading": "Fortunate II",
+      "b.recipe": "bloodmagic:soulforge/vein_charge_2_fortune_2_l"
     },
     {
       "type": "bloodmagic:crafting_soulforge",
@@ -68,12 +175,40 @@
     },
     {
       "type": "bloodmagic:3x_crafting_soulforge",
-      "a.heading": "Fortunate",
-      "a.recipe": "bloodmagic:soulforge/fungal_charge_fortune_1",
+      "a.heading": "Voiding",
+      "a.recipe": "bloodmagic:soulforge/fungal_charge_voiding",
       "b.heading": "Heated Tool",
       "b.recipe": "bloodmagic:soulforge/fungal_charge_smelting",
       "c.heading": "Soft Touch",
       "c.recipe": "bloodmagic:soulforge/fungal_charge_silk_touch"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "Fortunate",
+      "recipe": "bloodmagic:soulforge/fungal_charge_fortune_1"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "Fungal Charge_II",
+      "recipe": "bloodmagic:soulforge/fungal_charge",
+      "anchor":"fungal_charge_2",
+      "text": "The $(item)Fungal Charge II$() is for felling giant mushrooms, both in the Overworld and the Nether. It can destroy up to 8 stacks of mushroomy goodness per charge. $(br2)Why would you ever need this?"
+    },
+    {
+      "type": "bloodmagic:3x_crafting_soulforge",
+      "a.heading": "Voiding",
+      "a.recipe": "bloodmagic:soulforge/fungal_charge_2_voiding",
+      "b.heading": "Heated Tool",
+      "b.recipe": "bloodmagic:soulforge/fungal_charge_2_smelting_l",
+      "c.heading": "Soft Touch",
+      "c.recipe": "bloodmagic:soulforge/fungal_charge_2_silk_touch_l"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_soulforge",
+      "a.heading": "Fortunate",
+      "a.recipe": "bloodmagic:soulforge/fungal_charge_2_fortune_1_l",
+      "b.heading": "Fortunate II",
+      "b.recipe": "bloodmagic:soulforge/fungal_charge_2_fortune_2_l"
     }
   ]
 }

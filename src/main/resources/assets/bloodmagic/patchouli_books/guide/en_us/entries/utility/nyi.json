@@ -28,11 +28,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "$(li)The Gate of the Fold. $(li)Ritual of the Feathered Earth. $(li)Ritual of Expulsion. $(li)Most of Tier V. $(li)Archmage Blood Orb. $(li)Awakened Activation Crystal."
-    },
-    {
-      "type": "patchouli:text",
-      "text": "$(li)Ritual of Grounding. $(li)Ritual of Speed. $(li)The Gate of the Fold. $(li)Ritual of the Feathered Earth. $(li)Ritual of Expulsion. $(li)Most of Tier V. $(li)Archmage Blood Orb. $(li)Awakened Activation Crystal."
+      "text": "$(li)The Gate of the Fold. $(li)Ritual of the Feathered Earth. $(li)Ritual of Expulsion. $(li)Most of Tier V. $(li)Awakened Activation Crystal."
     },
     {
       "type": "patchouli:text",

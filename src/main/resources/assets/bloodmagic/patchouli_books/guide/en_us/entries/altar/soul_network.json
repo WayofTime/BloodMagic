@@ -17,7 +17,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "There is a separate $(item)Blood Orb$() that can be created for each Tier of the $(item)Blood Altar$(). Their recipes are documented overleaf. $(li)$(item)Weak Blood Orb$() - Max capacity: $(blood)5k LP$(). $(li)$(item)Apprentice Blood Orb$() - Max capacity: $(blood)25k LP$(). $(li)$(item)Magician Blood Orb$() - Max capacity: $(blood)150k LP$(). $(li)$(item)Master Blood Orb$() - Max capacity: $(blood)1M LP$(). $(br2)If that's still not enough $(blood)LP storage$() for you, consider using $(l:bloodmagic:altar/blood_rune/orb_rune)Runes of the Orb$()."
+      "text": "There is a separate $(item)Blood Orb$() that can be created for each Tier of the $(item)Blood Altar$(). Their recipes are documented overleaf. $(li)$(item)Weak Blood Orb$() - Max capacity: $(blood)5k LP$(). $(li)$(item)Apprentice Blood Orb$() - Max capacity: $(blood)25k LP$(). $(li)$(item)Magician Blood Orb$() - Max capacity: $(blood)150k LP$(). $(li)$(item)Master Blood Orb$() - Max capacity: $(blood)1M LP$(). $(li)$(item)Archmage Blood Orb$() - Max capacity: $(blood)10M LP$()."
     },
     {
       "type": "bloodmagic:2x_crafting_altar",
@@ -32,6 +32,12 @@
       "a.recipe": "bloodmagic:altar/magicianbloodorb",
       "b.heading": "Master Blood Orb",
       "b.recipe": "bloodmagic:altar/masterbloodorb"
+    },
+    {
+      "type": "bloodmagic:crafting_altar",
+      "heading": "Archmage Blood Orb",
+      "recipe": "bloodmagic:altar/archmagebloodorb",
+      "text":"If that's still not enough $(blood)LP storage$() for you, consider using $(l:bloodmagic:altar/blood_rune/orb_rune)Runes of the Orb$()."
     }
   ]
 }

@@ -1,0 +1,22 @@
+{
+  "name": "The Endless Realm",
+  "icon": "bloodmagic:special_dungeon_seal",
+  "category": "bloodmagic:dungeons",
+  "extra_recipe_mappings": {
+    "bloodmagic:special_dungeon_seal": 0
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Much as with its little brother, the $(l:bloodmagic:rituals/ritual_list/ritual_simple_dungeon)Edge of the Hidden Realm$() ritual, you can access the $(thing)Demon Realm$() proper with the $(l:bloodmagic:rituals/ritual_list/ritual_standard_dungeon)Pathway to the Endless Realm$(). you will once again find yourself looking at an $(thing)Inversion Pillar$(). As with the $(thing)Antechamber$(), you'll find a simple loot chest left by a careless demon (or perhaps a less-lucky sanguimancer) and a number of doorways, alongside"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "another Inversion Pillar to return you home. $(br2)These dungeon rooms will be filled with more fearsome foes than you found in the antechamber, and will have loot to match. Be sure to keep your eyes peeled for any $(thing)Spatial Distortions$(), as well as rare $(l:bloodmagic:dungeons/keys)keys$() such as the $(item)Foreman's Key$()."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The Foreman's Key will allow entrance into $(thing)The Mines$(), which is another step up in both difficulty and rewards. Along with $(l:bloodmagic:dungeons/demonite)Demonite Ore$(), which is essential for high tier $(l:bloodmagic:alchemy_table/potions)potioncrafting$() and $(l:bloodmagic:altar/blood_altar)the Tier-5 Blood Altar$() and its accompanying $(l:bloodmagic:altar/soul_network)Orb$(), you may be lucky enough to find $(item)Intricate Hellforged Parts$(), which can be used to double the power of your existing $(item)Runes$()!"
+    }
+  ]
+}
