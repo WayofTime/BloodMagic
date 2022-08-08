@@ -316,7 +316,12 @@ public class GlobalLootModifier
 		@Override
 		public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context)
 		{
-			BlockState blockState = context.getParamOrNull(LootContextParams.BLOCK_STATE).getBlock().defaultBlockState();
+			BlockState blockState = context.getParamOrNull(LootContextParams.BLOCK_STATE);
+			if (blockState == null)
+			{
+				return generatedLoot;
+			}
+
 			if (!blockState.is(BloodMagicTags.Blocks.MUNDANE_BLOCK))
 			{
 				return generatedLoot;
