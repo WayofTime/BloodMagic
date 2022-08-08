@@ -48,25 +48,37 @@
       "type": "patchouli:spotlight",
       "item": "bloodmagic:ritualdiviner",
       "title": "Tier Three",
-      "text": "By this point, you will have the ability to create some basic $(l:bloodmagic:rituals/ritual_basics)Rituals$() and $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$() as well. This armour is very versatile, though you'll have to work hard to unlock its full potential. At this point you should look into upgrading your $(l:bloodmagic:altar/blood_altar)Altar$() and your $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$() to unlock more powerful $(thing)Rituals$()."
+      "text": "By this point, you will have the ability to create some basic $(l:bloodmagic:rituals/ritual_basics)Rituals$() and $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$() as well. This armour is very versatile, though you'll have to work hard to unlock its full potential. At this point you should look into upgrading your $(l:bloodmagic:altar/blood_altar)Altar$() and your $(l:bloodmagic:rituals/ritual_diviner)Ritual Diviner$() to unlock more powerful $(thing)Rituals$(). How, you say?"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "bloodmagic:simplekey",
+      "title": "Dungeoneering (Tier-3)",
+      "text": "By performing the $(l:bloodmagic:rituals/ritual_list/ritual_simple_dungeon)Edge of the Hidden Realm$(), that's how! This will allow you limited access to $(thing)Demon Realm$(), and hopefully to $(l:bloodmagic:dungeons/tau_fruit)Tau Fruit$(), which can be cultivated into $(thing)Saturated Tau$() and then converted into $(item)Weak Blood Shards$() in the $(l:bloodmagic:utility/alchemical_reaction_chamber)Alchemical Reaction Chamber$(). These can be used to make the Tier IV Altar, more powerful $(l:bloodmagic:alchemy_table/anointments)Anointments$(), and $(l:bloodmagic:alchemy_table/potions#average_potions)Potion Catalysts$()."
     },
     {
       "type": "patchouli:spotlight",
       "item": "bloodmagic:vengefulcrystal",
       "title": "Tier Four",
-      "text": "This is the top tier. At this point you have access to everything that $(blood)Blood Magic$() has to offer. You may want to look into the $(l:bloodmagic:rituals/ritual_tinkerer)Ritual Tinkerer$() and the various kinds of $(l:bloodmagic:demon_will/will_manipulation/aspected_will)Will Aspects$() available to you, and consider how they may be used to refine your existing rituals and alter how your $(l:bloodmagic:demon_will/demonic_items/sentient_tools)Sentient Tools$() and $(l:bloodmagic:demon_will/demonic_items/sentient_sword)Weapons$() work."
+      "text": "You may want to look into the $(l:bloodmagic:rituals/ritual_tinkerer)Ritual Tinkerer$() and the various kinds of $(l:bloodmagic:demon_will/will_manipulation/aspected_will)Will Aspects$() available to you, and consider how they may be used to refine your existing rituals and alter how your $(l:bloodmagic:demon_will/demonic_items/sentient_tools)Sentient Tools$() and $(l:bloodmagic:demon_will/demonic_items/sentient_sword)Weapons$() work. To progress beyond this point, however, a delve into the $(l:bloodmagic:rituals/ritual_list/ritual_standard_dungeon)Demon Realm$() will be needed..."
     },
     {
       "type": "patchouli:spotlight",
-      "item": "bloodmagic:activationcrystalawakened",
+      "item": "bloodmagic:mineentrancekey",
+      "title": "The Demon Realm (Tier-4)",
+      "text": "By performing the $(thing)Pathway to the Endless Realm$(), you can gain access to the $(thing)Demon Realm$() proper, along with all of its treasures and terrors. Come equipped for a fight! Delve deep, and you may find a rich source of $(l:bloodmagic:dungeons/demonite)Demonite Ore$(), which can be combined into block form and used for the capstones on your altar, along with the $(item)Archmage's Blood Orb$()."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "bloodmagic:ingot_hellforged",
       "title": "Tier Five",
-      "text": "While the altar itself can be upgraded to this point, Currently, everything else about this tier is just a myth. Nothing's implemented at this stage."
+      "text": "This is the top tier. At this point you have access to everything that $(blood)Blood Magic$() has to offer. Continue to delve into the Demon Realm to hunt for rare treasures, and you may be lucky enough to find $(item)Intricate Hellforged Parts$(), which can be used alongside some $(item)Netherite Scrap$() to double the power of each of your altar's Runes"
     },
     {
       "type": "patchouli:spotlight",
       "item": "minecraft:barrier",
       "title": "Tier Six?",
-      "text": "What? No. Look, even in 1.12, this only existed as a favor to pack makers and was otherwise unimplemented. You've come too far. Go back two pages."
+      "text": "What? No. Look, even in 1.12, this only existed as a favor to pack makers and was otherwise unimplemented. You've come too far. Go back a page."
     }
   ]
 }

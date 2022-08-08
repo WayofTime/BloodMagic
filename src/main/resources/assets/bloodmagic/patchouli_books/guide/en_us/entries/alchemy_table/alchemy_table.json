@@ -54,11 +54,13 @@
       "c.recipe": "bloodmagic:alchemytable/bread"
     },
     {
-      "type": "bloodmagic:2x_crafting_alchemy_table",
+      "type": "bloodmagic:3x_crafting_alchemy_table",
       "a.heading": "Clay",
       "a.recipe": "bloodmagic:alchemytable/clay_from_sand",
       "b.heading": "String",
-      "b.recipe": "bloodmagic:alchemytable/string"
+      "b.recipe": "bloodmagic:alchemytable/string",
+      "c.heading": "Cobweb",
+      "c.recipe": "bloodmagic:alchemytable/cobweb"
     },
     {
       "type": "bloodmagic:3x_crafting_alchemy_table",
