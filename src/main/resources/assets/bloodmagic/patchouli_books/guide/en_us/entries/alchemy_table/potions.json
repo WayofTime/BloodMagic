@@ -81,6 +81,7 @@
     {
       "type": "patchouli:text",
       "title": "Potion Crafting 201",
+      "anchor": "average_potions",
       "text": "If the potions you've crafted so far just aren't enough for you, then perhaps you need to do a little exploring? With some $(item)Glow berries$(), some $(item)Cobbled Deepslate$() and a sprinkling of $(l:bloodmagic:dungeons/demonite)Hellforged Sand$(), you can boost the duration and power of your flasks significantly."
     },
     {
@@ -99,7 +100,7 @@
       "type": "bloodmagic:crafting_alchemy_table",
       "heading": "Standard Power Catalyst",
       "recipe": "bloodmagic:alchemytable/average_power",
-      "text": "The Standard Power Catalyst is a souped-up version of the Small Power Catalyst, allowing you to get up to level III potion effects in your flask."
+      "text": "The Standard Power Catalyst is a souped-up version of the Small Power Catalyst, allowing you to get up to level III potion effects in your flask, while reducing the duration to just 45 seconds per dose."
     }
   ]
 }

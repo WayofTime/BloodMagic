@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "$(thing)Slowness$() decreases the target's movement speed by 15% per level. $(br2)See overleaf for Catalyst Combinations"
+      "text": "$(thing)Slowness$() decreases the target's movement speed by 15% per level. $(br2)It's made from a potion of either $(l:bloodmagic:alchemy_table/potion_flasks/vanilla/speed)Speed$() or $(l:bloodmagic:alchemy_table/potion_flasks/vanilla/jump_boost)Jump Boost$(). $(br2)See overleaf for Catalyst Combinations."
     },
     {
       "type": "bloodmagic:2x_crafting_flask",
@@ -20,6 +20,14 @@
       "a.recipe": "bloodmagic:flask/length_slowness",
       "b.heading": "Slowness II (1:30)",
       "b.recipe": "bloodmagic:flask/potency_slowness"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_flask",
+      "a.heading": "Slowness III (0:45)",
+      "a.recipe": "bloodmagic:flask/potency_average_slowness",
+      "b.heading": "Slowness (21:20)",
+      "b.recipe": "bloodmagic:flask/length_average_slowness"
     }
+
   ]
 }

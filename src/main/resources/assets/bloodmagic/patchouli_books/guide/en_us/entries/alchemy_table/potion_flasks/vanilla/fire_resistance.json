@@ -8,11 +8,13 @@
       "text": "$(thing)Fire Resistance$() makes the target immune to most fire-based damage."
     },
     {
-      "type": "bloodmagic:2x_crafting_flask",
+      "type": "bloodmagic:3x_crafting_flask",
       "a.heading": "Fire Resistance (3:00)",
       "a.recipe": "bloodmagic:flask/fire_resist",
       "b.heading": "Fire Resistance (8:00)",
-      "b.recipe": "bloodmagic:flask/length_fire_resist"
+      "b.recipe": "bloodmagic:flask/length_fire_resist",
+      "c.heading": "Fire Resistance (21:20)",
+      "c.recipe": "bloodmagic:flask/length_average_fire_resist"
     }
   ]
 }
