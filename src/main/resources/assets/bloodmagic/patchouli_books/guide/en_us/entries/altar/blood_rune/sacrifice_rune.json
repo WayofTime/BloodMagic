@@ -10,6 +10,16 @@
     {
       "type": "patchouli:crafting",
       "recipe": "bloodmagic:blood_rune_sacrifice"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:blood_rune_sac_2",
+      "text":"With some $(item)Netherite Scrap$() and some $(item)Intricate Hellforged Parts$() looted from the $(l:bloodmagic:dungeons/endless_realm)Demon Realm$(), you can double the power of your $(item)Rune of Sacrifice$(), increasing the bonus to an additive +20% per rune."
+    },
+    {
+      "type": "bloodmagic:crafting_arc",
+      "recipe": "bloodmagic:arc/reversion/sac",
+      "text":"If you change your mind, you can undo the recipe in the ARC."
     }
   ]
 }

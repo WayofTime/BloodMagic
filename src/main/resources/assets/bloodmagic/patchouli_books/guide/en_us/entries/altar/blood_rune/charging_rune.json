@@ -14,6 +14,16 @@
     {
       "type": "patchouli:crafting",
       "recipe": "bloodmagic:blood_rune_charging"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:blood_rune_charging_2",
+      "text":"With some $(item)Netherite Scrap$() and some $(item)Intricate Hellforged Parts$() looted from the $(l:bloodmagic:dungeons/endless_realm)Demon Realm$(), you can double the power of your $(item)Charging Rune$(), both in terms of capacity and speed."
+    },
+    {
+      "type": "bloodmagic:crafting_arc",
+      "recipe": "bloodmagic:arc/reversion/charging",
+      "text":"If you change your mind, you can undo the recipe in the ARC."
     }
   ]
 }

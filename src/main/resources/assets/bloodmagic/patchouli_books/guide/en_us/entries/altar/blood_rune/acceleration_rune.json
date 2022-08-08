@@ -10,6 +10,16 @@
     {
       "type": "patchouli:crafting",
       "recipe": "bloodmagic:blood_rune_acceleration"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:blood_rune_acceleration_2",
+      "text":"With some $(item)Netherite Scrap$() and some $(item)Intricate Hellforged Parts$() looted from the $(l:bloodmagic:dungeons/endless_realm)Demon Realm$(), you can double the power of your $(item)Accelleration Rune$(), removing two ticks per rune instead of one, freeing up other slots around your altar."
+    },
+    {
+      "type": "bloodmagic:crafting_arc",
+      "recipe": "bloodmagic:arc/reversion/acceleration",
+      "text":"If you change your mind, you can undo the recipe in the ARC."
     }
   ]
 }
