@@ -10,6 +10,11 @@
     },
     {
       "type": "patchouli:text",
+      "title": "3.2.5",
+      "text": "$(li)Fixed it so that the Fishing Rod actually works.$(li)Don't ask."
+    },
+    {
+      "type": "patchouli:text",
       "title": "3.2.4",
       "text": "$(li)Implemented the \"Pathway to the Endless Realm\" ritual, which provides access to a larger version of the Demon Dungeons! $(li2)\"The Endless Realm\" is a sprawling, procedurally generated dungeon, filled with chests bursting with loot and monsters that pack a serious punch! $(li2)Those who successfully navigate its many chambers may find Demonite, an ore that"
     },

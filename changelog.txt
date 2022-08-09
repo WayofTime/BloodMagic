@@ -1,4 +1,11 @@
 ------------------------------------------------------
+Version 3.2.5
+------------------------------------------------------
+- Updated several entries in the guide book.
+- Fixed it so that the Fishing Rod actually works.
+-> Don't ask.
+
+------------------------------------------------------
 Version 3.2.4
 ------------------------------------------------------
 - Implemented the "Pathway to the Endless Realm" ritual, which provides access to a larger version of the Demon Dungeons!
