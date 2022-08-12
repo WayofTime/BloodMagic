@@ -43,6 +43,7 @@ import wayoftime.bloodmagic.client.hud.Elements;
 import wayoftime.bloodmagic.client.key.BloodMagicKeyHandler;
 import wayoftime.bloodmagic.client.key.KeyBindings;
 import wayoftime.bloodmagic.client.model.MimicModelLoader;
+import wayoftime.bloodmagic.client.sounds.SoundRegisterListener;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.GeneratorBaseRecipes;
 import wayoftime.bloodmagic.common.data.GeneratorBlockStates;
@@ -157,6 +158,7 @@ public class BloodMagic
 		modBus.addListener(ConfigManager::onClientReload);
 
 		MinecraftForge.EVENT_BUS.register(new GenericHandler());
+		MinecraftForge.EVENT_BUS.register(new SoundRegisterListener());
 //		MinecraftForge.EVENT_BUS.register(new ClientHandler());
 		modBus.addListener(this::registerColors);
 
