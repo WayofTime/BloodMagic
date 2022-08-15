@@ -456,6 +456,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> DUNGEON_SPIKE_TRAP = ITEMS.register("dungeon_spike_trap", () -> new BlockItem(BloodMagicBlocks.DUNGEON_SPIKE_TRAP.get(), new Item.Properties().tab(BloodMagic.TAB)));
 
 	public static final RegistryObject<Item> HELLFORGED_BLOCK = ITEMS.register("dungeon_metal", () -> new BlockItem(BloodMagicBlocks.HELLFORGED_BLOCK.get(), new Item.Properties().tab(BloodMagic.TAB)));
+	public static final RegistryObject<Item> RAW_HELLFORGED_BLOCK = ITEMS.register("rawdemoniteblock", () -> new BlockItem(BloodMagicBlocks.RAW_HELLFORGED_BLOCK.get(), new Item.Properties().tab(BloodMagic.TAB)));
 	public static final RegistryObject<Item> INVERSION_PILLAR_BLOCK = ITEMS.register("inversion_pillar", () -> new BlockItem(BloodMagicBlocks.INVERSION_PILLAR.get(), new Item.Properties()));
 	public static final RegistryObject<Item> INVERSION_PILLAR_CAP_BLOCK = ITEMS.register("inversion_pillar_cap", () -> new BlockItem(BloodMagicBlocks.INVERSION_PILLAR_CAP.get(), new Item.Properties()));
 

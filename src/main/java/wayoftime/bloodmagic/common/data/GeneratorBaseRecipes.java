@@ -72,6 +72,10 @@ public class GeneratorBaseRecipes extends BaseRecipeProvider
 		}
 
 		ShapedRecipeBuilder.shaped(BloodMagicItems.SYNTHETIC_POINT.get(), 2).pattern("ifi").pattern("frf").pattern("ifi").define('f', Ingredient.of(Items.ROTTEN_FLESH, Items.PORKCHOP, Items.MUTTON, Items.BEEF, Items.TROPICAL_FISH, Items.COD, Items.PUFFERFISH, Items.SALMON, Items.CHICKEN, Items.SPIDER_EYE, Items.RABBIT, BloodMagicItems.STRONG_TAU_ITEM.get())).define('i', Tags.Items.NUGGETS_IRON).define('r', Tags.Items.DUSTS_REDSTONE).unlockedBy("has_nugget", has(Items.IRON_NUGGET)).save(consumer, BloodMagic.rl("synthetic_point"));
+
+		ShapedRecipeBuilder.shaped(BloodMagicBlocks.RAW_HELLFORGED_BLOCK.get()).define('s', BloodMagicItems.DEMONITE_RAW.get()).pattern("sss").pattern("sss").pattern("sss").unlockedBy("has_raw_hellforged", has(BloodMagicItems.DEMONITE_RAW.get())).save(consumer, BloodMagic.rl("raw_hellforged_block"));
+		ShapelessRecipeBuilder.shapeless(BloodMagicItems.DEMONITE_RAW.get(), 9).requires(BloodMagicBlocks.RAW_HELLFORGED_BLOCK.get()).unlockedBy("has_raw_hellforged_block", has(BloodMagicBlocks.RAW_HELLFORGED_BLOCK.get())).save(consumer, BloodMagic.rl("raw_hellforged_block_to_item"));
+
 	}
 
 	private void addVanillaSmithingRecipes(Consumer<FinishedRecipe> consumer)

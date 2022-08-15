@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "bloodmagic:rawdemoniteblock"
+    }
+  ],
+  "result": {
+    "item": "bloodmagic:rawdemonite",
+    "count": 9
+  }
+}

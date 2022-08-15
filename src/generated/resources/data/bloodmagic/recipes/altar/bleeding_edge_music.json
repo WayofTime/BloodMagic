@@ -1,0 +1,13 @@
+{
+  "type": "bloodmagic:altar",
+  "input": {
+    "item": "bloodmagic:rawdemoniteblock"
+  },
+  "output": {
+    "item": "bloodmagic:bleedingedge"
+  },
+  "upgradeLevel": 3,
+  "altarSyphon": 10000,
+  "consumptionRate": 20,
+  "drainRate": 10
+}

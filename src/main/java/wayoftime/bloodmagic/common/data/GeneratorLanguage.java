@@ -612,6 +612,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.DUNGEON_SPIKE_TRAP, "Demon Spike Trap");
 
 		addBlock(BloodMagicBlocks.DUNGEON_ORE, "Demonite");
+		addBlock(BloodMagicBlocks.RAW_HELLFORGED_BLOCK, "Block of Raw Demonite");
 
 		addBlock(BloodMagicBlocks.DUNGEON_BRICK_SLAB, "Demon Brick Slab");
 		addBlock(BloodMagicBlocks.DUNGEON_TILE_SLAB, "Demon Stone Tile Slab");
