@@ -85,7 +85,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "To upgrade the Blood Altar to Tier 4, place 7 $(item) Blood Runes$() one block down and two blocks away from the previous set of runes along each edge. Then place four solid blocks in each corner, starting above the new ring of runes, and then cap each pillar with $(l:bloodmagic:utility/bloodstone_bricks)Bloodstone Bricks$(/l) and/or $(l:bloodmagic:utility/bloodstone_bricks)Large Bloodstone Bricks$(/l)."
+      "text": "To upgrade the Blood Altar to Tier 4, place 7 $(item) Blood Runes$() one block down and two blocks away from the previous set of runes along each edge. Then place four solid blocks in each corner, starting above the new ring of runes, and then cap each pillar with $(l:bloodmagic:utility/bloodstone_bricks)Bloodstone Bricks$(/l) and/or $(l:bloodmagic:utility/bloodstone_bricks)Large Bloodstone Bricks$(/l). For these, you'll need $(l:bloodmagic:dungeons/tau_fruit)Tau Fruit$(), found via the $(l:bloodmagic:rituals/ritual_list/ritual_simple_dungeon)Edge of the Hidden Realm$() ritual."
     },
     {
       "type": "multiblock",

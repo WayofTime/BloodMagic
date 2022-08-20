@@ -29,7 +29,7 @@
     {
       "type": "bloodmagic:crafting_soulforge",
       "heading": "Miner's Key",
-      "recipe": "bloodmagic:soulforge/minekey",
+      "recipe": "bloodmagic:soulforge/mine_key",
       "text": "$(italic)It's off to work we go..!$()"
     }
   ]
