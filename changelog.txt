@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 3.2.6
+------------------------------------------------------
+- Changed Sigil of Holding rendering so that it displays the selected Sigil in the hand.
+
+------------------------------------------------------
 Version 3.2.5
 ------------------------------------------------------
 - Updated several entries in the guide book.

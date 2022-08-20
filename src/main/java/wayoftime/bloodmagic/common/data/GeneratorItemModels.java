@@ -114,6 +114,8 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerBasicItem(BloodMagicItems.WEAK_TAU_ITEM.get(), modLoc("item/weak_tau"));
 		registerBasicItem(BloodMagicItems.STRONG_TAU_ITEM.get(), modLoc("item/strong_tau"));
 
+		createTexturedModelWithCustomPath("sigilofholding_base", modLoc("item/sigilofholding"));
+
 		registerBlockModel(BloodMagicBlocks.SHAPED_CHARGE.get());
 		registerBlockModel(BloodMagicBlocks.DEFORESTER_CHARGE.get());
 		registerBlockModel(BloodMagicBlocks.VEINMINE_CHARGE.get());
@@ -198,6 +200,14 @@ public class GeneratorItemModels extends ItemModelProvider
 		registerMultiLayerItem(BloodMagicItems.ALCHEMY_FLASK_LINGERING.get(), modLoc("item/potionflask_underlay"), modLoc("item/potionflask_outline_lingering"), modLoc("item/potionflask_overlay_lingering"));
 
 		registerMultiLayerItem(BloodMagicItems.THROWING_DAGGER_COPPER_POTION.get(), modLoc("item/amethystthrowingdagger_partial"), modLoc("item/dagger_potion"));
+	}
+
+	private void createTexturedModelWithCustomPath(String path, ResourceLocation texturePath)
+	{
+
+//		String path = item.getRegistryName().getPath();
+		ModelFile activatedFile = singleTexture("item/" + path, mcLoc("item/handheld"), "layer0", texturePath);
+//		getBuilder(path).parent(new ModelFile.UncheckedModelFile(rl));
 	}
 
 	private void registerCustomFullTexture(Block block, String texturePath)

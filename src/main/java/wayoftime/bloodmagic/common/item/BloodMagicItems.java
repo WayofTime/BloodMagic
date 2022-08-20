@@ -171,7 +171,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> ICE_SIGIL = ITEMS.register("icesigil", () -> new ItemSigilFrost());
 	public static final RegistryObject<Item> AIR_SIGIL = BASICITEMS.register("airsigil", ItemSigilAir::new);
 	public static final RegistryObject<Item> BLOOD_LIGHT_SIGIL = BASICITEMS.register("bloodlightsigil", ItemSigilBloodLight::new);
-	public static final RegistryObject<Item> HOLDING_SIGIL = BASICITEMS.register("sigilofholding", ItemSigilHolding::new);
+	public static final RegistryObject<Item> HOLDING_SIGIL = ITEMS.register("sigilofholding", ItemSigilHolding::new);
 	public static final RegistryObject<Item> SUPPRESSION_SIGIL = ITEMS.register("sigilofsuppression", () -> new ItemSigilSuppression());
 	public static final RegistryObject<Item> TELEPOSITION_SIGIL = BASICITEMS.register("telepositionsigil", () -> new ItemSigilTeleposition());
 

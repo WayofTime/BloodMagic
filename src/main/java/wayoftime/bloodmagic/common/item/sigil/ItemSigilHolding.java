@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.common.item.sigil;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
@@ -155,7 +156,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
 
 	@Nonnull
 	@Override
-	public ItemStack getHeldItem(ItemStack holdingStack, Player player)
+	public ItemStack getHeldItem(ItemStack holdingStack, @Nullable Player player)
 	{
 		return getInternalInventory(holdingStack).get(getCurrentItemOrdinal(holdingStack));
 	}

@@ -43,6 +43,7 @@ import wayoftime.bloodmagic.client.hud.Elements;
 import wayoftime.bloodmagic.client.key.BloodMagicKeyHandler;
 import wayoftime.bloodmagic.client.key.KeyBindings;
 import wayoftime.bloodmagic.client.model.MimicModelLoader;
+import wayoftime.bloodmagic.client.model.SigilHoldingModelLoader;
 import wayoftime.bloodmagic.client.sounds.SoundRegisterListener;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.GeneratorBaseRecipes;
@@ -319,6 +320,8 @@ public class BloodMagic
 	{
 		ModelLoaderRegistry.registerLoader(BloodMagic.rl("mimicloader"), new MimicModelLoader(BloodMagic.rl("block/solidopaquemimic")));
 		ModelLoaderRegistry.registerLoader(BloodMagic.rl("mimicloader_ethereal"), new MimicModelLoader(BloodMagic.rl("block/etherealopaquemimic")));
+
+		ModelLoaderRegistry.registerLoader(BloodMagic.rl("loader_holding"), new SigilHoldingModelLoader(BloodMagic.rl("item/sigilofholding_base")));
 	}
 
 	private void setup(final FMLCommonSetupEvent event)
