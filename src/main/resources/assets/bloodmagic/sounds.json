@@ -1,0 +1,10 @@
+{
+  "bleedingedge": {
+    "category" : "ambient",
+    "sounds": [{
+        "name": "bloodmagic:bleedingedge",
+        "stream": true
+      }
+    ]
+  }
+}

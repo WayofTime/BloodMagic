@@ -84,6 +84,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.soulGem.grand", "A gem used to contain a large amount of will.");
 		add("tooltip.bloodmagic.soulSnare.desc", "Throw at a monster and then kill them to obtain their demonic will.");
 		add("tooltip.bloodmagic.willGauge", "A strange device that can measure the Demon Will in the Aura.");
+		add("item.bloodmagic.bleedingedge.desc", "Bleeding Edge of the Hidden Realm");
 
 		add("tooltip.bloodmagic.syntheticpoint.desc", "A synthetic living armour point. It's... wriggling.");
 
@@ -611,6 +612,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.DUNGEON_SPIKE_TRAP, "Demon Spike Trap");
 
 		addBlock(BloodMagicBlocks.DUNGEON_ORE, "Demonite");
+		addBlock(BloodMagicBlocks.RAW_HELLFORGED_BLOCK, "Block of Raw Demonite");
 
 		addBlock(BloodMagicBlocks.DUNGEON_BRICK_SLAB, "Demon Brick Slab");
 		addBlock(BloodMagicBlocks.DUNGEON_TILE_SLAB, "Demon Stone Tile Slab");
@@ -641,6 +643,8 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.ETHEREAL_MIMIC, "Ethereal Mimic");
 
 		// Item names
+		addItem(BloodMagicItems.BLEEDING_EDGE_MUSIC, "Hellforged Record");
+
 		addItem(BloodMagicItems.WEAK_BLOOD_ORB, "Weak Blood Orb");
 		addItem(BloodMagicItems.APPRENTICE_BLOOD_ORB, "Apprentice Blood Orb");
 		addItem(BloodMagicItems.MAGICIAN_BLOOD_ORB, "Magician's Blood Orb");

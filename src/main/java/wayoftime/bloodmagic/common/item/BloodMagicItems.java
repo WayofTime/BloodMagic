@@ -4,11 +4,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.RecordItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
+import wayoftime.bloodmagic.client.sounds.SoundRegistrator;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.arc.ItemARCToolBase;
 import wayoftime.bloodmagic.common.item.block.ItemBlockAlchemyTable;
@@ -454,6 +456,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> DUNGEON_SPIKE_TRAP = ITEMS.register("dungeon_spike_trap", () -> new BlockItem(BloodMagicBlocks.DUNGEON_SPIKE_TRAP.get(), new Item.Properties().tab(BloodMagic.TAB)));
 
 	public static final RegistryObject<Item> HELLFORGED_BLOCK = ITEMS.register("dungeon_metal", () -> new BlockItem(BloodMagicBlocks.HELLFORGED_BLOCK.get(), new Item.Properties().tab(BloodMagic.TAB)));
+	public static final RegistryObject<Item> RAW_HELLFORGED_BLOCK = ITEMS.register("rawdemoniteblock", () -> new BlockItem(BloodMagicBlocks.RAW_HELLFORGED_BLOCK.get(), new Item.Properties().tab(BloodMagic.TAB)));
 	public static final RegistryObject<Item> INVERSION_PILLAR_BLOCK = ITEMS.register("inversion_pillar", () -> new BlockItem(BloodMagicBlocks.INVERSION_PILLAR.get(), new Item.Properties()));
 	public static final RegistryObject<Item> INVERSION_PILLAR_CAP_BLOCK = ITEMS.register("inversion_pillar_cap", () -> new BlockItem(BloodMagicBlocks.INVERSION_PILLAR_CAP.get(), new Item.Properties()));
 
@@ -465,5 +468,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> DUNGEON_SIMPLE_KEY = BASICITEMS.register("simplekey", () -> new ItemDungeonKey("simplekey", "tier1", "standard"));
 	public static final RegistryObject<Item> DUNGEON_MINE_ENTRANCE_KEY = BASICITEMS.register("mineentrancekey", () -> new ItemDungeonKey("mineentrancekey", "mine_entrances"));
 	public static final RegistryObject<Item> DUNGEON_MINE_KEY = BASICITEMS.register("minekey", () -> new ItemDungeonKey("minekey", "mines"));
+
+	public static final RegistryObject<Item> BLEEDING_EDGE_MUSIC = BASICITEMS.register("bleedingedge", () -> new RecordItem(15, SoundRegistrator.BLEEDING_EDGE_MUSIC, new Item.Properties().stacksTo(1).tab(BloodMagic.TAB)));
 
 }

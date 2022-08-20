@@ -203,6 +203,7 @@ public class BloodMagicBlocks
 	public static final RegistryObject<Block> DUNGEON_TILE_SLAB = BLOCKS.register("dungeon_tile_slab", () -> new SlabBlock(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 
 	public static final RegistryObject<Block> HELLFORGED_BLOCK = DUNGEONBLOCKS.register("dungeon_metal", () -> new Block(Properties.of(Material.METAL).strength(5.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> RAW_HELLFORGED_BLOCK = BASICBLOCKS.register("rawdemoniteblock", () -> new Block(Properties.of(Material.METAL).strength(5.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 
 	public static final RegistryObject<Block> DUNGEON_CRACKED_BRICK_1 = DUNGEONBLOCKS.register("dungeon_regular_cracked_brick1", () -> new Block(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> DUNGEON_GLOWING_CRACKED_BRICK_1 = DUNGEONBLOCKS.register("dungeon_cracked_brick1", () -> new Block(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));

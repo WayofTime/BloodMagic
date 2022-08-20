@@ -50,6 +50,8 @@ public class BloodAltarRecipeProvider implements ISubRecipeProvider
 		BloodAltarRecipeBuilder.altar(Ingredient.of(Tags.Items.ENDER_PEARLS), new ItemStack(BloodMagicItems.TELEPOSER_FOCUS.get()), AltarTier.FOUR.ordinal(), 2000, 10, 10).build(consumer, BloodMagic.rl(basePath + "teleposer_focus"));
 		BloodAltarRecipeBuilder.altar(Ingredient.of(BloodMagicItems.TELEPOSER_FOCUS.get()), new ItemStack(BloodMagicItems.ENHANCED_TELEPOSER_FOCUS.get()), AltarTier.FOUR.ordinal(), 10000, 20, 10).build(consumer, BloodMagic.rl(basePath + "enhanced_teleposer_focus"));
 
+		BloodAltarRecipeBuilder.altar(Ingredient.of(BloodMagicBlocks.RAW_HELLFORGED_BLOCK.get()), new ItemStack(BloodMagicItems.BLEEDING_EDGE_MUSIC.get()), AltarTier.FOUR.ordinal(), 10000, 20, 10).build(consumer, BloodMagic.rl(basePath + "bleeding_edge_music"));
+
 		// Changed Recipes
 		{
 
