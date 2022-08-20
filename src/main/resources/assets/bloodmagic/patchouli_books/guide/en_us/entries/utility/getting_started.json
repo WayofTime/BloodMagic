@@ -72,7 +72,7 @@
       "type": "patchouli:spotlight",
       "item": "bloodmagic:ingot_hellforged",
       "title": "Tier Five",
-      "text": "This is the top tier. At this point you have access to everything that $(blood)Blood Magic$() has to offer. Continue to delve into the Demon Realm to hunt for rare treasures, and you may be lucky enough to find $(item)Intricate Hellforged Parts$(), which can be used alongside some $(item)Netherite Scrap$() to double the power of each of your altar's Runes"
+      "text": "This is the top tier. At this point you have access to everything that $(blood)Blood Magic$() has to offer. Continue to delve into the Demon Realm to hunt for rare treasures, and you may be lucky enough to find $(item)Intricate Hellforged Parts$(), which can be used alongside some $(item)Netherite Scrap$() to double the power of each of your altar's Runes!"
     },
     {
       "type": "patchouli:spotlight",
