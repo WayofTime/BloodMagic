@@ -12,20 +12,27 @@
       "minWeight": 400,
       "weightMap": [
         {
-          "tag": "#forge:ores/apatite#0",
+          "tag": "forge:ores/apatite",
+          "index": 0,
           "weight": 50
         },
         {
-          "tag": "#forge:ores/coal#0",
+          "tag": "forge:ores/coal",
+          "index": 0,
           "weight": 150
         },
         {
-          "tag": "minecraft:iron_ore",
+          "block": "minecraft:iron_ore",
           "weight": 50
         }
       ],
-      "fill": "minecraft:stone",
-      "shell": "#minecraft:stone_unpolished"
+      "fill": {
+        "block": "minecraft:stone"
+      },
+      "shell": {
+        "tag": "minecraft:stone_unpolished",
+        "index": -1
+      }
     }
   ]
 }

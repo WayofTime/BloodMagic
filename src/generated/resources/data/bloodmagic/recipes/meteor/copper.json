@@ -1,0 +1,28 @@
+{
+  "type": "bloodmagic:meteor",
+  "input": {
+    "tag": "forge:ingots/copper"
+  },
+  "syphon": 0,
+  "explosion": 10.0,
+  "layers": [
+    {
+      "radius": 6,
+      "additionalWeight": 0,
+      "minWeight": 0,
+      "weightMap": [
+        {
+          "block": "bloodmagic:life_essence_block",
+          "weight": 30
+        }
+      ],
+      "fill": {
+        "block": "minecraft:iron_ore"
+      },
+      "shell": {
+        "tag": "forge:cobblestone",
+        "index": 0
+      }
+    }
+  ]
+}

@@ -12,15 +12,19 @@
       "minWeight": 0,
       "weightMap": [
         {
-          "tag": "#forge:ores/copper#0",
+          "tag": "forge:ores/copper",
+          "index": 0,
           "weight": 100
         },
         {
-          "tag": "#forge:ores/silver#0",
+          "tag": "forge:ores/silver",
+          "index": 0,
           "weight": 100
         }
       ],
-      "fill": "minecraft:stone"
+      "fill": {
+        "block": "minecraft:stone"
+      }
     }
   ]
 }

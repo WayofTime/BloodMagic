@@ -197,6 +197,8 @@ public class Constants
 		public static final String COUNT = "count";
 		public static final String NBT = "nbt";
 		public static final String TAG = "tag";
+		public static final String BLOCK = "block";
+		public static final String INDEX = "index";
 		public static final String TYPE = "type";
 		public static final String TEXTURE = "texture";
 		public static final String CONDITIONS = "conditions";

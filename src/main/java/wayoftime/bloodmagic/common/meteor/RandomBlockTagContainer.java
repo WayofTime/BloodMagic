@@ -5,17 +5,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import com.google.gson.JsonObject;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.tags.ITag;
+import wayoftime.bloodmagic.util.Constants;
 
 public class RandomBlockTagContainer extends RandomBlockContainer
 {
-	private TagKey<Block> tag;
-	private int index = -1;
+	public final TagKey<Block> tag;
+	public final int index;;
 
 	public RandomBlockTagContainer(TagKey<Block> tag2, int index)
 	{
@@ -63,5 +66,26 @@ public class RandomBlockTagContainer extends RandomBlockContainer
 		}
 
 		return entry;
+	}
+
+	@Override
+	public JsonObject serialize(int weight)
+	{
+		JsonObject jsonObj = new JsonObject();
+		jsonObj.addProperty(Constants.JSON.TAG, tag.location().toString());
+		jsonObj.addProperty(Constants.JSON.INDEX, index);
+		jsonObj.addProperty(Constants.JSON.WEIGHT, weight);
+
+		return jsonObj;
+	}
+
+	@Override
+	public JsonObject serialize()
+	{
+		JsonObject jsonObj = new JsonObject();
+		jsonObj.addProperty(Constants.JSON.TAG, tag.location().toString());
+		jsonObj.addProperty(Constants.JSON.INDEX, index);
+
+		return jsonObj;
 	}
 }

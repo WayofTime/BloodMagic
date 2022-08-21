@@ -10,7 +10,9 @@
       "radius": 2,
       "additionalWeight": 0,
       "minWeight": 0,
-      "fill": "minecraft:diamond_ore"
+      "fill": {
+        "block": "minecraft:diamond_ore"
+      }
     },
     {
       "radius": 5,
@@ -18,27 +20,32 @@
       "minWeight": 1000,
       "weightMap": [
         {
-          "tag": "#forge:ores/sapphire#0",
+          "tag": "forge:ores/sapphire",
+          "index": 0,
           "weight": 100
         },
         {
-          "tag": "#forge:ores/ruby#0",
+          "tag": "forge:ores/ruby",
+          "index": 0,
           "weight": 100
         },
         {
-          "tag": "minecraft:diamond_ore",
+          "block": "minecraft:diamond_ore",
           "weight": 100
         },
         {
-          "tag": "minecraft:emerald_ore",
+          "block": "minecraft:emerald_ore",
           "weight": 75
         },
         {
-          "tag": "#forge:ores/cinnabar#0",
+          "tag": "forge:ores/cinnabar",
+          "index": 0,
           "weight": 200
         }
       ],
-      "fill": "minecraft:cobblestone"
+      "fill": {
+        "block": "minecraft:cobblestone"
+      }
     }
   ]
 }

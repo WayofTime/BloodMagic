@@ -228,14 +228,7 @@ public class MeteorLayer
 			JsonArray mainArray = new JsonArray();
 			for (Pair<RandomBlockContainer, Integer> weightedPair : weightList)
 			{
-				JsonObject jsonObj = new JsonObject();
-//				ResourceLocation rl = TagCollectionManager.getManager().getBlockTags().getDirectIdFromTag(weightedPair.getKey());
-//				if (rl == null)
-//				{
-//					continue;
-//				}
-				jsonObj.addProperty(Constants.JSON.TAG, weightedPair.getKey().getEntry());
-				jsonObj.addProperty(Constants.JSON.WEIGHT, weightedPair.getValue());
+				JsonObject jsonObj = weightedPair.getKey().serialize(weightedPair.getValue());
 
 				mainArray.add(jsonObj);
 			}
@@ -243,10 +236,11 @@ public class MeteorLayer
 			json.add(Constants.JSON.WEIGHT_MAP, mainArray);
 		}
 
-		json.addProperty(Constants.JSON.FILL, fillBlock.getEntry());
+		json.add(Constants.JSON.FILL, fillBlock.serialize());
 		if (shellBlock != null)
 		{
-			json.addProperty(Constants.JSON.SHELL, shellBlock.getEntry());
+//			json.addProperty(Constants.JSON.SHELL, shellBlock.getEntry());
+			json.add(Constants.JSON.SHELL, shellBlock.serialize());
 		}
 
 		return json;
@@ -266,24 +260,39 @@ public class MeteorLayer
 			for (JsonElement element : mainArray)
 			{
 				JsonObject obj = element.getAsJsonObject();
-				RandomBlockContainer container = RandomBlockContainer.parseEntry(GsonHelper.getAsString(obj, Constants.JSON.TAG));
-//				ITag<Block> itag = TagCollectionManager.getManager().getBlockTags().get(new ResourceLocation(JSONUtils.getString(obj, Constants.JSON.TAG)));
-				int weight = GsonHelper.getAsInt(obj, Constants.JSON.WEIGHT);
-
-				if (container != null)
+				Pair<RandomBlockContainer, Integer> weightedEntry = RandomBlockContainer.deserializeWeightedPair(obj);
+				if (weightedEntry != null)
 				{
-					weightList.add(Pair.of(container, weight));
+					weightList.add(weightedEntry);
 				}
 			}
 		}
 
-//		Block fillBlock = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(JSONUtils.getString(json, Constants.JSON.FILL)));
-		RandomBlockContainer fillBlock = RandomBlockContainer.parseEntry(GsonHelper.getAsString(json, Constants.JSON.FILL));
+		// Includes logic for backwards compatibility
+		RandomBlockContainer fillBlock = null;
+		if (GsonHelper.isValidPrimitive(json, Constants.JSON.FILL))
+		{
+			fillBlock = RandomBlockContainer.parseEntry(GsonHelper.getAsString(json, Constants.JSON.FILL));
+		} else
+		{
+			JsonObject fillObj = GsonHelper.getAsJsonObject(json, Constants.JSON.FILL);
+			fillBlock = RandomBlockContainer.deserializeContainer(fillObj);
+		}
 
 		MeteorLayer layer = new MeteorLayer(layerRadius, maxWeight, weightList, fillBlock);
 		if (GsonHelper.isValidNode(json, Constants.JSON.SHELL))
 		{
-			layer.addShellBlock(RandomBlockContainer.parseEntry(GsonHelper.getAsString(json, Constants.JSON.SHELL)));
+			RandomBlockContainer shellBlock = null;
+			if (GsonHelper.isValidPrimitive(json, Constants.JSON.SHELL))
+			{
+				shellBlock = RandomBlockContainer.parseEntry(GsonHelper.getAsString(json, Constants.JSON.SHELL));
+			} else
+			{
+				JsonObject shellObj = GsonHelper.getAsJsonObject(json, Constants.JSON.SHELL);
+				shellBlock = RandomBlockContainer.deserializeContainer(shellObj);
+			}
+
+			layer.addShellBlock(shellBlock);
 		}
 
 		layer.setMinWeight(minWeight);

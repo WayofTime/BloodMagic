@@ -12,36 +12,45 @@
       "minWeight": 0,
       "weightMap": [
         {
-          "tag": "minecraft:gold_ore",
+          "block": "minecraft:gold_ore",
           "weight": 30
         },
         {
-          "tag": "#forge:ores/copper#0",
+          "tag": "forge:ores/copper",
+          "index": 0,
           "weight": 200
         },
         {
-          "tag": "#forge:ores/tin#0",
+          "tag": "forge:ores/tin",
+          "index": 0,
           "weight": 140
         },
         {
-          "tag": "#forge:ores/silver#0",
+          "tag": "forge:ores/silver",
+          "index": 0,
           "weight": 70
         },
         {
-          "tag": "#forge:ores/lead#0",
+          "tag": "forge:ores/lead",
+          "index": 0,
           "weight": 80
         },
         {
-          "tag": "minecraft:lapis_ore",
+          "block": "minecraft:lapis_ore",
           "weight": 60
         },
         {
-          "tag": "minecraft:redstone_ore",
+          "block": "minecraft:redstone_ore",
           "weight": 100
         }
       ],
-      "fill": "minecraft:iron_ore",
-      "shell": "#forge:cobblestone"
+      "fill": {
+        "block": "minecraft:iron_ore"
+      },
+      "shell": {
+        "tag": "forge:cobblestone",
+        "index": -1
+      }
     },
     {
       "radius": 7,
@@ -49,39 +58,45 @@
       "minWeight": 1000,
       "weightMap": [
         {
-          "tag": "minecraft:iron_ore",
+          "block": "minecraft:iron_ore",
           "weight": 400
         },
         {
-          "tag": "minecraft:gold_ore",
+          "block": "minecraft:gold_ore",
           "weight": 30
         },
         {
-          "tag": "#forge:ores/copper#0",
+          "tag": "forge:ores/copper",
+          "index": 0,
           "weight": 200
         },
         {
-          "tag": "#forge:ores/tin#0",
+          "tag": "forge:ores/tin",
+          "index": 0,
           "weight": 140
         },
         {
-          "tag": "#forge:ores/silver#0",
+          "tag": "forge:ores/silver",
+          "index": 0,
           "weight": 70
         },
         {
-          "tag": "#forge:ores/lead#0",
+          "tag": "forge:ores/lead",
+          "index": 0,
           "weight": 80
         },
         {
-          "tag": "minecraft:lapis_ore",
+          "block": "minecraft:lapis_ore",
           "weight": 60
         },
         {
-          "tag": "minecraft:redstone_ore",
+          "block": "minecraft:redstone_ore",
           "weight": 100
         }
       ],
-      "fill": "minecraft:stone"
+      "fill": {
+        "block": "minecraft:stone"
+      }
     }
   ]
 }
