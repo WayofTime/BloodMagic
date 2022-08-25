@@ -34,7 +34,7 @@ public class BloodMagicCorePlugin
 		api.getValueManager().setTranquility(Blocks.NETHER_WART, new TranquilityStack(EnumTranquilityType.CROP, 1.0D));
 		api.getValueManager().setTranquility(Blocks.BEETROOTS, new TranquilityStack(EnumTranquilityType.CROP, 1.0D));
 
-		//commence experimental fucking-about-with, by wrince, on behalf of Tara.
+		//Added some blocks to the list at Tara's suggestion.
 		api.getValueManager().setTranquility(Blocks.CRIMSON_NYLIUM, new TranquilityStack(EnumTranquilityType.FIRE, 0.75D));
 		api.getValueManager().setTranquility(Blocks.WARPED_NYLIUM, new TranquilityStack(EnumTranquilityType.FIRE, 0.75D));
 		api.getValueManager().setTranquility(Blocks.NETHER_WART_BLOCK, new TranquilityStack(EnumTranquilityType.PLANT, 1.0D));
@@ -74,8 +74,6 @@ public class BloodMagicCorePlugin
 
 		apiInterface.registerAltarComponent(Blocks.GLOWSTONE.defaultBlockState(), ComponentType.GLOWSTONE.name());
 		apiInterface.registerAltarComponent(Blocks.SEA_LANTERN.defaultBlockState(), ComponentType.GLOWSTONE.name());
-
-		//commence experimental fucking-about-with, by wrince, on behalf of Tara.
 		apiInterface.registerAltarComponent(Blocks.SHROOMLIGHT.defaultBlockState(), ComponentType.GLOWSTONE.name());
 
 		apiInterface.registerAltarComponent(BloodMagicBlocks.BLOODSTONE.get().defaultBlockState(), ComponentType.BLOODSTONE.name());
