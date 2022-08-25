@@ -2,7 +2,9 @@
 Version 3.2.6
 ------------------------------------------------------
 - Changed Sigil of Holding rendering so that it displays the selected Sigil in the hand.
-- Added Patchouli documentation for The Rhythm of the Beating Anvil ritual (Autocrafting Ritual)
+- Added a new music disc, which is obtainable in the Mines!
+- Fixed the Harvest Moon ritual so that it works properly with Netherwart.
+- Added Patchouli documentation for The Rhythm of the Beating Anvil ritual (Autocrafting Ritual).
 -> Sorry it took a while. It was hard, Okay? - Wrince
 
 ------------------------------------------------------

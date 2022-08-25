@@ -517,6 +517,7 @@ public class GeneratorLootTable extends LootTableProvider
 //			miningOreLoot.add(LootItem.lootTableItem(BloodMagicItems.FORTUNE_ANOINTMENT_2.get()).setWeight(4).setQuality(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5))));
 			addMultipleItemsWithQualitySameParams(miningOreLoot, empoweredWeaponAnointments, 3, 2, UniformGenerator.between(2, 5));
 			miningOreLoot.add(LootItem.lootTableItem(BloodMagicItems.HELLFORGED_PARTS.get()).setWeight(1).setQuality(10).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))));
+			miningOreLoot.add(LootItem.lootTableItem(BloodMagicItems.BLEEDING_EDGE_MUSIC.get()).setWeight(3).setQuality(5).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))));
 
 			acceptor.accept(BloodMagic.rl("chests/mines/ore_loot"), LootTable.lootTable().withPool(fragmentLoot).withPool(miningOreLoot));
 
@@ -560,6 +561,7 @@ public class GeneratorLootTable extends LootTableProvider
 			minesSmithyLoot.add(LootItem.lootTableItem(BloodMagicItems.HELLFORGED_EXPLOSIVE_CELL.get()).setWeight(4).setQuality(5).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))).apply(SetItemDamageFunction.setDamage(UniformGenerator.between(0.3F, 0.7F))));
 			minesSmithyLoot.add(LootItem.lootTableItem(BloodMagicItems.HELLFORGED_RESONATOR.get()).setWeight(4).setQuality(5).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))).apply(SetItemDamageFunction.setDamage(UniformGenerator.between(0.3F, 0.7F))));
 			minesSmithyLoot.add(LootItem.lootTableItem(BloodMagicItems.ADVANCED_CUTTING_FLUID.get()).setWeight(4).setQuality(5).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))).apply(SetItemDamageFunction.setDamage(UniformGenerator.between(0.3F, 0.7F))));
+			minesSmithyLoot.add(LootItem.lootTableItem(BloodMagicItems.BLEEDING_EDGE_MUSIC.get()).setWeight(3).setQuality(5).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))));
 
 			acceptor.accept(BloodMagic.rl("chests/mines/smithy_loot"), LootTable.lootTable().withPool(fragmentLoot).withPool(minesSmithyLoot));
 
@@ -600,6 +602,7 @@ public class GeneratorLootTable extends LootTableProvider
 			minesDecentLoot.add(LootItem.lootTableItem(BloodMagicItems.HELLFORGED_EXPLOSIVE_CELL.get()).setWeight(4).setQuality(5).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))));
 			minesDecentLoot.add(LootItem.lootTableItem(BloodMagicItems.HELLFORGED_RESONATOR.get()).setWeight(4).setQuality(5).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))));
 			minesDecentLoot.add(LootItem.lootTableItem(BloodMagicItems.ADVANCED_CUTTING_FLUID.get()).setWeight(4).setQuality(5).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))));
+			minesDecentLoot.add(LootItem.lootTableItem(BloodMagicItems.BLEEDING_EDGE_MUSIC.get()).setWeight(3).setQuality(5).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))));
 
 			acceptor.accept(BloodMagic.rl("chests/mines/decent_loot"), LootTable.lootTable().withPool(minesRawLoot).withPool(minesDecentLoot));
 

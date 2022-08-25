@@ -145,6 +145,7 @@ public class ARCRecipeProvider implements ISubRecipeProvider
 		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicBlocks.SPEED_RUNE_2.get()), Ingredient.of(BloodMagicTags.ARC_TOOL_REVERTER), null, new ItemStack(BloodMagicBlocks.SPEED_RUNE.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.HELLFORGED_PARTS.get()), 1, 0).addRandomOutput(new ItemStack(Items.NETHERITE_SCRAP, 4), 1, 0).build(consumer, BloodMagic.rl(basePath + "speed"));
 		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicBlocks.SACRIFICE_RUNE_2.get()), Ingredient.of(BloodMagicTags.ARC_TOOL_REVERTER), null, new ItemStack(BloodMagicBlocks.SACRIFICE_RUNE.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.HELLFORGED_PARTS.get()), 1, 0).addRandomOutput(new ItemStack(Items.NETHERITE_SCRAP, 4), 1, 0).build(consumer, BloodMagic.rl(basePath + "sac"));
 		ARCRecipeBuilder.arc(Ingredient.of(Items.NETHERITE_INGOT), Ingredient.of(BloodMagicTags.ARC_TOOL_REVERTER), null, new ItemStack(Items.NETHERITE_SCRAP, 4), null).addRandomOutput(new ItemStack(Items.GOLD_INGOT, 4), 1, 0).build(consumer, BloodMagic.rl(basePath + "netherite_ingot"));
+		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicItems.BLEEDING_EDGE_MUSIC.get()), Ingredient.of(BloodMagicTags.ARC_TOOL_REVERTER), null, new ItemStack(BloodMagicItems.DEMONITE_RAW.get(), 9), null).build(consumer, BloodMagic.rl(basePath + "bleeding_edge"));
 
 	}
 

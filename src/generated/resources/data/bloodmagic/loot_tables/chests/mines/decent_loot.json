@@ -872,6 +872,19 @@
             }
           ],
           "name": "bloodmagic:advancedcuttingfluid"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "quality": 5,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 1.0,
+              "add": false
+            }
+          ],
+          "name": "bloodmagic:bleedingedge"
         }
       ]
     }
