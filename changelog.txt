@@ -3,12 +3,14 @@ Version 3.2.6
 ------------------------------------------------------
 - Changed Sigil of Holding rendering so that it displays the selected Sigil in the hand.
 - Added a new music disc, which is obtainable in the Mines!
+- Modified several textures, and adjusted Reinforced Runes' recipes accordingly.
 - Fixed the Harvest Moon ritual so that it works properly with Netherwart.
+- Modified the recipe framework of the Mark of the Falling Tower to better facilitate creating custom recipes.
+-> Now includes fluid support!
+
 - Added Patchouli documentation for The Rhythm of the Beating Anvil ritual (Autocrafting Ritual).
 -> Sorry it took a while. It was hard, Okay? - Wrince
 
-- Modified the recipe framework of the Mark of the Falling Tower to better facilitate creating custom recipes.
--> Now includes fluid support!
 
 ------------------------------------------------------
 Version 3.2.5
