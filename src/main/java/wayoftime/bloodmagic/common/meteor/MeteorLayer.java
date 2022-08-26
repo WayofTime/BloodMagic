@@ -25,6 +25,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import wayoftime.bloodmagic.util.Constants;
@@ -39,8 +40,6 @@ public class MeteorLayer
 	public RandomBlockContainer fillBlock;
 	public RandomBlockContainer shellBlock;
 
-	// TODO: Add option to have a shell at the meteor's layerRadius
-
 	public MeteorLayer(int layerRadius, int additionalMaxWeight, List<Pair<RandomBlockContainer, Integer>> weightList, RandomBlockContainer fillBlock)
 	{
 		this.layerRadius = layerRadius;
@@ -52,6 +51,11 @@ public class MeteorLayer
 	public MeteorLayer(int layerRadius, int additionalMaxWeight, Block fillBlock)
 	{
 		this(layerRadius, additionalMaxWeight, new ArrayList<>(), new StaticBlockContainer(fillBlock));
+	}
+
+	public MeteorLayer(int layerRadius, int additionalMaxWeight, Fluid fillFluid)
+	{
+		this(layerRadius, additionalMaxWeight, new ArrayList<>(), new FluidBlockContainer(fillFluid));
 	}
 
 	public MeteorLayer(int layerRadius, int additionalMaxWeight, TagKey<Block> fillTag)
@@ -85,6 +89,11 @@ public class MeteorLayer
 		return addShellBlock(new StaticBlockContainer(block));
 	}
 
+	public MeteorLayer addShellBlock(Fluid fluid)
+	{
+		return addShellBlock(new FluidBlockContainer(fluid));
+	}
+
 	public MeteorLayer addWeightedTag(TagKey<Block> tag, int weight)
 	{
 		return addWeightedTag(tag, weight, -1);
@@ -99,6 +108,12 @@ public class MeteorLayer
 	public MeteorLayer addWeightedBlock(Block block, int weight)
 	{
 		weightList.add(Pair.of(new StaticBlockContainer(block), weight));
+		return this;
+	}
+
+	public MeteorLayer addWeightedFluid(Fluid fluid, int weight)
+	{
+		weightList.add(Pair.of(new FluidBlockContainer(fluid), weight));
 		return this;
 	}
 

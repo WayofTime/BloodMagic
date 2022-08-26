@@ -1,17 +1,20 @@
 package wayoftime.bloodmagic.common.meteor;
 
+import java.util.Optional;
 import java.util.Random;
 
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.gson.JsonObject;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.util.Constants;
 
@@ -48,6 +51,12 @@ public abstract class RandomBlockContainer
 			}
 
 			return new RandomBlockTagContainer(tag, index);
+		} else if (str.startsWith(";"))
+		{
+			String[] splitStr = str.split(";");
+			String fluidName = splitStr[1];
+
+			return parseFluidEntry(fluidName);
 		} else
 		{
 			return parseBlockEntry(str);
@@ -84,6 +93,16 @@ public abstract class RandomBlockContainer
 				{
 					return Pair.of(container, weight);
 				}
+			}
+		} else if (obj.has(Constants.JSON.FLUID))
+		{
+			String entry = GsonHelper.getAsString(obj, Constants.JSON.FLUID);
+			int weight = GsonHelper.getAsInt(obj, Constants.JSON.WEIGHT);
+			RandomBlockContainer container = RandomBlockContainer.parseFluidEntry(entry);
+
+			if (container != null)
+			{
+				return Pair.of(container, weight);
 			}
 		} else if (obj.has(Constants.JSON.BLOCK))
 		{
@@ -126,6 +145,15 @@ public abstract class RandomBlockContainer
 					return container;
 				}
 			}
+		} else if (obj.has(Constants.JSON.FLUID))
+		{
+			String entry = GsonHelper.getAsString(obj, Constants.JSON.FLUID);
+			RandomBlockContainer container = RandomBlockContainer.parseFluidEntry(entry);
+
+			if (container != null)
+			{
+				return container;
+			}
 		} else if (obj.has(Constants.JSON.BLOCK))
 		{
 			String entry = GsonHelper.getAsString(obj, Constants.JSON.BLOCK);
@@ -155,6 +183,19 @@ public abstract class RandomBlockContainer
 		}
 
 		return new StaticBlockContainer(block);
+	}
+
+	public static RandomBlockContainer parseFluidEntry(String str)
+	{
+		String fluidName = str;
+		Optional<Holder<Fluid>> holderOptional = ForgeRegistries.FLUIDS.getHolder(new ResourceLocation(fluidName));
+		if (holderOptional.isPresent())
+		{
+			Fluid fluid = holderOptional.get().value();
+			return new FluidBlockContainer(fluid);
+		}
+
+		return null;
 	}
 
 	public abstract String getEntry();
