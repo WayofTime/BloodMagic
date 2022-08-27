@@ -217,7 +217,7 @@ public class ContainerFilter extends AbstractContainerMenu
 		inventoryFilter.onGuiSaved(entityPlayer);
 	}
 
-	private class SlotGhostItem extends Slot
+	public class SlotGhostItem extends Slot
 	{
 		private final Player player;
 		private ContainerFilter containerHolding;

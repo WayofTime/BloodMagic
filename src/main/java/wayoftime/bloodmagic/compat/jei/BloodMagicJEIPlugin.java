@@ -7,15 +7,17 @@ import com.google.common.collect.ImmutableSet;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IJeiHelpers;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.client.screens.ScreenFilter;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.compat.jei.alchemytable.AlchemyTableRecipeCategory;
@@ -25,6 +27,7 @@ import wayoftime.bloodmagic.compat.jei.arc.ARCFurnaceRecipeCategory;
 import wayoftime.bloodmagic.compat.jei.arc.ARCRecipeCategory;
 import wayoftime.bloodmagic.compat.jei.array.AlchemyArrayCraftingCategory;
 import wayoftime.bloodmagic.compat.jei.forge.TartaricForgeRecipeCategory;
+import wayoftime.bloodmagic.compat.jei.ghostingredienthandlers.GhostFilter;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 
 @JeiPlugin
@@ -70,6 +73,12 @@ public class BloodMagicJEIPlugin implements IModPlugin
 		registration.addRecipes(ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(RecipeType.SMELTING)), ARCFurnaceRecipeCategory.UID);
 		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyTableRecipes(world), AlchemyTableRecipeCategory.UID);
 		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getPotionFlaskRecipes(world), PotionRecipeCategory.UID);
+	}
+
+	@Override
+	public void registerGuiHandlers(IGuiHandlerRegistration registration)
+	{
+		registration.addGhostIngredientHandler(ScreenFilter.class, new GhostFilter());
 	}
 
 	@Override
