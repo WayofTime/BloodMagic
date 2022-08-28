@@ -47,7 +47,7 @@
     {
       "type": "patchouli:text",
       "flag": "mod:curios",
-      "text": "As you have the $(thing)Curios API$() installed, you can equip $(item)Tartaric Gems$() as a necklace. If you want to wear more curios at once, consider using a $(l:bloodmagic:alchemy_array/sigil/holding)Sigil of Holding$(), or the $(l:bloodmagic:alchemy_array/living_equipment/armor_upgrades/curios_sockets)Socketed Upgrade$() for your $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$()."
+      "text": "As you have the $(thing)Curios API$() installed, you can equip $(item)Tartaric Gems$() as a necklace. If you want to wear more curios at once, consider using the $(l:bloodmagic:alchemy_array/living_equipment/armor_upgrades/curios_sockets)Socketed Upgrade$() for your $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$()."
     }
   ]
 }

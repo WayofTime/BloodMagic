@@ -25,6 +25,11 @@
     {
       "type": "patchouli:text",
       "text": "The bracelet can specify a limit for any given upgrade (assuming you have a copy of the $(item)Tome$() to hand). For example, you could tell it to limit Strong Legs to level 3 - once you reach this level, Strong Legs will no longer gain experience. It can also prevent or allow the training of all other skills that you haven't otherwise specified. If you want to allow all upgrades except one, you can add that one to the bracelet in 'allow others' mode and set its level cap to 0."
+    },
+    {
+      "type": "patchouli:text",
+      "flag": "mod:curios",
+      "text": "As you have the $(thing)Curios API$() installed, you can equip this $(item)Training Bracelet$() as a bracelet. If you want to wear more curios at once, consider using the $(l:bloodmagic:alchemy_array/living_equipment/armor_upgrades/curios_sockets)Socketed Upgrade$() for your $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$()."
     }
   ]
 }

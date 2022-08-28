@@ -24,6 +24,11 @@
     {
       "type": "patchouli:text",
       "text": "This gauge will appear in the top left of your screen. The coloured bars will give you a good estimate of how much of each $(l:bloodmagic:demon_will/will_manipulation/aspected_will)Will Aspect$() is in the current chunk. $(br2)You can hold [$(k:sneak)] to get a numerical value for each Aspect, between 1 and 100 $(raw)Will$() for each. 100 is the maximum amount of any one aspect of $(raw)Will$() that a chunk can have in it."
+    },
+    {
+      "type": "patchouli:text",
+      "flag": "mod:curios",
+      "text": "As you have the $(thing)Curios API$() installed, you can equip the $(item)Demon Will Aura Gauge$() as a charm. If you want to wear more curios at once, consider using the $(l:bloodmagic:alchemy_array/living_equipment/armor_upgrades/curios_sockets)Socketed Upgrade$() for your $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$()."
     }
   ]
 }

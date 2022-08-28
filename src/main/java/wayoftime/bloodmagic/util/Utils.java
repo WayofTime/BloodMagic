@@ -38,10 +38,10 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.wrapper.InvWrapper;
-import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import wayoftime.bloodmagic.api.compat.IDemonWillViewer;
 import wayoftime.bloodmagic.common.tile.TileInventory;
+import wayoftime.bloodmagic.util.helper.InventoryHelper;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 
 public class Utils
@@ -570,11 +570,8 @@ public class Utils
 
 	public static boolean canPlayerSeeDemonWill(Player player)
 	{
-		IItemHandler inventory = new PlayerMainInvWrapper(player.getInventory());
-
-		for (int i = 0; i < inventory.getSlots(); i++)
+		for (ItemStack stack : InventoryHelper.getAllInventories(player))
 		{
-			ItemStack stack = inventory.getStackInSlot(i);
 			if (stack.isEmpty())
 			{
 				continue;
@@ -586,22 +583,13 @@ public class Utils
 			}
 		}
 
-		ItemStack offhandStack = player.getOffhandItem();
-		if (!offhandStack.isEmpty() && offhandStack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) offhandStack.getItem()).canSeeDemonWillAura(player.getCommandSenderWorld(), offhandStack, player))
-		{
-			return true;
-		}
-
 		return false;
 	}
 
 	public static double getDemonWillResolution(Player player)
 	{
-		IItemHandler inventory = new PlayerMainInvWrapper(player.getInventory());
-
-		for (int i = 0; i < inventory.getSlots(); i++)
+		for (ItemStack stack : InventoryHelper.getAllInventories(player))
 		{
-			ItemStack stack = inventory.getStackInSlot(i);
 			if (stack.isEmpty())
 			{
 				continue;
@@ -611,12 +599,6 @@ public class Utils
 			{
 				return ((IDemonWillViewer) stack.getItem()).getDemonWillAuraResolution(player.getCommandSenderWorld(), stack, player);
 			}
-		}
-
-		ItemStack offhandStack = player.getOffhandItem();
-		if (!offhandStack.isEmpty() && offhandStack.getItem() instanceof IDemonWillViewer && ((IDemonWillViewer) offhandStack.getItem()).canSeeDemonWillAura(player.getCommandSenderWorld(), offhandStack, player))
-		{
-			return ((IDemonWillViewer) offhandStack.getItem()).getDemonWillAuraResolution(player.getCommandSenderWorld(), offhandStack, player);
 		}
 
 		return 100;

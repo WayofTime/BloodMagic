@@ -14,6 +14,11 @@
       "array.heading": "Sigil of Suppression",
       "array.recipe": "bloodmagic:array/suppressionsigil",
       "array.text": "$(italic)Better than a Void Sigil\u00AE!"
+    },
+    {
+      "type": "patchouli:text",
+      "flag": "mod:curios",
+      "text": "As you have the $(thing)Curios API$() installed, you can equip this $(item)Sigil$() as a charm. If you want to wear more curios at once, consider using a $(l:bloodmagic:alchemy_array/sigil/holding)Sigil of Holding$(), or the $(l:bloodmagic:alchemy_array/living_equipment/armor_upgrades/curios_sockets)Socketed Upgrade$() for your $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$()."
     }
   ]
 }

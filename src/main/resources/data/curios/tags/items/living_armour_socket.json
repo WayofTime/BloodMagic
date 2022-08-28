@@ -5,11 +5,14 @@
     "bloodmagic:growthsigil",
     "bloodmagic:sigilofmagnetism",
     "bloodmagic:icesigil",
+    "bloodmagic:sigilofsuppression",
     "bloodmagic:sigilofholding",
     "bloodmagic:experiencebook",
     "bloodmagic:soulgempetty",
     "bloodmagic:soulgemlesser",
     "bloodmagic:soulgemcommon",
-    "bloodmagic:soulgemgreater"
+    "bloodmagic:soulgemgreater",
+    "bloodmagic:upgradetrainer",
+    "bloodmagic:demonwillgauge"
   ]
 }

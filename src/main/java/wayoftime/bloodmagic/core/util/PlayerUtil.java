@@ -11,24 +11,20 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import wayoftime.bloodmagic.common.item.ExpandedArmor;
 import wayoftime.bloodmagic.core.living.LivingUtil;
+import wayoftime.bloodmagic.util.helper.InventoryHelper;
 
 public class PlayerUtil
 {
 
 	public static ItemStack findItem(Player player, Predicate<ItemStack> requirements)
 	{
-
-		// Check offhand first
-		ItemStack offHand = player.getOffhandItem();
-		if (requirements.test(offHand))
-			return offHand;
-
-		// Check inventory next
-		for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++)
+		// Check offhand first.
+		for (ItemStack stack : InventoryHelper.getAllInventories(player, InventoryHelper.OFFHAND_FIRST))
 		{
-			ItemStack foundStack = player.getInventory().getItem(slot);
-			if (!foundStack.isEmpty() && requirements.test(foundStack))
-				return foundStack;
+			if (!stack.isEmpty() && requirements.test(stack))
+			{
+				return stack;
+			}
 		}
 
 		return ItemStack.EMPTY;
