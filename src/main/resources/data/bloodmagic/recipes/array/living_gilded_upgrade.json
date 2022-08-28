@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:array",
+  "texture": "bloodmagic:textures/models/alchemyarrays/bindingarray.png",
+  "baseinput": {
+    "item": "bloodmagic:reagentbinding"
+  },
+  "addedinput": {
+    "item": "minecraft:gold_block"
+  },
+  "output": {
+    "item": "bloodmagic:upgradetome",
+    "nbt": "{livingStats: {maxPoints: 5, upgrades: [{exp: 1.0d, key: \"bloodmagic:gilded\"}]}}"
+  }
+}

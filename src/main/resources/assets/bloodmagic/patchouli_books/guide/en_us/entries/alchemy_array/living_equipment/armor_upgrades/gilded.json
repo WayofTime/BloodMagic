@@ -1,0 +1,17 @@
+{
+  "name": "Gilded",
+  "icon": "minecraft:golden_chestplate",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Adds the essence of Gold to your Living Armour. This should be enough to appease the Piglins in the Nether, even if you yourself can't see any difference. $(br2)Rather than being trained, the $(l:bloodmagic:alchemy_array/living_equipment/living_tomes)Upgrade Tome$() must be crafted."
+    },
+    {
+      "type": "bloodmagic:crafting_upgrade_array",
+      "a.heading": "Gilded Tome",
+      "a.recipe": "bloodmagic:array/living_gilded_upgrade",
+      "b.upgrade": "bloodmagic:gilded"
+    }
+  ]
+}
