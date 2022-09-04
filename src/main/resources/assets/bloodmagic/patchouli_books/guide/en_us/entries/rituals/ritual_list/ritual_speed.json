@@ -45,6 +45,11 @@
       "page_type": "steadfast"
     },
     {
+      "type": "bloodmagic:ritual_ranges",
+      "ritual": "speed",
+      "ranges": ["*"]
+    },
+    {
       "type": "bloodmagic:ritual_data",
       "ritual": "speed",
       "page_type": "sanicRange"

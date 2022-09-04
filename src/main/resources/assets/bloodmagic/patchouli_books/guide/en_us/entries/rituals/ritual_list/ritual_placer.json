@@ -14,6 +14,11 @@
       "ritual": "placer"
     },
     {
+      "type": "bloodmagic:ritual_ranges",
+      "ritual": "placer",
+      "ranges": ["*"]
+    },
+    {
       "type": "bloodmagic:ritual_data",
       "ritual": "placer",
       "page_type": "placerRange"

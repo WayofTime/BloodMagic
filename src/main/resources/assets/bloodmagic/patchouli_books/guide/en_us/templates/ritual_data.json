@@ -1,5 +1,5 @@
 {
-  "processor": "wayoftime.bloodmagic.compat.patchouli.processors.RitualInfoProcessor",
+  "processor": "wayoftime.bloodmagic.compat.patchouli.processors.ritual.RitualDataProcessor",
   "components": [
     {
       "type": "patchouli:header",

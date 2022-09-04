@@ -18,6 +18,11 @@
       "text": "By default, the $()Ritual of Magnetism$() searches down to bedrock in a radius of 3 blocks out from the $(item)Master Ritual Stone$() for ores to collect. This can be augmented by placing an expensive block directly underneath the MRS, as follows: $(br)$(li)$(item)Block of Iron$() - 7 blocks. $(li)$(item)Block of Gold$() - 15 blocks. $(li)$(item)Block of Diamond$() - 31 blocks."
     },
     {
+      "type": "bloodmagic:ritual_ranges",
+      "ritual": "magnetism",
+      "ranges": ["*"]
+    },
+    {
       "type": "bloodmagic:ritual_data",
       "ritual": "magnetism",
       "page_type": "placementRange",

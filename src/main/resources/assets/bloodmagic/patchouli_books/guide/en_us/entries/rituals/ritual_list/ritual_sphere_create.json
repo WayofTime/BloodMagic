@@ -17,6 +17,11 @@
       ]
     },
     {
+      "type": "bloodmagic:ritual_ranges",
+      "ritual": "sphere",
+      "ranges": ["*"]
+    },
+    {
       "type": "bloodmagic:ritual_data",
       "ritual": "sphere",
       "page_type": "spheroidRange"

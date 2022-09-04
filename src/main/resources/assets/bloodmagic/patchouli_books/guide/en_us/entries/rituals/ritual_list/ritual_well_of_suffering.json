@@ -22,6 +22,11 @@
       "text": "This ritual attacks mobs within its damage zone and puts the harvested $(blood)Blood$() into a nearby $(l:bloodmagic:altar/blood_altar)Blood Altar$(). Put a $(l:bloodmagic:altar/soul_network)Blood Orb$() in the Altar, maybe add a few $(l:bloodmagic:altar/blood_rune/sacrifice_rune)Runes of Sacrifice$() for good measure and you'll never have to worry about your LP supplies again... As long as you can supply enough mobs." 
     },
     {
+      "type": "bloodmagic:ritual_ranges",
+      "ritual": "well_of_suffering",
+      "ranges": ["*"]
+    },
+    {
       "type": "bloodmagic:ritual_data",
       "ritual": "well_of_suffering",
       "page_type": "altar",

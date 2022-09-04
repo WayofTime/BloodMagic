@@ -17,9 +17,19 @@
       ]
     },
     {
+      "type": "bloodmagic:ritual_ranges",
+      "ritual": "water",
+      "ranges": ["*"]
+    },
+    {
       "type": "bloodmagic:ritual_data",
       "ritual": "water",
       "page_type": "waterRange"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "water",
+      "page_type": "waterTank"
     }
   ]
 }

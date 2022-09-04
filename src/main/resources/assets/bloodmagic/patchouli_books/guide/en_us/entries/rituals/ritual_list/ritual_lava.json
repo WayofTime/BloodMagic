@@ -57,6 +57,16 @@
       ]
     },
     {
+      "type": "bloodmagic:ritual_ranges",
+      "ritual": "lava",
+      "ranges": ["lavaRange", "fireDamage", "fireFuse"]
+    },
+    {
+      "type": "bloodmagic:ritual_ranges",
+      "ritual": "lava",
+      "ranges": ["fireResist", "lavaTank"]
+    },
+    {
       "type": "bloodmagic:ritual_data",
       "ritual": "lava",
       "page_type": "lavaRange"

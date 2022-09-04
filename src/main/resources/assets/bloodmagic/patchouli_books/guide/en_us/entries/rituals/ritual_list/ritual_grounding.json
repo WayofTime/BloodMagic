@@ -46,6 +46,11 @@
       "page_type": "steadfast"
     },
     {
+      "type": "bloodmagic:ritual_ranges",
+      "ritual": "grounding",
+      "ranges": ["*"]
+    },
+    {
       "type": "bloodmagic:ritual_data",
       "ritual": "grounding",
       "page_type": "groundingRange"

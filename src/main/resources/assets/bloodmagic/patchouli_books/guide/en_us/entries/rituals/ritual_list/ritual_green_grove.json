@@ -45,6 +45,11 @@
       "page_type": "steadfast"
     },
     {
+      "type": "bloodmagic:ritual_ranges",
+      "ritual": "green_grove",
+      "ranges": ["*"]
+    },
+    {
       "type": "bloodmagic:ritual_data",
       "ritual": "green_grove",
       "page_type": "growing"
