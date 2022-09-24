@@ -12,7 +12,7 @@
       "minWeight": 0,
       "weightMap": [
         {
-          "tag": "#forge:ores/propserity#0",
+          "tag": "#forge:ores/prosperity#0",
           "weight": 100
         },
         {
