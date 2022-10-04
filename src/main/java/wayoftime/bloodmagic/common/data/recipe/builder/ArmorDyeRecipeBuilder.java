@@ -1,34 +1,27 @@
 package wayoftime.bloodmagic.common.data.recipe.builder;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder;
-import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
-import wayoftime.bloodmagic.util.Constants;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ArmorDyeRecipeBuilder extends BloodMagicRecipeBuilder<ArmorDyeRecipeBuilder> {
-    private final List<Ingredient> input;
+    private final Ingredient input;
+    private final Ingredient dye;
     private final ItemStack output;
 
-    protected ArmorDyeRecipeBuilder(List<Ingredient> input, ItemStack output){
-        super(bmSerializer("armor_dye"));
+    protected ArmorDyeRecipeBuilder( Ingredient input, Ingredient dye,ItemStack output){
+        super(bmSerializer("armordye"));
         this.input = input;
+        this.dye = dye;
         this.output = output;
     }
 
-    public static ArmorDyeRecipeBuilder armorDye(ItemStack output, Ingredient... inputArray){
-        List<Ingredient> inputList = new ArrayList<Ingredient>();
-        for (int i = 0; i < inputArray.length; i++)
-        {
-            inputList.add(inputArray[i]);
-        }
-        return new ArmorDyeRecipeBuilder(inputList,output);
+    public static ArmorDyeRecipeBuilder armorDye(Ingredient input, Ingredient dye, ItemStack output){
+        return new ArmorDyeRecipeBuilder(input, dye,output);
     }
 
 
@@ -43,11 +36,13 @@ public class ArmorDyeRecipeBuilder extends BloodMagicRecipeBuilder<ArmorDyeRecip
 
         @Override
         public void serializeRecipeData(@NotNull JsonObject json) {
-            for (int i = 0; i < Math.min(input.size(), 4); i++)
-            {
-                json.add(Constants.JSON.INPUT + i, input.get(i).toJson());
-            }
-            json.add(Constants.JSON.OUTPUT, SerializerHelper.serializeItemStack(output));
+            JsonArray ingredients = new JsonArray();
+            ingredients.add(dye.toJson());
+            ingredients.add(input.toJson());
+            json.add("ingredients", ingredients);
+            JsonObject itemObject = new JsonObject();
+            itemObject.addProperty("item", output.getItem().getRegistryName().toString());
+            json.add("result", itemObject);
         }
     }
 }
