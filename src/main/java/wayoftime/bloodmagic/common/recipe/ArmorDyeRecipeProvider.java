@@ -17,6 +17,6 @@ public class ArmorDyeRecipeProvider implements ISubRecipeProvider{
 
         String basePath = "living/";
 
-        ArmorDyeRecipeBuilder.armorDye(Ingredient.of(BloodMagicItems.LIVING_PLATE.get()), Ingredient.of(Tags.Items.DYES), new ItemStack(BloodMagicItems.LIVING_PLATE.get())).build(consumer, new ResourceLocation(BloodMagic.MODID, basePath + "living_plate"));
+        ArmorDyeRecipeBuilder.armorDye(new ItemStack(BloodMagicItems.LIVING_PLATE.get()) ,Ingredient.of(BloodMagicItems.LIVING_PLATE.get()), Ingredient.of(Tags.Items.DYES)).build(consumer, new ResourceLocation(BloodMagic.MODID, basePath + "living_plate"));
     }
 }

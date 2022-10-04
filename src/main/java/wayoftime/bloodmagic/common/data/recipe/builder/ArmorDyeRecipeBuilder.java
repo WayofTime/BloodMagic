@@ -9,20 +9,26 @@ import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder;
 import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
 import wayoftime.bloodmagic.util.Constants;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ArmorDyeRecipeBuilder extends BloodMagicRecipeBuilder<ArmorDyeRecipeBuilder> {
-    private final Ingredient armor_piece;
-    private final Ingredient dye;
+    private final List<Ingredient> input;
     private final ItemStack output;
 
-    protected ArmorDyeRecipeBuilder( Ingredient armor_piece, Ingredient dye,ItemStack output){
-        super(bmSerializer("armordye"));
-        this.armor_piece = armor_piece;
-        this.dye = dye;
+    protected ArmorDyeRecipeBuilder(List<Ingredient> input, ItemStack output){
+        super(bmSerializer("armor_dye"));
+        this.input = input;
         this.output = output;
     }
 
-    public static ArmorDyeRecipeBuilder armorDye(Ingredient armor_piece, Ingredient dye, ItemStack output){
-        return new ArmorDyeRecipeBuilder(armor_piece, dye,output);
+    public static ArmorDyeRecipeBuilder armorDye(ItemStack output, Ingredient... inputArray){
+        List<Ingredient> inputList = new ArrayList<Ingredient>();
+        for (int i = 0; i < inputArray.length; i++)
+        {
+            inputList.add(inputArray[i]);
+        }
+        return new ArmorDyeRecipeBuilder(inputList,output);
     }
 
 
@@ -37,8 +43,10 @@ public class ArmorDyeRecipeBuilder extends BloodMagicRecipeBuilder<ArmorDyeRecip
 
         @Override
         public void serializeRecipeData(@NotNull JsonObject json) {
-            json.add(Constants.JSON.BASEINPUT, armor_piece.toJson());
-            json.add(Constants.JSON.ADDEDINPUT, dye.toJson());
+            for (int i = 0; i < Math.min(input.size(), 4); i++)
+            {
+                json.add(Constants.JSON.INPUT + i, input.get(i).toJson());
+            }
             json.add(Constants.JSON.OUTPUT, SerializerHelper.serializeItemStack(output));
         }
     }
