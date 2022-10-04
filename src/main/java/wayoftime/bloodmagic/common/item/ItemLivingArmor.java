@@ -7,17 +7,13 @@ import java.util.function.Consumer;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
@@ -28,10 +24,11 @@ import net.minecraftforge.common.extensions.IForgeItem;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.living.ILivingContainer;
+import wayoftime.bloodmagic.core.living.ILivingDyeable;
 import wayoftime.bloodmagic.core.living.LivingStats;
 import wayoftime.bloodmagic.core.living.LivingUtil;
 
-public class ItemLivingArmor extends ArmorItem implements ILivingContainer, ExpandedArmor, IForgeItem
+public class ItemLivingArmor extends ArmorItem implements ILivingContainer, ExpandedArmor, IForgeItem, ILivingDyeable
 {
 
 	private static final int MAX_ABSORPTION = 100000;
@@ -46,11 +43,17 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 	{
 		if (this == BloodMagicItems.LIVING_PLATE.get() || this == BloodMagicItems.LIVING_HELMET.get() || this == BloodMagicItems.LIVING_BOOTS.get())
 		{
+			if(this.getDyeColor(stack).equals("blue")){
+				return "bloodmagic:models/armor/livingarmour_layer_1_custom.png";
+			}
 			return "bloodmagic:models/armor/livingarmour_layer_1.png";
 		}
 
 		if (this == BloodMagicItems.LIVING_LEGGINGS.get())
 		{
+			if(this.getDyeColor(stack).equals("blue")){
+				return "bloodmagic:models/armor/livingarmour_layer_2_custom.png";
+			}
 			return "bloodmagic:models/armor/livingarmour_layer_2.png";
 		} else
 		{

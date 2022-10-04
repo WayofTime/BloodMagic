@@ -19,15 +19,7 @@ import wayoftime.bloodmagic.common.recipe.serializer.PotionTransformRecipeSerial
 import wayoftime.bloodmagic.common.recipe.serializer.TartaricForgeRecipeSerializer;
 import wayoftime.bloodmagic.common.registration.impl.IRecipeSerializerDeferredRegister;
 import wayoftime.bloodmagic.common.registration.impl.IRecipeSerializerRegistryObject;
-import wayoftime.bloodmagic.recipe.RecipeARC;
-import wayoftime.bloodmagic.recipe.RecipeARCPotion;
-import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
-import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
-import wayoftime.bloodmagic.recipe.RecipeBloodAltar;
-import wayoftime.bloodmagic.recipe.RecipeFilterMergeAlchemyTable;
-import wayoftime.bloodmagic.recipe.RecipeLivingDowngrade;
-import wayoftime.bloodmagic.recipe.RecipeMeteor;
-import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
+import wayoftime.bloodmagic.recipe.*;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionCycle;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionEffect;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionFill;
@@ -63,6 +55,7 @@ public class BloodMagicRecipeSerializers
 	public static final IRecipeSerializerRegistryObject<RecipePotionCycle> POTIONCYCLE = RECIPE_SERIALIZERS.register("flask_potioncycle", () -> new PotionCycleRecipeSerializer<>(RecipePotionCycle::new));
 
 	public static final IRecipeSerializerRegistryObject<RecipeMeteor> METEOR = RECIPE_SERIALIZERS.register("meteor", () -> new MeteorRecipeSerializer<>(RecipeMeteor::new));
+	public static final IRecipeSerializerRegistryObject<DyeRecipe> DYE = RECIPE_SERIALIZERS.register("dye_armor", DyeRecipe.Serializer::new);
 
 //	public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, BloodMagic.MODID);
 

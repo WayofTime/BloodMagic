@@ -5,15 +5,7 @@ import java.util.List;
 
 import net.minecraft.data.DataGenerator;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.common.recipe.ARCRecipeProvider;
-import wayoftime.bloodmagic.common.recipe.AlchemyArrayRecipeProvider;
-import wayoftime.bloodmagic.common.recipe.AlchemyTableRecipeProvider;
-import wayoftime.bloodmagic.common.recipe.BloodAltarRecipeProvider;
-import wayoftime.bloodmagic.common.recipe.ISubRecipeProvider;
-import wayoftime.bloodmagic.common.recipe.LivingDowngradeRecipeProvider;
-import wayoftime.bloodmagic.common.recipe.MeteorRecipeProvider;
-import wayoftime.bloodmagic.common.recipe.PotionRecipeProvider;
-import wayoftime.bloodmagic.common.recipe.TartaricForgeRecipeProvider;
+import wayoftime.bloodmagic.common.recipe.*;
 
 public class BloodMagicRecipeProvider extends BaseRecipeProvider
 {
@@ -26,6 +18,6 @@ public class BloodMagicRecipeProvider extends BaseRecipeProvider
 	protected List<ISubRecipeProvider> getSubRecipeProviders()
 	{
 //		return Arrays.asList(new BloodAltarRecipeProvider(), new AlchemyArrayRecipeProvider(), new TartaricForgeRecipeProvider(), new ARCRecipeProvider(), new AlchemyTableRecipeProvider(), new LivingDowngradeRecipeProvider(), new PotionRecipeProvider(), new MeteorRecipeProvider());
-		return Arrays.asList(new BloodAltarRecipeProvider(), new AlchemyArrayRecipeProvider(), new TartaricForgeRecipeProvider(), new ARCRecipeProvider(), new AlchemyTableRecipeProvider(), new LivingDowngradeRecipeProvider(), new PotionRecipeProvider(), new MeteorRecipeProvider());
+		return Arrays.asList(new BloodAltarRecipeProvider(), new AlchemyArrayRecipeProvider(), new TartaricForgeRecipeProvider(), new ARCRecipeProvider(), new AlchemyTableRecipeProvider(), new LivingDowngradeRecipeProvider(), new PotionRecipeProvider(), new MeteorRecipeProvider(), new ArmorDyeRecipeProvider());
 	}
 }
