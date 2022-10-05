@@ -13,7 +13,7 @@ public interface ILivingDyeable {
             return DyeColor.RED.getName();
         }
         String color = stack.getTag().getString("armorColor");
-        return color.isEmpty() ? color : DyeColor.RED.getName();
+        return !color.isEmpty() ? color : DyeColor.RED.getName();
     }
 
 }
