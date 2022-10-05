@@ -56,24 +56,6 @@ public class DyeRecipe extends ShapelessRecipe {
         return BloodMagicRecipeSerializers.DYE.get();
     }
 
-//    public static JsonElement asRecipe(Item item) {
-//        JsonObject jsonobject = new JsonObject();
-//        jsonobject.addProperty("type", "bloodmagic:" + RecipeRegistry.DYE_RECIPE_ID);
-//        JsonArray ingredients = new JsonArray();
-//        JsonObject dyeObject = new JsonObject();
-//        dyeObject.addProperty("tag", Tags.Items.DYES.location().toString());
-//        ingredients.add(dyeObject);
-//
-//        JsonObject input = new JsonObject();
-//        input.addProperty("item", getRegistryName(item).toString());
-//        ingredients.add(input);
-//
-//        jsonobject.add("ingredients", ingredients);
-//        JsonObject itemObject = new JsonObject();
-//        itemObject.addProperty("item", getRegistryName(item).toString());
-//        jsonobject.add("result", itemObject);
-//        return jsonobject;
-//    }
 
 
     public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<DyeRecipe> {

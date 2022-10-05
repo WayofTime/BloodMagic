@@ -55,7 +55,7 @@ public class BloodMagicRecipeSerializers
 	public static final IRecipeSerializerRegistryObject<RecipePotionCycle> POTIONCYCLE = RECIPE_SERIALIZERS.register("flask_potioncycle", () -> new PotionCycleRecipeSerializer<>(RecipePotionCycle::new));
 
 	public static final IRecipeSerializerRegistryObject<RecipeMeteor> METEOR = RECIPE_SERIALIZERS.register("meteor", () -> new MeteorRecipeSerializer<>(RecipeMeteor::new));
-	public static final IRecipeSerializerRegistryObject<DyeRecipe> DYE = RECIPE_SERIALIZERS.register("dye_armor", DyeRecipe.Serializer::new);
+	public static final IRecipeSerializerRegistryObject<DyeRecipe> DYE = RECIPE_SERIALIZERS.register("armordye", DyeRecipe.Serializer::new);
 
 //	public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, BloodMagic.MODID);
 

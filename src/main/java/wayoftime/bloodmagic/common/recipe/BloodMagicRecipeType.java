@@ -1,23 +1,21 @@
 package wayoftime.bloodmagic.common.recipe;
 
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.registration.impl.RecipeTypeDeferredRegister;
 import wayoftime.bloodmagic.common.registration.impl.RecipeTypeRegistryObject;
-import wayoftime.bloodmagic.recipe.BloodMagicRecipe;
-import wayoftime.bloodmagic.recipe.RecipeARC;
-import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
-import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
-import wayoftime.bloodmagic.recipe.RecipeBloodAltar;
-import wayoftime.bloodmagic.recipe.RecipeLivingDowngrade;
-import wayoftime.bloodmagic.recipe.RecipeMeteor;
-import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
+import wayoftime.bloodmagic.recipe.*;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionFlaskBase;
 
 public class BloodMagicRecipeType<RECIPE extends BloodMagicRecipe> implements RecipeType<RECIPE>
 {
 	public static final RecipeTypeDeferredRegister RECIPE_TYPES = new RecipeTypeDeferredRegister(BloodMagic.MODID);
+	public static final DeferredRegister<RecipeType<?>> CUSTOM_RECIPE_TYPES = DeferredRegister.create(Registry.RECIPE_TYPE_REGISTRY, BloodMagic.MODID);
 
 	public static final RecipeTypeRegistryObject<RecipeBloodAltar> ALTAR = register("altar");
 	public static final RecipeTypeRegistryObject<RecipeAlchemyArray> ARRAY = register("array");
@@ -27,6 +25,7 @@ public class BloodMagicRecipeType<RECIPE extends BloodMagicRecipe> implements Re
 	public static final RecipeTypeRegistryObject<RecipeLivingDowngrade> LIVINGDOWNGRADE = register("livingdowngrade");
 	public static final RecipeTypeRegistryObject<RecipePotionFlaskBase> POTIONFLASK = register("potionflask");
 	public static final RecipeTypeRegistryObject<RecipeMeteor> METEOR = register("meteor");
+	public static final RegistryObject<RecipeType<DyeRecipe>> DYE = CUSTOM_RECIPE_TYPES.register("armordye", ModRecipeType::new);
 
 //	public static final RecipeType<RecipeBloodAltar> ALTAR = RecipeType.register(BloodMagic.MODID + ":altar");
 //	public static final RecipeType<RecipeAlchemyArray> ARRAY = RecipeType.register(BloodMagic.MODID + ":array");
@@ -47,5 +46,13 @@ public class BloodMagicRecipeType<RECIPE extends BloodMagicRecipe> implements Re
 	private BloodMagicRecipeType(String name)
 	{
 		this.registryName = BloodMagic.rl(name);
+	}
+
+
+	private static class ModRecipeType<T extends Recipe<?>> implements RecipeType<T> {
+		@Override
+		public String toString() {
+			return Registry.RECIPE_TYPE.getKey(this).toString();
+		}
 	}
 }

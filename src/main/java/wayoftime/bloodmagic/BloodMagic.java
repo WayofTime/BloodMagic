@@ -137,6 +137,7 @@ public class BloodMagic
 
 		BloodMagicRecipeSerializers.RECIPE_SERIALIZERS.register(modBus);
 		BloodMagicRecipeType.RECIPE_TYPES.register(modBus);
+		BloodMagicRecipeType.CUSTOM_RECIPE_TYPES.register(modBus);
 
 		// Register the setup method for modloading
 		modBus.addListener(this::setup);
