@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:armordye",
+  "ingredients": [
+    {
+      "tag": "forge:dyes"
+    },
+    {
+      "item": "bloodmagic:livingplate"
+    }
+  ],
+  "result": {
+    "item": "bloodmagic:livingplate"
+  }
+}

@@ -5,14 +5,14 @@ import net.minecraft.world.item.ItemStack;
 
 public interface ILivingDyeable {
     default void onDye(ItemStack stack, DyeColor dyeColor){
-        stack.getOrCreateTag().putString("armorColor", dyeColor.getName());
+        stack.getOrCreateTag().putString("livingArmorColor", dyeColor.getName());
     }
 
     default String getDyeColor(ItemStack stack) {
         if (!stack.hasTag()) {
             return DyeColor.RED.getName();
         }
-        String color = stack.getTag().getString("armorColor");
+        String color = stack.getTag().getString("livingArmorColor");
         return !color.isEmpty() ? color : DyeColor.RED.getName();
     }
 

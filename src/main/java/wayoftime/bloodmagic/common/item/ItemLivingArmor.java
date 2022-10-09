@@ -41,9 +41,18 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type)
 	{
+		String color = "red";
+
+		for (ItemStack itemStack : entity.getArmorSlots()){
+			Item item = itemStack.getItem();
+			if(item == BloodMagicItems.LIVING_PLATE.get()){
+				color = ((ItemLivingArmor) item).getDyeColor(itemStack);
+				break;
+			}
+		}
 		if (this == BloodMagicItems.LIVING_PLATE.get() || this == BloodMagicItems.LIVING_HELMET.get() || this == BloodMagicItems.LIVING_BOOTS.get())
 		{
-			if(this.getDyeColor(stack).equals("blue")){
+			if(color.equals("blue")){
 				return "bloodmagic:models/armor/livingarmour_layer_1_custom.png";
 			}
 			return "bloodmagic:models/armor/livingarmour_layer_1.png";
@@ -51,7 +60,7 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 
 		if (this == BloodMagicItems.LIVING_LEGGINGS.get())
 		{
-			if(this.getDyeColor(stack).equals("blue")){
+			if(color.equals("blue")){
 				return "bloodmagic:models/armor/livingarmour_layer_2_custom.png";
 			}
 			return "bloodmagic:models/armor/livingarmour_layer_2.png";
