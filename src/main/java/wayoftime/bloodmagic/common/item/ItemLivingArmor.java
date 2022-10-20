@@ -52,18 +52,12 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 		}
 		if (this == BloodMagicItems.LIVING_PLATE.get() || this == BloodMagicItems.LIVING_HELMET.get() || this == BloodMagicItems.LIVING_BOOTS.get())
 		{
-			if(color.equals("blue")){
-				return "bloodmagic:models/armor/livingarmour_layer_1_custom.png";
-			}
-			return "bloodmagic:models/armor/livingarmour_layer_1.png";
+			return String.format("bloodmagic:models/armor/living/livingarmour_%s_layer_1.png", color);
 		}
 
 		if (this == BloodMagicItems.LIVING_LEGGINGS.get())
 		{
-			if(color.equals("blue")){
-				return "bloodmagic:models/armor/livingarmour_layer_2_custom.png";
-			}
-			return "bloodmagic:models/armor/livingarmour_layer_2.png";
+			return String.format("bloodmagic:models/armor/living/livingarmour_%s_layer_2.png",color);
 		} else
 		{
 			return null;
