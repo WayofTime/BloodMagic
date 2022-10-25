@@ -458,6 +458,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("living_upgrade.bloodmagic.swim_decrease", "Concrete Shoes");
 		add("living_upgrade.bloodmagic.speed_decrease", "Limp Leg");
 
+		add("tooltip.bloodmagic.livingarmour.color", "Color: %s");
 		add("tooltip.bloodmagic.livingarmour.upgrade.level", "%s (Level %d)");
 		add("tooltip.bloodmagic.livingarmour.upgrade.progress", "%s (%d/100)");
 		add("tooltip.bloodmagic.livingarmour.upgrade.points", "Upgrade points: %s / %s");

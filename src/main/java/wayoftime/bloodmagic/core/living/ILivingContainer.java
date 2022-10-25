@@ -3,6 +3,8 @@ package wayoftime.bloodmagic.core.living;
 import java.util.List;
 
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -10,6 +12,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import wayoftime.bloodmagic.common.item.BloodMagicItems;
+import wayoftime.bloodmagic.common.item.ItemLivingArmor;
 import wayoftime.bloodmagic.util.Constants;
 
 public interface ILivingContainer
@@ -64,6 +68,13 @@ public interface ILivingContainer
 		{
 			if (trainable)
 				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.livingarmour.upgrade.points", stats.getUsedPoints(), stats.getMaxPoints()).withStyle(ChatFormatting.GOLD));
+
+			String color = "Red";
+			Item item = stack.getItem();
+			if(item == BloodMagicItems.LIVING_PLATE.get()){
+				color = ((ItemLivingArmor) item).getDyeColor(stack);
+			}
+			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.livingarmour.color", I18n.get(String.format("color.minecraft.%s", color))).withStyle(ChatFormatting.GOLD));
 
 			stats.getUpgrades().forEach((k, v) -> {
 				if (k.getLevel(v.intValue()) <= 0 && !displayIfLevelZero(stack))

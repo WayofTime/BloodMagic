@@ -700,6 +700,7 @@
   "tooltip.bloodmagic.holdShiftForInfo": "Press shift for extra info.",
   "tooltip.bloodmagic.incorrectKey": "The key does not fit in this lock...",
   "tooltip.bloodmagic.inscriber.desc": "The writing is on the wall...",
+  "tooltip.bloodmagic.livingarmour.color": "Color: %s",
   "tooltip.bloodmagic.livingarmour.extraExtraInfo": "&9-Hold shift + M for progress info-",
   "tooltip.bloodmagic.livingarmour.upgrade.level": "%s (Level %d)",
   "tooltip.bloodmagic.livingarmour.upgrade.points": "Upgrade points: %s / %s",
