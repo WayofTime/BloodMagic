@@ -12,13 +12,13 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Eventually, you may come across a $(thing)Spatial Distortion$() when searching through a Dungeon. These can only be opened with special, rare keys that cannot be crafted, and must instead be found somewhere within the Demon Realm. Spatial Distortions only form within the Demon Realm proper, and you will never find them within an Antechamber."
+      "text": "Eventually, you may come across a $(thing)Spatial Distortion$() when searching through a Dungeon. These will either lead you to a unique, uncraftable key, or to a door that only said key can open. Spatial Distortions only form within the Demon Realm proper, and you will never find them within an Antechamber."
     },
     {
       "type": "patchouli:spotlight",
       "item": "bloodmagic:mineentrancekey",
       "title": "The Mines",
-      "text": "The entrance to $(thing)The Mines$() can only be opened with the $(thing)Foreman's Key$(), while all other doors beyond that can be opened with $(thing)Miner's Keys$(). The mines will grant you access to $(l:bloodmagic:dungeons/demonite)Demonite ore$() alongside some rarer loot, but comes with challenges to match."
+      "text": "The entrance to $(thing)The Mines$() can only be opened with the uncraftable $(thing)Foreman's Key$(), while all other doors beyond that can be opened with $(thing)Miner's Keys$(). The mines will grant you access to $(l:bloodmagic:dungeons/demonite)Demonite ore$() alongside some rarer loot, but comes with challenges to match."
     },
     {
       "type": "bloodmagic:crafting_soulforge",

@@ -57,10 +57,10 @@
     },
     {
       "type": "bloodmagic:crafting_soulforge",
-      "heading": "Tunneling Shaped Charge",
+      "heading": "Tunnelling Shaped Charge",
       "recipe": "bloodmagic:soulforge/shaped_charge",
-      "anchor":"shaped_charge",
-      "text": "The $(item)Tunneling Shaped Charge$() will destroy a 5x5x20 tunnel facing whichever side of a block it lands on, dropping all blocks as though mined with a pickaxe. Good for mining."
+      "anchor":"shaped_charge_tunneling",
+      "text": "The $(item)Tunnelling Shaped Charge$() will destroy a 5x5x20 tunnel facing whichever side of a block it lands on, dropping all blocks as though mined with a pickaxe. Good for mining."
     },
     {
       "type": "bloodmagic:3x_crafting_soulforge",
@@ -104,7 +104,7 @@
       "heading": "Deforester Charge II",
       "recipe": "bloodmagic:soulforge/deforester_charge_2",
       "anchor":"deforester_charge_2",
-      "text": "The $(item)Deforester Charge II$(), much like the standard Deforester Charge, is for breaking wood and trees. It can breaks up to 8x64 logs, clearing away aany connecting leaves. Excellent for making yourself a nice clearing in any Dark Oak Forest or Jungle you might happen to like the look of."
+      "text": "The $(item)Deforester Charge II$(), much like the standard Deforester Charge, is for breaking wood and trees. It can break up to 8x64 logs, clearing away any connecting leaves. Excellent for making yourself a nice clearing in any Dark Oak Forest or Jungle you might happen to like the look of."
     },
     {
       "type": "bloodmagic:3x_crafting_soulforge",
@@ -189,7 +189,7 @@
     },
     {
       "type": "bloodmagic:crafting_soulforge",
-      "heading": "Fungal Charge_II",
+      "heading": "Fungal Charge II",
       "recipe": "bloodmagic:soulforge/fungal_charge",
       "anchor":"fungal_charge_2",
       "text": "The $(item)Fungal Charge II$() is for felling giant mushrooms, both in the Overworld and the Nether. It can destroy up to 8 stacks of mushroomy goodness per charge. $(br2)Why would you ever need this?"

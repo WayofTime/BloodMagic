@@ -35,7 +35,7 @@
       "heading": "Amethyst Throwing Dagger",
       "recipe": "bloodmagic:soulforge/throwing_dagger_copper",
       "anchor":"amethyst_throwing_dagger",
-      "text": "The $(item)Amethyst Throwing Dagger$() does as much damage as an $(item)Iron Throwing Dagger$(), but mobs do not drop $(raw)Will$() when killed. Instead, eight of them can be crafted with a $(l:bloodmagic:alchemy_table/potions)Lingering Alchemy Flask$() in the $(item)Alchemy Reaction Chamber$() to create $(item)Tipped Amethyst Throwing Daggers$()."
+      "text": "The $(item)Amethyst Throwing Dagger$() does as much damage as an $(item)Iron Throwing Dagger$(), but mobs do not drop $(raw)Will$() when killed. Instead, eight of them can be crafted with a $(l:bloodmagic:alchemy_table/potions)Lingering Alchemy Flask$() in the $(item)Alchemical Reaction Chamber$() to create $(item)Tipped Amethyst Throwing Daggers$()."
     },
     {
       "type": "bloodmagic:crafting_arc",
