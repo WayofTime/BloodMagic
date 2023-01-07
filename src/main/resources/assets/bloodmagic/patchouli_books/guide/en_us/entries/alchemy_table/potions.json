@@ -24,15 +24,18 @@
     {
       "type": "patchouli:crafting",
       "recipe": "bloodmagic:alchemy_flask",
-      "text": "Once you have used up any kind of alchemy flask, simply wash out and refill it with water, to get a fresh new flask ready for use. $(br2)Flasks also have their equivalent to $(thing)Splash$() and $(thing)Lingering Potions$()."
+      "text": "Once you have used up any kind of alchemy flask, simply wash out and refill it with water, to get a fresh new flask ready for use."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Flasks also have their equivalent to $(thing)Splash$() and $(thing)Lingering Potions$(), see overleaf. $(br2)$(thing)Lingering Potions$() can be combined with 8 $(l:bloodmagic:demon_will/demonic_items/throwing_daggers#amethyst_throwing_dagger)Amethyst Throwing Daggers$() in the $(item)Alchemical Reaction Chamber$() to create $(item)Tipped Amethyst Throwing Daggers$(). Any entity hit by one of these daggers will have the potion's effects transferred to it."
     },
     {
       "type": "bloodmagic:2x_crafting_flask",
       "a.heading": "Splash Alchemy Flask",
       "a.recipe": "bloodmagic:flask/flask_splash",
       "b.heading": "Lingering Alchemy Flask",
-      "b.recipe": "bloodmagic:flask/flask_lingering",
-      "text": "Flasks also have their equivalent to $(thing)Splash$() and $(thing)Lingering Potions$(), as seen overleaf. "
+      "b.recipe": "bloodmagic:flask/flask_lingering"
     },
     {
       "type": "patchouli:text",

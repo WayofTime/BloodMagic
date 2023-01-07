@@ -42,7 +42,7 @@
       "type": "patchouli:spotlight",
       "item": "bloodmagic:alchemy_flask",
       "title": "Potioncrafting (Tier-2)",
-      "text": "If building your $(l:bloodmagic:altar/blood_altar)Altar$() is getting tiresome and you feel in need of a distraction, why not try out the newly available $(l:bloodmagic:alchemy_table/potions)Potioncrafting$() system?  you will be able to craft $(thing)Alchemy Flasks$() and imbue them with literally dozens of effects."
+      "text": "If building your $(l:bloodmagic:altar/blood_altar)Altar$() is getting tiresome and you feel in need of a distraction, why not try out the newly available $(l:bloodmagic:alchemy_table/potions)Potioncrafting$() system? you will be able to craft $(thing)Alchemy Flasks$() or $(l:bloodmagic:demon_will/demonic_items/throwing_daggers#amethyst_throwing_dagger)Tipped Amethyst Throwing Daggers$() and imbue them with literally dozens of effects."
     },
     {
       "type": "patchouli:spotlight",
