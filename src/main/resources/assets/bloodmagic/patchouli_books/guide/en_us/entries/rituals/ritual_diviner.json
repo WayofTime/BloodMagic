@@ -8,6 +8,10 @@
       "text": "Crafting rituals is an intricate business; Even if you have the correct $(item)Inscription Tools$(), you can't just slap runic inscriptions down any old how and expect things to happen. Luckily, the $(item)Ritual Diviner$() is here to help. $(br2)Hold [$(k:sneak)] and press [$(k:use)] or [$(k:attack)] while looking at empty air to cycle through the avaliable rituals in either direction."
     },
     {
+      "type": "patchouli:text",
+      "text": "you can also change the direction that the completed ritual will face by pressing [$(k:use)]. This will only affect a small number of rituals, such as the $(l:bloodmagic:rituals/ritual_list/ritual_speed)Ritual of Speed$(), as most rituals are symmetrical."
+    },
+    {
       "type": "patchouli:crafting",
       "recipe": "bloodmagic:ritual_diviner_0",
       "text": "simply tap [$(k:use)] while looking at a $(item)Master Ritual Stone$() to make the Diviner build the currently selected ritual out of any $(item)Ritual Stones$() you may be carrying. It's almost like magic!"
