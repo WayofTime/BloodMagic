@@ -58,15 +58,39 @@
     },
     {
       "type": "patchouli:spotlight",
-      "item": "bloodmagic:vengefulcrystal",
+      "item": "bloodmagic:duskscribetool",
       "title": "Tier Four",
-      "text": "You may want to look into the $(l:bloodmagic:rituals/ritual_tinkerer)Ritual Tinkerer$() and the various kinds of $(l:bloodmagic:demon_will/will_manipulation/aspected_will)Will Aspects$() available to you, and consider how they may be used to refine your existing rituals and alter how your $(l:bloodmagic:demon_will/demonic_items/sentient_tools)Sentient Tools$() and $(l:bloodmagic:demon_will/demonic_items/sentient_sword)Weapons$() work. To progress beyond this point, however, a delve into the $(l:bloodmagic:rituals/ritual_list/ritual_standard_dungeon)Demon Realm$() will be needed..."
+      "text": "at Tier 4, you will gain access to the $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l), and with it, a plethora of more advanced $(thing)Rituals$(), allowing such feats as $(l:bloodmagic:rituals/ritual_list/ritual_well_of_suffering)automating your LP supply$(), unlimited $(l:bloodmagic:rituals/ritual_list/ritual_condor)creative flight within your base$(), and even $(l:bloodmagic:rituals/ritual_list/ritual_meteor)summoning a devastating meteor$() from the heavens, chock full of goodies!"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "bloodmagic:upgradetome",
+      "title": "Better Armour (Tier-4)",
+      "text": "You may have tinkered around with $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$() by this point, but the relatively low cap of points may have started to chafe. With the $(l:bloodmagic:rituals/ritual_diviner#dusk)Ritual Diviner [Dusk]$(/l), you are now free to augment your armour like never before. Firstly, The $(l:bloodmagic:rituals/ritual_list/ritual_armour_evolve)Ritual of Living Evolution$() will allow you to raise your points cap from 100 to 300."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "If that's not enough, you can use the $(l:bloodmagic:rituals/ritual_list/ritual_upgrade_remove)Sound of the Cleansing Soul$() to strip your armour of its upgrades. These tomes can be copied into a $(l:bloodmagic:alchemy_array/living_equipment/training_bracelet)Training Bracelet$(), or re-applied to your armour to ensure you only train Upgrades that you actually want. $(br2)Any leftover $(thing)Upgrade Tomes$() can be kept as fuel for the $(l:bloodmagic:rituals/ritual_list/ritual_living_downgrade)Penance of the Leaden Soul$(). This ritual allows you to apply $(thing)Downgrades$() to your Armour."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "While these are expensive (and each comes with a hefty penalty), their negative point-cost will give you more room to further improve your upgrades. $(br2)Want to be incredibly tough and healthy, and don't mind being slow? Try combining $(l:bloodmagic:alchemy_array/living_equipment/armor_upgrades/body_builder)Body Builder$() V, $(l:bloodmagic:alchemy_array/living_equipment/armor_upgrades/brilliance)Brilliance$() V, $(l:bloodmagic:alchemy_array/living_equipment/armor_upgrades/healthy)Healthy$() X, and $(l:bloodmagic:alchemy_array/living_equipment/armor_upgrades/tough)Tough$() X with $(l:bloodmagic:alchemy_array/living_equipment/armour_downgrades/dig_slowdown)Leadened Pick$() X and $(l:bloodmagic:alchemy_array/living_equipment/armour_downgrades/speed_decreas e)Limp Leg$() X."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Feel more like exploring and going fast? Perhaps you don't care about your offhand? Maybe $(l:bloodmagic:alchemy_array/living_equipment/armor_upgrades/strong_legs)Strong Legs$() X, $(l:bloodmagic:alchemy_array/living_equipment/armor_upgrades/quick_feet)Quick Feet$() X, and $(l:bloodmagic:alchemy_array/living_equipment/armour_downgrades/crippled_arm)Crippled Arm$() would be more your speed. $(br2)Feel like having both at different times? Make multiple chestplates and swap between them! There are dozens of upgrades and downgrades, so mix and match to find your favourite combinations."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "bloodmagic:vengefulcrystal",
+      "title": "Aspected Will (Tier-4)",
+      "text": "You may want to look into the $(l:bloodmagic:rituals/ritual_tinkerer)Ritual Tinkerer$() and the various kinds of $(l:bloodmagic:demon_will/will_manipulation/aspected_will)Will Aspects$() available to you, and consider how they may be used to refine your existing rituals and alter how your $(l:bloodmagic:demon_will/demonic_items/sentient_tools)Sentient Tools$() and $(l:bloodmagic:demon_will/demonic_items/sentient_sword)Weapons$() work. To progress beyond this point, however, a delve into the $(thing)Demon Realm$() will be needed..."
     },
     {
       "type": "patchouli:spotlight",
       "item": "bloodmagic:mineentrancekey",
       "title": "The Demon Realm (Tier-4)",
-      "text": "By performing the $(thing)Pathway to the Endless Realm$(), you can gain access to the $(thing)Demon Realm$() proper, along with all of its treasures and terrors. Come equipped for a fight! Delve deep, and you may find a rich source of $(l:bloodmagic:dungeons/demonite)Demonite Ore$(), which can be combined into block form and used for the capstones on your altar, along with the $(item)Archmage's Blood Orb$()."
+      "text": "By performing the $(l:bloodmagic:rituals/ritual_list/ritual_standard_dungeon)Pathway to the Endless Realm$(), you can gain access to the $(thing)Demon Realm$() proper, along with all of its treasures and terrors. Come equipped for a fight! Delve deep, and you may find a rich source of $(l:bloodmagic:dungeons/demonite)Demonite Ore$(), which can be combined into block form and used for the capstones on your altar, along with the $(item)Archmage's Blood Orb$()."
     },
     {
       "type": "patchouli:spotlight",
