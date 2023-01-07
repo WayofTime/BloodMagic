@@ -320,7 +320,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.fullStomachRitual.info", "Takes food from the linked chest and fills the player's saturation with it.");
 		add("ritual.bloodmagic.interdictionRitual.info", "Pushes all mobs within its area away from the master ritual stone.");
 		add("ritual.bloodmagic.containmentRitual.info", "Pulls all mobs within its area towards the master ritual stone.");
-		add("ritual.bloodmagic.speedRitual.info", "Launches players within its range in the direction of the ritual.");
+		add("ritual.bloodmagic.speedRitual.info", "Launches entites within its range in the direction of the ritual.");
 		add("ritual.bloodmagic.suppressionRitual.info", "Suppresses fluids within its range - deactivating the ritual returns the fluids back to the world.");
 		add("ritual.bloodmagic.expulsionRitual.info", "Expels players from its range that are neither the owner nor have a bound blood orb in the chest on top of the master ritual stone.");
 		add("ritual.bloodmagic.zephyrRitual.info", "Picks up items within its range and places them into the linked chest.");
