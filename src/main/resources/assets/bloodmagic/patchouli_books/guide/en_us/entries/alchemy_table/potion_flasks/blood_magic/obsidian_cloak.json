@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "$(thing)Obsidian Cloak$() reduces all damage taken from non-magical sources by 20% per level."
+      "text": "$(thing)Obsidian Cloak$() reduces all damage taken from non-magical sources by 20% per level. $(br2)It's created from a flask of $(l:bloodmagic:alchemy_table/potion_flasks/blood_magic/hard_cloak)Hard Cloak$(), not an $(item)Empty Flask$() like most other $(thing)potions$()."
     },
     {
       "type": "bloodmagic:3x_crafting_flask",
