@@ -92,12 +92,6 @@ minecraft {
     }
 }
 
-mixin {
-	add sourceSets.main, "bloodmagic.refmap.json"
-	
-	config "bloodmagic.mixins.json"
-}
-
 repositories {
 	maven {
         url "https://dvs1.progwml6.com/files/maven/"
