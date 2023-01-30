@@ -171,8 +171,8 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 			@SuppressWarnings("unchecked")
 			List<Object> crops = (List<Object>) getCrops.invoke(registry);
 
-			Class<?> mysticalCrop = Class.forName("com.blakebr0.mysticalagriculture.api.crop.ICrop");
-			Method getCrop = mysticalCrop.getMethod("getCrop");
+			Class<?> mysticalCrop = Class.forName("com.blakebr0.mysticalagriculture.api.crop.Crop");
+			Method getCrop = mysticalCrop.getMethod("getCropBlock");
 
 			for (Object maCrop : crops)
 			{
