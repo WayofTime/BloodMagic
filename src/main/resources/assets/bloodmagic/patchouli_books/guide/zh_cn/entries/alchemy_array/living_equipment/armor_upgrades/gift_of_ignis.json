@@ -1,0 +1,15 @@
+{
+  "name": "焰火之礼",
+  "icon": "minecraft:blaze_powder",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "效果：提供抗火效果。等级越高，抗火效果持续时间越长，充能速度越快。$(br2)训练：玩家燃烧。($(item)抗火药水$()是训练的好帮手) $(br2)最高等级：5"
+    },
+    {
+      "type": "bloodmagic:living_armour_upgrade_table",
+      "upgrade": "bloodmagic:fire_resist"
+    }
+  ]
+}

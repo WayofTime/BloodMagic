@@ -1,0 +1,67 @@
+{
+  "name": "意志催化剂",
+  "icon": "bloodmagic:rawcatalyst",
+  "category": "bloodmagic:demon_will/will_manipulation",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "要说$(raw)恶魔意识$()有一个缺点，那它的收集是一个乏味、进度缓慢的过程。即使有一颗完整的$(l:bloodmagic:demon_will/will_manipulation/soul_gem)地狱魂石$()和一把拥有$(thing)抢夺 III$()和被$(l:bloodmagic:alchemy_table/anointments/looting_anointment)掠夺闪芒 II$()强化的$(l:bloodmagic:demon_will/demonic_items/sentient_sword)感知之剑$()，但这仍需要手动进行。但是你还有很多事要做，而不是一味的去打蜘蛛和骷髅。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "当然，这个过程可以完全自动化，使你有更多的时间去扩大你的魔法。（如果你愿意，也可以回去种田） $(br2)第一步则是获取一些$(l:bloodmagic/demon_will/will_manipulation/crystallized_will)意志晶体$()。可以使用任何一种 - $(raw)原生$()、$(steadfast)坚毅$()、$(destructive)破坏$()、$(vengeful)报复$()或$(corrosive)腐蚀$()意识，只要有 4 种同类的晶体。"
+    },
+    {
+      "type": "bloodmagic:3x_crafting_soulforge",
+      "a.heading": "原生意志晶簇",
+      "a.recipe": "bloodmagic:soulforge/raw_crystal_block",
+      "b.heading": "坚毅意志晶簇",
+      "b.recipe": "bloodmagic:soulforge/steadfast_crystal_block",
+      "c.heading": "破坏意志晶簇",
+      "c.recipe": "bloodmagic:soulforge/destructive_crystal_block"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_soulforge",
+      "a.heading": "复仇意志晶簇",
+      "a.recipe": "bloodmagic:soulforge/vengeful_crystal_block",
+      "b.heading": "腐蚀意志晶簇",
+      "b.recipe": "bloodmagic:soulforge/corrosive_crystal_block"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "只要有了晶簇，放到任何一种区块中，并为该区块提供相应的意志等待即可热。最终，新的晶簇将会生长出来，就像在$(l:bloodmagic:demon_will/will_manipulation/crystallized_will)恶魔结晶坛$()生长的晶簇。$(br2)你可以使用$(l:bloodmagic:rituals/ritual_list/ritual_crystal_harvest)碎晶裂纹$()仪式来自动打碎除中间的晶簇外其余的晶簇，并使用$(l:bloodmagic:rituals/ritual_list/ritual_zephyr)和风之唤$()仪式来自动收集掉落的晶簇。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "当有了基本的$(l:bloodmagic:demon_will/item_routing/routing_nodes)路由节点系统$()，可以将多余的晶体输送到$(l:bloodmagic:demon_will/will_manipulation/crystallized_will)恶魔坩埚$()，实现完全自动的一个循环。$(br2)你应该注意到一点问题 - 晶簇的生长速度很慢，非常慢。每个晶簇每隔几分钟才会生长出一个晶簇，并且新长出的晶簇所需的意志和燃烧时产生的意志几乎一样 - 平均的说，大约是 1 意志 / 分钟 / 晶簇。"
+    },
+    {
+      "type": "bloodmagic:3x_crafting_soulforge",
+      "a.heading": "原生意志催化剂",
+      "a.recipe": "bloodmagic:soulforge/raw_catalyst",
+      "b.heading": "坚毅意志催化剂",
+      "b.recipe": "bloodmagic:soulforge/steadfast_catalyst",
+      "c.heading": "破坏意志催化剂",
+      "c.recipe": "bloodmagic:soulforge/destructive_catalyst"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_soulforge",
+      "a.heading": "复仇意志催化剂",
+      "a.recipe": "bloodmagic:soulforge/vengeful_catalyst",
+      "b.heading": "腐蚀意志催化剂",
+      "b.recipe": "bloodmagic:soulforge/corrosive_catalyst"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "好消息，有一个新物品$(item)意志催化剂$()，这里就是它大显宏图的地方。当手持该晶簇种类的催化剂，并在该种类的$(thing)晶簇$()按[$(k:use)]，就可以加速其生长。任何一种催化剂都可以使晶簇生长所需的意志从 45 降至 25，并将生长速度提高 10 倍！任何一种催化剂可以促进 10 个晶簇的生长，还可以省出 200 意志。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "你也可以对一个晶簇使用两次催化剂 - 尽管这只可以将生长速度提高到 20 倍，而并不是 10 倍。$(br2)当然，一些精明的 Sanguimancer 已经意识到了，这取代了一个手动问题 - 用剑到处打怪物，但是也有另一个问题  - 用催化剂和到处收集晶体。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "幸运的是这也有一个仪式！$(l:bloodmagic:rituals/ritual_list/ritual_crystal_catalyst)聚集游魂$()，这个仪式会自动将作用范围内的晶簇施加催化剂。有了些生产规模和已经设置好的$(thing)路由节点$()，就可以将整个事情自动化， 从上到下.....正如它们所说，这是给读者的一个练习。"
+    }
+  ]
+}

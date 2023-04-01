@@ -1,0 +1,22 @@
+{
+  "name": "丰收之月",
+  "icon": "minecraft:wheat",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "丰收之月",
+      "multiblock_id": "bloodmagic:harvest",
+      "text": "使用$(l:bloodmagic:rituals/ritual_diviner#dusk)仪式推测杖 [薄暮] $(/l)更容易建造。"
+    },
+    {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "harvest"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "harvest",
+      "page_type": "harvestRange"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "隐身",
+  "icon": "minecraft:glass_pane",
+  "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)隐身$()使目标消失，使目标难以被发现。但这个效果并不包括$(item)盔甲$()和持有的物品，这些物品都是对目标位置暴露的提示。$(br2))这个是由内含$(l:bloodmagic:alchemy_table/potion_flasks/vanilla/night_vision)夜视$()效果的炼金瓶制作。"
+    },
+    {
+      "type": "bloodmagic:3x_crafting_flask",
+      "a.heading": "隐身 (3:00)",
+      "a.recipe": "bloodmagic:flask/night_to_invis",
+      "b.heading": "隐身 (8:00)",
+      "b.recipe": "bloodmagic:flask/length_invisibility",
+      "c.heading": "隐身 (21:20)",
+      "c.recipe": "bloodmagic:flask/length_average_invisibility"
+    }
+  ]
+}

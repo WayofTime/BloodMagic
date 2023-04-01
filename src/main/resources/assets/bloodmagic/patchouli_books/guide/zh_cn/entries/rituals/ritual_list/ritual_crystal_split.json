@@ -1,0 +1,32 @@
+{
+  "name": "结晶共鸣",
+  "icon": "bloodmagic:vengefulcrystal",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "结晶共鸣",
+      "multiblock_id": "bloodmagic:crystal_split",
+      "text": "使用$(l:bloodmagic:rituals/ritual_diviner#dusk)仪式推测杖 [薄暮] $(/l)更容易建造。"
+    },
+    {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "crystal_split",
+      "text_overrides": [
+        ["Raw crystal cluster", "l:bloodmagic:demon_will/will_manipulation/crystallized_will"],
+        ["aspected crystal clusters", "l:bloodmagic:demon_will/will_manipulation/aspected_will"]
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "这个仪式将位于$(item)主仪式石$()上两格的位置，生长较好（至少有 5 个晶簇）的$(l:bloodmagic:demon_will/will_manipulation/crystallized_will)原生意志晶簇$(/l)分裂成 4 个元素仪式石上对应$(l:bloodmagic:demon_will/will_manipulation/aspected_will)意志种类$(/l)的新晶簇。 这个距离就是为了$(item)主仪式石$()上的$(item)恶魔结晶坛$()而留。 $(br2)有关恶魔意志晶体的生长信息，请阅读$(l:bloodmagic:demon_will/will_manipulation/crystallized_will)意志晶体$(/l)这一章。"
+    },
+    {
+      "type": "patchouli:image",
+      "title": "Ritual Setup",
+      "images": ["bloodmagic:images/entries/demon_will/will_splitting.png"],
+      "border": true,
+      "text": "结晶共鸣的设置推荐。"
+    }
+  ]
+}

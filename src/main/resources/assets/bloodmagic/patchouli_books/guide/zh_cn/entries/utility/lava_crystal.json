@@ -1,0 +1,16 @@
+{
+  "name": "熔岩晶体",
+  "icon": "bloodmagic:lavacrystal",
+  "category": "bloodmagic:utility",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)熔岩晶体$()是一种高能热源。制造$(fire)熔岩$()你会因为制备时使用的岩浆以及你的$(l:bloodmagic:altar/soul_network)灵魂网络$()，并自信他不会冷却。$(br2)当在方块上按[$(k:use)]，该方块将会被点燃，消耗100 LP。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:lava_crystal",
+      "text": "$(br)如果将晶体放进$(item)熔炉$()燃料栏，该晶体会是一个无限$(thing)燃料$()，每使用 10 秒就会消耗 50LP，或长时间制作一件物品。 "
+    }
+  ]
+}

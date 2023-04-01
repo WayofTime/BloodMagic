@@ -1,0 +1,21 @@
+{
+  "name": "无尽之路仪式",
+  "icon": "bloodmagic:ingot_hellforged",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "无尽领域",
+      "multiblock_id": "bloodmagic:standard_dungeon",
+      "text": "使用$(l:bloodmagic:rituals/ritual_diviner)仪式推测杖$(/l)更容易建造。"
+    },
+    {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "standard_dungeon",
+      "text_overrides": [
+        ["Demon Realm", "thing"]
+      ],
+      "text": "小心，恶魔领域是非常危险的。一定要有备而来!"
+    }
+  ]
+}

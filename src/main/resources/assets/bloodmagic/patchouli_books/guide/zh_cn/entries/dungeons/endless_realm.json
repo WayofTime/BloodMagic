@@ -1,0 +1,29 @@
+{
+  "name": "无尽领域",
+  "icon": "bloodmagic:special_dungeon_seal",
+  "category": "bloodmagic:dungeons",
+  "extra_recipe_mappings": {
+    "bloodmagic:special_dungeon_seal": 0,
+    "bloodmagic:hellforgedparts": 3
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "和它的兄弟$(l:bloodmagic:rituals/ritual_list/ritual_simple_dungeon)隐域之缘仪式$()一样，你可以通过$(l:bloodmagic:rituals/ritual_list/ritual_standard_dungeon)无尽之路仪式$()来进入$(thing)恶魔领域$()。你会发现自己正在看着$(thing)反转柱$()。和$(thing)前厅$()一样，你可以发现一个普通的战利品箱，应该是一个粗心的恶魔（也可能是一个不走运的巫师）留下的，还有一些门洞，旁边有"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "另一个反转柱，这是让你回家的。$(br2)地牢的这些房间将有比前厅更为强大的敌人，也有相应的战利品。务必要观察任何的$(thing)空间扭曲$()，以及像$(item)工头的钥匙$()那样的稀有$(l:bloodmagic:dungeons/keys)钥匙$()。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "工头的钥匙将允许进入$(thing)矿井$()，难度和奖励也会有一定的提升。除了有高等级$(l:bloodmagic:alchemy_table/potions)药水制作$()需要的$(l:bloodmagic:dungeons/demonite)恶魔合金矿$()和$(l:bloodmagic:altar/blood_altar)5 级血之祭坛$()和附带的$(l:bloodmagic:altar/soul_network)气血宝珠$()以外，还会发现大量普通的战利品、附魔的工具和武器、药水......"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "bloodmagic:hellforgedparts",
+      "title": "Intricate Hellforged Parts",
+      "text": "深入探索，你可能会发现$(item)复杂的恶魔合金零件$()，这个零件可以增强$(item)符文$()的效果。这就像有两个$(blood)血之祭坛$()一样！"
+    }
+  ]
+}

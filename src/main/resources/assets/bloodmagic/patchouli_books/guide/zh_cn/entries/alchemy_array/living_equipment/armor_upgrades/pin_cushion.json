@@ -1,0 +1,15 @@
+{
+  "name": "箭芒消涣",
+  "icon": "minecraft:arrow",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "效果：免受弓箭的伤害。$(br2)训练：被射杀。$(br2)最高等级：10"
+    },
+    {
+      "type": "bloodmagic:living_armour_upgrade_table",
+      "upgrade": "bloodmagic:arrow_protect"
+    }
+  ]
+}

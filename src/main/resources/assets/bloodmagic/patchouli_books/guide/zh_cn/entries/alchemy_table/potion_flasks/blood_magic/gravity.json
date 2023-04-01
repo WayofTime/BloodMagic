@@ -1,0 +1,31 @@
+{
+  "name": "引力",
+  "icon": "minecraft:tropical_fish",
+  "category": "bloodmagic:alchemy_table/potion_flasks/blood_magic",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)引力$()会使目标下落的更快，在落地时所受的伤害也更高。$(br2)这个是由内含$(l:bloodmagic:alchemy_table/potion_flasks/blood_magic/grounded)沉重$()和$(l:bloodmagic:alchemy_table/potion_flasks/vanilla/slow_falling)缓降$()效果的炼金瓶制作的。"
+    },
+    {
+      "type": "bloodmagic:3x_crafting_flask",
+      "a.heading": "引力 (3:00)",
+      "a.recipe": "bloodmagic:flask/gravity",
+      "b.heading": "引力 (8:00)",
+      "b.recipe": "bloodmagic:flask/length_gravity",
+      "c.heading": "引力 II (1:30)",
+      "c.recipe": "bloodmagic:flask/potency_gravity"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "可以通过加入$(l:bloodmagic:alchemy_table/potions#average_potions)标准增强催化剂$()来提高炼金瓶的效果。"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_flask",
+      "a.heading": "引力 III (0:45)",
+      "a.recipe": "bloodmagic:flask/potency_average_gravity",
+      "b.heading": "引力 (21:20)",
+      "b.recipe": "bloodmagic:flask/length_average_gravity"
+    }
+  ]
+}

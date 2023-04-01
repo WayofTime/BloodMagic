@@ -1,0 +1,13 @@
+{
+  "name": "过滤器零件",
+  "icon": "bloodmagic:componentframeparts",
+  "category": "bloodmagic:demon_will/item_routing",
+  "pages":[
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "过滤器零件",
+      "recipe": "bloodmagic:alchemytable/component_frame_parts",
+      "text": "$(item)过滤器零件$()是$(item)过滤器$()的一部分，本身是没有什么作用。"
+    }
+  ]
+}

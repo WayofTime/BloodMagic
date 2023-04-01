@@ -1,0 +1,61 @@
+{
+  "name": "炼金反应炉",
+  "icon": "bloodmagic:alchemicalreactionchamber",
+  "category": "bloodmagic:utility",
+  "pages": [
+     {
+      "type": "patchouli:text",
+      "text": "$(item)炼金反应炉$()并没有完全完成，但是，它还是可以当成一个$(thing)熔炉$()使用的，提供$(l:bloodmagic:utility/ore_processing)三倍矿物$()的效果，还可以还原$(l:bloodmagic:altar/soul_network)气血宝珠$()、$(item)下界合金锭$()和$(item)增强符文$()，而且还是目前唯一可以获取$(blood)虚弱气血碎片$()的唯一途径，具体来说获取的物品是$(l:bloodmagic:dungeons/tau_fruit)饱满血命果$()。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:arc"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "血染恢复宝具",
+      "recipe": "bloodmagic:soulforge/sanguine_reverter",
+	  "anchor": "blood_shard",
+      "text": "$(item)血染恢复宝具$()用于制造$(blood)虚弱气血碎片$()，还是还原$(l:bloodmagic:altar/soul_network)气血宝珠$()、$(item)下界合金锭$()和$(item)增强符文$()为原材料的工具。"
+    },
+    {
+      "type": "bloodmagic:3x_crafting_arc",
+      "a.heading": "虚弱气血碎片",
+      "a.recipe": "bloodmagic:arc/weakbloodshard_tau",
+      "b.heading": "虚弱气血宝珠",
+      "b.recipe": "bloodmagic:arc/reversion/weak_blood_orb",
+      "c.heading": "学徒气血宝珠",
+      "c.recipe": "bloodmagic:arc/reversion/apprentice_blood_orb"
+    },
+    {
+      "type": "bloodmagic:3x_crafting_arc",
+      "a.heading": "还原法师气血宝珠",
+      "a.recipe": "bloodmagic:arc/reversion/magician_blood_orb",
+      "b.heading": "还原导师气血宝珠",
+      "b.recipe": "bloodmagic:arc/reversion/master_blood_orb",
+      "c.heading": "还原下界合金锭",
+      "c.recipe": "bloodmagic:arc/reversion/netherite_ingot"
+    },
+    {
+      "type": "bloodmagic:crafting_arc",
+      "heading": "还原增强符文",
+      "recipe": "bloodmagic:arc/reversion/speed",
+      "text": "All Reinforced Runes can be reverted in this way - this is just a demonstration."
+    },
+    {
+      "type": "patchouli:crafting",
+      "heading": "水化单元",
+      "recipe": "bloodmagic:primitive_hydration_cell",
+      "text": "水化单元用来制造粘土，就是平衡基石。"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_arc",
+      "a.heading": "粘性沙",
+      "a.recipe": "bloodmagic:arc/clay_from_sand",
+      "a.fluid_input": "minecraft:water_bucket",
+      "b.heading": "粘性陶土",
+      "b.recipe": "bloodmagic:arc/clay_from_terracotta",
+      "b.fluid_input": "minecraft:water_bucket"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "壮实双腿",
+  "icon": "minecraft:diamond_leggings",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "效果：增加跳跃高度并减少摔落伤害，最高可以跳跃7.5格并减少83%的摔落伤害。可以在跳跃时按住[$(k:sneak)]来取消. $(br2)训练：进行跳跃$(br2)最高等级：10"
+    },
+    {
+      "type": "bloodmagic:living_armour_upgrade_table",
+      "upgrade": "bloodmagic:jump"
+    }
+  ]
+}

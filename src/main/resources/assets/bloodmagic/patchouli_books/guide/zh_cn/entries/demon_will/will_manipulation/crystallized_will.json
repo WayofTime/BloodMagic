@@ -1,0 +1,27 @@
+{
+  "name": "意识晶体",
+  "icon": "bloodmagic:defaultcrystal",
+  "category": "bloodmagic:demon_will/will_manipulation",
+  "extra_recipe_mappings": {
+    "bloodmagic:demoncrucible": 1,
+    "bloodmagic:demoncrystallizer": 1,
+    "bloodmagic:rawdemoncrystal": 1,
+    "bloodmagic:defaultcrystal": 1
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "现在你的$(l:bloodmagic:demon_will/will_manipulation/soul_gem)地狱魂石$()中有大量的$(l:bloodmagic:demon_will/will_manipulation/demon_will)恶魔意识$()，该探索把意志释放到世界中会发生什么。$(br2)首先，需要将$(raw)意识$()释放到$(l:bloodmagic:demon_will/will_manipulation/aura)灵气$()中。接下类需要制作一个$(thing)恶魔结晶坛$()。"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "恶魔结晶坛",
+      "recipe": "bloodmagic:soulforge/demon_crystallizer",
+      "text": "这将缓慢的消耗$(l:bloodmagic:demon_will/will_manipulation/aura)灵气$()中的$(l:bloodmagic:demon_will/will_manipulation/demon_will)恶魔意志$()来产生$(item)意志晶体$()。生成第一个晶簇需要 100 $(raw)意志$()，后面生产的晶簇每个需要 40 意志。但是可以使用$(item)恶魔坩埚$()以 50 意志烧掉，这样就可以净赚 10 意志。最大的$(item)晶簇$()有 7 个小晶簇。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "如果库存中有超过 512 $(raw)意志$()（任意种类的$(l:bloodmagic:demon_will/will_manipulation/soul_gem)地狱魂石$()的数量），你可以空手右击处于中间的晶簇来收获晶体，这会使除中间的晶簇以外其它晶簇掉落。$(br2)如果你并没有足够的$(raw)意志$()，$(italic)真的$()需要中间的晶簇或只是赶时间，你可以使用搞头收获全部的晶簇。"
+    }
+  ]
+}

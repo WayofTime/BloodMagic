@@ -1,0 +1,25 @@
+{
+  "name": "速度符文",
+  "icon": "bloodmagic:speedrune",
+  "category": "bloodmagic:altar/blood_rune",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)速度符文$()可以增加血之祭坛所有合成的合成速度。每个符文叠加 20% 的合成速度（以及当祭坛空置时的进度丢失速度）。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:blood_rune_speed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:blood_rune_speed_2",
+      "text":"有了一些$(item)下界合金碎片$()和从$(l:bloodmagic:dungeons/endless_realm)恶魔领域$()带来的$(item)复杂的恶魔合金零件$()，这样就可以使$(item)速度符文$()的效果提高，每个符文将会提高 40% 的合成速度。"
+    },
+    {
+      "type": "bloodmagic:crafting_arc",
+      "recipe": "bloodmagic:arc/reversion/speed",
+      "text":"如果改变了主意，你可以撤销 ARC 中的配方。"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "强劲身躯",
+  "icon": "minecraft:cooked_beef",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "效果：给予击退抗性和额外生命. 最高有100% 的抗性提升和10颗半心的生命值。$(br2)训练: 进食。$(br2)最高等级: 5"
+    },
+    {
+      "type": "bloodmagic:living_armour_upgrade_table",
+      "upgrade": "bloodmagic:knockback_resist"
+    }
+  ]
+}

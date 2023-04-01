@@ -1,0 +1,37 @@
+{
+  "name": "修复剂",
+  "icon": "bloodmagic:weapon_repair_anointment",
+  "category": "bloodmagic:alchemy_table/anointments",
+  "pages": [
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "修复剂",
+      "recipe": "bloodmagic:alchemytable/weapon_repair_anointment",
+      "text": "每次使用工具时，修复1点耐久。 $(br2)有效物品:工具，剑。$(br2)套用: 定期维修I (256 方块)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "修复剂 L",
+      "recipe": "bloodmagic:alchemytable/weapon_repair_anointment_l",
+      "text": "这种升级版的药剂可延长4倍效果次数。 $(br2)套用: 定期维修I (1024 方块)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "修复剂 II",
+      "recipe": "bloodmagic:alchemytable/weapon_repair_anointment_2",
+      "text": "这种升级版的药剂可以使修复的耐久度提升为2点。如果工具会损坏则不会发动。 $(br2)套用: 定期维修II (256 方块)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "修复剂 XL",
+      "recipe": "bloodmagic:alchemytable/weapon_repair_anointment_xl",
+      "text": "这种升级版的药剂可延长16倍效果次数。$(br2)套用: 定期维修I (4096 方块)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "修复剂 III",
+      "recipe": "bloodmagic:alchemytable/weapon_repair_anointment_3",
+      "text": "这种升级版的药剂可以使修复的耐久度提升为3点。如果工具会损坏则不会发动。 $(br2)套用: 定期维修III (256 方块)"
+    }
+  ]
+}

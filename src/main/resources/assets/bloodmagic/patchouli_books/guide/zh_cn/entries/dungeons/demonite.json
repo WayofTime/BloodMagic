@@ -1,0 +1,45 @@
+{
+  "name": "恶魔合金矿",
+  "icon": "bloodmagic:dungeon_ore",
+  "category": "bloodmagic:dungeons",
+  "extra_recipe_mappings": {
+    "bloodmagic:dungeon_ore": 0,
+    "bloodmagic:rawdemonite": 0
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)恶魔合金矿$()只有在$(thing)地牢$()中才可以找到。特别是在$(thing)矿井$()，需要在错综复杂的通道中找到$(item)工头的钥匙$()，使用这把钥匙来打开$(thing)空间扭曲$()的地方。恶魔合金矿可以制造$(item)恶魔合金锭$()或$(item)恶魔合金粉末$()。$(br2)当使用有精准采集的工具经行采集时会直接掉落矿石方块，如果直接用工具采集则会掉落$(item)粗恶魔合金$()。"
+    },
+    {
+      "type": "patchouli:smelting",
+      "heading": "恶魔合金锭",
+      "recipe": "bloodmagic:smelting/ingot_from_demonite",
+      "recipe2": "bloodmagic:smelting/ingot_from_raw_hellforged",
+      "recipe3": "bloodmagic:smelting/ingot_hellforged"
+    },
+    {
+      "type": "patchouli:smelting",
+      "heading": "恶魔合金锭",
+      "recipe": "bloodmagic:smelting/ingot_hellforged"
+    },
+    {
+      "type": "bloodmagic:3x_crafting_arc",
+      "a.heading": "恶魔合金粉末",
+      "a.recipe": "bloodmagic:arc/dustsfrom_gravel_hellforged",
+      "b.recipe": "bloodmagic:arc/dustsfrom_ore_hellforged",
+      "c.recipe": "bloodmagic:arc/dustsfrom_raw_hellforged"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_arc",
+      "a.heading": "处理恶魔合金矿",
+      "a.recipe": "bloodmagic:arc/fragmentshellforged",
+      "b.recipe": "bloodmagic:arc/gravelshellforged"
+    },
+    {
+      "type": "patchouli:crafting",
+      "heading": "恶魔合金块",
+      "recipe": "bloodmagic:hellforged_block"
+    }
+  ]
+}

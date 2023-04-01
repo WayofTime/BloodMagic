@@ -1,0 +1,29 @@
+{
+  "name": "组合式物品过滤器",
+  "icon": "bloodmagic:itemrouterfiltercomposite",
+  "category": "bloodmagic:demon_will/item_routing",
+  "pages":[
+    {
+      "type": "patchouli:text",
+      "text": "$(item)组合式物品过滤器$()单独一个是没有什么作用的，但是如果和另一种$(item)过滤器$()一起使用时，将允许在过滤器中添加过滤规则。$(br2)例如：将附魔过滤器设置为 “任意附魔“ 可以通过和将标签过滤器设置为 ”forge:swords” 可以通过，这样只有附魔的剑可以通过。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "与$(l:bloodmagic:demon_will/item_routing/standard_item_filter)标准的物品过滤器$()类似，有一个数量选择器和可以选择允许/拒绝的功能。留空时将默认为 “全部”。当其它过滤器与组合式物品过滤器结合在一起时 GUI 会出现 “其它” 这个按键。"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_alchemy_table",
+      "a.heading": "组合式物品过滤器",
+      "a.recipe": "bloodmagic:alchemytable/composite_router_filter",
+      "b.heading": "添加标签过滤器",
+      "b.recipe": "bloodmagic:alchemytable/filter/composite_tag_filter"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_alchemy_table",
+      "a.heading": "添加附魔过滤器",
+      "a.recipe": "bloodmagic:alchemytable/filter/composite_enchant_filter",
+      "b.heading": "添加 Mod 过滤器",
+      "b.recipe": "bloodmagic:alchemytable/filter/composite_mod_filter"
+    }
+  ]
+}

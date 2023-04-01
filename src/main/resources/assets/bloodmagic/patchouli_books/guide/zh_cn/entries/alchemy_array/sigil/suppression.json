@@ -1,0 +1,19 @@
+{
+  "name": "抑制印记",
+  "icon": "bloodmagic:sigilofsuppression",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "当透过按下[$(k:use)]活化$(item)抑制印记$()时，将暂时使持有者周围大约6个方块范围内的液体消失。在离开范围后液体将会恢复，像是从来没有消失过。虽然将使探索地狱的岩浆海变得容易，但是要小心再活化时跳下任何深水域!"
+    },
+    {
+      "type": "bloodmagic:crafting_2-step_sigil",
+      "alchemy_table.heading": "抑制试剂",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_suppression",
+      "array.heading": "抑制印记",
+      "array.recipe": "bloodmagic:array/suppressionsigil",
+      "array.text": "$(italic)比虚无印记更好\u00AE!"
+    }
+  ]
+}

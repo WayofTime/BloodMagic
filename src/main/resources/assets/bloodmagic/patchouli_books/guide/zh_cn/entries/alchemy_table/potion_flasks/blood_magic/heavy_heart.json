@@ -1,0 +1,31 @@
+{
+  "name": "沉重的重心",
+  "icon": "minecraft:slime_ball",
+  "category": "bloodmagic:alchemy_table/potion_flasks/blood_magic",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)沉重的重心$()可以使目标稳定的向下下落，使目标的飞行和游泳变困难。$(br2)这个是由内含$(l:bloodmagic:alchemy_table/potion_flasks/blood_magic/gravity)引力$()和$(l:bloodmagic:alchemy_table/potion_flasks/vanilla/instant_health)瞬间治疗$()效果的炼金瓶制作。"
+    },
+    {
+      "type": "bloodmagic:3x_crafting_flask",
+      "a.heading": "沉重的重心 (3:00)",
+      "a.recipe": "bloodmagic:flask/gravity_to_heart",
+      "b.heading": "沉重的重心 (8:00)",
+      "b.recipe": "bloodmagic:flask/length_heavy_heart",
+      "c.heading": "沉重的重心 II (1:30)",
+      "c.recipe": "bloodmagic:flask/potency_heavy_heart"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "可以通过加入$(l:bloodmagic:alchemy_table/potions#average_potions)标准增强催化剂$()来提高炼金瓶的效果。"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_flask",
+      "a.heading": "沉重的重心 III (0:45)",
+      "a.recipe": "bloodmagic:flask/potency_average_heavy_heart",
+      "b.heading": "沉重的重心 (21:20)",
+      "b.recipe": "bloodmagic:flask/length_average_heavy_heart"
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "name": "Rhythm of the Beating Anvil",
+  "icon": "minecraft:crafting_table",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "Rhythm of the Beating Anvil",
+      "multiblock_id": "bloodmagic:crafting",
+      "text": "使用$(l:bloodmagic:rituals/ritual_diviner#dusk)仪式推测杖 [薄暮] $(/l)更容易建造。"
+    },
+    {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "crafting",
+    "text_overrides": [
+      ["Item Filter", "l:bloodmagic:demon_will/item_routing/standard_item_filter"]
+    ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Rythm of the Beating Anvil$()是一个强大且普遍的一个仪式，仪式允许在使用$(l:bloodmagic:alchemy_table/alchemy_table)炼金术桌$()或$(l:bloodmagic:demon_will/will_manipulation/soul_forge)地狱熔炉$()（如果有增强）的同时自动合成普通的配方。但是，这个仪式有点复杂，下面是如何设置这个仪式。$(br2)每一个仪式可以精确到一个配方。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "首先，需要一个在仪式上使用的配方。这个操作是物品过滤器完成的。$(br2)可以使用不同类型的过滤器，但是仪式只允许装备一个过滤器；多余的过滤器将不会使用。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "仪式中可以使用的过滤器：$(li)标准的物品过滤器: 精准的决定那个栏中是那个物品。$(li)物品标签过滤器：使用$(thing)Tags$()来决定那个物品。例如：如果有一个配方需要石头但是并没有准确的说（也可以使用安山岩、花岗岩等），你可以在过滤器中设置只允许 forge:stone 标签的通过。$(li)Mod 物品过滤器r: 将决定栏中的为任何 Mod 的物品。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/ritual/autocraft/filter_pickaxe.png"
+      ],
+      "title": "Sample Filter",
+      "border": true,
+      "text": "将标准的物品过滤器设置为自动制作$(item)石搞$()所需的材料。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "接下来，将物品过滤器放在仪式上，这个操作是必要的。在图片上，我们使用了一个$(item)物品展示框$()，当然你也可以用一个箱子代替。但是要注意，箱子中如果有多个$(item)过滤器$()，那只有第一个过滤器会被使用。$(br2)默认情况下，输入和输出的箱子会在同一个地方；但是这个可以通过$(l:bloodmagic/rituals/ritual_tinkerer)仪式调整器$()来调整。这对重复使用的物品配方有很大帮助，如：$(l:bloodmagic:altar/soul_network)气血宝珠$()。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/ritual/autocraft/default_placement.png",
+        "bloodmagic:images/entries/ritual/autocraft/optional_placement.png"
+      ],
+      "title": "放置过滤器",
+      "border": true,
+      "text": "在正常的位置放置一个过滤器和箱子，以及使用$(l:bloodmagic/rituals/ritual_tinkerer)仪式调整器$()调整过的进出箱子。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "如果为仪式提供$(steadfast)坚毅$()或$(corrosive)腐蚀$()意志，那仪式会分别尝试使用已经连接的$(l:bloodmagic:demon_will/will_manipulation/soul_forge)狱火熔炉$()或$(l:bloodmagic:alchemy_table/alchemy_table)炼金术桌$()自动制作物品。而且这些配方是无形的，想要制作2个相同的物品，那就需要设置过滤器为 2 次。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/ritual/autocraft/catalyst_recipe.png"
+      ],
+      "title": "炼金术过滤器",
+      "border": true,
+      "text": "一个为了制作$(l:bloodmagic:alchemy_table/potions)简易催化剂$()。"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "crafting",
+      "page_type": "recipeRange",
+      "text_overrides": [
+        ["Item Filter", "l:bloodmagic:demon_will/item_routing/standard_item_filter"]
+      ],
+      "text": "支持$(l:bloodmagic:demon_will/item_routing/standard_item_filter)标准$()、$(l:bloodmagic:demon_will/item_routing/tag_item_filter)标签$()和$(l:bloodmagic:demon_will/item_routing/mod_item_filter)Mod 物品过滤器$()."
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "crafting",
+      "page_type": "inputRange"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "crafting",
+      "page_type": "outputRange"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "crafting",
+      "page_type": "outputFilterRange",
+      "text_overrides": [
+        ["filter", "l:bloodmagic:demon_will/item_routing/standard_item_filter"]
+      ],
+      "text": "支持$(l:bloodmagic:demon_will/item_routing/standard_item_filter)标准$()、$(l:bloodmagic:demon_will/item_routing/tag_item_filter)标签$()和$(l:bloodmagic:demon_will/item_routing/mod_item_filter)Mod 物品过滤器$()."
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "crafting",
+      "page_type": "hellforgedRange"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "crafting",
+      "page_type": "steadfast"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "crafting",
+      "page_type": "corrosive"
+    }
+  ]
+}

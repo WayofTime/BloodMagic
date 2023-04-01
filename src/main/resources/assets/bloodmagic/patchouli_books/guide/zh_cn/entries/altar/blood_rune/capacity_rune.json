@@ -1,0 +1,25 @@
+{
+  "name": "增容符文",
+  "icon": "bloodmagic:altarcapacityrune",
+  "category": "bloodmagic:altar/blood_rune",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)增容符文$()可以提升$(l:bloodmagic:altar/blood_altar)血之祭坛$(/l)的容量，每个符文叠加 20%。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:blood_rune_capacity"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:blood_rune_capacity_2",
+      "text":"有了一些$(item)下界合金碎片$()和从$(l:bloodmagic:dungeons/endless_realm)恶魔领域$()带来的$(item)复杂的恶魔合金零件$()，这样就可以使$(item)增容符文$()让(l:bloodmagic:altar/blood_altar)血之祭坛$(/l)以每一个符文增加 40% 的容量来增加容量。"
+    },
+    {
+      "type": "bloodmagic:crafting_arc",
+      "recipe": "bloodmagic:arc/reversion/capacity",
+      "text":"如果改变了主意，你可以撤销 ARC 中的配方。"
+    }
+  ]
+}

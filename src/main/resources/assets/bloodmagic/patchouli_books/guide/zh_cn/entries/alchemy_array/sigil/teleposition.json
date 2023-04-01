@@ -1,0 +1,19 @@
+{
+  "name": "传送印记",
+  "icon": "bloodmagic:telepositionsigil",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "将使用者传送至连接的传送器，代价为每次使用$(blood)1000 LP$()。在手持印记的情况下，透过潜行并点击传送器，可以记录传送器的位置及尺寸，从而迅速地逃回家中。 $(br2只要不要意外的移动传送器就好..."
+    },
+    {
+      "type": "bloodmagic:crafting_2-step_sigil",
+      "alchemy_table.heading": "传送试剂",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_teleposition",
+      "array.heading": "传送印记",
+      "array.recipe": "bloodmagic:array/telepositionsigil",
+      "array.text": "$(italic)现在你看到我了...!$()"
+    }
+  ]
+}

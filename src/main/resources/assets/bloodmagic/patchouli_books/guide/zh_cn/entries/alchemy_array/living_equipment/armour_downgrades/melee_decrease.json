@@ -1,0 +1,16 @@
+{
+  "name": "钝刃",
+  "icon": "minecraft:stone_sword",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_downgrades",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "减少近战伤害。 最高-80%。"
+    },
+    {
+      "type": "bloodmagic:living_armour_downgrade",
+      "a.recipe": "bloodmagic:downgrade/melee_decrease",
+      "b.upgrade": "bloodmagic:melee_decrease"
+    }
+  ]
+}

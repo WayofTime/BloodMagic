@@ -1,0 +1,24 @@
+{
+  "name": "仪式调整器",
+  "icon": "bloodmagic:ritualtinkerer",
+  "category": "bloodmagic:rituals",
+  "priority": "true",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)仪式调整器$()是高级 Sanguimancer 的基本工具，他们正在寻找可以使用$(thing)仪式$()来获取I的一切。有三种模式（后有描述），可以使用[$(k:sneak)]和[$(k:use)]来进行切换。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:ritual_reader"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)信息：描述了$(thing)仪式$()的功能，与$(l:bloodmagic:rituals/ritual_diviner)仪式推测杖$()相似。$(li意志消耗的设置：需要告知$(thing)仪式$()需要从 $(l:bloodmagic:demon_will/will_manipulation/aura)灵气$()中消耗那种$(raw)恶魔意志$()（如果还有）。$(item)恶魔意志晶体$()的种类需要在工具栏中存放该类晶体，你希望每个$(thing)仪式$()只消耗每种$(raw)意志$()的一个晶体。关于$(raw)恶魔意志$()对$(thing)仪式$()影响的消息，可在书中$(thing)仪式$()这里查看。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)指定区域：使$(thing)仪式$()在指定的区域进行，并显示该区域。如果可以指定多个区域，可以在$(item)主仪式石$()按[$(k:sneak)]和[$(k:use)]来来回切换。有一些$(thing)仪式$()可以将区域扩展出默认区域，但要记住，这将加大消耗 $(blood)LP$()，好匹配..."
+    }
+  ]
+}

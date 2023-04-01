@@ -1,0 +1,15 @@
+{
+  "name": "修复",
+  "icon": "minecraft:anvil",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "效果：每100Tick修复随机破损铠甲。$(br2)训练：修复你的护甲。（使用铁砧，或是$(thing)修补$()附魔，以及其他)。 $(br2)最高等级：1"
+    },
+    {
+      "type": "bloodmagic:living_armour_upgrade_table",
+      "upgrade": "bloodmagic:repair"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "name": "沉重灵魂的忏悔",
+  "icon": "bloodmagic:upgradescraps",
+  "category": "bloodmagic:rituals/ritual_list",
+  "extra_recipe_mappings": {
+    "bloodmagic:upgradescraps": 5
+  },
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "沉重灵魂的忏悔",
+      "multiblock_id": "bloodmagic:downgrade",
+      "text": "使用$(l:bloodmagic:rituals/ritual_diviner#dusk)仪式推测杖 [薄暮] $(/l)更容易建造。"
+    },
+    {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "downgrade"
+    },
+    {
+      "type": "patchouli:text",
+      "anchor": "downgrades",
+      "text": "这个仪式将消耗多余的$(thing)升级点数$()（通常为$(item)手册$()，$(item)碎片$()和$(item)合成升级点数$()的形式），更好的对$(l:bloodmagic:alchemy_array/living_equipment/living_basics)束灵盔甲$()经行降级。对盔甲经行降级会严重限制你的能力，但也为你提供了大量的$(thing)升级点数$()，可以拥有更多的专业技能。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:synthetic_point",
+      "text": "如果你没有足够的升级点数，你可以制作合成升级点数。每一个合成升级点数就算是一个升级点数。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "想要使用这个仪式，需要将手册（或其它种类的升级点数）和特定降级需要的物品放进箱子中（请看前一页），同时穿上束灵盔甲。仪式将会消耗升级点数，并将束灵盔甲经行降级。消耗的顺序为$(item)束灵盔甲升级碎片$()然后是$(item)束灵盔甲升级手册$()最后是$(item)合成升级点数$()。"
+    },
+    {
+    "type": "patchouli:spotlight",
+    "item": "bloodmagic:upgradescraps",
+    "title": "束灵盔甲的升级碎片",
+    "text": "多余的点数将以$(item)束灵盔甲的升级碎片$()的形式掉落。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "盔甲降级取决于箱子中的物品。特定的降级所需的物品会比需要降的等级多一个。通过这个方式，一个仪式激活时可以经行多次降级。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "仪式会尊重你在$(l:bloodmagic:alchemy_array/living_equipment/training_bracelet)束灵盔甲训练手镯$()上的设置，如果你将手镯设置成“不允许其它升级”，那么仪式也不会进行降级。如果有疑问，那就把项链手镯收起来吧！"
+    }
+  ]
+}

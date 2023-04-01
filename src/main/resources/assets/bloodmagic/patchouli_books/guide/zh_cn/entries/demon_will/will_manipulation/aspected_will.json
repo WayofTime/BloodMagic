@@ -1,0 +1,55 @@
+{
+  "name": "恶魔意志种类",
+  "icon": "bloodmagic:vengefulcrystal",
+  "category": "bloodmagic:demon_will/will_manipulation",
+  "extra_recipe_mappings": {
+    "bloodmagic:steadfastdemoncrystal": 2,
+    "bloodmagic:corrosivedemoncrystal": 2,
+    "bloodmagic:destructivedemoncrystal": 2,
+    "bloodmagic:vengefuldemoncrystal": 2,
+    "bloodmagic:steadfastcrystal": 2,
+    "bloodmagic:corrosivecrystal": 2,
+    "bloodmagic:destructivecrystal": 2,
+    "bloodmagic:vengefulcrystal": 2,
+    "bloodmagic:basemonstersoul_vengeful": 2,
+    "bloodmagic:basemonstersoul_corrosive": 2,
+    "bloodmagic:basemonstersoul_steadfast": 2,
+    "bloodmagic:basemonstersoul_destructive": 2
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "将$(l:bloodmagic:demon_will/will_manipulation/demon_will)恶魔意志$()释放到大气中就对是个好主意，恶魔意志不仅被证明赋能$(item)仪式$()时最有用，你还可以把恶魔意志凝结成一个晶体，接下来想一想该将看向那。这些晶体使你的感受有些....矛盾。有一种可能有助于将这些晶体变成更纯净......"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/demon_will/will_splitting.png"
+      ],
+      "title": "意志种类",
+      "border": true,
+      "text": "$(l:bloodmagic:rituals/ritual_list/ritual_crystal_split)结晶共鸣$()仪式。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "现在有四种$(item)意志晶体$()了！在$(water)水之符文$()上为$(steadfast)坚毅意志$()，在$(air)风之符文$()上为$(destructive)破坏意志$()，在$(fire)火之符文$()上为$(vengeful)复仇意志$()和在$(earth)土之符文$()上为$(corrosive)腐蚀意志$()。$(br2)这些意识可以像原生意识一样可以在$(item)恶魔坩埚$()燃烧，并从这输入到各种的仪式中，产生令人震撼的效果。"
+    },
+    {
+      "type": "patchouli:text",
+      "anchor": "sentient_aspects",
+      "text": "并且，这些意识会改变感知工具，使工具变得更强大。$(br) $(li)$(raw)原生意志$()：可以增加伤害。$(corrosive)$(li)腐蚀意志$()：在攻击时有几率对敌人造成中毒和凋零效果，其它部分和$(raw)原生$()相同。$(vengeful)$(li)复仇意志$()：增加伤害，虽然没有比$(raw)原生$()的伤害增加多少。增加攻击速度，并有速度buff，随意志的增加而增加效果。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(steadfast)$(li)坚毅意志$()：增加伤害（虽然没有比$(raw)原生$()的伤害增加多少），并在击杀后给与伤害吸收效果。$(destructive)$(li)破坏意志$()：比其他的意识增加的伤害更高，但会降低攻击速度。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "你可能想知道：“我该怎样办才能把意志变成可以使用的形式？” 答案其实十分简单，只需要将一颗空的$(l:bloodmagic:demon_will/will_manipulation/soul_gem)地狱魂石$()放进$(l:bloodmagic:demon_will/will_manipulation/soul_forge)狱火熔炉$()中，然后将$(item)恶魔坩埚$()放在一起，在像恶魔坩埚中放入所需种类的意志晶体。之后你的$(l:bloodmagic:demon_will/will_manipulation/soul_gem)地狱魂石$()将会注入该种类的意志。你可以按[$(k:use)]来使你的$(raw)感知工具$()使用那种意志。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "注意$(item)感知工具$()呈现的意志将是地狱魂石中数量最多的$(raw)意志$()。如：在一颗$(l:bloodmagic:demon_will/will_manipulation/soul_gem)地狱魂石$()中有 10 个$(corrosive)腐蚀意志$()而另一个地狱魂石有 1,000 个$(raw)原生意识$()，那么你的剑会保持$(raw)原生$()。$(br2)$(l:bloodmagic:demon_will/will_manipulation/soul_forge)狱火熔炉$()可以让不同的$(raw)意志$()之间进行制作，所以并不用担心不同的$(item)地狱魂石$()处理不同类型的意志。"
+    }
+  ]
+}

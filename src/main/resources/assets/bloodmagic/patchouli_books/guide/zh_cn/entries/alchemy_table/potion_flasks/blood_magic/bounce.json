@@ -1,0 +1,20 @@
+{
+  "name": "弹跳",
+  "icon": "minecraft:slime_ball",
+  "category": "bloodmagic:alchemy_table/potion_flasks/blood_magic",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "如果从高空摔落，$(thing)弹跳$()可以让你免受摔落伤害并从地面上弹起。$(br2)在即将落到地面时按住shift键可以不让你弹起。"
+    },
+    {
+      "type": "bloodmagic:3x_crafting_flask",
+      "a.heading": "弹跳 (3:00)",
+      "a.recipe": "bloodmagic:flask/bounce",
+      "b.heading": "弹跳 (8:00)",
+      "b.recipe": "bloodmagic:flask/length_bounce",
+      "c.heading": "弹跳 (21:20)",
+      "c.recipe": "bloodmagic:flask/length_average_bounce"
+    }
+  ]
+}

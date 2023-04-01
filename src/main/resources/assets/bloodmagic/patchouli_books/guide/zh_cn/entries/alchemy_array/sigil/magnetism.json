@@ -1,0 +1,23 @@
+{
+  "name": "磁引印记",
+  "icon": "bloodmagic:sigilofmagnetism",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "激活后玩家的拾取范围将扩大7格。手持该印记按[$(k:sneak)]并按[$(k:use)]来切换该印记的开/关。$(br2)在该印记激活时，每5秒消耗50$(blood)LP$()"
+    },
+    {
+      "type": "bloodmagic:crafting_2-step_sigil",
+      "alchemy_table.heading": "磁引试剂",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_magnetism",
+      "array.heading": "磁引印记",
+      "array.recipe": "bloodmagic:array/magnetismsigil"
+    },
+    {
+      "type": "patchouli:text",
+      "flag": "mod:curios",
+      "text": "如果你安装了$(thing)Curios API$()，你可以把$(item)印记$()当作饰品。如果你想同时佩戴许多的饰品,，可以使用$(l:bloodmagic:alchemy_array/sigil/holding)集合印记$(),或$(l:bloodmagic:alchemy_array/living_equipment/armor_upgrades/curios_sockets)为你的 $(l:bloodmagic:alchemy_array/living_equipment/living_basics)束灵装备$()升级插槽$() "
+    }
+  ]
+}

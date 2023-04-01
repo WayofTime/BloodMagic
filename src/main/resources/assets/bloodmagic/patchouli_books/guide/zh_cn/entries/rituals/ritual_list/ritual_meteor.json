@@ -1,0 +1,25 @@
+{
+  "name": "坠星标位",
+  "icon": "minecraft:fire_charge",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "坠星标位",
+      "multiblock_id": "bloodmagic:meteor",
+      "text": "使用$(l:bloodmagic:rituals/ritual_diviner#dusk)仪式推测杖 [薄暮] $(/l)更容易建造。"
+    },
+    {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "meteor"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "利用你巨大的能量，从外太空召唤一颗流星来撞击地球是个不错的注意。$(br2)在 MRS 上放置一个合适的物品，仪式将会消耗该物品（加上大量 LP，默认为100万 LP）并在地图的方块可放置的高度召唤一颗流星。无论陨石击中什么东西，都会引起爆炸，留下大量可以开采和加工的资源。。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "流星的规模和所携带的物资是根据提供的物品而形成的。一般该物品包括：$(item)钻石$()、$(item)铁块$()、$(item)金块$()和$(item)石头$()。$(br2)模组物品包括：冰火传说 $(item)龙骨$()，AE2 $(item)赛特斯石英$()，机械动力 $(item)安山合金$()，IE $(item)铜线圈$()，神秘农业 $(item)活化水晶碎片$()，热力系列 $(item)通量线圈$()和 通用机械 $(item)高级合金$()。"
+    }
+  ]
+}

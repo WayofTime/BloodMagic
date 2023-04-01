@@ -1,0 +1,23 @@
+{
+  "name": "强化手册",
+  "icon": "bloodmagic:upgradetome",
+  "priority": true,
+  "category": "bloodmagic:alchemy_array/living_equipment",
+  "extra_recipe_mappings": {
+    "bloodmagic:upgradetome": 0
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "激活$(l:bloodmagic:rituals/ritual_list/ritual_upgrade_remove)净灵之音$()后, 神奇的是$(item)手册$()会在你的周围出现. $(br2)你可以可以使用[$(k:use)]键来持有其中的一个。你也可以“授予“的胸甲一个技能（假如有足够的点数来学习技能）。 按住[$(k:sneak)]和[$(k:use)]会更多的消耗强化手册中的经验。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "这样操作会消耗$(item)手册$()并将其中所有的经验值用于胸甲的升级——除了$(thing)升级点数$()并不足够。$(br2)在这种情况下，手册会更多的使用经验值并将剩余的经验值进行储存——当剩余的经验值小于1级时，手册会被销毁。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "这是一个好的方法，这样可以让你想要加强的能力得到加强，也可以更方便让你觉的不好的能力去掉。$(br2)你也可以给不同的胸甲给予不同的技能，可以让你有一个胸甲用于采矿，一个用于战斗，还有一个用于探索。"
+    }
+  ]
+}

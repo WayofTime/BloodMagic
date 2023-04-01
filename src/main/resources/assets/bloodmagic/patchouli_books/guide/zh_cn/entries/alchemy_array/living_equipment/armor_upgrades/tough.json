@@ -1,0 +1,15 @@
+{
+  "name": "坚韧",
+  "icon": "minecraft:shield",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "效果：免受弹射物伤害。$(br2)训练：受到除弹射物的伤害。$(br2)最高等级：10"
+    },
+    {
+      "type": "bloodmagic:living_armour_upgrade_table",
+      "upgrade": "bloodmagic:physical_protect"
+    }
+  ]
+}

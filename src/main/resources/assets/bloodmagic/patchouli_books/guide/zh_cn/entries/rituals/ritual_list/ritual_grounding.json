@@ -1,0 +1,54 @@
+{
+  "name": "接地仪式",
+  "icon": "minecraft:dirt",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "接地仪式",
+      "multiblock_id": "bloodmagic:grounding",
+      "text": "使用$(l:bloodmagic:rituals/ritual_diviner)仪式推测杖$(/l)更容易建造。"
+    },
+    {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "grounding"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "grounding",
+      "page_type": "raw"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "grounding",
+      "page_type": "corrosive",
+      "text":"表现和$(l:bloodmagic:alchemy_table/potion_flasks/blood_magic/suspended)悬浮$()差不多。"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "grounding",
+      "page_type": "vengeful",
+      "text_overrides": [
+        ["Levitation", "l:bloodmagic:alchemy_table/potion_flasks/vanilla/levitation"]
+      ]
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "grounding",
+      "page_type": "destructive",
+      "text_overrides": [
+        ["Heavy Heart", "l:bloodmagic:alchemy_table/potion_flasks/blood_magic/heavy_heart"]
+      ]
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "grounding",
+      "page_type": "steadfast"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "grounding",
+      "page_type": "groundingRange"
+    }
+  ]
+}
