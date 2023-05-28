@@ -1,15 +1,11 @@
 package wayoftime.bloodmagic.util.handler.event;
 
-import java.util.HashMap;
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -28,7 +24,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -58,6 +53,9 @@ import wayoftime.bloodmagic.ritual.EnumRitualReaderState;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.will.DemonWillHolder;
+
+import java.util.HashMap;
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID, value = Dist.CLIENT)
 //@OnlyIn(Dist.CLIENT)
@@ -555,18 +553,18 @@ public class ClientHandler
 			else
 			{
 				// TODO translation keys
-				tooltip.add(applyFormat(new TextComponent("Fluid Registry: " + fluid.getFluid().getRegistryName()), ChatFormatting.DARK_GRAY));
-				tooltip.add(applyFormat(new TextComponent("Density: " + fluid.getFluid().getAttributes().getDensity(fluid)), ChatFormatting.DARK_GRAY));
-				tooltip.add(applyFormat(new TextComponent("Temperature: " + fluid.getFluid().getAttributes().getTemperature(fluid)), ChatFormatting.DARK_GRAY));
-				tooltip.add(applyFormat(new TextComponent("Viscosity: " + fluid.getFluid().getAttributes().getViscosity(fluid)), ChatFormatting.DARK_GRAY));
-				tooltip.add(applyFormat(new TextComponent("NBT Data: " + fluid.getTag()), ChatFormatting.DARK_GRAY));
+				tooltip.add(applyFormat(Component.literal("Fluid Registry: " + fluid.getFluid().getRegistryName()), ChatFormatting.DARK_GRAY));
+				tooltip.add(applyFormat(Component.literal("Density: " + fluid.getFluid().getAttributes().getDensity(fluid)), ChatFormatting.DARK_GRAY));
+				tooltip.add(applyFormat(Component.literal("Temperature: " + fluid.getFluid().getAttributes().getTemperature(fluid)), ChatFormatting.DARK_GRAY));
+				tooltip.add(applyFormat(Component.literal("Viscosity: " + fluid.getFluid().getAttributes().getViscosity(fluid)), ChatFormatting.DARK_GRAY));
+				tooltip.add(applyFormat(Component.literal("NBT Data: " + fluid.getTag()), ChatFormatting.DARK_GRAY));
 			}
 		}
 
 		if (tankCapacity > 0)
-			tooltip.add(applyFormat(new TextComponent(fluid.getAmount() + "/" + tankCapacity + "mB"), ChatFormatting.GRAY));
+			tooltip.add(applyFormat(Component.literal(fluid.getAmount() + "/" + tankCapacity + "mB"), ChatFormatting.GRAY));
 		else
-			tooltip.add(applyFormat(new TextComponent(fluid.getAmount() + "mB"), ChatFormatting.GRAY));
+			tooltip.add(applyFormat(Component.literal(fluid.getAmount() + "mB"), ChatFormatting.GRAY));
 	}
 
 	public static MutableComponent applyFormat(Component component, ChatFormatting... color)

@@ -9,7 +9,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.item.ItemPropertyFunction;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -142,7 +141,7 @@ public class ClientEvents
 		ItemSigilHolding.cycleToNextSigil(stack, mode);
 		BloodMagicPacketHandler.INSTANCE.sendToServer(new SigilHoldingPacket(player.getInventory().selected, mode));
 		ItemStack newStack = ItemSigilHolding.getItemStackInSlot(stack, ItemSigilHolding.getCurrentItemOrdinal(stack));
-		player.displayClientMessage(newStack.isEmpty() ? new TextComponent("") : newStack.getDisplayName(), true);
+		player.displayClientMessage(newStack.isEmpty() ? Component.literal("") : newStack.getDisplayName(), true);
 	}
 
 	@SubscribeEvent

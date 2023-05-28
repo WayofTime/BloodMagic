@@ -4,7 +4,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -379,7 +378,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
 	public Component getDisplayName()
 	{
 		// TODO Auto-generated method stub
-		return new TextComponent("Sigil of Holding");
+		return Component.literal("Sigil of Holding");
 	}
 
 }

@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -746,6 +745,6 @@ public class TileAlchemyTable extends TileInventory implements WorldlyContainer,
 	@Override
 	public Component getDisplayName()
 	{
-		return new TextComponent("Alchemy Table");
+		return Component.literal("Alchemy Table");
 	}
 }

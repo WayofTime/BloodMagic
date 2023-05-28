@@ -1,9 +1,6 @@
 package wayoftime.bloodmagic.common.item.sigil;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -28,6 +25,8 @@ import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.NumeralHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
+
+import java.util.List;
 
 public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 {
@@ -102,7 +101,7 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 //                    {
 //                        TileInversionPillar pillar = (TileInversionPillar) tile;
 //                        double inversion = pillar.getCurrentInversion();
-//                        ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentInversion", ((int) (10 * inversion)) / 10d));
+//                        ChatUtil.sendNoSpam(player, Component.literalTranslation(tooltipBase + "currentInversion", ((int) (10 * inversion)) / 10d));
 //                    } 
 					else
 					{

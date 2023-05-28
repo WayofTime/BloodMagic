@@ -1,8 +1,5 @@
 package wayoftime.bloodmagic.common.tile;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -22,6 +19,9 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import wayoftime.bloodmagic.common.tile.base.TileBase;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class TileInventory extends TileBase implements Container
 {
@@ -258,7 +258,7 @@ public class TileInventory extends TileBase implements Container
 //	@Override
 //	public ITextComponent getDisplayName()
 //	{
-//		return new TextComponentString(getName());
+//		return Component.literalString(getName());
 //	}
 
 	protected void initializeItemHandlers()

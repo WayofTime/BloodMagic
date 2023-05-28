@@ -1,9 +1,5 @@
 package wayoftime.bloodmagic.common.item;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -11,7 +7,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -43,6 +38,10 @@ import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.util.helper.TextHelper;
 import wayoftime.bloodmagic.will.DemonWillHolder;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 public class ItemRitualReader extends Item
 {
 	public static final String tooltipBase = "tooltip.bloodmagic.ritualReader.";
@@ -62,7 +61,7 @@ public class ItemRitualReader extends Item
 		EnumRitualReaderState state = this.getState(stack);
 		tooltip.add(new TranslatableComponent(tooltipBase + "currentState", TextHelper.localizeEffect(tooltipBase + state.toString().toLowerCase(Locale.ROOT))).withStyle(ChatFormatting.GRAY));
 
-		tooltip.add(new TextComponent(""));
+		tooltip.add(Component.literal(""));
 
 		boolean sneaking = Screen.hasShiftDown();
 

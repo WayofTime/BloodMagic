@@ -1,20 +1,12 @@
 package wayoftime.bloodmagic.client.screens;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -23,11 +15,16 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import org.apache.commons.lang3.tuple.Pair;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.container.item.ContainerFilter;
 import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
 import wayoftime.bloodmagic.network.RouterFilterPacket;
 import wayoftime.bloodmagic.util.GhostItemHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class ScreenFilter extends ScreenBase<ContainerFilter>
 {
@@ -59,7 +56,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		left = (this.width - this.imageWidth) / 2;
 		top = (this.height - this.imageHeight) / 2;
 
-		this.textBox = new EditBox(Minecraft.getInstance().font, left + 23, top + 19, 70, 12, new TextComponent("itemGroup.search"));
+		this.textBox = new EditBox(Minecraft.getInstance().font, left + 23, top + 19, 70, 12, Component.literal("itemGroup.search"));
 		this.textBox.setBordered(false);
 //		this.textBox.setText("");
 		this.textBox.setMaxLength(50);
@@ -85,7 +82,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 				}
 				buttonKeyList.add(pair.getKey());
 				Pair<Integer, Integer> buttonLocation = getButtonLocation(numberOfAddedButtons);
-				Button addedButton = new Button(left + buttonLocation.getLeft(), top + buttonLocation.getRight(), 20, 20, new TextComponent(""), pair.getRight());
+				Button addedButton = new Button(left + buttonLocation.getLeft(), top + buttonLocation.getRight(), 20, 20, Component.literal(""), pair.getRight());
 
 				if (!provider.isButtonGlobal(filterStack, pair.getKey()))
 				{

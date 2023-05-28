@@ -1,12 +1,6 @@
 package wayoftime.bloodmagic.common.item;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -15,7 +9,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
@@ -54,6 +47,11 @@ import wayoftime.bloodmagic.util.handler.event.ClientHandler;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.util.helper.RitualHelper;
 import wayoftime.bloodmagic.util.helper.TextHelper;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class ItemRitualDiviner extends Item
 {
@@ -318,7 +316,7 @@ public class ItemRitualDiviner extends Item
 
 			if (extraInfo)
 			{
-				tooltip.add(new TextComponent(""));
+				tooltip.add(Component.literal(""));
 
 				for (EnumDemonWillType type : EnumDemonWillType.values())
 				{
@@ -330,7 +328,7 @@ public class ItemRitualDiviner extends Item
 			} else if (sneaking)
 			{
 				tooltip.add(new TranslatableComponent(tooltipBase + "currentDirection", Utils.toFancyCasing(getDirection(stack).name())).withStyle(ChatFormatting.GRAY));
-				tooltip.add(new TextComponent(""));
+				tooltip.add(Component.literal(""));
 
 				Tuple<Integer, Map<EnumRuneType, Integer>> runeCount = RitualHelper.countRunes(ritual);
 				int totalRunes = runeCount.getA();
@@ -343,15 +341,15 @@ public class ItemRitualDiviner extends Item
 						tooltip.add(new TranslatableComponent(tooltipBase + type.translationKey, count).withStyle(type.colorCode));
 					}
 				}
-				tooltip.add(new TextComponent(""));
+				tooltip.add(Component.literal(""));
 				tooltip.add(new TranslatableComponent(tooltipBase + "totalRune", totalRunes).withStyle(ChatFormatting.GRAY));
 			} else
 			{
-				tooltip.add(new TextComponent(""));
+				tooltip.add(Component.literal(""));
 				if (TextHelper.canTranslate(ritual.getTranslationKey() + ".info"))
 				{
 					tooltip.add(new TranslatableComponent(ritual.getTranslationKey() + ".info").withStyle(ChatFormatting.GRAY));
-					tooltip.add(new TextComponent(""));
+					tooltip.add(Component.literal(""));
 				}
 
 				tooltip.add(new TranslatableComponent(tooltipBase + "extraInfo").withStyle(ChatFormatting.BLUE));

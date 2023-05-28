@@ -1,16 +1,9 @@
 package wayoftime.bloodmagic.client.screens;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.Optional;
-
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -26,6 +19,11 @@ import wayoftime.bloodmagic.core.living.LivingStats;
 import wayoftime.bloodmagic.core.living.LivingUpgrade;
 import wayoftime.bloodmagic.network.LivingTrainerPacket;
 import wayoftime.bloodmagic.network.LivingTrainerWhitelistPacket;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Optional;
 
 public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet>
 {
@@ -67,10 +65,10 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 
 		ItemStack filterStack = this.container.trainerStack;
 
-		this.addRenderableWidget(new Button(left + 62 - 18, top + 34, 8, 20, new TextComponent(">"), new IncrementPress(this, 0)));
-		this.addRenderableWidget(new Button(left + 34 - 18, top + 34, 8, 20, new TextComponent("<"), new IncrementPress(this, 1)));
+		this.addRenderableWidget(new Button(left + 62 - 18, top + 34, 8, 20, Component.literal(">"), new IncrementPress(this, 0)));
+		this.addRenderableWidget(new Button(left + 34 - 18, top + 34, 8, 20, Component.literal("<"), new IncrementPress(this, 1)));
 
-		this.addRenderableWidget(new Button(left + whitelistButtonPosX, top + whitelistButtonPosY, 20, 20, new TextComponent(""), new WhitelistTogglePress(this)));
+		this.addRenderableWidget(new Button(left + whitelistButtonPosX, top + whitelistButtonPosY, 20, 20, Component.literal(""), new WhitelistTogglePress(this)));
 
 //		if (filterStack.getItem() instanceof IItemFilterProvider)
 //		{
@@ -194,7 +192,7 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 	{
 		String textEntry = "" + getCurrentActiveSlotUpgradeLevel();
 		int offset = -3 * textEntry.length();
-		this.font.draw(stack, new TextComponent(textEntry), 45 - 18 + offset + 7.5f, 37 + 3, 0xFFFFFF);
+		this.font.draw(stack, Component.literal(textEntry), 45 - 18 + offset + 7.5f, 37 + 3, 0xFFFFFF);
 //		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
 		this.font.draw(stack, new TranslatableComponent("container.inventory"), 8, 93, 4210752);
 		this.font.draw(stack, container.trainerStack.getHoverName(), 8, 4, 4210752);

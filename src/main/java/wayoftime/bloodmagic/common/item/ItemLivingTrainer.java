@@ -3,7 +3,6 @@ package wayoftime.bloodmagic.common.item;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -144,7 +143,7 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, MenuPro
 	public Component getDisplayName()
 	{
 		// TODO Auto-generated method stub
-		return new TextComponent("Bracelet");
+		return Component.literal("Bracelet");
 	}
 
 	public void setTomeLevel(ItemStack trainerStack, int slot, int desiredLevel)

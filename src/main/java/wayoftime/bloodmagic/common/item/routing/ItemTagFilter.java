@@ -1,17 +1,10 @@
 package wayoftime.bloodmagic.common.item.routing;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -21,6 +14,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.apache.commons.lang3.tuple.Pair;
 import wayoftime.bloodmagic.client.button.FilterButtonTogglePress;
 import wayoftime.bloodmagic.common.container.item.ContainerFilter;
 import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
@@ -30,6 +24,10 @@ import wayoftime.bloodmagic.common.routing.BlacklistItemFilter;
 import wayoftime.bloodmagic.common.routing.IItemFilter;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.GhostItemHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
 public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilterProvider
 {
@@ -80,7 +78,7 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 			Component display = stack.getHoverName();
 			if (tag != null)
 			{
-				display = new TextComponent(tag.toString());
+				display = Component.literal(tag.toString());
 			} else
 			{
 				display = new TranslatableComponent("tooltip.bloodmagic.filter.anytag", display);
@@ -349,7 +347,7 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 					componentList.add(new TranslatableComponent("filter.bloodmagic.anytag"));
 					for (ResourceLocation rl : locations)
 					{
-						componentList.add(new TextComponent(rl.toString()));
+						componentList.add(Component.literal(rl.toString()));
 					}
 				} else
 				{
@@ -362,7 +360,7 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 				if (rl != null)
 				{
 					componentList.add(new TranslatableComponent("filter.bloodmagic.specifiedtag"));
-					componentList.add(new TextComponent(rl.toString()));
+					componentList.add(Component.literal(rl.toString()));
 				}
 			}
 		}

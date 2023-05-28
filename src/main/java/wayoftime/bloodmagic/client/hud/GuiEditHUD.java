@@ -1,22 +1,19 @@
 package wayoftime.bloodmagic.client.hud;
 
-import java.awt.Point;
-import java.util.Map;
-
-import javax.annotation.Nullable;
-
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec2;
 import wayoftime.bloodmagic.client.hud.element.HUDElement;
+
+import javax.annotation.Nullable;
+import java.awt.*;
+import java.util.Map;
 
 public class GuiEditHUD extends Screen
 {
@@ -29,7 +26,7 @@ public class GuiEditHUD extends Screen
 
 	public GuiEditHUD(Screen parent)
 	{
-		super(new TextComponent("Testing GuiEditHUD"));
+		super(Component.literal("Testing GuiEditHUD"));
 		this.parent = parent;
 	}
 
