@@ -2,7 +2,6 @@ package wayoftime.bloodmagic.common.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -68,15 +67,15 @@ public class BlockMasterRitualStone extends Block implements EntityBlock
 							}
 						} else
 						{
-							player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.ritual.notValid"), true);
+							player.displayClientMessage(Component.translatable("chat.bloodmagic.ritual.notValid"), true);
 						}
 					} else
 					{
-						player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.ritual.notValid"), true);
+						player.displayClientMessage(Component.translatable("chat.bloodmagic.ritual.notValid"), true);
 					}
 				} else
 				{
-					player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.ritual.notValid"), true);
+					player.displayClientMessage(Component.translatable("chat.bloodmagic.ritual.notValid"), true);
 				}
 			}
 		}

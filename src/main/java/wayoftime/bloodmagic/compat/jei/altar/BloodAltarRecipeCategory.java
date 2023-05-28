@@ -1,14 +1,7 @@
 package wayoftime.bloodmagic.compat.jei.altar;
 
-import java.awt.Color;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -18,7 +11,6 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import wayoftime.bloodmagic.BloodMagic;
@@ -28,6 +20,11 @@ import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NumeralHelper;
 import wayoftime.bloodmagic.util.helper.TextHelper;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.awt.*;
+import java.util.List;
 
 public class BloodAltarRecipeCategory implements IRecipeCategory<RecipeBloodAltar>
 {
@@ -62,8 +59,8 @@ public class BloodAltarRecipeCategory implements IRecipeCategory<RecipeBloodAlta
 
 		if (mouseX >= 13 && mouseX <= 64 && mouseY >= 27 && mouseY <= 58)
 		{
-			tooltip.add(new TranslatableComponent("jei.bloodmagic.recipe.consumptionrate", ChatUtil.DECIMAL_FORMAT.format(recipe.getConsumeRate())));
-			tooltip.add(new TranslatableComponent("jei.bloodmagic.recipe.drainrate", ChatUtil.DECIMAL_FORMAT.format(recipe.getDrainRate())));
+			tooltip.add(Component.translatable("jei.bloodmagic.recipe.consumptionrate", ChatUtil.DECIMAL_FORMAT.format(recipe.getConsumeRate())));
+			tooltip.add(Component.translatable("jei.bloodmagic.recipe.drainrate", ChatUtil.DECIMAL_FORMAT.format(recipe.getDrainRate())));
 		}
 
 		return tooltip;
@@ -73,7 +70,7 @@ public class BloodAltarRecipeCategory implements IRecipeCategory<RecipeBloodAlta
 	@Override
 	public Component getTitle()
 	{
-		return new TranslatableComponent("jei.bloodmagic.recipe.altar");
+		return Component.translatable("jei.bloodmagic.recipe.altar");
 	}
 
 	@Nonnull

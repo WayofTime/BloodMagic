@@ -1,38 +1,27 @@
 package wayoftime.bloodmagic.ritual.types;
 
-import java.util.List;
-import java.util.Random;
-import java.util.function.Consumer;
-
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CactusBlock;
-import net.minecraft.world.level.block.FarmBlock;
-import net.minecraft.world.level.block.BonemealableBlock;
-import net.minecraft.world.level.block.SugarCaneBlock;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
-import wayoftime.bloodmagic.ritual.AreaDescriptor;
-import wayoftime.bloodmagic.ritual.EnumRuneType;
-import wayoftime.bloodmagic.ritual.IMasterRitualStone;
-import wayoftime.bloodmagic.ritual.Ritual;
-import wayoftime.bloodmagic.ritual.RitualComponent;
-import wayoftime.bloodmagic.ritual.RitualRegister;
+import wayoftime.bloodmagic.ritual.*;
 import wayoftime.bloodmagic.util.Utils;
 import wayoftime.bloodmagic.will.DemonWillHolder;
+
+import java.util.List;
+import java.util.Random;
+import java.util.function.Consumer;
 
 @RitualRegister("green_grove")
 public class RitualGreenGrove extends Ritual
@@ -329,12 +318,12 @@ public class RitualGreenGrove extends Ritual
 	@Override
 	public Component[] provideInformationOfRitualToPlayer(Player player)
 	{
-		return new Component[] { new TranslatableComponent(this.getTranslationKey() + ".info"),
-				new TranslatableComponent(this.getTranslationKey() + ".default.info"),
-				new TranslatableComponent(this.getTranslationKey() + ".corrosive.info"),
-				new TranslatableComponent(this.getTranslationKey() + ".steadfast.info"),
-				new TranslatableComponent(this.getTranslationKey() + ".destructive.info"),
-				new TranslatableComponent(this.getTranslationKey() + ".vengeful.info") };
+		return new Component[] { Component.translatable(this.getTranslationKey() + ".info"),
+				Component.translatable(this.getTranslationKey() + ".default.info"),
+				Component.translatable(this.getTranslationKey() + ".corrosive.info"),
+				Component.translatable(this.getTranslationKey() + ".steadfast.info"),
+				Component.translatable(this.getTranslationKey() + ".destructive.info"),
+				Component.translatable(this.getTranslationKey() + ".vengeful.info") };
 	}
 
 	@Override

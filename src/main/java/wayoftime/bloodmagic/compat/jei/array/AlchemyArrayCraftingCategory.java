@@ -1,8 +1,5 @@
 package wayoftime.bloodmagic.compat.jei.array;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -11,13 +8,15 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyArray;
 import wayoftime.bloodmagic.util.Constants;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class AlchemyArrayCraftingCategory implements IRecipeCategory<RecipeAlchemyArray>
 {
@@ -50,7 +49,7 @@ public class AlchemyArrayCraftingCategory implements IRecipeCategory<RecipeAlche
 	@Override
 	public Component getTitle()
 	{
-		return new TranslatableComponent("jei.bloodmagic.recipe.alchemyarraycrafting");
+		return Component.translatable("jei.bloodmagic.recipe.alchemyarraycrafting");
 	}
 
 	@Nonnull

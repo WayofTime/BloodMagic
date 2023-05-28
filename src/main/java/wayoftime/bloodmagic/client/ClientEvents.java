@@ -9,7 +9,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.item.ItemPropertyFunction;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -177,10 +176,10 @@ public class ClientEvents
 			int amount = GhostItemHelper.getItemGhostAmount(stack);
 			if (amount == 0)
 			{
-				event.getToolTip().add(new TranslatableComponent("tooltip.bloodmagic.ghost.everything"));
+				event.getToolTip().add(Component.translatable("tooltip.bloodmagic.ghost.everything"));
 			} else
 			{
-				event.getToolTip().add(new TranslatableComponent("tooltip.bloodmagic.ghost.amount", amount));
+				event.getToolTip().add(Component.translatable("tooltip.bloodmagic.ghost.amount", amount));
 			}
 		}
 	}

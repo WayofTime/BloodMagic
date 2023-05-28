@@ -1,13 +1,12 @@
 package wayoftime.bloodmagic.client.screens;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import wayoftime.bloodmagic.BloodMagic;
 
 public abstract class ScreenBase<T extends AbstractContainerMenu> extends AbstractContainerScreen<T>
@@ -63,6 +62,6 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
 //
 	protected static TranslatableComponent getTrans(String key, Object... args)
 	{
-		return new TranslatableComponent(BloodMagic.MODID + "." + key, args);
+		return Component.translatable(BloodMagic.MODID + "." + key, args);
 	}
 }

@@ -7,7 +7,6 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
@@ -268,7 +267,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	protected void renderLabels(PoseStack stack, int mouseX, int mouseY)
 	{
 //		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
-		this.font.draw(stack, new TranslatableComponent("container.inventory"), 8, 93, 4210752);
+		this.font.draw(stack, Component.translatable("container.inventory"), 8, 93, 4210752);
 		this.font.draw(stack, container.filterStack.getHoverName(), 8, 4, 4210752);
 
 		if (container.filterStack.getItem() instanceof IItemFilterProvider)

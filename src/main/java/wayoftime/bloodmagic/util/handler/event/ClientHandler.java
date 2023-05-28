@@ -24,7 +24,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
@@ -542,14 +541,14 @@ public class ClientHandler
 		if (!fluid.isEmpty())
 			tooltip.add(applyFormat(fluid.getDisplayName(), fluid.getFluid().getAttributes().getRarity(fluid).color));
 		else
-			tooltip.add(new TranslatableComponent("gui.bloodmagic.empty"));
+			tooltip.add(Component.translatable("gui.bloodmagic.empty"));
 //		if (fluid.getFluid() instanceof IEFluid)
 //			((IEFluid) fluid.getFluid()).addTooltipInfo(fluid, null, tooltip);
 
 		if (mc().options.advancedItemTooltips && !fluid.isEmpty())
 		{
 			if (!Screen.hasShiftDown())
-				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.holdShiftForInfo"));
+				tooltip.add(Component.translatable("tooltip.bloodmagic.holdShiftForInfo"));
 			else
 			{
 				// TODO translation keys

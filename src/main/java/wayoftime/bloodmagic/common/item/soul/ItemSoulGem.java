@@ -1,13 +1,9 @@
 package wayoftime.bloodmagic.common.item.soul;
 
-import java.util.List;
-import java.util.Locale;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -29,6 +25,9 @@ import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
+
+import java.util.List;
+import java.util.Locale;
 
 public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 {
@@ -78,9 +77,9 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 			return;
 
 		EnumDemonWillType type = this.getCurrentType(stack);
-		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.soulGem." + name).withStyle(ChatFormatting.GRAY));
-		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.will", ChatUtil.DECIMAL_FORMAT.format(getWill(type, stack))).withStyle(ChatFormatting.GRAY));
-		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GRAY));
+		tooltip.add(Component.translatable("tooltip.bloodmagic.soulGem." + name).withStyle(ChatFormatting.GRAY));
+		tooltip.add(Component.translatable("tooltip.bloodmagic.will", ChatUtil.DECIMAL_FORMAT.format(getWill(type, stack))).withStyle(ChatFormatting.GRAY));
+		tooltip.add(Component.translatable("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GRAY));
 
 		super.appendHoverText(stack, world, tooltip, flag);
 	}

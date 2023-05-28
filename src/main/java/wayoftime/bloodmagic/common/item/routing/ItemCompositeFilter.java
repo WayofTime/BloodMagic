@@ -1,29 +1,24 @@
 package wayoftime.bloodmagic.common.item.routing;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang3.tuple.Pair;
-
-import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Button.OnPress;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.IItemHandler;
+import org.apache.commons.lang3.tuple.Pair;
 import wayoftime.bloodmagic.client.button.FilterButtonTogglePress;
 import wayoftime.bloodmagic.common.container.item.ContainerFilter;
 import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
@@ -33,6 +28,9 @@ import wayoftime.bloodmagic.common.routing.BlacklistItemFilter;
 import wayoftime.bloodmagic.common.routing.IItemFilter;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.GhostItemHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvider, ICompositeItemFilterProvider
 {
@@ -45,7 +43,7 @@ public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvide
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack filterStack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
-		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.compositefilter.desc").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY));
+		tooltip.add(Component.translatable("tooltip.bloodmagic.compositefilter.desc").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY));
 
 		if (filterStack.getTag() == null)
 		{
@@ -58,10 +56,10 @@ public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvide
 			boolean sneaking = Screen.hasShiftDown();
 			if (!sneaking)
 			{
-				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.extraInfo").withStyle(ChatFormatting.BLUE));
+				tooltip.add(Component.translatable("tooltip.bloodmagic.extraInfo").withStyle(ChatFormatting.BLUE));
 			} else
 			{
-				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.contained_filters").withStyle(ChatFormatting.BLUE));
+				tooltip.add(Component.translatable("tooltip.bloodmagic.contained_filters").withStyle(ChatFormatting.BLUE));
 				for (ItemStack nestedStack : nestedFilters)
 				{
 					tooltip.add(nestedStack.getHoverName());
@@ -74,10 +72,10 @@ public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvide
 
 		if (isWhitelist)
 		{
-			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.whitelist").withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("tooltip.bloodmagic.filter.whitelist").withStyle(ChatFormatting.GRAY));
 		} else
 		{
-			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.blacklist").withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("tooltip.bloodmagic.filter.blacklist").withStyle(ChatFormatting.GRAY));
 		}
 
 		ItemInventory inv = new InventoryFilter(filterStack);
@@ -94,10 +92,10 @@ public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvide
 				int amount = GhostItemHelper.getItemGhostAmount(stack);
 				if (amount > 0)
 				{
-					tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.count", amount, stack.getHoverName()));
+					tooltip.add(Component.translatable("tooltip.bloodmagic.filter.count", amount, stack.getHoverName()));
 				} else
 				{
-					tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.all", stack.getHoverName()));
+					tooltip.add(Component.translatable("tooltip.bloodmagic.filter.all", stack.getHoverName()));
 				}
 			} else
 			{
@@ -314,10 +312,10 @@ public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvide
 			switch (currentState)
 			{
 			case 1:
-				componentList.add(new TranslatableComponent("filter.bloodmagic.blacklist"));
+				componentList.add(Component.translatable("filter.bloodmagic.blacklist"));
 				break;
 			default:
-				componentList.add(new TranslatableComponent("filter.bloodmagic.whitelist"));
+				componentList.add(Component.translatable("filter.bloodmagic.whitelist"));
 			}
 			return componentList;
 		}

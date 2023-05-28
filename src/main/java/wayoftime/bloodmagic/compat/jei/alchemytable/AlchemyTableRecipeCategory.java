@@ -1,12 +1,6 @@
 package wayoftime.bloodmagic.compat.jei.alchemytable;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.google.common.collect.Lists;
-
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -15,7 +9,6 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -25,6 +18,10 @@ import wayoftime.bloodmagic.core.registry.OrbRegistry;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.Constants;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class AlchemyTableRecipeCategory implements IRecipeCategory<RecipeAlchemyTable>
 {
@@ -66,9 +63,9 @@ public class AlchemyTableRecipeCategory implements IRecipeCategory<RecipeAlchemy
 
 		if (mouseX >= 58 && mouseX <= 78 && mouseY >= 21 && mouseY <= 34)
 		{
-			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.tier", ChatUtil.DECIMAL_FORMAT.format(recipe.getMinimumTier())));
-			tooltip.add(new TranslatableComponent("jei.bloodmagic.recipe.lpDrained", ChatUtil.DECIMAL_FORMAT.format(recipe.getSyphon())));
-			tooltip.add(new TranslatableComponent("jei.bloodmagic.recipe.ticksRequired", ChatUtil.DECIMAL_FORMAT.format(recipe.getTicks())));
+			tooltip.add(Component.translatable("tooltip.bloodmagic.tier", ChatUtil.DECIMAL_FORMAT.format(recipe.getMinimumTier())));
+			tooltip.add(Component.translatable("jei.bloodmagic.recipe.lpDrained", ChatUtil.DECIMAL_FORMAT.format(recipe.getSyphon())));
+			tooltip.add(Component.translatable("jei.bloodmagic.recipe.ticksRequired", ChatUtil.DECIMAL_FORMAT.format(recipe.getTicks())));
 		}
 
 		return tooltip;
@@ -78,7 +75,7 @@ public class AlchemyTableRecipeCategory implements IRecipeCategory<RecipeAlchemy
 	@Override
 	public Component getTitle()
 	{
-		return new TranslatableComponent("jei.bloodmagic.recipe.alchemytable");
+		return Component.translatable("jei.bloodmagic.recipe.alchemytable");
 	}
 
 	@Nonnull

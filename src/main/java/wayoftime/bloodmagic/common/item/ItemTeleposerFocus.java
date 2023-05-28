@@ -1,23 +1,19 @@
 package wayoftime.bloodmagic.common.item;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.phys.AABB;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
@@ -27,6 +23,9 @@ import wayoftime.bloodmagic.event.ItemBindEvent;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.BindableHelper;
 import wayoftime.bloodmagic.util.helper.TextHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemTeleposerFocus extends ItemBindableBase implements ITeleposerFocus
 {
@@ -136,8 +135,8 @@ public class ItemTeleposerFocus extends ItemBindableBase implements ITeleposerFo
 		if (storedKey != null)
 		{
 			BlockPos storedPos = getStoredPos(stack);
-			tooltip.add(new TranslatableComponent(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionfocus.coords", storedPos.getX(), storedPos.getY(), storedPos.getZ())).withStyle(ChatFormatting.GRAY));
-			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.telepositionfocus.world", new TranslatableComponent(storedKey.location().toString())).withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable(TextHelper.localizeEffect("tooltip.bloodmagic.telepositionfocus.coords", storedPos.getX(), storedPos.getY(), storedPos.getZ())).withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("tooltip.bloodmagic.telepositionfocus.world", Component.translatable(storedKey.location().toString())).withStyle(ChatFormatting.GRAY));
 		}
 	}
 

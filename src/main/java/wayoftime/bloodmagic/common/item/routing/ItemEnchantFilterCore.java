@@ -1,31 +1,30 @@
 package wayoftime.bloodmagic.common.item.routing;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import org.apache.commons.lang3.tuple.Pair;
-
-import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.apache.commons.lang3.tuple.Pair;
 import wayoftime.bloodmagic.client.button.FilterButtonTogglePress;
 import wayoftime.bloodmagic.common.container.item.ContainerFilter;
 import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
 import wayoftime.bloodmagic.common.item.inventory.ItemInventory;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.GhostItemHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class ItemEnchantFilterCore extends ItemRouterFilter implements INestableItemFilterProvider
 {
@@ -39,7 +38,7 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 	public void appendHoverText(ItemStack filterStack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
 //		super.addInformation(filterStack, world, tooltip, flag);
-		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.enchantfilter.desc").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY));
+		tooltip.add(Component.translatable("tooltip.bloodmagic.enchantfilter.desc").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY));
 
 		if (filterStack.getTag() == null)
 		{
@@ -49,7 +48,7 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 		boolean sneaking = Screen.hasShiftDown();
 		if (!sneaking)
 		{
-			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.extraInfo").withStyle(ChatFormatting.BLUE));
+			tooltip.add(Component.translatable("tooltip.bloodmagic.extraInfo").withStyle(ChatFormatting.BLUE));
 		} else
 		{
 			int whitelistState = this.getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
@@ -57,10 +56,10 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 
 			if (isWhitelist)
 			{
-				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.whitelist").withStyle(ChatFormatting.GRAY));
+				tooltip.add(Component.translatable("tooltip.bloodmagic.filter.whitelist").withStyle(ChatFormatting.GRAY));
 			} else
 			{
-				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.blacklist").withStyle(ChatFormatting.GRAY));
+				tooltip.add(Component.translatable("tooltip.bloodmagic.filter.blacklist").withStyle(ChatFormatting.GRAY));
 			}
 
 			ItemInventory inv = new InventoryFilter(filterStack);
@@ -79,17 +78,17 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 					continue;
 				}
 
-				TranslatableComponent fuzzyText = new TranslatableComponent("tooltip.bloodmagic.filter.enchant_combination", fuzzyList.get(0), list.get(0));
+				TranslatableComponent fuzzyText = Component.translatable("tooltip.bloodmagic.filter.enchant_combination", fuzzyList.get(0), list.get(0));
 
 				if (isWhitelist)
 				{
 					int amount = GhostItemHelper.getItemGhostAmount(stack);
 					if (amount > 0)
 					{
-						tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.count", amount, fuzzyText));
+						tooltip.add(Component.translatable("tooltip.bloodmagic.filter.count", amount, fuzzyText));
 					} else
 					{
-						tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.all", fuzzyText));
+						tooltip.add(Component.translatable("tooltip.bloodmagic.filter.all", fuzzyText));
 					}
 
 				} else
@@ -301,7 +300,7 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 				ItemStack ghostStack = inv.getItem(ghostItemSlot);
 				if (ghostStack.isEmpty())
 				{
-					componentList.add(new TranslatableComponent("filter.bloodmagic.noenchant"));
+					componentList.add(Component.translatable("filter.bloodmagic.noenchant"));
 					return componentList;
 				}
 
@@ -311,10 +310,10 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 				{
 					if (currentState == 0)
 					{
-						componentList.add(new TranslatableComponent("filter.bloodmagic.anyenchant"));
+						componentList.add(Component.translatable("filter.bloodmagic.anyenchant"));
 					} else
 					{
-						componentList.add(new TranslatableComponent("filter.bloodmagic.allenchant"));
+						componentList.add(Component.translatable("filter.bloodmagic.allenchant"));
 					}
 					for (Entry<Enchantment, Integer> entry : enchants.entrySet())
 					{
@@ -322,7 +321,7 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 					}
 				} else
 				{
-					componentList.add(new TranslatableComponent("filter.bloodmagic.noenchant"));
+					componentList.add(Component.translatable("filter.bloodmagic.noenchant"));
 					return componentList;
 				}
 			} else
@@ -338,10 +337,10 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 			boolean isFuzzy = this.getIsFuzzy(filterStack, ghostItemSlot);
 			if (isFuzzy)
 			{
-				componentList.add(new TranslatableComponent("filter.bloodmagic.enchantfuzzy"));
+				componentList.add(Component.translatable("filter.bloodmagic.enchantfuzzy"));
 			} else
 			{
-				componentList.add(new TranslatableComponent("filter.bloodmagic.enchantnotfuzzy"));
+				componentList.add(Component.translatable("filter.bloodmagic.enchantnotfuzzy"));
 			}
 		}
 

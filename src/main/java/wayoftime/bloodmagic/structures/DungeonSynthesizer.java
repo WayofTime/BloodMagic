@@ -1,24 +1,12 @@
 package wayoftime.bloodmagic.structures;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Random;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.google.common.collect.Lists;
 import com.google.common.reflect.TypeToken;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
@@ -27,6 +15,7 @@ import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import org.apache.commons.lang3.tuple.Pair;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.tile.TileDungeonController;
 import wayoftime.bloodmagic.common.tile.TileDungeonSeal;
@@ -36,6 +25,9 @@ import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.structures.rooms.DungeonRoomPlacement;
 import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.Constants;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 public class DungeonSynthesizer
 {
@@ -349,8 +341,8 @@ public class DungeonSynthesizer
 					{
 						List<Component> toSend = Lists.newArrayList();
 //						if (!binding.getOwnerId().equals(player.getGameProfile().getId()))
-//							toSend.add(new TranslatableComponent(tooltipBase + "otherNetwork", binding.getOwnerName()));
-						toSend.add(new TranslatableComponent("tooltip.bloodmagic.specialspawn"));
+//							toSend.add(Component.translatable(tooltipBase + "otherNetwork", binding.getOwnerName()));
+						toSend.add(Component.translatable("tooltip.bloodmagic.specialspawn"));
 						ChatUtil.sendNoSpam(player, toSend.toArray(new Component[toSend.size()]));
 					}
 

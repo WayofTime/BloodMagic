@@ -4,7 +4,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
@@ -194,7 +193,7 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 		int offset = -3 * textEntry.length();
 		this.font.draw(stack, Component.literal(textEntry), 45 - 18 + offset + 7.5f, 37 + 3, 0xFFFFFF);
 //		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
-		this.font.draw(stack, new TranslatableComponent("container.inventory"), 8, 93, 4210752);
+		this.font.draw(stack, Component.translatable("container.inventory"), 8, 93, 4210752);
 		this.font.draw(stack, container.trainerStack.getHoverName(), 8, 4, 4210752);
 
 		int w = 20;
@@ -301,10 +300,10 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 
 		if (isWhitelist)
 		{
-			components.add(new TranslatableComponent("trainer.bloodmagic.whitelist"));
+			components.add(Component.translatable("trainer.bloodmagic.whitelist"));
 		} else
 		{
-			components.add(new TranslatableComponent("trainer.bloodmagic.blacklist"));
+			components.add(Component.translatable("trainer.bloodmagic.blacklist"));
 		}
 
 		return components;
@@ -332,9 +331,9 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 					int level = entry.getKey().getLevel(entry.getValue().intValue());
 
 					if (level > 0)
-						components.add(new TranslatableComponent("trainer.bloodmagic.allowupgrade", new TranslatableComponent(entry.getKey().getTranslationKey()), new TranslatableComponent("enchantment.level." + level)));
+						components.add(Component.translatable("trainer.bloodmagic.allowupgrade", Component.translatable(entry.getKey().getTranslationKey()), Component.translatable("enchantment.level." + level)));
 					else
-						components.add(new TranslatableComponent("trainer.bloodmagic.blockupgrade", new TranslatableComponent(entry.getKey().getTranslationKey())));
+						components.add(Component.translatable("trainer.bloodmagic.blockupgrade", Component.translatable(entry.getKey().getTranslationKey())));
 				}
 			}
 		}

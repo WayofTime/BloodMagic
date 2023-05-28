@@ -2,7 +2,6 @@ package wayoftime.bloodmagic.common.item;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -80,11 +79,11 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IForgeI
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag)
 	{
-		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.orb.desc").withStyle(ChatFormatting.GRAY));
+		tooltip.add(Component.translatable("tooltip.bloodmagic.orb.desc").withStyle(ChatFormatting.GRAY));
 
 		BloodOrb orb = getOrb(stack);
 		if (flag.isAdvanced() && orb != null)
-			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.orb.owner", stack.getItem().getRegistryName()).withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("tooltip.bloodmagic.orb.owner", stack.getItem().getRegistryName()).withStyle(ChatFormatting.GRAY));
 
 		super.appendHoverText(stack, world, tooltip, flag);
 	}

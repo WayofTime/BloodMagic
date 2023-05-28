@@ -4,7 +4,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.*;
@@ -77,7 +76,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
 	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
 		super.appendHoverText(stack, world, tooltip, flag);
-		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.sigil.holding.press", new TranslatableComponent(KeyBindings.OPEN_HOLDING.getKey().saveString()).withStyle(ChatFormatting.ITALIC)).withStyle(ChatFormatting.GRAY));
+		tooltip.add(Component.translatable("tooltip.bloodmagic.sigil.holding.press", Component.translatable(KeyBindings.OPEN_HOLDING.getKey().saveString()).withStyle(ChatFormatting.ITALIC)).withStyle(ChatFormatting.GRAY));
 
 		if (!stack.hasTag())
 			return;
@@ -92,11 +91,11 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
 			if (!invStack.isEmpty())
 				if (!item.isEmpty() && invStack == item)
 				{
-					tooltip.add(new TranslatableComponent("tooltip.bloodmagic.sigil.holding.sigilInSlot", i + 1, (invStack.getHoverName().plainCopy()).withStyle(ChatFormatting.ITALIC, ChatFormatting.UNDERLINE)));
+					tooltip.add(Component.translatable("tooltip.bloodmagic.sigil.holding.sigilInSlot", i + 1, (invStack.getHoverName().plainCopy()).withStyle(ChatFormatting.ITALIC, ChatFormatting.UNDERLINE)));
 //					tooltip.add(new TranslationTextComponent("tooltip.bloodmagic.sigil.holding.sigilInSlot", i + 1, new TranslationTextComponent(invStack.getDisplayName()).mergeStyle(TextFormatting.ITALIC, TextFormatting.UNDERLINE)));
 
 				} else
-					tooltip.add(new TranslatableComponent("tooltip.bloodmagic.sigil.holding.sigilInSlot", i + 1, invStack.getHoverName()));
+					tooltip.add(Component.translatable("tooltip.bloodmagic.sigil.holding.sigilInSlot", i + 1, invStack.getHoverName()));
 		}
 	}
 

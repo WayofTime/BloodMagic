@@ -1,17 +1,10 @@
 package wayoftime.bloodmagic.common.item.soul;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
-
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -45,6 +38,11 @@ import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon, IMultiWillTool
 {
@@ -302,8 +300,8 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 			return;
 
 //		tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.sentientSword.desc"))));
-		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.sentientPickaxe.desc").withStyle(ChatFormatting.GRAY));
-		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GRAY));
+		tooltip.add(Component.translatable("tooltip.bloodmagic.sentientPickaxe.desc").withStyle(ChatFormatting.GRAY));
+		tooltip.add(Component.translatable("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override

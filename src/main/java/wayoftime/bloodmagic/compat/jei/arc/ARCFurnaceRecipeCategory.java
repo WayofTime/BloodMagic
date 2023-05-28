@@ -1,12 +1,6 @@
 package wayoftime.bloodmagic.compat.jei.arc;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -15,7 +9,6 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -26,6 +19,10 @@ import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.handler.event.ClientHandler;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ARCFurnaceRecipeCategory implements IRecipeCategory<SmeltingRecipe>
 {
@@ -59,7 +56,7 @@ public class ARCFurnaceRecipeCategory implements IRecipeCategory<SmeltingRecipe>
 	@Override
 	public Component getTitle()
 	{
-		return new TranslatableComponent("jei.bloodmagic.recipe.arcfurnace");
+		return Component.translatable("jei.bloodmagic.recipe.arcfurnace");
 	}
 
 	@Nonnull

@@ -4,7 +4,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Button.OnPress;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -239,10 +238,10 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 			switch (currentState)
 			{
 			case 1:
-				componentList.add(new TranslatableComponent("filter.bloodmagic.blacklist"));
+				componentList.add(Component.translatable("filter.bloodmagic.blacklist"));
 				break;
 			default:
-				componentList.add(new TranslatableComponent("filter.bloodmagic.whitelist"));
+				componentList.add(Component.translatable("filter.bloodmagic.whitelist"));
 			}
 		}
 

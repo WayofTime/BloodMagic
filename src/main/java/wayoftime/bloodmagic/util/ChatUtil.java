@@ -5,7 +5,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkEvent.Context;
@@ -70,7 +69,7 @@ public class ChatUtil
 	 */
 	public static Component wrapFormatted(String s, Object... args)
 	{
-		return new TranslatableComponent(s, args);
+		return Component.translatable(s, args);
 	}
 
 	/**

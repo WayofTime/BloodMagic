@@ -1,16 +1,6 @@
 package wayoftime.bloodmagic.compat.jei.arc;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -21,16 +11,22 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
+import org.apache.commons.lang3.tuple.Pair;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.recipe.RecipeARC;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.handler.event.ClientHandler;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ARCRecipeCategory implements IRecipeCategory<RecipeARC>
 {
@@ -64,7 +60,7 @@ public class ARCRecipeCategory implements IRecipeCategory<RecipeARC>
 	@Override
 	public Component getTitle()
 	{
-		return new TranslatableComponent("jei.bloodmagic.recipe.arc");
+		return Component.translatable("jei.bloodmagic.recipe.arc");
 	}
 
 	@Nonnull
