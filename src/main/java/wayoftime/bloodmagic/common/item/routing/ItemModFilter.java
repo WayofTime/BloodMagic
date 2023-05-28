@@ -3,7 +3,6 @@ package wayoftime.bloodmagic.common.item.routing;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -59,7 +58,7 @@ public class ItemModFilter extends ItemRouterFilter implements INestableItemFilt
 					continue;
 				}
 
-				TranslatableComponent modText = Component.translatable("tooltip.bloodmagic.filter.from_mod", stack.getItem().getRegistryName().getNamespace());
+				Component modText = Component.translatable("tooltip.bloodmagic.filter.from_mod", stack.getItem().getRegistryName().getNamespace());
 
 				if (isWhitelist)
 				{

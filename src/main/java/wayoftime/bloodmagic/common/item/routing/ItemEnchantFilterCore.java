@@ -5,7 +5,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -78,7 +77,7 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 					continue;
 				}
 
-				TranslatableComponent fuzzyText = Component.translatable("tooltip.bloodmagic.filter.enchant_combination", fuzzyList.get(0), list.get(0));
+				Component fuzzyText = Component.translatable("tooltip.bloodmagic.filter.enchant_combination", fuzzyList.get(0), list.get(0));
 
 				if (isWhitelist)
 				{
