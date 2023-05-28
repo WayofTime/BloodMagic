@@ -1,8 +1,5 @@
 package wayoftime.bloodmagic.compat.jei.ghostingredienthandlers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import mezz.jei.api.gui.handlers.IGhostIngredientHandler;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.world.inventory.Slot;
@@ -12,6 +9,9 @@ import wayoftime.bloodmagic.client.screens.ScreenFilter;
 import wayoftime.bloodmagic.common.container.item.ContainerFilter;
 import wayoftime.bloodmagic.network.FilterGhostSlotPacket;
 import wayoftime.bloodmagic.util.GhostItemHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GhostFilter implements IGhostIngredientHandler<ScreenFilter>
 {

@@ -1,16 +1,7 @@
 package wayoftime.bloodmagic.client.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.VertexFormatElement;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -25,12 +16,19 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.client.model.IDynamicBakedModel;
 import net.minecraftforge.client.model.data.EmptyModelData;
-import net.minecraftforge.client.model.data.IDynamicBakedModel;
-import net.minecraftforge.client.model.data.IModelData;
-import net.minecraftforge.client.model.pipeline.BakedQuadBuilder;
+import net.minecraftforge.client.model.data.ModelData;
+import net.minecraftforge.client.model.pipeline.QuadBakingVertexConsumer;
 import wayoftime.bloodmagic.common.block.BlockMimic;
 import wayoftime.bloodmagic.common.tile.TileMimic;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public class MimicBakedModel implements IDynamicBakedModel
 {
@@ -52,7 +50,7 @@ public class MimicBakedModel implements IDynamicBakedModel
 		return false;
 	}
 
-	private void putVertex(BakedQuadBuilder builder, Vec3 normal, double x, double y, double z, float u, float v, TextureAtlasSprite sprite, float r, float g, float b)
+	private void putVertex(QuadBakingVertexConsumer builder, Vec3 normal, double x, double y, double z, float u, float v, TextureAtlasSprite sprite, float r, float g, float b)
 	{
 		ImmutableList<VertexFormatElement> elements = builder.getVertexFormat().getElements().asList();
 		for (int j = 0; j < elements.size(); j++)
@@ -98,7 +96,7 @@ public class MimicBakedModel implements IDynamicBakedModel
 		int tw = sprite.getWidth();
 		int th = sprite.getHeight();
 
-		BakedQuadBuilder builder = new BakedQuadBuilder(sprite);
+		QuadBakingVertexConsumer builder = new QuadBakingVertexConsumer(sprite);
 		builder.setQuadOrientation(Direction.getNearest(normal.x, normal.y, normal.z));
 		putVertex(builder, normal, v1.x, v1.y, v1.z, 0, 0, sprite, 1.0f, 1.0f, 1.0f);
 		putVertex(builder, normal, v2.x, v2.y, v2.z, 0, th, sprite, 1.0f, 1.0f, 1.0f);
@@ -114,7 +112,7 @@ public class MimicBakedModel implements IDynamicBakedModel
 
 	@Nonnull
 	@Override
-	public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @Nonnull Random rand, @Nonnull IModelData extraData)
+	public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @Nonnull Random rand, @Nonnull ModelData extraData)
 	{
 		RenderType layer = MinecraftForgeClient.getRenderType();
 

@@ -1,10 +1,6 @@
 package wayoftime.bloodmagic;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.google.gson.Gson;
-
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -14,14 +10,15 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.ModelEvent.RegisterGeometryLoaders;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -29,13 +26,10 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import wayoftime.bloodmagic.anointment.Anointment;
 import wayoftime.bloodmagic.client.ClientEvents;
 import wayoftime.bloodmagic.client.hud.ElementRegistry;
@@ -46,14 +40,7 @@ import wayoftime.bloodmagic.client.model.MimicModelLoader;
 import wayoftime.bloodmagic.client.model.SigilHoldingModelLoader;
 import wayoftime.bloodmagic.client.sounds.SoundRegisterListener;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
-import wayoftime.bloodmagic.common.data.GeneratorBaseRecipes;
-import wayoftime.bloodmagic.common.data.GeneratorBlockStates;
-import wayoftime.bloodmagic.common.data.GeneratorBlockTags;
-import wayoftime.bloodmagic.common.data.GeneratorFluidTags;
-import wayoftime.bloodmagic.common.data.GeneratorItemModels;
-import wayoftime.bloodmagic.common.data.GeneratorItemTags;
-import wayoftime.bloodmagic.common.data.GeneratorLanguage;
-import wayoftime.bloodmagic.common.data.GeneratorLootTable;
+import wayoftime.bloodmagic.common.data.*;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeProvider;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.item.BloodOrb;
@@ -316,7 +303,7 @@ public class BloodMagic
 		}
 	}
 
-	private void loadModels(final ModelRegistryEvent event)
+	private void loadModels(final RegisterGeometryLoaders event)
 	{
 		ModelLoaderRegistry.registerLoader(BloodMagic.rl("mimicloader"), new MimicModelLoader(BloodMagic.rl("block/solidopaquemimic")));
 		ModelLoaderRegistry.registerLoader(BloodMagic.rl("mimicloader_ethereal"), new MimicModelLoader(BloodMagic.rl("block/etherealopaquemimic")));
@@ -355,10 +342,10 @@ public class BloodMagic
 		ClientEvents.initRenderLayer(event);
 	}
 
-	private void registerColors(final ColorHandlerEvent event)
+	private void registerColors(final RegisterColorHandlersEvent event)
 	{
-		if (event instanceof ColorHandlerEvent.Item)
-			ClientEvents.colorHandlerEvent((ColorHandlerEvent.Item) event);
+		if (event instanceof RegisterColorHandlersEvent.Item)
+			ClientEvents.colorHandlerEvent((RegisterColorHandlersEvent.Item) event);
 	}
 
 	private void enqueueIMC(final InterModEnqueueEvent event)

@@ -1,23 +1,20 @@
 package wayoftime.bloodmagic.common.data.recipe.builder;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.crafting.Ingredient;
+import org.apache.commons.lang3.tuple.Pair;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionTransform;
 import wayoftime.bloodmagic.util.Constants;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PotionTransformRecipeBuilder extends BloodMagicRecipeBuilder<PotionTransformRecipeBuilder>
 {

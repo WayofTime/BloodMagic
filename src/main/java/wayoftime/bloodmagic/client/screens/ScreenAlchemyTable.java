@@ -1,14 +1,9 @@
 package wayoftime.bloodmagic.client.screens;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
 import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -25,6 +20,10 @@ import wayoftime.bloodmagic.common.container.tile.ContainerAlchemyTable;
 import wayoftime.bloodmagic.common.tile.TileAlchemyTable;
 import wayoftime.bloodmagic.network.AlchemyTableButtonPacket;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 {

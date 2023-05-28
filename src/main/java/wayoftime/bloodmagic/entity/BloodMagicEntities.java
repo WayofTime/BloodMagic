@@ -1,7 +1,7 @@
 package wayoftime.bloodmagic.entity;
 
 import net.minecraft.world.entity.EntityType;
-import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.ModelEvent.RegisterGeometryLoaders;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -22,7 +22,7 @@ public class BloodMagicEntities
 	}
 
 	@SubscribeEvent
-	public static void registerModels(ModelRegistryEvent evt)
+	public static void registerModels(RegisterGeometryLoaders evt)
 	{
 //		System.out.println("O wO");
 //		RenderingRegistry.registerEntityRenderingHandler(BloodMagicEntityTypes.SNARE.getEntityType(), SoulSnareRenderer::new);

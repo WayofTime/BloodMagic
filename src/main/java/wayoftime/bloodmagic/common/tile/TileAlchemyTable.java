@@ -1,10 +1,5 @@
 package wayoftime.bloodmagic.common.tile;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang3.ArrayUtils;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -24,6 +19,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
+import org.apache.commons.lang3.ArrayUtils;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.event.BloodMagicCraftedEvent;
 import wayoftime.bloodmagic.common.container.tile.ContainerAlchemyTable;
@@ -42,6 +38,9 @@ import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionFlaskBase;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileAlchemyTable extends TileInventory implements WorldlyContainer, MenuProvider
 {
@@ -635,9 +634,9 @@ public class TileAlchemyTable extends TileInventory implements WorldlyContainer,
 					}
 
 					continue;
-				} else if (inputStack.getItem().hasContainerItem(inputStack))
+				} else if (inputStack.getItem().hasCraftingRemainingItem(inputStack))
 				{
-					setItem(i, inputStack.getItem().getContainerItem(inputStack));
+					setItem(i, inputStack.getItem().getCraftingRemainingItem(inputStack));
 					continue;
 				} else if (inputStack.getMaxDamage() > 0)
 				{
@@ -682,9 +681,9 @@ public class TileAlchemyTable extends TileInventory implements WorldlyContainer,
 					}
 
 					continue;
-				} else if (inputStack.getItem().hasContainerItem(inputStack))
+				} else if (inputStack.getItem().hasCraftingRemainingItem(inputStack))
 				{
-					setItem(i, inputStack.getItem().getContainerItem(inputStack));
+					setItem(i, inputStack.getItem().getCraftingRemainingItem(inputStack));
 					continue;
 				}
 

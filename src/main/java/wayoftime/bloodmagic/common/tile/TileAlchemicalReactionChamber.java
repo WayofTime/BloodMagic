@@ -1,12 +1,5 @@
 package wayoftime.bloodmagic.common.tile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -48,6 +41,12 @@ import wayoftime.bloodmagic.recipe.RecipeARC;
 import wayoftime.bloodmagic.recipe.helper.FluidStackIngredient;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.MultiSlotItemHandler;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class TileAlchemicalReactionChamber extends TileInventory implements MenuProvider, WorldlyContainer, IFluidHandler
 {
@@ -367,9 +366,9 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 		ItemStack inputStack = getItem(INPUT_SLOT);
 		if (!inputStack.isEmpty())
 		{
-			if (!consumeInput && inputStack.getItem().hasContainerItem(inputStack))
+			if (!consumeInput && inputStack.getItem().hasCraftingRemainingItem(inputStack))
 			{
-				setItem(INPUT_SLOT, inputStack.getItem().getContainerItem(inputStack));
+				setItem(INPUT_SLOT, inputStack.getItem().getCraftingRemainingItem(inputStack));
 			} else
 			{
 				inputStack.shrink(inputCount);
@@ -394,9 +393,9 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 						setItem(ARC_TOOL_SLOT, ItemStack.EMPTY);
 					}
 				}
-			} else if (toolStack.getItem().hasContainerItem(toolStack))
+			} else if (toolStack.getItem().hasCraftingRemainingItem(toolStack))
 			{
-				setItem(ARC_TOOL_SLOT, toolStack.getItem().getContainerItem(inputStack));
+				setItem(ARC_TOOL_SLOT, toolStack.getItem().getCraftingRemainingItem(inputStack));
 			} else
 			{
 				toolStack.shrink(1);

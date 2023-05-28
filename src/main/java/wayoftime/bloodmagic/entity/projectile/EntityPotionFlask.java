@@ -1,10 +1,5 @@
 package wayoftime.bloodmagic.entity.projectile;
 
-import java.util.List;
-import java.util.function.Predicate;
-
-import javax.annotation.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -36,6 +31,10 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkHooks;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.function.Predicate;
 
 @OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
 public class EntityPotionFlask extends ThrowableItemProjectile implements ItemSupplier

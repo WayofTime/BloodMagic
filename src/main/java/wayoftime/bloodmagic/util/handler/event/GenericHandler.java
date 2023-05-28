@@ -1,10 +1,5 @@
 package wayoftime.bloodmagic.util.handler.event;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.UUID;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -19,44 +14,26 @@ import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
-import net.minecraft.world.item.BowItem;
-import net.minecraft.world.item.CrossbowItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SplashPotionItem;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
-import net.minecraftforge.event.entity.living.LivingHealEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.LootingLevelEvent;
-import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
-import wayoftime.bloodmagic.common.item.BloodOrb;
-import wayoftime.bloodmagic.common.item.IBindable;
-import wayoftime.bloodmagic.common.item.IBloodOrb;
-import wayoftime.bloodmagic.common.item.ItemExperienceBook;
-import wayoftime.bloodmagic.common.item.ItemLavaCrystal;
-import wayoftime.bloodmagic.common.item.ItemLivingArmor;
-import wayoftime.bloodmagic.common.item.ItemRitualDiviner;
+import wayoftime.bloodmagic.common.item.*;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.data.Binding;
@@ -76,6 +53,11 @@ import wayoftime.bloodmagic.util.helper.InventoryHelper;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 import wayoftime.bloodmagic.will.DemonWillHolder;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class GenericHandler
@@ -113,7 +95,7 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onLivingFall(LivingFallEvent event)
 	{
-		LivingEntity eventEntityLiving = event.getEntityLiving();
+		LivingEntity eventEntityLiving = event.getEntity();
 
 		if (eventEntityLiving.hasEffect(BloodMagicPotions.HEAVY_HEART))
 		{
@@ -157,10 +139,10 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onInteract(PlayerInteractEvent.RightClickItem event)
 	{
-		if (event.getWorld().isClientSide)
+		if (event.getLevel().isClientSide)
 			return;
 
-		Player player = event.getPlayer();
+		Player player = event.getEntity();
 
 		if (PlayerHelper.isFakePlayer(player))
 			return;
@@ -208,7 +190,7 @@ public class GenericHandler
 	{
 		if (event.getItemStack().getItem() instanceof ItemRitualDiviner)
 		{
-			BloodMagicPacketHandler.INSTANCE.sendToServer(new CycleRitualDivinerPacket(event.getPlayer().getInventory().selected));
+			BloodMagicPacketHandler.INSTANCE.sendToServer(new CycleRitualDivinerPacket(event.getEntity().getInventory().selected));
 		}
 	}
 
@@ -218,7 +200,7 @@ public class GenericHandler
 	public void onLivingHurt(LivingHurtEvent event)
 	{
 		Entity sourceEntity = event.getSource().getEntity();
-		LivingEntity living = event.getEntityLiving();
+		LivingEntity living = event.getEntity();
 
 		if (sourceEntity instanceof Player)
 		{
@@ -283,7 +265,7 @@ public class GenericHandler
 			return;
 		}
 
-		Player sourcePlayer = event.getPlayer();
+		Player sourcePlayer = event.getEntity();
 		if (LivingUtil.hasFullSet(sourcePlayer))
 		{
 			LivingStats stats = LivingStats.fromPlayer(sourcePlayer, true);
@@ -318,7 +300,7 @@ public class GenericHandler
 	public void onLivingDamage(LivingDamageEvent event)
 	{
 		Entity sourceEntity = event.getSource().getEntity();
-		LivingEntity living = event.getEntityLiving();
+		LivingEntity living = event.getEntity();
 
 		if (sourceEntity instanceof Player)
 		{
@@ -415,7 +397,7 @@ public class GenericHandler
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onExperiencePickupHighest(PlayerXpEvent.PickupXp event)
 	{
-		LivingEntity living = event.getEntityLiving();
+		LivingEntity living = event.getEntity();
 		if (living instanceof Player)
 		{
 			Player player = (Player) living;
@@ -453,7 +435,7 @@ public class GenericHandler
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onExperiencePickup(PlayerXpEvent.PickupXp event)
 	{
-		Player player = event.getPlayer();
+		Player player = event.getEntity();
 		Entry<EquipmentSlot, ItemStack> entry = EnchantmentHelper.getRandomItemWith(Enchantments.MENDING, player);
 
 		if (entry != null)
@@ -510,7 +492,7 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onHeal(LivingHealEvent event)
 	{
-		LivingEntity living = event.getEntityLiving();
+		LivingEntity living = event.getEntity();
 		if (living instanceof Player)
 		{
 			Player player = (Player) living;
@@ -545,11 +527,11 @@ public class GenericHandler
 	Map<UUID, MeleeAttackGoal> attackGoalMap = new HashMap<>();
 
 	@SubscribeEvent
-	public void onPotionAdded(PotionEvent.PotionAddedEvent event)
+	public void onPotionAdded(MobEffectEvent.Added event)
 	{
-		if (event.getPotionEffect().getEffect() == BloodMagicPotions.FLIGHT && event.getEntityLiving() instanceof Player)
+		if (event.getEffectInstance().getEffect() == BloodMagicPotions.FLIGHT && event.getEntity() instanceof Player)
 		{
-			Player player = (Player) event.getEntityLiving();
+			Player player = (Player) event.getEntity();
 			player.getAbilities().mayfly = true;
 			if (!prevFlySpeedMap.containsKey(player.getUUID()))
 			{
@@ -557,27 +539,27 @@ public class GenericHandler
 			}
 
 			if (event.getEntity().level.isClientSide)
-				player.getAbilities().setFlyingSpeed(getFlySpeedForFlightLevel(event.getPotionEffect().getAmplifier()));
+				player.getAbilities().setFlyingSpeed(getFlySpeedForFlightLevel(event.getEffectInstance().getAmplifier()));
 			player.onUpdateAbilities();
 		}
 
 	}
 
 	@SubscribeEvent
-	public void onPotionExpired(PotionEvent.PotionExpiryEvent event)
+	public void onPotionExpired(MobEffectEvent.Expired event)
 	{
-		if (event.getPotionEffect().getEffect() == BloodMagicPotions.FLIGHT && event.getEntityLiving() instanceof Player)
+		if (event.getEffectInstance().getEffect() == BloodMagicPotions.FLIGHT && event.getEntity() instanceof Player)
 		{
-			((Player) event.getEntityLiving()).getAbilities().mayfly = ((Player) event.getEntityLiving()).isCreative();
-			((Player) event.getEntityLiving()).getAbilities().flying = false;
+			((Player) event.getEntity()).getAbilities().mayfly = ((Player) event.getEntity()).isCreative();
+			((Player) event.getEntity()).getAbilities().flying = false;
 
 			if (event.getEntity().level.isClientSide)
 			{
-				((Player) event.getEntityLiving()).getAbilities().setFlyingSpeed(prevFlySpeedMap.getOrDefault((((Player) event.getEntityLiving()).getUUID()), getFlySpeedForFlightLevel(-1)));
-				prevFlySpeedMap.remove(((Player) event.getEntityLiving()).getUUID());
+				((Player) event.getEntity()).getAbilities().setFlyingSpeed(prevFlySpeedMap.getOrDefault((((Player) event.getEntity()).getUUID()), getFlySpeedForFlightLevel(-1)));
+				prevFlySpeedMap.remove(((Player) event.getEntity()).getUUID());
 			}
 
-			((Player) event.getEntityLiving()).onUpdateAbilities();
+			((Player) event.getEntity()).onUpdateAbilities();
 		}
 	}
 
@@ -594,13 +576,13 @@ public class GenericHandler
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
-	public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
+	public void onEntityUpdate(LivingEvent.LivingTickEvent event)
 	{
 		if (event.getEntity().level.isClientSide)
 		{
-			if (event.getEntityLiving() instanceof Player)
+			if (event.getEntity() instanceof Player)
 			{
-				Player player = (Player) event.getEntityLiving();
+				Player player = (Player) event.getEntity();
 				if (LivingUtil.hasFullSet(player))
 				{
 					LivingStats stats = LivingStats.fromPlayer(player, true);
@@ -615,9 +597,9 @@ public class GenericHandler
 			}
 		}
 
-		if (event.getEntityLiving() instanceof Player)
+		if (event.getEntity() instanceof Player)
 		{
-			Player player = (Player) event.getEntityLiving();
+			Player player = (Player) event.getEntity();
 			if (player.hasEffect(BloodMagicPotions.FLIGHT))
 			{
 				player.fallDistance = 0;
@@ -847,7 +829,7 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onMiningSpeedCheck(PlayerEvent.BreakSpeed event)
 	{
-		Player player = event.getPlayer();
+		Player player = event.getEntity();
 		float speedModifier = 1;
 
 		if (LivingUtil.hasFullSet(player))
@@ -887,7 +869,7 @@ public class GenericHandler
 				if (holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get()) >= 1)
 				{
 					int bonusLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player.getMainHandItem());
-					int exp = event.getState().getExpDrop(event.getWorld(), event.getPos(), bonusLevel, holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get()));
+					int exp = event.getState().getExpDrop(event.getLevel(), event.getPos(), bonusLevel, holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get()));
 					event.setExpToDrop(exp);
 				}
 
@@ -898,7 +880,7 @@ public class GenericHandler
 
 					if (event.getExpToDrop() > 0 && expBonus > 0)
 					{
-						int expAdded = (int) expBonus + (expBonus % 1 > event.getWorld().getRandom().nextDouble() ? 1
+						int expAdded = (int) expBonus + (expBonus % 1 > event.getLevel().getRandom().nextDouble() ? 1
 								: 0);
 						event.setExpToDrop(event.getExpToDrop() + expAdded);
 
@@ -918,7 +900,7 @@ public class GenericHandler
 
 						double repairRatio = heldStack.getXpRepairRatio();
 						double durabilityBonus = Math.min(expBonus / repairRatio, heldStack.getDamageValue());
-						int durabilityAdded = (int) durabilityBonus + (durabilityBonus % 1 > event.getWorld().getRandom().nextDouble()
+						int durabilityAdded = (int) durabilityBonus + (durabilityBonus % 1 > event.getLevel().getRandom().nextDouble()
 								? 1
 								: 0);
 						if (durabilityAdded > 0)
@@ -940,17 +922,17 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onJump(LivingJumpEvent event)
 	{
-		if (event.getEntityLiving().hasEffect(BloodMagicPotions.GROUNDED))
+		if (event.getEntity().hasEffect(BloodMagicPotions.GROUNDED))
 		{
-			Vec3 motion = event.getEntityLiving().getDeltaMovement();
+			Vec3 motion = event.getEntity().getDeltaMovement();
 			motion = motion.multiply(1, 0, 1);
-			event.getEntityLiving().setDeltaMovement(motion);
+			event.getEntity().setDeltaMovement(motion);
 			return;
 		}
 
-		if (event.getEntityLiving() instanceof Player)
+		if (event.getEntity() instanceof Player)
 		{
-			Player player = (Player) event.getEntityLiving();
+			Player player = (Player) event.getEntity();
 
 			if (LivingUtil.hasFullSet(player))
 			{
@@ -1010,7 +992,7 @@ public class GenericHandler
 		AnointmentHolder holder = AnointmentHolder.fromItemStack(stack);
 		if (holder != null)
 		{
-			if (holder.consumeAnointmentDurabilityOnUseFinish(stack, EquipmentSlot.MAINHAND, event.getEntityLiving()))
+			if (holder.consumeAnointmentDurabilityOnUseFinish(stack, EquipmentSlot.MAINHAND, event.getEntity()))
 			{
 
 				holder.toItemStack(stack);
@@ -1019,7 +1001,7 @@ public class GenericHandler
 	}
 
 	@SubscribeEvent
-	public void onEntityJoinEvent(EntityJoinWorldEvent event)
+	public void onEntityJoinEvent(EntityJoinLevelEvent event)
 	{
 		Entity owner = null;
 		Entity entity = event.getEntity();
@@ -1044,7 +1026,7 @@ public class GenericHandler
 					Vec3 motion = projectile.getDeltaMovement();
 					float velocityModifier = (float) (arrowJiggle * Math.sqrt(motion.x * motion.x + motion.y * motion.y + motion.z * motion.z));
 
-					Vec3 newMotion = motion.add(2 * (event.getWorld().random.nextDouble() - 0.5) * velocityModifier, 2 * (event.getWorld().random.nextDouble() - 0.5) * velocityModifier, 2 * (event.getWorld().random.nextDouble() - 0.5) * velocityModifier);
+					Vec3 newMotion = motion.add(2 * (event.getLevel().random.nextDouble() - 0.5) * velocityModifier, 2 * (event.getLevel().random.nextDouble() - 0.5) * velocityModifier, 2 * (event.getLevel().random.nextDouble() - 0.5) * velocityModifier);
 
 					projectile.setDeltaMovement(newMotion);
 				}
@@ -1161,7 +1143,7 @@ public class GenericHandler
 		{ // Without Curios, there is nothing this cares about.
 			if (event.getFrom().getItem() instanceof ItemLivingArmor || event.getTo().getItem() instanceof ItemLivingArmor)
 			{ // Armor change involves Living Armor
-				LivingEntity entity = event.getEntityLiving();
+				LivingEntity entity = event.getEntity();
 				if (entity instanceof Player)
 				{ // is a player
 					Player player = (Player) entity;

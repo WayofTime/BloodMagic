@@ -1,9 +1,5 @@
 package wayoftime.bloodmagic.common.block;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -20,12 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -41,6 +32,10 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.tile.TileAlchemicalReactionChamber;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 public class BlockAlchemicalReactionChamber extends Block implements EntityBlock
 {
@@ -108,7 +103,7 @@ public class BlockAlchemicalReactionChamber extends Block implements EntityBlock
 		if (!(tile instanceof TileAlchemicalReactionChamber))
 			return InteractionResult.FAIL;
 
-		NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) tile, pos);
+		NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) tile, pos);
 //			player.openGui(BloodMagic.instance, Constants.Gui.SOUL_FORGE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
 
 		return InteractionResult.SUCCESS;

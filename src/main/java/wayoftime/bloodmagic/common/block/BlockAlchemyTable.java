@@ -101,10 +101,10 @@ public class BlockAlchemyTable extends Block implements EntityBlock// implements
 		{
 			if (((TileAlchemyTable) tile).isSlave())
 			{
-				NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) world.getBlockEntity(((TileAlchemyTable) tile).getConnectedPos()), ((TileAlchemyTable) tile).getConnectedPos());
+				NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) world.getBlockEntity(((TileAlchemyTable) tile).getConnectedPos()), ((TileAlchemyTable) tile).getConnectedPos());
 			} else
 			{
-				NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) tile, pos);
+				NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) tile, pos);
 			}
 
 			return InteractionResult.SUCCESS;

@@ -1,11 +1,5 @@
 package wayoftime.bloodmagic.common.item;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -35,6 +29,12 @@ import wayoftime.bloodmagic.core.living.LivingUpgrade;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.Utils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 public class ItemLivingTrainer extends Item implements ILivingContainer, MenuProvider
 {
 	public static final int MAX_SIZE = 16;
@@ -55,7 +55,7 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, MenuPro
 
 			if (player instanceof ServerPlayer)
 			{
-				NetworkHooks.openGui((ServerPlayer) player, this, buf -> buf.writeItemStack(stack, false));
+				NetworkHooks.openScreen((ServerPlayer) player, this, buf -> buf.writeItemStack(stack, false));
 			}
 		}
 

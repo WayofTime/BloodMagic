@@ -16,9 +16,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -32,30 +32,14 @@ import wayoftime.bloodmagic.api.compat.IMultiWillTool;
 import wayoftime.bloodmagic.client.model.MimicColor;
 import wayoftime.bloodmagic.client.render.BloodMagicModelLayerLocations;
 import wayoftime.bloodmagic.client.render.RenderItemRoutingNode;
-import wayoftime.bloodmagic.client.render.alchemyarray.BeaconAlchemyCircleRenderer;
-import wayoftime.bloodmagic.client.render.alchemyarray.DayAlchemyCircleRenderer;
-import wayoftime.bloodmagic.client.render.alchemyarray.LowStaticAlchemyCircleRenderer;
-import wayoftime.bloodmagic.client.render.alchemyarray.NightAlchemyCircleRenderer;
-import wayoftime.bloodmagic.client.render.alchemyarray.StaticAlchemyCircleRenderer;
+import wayoftime.bloodmagic.client.render.alchemyarray.*;
 import wayoftime.bloodmagic.client.render.block.RenderAlchemyArray;
 import wayoftime.bloodmagic.client.render.block.RenderAltar;
 import wayoftime.bloodmagic.client.render.block.RenderDemonCrucible;
-import wayoftime.bloodmagic.client.render.entity.BloodLightRenderer;
-import wayoftime.bloodmagic.client.render.entity.EntityMeteorRenderer;
-import wayoftime.bloodmagic.client.render.entity.EntityShapedChargeRenderer;
-import wayoftime.bloodmagic.client.render.entity.EntityThrowingDaggerRenderer;
-import wayoftime.bloodmagic.client.render.entity.SoulSnareRenderer;
+import wayoftime.bloodmagic.client.render.entity.*;
 import wayoftime.bloodmagic.client.render.entity.layers.BloodElytraLayer;
 import wayoftime.bloodmagic.client.render.model.ModelMeteor;
-import wayoftime.bloodmagic.client.screens.ScreenAlchemicalReactionChamber;
-import wayoftime.bloodmagic.client.screens.ScreenAlchemyTable;
-import wayoftime.bloodmagic.client.screens.ScreenFilter;
-import wayoftime.bloodmagic.client.screens.ScreenHolding;
-import wayoftime.bloodmagic.client.screens.ScreenItemRoutingNode;
-import wayoftime.bloodmagic.client.screens.ScreenMasterRoutingNode;
-import wayoftime.bloodmagic.client.screens.ScreenSoulForge;
-import wayoftime.bloodmagic.client.screens.ScreenTeleposer;
-import wayoftime.bloodmagic.client.screens.ScreenTrainingBracelet;
+import wayoftime.bloodmagic.client.screens.*;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.item.ItemSacrificialDagger;
@@ -132,7 +116,7 @@ public class ClientEvents
 
 	}
 
-	public static void colorHandlerEvent(ColorHandlerEvent.Item event)
+	public static void colorHandlerEvent(RegisterColorHandlersEvent.Item event)
 	{
 		event.getItemColors().register(new AnointmentColor(), BloodMagicItems.MELEE_DAMAGE_ANOINTMENT.get(), BloodMagicItems.SILK_TOUCH_ANOINTMENT.get(), BloodMagicItems.FORTUNE_ANOINTMENT.get(), BloodMagicItems.HOLY_WATER_ANOINTMENT.get(), BloodMagicItems.HIDDEN_KNOWLEDGE_ANOINTMENT.get(), BloodMagicItems.QUICK_DRAW_ANOINTMENT.get(), BloodMagicItems.LOOTING_ANOINTMENT.get(), BloodMagicItems.BOW_POWER_ANOINTMENT.get(), BloodMagicItems.WILL_POWER_ANOINTMENT.get(), BloodMagicItems.SMELTING_ANOINTMENT.get(), BloodMagicItems.BOW_VELOCITY_ANOINTMENT.get(), BloodMagicItems.VOIDING_ANOINTMENT.get(), BloodMagicItems.WEAPON_REPAIR_ANOINTMENT.get());
 		event.getItemColors().register(new AnointmentColor(), BloodMagicItems.BOW_POWER_ANOINTMENT_STRONG.get());
@@ -162,7 +146,7 @@ public class ClientEvents
 	}
 
 	@SubscribeEvent
-	public void onMouseEvent(InputEvent.MouseScrollEvent event)
+	public void onMouseEvent(InputEvent.MouseScrollingEvent event)
 	{
 		LocalPlayer player = Minecraft.getInstance().player;
 

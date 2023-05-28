@@ -72,7 +72,7 @@ public class BlockSoulForge extends Block implements EntityBlock// implements IB
 		if (!(tile instanceof TileSoulForge))
 			return InteractionResult.FAIL;
 
-		NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) tile, pos);
+		NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) tile, pos);
 //			player.openGui(BloodMagic.instance, Constants.Gui.SOUL_FORGE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
 
 		return InteractionResult.SUCCESS;

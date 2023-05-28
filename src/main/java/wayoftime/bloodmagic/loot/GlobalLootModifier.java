@@ -1,13 +1,6 @@
 package wayoftime.bloodmagic.loot;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-
 import com.google.gson.JsonObject;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
@@ -33,10 +26,15 @@ import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class GlobalLootModifier
 {
 //	public static final DeferredRegister<GlobalLootModifierSerializer<?>> GLM = DeferredRegister.create(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS, BloodMagic.MODID);
-	public static final DeferredRegister<GlobalLootModifierSerializer<?>> GLM = DeferredRegister.create(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS, BloodMagic.MODID);
+	public static final DeferredRegister<GlobalLootModifierSerializer<?>> GLM = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, BloodMagic.MODID);
 	public static final RegistryObject<SilkTouchTestModifier.Serializer> SILKTOUCH = GLM.register("silk_touch_bamboo", SilkTouchTestModifier.Serializer::new);
 	public static final RegistryObject<FortuneModifier.Serializer> FORTUNE = GLM.register("fortune", FortuneModifier.Serializer::new);
 	public static final RegistryObject<LootingModifier.Serializer> LOOTING = GLM.register("looting", LootingModifier.Serializer::new);

@@ -1,8 +1,5 @@
 package wayoftime.bloodmagic.common.tile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -27,6 +24,9 @@ import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
 import wayoftime.bloodmagic.util.Constants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileSoulForge extends TileInventory implements MenuProvider, IDemonWillConduit
 {
@@ -372,9 +372,9 @@ public class TileSoulForge extends TileInventory implements MenuProvider, IDemon
 			ItemStack inputStack = getItem(i);
 			if (!inputStack.isEmpty())
 			{
-				if (inputStack.getItem().hasContainerItem(inputStack))
+				if (inputStack.getItem().hasCraftingRemainingItem(inputStack))
 				{
-					setItem(i, inputStack.getItem().getContainerItem(inputStack));
+					setItem(i, inputStack.getItem().getCraftingRemainingItem(inputStack));
 					continue;
 				}
 

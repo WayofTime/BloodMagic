@@ -1,12 +1,5 @@
 package wayoftime.bloodmagic.ritual.types;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.function.Consumer;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -34,13 +27,15 @@ import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
-import wayoftime.bloodmagic.ritual.AreaDescriptor;
-import wayoftime.bloodmagic.ritual.EnumRuneType;
-import wayoftime.bloodmagic.ritual.IMasterRitualStone;
-import wayoftime.bloodmagic.ritual.Ritual;
-import wayoftime.bloodmagic.ritual.RitualComponent;
-import wayoftime.bloodmagic.ritual.RitualRegister;
+import wayoftime.bloodmagic.ritual.*;
 import wayoftime.bloodmagic.util.Utils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.Consumer;
 
 @RitualRegister("crafting")
 public class RitualCrafting extends Ritual
@@ -793,9 +788,9 @@ public class RitualCrafting extends Ritual
 				int slot = syphonEntry.getKey();
 				int syphonAmount = syphonEntry.getValue();
 				ItemStack syphonStack = inputInv.extractItem(slot, syphonAmount, false);
-				if (syphonStack.hasContainerItem())
+				if (syphonStack.hasCraftingRemainingItem())
 				{
-					ItemStack containedStack = syphonStack.getContainerItem();
+					ItemStack containedStack = syphonStack.getCraftingRemainingItem();
 					if (inputInv.isItemValid(slot, containedStack))
 					{
 						ItemStack remainderStack = inputInv.insertItem(slot, containedStack, false);

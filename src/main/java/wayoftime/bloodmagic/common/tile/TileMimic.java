@@ -1,11 +1,5 @@
 package wayoftime.bloodmagic.common.tile;
 
-import java.util.List;
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -28,13 +22,18 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.model.ModelDataManager;
-import net.minecraftforge.client.model.data.IModelData;
+import net.minecraftforge.client.model.data.ModelData;
+import net.minecraftforge.client.model.data.ModelDataManager;
 import net.minecraftforge.client.model.data.ModelDataMap;
 import net.minecraftforge.client.model.data.ModelProperty;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.Utils;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Objects;
 
 public class TileMimic extends TileInventory
 {
@@ -292,7 +291,7 @@ public class TileMimic extends TileInventory
 
 	@Nonnull
 	@Override
-	public IModelData getModelData()
+	public ModelData getModelData()
 	{
 		return new ModelDataMap.Builder().withInitial(MIMIC, mimic).build();
 	}

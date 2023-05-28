@@ -1,14 +1,13 @@
 package wayoftime.bloodmagic.client.key;
 
-import java.util.BitSet;
-
-import org.lwjgl.glfw.GLFW;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.KeyMapping;
 import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.common.MinecraftForge;
+import org.lwjgl.glfw.GLFW;
+
+import java.util.BitSet;
 
 public class BloodMagicKeyHandler
 {
@@ -47,7 +46,7 @@ public class BloodMagicKeyHandler
 		return false;
 	}
 
-	public void keyTick(InputEvent.KeyInputEvent event)
+	public void keyTick(InputEvent.Key event)
 	{
 //		System.out.println("Pressing the key handlers");
 		for (int i = 0; i < KeyBindings.values().length; i++)

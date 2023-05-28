@@ -1,7 +1,5 @@
 package wayoftime.bloodmagic.common.item.routing;
 
-import java.util.List;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -23,6 +21,8 @@ import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.GhostItemHelper;
 import wayoftime.bloodmagic.util.Utils;
 
+import java.util.List;
+
 public class ItemStandardFilter extends ItemCompositeFilter
 {
 	@Override
@@ -35,7 +35,7 @@ public class ItemStandardFilter extends ItemCompositeFilter
 
 			if (player instanceof ServerPlayer)
 			{
-				NetworkHooks.openGui((ServerPlayer) player, this, buf -> buf.writeItemStack(stack, false));
+				NetworkHooks.openScreen((ServerPlayer) player, this, buf -> buf.writeItemStack(stack, false));
 			}
 		}
 

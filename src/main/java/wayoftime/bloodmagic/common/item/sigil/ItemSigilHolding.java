@@ -1,10 +1,5 @@
 package wayoftime.bloodmagic.common.item.sigil;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -13,11 +8,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.MenuProvider;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -41,6 +32,10 @@ import wayoftime.bloodmagic.util.Utils;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
+
 public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAltarReader, ISigil.Holding, MenuProvider
 {
 	public static final int inventorySize = 5;
@@ -59,7 +54,7 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
 
 			if (player instanceof ServerPlayer)
 			{
-				NetworkHooks.openGui((ServerPlayer) player, this, buf -> buf.writeItemStack(stack, false));
+				NetworkHooks.openScreen((ServerPlayer) player, this, buf -> buf.writeItemStack(stack, false));
 			}
 //			player.openGui(BloodMagic.instance, Constants.Gui.SIGIL_HOLDING_GUI, player.getEntityWorld(), (int) player.posX, (int) player.posY, (int) player.posZ);
 		}
