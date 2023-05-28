@@ -16,10 +16,9 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 //useful for automate update from one version to another ; might need to delete it
-apply from: 'https://raw.githubusercontent.com/SizableShrimp/ForgeUpdatesRemapper/main/remapper.gradle'
+//apply from: 'https://raw.githubusercontent.com/SizableShrimp/ForgeUpdatesRemapper/main/remapper.gradle'
 
-
-version = '1.18.2-3.2.6-41'
+version = '1.19.0-3.2.6-41'
 group = 'com.yourname.modid' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'BloodMagic'
 
@@ -27,7 +26,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-    mappings channel: 'official', version: '1.18.2'
+    mappings channel: 'official', version: '1.19'
 
     runs {
         client {
@@ -118,16 +117,12 @@ dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.18.2-40.1.51'
+    minecraft 'net.minecraftforge:forge:1.19-41.1.0'
     
-    // compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
-    // runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
-        
-    
-    
-    compileOnly fg.deobf("mezz.jei:jei-1.18.2:9.5.5.174:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-1.18.2:9.5.5.174")
-    
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
 
@@ -174,6 +169,13 @@ task apiJar(type: Jar) {
 
 artifacts {
     archives srcJar, apiJar
+}
+
+//TODO remove this, only for the pain
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xmaxerrs" << "999"
+    }
 }
 
 publishing {
