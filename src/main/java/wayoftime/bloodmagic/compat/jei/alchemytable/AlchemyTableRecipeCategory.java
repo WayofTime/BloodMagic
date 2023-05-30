@@ -1,17 +1,17 @@
 package wayoftime.bloodmagic.compat.jei.alchemytable;
 
 import com.google.common.collect.Lists;
-import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
@@ -23,136 +23,70 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class AlchemyTableRecipeCategory implements IRecipeCategory<RecipeAlchemyTable>
-{
-	private static final int OUTPUT_SLOT = 0;
-	private static final int ORB_SLOT = 1;
-	private static final int INPUT_SLOT = 2;
-	public static final ResourceLocation UID = BloodMagic.rl(Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE);
+public class AlchemyTableRecipeCategory implements IRecipeCategory<RecipeAlchemyTable> {
+    public static final RecipeType<RecipeAlchemyTable> RECIPE_TYPE = RecipeType.create(BloodMagic.MODID, Constants.Compat.JEI_CATEGORY_ALCHEMYTABLE, RecipeAlchemyTable.class);
 
-	@Nonnull
-	private final IDrawable background;
-	private final IDrawable icon;
-//	@Nonnull
-//	private final ICraftingGridHelper craftingGridHelper;
+    @Nonnull
+    private final IDrawable background;
+    private final IDrawable icon;
 
-	public AlchemyTableRecipeCategory(IGuiHelper guiHelper)
-	{
-		icon = guiHelper.createDrawableIngredient(new ItemStack(BloodMagicBlocks.ALCHEMY_TABLE.get()));
-		background = guiHelper.createDrawable(BloodMagic.rl("gui/jei/alchemytable.png"), 0, 0, 118, 40);
-//		craftingGridHelper = guiHelper.createCraftingGridHelper(INPUT_SLOT);
-	}
+    public AlchemyTableRecipeCategory(IGuiHelper guiHelper) {
+        icon = guiHelper.createDrawableItemStack(new ItemStack(BloodMagicBlocks.ALCHEMY_TABLE.get()));
+        background = guiHelper.createDrawable(BloodMagic.rl("gui/jei/alchemytable.png"), 0, 0, 118, 40);
+    }
 
-	@Nonnull
-	@Override
-	public ResourceLocation getUid()
-	{
-		return UID;
-	}
 
-	@Override
-	public List<Component> getTooltipStrings(RecipeAlchemyTable recipe, double mouseX, double mouseY)
-	{
-		List<Component> tooltip = Lists.newArrayList();
+    @Override
+    public List<Component> getTooltipStrings(RecipeAlchemyTable recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+        List<Component> tooltip = Lists.newArrayList();
 
-//		if (mouseX >= 13 && mouseX <= 64 && mouseY >= 27 && mouseY <= 58)
-//		{
-//			tooltip.add(new TranslationTextComponent("jei.bloodmagic.recipe.consumptionrate", ChatUtil.DECIMAL_FORMAT.format(recipe.getConsumeRate())));
-//			tooltip.add(new TranslationTextComponent("jei.bloodmagic.recipe.drainrate", ChatUtil.DECIMAL_FORMAT.format(recipe.getDrainRate())));
-//		}
+        if (mouseX >= 58 && mouseX <= 78 && mouseY >= 21 && mouseY <= 34) {
+            tooltip.add(Component.translatable("tooltip.bloodmagic.tier", ChatUtil.DECIMAL_FORMAT.format(recipe.getMinimumTier())));
+            tooltip.add(Component.translatable("jei.bloodmagic.recipe.lpDrained", ChatUtil.DECIMAL_FORMAT.format(recipe.getSyphon())));
+            tooltip.add(Component.translatable("jei.bloodmagic.recipe.ticksRequired", ChatUtil.DECIMAL_FORMAT.format(recipe.getTicks())));
+        }
 
-		if (mouseX >= 58 && mouseX <= 78 && mouseY >= 21 && mouseY <= 34)
-		{
-			tooltip.add(Component.translatable("tooltip.bloodmagic.tier", ChatUtil.DECIMAL_FORMAT.format(recipe.getMinimumTier())));
-			tooltip.add(Component.translatable("jei.bloodmagic.recipe.lpDrained", ChatUtil.DECIMAL_FORMAT.format(recipe.getSyphon())));
-			tooltip.add(Component.translatable("jei.bloodmagic.recipe.ticksRequired", ChatUtil.DECIMAL_FORMAT.format(recipe.getTicks())));
-		}
+        return tooltip;
+    }
 
-		return tooltip;
-	}
+    @Nonnull
+    @Override
+    public Component getTitle() {
+        return Component.translatable("jei.bloodmagic.recipe.alchemytable");
+    }
 
-	@Nonnull
-	@Override
-	public Component getTitle()
-	{
-		return Component.translatable("jei.bloodmagic.recipe.alchemytable");
-	}
+    @Nonnull
+    @Override
+    public IDrawable getBackground() {
+        return background;
+    }
 
-	@Nonnull
-	@Override
-	public IDrawable getBackground()
-	{
-		return background;
-	}
+    @Nullable
+    @Override
+    public IDrawable getIcon() {
+        return icon;
+    }
 
-	@Nullable
-	@Override
-	public IDrawable getIcon()
-	{
-		return icon;
-	}
+    @Override
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeAlchemyTable recipe, IFocusGroup focuses) {
+        IRecipeSlotBuilder output = builder.addSlot(RecipeIngredientRole.OUTPUT, 91, 13);
+        output.addItemStack(recipe.getOutput());
 
-	@Override
-	public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull RecipeAlchemyTable recipe, @Nonnull IIngredients ingredients)
-	{
-		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+        IRecipeSlotBuilder orb = builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 91, 13);
+        orb.addItemStacks(OrbRegistry.getOrbsDownToTier(recipe.getMinimumTier()));
 
-		guiItemStacks.init(OUTPUT_SLOT, false, 91, 13);
-		guiItemStacks.init(ORB_SLOT, true, 60, 0);
+        for (int y = 0; y < 2; ++y) {
+            for (int x = 0; x < 3; ++x) {
+                int index = x + (y * 3);
+                IRecipeSlotBuilder input = builder.addSlot(RecipeIngredientRole.INPUT, x * 18, y * 18);
+                input.addIngredients(recipe.getInput().get(index));
+            }
+        }
+    }
 
-		for (int y = 0; y < 2; ++y)
-		{
-			for (int x = 0; x < 3; ++x)
-			{
-				int index = INPUT_SLOT + x + (y * 3);
-				guiItemStacks.init(index, true, x * 18, y * 18);
-			}
-		}
-//		guiItemStacks.set(ORB_SLOT, OrbRegistry.getOrbsDownToTier(recipe.getMinimumTier()));
-//		guiItemStacks.set(OUTPUT_SLOT, ingredients.getOutputs(ItemStack.class).get(0));
-
-//		guiItemStacks.init(OUTPUT_SLOT, false, 125, 30);
-//		guiItemStacks.init(INPUT_SLOT, true, 31, 0);
-//        craftingGridHelper.setInputs(guiItemStacks, ingredients.getInputs(ItemStack.class), 3, 2);
-
-		guiItemStacks.set(ingredients);
-	}
-
-	@Override
-	public Class<? extends RecipeAlchemyTable> getRecipeClass()
-	{
-		return RecipeAlchemyTable.class;
-	}
-
-	@Override
-	public void setIngredients(RecipeAlchemyTable recipe, IIngredients ingredients)
-	{
-		List<ItemStack> validOrbs = OrbRegistry.getOrbsDownToTier(recipe.getMinimumTier());
-
-		ItemStack[] validOrbStacks = new ItemStack[validOrbs.size()];
-		for (int i = 0; i < validOrbStacks.length; i++)
-		{
-			validOrbStacks[i] = validOrbs.get(i);
-		}
-
-		List<Ingredient> ingList = Lists.newArrayList();
-		ingList.add(Ingredient.of(validOrbStacks));
-		ingList.addAll(recipe.getInput());
-		ingredients.setInputIngredients(ingList);
-		ingredients.setOutput(VanillaTypes.ITEM, recipe.getOutput());
-	}
-
-//	@Override
-//	public void draw(RecipeBloodAltar recipe, MatrixStack matrixStack, double mouseX, double mouseY)
-//	{
-//		Minecraft mc = Minecraft.getInstance();
-//		String[] infoString = new String[]
-//		{ TextHelper.localize("jei.bloodmagic.recipe.requiredtier", NumeralHelper.toRoman(recipe.getMinimumTier().toInt())),
-//				TextHelper.localize("jei.bloodmagic.recipe.requiredlp", recipe.getSyphon()) };
-//		mc.fontRenderer.drawString(matrixStack, infoString[0], 90
-//				- mc.fontRenderer.getStringWidth(infoString[0]) / 2, 0, Color.gray.getRGB());
-//		mc.fontRenderer.drawString(matrixStack, infoString[1], 90
-//				- mc.fontRenderer.getStringWidth(infoString[1]) / 2, 10, Color.gray.getRGB());
-//	}
+    @Override
+    public RecipeType<RecipeAlchemyTable> getRecipeType() {
+        return RECIPE_TYPE;
+    }
 
 }
