@@ -869,7 +869,7 @@ public class GenericHandler
 				if (holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get()) >= 1)
 				{
 					int bonusLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player.getMainHandItem());
-					int exp = event.getState().getExpDrop(event.getLevel(), event.getPos(), bonusLevel, holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get()));
+					int exp = event.getState().getExpDrop(event.getLevel(), event.getLevel().getRandom(), event.getPos(), bonusLevel, holder.getAnointmentLevel(AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get()));
 					event.setExpToDrop(exp);
 				}
 

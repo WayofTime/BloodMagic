@@ -11,11 +11,12 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.TreeMap;
 
+import com.google.gson.JsonElement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.gson.Serializers;
@@ -24,6 +25,8 @@ import wayoftime.bloodmagic.ritual.AreaDescriptor.Rectangle;
 import wayoftime.bloodmagic.structures.DungeonRoom;
 import wayoftime.bloodmagic.structures.ModDungeons;
 import wayoftime.bloodmagic.structures.ModRoomPools;
+
+import javax.xml.crypto.Data;
 
 public class DungeonRoomProvider implements DataProvider
 {
@@ -34,7 +37,7 @@ public class DungeonRoomProvider implements DataProvider
 		this.generator = gen;
 	}
 
-	public void loadRoomPools(HashCache cache)
+	public void loadRoomPools(CachedOutput cache)
 	{
 		Map<ResourceLocation, Integer> connectiveCorridors = new TreeMap<>();
 		connectiveCorridors.put(ModDungeons.T_CORRIDOR, 2);
@@ -121,7 +124,7 @@ public class DungeonRoomProvider implements DataProvider
 		addRoomPool(cache, mineDeadends, ModRoomPools.MINE_DEADEND);
 	}
 
-	public void loadDungeons(HashCache cache)
+	public void loadDungeons(CachedOutput cache)
 	{
 		DungeonRoom miniArmoury = new DungeonRoom().addStructure("bloodmagic:mini_dungeon/armoury", new BlockPos(0, 0, 0)).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(17, 8, 17)));
 		miniArmoury.addDoor(new BlockPos(8, 0, 0), Direction.NORTH, "default", 1);
@@ -488,7 +491,7 @@ public class DungeonRoomProvider implements DataProvider
 		room.addNormalRoomPool(index, ModRoomPools.MINE_ROOMS);
 	}
 
-	public void registerStarterRooms(HashCache cache)
+	public void registerStarterRooms(CachedOutput cache)
 	{
 		DungeonRoom miniDungeon = new DungeonRoom().addStructure("bloodmagic:t3_entrance", BlockPos.ZERO).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(17, 8, 17)));
 		miniDungeon.addDoors(Direction.NORTH, "default", 1, new BlockPos(8, 1, 0));
@@ -515,23 +518,23 @@ public class DungeonRoomProvider implements DataProvider
 
 	}
 
-	public void addDungeonRoom(HashCache cache, DungeonRoom room, ResourceLocation schematicName)
+	public void addDungeonRoom(CachedOutput cache, DungeonRoom room, ResourceLocation schematicName)
 	{
-		String json = Serializers.GSON.toJson(room);
+		JsonElement json = Serializers.GSON.toJsonTree(room);
 
 		Path mainOutput = generator.getOutputFolder();
 		String pathSuffix = "assets/" + schematicName.getNamespace() + "/schematics/" + schematicName.getPath() + ".json";
 		Path outputPath = mainOutput.resolve(pathSuffix);
 		try
 		{
-			save(cache, json, outputPath);
+			DataProvider.saveStable(cache, json, outputPath);
 		} catch (IOException e)
 		{
 			BloodMagic.LOGGER.error("Couldn't save schematic to {}", outputPath, e);
 		}
 	}
 
-	public void addRoomPool(HashCache cache, Map<ResourceLocation, Integer> roomPool, ResourceLocation schematicName)
+	public void addRoomPool(CachedOutput cache, Map<ResourceLocation, Integer> roomPool, ResourceLocation schematicName)
 	{
 		List<String> roomStringList = new ArrayList<>();
 		for (Entry<ResourceLocation, Integer> roomEntry : roomPool.entrySet())
@@ -539,62 +542,23 @@ public class DungeonRoomProvider implements DataProvider
 			roomStringList.add(roomEntry.getValue() + ";" + roomEntry.getKey().toString());
 		}
 
-		String json = Serializers.GSON.toJson(roomStringList);
+		JsonElement json = Serializers.GSON.toJsonTree(roomStringList);
 
 		Path mainOutput = generator.getOutputFolder();
 		String pathSuffix = "assets/" + schematicName.getNamespace() + "/schematics/" + schematicName.getPath() + ".json";
 		Path outputPath = mainOutput.resolve(pathSuffix);
 		try
 		{
-			save(cache, json, outputPath);
+			DataProvider.saveStable(cache, json, outputPath);
 		} catch (IOException e)
 		{
 			BloodMagic.LOGGER.error("Couldn't save schematic to {}", outputPath, e);
 		}
 	}
 
-	static void save(HashCache p_123922_, String json, Path p_123924_)
-			throws IOException
-	{
-		String s = json;
-		String s1 = SHA1.hashUnencodedChars(s).toString();
-		if (!Objects.equals(p_123922_.getHash(p_123924_), s1) || !Files.exists(p_123924_))
-		{
-			Files.createDirectories(p_123924_.getParent());
-			BufferedWriter bufferedwriter = Files.newBufferedWriter(p_123924_);
-
-			try
-			{
-				bufferedwriter.write(s);
-			} catch (Throwable throwable1)
-			{
-				if (bufferedwriter != null)
-				{
-					try
-					{
-						bufferedwriter.close();
-					} catch (Throwable throwable)
-					{
-						throwable1.addSuppressed(throwable);
-					}
-				}
-
-				throw throwable1;
-			}
-
-			if (bufferedwriter != null)
-			{
-				bufferedwriter.close();
-			}
-		}
-
-		p_123922_.putNew(p_123924_, s1);
-	}
 
 	@Override
-	public void run(HashCache cache)
-			throws IOException
-	{
+	public void run(CachedOutput cache) throws IOException {
 		loadRoomPools(cache);
 		loadDungeons(cache);
 	}

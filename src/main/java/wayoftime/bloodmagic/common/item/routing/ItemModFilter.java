@@ -8,6 +8,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
 import wayoftime.bloodmagic.common.item.inventory.ItemInventory;
 import wayoftime.bloodmagic.util.Constants;
@@ -58,7 +59,7 @@ public class ItemModFilter extends ItemRouterFilter implements INestableItemFilt
 					continue;
 				}
 
-				Component modText = Component.translatable("tooltip.bloodmagic.filter.from_mod", stack.getItem().getRegistryName().getNamespace());
+				Component modText = Component.translatable("tooltip.bloodmagic.filter.from_mod", ForgeRegistries.ITEMS.getKey(stack.getItem()).getNamespace());
 
 				if (isWhitelist)
 				{
@@ -82,7 +83,7 @@ public class ItemModFilter extends ItemRouterFilter implements INestableItemFilt
 	@Override
 	public IFilterKey getFilterKey(ItemStack filterStack, int slot, ItemStack ghostStack, int amount)
 	{
-		String namespace = ghostStack.getItem().getRegistryName().getNamespace();
+		String namespace = ForgeRegistries.ITEMS.getKey(ghostStack.getItem()).getNamespace();
 
 		return new ModFilterKey(namespace, amount);
 	}

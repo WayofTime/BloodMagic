@@ -754,7 +754,7 @@ public class GeneratorLootTable extends LootTableProvider
 
 		private void registerNoDropLootTable(Block block)
 		{
-			LootPool.Builder builder = LootPool.lootPool().name(block.getRegistryName().toString());
+			LootPool.Builder builder = LootPool.lootPool().name(ForgeRegistries.BLOCKS.getKey(block).toString());
 			this.add(block, LootTable.lootTable().withPool(builder));
 		}
 
@@ -801,7 +801,7 @@ public class GeneratorLootTable extends LootTableProvider
 		@Override
 		protected Iterable<Block> getKnownBlocks()
 		{
-			return ForgeRegistries.BLOCKS.getValues().stream().filter(b -> b.getRegistryName().getNamespace().equals(BloodMagic.MODID)).collect(Collectors.toList());
+			return ForgeRegistries.BLOCKS.getValues().stream().filter(b -> ForgeRegistries.BLOCKS.getKey(b).getNamespace().equals(BloodMagic.MODID)).collect(Collectors.toList());
 		}
 	}
 

@@ -12,6 +12,7 @@ import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -130,8 +131,7 @@ public class ElementRegistry
 	@SubscribeEvent
 	public static void onRenderOverlay(RenderGuiOverlayEvent.Pre event)
 	{
-//		if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR)
-		if (event.getType() == RenderGuiOverlayEvent.ElementType.CHAT)
+		if (event.getOverlay() == VanillaGuiOverlay.CHAT_PANEL.type())
 		{
 			Window window = event.getWindow();
 
@@ -144,7 +144,7 @@ public class ElementRegistry
 				int xPos = (int) (window.getGuiScaledWidth() * position.x);
 				int yPos = (int) (window.getGuiScaledHeight() * position.y);
 
-				element.draw(event.getMatrixStack(), event.getPartialTicks(), xPos, yPos);
+				element.draw(event.getPoseStack(), event.getPartialTick(), xPos, yPos);
 			}
 		}
 	}

@@ -65,7 +65,7 @@ public class ItemMonsterSoul extends Item implements IDemonWill
 	@Override
 	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items)
 	{
-		if (this.allowdedIn(group))
+		if (this.allowedIn(group))
 		{
 			ItemStack stack = new ItemStack(this);
 			this.setWill(type, stack, 5);

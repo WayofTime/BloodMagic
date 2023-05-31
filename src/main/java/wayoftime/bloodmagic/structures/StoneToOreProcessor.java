@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.mojang.serialization.Codec;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
@@ -33,7 +34,7 @@ public class StoneToOreProcessor extends StructureProcessor
 		{
 			return p_230386_5_;
 		}
-		Random random = p_230386_6_.getRandom(p_230386_5_.pos);
+		RandomSource random = p_230386_6_.getRandom(p_230386_5_.pos);
 		return !(this.integrity >= 1.0F) && !(random.nextFloat() >= this.integrity)
 				? new StructureTemplate.StructureBlockInfo(p_230386_5_.pos, BloodMagicBlocks.DUNGEON_ORE.get().defaultBlockState(), p_230386_5_.nbt)
 				: p_230386_5_;

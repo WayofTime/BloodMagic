@@ -98,7 +98,7 @@ public class TileInversionPillar extends TileBase implements CommandSource
 //		String command = "execute in bloodmagic:dungeon run teleport Dev 0 100 0";
 		String command = getTextCommandForTeleport(destination, player, destinationPos.getX() + 0.5, destinationPos.getY(), destinationPos.getZ() + 0.5);
 		MinecraftServer mcServer = serverWorld.getServer();
-		mcServer.getCommands().performCommand(getCommandSource(serverWorld), command);
+		mcServer.getCommands().performPrefixedCommand(getCommandSource(serverWorld), command);
 	}
 
 	public String getTextCommandForTeleport(ResourceKey<Level> destination, Player player, double posX, double posY, double posZ)
@@ -109,8 +109,7 @@ public class TileInversionPillar extends TileBase implements CommandSource
 	}
 
 	@Override
-	public void sendMessage(Component component, UUID senderUUID)
-	{
+	public void sendSystemMessage(Component component) {
 		// TODO Auto-generated method stub
 
 	}

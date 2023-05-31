@@ -123,7 +123,7 @@ public class ItemLivingTome extends Item implements ILivingContainer, ILivingUpg
 	@Override
 	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items)
 	{
-		if (!allowdedIn(group))
+		if (!allowedIn(group))
 			return;
 
 		for (Entry<ResourceLocation, LivingUpgrade> entry : LivingArmorRegistrar.UPGRADE_MAP.entrySet())

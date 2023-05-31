@@ -940,6 +940,11 @@ public class RitualCrafting extends Ritual
 	{
 		CraftingContainer craftingcontainer = new CraftingContainer(new AbstractContainerMenu((MenuType) null, -1)
 		{
+			@Override
+			public ItemStack quickMoveStack(Player p_38941_, int p_38942_) {
+				return null;
+			}
+
 			public boolean stillValid(Player p_29888_)
 			{
 				return false;

@@ -248,7 +248,7 @@ public class TileTeleposer extends TileInventory implements MenuProvider, Comman
 //		String command = "execute in bloodmagic:dungeon run teleport Dev 0 100 0";
 		String command = getTextCommandForTeleport(destination, player, x, y, z);
 		MinecraftServer mcServer = serverWorld.getServer();
-		mcServer.getCommands().performCommand(getCommandSource(serverWorld), command);
+		mcServer.getCommands().performPrefixedCommand(getCommandSource(serverWorld), command);
 	}
 
 	public String getTextCommandForTeleport(ResourceKey<Level> destination, Player player, double posX, double posY, double posZ)
@@ -259,8 +259,7 @@ public class TileTeleposer extends TileInventory implements MenuProvider, Comman
 	}
 
 	@Override
-	public void sendMessage(Component component, UUID senderUUID)
-	{
+	public void sendSystemMessage(Component component) {
 		// TODO Auto-generated method stub
 
 	}

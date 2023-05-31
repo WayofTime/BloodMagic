@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -412,7 +413,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 		// There is probably an easier way to make expanded chat messages
 		if (typeList.size() >= 1)
 		{
-			Object[] translations = Component.translatable[typeList.size()];
+			Object[] translations = new Component[typeList.size()];
 			StringBuilder constructedString = new StringBuilder("%s");
 
 			for (int i = 1; i < typeList.size(); i++)

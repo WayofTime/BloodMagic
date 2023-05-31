@@ -164,9 +164,9 @@ public class RitualLava extends Ritual
 					continue;
 				}
 
-				if (!entity.hasEffect(BloodMagicPotions.FIRE_FUSE))
+				if (!entity.hasEffect(BloodMagicPotions.FIRE_FUSE.get()))
 				{
-					entity.addEffect(new MobEffectInstance(BloodMagicPotions.FIRE_FUSE, 100, 0));
+					entity.addEffect(new MobEffectInstance(BloodMagicPotions.FIRE_FUSE.get(), 100, 0));
 
 					vengefulDrained += vengefulWillDrain;
 					vengefulWill -= vengefulWillDrain;

@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.google.gson.JsonObject;
 
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -19,7 +20,7 @@ public class StaticBlockContainer extends RandomBlockContainer
 	}
 
 	@Override
-	public Block getRandomBlock(Random rand, Level world)
+	public Block getRandomBlock(RandomSource rand, Level world)
 	{
 		return block;
 	}

@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.tile.TileAltar;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
@@ -92,7 +93,7 @@ public class RitualWellOfSuffering extends Ritual
 			for (LivingEntity entity : entities)
 			{
 //				EntityEntry entityEntry = ForgeRegistries.ENTITIES.getKe;
-				ResourceLocation id = entity.getType().getRegistryName();
+				ResourceLocation id = ForgeRegistries.ENTITY_TYPES.getKey(entity.getType());
 
 				if (BloodMagicAPI.INSTANCE.getBlacklist().getSacrifice().contains(id))
 					continue;

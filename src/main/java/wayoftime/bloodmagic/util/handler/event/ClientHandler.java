@@ -34,12 +34,14 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderLevelLastEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer.Model3D;
@@ -139,7 +141,7 @@ public class ClientHandler
 	}
 
 	@SubscribeEvent
-	public static void render(RenderLevelLastEvent event)
+	public static void render(RenderLevelStageEvent event)
 	{
 		LocalPlayer player = minecraft.player;
 		Level world = player.getCommandSenderWorld();
@@ -489,9 +491,9 @@ public class ClientHandler
 
 	public static void drawRepeatedFluidSprite(VertexConsumer builder, PoseStack transform, FluidStack fluid, float x, float y, float w, float h)
 	{
-		TextureAtlasSprite sprite = getSprite(fluid.getFluid().getAttributes().getStillTexture(fluid));
+		TextureAtlasSprite sprite = getSprite(IClientFluidTypeExtensions.of(fluid.getFluid()).getStillTexture(fluid));
 //		Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(spriteLocation);
-		int col = fluid.getFluid().getAttributes().getColor(fluid);
+		int col = IClientFluidTypeExtensions.of(fluid.getFluid()).getTintColor(fluid);
 		int iW = sprite.getWidth();
 		int iH = sprite.getHeight();
 		if (iW > 0 && iH > 0)
@@ -539,7 +541,7 @@ public class ClientHandler
 	public static void addFluidTooltip(FluidStack fluid, List<Component> tooltip, int tankCapacity)
 	{
 		if (!fluid.isEmpty())
-			tooltip.add(applyFormat(fluid.getDisplayName(), fluid.getFluid().getAttributes().getRarity(fluid).color));
+			tooltip.add(applyFormat(fluid.getDisplayName(), fluid.getFluid().getFluidType().getRarity(fluid).color));
 		else
 			tooltip.add(Component.translatable("gui.bloodmagic.empty"));
 //		if (fluid.getFluid() instanceof IEFluid)
@@ -552,10 +554,10 @@ public class ClientHandler
 			else
 			{
 				// TODO translation keys
-				tooltip.add(applyFormat(Component.literal("Fluid Registry: " + fluid.getFluid().getRegistryName()), ChatFormatting.DARK_GRAY));
-				tooltip.add(applyFormat(Component.literal("Density: " + fluid.getFluid().getAttributes().getDensity(fluid)), ChatFormatting.DARK_GRAY));
-				tooltip.add(applyFormat(Component.literal("Temperature: " + fluid.getFluid().getAttributes().getTemperature(fluid)), ChatFormatting.DARK_GRAY));
-				tooltip.add(applyFormat(Component.literal("Viscosity: " + fluid.getFluid().getAttributes().getViscosity(fluid)), ChatFormatting.DARK_GRAY));
+				tooltip.add(applyFormat(Component.literal("Fluid Registry: " + ForgeRegistries.FLUIDS.getKey(fluid.getFluid())), ChatFormatting.DARK_GRAY));
+				tooltip.add(applyFormat(Component.literal("Density: " + fluid.getFluid().getFluidType().getDensity(fluid)), ChatFormatting.DARK_GRAY));
+				tooltip.add(applyFormat(Component.literal("Temperature: " + fluid.getFluid().getFluidType().getTemperature(fluid)), ChatFormatting.DARK_GRAY));
+				tooltip.add(applyFormat(Component.literal("Viscosity: " + fluid.getFluid().getFluidType().getViscosity(fluid)), ChatFormatting.DARK_GRAY));
 				tooltip.add(applyFormat(Component.literal("NBT Data: " + fluid.getTag()), ChatFormatting.DARK_GRAY));
 			}
 		}

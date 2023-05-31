@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import net.minecraft.util.RandomSource;
 import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.core.BlockPos;
@@ -21,7 +22,7 @@ import wayoftime.bloodmagic.util.BMLog;
 
 public class Dungeon
 {
-	public static boolean placeStructureAtPosition(Random rand, ServerLevel world, BlockPos pos)
+	public static boolean placeStructureAtPosition(RandomSource rand, ServerLevel world, BlockPos pos)
 	{
 		String initialDoorName = "default";
 
@@ -266,7 +267,7 @@ public class Dungeon
 		return false;
 	}
 
-	public static DungeonRoom getRandomRoom(Random rand)
+	public static DungeonRoom getRandomRoom(RandomSource rand)
 	{
 //		System.out.println("Dungeon size: " + DungeonRoomRegistry.dungeonWeightMap.size());
 		return DungeonRoomRegistry.getRandomDungeonRoom(rand);

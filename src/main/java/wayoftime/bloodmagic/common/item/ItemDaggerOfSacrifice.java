@@ -1,5 +1,6 @@
 package wayoftime.bloodmagic.common.item;
 
+import com.electronwill.nightconfig.core.conversion.ForceBreakdown;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
@@ -10,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.util.DamageSourceBloodMagic;
@@ -46,7 +48,7 @@ public class ItemDaggerOfSacrifice extends Item
 //		EntityEntry entityEntry = EntityRegistry.getEntry(target.getClass());
 //		if (entityEntry == null)
 //			return false;
-		ResourceLocation id = target.getType().getRegistryName();
+		ResourceLocation id = ForgeRegistries.ENTITY_TYPES.getKey(target.getType());
 		int lifeEssenceRatio = BloodMagicAPI.INSTANCE.getValueManager().getSacrificial().getOrDefault(id, 25);
 //		int lifeEssenceRatio = 25;
 

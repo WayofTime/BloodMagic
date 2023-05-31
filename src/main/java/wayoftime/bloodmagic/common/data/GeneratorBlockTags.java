@@ -79,11 +79,11 @@ public class GeneratorBlockTags extends BlockTagsProvider
 	/**
 	 * Resolves a Path for the location to save the given tag.
 	 */
-	@Override
-	protected Path getPath(ResourceLocation id)
-	{
-		return this.generator.getOutputFolder().resolve("data/" + id.getNamespace() + "/tags/blocks/" + id.getPath() + ".json");
-	}
+//	@Override
+//	protected Path getPath(ResourceLocation id)
+//	{
+//		return this.generator.getOutputFolder().resolve("data/" + id.getNamespace() + "/tags/blocks/" + id.getPath() + ".json");
+//	}
 
 	/**
 	 * Gets a name for this provider, to use in logging.

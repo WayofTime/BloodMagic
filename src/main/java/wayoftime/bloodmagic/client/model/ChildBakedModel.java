@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class ChildBakedModel implements BakedModel
@@ -25,8 +26,7 @@ public class ChildBakedModel implements BakedModel
 	}
 
 	@Override
-	public BakedModel handlePerspective(ItemTransforms.TransformType cameraTransformType, PoseStack poseStack)
-	{
+	public BakedModel applyTransform(ItemTransforms.TransformType cameraTransformType, PoseStack poseStack, boolean applyLeftHandTransform) {
 		switch (cameraTransformType)
 		{
 		case FIRST_PERSON_LEFT_HAND:
@@ -38,15 +38,15 @@ public class ChildBakedModel implements BakedModel
 		case THIRD_PERSON_RIGHT_HAND:
 		default:
 			// TODO: Change to cacheing system.
-			return net.minecraftforge.client.ForgeHooksClient.handlePerspective(heldModel, cameraTransformType, poseStack);
+			return net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(poseStack, heldModel, cameraTransformType, applyLeftHandTransform);
 		case NONE:
 		case GUI:
-			return net.minecraftforge.client.ForgeHooksClient.handlePerspective(baseModel, cameraTransformType, poseStack);
+			return net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(poseStack, baseModel, cameraTransformType, applyLeftHandTransform);
 		}
 	}
 
 	@Override
-	public List<BakedQuad> getQuads(BlockState p_119123_, Direction p_119124_, Random p_119125_)
+	public List<BakedQuad> getQuads(BlockState p_119123_, Direction p_119124_, RandomSource p_119125_)
 	{
 		return baseModel.getQuads(p_119123_, p_119124_, p_119125_);
 	}

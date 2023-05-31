@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.model.data.ModelData;
 import wayoftime.bloodmagic.entity.projectile.EntityShapedCharge;
 
 @OnlyIn(Dist.CLIENT)
@@ -46,13 +47,13 @@ public class EntityShapedChargeRenderer extends EntityRenderer<EntityShapedCharg
 				BlockRenderDispatcher blockrendererdispatcher = Minecraft.getInstance().getBlockRenderer();
 				for (net.minecraft.client.renderer.RenderType type : net.minecraft.client.renderer.RenderType.chunkBufferLayers())
 				{
-					if (ItemBlockRenderTypes.canRenderInLayer(blockstate, type))
-					{
-						net.minecraftforge.client.ForgeHooksClient.setRenderType(type);
-						blockrendererdispatcher.getModelRenderer().tesselateBlock(world, blockrendererdispatcher.getBlockModel(blockstate), blockstate, blockpos, matrixStackIn, bufferIn.getBuffer(type), false, new Random(), 0, OverlayTexture.NO_OVERLAY);
-					}
+//					if (ItemBlockRenderTypes.canRenderInLayer(blockstate, type))
+//					{
+//						net.minecraftforge.client.ForgeHooksClient.setRenderType(type);
+						blockrendererdispatcher.getModelRenderer().tesselateBlock(world, blockrendererdispatcher.getBlockModel(blockstate), blockstate, blockpos, matrixStackIn, bufferIn.getBuffer(type), false, world.random, 0, OverlayTexture.NO_OVERLAY);
+//					}
 				}
-				net.minecraftforge.client.ForgeHooksClient.setRenderType(null);
+//				net.minecraftforge.client.ForgeHooksClient.setRenderType(null);
 				matrixStackIn.popPose();
 				super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 			}

@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.common.item.routing;
 
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModFilterKey implements IFilterKey
 {
@@ -16,7 +17,7 @@ public class ModFilterKey implements IFilterKey
 	@Override
 	public boolean doesStackMatch(ItemStack testStack)
 	{
-		return !testStack.isEmpty() && testStack.getItem().getRegistryName().getNamespace().equals(namespace);
+		return !testStack.isEmpty() && ForgeRegistries.ITEMS.getKey(testStack.getItem()).getNamespace().equals(namespace);
 	}
 
 	@Override

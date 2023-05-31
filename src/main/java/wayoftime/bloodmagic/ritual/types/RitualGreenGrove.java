@@ -108,7 +108,7 @@ public class RitualGreenGrove extends Ritual
 				{
 					if (world.random.nextDouble() < growthChance)
 					{
-						state.getBlock().randomTick(state, serverWorld, newPos, new Random());
+						state.getBlock().randomTick(state, serverWorld, newPos, serverWorld.random);
 						BlockState newState = world.getBlockState(newPos);
 						if (!newState.equals(state))
 						{

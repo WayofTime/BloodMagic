@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.common.meteor;
 import java.util.Optional;
 import java.util.Random;
 
+import net.minecraft.util.RandomSource;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.gson.JsonObject;
@@ -25,7 +26,7 @@ public abstract class RandomBlockContainer
 
 	}
 
-	public abstract Block getRandomBlock(Random rand, Level world);
+	public abstract Block getRandomBlock(RandomSource rand, Level world);
 
 	public static RandomBlockContainer parseEntry(String str)
 	{

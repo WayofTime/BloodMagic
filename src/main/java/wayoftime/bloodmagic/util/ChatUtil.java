@@ -104,7 +104,7 @@ public class ChatUtil
 		for (Component c : lines)
 		{
 //			BloodMagic.packetHandler.send
-			player.sendMessage(c, Util.NIL_UUID);
+			player.sendSystemMessage(c);
 //			player.sendMessage(c);
 		}
 	}

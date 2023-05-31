@@ -44,7 +44,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 	@Override
 	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items)
 	{
-		if (this.allowdedIn(group))
+		if (this.allowedIn(group))
 		{
 			for (EnumDemonWillType type : EnumDemonWillType.values())
 			{

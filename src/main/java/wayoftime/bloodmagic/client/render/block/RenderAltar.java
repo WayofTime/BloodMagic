@@ -18,7 +18,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer.Model3D;
 import wayoftime.bloodmagic.client.render.RenderResizableCuboid;
@@ -135,17 +137,18 @@ public class RenderAltar implements BlockEntityRenderer<TileAltar>
 
 		public TextureAtlasSprite getTexture()
 		{
-			return Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(fluidType.getFluid().getAttributes().getStillTexture());
+			return Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(IClientFluidTypeExtensions.of(fluidType.getFluid()).getStillTexture());
 		}
 
 		public boolean isGaseous()
 		{
-			return fluidType.getFluid().getAttributes().isGaseous(fluidType);
+			// TODO: FIX GASES - Gases don't exist in fluidtypes
+			return fluidType.getFluid().getFluidType().isLighterThanAir();
 		}
 
 		public int getColorARGB(float scale)
 		{
-			return fluidType.getFluid().getAttributes().getColor(fluidType);
+			return IClientFluidTypeExtensions.of(fluidType.getFluid()).getTintColor(fluidType);
 		}
 
 		public int calculateGlowLight(int light)
@@ -157,7 +160,7 @@ public class RenderAltar implements BlockEntityRenderer<TileAltar>
 		public int hashCode()
 		{
 			int code = super.hashCode();
-			code = 31 * code + fluidType.getFluid().getRegistryName().hashCode();
+			code = 31 * code + ForgeRegistries.FLUIDS.getKey(fluidType.getFluid()).hashCode();
 			if (fluidType.hasTag())
 			{
 				code = 31 * code + fluidType.getTag().hashCode();

@@ -34,7 +34,7 @@ public class ItemLivingTomeScrap extends Item implements ILivingUpgradePointsPro
 	@Override
 	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items)
 	{
-		if (!allowdedIn(group))
+		if (!allowedIn(group))
 			return;
 
 		ItemStack stack = new ItemStack(this);

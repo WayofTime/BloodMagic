@@ -13,6 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.extensions.IForgeItem;
+import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.core.data.SoulTicket;
@@ -83,7 +84,7 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IForgeI
 
 		BloodOrb orb = getOrb(stack);
 		if (flag.isAdvanced() && orb != null)
-			tooltip.add(Component.translatable("tooltip.bloodmagic.orb.owner", stack.getItem().getRegistryName()).withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("tooltip.bloodmagic.orb.owner", ForgeRegistries.ITEMS.getKey(stack.getItem())).withStyle(ChatFormatting.GRAY));
 
 		super.appendHoverText(stack, world, tooltip, flag);
 	}
