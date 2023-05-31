@@ -15,12 +15,11 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionEffect;
 import wayoftime.bloodmagic.util.Constants;
 
-public class PotionEffectRecipeSerializer<RECIPE extends RecipePotionEffect> extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RECIPE>
+public class PotionEffectRecipeSerializer<RECIPE extends RecipePotionEffect>  implements RecipeSerializer<RECIPE>
 {
 	private final IFactory<RECIPE> factory;
 

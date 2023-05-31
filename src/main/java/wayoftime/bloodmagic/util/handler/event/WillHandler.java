@@ -87,9 +87,9 @@ public class WillHandler
 		DamageSource source = event.getSource();
 		Entity entity = source.getEntity();
 
-		if (attackedEntity.hasEffect(BloodMagicPotions.SOUL_SNARE) && (attackedEntity instanceof Mob || attackedEntity.getCommandSenderWorld().getDifficulty() == Difficulty.PEACEFUL))
+		if (attackedEntity.hasEffect(BloodMagicPotions.SOUL_SNARE.get()) && (attackedEntity instanceof Mob || attackedEntity.getCommandSenderWorld().getDifficulty() == Difficulty.PEACEFUL))
 		{
-			MobEffectInstance eff = attackedEntity.getEffect(BloodMagicPotions.SOUL_SNARE);
+			MobEffectInstance eff = attackedEntity.getEffect(BloodMagicPotions.SOUL_SNARE.get());
 			int lvl = eff.getAmplifier();
 
 			double amountOfSouls = attackedEntity.getCommandSenderWorld().random.nextDouble() * (lvl + 1) * (lvl + 1) * 4 + 1;

@@ -19,7 +19,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.Lazy;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.altar.ComponentType;
 import wayoftime.bloodmagic.anointment.Anointment;
@@ -61,7 +60,7 @@ public class BloodMagicAPI implements IBloodMagicAPI
 
 	// Copied from Mekanism. Again.
 	@Nonnull
-	private static <T extends IForgeRegistryEntry<T>> Lazy<ResourceKey<? extends Registry<T>>> registryKey(@SuppressWarnings("unused") @Nonnull Class<T> compileTimeTypeValidator, @Nonnull String path)
+	private static <T> Lazy<ResourceKey<? extends Registry<T>>> registryKey(@SuppressWarnings("unused") @Nonnull Class<T> compileTimeTypeValidator, @Nonnull String path)
 	{
 		return Lazy.of(() -> ResourceKey.createRegistryKey(new ResourceLocation(BloodMagic.MODID, path)));
 	}

@@ -35,7 +35,7 @@ public class PotionSacrificialLamb extends PotionBloodMagic
 
 		if (animal.getTarget() != null && animal.distanceToSqr(animal.getTarget()) < 4)
 		{
-			animal.getCommandSenderWorld().explode(null, animal.getX(), animal.getY() + (double) (animal.getBbHeight() / 16.0F), animal.getZ(), 2 + animal.getEffect(BloodMagicPotions.SACRIFICIAL_LAMB).getAmplifier() * 1.5f, false, BlockInteraction.NONE);
+			animal.getCommandSenderWorld().explode(null, animal.getX(), animal.getY() + (double) (animal.getBbHeight() / 16.0F), animal.getZ(), 2 + animal.getEffect(BloodMagicPotions.SACRIFICIAL_LAMB.get()).getAmplifier() * 1.5f, false, BlockInteraction.NONE);
 		}
 	}
 

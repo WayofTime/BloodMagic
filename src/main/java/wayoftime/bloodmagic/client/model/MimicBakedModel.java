@@ -13,13 +13,13 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.model.IDynamicBakedModel;
-import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.model.pipeline.QuadBakingVertexConsumer;
+import org.jetbrains.annotations.NotNull;
 import wayoftime.bloodmagic.common.block.BlockMimic;
 import wayoftime.bloodmagic.common.tile.TileMimic;
 
@@ -50,44 +50,15 @@ public class MimicBakedModel implements IDynamicBakedModel
 		return false;
 	}
 
-	private void putVertex(QuadBakingVertexConsumer builder, Vec3 normal, double x, double y, double z, float u, float v, TextureAtlasSprite sprite, float r, float g, float b)
+	private void putVertex(QuadBakingVertexConsumer quadBaker, Vec3 normal, double x, double y, double z, float u, float v, TextureAtlasSprite sprite, float r, float g, float b)
 	{
-		ImmutableList<VertexFormatElement> elements = builder.getVertexFormat().getElements().asList();
-		for (int j = 0; j < elements.size(); j++)
-		{
-			VertexFormatElement e = elements.get(j);
-			switch (e.getUsage())
-			{
-			case POSITION:
-				builder.put(j, (float) x, (float) y, (float) z, 1.0f);
-				break;
-			case COLOR:
-				builder.put(j, r, g, b, 1.0f);
-				break;
-			case UV:
-				switch (e.getIndex())
-				{
-				case 0:
-					float iu = sprite.getU(u);
-					float iv = sprite.getV(v);
-					builder.put(j, iu, iv);
-					break;
-				case 2:
-					builder.put(j, (short) 0, (short) 0);
-					break;
-				default:
-					builder.put(j);
-					break;
-				}
-				break;
-			case NORMAL:
-				builder.put(j, (float) normal.x, (float) normal.y, (float) normal.z);
-				break;
-			default:
-				builder.put(j);
-				break;
-			}
-		}
+		quadBaker.vertex(x, y, z);
+		quadBaker.normal((float) normal.x, (float) normal.y, (float) normal.z);
+		quadBaker.color(r, g, b, 1);
+		quadBaker.uv(sprite.getU(u), sprite.getV(v));
+		quadBaker.setSprite(sprite);
+		quadBaker.setDirection(Direction.getNearest(normal.x, normal.y, normal.z));
+		quadBaker.endVertex();
 	}
 
 	private BakedQuad createQuad(Vec3 v1, Vec3 v2, Vec3 v3, Vec3 v4, TextureAtlasSprite sprite)
@@ -96,13 +67,12 @@ public class MimicBakedModel implements IDynamicBakedModel
 		int tw = sprite.getWidth();
 		int th = sprite.getHeight();
 
-		QuadBakingVertexConsumer builder = new QuadBakingVertexConsumer(sprite);
-		builder.setQuadOrientation(Direction.getNearest(normal.x, normal.y, normal.z));
-		putVertex(builder, normal, v1.x, v1.y, v1.z, 0, 0, sprite, 1.0f, 1.0f, 1.0f);
-		putVertex(builder, normal, v2.x, v2.y, v2.z, 0, th, sprite, 1.0f, 1.0f, 1.0f);
-		putVertex(builder, normal, v3.x, v3.y, v3.z, tw, th, sprite, 1.0f, 1.0f, 1.0f);
-		putVertex(builder, normal, v4.x, v4.y, v4.z, tw, 0, sprite, 1.0f, 1.0f, 1.0f);
-		return builder.build();
+		QuadBakingVertexConsumer.Buffered quadBaker = new QuadBakingVertexConsumer.Buffered();
+		putVertex(quadBaker, normal, v1.x, v1.y, v1.z, 0, 0, sprite, 1.0f, 1.0f, 1.0f);
+		putVertex(quadBaker, normal, v2.x, v2.y, v2.z, 0, th, sprite, 1.0f, 1.0f, 1.0f);
+		putVertex(quadBaker, normal, v3.x, v3.y, v3.z, tw, th, sprite, 1.0f, 1.0f, 1.0f);
+		putVertex(quadBaker, normal, v4.x, v4.y, v4.z, tw, 0, sprite, 1.0f, 1.0f, 1.0f);
+		return quadBaker.getQuad();
 	}
 
 	private static Vec3 v(double x, double y, double z)
@@ -110,21 +80,19 @@ public class MimicBakedModel implements IDynamicBakedModel
 		return new Vec3(x, y, z);
 	}
 
-	@Nonnull
-	@Override
-	public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @Nonnull Random rand, @Nonnull ModelData extraData)
-	{
-		RenderType layer = MinecraftForgeClient.getRenderType();
 
-		BlockState mimic = extraData.getData(TileMimic.MIMIC);
+	@Override
+	public @NotNull List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull RandomSource rand, @NotNull ModelData extraData, @Nullable RenderType layer) {
+
+		BlockState mimic = extraData.get(TileMimic.MIMIC);
 		if (mimic != null && !(mimic.getBlock() instanceof BlockMimic))
 		{
-			if (layer == null || ItemBlockRenderTypes.canRenderInLayer(mimic, layer))
+			BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModelShaper().getBlockModel(mimic);
+			if (layer == null || model.getRenderTypes(mimic, rand, extraData).contains(layer))
 			{
-				BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModelShaper().getBlockModel(mimic);
 				try
 				{
-					return model.getQuads(mimic, side, rand, EmptyModelData.INSTANCE);
+					return model.getQuads(mimic, side, rand, ModelData.EMPTY, layer);
 				} catch (Exception e)
 				{
 					return Collections.emptyList();

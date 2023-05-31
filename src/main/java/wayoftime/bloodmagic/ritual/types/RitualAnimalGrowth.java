@@ -121,9 +121,9 @@ public class RitualAnimalGrowth extends Ritual
 				{
 					if (destructiveWill >= destructiveWillDrain)
 					{
-						if (!animal.hasEffect(BloodMagicPotions.SACRIFICIAL_LAMB))
+						if (!animal.hasEffect(BloodMagicPotions.SACRIFICIAL_LAMB.get()))
 						{
-							animal.addEffect(new MobEffectInstance(BloodMagicPotions.SACRIFICIAL_LAMB, 1200));
+							animal.addEffect(new MobEffectInstance(BloodMagicPotions.SACRIFICIAL_LAMB.get(), 1200));
 							destructiveDrain += destructiveWillDrain;
 							destructiveWill -= destructiveWillDrain;
 							performedEffect = true;

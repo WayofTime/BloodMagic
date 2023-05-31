@@ -208,11 +208,11 @@ public class GeneratorItemTags extends ItemTagsProvider
 	/**
 	 * Resolves a Path for the location to save the given tag.
 	 */
-	@Override
-	protected Path getPath(ResourceLocation id)
-	{
-		return this.generator.getOutputFolder().resolve("data/" + id.getNamespace() + "/tags/items/" + id.getPath() + ".json");
-	}
+//	@Override
+//	protected Path getPath(ResourceLocation id)
+//	{
+//		return this.pathProvider.getOutputFolder().resolve("data/" + id.getNamespace() + "/tags/items/" + id.getPath() + ".json");
+//	}
 
 	/**
 	 * Gets a name for this provider, to use in logging.

@@ -211,12 +211,12 @@ public class RitualGreenGrove extends Ritual
 					continue;
 				}
 
-				if (entityLiving.hasEffect(BloodMagicPotions.PLANT_LEECH) || !entityLiving.canBeAffected(new MobEffectInstance(BloodMagicPotions.PLANT_LEECH)))
+				if (entityLiving.hasEffect(BloodMagicPotions.PLANT_LEECH.get()) || !entityLiving.canBeAffected(new MobEffectInstance(BloodMagicPotions.PLANT_LEECH.get())))
 				{
 					continue;
 				}
 
-				entityLiving.addEffect(new MobEffectInstance(BloodMagicPotions.PLANT_LEECH, 200, 0));
+				entityLiving.addEffect(new MobEffectInstance(BloodMagicPotions.PLANT_LEECH.get(), 200, 0));
 
 				corrosiveWill -= corrosiveWillDrain;
 				corrosiveDrain += corrosiveWillDrain;

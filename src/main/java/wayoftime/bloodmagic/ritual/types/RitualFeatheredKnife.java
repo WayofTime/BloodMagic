@@ -132,7 +132,7 @@ public class RitualFeatheredKnife extends Ritual
 				float sacrificedHealth = 1;
 				double lpModifier = 1;
 
-				if ((health / player.getMaxHealth() > healthThreshold) && (!useIncense || !player.hasEffect(BloodMagicPotions.SOUL_FRAY)))
+				if ((health / player.getMaxHealth() > healthThreshold) && (!useIncense || !player.hasEffect(BloodMagicPotions.SOUL_FRAY.get())))
 				{
 					if (useIncense)
 					{
@@ -142,7 +142,7 @@ public class RitualFeatheredKnife extends Ritual
 						lpModifier *= PlayerSacrificeHelper.getModifier(incenseAmount);
 
 						PlayerSacrificeHelper.setPlayerIncense(player, 0);
-						player.addEffect(new MobEffectInstance(BloodMagicPotions.SOUL_FRAY, PlayerSacrificeHelper.soulFrayDuration));
+						player.addEffect(new MobEffectInstance(BloodMagicPotions.SOUL_FRAY.get(), PlayerSacrificeHelper.soulFrayDuration));
 					}
 
 					if (destructiveWill >= destructiveWillDrain * sacrificedHealth)

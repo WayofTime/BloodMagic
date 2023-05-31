@@ -15,8 +15,6 @@ public class SoundRegistrator
 	private static SoundEvent addSoundsToRegistry(String soundId)
 	{
 		ResourceLocation shotSoundLocation = BloodMagic.rl(soundId);
-		SoundEvent soundEvent = new SoundEvent(shotSoundLocation);
-		soundEvent.setRegistryName(shotSoundLocation);
-		return soundEvent;
+		return new SoundEvent(shotSoundLocation);
 	}
 }

@@ -21,12 +21,12 @@ public class NearestAttackableDummyGoal<T extends LivingEntity> extends NearestA
 	@Override
 	public boolean canUse()
 	{
-		return this.mob.hasEffect(BloodMagicPotions.PASSIVITY);
+		return this.mob.hasEffect(BloodMagicPotions.PASSIVITY.get());
 	}
 
 	@Override
 	public boolean canContinueToUse()
 	{
-		return this.mob.hasEffect(BloodMagicPotions.PASSIVITY);
+		return this.mob.hasEffect(BloodMagicPotions.PASSIVITY.get());
 	}
 }

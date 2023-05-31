@@ -97,14 +97,14 @@ public class GenericHandler
 	{
 		LivingEntity eventEntityLiving = event.getEntity();
 
-		if (eventEntityLiving.hasEffect(BloodMagicPotions.HEAVY_HEART))
+		if (eventEntityLiving.hasEffect(BloodMagicPotions.HEAVY_HEART.get()))
 		{
-			int i = eventEntityLiving.getEffect(BloodMagicPotions.HEAVY_HEART).getAmplifier() + 1;
+			int i = eventEntityLiving.getEffect(BloodMagicPotions.HEAVY_HEART.get()).getAmplifier() + 1;
 			event.setDamageMultiplier(event.getDamageMultiplier() + i);
 			event.setDistance(event.getDistance() + i);
 		}
 
-		if (eventEntityLiving.hasEffect(BloodMagicPotions.BOUNCE))
+		if (eventEntityLiving.hasEffect(BloodMagicPotions.BOUNCE.get()))
 		{
 			if (eventEntityLiving instanceof Player)
 			{
@@ -250,9 +250,9 @@ public class GenericHandler
 			}
 		}
 
-		if (!event.getSource().isMagic() && living.hasEffect(BloodMagicPotions.OBSIDIAN_CLOAK))
+		if (!event.getSource().isMagic() && living.hasEffect(BloodMagicPotions.OBSIDIAN_CLOAK.get()))
 		{
-			float modifier = (float) (1 - 0.2 * (1 + living.getEffect(BloodMagicPotions.OBSIDIAN_CLOAK).getAmplifier()));
+			float modifier = (float) (1 - 0.2 * (1 + living.getEffect(BloodMagicPotions.OBSIDIAN_CLOAK.get()).getAmplifier()));
 			event.setAmount((float) (event.getAmount() * Math.max(0, modifier)));
 		}
 	}
@@ -529,7 +529,7 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onPotionAdded(MobEffectEvent.Added event)
 	{
-		if (event.getEffectInstance().getEffect() == BloodMagicPotions.FLIGHT && event.getEntity() instanceof Player)
+		if (event.getEffectInstance().getEffect() == BloodMagicPotions.FLIGHT.get() && event.getEntity() instanceof Player)
 		{
 			Player player = (Player) event.getEntity();
 			player.getAbilities().mayfly = true;
@@ -548,7 +548,7 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onPotionExpired(MobEffectEvent.Expired event)
 	{
-		if (event.getEffectInstance().getEffect() == BloodMagicPotions.FLIGHT && event.getEntity() instanceof Player)
+		if (event.getEffectInstance().getEffect() == BloodMagicPotions.FLIGHT.get() && event.getEntity() instanceof Player)
 		{
 			((Player) event.getEntity()).getAbilities().mayfly = ((Player) event.getEntity()).isCreative();
 			((Player) event.getEntity()).getAbilities().flying = false;
@@ -600,7 +600,7 @@ public class GenericHandler
 		if (event.getEntity() instanceof Player)
 		{
 			Player player = (Player) event.getEntity();
-			if (player.hasEffect(BloodMagicPotions.FLIGHT))
+			if (player.hasEffect(BloodMagicPotions.FLIGHT.get()))
 			{
 				player.fallDistance = 0;
 				if (!player.getAbilities().mayfly || !prevFlySpeedMap.containsKey(player.getUUID()))
@@ -608,7 +608,7 @@ public class GenericHandler
 					prevFlySpeedMap.put(player.getUUID(), player.getAbilities().getFlyingSpeed());
 					player.getAbilities().mayfly = true;
 					if (player.level.isClientSide)
-						player.getAbilities().setFlyingSpeed(getFlySpeedForFlightLevel(player.getEffect(BloodMagicPotions.FLIGHT).getAmplifier()));
+						player.getAbilities().setFlyingSpeed(getFlySpeedForFlightLevel(player.getEffect(BloodMagicPotions.FLIGHT.get()).getAmplifier()));
 					player.onUpdateAbilities();
 				}
 			}
@@ -922,7 +922,7 @@ public class GenericHandler
 	@SubscribeEvent
 	public void onJump(LivingJumpEvent event)
 	{
-		if (event.getEntity().hasEffect(BloodMagicPotions.GROUNDED))
+		if (event.getEntity().hasEffect(BloodMagicPotions.GROUNDED.get()))
 		{
 			Vec3 motion = event.getEntity().getDeltaMovement();
 			motion = motion.multiply(1, 0, 1);

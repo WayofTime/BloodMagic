@@ -58,7 +58,7 @@ public class EntitySoulSnare extends ThrowableItemProjectile
 
 		if (result.getEntity() instanceof LivingEntity)
 		{
-			((LivingEntity) result.getEntity()).addEffect(new MobEffectInstance(BloodMagicPotions.SOUL_SNARE, 300, 0));
+			((LivingEntity) result.getEntity()).addEffect(new MobEffectInstance(BloodMagicPotions.SOUL_SNARE.get(), 300, 0));
 			result.getEntity().hurt(DamageSource.thrown(this, this.getOwner()), (float) 0);
 		}
 

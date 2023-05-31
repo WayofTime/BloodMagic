@@ -6,6 +6,7 @@ import java.util.Random;
 
 import javax.annotation.Nonnull;
 
+import net.minecraft.util.RandomSource;
 import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.core.NonNullList;
@@ -126,7 +127,7 @@ public class RecipeARC extends BloodMagicRecipe
 		return list;
 	}
 
-	public List<ItemStack> getAllOutputs(Random rand, ItemStack inputStack, ItemStack toolStack, double secondaryBonus)
+	public List<ItemStack> getAllOutputs(RandomSource rand, ItemStack inputStack, ItemStack toolStack, double secondaryBonus)
 	{
 		List<ItemStack> list = new ArrayList<ItemStack>();
 

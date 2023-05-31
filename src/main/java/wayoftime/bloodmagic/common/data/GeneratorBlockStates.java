@@ -27,6 +27,7 @@ import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder.PartBuilder;
 import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
@@ -149,7 +150,7 @@ public class GeneratorBlockStates extends BlockStateProvider
 
 	private void buildSpecialDungeonSeal(Block block)
 	{
-		String basePath = block.getRegistryName().getPath();
+		String basePath = ForgeRegistries.BLOCKS.getKey(block).getPath();
 		VariantBlockStateBuilder builder = getVariantBuilder(block);
 
 		for (SpecialSealType type : SpecialSealType.values())
@@ -203,7 +204,7 @@ public class GeneratorBlockStates extends BlockStateProvider
 
 	private void buildCrop(Block block, IntegerProperty prop, int maxAge, ResourceLocation... textures)
 	{
-		String basePath = block.getRegistryName().getPath();
+		String basePath = ForgeRegistries.BLOCKS.getKey(block).getPath();
 		VariantBlockStateBuilder builder = getVariantBuilder(block);
 
 		for (int i = 0; i <= maxAge; i++)
@@ -215,7 +216,7 @@ public class GeneratorBlockStates extends BlockStateProvider
 
 	private void buildCrossCrop(Block block, IntegerProperty prop, int maxAge, ResourceLocation... textures)
 	{
-		String basePath = block.getRegistryName().getPath();
+		String basePath = ForgeRegistries.BLOCKS.getKey(block).getPath();
 		VariantBlockStateBuilder builder = getVariantBuilder(block);
 
 		for (int i = 0; i <= maxAge; i++)
@@ -227,7 +228,7 @@ public class GeneratorBlockStates extends BlockStateProvider
 
 	private void buildFarmland(Block block, ResourceLocation top, ResourceLocation side)
 	{
-		String basePath = block.getRegistryName().getPath();
+		String basePath = ForgeRegistries.BLOCKS.getKey(block).getPath();
 		getVariantBuilder(block).forAllStates(state -> {
 			Builder builder = ConfiguredModel.builder();
 
@@ -266,7 +267,7 @@ public class GeneratorBlockStates extends BlockStateProvider
 
 	private void buildRandomStone(Block block, ResourceLocation texture)
 	{
-		String basePath = block.getRegistryName().getPath();
+		String basePath = ForgeRegistries.BLOCKS.getKey(block).getPath();
 		ModelFile modelFile = models().cubeAll(basePath, texture);
 		ModelFile modelFile_mirrored = models().withExistingParent(basePath + "_mirrored", "cube_mirrored_all").texture("all", texture);
 		getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder().modelFile(modelFile).nextModel().modelFile(modelFile_mirrored).nextModel().modelFile(modelFile).rotationY(180).nextModel().modelFile(modelFile_mirrored).rotationY(180).build());
@@ -274,7 +275,7 @@ public class GeneratorBlockStates extends BlockStateProvider
 
 	private void buildWallInventory(WallBlock block, ResourceLocation texture)
 	{
-		String basePath = block.getRegistryName().getPath();
+		String basePath = ForgeRegistries.BLOCKS.getKey(block).getPath();
 		wallBlock(block, texture);
 		ModelFile file = models().wallInventory(basePath + "_inventory", texture);
 		file.assertExistence();
@@ -282,7 +283,7 @@ public class GeneratorBlockStates extends BlockStateProvider
 
 	private void buildDungeonBlock(Block block)
 	{
-		String basePath = block.getRegistryName().getPath();
+		String basePath = ForgeRegistries.BLOCKS.getKey(block).getPath();
 		ModelFile modelFile = models().cubeAll(basePath, BloodMagic.rl("block/dungeon/" + basePath));
 		getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder().modelFile(modelFile).build());
 //		ModelFile furnace_off = models().cubeAll(block.getRegistryName().toString(), texture)\
@@ -293,7 +294,7 @@ public class GeneratorBlockStates extends BlockStateProvider
 //		this.top
 //		String basePath = block.getRegistryName().getPath();
 //		models().cubeAll(texture, BloodMagic.rl("block/" + texture)).assertExistence();
-		String basePath = block.getRegistryName().getPath();
+		String basePath = ForgeRegistries.BLOCKS.getKey(block).getPath();
 		ModelFile model = models().cubeBottomTop(basePath, side, side, top);
 
 		getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder().modelFile(model).build());
@@ -330,7 +331,7 @@ public class GeneratorBlockStates extends BlockStateProvider
 
 	private void buildPillarCenter(Block block, ResourceLocation side, ResourceLocation pillarEnd)
 	{
-		String basePath = block.getRegistryName().getPath();
+		String basePath = ForgeRegistries.BLOCKS.getKey(block).getPath();
 		ModelFile yModel = models().cubeColumn(basePath, side, pillarEnd);
 
 		ElementBuilder xElementBuilder = models().withExistingParent(basePath + "_x", "cube").texture("particle", side).texture("end", pillarEnd).texture("side", side).element();
@@ -359,7 +360,7 @@ public class GeneratorBlockStates extends BlockStateProvider
 
 	private void buildPillarCap(Block block, ResourceLocation pillarEnd, ResourceLocation sideBottom, ResourceLocation sideTop)
 	{
-		String basePath = block.getRegistryName().getPath();
+		String basePath = ForgeRegistries.BLOCKS.getKey(block).getPath();
 		ModelFile upModel = models().cubeBottomTop(basePath, sideTop, pillarEnd, pillarEnd);
 		ModelFile downModel = models().cubeBottomTop(basePath + "_down", sideBottom, pillarEnd, pillarEnd);
 

@@ -183,7 +183,7 @@ public class RitualGrounding extends Ritual
 		if (corrosiveWill >= willDrain)
 		{
 
-			entity.addEffect(new MobEffectInstance(BloodMagicPotions.SUSPENDED, 20, 0));
+			entity.addEffect(new MobEffectInstance(BloodMagicPotions.SUSPENDED.get(), 20, 0));
 			corrosiveDrained += willDrain;
 
 			/* Vengeful will effect: Levitation */
@@ -195,8 +195,8 @@ public class RitualGrounding extends Ritual
 
 		} else
 		{
-			entity.addEffect(new MobEffectInstance(BloodMagicPotions.GROUNDED, 20, 0));
-			entity.addEffect(new MobEffectInstance(BloodMagicPotions.GRAVITY, 20, 0));
+			entity.addEffect(new MobEffectInstance(BloodMagicPotions.GROUNDED.get(), 20, 0));
+			entity.addEffect(new MobEffectInstance(BloodMagicPotions.GRAVITY.get(), 20, 0));
 		}
 
 		/* Destructive will effect: Increased fall damage */
@@ -204,7 +204,7 @@ public class RitualGrounding extends Ritual
 		{
 			destructiveDrained += willDrain;
 
-			entity.addEffect(new MobEffectInstance(BloodMagicPotions.HEAVY_HEART, 100, 1));
+			entity.addEffect(new MobEffectInstance(BloodMagicPotions.HEAVY_HEART.get(), 100, 1));
 		}
 		return new double[] { corrosiveDrained, destructiveDrained, vengefulDrained };
 	}

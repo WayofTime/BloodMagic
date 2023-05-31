@@ -23,8 +23,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.ModelData;
-import net.minecraftforge.client.model.data.ModelDataManager;
-import net.minecraftforge.client.model.data.ModelDataMap;
 import net.minecraftforge.client.model.data.ModelProperty;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.util.ChatUtil;
@@ -284,7 +282,7 @@ public class TileMimic extends TileInventory
 		deserialize(tag);
 		if (!Objects.equals(oldMimic, mimic))
 		{
-			ModelDataManager.requestModelDataRefresh(this);
+			requestModelDataUpdate();
 			level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
 		}
 	}
@@ -293,7 +291,7 @@ public class TileMimic extends TileInventory
 	@Override
 	public ModelData getModelData()
 	{
-		return new ModelDataMap.Builder().withInitial(MIMIC, mimic).build();
+		return ModelData.builder().with(MIMIC, mimic).build();
 	}
 
 	@Override

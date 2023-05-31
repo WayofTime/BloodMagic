@@ -157,7 +157,7 @@ public class RitualSpeed extends Ritual
 
 			if (steadfastWill >= steadfastWillDrain)
 			{
-				entity.addEffect(new MobEffectInstance(BloodMagicPotions.SOFT_FALL, 100, 0));
+				entity.addEffect(new MobEffectInstance(BloodMagicPotions.SOFT_FALL.get(), 100, 0));
 				steadfastWill -= steadfastWillDrain;
 				steadfastDrain += steadfastWillDrain;
 			}

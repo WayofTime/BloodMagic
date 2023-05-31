@@ -1,7 +1,9 @@
 package wayoftime.bloodmagic.loot;
 
-import com.google.gson.JsonObject;
-import net.minecraft.resources.ResourceLocation;
+import com.google.common.base.Suppliers;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -15,34 +17,35 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class GlobalLootModifier
 {
 //	public static final DeferredRegister<GlobalLootModifierSerializer<?>> GLM = DeferredRegister.create(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS, BloodMagic.MODID);
-	public static final DeferredRegister<GlobalLootModifierSerializer<?>> GLM = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, BloodMagic.MODID);
-	public static final RegistryObject<SilkTouchTestModifier.Serializer> SILKTOUCH = GLM.register("silk_touch_bamboo", SilkTouchTestModifier.Serializer::new);
-	public static final RegistryObject<FortuneModifier.Serializer> FORTUNE = GLM.register("fortune", FortuneModifier.Serializer::new);
-	public static final RegistryObject<LootingModifier.Serializer> LOOTING = GLM.register("looting", LootingModifier.Serializer::new);
-	public static final RegistryObject<SmeltingModifier.Serializer> SMELT = GLM.register("smelt", SmeltingModifier.Serializer::new);
-	public static final RegistryObject<VoidingModifier.Serializer> VOID = GLM.register("voiding", VoidingModifier.Serializer::new);
+	public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> GLM = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, BloodMagic.MODID);
+	public static final RegistryObject<Codec<SilkTouchTestModifier>> SILKTOUCH = GLM.register("silk_touch_bamboo", SilkTouchTestModifier.CODEC);
+	public static final RegistryObject<Codec<FortuneModifier>> FORTUNE = GLM.register("fortune", FortuneModifier.CODEC);
+	public static final RegistryObject<Codec<LootingModifier>> LOOTING = GLM.register("looting", LootingModifier.CODEC);
+	public static final RegistryObject<Codec<SmeltingModifier>> SMELT = GLM.register("smelt", SmeltingModifier.CODEC);
+	public static final RegistryObject<Codec<VoidingModifier>> VOID = GLM.register("voiding", VoidingModifier.CODEC);
 
 	private static class SilkTouchTestModifier extends LootModifier
 	{
+		public static final Supplier<Codec<SilkTouchTestModifier>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, SilkTouchTestModifier::new)));
 		public SilkTouchTestModifier(LootItemCondition[] conditionsIn)
 		{
 			super(conditionsIn);
@@ -51,8 +54,7 @@ public class GlobalLootModifier
 
 		@Nonnull
 		@Override
-		public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context)
-		{
+		protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 			ItemStack ctxTool = context.getParamOrNull(LootContextParams.TOOL);
 			// return early if silk-touch is already applied (otherwise we'll get stuck in
 			// an infinite loop).
@@ -72,24 +74,15 @@ public class GlobalLootModifier
 			return loottable.getRandomItems(ctx);
 		}
 
-		private static class Serializer extends GlobalLootModifierSerializer<SilkTouchTestModifier>
-		{
-			@Override
-			public SilkTouchTestModifier read(ResourceLocation name, JsonObject json, LootItemCondition[] conditionsIn)
-			{
-				return new SilkTouchTestModifier(conditionsIn);
-			}
-
-			@Override
-			public JsonObject write(SilkTouchTestModifier instance)
-			{
-				return makeConditions(instance.conditions);
-			}
+		@Override
+		public Codec<? extends IGlobalLootModifier> codec() {
+			return CODEC.get();
 		}
 	}
 
 	private static class FortuneModifier extends LootModifier
 	{
+		public static final Supplier<Codec<FortuneModifier>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, FortuneModifier::new)));
 		public FortuneModifier(LootItemCondition[] conditionsIn)
 		{
 			super(conditionsIn);
@@ -100,8 +93,7 @@ public class GlobalLootModifier
 
 		@Nonnull
 		@Override
-		public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context)
-		{
+		protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 			ItemStack ctxTool = context.getParamOrNull(LootContextParams.TOOL);
 			// return early if silk-touch is already applied (otherwise we'll get stuck in
 			// an infinite loop).
@@ -141,24 +133,15 @@ public class GlobalLootModifier
 			return loottable.getRandomItems(ctx);
 		}
 
-		private static class Serializer extends GlobalLootModifierSerializer<FortuneModifier>
-		{
-			@Override
-			public FortuneModifier read(ResourceLocation name, JsonObject json, LootItemCondition[] conditionsIn)
-			{
-				return new FortuneModifier(conditionsIn);
-			}
-
-			@Override
-			public JsonObject write(FortuneModifier instance)
-			{
-				return makeConditions(instance.conditions);
-			}
+		@Override
+		public Codec<? extends IGlobalLootModifier> codec() {
+			return CODEC.get();
 		}
 	}
 
 	private static class LootingModifier extends LootModifier
 	{
+		public static final Supplier<Codec<LootingModifier>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, LootingModifier::new)));
 		public LootingModifier(LootItemCondition[] conditionsIn)
 		{
 			super(conditionsIn);
@@ -166,8 +149,7 @@ public class GlobalLootModifier
 
 		@Nonnull
 		@Override
-		public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context)
-		{
+		protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 //			System.out.println("Checking for looting");
 //			Entity killerEntity = context.get(LootParameters.KILLER_ENTITY);
 //			if (!(killerEntity instanceof PlayerEntity))
@@ -222,32 +204,15 @@ public class GlobalLootModifier
 //			return loottable.generate(ctx);
 		}
 
-		private static class Serializer extends GlobalLootModifierSerializer<LootingModifier>
-		{
-			@Override
-			public LootingModifier read(ResourceLocation name, JsonObject json, LootItemCondition[] conditionsIn)
-			{
-				return new LootingModifier(conditionsIn);
-			}
-
-			@Override
-			public JsonObject write(LootingModifier instance)
-			{
-				return makeConditions(instance.conditions);
-			}
+		@Override
+		public Codec<? extends IGlobalLootModifier> codec() {
+			return CODEC.get();
 		}
-
-//		private static class ExtendedLootContext extends LootContext
-//		{
-//			public ExtendedLootContext()
-//			{
-//				
-//			}
-//		}
 	}
 
 	private static class SmeltingModifier extends LootModifier
 	{
+		public static final Supplier<Codec<SmeltingModifier>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, SmeltingModifier::new)));
 		public SmeltingModifier(LootItemCondition[] conditionsIn)
 		{
 			super(conditionsIn);
@@ -255,8 +220,7 @@ public class GlobalLootModifier
 
 		@Nonnull
 		@Override
-		public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context)
-		{
+		protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 			ItemStack ctxTool = context.getParamOrNull(LootContextParams.TOOL);
 			// return early if silk-touch is already applied (otherwise we'll get stuck in
 			// an infinite loop).
@@ -277,7 +241,7 @@ public class GlobalLootModifier
 				return generatedLoot;
 			}
 
-			ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+			ObjectArrayList<ItemStack> ret = new ObjectArrayList<>();
 			generatedLoot.forEach((stack) -> ret.add(smelt(stack, context)));
 			return ret;
 		}
@@ -287,24 +251,15 @@ public class GlobalLootModifier
 			return context.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), context.getLevel()).map(SmeltingRecipe::getResultItem).filter(itemStack -> !itemStack.isEmpty()).map(itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, stack.getCount() * itemStack.getCount())).orElse(stack);
 		}
 
-		private static class Serializer extends GlobalLootModifierSerializer<SmeltingModifier>
-		{
-			@Override
-			public SmeltingModifier read(ResourceLocation name, JsonObject json, LootItemCondition[] conditionsIn)
-			{
-				return new SmeltingModifier(conditionsIn);
-			}
-
-			@Override
-			public JsonObject write(SmeltingModifier instance)
-			{
-				return makeConditions(instance.conditions);
-			}
+		@Override
+		public Codec<? extends IGlobalLootModifier> codec() {
+			return CODEC.get();
 		}
 	}
 
 	private static class VoidingModifier extends LootModifier
 	{
+		public static final Supplier<Codec<VoidingModifier>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, VoidingModifier::new)));
 		public VoidingModifier(LootItemCondition[] conditionsIn)
 		{
 			super(conditionsIn);
@@ -312,8 +267,7 @@ public class GlobalLootModifier
 
 		@Nonnull
 		@Override
-		public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context)
-		{
+		protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 			BlockState blockState = context.getParamOrNull(LootContextParams.BLOCK_STATE);
 			if (blockState == null)
 			{
@@ -345,24 +299,14 @@ public class GlobalLootModifier
 				return generatedLoot;
 			}
 
-			ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+			ObjectArrayList<ItemStack> ret = new ObjectArrayList<>();
 //			generatedLoot.forEach((stack) -> ret.add(smelt(stack, context)));
 			return ret;
 		}
 
-		private static class Serializer extends GlobalLootModifierSerializer<VoidingModifier>
-		{
-			@Override
-			public VoidingModifier read(ResourceLocation name, JsonObject json, LootItemCondition[] conditionsIn)
-			{
-				return new VoidingModifier(conditionsIn);
-			}
-
-			@Override
-			public JsonObject write(VoidingModifier instance)
-			{
-				return makeConditions(instance.conditions);
-			}
+		@Override
+		public Codec<? extends IGlobalLootModifier> codec() {
+			return CODEC.get();
 		}
 	}
 }

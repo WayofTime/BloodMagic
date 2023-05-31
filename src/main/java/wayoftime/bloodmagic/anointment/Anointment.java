@@ -34,11 +34,10 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.Util;
 import net.minecraft.core.Registry;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.core.living.LivingUpgrade.Level;
 
 @JsonAdapter(Anointment.Deserializer.class)
-public class Anointment extends ForgeRegistryEntry<Anointment>
+public class Anointment
 {
 	public static final Anointment DUMMY = new Anointment(new ResourceLocation("dummy"));
 

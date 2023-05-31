@@ -10,11 +10,10 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.recipe.RecipeLivingDowngrade;
 import wayoftime.bloodmagic.util.Constants;
 
-public class LivingDowngradeRecipeSerializer<RECIPE extends RecipeLivingDowngrade> extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RECIPE>
+public class LivingDowngradeRecipeSerializer<RECIPE extends RecipeLivingDowngrade>  implements RecipeSerializer<RECIPE>
 {
 	private final IFactory<RECIPE> factory;
 

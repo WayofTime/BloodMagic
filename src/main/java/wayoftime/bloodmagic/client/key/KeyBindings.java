@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.client.key;
 
 import java.util.Locale;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.KeyMapping;
@@ -95,8 +96,7 @@ public enum KeyBindings
 	public KeyMapping getKey()
 	{
 		if (key == null)
-			key = new KeyBindingBloodMagic(this);
-
+			key = toKeyMapping();
 		return key;
 	}
 
@@ -111,10 +111,9 @@ public enum KeyBindings
 		return BloodMagic.MODID + ".keybind." + name().toLowerCase(Locale.ROOT);
 	}
 
-	public static void initializeKeys()
-	{
-		OPEN_HOLDING.getKey();
-		CYCLE_HOLDING_POS.getKey();
-		CYCLE_HOLDING_NEG.getKey();
+	public KeyMapping toKeyMapping() {
+		return new KeyMapping(getDescription(), keyConflictContext, keyModifier,InputConstants.Type.KEYSYM, getKeyCode(), "key.bloodmagic.category");
 	}
+
+
 }

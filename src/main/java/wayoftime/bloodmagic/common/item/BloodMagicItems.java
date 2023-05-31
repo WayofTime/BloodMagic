@@ -469,6 +469,6 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> DUNGEON_MINE_ENTRANCE_KEY = BASICITEMS.register("mineentrancekey", () -> new ItemDungeonKey("mineentrancekey", "mine_entrances"));
 	public static final RegistryObject<Item> DUNGEON_MINE_KEY = BASICITEMS.register("minekey", () -> new ItemDungeonKey("minekey", "mines"));
 
-	public static final RegistryObject<Item> BLEEDING_EDGE_MUSIC = BASICITEMS.register("bleedingedge", () -> new RecordItem(15, SoundRegistrator.BLEEDING_EDGE_MUSIC, new Item.Properties().stacksTo(1).tab(BloodMagic.TAB)));
+	public static final RegistryObject<Item> BLEEDING_EDGE_MUSIC = BASICITEMS.register("bleedingedge", () -> new RecordItem(15, () -> SoundRegistrator.BLEEDING_EDGE_MUSIC, new Item.Properties().stacksTo(1).tab(BloodMagic.TAB)));
 
 }
