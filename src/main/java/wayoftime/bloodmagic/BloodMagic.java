@@ -111,6 +111,7 @@ public class BloodMagic {
         BloodMagicItems.BASICITEMS.register(modBus);
         BloodMagicBlocks.BASICBLOCKS.register(modBus);
         BloodMagicBlocks.DUNGEONBLOCKS.register(modBus);
+        BloodMagicBlocks.FLUID_TYPES.register(modBus);
         BloodMagicBlocks.FLUIDS.register(modBus);
         BloodMagicBlocks.CONTAINERS.register(modBus);
         BloodMagicEntityTypes.ENTITY_TYPES.register(modBus);
@@ -137,7 +138,8 @@ public class BloodMagic {
         modBus.addListener(this::gatherData);
         modBus.addListener(this::onRegisterCapabilities);
 
-        modBus.addListener(this::registerRecipes);
+        // FIXME
+//        modBus.addListener(this::registerRecipes);
         modBus.addListener(ConfigManager::onCommonReload);
         modBus.addListener(ConfigManager::onClientReload);
 
@@ -249,10 +251,10 @@ public class BloodMagic {
     }
 
     private void loadModels(final RegisterGeometryLoaders event) {
-        event.register(String.valueOf(BloodMagic.rl("mimicloader")), new MimicModelLoader(BloodMagic.rl("block/solidopaquemimic")));
-        event.register(String.valueOf(BloodMagic.rl("mimicloader_ethereal")), new MimicModelLoader(BloodMagic.rl("block/etherealopaquemimic")));
+        event.register("mimicloader", new MimicModelLoader(BloodMagic.rl("block/solidopaquemimic")));
+        event.register("mimicloader_ethereal", new MimicModelLoader(BloodMagic.rl("block/etherealopaquemimic")));
 
-        event.register(String.valueOf(BloodMagic.rl("loader_holding")), new SigilHoldingModelLoader(BloodMagic.rl("item/sigilofholding_base")));
+        event.register("loader_holding", new SigilHoldingModelLoader(BloodMagic.rl("item/sigilofholding_base")));
     }
 
     private void setup(final FMLCommonSetupEvent event) {

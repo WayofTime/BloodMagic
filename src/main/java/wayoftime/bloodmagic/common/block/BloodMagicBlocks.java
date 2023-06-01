@@ -43,8 +43,6 @@ import java.util.function.Consumer;
 
 public class BloodMagicBlocks
 {
-	public static final ResourceLocation FLUID_STILL = new ResourceLocation("bloodmagic:block/lifeessencestill");
-	public static final ResourceLocation FLUID_FLOWING = new ResourceLocation("bloodmagic:block/lifeessenceflowing");
 
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BloodMagic.MODID);
 	public static final DeferredRegister<Block> BASICBLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BloodMagic.MODID);
@@ -161,20 +159,20 @@ public class BloodMagicBlocks
 					consumer.accept(new IClientFluidTypeExtensions()
 					{
 						private static final ResourceLocation UNDERWATER_LOCATION = new ResourceLocation("textures/misc/underwater.png"),
-								WATER_STILL = new ResourceLocation("block/water_still"),
-								WATER_FLOW = new ResourceLocation("block/water_flow"),
 								WATER_OVERLAY = new ResourceLocation("block/water_overlay");
+						public static final ResourceLocation FLUID_STILL = new ResourceLocation("bloodmagic:block/lifeessencestill");
+						public static final ResourceLocation FLUID_FLOWING = new ResourceLocation("bloodmagic:block/lifeessenceflowing");
 
 						@Override
 						public ResourceLocation getStillTexture()
 						{
-							return WATER_STILL;
+							return FLUID_STILL;
 						}
 
 						@Override
 						public ResourceLocation getFlowingTexture()
 						{
-							return WATER_FLOW;
+							return FLUID_FLOWING;
 						}
 
 						@Nullable
