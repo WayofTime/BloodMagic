@@ -21,6 +21,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -186,7 +187,9 @@ public class BloodMagic {
 
     private void registerRecipes(RegisterEvent event) {
 //		System.out.println("Registering IngredientBloodOrb Serializer.");
-        CraftingHelper.register(IngredientBloodOrb.NAME, IngredientBloodOrb.Serializer.INSTANCE);
+        if (event.getRegistryKey() == ForgeRegistries.Keys.RECIPE_SERIALIZERS) {
+            CraftingHelper.register(IngredientBloodOrb.NAME, IngredientBloodOrb.Serializer.INSTANCE);
+        }
 
 //		System.out.println("Testing after IngredientBloodOrb");
 

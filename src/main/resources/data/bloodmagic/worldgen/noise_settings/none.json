@@ -57,6 +57,7 @@
     "vein_ridged": 0,
     "vein_gap": 0
   },
+  "spawn_target": [],
   "surface_rule": {
     "type": "minecraft:block",
     "result_state": {
