@@ -1,13 +1,13 @@
 {
   "type": "bloodmagic:altar",
+  "altarSyphon": 10000,
+  "consumptionRate": 20,
+  "drainRate": 10,
   "input": {
     "item": "bloodmagic:lavacrystal"
   },
   "output": {
     "item": "bloodmagic:activationcrystalweak"
   },
-  "upgradeLevel": 2,
-  "altarSyphon": 10000,
-  "consumptionRate": 20,
-  "drainRate": 10
+  "upgradeLevel": 2
 }

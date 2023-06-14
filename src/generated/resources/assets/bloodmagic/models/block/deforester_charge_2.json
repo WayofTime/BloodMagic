@@ -2,10 +2,10 @@
   "parent": "bloodmagic:block/sub/augment_shaped_charge",
   "textures": {
     "1": "minecraft:block/oak_log_top",
+    "2": "bloodmagic:models/defaultcrystal",
     "3": "minecraft:block/oak_log_top",
     "4": "bloodmagic:block/blankrune",
     "5": "minecraft:block/oak_planks",
-    "2": "bloodmagic:models/defaultcrystal",
     "7": "bloodmagic:models/copper_trim",
     "particle": "bloodmagic:models/defaultcrystal"
   }

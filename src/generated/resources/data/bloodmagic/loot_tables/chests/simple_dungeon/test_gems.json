@@ -2,82 +2,82 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "rolls": {
-        "type": "minecraft:uniform",
-        "min": 1.0,
-        "max": 2.0
-      },
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 5,
           "functions": [
             {
-              "function": "bloodmagic:set_will_fraction",
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 0.5,
-                "max": 0.7
-              }
+                "max": 0.7,
+                "min": 0.5
+              },
+              "function": "bloodmagic:set_will_fraction"
             }
           ],
-          "name": "bloodmagic:soulgempetty"
+          "name": "bloodmagic:soulgempetty",
+          "weight": 5
         }
-      ]
-    },
-    {
+      ],
       "rolls": {
         "type": "minecraft:uniform",
-        "min": 1.0,
-        "max": 2.0
-      },
+        "max": 2.0,
+        "min": 1.0
+      }
+    },
+    {
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 5,
           "functions": [
             {
-              "function": "bloodmagic:set_will_range",
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 20.0,
-                "max": 50.0
-              }
+                "max": 50.0,
+                "min": 20.0
+              },
+              "function": "bloodmagic:set_will_range"
             }
           ],
-          "name": "bloodmagic:basemonstersoul"
+          "name": "bloodmagic:basemonstersoul",
+          "weight": 5
         }
-      ]
-    },
-    {
+      ],
       "rolls": {
         "type": "minecraft:uniform",
-        "min": 1.0,
-        "max": 2.0
-      },
+        "max": 2.0,
+        "min": 1.0
+      }
+    },
+    {
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 3,
           "functions": [
             {
               "function": "bloodmagic:set_living_upgrade",
-              "upgrades": [
-                "bloodmagic:health"
-              ],
               "points": {
                 "type": "minecraft:uniform",
-                "min": 300.0,
-                "max": 600.0
-              }
+                "max": 600.0,
+                "min": 300.0
+              },
+              "upgrades": [
+                "bloodmagic:health"
+              ]
             }
           ],
-          "name": "bloodmagic:upgradetome"
+          "name": "bloodmagic:upgradetome",
+          "weight": 3
         }
-      ]
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 2.0,
+        "min": 1.0
+      }
     }
   ]
 }

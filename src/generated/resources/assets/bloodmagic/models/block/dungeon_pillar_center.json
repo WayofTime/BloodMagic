@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube_column",
   "textures": {
-    "side": "bloodmagic:block/dungeon/dungeon_pillar",
-    "end": "bloodmagic:block/dungeon/dungeon_pillarheart"
+    "end": "bloodmagic:block/dungeon/dungeon_pillarheart",
+    "side": "bloodmagic:block/dungeon/dungeon_pillar"
   }
 }

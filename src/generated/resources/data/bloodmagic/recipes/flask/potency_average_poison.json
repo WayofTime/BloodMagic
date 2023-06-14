@@ -1,5 +1,8 @@
 {
   "type": "bloodmagic:flask_potionpotency",
+  "ampDurMod": 0.25,
+  "amplifier": 2,
+  "effect": "minecraft:poison",
   "input": [
     {
       "item": "bloodmagic:averagepowercatalyst"
@@ -7,8 +10,5 @@
   ],
   "syphon": 500,
   "ticks": 100,
-  "upgradeLevel": 4,
-  "effect": "minecraft:poison",
-  "amplifier": 2,
-  "ampDurMod": 0.25
+  "upgradeLevel": 4
 }

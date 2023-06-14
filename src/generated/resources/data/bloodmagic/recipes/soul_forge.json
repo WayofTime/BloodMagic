@@ -1,14 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "i i",
-    "sSs",
-    "sos"
-  ],
   "key": {
-    "s": {
-      "tag": "forge:stone"
-    },
     "S": {
       "item": "bloodmagic:blankslate"
     },
@@ -17,8 +9,16 @@
     },
     "o": {
       "tag": "forge:storage_blocks/iron"
+    },
+    "s": {
+      "tag": "forge:stone"
     }
   },
+  "pattern": [
+    "i i",
+    "sSs",
+    "sos"
+  ],
   "result": {
     "item": "bloodmagic:soulforge"
   }

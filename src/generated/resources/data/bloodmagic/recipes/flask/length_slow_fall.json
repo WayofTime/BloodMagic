@@ -1,13 +1,13 @@
 {
   "type": "bloodmagic:flask_potionlength",
+  "effect": "minecraft:slow_falling",
   "input": [
     {
       "item": "bloodmagic:mundanelengtheningcatalyst"
     }
   ],
+  "lengthDurMod": 2.6667,
   "syphon": 200,
   "ticks": 100,
-  "upgradeLevel": 1,
-  "effect": "minecraft:slow_falling",
-  "lengthDurMod": 2.6667
+  "upgradeLevel": 1
 }

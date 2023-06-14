@@ -2,15 +2,14 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "minecraft:block_state_property",
               "block": "bloodmagic:destructivedemoncrystal",
+              "condition": "minecraft:block_state_property",
               "properties": {
                 "age": "0"
               }
@@ -18,25 +17,25 @@
           ],
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
           "name": "bloodmagic:destructivecrystal"
         }
-      ]
+      ],
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "minecraft:block_state_property",
               "block": "bloodmagic:destructivedemoncrystal",
+              "condition": "minecraft:block_state_property",
               "properties": {
                 "age": "1"
               }
@@ -44,25 +43,25 @@
           ],
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 2.0,
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
           "name": "bloodmagic:destructivecrystal"
         }
-      ]
+      ],
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "minecraft:block_state_property",
               "block": "bloodmagic:destructivedemoncrystal",
+              "condition": "minecraft:block_state_property",
               "properties": {
                 "age": "2"
               }
@@ -70,25 +69,25 @@
           ],
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 3.0,
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
           "name": "bloodmagic:destructivecrystal"
         }
-      ]
+      ],
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "minecraft:block_state_property",
               "block": "bloodmagic:destructivedemoncrystal",
+              "condition": "minecraft:block_state_property",
               "properties": {
                 "age": "3"
               }
@@ -96,25 +95,25 @@
           ],
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 4.0,
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
           "name": "bloodmagic:destructivecrystal"
         }
-      ]
+      ],
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "minecraft:block_state_property",
               "block": "bloodmagic:destructivedemoncrystal",
+              "condition": "minecraft:block_state_property",
               "properties": {
                 "age": "4"
               }
@@ -122,25 +121,25 @@
           ],
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 5.0,
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
           "name": "bloodmagic:destructivecrystal"
         }
-      ]
+      ],
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "minecraft:block_state_property",
               "block": "bloodmagic:destructivedemoncrystal",
+              "condition": "minecraft:block_state_property",
               "properties": {
                 "age": "5"
               }
@@ -148,25 +147,25 @@
           ],
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 6.0,
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
           "name": "bloodmagic:destructivecrystal"
         }
-      ]
+      ],
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "minecraft:block_state_property",
               "block": "bloodmagic:destructivedemoncrystal",
+              "condition": "minecraft:block_state_property",
               "properties": {
                 "age": "6"
               }
@@ -174,14 +173,15 @@
           ],
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 7.0,
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
           "name": "bloodmagic:destructivecrystal"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

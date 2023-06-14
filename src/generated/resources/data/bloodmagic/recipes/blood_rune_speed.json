@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "aba",
-    "cdc",
-    "aba"
-  ],
   "key": {
     "a": {
       "tag": "forge:stone"
@@ -19,6 +14,11 @@
       "item": "bloodmagic:blankrune"
     }
   },
+  "pattern": [
+    "aba",
+    "cdc",
+    "aba"
+  ],
   "result": {
     "item": "bloodmagic:speedrune"
   }

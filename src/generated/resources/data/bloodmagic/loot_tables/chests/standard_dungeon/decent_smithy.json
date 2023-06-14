@@ -2,1023 +2,1023 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "rolls": {
-        "type": "minecraft:uniform",
-        "min": 4.0,
-        "max": 7.0
-      },
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 15,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 20.0,
+                "min": 8.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:raw_copper",
           "quality": -4,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 8.0,
-                "max": 20.0
-              },
-              "add": false
-            }
-          ],
-          "name": "minecraft:raw_copper"
+          "weight": 15
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 12.0,
+                "min": 8.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:raw_iron",
           "quality": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 8.0,
-                "max": 12.0
-              },
-              "add": false
-            }
-          ],
-          "name": "minecraft:raw_iron"
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 16,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 11.0,
+                "min": 5.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:raw_gold",
           "quality": 2,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 5.0,
-                "max": 11.0
-              },
-              "add": false
-            }
-          ],
-          "name": "minecraft:raw_gold"
+          "weight": 16
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 14.0,
+                "min": 8.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:coal",
           "quality": 2,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 8.0,
-                "max": 14.0
-              },
-              "add": false
-            }
-          ],
-          "name": "minecraft:coal"
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 7,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 6.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:diamond",
           "quality": 4,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 6.0
-              },
-              "add": false
-            }
-          ],
-          "name": "minecraft:diamond"
+          "weight": 7
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 8.0,
+                "min": 3.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:emerald",
           "quality": 5,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 3.0,
-                "max": 8.0
-              },
-              "add": false
-            }
-          ],
-          "name": "minecraft:emerald"
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 5.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "bloodmagic:sand_netherite",
           "quality": 5,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 5.0
-              },
-              "add": false
-            }
-          ],
-          "name": "bloodmagic:sand_netherite"
+          "weight": 4
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "bloodmagic:sand_hellforged",
           "quality": 5,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 4.0
-              },
-              "add": false
-            }
-          ],
-          "name": "bloodmagic:sand_hellforged"
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "weight": 6,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 5.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "bloodmagic:corrupted_dust",
           "quality": 4,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 5.0
-              },
-              "add": false
-            }
-          ],
-          "name": "bloodmagic:corrupted_dust"
+          "weight": 6
         },
         {
           "type": "minecraft:item",
-          "weight": 8,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "bloodmagic:strong_tau",
           "quality": 3,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 4.0
-              },
-              "add": false
-            }
-          ],
-          "name": "bloodmagic:strong_tau"
+          "weight": 8
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
+          "name": "bloodmagic:primitive_explosive_cell",
           "quality": 5,
-          "name": "bloodmagic:primitive_explosive_cell"
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 4.0
+                "max": 4.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:bow_power_anointment_2"
+          "name": "bloodmagic:bow_power_anointment_2",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 4.0
+                "max": 4.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:holy_water_anointment_2"
+          "name": "bloodmagic:holy_water_anointment_2",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 4.0
+                "max": 4.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:looting_anointment_2"
+          "name": "bloodmagic:looting_anointment_2",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 4.0
+                "max": 4.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:melee_anointment_2"
+          "name": "bloodmagic:melee_anointment_2",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 4.0
+                "max": 4.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:quick_draw_anointment_2"
+          "name": "bloodmagic:quick_draw_anointment_2",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 4.0
+                "max": 4.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:smelting_anointment_l"
+          "name": "bloodmagic:smelting_anointment_l",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 4.0
+                "max": 4.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:bow_velocity_anointment_2"
+          "name": "bloodmagic:bow_velocity_anointment_2",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "weight": 12,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 40.0,
+                "min": 20.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:iron_nugget",
           "quality": -4,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 20.0,
-                "max": 40.0
-              },
-              "add": false
-            }
-          ],
-          "name": "minecraft:iron_nugget"
+          "weight": 12
         },
         {
           "type": "minecraft:item",
-          "weight": 14,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 20.0,
+                "min": 10.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:leather",
           "quality": -4,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 10.0,
-                "max": 20.0
-              },
-              "add": false
-            }
-          ],
-          "name": "minecraft:leather"
+          "weight": 14
         },
         {
           "type": "minecraft:item",
-          "weight": 6,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 7.0,
+                "min": 4.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:gold_nugget",
           "quality": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 4.0,
-                "max": 7.0
-              },
-              "add": false
-            }
-          ],
-          "name": "minecraft:gold_nugget"
+          "weight": 6
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 20.0,
+                "min": 10.0
+              },
+              "treasure": true
+            },
+            {
+              "add": false,
+              "damage": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.9
+              },
+              "function": "minecraft:set_damage"
+            }
+          ],
+          "name": "minecraft:iron_pickaxe",
           "quality": -2,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 10.0,
-                "max": 20.0
+                "max": 20.0,
+                "min": 10.0
               },
               "treasure": true
             },
             {
-              "function": "minecraft:set_damage",
+              "add": false,
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 0.9,
-                "max": 1.0
+                "max": 1.0,
+                "min": 0.9
               },
-              "add": false
+              "function": "minecraft:set_damage"
             }
           ],
-          "name": "minecraft:iron_pickaxe"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 3,
+          "name": "minecraft:iron_axe",
           "quality": -2,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 10.0,
-                "max": 20.0
+                "max": 20.0,
+                "min": 10.0
               },
               "treasure": true
             },
             {
-              "function": "minecraft:set_damage",
+              "add": false,
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 0.9,
-                "max": 1.0
+                "max": 1.0,
+                "min": 0.9
               },
-              "add": false
+              "function": "minecraft:set_damage"
             }
           ],
-          "name": "minecraft:iron_axe"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 3,
+          "name": "minecraft:iron_sword",
           "quality": -2,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 10.0,
-                "max": 20.0
+                "max": 20.0,
+                "min": 10.0
               },
               "treasure": true
             },
             {
-              "function": "minecraft:set_damage",
+              "add": false,
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 0.9,
-                "max": 1.0
+                "max": 1.0,
+                "min": 0.9
               },
-              "add": false
+              "function": "minecraft:set_damage"
             }
           ],
-          "name": "minecraft:iron_sword"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 3,
+          "name": "minecraft:iron_shovel",
           "quality": -2,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 10.0,
-                "max": 20.0
+                "max": 20.0,
+                "min": 10.0
               },
               "treasure": true
             },
             {
-              "function": "minecraft:set_damage",
+              "add": false,
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 0.9,
-                "max": 1.0
+                "max": 1.0,
+                "min": 0.9
               },
-              "add": false
+              "function": "minecraft:set_damage"
             }
           ],
-          "name": "minecraft:iron_shovel"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 3,
+          "name": "minecraft:iron_hoe",
           "quality": -2,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 10.0,
-                "max": 20.0
+                "max": 20.0,
+                "min": 10.0
               },
               "treasure": true
             },
             {
-              "function": "minecraft:set_damage",
+              "add": false,
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 0.9,
-                "max": 1.0
+                "max": 1.0,
+                "min": 0.9
               },
-              "add": false
+              "function": "minecraft:set_damage"
             }
           ],
-          "name": "minecraft:iron_hoe"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 3,
+          "name": "minecraft:iron_helmet",
           "quality": -2,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 10.0,
-                "max": 20.0
+                "max": 20.0,
+                "min": 10.0
               },
               "treasure": true
             },
             {
-              "function": "minecraft:set_damage",
+              "add": false,
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 0.9,
-                "max": 1.0
+                "max": 1.0,
+                "min": 0.9
               },
-              "add": false
+              "function": "minecraft:set_damage"
             }
           ],
-          "name": "minecraft:iron_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 3,
+          "name": "minecraft:iron_chestplate",
           "quality": -2,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 10.0,
-                "max": 20.0
+                "max": 20.0,
+                "min": 10.0
               },
               "treasure": true
             },
             {
-              "function": "minecraft:set_damage",
+              "add": false,
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 0.9,
-                "max": 1.0
+                "max": 1.0,
+                "min": 0.9
               },
-              "add": false
+              "function": "minecraft:set_damage"
             }
           ],
-          "name": "minecraft:iron_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 3,
+          "name": "minecraft:iron_leggings",
           "quality": -2,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 10.0,
-                "max": 20.0
+                "max": 20.0,
+                "min": 10.0
               },
               "treasure": true
             },
             {
-              "function": "minecraft:set_damage",
+              "add": false,
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 0.9,
-                "max": 1.0
+                "max": 1.0,
+                "min": 0.9
               },
-              "add": false
+              "function": "minecraft:set_damage"
             }
           ],
-          "name": "minecraft:iron_leggings"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 3,
+          "name": "minecraft:iron_boots",
           "quality": -2,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 10.0,
-                "max": 20.0
+                "max": 25.0,
+                "min": 20.0
               },
               "treasure": true
             },
             {
-              "function": "minecraft:set_damage",
+              "add": false,
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 0.9,
-                "max": 1.0
+                "max": 0.9,
+                "min": 0.7
               },
-              "add": false
+              "function": "minecraft:set_damage"
             }
           ],
-          "name": "minecraft:iron_boots"
+          "name": "minecraft:diamond_pickaxe",
+          "quality": 2
         },
         {
           "type": "minecraft:item",
-          "quality": 2,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 20.0,
-                "max": 25.0
+                "max": 25.0,
+                "min": 20.0
               },
               "treasure": true
             },
             {
-              "function": "minecraft:set_damage",
+              "add": false,
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 0.7,
-                "max": 0.9
+                "max": 0.9,
+                "min": 0.7
               },
-              "add": false
+              "function": "minecraft:set_damage"
             }
           ],
-          "name": "minecraft:diamond_pickaxe"
+          "name": "minecraft:diamond_axe",
+          "quality": 2
         },
         {
           "type": "minecraft:item",
-          "quality": 2,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 20.0,
-                "max": 25.0
+                "max": 25.0,
+                "min": 20.0
               },
               "treasure": true
             },
             {
-              "function": "minecraft:set_damage",
+              "add": false,
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 0.7,
-                "max": 0.9
+                "max": 0.9,
+                "min": 0.7
               },
-              "add": false
+              "function": "minecraft:set_damage"
             }
           ],
-          "name": "minecraft:diamond_axe"
+          "name": "minecraft:diamond_sword",
+          "quality": 2
         },
         {
           "type": "minecraft:item",
-          "quality": 2,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 20.0,
-                "max": 25.0
+                "max": 25.0,
+                "min": 20.0
               },
               "treasure": true
             },
             {
-              "function": "minecraft:set_damage",
+              "add": false,
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 0.7,
-                "max": 0.9
+                "max": 0.9,
+                "min": 0.7
               },
-              "add": false
+              "function": "minecraft:set_damage"
             }
           ],
-          "name": "minecraft:diamond_sword"
+          "name": "minecraft:diamond_shovel",
+          "quality": 2
         },
         {
           "type": "minecraft:item",
-          "quality": 2,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 20.0,
-                "max": 25.0
+                "max": 25.0,
+                "min": 20.0
               },
               "treasure": true
             },
             {
-              "function": "minecraft:set_damage",
+              "add": false,
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 0.7,
-                "max": 0.9
+                "max": 0.9,
+                "min": 0.7
               },
-              "add": false
+              "function": "minecraft:set_damage"
             }
           ],
-          "name": "minecraft:diamond_shovel"
+          "name": "minecraft:diamond_hoe",
+          "quality": 2
         },
         {
           "type": "minecraft:item",
-          "quality": 2,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 20.0,
-                "max": 25.0
+                "max": 25.0,
+                "min": 20.0
               },
               "treasure": true
             },
             {
-              "function": "minecraft:set_damage",
+              "add": false,
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 0.7,
-                "max": 0.9
+                "max": 0.9,
+                "min": 0.7
               },
-              "add": false
+              "function": "minecraft:set_damage"
             }
           ],
-          "name": "minecraft:diamond_hoe"
+          "name": "minecraft:diamond_helmet",
+          "quality": 2
         },
         {
           "type": "minecraft:item",
-          "quality": 2,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 20.0,
-                "max": 25.0
+                "max": 25.0,
+                "min": 20.0
               },
               "treasure": true
             },
             {
-              "function": "minecraft:set_damage",
+              "add": false,
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 0.7,
-                "max": 0.9
+                "max": 0.9,
+                "min": 0.7
               },
-              "add": false
+              "function": "minecraft:set_damage"
             }
           ],
-          "name": "minecraft:diamond_helmet"
+          "name": "minecraft:diamond_chestplate",
+          "quality": 2
         },
         {
           "type": "minecraft:item",
-          "quality": 2,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 20.0,
-                "max": 25.0
+                "max": 25.0,
+                "min": 20.0
               },
               "treasure": true
             },
             {
-              "function": "minecraft:set_damage",
+              "add": false,
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 0.7,
-                "max": 0.9
+                "max": 0.9,
+                "min": 0.7
               },
-              "add": false
+              "function": "minecraft:set_damage"
             }
           ],
-          "name": "minecraft:diamond_chestplate"
+          "name": "minecraft:diamond_leggings",
+          "quality": 2
         },
         {
           "type": "minecraft:item",
-          "quality": 2,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 20.0,
-                "max": 25.0
+                "max": 25.0,
+                "min": 20.0
               },
               "treasure": true
             },
             {
-              "function": "minecraft:set_damage",
+              "add": false,
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 0.7,
-                "max": 0.9
+                "max": 0.9,
+                "min": 0.7
               },
-              "add": false
+              "function": "minecraft:set_damage"
             }
           ],
-          "name": "minecraft:diamond_leggings"
+          "name": "minecraft:diamond_boots",
+          "quality": 2
         },
         {
           "type": "minecraft:item",
-          "quality": 2,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1.0,
-              "add": false
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "min": 20.0,
-                "max": 25.0
-              },
-              "treasure": true
-            },
-            {
-              "function": "minecraft:set_damage",
-              "damage": {
-                "type": "minecraft:uniform",
-                "min": 0.7,
-                "max": 0.9
-              },
-              "add": false
-            }
-          ],
-          "name": "minecraft:diamond_boots"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 4,
           "functions": [
             {
               "function": "bloodmagic:set_living_upgrade",
+              "points": {
+                "type": "minecraft:uniform",
+                "max": 225.0,
+                "min": 150.0
+              },
               "upgrades": [
                 "bloodmagic:digging"
-              ],
-              "points": {
-                "type": "minecraft:uniform",
-                "min": 150.0,
-                "max": 225.0
-              }
+              ]
             }
           ],
-          "name": "bloodmagic:upgradetome"
+          "name": "bloodmagic:upgradetome",
+          "weight": 4
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
           "functions": [
             {
               "function": "bloodmagic:set_living_upgrade",
-              "upgrades": [
-                "bloodmagic:melee_damage"
-              ],
               "points": {
                 "type": "minecraft:uniform",
-                "min": 250.0,
-                "max": 350.0
-              }
+                "max": 350.0,
+                "min": 250.0
+              },
+              "upgrades": [
+                "bloodmagic:melee_damage"
+              ]
             }
           ],
-          "name": "bloodmagic:upgradetome"
+          "name": "bloodmagic:upgradetome",
+          "weight": 4
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "quality": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:corrosivecrystal"
+          "name": "bloodmagic:corrosivecrystal",
+          "quality": 3,
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "quality": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:defaultcrystal"
+          "name": "bloodmagic:defaultcrystal",
+          "quality": 3,
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "quality": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:steadfastcrystal"
+          "name": "bloodmagic:steadfastcrystal",
+          "quality": 3,
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "quality": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:vengefulcrystal"
+          "name": "bloodmagic:vengefulcrystal",
+          "quality": 3,
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "quality": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:destructivecrystal"
+          "name": "bloodmagic:destructivecrystal",
+          "quality": 3,
+          "weight": 2
         }
-      ]
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 7.0,
+        "min": 4.0
+      }
     }
   ]
 }

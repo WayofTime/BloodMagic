@@ -1,25 +1,25 @@
 {
   "type": "bloodmagic:arc",
+  "addedoutput": [
+    {
+      "type": {
+        "item": "bloodmagic:goldfragment"
+      },
+      "chance": 0.25,
+      "mainchance": 0.0
+    }
+  ],
+  "consumeingredient": false,
   "input": {
     "tag": "forge:raw_materials/gold"
   },
   "inputsize": 1,
+  "mainoutputchance": 0.0,
+  "output": {
+    "count": 2,
+    "item": "bloodmagic:goldfragment"
+  },
   "tool": {
     "tag": "bloodmagic:arc/explosive"
-  },
-  "addedoutput": [
-    {
-      "mainchance": 0.0,
-      "chance": 0.25,
-      "type": {
-        "item": "bloodmagic:goldfragment"
-      }
-    }
-  ],
-  "output": {
-    "item": "bloodmagic:goldfragment",
-    "count": 2
-  },
-  "consumeingredient": false,
-  "mainoutputchance": 0.0
+  }
 }

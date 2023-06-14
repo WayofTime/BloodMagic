@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.0,
   "ingredient": {
     "tag": "forge:dusts/hellforged"
   },
-  "result": "bloodmagic:ingot_hellforged",
-  "experience": 0.0,
-  "cookingtime": 200
+  "result": "bloodmagic:ingot_hellforged"
 }

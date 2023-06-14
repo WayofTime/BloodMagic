@@ -1,32 +1,32 @@
 {
   "type": "bloodmagic:arc",
+  "addedoutput": [
+    {
+      "type": {
+        "item": "bloodmagic:hellforgedparts"
+      },
+      "chance": 0.0,
+      "mainchance": 1.0
+    },
+    {
+      "type": {
+        "count": 4,
+        "item": "minecraft:netherite_scrap"
+      },
+      "chance": 0.0,
+      "mainchance": 1.0
+    }
+  ],
+  "consumeingredient": false,
   "input": {
     "item": "bloodmagic:selfsacrificerune2"
   },
   "inputsize": 1,
-  "tool": {
-    "tag": "bloodmagic:arc/reverter"
-  },
-  "addedoutput": [
-    {
-      "mainchance": 1.0,
-      "chance": 0.0,
-      "type": {
-        "item": "bloodmagic:hellforgedparts"
-      }
-    },
-    {
-      "mainchance": 1.0,
-      "chance": 0.0,
-      "type": {
-        "item": "minecraft:netherite_scrap",
-        "count": 4
-      }
-    }
-  ],
+  "mainoutputchance": 0.0,
   "output": {
     "item": "bloodmagic:selfsacrificerune"
   },
-  "consumeingredient": false,
-  "mainoutputchance": 0.0
+  "tool": {
+    "tag": "bloodmagic:arc/reverter"
+  }
 }

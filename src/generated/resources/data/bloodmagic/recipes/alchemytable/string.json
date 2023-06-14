@@ -9,8 +9,8 @@
     }
   ],
   "output": {
-    "item": "minecraft:string",
-    "count": 4
+    "count": 4,
+    "item": "minecraft:string"
   },
   "syphon": 100,
   "ticks": 100,

@@ -2,10 +2,10 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "name": "bloodmagic:spectral",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
-      "entries": []
+      "entries": [],
+      "name": "bloodmagic:spectral",
+      "rolls": 1.0
     }
   ]
 }

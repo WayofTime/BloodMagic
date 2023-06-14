@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "a a",
-    "aba",
-    "cdc"
-  ],
   "key": {
     "a": {
       "tag": "forge:stone"
@@ -19,6 +14,11 @@
       "item": "minecraft:gold_ingot"
     }
   },
+  "pattern": [
+    "a a",
+    "aba",
+    "cdc"
+  ],
   "result": {
     "item": "bloodmagic:altar"
   }

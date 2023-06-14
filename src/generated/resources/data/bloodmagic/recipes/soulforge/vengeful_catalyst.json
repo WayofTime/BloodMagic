@@ -1,5 +1,6 @@
 {
   "type": "bloodmagic:soulforge",
+  "drain": 20.0,
   "input0": {
     "tag": "forge:crops/nether_wart"
   },
@@ -12,9 +13,8 @@
   "input3": {
     "item": "minecraft:melon_seeds"
   },
+  "minimumDrain": 400.0,
   "output": {
     "item": "bloodmagic:vengefulcatalyst"
-  },
-  "minimumDrain": 400.0,
-  "drain": 20.0
+  }
 }

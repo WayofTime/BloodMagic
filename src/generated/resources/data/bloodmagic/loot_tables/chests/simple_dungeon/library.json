@@ -2,75 +2,75 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "name": "vanilla_library",
-      "rolls": 2.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "bloodmagic:loot_table",
           "name": "minecraft:chests/stronghold_library"
         }
-      ]
+      ],
+      "name": "vanilla_library",
+      "rolls": 2.0
     },
     {
-      "name": "extra",
-      "rolls": {
-        "type": "minecraft:uniform",
-        "min": 2.0,
-        "max": 3.0
-      },
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 20,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 5.0
+                "max": 5.0,
+                "min": 2.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:weak_tau"
+          "name": "bloodmagic:weak_tau",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
           "functions": [
             {
-              "function": "bloodmagic:set_will_range",
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 15.0,
-                "max": 30.0
-              }
+                "max": 30.0,
+                "min": 15.0
+              },
+              "function": "bloodmagic:set_will_range"
             }
           ],
-          "name": "bloodmagic:basemonstersoul"
+          "name": "bloodmagic:basemonstersoul",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
           "functions": [
             {
               "function": "bloodmagic:set_living_upgrade",
-              "upgrades": [
-                "bloodmagic:experienced"
-              ],
               "points": {
                 "type": "minecraft:uniform",
-                "min": 200.0,
-                "max": 400.0
-              }
+                "max": 400.0,
+                "min": 200.0
+              },
+              "upgrades": [
+                "bloodmagic:experienced"
+              ]
             }
           ],
-          "name": "bloodmagic:upgradetome"
+          "name": "bloodmagic:upgradetome",
+          "weight": 5
         }
-      ]
+      ],
+      "name": "extra",
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 3.0,
+        "min": 2.0
+      }
     }
   ]
 }

@@ -1,5 +1,6 @@
 {
   "type": "bloodmagic:soulforge",
+  "drain": 25.0,
   "input0": {
     "tag": "forge:ingots/iron"
   },
@@ -12,9 +13,8 @@
   "input3": {
     "tag": "forge:dusts/glowstone"
   },
+  "minimumDrain": 400.0,
   "output": {
     "item": "bloodmagic:outputroutingnode"
-  },
-  "minimumDrain": 400.0,
-  "drain": 25.0
+  }
 }

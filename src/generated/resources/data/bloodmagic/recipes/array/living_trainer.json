@@ -1,13 +1,13 @@
 {
   "type": "bloodmagic:array",
-  "texture": "bloodmagic:textures/models/alchemyarrays/bindingarray.png",
-  "baseinput": {
-    "item": "bloodmagic:reagentbinding"
-  },
   "addedinput": {
     "item": "minecraft:diamond"
   },
+  "baseinput": {
+    "item": "bloodmagic:reagentbinding"
+  },
   "output": {
     "item": "bloodmagic:upgradetrainer"
-  }
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/bindingarray.png"
 }

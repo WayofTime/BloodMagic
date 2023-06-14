@@ -1,27 +1,27 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "sps",
-    "drd",
-    "sos"
-  ],
   "key": {
-    "r": {
-      "item": "bloodmagic:dislocationrune"
-    },
-    "s": {
-      "item": "minecraft:netherite_scrap"
-    },
-    "p": {
-      "item": "bloodmagic:hellforgedparts"
-    },
     "d": {
       "item": "bloodmagic:largebloodstonebrick"
     },
     "o": {
       "item": "bloodmagic:etherealslate"
+    },
+    "p": {
+      "item": "bloodmagic:hellforgedparts"
+    },
+    "r": {
+      "item": "bloodmagic:dislocationrune"
+    },
+    "s": {
+      "item": "minecraft:netherite_scrap"
     }
   },
+  "pattern": [
+    "sps",
+    "drd",
+    "sos"
+  ],
   "result": {
     "item": "bloodmagic:dislocationrune2"
   }

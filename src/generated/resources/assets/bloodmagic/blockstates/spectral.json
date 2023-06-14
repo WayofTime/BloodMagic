@@ -1,9 +1,9 @@
 {
   "variants": {
-    "spectral=solid": {
+    "spectral=leaking": {
       "model": "bloodmagic:block/spectral"
     },
-    "spectral=leaking": {
+    "spectral=solid": {
       "model": "bloodmagic:block/spectral"
     }
   }

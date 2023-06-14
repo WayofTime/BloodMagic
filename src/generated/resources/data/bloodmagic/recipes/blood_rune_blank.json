@@ -1,22 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "tag": "forge:stone"
+    },
+    "o": {
+      "type": "bloodmagic:bloodorb",
+      "orb_tier": 1
+    },
+    "s": {
+      "item": "bloodmagic:blankslate"
+    }
+  },
   "pattern": [
     "asa",
     "aoa",
     "aaa"
   ],
-  "key": {
-    "a": {
-      "tag": "forge:stone"
-    },
-    "s": {
-      "item": "bloodmagic:blankslate"
-    },
-    "o": {
-      "type": "bloodmagic:bloodorb",
-      "orb_tier": 1
-    }
-  },
   "result": {
     "item": "bloodmagic:blankrune"
   }

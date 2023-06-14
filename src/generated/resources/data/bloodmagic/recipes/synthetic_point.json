@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "ifi",
-    "frf",
-    "ifi"
-  ],
   "key": {
     "f": [
       {
@@ -51,8 +46,13 @@
       "tag": "forge:dusts/redstone"
     }
   },
+  "pattern": [
+    "ifi",
+    "frf",
+    "ifi"
+  ],
   "result": {
-    "item": "bloodmagic:syntheticpoint",
-    "count": 2
+    "count": 2,
+    "item": "bloodmagic:syntheticpoint"
   }
 }

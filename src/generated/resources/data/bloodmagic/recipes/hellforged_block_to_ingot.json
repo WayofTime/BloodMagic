@@ -6,7 +6,7 @@
     }
   ],
   "result": {
-    "item": "bloodmagic:ingot_hellforged",
-    "count": 9
+    "count": 9,
+    "item": "bloodmagic:ingot_hellforged"
   }
 }

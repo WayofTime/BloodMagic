@@ -9,8 +9,8 @@
     }
   ],
   "output": {
-    "item": "minecraft:flint",
-    "count": 2
+    "count": 2,
+    "item": "minecraft:flint"
   },
   "syphon": 50,
   "ticks": 20,

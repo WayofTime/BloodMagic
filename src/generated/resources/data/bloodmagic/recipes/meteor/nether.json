@@ -1,15 +1,17 @@
 {
   "type": "bloodmagic:meteor",
+  "explosion": 12.0,
   "input": {
     "tag": "forge:dusts/glowstone"
   },
-  "syphon": 1000000,
-  "explosion": 12.0,
   "layers": [
     {
-      "radius": 8,
       "additionalWeight": 0,
+      "fill": {
+        "block": "minecraft:netherrack"
+      },
       "minWeight": 500,
+      "radius": 8,
       "weightMap": [
         {
           "block": "minecraft:glowstone",
@@ -23,15 +25,18 @@
           "block": "minecraft:nether_gold_ore",
           "weight": 60
         }
-      ],
-      "fill": {
-        "block": "minecraft:netherrack"
-      }
+      ]
     },
     {
-      "radius": 5,
       "additionalWeight": 0,
+      "fill": {
+        "block": "minecraft:blackstone"
+      },
       "minWeight": 1000,
+      "radius": 5,
+      "shell": {
+        "block": "minecraft:glowstone"
+      },
       "weightMap": [
         {
           "block": "minecraft:ancient_debris",
@@ -49,13 +54,8 @@
           "block": "minecraft:polished_blackstone",
           "weight": 400
         }
-      ],
-      "fill": {
-        "block": "minecraft:blackstone"
-      },
-      "shell": {
-        "block": "minecraft:glowstone"
-      }
+      ]
     }
-  ]
+  ],
+  "syphon": 1000000
 }

@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.0,
   "ingredient": {
     "item": "bloodmagic:plantoil"
   },
-  "result": "bloodmagic:saltpeter",
-  "experience": 0.0,
-  "cookingtime": 200
+  "result": "bloodmagic:saltpeter"
 }

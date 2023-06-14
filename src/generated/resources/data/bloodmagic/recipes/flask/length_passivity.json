@@ -1,13 +1,13 @@
 {
   "type": "bloodmagic:flask_potionlength",
+  "effect": "bloodmagic:passivity",
   "input": [
     {
       "item": "bloodmagic:mundanelengtheningcatalyst"
     }
   ],
+  "lengthDurMod": 2.6667,
   "syphon": 200,
   "ticks": 100,
-  "upgradeLevel": 1,
-  "effect": "bloodmagic:passivity",
-  "lengthDurMod": 2.6667
+  "upgradeLevel": 1
 }

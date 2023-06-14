@@ -1,21 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "ggg",
-    " Gg",
-    "i g"
-  ],
   "key": {
-    "g": {
-      "tag": "forge:glass"
-    },
     "G": {
       "tag": "forge:ingots/gold"
+    },
+    "g": {
+      "tag": "forge:glass"
     },
     "i": {
       "tag": "forge:ingots/iron"
     }
   },
+  "pattern": [
+    "ggg",
+    " Gg",
+    "i g"
+  ],
   "result": {
     "item": "bloodmagic:sacrificialdagger"
   }

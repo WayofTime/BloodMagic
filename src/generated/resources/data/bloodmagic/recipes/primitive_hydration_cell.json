@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "csc",
-    "cBc",
-    "coc"
-  ],
   "key": {
     "B": {
       "item": "minecraft:water_bucket"
@@ -20,6 +15,11 @@
       "item": "bloodmagic:blankslate"
     }
   },
+  "pattern": [
+    "csc",
+    "cBc",
+    "coc"
+  ],
   "result": {
     "item": "bloodmagic:primitive_hydration_cell"
   }

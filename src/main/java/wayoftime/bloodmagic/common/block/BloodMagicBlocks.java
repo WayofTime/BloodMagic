@@ -247,8 +247,8 @@ public class BloodMagicBlocks
 			new ForgeFlowingFluid.Source(makeDoubtProperties()));
 	public static final RegistryObject<Fluid> DOUBT_FLUID_FLOWING = FLUIDS.register("doubt_fluid_flowing", () ->
 			new ForgeFlowingFluid.Flowing(makeDoubtProperties()));
-	public static RegistryObject<LiquidBlock> LIFE_ESSENCE_BLOCK = BLOCKS.register("life_essence_block", () -> new LiquidBlock(LIFE_ESSENCE_FLUID, BlockBehaviour.Properties.of(net.minecraft.world.level.material.Material.WATER).noCollission().strength(100.0F).noLootTable()));
-	public static RegistryObject<LiquidBlock> DOUBT_BLOCK = BLOCKS.register("doubt_block", () -> new LiquidBlock(DOUBT_FLUID, BlockBehaviour.Properties.of(net.minecraft.world.level.material.Material.WATER).noCollission().strength(100.0F).noLootTable()));
+	public static RegistryObject<LiquidBlock> LIFE_ESSENCE_BLOCK = BLOCKS.register("life_essence_block", () -> new LiquidBlock(LIFE_ESSENCE_FLUID, BlockBehaviour.Properties.copy(Blocks.WATER)));
+	public static RegistryObject<LiquidBlock> DOUBT_BLOCK = BLOCKS.register("doubt_block", () -> new LiquidBlock(DOUBT_FLUID, BlockBehaviour.Properties.copy(Blocks.WATER)));
 	public static RegistryObject<Item> LIFE_ESSENCE_BUCKET = ITEMS.register("life_essence_bucket", () -> new BucketItem(LIFE_ESSENCE_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(BloodMagic.TAB)));
 	public static RegistryObject<Item> DOUBT_BUCKET = ITEMS.register("doubt_bucket", () -> new BucketItem(DOUBT_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(BloodMagic.TAB)));
 

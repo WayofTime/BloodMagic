@@ -1,28 +1,28 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "RsR",
-    "GrG",
-    "ReR"
-  ],
   "key": {
+    "G": {
+      "tag": "forge:dusts/glowstone"
+    },
     "R": {
       "tag": "forge:dusts/redstone"
+    },
+    "e": {
+      "type": "bloodmagic:bloodorb",
+      "orb_tier": 4
     },
     "r": {
       "item": "bloodmagic:blankrune"
     },
     "s": {
       "item": "bloodmagic:demonslate"
-    },
-    "e": {
-      "type": "bloodmagic:bloodorb",
-      "orb_tier": 4
-    },
-    "G": {
-      "tag": "forge:dusts/glowstone"
     }
   },
+  "pattern": [
+    "RsR",
+    "GrG",
+    "ReR"
+  ],
   "result": {
     "item": "bloodmagic:chargingrune"
   }

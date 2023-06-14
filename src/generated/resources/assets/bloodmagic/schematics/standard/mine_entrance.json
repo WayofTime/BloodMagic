@@ -1,18 +1,26 @@
 {
-  "key": null,
-  "dungeonWeight": 1,
-  "structureMap": {
-    "bloodmagic:standard/mine_entrance": {
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "bloodmagic:standard/mine_entrance2": {
-      "x": 0,
-      "y": 0,
-      "z": 32
-    }
+  "controllerOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
   },
+  "descriptorList": [
+    {
+      "blockPosCache": [],
+      "cache": false,
+      "maximumOffset": {
+        "x": 21,
+        "y": 18,
+        "z": 43
+      },
+      "minimumOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  ],
+  "doorCoverMap": {},
   "doorMap": {
     "default": {
       "west": [
@@ -33,40 +41,7 @@
       ]
     }
   },
-  "descriptorList": [
-    {
-      "minimumOffset": {
-        "x": 0,
-        "y": 0,
-        "z": 0
-      },
-      "maximumOffset": {
-        "x": 21,
-        "y": 18,
-        "z": 43
-      },
-      "currentPosition": null,
-      "blockPosCache": [],
-      "cachedPosition": null,
-      "cache": false
-    }
-  ],
-  "oreDensity": 0.0,
-  "spawnLocation": {
-    "x": 0,
-    "y": 0,
-    "z": 0
-  },
-  "controllerOffset": {
-    "x": 0,
-    "y": 0,
-    "z": 0
-  },
-  "portalOffset": {
-    "x": 0,
-    "y": 0,
-    "z": 0
-  },
+  "dungeonWeight": 1,
   "indexToDoorMap": {
     "1": [
       {
@@ -91,6 +66,28 @@
       "bloodmagic:room_pools/mines/mine_corridors"
     ]
   },
+  "oreDensity": 0.0,
+  "portalOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
   "requiredDoorMap": {},
-  "doorCoverMap": {}
+  "spawnLocation": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "structureMap": {
+    "bloodmagic:standard/mine_entrance": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "bloodmagic:standard/mine_entrance2": {
+      "x": 0,
+      "y": 0,
+      "z": 32
+    }
+  }
 }
