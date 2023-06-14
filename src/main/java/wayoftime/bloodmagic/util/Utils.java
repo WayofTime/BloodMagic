@@ -32,9 +32,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.IFluidBlock;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -253,7 +253,7 @@ public class Utils
 
 	public static ItemStack insertStackIntoTile(ItemStack stack, BlockEntity tile, Direction dir)
 	{
-		LazyOptional<IItemHandler> capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir);
+		LazyOptional<IItemHandler> capability = tile.getCapability(ForgeCapabilities.ITEM_HANDLER, dir);
 		if (capability.isPresent())
 		{
 			IItemHandler handler = capability.resolve().get();
@@ -310,7 +310,7 @@ public class Utils
 	{
 		int slots = 0;
 
-		LazyOptional<IItemHandler> capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir);
+		LazyOptional<IItemHandler> capability = tile.getCapability(ForgeCapabilities.ITEM_HANDLER, dir);
 		if (capability.isPresent())
 		{
 			IItemHandler handler = capability.resolve().get();
@@ -722,8 +722,8 @@ public class Utils
 
 		IItemHandler itemHandler = null;
 
-		if (tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing).isPresent())
-			itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing).resolve().get();
+		if (tile.getCapability(ForgeCapabilities.ITEM_HANDLER, facing).isPresent())
+			itemHandler = tile.getCapability(ForgeCapabilities.ITEM_HANDLER, facing).resolve().get();
 		else if (tile instanceof WorldlyContainer)
 			itemHandler = ((WorldlyContainer) tile).getSlotsForFace(facing).length != 0
 					? new SidedInvWrapper((WorldlyContainer) tile, facing)
