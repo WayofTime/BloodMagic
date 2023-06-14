@@ -139,8 +139,7 @@ public class BloodMagic {
         modBus.addListener(this::gatherData);
         modBus.addListener(this::onRegisterCapabilities);
 
-        // FIXME
-//        modBus.addListener(this::registerRecipes);
+        modBus.addListener(this::registerRecipes);
         modBus.addListener(ConfigManager::onCommonReload);
         modBus.addListener(ConfigManager::onClientReload);
 
@@ -186,18 +185,10 @@ public class BloodMagic {
     }
 
     private void registerRecipes(RegisterEvent event) {
-//		System.out.println("Registering IngredientBloodOrb Serializer.");
         if (event.getRegistryKey() == ForgeRegistries.Keys.RECIPE_SERIALIZERS) {
             CraftingHelper.register(IngredientBloodOrb.NAME, IngredientBloodOrb.Serializer.INSTANCE);
         }
 
-//		System.out.println("Testing after IngredientBloodOrb");
-
-//		event.getRegistry().registerAll(new SpecialRecipeSerializer<>(TestSpecialRecipe::new).setRegistryName("test"));
-
-//        event.getRegistry().registerAll(
-//                new SewingRecipe.Serializer().setRegistryName("sewing")
-//        );
     }
 
     private void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
