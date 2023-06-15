@@ -59,13 +59,13 @@ public class ARCFurnaceRecipeCategory implements IRecipeCategory<SmeltingRecipe>
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, SmeltingRecipe recipe, IFocusGroup focuses) {
-        IRecipeSlotBuilder output = builder.addSlot(RecipeIngredientRole.OUTPUT, 53, 16);
+        IRecipeSlotBuilder output = builder.addSlot(RecipeIngredientRole.OUTPUT, 54, 17);
         output.addItemStack(recipe.getResultItem());
 
-        IRecipeSlotBuilder input = builder.addSlot(RecipeIngredientRole.INPUT, 0, 5);
+        IRecipeSlotBuilder input = builder.addSlot(RecipeIngredientRole.INPUT, 1, 6);
         input.addIngredients(recipe.getIngredients().get(0));
 
-        IRecipeSlotBuilder catalyst = builder.addSlot(RecipeIngredientRole.CATALYST, 21, 16);
+        IRecipeSlotBuilder catalyst = builder.addSlot(RecipeIngredientRole.CATALYST, 22, 17);
         catalyst.addIngredients(Ingredient.of(BloodMagicTags.ARC_TOOL_FURNACE));
     }
 

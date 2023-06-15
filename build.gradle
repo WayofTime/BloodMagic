@@ -100,9 +100,6 @@ mixin {
 }
 
 repositories {
-	maven {
-        url "https://dvs1.progwml6.com/files/maven/"
-    }
     maven {
         name = "The Loader"
         url = "https://maven.blamejared.com"
