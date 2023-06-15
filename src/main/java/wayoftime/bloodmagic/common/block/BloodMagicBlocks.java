@@ -158,8 +158,6 @@ public class BloodMagicBlocks
 				{
 					consumer.accept(new IClientFluidTypeExtensions()
 					{
-						private static final ResourceLocation UNDERWATER_LOCATION = new ResourceLocation("textures/misc/underwater.png"),
-								WATER_OVERLAY = new ResourceLocation("block/water_overlay");
 						public static final ResourceLocation FLUID_STILL = new ResourceLocation("bloodmagic:block/lifeessencestill");
 						public static final ResourceLocation FLUID_FLOWING = new ResourceLocation("bloodmagic:block/lifeessenceflowing");
 
@@ -173,31 +171,6 @@ public class BloodMagicBlocks
 						public ResourceLocation getFlowingTexture()
 						{
 							return FLUID_FLOWING;
-						}
-
-						@Nullable
-						@Override
-						public ResourceLocation getOverlayTexture()
-						{
-							return WATER_OVERLAY;
-						}
-
-						@Override
-						public ResourceLocation getRenderOverlayTexture(Minecraft mc)
-						{
-							return UNDERWATER_LOCATION;
-						}
-
-						@Override
-						public int getTintColor()
-						{
-							return 0xFF3F76E4;
-						}
-
-						@Override
-						public int getTintColor(FluidState state, BlockAndTintGetter getter, BlockPos pos)
-						{
-							return BiomeColors.getAverageWaterColor(getter, pos) | 0xFF000000;
 						}
 					});
 				}
