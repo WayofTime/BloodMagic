@@ -50,13 +50,13 @@ public class AlchemyArrayCraftingCategory implements IRecipeCategory<RecipeAlche
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeAlchemyArray recipe, IFocusGroup focuses) {
-        IRecipeSlotBuilder output = builder.addSlot(RecipeIngredientRole.OUTPUT, 73, 5);
+        IRecipeSlotBuilder output = builder.addSlot(RecipeIngredientRole.OUTPUT, 74, 6);
         output.addItemStack(recipe.getOutput());
 
-        IRecipeSlotBuilder catalyst = builder.addSlot(RecipeIngredientRole.CATALYST, 29, 3);
+        IRecipeSlotBuilder catalyst = builder.addSlot(RecipeIngredientRole.INPUT, 30, 4);
         catalyst.addIngredients(recipe.getAddedInput());
 
-        IRecipeSlotBuilder input = builder.addSlot(RecipeIngredientRole.INPUT, 0, 5);
+        IRecipeSlotBuilder input = builder.addSlot(RecipeIngredientRole.INPUT, 1, 6);
         input.addIngredients(recipe.getBaseInput());
     }
 

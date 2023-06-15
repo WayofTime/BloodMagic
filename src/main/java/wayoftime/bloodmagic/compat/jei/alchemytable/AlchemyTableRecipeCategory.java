@@ -69,18 +69,17 @@ public class AlchemyTableRecipeCategory implements IRecipeCategory<RecipeAlchemy
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeAlchemyTable recipe, IFocusGroup focuses) {
-        IRecipeSlotBuilder output = builder.addSlot(RecipeIngredientRole.OUTPUT, 91, 13);
+        IRecipeSlotBuilder output = builder.addSlot(RecipeIngredientRole.OUTPUT, 92, 14);
         output.addItemStack(recipe.getOutput());
 
-        IRecipeSlotBuilder orb = builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 91, 13);
+        IRecipeSlotBuilder orb = builder.addSlot(RecipeIngredientRole.CATALYST, 61, 1);
         orb.addItemStacks(OrbRegistry.getOrbsDownToTier(recipe.getMinimumTier()));
 
-        for (int y = 0; y < 2; ++y) {
-            for (int x = 0; x < 3; ++x) {
-                int index = x + (y * 3);
-                IRecipeSlotBuilder input = builder.addSlot(RecipeIngredientRole.INPUT, x * 18, y * 18);
-                input.addIngredients(recipe.getInput().get(index));
-            }
+        for (int index = 0; index < recipe.getInput().size(); index++) {
+            int x = index % 3;
+            int y = index / 3;
+            IRecipeSlotBuilder input = builder.addSlot(RecipeIngredientRole.INPUT, x * 18 + 1, y * 18 + 1);
+            input.addIngredients(recipe.getInput().get(index));
         }
     }
 

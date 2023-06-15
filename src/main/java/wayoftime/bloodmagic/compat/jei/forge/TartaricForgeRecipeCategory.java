@@ -76,18 +76,17 @@ public class TartaricForgeRecipeCategory implements IRecipeCategory<RecipeTartar
                 validGems.add(will.willStack);
             }
         }
-        IRecipeSlotBuilder gems = builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 42, 0);
+        IRecipeSlotBuilder gems = builder.addSlot(RecipeIngredientRole.CATALYST, 43, 1);
         gems.addItemStacks(validGems);
 
-        IRecipeSlotBuilder output = builder.addSlot(RecipeIngredientRole.OUTPUT, 73, 13);
+        IRecipeSlotBuilder output = builder.addSlot(RecipeIngredientRole.OUTPUT, 74, 14);
         output.addItemStack(recipe.getOutput());
 
-        for (int y = 0; y < 2; ++y) {
-            for (int x = 0; x < 2; ++x) {
-                int index = x + (y * 2);
-                IRecipeSlotBuilder input = builder.addSlot(RecipeIngredientRole.INPUT, x * 18, y * 18);
-                input.addIngredients(recipe.getInput().get(index));
-            }
+        for (int index = 0; index < recipe.getInput().size(); index++) {
+           int x = index % 2 ;
+           int y = index / 2;
+            IRecipeSlotBuilder input = builder.addSlot(RecipeIngredientRole.INPUT, x * 18 + 1, y * 18 + 1);
+            input.addIngredients(recipe.getInput().get(index));
         }
 
     }

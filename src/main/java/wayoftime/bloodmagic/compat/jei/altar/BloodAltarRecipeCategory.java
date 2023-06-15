@@ -72,10 +72,10 @@ public class BloodAltarRecipeCategory implements IRecipeCategory<RecipeBloodAlta
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeBloodAltar recipe, IFocusGroup focuses) {
-        IRecipeSlotBuilder output = builder.addSlot(RecipeIngredientRole.OUTPUT, 125, 30);
+        IRecipeSlotBuilder output = builder.addSlot(RecipeIngredientRole.OUTPUT, 126, 31);
         output.addItemStack(recipe.getOutput());
 
-        IRecipeSlotBuilder input = builder.addSlot(RecipeIngredientRole.INPUT, 31, 0);
+        IRecipeSlotBuilder input = builder.addSlot(RecipeIngredientRole.INPUT, 32, 1);
         input.addIngredients(recipe.getInput());
     }
 
