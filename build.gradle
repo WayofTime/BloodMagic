@@ -19,7 +19,7 @@ apply plugin: 'maven-publish'
 //apply from: 'https://raw.githubusercontent.com/SizableShrimp/ForgeUpdatesRemapper/main/remapper.gradle'
 
 version = '1.19.2-3.2.6-41'
-group = 'com.yourname.modid' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = 'wayoftime.bloodmagic' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'BloodMagic'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
