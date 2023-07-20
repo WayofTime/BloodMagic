@@ -1,15 +1,10 @@
 package wayoftime.bloodmagic.common.block;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -17,7 +12,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.common.SoundActions;
@@ -27,7 +21,6 @@ import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import org.jetbrains.annotations.Nullable;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.block.enums.BloodRuneType;
@@ -47,7 +40,6 @@ public class BloodMagicBlocks
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BloodMagic.MODID);
 	public static final DeferredRegister<Block> BASICBLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BloodMagic.MODID);
 	public static final DeferredRegister<Block> DUNGEONBLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BloodMagic.MODID);
-	public static final DeferredRegister<Item> ITEMS = BloodMagicItems.ITEMS;
 	public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, BloodMagic.MODID);
 	public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, BloodMagic.MODID);
 	public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, BloodMagic.MODID);
@@ -132,13 +124,13 @@ public class BloodMagicBlocks
 	{
 		return new ForgeFlowingFluid.Properties(LIFE_ESSENCE_FLUID_TYPE, LIFE_ESSENCE_FLUID, LIFE_ESSENCE_FLUID_FLOWING)
 				.block(LIFE_ESSENCE_BLOCK)
-				.bucket(LIFE_ESSENCE_BUCKET);
+				.bucket(BloodMagicItems.LIFE_ESSENCE_BUCKET);
 	}
 	private static ForgeFlowingFluid.Properties makeDoubtProperties()
 	{
 		return new ForgeFlowingFluid.Properties(DOUBT_FLUID_TYPE, DOUBT_FLUID, DOUBT_FLUID_FLOWING)
 				.block(DOUBT_BLOCK)
-				.bucket(DOUBT_BUCKET);
+				.bucket(BloodMagicItems.DOUBT_BUCKET);
 	}
 	public static final RegistryObject<FluidType> LIFE_ESSENCE_FLUID_TYPE = FLUID_TYPES.register("life_essence_fluid_type", () ->
 			new FluidType(FluidType.Properties.create()
@@ -222,8 +214,6 @@ public class BloodMagicBlocks
 			new ForgeFlowingFluid.Flowing(makeDoubtProperties()));
 	public static final RegistryObject<LiquidBlock> LIFE_ESSENCE_BLOCK = BLOCKS.register("life_essence_block", () -> new LiquidBlock(LIFE_ESSENCE_FLUID, BlockBehaviour.Properties.copy(Blocks.WATER)));
 	public static final RegistryObject<LiquidBlock> DOUBT_BLOCK = BLOCKS.register("doubt_block", () -> new LiquidBlock(DOUBT_FLUID, BlockBehaviour.Properties.copy(Blocks.WATER)));
-	public static final RegistryObject<Item> LIFE_ESSENCE_BUCKET = ITEMS.register("life_essence_bucket", () -> new BucketItem(LIFE_ESSENCE_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(BloodMagic.TAB)));
-	public static final RegistryObject<Item> DOUBT_BUCKET = ITEMS.register("doubt_bucket", () -> new BucketItem(DOUBT_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(BloodMagic.TAB)));
 
 	// TODO: Move these to a dedicated class?
 	public static final RegistryObject<MenuType<ContainerSoulForge>> SOUL_FORGE_CONTAINER = CONTAINERS.register("soul_forge_container", () -> IForgeMenuType.create(ContainerSoulForge::new));

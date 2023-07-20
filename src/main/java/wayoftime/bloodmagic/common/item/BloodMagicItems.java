@@ -2,9 +2,7 @@ package wayoftime.bloodmagic.common.item;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.RecordItem;
+import net.minecraft.world.item.*;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -192,6 +190,8 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> TELEPOSER_FOCUS = BASICITEMS.register("teleposerfocus", () -> new ItemTeleposerFocus(0));
 	public static final RegistryObject<Item> ENHANCED_TELEPOSER_FOCUS = BASICITEMS.register("enhancedteleposerfocus", () -> new ItemTeleposerFocus(1));
 	public static final RegistryObject<Item> REINFORCED_TELEPOSER_FOCUS = BASICITEMS.register("reinforcedteleposerfocus", () -> new ItemTeleposerFocus(2));
+	public static final RegistryObject<Item> LIFE_ESSENCE_BUCKET = ITEMS.register("life_essence_bucket", () -> new BucketItem(BloodMagicBlocks.LIFE_ESSENCE_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(BloodMagic.TAB)));
+	public static final RegistryObject<Item> DOUBT_BUCKET = ITEMS.register("doubt_bucket", () -> new BucketItem(BloodMagicBlocks.DOUBT_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(BloodMagic.TAB)));
 
 	// Ritual stuffs
 	public static final RegistryObject<Item> WEAK_ACTIVATION_CRYSTAL = BASICITEMS.register("activationcrystalweak", () -> new ItemActivationCrystal(ItemActivationCrystal.CrystalType.WEAK));

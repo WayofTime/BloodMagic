@@ -665,7 +665,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.SUPPRESSION_SIGIL, "Sigil of Suppression");
 		addItem(BloodMagicItems.TELEPOSITION_SIGIL, "Teleposition Sigil");
 
-		addItem(BloodMagicBlocks.LIFE_ESSENCE_BUCKET, "Bucket of Life");
+		addItem(BloodMagicItems.LIFE_ESSENCE_BUCKET, "Bucket of Life");
 		addItem(BloodMagicItems.ARCANE_ASHES, "Arcane Ashes");
 		addItem(BloodMagicItems.SLATE, "Blank Slate");
 		addItem(BloodMagicItems.REINFORCED_SLATE, "Reinforced Slate");
