@@ -20,7 +20,7 @@ public class ItemSigilBase extends ItemSigil
 
 	public ItemSigilBase(String name, int lpUsed)
 	{
-		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB), lpUsed);
+		super(new Item.Properties().stacksTo(1), lpUsed);
 //		super(lpUsed);
 
 //		this.name = name;

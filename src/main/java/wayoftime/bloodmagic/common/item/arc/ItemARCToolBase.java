@@ -37,7 +37,7 @@ public class ItemARCToolBase extends Item implements IARCTool
 
 	public ItemARCToolBase(int maxDamage, double craftingMultiplier, double additionalOutputChance, EnumDemonWillType type)
 	{
-		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB).durability(maxDamage));
+		super(new Item.Properties().stacksTo(1).durability(maxDamage));
 		this.craftingMultiplier = craftingMultiplier;
 		this.additionalOutputChance = additionalOutputChance;
 		this.dominantWillType = type;

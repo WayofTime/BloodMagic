@@ -31,7 +31,7 @@ public class ItemLivingTome extends Item implements ILivingContainer, ILivingUpg
 
 	public ItemLivingTome()
 	{
-		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1));
 	}
 
 	@Override

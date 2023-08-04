@@ -25,7 +25,7 @@ public class ItemArcaneAshes extends Item
 {
 	public ItemArcaneAshes()
 	{
-		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB).durability(20));
+		super(new Item.Properties().stacksTo(1).durability(20));
 	}
 
 	@Override

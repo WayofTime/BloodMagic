@@ -43,6 +43,7 @@ import wayoftime.bloodmagic.common.item.BloodOrb;
 import wayoftime.bloodmagic.common.loot.BloodMagicLootFunctionManager;
 import wayoftime.bloodmagic.common.loot.BloodMagicLootTypeManager;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
+import wayoftime.bloodmagic.common.registries.BloodMagicCreativeTabs;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 import wayoftime.bloodmagic.common.tile.BloodMagicTileEntities;
@@ -78,15 +79,8 @@ public class BloodMagic {
     public static final RitualManager RITUAL_MANAGER = new RitualManager();
     public static final CuriosCompat curiosCompat = new CuriosCompat();
     // Custom ItemGroup TAB
-    public static final CreativeModeTab TAB = new CreativeModeTab("bloodmagictab") {
-        @Override
-        public ItemStack makeIcon() {
-            return new ItemStack(BloodMagicBlocks.BLOOD_ALTAR.get());
-        }
-    };
     public static final String NAME = "Blood Magic: Alchemical Wizardry";
     public static Boolean curiosLoaded;
-    private static final Gson GSON = null;
 
     public BloodMagic() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -94,20 +88,12 @@ public class BloodMagic {
         modBus.addListener(this::setup);
         modBus.addListener(this::onLoadComplete);
 
-//		BloodMagicItems.BLOOD_ORBS.register(modBus);
-//		LivingArmorRegistrar.UPGRADES.register(modBus);
-//		AnointmentRegistrar.ANOINTMENTS.register(modBus);
         BloodMagicItems.BLOOD_ORBS.createAndRegister(modBus, BloodOrb.class);
         LivingArmorRegistrar.UPGRADES.createAndRegister(modBus, LivingUpgrade.class);
         AnointmentRegistrar.ANOINTMENTS.createAndRegister(modBus, Anointment.class);
 
         BloodMagicBlocks.BLOCKS.register(modBus);
         BloodMagicItems.ITEMS.register(modBus);
-
-//		RegistrarBloodMagic.BLOOD_ORBS.createAndRegister(modBus, "bloodorbs");
-//		BloodMagicItems.BLOOD_ORBS.createAndRegister(modBus, "bloodorbs");
-//		LivingArmorRegistrar.UPGRADES.createAndRegister(modBus, "upgrades");
-//		AnointmentRegistrar.ANOINTMENTS.createAndRegister(modBus, "anointments");
 
         BloodMagicItems.BASICITEMS.register(modBus);
         BloodMagicBlocks.BASICBLOCKS.register(modBus);
@@ -125,6 +111,7 @@ public class BloodMagic {
         BloodMagicRecipeSerializers.RECIPE_SERIALIZERS.register(modBus);
         BloodMagicRecipeType.RECIPE_TYPES.register(modBus);
         BloodMagicPotions.MOB_EFFECTS.register(modBus);
+        BloodMagicCreativeTabs.CREATIVE_TABS.register(modBus);
 
         // Register the setup method for modloading
         modBus.addListener(this::setup);

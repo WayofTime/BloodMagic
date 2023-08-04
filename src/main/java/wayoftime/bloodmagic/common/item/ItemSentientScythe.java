@@ -82,7 +82,7 @@ public class ItemSentientScythe extends HoeItem implements IDemonWillWeapon, IMu
 
 	public ItemSentientScythe()
 	{
-		super(BMItemTier.SENTIENT, (int) baseAttackDamage, (float) baseAttackSpeed, new Item.Properties().durability(520).tab(BloodMagic.TAB));
+		super(BMItemTier.SENTIENT, (int) baseAttackDamage, (float) baseAttackSpeed, new Item.Properties().durability(520));
 //		super(RegistrarBloodMagicItems.SOUL_TOOL_MATERIAL, 8.0F, 3.1F);
 	}
 

@@ -29,7 +29,7 @@ public class ItemAlchemyFlask extends Item
 {
 	public ItemAlchemyFlask()
 	{
-		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB).durability(8));
+		super(new Item.Properties().stacksTo(1).durability(8));
 	}
 
 	@OnlyIn(Dist.CLIENT)

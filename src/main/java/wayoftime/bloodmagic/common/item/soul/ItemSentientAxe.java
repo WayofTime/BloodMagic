@@ -74,7 +74,7 @@ public class ItemSentientAxe extends AxeItem implements IDemonWillWeapon, IMulti
 
 	public ItemSentientAxe()
 	{
-		super(BMItemTier.SENTIENT, 8, -3.1f, new Item.Properties().durability(520).tab(BloodMagic.TAB));
+		super(BMItemTier.SENTIENT, 8, -3.1f, new Item.Properties().durability(520));
 //		super(RegistrarBloodMagicItems.SOUL_TOOL_MATERIAL, 8.0F, 3.1F);
 	}
 

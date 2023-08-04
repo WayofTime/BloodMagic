@@ -32,7 +32,7 @@ public class ItemAnointmentProvider extends Item
 
 	public ItemAnointmentProvider(ResourceLocation anointRL, int colour, int level, int maxDamage)
 	{
-		super(new Item.Properties().stacksTo(16).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(16));
 		this.anointRL = anointRL;
 		this.colour = colour;
 		this.level = level;

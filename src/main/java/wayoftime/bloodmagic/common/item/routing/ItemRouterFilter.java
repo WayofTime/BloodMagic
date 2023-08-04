@@ -45,7 +45,7 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 
 	public ItemRouterFilter()
 	{
-		super(new Item.Properties().stacksTo(16).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(16));
 	}
 
 	@Override

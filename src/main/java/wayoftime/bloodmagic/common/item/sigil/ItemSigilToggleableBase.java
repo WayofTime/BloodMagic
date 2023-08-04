@@ -19,7 +19,7 @@ public class ItemSigilToggleableBase extends ItemSigilToggleable// implements IM
 
 	public ItemSigilToggleableBase(String name, int lpUsed)
 	{
-		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB), lpUsed);
+		super(new Item.Properties().stacksTo(1), lpUsed);
 
 		this.name = name;
 		this.tooltipBase = "tooltip.bloodmagic.sigil." + name + ".";

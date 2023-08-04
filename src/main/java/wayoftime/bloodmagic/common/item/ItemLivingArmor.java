@@ -38,7 +38,7 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 
 	public ItemLivingArmor(EquipmentSlot slot)
 	{
-		super(ArmorMaterialLiving.INSTANCE, slot, new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
+		super(ArmorMaterialLiving.INSTANCE, slot, new Item.Properties().stacksTo(1));
 	}
 
 	@Override

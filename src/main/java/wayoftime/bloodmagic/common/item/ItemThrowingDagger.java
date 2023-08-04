@@ -24,7 +24,7 @@ public class ItemThrowingDagger extends Item
 {
 	public ItemThrowingDagger()
 	{
-		super(new Item.Properties().stacksTo(64).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(64));
 	}
 
 	@Override

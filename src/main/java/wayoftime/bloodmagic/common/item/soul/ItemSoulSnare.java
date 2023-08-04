@@ -25,7 +25,7 @@ public class ItemSoulSnare extends Item
 
 	public ItemSoulSnare()
 	{
-		super(new Item.Properties().stacksTo(16).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(16));
 
 //		setTranslationKey(BloodMagic.MODID + ".soulSnare.");
 //		setCreativeTab(BloodMagic.TAB_BM);

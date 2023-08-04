@@ -36,7 +36,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 
 	public ItemSoulGem(String name, int maxWill)
 	{
-		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1));
 		this.name = name;
 		this.maxWill = maxWill;
 	}

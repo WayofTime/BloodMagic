@@ -39,7 +39,7 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, MenuPro
 
 	public ItemLivingTrainer()
 	{
-		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1));
 	}
 
 	@Override

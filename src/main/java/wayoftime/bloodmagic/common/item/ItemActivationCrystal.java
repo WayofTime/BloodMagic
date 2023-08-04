@@ -21,7 +21,7 @@ public class ItemActivationCrystal extends Item implements IBindable
 
 	public ItemActivationCrystal(CrystalType type)
 	{
-		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1));
 		this.type = type;
 	}
 

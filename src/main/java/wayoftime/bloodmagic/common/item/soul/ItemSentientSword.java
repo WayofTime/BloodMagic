@@ -70,7 +70,7 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 	public ItemSentientSword()
 	{
 //		super(RegistrarBloodMagicItems.SOUL_TOOL_MATERIAL);
-		super(BMItemTier.SENTIENT, 6, -2.6f, new Item.Properties().durability(520).tab(BloodMagic.TAB));
+		super(BMItemTier.SENTIENT, 6, -2.6f, new Item.Properties().durability(520));
 	}
 
 	@Override

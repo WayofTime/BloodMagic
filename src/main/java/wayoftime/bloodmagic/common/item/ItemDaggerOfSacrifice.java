@@ -21,7 +21,7 @@ public class ItemDaggerOfSacrifice extends Item
 {
 	public ItemDaggerOfSacrifice()
 	{
-		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1));
 	}
 
 	@Override

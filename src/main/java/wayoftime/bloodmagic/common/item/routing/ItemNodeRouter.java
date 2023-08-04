@@ -28,7 +28,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 {
 	public ItemNodeRouter()
 	{
-		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1));
 	}
 
 	@Override

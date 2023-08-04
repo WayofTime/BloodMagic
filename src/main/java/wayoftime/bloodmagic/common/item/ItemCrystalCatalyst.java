@@ -34,7 +34,7 @@ public class ItemCrystalCatalyst extends Item
 
 	public ItemCrystalCatalyst(EnumDemonWillType type, double injectedWill, double speedModifier, double conversionRate, double maxInjectedWill)
 	{
-		super(new Item.Properties().tab(BloodMagic.TAB));
+		super(new Item.Properties());
 		this.type = type;
 		this.injectedWill = injectedWill;
 		this.speedModifier = speedModifier;

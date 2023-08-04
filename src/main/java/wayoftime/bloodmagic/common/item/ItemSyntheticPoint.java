@@ -16,7 +16,7 @@ public class ItemSyntheticPoint extends Item implements ILivingUpgradePointsProv
 {
 	public ItemSyntheticPoint()
 	{
-		super(new Item.Properties().tab(BloodMagic.TAB));
+		super(new Item.Properties());
 	}
 
 	@Override

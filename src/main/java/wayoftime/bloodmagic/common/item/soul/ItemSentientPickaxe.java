@@ -74,7 +74,7 @@ public class ItemSentientPickaxe extends PickaxeItem implements IDemonWillWeapon
 
 	public ItemSentientPickaxe()
 	{
-		super(BMItemTier.SENTIENT, (int) baseAttackDamage, (float) baseAttackSpeed, new Item.Properties().durability(520).tab(BloodMagic.TAB));
+		super(BMItemTier.SENTIENT, (int) baseAttackDamage, (float) baseAttackSpeed, new Item.Properties().durability(520));
 	}
 
 	@Override

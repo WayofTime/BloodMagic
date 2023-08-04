@@ -33,7 +33,7 @@ public class ItemBase extends Item
 
 	public ItemBase(int stackSize, String desc)
 	{
-		super(new Item.Properties().stacksTo(stackSize).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(stackSize));
 		this.desc = desc;
 	}
 

@@ -17,7 +17,7 @@ public class ItemBasicNodeUpgrade extends Item implements IRouterUpgrade
 {
 	public ItemBasicNodeUpgrade()
 	{
-		super(new Item.Properties().stacksTo(16).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(16));
 	}
 
 	@Override

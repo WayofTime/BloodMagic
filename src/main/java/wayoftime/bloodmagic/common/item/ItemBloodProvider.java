@@ -28,7 +28,7 @@ public class ItemBloodProvider extends Item
 
 	public ItemBloodProvider(String name, int lpProvided)
 	{
-		super(new Item.Properties().stacksTo(64).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(64));
 
 		this.tooltipBase = "tooltip.bloodmagic.blood_provider." + name + ".";
 		this.lpProvided = lpProvided;
