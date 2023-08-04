@@ -18,7 +18,7 @@ apply plugin: 'maven-publish'
 //useful for automate update from one version to another ; might need to delete it
 //apply from: 'https://raw.githubusercontent.com/SizableShrimp/ForgeUpdatesRemapper/main/remapper.gradle'
 
-version = '1.19.2-3.2.6-41'
+version = '1.19.2-3.3.0-42'
 group = 'wayoftime.bloodmagic' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'BloodMagic'
 
