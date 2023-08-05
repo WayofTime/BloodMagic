@@ -1,11 +1,11 @@
 package wayoftime.bloodmagic.common.data;
 
-import java.nio.file.Path;
+import java.util.concurrent.CompletableFuture;
 
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BlockTagsProvider;
-import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -15,15 +15,15 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 
-public class GeneratorItemTags extends ItemTagsProvider
+public class GeneratorItemTags extends IntrinsicHolderTagsProvider<Item>
 {
-	public GeneratorItemTags(DataGenerator dataGenerator, BlockTagsProvider blockTagProvider, ExistingFileHelper existingFileHelper)
+	public GeneratorItemTags(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper)
 	{
-		super(dataGenerator, blockTagProvider, BloodMagic.MODID, existingFileHelper);
+		super(output, Registries.ITEM, future, block -> block.builtInRegistryHolder().key(), BloodMagic.MODID, helper);
 	}
 
 	@Override
-	public void addTags()
+	public void addTags(HolderLookup.Provider provider)
 	{
 		registerIngots();
 		registerRaw();
@@ -60,8 +60,8 @@ public class GeneratorItemTags extends ItemTagsProvider
 		this.tag(BloodMagicTags.CRYSTAL_DEMON).add(BloodMagicItems.VENGEFUL_CRYSTAL.get());
 		this.tag(BloodMagicTags.CRYSTAL_DEMON).add(BloodMagicItems.STEADFAST_CRYSTAL.get());
 
-		this.copy(BloodMagicTags.Blocks.MUSHROOM_STEM, BloodMagicTags.MUSHROOM_STEM);
-		this.copy(BloodMagicTags.Blocks.MUSHROOM_HYPHAE, BloodMagicTags.MUSHROOM_HYPHAE);
+//		this.copy(BloodMagicTags.Blocks.MUSHROOM_STEM, BloodMagicTags.MUSHROOM_STEM); // FIXME
+//		this.copy(BloodMagicTags.Blocks.MUSHROOM_HYPHAE, BloodMagicTags.MUSHROOM_HYPHAE);
 
 //		this.tag(GOORESISTANT).addTag(BlockTags.DOORS);
 //		this.tag(GOORESISTANT).addTag(BlockTags.BEDS);

@@ -1,7 +1,9 @@
 package wayoftime.bloodmagic;
 
 import com.google.gson.Gson;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -68,6 +70,8 @@ import wayoftime.bloodmagic.structures.ModDungeons;
 import wayoftime.bloodmagic.structures.ModRoomPools;
 import wayoftime.bloodmagic.util.handler.event.GenericHandler;
 import wayoftime.bloodmagic.util.handler.event.WillHandler;
+
+import java.util.concurrent.CompletableFuture;
 
 @Mod("bloodmagic")
 //@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -208,27 +212,24 @@ public class BloodMagic {
 
     @SubscribeEvent
     public void gatherData(GatherDataEvent event) {
-//		GSON = new GsonBuilder().registerTypeAdapter(Variant.class, new Variant.Deserializer()).registerTypeAdapter(ItemCameraTransforms.class, new ItemCameraTransforms.Deserializer()).registerTypeAdapter(ItemTransformVec3f.class, new ItemTransformVec3f.Deserializer()).create();
 
         DataGenerator gen = event.getGenerator();
 
-//        if(event.includeClient())
-        {
-            ItemModelProvider itemModels = new GeneratorItemModels(gen, event.getExistingFileHelper());
-            gen.addProvider(event.includeServer(), itemModels);
-            gen.addProvider(event.includeServer(), new GeneratorBlockStates(gen, itemModels.existingFileHelper));
-            gen.addProvider(event.includeServer(), new GeneratorLanguage(gen));
-            gen.addProvider(event.includeServer(), new BloodMagicRecipeProvider(gen));
-            gen.addProvider(event.includeServer(), new GeneratorBaseRecipes(gen));
-            gen.addProvider(event.includeServer(), new GeneratorLootTable(gen));
-            gen.addProvider(event.includeServer(), new DungeonRoomProvider(gen));
+        ItemModelProvider itemModels = new GeneratorItemModels(gen, event.getExistingFileHelper());
+        gen.addProvider(event.includeServer(), itemModels);
+        gen.addProvider(event.includeServer(), new GeneratorBlockStates(gen, itemModels.existingFileHelper));
+        gen.addProvider(event.includeServer(), new GeneratorLanguage(gen));
+        gen.addProvider(event.includeServer(), new BloodMagicRecipeProvider(gen));
+        gen.addProvider(event.includeServer(), new GeneratorBaseRecipes(gen));
+        gen.addProvider(event.includeServer(), new GeneratorLootTable(gen));
+        gen.addProvider(event.includeServer(), new DungeonRoomProvider(gen));
 
-            GeneratorBlockTags bmBlockTags = new GeneratorBlockTags(gen, event.getExistingFileHelper());
-            gen.addProvider(event.includeServer(), bmBlockTags);
-            gen.addProvider(event.includeServer(), new GeneratorItemTags(gen, bmBlockTags, event.getExistingFileHelper()));
-            gen.addProvider(event.includeServer(), new GeneratorFluidTags(gen, event.getExistingFileHelper()));
+        PackOutput output = event.getGenerator().getPackOutput();
+        CompletableFuture<HolderLookup.Provider> provider = event.getLookupProvider();
+        gen.addProvider(event.includeServer(), new GeneratorBlockTags(output, provider, event.getExistingFileHelper()));
+        gen.addProvider(event.includeServer(), new GeneratorItemTags(output, provider, event.getExistingFileHelper()));
+        gen.addProvider(event.includeServer(), new GeneratorFluidTags(output, provider, event.getExistingFileHelper()));
 
-        }
     }
 
     private void loadModels(final RegisterGeometryLoaders event) {
