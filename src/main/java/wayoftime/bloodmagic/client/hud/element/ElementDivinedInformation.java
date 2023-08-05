@@ -3,10 +3,14 @@ package wayoftime.bloodmagic.client.hud.element;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.InteractionHand;
+import net.minecraftforge.items.IItemHandler;
+import top.theillusivec4.curios.api.CuriosApi;
+import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.item.sigil.ItemSigilHolding;
 
@@ -25,39 +29,31 @@ public abstract class ElementDivinedInformation<T extends BlockEntity> extends E
 	public boolean shouldRender(Minecraft minecraft)
 	{
 		Player player = Minecraft.getInstance().player;
-		ItemStack sigilStack = player.getItemInHand(InteractionHand.MAIN_HAND);
+
+		NonNullList<ItemStack> inventory = NonNullList.create();
+		if (BloodMagic.curiosLoaded)
+		{
+			IItemHandler curioSlots = CuriosApi.getCuriosHelper().getEquippedCurios(player).resolve().get();
+			for (int i = 0; i < curioSlots.getSlots(); i++)
+			{
+				inventory.add(curioSlots.getStackInSlot(i));
+			}
+		}
+
+		inventory.add(player.getItemInHand(InteractionHand.MAIN_HAND));
+		inventory.add(player.getItemInHand(InteractionHand.OFF_HAND));
+
 		boolean flag = false;
-		if (simple)
+		for (int i = 0; i < inventory.size(); i++)
 		{
-			if (sigilStack.getItem() == BloodMagicItems.DIVINATION_SIGIL.get() || sigilStack.getItem() == BloodMagicItems.SEER_SIGIL.get())
+			ItemStack sigilStack = inventory.get(i);
+			if ((sigilStack.getItem() == BloodMagicItems.DIVINATION_SIGIL.get() && simple) || sigilStack.getItem() == BloodMagicItems.SEER_SIGIL.get())
 				flag = true;
 			else
-				flag = isFlagSigilHolding(sigilStack, true);
+				flag = isFlagSigilHolding(sigilStack, simple);
 
-			if (!flag)
-			{
-				sigilStack = player.getItemInHand(InteractionHand.OFF_HAND);
-				if (sigilStack.getItem() == BloodMagicItems.DIVINATION_SIGIL.get() || sigilStack.getItem() == BloodMagicItems.SEER_SIGIL.get())
-					flag = true;
-				else
-					flag = isFlagSigilHolding(sigilStack, true);
-			}
-
-		} else
-		{
-			if (sigilStack.getItem() == BloodMagicItems.SEER_SIGIL.get())
-				flag = true;
-			else
-				flag = isFlagSigilHolding(sigilStack, false);
-
-			if (!flag)
-			{
-				sigilStack = player.getItemInHand(InteractionHand.OFF_HAND);
-				if (sigilStack.getItem() == BloodMagicItems.SEER_SIGIL.get())
-					flag = true;
-				else
-					flag = isFlagSigilHolding(sigilStack, false);
-			}
+			if (flag)
+				break;
 		}
 
 		return super.shouldRender(minecraft) && flag;
