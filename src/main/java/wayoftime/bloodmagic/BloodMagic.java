@@ -248,7 +248,6 @@ public class BloodMagic {
         curiosLoaded = ModList.get().isLoaded("curios");
     }
 
-    //	@OnlyIn(Dist.CLIENT)
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
 //		LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
@@ -273,12 +272,6 @@ public class BloodMagic {
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {
-        // some example code to dispatch IMC to another mod
-//		InterModComms.sendTo("examplemod", "helloworld", () -> {
-//			LOGGER.info("Hello world from the MDK");
-//			return "Hello world";
-//		});
-
         if (curiosLoaded) {
             curiosCompat.setupSlots(event);
         }
@@ -287,22 +280,5 @@ public class BloodMagic {
     private void processIMC(final InterModProcessEvent event) {
         // some example code to receive and process InterModComms from other mods
 //		LOGGER.info("Got IMC {}", event.getIMCStream().map(m -> m.getMessageSupplier().get()).collect(Collectors.toList()));
-    }
-
-    // You can use EventBusSubscriber to automatically subscribe events on the
-    // contained class (this is subscribing to the MOD
-    // Event bus for receiving Registry Events)
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents {
-//		@SubscribeEvent
-//		public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent)
-//		{
-        // register a new block here
-//			LOGGER.info("HELLO from Register Block");
-//		}
-
-        public static void onRecipeTypeRegister() {
-
-        }
     }
 }
