@@ -30,9 +30,8 @@ public abstract class ElementDivinedInformation<T extends BlockEntity> extends E
 		NonNullList<ItemStack> inventory = InventoryHelper.getActiveInventories(player);
 
 		boolean flag = false;
-		for (int i = 0; i < inventory.size(); i++)
+		for (ItemStack sigilStack : inventory)
 		{
-			ItemStack sigilStack = inventory.get(i);
 			if ((sigilStack.getItem() == BloodMagicItems.DIVINATION_SIGIL.get() && simple) || sigilStack.getItem() == BloodMagicItems.SEER_SIGIL.get())
 				flag = true;
 			else
@@ -53,7 +52,7 @@ public abstract class ElementDivinedInformation<T extends BlockEntity> extends E
 			int currentSlot = ItemSigilHolding.getCurrentItemOrdinal(sigilStack);
 			if (internalInv != null && !internalInv.get(currentSlot).isEmpty())
 			{
-				return (internalInv.get(currentSlot).getItem() == BloodMagicItems.SEER_SIGIL.get() && !simple) || (internalInv.get(currentSlot).getItem() == BloodMagicItems.DIVINATION_SIGIL.get() && simple);
+				return (internalInv.get(currentSlot).getItem() == BloodMagicItems.SEER_SIGIL.get()) || (internalInv.get(currentSlot).getItem() == BloodMagicItems.DIVINATION_SIGIL.get() && simple);
 			}
 		}
 		return false;
