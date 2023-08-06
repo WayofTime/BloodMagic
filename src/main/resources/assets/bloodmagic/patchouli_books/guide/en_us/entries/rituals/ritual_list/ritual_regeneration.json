@@ -19,6 +19,11 @@
       "page_type": "corrosive"
     },
     {
+      "type": "bloodmagic:ritual_ranges",
+      "ritual": "regeneration",
+      "ranges": ["*"]
+    },
+    {
       "type": "bloodmagic:ritual_data",
       "ritual": "regeneration",
       "page_type": "heal"

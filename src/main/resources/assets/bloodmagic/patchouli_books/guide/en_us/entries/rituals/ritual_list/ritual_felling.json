@@ -14,6 +14,11 @@
       "ritual": "felling"
     },
     {
+      "type": "bloodmagic:ritual_ranges",
+      "ritual": "felling",
+      "ranges": ["*"]
+    },
+    {
       "type": "bloodmagic:ritual_data",
       "ritual": "felling",
       "page_type": "fellingRange"

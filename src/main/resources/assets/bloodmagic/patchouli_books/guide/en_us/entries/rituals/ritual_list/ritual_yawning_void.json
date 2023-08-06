@@ -36,6 +36,11 @@
       "page_type": "steadfast"
     },
     {
+      "type": "bloodmagic:ritual_ranges",
+      "ritual": "yawning_void",
+      "ranges": ["*"]
+    },
+    {
       "type": "bloodmagic:ritual_data",
       "ritual": "yawning_void",
       "page_type": "quarryRange"

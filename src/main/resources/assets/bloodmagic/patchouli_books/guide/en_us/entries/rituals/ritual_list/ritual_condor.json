@@ -14,6 +14,11 @@
       "ritual": "condor"
     },
     {
+      "type": "bloodmagic:ritual_ranges",
+      "ritual": "condor",
+      "ranges": ["*"]
+    },
+    {
       "type": "bloodmagic:ritual_data",
       "ritual": "condor",
       "page_type": "flightRange"

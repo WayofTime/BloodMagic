@@ -54,6 +54,11 @@
       ]
     },
     {
+      "type": "bloodmagic:ritual_ranges",
+      "ritual": "crushing",
+      "ranges": ["*"]
+    },
+    {
       "type": "bloodmagic:ritual_data",
       "ritual": "crushing",
       "page_type": "chest"

@@ -65,6 +65,16 @@
       "text": "A filter configured for the crafting of $(l:bloodmagic:alchemy_table/potions)Simple Catalysts$()."
     },
     {
+      "type": "bloodmagic:ritual_ranges",
+      "ritual": "crafting",
+      "ranges": ["recipeRange", "inputRange", "outputRange"]
+    },
+    {
+      "type": "bloodmagic:ritual_ranges",
+      "ritual": "crafting",
+      "ranges": ["outputFilterRange", "hellforgedRange"]
+    },
+    {
       "type": "bloodmagic:ritual_data",
       "ritual": "crafting",
       "page_type": "recipeRange",

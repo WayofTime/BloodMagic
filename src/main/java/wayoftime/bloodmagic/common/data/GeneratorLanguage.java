@@ -388,7 +388,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.fellingRitual.fellingRange.info", "(Cutting) The range that the ritual will search out logs and leaves in order to cut down.");
 		add("ritual.bloodmagic.fellingRitual.chest.info", "(Chest) The location of the inventory that the ritual will place the results into.");
 		add("ritual.bloodmagic.pumpRitual.pumpRange.info", "(Pump) The region that the ritual will look for fluids to grab from the world.");
-		add("ritual.bloodmagic.condorRitual.flightRange.info", "Players within this range will receive a Flight buff.");
+		add("ritual.bloodmagic.condorRitual.flightRange.info", "(Flight Range) Players within this range will receive a Flight buff.");
 		add("ritual.bloodmagic.downgradeRitual.info", "Consumes items from a linked chest to forcefully downgrade worn Living Armour.");
 		add("ritual.bloodmagic.groundingRitual.groundingRange.info", "(Range) Affects entities within range.");
 
@@ -503,6 +503,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("guide.bloodmagic.name", "Sanguine Scientiem");
 		add("guide.bloodmagic.landing_text", "Welcome to $(6)Blood Magic$()! $(br2)$(l:bloodmagic:utility/nyi)A lot of stuff$() isn't yet implemented, so please excuse our dust. $(br2)Click $(l:bloodmagic:utility/getting_started)HERE$() to get started. If you find any bugs, please report them on our $(l:https://github.com/WayofTime/BloodMagic/issues)Github$().");
 		add("guide.bloodmagic.subtitle", "Alchemical Wizardry");
+		add("guide.patchouli.bloodmagic.common.header", "$(bold)%s$()$(br)"); // Bold + new line
 		add("guide.patchouli.bloodmagic.common.double_new_line", "$(br2)%s");
 		add("guide.patchouli.bloodmagic.arc_processor.fluid", "%dmb of %s");
 		add("guide.patchouli.bloodmagic.arc_processor.no_fluid", "None");
@@ -515,8 +516,12 @@ public class GeneratorLanguage extends LanguageProvider
 		add("guide.patchouli.bloodmagic.ritual_info.counter_formatter", "$(br)%s%s$()");
 		add("guide.patchouli.bloodmagic.ritual_info.text_override_formatter", "\\$(%s)%s\\$()");
 		add("guide.patchouli.bloodmagic.ritual_info.info_formatter", "%s$(br)%s$(br2)%s$(br)%s%s%s");
-		add("guide.patchouli.bloodmagic.ritual_info.range_formatter", "$(br) $(li)Max Volume: %s$(li)Horizontal Radius: %s$(li)Vertical Radius: %s");
+		add("guide.patchouli.bloodmagic.ritual_info.range_formatter", "$(br) $(li)Max Volume: %s$(li)Max Horizontal Radius: %s$(li)Max Vertical Radius: %s");
 		add("guide.patchouli.bloodmagic.ritual_info.full_range", "Full Range");
+		add("guide.patchouli.bloodmagic.ritual_ranges.at_mrs", "Size: %d x %d x %d$(br)Center: at the $(l:bloodmagic:rituals/ritual_stones)Master Ritual Stone$()$(br2)");
+		add("guide.patchouli.bloodmagic.ritual_ranges.above_mrs", "Size: %d x %d x %d$(br)Center: %d above the $(l:bloodmagic:rituals/ritual_stones)Master Ritual Stone$()$(br2)");
+		add("guide.patchouli.bloodmagic.ritual_ranges.below_mrs", "Size: %d x %d x %d$(br)Center: %d below the $(l:bloodmagic:rituals/ritual_stones)Master Ritual Stone$()$(br2)");
+		add("guide.patchouli.bloodmagic.ritual_ranges.away_from_mrs", "Size: %d x %d x %d$(br)Center: (%d, %d, %d)$(br2)");
 
 		// Keybinds
 		add("bloodmagic.keybind.open_holding", "Open Sigil of Holding");
