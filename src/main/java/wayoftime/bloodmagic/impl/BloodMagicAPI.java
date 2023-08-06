@@ -1,5 +1,6 @@
 package wayoftime.bloodmagic.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +43,7 @@ public class BloodMagicAPI implements IBloodMagicAPI
 	private final BloodMagicValueManager valueManager;
 	private final Multimap<ComponentType, BlockState> altarComponents;
 	private final Map<String, Function<Player, NonNullList<ItemStack>>> inventoryProvider;
+	private final List<String> activeInventories;
 
 	@Nonnull
 	private static final Lazy<ResourceKey<? extends Registry<Anointment>>> ANOINTMENT_REGISTRY_NAME = registryKey(Anointment.class, "anointment");
@@ -57,6 +59,7 @@ public class BloodMagicAPI implements IBloodMagicAPI
 		this.valueManager = new BloodMagicValueManager();
 		this.altarComponents = ArrayListMultimap.create();
 		this.inventoryProvider = new HashMap<String, Function<Player, NonNullList<ItemStack>>>();
+		this.activeInventories = new ArrayList<String>();
 	}
 
 	// Copied from Mekanism. Again.
@@ -109,6 +112,20 @@ public class BloodMagicAPI implements IBloodMagicAPI
 	public Map<String, Function<Player, NonNullList<ItemStack>>> getInventoryProvider()
 	{
 		return inventoryProvider;
+	}
+
+	public Map<String, Function<Player, NonNullList<ItemStack>>> getActiveInventoryProvider()
+	{
+		Map<String, Function<Player, NonNullList<ItemStack>>> activeInventoryProvider = new HashMap<String, Function<Player, NonNullList<ItemStack>>>();
+
+		activeInventories.forEach(key -> activeInventoryProvider.put(key, inventoryProvider.get(key)));
+
+		return activeInventoryProvider;
+	}
+
+	public void registerActiveInventoryProvider(String inventoryIdentifier)
+	{
+		activeInventories.add(inventoryIdentifier);
 	}
 
 	@Override
