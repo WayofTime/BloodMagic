@@ -3,11 +3,11 @@ package wayoftime.bloodmagic.client.render.alchemyarray;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import com.mojang.math.Quaternion;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer.Model2D;
 import wayoftime.bloodmagic.common.tile.TileAlchemyArray;
@@ -204,12 +204,12 @@ public class NightAlchemyCircleRenderer extends AlchemyArrayRenderer
 
 		matrixStack.pushPose();
 		matrixStack.translate(0, getVerticalOffset(craftTime), 0);
-		matrixStack.mulPose(new Quaternion(Direction.UP.step(), -rotation.toYRot(), true));
+		matrixStack.mulPose(Axis.YP.rotationDegrees( -rotation.toYRot()));
 
 		matrixStack.pushPose();
 
-		matrixStack.mulPose(new Quaternion(Direction.NORTH.step(), rot, true));
-		matrixStack.mulPose(new Quaternion(Direction.UP.step(), secondaryRot, true));
+		matrixStack.mulPose(Axis.ZN.rotationDegrees( rot));
+		matrixStack.mulPose(Axis.YP.rotationDegrees( secondaryRot));
 //		matrixStack.rotate(new Quaternion(Direction.EAST.toVector3f(), secondaryRot * 0.45812f, true));
 
 		VertexConsumer twoDBuffer = renderer.getBuffer(RenderType.entityTranslucent(arrayResource));
@@ -259,13 +259,13 @@ public class NightAlchemyCircleRenderer extends AlchemyArrayRenderer
 
 		matrixStack.pushPose();
 		matrixStack.translate(0, getCentralCircleOffset(craftTime), 0);
-		matrixStack.mulPose(new Quaternion(Direction.UP.step(), -rotation.toYRot(), true));
+		matrixStack.mulPose(Axis.YP.rotationDegrees( -rotation.toYRot() ));
 
 		matrixStack.pushPose();
 
 		pitch = getCentralCirclePitch(craftTime);
-		matrixStack.mulPose(new Quaternion(Direction.WEST.step(), pitch, true));
-		matrixStack.mulPose(new Quaternion(Direction.UP.step(), -secondaryRot, true));
+		matrixStack.mulPose(Axis.XN.rotationDegrees( pitch ));
+		matrixStack.mulPose(Axis.YP.rotationDegrees( -secondaryRot ));
 //		matrixStack.rotate(new Quaternion(Direction.EAST.toVector3f(), secondaryRot * 0.45812f, true));
 
 		twoDBuffer = renderer.getBuffer(RenderType.entityTranslucent(circleResource));
@@ -291,16 +291,16 @@ public class NightAlchemyCircleRenderer extends AlchemyArrayRenderer
 
 		matrixStack.pushPose();
 		matrixStack.translate(0, getCentralCircleOffset(craftTime), 0);
-		matrixStack.mulPose(new Quaternion(Direction.UP.step(), -rotation.toYRot(), true));
-		matrixStack.mulPose(new Quaternion(Direction.SOUTH.step(), moonArc(craftTime), true));
+		matrixStack.mulPose(Axis.YP.rotationDegrees( -rotation.toYRot() ));
+		matrixStack.mulPose(Axis.ZP.rotationDegrees( moonArc(craftTime)));
 		matrixStack.translate(moonDisplacement(craftTime), 0, 0);
 
 		matrixStack.pushPose();
 
 		pitch = getSymbolPitch(craftTime);
 
-		matrixStack.mulPose(new Quaternion(Direction.WEST.step(), pitch, true));
-		matrixStack.mulPose(new Quaternion(Direction.NORTH.step(), tertiaryRot, true));
+		matrixStack.mulPose(Axis.XN.rotationDegrees( pitch ));
+		matrixStack.mulPose(Axis.ZN.rotationDegrees( tertiaryRot));
 //		matrixStack.rotate(new Quaternion(Direction.EAST.toVector3f(), secondaryRot * 0.45812f, true));
 
 		twoDBuffer = renderer.getBuffer(RenderType.entityTranslucent(symbolResource));

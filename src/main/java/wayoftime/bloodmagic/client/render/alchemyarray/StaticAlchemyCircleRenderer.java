@@ -3,12 +3,12 @@ package wayoftime.bloodmagic.client.render.alchemyarray;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import com.mojang.math.Quaternion;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer.Model2D;
 import wayoftime.bloodmagic.common.tile.TileAlchemyArray;
@@ -71,11 +71,11 @@ public class StaticAlchemyCircleRenderer extends AlchemyArrayRenderer
 
 		matrixStack.pushPose();
 		matrixStack.translate(0, getVerticalOffset(craftTime), 0);
-		matrixStack.mulPose(new Quaternion(Direction.UP.step(), -rotation.toYRot(), true));
+		matrixStack.mulPose(Axis.YP.rotationDegrees( -rotation.toYRot()));
 
 		matrixStack.pushPose();
 
-		matrixStack.mulPose(new Quaternion(Direction.NORTH.step(), rot, true));
+		matrixStack.mulPose(Axis.ZN.rotationDegrees( rot ));
 //		matrixStack.rotate(new Quaternion(Direction.NORTH.toVector3f(), secondaryRot, true));
 //		matrixStack.rotate(new Quaternion(Direction.EAST.toVector3f(), secondaryRot * 0.45812f, true));
 
