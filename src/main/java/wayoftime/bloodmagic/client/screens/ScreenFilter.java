@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.client.screens;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -81,7 +82,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 				}
 				buttonKeyList.add(pair.getKey());
 				Pair<Integer, Integer> buttonLocation = getButtonLocation(numberOfAddedButtons);
-				Button addedButton = new Button(left + buttonLocation.getLeft(), top + buttonLocation.getRight(), 20, 20, Component.literal(""), pair.getRight());
+				Button addedButton = Button.builder(Component.literal(""), pair.getRight()).pos(left + buttonLocation.getLeft(), top + buttonLocation.getRight()).size( 20, 20).build();
 
 				if (!provider.isButtonGlobal(filterStack, pair.getKey()))
 				{
@@ -264,11 +265,11 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	}
 
 	@Override
-	protected void renderLabels(PoseStack stack, int mouseX, int mouseY)
+	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY)
 	{
 //		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
-		this.font.draw(stack, Component.translatable("container.inventory"), 8, 93, 4210752);
-		this.font.draw(stack, container.filterStack.getHoverName(), 8, 4, 4210752);
+		guiGraphics.drawString(this.font, Component.translatable("container.inventory"), 8, 93, 4210752);
+		guiGraphics.drawString(this.font, container.filterStack.getHoverName(), 8, 4, 4210752);
 
 		if (container.filterStack.getItem() instanceof IItemFilterProvider)
 		{
@@ -284,18 +285,14 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 				int xl = buttonLocation.getLeft();
 				int yl = buttonLocation.getRight();
 
-				RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-				RenderSystem.setShaderTexture(0, background);
-				this.blit(stack, +xl, +yl, textureLocation.getLeft(), textureLocation.getRight(), w, h);
+				guiGraphics.blit(background, +xl, +yl, textureLocation.getLeft(), textureLocation.getRight(), w, h);
 			}
 		}
 	}
 
 	@Override
-	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY)
 	{
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		RenderSystem.setShaderTexture(0, background);
 //		int i = (this.width - this.xSize) / 2;
 //		int j = (this.height - this.ySize) / 2;
 //		this.blit(stack, i, j, 0, 0, this.xSize, this.ySize);
@@ -318,23 +315,22 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 //        this.mc.getTextureManager().bindTexture(texture);
 		int x = (width - imageWidth) / 2;
 		int y = (height - imageHeight) / 2;
-		this.blit(stack, x, y, 0, 0, imageWidth, imageHeight);
+		guiGraphics.blit(background, x, y, 0, 0, imageWidth, imageHeight);
 		ItemStack held = player.getItemInHand(InteractionHand.MAIN_HAND);
 		if (container.lastGhostSlotClicked >= 0)
 		{
 //            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-			this.blit(stack, 106 + x + 21 * (container.lastGhostSlotClicked % 3), y + 11 + 21 * (container.lastGhostSlotClicked / 3), 0, 187, 24, 24);
+			guiGraphics.blit(background, 106 + x + 21 * (container.lastGhostSlotClicked % 3), y + 11 + 21 * (container.lastGhostSlotClicked / 3), 0, 187, 24, 24);
 		}
 
 	}
 
 	@Override
-	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks)
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks)
 	{
-		super.render(matrixStack, mouseX, mouseY, partialTicks);
+		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 		{
-			this.textBox.render(matrixStack, mouseX, mouseY, partialTicks);
+			this.textBox.render(guiGraphics, mouseX, mouseY, partialTicks);
 		}
 
 		List<Component> tooltip = new ArrayList<>();
@@ -360,7 +356,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		}
 
 		if (!tooltip.isEmpty())
-			this.renderTooltip(matrixStack, tooltip, Optional.empty(), mouseX, mouseY, font);
+			guiGraphics.renderTooltip(this.font, tooltip, Optional.empty(), mouseX, mouseY);
 //			GuiUtils.drawHoveringText(matrixStack, tooltip, mouseX, mouseY, width, height, -1, font);
 	}
 

@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.client.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -48,25 +49,22 @@ public class ScreenSoulForge extends ScreenBase<ContainerSoulForge>
 //	}
 //
 	@Override
-	protected void renderLabels(PoseStack stack, int mouseX, int mouseY)
+	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY)
 	{
-		this.font.draw(stack, Component.translatable("tile.bloodmagic.soulforge.name"), 8, 5, 4210752);
-		this.font.draw(stack, Component.translatable("container.inventory"), 8, 111, 4210752);
+		guiGraphics.drawString(this.font, Component.translatable("tile.bloodmagic.soulforge.name"), 8, 5, 4210752);
+		guiGraphics.drawString(this.font, Component.translatable("container.inventory"), 8, 111, 4210752);
 	}
 
 //
 	@Override
-	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY)
 	{
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-//		getMinecraft().getTextureManager().bindForSetup(background);
-		RenderSystem.setShaderTexture(0, background);
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
-		this.blit(stack, i, j, 0, 0, this.imageWidth, this.imageHeight);
+		guiGraphics.blit(background, i, j, 0, 0, this.imageWidth, this.imageHeight);
 
 		int l = this.getCookProgressScaled(90);
-		this.blit(stack, i + 115, j + 14 + 90 - l, 176, 90 - l, 18, l);
+		guiGraphics.blit(background, i + 115, j + 14 + 90 - l, 176, 90 - l, 18, l);
 	}
 
 //

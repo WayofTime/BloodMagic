@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.client.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -36,18 +37,16 @@ public class ScreenHolding extends ScreenBase<ContainerHolding>
 	}
 
 	@Override
-	protected void renderLabels(PoseStack stack, int mouseX, int mouseY)
+	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY)
 	{
 //		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
 //		this.font.draw(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
-		this.font.draw(stack, Component.translatable("item.bloodmagic.sigilofholding"), 53, 4, 4210752);
+		guiGraphics.drawString(this.font, Component.translatable("item.bloodmagic.sigilofholding"), 53, 4, 4210752);
 	}
 
 	@Override
-	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY)
 	{
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		RenderSystem.setShaderTexture(0, background);
 //		int i = (this.width - this.xSize) / 2;
 //		int j = (this.height - this.ySize) / 2;
 //		this.blit(stack, i, j, 0, 0, this.xSize, this.ySize);
@@ -70,13 +69,12 @@ public class ScreenHolding extends ScreenBase<ContainerHolding>
 //        this.mc.getTextureManager().bindTexture(texture);
 		int x = (width - imageWidth) / 2;
 		int y = (height - imageHeight) / 2;
-		this.blit(stack, x, y, 0, 0, imageWidth, imageHeight);
+		guiGraphics.blit(background, x, y, 0, 0, imageWidth, imageHeight);
 		ItemStack held = player.getItemInHand(InteractionHand.MAIN_HAND);
 		if (!held.isEmpty() && held.getItem() == BloodMagicItems.HOLDING_SIGIL.get())
 		{
 //            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-			this.blit(stack, 4 + x + 36 * ItemSigilHolding.getCurrentItemOrdinal(player.getMainHandItem()), y + 13, 0, 123, 24, 24);
+			guiGraphics.blit(background, 4 + x + 36 * ItemSigilHolding.getCurrentItemOrdinal(player.getMainHandItem()), y + 13, 0, 123, 24, 24);
 		}
 	}
 

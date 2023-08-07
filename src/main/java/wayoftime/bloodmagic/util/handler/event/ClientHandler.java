@@ -5,11 +5,10 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
@@ -42,6 +41,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.joml.Matrix4f;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer.Model3D;
@@ -71,11 +71,11 @@ public class ClientHandler
 	public static ResourceLocation ritualStoneDawn = BloodMagic.rl("block/dawnritualstone");;
 	public static ResourceLocation ritualStoneDusk = BloodMagic.rl("block/duskritualstone");;
 	public static ResourceLocation boarder = new ResourceLocation("block/chiseled_sandstone");
-	public static TextureAtlasSprite blankBloodRune;
-	public static TextureAtlasSprite stoneBrick;
-	public static TextureAtlasSprite glowstone;
+//	public static TextureAtlasSprite blankBloodRune;
+//	public static TextureAtlasSprite stoneBrick;
+//	public static TextureAtlasSprite glowstone;
 //	public static TextureAtlasSprite bloodStoneBrick;
-	public static TextureAtlasSprite beacon;
+//	public static TextureAtlasSprite beacon;
 //	public static TextureAtlasSprite crystalCluster;
 	public static Minecraft minecraft = Minecraft.getInstance();
 	private static TileMasterRitualStone mrsHoloTile;
@@ -112,16 +112,11 @@ public class ClientHandler
 		return rl;
 	}
 
-	public static TextureAtlasSprite getSprite(ResourceLocation rl)
-	{
-		return Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(rl);
-//		return mc().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).getSprite(rl);
-	}
-
-	@SubscribeEvent
-	public static void onTextureStitch(TextureStitchEvent.Pre event)
-	{
-		final String BLOCKS = "block/";
+	//FIXME remove if not needed
+//	@SubscribeEvent
+//	public static void onTextureStitch(TextureStitchEvent.Pre event)
+//	{
+//		final String BLOCKS = "block/";
 
 //		ritualStoneBlank = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(BloodMagic.rl(block//" + "blankrune"));
 ////		ritualStoneBlank = forName(event.getMap(), "ritualstone", BLOCKS);
@@ -132,13 +127,13 @@ public class ClientHandler
 //		ritualStoneDawn = forName(event.getMap(), "lightritualstone", BLOCKS);
 //		ritualStoneDusk = forName(event.getMap(), "duskritualstone", BLOCKS);
 
-		blankBloodRune = forName(event.getAtlas(), "blankrune", BLOCKS);
-		stoneBrick = event.getAtlas().getSprite(new ResourceLocation("minecraft:block/stonebrick"));
-		glowstone = event.getAtlas().getSprite(new ResourceLocation("minecraft:block/glowstone"));
+//		blankBloodRune = forName(event.getAtlas(), "blankrune", BLOCKS);
+//		stoneBrick = event.getAtlas().getSprite(new ResourceLocation("minecraft:block/stonebrick"));
+//		glowstone = event.getAtlas().getSprite(new ResourceLocation("minecraft:block/glowstone"));
 //		bloodStoneBrick = forName(event.getMap(), "BloodStoneBrick", BLOCKS);
-		beacon = event.getAtlas().getSprite(new ResourceLocation("minecraft:block/beacon"));
+//		beacon = event.getAtlas().getSprite(new ResourceLocation("minecraft:block/beacon"));
 //		crystalCluster = forName(event.getMap(), "ShardCluster", BLOCKS);
-	}
+//	}
 
 	@SubscribeEvent
 	public static void render(RenderLevelStageEvent event)
@@ -439,36 +434,40 @@ public class ClientHandler
 		mrsRangeTile = null;
 	}
 
-	public static void handleGuiTank(PoseStack transform, IFluidTank tank, int x, int y, int w, int h, int oX, int oY, int oW, int oH, int mX, int mY, String originalTexture, List<Component> tooltip)
+
+	public static TextureAtlasSprite getSprite(ResourceLocation rl)
 	{
-		handleGuiTank(transform, tank.getFluid(), tank.getCapacity(), x, y, w, h, oX, oY, oW, oH, mX, mY, originalTexture, tooltip);
+		return Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(rl);
+//		return mc().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).getSprite(rl);
 	}
 
-	public static void handleGuiTank(PoseStack transform, FluidStack fluid, int capacity, int x, int y, int w, int h, int oX, int oY, int oW, int oH, int mX, int mY, String originalTexture, List<Component> tooltip)
+	public static void handleGuiTank(GuiGraphics guiGraphics, IFluidTank tank,  int x, int y, int w, int h, int oX, int oY, int oW, int oH, int mX, int mY, String originalTexture, List<Component> tooltip)
+	{
+		handleGuiTank(guiGraphics, tank.getFluid(), tank.getCapacity(), x, y, w, h, oX, oY, oW, oH, mX, mY, originalTexture, tooltip);
+
+	}
+
+	public static void handleGuiTank(GuiGraphics guiGraphics, FluidStack fluid, int capacity, int x, int y, int w, int h, int oX, int oY, int oW, int oH, int mX, int mY, String originalTexture, List<Component> tooltip)
 	{
 		if (tooltip == null)
 		{
-			transform.pushPose();
 			RenderSystem.setShader(GameRenderer::getPositionTexShader);
 			RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
 			MultiBufferSource.BufferSource buffer = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
 			if (fluid != null && fluid.getFluid() != null)
 			{
 				int fluidHeight = (int) (h * (fluid.getAmount() / (float) capacity));
-				drawRepeatedFluidSpriteGui(buffer, transform, fluid, x, y + h - fluidHeight, w, fluidHeight);
+				drawRepeatedFluidSpriteGui(buffer, guiGraphics, fluid, x, y + h - fluidHeight, w, fluidHeight);
 				RenderSystem.setShaderColor(1, 1, 1, 1);
 			}
 			int xOff = (w - oW) / 2;
 			int yOff = (h - oH) / 2;
-//			RenderSystem.setShaderTe
 			RenderType renderType = RenderType.translucent();
-//			drawTexturedRect(buffer.getBuffer(renderType), transform, x + xOff, y + yOff, oW, oH, 256f, oX, oX + oW, oY, oY + oH);
 			buffer.endBatch(renderType);
 
 			RenderSystem.setShaderTexture(0, new ResourceLocation(originalTexture));
-			blit(transform, x + xOff, y + yOff, oX, oY, oW, oH, 32);
+			guiGraphics.blit(new ResourceLocation(originalTexture), x + xOff, y + yOff, oX, oY, oW, oH, 32, 32);
 
-			transform.popPose();
 		} else
 		{
 			if (mX >= x && mX < x + w && mY >= y && mY < y + h)
@@ -476,31 +475,25 @@ public class ClientHandler
 		}
 	}
 
-	public static void blit(PoseStack p_93229_, int p_93230_, int p_93231_, int p_93232_, int p_93233_, int p_93234_, int p_93235_, int blitOffset)
+	public static void drawRepeatedFluidSpriteGui(MultiBufferSource buffer, GuiGraphics guiGraphics, FluidStack fluid, float x, float y, float w, float h)
 	{
-		GuiComponent.blit(p_93229_, p_93230_, p_93231_, blitOffset, (float) p_93232_, (float) p_93233_, p_93234_, p_93235_, 256, 256);
-	}
-
-	public static void drawRepeatedFluidSpriteGui(MultiBufferSource buffer, PoseStack transform, FluidStack fluid, float x, float y, float w, float h)
-	{
-//		RenderType renderType = BMRenderTypes.getGui(InventoryMenu.BLOCK_ATLAS);
 		RenderType renderType = RenderType.translucent();
 		VertexConsumer builder = buffer.getBuffer(renderType);
-		drawRepeatedFluidSprite(builder, transform, fluid, x, y, w, h);
+		drawRepeatedFluidSprite(builder, guiGraphics, fluid, x, y, w, h);
 	}
 
-	public static void drawRepeatedFluidSprite(VertexConsumer builder, PoseStack transform, FluidStack fluid, float x, float y, float w, float h)
+	public static void drawRepeatedFluidSprite(VertexConsumer builder, GuiGraphics guiGraphics, FluidStack fluid, float x, float y, float w, float h)
 	{
 		TextureAtlasSprite sprite = getSprite(IClientFluidTypeExtensions.of(fluid.getFluid()).getStillTexture(fluid));
 //		Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(spriteLocation);
 		int col = IClientFluidTypeExtensions.of(fluid.getFluid()).getTintColor(fluid);
-		int iW = sprite.getWidth();
-		int iH = sprite.getHeight();
+		int iW = sprite.getX();
+		int iH = sprite.getY();
 		if (iW > 0 && iH > 0)
-			drawRepeatedSprite(builder, transform, x, y, w, h, iW, iH, sprite.getU0(), sprite.getU1(), sprite.getV0(), sprite.getV1(), (col >> 16 & 255) / 255.0f, (col >> 8 & 255) / 255.0f, (col & 255) / 255.0f, 1);
+			drawRepeatedSprite(builder, guiGraphics, x, y, w, h, iW, iH, sprite.getU0(), sprite.getU1(), sprite.getV0(), sprite.getV1(), (col >> 16 & 255) / 255.0f, (col >> 8 & 255) / 255.0f, (col & 255) / 255.0f, 1);
 	}
 
-	public static void drawRepeatedSprite(VertexConsumer builder, PoseStack transform, float x, float y, float w, float h, int iconWidth, int iconHeight, float uMin, float uMax, float vMin, float vMax, float r, float g, float b, float alpha)
+	public static void drawRepeatedSprite(VertexConsumer builder, GuiGraphics guiGraphics, float x, float y, float w, float h, int iconWidth, int iconHeight, float uMin, float uMax, float vMin, float vMax, float r, float g, float b, float alpha)
 	{
 		int iterMaxW = (int) (w / iconWidth);
 		int iterMaxH = (int) (h / iconHeight);
@@ -513,30 +506,30 @@ public class ClientHandler
 		for (int ww = 0; ww < iterMaxW; ww++)
 		{
 			for (int hh = 0; hh < iterMaxH; hh++)
-				drawTexturedRect(builder, transform, x + ww * iconWidth, y + hh * iconHeight, iconWidth, iconHeight, r, g, b, alpha, uMin, uMax, vMin, vMax);
-			drawTexturedRect(builder, transform, x + ww * iconWidth, y + iterMaxH * iconHeight, iconWidth, leftoverH, r, g, b, alpha, uMin, uMax, vMin, (vMin + iconVDif * leftoverHf));
+				drawTexturedRect(builder, guiGraphics, x + ww * iconWidth, y + hh * iconHeight, iconWidth, iconHeight, r, g, b, alpha, uMin, uMax, vMin, vMax);
+			drawTexturedRect(builder, guiGraphics, x + ww * iconWidth, y + iterMaxH * iconHeight, iconWidth, leftoverH, r, g, b, alpha, uMin, uMax, vMin, (vMin + iconVDif * leftoverHf));
 		}
 		if (leftoverW > 0)
 		{
 			for (int hh = 0; hh < iterMaxH; hh++)
-				drawTexturedRect(builder, transform, x + iterMaxW * iconWidth, y + hh * iconHeight, leftoverW, iconHeight, r, g, b, alpha, uMin, (uMin + iconUDif * leftoverWf), vMin, vMax);
-			drawTexturedRect(builder, transform, x + iterMaxW * iconWidth, y + iterMaxH * iconHeight, leftoverW, leftoverH, r, g, b, alpha, uMin, (uMin + iconUDif * leftoverWf), vMin, (vMin + iconVDif * leftoverHf));
+				drawTexturedRect(builder, guiGraphics, x + iterMaxW * iconWidth, y + hh * iconHeight, leftoverW, iconHeight, r, g, b, alpha, uMin, (uMin + iconUDif * leftoverWf), vMin, vMax);
+			drawTexturedRect(builder, guiGraphics, x + iterMaxW * iconWidth, y + iterMaxH * iconHeight, leftoverW, leftoverH, r, g, b, alpha, uMin, (uMin + iconUDif * leftoverWf), vMin, (vMin + iconVDif * leftoverHf));
 		}
 	}
 
-	public static void drawTexturedRect(VertexConsumer builder, PoseStack transform, float x, float y, float w, float h, float r, float g, float b, float alpha, float u0, float u1, float v0, float v1)
+	public static void drawTexturedRect(VertexConsumer builder, GuiGraphics guiGraphics, float x, float y, float w, float h, float r, float g, float b, float alpha, float u0, float u1, float v0, float v1)
 	{
-		Matrix4f mat = transform.last().pose();
+		Matrix4f mat = guiGraphics.pose().last().pose();
 		builder.vertex(mat, x, y + h, 0).color(r, g, b, alpha).uv(u0, v1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xf000f0).normal(1, 1, 1).endVertex();
 		builder.vertex(mat, x + w, y + h, 0).color(r, g, b, alpha).uv(u1, v1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).normal(1, 1, 1).endVertex();
 		builder.vertex(mat, x + w, y, 0).color(r, g, b, alpha).uv(u1, v0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).normal(1, 1, 1).endVertex();
 		builder.vertex(mat, x, y, 0).color(r, g, b, alpha).uv(u0, v0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).normal(1, 1, 1).endVertex();
 	}
 
-	public static void drawTexturedRect(VertexConsumer builder, PoseStack transform, int x, int y, int w, int h, float picSize, int u0, int u1, int v0, int v1)
-	{
-		drawTexturedRect(builder, transform, x, y, w, h, 1, 1, 1, 1, u0 / picSize, u1 / picSize, v0 / picSize, v1 / picSize);
-	}
+//	public static void drawTexturedRect(VertexConsumer builder, PoseStack transform, int x, int y, int w, int h, float picSize, int u0, int u1, int v0, int v1)
+//	{
+//		drawTexturedRect(builder, transform, x, y, w, h, 1, 1, 1, 1, u0 / picSize, u1 / picSize, v0 / picSize, v1 / picSize);
+//	}
 
 	public static void addFluidTooltip(FluidStack fluid, List<Component> tooltip, int tankCapacity)
 	{
