@@ -16,7 +16,6 @@ import net.minecraft.world.Container;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -52,7 +51,7 @@ public class Utils
 	 * @param tile   - The {@link TileInventory} to input the item to
 	 * @param player - The player to take the item from.
 	 * @return {@code true} if the ItemStack is inserted, {@code false} otherwise
-	 * @see #insertItemToTile(TileInventory, PlayerEntity, int)
+	 * @see #insertItemToTile(TileInventory, Player, int)
 	 */
 	public static boolean insertItemToTile(TileInventory tile, Player player)
 	{
@@ -102,7 +101,7 @@ public class Utils
 
 	public static boolean isBlockLiquid(BlockState state)
 	{
-		return (state instanceof IFluidBlock || state.getMaterial().isLiquid());
+		return (state instanceof IFluidBlock || state.liquid());
 	}
 
 	public static boolean isFlowingLiquid(Level world, BlockPos pos, BlockState state)
