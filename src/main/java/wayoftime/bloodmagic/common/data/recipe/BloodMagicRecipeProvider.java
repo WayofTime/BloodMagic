@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.recipe.ARCRecipeProvider;
 import wayoftime.bloodmagic.common.recipe.AlchemyArrayRecipeProvider;
@@ -17,9 +18,9 @@ import wayoftime.bloodmagic.common.recipe.TartaricForgeRecipeProvider;
 
 public class BloodMagicRecipeProvider extends BaseRecipeProvider
 {
-	public BloodMagicRecipeProvider(DataGenerator gen)
+	public BloodMagicRecipeProvider(PackOutput output)
 	{
-		super(gen, BloodMagic.MODID);
+		super(output, BloodMagic.MODID);
 	}
 
 	@Override

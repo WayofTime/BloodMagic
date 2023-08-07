@@ -1,22 +1,20 @@
 package wayoftime.bloodmagic.core.data;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Objects;
 import java.util.TreeMap;
+import java.util.concurrent.CompletableFuture;
 
 import com.google.gson.JsonElement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.gson.Serializers;
@@ -26,15 +24,13 @@ import wayoftime.bloodmagic.structures.DungeonRoom;
 import wayoftime.bloodmagic.structures.ModDungeons;
 import wayoftime.bloodmagic.structures.ModRoomPools;
 
-import javax.xml.crypto.Data;
-
 public class DungeonRoomProvider implements DataProvider
 {
-	DataGenerator generator;
+	PackOutput packOutput;
 
-	public DungeonRoomProvider(DataGenerator gen)
+	public DungeonRoomProvider(PackOutput output)
 	{
-		this.generator = gen;
+		this.packOutput = output;
 	}
 
 	public void loadRoomPools(CachedOutput cache)
@@ -522,16 +518,17 @@ public class DungeonRoomProvider implements DataProvider
 	{
 		JsonElement json = Serializers.GSON.toJsonTree(room);
 
-		Path mainOutput = generator.getOutputFolder();
+		Path mainOutput = packOutput.getOutputFolder();
 		String pathSuffix = "assets/" + schematicName.getNamespace() + "/schematics/" + schematicName.getPath() + ".json";
 		Path outputPath = mainOutput.resolve(pathSuffix);
-		try
-		{
+//		try
+//		{
 			DataProvider.saveStable(cache, json, outputPath);
-		} catch (IOException e)
-		{
-			BloodMagic.LOGGER.error("Couldn't save schematic to {}", outputPath, e);
-		}
+//		}
+//		catch (IOException e)
+//		{
+//			BloodMagic.LOGGER.error("Couldn't save schematic to {}", outputPath, e);
+//		}
 	}
 
 	public void addRoomPool(CachedOutput cache, Map<ResourceLocation, Integer> roomPool, ResourceLocation schematicName)
@@ -544,23 +541,26 @@ public class DungeonRoomProvider implements DataProvider
 
 		JsonElement json = Serializers.GSON.toJsonTree(roomStringList);
 
-		Path mainOutput = generator.getOutputFolder();
+		Path mainOutput = packOutput.getOutputFolder();
 		String pathSuffix = "assets/" + schematicName.getNamespace() + "/schematics/" + schematicName.getPath() + ".json";
 		Path outputPath = mainOutput.resolve(pathSuffix);
-		try
-		{
+//		try
+//		{
 			DataProvider.saveStable(cache, json, outputPath);
-		} catch (IOException e)
-		{
-			BloodMagic.LOGGER.error("Couldn't save schematic to {}", outputPath, e);
-		}
+//		} catch (IOException e)
+//		{
+//			BloodMagic.LOGGER.error("Couldn't save schematic to {}", outputPath, e);
+//		}
 	}
 
 
+
+
 	@Override
-	public void run(CachedOutput cache) throws IOException {
+	public CompletableFuture<?> run(CachedOutput cache) {
 		loadRoomPools(cache);
 		loadDungeons(cache);
+		return CompletableFuture.allOf();
 	}
 
 	@Override

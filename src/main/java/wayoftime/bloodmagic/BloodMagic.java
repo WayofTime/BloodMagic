@@ -218,12 +218,12 @@ public class BloodMagic {
         ItemModelProvider itemModels = new GeneratorItemModels(gen, event.getExistingFileHelper());
         PackOutput output = event.getGenerator().getPackOutput();
         gen.addProvider(event.includeServer(), itemModels);
-        gen.addProvider(event.includeServer(), new GeneratorBlockStates(gen, itemModels.existingFileHelper));
+        gen.addProvider(event.includeServer(), new GeneratorBlockStates(output, itemModels.existingFileHelper));
         gen.addProvider(event.includeServer(), new GeneratorLanguage(output));
-        gen.addProvider(event.includeServer(), new BloodMagicRecipeProvider(gen));
+        gen.addProvider(event.includeServer(), new BloodMagicRecipeProvider(output));
         gen.addProvider(event.includeServer(), new GeneratorBaseRecipes(output));
-        gen.addProvider(event.includeServer(), new GeneratorLootTable(gen));
-        gen.addProvider(event.includeServer(), new DungeonRoomProvider(gen));
+        gen.addProvider(event.includeServer(), new GeneratorLootTable(output));
+        gen.addProvider(event.includeServer(), new DungeonRoomProvider(output));
 
         CompletableFuture<HolderLookup.Provider> provider = event.getLookupProvider();
         gen.addProvider(event.includeServer(), new GeneratorBlockTags(output, provider, event.getExistingFileHelper()));

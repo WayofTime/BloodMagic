@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
@@ -44,9 +45,9 @@ import wayoftime.bloodmagic.common.block.type.SpecialSealType;
 
 public class GeneratorBlockStates extends BlockStateProvider
 {
-	public GeneratorBlockStates(DataGenerator gen, ExistingFileHelper exFileHelper)
+	public GeneratorBlockStates(PackOutput packOutput, ExistingFileHelper exFileHelper)
 	{
-		super(gen, BloodMagic.MODID, exFileHelper);
+		super(packOutput, BloodMagic.MODID, exFileHelper);
 	}
 
 	@Override
