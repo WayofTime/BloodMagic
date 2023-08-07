@@ -11,14 +11,15 @@ import com.google.common.collect.Sets;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -57,6 +58,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
@@ -119,7 +121,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 	}
 
 	@Override
-	public Packet<?> getAddEntityPacket()
+	public Packet<ClientGamePacketListener> getAddEntityPacket()
 	{
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
@@ -206,7 +208,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 
 			for (int j = 0; j < p_36877_; ++j)
 			{
-				this.level.addParticle(ParticleTypes.ENTITY_EFFECT, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), d0, d1, d2);
+				this.level().addParticle(ParticleTypes.ENTITY_EFFECT, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), d0, d1, d2);
 			}
 		}
 	}
@@ -234,10 +236,10 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 		}
 
 		BlockPos blockpos = this.blockPosition();
-		BlockState blockstate = this.level.getBlockState(blockpos);
+		BlockState blockstate = this.level().getBlockState(blockpos);
 		if (!blockstate.isAir() && !flag)
 		{
-			VoxelShape voxelshape = blockstate.getCollisionShape(this.level, blockpos);
+			VoxelShape voxelshape = blockstate.getCollisionShape(this.level(), blockpos);
 			if (!voxelshape.isEmpty())
 			{
 				Vec3 vec31 = this.position();
@@ -268,7 +270,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 			if (this.inBlockState != blockstate && this.shouldFall())
 			{
 				this.startFalling();
-			} else if (!this.level.isClientSide)
+			} else if (!this.level().isClientSide)
 			{
 				this.tickDespawn();
 			}
@@ -279,7 +281,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 			this.timeInGround = 0;
 			Vec3 vec32 = this.position();
 			Vec3 vec33 = vec32.add(vec3);
-			HitResult hitresult = this.level.clip(new ClipContext(vec32, vec33, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+			HitResult hitresult = this.level().clip(new ClipContext(vec32, vec33, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
 			if (hitresult.getType() != HitResult.Type.MISS)
 			{
 				vec33 = hitresult.getLocation();
@@ -326,7 +328,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 			{
 				for (int i = 0; i < 4; ++i)
 				{
-					this.level.addParticle(ParticleTypes.CRIT, this.getX() + d5 * (double) i / 4.0D, this.getY() + d6 * (double) i / 4.0D, this.getZ() + d1 * (double) i / 4.0D, -d5, -d6 + 0.2D, -d1);
+					this.level().addParticle(ParticleTypes.CRIT, this.getX() + d5 * (double) i / 4.0D, this.getY() + d6 * (double) i / 4.0D, this.getZ() + d1 * (double) i / 4.0D, -d5, -d6 + 0.2D, -d1);
 				}
 			}
 
@@ -352,7 +354,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 				for (int j = 0; j < 4; ++j)
 				{
 					float f2 = 0.25F;
-					this.level.addParticle(ParticleTypes.BUBBLE, d7 - d5 * 0.25D, d2 - d6 * 0.25D, d3 - d1 * 0.25D, d5, d6, d1);
+					this.level().addParticle(ParticleTypes.BUBBLE, d7 - d5 * 0.25D, d2 - d6 * 0.25D, d3 - d1 * 0.25D, d5, d6, d1);
 				}
 
 				f = this.getWaterDrag();
@@ -369,7 +371,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 			this.checkInsideBlocks();
 		}
 
-		if (this.level.isClientSide)
+		if (this.level().isClientSide)
 		{
 			if (this.inGround)
 			{
@@ -383,7 +385,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 			}
 		} else if (this.inGround && this.timeInGround != 0 && !this.effects.isEmpty() && this.timeInGround >= 600)
 		{
-			this.level.broadcastEntityEvent(this, (byte) 0);
+			this.level().broadcastEntityEvent(this, (byte) 0);
 			this.potion = Potions.EMPTY;
 			this.effects.clear();
 			this.entityData.set(ID_EFFECT_COLOR, -1);
@@ -416,7 +418,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 		compound.putDouble("damage", this.damage);
 //	      compound.putBoolean("crit", this.getIsCritical());
 //	      compound.putByte("PierceLevel", this.getPierceLevel());
-		compound.putString("SoundEvent", Registry.SOUND_EVENT.getKey(this.hitSound).toString());
+		compound.putString("SoundEvent", ForgeRegistries.SOUND_EVENTS.getKey(this.hitSound).toString());
 //	      compound.putBoolean("ShotFromCrossbow", this.getShotFromCrossbow());
 		compound.putDouble("willDrop", willDrop);
 //		this.containedStack.write(compound);
@@ -424,7 +426,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 
 		if (this.potion != Potions.EMPTY)
 		{
-			compound.putString("Potion", Registry.POTION.getKey(this.potion).toString());
+			compound.putString("Potion", ForgeRegistries.POTIONS.getKey(this.potion).toString());
 		}
 
 		if (this.fixedColor)
@@ -454,7 +456,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 		this.ticksInGround = compound.getShort("life");
 		if (compound.contains("inBlockState", 10))
 		{
-			this.inBlockState = NbtUtils.readBlockState(compound.getCompound("inBlockState"));
+			this.inBlockState = NbtUtils.readBlockState(this.level().holderLookup(Registries.BLOCK), compound.getCompound("inBlockState"));
 		}
 
 		this.arrowShake = compound.getByte("shake") & 255;
@@ -550,10 +552,10 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 		DamageSource damagesource;
 		if (entity1 == null)
 		{
-			damagesource = DamageSource.thrown(this, this);
+			damagesource = entity.damageSources().thrown(this,this);
 		} else
 		{
-			damagesource = DamageSource.thrown(this, entity1);
+			damagesource = entity.damageSources().thrown(this, entity1);
 			if (entity1 instanceof LivingEntity)
 			{
 				((LivingEntity) entity1).setLastHurtMob(entity);
@@ -598,7 +600,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 					}
 				}
 
-				if (!this.level.isClientSide && entity1 instanceof LivingEntity)
+				if (!this.level().isClientSide && entity1 instanceof LivingEntity)
 				{
 					EnchantmentHelper.doPostHurtEffects(livingentity, entity1);
 					EnchantmentHelper.doPostDamageEffects((LivingEntity) entity1, livingentity);
@@ -627,7 +629,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 			this.setDeltaMovement(this.getDeltaMovement().scale(-0.1D));
 			this.setYRot(this.getYRot() + 180.0F);
 			this.yRotO += 180.0F;
-			if (!this.level.isClientSide && this.getDeltaMovement().lengthSqr() < 1.0E-7D)
+			if (!this.level().isClientSide && this.getDeltaMovement().lengthSqr() < 1.0E-7D)
 			{
 				if (this.pickupStatus == AbstractArrow.Pickup.ALLOWED)
 				{
@@ -646,7 +648,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 	@Override
 	public void playerTouch(Player entityIn)
 	{
-		if (!this.level.isClientSide && (this.inGround || this.getNoClip()) && this.arrowShake <= 0)
+		if (!this.level().isClientSide && (this.inGround || this.getNoClip()) && this.arrowShake <= 0)
 		{
 			boolean flag = this.pickupStatus == AbstractArrow.Pickup.ALLOWED || this.pickupStatus == AbstractArrow.Pickup.CREATIVE_ONLY && entityIn.getAbilities().instabuild || this.getNoClip() && this.getOwner().getUUID() == entityIn.getUUID();
 			if (this.pickupStatus == AbstractArrow.Pickup.ALLOWED && !entityIn.getInventory().add(this.getArrowStack()))
@@ -659,7 +661,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 //				System.out.println("Um test?");
 
 //				entityIn.onItemPickup(this, 1);
-				level.playSound(null, entityIn.getX(), entityIn.getY() + 0.5, entityIn.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, ((level.random.nextFloat() - level.random.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+				level().playSound(null, entityIn.getX(), entityIn.getY() + 0.5, entityIn.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, ((level().random.nextFloat() - level().random.nextFloat()) * 0.7F + 1.0F) * 2.0F);
 				this.discard();
 			}
 
@@ -675,7 +677,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 	// OnHitBlock
 	protected void onHitBlock(BlockHitResult p_230299_1_)
 	{
-		this.inBlockState = this.level.getBlockState(p_230299_1_.getBlockPos());
+		this.inBlockState = this.level().getBlockState(p_230299_1_.getBlockPos());
 		super.onHitBlock(p_230299_1_);
 		Vec3 vector3d = p_230299_1_.getLocation().subtract(this.getX(), this.getY(), this.getZ());
 		this.setDeltaMovement(vector3d);
@@ -701,7 +703,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 
 	private boolean shouldFall()
 	{
-		return this.inGround && this.level.noCollision((new AABB(this.position(), this.position())).inflate(0.06D));
+		return this.inGround && this.level().noCollision((new AABB(this.position(), this.position())).inflate(0.06D));
 	}
 
 	protected void tickDespawn()
@@ -766,7 +768,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 
 	public boolean getNoClip()
 	{
-		if (!this.level.isClientSide)
+		if (!this.level().isClientSide)
 		{
 			return this.noPhysics;
 		} else
@@ -800,7 +802,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 	@Nullable
 	protected EntityHitResult rayTraceEntities(Vec3 startVec, Vec3 endVec)
 	{
-		return ProjectileUtil.getEntityHitResult(this.level, this, startVec, endVec, this.getBoundingBox().expandTowards(this.getDeltaMovement()).inflate(1.0D), this::canHitEntity);
+		return ProjectileUtil.getEntityHitResult(this.level(), this, startVec, endVec, this.getBoundingBox().expandTowards(this.getDeltaMovement()).inflate(1.0D), this::canHitEntity);
 	}
 
 	protected boolean canHitEntity(Entity p_230298_1_)
@@ -836,9 +838,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 				: new ItemParticleOption(ParticleTypes.ITEM, itemstack));
 	}
 
-	/**
-	 * Handler for {@link World#setEntityState}
-	 */
+
 	@OnlyIn(Dist.CLIENT)
 	public void handleEntityEvent(byte id)
 	{
@@ -848,7 +848,7 @@ public class AbstractEntityThrowingDagger extends ThrowableItemProjectile
 
 			for (int i = 0; i < 8; ++i)
 			{
-				this.level.addParticle(iparticledata, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+				this.level().addParticle(iparticledata, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 			}
 		}
 	}

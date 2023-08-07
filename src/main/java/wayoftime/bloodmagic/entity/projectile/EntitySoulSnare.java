@@ -4,8 +4,10 @@ import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
@@ -43,7 +45,7 @@ public class EntitySoulSnare extends ThrowableItemProjectile
 	}
 
 	@Override
-	public Packet<?> getAddEntityPacket()
+	public Packet<ClientGamePacketListener> getAddEntityPacket()
 	{
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
@@ -53,13 +55,14 @@ public class EntitySoulSnare extends ThrowableItemProjectile
 	 */
 	protected void onHitEntity(EntityHitResult result)
 	{
-		if (result.getEntity() == this.getOwner() || this.tickCount < 2 || getCommandSenderWorld().isClientSide)
+		Entity entity = result.getEntity();
+		if (entity == this.getOwner() || this.tickCount < 2 || getCommandSenderWorld().isClientSide)
 			return;
 
-		if (result.getEntity() instanceof LivingEntity)
+		if (entity instanceof LivingEntity livingEntity)
 		{
-			((LivingEntity) result.getEntity()).addEffect(new MobEffectInstance(BloodMagicPotions.SOUL_SNARE.get(), 300, 0));
-			result.getEntity().hurt(DamageSource.thrown(this, this.getOwner()), (float) 0);
+			livingEntity.addEffect(new MobEffectInstance(BloodMagicPotions.SOUL_SNARE.get(), 300, 0));
+			livingEntity.hurt(livingEntity.damageSources().thrown(this, this.getOwner()), (float) 0);
 		}
 
 		this.removeAfterChangingDimensions();
@@ -73,9 +76,7 @@ public class EntitySoulSnare extends ThrowableItemProjectile
 				: new ItemParticleOption(ParticleTypes.ITEM, itemstack));
 	}
 
-	/**
-	 * Handler for {@link World#setEntityState}
-	 */
+
 	@OnlyIn(Dist.CLIENT)
 	public void handleEntityEvent(byte id)
 	{
@@ -85,7 +86,7 @@ public class EntitySoulSnare extends ThrowableItemProjectile
 
 			for (int i = 0; i < 8; ++i)
 			{
-				this.level.addParticle(iparticledata, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+				this.level().addParticle(iparticledata, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 			}
 		}
 	}

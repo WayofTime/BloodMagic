@@ -1,12 +1,12 @@
 package wayoftime.bloodmagic.entity.projectile;
 
-import java.util.Optional;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -20,7 +20,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
@@ -34,7 +33,7 @@ import wayoftime.bloodmagic.common.tile.TileExplosiveCharge;
 
 public class EntityShapedCharge extends ThrowableProjectile
 {
-	private static final EntityDataAccessor<Optional<BlockState>> ITEMSTACK_DATA = SynchedEntityData.defineId(EntityShapedCharge.class, EntityDataSerializers.BLOCK_STATE);
+	private static final EntityDataAccessor<BlockState> ITEMSTACK_DATA = SynchedEntityData.defineId(EntityShapedCharge.class, EntityDataSerializers.BLOCK_STATE);
 //	private BlockState fallTile = BloodMagicBlocks.SHAPED_CHARGE.get().getDefaultState();
 	private AnointmentHolder holder;
 
@@ -64,16 +63,16 @@ public class EntityShapedCharge extends ThrowableProjectile
 
 	public void setFallTile(BlockState state)
 	{
-		this.entityData.set(ITEMSTACK_DATA, Optional.of(state));
+		this.entityData.set(ITEMSTACK_DATA, state);
 	}
 
 	@Override
 	public void tick()
 	{
 		super.tick();
-		HitResult raytraceresult = ProjectileUtil.getHitResult(this, this::canHitEntity);
+		HitResult raytraceresult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
 //		boolean flag = false;
-		if (level.isClientSide)
+		if (level().isClientSide)
 		{
 			return;
 		}
@@ -81,11 +80,10 @@ public class EntityShapedCharge extends ThrowableProjectile
 		{
 			Direction faceHit = ((BlockHitResult) raytraceresult).getDirection();
 			BlockPos blockpos = ((BlockHitResult) raytraceresult).getBlockPos().relative(((BlockHitResult) raytraceresult).getDirection());
-			BlockState blockstate = this.level.getBlockState(blockpos);
-			Material material = blockstate.getMaterial();
+			BlockState blockstate = this.level().getBlockState(blockpos);
 //		      return state.isAir() || state.isIn(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable();
 			BlockState fallTile = this.getBlockState();
-			if (blockstate.isAir() || blockstate.is(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable())
+			if (blockstate.isAir() || blockstate.is(BlockTags.FIRE) || blockstate.liquid() || blockstate.canBeReplaced())
 			{
 				this.getCommandSenderWorld().setBlockAndUpdate(blockpos, fallTile.setValue(BlockShapedExplosive.ATTACHED, faceHit));
 				BlockEntity tile = this.getCommandSenderWorld().getBlockEntity(blockpos);
@@ -127,7 +125,7 @@ public class EntityShapedCharge extends ThrowableProjectile
 	@Override
 	protected void readAdditionalSaveData(CompoundTag compound)
 	{
-		BlockState fallTile = NbtUtils.readBlockState(compound.getCompound("BlockState"));
+		BlockState fallTile = NbtUtils.readBlockState(this.level().holderLookup(Registries.BLOCK),compound.getCompound("BlockState"));
 		this.setFallTile(fallTile);
 		if (compound.contains("holder"))
 			this.holder = AnointmentHolder.fromNBT(compound.getCompound("holder"));
@@ -162,19 +160,19 @@ public class EntityShapedCharge extends ThrowableProjectile
 //		super.registerData();
 		// TODO Auto-generated method stub
 //		super.registerData();
-		this.entityData.define(ITEMSTACK_DATA, Optional.of(Blocks.SAND.defaultBlockState()));
+		this.entityData.define(ITEMSTACK_DATA, Blocks.SAND.defaultBlockState());
 	}
 
 	public BlockState getBlockState()
 	{
 		// TODO Auto-generated method stub
-		return this.entityData.get(ITEMSTACK_DATA).get();
+		return this.entityData.get(ITEMSTACK_DATA);
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	public Level getWorldObj()
 	{
-		return this.level;
+		return this.level();
 	}
 
 //	@Override
@@ -184,7 +182,7 @@ public class EntityShapedCharge extends ThrowableProjectile
 //	}
 
 	@Override
-	public Packet<?> getAddEntityPacket()
+	public Packet<ClientGamePacketListener> getAddEntityPacket()
 	{
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}

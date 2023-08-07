@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
@@ -68,7 +69,7 @@ public class EntityPotionFlask extends ThrowableItemProjectile implements ItemSu
 	}
 
 	@Override
-	public Packet<?> getAddEntityPacket()
+	public Packet<ClientGamePacketListener> getAddEntityPacket()
 	{
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
@@ -84,7 +85,7 @@ public class EntityPotionFlask extends ThrowableItemProjectile implements ItemSu
 	protected void onHitBlock(BlockHitResult p_230299_1_)
 	{
 		super.onHitBlock(p_230299_1_);
-		if (!this.level.isClientSide)
+		if (!this.level().isClientSide)
 		{
 			ItemStack itemstack = this.getItem();
 			Potion potion = PotionUtils.getPotion(itemstack);
@@ -113,7 +114,7 @@ public class EntityPotionFlask extends ThrowableItemProjectile implements ItemSu
 	protected void onHit(HitResult result)
 	{
 		super.onHit(result);
-		if (!this.level.isClientSide)
+		if (!this.level().isClientSide)
 		{
 			ItemStack itemstack = this.getItem();
 			Potion potion = PotionUtils.getPotion(itemstack);
@@ -136,7 +137,7 @@ public class EntityPotionFlask extends ThrowableItemProjectile implements ItemSu
 			}
 
 			int i = potion.hasInstantEffects() ? 2007 : 2002;
-			this.level.levelEvent(i, this.blockPosition(), PotionUtils.getColor(itemstack));
+			this.level().levelEvent(i, this.blockPosition(), PotionUtils.getColor(itemstack));
 			this.remove(RemovalReason.KILLED);
 		}
 	}
@@ -144,7 +145,7 @@ public class EntityPotionFlask extends ThrowableItemProjectile implements ItemSu
 	private void applyWater()
 	{
 		AABB axisalignedbb = this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D);
-		List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, axisalignedbb, WATER_SENSITIVE);
+		List<LivingEntity> list = this.level().getEntitiesOfClass(LivingEntity.class, axisalignedbb, WATER_SENSITIVE);
 		if (!list.isEmpty())
 		{
 			for (LivingEntity livingentity : list)
@@ -152,7 +153,7 @@ public class EntityPotionFlask extends ThrowableItemProjectile implements ItemSu
 				double d0 = this.distanceToSqr(livingentity);
 				if (d0 < 16.0D && livingentity.isSensitiveToWater())
 				{
-					livingentity.hurt(DamageSource.indirectMagic(livingentity, this.getOwner()), 1.0F);
+					livingentity.hurt(livingentity.damageSources().indirectMagic(livingentity, this.getOwner()), 1.0F);
 				}
 			}
 		}
@@ -162,7 +163,7 @@ public class EntityPotionFlask extends ThrowableItemProjectile implements ItemSu
 	private void applySplash(List<MobEffectInstance> p_213888_1_, @Nullable Entity p_213888_2_)
 	{
 		AABB axisalignedbb = this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D);
-		List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, axisalignedbb);
+		List<LivingEntity> list = this.level().getEntitiesOfClass(LivingEntity.class, axisalignedbb);
 		if (!list.isEmpty())
 		{
 			for (LivingEntity livingentity : list)
@@ -202,7 +203,7 @@ public class EntityPotionFlask extends ThrowableItemProjectile implements ItemSu
 
 	public void makeAreaOfEffectCloud(ItemStack p_190542_1_, Potion p_190542_2_)
 	{
-		AreaEffectCloud areaeffectcloudentity = new AreaEffectCloud(this.level, this.getX(), this.getY(), this.getZ());
+		AreaEffectCloud areaeffectcloudentity = new AreaEffectCloud(this.level(), this.getX(), this.getY(), this.getZ());
 		Entity entity = this.getOwner();
 		if (entity instanceof LivingEntity)
 		{
@@ -226,7 +227,7 @@ public class EntityPotionFlask extends ThrowableItemProjectile implements ItemSu
 			areaeffectcloudentity.setFixedColor(compoundnbt.getInt("CustomPotionColor"));
 		}
 
-		this.level.addFreshEntity(areaeffectcloudentity);
+		this.level().addFreshEntity(areaeffectcloudentity);
 	}
 
 	public boolean isLingering()
@@ -236,15 +237,15 @@ public class EntityPotionFlask extends ThrowableItemProjectile implements ItemSu
 
 	public void extinguishFires(BlockPos pos, Direction p_184542_2_)
 	{
-		BlockState blockstate = this.level.getBlockState(pos);
+		BlockState blockstate = this.level().getBlockState(pos);
 		if (blockstate.is(BlockTags.FIRE))
 		{
-			this.level.removeBlock(pos, false);
+			this.level().removeBlock(pos, false);
 		} else if (CampfireBlock.isLitCampfire(blockstate))
 		{
-			this.level.levelEvent((Player) null, 1009, pos, 0);
-			CampfireBlock.dowse(null, this.level, pos, blockstate);
-			this.level.setBlockAndUpdate(pos, blockstate.setValue(CampfireBlock.LIT, Boolean.valueOf(false)));
+			this.level().levelEvent((Player) null, 1009, pos, 0);
+			CampfireBlock.dowse(null, this.level(), pos, blockstate);
+			this.level().setBlockAndUpdate(pos, blockstate.setValue(CampfireBlock.LIT, Boolean.valueOf(false)));
 		}
 
 	}
