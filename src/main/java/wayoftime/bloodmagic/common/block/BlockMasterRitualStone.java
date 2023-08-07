@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.IBindable;
@@ -32,7 +31,7 @@ public class BlockMasterRitualStone extends Block implements EntityBlock
 
 	public BlockMasterRitualStone(boolean isInverted)
 	{
-		super(Properties.of(Material.STONE).sound(SoundType.STONE).strength(2.0F, 5.0F).requiresCorrectToolForDrops());
+		super(Properties.of().sound(SoundType.STONE).strength(2.0F, 5.0F).requiresCorrectToolForDrops());
 		this.isInverted = isInverted;
 //	.harvestTool(ToolType.PICKAXE).harvestLevel(2)
 	}

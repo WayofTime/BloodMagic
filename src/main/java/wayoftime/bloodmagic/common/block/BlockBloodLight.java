@@ -1,12 +1,10 @@
 package wayoftime.bloodmagic.common.block;
 
-import java.util.Random;
 
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -28,9 +26,7 @@ public class BlockBloodLight extends Block
 
 	public BlockBloodLight()
 	{
-		super(Properties.of(Material.WOOL).noCollission().lightLevel((state) -> {
-			return 15;
-		}));
+		super(Properties.of().noCollission().lightLevel((state) -> 15).ignitedByLava());
 	}
 
 	@Override

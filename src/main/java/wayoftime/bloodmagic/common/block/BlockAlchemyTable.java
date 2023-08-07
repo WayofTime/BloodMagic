@@ -25,7 +25,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -42,7 +41,7 @@ public class BlockAlchemyTable extends Block implements EntityBlock// implements
 
 	public BlockAlchemyTable()
 	{
-		super(BlockBehaviour.Properties.of(Material.METAL).strength(2.0F, 5.0F).noOcclusion().isRedstoneConductor(BlockAlchemyTable::isntSolid).isViewBlocking(BlockAlchemyTable::isntSolid).requiresCorrectToolForDrops());
+		super(BlockBehaviour.Properties.of().strength(2.0F, 5.0F).noOcclusion().isRedstoneConductor(BlockAlchemyTable::isntSolid).isViewBlocking(BlockAlchemyTable::isntSolid).requiresCorrectToolForDrops());
 //		.harvestTool(ToolType.PICKAXE).harvestLevel(1)
 	}
 

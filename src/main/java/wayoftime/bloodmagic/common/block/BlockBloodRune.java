@@ -9,7 +9,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.Material;
 import wayoftime.bloodmagic.altar.IBloodRune;
 import wayoftime.bloodmagic.block.enums.BloodRuneType;
 
@@ -23,7 +22,7 @@ public class BlockBloodRune extends Block implements IBloodRune
 
 	public BlockBloodRune(BloodRuneType type, int strength)
 	{
-		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops());
+		super(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops());
 		this.type = type;
 		this.strength = strength;
 	}

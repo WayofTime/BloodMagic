@@ -10,7 +10,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.ritual.IRitualStone;
 
@@ -23,7 +22,7 @@ public class BlockRitualStone extends Block implements IRitualStone
 
 	public BlockRitualStone(EnumRuneType type)
 	{
-		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops());
+		super(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops());
 		this.type = type;
 //	.harvestTool(ToolType.PICKAXE).harvestLevel(2)
 	}
