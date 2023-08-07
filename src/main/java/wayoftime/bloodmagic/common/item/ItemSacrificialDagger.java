@@ -18,11 +18,10 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
-import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ConfigManager;
+import wayoftime.bloodmagic.common.registries.BloodMagicDamageSources;
 import wayoftime.bloodmagic.event.SacrificeKnifeUsedEvent;
 import wayoftime.bloodmagic.util.Constants;
-import wayoftime.bloodmagic.util.DamageSourceBloodMagic;
 import wayoftime.bloodmagic.util.helper.IncenseHelper;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
@@ -109,12 +108,12 @@ public class ItemSacrificialDagger extends Item
 			{
 				player.invulnerableTime = 0;
 
-				player.hurt(DamageSourceBloodMagic.INSTANCE, 0.001F);
+				player.hurt(BloodMagicDamageSources.INSTANCE.defaultSource(), 0.001F);
 				player.setHealth(Math.max(player.getHealth() - 1.998F, 0.0001f));
 				if (player.getHealth() <= 0.001f && !world.isClientSide)
 				{
 					player.invulnerableTime = 0;
-					player.hurt(DamageSourceBloodMagic.INSTANCE, 10);
+					player.hurt(BloodMagicDamageSources.INSTANCE.defaultSource(), 10);
 				}
 			}
 

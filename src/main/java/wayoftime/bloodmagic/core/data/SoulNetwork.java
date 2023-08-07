@@ -15,10 +15,10 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.INBTSerializable;
+import wayoftime.bloodmagic.common.registries.BloodMagicDamageSources;
 import wayoftime.bloodmagic.event.SoulNetworkEvent;
 import wayoftime.bloodmagic.util.BMLog;
 import wayoftime.bloodmagic.util.BooleanResult;
-import wayoftime.bloodmagic.util.DamageSourceBloodMagic;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 
 public class SoulNetwork implements INBTSerializable<CompoundTag>
@@ -140,7 +140,7 @@ public class SoulNetwork implements INBTSerializable<CompoundTag>
 	}
 
 	/**
-	 * @deprecated Use {@link #syphonAndDamage(PlayerEntity, SoulTicket)} instead.
+	 * @deprecated Use {@link #syphonAndDamage(Player, SoulTicket)} instead.
 	 */
 	@Deprecated
 	public boolean syphonAndDamage(Player user, int amount)
@@ -172,7 +172,7 @@ public class SoulNetwork implements INBTSerializable<CompoundTag>
 				if (!user.isCreative())
 				{
 					user.invulnerableTime = 0;
-					user.hurt(DamageSourceBloodMagic.INSTANCE, 1.0F);
+					user.hurt(BloodMagicDamageSources.INSTANCE.defaultSource(), 1.0F);
 				}
 
 			} else if (syphon >= 100)
@@ -182,7 +182,7 @@ public class SoulNetwork implements INBTSerializable<CompoundTag>
 					for (int i = 0; i < ((syphon + 99) / 100); i++)
 					{
 						user.invulnerableTime = 0;
-						user.hurt(DamageSourceBloodMagic.INSTANCE, 1.0F);
+						user.hurt(BloodMagicDamageSources.INSTANCE.defaultSource(), 1.0F);
 					}
 				}
 			}

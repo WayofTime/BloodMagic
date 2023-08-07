@@ -15,6 +15,9 @@ import java.util.Map;
 
 public class BloodMagicCreativeTabs {
 
+    private BloodMagicCreativeTabs(){
+
+    }
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, BloodMagic.MODID);
     public static final RegistryObject<CreativeModeTab> TAB = CREATIVE_TABS.register("bloodmagictab", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.bloodmagictab"))

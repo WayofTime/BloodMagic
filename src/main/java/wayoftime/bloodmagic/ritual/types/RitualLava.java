@@ -19,10 +19,10 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
+import wayoftime.bloodmagic.common.registries.BloodMagicDamageSources;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.ritual.*;
-import wayoftime.bloodmagic.util.DamageSourceBloodMagic;
 import wayoftime.bloodmagic.util.Utils;
 import wayoftime.bloodmagic.will.DemonWillHolder;
 
@@ -229,7 +229,7 @@ public class RitualLava extends Ritual
 
 				if (!entity.isAlive() && entity.hurtTime <= 0 && Utils.isImmuneToFireDamage(entity))
 				{
-					if (entity.hurt(DamageSourceBloodMagic.INSTANCE, damage))
+					if (entity.hurt(BloodMagicDamageSources.INSTANCE.defaultSource(), damage))
 					{
 						corrosiveDrained += corrosiveWillDrain;
 						corrosiveWill -= corrosiveWillDrain;

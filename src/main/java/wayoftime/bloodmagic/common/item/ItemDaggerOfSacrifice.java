@@ -1,6 +1,5 @@
 package wayoftime.bloodmagic.common.item;
 
-import com.electronwill.nightconfig.core.conversion.ForceBreakdown;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
@@ -12,9 +11,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.registries.ForgeRegistries;
-import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.registries.BloodMagicDamageSources;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
-import wayoftime.bloodmagic.util.DamageSourceBloodMagic;
 import wayoftime.bloodmagic.util.helper.PlayerSacrificeHelper;
 
 public class ItemDaggerOfSacrifice extends Item
@@ -71,7 +69,7 @@ public class ItemDaggerOfSacrifice extends Item
 			target.getCommandSenderWorld().playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (target.getCommandSenderWorld().random.nextFloat() - target.getCommandSenderWorld().random.nextFloat()) * 0.8F);
 			target.setHealth(0.00001f);
 			target.invulnerableTime = 0;
-			target.hurt(DamageSourceBloodMagic.INSTANCE, 10);
+			target.hurt(BloodMagicDamageSources.INSTANCE.defaultSource(), 10);
 //			target.onDeath(DamageSourceBloodMagic.INSTANCE);
 		}
 

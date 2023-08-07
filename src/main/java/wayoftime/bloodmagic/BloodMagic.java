@@ -46,6 +46,7 @@ import wayoftime.bloodmagic.common.loot.BloodMagicLootFunctionManager;
 import wayoftime.bloodmagic.common.loot.BloodMagicLootTypeManager;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.common.registries.BloodMagicCreativeTabs;
+import wayoftime.bloodmagic.common.registries.BloodMagicDamageSources;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 import wayoftime.bloodmagic.common.tile.BloodMagicTileEntities;
@@ -99,6 +100,7 @@ public class BloodMagic {
         BloodMagicBlocks.BLOCKS.register(modBus);
         BloodMagicItems.ITEMS.register(modBus);
 
+        BloodMagicDamageSources.DAMAGE_TYPES.register(modBus);
         BloodMagicItems.BASICITEMS.register(modBus);
         BloodMagicBlocks.BASICBLOCKS.register(modBus);
         BloodMagicBlocks.DUNGEONBLOCKS.register(modBus);
@@ -229,6 +231,7 @@ public class BloodMagic {
         gen.addProvider(event.includeServer(), new GeneratorBlockTags(output, provider, event.getExistingFileHelper()));
         gen.addProvider(event.includeServer(), new GeneratorItemTags(output, provider, event.getExistingFileHelper()));
         gen.addProvider(event.includeServer(), new GeneratorFluidTags(output, provider, event.getExistingFileHelper()));
+        gen.addProvider(event.includeServer(), new GeneratorDamageTags(output, provider, event.getExistingFileHelper()));
 
     }
 
