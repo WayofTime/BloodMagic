@@ -11,9 +11,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -892,11 +894,10 @@ public class Utils
 
 	public static boolean isMeleeDamage(DamageSource source)
 	{
-		if (source.isProjectile() || source.isExplosion() || source.isFall() || source.isFire())
+		if (source.is(DamageTypeTags.IS_PROJECTILE))
 		{
 			return false;
 		}
-
-		return source instanceof EntityDamageSource;
+		return source.is(DamageTypes.MOB_ATTACK) || source.is(DamageTypes.MOB_ATTACK_NO_AGGRO) || source.is(DamageTypes.PLAYER_ATTACK);
 	}
 }

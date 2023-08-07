@@ -2,8 +2,10 @@ package wayoftime.bloodmagic.util.handler.event;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -112,7 +114,7 @@ public class GenericHandler
 				event.setDamageMultiplier(0);
 				if (!player.isShiftKeyDown() && event.getDistance() > 1.5)
 				{
-					if (player.level.isClientSide)
+					if (player.level().isClientSide)
 					{
 						player.setDeltaMovement(player.getDeltaMovement().multiply(1, -1, 1));
 						bounceMap.put(player.getUUID(), player.getDeltaMovement().y());
@@ -233,7 +235,7 @@ public class GenericHandler
 				// The factor of 1.6 is due to taking into account iron armour's protection at
 				// ~11 damage
 				double factor = 1.6;
-				if (event.getSource().isProjectile())
+				if (event.getSource().is(DamageTypeTags.IS_PROJECTILE))
 				{
 //					LivingStats stats = LivingStats.fromPlayer(player);
 //					stats.addExperience(LivingArmorRegistrar.TEST_UPGRADE.get().getKey(), 10);
@@ -243,14 +245,14 @@ public class GenericHandler
 					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_PHYSICAL_PROTECT.get(), event.getAmount() / factor);
 				}
 
-				if (event.getSource() == DamageSource.FALL)
+				if (event.getSource().is(DamageTypes.FALL))
 				{
 					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_FALL_PROTECT.get(), event.getAmount() / factor);
 				}
 			}
 		}
 
-		if (!event.getSource().isMagic() && living.hasEffect(BloodMagicPotions.OBSIDIAN_CLOAK.get()))
+		if (!event.getSource().is(DamageTypes.MAGIC) && living.hasEffect(BloodMagicPotions.OBSIDIAN_CLOAK.get()))
 		{
 			float modifier = (float) (1 - 0.2 * (1 + living.getEffect(BloodMagicPotions.OBSIDIAN_CLOAK.get()).getAmplifier()));
 			event.setAmount((float) (event.getAmount() * Math.max(0, modifier)));
@@ -315,7 +317,7 @@ public class GenericHandler
 					LivingUtil.applyNewExperience(sourcePlayer, LivingArmorRegistrar.UPGRADE_SPRINT_ATTACK.get(), event.getAmount());
 				}
 
-				if (!event.getSource().isProjectile())
+				if (!event.getSource().is(DamageTypeTags.IS_PROJECTILE))
 				{
 					LivingUtil.applyNewExperience(sourcePlayer, LivingArmorRegistrar.UPGRADE_MELEE_DAMAGE.get(), event.getAmount());
 				}
@@ -347,7 +349,7 @@ public class GenericHandler
 						double durabilityBonus = Math.min(expBonus / repairRatio, heldStack.getDamageValue());
 						if (heldStack.getDamageValue() >= durabilityBonus)
 						{
-							int durabilityAdded = (int) durabilityBonus + (durabilityBonus % 1 > sourcePlayer.level.getRandom().nextDouble()
+							int durabilityAdded = (int) durabilityBonus + (durabilityBonus % 1 > sourcePlayer.level().getRandom().nextDouble()
 									? 1
 									: 0);
 							if (durabilityAdded > 0)
@@ -409,7 +411,7 @@ public class GenericHandler
 
 				int xp = event.getOrb().value;
 
-				event.getOrb().value = ((int) Math.floor(xp * expModifier) + (player.level.random.nextDouble() < (xp * expModifier) % 1
+				event.getOrb().value = ((int) Math.floor(xp * expModifier) + (player.level().random.nextDouble() < (xp * expModifier) % 1
 						? 1
 						: 0));
 
@@ -478,7 +480,7 @@ public class GenericHandler
 		if (player instanceof ServerPlayer)
 		{
 			BlockPos pos = player.blockPosition();
-			DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(WorldDemonWillHandler.getDimensionResourceLocation(player.level), pos.getX() >> 4, pos.getZ() >> 4);
+			DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(WorldDemonWillHandler.getDimensionResourceLocation(player.level()), pos.getX() >> 4, pos.getZ() >> 4);
 			if (holder != null)
 			{
 				BloodMagic.packetHandler.sendTo(new DemonAuraClientPacket(holder), (ServerPlayer) player);
@@ -538,7 +540,7 @@ public class GenericHandler
 				prevFlySpeedMap.put(player.getUUID(), player.getAbilities().getFlyingSpeed());
 			}
 
-			if (event.getEntity().level.isClientSide)
+			if (event.getEntity().level().isClientSide)
 				player.getAbilities().setFlyingSpeed(getFlySpeedForFlightLevel(event.getEffectInstance().getAmplifier()));
 			player.onUpdateAbilities();
 		}
@@ -553,7 +555,7 @@ public class GenericHandler
 			((Player) event.getEntity()).getAbilities().mayfly = ((Player) event.getEntity()).isCreative();
 			((Player) event.getEntity()).getAbilities().flying = false;
 
-			if (event.getEntity().level.isClientSide)
+			if (event.getEntity().level().isClientSide)
 			{
 				((Player) event.getEntity()).getAbilities().setFlyingSpeed(prevFlySpeedMap.getOrDefault((((Player) event.getEntity()).getUUID()), getFlySpeedForFlightLevel(-1)));
 				prevFlySpeedMap.remove(((Player) event.getEntity()).getUUID());
@@ -578,7 +580,7 @@ public class GenericHandler
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onEntityUpdate(LivingEvent.LivingTickEvent event)
 	{
-		if (event.getEntity().level.isClientSide)
+		if (event.getEntity().level().isClientSide)
 		{
 			if (event.getEntity() instanceof Player)
 			{
@@ -586,7 +588,7 @@ public class GenericHandler
 				if (LivingUtil.hasFullSet(player))
 				{
 					LivingStats stats = LivingStats.fromPlayer(player, true);
-					if (!player.isOnGround() && player.getDeltaMovement().y() < 0)
+					if (!player.onGround() && player.getDeltaMovement().y() < 0)
 					{
 						int jumpLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_JUMP.get().getKey());
 						double fallDistanceMultiplier = LivingArmorRegistrar.UPGRADE_JUMP.get().getBonusValue("fall", jumpLevel).doubleValue();
@@ -607,7 +609,7 @@ public class GenericHandler
 				{
 					prevFlySpeedMap.put(player.getUUID(), player.getAbilities().getFlyingSpeed());
 					player.getAbilities().mayfly = true;
-					if (player.level.isClientSide)
+					if (player.level().isClientSide)
 						player.getAbilities().setFlyingSpeed(getFlySpeedForFlightLevel(player.getEffect(BloodMagicPotions.FLIGHT.get()).getAmplifier()));
 					player.onUpdateAbilities();
 				}
@@ -622,7 +624,7 @@ public class GenericHandler
 				LivingStats stats = LivingStats.fromPlayer(player, true);
 				ItemStack chestStack = player.getItemBySlot(EquipmentSlot.CHEST);
 
-				if (!event.getEntity().level.isClientSide)
+				if (!event.getEntity().level().isClientSide)
 				{
 					int currentFood = player.getFoodData().getFoodLevel();
 
@@ -653,14 +655,14 @@ public class GenericHandler
 				}
 
 //				System.out.println("Distance travelled: " + distance);
-				if (player.isOnGround() && distance > 0 && distance < 50)
+				if (player.onGround() && distance > 0 && distance < 50)
 				{
 					distance *= (1 + percentIncrease);
 					LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_SPEED.get(), distance);
 //					System.out.println("Current exp for speed: " + LivingStats.fromPlayer(player).getUpgrades().getOrDefault(LivingArmorRegistrar.UPGRADE_SPEED.get(), 0d));
 				}
 
-				if (!player.isOnGround() && player.getDeltaMovement().y() < 0)
+				if (!player.onGround() && player.getDeltaMovement().y() < 0)
 				{
 
 					int jumpLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_JUMP.get().getKey());
@@ -774,7 +776,7 @@ public class GenericHandler
 					chestStack.getTag().putInt("past_damage", currentArmourDamage);
 				}
 
-				if (!player.level.isClientSide)
+				if (!player.level().isClientSide)
 				{
 					int repairingLevel = stats.getLevel(LivingArmorRegistrar.UPGRADE_REPAIR.get().getKey());
 					if (repairingLevel > 0)
@@ -792,7 +794,7 @@ public class GenericHandler
 
 							repairCooldown = LivingArmorRegistrar.UPGRADE_REPAIR.get().getBonusValue("interval", repairingLevel).intValue();
 							hasChanged = true;
-							EquipmentSlot randomSlot = EquipmentSlot.values()[2 + player.level.random.nextInt(4)];
+							EquipmentSlot randomSlot = EquipmentSlot.values()[2 + player.level().random.nextInt(4)];
 							ItemStack repairStack = player.getItemBySlot(randomSlot);
 							if (!repairStack.isEmpty())
 							{
