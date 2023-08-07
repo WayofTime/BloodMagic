@@ -6,6 +6,7 @@ import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -25,11 +26,10 @@ public class ElementHolding extends HUDElement
 	}
 
 	@Override
-	public void draw(PoseStack matrixStack, float partialTicks, int drawX, int drawY)
+	public void draw(GuiGraphics guiGraphics, float partialTicks, int drawX, int drawY)
 	{
 //		GlStateManager.color(1.0F, 1.0F, 1.0F);
-		matrixStack.pushPose();
-		HOLDING_BAR.draw(matrixStack, drawX, drawY);
+		HOLDING_BAR.draw(guiGraphics, drawX, drawY);
 
 		Minecraft minecraft = Minecraft.getInstance();
 		ItemStack sigilHolding = minecraft.player.getMainHandItem();
@@ -41,7 +41,7 @@ public class ElementHolding extends HUDElement
 			return;
 
 		int currentSlot = ItemSigilHolding.getCurrentItemOrdinal(sigilHolding);
-		SELECTED_OVERLAY.draw(matrixStack, drawX - 1 + (currentSlot * 20), drawY - 1);
+		SELECTED_OVERLAY.draw(guiGraphics, drawX - 1 + (currentSlot * 20), drawY - 1);
 
 		Lighting.setupForFlatItems();
 //		Lighting.turnBackOn();
@@ -49,10 +49,9 @@ public class ElementHolding extends HUDElement
 		int xOffset = 0;
 		for (ItemStack stack : inventory)
 		{
-			renderHotbarItem(matrixStack, drawX + 3 + xOffset, drawY + 3, partialTicks, minecraft.player, stack);
+			renderHotbarItem(guiGraphics, drawX + 3 + xOffset, drawY + 3, partialTicks, minecraft.player, stack);
 			xOffset += 20;
 		}
-		matrixStack.popPose();
 	}
 
 	@Override
@@ -69,30 +68,30 @@ public class ElementHolding extends HUDElement
 		return true;
 	}
 
-	protected void renderHotbarItem(PoseStack matrixStack, int x, int y, float partialTicks, Player player, ItemStack stack)
+	protected void renderHotbarItem(GuiGraphics guiGraphics, int x, int y, float partialTicks, Player player, ItemStack stack)
 	{
 		if (!stack.isEmpty())
 		{
 			float animation = (float) stack.getPopTime() - partialTicks;
 
+			PoseStack poseStack = guiGraphics.pose();
 			if (animation > 0.0F)
 			{
-				matrixStack.pushPose();
+				poseStack.pushPose();
 				float f1 = 1.0F + animation / 5.0F;
-				matrixStack.translate((float) (x + 8), (float) (y + 12), 0.0F);
-				matrixStack.scale(1.0F / f1, (f1 + 1.0F) / 2.0F, 1.0F);
-				matrixStack.translate((float) (-(x + 8)), (float) (-(y + 12)), 0.0F);
+				poseStack.translate((float) (x + 8), (float) (y + 12), 0.0F);
+				poseStack.scale(1.0F / f1, (f1 + 1.0F) / 2.0F, 1.0F);
+				poseStack.translate((float) (-(x + 8)), (float) (-(y + 12)), 0.0F);
 //				RenderSystem.translatef((float) (x + 8), (float) (y + 12), 0.0F);
 //				RenderSystem.scalef(1.0F / f1, (f1 + 1.0F) / 2.0F, 1.0F);
 //				RenderSystem.translatef((float) (-(x + 8)), (float) (-(y + 12)), 0.0F);
 			}
-
-			Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(player, stack, x, y, 1);
+			guiGraphics.renderItem(player, stack, x, y, 1);
 
 			if (animation > 0.0F)
-				matrixStack.popPose();
+				poseStack.popPose();
 
-			Minecraft.getInstance().getItemRenderer().renderGuiItemDecorations(Minecraft.getInstance().font, stack, x, y);
+			guiGraphics.renderItemDecorations(Minecraft.getInstance().font, stack, x, y);
 		}
 	}
 
