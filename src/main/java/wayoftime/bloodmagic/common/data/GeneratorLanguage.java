@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.common.data;
 
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
@@ -8,9 +9,9 @@ import wayoftime.bloodmagic.common.item.BloodMagicItems;
 
 public class GeneratorLanguage extends LanguageProvider
 {
-	public GeneratorLanguage(DataGenerator gen)
+	public GeneratorLanguage(PackOutput output)
 	{
-		super(gen, BloodMagic.MODID, "en_us");
+		super(output, BloodMagic.MODID, "en_us");
 	}
 
 	@Override
