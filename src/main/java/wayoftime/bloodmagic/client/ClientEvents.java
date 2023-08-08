@@ -322,9 +322,10 @@ public class ClientEvents
 		});
 	}
 
-	@SubscribeEvent
-	public static void onTextureStitchEvent(TextureStitchEvent.Pre event)
-	{
-		event.addSprite(BloodMagic.rl("item/curios_empty_living_armour_socket"));
-	}
+	// TODO: replace with JSON/datagen
+//	@SubscribeEvent
+//	public static void onTextureStitchEvent(TextureStitchEvent.Pre event)
+//	{
+//		event.addSprite(BloodMagic.rl("item/curios_empty_living_armour_socket"));
+//	}
 }

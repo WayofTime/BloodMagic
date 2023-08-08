@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -650,7 +651,7 @@ public class RitualCrafting extends Ritual
 				boolean foundRecipe = false;
 				for (CraftingRecipe testRecipe : craftingRecipes)
 				{
-					ItemStack resultStack = testRecipe.getResultItem();
+					ItemStack resultStack = testRecipe.getResultItem(level.registryAccess());
 					if (outputFilter.doesStackPassFilter(resultStack))
 					{
 						recipe = testRecipe;
@@ -682,7 +683,7 @@ public class RitualCrafting extends Ritual
 
 			if (doLimit)
 			{
-				craftLimit += (recipe.getResultItem().getCount() - 1);
+				craftLimit += (recipe.getResultItem(level.registryAccess()).getCount() - 1);
 			}
 		}
 
@@ -765,7 +766,7 @@ public class RitualCrafting extends Ritual
 			outputInv = Utils.getInventory(outputTile, null);
 		}
 
-		ItemStack resultStack = recipe.assemble(craftingContainer);
+		ItemStack resultStack = recipe.assemble(craftingContainer, level.registryAccess());
 
 		boolean doCraft = true;
 		if (outputInv != null)
@@ -938,7 +939,7 @@ public class RitualCrafting extends Ritual
 
 	private static CraftingContainer makeContainer()
 	{
-		CraftingContainer craftingcontainer = new CraftingContainer(new AbstractContainerMenu((MenuType) null, -1)
+		CraftingContainer craftingcontainer = new TransientCraftingContainer(new AbstractContainerMenu((MenuType) null, -1)
 		{
 			@Override
 			public ItemStack quickMoveStack(Player p_38941_, int p_38942_) {
