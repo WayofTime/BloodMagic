@@ -42,7 +42,8 @@ public class EntityShapedChargeRenderer extends EntityRenderer<EntityShapedCharg
 			if (blockstate != world.getBlockState(entityIn.blockPosition()) && blockstate.getRenderShape() != RenderShape.INVISIBLE)
 			{
 				matrixStackIn.pushPose();
-				BlockPos blockpos = new BlockPos(entityIn.getX(), entityIn.getBoundingBox().maxY, entityIn.getZ());
+
+				BlockPos blockpos = new BlockPos((int) entityIn.getX(), (int) entityIn.getBoundingBox().maxY, (int) entityIn.getZ());
 				matrixStackIn.translate(-0.5D, 0.0D, -0.5D);
 				BlockRenderDispatcher blockrendererdispatcher = Minecraft.getInstance().getBlockRenderer();
 				for (net.minecraft.client.renderer.RenderType type : net.minecraft.client.renderer.RenderType.chunkBufferLayers())
