@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext.Fluid;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -73,7 +74,7 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 			{
 				if (position.getType() == HitResult.Type.BLOCK)
 				{
-					BlockEntity tile = world.getBlockEntity(new BlockPos(position.getLocation()));
+					BlockEntity tile = world.getBlockEntity(((BlockHitResult) position).getBlockPos());
 
 					if (tile != null && tile instanceof IBloodAltar)
 					{

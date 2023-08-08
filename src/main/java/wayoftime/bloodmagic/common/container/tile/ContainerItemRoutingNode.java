@@ -23,7 +23,7 @@ public class ContainerItemRoutingNode extends AbstractContainerMenu
 
 	public ContainerItemRoutingNode(int windowId, Inventory playerInventory, FriendlyByteBuf extraData)
 	{
-		this((TileFilteredRoutingNode) playerInventory.player.level.getBlockEntity(extraData.readBlockPos()), windowId, playerInventory);
+		this((TileFilteredRoutingNode) playerInventory.player.level().getBlockEntity(extraData.readBlockPos()), windowId, playerInventory);
 	}
 
 	public ContainerItemRoutingNode(@Nullable TileFilteredRoutingNode tile, int windowId, Inventory playerInventory)

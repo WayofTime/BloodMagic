@@ -19,7 +19,7 @@ public class ContainerMasterRoutingNode extends AbstractContainerMenu
 
 	public ContainerMasterRoutingNode(int windowId, Inventory playerInventory, FriendlyByteBuf extraData)
 	{
-		this((TileMasterRoutingNode) playerInventory.player.level.getBlockEntity(extraData.readBlockPos()), windowId, playerInventory);
+		this((TileMasterRoutingNode) playerInventory.player.level().getBlockEntity(extraData.readBlockPos()), windowId, playerInventory);
 	}
 
 	public ContainerMasterRoutingNode(@Nullable TileMasterRoutingNode tile, int windowId, Inventory playerInventory)

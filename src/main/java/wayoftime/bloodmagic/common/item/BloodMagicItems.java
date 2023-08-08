@@ -179,10 +179,10 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> WEAK_BLOOD_SHARD = BASICITEMS.register("weakbloodshard", () -> new ItemBase());
 	public static final RegistryObject<Item> EXPERIENCE_TOME = BASICITEMS.register("experiencebook", () -> new ItemExperienceBook());
 
-	public static final RegistryObject<Item> LIVING_HELMET = BASICITEMS.register("livinghelmet", () -> new ItemLivingArmor(EquipmentSlot.HEAD));
-	public static final RegistryObject<Item> LIVING_PLATE = BASICITEMS.register("livingplate", () -> new ItemLivingArmor(EquipmentSlot.CHEST));
-	public static final RegistryObject<Item> LIVING_LEGGINGS = BASICITEMS.register("livingleggings", () -> new ItemLivingArmor(EquipmentSlot.LEGS));
-	public static final RegistryObject<Item> LIVING_BOOTS = BASICITEMS.register("livingboots", () -> new ItemLivingArmor(EquipmentSlot.FEET));
+	public static final RegistryObject<Item> LIVING_HELMET = BASICITEMS.register("livinghelmet", () -> new ItemLivingArmor(ArmorItem.Type.HELMET));
+	public static final RegistryObject<Item> LIVING_PLATE = BASICITEMS.register("livingplate", () -> new ItemLivingArmor(ArmorItem.Type.CHESTPLATE));
+	public static final RegistryObject<Item> LIVING_LEGGINGS = BASICITEMS.register("livingleggings", () -> new ItemLivingArmor(ArmorItem.Type.LEGGINGS));
+	public static final RegistryObject<Item> LIVING_BOOTS = BASICITEMS.register("livingboots", () -> new ItemLivingArmor(ArmorItem.Type.BOOTS));
 
 	public static final RegistryObject<Item> LIVING_TOME = BASICITEMS.register("upgradetome", () -> new ItemLivingTome());
 	public static final RegistryObject<Item> LIVING_TRAINER = BASICITEMS.register("upgradetrainer", () -> new ItemLivingTrainer());

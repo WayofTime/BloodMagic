@@ -393,11 +393,11 @@ public class ItemRitualDiviner extends Item
 	public void onUseTick(Level worldIn, LivingEntity entityLiving, ItemStack stack, int count)
 	{
 		setActivatedState(stack, false);
-		if (!entityLiving.level.isClientSide && entityLiving instanceof Player)
+		if (!entityLiving.level().isClientSide && entityLiving instanceof Player)
 		{
 			Player player = (Player) entityLiving;
 
-			HitResult ray = getPlayerPOVHitResult(player.level, player, ClipContext.Fluid.NONE);
+			HitResult ray = getPlayerPOVHitResult(player.level(), player, ClipContext.Fluid.NONE);
 
 			if (ray != null && ray.getType() == HitResult.Type.BLOCK)
 			{
