@@ -11,7 +11,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
-import wayoftime.bloodmagic.common.registries.BloodMagicDamageSources;
+import wayoftime.bloodmagic.common.registries.BloodMagicDamageTypes;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 
 public class BMPotionUtils
@@ -69,7 +69,7 @@ public class BMPotionUtils
 
 		if (incurredDamage > 0)
 		{
-			entity.hurt(BloodMagicDamageSources.INSTANCE.sacrifice(), (float) incurredDamage);
+			entity.hurt(entity.damageSources().source(BloodMagicDamageTypes.SACRIFICE), (float) incurredDamage);
 		}
 
 		return incurredDamage;

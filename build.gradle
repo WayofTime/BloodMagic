@@ -19,9 +19,9 @@ println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getPro
 minecraft {
     mappings channel: mapping_channel, version: mapping_version
 
-
-
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     copyIdeResources = true
+
     runs {
 
         configureEach {

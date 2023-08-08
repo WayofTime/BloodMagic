@@ -9,7 +9,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import wayoftime.bloodmagic.common.registries.BloodMagicDamageSources;
+import wayoftime.bloodmagic.common.registries.BloodMagicDamageTypes;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 
 public class ItemSigilFastMiner extends ItemSigilToggleableBase
@@ -45,7 +45,7 @@ public class ItemSigilFastMiner extends ItemSigilToggleableBase
 				if (!player.isCreative())
 				{
 					player.invulnerableTime = 0;
-					player.hurt(BloodMagicDamageSources.INSTANCE.sacrifice(), 1.0F);
+					player.hurt(player.damageSources().source(BloodMagicDamageTypes.SACRIFICE), 1.0F);
 				}
 			}
 		}

@@ -1,16 +1,13 @@
 package wayoftime.bloodmagic;
 
-import com.google.gson.Gson;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent.RegisterGeometryLoaders;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -33,7 +30,6 @@ import wayoftime.bloodmagic.client.hud.ElementRegistry;
 import wayoftime.bloodmagic.client.hud.Elements;
 import wayoftime.bloodmagic.client.key.BloodMagicKeyHandler;
 import wayoftime.bloodmagic.client.key.KeyBindingBloodMagic;
-import wayoftime.bloodmagic.client.key.KeyBindings;
 import wayoftime.bloodmagic.client.model.MimicModelLoader;
 import wayoftime.bloodmagic.client.model.SigilHoldingModelLoader;
 import wayoftime.bloodmagic.client.sounds.SoundRegisterListener;
@@ -46,7 +42,7 @@ import wayoftime.bloodmagic.common.loot.BloodMagicLootFunctionManager;
 import wayoftime.bloodmagic.common.loot.BloodMagicLootTypeManager;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.common.registries.BloodMagicCreativeTabs;
-import wayoftime.bloodmagic.common.registries.BloodMagicDamageSources;
+import wayoftime.bloodmagic.common.registries.BloodMagicDamageTypes;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 import wayoftime.bloodmagic.common.tile.BloodMagicTileEntities;
@@ -100,7 +96,6 @@ public class BloodMagic {
         BloodMagicBlocks.BLOCKS.register(modBus);
         BloodMagicItems.ITEMS.register(modBus);
 
-        BloodMagicDamageSources.DAMAGE_TYPES.register(modBus);
         BloodMagicItems.BASICITEMS.register(modBus);
         BloodMagicBlocks.BASICBLOCKS.register(modBus);
         BloodMagicBlocks.DUNGEONBLOCKS.register(modBus);

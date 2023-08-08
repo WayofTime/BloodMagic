@@ -13,7 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
-import wayoftime.bloodmagic.common.registries.BloodMagicDamageSources;
+import wayoftime.bloodmagic.common.registries.BloodMagicDamageTypes;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
@@ -107,7 +107,7 @@ public class RitualRegeneration extends Ritual
 
 						float currentHealth = damagedEntity.getHealth();
 
-						damagedEntity.hurt(BloodMagicDamageSources.INSTANCE.sacrifice(), Math.min(player.getMaxHealth() - player.getHealth(), syphonedHealthAmount));
+						damagedEntity.hurt(damagedEntity.damageSources().source(BloodMagicDamageTypes.SACRIFICE), Math.min(player.getMaxHealth() - player.getHealth(), syphonedHealthAmount));
 
 						float healthDifference = currentHealth - damagedEntity.getHealth();
 						if (healthDifference > 0)

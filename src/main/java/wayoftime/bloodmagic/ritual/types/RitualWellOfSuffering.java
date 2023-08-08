@@ -12,7 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.common.registries.BloodMagicDamageSources;
+import wayoftime.bloodmagic.common.registries.BloodMagicDamageTypes;
 import wayoftime.bloodmagic.common.tile.TileAltar;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
@@ -20,7 +20,6 @@ import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.ritual.IMasterRitualStone;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
-import wayoftime.bloodmagic.ritual.RitualManager;
 import wayoftime.bloodmagic.ritual.RitualRegister;
 
 @RitualRegister("well_of_suffering")
@@ -106,7 +105,7 @@ public class RitualWellOfSuffering extends Ritual
 
 				if (entity.isAlive() && !(entity instanceof Player))
 				{
-					if (entity.hurt(BloodMagicDamageSources.INSTANCE.ritual(), 1))
+					if (entity.hurt(entity.damageSources().source(BloodMagicDamageTypes.RITUAL), 1))
 					{
 						if (entity.isBaby())
 							lifeEssenceRatio *= 0.5F;

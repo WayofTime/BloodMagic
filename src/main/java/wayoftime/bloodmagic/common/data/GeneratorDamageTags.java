@@ -8,7 +8,7 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.common.registries.BloodMagicDamageSources;
+import wayoftime.bloodmagic.common.registries.BloodMagicDamageTypes;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -19,7 +19,7 @@ public class GeneratorDamageTags extends TagsProvider<DamageType> {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        this.tag(DamageTypeTags.BYPASSES_ARMOR).add(BloodMagicDamageSources.SACRIFICE.getKey()).add(BloodMagicDamageSources.RITUAL.getKey());
-        this.tag(DamageTypeTags.BYPASSES_EFFECTS).add(BloodMagicDamageSources.SACRIFICE.getKey());
+        this.tag(DamageTypeTags.BYPASSES_ARMOR).add(BloodMagicDamageTypes.SACRIFICE).add(BloodMagicDamageTypes.RITUAL);
+        this.tag(DamageTypeTags.BYPASSES_EFFECTS).add(BloodMagicDamageTypes.SACRIFICE);
     }
 }
