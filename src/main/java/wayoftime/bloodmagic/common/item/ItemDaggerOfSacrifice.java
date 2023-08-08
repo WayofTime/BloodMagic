@@ -69,7 +69,7 @@ public class ItemDaggerOfSacrifice extends Item
 			target.getCommandSenderWorld().playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (target.getCommandSenderWorld().random.nextFloat() - target.getCommandSenderWorld().random.nextFloat()) * 0.8F);
 			target.setHealth(0.00001f);
 			target.invulnerableTime = 0;
-			target.hurt(BloodMagicDamageSources.INSTANCE.defaultSource(), 10);
+			target.hurt(BloodMagicDamageSources.INSTANCE.sacrifice(), 10);
 //			target.onDeath(DamageSourceBloodMagic.INSTANCE);
 		}
 

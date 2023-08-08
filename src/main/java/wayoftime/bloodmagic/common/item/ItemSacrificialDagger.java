@@ -108,12 +108,12 @@ public class ItemSacrificialDagger extends Item
 			{
 				player.invulnerableTime = 0;
 
-				player.hurt(BloodMagicDamageSources.INSTANCE.defaultSource(), 0.001F);
+				player.hurt(BloodMagicDamageSources.INSTANCE.sacrifice(), 0.001F);
 				player.setHealth(Math.max(player.getHealth() - 1.998F, 0.0001f));
 				if (player.getHealth() <= 0.001f && !world.isClientSide)
 				{
 					player.invulnerableTime = 0;
-					player.hurt(BloodMagicDamageSources.INSTANCE.defaultSource(), 10);
+					player.hurt(BloodMagicDamageSources.INSTANCE.sacrifice(), 10);
 				}
 			}
 

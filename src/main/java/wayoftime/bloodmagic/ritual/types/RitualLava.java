@@ -229,7 +229,7 @@ public class RitualLava extends Ritual
 
 				if (!entity.isAlive() && entity.hurtTime <= 0 && Utils.isImmuneToFireDamage(entity))
 				{
-					if (entity.hurt(BloodMagicDamageSources.INSTANCE.defaultSource(), damage))
+					if (entity.hurt(BloodMagicDamageSources.INSTANCE.sacrifice(), damage))
 					{
 						corrosiveDrained += corrosiveWillDrain;
 						corrosiveWill -= corrosiveWillDrain;

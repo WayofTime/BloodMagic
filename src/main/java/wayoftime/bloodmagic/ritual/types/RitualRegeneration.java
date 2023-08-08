@@ -107,7 +107,7 @@ public class RitualRegeneration extends Ritual
 
 						float currentHealth = damagedEntity.getHealth();
 
-						damagedEntity.hurt(BloodMagicDamageSources.INSTANCE.defaultSource(), Math.min(player.getMaxHealth() - player.getHealth(), syphonedHealthAmount));
+						damagedEntity.hurt(BloodMagicDamageSources.INSTANCE.sacrifice(), Math.min(player.getMaxHealth() - player.getHealth(), syphonedHealthAmount));
 
 						float healthDifference = currentHealth - damagedEntity.getHealth();
 						if (healthDifference > 0)

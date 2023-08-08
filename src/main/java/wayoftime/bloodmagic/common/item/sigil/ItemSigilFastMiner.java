@@ -45,7 +45,7 @@ public class ItemSigilFastMiner extends ItemSigilToggleableBase
 				if (!player.isCreative())
 				{
 					player.invulnerableTime = 0;
-					player.hurt(BloodMagicDamageSources.INSTANCE.defaultSource(), 1.0F);
+					player.hurt(BloodMagicDamageSources.INSTANCE.sacrifice(), 1.0F);
 				}
 			}
 		}

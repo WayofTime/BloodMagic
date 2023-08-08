@@ -172,7 +172,7 @@ public class SoulNetwork implements INBTSerializable<CompoundTag>
 				if (!user.isCreative())
 				{
 					user.invulnerableTime = 0;
-					user.hurt(BloodMagicDamageSources.INSTANCE.defaultSource(), 1.0F);
+					user.hurt(BloodMagicDamageSources.INSTANCE.sacrifice(), 1.0F);
 				}
 
 			} else if (syphon >= 100)
@@ -182,7 +182,7 @@ public class SoulNetwork implements INBTSerializable<CompoundTag>
 					for (int i = 0; i < ((syphon + 99) / 100); i++)
 					{
 						user.invulnerableTime = 0;
-						user.hurt(BloodMagicDamageSources.INSTANCE.defaultSource(), 1.0F);
+						user.hurt(BloodMagicDamageSources.INSTANCE.sacrifice(), 1.0F);
 					}
 				}
 			}

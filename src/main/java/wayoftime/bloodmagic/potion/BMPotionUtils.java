@@ -69,7 +69,7 @@ public class BMPotionUtils
 
 		if (incurredDamage > 0)
 		{
-			entity.hurt(BloodMagicDamageSources.INSTANCE.defaultSource(), (float) incurredDamage);
+			entity.hurt(BloodMagicDamageSources.INSTANCE.sacrifice(), (float) incurredDamage);
 		}
 
 		return incurredDamage;
