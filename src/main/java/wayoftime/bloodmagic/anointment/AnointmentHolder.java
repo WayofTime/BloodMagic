@@ -204,11 +204,10 @@ public class AnointmentHolder
 		anointment.removeAnointment(this, weaponStack, type);
 
 		SoundEvent soundevent = SoundEvents.SPLASH_POTION_BREAK;
-		user.level.playSound(null, user.blockPosition(), soundevent, SoundSource.BLOCKS, 1.0F, 1.0F);
+		user.level().playSound(null, user.blockPosition(), soundevent, SoundSource.BLOCKS, 1.0F, 1.0F);
 
-		if (user.level instanceof ServerLevel)
+		if (user.level() instanceof ServerLevel server)
 		{
-			ServerLevel server = (ServerLevel) user.level;
 			server.sendParticles(ParticleTypes.LARGE_SMOKE, user.getX(), user.getY() + 1, user.getZ(), 16, 0.3, 0, 0.3, 0);
 		}
 
