@@ -297,7 +297,7 @@ public class LivingUtil
 			if (stack.isEmpty() || !(stack.getItem() instanceof ILivingContainer))
 				return false;
 
-			if (stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlot.CHEST)
+			if (stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getType() == ArmorItem.Type.CHESTPLATE)
 			{
 				if (stack.getMaxDamage() - stack.getDamageValue() <= 1)
 				{

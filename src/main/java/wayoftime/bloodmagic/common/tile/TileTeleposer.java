@@ -147,7 +147,6 @@ public class TileTeleposer extends TileInventory implements MenuProvider, Comman
 				} else
 				{
 					entity.teleportTo(newPosVec.x, newPosVec.y, newPosVec.z);
-					entity.level = linkedWorld;
 				}
 
 				uses++;
@@ -164,7 +163,6 @@ public class TileTeleposer extends TileInventory implements MenuProvider, Comman
 				{
 					entity.teleportTo(newPosVec.x, newPosVec.y, newPosVec.z);
 //					entity.setLevel(level);
-					entity.level = level;
 				}
 
 				uses++;

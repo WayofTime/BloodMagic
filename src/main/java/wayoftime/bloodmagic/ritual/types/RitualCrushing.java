@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.FakePlayer;
@@ -186,7 +187,7 @@ public class RitualCrushing extends Ritual
 
 			if (!isBlockClaimed && isSilkTouch)
 			{
-				LootContext.Builder lootBuilder = new LootContext.Builder((ServerLevel) world);
+				LootParams.Builder lootBuilder = new LootParams.Builder((ServerLevel) world);
 				Vec3 blockCenter = new Vec3(newPos.getX() + 0.5, newPos.getY() + 0.5, newPos.getZ() + 0.5);
 				List<ItemStack> silkDrops = state.getDrops(lootBuilder.withParameter(LootContextParams.ORIGIN, blockCenter).withParameter(LootContextParams.TOOL, mockPick));
 
@@ -227,7 +228,7 @@ public class RitualCrushing extends Ritual
 				ItemStack mockFortunePick = new ItemStack(Items.DIAMOND_PICKAXE, 1);
 				mockFortunePick.enchant(Enchantments.BLOCK_FORTUNE, fortune);
 
-				LootContext.Builder lootBuilder = new LootContext.Builder((ServerLevel) world);
+				LootParams.Builder lootBuilder = new LootParams.Builder((ServerLevel) world);
 				Vec3 blockCenter = new Vec3(newPos.getX() + 0.5, newPos.getY() + 0.5, newPos.getZ() + 0.5);
 				List<ItemStack> stackList = state.getDrops(lootBuilder.withParameter(LootContextParams.ORIGIN, blockCenter).withParameter(LootContextParams.TOOL, mockFortunePick));
 //				List<ItemStack> stackList = Block.getDrops(state, world, newPos, world.getTileEntity(newPos));

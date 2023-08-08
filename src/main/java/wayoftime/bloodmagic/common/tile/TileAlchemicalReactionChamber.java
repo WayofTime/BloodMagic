@@ -238,7 +238,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 				Optional<SmeltingRecipe> furnaceRecipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, invWrapper, level);
 				if (furnaceRecipe.isPresent())
 				{
-					ItemStack outputStack = furnaceRecipe.get().assemble(invWrapper);
+					ItemStack outputStack = furnaceRecipe.get().assemble(invWrapper, level.registryAccess());
 					if (canCraftFurnace(outputStack, outputSlotHandler))
 					{
 						setIsCrafting(level, worldPosition, getBlockState(), true);

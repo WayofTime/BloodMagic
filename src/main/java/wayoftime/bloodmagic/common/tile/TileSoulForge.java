@@ -200,7 +200,7 @@ public class TileSoulForge extends TileInventory implements MenuProvider, IDemon
 			return false;
 		if (currentOutputStack.isEmpty())
 			return true;
-		if (!currentOutputStack.sameItem(recipe.getOutput()))
+		if (!ItemStack.isSameItem(currentOutputStack, recipe.getOutput()))
 			return false;
 		int result = currentOutputStack.getCount() + recipe.getOutput().getCount();
 		return result <= getMaxStackSize() && result <= currentOutputStack.getMaxStackSize();
