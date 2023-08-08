@@ -40,22 +40,6 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMultiWillTool
 		this.name = name;
 		this.maxWill = maxWill;
 	}
-
-	@Override
-	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items)
-	{
-		if (this.allowedIn(group))
-		{
-			for (EnumDemonWillType type : EnumDemonWillType.values())
-			{
-				ItemStack stack = new ItemStack(this);
-				this.setCurrentType(type, stack);
-				this.setWill(type, stack, maxWill);
-				items.add(stack);
-			}
-		}
-	}
-
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{

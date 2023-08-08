@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.common.item.routing;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -228,7 +229,7 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 		} else
 		{
 			ResourceLocation rl = new ResourceLocation(tagName);
-			TagKey<Item> tag = TagKey.create(Registry.ITEM_REGISTRY, rl);
+			TagKey<Item> tag = TagKey.create(Registries.ITEM, rl);
 			return tag;
 		}
 	}

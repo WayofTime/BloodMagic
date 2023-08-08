@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.common.item;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -110,7 +111,7 @@ public class ItemTeleposerFocus extends ItemBindableBase implements ITeleposerFo
 		}
 
 		String worldKey = stack.getTag().getString(Constants.NBT.WORLD);
-		ResourceKey<Level> registryKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(worldKey));
+		ResourceKey<Level> registryKey = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(worldKey));
 		return registryKey;
 	}
 

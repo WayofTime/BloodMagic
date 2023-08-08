@@ -62,16 +62,6 @@ public class ItemMonsterSoul extends Item implements IDemonWill
 		return tag.getDouble(Constants.NBT.SOULS);
 	}
 
-	@Override
-	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items)
-	{
-		if (this.allowedIn(group))
-		{
-			ItemStack stack = new ItemStack(this);
-			this.setWill(type, stack, 5);
-			items.add(stack);
-		}
-	}
 
 	@Override
 	public boolean setWill(EnumDemonWillType type, ItemStack soulStack, double souls)
