@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.common.loot;
 
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
@@ -8,7 +9,7 @@ import wayoftime.bloodmagic.BloodMagic;
 
 public class BloodMagicLootTypeManager
 {
-	public static final DeferredRegister<LootPoolEntryType> ENTRY_TYPES = DeferredRegister.create(Registry.LOOT_ENTRY_REGISTRY, BloodMagic.MODID);
+	public static final DeferredRegister<LootPoolEntryType> ENTRY_TYPES = DeferredRegister.create(Registries.LOOT_POOL_ENTRY_TYPE, BloodMagic.MODID);
 	public static final RegistryObject<LootPoolEntryType> LOOT_TABLE = ENTRY_TYPES.register("loot_table", () -> new LootPoolEntryType(new BMTableLootEntry.Serializer()));
 
 //	public static LootPoolEntryType LOOT_TABLE;

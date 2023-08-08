@@ -46,7 +46,7 @@ public class BMTableLootEntry extends LootPoolSingletonContainer
 		} else
 		{
 			super.validate(p_225579_1_);
-			LootTable loottable = p_225579_1_.resolveLootTable(this.table);
+//			LootTable loottable = p_225579_1_.resolveLootTable(this.table);
 //			if (loottable == null)
 //			{
 //				p_225579_1_.addProblem("Unknown loot table called " + this.table);
