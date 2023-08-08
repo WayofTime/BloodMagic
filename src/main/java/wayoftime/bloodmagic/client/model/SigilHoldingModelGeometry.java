@@ -9,6 +9,7 @@ import net.minecraftforge.client.model.geometry.IUnbakedGeometry;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.function.Function;
 
 public class SigilHoldingModelGeometry implements IUnbakedGeometry<SigilHoldingModelGeometry>
 {
@@ -23,18 +24,15 @@ public class SigilHoldingModelGeometry implements IUnbakedGeometry<SigilHoldingM
 	}
 
 	@Override
-	public BakedModel bake(IGeometryBakingContext owner, ModelBakery bakery, java.util.function.Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ItemOverrides overrides, ResourceLocation modelLocation)
-	{
-		bakedBaseModel = unbakedBaseModel.bake(bakery, spriteGetter, modelTransform, baseModelLoc);
+	public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
+		bakedBaseModel = unbakedBaseModel.bake(baker, spriteGetter, modelState, baseModelLoc);
 
 		return new SigilHoldingBakedModel(baseModelLoc, bakedBaseModel);
 	}
 
 	@Override
-	public Collection<Material> getMaterials(IGeometryBakingContext owner, java.util.function.Function<ResourceLocation, UnbakedModel> modelGetter, Set<com.mojang.datafixers.util.Pair<String, String>> missingTextureErrors)
-	{
+	public void resolveParents(Function<ResourceLocation, UnbakedModel> modelGetter, IGeometryBakingContext context) {
 		unbakedBaseModel = modelGetter.apply(baseModelLoc);
-
-		return unbakedBaseModel.getMaterials(modelGetter, missingTextureErrors);
+//		return unbakedBaseModel.getMaterials(modelGetter, missingTextureErrors);
 	}
 }

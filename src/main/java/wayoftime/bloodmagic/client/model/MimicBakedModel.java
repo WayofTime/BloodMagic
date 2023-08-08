@@ -64,8 +64,8 @@ public class MimicBakedModel implements IDynamicBakedModel
 	private BakedQuad createQuad(Vec3 v1, Vec3 v2, Vec3 v3, Vec3 v4, TextureAtlasSprite sprite)
 	{
 		Vec3 normal = v3.subtract(v2).cross(v1.subtract(v2)).normalize();
-		int tw = sprite.getWidth();
-		int th = sprite.getHeight();
+		int tw = sprite.getX();
+		int th = sprite.getY();
 
 		QuadBakingVertexConsumer.Buffered quadBaker = new QuadBakingVertexConsumer.Buffered();
 		putVertex(quadBaker, normal, v1.x, v1.y, v1.z, 0, 0, sprite, 1.0f, 1.0f, 1.0f);

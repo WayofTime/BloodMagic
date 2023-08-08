@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class ChildBakedModel implements BakedModel
@@ -26,8 +27,8 @@ public class ChildBakedModel implements BakedModel
 	}
 
 	@Override
-	public BakedModel applyTransform(ItemTransforms.TransformType cameraTransformType, PoseStack poseStack, boolean applyLeftHandTransform) {
-		switch (cameraTransformType)
+	public BakedModel applyTransform(ItemDisplayContext transformType, PoseStack poseStack, boolean applyLeftHandTransform) {
+		switch (transformType)
 		{
 		case FIRST_PERSON_LEFT_HAND:
 		case FIRST_PERSON_RIGHT_HAND:
@@ -38,10 +39,10 @@ public class ChildBakedModel implements BakedModel
 		case THIRD_PERSON_RIGHT_HAND:
 		default:
 			// TODO: Change to cacheing system.
-			return net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(poseStack, heldModel, cameraTransformType, applyLeftHandTransform);
+			return net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(poseStack, heldModel, transformType, applyLeftHandTransform);
 		case NONE:
 		case GUI:
-			return net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(poseStack, baseModel, cameraTransformType, applyLeftHandTransform);
+			return net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(poseStack, baseModel, transformType, applyLeftHandTransform);
 		}
 	}
 
