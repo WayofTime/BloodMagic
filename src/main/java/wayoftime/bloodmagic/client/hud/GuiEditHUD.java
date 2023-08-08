@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -34,35 +35,32 @@ public class GuiEditHUD extends Screen
 	public void init()
 	{
 		super.init();
+		Button btn = Button.builder(Component.translatable("gui.bloodmagic.toggle"), b -> Minecraft.getInstance().setScreen(parent)).pos(width / 2 - 155, height - 30).size(70, 20).build();
+		btn.active = false;
+		addRenderableWidget(btn);
 
-		addRenderableWidget(new Button(width / 2 - 155, height - 30, 70, 20, Component.translatable("gui.bloodmagic.toggle"), b -> {
-			Minecraft.getInstance().setScreen(parent);
-		})
-		{
-			{
-				active = false;
-			}
-		});
-		addRenderableWidget(new Button(width / 2 - 75, height - 30, 70, 20, Component.translatable("gui.bloodmagic.default"), b -> {
+		addRenderableWidget(Button.builder(Component.translatable("gui.bloodmagic.default"), b -> {
 			currentOverrides.clear();
 			ElementRegistry.resetPos();
 			changes = false;
-		}));
-		addRenderableWidget(new Button(width / 2 + 5, height - 30, 70, 20, Component.translatable("gui.bloodmagic.save"), b -> {
+		}).pos(width / 2 - 75, height - 30).size(70, 20).build());
+
+		addRenderableWidget(Button.builder(Component.translatable("gui.bloodmagic.save"), b -> {
 			ElementRegistry.save(currentOverrides);
 			Minecraft.getInstance().setScreen(parent);
-		}));
-		addRenderableWidget(new Button(width / 2 + 90, height - 30, 70, 20, Component.translatable("gui.bloodmagic.cancel"), b -> {
+		}).pos(width / 2 + 5, height - 30).size(70, 20).build());
+
+		addRenderableWidget(Button.builder(Component.translatable("gui.bloodmagic.cancel"), b -> {
 			currentOverrides.clear();
 			Minecraft.getInstance().setScreen(parent);
-		}));
+		}).pos(width / 2 + 90, height - 30).size(70, 20).build());
 	}
 
 	@Override
-	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks)
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks)
 	{
-		this.renderBackground(matrixStack);
-		super.render(matrixStack, mouseX, mouseY, partialTicks);
+		this.renderBackground(guiGraphics);
+		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 
 //		ScaledResolution resolution = new ScaledResolution(Minecraft.getInstance());
 		Window window = Minecraft.getInstance().getWindow();
@@ -76,13 +74,13 @@ public class GuiEditHUD extends Screen
 			int xPos = (int) (window.getGuiScaledWidth() * position.x);
 			int yPos = (int) (window.getGuiScaledHeight() * position.y);
 
-			drawWithBox(matrixStack, element, partialTicks, xPos, yPos);
+			drawWithBox(guiGraphics, element, partialTicks, xPos, yPos);
 		}
 
 		if (dragged != null)
 		{
 			Point bounded = getBoundedDrag(window, mouseX, mouseY);
-			drawWithBox(matrixStack, dragged, partialTicks, bounded.x, bounded.y);
+			drawWithBox(guiGraphics, dragged, partialTicks, bounded.x, bounded.y);
 		}
 	}
 
@@ -170,24 +168,17 @@ public class GuiEditHUD extends Screen
 		return new Point(drawX, drawY);
 	}
 
-	protected void drawWithBox(PoseStack matrixStack, HUDElement element, float partialTicks, int drawX, int drawY)
+	protected void drawWithBox(GuiGraphics guiGraphics, HUDElement element, float partialTicks, int drawX, int drawY)
 	{
 		int color = ElementRegistry.getColor(ElementRegistry.getKey(element));
-		matrixStack.pushPose();
-//		GlStateManager.enableAlpha();
-//		GlStateManager.enableBlend();
-//		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+		guiGraphics.pose().pushPose();
 
-		this.vLine(matrixStack, drawX, drawY, drawY + element.getHeight() - 1, color);
-		this.vLine(matrixStack, drawX + element.getWidth() - 1, drawY, drawY + element.getHeight() - 1, color);
-		this.hLine(matrixStack, drawX, drawX + element.getWidth() - 1, drawY, color);
-		this.hLine(matrixStack, drawX, drawX + element.getWidth() - 1, drawY + element.getHeight() - 1, color);
-//		GlStateManager.disableBlend();
-//		GlStateManager.disableAlpha();
-		matrixStack.popPose();
-//		GlStateManager.color(1.0F, 1.0F, 1.0F);
-//		GlStateManager.enableTexture2D();
-		element.draw(matrixStack, partialTicks, drawX, drawY);
-//		GlStateManager.disableTexture2D();
+		guiGraphics.vLine( drawX, drawY, drawY + element.getHeight() - 1, color);
+		guiGraphics.vLine( drawX + element.getWidth() - 1, drawY, drawY + element.getHeight() - 1, color);
+		guiGraphics.hLine( drawX, drawX + element.getWidth() - 1, drawY, color);
+		guiGraphics.hLine( drawX, drawX + element.getWidth() - 1, drawY + element.getHeight() - 1, color);
+
+		guiGraphics.pose().popPose();
+		element.draw(guiGraphics, partialTicks, drawX, drawY);
 	}
 }

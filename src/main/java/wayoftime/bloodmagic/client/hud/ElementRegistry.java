@@ -143,8 +143,7 @@ public class ElementRegistry
 				Vec2 position = ELEMENT_INFO.get(getKey(element)).getPosition();
 				int xPos = (int) (window.getGuiScaledWidth() * position.x);
 				int yPos = (int) (window.getGuiScaledHeight() * position.y);
-
-				element.draw(event.getPoseStack(), event.getPartialTick(), xPos, yPos);
+				element.draw(event.getGuiGraphics(), event.getPartialTick(), xPos, yPos);
 			}
 		}
 	}
