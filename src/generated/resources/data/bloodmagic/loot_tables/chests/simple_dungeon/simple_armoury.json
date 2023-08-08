@@ -716,5 +716,6 @@
         "min": 5.0
       }
     }
-  ]
+  ],
+  "random_sequence": "bloodmagic:chests/simple_dungeon/simple_armoury"
 }

@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "a": {
       "tag": "forge:stone"
@@ -19,5 +20,6 @@
   ],
   "result": {
     "item": "bloodmagic:blankrune"
-  }
+  },
+  "show_notification": true
 }

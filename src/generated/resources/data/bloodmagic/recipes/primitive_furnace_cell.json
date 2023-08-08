@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "c": {
       "tag": "forge:cobblestone"
@@ -22,5 +23,6 @@
   ],
   "result": {
     "item": "bloodmagic:furnacecell_primitive"
-  }
+  },
+  "show_notification": true
 }

@@ -30,5 +30,6 @@
     "recipes": [
       "bloodmagic:smelting/blasting_ingot_netherite_scrap"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

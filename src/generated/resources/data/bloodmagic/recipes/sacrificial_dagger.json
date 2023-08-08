@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "G": {
       "tag": "forge:ingots/gold"
@@ -18,5 +19,6 @@
   ],
   "result": {
     "item": "bloodmagic:sacrificialdagger"
-  }
+  },
+  "show_notification": true
 }

@@ -72,5 +72,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "bloodmagic:blocks/strong_tau"
 }

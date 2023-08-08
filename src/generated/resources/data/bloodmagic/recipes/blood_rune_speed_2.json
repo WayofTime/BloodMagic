@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "d": {
       "item": "bloodmagic:largebloodstonebrick"
@@ -24,5 +25,6 @@
   ],
   "result": {
     "item": "bloodmagic:speedrune2"
-  }
+  },
+  "show_notification": true
 }

@@ -749,5 +749,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "bloodmagic:chests/simple_dungeon/simple_blacksmith"
 }

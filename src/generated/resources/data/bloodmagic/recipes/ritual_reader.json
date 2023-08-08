@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "g": {
       "tag": "forge:glass"
@@ -22,5 +23,6 @@
   ],
   "result": {
     "item": "bloodmagic:ritualtinkerer"
-  }
+  },
+  "show_notification": true
 }

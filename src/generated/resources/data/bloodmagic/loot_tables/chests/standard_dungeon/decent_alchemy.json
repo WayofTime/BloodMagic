@@ -436,5 +436,6 @@
         "min": 3.0
       }
     }
-  ]
+  ],
+  "random_sequence": "bloodmagic:chests/standard_dungeon/decent_alchemy"
 }

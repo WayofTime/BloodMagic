@@ -674,5 +674,6 @@
         "min": 3.0
       }
     }
-  ]
+  ],
+  "random_sequence": "bloodmagic:chests/mines/ore_loot"
 }

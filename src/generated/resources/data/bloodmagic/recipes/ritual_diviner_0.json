@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "a": {
       "item": "bloodmagic:airscribetool"
@@ -27,5 +28,6 @@
   ],
   "result": {
     "item": "bloodmagic:ritualdiviner"
-  }
+  },
+  "show_notification": true
 }

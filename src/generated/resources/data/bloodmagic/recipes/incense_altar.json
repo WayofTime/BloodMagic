@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "c": {
       "tag": "forge:cobblestone"
@@ -22,5 +23,6 @@
   ],
   "result": {
     "item": "bloodmagic:incensealtar"
-  }
+  },
+  "show_notification": true
 }

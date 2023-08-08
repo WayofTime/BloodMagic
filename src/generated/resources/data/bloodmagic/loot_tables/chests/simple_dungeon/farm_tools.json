@@ -191,5 +191,6 @@
         "min": 1.0
       }
     }
-  ]
+  ],
+  "random_sequence": "bloodmagic:chests/simple_dungeon/farm_tools"
 }

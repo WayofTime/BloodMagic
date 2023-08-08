@@ -789,5 +789,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "bloodmagic:chests/standard_dungeon/mines_key"
 }

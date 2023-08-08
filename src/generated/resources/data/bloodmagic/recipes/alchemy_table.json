@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "b": {
       "tag": "forge:ingots/iron"
@@ -24,5 +25,6 @@
   ],
   "result": {
     "item": "bloodmagic:alchemytable"
-  }
+  },
+  "show_notification": true
 }

@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "s": {
       "item": "bloodmagic:rawdemonite"
@@ -12,5 +13,6 @@
   ],
   "result": {
     "item": "bloodmagic:rawdemoniteblock"
-  }
+  },
+  "show_notification": true
 }

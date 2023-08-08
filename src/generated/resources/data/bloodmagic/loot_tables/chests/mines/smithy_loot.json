@@ -944,5 +944,6 @@
         "min": 3.0
       }
     }
-  ]
+  ],
+  "random_sequence": "bloodmagic:chests/mines/smithy_loot"
 }

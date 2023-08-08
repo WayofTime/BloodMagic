@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "f": [
       {
@@ -54,5 +55,6 @@
   "result": {
     "count": 2,
     "item": "bloodmagic:syntheticpoint"
-  }
+  },
+  "show_notification": true
 }

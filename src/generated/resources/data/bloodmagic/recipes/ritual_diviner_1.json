@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "S": {
       "item": "bloodmagic:demonslate"
@@ -18,5 +19,6 @@
   ],
   "result": {
     "item": "bloodmagic:ritualdivinerdusk"
-  }
+  },
+  "show_notification": true
 }

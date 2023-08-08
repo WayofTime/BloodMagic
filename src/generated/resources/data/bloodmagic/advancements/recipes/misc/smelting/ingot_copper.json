@@ -30,5 +30,6 @@
     "recipes": [
       "bloodmagic:smelting/ingot_copper"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

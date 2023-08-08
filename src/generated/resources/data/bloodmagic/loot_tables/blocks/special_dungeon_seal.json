@@ -7,5 +7,6 @@
       "name": "bloodmagic:special_dungeon_seal",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "bloodmagic:blocks/special_dungeon_seal"
 }

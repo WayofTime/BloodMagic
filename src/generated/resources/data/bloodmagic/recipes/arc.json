@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "I": {
       "tag": "forge:storage_blocks/iron"
@@ -25,5 +26,6 @@
   ],
   "result": {
     "item": "bloodmagic:alchemicalreactionchamber"
-  }
+  },
+  "show_notification": true
 }

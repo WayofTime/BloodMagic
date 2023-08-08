@@ -300,5 +300,6 @@
         "min": 3.0
       }
     }
-  ]
+  ],
+  "random_sequence": "bloodmagic:chests/simple_dungeon/farm_parts"
 }

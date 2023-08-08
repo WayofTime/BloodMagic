@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "B": {
       "item": "minecraft:water_bucket"
@@ -22,5 +23,6 @@
   ],
   "result": {
     "item": "bloodmagic:primitive_hydration_cell"
-  }
+  },
+  "show_notification": true
 }

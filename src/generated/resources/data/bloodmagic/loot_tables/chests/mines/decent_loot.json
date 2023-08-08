@@ -888,5 +888,6 @@
         "min": 3.0
       }
     }
-  ]
+  ],
+  "random_sequence": "bloodmagic:chests/mines/decent_loot"
 }

@@ -135,5 +135,6 @@
         "min": 2.0
       }
     }
-  ]
+  ],
+  "random_sequence": "bloodmagic:chests/simple_dungeon/nether"
 }

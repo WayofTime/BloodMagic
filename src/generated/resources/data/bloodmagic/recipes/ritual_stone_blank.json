@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "a": {
       "tag": "forge:obsidian"
@@ -20,5 +21,6 @@
   "result": {
     "count": 4,
     "item": "bloodmagic:ritualstone"
-  }
+  },
+  "show_notification": true
 }

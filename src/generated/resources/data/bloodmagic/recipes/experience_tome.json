@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "b": {
       "item": "minecraft:enchanted_book"
@@ -28,5 +29,6 @@
   ],
   "result": {
     "item": "bloodmagic:experiencebook"
-  }
+  },
+  "show_notification": true
 }

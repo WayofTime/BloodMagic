@@ -490,5 +490,6 @@
         "min": 3.0
       }
     }
-  ]
+  ],
+  "random_sequence": "bloodmagic:chests/standard_dungeon/enchanting_loot"
 }

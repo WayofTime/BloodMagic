@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "a": {
       "tag": "forge:obsidian"
@@ -25,5 +26,6 @@
   ],
   "result": {
     "item": "bloodmagic:bettercapacityrune"
-  }
+  },
+  "show_notification": true
 }

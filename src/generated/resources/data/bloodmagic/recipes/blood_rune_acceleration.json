@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "a": {
       "item": "minecraft:bucket"
@@ -25,5 +26,6 @@
   ],
   "result": {
     "item": "bloodmagic:accelerationrune"
-  }
+  },
+  "show_notification": true
 }

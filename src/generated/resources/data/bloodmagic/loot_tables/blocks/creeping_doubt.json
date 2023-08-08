@@ -41,5 +41,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "bloodmagic:blocks/creeping_doubt"
 }

@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "e": {
       "tag": "forge:ender_pearls"
@@ -18,5 +19,6 @@
   ],
   "result": {
     "item": "bloodmagic:teleposer"
-  }
+  },
+  "show_notification": true
 }

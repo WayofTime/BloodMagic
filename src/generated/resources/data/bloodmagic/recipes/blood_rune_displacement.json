@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "a": {
       "tag": "forge:stone"
@@ -21,5 +22,6 @@
   ],
   "result": {
     "item": "bloodmagic:dislocationrune"
-  }
+  },
+  "show_notification": true
 }

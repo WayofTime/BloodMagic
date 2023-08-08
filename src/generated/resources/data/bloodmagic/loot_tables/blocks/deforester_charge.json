@@ -7,5 +7,6 @@
       "name": "bloodmagic:deforester_charge",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "bloodmagic:blocks/deforester_charge"
 }
