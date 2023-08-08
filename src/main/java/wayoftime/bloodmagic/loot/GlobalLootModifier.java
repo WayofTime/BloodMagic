@@ -13,6 +13,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -67,10 +68,10 @@ public class GlobalLootModifier
 			}
 			ItemStack fakeTool = ctxTool.copy();
 			fakeTool.enchant(Enchantments.SILK_TOUCH, 1);
-			LootContext.Builder builder = new LootContext.Builder(context);
+			LootParams.Builder builder = new LootParams.Builder(context.getLevel());
 			builder.withParameter(LootContextParams.TOOL, fakeTool);
-			LootContext ctx = builder.create(LootContextParamSets.BLOCK);
-			LootTable loottable = context.getLevel().getServer().getLootTables().get(context.getParamOrNull(LootContextParams.BLOCK_STATE).getBlock().getLootTable());
+			LootParams ctx = builder.create(LootContextParamSets.BLOCK);
+			LootTable loottable = context.getLevel().getServer().getLootData().getLootTable(context.getParamOrNull(LootContextParams.BLOCK_STATE).getBlock().getLootTable());
 			return loottable.getRandomItems(ctx);
 		}
 
@@ -126,10 +127,10 @@ public class GlobalLootModifier
 
 //			EnchantmentHelper.setEnchantmentLevel(p_182441_, p_182442_);
 
-			LootContext.Builder builder = new LootContext.Builder(context);
+			LootParams.Builder builder = new LootParams.Builder(context.getLevel());
 			builder.withParameter(LootContextParams.TOOL, fakeTool);
-			LootContext ctx = builder.create(LootContextParamSets.BLOCK);
-			LootTable loottable = context.getLevel().getServer().getLootTables().get(context.getParamOrNull(LootContextParams.BLOCK_STATE).getBlock().getLootTable());
+			LootParams ctx = builder.create(LootContextParamSets.BLOCK);
+			LootTable loottable = context.getLevel().getServer().getLootData().getLootTable(context.getParamOrNull(LootContextParams.BLOCK_STATE).getBlock().getLootTable());
 			return loottable.getRandomItems(ctx);
 		}
 
@@ -248,7 +249,11 @@ public class GlobalLootModifier
 
 		private static ItemStack smelt(ItemStack stack, LootContext context)
 		{
-			return context.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), context.getLevel()).map(SmeltingRecipe::getResultItem).filter(itemStack -> !itemStack.isEmpty()).map(itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, stack.getCount() * itemStack.getCount())).orElse(stack);
+			return context.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), context.getLevel())
+					.map((a) -> a.getResultItem(context.getLevel().registryAccess()))
+					.filter(itemStack -> !itemStack.isEmpty())
+					.map(itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, stack.getCount() * itemStack.getCount()))
+					.orElse(stack);
 		}
 
 		@Override
