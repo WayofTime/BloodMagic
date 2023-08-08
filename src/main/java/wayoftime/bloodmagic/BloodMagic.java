@@ -216,11 +216,9 @@ public class BloodMagic {
     public void gatherData(GatherDataEvent event) {
 
         DataGenerator gen = event.getGenerator();
-
-        ItemModelProvider itemModels = new GeneratorItemModels(gen, event.getExistingFileHelper());
-        PackOutput output = event.getGenerator().getPackOutput();
-        gen.addProvider(event.includeServer(), itemModels);
-        gen.addProvider(event.includeServer(), new GeneratorBlockStates(output, itemModels.existingFileHelper));
+        PackOutput output = gen.getPackOutput();
+        gen.addProvider(event.includeServer(), new GeneratorItemModels(output, event.getExistingFileHelper()));
+        gen.addProvider(event.includeServer(), new GeneratorBlockStates(output, event.getExistingFileHelper()));
         gen.addProvider(event.includeServer(), new GeneratorLanguage(output));
         gen.addProvider(event.includeServer(), new BloodMagicRecipeProvider(output));
         gen.addProvider(event.includeServer(), new GeneratorBaseRecipes(output));

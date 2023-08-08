@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.common.data;
 
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -18,8 +19,8 @@ import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import java.util.Locale;
 
 public class GeneratorItemModels extends ItemModelProvider {
-    public GeneratorItemModels(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-        super(generator, BloodMagic.MODID, existingFileHelper);
+    public GeneratorItemModels(PackOutput output, ExistingFileHelper existingFileHelper) {
+        super(output, BloodMagic.MODID, existingFileHelper);
     }
 
     @Override
