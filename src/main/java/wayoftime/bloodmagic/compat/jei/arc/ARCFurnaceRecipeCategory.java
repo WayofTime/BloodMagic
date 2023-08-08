@@ -10,6 +10,8 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -60,7 +62,7 @@ public class ARCFurnaceRecipeCategory implements IRecipeCategory<SmeltingRecipe>
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, SmeltingRecipe recipe, IFocusGroup focuses) {
         IRecipeSlotBuilder output = builder.addSlot(RecipeIngredientRole.OUTPUT, 54, 17);
-        output.addItemStack(recipe.getResultItem());
+        output.addItemStack(recipe.getResultItem(Minecraft.getInstance().level.registryAccess()));
 
         IRecipeSlotBuilder input = builder.addSlot(RecipeIngredientRole.INPUT, 1, 6);
         input.addIngredients(recipe.getIngredients().get(0));
@@ -77,11 +79,11 @@ public class ARCFurnaceRecipeCategory implements IRecipeCategory<SmeltingRecipe>
 
 
     @Override
-    public void draw(SmeltingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrixStack, double mouseX, double mouseY) {
+    public void draw(SmeltingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         FluidStack outputStack = FluidStack.EMPTY;
-        ClientHandler.handleGuiTank(matrixStack, outputStack, outputStack.getAmount(), 140, 7, 16, 36, 157, 6, 18, 38, (int) mouseX, (int) mouseY, BACKGROUNDRL.toString(), null);
+        ClientHandler.handleGuiTank(guiGraphics, outputStack, outputStack.getAmount(), 140, 7, 16, 36, 157, 6, 18, 38, (int) mouseX, (int) mouseY, BACKGROUNDRL.toString(), null);
 
         FluidStack inputStack = FluidStack.EMPTY;
-        ClientHandler.handleGuiTank(matrixStack, inputStack, inputStack.getAmount(), 1, 26, 16, 16, 175, 26, 18, 18, (int) mouseX, (int) mouseY, BACKGROUNDRL.toString(), null);
+        ClientHandler.handleGuiTank(guiGraphics, inputStack, inputStack.getAmount(), 1, 26, 16, 16, 175, 26, 18, 18, (int) mouseX, (int) mouseY, BACKGROUNDRL.toString(), null);
     }
 }

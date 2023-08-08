@@ -11,6 +11,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -91,7 +92,7 @@ public class ARCRecipeCategory implements IRecipeCategory<RecipeARC> {
 
 
     @Override
-    public void draw(RecipeARC recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrixStack, double mouseX, double mouseY) {
+    public void draw(RecipeARC recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         Minecraft mc = Minecraft.getInstance();
         List<Pair<Double, Double>> chanceArray = recipe.getAllOutputChances();
 
@@ -107,19 +108,19 @@ public class ARCRecipeCategory implements IRecipeCategory<RecipeARC> {
                 infoString[i] = (int) (Math.round(totalChance * 100)) + "%";
             }
 
-            mc.font.drawShadow(matrixStack, infoString[i], 86 + 22 * i - mc.font.width(infoString[i]) / 2, 5, Color.white.getRGB());
+            guiGraphics.drawString(mc.font, infoString[i], 86 + 22 * i - mc.font.width(infoString[i]) / 2, 5, Color.white.getRGB(), true);
         }
 
 //		if (recipe.getFluidOutput() != null && !recipe.getFluidOutput().isEmpty())
         {
             FluidStack outputStack = recipe.getFluidOutput();
-            ClientHandler.handleGuiTank(matrixStack, outputStack, outputStack.getAmount(), 140, 7, 16, 36, 157, 6, 18, 38, (int) mouseX, (int) mouseY, BACKGROUNDRL.toString(), null);
+            ClientHandler.handleGuiTank(guiGraphics, outputStack, outputStack.getAmount(), 140, 7, 16, 36, 157, 6, 18, 38, (int) mouseX, (int) mouseY, BACKGROUNDRL.toString(), null);
         }
 
         if (recipe.getFluidIngredient() != null) {
             List<FluidStack> inputFluids = recipe.getFluidIngredient().getRepresentations();
             FluidStack inputStack = inputFluids.get(0);
-            ClientHandler.handleGuiTank(matrixStack, inputStack, inputStack.getAmount(), 1, 26, 16, 16, 175, 26, 18, 18, (int) mouseX, (int) mouseY, BACKGROUNDRL.toString(), null);
+            ClientHandler.handleGuiTank(guiGraphics, inputStack, inputStack.getAmount(), 1, 26, 16, 16, 175, 26, 18, 18, (int) mouseX, (int) mouseY, BACKGROUNDRL.toString(), null);
         }
 
     }

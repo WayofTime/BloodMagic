@@ -12,6 +12,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import wayoftime.bloodmagic.BloodMagic;
@@ -87,13 +88,13 @@ public class BloodAltarRecipeCategory implements IRecipeCategory<RecipeBloodAlta
 
 
     @Override
-    public void draw(RecipeBloodAltar recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+    public void draw(RecipeBloodAltar recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         Minecraft mc = Minecraft.getInstance();
         String[] infoString = new String[]{
                 TextHelper.localize("jei.bloodmagic.recipe.requiredtier", NumeralHelper.toRoman(recipe.getMinimumTier() + 1)),
                 TextHelper.localize("jei.bloodmagic.recipe.requiredlp", recipe.getSyphon())};
-        mc.font.draw(stack, infoString[0], 90 - mc.font.width(infoString[0]) / 2, 0, Color.gray.getRGB());
-        mc.font.draw(stack, infoString[1], 90 - mc.font.width(infoString[1]) / 2, 10, Color.gray.getRGB());
+        guiGraphics.drawString(mc.font, infoString[0], 90 - mc.font.width(infoString[0]) / 2, 0, Color.gray.getRGB());
+        guiGraphics.drawString(mc.font, infoString[1], 90 - mc.font.width(infoString[1]) / 2, 10, Color.gray.getRGB());
     }
 
 }

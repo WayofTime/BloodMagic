@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.compat.jei.ghostingredienthandlers;
 
 import mezz.jei.api.gui.handlers.IGhostIngredientHandler;
+import mezz.jei.api.ingredients.ITypedIngredient;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -17,8 +18,7 @@ public class GhostFilter implements IGhostIngredientHandler<ScreenFilter>
 {
 
 	@Override
-	public <I> List<Target<I>> getTargets(ScreenFilter gui, I ingredient, boolean doStart)
-	{
+	public <I> List<Target<I>> getTargetsTyped(ScreenFilter gui, ITypedIngredient<I> typedIngredient, boolean doStart) {
 		List<Target<I>> targets = new ArrayList<>();
 
 		for (Slot slot : gui.getMenu().slots)
@@ -30,7 +30,7 @@ public class GhostFilter implements IGhostIngredientHandler<ScreenFilter>
 
 			Rect2i bounds = new Rect2i(gui.getGuiLeft() + slot.x, gui.getGuiTop() + slot.y, 16, 16);
 
-			if (ingredient instanceof ItemStack && (slot instanceof ContainerFilter.SlotGhostItem))
+			if (typedIngredient.getIngredient() instanceof ItemStack && (slot instanceof ContainerFilter.SlotGhostItem))
 			{
 				targets.add(new Target<I>()
 				{
