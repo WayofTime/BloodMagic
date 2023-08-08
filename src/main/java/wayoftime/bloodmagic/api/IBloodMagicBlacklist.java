@@ -21,7 +21,7 @@ public interface IBloodMagicBlacklist
 	};
 
 	/**
-	 * Blacklists a {@link net.minecraft.entity.Entity} from being teleposed based
+	 * Blacklists a {@link net.minecraft.world.entity.Entity} from being teleposed based
 	 * on the given registry name.
 	 *
 	 * @param entityId The registry name to blacklist.
@@ -50,7 +50,7 @@ public interface IBloodMagicBlacklist
 	};
 
 	/**
-	 * Blacklists a {@link net.minecraft.entity.Entity} from being sacrificed via
+	 * Blacklists a {@link net.minecraft.world.entity.Entity} from being sacrificed via
 	 * the Well of Suffering ritual.
 	 *
 	 * @param entityId The registry name to blacklist.
