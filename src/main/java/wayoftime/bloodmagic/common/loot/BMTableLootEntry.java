@@ -34,29 +34,28 @@ public class BMTableLootEntry extends LootPoolSingletonContainer
 
 	public void createItemStack(Consumer<ItemStack> stackConsumer, LootContext context)
 	{
-		LootTable loottable = context.getLootTable(this.table);
-		loottable.getRandomItemsRaw(context, stackConsumer);
+		context.addDynamicDrops(this.table, stackConsumer);
 	}
 
-	public void validate(ValidationContext p_225579_1_)
-	{
-		if (p_225579_1_.hasVisitedTable(this.table))
-		{
-			p_225579_1_.reportProblem("Table " + this.table + " is recursively called");
-		} else
-		{
-			super.validate(p_225579_1_);
-//			LootTable loottable = p_225579_1_.resolveLootTable(this.table);
-//			if (loottable == null)
-//			{
-//				p_225579_1_.addProblem("Unknown loot table called " + this.table);
-//			} else
-//			{
-//				loottable.validate(p_225579_1_.enterTable("->{" + this.table + "}", this.table));
-//			}
-
-		}
-	}
+//	public void validate(ValidationContext p_225579_1_)
+//	{
+//		if (p_225579_1_.hasVisitedTable(this.table))
+//		{
+//			p_225579_1_.reportProblem("Table " + this.table + " is recursively called");
+//		} else
+//		{
+//			super.validate(p_225579_1_);
+////			LootTable loottable = p_225579_1_.resolveLootTable(this.table);
+////			if (loottable == null)
+////			{
+////				p_225579_1_.addProblem("Unknown loot table called " + this.table);
+////			} else
+////			{
+////				loottable.validate(p_225579_1_.enterTable("->{" + this.table + "}", this.table));
+////			}
+//
+//		}
+//	}
 
 	public static LootPoolSingletonContainer.Builder<?> builder(ResourceLocation tableIn)
 	{
