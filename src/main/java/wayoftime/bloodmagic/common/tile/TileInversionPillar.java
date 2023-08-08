@@ -4,6 +4,7 @@ import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -55,7 +56,7 @@ public class TileInversionPillar extends TileBase implements CommandSource
 		{
 			String key = tag.getString(Constants.NBT.DUNGEON_TELEPORT_KEY);
 //			System.out.println("Deserialized key: " + key);
-			destinationKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(key));
+			destinationKey = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(key));
 		}
 	}
 

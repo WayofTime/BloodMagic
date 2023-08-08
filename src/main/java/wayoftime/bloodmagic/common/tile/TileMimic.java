@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.common.tile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.Connection;
@@ -313,7 +314,7 @@ public class TileMimic extends TileInventory
 	{
 		if (tag.contains("mimic"))
 		{
-			mimic = NbtUtils.readBlockState(tag.getCompound("mimic"));
+			mimic = NbtUtils.readBlockState(this.level.holderLookup(Registries.BLOCK),tag.getCompound("mimic"));
 		}
 	}
 
