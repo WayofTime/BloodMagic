@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
@@ -51,7 +52,7 @@ public class HarvestHandlerStem implements IHarvestHandler
 			{
 				if (registeredCrop == probableCrop)
 				{
-					LootContext.Builder lootBuilder = new LootContext.Builder((ServerLevel) world);
+					LootParams.Builder lootBuilder = new LootParams.Builder((ServerLevel) world);
 					Vec3 blockCenter = new Vec3(cropPos.getX() + 0.5, cropPos.getY() + 0.5, cropPos.getZ() + 0.5);
 					List<ItemStack> blockDrops = registeredCrop.getDrops(lootBuilder.withParameter(LootContextParams.ORIGIN, blockCenter).withParameter(LootContextParams.TOOL, mockHoe));
 					drops.addAll(blockDrops);
