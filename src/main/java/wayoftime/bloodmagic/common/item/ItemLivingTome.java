@@ -119,38 +119,6 @@ public class ItemLivingTome extends Item implements ILivingContainer, ILivingUpg
 		} else
 			return InteractionResultHolder.pass(held);
 	}
-	// TODO: Living Tomes
-
-//	@Override
-//	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items)
-//	{
-//		if (!allowedIn(group))
-//			return;
-//
-//		for (Entry<ResourceLocation, LivingUpgrade> entry : LivingArmorRegistrar.UPGRADE_MAP.entrySet())
-//		{
-//			LivingUpgrade upgrade = entry.getValue();
-//			int exp = 0;
-//
-//			while ((exp = upgrade.getNextRequirement(exp)) != 0)
-//			{
-//				ItemStack tome = new ItemStack(this);
-//				updateLivingStats(tome, new LivingStats().setMaxPoints(upgrade.getLevelCost(exp)).addExperience(upgrade.getKey(), exp));
-//				items.add(tome);
-//			}
-//		}
-//
-////		LivingArmorRegistrar.UPGRADE_MAP.forEach(upgrade -> {
-////			int exp = 0;
-////
-////			while ((exp = upgrade.getNextRequirement(exp)) != 0)
-////			{
-////				ItemStack tome = new ItemStack(this);
-////				updateLivingStats(tome, new LivingStats().setMaxPoints(upgrade.getLevelCost(exp)).addExperience(upgrade.getKey(), exp));
-////				display.add(tome);
-////			}
-////		});
-//	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)

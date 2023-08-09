@@ -22,6 +22,7 @@ public class GeneratorLanguage extends LanguageProvider
 
 		// Creative Tab
 		add("itemGroup.bloodmagic.creativeTab", "Blood Magic");
+		add("itemGroup.bloodmagic.upgradeTab", "Blood Magic Living Upgrades");
 
 		add("chat.bloodmagic.damageSource", "%s's soul became too weak");
 
@@ -122,7 +123,6 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.arctool.craftspeed", "Increases crafting speed by: x%s.");
 		add("tooltip.bloodmagic.arctool.uses", "Uses remaining: %s.");
 
-		add("itemGroup.bloodmagictab", "Blood Magic");
 
 		add("tooltip.bloodmagic.experienceTome", "A book used to store experience.");
 		add("tooltip.bloodmagic.experienceTome.exp", "Exp: %0.3f");

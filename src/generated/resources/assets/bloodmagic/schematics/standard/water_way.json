@@ -1,0 +1,154 @@
+{
+  "controllerOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "descriptorList": [
+    {
+      "blockPosCache": [],
+      "cache": false,
+      "maximumOffset": {
+        "x": 12,
+        "y": 8,
+        "z": 11
+      },
+      "minimumOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  ],
+  "doorCoverMap": {
+    "2": {
+      "blockPosCache": [],
+      "cache": true,
+      "maximumOffset": {
+        "x": 2,
+        "y": 4,
+        "z": 1
+      },
+      "minimumOffset": {
+        "x": -6,
+        "y": -4,
+        "z": 0
+      }
+    },
+    "3": {
+      "blockPosCache": [],
+      "cache": true,
+      "maximumOffset": {
+        "x": 7,
+        "y": 4,
+        "z": 1
+      },
+      "minimumOffset": {
+        "x": -1,
+        "y": -4,
+        "z": 0
+      }
+    }
+  },
+  "doorMap": {
+    "default": {
+      "east": [
+        {
+          "x": 11,
+          "y": 3,
+          "z": 5
+        }
+      ]
+    },
+    "waterway_l": {
+      "south": [
+        {
+          "x": 6,
+          "y": 3,
+          "z": 10
+        }
+      ]
+    },
+    "waterway_r": {
+      "north": [
+        {
+          "x": 6,
+          "y": 3,
+          "z": 0
+        }
+      ]
+    }
+  },
+  "dungeonWeight": 1,
+  "indexToDoorMap": {
+    "1": [
+      {
+        "x": 11,
+        "y": 3,
+        "z": 5
+      }
+    ],
+    "2": [
+      {
+        "x": 6,
+        "y": 3,
+        "z": 0
+      }
+    ],
+    "3": [
+      {
+        "x": 6,
+        "y": 3,
+        "z": 10
+      }
+    ]
+  },
+  "indexToRoomTypeMap": {
+    "1": [
+      "bloodmagic:room_pools/standard/standard_rooms",
+      "#bloodmagic:room_pools/special/mine_entrances"
+    ],
+    "2": [
+      "bloodmagic:room_pools/standard/standard_rooms",
+      "#bloodmagic:room_pools/special/mine_entrances"
+    ],
+    "3": [
+      "bloodmagic:room_pools/standard/standard_rooms",
+      "#bloodmagic:room_pools/special/mine_entrances"
+    ]
+  },
+  "oreDensity": 0.0,
+  "portalOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "requiredDoorMap": {
+    "waterway_l": [
+      {
+        "x": 6,
+        "y": 3,
+        "z": 0
+      }
+    ],
+    "waterway_r": [
+      {
+        "x": 6,
+        "y": 3,
+        "z": 10
+      }
+    ]
+  },
+  "spawnLocation": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "structureMap": {
+    "bloodmagic:standard/test_waterway": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  }
+}

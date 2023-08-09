@@ -1,0 +1,65 @@
+{
+  "controllerOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "descriptorList": [
+    {
+      "blockPosCache": [],
+      "cache": false,
+      "maximumOffset": {
+        "x": 11,
+        "y": 8,
+        "z": 11
+      },
+      "minimumOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  ],
+  "doorCoverMap": {},
+  "doorMap": {
+    "default": {
+      "north": [
+        {
+          "x": 5,
+          "y": 1,
+          "z": 0
+        }
+      ]
+    }
+  },
+  "dungeonWeight": 1,
+  "indexToDoorMap": {
+    "1": [
+      {
+        "x": 5,
+        "y": 1,
+        "z": 0
+      }
+    ]
+  },
+  "indexToRoomTypeMap": {},
+  "oreDensity": 0.2,
+  "portalOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "requiredDoorMap": {},
+  "spawnLocation": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "structureMap": {
+    "bloodmagic:mines/mine_key": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  }
+}

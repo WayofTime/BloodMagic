@@ -1,0 +1,139 @@
+{
+  "controllerOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "descriptorList": [
+    {
+      "blockPosCache": [],
+      "cache": false,
+      "maximumOffset": {
+        "x": 32,
+        "y": 13,
+        "z": 32
+      },
+      "minimumOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    {
+      "blockPosCache": [],
+      "cache": false,
+      "maximumOffset": {
+        "x": 32,
+        "y": 12,
+        "z": 41
+      },
+      "minimumOffset": {
+        "x": 23,
+        "y": 4,
+        "z": 32
+      }
+    }
+  ],
+  "doorCoverMap": {
+    "1": {
+      "blockPosCache": [],
+      "cache": true,
+      "maximumOffset": {
+        "x": 3,
+        "y": 3,
+        "z": 1
+      },
+      "minimumOffset": {
+        "x": -2,
+        "y": -2,
+        "z": 0
+      }
+    }
+  },
+  "doorMap": {
+    "mine": {
+      "east": [
+        {
+          "x": 31,
+          "y": 5,
+          "z": 36
+        }
+      ],
+      "south": [
+        {
+          "x": 3,
+          "y": 5,
+          "z": 31
+        }
+      ],
+      "west": [
+        {
+          "x": 0,
+          "y": 5,
+          "z": 4
+        },
+        {
+          "x": 0,
+          "y": 5,
+          "z": 16
+        }
+      ]
+    }
+  },
+  "dungeonWeight": 1,
+  "indexToDoorMap": {
+    "1": [
+      {
+        "x": 0,
+        "y": 5,
+        "z": 4
+      },
+      {
+        "x": 0,
+        "y": 5,
+        "z": 16
+      },
+      {
+        "x": 3,
+        "y": 5,
+        "z": 31
+      },
+      {
+        "x": 31,
+        "y": 5,
+        "z": 36
+      }
+    ]
+  },
+  "indexToRoomTypeMap": {
+    "1": [
+      "bloodmagic:room_pools/mines/mine_corridors",
+      "bloodmagic:room_pools/mines/mine_rooms",
+      "$bloodmagic:room_pools/mines/mine_deadend"
+    ]
+  },
+  "oreDensity": 0.1,
+  "portalOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "requiredDoorMap": {},
+  "spawnLocation": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "structureMap": {
+    "bloodmagic:standard/mine_station_1": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "bloodmagic:standard/mine_station_2": {
+      "x": 23,
+      "y": 4,
+      "z": 32
+    }
+  }
+}

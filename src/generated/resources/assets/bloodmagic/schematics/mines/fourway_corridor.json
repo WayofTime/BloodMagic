@@ -1,0 +1,121 @@
+{
+  "controllerOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "descriptorList": [
+    {
+      "blockPosCache": [],
+      "cache": false,
+      "maximumOffset": {
+        "x": 19,
+        "y": 7,
+        "z": 20
+      },
+      "minimumOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  ],
+  "doorCoverMap": {
+    "1": {
+      "blockPosCache": [],
+      "cache": true,
+      "maximumOffset": {
+        "x": 3,
+        "y": 3,
+        "z": 1
+      },
+      "minimumOffset": {
+        "x": -2,
+        "y": -2,
+        "z": 0
+      }
+    }
+  },
+  "doorMap": {
+    "mine": {
+      "east": [
+        {
+          "x": 18,
+          "y": 1,
+          "z": 5
+        }
+      ],
+      "north": [
+        {
+          "x": 9,
+          "y": 1,
+          "z": 0
+        }
+      ],
+      "south": [
+        {
+          "x": 9,
+          "y": 1,
+          "z": 19
+        }
+      ],
+      "west": [
+        {
+          "x": 0,
+          "y": 1,
+          "z": 14
+        }
+      ]
+    }
+  },
+  "dungeonWeight": 1,
+  "indexToDoorMap": {
+    "1": [
+      {
+        "x": 9,
+        "y": 1,
+        "z": 0
+      },
+      {
+        "x": 0,
+        "y": 1,
+        "z": 14
+      },
+      {
+        "x": 9,
+        "y": 1,
+        "z": 19
+      },
+      {
+        "x": 18,
+        "y": 1,
+        "z": 5
+      }
+    ]
+  },
+  "indexToRoomTypeMap": {
+    "1": [
+      "bloodmagic:room_pools/mines/mine_rooms",
+      "$bloodmagic:room_pools/mines/mine_deadend"
+    ]
+  },
+  "oreDensity": 0.05,
+  "portalOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "requiredDoorMap": {},
+  "spawnLocation": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "structureMap": {
+    "bloodmagic:standard/mine_fourway": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  }
+}

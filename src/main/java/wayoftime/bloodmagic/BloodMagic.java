@@ -212,6 +212,7 @@ public class BloodMagic {
         PackOutput output = gen.getPackOutput();
         gen.addProvider(event.includeServer(), new GeneratorItemModels(output, event.getExistingFileHelper()));
         gen.addProvider(event.includeServer(), new GeneratorBlockStates(output, event.getExistingFileHelper()));
+        gen.addProvider(event.includeServer(), new GeneratorSpriteSources(output, event.getExistingFileHelper()));
         gen.addProvider(event.includeServer(), new GeneratorLanguage(output));
         gen.addProvider(event.includeServer(), new GeneratorRecipes(output));
         gen.addProvider(event.includeServer(), new GeneratorLootTable(output));

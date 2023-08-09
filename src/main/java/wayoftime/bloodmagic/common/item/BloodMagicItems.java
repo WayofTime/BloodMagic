@@ -144,8 +144,6 @@ public class BloodMagicItems
 	// TODO: Need to rework the above instantiations for the ItemBlocks so that it's
 	// done with the Blocks.
 
-//	public static final RegistryObject<Item> WEAK_BLOOD_ORB = BASICITEMS.register("weakbloodorb", ItemBloodOrb::new);
-//	public static final RegistryObject<Item> WEAK_BLOOD_ORB = BASICITEMS.register("weakbloodorb", () -> new ItemBloodOrb(WEAK_ORB_INSTANCE));
 	public static final RegistryObject<Item> WEAK_BLOOD_ORB = BASICITEMS.register("weakbloodorb", () -> new ItemBloodOrb(ORB_WEAK));
 	public static final RegistryObject<Item> APPRENTICE_BLOOD_ORB = BASICITEMS.register("apprenticebloodorb", () -> new ItemBloodOrb(ORB_APPRENTICE));
 	public static final RegistryObject<Item> MAGICIAN_BLOOD_ORB = BASICITEMS.register("magicianbloodorb", () -> new ItemBloodOrb(ORB_MAGICIAN));
