@@ -27,8 +27,6 @@ public class PotionRecipeProvider implements ISubRecipeProvider
 	@Override
 	public void addRecipes(Consumer<FinishedRecipe> consumer)
 	{
-		ItemStack waterbottleStack = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER);
-
 		String basePath = "flask/";
 
 		PotionEffectRecipeBuilder.potionEffect(MobEffects.MOVEMENT_SPEED, 3600, 500, 200, 1).addIngredient(Ingredient.of(BloodMagicItems.SIMPLE_CATALYST.get())).addIngredient(Ingredient.of(Items.SUGAR)).build(consumer, BloodMagic.rl(basePath + "speed_boost"));

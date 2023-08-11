@@ -17,7 +17,9 @@
       "tag": "forge:dusts/sulfur"
     },
     {
-      "item": "minecraft:potion"
+      "type": "forge:partial_nbt",
+      "item": "minecraft:potion",
+      "nbt": "{Potion:\"minecraft:water\"}"
     }
   ],
   "output": {
