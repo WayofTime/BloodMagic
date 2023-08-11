@@ -69,7 +69,6 @@ import wayoftime.bloodmagic.util.handler.event.WillHandler;
 import java.util.concurrent.CompletableFuture;
 
 @Mod("bloodmagic")
-//@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BloodMagic {
     public static final String MODID = "bloodmagic";
     // Directly reference a log4j logger.
@@ -131,7 +130,6 @@ public class BloodMagic {
 
         MinecraftForge.EVENT_BUS.register(new GenericHandler());
         MinecraftForge.EVENT_BUS.register(new SoundRegisterListener());
-//		MinecraftForge.EVENT_BUS.register(new ClientHandler());
         modBus.addListener(this::registerColors);
 
         MinecraftForge.EVENT_BUS.register(new WillHandler());
@@ -144,9 +142,6 @@ public class BloodMagic {
         ModLoadingContext context = ModLoadingContext.get();
         context.registerConfig(ModConfig.Type.CLIENT, ConfigManager.CLIENT_SPEC);
         context.registerConfig(ModConfig.Type.COMMON, ConfigManager.COMMON_SPEC);
-
-//		BloodMagicLootFunctionManager.register();
-//		BloodMagicLootTypeManager.register();
 
         ModDungeons.init();
         ModRoomPools.init();
@@ -234,18 +229,12 @@ public class BloodMagic {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        // some preinit code
-//		LOGGER.info("HELLO FROM PREINIT");
-//		LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
         packetHandler.initialize();
 
         curiosLoaded = ModList.get().isLoaded("curios");
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        // do something that can only be done on the client
-//		LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
-
         ClientEvents.initClientEvents(event);
         Elements.registerElements();
         ElementRegistry.readConfig();
@@ -272,7 +261,5 @@ public class BloodMagic {
     }
 
     private void processIMC(final InterModProcessEvent event) {
-        // some example code to receive and process InterModComms from other mods
-//		LOGGER.info("Got IMC {}", event.getIMCStream().map(m -> m.getMessageSupplier().get()).collect(Collectors.toList()));
     }
 }

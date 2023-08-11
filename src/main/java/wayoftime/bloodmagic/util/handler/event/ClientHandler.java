@@ -137,6 +137,8 @@ public class ClientHandler
 	@SubscribeEvent
 	public static void render(RenderLevelStageEvent event)
 	{
+		if(event.getStage() != RenderLevelStageEvent.Stage.AFTER_PARTICLES)
+			return;
 		LocalPlayer player = minecraft.player;
 		Level world = player.getCommandSenderWorld();
 

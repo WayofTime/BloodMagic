@@ -39,8 +39,6 @@ public abstract class ElementTileInformation<T extends BlockEntity> extends HUDE
 	public void draw(GuiGraphics guiGraphics, float partialTicks, int drawX, int drawY)
 	{
 		HitResult trace = Minecraft.getInstance().hitResult;
-		if (trace == null || trace.getType() != HitResult.Type.BLOCK)
-			return;
 
 		T tile = (T) Minecraft.getInstance().level.getBlockEntity(((BlockHitResult) trace).getBlockPos());
 
