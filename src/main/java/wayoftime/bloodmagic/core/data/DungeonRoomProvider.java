@@ -1,6 +1,5 @@
 package wayoftime.bloodmagic.core.data;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,6 @@ import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.gson.Serializers;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.ritual.AreaDescriptor.Rectangle;
@@ -33,7 +31,7 @@ public class DungeonRoomProvider implements DataProvider
 		this.packOutput = output;
 	}
 
-	public void loadRoomPools(CachedOutput cache)
+	public ArrayList<CompletableFuture<?>> loadRoomPools(CachedOutput cache)
 	{
 		Map<ResourceLocation, Integer> connectiveCorridors = new TreeMap<>();
 		connectiveCorridors.put(ModDungeons.T_CORRIDOR, 2);
@@ -104,23 +102,25 @@ public class DungeonRoomProvider implements DataProvider
 		mineDeadends.put(ModDungeons.MINES_DEADEND, 1);
 
 		// Registration
-		addRoomPool(cache, connectiveCorridors, ModRoomPools.CONNECTIVE_CORRIDORS);
-		addRoomPool(cache, miniDungeonRooms, ModRoomPools.MINI_DUNGEON);
-		addRoomPool(cache, standardDungeonRooms, ModRoomPools.STANDARD_ROOMS);
+		return new ArrayList<>( List.of(
+		addRoomPool(cache, connectiveCorridors, ModRoomPools.CONNECTIVE_CORRIDORS),
+		addRoomPool(cache, miniDungeonRooms, ModRoomPools.MINI_DUNGEON),
+		addRoomPool(cache, standardDungeonRooms, ModRoomPools.STANDARD_ROOMS),
 
-		addRoomPool(cache, mineEntrances, ModRoomPools.MINE_ENTRANCES);
-		addRoomPool(cache, mineKey, ModRoomPools.MINE_KEY);
-		addRoomPool(cache, mineDungeonRooms, ModRoomPools.MINE_ROOMS);
-		addRoomPool(cache, mineCorridors, ModRoomPools.MINE_CORRIDORS);
+		addRoomPool(cache, mineEntrances, ModRoomPools.MINE_ENTRANCES),
+		addRoomPool(cache, mineKey, ModRoomPools.MINE_KEY),
+		addRoomPool(cache, mineDungeonRooms, ModRoomPools.MINE_ROOMS),
+		addRoomPool(cache, mineCorridors, ModRoomPools.MINE_CORRIDORS),
 
-		addRoomPool(cache, miniDungeonEntrances, ModRoomPools.MINI_DUNGEON_ENTRANCES);
-		addRoomPool(cache, standardDungeonEntrances, ModRoomPools.STANDARD_DUNGEON_ENTRANCES);
+		addRoomPool(cache, miniDungeonEntrances, ModRoomPools.MINI_DUNGEON_ENTRANCES),
+		addRoomPool(cache, standardDungeonEntrances, ModRoomPools.STANDARD_DUNGEON_ENTRANCES),
 
-		addRoomPool(cache, defaultDeadends, ModRoomPools.DEFAULT_DEADEND);
-		addRoomPool(cache, mineDeadends, ModRoomPools.MINE_DEADEND);
+		addRoomPool(cache, defaultDeadends, ModRoomPools.DEFAULT_DEADEND),
+		addRoomPool(cache, mineDeadends, ModRoomPools.MINE_DEADEND)
+		));
 	}
 
-	public void loadDungeons(CachedOutput cache)
+	public ArrayList<CompletableFuture<?>> loadDungeons(CachedOutput cache)
 	{
 		DungeonRoom miniArmoury = new DungeonRoom().addStructure("bloodmagic:mini_dungeon/armoury", new BlockPos(0, 0, 0)).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(17, 8, 17)));
 		miniArmoury.addDoor(new BlockPos(8, 0, 0), Direction.NORTH, "default", 1);
@@ -425,54 +425,56 @@ public class DungeonRoomProvider implements DataProvider
 		mineDeadend.addDoor(new BlockPos(5, 1, 0), Direction.NORTH, "mine", 1);
 		mineDeadend.oreDensity = 0.2f;
 
-		addDungeonRoom(cache, miniArmoury, ModDungeons.MINI_ARMOURY);
-		addDungeonRoom(cache, miniCrypt, ModDungeons.MINI_CRYPT);
-		addDungeonRoom(cache, miniFarm, ModDungeons.MINI_FARM);
-		addDungeonRoom(cache, miniLibrary, ModDungeons.MINI_LIBRARY);
-		addDungeonRoom(cache, miniPortalRoom, ModDungeons.MINI_PORTAL);
+		ArrayList<CompletableFuture<?>> futures =  new ArrayList<>( List.of(
+		addDungeonRoom(cache, miniArmoury, ModDungeons.MINI_ARMOURY),
+		addDungeonRoom(cache, miniCrypt, ModDungeons.MINI_CRYPT),
+		addDungeonRoom(cache, miniFarm, ModDungeons.MINI_FARM),
+		addDungeonRoom(cache, miniLibrary, ModDungeons.MINI_LIBRARY),
+		addDungeonRoom(cache, miniPortalRoom, ModDungeons.MINI_PORTAL),
 
-		addDungeonRoom(cache, fourWayCorridor, ModDungeons.FOUR_WAY_CORRIDOR);
-		addDungeonRoom(cache, fourWayCorridorLoot, ModDungeons.FOUR_WAY_CORRIDOR_LOOT);
-		addDungeonRoom(cache, overlapped_corridor, ModDungeons.OVERLAPPED_CORRIDOR);
-		addDungeonRoom(cache, straightCorridor, ModDungeons.STRAIGHT_CORRIDOR);
-		addDungeonRoom(cache, straightCorridor, ModDungeons.T_CORRIDOR);
+		addDungeonRoom(cache, fourWayCorridor, ModDungeons.FOUR_WAY_CORRIDOR),
+		addDungeonRoom(cache, fourWayCorridorLoot, ModDungeons.FOUR_WAY_CORRIDOR_LOOT),
+		addDungeonRoom(cache, overlapped_corridor, ModDungeons.OVERLAPPED_CORRIDOR),
+		addDungeonRoom(cache, straightCorridor, ModDungeons.STRAIGHT_CORRIDOR),
+		addDungeonRoom(cache, straightCorridor, ModDungeons.T_CORRIDOR),
 
-		addDungeonRoom(cache, challengeTower, ModDungeons.CHALLENGE_TOWER);
-		addDungeonRoom(cache, bigLibrary, ModDungeons.BIG_LIBRARY);
-		addDungeonRoom(cache, smallCrane, ModDungeons.SMALL_CRANE);
-		addDungeonRoom(cache, smallLibrary, ModDungeons.SMALL_LIBRARY);
-		addDungeonRoom(cache, smallSmithy, ModDungeons.SMALL_SMITHY);
-		addDungeonRoom(cache, tallSpiral, ModDungeons.TALL_SPIRAL);
-		addDungeonRoom(cache, smallArena, ModDungeons.SMALL_ARENA);
-		addDungeonRoom(cache, antechamber, ModDungeons.ANTECHAMBER);
-		addDungeonRoom(cache, destroyedEndPortal, ModDungeons.DESTROYED_END_PORTAL);
-		addDungeonRoom(cache, augCorridorLoot, ModDungeons.AUG_CORRIDOR_LOOT);
+		addDungeonRoom(cache, challengeTower, ModDungeons.CHALLENGE_TOWER),
+		addDungeonRoom(cache, bigLibrary, ModDungeons.BIG_LIBRARY),
+		addDungeonRoom(cache, smallCrane, ModDungeons.SMALL_CRANE),
+		addDungeonRoom(cache, smallLibrary, ModDungeons.SMALL_LIBRARY),
+		addDungeonRoom(cache, smallSmithy, ModDungeons.SMALL_SMITHY),
+		addDungeonRoom(cache, tallSpiral, ModDungeons.TALL_SPIRAL),
+		addDungeonRoom(cache, smallArena, ModDungeons.SMALL_ARENA),
+		addDungeonRoom(cache, antechamber, ModDungeons.ANTECHAMBER),
+		addDungeonRoom(cache, destroyedEndPortal, ModDungeons.DESTROYED_END_PORTAL),
+		addDungeonRoom(cache, augCorridorLoot, ModDungeons.AUG_CORRIDOR_LOOT),
 
-		addDungeonRoom(cache, oreHold, ModDungeons.ORE_HOLD_1);
-		addDungeonRoom(cache, waterway, ModDungeons.WATER_WAY);
-		addDungeonRoom(cache, mineEntrance, ModDungeons.MINE_ENTRANCE);
-		addDungeonRoom(cache, mineKey, ModDungeons.MINE_KEY);
+		addDungeonRoom(cache, oreHold, ModDungeons.ORE_HOLD_1),
+		addDungeonRoom(cache, waterway, ModDungeons.WATER_WAY),
+		addDungeonRoom(cache, mineEntrance, ModDungeons.MINE_ENTRANCE),
+		addDungeonRoom(cache, mineKey, ModDungeons.MINE_KEY),
 
-		addDungeonRoom(cache, minePit, ModDungeons.MINE_PIT);
-		addDungeonRoom(cache, mineCornerZombieTrap, ModDungeons.MINE_CORNER_ZOMBIE_TRAP);
-		addDungeonRoom(cache, mineSplitRoad, ModDungeons.MINE_SPLIT_ROAD);
-		addDungeonRoom(cache, mineStation, ModDungeons.MINE_STATION);
-		addDungeonRoom(cache, mineDownwardTunnel, ModDungeons.MINE_DOWNWARD_TUNNEL);
-		addDungeonRoom(cache, mineJunctionStation, ModDungeons.MINE_JUNCTION_STATION);
-		addDungeonRoom(cache, mineBuiltShaft, ModDungeons.MINE_BUILT_SHAFT);
-		addDungeonRoom(cache, mineNatureCrossroad, ModDungeons.MINE_NATURE_CROSSROAD);
-		addDungeonRoom(cache, mineWolfDen, ModDungeons.MINE_WOLF_DEN);
-		addDungeonRoom(cache, mineOreCavern, ModDungeons.MINE_ORE_CAVERN);
+		addDungeonRoom(cache, minePit, ModDungeons.MINE_PIT),
+		addDungeonRoom(cache, mineCornerZombieTrap, ModDungeons.MINE_CORNER_ZOMBIE_TRAP),
+		addDungeonRoom(cache, mineSplitRoad, ModDungeons.MINE_SPLIT_ROAD),
+		addDungeonRoom(cache, mineStation, ModDungeons.MINE_STATION),
+		addDungeonRoom(cache, mineDownwardTunnel, ModDungeons.MINE_DOWNWARD_TUNNEL),
+		addDungeonRoom(cache, mineJunctionStation, ModDungeons.MINE_JUNCTION_STATION),
+		addDungeonRoom(cache, mineBuiltShaft, ModDungeons.MINE_BUILT_SHAFT),
+		addDungeonRoom(cache, mineNatureCrossroad, ModDungeons.MINE_NATURE_CROSSROAD),
+		addDungeonRoom(cache, mineWolfDen, ModDungeons.MINE_WOLF_DEN),
+		addDungeonRoom(cache, mineOreCavern, ModDungeons.MINE_ORE_CAVERN),
 
-		addDungeonRoom(cache, mineStraightCorridor, ModDungeons.MINE_STRAIGHT_CORRIDOR);
-		addDungeonRoom(cache, mineBentCorridor, ModDungeons.MINE_BENT_CORRIDOR);
-		addDungeonRoom(cache, mineFourwayCorridor, ModDungeons.MINE_FOURWAY_CORRIDOR);
+		addDungeonRoom(cache, mineStraightCorridor, ModDungeons.MINE_STRAIGHT_CORRIDOR),
+		addDungeonRoom(cache, mineBentCorridor, ModDungeons.MINE_BENT_CORRIDOR),
+		addDungeonRoom(cache, mineFourwayCorridor, ModDungeons.MINE_FOURWAY_CORRIDOR),
 
-		addDungeonRoom(cache, defaultDeadend, ModDungeons.DEFAULT_DEADEND);
-		addDungeonRoom(cache, mineDeadend, ModDungeons.MINES_DEADEND);
-//		DungeonRoom dungeonRoom = Serializers.GSON.fromJson(Resources.toString(dungeonURL, Charsets.UTF_8), DungeonRoom.class);
+		addDungeonRoom(cache, defaultDeadend, ModDungeons.DEFAULT_DEADEND),
+		addDungeonRoom(cache, mineDeadend, ModDungeons.MINES_DEADEND)
 
-		registerStarterRooms(cache);
+		));
+		futures.addAll(registerStarterRooms(cache));
+		return futures;
 	}
 
 	public void addDefaultSpecialRoomPools(DungeonRoom room, int index)
@@ -487,7 +489,7 @@ public class DungeonRoomProvider implements DataProvider
 		room.addNormalRoomPool(index, ModRoomPools.MINE_ROOMS);
 	}
 
-	public void registerStarterRooms(CachedOutput cache)
+	public ArrayList<CompletableFuture<?>> registerStarterRooms(CachedOutput cache)
 	{
 		DungeonRoom miniDungeon = new DungeonRoom().addStructure("bloodmagic:t3_entrance", BlockPos.ZERO).addAreaDescriptor(new Rectangle(new BlockPos(0, 0, 0), new BlockPos(17, 8, 17)));
 		miniDungeon.addDoors(Direction.NORTH, "default", 1, new BlockPos(8, 1, 0));
@@ -509,29 +511,21 @@ public class DungeonRoomProvider implements DataProvider
 		starterDungeon.controllerOffset = new BlockPos(9, 6, 9);
 		starterDungeon.portalOffset = new BlockPos(9, 4, 9);
 
-		addDungeonRoom(cache, miniDungeon, ModDungeons.MINI_ENTRANCE);
-		addDungeonRoom(cache, starterDungeon, ModDungeons.STANDARD_ENTRANCE);
-
+		return new ArrayList<>(List.of(addDungeonRoom(cache, miniDungeon, ModDungeons.MINI_ENTRANCE),
+				addDungeonRoom(cache, starterDungeon, ModDungeons.STANDARD_ENTRANCE)));
 	}
 
-	public void addDungeonRoom(CachedOutput cache, DungeonRoom room, ResourceLocation schematicName)
+	public CompletableFuture<?> addDungeonRoom(CachedOutput cache, DungeonRoom room, ResourceLocation schematicName)
 	{
 		JsonElement json = Serializers.GSON.toJsonTree(room);
 
 		Path mainOutput = packOutput.getOutputFolder();
 		String pathSuffix = "assets/" + schematicName.getNamespace() + "/schematics/" + schematicName.getPath() + ".json";
 		Path outputPath = mainOutput.resolve(pathSuffix);
-//		try
-//		{
-			DataProvider.saveStable(cache, json, outputPath);
-//		}
-//		catch (IOException e)
-//		{
-//			BloodMagic.LOGGER.error("Couldn't save schematic to {}", outputPath, e);
-//		}
+		return DataProvider.saveStable(cache, json, outputPath);
 	}
 
-	public void addRoomPool(CachedOutput cache, Map<ResourceLocation, Integer> roomPool, ResourceLocation schematicName)
+	public CompletableFuture<?> addRoomPool(CachedOutput cache, Map<ResourceLocation, Integer> roomPool, ResourceLocation schematicName)
 	{
 		List<String> roomStringList = new ArrayList<>();
 		for (Entry<ResourceLocation, Integer> roomEntry : roomPool.entrySet())
@@ -544,23 +538,14 @@ public class DungeonRoomProvider implements DataProvider
 		Path mainOutput = packOutput.getOutputFolder();
 		String pathSuffix = "assets/" + schematicName.getNamespace() + "/schematics/" + schematicName.getPath() + ".json";
 		Path outputPath = mainOutput.resolve(pathSuffix);
-//		try
-//		{
-			DataProvider.saveStable(cache, json, outputPath);
-//		} catch (IOException e)
-//		{
-//			BloodMagic.LOGGER.error("Couldn't save schematic to {}", outputPath, e);
-//		}
+		return DataProvider.saveStable(cache, json, outputPath);
 	}
-
-
-
 
 	@Override
 	public CompletableFuture<?> run(CachedOutput cache) {
-		loadRoomPools(cache);
-		loadDungeons(cache);
-		return CompletableFuture.allOf();
+		ArrayList<CompletableFuture<?>> futures = loadRoomPools(cache);
+		futures.addAll(loadDungeons(cache));
+		return CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new));
 	}
 
 	@Override

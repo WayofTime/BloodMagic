@@ -1,0 +1,65 @@
+{
+  "controllerOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "descriptorList": [
+    {
+      "blockPosCache": [],
+      "cache": false,
+      "maximumOffset": {
+        "x": 7,
+        "y": 6,
+        "z": 7
+      },
+      "minimumOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  ],
+  "doorCoverMap": {},
+  "doorMap": {
+    "default": {
+      "north": [
+        {
+          "x": 3,
+          "y": 0,
+          "z": 0
+        }
+      ]
+    }
+  },
+  "dungeonWeight": 1,
+  "indexToDoorMap": {
+    "1": [
+      {
+        "x": 3,
+        "y": 0,
+        "z": 0
+      }
+    ]
+  },
+  "indexToRoomTypeMap": {},
+  "oreDensity": 0.0,
+  "portalOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "requiredDoorMap": {},
+  "spawnLocation": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "structureMap": {
+    "bloodmagic:standard/default_deadend": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  }
+}
