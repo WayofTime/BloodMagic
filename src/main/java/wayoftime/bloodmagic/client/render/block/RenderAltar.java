@@ -25,6 +25,7 @@ import wayoftime.bloodmagic.client.render.BloodMagicRenderer;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer.Model3D;
 import wayoftime.bloodmagic.client.render.RenderResizableCuboid;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.common.fluid.BloodMagicFluids;
 import wayoftime.bloodmagic.common.tile.TileAltar;
 
 //public class BeaconRenderer implements BlockEntityRenderer<BeaconBlockEntity> {
@@ -60,7 +61,7 @@ public class RenderAltar implements BlockEntityRenderer<TileAltar>
 
 	private void renderFluid(float fluidLevel, PoseStack matrixStack, MultiBufferSource renderer, int combinedLightIn, int combinedOverlayIn)
 	{
-		Fluid fluid = BloodMagicBlocks.LIFE_ESSENCE_FLUID.get();
+		Fluid fluid = BloodMagicFluids.LIFE_ESSENCE_FLUID.get();
 		FluidStack fluidStack = new FluidStack(fluid, 1000);
 
 		FluidRenderData data = new FluidRenderData(fluidStack);

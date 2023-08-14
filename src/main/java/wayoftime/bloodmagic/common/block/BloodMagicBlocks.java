@@ -40,8 +40,6 @@ public class BloodMagicBlocks
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BloodMagic.MODID);
 	public static final DeferredRegister<Block> BASICBLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BloodMagic.MODID);
 	public static final DeferredRegister<Block> DUNGEONBLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BloodMagic.MODID);
-	public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, BloodMagic.MODID);
-	public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, BloodMagic.MODID);
 	public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, BloodMagic.MODID);
 
 //	public static final RegistryObject<Block> BLOODSTONE = BASICBLOCKS.register("ruby_block", BloodstoneBlock::new);
@@ -118,102 +116,6 @@ public class BloodMagicBlocks
 	public static final RegistryObject<Block> ETHEREAL_MIMIC = BLOCKS.register("ethereal_mimic", () -> new BlockMimic(Properties.of().requiresCorrectToolForDrops().sound(SoundType.METAL).strength(2.0f).isRedstoneConductor(BloodMagicBlocks::isntSolid).isSuffocating(BloodMagicBlocks::isntSolid).isViewBlocking(BloodMagicBlocks::isntSolid).noOcclusion().noCollission()));
 
 	public static final RegistryObject<Block> SPECTRAL = BLOCKS.register("spectral", () -> new BlockSpectral(Properties.of().sound(SoundType.METAL).strength(100.0f).isRedstoneConductor(BloodMagicBlocks::isntSolid).isSuffocating(BloodMagicBlocks::isntSolid).isViewBlocking(BloodMagicBlocks::isntSolid).noOcclusion().noCollission()));
-
-
-	private static ForgeFlowingFluid.Properties makeLifeEssenceProperties()
-	{
-		return new ForgeFlowingFluid.Properties(LIFE_ESSENCE_FLUID_TYPE, LIFE_ESSENCE_FLUID, LIFE_ESSENCE_FLUID_FLOWING)
-				.block(LIFE_ESSENCE_BLOCK)
-				.bucket(BloodMagicItems.LIFE_ESSENCE_BUCKET);
-	}
-	private static ForgeFlowingFluid.Properties makeDoubtProperties()
-	{
-		return new ForgeFlowingFluid.Properties(DOUBT_FLUID_TYPE, DOUBT_FLUID, DOUBT_FLUID_FLOWING)
-				.block(DOUBT_BLOCK)
-				.bucket(BloodMagicItems.DOUBT_BUCKET);
-	}
-	public static final RegistryObject<FluidType> LIFE_ESSENCE_FLUID_TYPE = FLUID_TYPES.register("life_essence_fluid_type", () ->
-			new FluidType(FluidType.Properties.create()
-					.descriptionId("life_essence_fluid_type")
-					.fallDistanceModifier(0F)
-					.canExtinguish(false)
-					.canConvertToSource(false)
-					.supportsBoating(false)
-					.sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
-					.sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
-					.sound(SoundActions.FLUID_VAPORIZE, SoundEvents.FIRE_EXTINGUISH)
-					.canHydrate(false)
-					.viscosity(1000))
-			{
-				@Override
-				public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer)
-				{
-					consumer.accept(new IClientFluidTypeExtensions()
-					{
-						public static final ResourceLocation FLUID_STILL = new ResourceLocation("bloodmagic:block/lifeessencestill");
-						public static final ResourceLocation FLUID_FLOWING = new ResourceLocation("bloodmagic:block/lifeessenceflowing");
-
-						@Override
-						public ResourceLocation getStillTexture()
-						{
-							return FLUID_STILL;
-						}
-
-						@Override
-						public ResourceLocation getFlowingTexture()
-						{
-							return FLUID_FLOWING;
-						}
-					});
-				}
-			});
-
-	public static final RegistryObject<FluidType> DOUBT_FLUID_TYPE = FLUID_TYPES.register("doubt_fluid_type", () ->
-			new FluidType(FluidType.Properties.create()
-					.descriptionId("doubt_fluid_type")
-					.fallDistanceModifier(0F)
-					.canExtinguish(false)
-					.canConvertToSource(false)
-					.supportsBoating(false)
-					.sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
-					.sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
-					.sound(SoundActions.FLUID_VAPORIZE, SoundEvents.FIRE_EXTINGUISH)
-					.canHydrate(false)
-					.viscosity(1000))
-			{
-				@Override
-				public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer)
-				{
-					consumer.accept(new IClientFluidTypeExtensions()
-					{
-						public static final ResourceLocation DOUBT_STILL_RESOURCE = new ResourceLocation("bloodmagic:block/liquid_doubt_still");
-						public static final ResourceLocation DOUBT_FLOWING_RESOURCE = new ResourceLocation("bloodmagic:block/liquid_doubt_flowing");
-
-						@Override
-						public ResourceLocation getStillTexture()
-						{
-							return DOUBT_STILL_RESOURCE;
-						}
-
-						@Override
-						public ResourceLocation getFlowingTexture()
-						{
-							return DOUBT_FLOWING_RESOURCE;
-						}
-					});
-				}
-			});
-	public static final RegistryObject<FlowingFluid> LIFE_ESSENCE_FLUID = FLUIDS.register("life_essence_fluid", () ->
-			new ForgeFlowingFluid.Source(makeLifeEssenceProperties()));
-	public static final RegistryObject<Fluid> LIFE_ESSENCE_FLUID_FLOWING = FLUIDS.register("life_essence_fluid_flowing", () ->
-			new ForgeFlowingFluid.Flowing(makeLifeEssenceProperties()));
-
-	public static final RegistryObject<FlowingFluid> DOUBT_FLUID = FLUIDS.register("doubt_fluid", () ->
-			new ForgeFlowingFluid.Source(makeDoubtProperties()));
-	public static final RegistryObject<Fluid> DOUBT_FLUID_FLOWING = FLUIDS.register("doubt_fluid_flowing", () ->
-			new ForgeFlowingFluid.Flowing(makeDoubtProperties()));
-	public static final RegistryObject<LiquidBlock> LIFE_ESSENCE_BLOCK = BLOCKS.register("life_essence_block", () -> new LiquidBlock(LIFE_ESSENCE_FLUID, BlockBehaviour.Properties.copy(Blocks.WATER)));
-	public static final RegistryObject<LiquidBlock> DOUBT_BLOCK = BLOCKS.register("doubt_block", () -> new LiquidBlock(DOUBT_FLUID, BlockBehaviour.Properties.copy(Blocks.WATER)));
 
 	// TODO: Move these to a dedicated class?
 	public static final RegistryObject<MenuType<ContainerSoulForge>> SOUL_FORGE_CONTAINER = CONTAINERS.register("soul_forge_container", () -> IForgeMenuType.create(ContainerSoulForge::new));

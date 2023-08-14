@@ -48,6 +48,7 @@ import net.minecraftforge.registries.RegistryObject;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BlockDemonCrystal;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.common.fluid.BloodMagicFluids;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.loot.BMTableLootEntry;
 import wayoftime.bloodmagic.common.loot.SetLivingUpgrade;
@@ -735,8 +736,8 @@ public class GeneratorLootTable extends LootTableProvider
 			registerNoDropLootTable(BloodMagicBlocks.INVERSION_PILLAR.get());
 			registerNoDropLootTable(BloodMagicBlocks.INVERSION_PILLAR_CAP.get());
 
-			registerNoDropLootTable(BloodMagicBlocks.LIFE_ESSENCE_BLOCK.get());
-			registerNoDropLootTable(BloodMagicBlocks.DOUBT_BLOCK.get());
+			registerNoDropLootTable(BloodMagicFluids.LIFE_ESSENCE_BLOCK.get());
+			registerNoDropLootTable(BloodMagicFluids.DOUBT_BLOCK.get());
 
 			add(BloodMagicBlocks.DUNGEON_ORE.get(), (block) -> {
 				return createOreDrop(block, BloodMagicItems.DEMONITE_RAW.get());

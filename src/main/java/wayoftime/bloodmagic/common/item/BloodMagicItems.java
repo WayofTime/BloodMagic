@@ -10,6 +10,7 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.client.sounds.SoundRegistrator;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.common.fluid.BloodMagicFluids;
 import wayoftime.bloodmagic.common.item.arc.ItemARCToolBase;
 import wayoftime.bloodmagic.common.item.block.ItemBlockAlchemyTable;
 import wayoftime.bloodmagic.common.item.block.ItemBlockMimic;
@@ -188,8 +189,8 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> TELEPOSER_FOCUS = BASICITEMS.register("teleposerfocus", () -> new ItemTeleposerFocus(0));
 	public static final RegistryObject<Item> ENHANCED_TELEPOSER_FOCUS = BASICITEMS.register("enhancedteleposerfocus", () -> new ItemTeleposerFocus(1));
 	public static final RegistryObject<Item> REINFORCED_TELEPOSER_FOCUS = BASICITEMS.register("reinforcedteleposerfocus", () -> new ItemTeleposerFocus(2));
-	public static final RegistryObject<Item> LIFE_ESSENCE_BUCKET = ITEMS.register("life_essence_bucket", () -> new BucketItem(BloodMagicBlocks.LIFE_ESSENCE_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
-	public static final RegistryObject<Item> DOUBT_BUCKET = ITEMS.register("doubt_bucket", () -> new BucketItem(BloodMagicBlocks.DOUBT_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+	public static final RegistryObject<Item> LIFE_ESSENCE_BUCKET = ITEMS.register("life_essence_bucket", () -> new BucketItem(BloodMagicFluids.LIFE_ESSENCE_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+	public static final RegistryObject<Item> DOUBT_BUCKET = ITEMS.register("doubt_bucket", () -> new BucketItem(BloodMagicFluids.DOUBT_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 
 	// Ritual stuffs
 	public static final RegistryObject<Item> WEAK_ACTIVATION_CRYSTAL = BASICITEMS.register("activationcrystalweak", () -> new ItemActivationCrystal(ItemActivationCrystal.CrystalType.WEAK));

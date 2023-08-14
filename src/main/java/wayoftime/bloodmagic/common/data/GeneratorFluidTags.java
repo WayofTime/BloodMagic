@@ -9,6 +9,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.common.fluid.BloodMagicFluids;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 
 import java.util.concurrent.CompletableFuture;
@@ -23,6 +24,6 @@ public class GeneratorFluidTags extends IntrinsicHolderTagsProvider<Fluid>
 	@Override
 	public void addTags(HolderLookup.Provider provider)
 	{
-		this.tag(BloodMagicTags.LIFE_ESSENCE).add(BloodMagicBlocks.LIFE_ESSENCE_FLUID.get(), BloodMagicBlocks.LIFE_ESSENCE_FLUID_FLOWING.get());
+		this.tag(BloodMagicTags.LIFE_ESSENCE).add(BloodMagicFluids.LIFE_ESSENCE_FLUID.get(), BloodMagicFluids.LIFE_ESSENCE_FLUID_FLOWING.get());
 	}
 }
