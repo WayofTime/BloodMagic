@@ -168,7 +168,7 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 	@Override
 	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY)
 	{
-		guiGraphics.drawString(this.font, Component.literal("" + getCurrentActiveSlotPriority()), 71 + 5, 51 + 5, 0xFFFFFF);
+		guiGraphics.drawString(this.font, Component.literal("" + getCurrentActiveSlotPriority()), 71 + 5, 51 + 5, 0xFFFFFF, false);
 //		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.routingnode.name"), 8, 5, 4210752);
 //		this.font.draw(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
 

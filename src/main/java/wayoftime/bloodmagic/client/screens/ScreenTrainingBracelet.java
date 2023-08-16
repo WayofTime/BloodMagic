@@ -192,9 +192,9 @@ public class ScreenTrainingBracelet extends ScreenBase<ContainerTrainingBracelet
 	{
 		String textEntry = "" + getCurrentActiveSlotUpgradeLevel();
 		int offset = -3 * textEntry.length();
-		guiGraphics.drawString(this.font, Component.literal(textEntry), 45 - 18 + offset + 7, 37 + 3, 0xFFFFFF);
-		guiGraphics.drawString(this.font, Component.translatable("container.inventory"), 8, 93, 4210752);
-		guiGraphics.drawString(this.font, container.trainerStack.getHoverName(), 8, 4, 4210752);
+		guiGraphics.drawString(this.font, Component.literal(textEntry), 45 - 18 + offset + 7, 37 + 3, 0xFFFFFF, false);
+		guiGraphics.drawString(this.font, Component.translatable("container.inventory"), 8, 93, 4210752, false);
+		guiGraphics.drawString(this.font, container.trainerStack.getHoverName(), 8, 4, 4210752, false);
 
 		int w = 20;
 		int h = 20;

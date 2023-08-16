@@ -57,8 +57,8 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 	@Override
 	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY)
 	{
-		guiGraphics.drawString(this.font, Component.translatable("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
-		guiGraphics.drawString(this.font, Component.translatable("container.inventory"), 8, 111, 4210752);
+		guiGraphics.drawString(this.font, Component.translatable("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752, false);
+		guiGraphics.drawString(this.font, Component.translatable("container.inventory"), 8, 111, 4210752, false);
 	}
 
 	@Override

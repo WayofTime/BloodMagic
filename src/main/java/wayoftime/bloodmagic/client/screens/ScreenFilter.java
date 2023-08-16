@@ -268,8 +268,8 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY)
 	{
 //		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
-		guiGraphics.drawString(this.font, Component.translatable("container.inventory"), 8, 93, 4210752);
-		guiGraphics.drawString(this.font, container.filterStack.getHoverName(), 8, 4, 4210752);
+		guiGraphics.drawString(this.font, Component.translatable("container.inventory"), 8, 93, 4210752, false);
+		guiGraphics.drawString(this.font, container.filterStack.getHoverName(), 8, 4, 4210752, false);
 
 		if (container.filterStack.getItem() instanceof IItemFilterProvider)
 		{

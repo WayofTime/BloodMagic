@@ -41,7 +41,7 @@ public class ScreenHolding extends ScreenBase<ContainerHolding>
 	{
 //		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
 //		this.font.draw(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
-		guiGraphics.drawString(this.font, Component.translatable("item.bloodmagic.sigilofholding"), 53, 4, 4210752);
+		guiGraphics.drawString(this.font, Component.translatable("item.bloodmagic.sigilofholding"), 53, 4, 4210752, false);
 	}
 
 	@Override
