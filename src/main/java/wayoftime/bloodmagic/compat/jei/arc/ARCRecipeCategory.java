@@ -114,13 +114,13 @@ public class ARCRecipeCategory implements IRecipeCategory<RecipeARC> {
 //		if (recipe.getFluidOutput() != null && !recipe.getFluidOutput().isEmpty())
         {
             FluidStack outputStack = recipe.getFluidOutput();
-            ClientHandler.handleGuiTank(guiGraphics, outputStack, outputStack.getAmount(), 140, 7, 16, 36, 157, 6, 18, 38, (int) mouseX, (int) mouseY, BACKGROUNDRL.toString(), null);
+            ClientHandler.handleGuiTank(guiGraphics, outputStack, outputStack.getAmount(), 140, 7, 16, 36, 157, 6, 18, 38, (int) mouseX, (int) mouseY, BACKGROUNDRL, null);
         }
 
         if (recipe.getFluidIngredient() != null) {
             List<FluidStack> inputFluids = recipe.getFluidIngredient().getRepresentations();
             FluidStack inputStack = inputFluids.get(0);
-            ClientHandler.handleGuiTank(guiGraphics, inputStack, inputStack.getAmount(), 1, 26, 16, 16, 175, 26, 18, 18, (int) mouseX, (int) mouseY, BACKGROUNDRL.toString(), null);
+            ClientHandler.handleGuiTank(guiGraphics, inputStack, inputStack.getAmount(), 1, 26, 16, 16, 175, 26, 18, 18, (int) mouseX, (int) mouseY, BACKGROUNDRL, null);
         }
 
     }
@@ -130,13 +130,13 @@ public class ARCRecipeCategory implements IRecipeCategory<RecipeARC> {
         List<Component> tooltip = new ArrayList<>();
         FluidStack outputStack = recipe.getFluidOutput();
         if (!outputStack.isEmpty()) {
-            ClientHandler.handleGuiTank(null, outputStack, -1, 140, 8, 16, 34, 157, 7, 18, 36, (int) mouseX, (int) mouseY, BACKGROUNDRL.toString(), tooltip);
+            ClientHandler.handleGuiTank(null, outputStack, -1, 140, 8, 16, 34, 157, 7, 18, 36, (int) mouseX, (int) mouseY, BACKGROUNDRL, tooltip);
         }
 
         if (recipe.getFluidIngredient() != null) {
             List<FluidStack> inputFluids = recipe.getFluidIngredient().getRepresentations();
             FluidStack inputStack = inputFluids.get(0);
-            ClientHandler.handleGuiTank(null, inputStack, -1, 1, 26, 16, 16, 175, 26, 18, 18, (int) mouseX, (int) mouseY, BACKGROUNDRL.toString(), tooltip);
+            ClientHandler.handleGuiTank(null, inputStack, -1, 1, 26, 16, 16, 175, 26, 18, 18, (int) mouseX, (int) mouseY, BACKGROUNDRL, tooltip);
         }
 
         return tooltip;

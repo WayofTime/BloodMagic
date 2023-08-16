@@ -439,23 +439,22 @@ public class ClientHandler
 	public static TextureAtlasSprite getSprite(ResourceLocation rl)
 	{
 		return Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(rl);
-//		return mc().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).getSprite(rl);
 	}
 
-	public static void handleGuiTank(GuiGraphics guiGraphics, IFluidTank tank,  int x, int y, int w, int h, int oX, int oY, int oW, int oH, int mX, int mY, String originalTexture, List<Component> tooltip)
+	public static void handleGuiTank(GuiGraphics guiGraphics, IFluidTank tank,  int x, int y, int w, int h, int oX, int oY, int oW, int oH, int mX, int mY, ResourceLocation originalTexture, List<Component> tooltip)
 	{
 		handleGuiTank(guiGraphics, tank.getFluid(), tank.getCapacity(), x, y, w, h, oX, oY, oW, oH, mX, mY, originalTexture, tooltip);
 
 	}
 
-	public static void handleGuiTank(GuiGraphics guiGraphics, FluidStack fluid, int capacity, int x, int y, int w, int h, int oX, int oY, int oW, int oH, int mX, int mY, String originalTexture, List<Component> tooltip)
+	public static void handleGuiTank(GuiGraphics guiGraphics, FluidStack fluid, int capacity, int x, int y, int w, int h, int oX, int oY, int oW, int oH, int mX, int mY, ResourceLocation originalTexture, List<Component> tooltip)
 	{
 		if (tooltip == null)
 		{
 			RenderSystem.setShader(GameRenderer::getPositionTexShader);
 			RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
 			MultiBufferSource.BufferSource buffer = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
-			if (fluid != null && fluid.getFluid() != null)
+			if (fluid != null && !fluid.isEmpty())
 			{
 				int fluidHeight = (int) (h * (fluid.getAmount() / (float) capacity));
 				drawRepeatedFluidSpriteGui(buffer, guiGraphics, fluid, x, y + h - fluidHeight, w, fluidHeight);
@@ -466,8 +465,8 @@ public class ClientHandler
 			RenderType renderType = RenderType.translucent();
 			buffer.endBatch(renderType);
 
-			RenderSystem.setShaderTexture(0, new ResourceLocation(originalTexture));
-			guiGraphics.blit(new ResourceLocation(originalTexture), x + xOff, y + yOff, oX, oY, oW, oH, 32, 32);
+			RenderSystem.setShaderTexture(0, originalTexture);
+			guiGraphics.blit(originalTexture, x + xOff, y + yOff, oX, oY, oW, oH, 256, 256);
 
 		} else
 		{
@@ -486,10 +485,9 @@ public class ClientHandler
 	public static void drawRepeatedFluidSprite(VertexConsumer builder, GuiGraphics guiGraphics, FluidStack fluid, float x, float y, float w, float h)
 	{
 		TextureAtlasSprite sprite = getSprite(IClientFluidTypeExtensions.of(fluid.getFluid()).getStillTexture(fluid));
-//		Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(spriteLocation);
 		int col = IClientFluidTypeExtensions.of(fluid.getFluid()).getTintColor(fluid);
-		int iW = sprite.getX();
-		int iH = sprite.getY();
+		int iW = sprite.contents().width();
+		int iH = sprite.contents().height();
 		if (iW > 0 && iH > 0)
 			drawRepeatedSprite(builder, guiGraphics, x, y, w, h, iW, iH, sprite.getU0(), sprite.getU1(), sprite.getV0(), sprite.getV1(), (col >> 16 & 255) / 255.0f, (col >> 8 & 255) / 255.0f, (col & 255) / 255.0f, 1);
 	}

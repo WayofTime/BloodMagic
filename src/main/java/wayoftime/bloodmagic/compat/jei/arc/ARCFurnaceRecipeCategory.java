@@ -81,9 +81,9 @@ public class ARCFurnaceRecipeCategory implements IRecipeCategory<SmeltingRecipe>
     @Override
     public void draw(SmeltingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         FluidStack outputStack = FluidStack.EMPTY;
-        ClientHandler.handleGuiTank(guiGraphics, outputStack, outputStack.getAmount(), 140, 7, 16, 36, 157, 6, 18, 38, (int) mouseX, (int) mouseY, BACKGROUNDRL.toString(), null);
+        ClientHandler.handleGuiTank(guiGraphics, outputStack, outputStack.getAmount(), 140, 7, 16, 36, 157, 6, 18, 38, (int) mouseX, (int) mouseY, BACKGROUNDRL, null);
 
         FluidStack inputStack = FluidStack.EMPTY;
-        ClientHandler.handleGuiTank(guiGraphics, inputStack, inputStack.getAmount(), 1, 26, 16, 16, 175, 26, 18, 18, (int) mouseX, (int) mouseY, BACKGROUNDRL.toString(), null);
+        ClientHandler.handleGuiTank(guiGraphics, inputStack, inputStack.getAmount(), 1, 26, 16, 16, 175, 26, 18, 18, (int) mouseX, (int) mouseY, BACKGROUNDRL, null);
     }
 }

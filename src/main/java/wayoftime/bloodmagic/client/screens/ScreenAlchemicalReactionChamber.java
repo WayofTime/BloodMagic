@@ -61,8 +61,8 @@ public class ScreenAlchemicalReactionChamber extends ScreenBase<ContainerAlchemi
 //		FluidTank inputTank = new FluidTank(FluidAttributes.BUCKET_VOLUME * 2);
 //		inputTank.fill(new FluidStack(Fluids.WATER, 1000), FluidAction.EXECUTE);
 
-		ClientHandler.handleGuiTank(guiGraphics, tileARC.inputTank, this.leftPos + 8, this.topPos + 40, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), tooltip);
-		ClientHandler.handleGuiTank(guiGraphics, tileARC.outputTank, this.leftPos + 152, this.topPos + 15, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), tooltip);
+		ClientHandler.handleGuiTank(guiGraphics, tileARC.inputTank, this.leftPos + 8, this.topPos + 40, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background, tooltip);
+		ClientHandler.handleGuiTank(guiGraphics, tileARC.outputTank, this.leftPos + 152, this.topPos + 15, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background, tooltip);
 
 		if (!tooltip.isEmpty())
 			guiGraphics.renderTooltip(this.font, tooltip, Optional.empty(), mouseX, mouseY);
@@ -87,8 +87,8 @@ public class ScreenAlchemicalReactionChamber extends ScreenBase<ContainerAlchemi
 //		FluidTank inputTank = new FluidTank(FluidAttributes.BUCKET_VOLUME * 2);
 //		inputTank.fill(new FluidStack(Fluids.WATER, 1000), FluidAction.EXECUTE);
 
-		ClientHandler.handleGuiTank(guiGraphics, tileARC.inputTank, this.leftPos + 8, this.topPos + 40, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), null);
-		ClientHandler.handleGuiTank(guiGraphics, tileARC.outputTank, this.leftPos + 152, this.topPos + 15, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background.toString(), null);
+		ClientHandler.handleGuiTank(guiGraphics, tileARC.inputTank, this.leftPos + 8, this.topPos + 40, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background, null);
+		ClientHandler.handleGuiTank(guiGraphics, tileARC.outputTank, this.leftPos + 152, this.topPos + 15, 16, 63, 194, 1, 16, 63, mouseX, mouseY, background, null);
 
 		int w = this.getCookProgressScaled(38);
 		guiGraphics.blit(background, i + 63, j + 44, 176, 90, w, 23);
