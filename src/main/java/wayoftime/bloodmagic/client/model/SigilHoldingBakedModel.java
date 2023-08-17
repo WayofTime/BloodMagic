@@ -28,7 +28,7 @@ public class SigilHoldingBakedModel implements BakedModel
 	}
 
 	@Override
-	public List<BakedQuad> getQuads(BlockState p_119123_, Direction p_119124_, RandomSource p_119125_)
+	public List<BakedQuad> getQuads(BlockState state, Direction direction, RandomSource randomSource)
 	{
 		return new ArrayList<>();
 	}

@@ -7,8 +7,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
 import net.minecraftforge.client.model.geometry.IUnbakedGeometry;
 
-import java.util.Collection;
-import java.util.Set;
 import java.util.function.Function;
 
 public class SigilHoldingModelGeometry implements IUnbakedGeometry<SigilHoldingModelGeometry>
@@ -33,6 +31,6 @@ public class SigilHoldingModelGeometry implements IUnbakedGeometry<SigilHoldingM
 	@Override
 	public void resolveParents(Function<ResourceLocation, UnbakedModel> modelGetter, IGeometryBakingContext context) {
 		unbakedBaseModel = modelGetter.apply(baseModelLoc);
-//		return unbakedBaseModel.getMaterials(modelGetter, missingTextureErrors);
+		unbakedBaseModel.resolveParents(modelGetter);
 	}
 }
