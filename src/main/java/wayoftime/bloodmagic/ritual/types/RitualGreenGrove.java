@@ -4,22 +4,23 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CactusBlock;
-import net.minecraft.world.level.block.FarmBlock;
-import net.minecraft.world.level.block.BonemealableBlock;
-import net.minecraft.world.level.block.SugarCaneBlock;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.CactusBlock;
+import net.minecraft.world.level.block.FarmBlock;
+import net.minecraft.world.level.block.NetherWartBlock;
+import net.minecraft.world.level.block.SugarCaneBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
@@ -114,7 +115,7 @@ public class RitualGreenGrove extends Ritual
 
 			if (!BloodMagicAPI.INSTANCE.getBlacklist().getGreenGrove().contains(state))
 			{
-				boolean flag = state.getBlock() instanceof BonemealableBlock || state.getBlock() instanceof CactusBlock || state.getBlock() instanceof SugarCaneBlock;
+				boolean flag = state.getBlock() instanceof BonemealableBlock || state.getBlock() instanceof CactusBlock || state.getBlock() instanceof SugarCaneBlock || state.getBlock() instanceof NetherWartBlock;
 				if (flag)
 				{
 					if (world.random.nextDouble() < growthChance)
