@@ -1,5 +1,6 @@
 {
   "type": "bloodmagic:soulforge",
+  "drain": 2.0,
   "input0": {
     "tag": "forge:ingots/copper"
   },
@@ -9,10 +10,9 @@
   "input2": {
     "tag": "forge:gems/amethyst"
   },
-  "output": {
-    "item": "bloodmagic:amethystthrowingdagger",
-    "count": 16
-  },
   "minimumDrain": 32.0,
-  "drain": 2.0
+  "output": {
+    "count": 16,
+    "item": "bloodmagic:amethystthrowingdagger"
+  }
 }

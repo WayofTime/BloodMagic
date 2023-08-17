@@ -1,15 +1,35 @@
 {
-  "key": null,
-  "dungeonWeight": 1,
-  "structureMap": {
-    "bloodmagic:standard/antechamber": {
-      "x": 0,
-      "y": 0,
-      "z": 0
-    }
+  "controllerOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
   },
+  "descriptorList": [
+    {
+      "blockPosCache": [],
+      "cache": false,
+      "maximumOffset": {
+        "x": 31,
+        "y": 26,
+        "z": 31
+      },
+      "minimumOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  ],
+  "doorCoverMap": {},
   "doorMap": {
     "default": {
+      "east": [
+        {
+          "x": 30,
+          "y": 13,
+          "z": 15
+        }
+      ],
       "north": [
         {
           "x": 15,
@@ -30,50 +50,10 @@
           "y": 13,
           "z": 15
         }
-      ],
-      "east": [
-        {
-          "x": 30,
-          "y": 13,
-          "z": 15
-        }
       ]
     }
   },
-  "descriptorList": [
-    {
-      "minimumOffset": {
-        "x": 0,
-        "y": 0,
-        "z": 0
-      },
-      "maximumOffset": {
-        "x": 31,
-        "y": 26,
-        "z": 31
-      },
-      "currentPosition": null,
-      "blockPosCache": [],
-      "cachedPosition": null,
-      "cache": false
-    }
-  ],
-  "oreDensity": 0.0,
-  "spawnLocation": {
-    "x": 0,
-    "y": 0,
-    "z": 0
-  },
-  "controllerOffset": {
-    "x": 0,
-    "y": 0,
-    "z": 0
-  },
-  "portalOffset": {
-    "x": 0,
-    "y": 0,
-    "z": 0
-  },
+  "dungeonWeight": 1,
   "indexToDoorMap": {
     "1": [
       {
@@ -105,6 +85,23 @@
       "#bloodmagic:room_pools/standard/mine_key"
     ]
   },
+  "oreDensity": 0.0,
+  "portalOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
   "requiredDoorMap": {},
-  "doorCoverMap": {}
+  "spawnLocation": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "structureMap": {
+    "bloodmagic:standard/antechamber": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  }
 }

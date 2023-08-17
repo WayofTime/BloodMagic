@@ -11,7 +11,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -27,7 +26,7 @@ public class BlockRoutingNode extends Block
 
 	public BlockRoutingNode()
 	{
-		super(BlockBehaviour.Properties.of(Material.METAL).strength(2.0F, 5.0F).requiresCorrectToolForDrops());
+		super(BlockBehaviour.Properties.of().strength(2.0F, 5.0F).requiresCorrectToolForDrops());
 //.harvestTool(ToolType.PICKAXE).harvestLevel(2)
 
 		this.registerDefaultState(this.stateDefinition.any().setValue(DOWN, false).setValue(UP, false).setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false).setValue(WEST, false));
@@ -138,7 +137,7 @@ public class BlockRoutingNode extends Block
 //		      boolean flag1 = block instanceof FenceGateBlock && FenceGateBlock.isParallel(state, direction);
 //		      return !cannotAttach(block) && isSideSolid || flag || flag1;
 
-		return state.getMaterial().isSolidBlocking() && isSideSolid;
+		return state.isSolid() && isSideSolid;
 	}
 
 	@Override

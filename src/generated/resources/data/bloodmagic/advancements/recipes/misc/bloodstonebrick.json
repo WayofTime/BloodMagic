@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bloodmagic:bloodstonebrick"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_weak_shard": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bloodmagic:weakbloodshard"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_weak_shard",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bloodmagic:bloodstonebrick"
+    ]
+  },
+  "sends_telemetry_event": false
+}

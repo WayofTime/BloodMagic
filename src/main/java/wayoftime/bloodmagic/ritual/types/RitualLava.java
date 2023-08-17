@@ -1,39 +1,33 @@
 package wayoftime.bloodmagic.ritual.types;
 
-import java.util.List;
-import java.util.function.Consumer;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.AABB;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
+import wayoftime.bloodmagic.common.registries.BloodMagicDamageTypes;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
-import wayoftime.bloodmagic.ritual.AreaDescriptor;
-import wayoftime.bloodmagic.ritual.EnumRuneType;
-import wayoftime.bloodmagic.ritual.IMasterRitualStone;
-import wayoftime.bloodmagic.ritual.Ritual;
-import wayoftime.bloodmagic.ritual.RitualComponent;
-import wayoftime.bloodmagic.ritual.RitualRegister;
-import wayoftime.bloodmagic.util.DamageSourceBloodMagic;
+import wayoftime.bloodmagic.ritual.*;
 import wayoftime.bloodmagic.util.Utils;
 import wayoftime.bloodmagic.will.DemonWillHolder;
-import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
+
+import java.util.List;
+import java.util.function.Consumer;
 
 @RitualRegister("lava")
 public class RitualLava extends Ritual
@@ -128,7 +122,7 @@ public class RitualLava extends Ritual
 			{
 				if (tile != null)
 				{
-					LazyOptional<IFluidHandler> capability = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+					LazyOptional<IFluidHandler> capability = tile.getCapability(ForgeCapabilities.FLUID_HANDLER, null);
 					if (capability.isPresent())
 					{
 						IFluidHandler handler = capability.resolve().get();
@@ -170,9 +164,9 @@ public class RitualLava extends Ritual
 					continue;
 				}
 
-				if (!entity.hasEffect(BloodMagicPotions.FIRE_FUSE))
+				if (!entity.hasEffect(BloodMagicPotions.FIRE_FUSE.get()))
 				{
-					entity.addEffect(new MobEffectInstance(BloodMagicPotions.FIRE_FUSE, 100, 0));
+					entity.addEffect(new MobEffectInstance(BloodMagicPotions.FIRE_FUSE.get(), 100, 0));
 
 					vengefulDrained += vengefulWillDrain;
 					vengefulWill -= vengefulWillDrain;
@@ -235,7 +229,7 @@ public class RitualLava extends Ritual
 
 				if (!entity.isAlive() && entity.hurtTime <= 0 && Utils.isImmuneToFireDamage(entity))
 				{
-					if (entity.hurt(DamageSourceBloodMagic.INSTANCE, damage))
+					if (entity.hurt(entity.damageSources().source(BloodMagicDamageTypes.SACRIFICE), damage))
 					{
 						corrosiveDrained += corrosiveWillDrain;
 						corrosiveWill -= corrosiveWillDrain;
@@ -272,12 +266,12 @@ public class RitualLava extends Ritual
 	@Override
 	public Component[] provideInformationOfRitualToPlayer(Player player)
 	{
-		return new Component[] { new TranslatableComponent(this.getTranslationKey() + ".info"),
-				new TranslatableComponent(this.getTranslationKey() + ".default.info"),
-				new TranslatableComponent(this.getTranslationKey() + ".corrosive.info"),
-				new TranslatableComponent(this.getTranslationKey() + ".steadfast.info"),
-				new TranslatableComponent(this.getTranslationKey() + ".destructive.info"),
-				new TranslatableComponent(this.getTranslationKey() + ".vengeful.info") };
+		return new Component[] { Component.translatable(this.getTranslationKey() + ".info"),
+				Component.translatable(this.getTranslationKey() + ".default.info"),
+				Component.translatable(this.getTranslationKey() + ".corrosive.info"),
+				Component.translatable(this.getTranslationKey() + ".steadfast.info"),
+				Component.translatable(this.getTranslationKey() + ".destructive.info"),
+				Component.translatable(this.getTranslationKey() + ".vengeful.info") };
 	}
 
 	@Override

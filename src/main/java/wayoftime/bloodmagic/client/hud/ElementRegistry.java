@@ -1,31 +1,31 @@
 package wayoftime.bloodmagic.client.hud;
 
-import java.awt.Color;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.mojang.blaze3d.platform.Window;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.loading.FMLPaths;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.client.hud.element.HUDElement;
+
+import java.awt.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID, value = Dist.CLIENT)
 public class ElementRegistry
@@ -129,10 +129,9 @@ public class ElementRegistry
 
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
-	public static void onRenderOverlay(RenderGameOverlayEvent.Pre event)
+	public static void onRenderOverlay(RenderGuiOverlayEvent.Pre event)
 	{
-//		if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR)
-		if (event.getType() == RenderGameOverlayEvent.ElementType.CHAT)
+		if (event.getOverlay() == VanillaGuiOverlay.CHAT_PANEL.type())
 		{
 			Window window = event.getWindow();
 
@@ -144,8 +143,7 @@ public class ElementRegistry
 				Vec2 position = ELEMENT_INFO.get(getKey(element)).getPosition();
 				int xPos = (int) (window.getGuiScaledWidth() * position.x);
 				int yPos = (int) (window.getGuiScaledHeight() * position.y);
-
-				element.draw(event.getMatrixStack(), event.getPartialTicks(), xPos, yPos);
+				element.draw(event.getGuiGraphics(), event.getPartialTick(), xPos, yPos);
 			}
 		}
 	}

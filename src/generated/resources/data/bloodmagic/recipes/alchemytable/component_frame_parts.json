@@ -12,8 +12,8 @@
     }
   ],
   "output": {
-    "item": "bloodmagic:componentframeparts",
-    "count": 2
+    "count": 2,
+    "item": "bloodmagic:componentframeparts"
   },
   "syphon": 1000,
   "ticks": 100,

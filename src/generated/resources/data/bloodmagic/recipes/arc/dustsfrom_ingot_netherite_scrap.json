@@ -1,15 +1,15 @@
 {
   "type": "bloodmagic:arc",
+  "consumeingredient": false,
   "input": {
     "item": "minecraft:netherite_scrap"
   },
   "inputsize": 1,
-  "tool": {
-    "tag": "bloodmagic:arc/explosive"
-  },
+  "mainoutputchance": 0.0,
   "output": {
     "item": "bloodmagic:sand_netherite"
   },
-  "consumeingredient": false,
-  "mainoutputchance": 0.0
+  "tool": {
+    "tag": "bloodmagic:arc/explosive"
+  }
 }

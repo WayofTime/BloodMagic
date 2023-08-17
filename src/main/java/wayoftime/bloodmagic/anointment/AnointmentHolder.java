@@ -1,19 +1,12 @@
 package wayoftime.bloodmagic.anointment;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -27,6 +20,11 @@ import net.minecraft.world.item.ItemStack;
 import wayoftime.bloodmagic.anointment.Anointment.IDamageProvider;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.util.Constants;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class AnointmentHolder
 {
@@ -206,11 +204,10 @@ public class AnointmentHolder
 		anointment.removeAnointment(this, weaponStack, type);
 
 		SoundEvent soundevent = SoundEvents.SPLASH_POTION_BREAK;
-		user.level.playSound(null, user.blockPosition(), soundevent, SoundSource.BLOCKS, 1.0F, 1.0F);
+		user.level().playSound(null, user.blockPosition(), soundevent, SoundSource.BLOCKS, 1.0F, 1.0F);
 
-		if (user.level instanceof ServerLevel)
+		if (user.level() instanceof ServerLevel server)
 		{
-			ServerLevel server = (ServerLevel) user.level;
 			server.sendParticles(ParticleTypes.LARGE_SMOKE, user.getX(), user.getY() + 1, user.getZ(), 16, 0.3, 0, 0.3, 0);
 		}
 
@@ -339,9 +336,9 @@ public class AnointmentHolder
 				boolean sneaking = Screen.hasShiftDown();
 //				if (!InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), 340) || k.getNextRequirement(v) == 0)
 				if (!sneaking)
-					tooltip.add(new TranslatableComponent("%s %s", new TranslatableComponent(k.getTranslationKey()), new TranslatableComponent("enchantment.level." + v.getLevel())));
+					tooltip.add(Component.translatable("%s %s", Component.translatable(k.getTranslationKey()), Component.translatable("enchantment.level." + v.getLevel())));
 				else
-					tooltip.add(new TranslatableComponent("%s %s", new TranslatableComponent(k.getTranslationKey()), (": (" + v.getDamageString() + ")")));
+					tooltip.add(Component.translatable("%s %s", Component.translatable(k.getTranslationKey()), (": (" + v.getDamageString() + ")")));
 			});
 		}
 	}

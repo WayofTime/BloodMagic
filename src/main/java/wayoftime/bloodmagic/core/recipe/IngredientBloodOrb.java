@@ -1,11 +1,6 @@
 package wayoftime.bloodmagic.core.recipe;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Stream;
-
 import com.google.gson.JsonObject;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
@@ -15,6 +10,10 @@ import net.minecraftforge.common.crafting.VanillaIngredientSerializer;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.BloodOrb;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Stream;
 
 public class IngredientBloodOrb extends Ingredient
 {

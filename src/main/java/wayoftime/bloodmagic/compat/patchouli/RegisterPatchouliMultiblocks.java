@@ -15,7 +15,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import vazkii.patchouli.api.IMultiblock;
 import vazkii.patchouli.api.IStateMatcher;
 import vazkii.patchouli.api.PatchouliAPI;
@@ -117,7 +116,7 @@ public class RegisterPatchouliMultiblocks
 
 			BMStateMatcher bloodRuneSM = new BMStateMatcher(bmAPI.getComponentStates(ComponentType.BLOODRUNE));
 			BMStateMatcher blankBloodRuneSM = new BMStateMatcher(BloodMagicBlocks.BLANK_RUNE.get(), bmAPI.getComponentStates(ComponentType.BLOODRUNE));
-			IStateMatcher notAirSM = patAPI.predicateMatcher(Blocks.STONE_BRICKS, state -> state.getMaterial() != Material.AIR && !state.getMaterial().isLiquid());
+			IStateMatcher notAirSM = patAPI.predicateMatcher(Blocks.STONE_BRICKS, state -> state.isSolid());
 			BMStateMatcher glowstoneSM = new BMStateMatcher(bmAPI.getComponentStates(ComponentType.GLOWSTONE));
 			BMStateMatcher bloodStoneSM = new BMStateMatcher(bmAPI.getComponentStates(ComponentType.BLOODSTONE));
 			BMStateMatcher beaconSM = new BMStateMatcher(bmAPI.getComponentStates(ComponentType.BEACON));

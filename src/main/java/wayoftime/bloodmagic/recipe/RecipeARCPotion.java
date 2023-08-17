@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.util.RandomSource;
 import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.resources.ResourceLocation;
@@ -45,7 +46,7 @@ public class RecipeARCPotion extends RecipeARC
 		return list;
 	}
 
-	public List<ItemStack> getAllOutputs(Random rand, ItemStack inputStack, ItemStack toolStack, double secondaryBonus)
+	public List<ItemStack> getAllOutputs(RandomSource rand, ItemStack inputStack, ItemStack toolStack, double secondaryBonus)
 	{
 		if (toolStack.isEmpty())
 		{

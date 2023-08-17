@@ -1,5 +1,8 @@
 {
   "type": "bloodmagic:altar",
+  "altarSyphon": 1000,
+  "consumptionRate": 5,
+  "drainRate": 5,
   "input": {
     "tag": "forge:obsidian"
   },
@@ -7,8 +10,5 @@
     "item": "bloodmagic:earthscribetool",
     "nbt": "{Damage:0}"
   },
-  "upgradeLevel": 2,
-  "altarSyphon": 1000,
-  "consumptionRate": 5,
-  "drainRate": 5
+  "upgradeLevel": 2
 }

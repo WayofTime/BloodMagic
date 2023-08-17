@@ -1,5 +1,6 @@
 {
   "type": "bloodmagic:soulforge",
+  "drain": 0.5,
   "input0": {
     "tag": "forge:cobblestone"
   },
@@ -12,10 +13,9 @@
   "input3": {
     "tag": "forge:mushrooms"
   },
-  "output": {
-    "item": "bloodmagic:fungal_charge",
-    "count": 8
-  },
   "minimumDrain": 10.0,
-  "drain": 0.5
+  "output": {
+    "count": 8,
+    "item": "bloodmagic:fungal_charge"
+  }
 }

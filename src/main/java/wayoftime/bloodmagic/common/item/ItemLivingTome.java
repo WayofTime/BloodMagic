@@ -31,7 +31,7 @@ public class ItemLivingTome extends Item implements ILivingContainer, ILivingUpg
 
 	public ItemLivingTome()
 	{
-		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1));
 	}
 
 	@Override
@@ -118,37 +118,6 @@ public class ItemLivingTome extends Item implements ILivingContainer, ILivingUpg
 			return InteractionResultHolder.success(held);
 		} else
 			return InteractionResultHolder.pass(held);
-	}
-
-	@Override
-	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items)
-	{
-		if (!allowdedIn(group))
-			return;
-
-		for (Entry<ResourceLocation, LivingUpgrade> entry : LivingArmorRegistrar.UPGRADE_MAP.entrySet())
-		{
-			LivingUpgrade upgrade = entry.getValue();
-			int exp = 0;
-
-			while ((exp = upgrade.getNextRequirement(exp)) != 0)
-			{
-				ItemStack tome = new ItemStack(this);
-				updateLivingStats(tome, new LivingStats().setMaxPoints(upgrade.getLevelCost(exp)).addExperience(upgrade.getKey(), exp));
-				items.add(tome);
-			}
-		}
-
-//		LivingArmorRegistrar.UPGRADE_MAP.forEach(upgrade -> {
-//			int exp = 0;
-//
-//			while ((exp = upgrade.getNextRequirement(exp)) != 0)
-//			{
-//				ItemStack tome = new ItemStack(this);
-//				updateLivingStats(tome, new LivingStats().setMaxPoints(upgrade.getLevelCost(exp)).addExperience(upgrade.getKey(), exp));
-//				display.add(tome);
-//			}
-//		});
 	}
 
 	@Override

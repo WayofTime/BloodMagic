@@ -1,24 +1,24 @@
 {
   "type": "bloodmagic:arc",
+  "addedoutput": [
+    {
+      "type": {
+        "item": "bloodmagic:ironsand"
+      },
+      "chance": 0.17,
+      "mainchance": 0.33
+    }
+  ],
+  "consumeingredient": false,
   "input": {
     "tag": "forge:raw_materials/iron"
   },
   "inputsize": 1,
-  "tool": {
-    "tag": "bloodmagic:arc/cuttingfluid"
-  },
-  "addedoutput": [
-    {
-      "mainchance": 0.33,
-      "chance": 0.17,
-      "type": {
-        "item": "bloodmagic:ironsand"
-      }
-    }
-  ],
+  "mainoutputchance": 0.0,
   "output": {
     "item": "bloodmagic:ironsand"
   },
-  "consumeingredient": false,
-  "mainoutputchance": 0.0
+  "tool": {
+    "tag": "bloodmagic:arc/cuttingfluid"
+  }
 }

@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "sss",
-    "sss",
-    "sss"
-  ],
+  "category": "misc",
   "key": {
     "s": {
       "item": "bloodmagic:rawdemonite"
     }
   },
+  "pattern": [
+    "sss",
+    "sss",
+    "sss"
+  ],
   "result": {
     "item": "bloodmagic:rawdemoniteblock"
-  }
+  },
+  "show_notification": true
 }

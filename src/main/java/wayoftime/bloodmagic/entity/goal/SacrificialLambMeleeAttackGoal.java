@@ -21,12 +21,12 @@ public class SacrificialLambMeleeAttackGoal extends MeleeAttackGoal
 	@Override
 	public boolean canUse()
 	{
-		return this.mob.hasEffect(BloodMagicPotions.SACRIFICIAL_LAMB) && super.canUse();
+		return this.mob.hasEffect(BloodMagicPotions.SACRIFICIAL_LAMB.get()) && super.canUse();
 	}
 
 	@Override
 	public boolean canContinueToUse()
 	{
-		return this.mob.hasEffect(BloodMagicPotions.SACRIFICIAL_LAMB) && super.canContinueToUse();
+		return this.mob.hasEffect(BloodMagicPotions.SACRIFICIAL_LAMB.get()) && super.canContinueToUse();
 	}
 }

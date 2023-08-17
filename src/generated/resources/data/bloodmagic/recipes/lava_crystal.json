@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "aba",
-    "bcb",
-    "ded"
-  ],
+  "category": "misc",
   "key": {
     "a": {
       "tag": "forge:glass"
@@ -23,7 +19,13 @@
       "tag": "forge:gems/diamond"
     }
   },
+  "pattern": [
+    "aba",
+    "bcb",
+    "ded"
+  ],
   "result": {
     "item": "bloodmagic:lavacrystal"
-  }
+  },
+  "show_notification": true
 }

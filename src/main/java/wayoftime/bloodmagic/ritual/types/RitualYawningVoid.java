@@ -1,12 +1,8 @@
 package wayoftime.bloodmagic.ritual.types;
 
-import java.util.List;
-import java.util.function.Consumer;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -19,14 +15,12 @@ import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
 import wayoftime.bloodmagic.common.routing.IItemFilter;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
-import wayoftime.bloodmagic.ritual.AreaDescriptor;
-import wayoftime.bloodmagic.ritual.EnumRuneType;
-import wayoftime.bloodmagic.ritual.IMasterRitualStone;
-import wayoftime.bloodmagic.ritual.Ritual;
-import wayoftime.bloodmagic.ritual.RitualComponent;
-import wayoftime.bloodmagic.ritual.RitualRegister;
+import wayoftime.bloodmagic.ritual.*;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.Utils;
+
+import java.util.List;
+import java.util.function.Consumer;
 
 @RitualRegister("yawning_void")
 public class RitualYawningVoid extends Ritual
@@ -276,10 +270,10 @@ public class RitualYawningVoid extends Ritual
 	@Override
 	public Component[] provideInformationOfRitualToPlayer(Player player)
 	{
-		return new Component[] { new TranslatableComponent(this.getTranslationKey() + ".info"),
-				new TranslatableComponent(this.getTranslationKey() + ".default.info"),
-				new TranslatableComponent(this.getTranslationKey() + ".corrosive.info"),
-				new TranslatableComponent(this.getTranslationKey() + ".steadfast.info") };
+		return new Component[] { Component.translatable(this.getTranslationKey() + ".info"),
+				Component.translatable(this.getTranslationKey() + ".default.info"),
+				Component.translatable(this.getTranslationKey() + ".corrosive.info"),
+				Component.translatable(this.getTranslationKey() + ".steadfast.info") };
 	}
 
 	public int getRefreshTimeForRawWill(double rawWill)

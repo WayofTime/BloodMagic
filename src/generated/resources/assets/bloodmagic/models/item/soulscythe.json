@@ -1,34 +1,34 @@
 {
   "overrides": [
     {
+      "model": "bloodmagic:item/variants/soulscythe",
       "predicate": {
         "bloodmagic:type": 0.0
-      },
-      "model": "bloodmagic:item/variants/soulscythe"
+      }
     },
     {
+      "model": "bloodmagic:item/variants/soulscythe_corrosive",
       "predicate": {
         "bloodmagic:type": 1.0
-      },
-      "model": "bloodmagic:item/variants/soulscythe_corrosive"
+      }
     },
     {
+      "model": "bloodmagic:item/variants/soulscythe_destructive",
       "predicate": {
         "bloodmagic:type": 2.0
-      },
-      "model": "bloodmagic:item/variants/soulscythe_destructive"
+      }
     },
     {
+      "model": "bloodmagic:item/variants/soulscythe_vengeful",
       "predicate": {
         "bloodmagic:type": 3.0
-      },
-      "model": "bloodmagic:item/variants/soulscythe_vengeful"
+      }
     },
     {
+      "model": "bloodmagic:item/variants/soulscythe_steadfast",
       "predicate": {
         "bloodmagic:type": 4.0
-      },
-      "model": "bloodmagic:item/variants/soulscythe_steadfast"
+      }
     }
   ]
 }

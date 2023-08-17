@@ -2,9 +2,8 @@ package wayoftime.bloodmagic.client.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import wayoftime.bloodmagic.BloodMagic;
@@ -34,10 +33,10 @@ public class ScreenMasterRoutingNode extends ScreenBase<ContainerMasterRoutingNo
 	}
 
 	@Override
-	protected void renderLabels(PoseStack stack, int mouseX, int mouseY)
+	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY)
 	{
-		this.font.draw(stack, new TranslatableComponent("tile.bloodmagic.masterroutingnode.name"), 8, 5, 4210752);
-		this.font.draw(stack, new TranslatableComponent("container.inventory"), 8, 27, 4210752);
+		guiGraphics.drawString(this.font, Component.translatable("tile.bloodmagic.masterroutingnode.name"), 8, 5, 4210752, false);
+		guiGraphics.drawString(this.font, Component.translatable("container.inventory"), 8, 27, 4210752, false);
 	}
 
 	@Override
@@ -49,13 +48,11 @@ public class ScreenMasterRoutingNode extends ScreenBase<ContainerMasterRoutingNo
 	}
 
 	@Override
-	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY)
 	{
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		RenderSystem.setShaderTexture(0, background);
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
-		this.blit(stack, i, j, 0, 0, this.imageWidth, this.imageHeight);
+		guiGraphics.blit(background, i, j, 0, 0, this.imageWidth, this.imageHeight);
 
 	}
 

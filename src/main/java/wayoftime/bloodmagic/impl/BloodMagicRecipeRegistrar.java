@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.base.Preconditions;
@@ -281,34 +282,34 @@ public class BloodMagicRecipeRegistrar
 		return null;
 	}
 
-	public Set<RecipeBloodAltar> getAltarRecipes(Level world)
+	public List<RecipeBloodAltar> getAltarRecipes(Level world)
 	{
-		return ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ALTAR.get()));
+		return ImmutableList.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ALTAR.get()));
 	}
 
-	public Set<RecipeTartaricForge> getTartaricForgeRecipes(Level world)
+	public List<RecipeTartaricForge> getTartaricForgeRecipes(Level world)
 	{
-		return ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.TARTARICFORGE.get()));
+		return ImmutableList.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.TARTARICFORGE.get()));
 	}
 
-	public Set<RecipeAlchemyArray> getAlchemyArrayRecipes(Level world)
+	public List<RecipeAlchemyArray> getAlchemyArrayRecipes(Level world)
 	{
-		return ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ARRAY.get()));
+		return ImmutableList.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ARRAY.get()));
 	}
 
-	public Set<RecipeARC> getARCRecipes(Level world)
+	public List<RecipeARC> getARCRecipes(Level world)
 	{
-		return ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ARC.get()));
+		return ImmutableList.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ARC.get()));
 	}
 
-	public Set<RecipeAlchemyTable> getAlchemyTableRecipes(Level world)
+	public List<RecipeAlchemyTable> getAlchemyTableRecipes(Level world)
 	{
-		return ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ALCHEMYTABLE.get()));
+		return ImmutableList.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.ALCHEMYTABLE.get()));
 	}
 
-	public Set<RecipePotionFlaskBase> getPotionFlaskRecipes(Level world)
+	public List<RecipePotionFlaskBase> getPotionFlaskRecipes(Level world)
 	{
-		return ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.POTIONFLASK.get()));
+		return ImmutableList.copyOf(world.getRecipeManager().getAllRecipesFor(BloodMagicRecipeType.POTIONFLASK.get()));
 	}
 
 	public Set<RecipeAlchemyArray> getCraftingAlchemyArrayRecipes(Level world)

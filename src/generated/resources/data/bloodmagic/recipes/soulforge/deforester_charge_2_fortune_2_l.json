@@ -1,15 +1,15 @@
 {
   "type": "bloodmagic:soulforge",
+  "drain": 4.0,
   "input0": {
     "item": "bloodmagic:deforester_charge_2"
   },
   "input1": {
     "item": "bloodmagic:fortune_anointment_2"
   },
+  "minimumDrain": 300.0,
   "output": {
     "item": "bloodmagic:deforester_charge_2",
     "nbt": "{anointment_holder:{anointments:[{damage:1,key:\"bloodmagic:fortune\",level:2,max_damage:1}]}}"
-  },
-  "minimumDrain": 300.0,
-  "drain": 4.0
+  }
 }

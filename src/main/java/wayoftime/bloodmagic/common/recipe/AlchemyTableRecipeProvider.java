@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.common.recipe;
 import java.util.function.Consumer;
 
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -11,6 +12,8 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.crafting.PartialNBTIngredient;
+import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.recipe.builder.AlchemyTableRecipeBuilder;
@@ -28,7 +31,11 @@ public class AlchemyTableRecipeProvider implements ISubRecipeProvider
 	@Override
 	public void addRecipes(Consumer<FinishedRecipe> consumer)
 	{
+		CompoundTag tag = new CompoundTag();
+		tag.putString("Potion", ForgeRegistries.POTIONS.getKey(Potions.WATER).toString());
+		Ingredient waterBottleIngredient = PartialNBTIngredient.of(Items.POTION, tag);
 		ItemStack waterbottleStack = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER);
+
 
 		String basePath = "alchemytable/";
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(Items.STRING, 4), 100, 100, 0).addIngredient(Ingredient.of(ItemTags.WOOL)).addIngredient(Ingredient.of(Items.FLINT)).build(consumer, BloodMagic.rl(basePath + "string"));
@@ -55,7 +62,7 @@ public class AlchemyTableRecipeProvider implements ISubRecipeProvider
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.SULFUR.get(), 4), 200, 100, 0).addIngredient(Ingredient.of(Items.LAVA_BUCKET)).addIngredient(Ingredient.of(Tags.Items.COBBLESTONE)).build(consumer, BloodMagic.rl(basePath + "sulfur_from_lava"));
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.SULFUR.get(), 4), 1200, 100, 0).addIngredient(Ingredient.of(BloodMagicItems.LAVA_SIGIL.get())).addIngredient(Ingredient.of(Tags.Items.COBBLESTONE)).build(consumer, BloodMagic.rl(basePath + "sulfur_from_sigil"));
 
-		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.BASIC_CUTTING_FLUID.get()), 1000, 200, 1).addIngredient(Ingredient.of(BloodMagicItems.PLANT_OIL.get())).addIngredient(Ingredient.of(Tags.Items.DUSTS_REDSTONE)).addIngredient(Ingredient.of(Tags.Items.GUNPOWDER)).addIngredient(Ingredient.of(Items.SUGAR)).addIngredient(Ingredient.of(BloodMagicTags.DUST_COAL)).addIngredient(Ingredient.of(waterbottleStack)).build(consumer, BloodMagic.rl(basePath + "basic_cutting_fluid"));
+		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.BASIC_CUTTING_FLUID.get()), 1000, 200, 1).addIngredient(Ingredient.of(BloodMagicItems.PLANT_OIL.get())).addIngredient(Ingredient.of(Tags.Items.DUSTS_REDSTONE)).addIngredient(Ingredient.of(Tags.Items.GUNPOWDER)).addIngredient(Ingredient.of(Items.SUGAR)).addIngredient(Ingredient.of(BloodMagicTags.DUST_COAL)).addIngredient(waterBottleIngredient).build(consumer, BloodMagic.rl(basePath + "basic_cutting_fluid"));
 
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.SLATE_VIAL.get(), 8), 500, 200, 1).addIngredient(Ingredient.of(BloodMagicItems.SLATE.get())).addIngredient(Ingredient.of(Tags.Items.GLASS)).addIngredient(Ingredient.of(Tags.Items.GLASS)).addIngredient(Ingredient.of(Tags.Items.GLASS)).addIngredient(Ingredient.of(Tags.Items.GLASS)).addIngredient(Ingredient.of(Tags.Items.GLASS)).build(consumer, BloodMagic.rl(basePath + "slate_vial"));
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.FORTUNE_ANOINTMENT.get()), 500, 100, 1).addIngredient(Ingredient.of(BloodMagicItems.SLATE_VIAL.get())).addIngredient(Ingredient.of(Tags.Items.CROPS_NETHER_WART)).addIngredient(Ingredient.of(Tags.Items.DUSTS_REDSTONE)).addIngredient(Ingredient.of(BloodMagicTags.DUST_COAL)).build(consumer, BloodMagic.rl(basePath + "fortune_anointment"));
@@ -133,9 +140,9 @@ public class AlchemyTableRecipeProvider implements ISubRecipeProvider
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.ITEM_COMPOSITE_FILTER.get()), 1000, 200, 3).addIngredient(Ingredient.of(BloodMagicItems.FRAME_PARTS.get())).addIngredient(Ingredient.of(Tags.Items.DUSTS_GLOWSTONE)).addIngredient(Ingredient.of(Tags.Items.DUSTS_REDSTONE)).addIngredient(Ingredient.of(BloodMagicItems.IMBUED_SLATE.get())).build(consumer, BloodMagic.rl(basePath + "composite_router_filter"));
 
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.TAU_OIL.get()), 500, 200, 3).addIngredient(Ingredient.of(BloodMagicItems.WEAK_TAU_ITEM.get())).addIngredient(Ingredient.of(BloodMagicItems.WEAK_TAU_ITEM.get())).addIngredient(Ingredient.of(BloodMagicItems.WEAK_TAU_ITEM.get())).addIngredient(Ingredient.of(Items.BONE_MEAL)).build(consumer, BloodMagic.rl(basePath + "tau_oil"));
-		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.INTERMEDIATE_CUTTING_FLUID.get()), 2000, 200, 3).addIngredient(Ingredient.of(BloodMagicItems.TAU_OIL.get())).addIngredient(Ingredient.of(Tags.Items.DUSTS_GLOWSTONE)).addIngredient(Ingredient.of(Tags.Items.GUNPOWDER)).addIngredient(Ingredient.of(Items.SUGAR)).addIngredient(Ingredient.of(BloodMagicTags.DUST_SULFUR)).addIngredient(Ingredient.of(waterbottleStack)).build(consumer, BloodMagic.rl(basePath + "intermediate_cutting_fluid"));
+		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.INTERMEDIATE_CUTTING_FLUID.get()), 2000, 200, 3).addIngredient(Ingredient.of(BloodMagicItems.TAU_OIL.get())).addIngredient(Ingredient.of(Tags.Items.DUSTS_GLOWSTONE)).addIngredient(Ingredient.of(Tags.Items.GUNPOWDER)).addIngredient(Ingredient.of(Items.SUGAR)).addIngredient(Ingredient.of(BloodMagicTags.DUST_SULFUR)).addIngredient(waterBottleIngredient).build(consumer, BloodMagic.rl(basePath + "intermediate_cutting_fluid"));
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.INTERMEDIATE_CUTTING_FLUID.get()), 2100, 200, 3).addIngredient(Ingredient.of(BloodMagicItems.TAU_OIL.get())).addIngredient(Ingredient.of(Tags.Items.DUSTS_GLOWSTONE)).addIngredient(Ingredient.of(Tags.Items.GUNPOWDER)).addIngredient(Ingredient.of(Items.SUGAR)).addIngredient(Ingredient.of(BloodMagicTags.DUST_SULFUR)).addIngredient(Ingredient.of(BloodMagicItems.WATER_SIGIL.get())).build(consumer, BloodMagic.rl(basePath + "intermediate_cutting_fluid_sigil"));
-		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.ADVANCED_CUTTING_FLUID.get()), 4000, 200, 4).addIngredient(Ingredient.of(BloodMagicItems.TAU_OIL.get())).addIngredient(Ingredient.of(BloodMagicTags.DUST_HELLFORGED)).addIngredient(Ingredient.of(Items.GLOW_BERRIES)).addIngredient(Ingredient.of(BloodMagicItems.SALTPETER.get())).addIngredient(Ingredient.of(BloodMagicTags.DUST_SULFUR)).addIngredient(Ingredient.of(waterbottleStack)).build(consumer, BloodMagic.rl(basePath + "advance_cutting_fluid"));
+		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.ADVANCED_CUTTING_FLUID.get()), 4000, 200, 4).addIngredient(Ingredient.of(BloodMagicItems.TAU_OIL.get())).addIngredient(Ingredient.of(BloodMagicTags.DUST_HELLFORGED)).addIngredient(Ingredient.of(Items.GLOW_BERRIES)).addIngredient(Ingredient.of(BloodMagicItems.SALTPETER.get())).addIngredient(Ingredient.of(BloodMagicTags.DUST_SULFUR)).addIngredient(waterBottleIngredient).build(consumer, BloodMagic.rl(basePath + "advance_cutting_fluid"));
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.ADVANCED_CUTTING_FLUID.get()), 4100, 200, 4).addIngredient(Ingredient.of(BloodMagicItems.TAU_OIL.get())).addIngredient(Ingredient.of(BloodMagicTags.DUST_HELLFORGED)).addIngredient(Ingredient.of(Items.GLOW_BERRIES)).addIngredient(Ingredient.of(BloodMagicItems.SALTPETER.get())).addIngredient(Ingredient.of(BloodMagicTags.DUST_SULFUR)).addIngredient(Ingredient.of(BloodMagicItems.WATER_SIGIL.get())).build(consumer, BloodMagic.rl(basePath + "advance_cutting_fluid_sigil"));
 
 		AlchemyTableRecipeBuilder.alchemyTable(new ItemStack(BloodMagicItems.PRIMITIVE_EXPLOSIVE_CELL.get()), 1000, 200, 3).addIngredient(Ingredient.of(Tags.Items.GUNPOWDER)).addIngredient(Ingredient.of(Tags.Items.DUSTS_REDSTONE)).addIngredient(Ingredient.of(BloodMagicItems.WEAK_TAU_ITEM.get())).addIngredient(Ingredient.of(BloodMagicTags.DUST_COAL)).build(consumer, BloodMagic.rl(basePath + "explosive_cell"));

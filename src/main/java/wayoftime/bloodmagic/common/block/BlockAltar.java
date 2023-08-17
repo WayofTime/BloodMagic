@@ -16,7 +16,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -31,7 +30,7 @@ public class BlockAltar extends Block implements EntityBlock
 
 	public BlockAltar()
 	{
-		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).requiresCorrectToolForDrops());
+		super(Properties.of().strength(2.0F, 5.0F).requiresCorrectToolForDrops());
 	}
 
 	@Override

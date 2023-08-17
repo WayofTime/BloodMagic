@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "aba",
-    "cdc",
-    "aea"
-  ],
+  "category": "misc",
   "key": {
     "a": {
       "item": "minecraft:bucket"
@@ -23,7 +19,13 @@
       "orb_tier": 4
     }
   },
+  "pattern": [
+    "aba",
+    "cdc",
+    "aea"
+  ],
   "result": {
     "item": "bloodmagic:accelerationrune"
-  }
+  },
+  "show_notification": true
 }

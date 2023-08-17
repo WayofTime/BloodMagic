@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import net.minecraft.client.gui.GuiGraphics;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.Lists;
@@ -35,22 +36,20 @@ public abstract class ElementTileInformation<T extends BlockEntity> extends HUDE
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void draw(PoseStack matrixStack, float partialTicks, int drawX, int drawY)
+	public void draw(GuiGraphics guiGraphics, float partialTicks, int drawX, int drawY)
 	{
 		HitResult trace = Minecraft.getInstance().hitResult;
-		if (trace == null || trace.getType() != HitResult.Type.BLOCK)
-			return;
 
 		T tile = (T) Minecraft.getInstance().level.getBlockEntity(((BlockHitResult) trace).getBlockPos());
 
 		int yOffset = 0;
 		for (Pair<Sprite, Function<T, String>> sprite : information)
 		{
-			sprite.getLeft().draw(matrixStack, drawX, drawY + yOffset);
+			sprite.getLeft().draw(guiGraphics, drawX, drawY + yOffset);
 			int textY = drawY + yOffset + (sprite.getLeft().getTextureHeight() / 4);
-			Minecraft.getInstance().font.drawShadow(matrixStack, (tile != null && tile.getClass() == tileClass)
+			guiGraphics.drawString(Minecraft.getInstance().font, (tile != null && tile.getClass() == tileClass)
 					? sprite.getRight().apply(tile)
-					: "?", drawX + sprite.getLeft().getTextureWidth() + 2, textY, Color.WHITE.getRGB());
+					: "?", drawX + sprite.getLeft().getTextureWidth() + 2, textY, Color.WHITE.getRGB(), true);
 			yOffset += sprite.getLeft().getTextureHeight() + 2;
 		}
 	}

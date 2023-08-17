@@ -86,7 +86,7 @@ public abstract class BasePacketHandler
 	 */
 	public <MSG> void sendTo(MSG message, ServerPlayer player)
 	{
-		getChannel().sendTo(message, player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
+		getChannel().sendTo(message, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 	}
 
 	/**

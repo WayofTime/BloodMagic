@@ -6,58 +6,58 @@
       }
     },
     {
-      "when": {
-        "down": "true"
-      },
       "apply": {
         "model": "bloodmagic:block/routing/inputroutingnodebase"
+      },
+      "when": {
+        "down": "true"
       }
     },
     {
-      "when": {
-        "up": "true"
-      },
       "apply": {
         "model": "bloodmagic:block/routing/inputroutingnodebase",
         "x": 180
+      },
+      "when": {
+        "up": "true"
       }
     },
     {
-      "when": {
-        "north": "true"
-      },
       "apply": {
         "model": "bloodmagic:block/routing/inputroutingnodebase",
         "x": 270
+      },
+      "when": {
+        "north": "true"
       }
     },
     {
-      "when": {
-        "south": "true"
-      },
       "apply": {
         "model": "bloodmagic:block/routing/inputroutingnodebase",
         "x": 90
+      },
+      "when": {
+        "south": "true"
       }
     },
     {
-      "when": {
-        "west": "true"
-      },
       "apply": {
         "model": "bloodmagic:block/routing/inputroutingnodebase",
         "x": 90,
         "y": 90
+      },
+      "when": {
+        "west": "true"
       }
     },
     {
-      "when": {
-        "east": "true"
-      },
       "apply": {
         "model": "bloodmagic:block/routing/inputroutingnodebase",
         "x": 90,
         "y": 270
+      },
+      "when": {
+        "east": "true"
       }
     }
   ]

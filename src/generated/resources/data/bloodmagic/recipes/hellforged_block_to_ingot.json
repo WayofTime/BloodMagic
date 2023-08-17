@@ -1,12 +1,13 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     {
       "item": "bloodmagic:dungeon_metal"
     }
   ],
   "result": {
-    "item": "bloodmagic:ingot_hellforged",
-    "count": 9
+    "count": 9,
+    "item": "bloodmagic:ingot_hellforged"
   }
 }

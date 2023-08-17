@@ -8,8 +8,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.util.Constants;
 
@@ -54,7 +54,7 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements WorldlyC
 				BlockEntity tile = level.getBlockEntity(offsetPos);
 				if (tile != null)
 				{
-					LazyOptional<IItemHandler> opt = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir.getOpposite());
+					LazyOptional<IItemHandler> opt = tile.getCapability(ForgeCapabilities.ITEM_HANDLER, dir.getOpposite());
 					if (opt != null && opt.isPresent())
 					{
 						currentActiveSlot = dir.ordinal();

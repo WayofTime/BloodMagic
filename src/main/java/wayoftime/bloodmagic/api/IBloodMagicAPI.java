@@ -128,11 +128,11 @@ public interface IBloodMagicAPI
 	}
 
 	/**
-	 * Registers a {@link Function<PlayerEntity, NonNullList<ItemStack>>} for
+	 * Registers a {@link Function<Player,NonNullList<ItemStack>>} for
 	 * inventory handling.
 	 * 
 	 * @param inventoryIdentifier String identifier for the inventory.
-	 * @param function            Function which inputs a Player Entity and outputs
+	 * @param provider            Function which inputs a Player Entity and outputs
 	 *                            a NonNullList of ItemStacks.
 	 */
 	default void registerInventoryProvider(String inventoryIdentifier, Function<Player, NonNullList<ItemStack>> provider)

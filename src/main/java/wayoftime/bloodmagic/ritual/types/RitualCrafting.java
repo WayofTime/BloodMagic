@@ -1,21 +1,14 @@
 package wayoftime.bloodmagic.ritual.types;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.function.Consumer;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -34,13 +27,15 @@ import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
-import wayoftime.bloodmagic.ritual.AreaDescriptor;
-import wayoftime.bloodmagic.ritual.EnumRuneType;
-import wayoftime.bloodmagic.ritual.IMasterRitualStone;
-import wayoftime.bloodmagic.ritual.Ritual;
-import wayoftime.bloodmagic.ritual.RitualComponent;
-import wayoftime.bloodmagic.ritual.RitualRegister;
+import wayoftime.bloodmagic.ritual.*;
 import wayoftime.bloodmagic.util.Utils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.Consumer;
 
 @RitualRegister("crafting")
 public class RitualCrafting extends Ritual
@@ -656,7 +651,7 @@ public class RitualCrafting extends Ritual
 				boolean foundRecipe = false;
 				for (CraftingRecipe testRecipe : craftingRecipes)
 				{
-					ItemStack resultStack = testRecipe.getResultItem();
+					ItemStack resultStack = testRecipe.getResultItem(level.registryAccess());
 					if (outputFilter.doesStackPassFilter(resultStack))
 					{
 						recipe = testRecipe;
@@ -688,7 +683,7 @@ public class RitualCrafting extends Ritual
 
 			if (doLimit)
 			{
-				craftLimit += (recipe.getResultItem().getCount() - 1);
+				craftLimit += (recipe.getResultItem(level.registryAccess()).getCount() - 1);
 			}
 		}
 
@@ -771,7 +766,7 @@ public class RitualCrafting extends Ritual
 			outputInv = Utils.getInventory(outputTile, null);
 		}
 
-		ItemStack resultStack = recipe.assemble(craftingContainer);
+		ItemStack resultStack = recipe.assemble(craftingContainer, level.registryAccess());
 
 		boolean doCraft = true;
 		if (outputInv != null)
@@ -793,9 +788,9 @@ public class RitualCrafting extends Ritual
 				int slot = syphonEntry.getKey();
 				int syphonAmount = syphonEntry.getValue();
 				ItemStack syphonStack = inputInv.extractItem(slot, syphonAmount, false);
-				if (syphonStack.hasContainerItem())
+				if (syphonStack.hasCraftingRemainingItem())
 				{
-					ItemStack containedStack = syphonStack.getContainerItem();
+					ItemStack containedStack = syphonStack.getCraftingRemainingItem();
 					if (inputInv.isItemValid(slot, containedStack))
 					{
 						ItemStack remainderStack = inputInv.insertItem(slot, containedStack, false);
@@ -944,8 +939,13 @@ public class RitualCrafting extends Ritual
 
 	private static CraftingContainer makeContainer()
 	{
-		CraftingContainer craftingcontainer = new CraftingContainer(new AbstractContainerMenu((MenuType) null, -1)
+		CraftingContainer craftingcontainer = new TransientCraftingContainer(new AbstractContainerMenu((MenuType) null, -1)
 		{
+			@Override
+			public ItemStack quickMoveStack(Player p_38941_, int p_38942_) {
+				return null;
+			}
+
 			public boolean stillValid(Player p_29888_)
 			{
 				return false;
@@ -1002,8 +1002,8 @@ public class RitualCrafting extends Ritual
 	@Override
 	public Component[] provideInformationOfRitualToPlayer(Player player)
 	{
-		return new Component[] { new TranslatableComponent(this.getTranslationKey() + ".info"),
-				new TranslatableComponent(this.getTranslationKey() + ".steadfast.info"),
-				new TranslatableComponent(this.getTranslationKey() + ".corrosive.info") };
+		return new Component[] { Component.translatable(this.getTranslationKey() + ".info"),
+				Component.translatable(this.getTranslationKey() + ".steadfast.info"),
+				Component.translatable(this.getTranslationKey() + ".corrosive.info") };
 	}
 }

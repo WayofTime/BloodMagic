@@ -1,16 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "dfd",
-    "ase",
-    "dwd"
-  ],
+  "category": "misc",
   "key": {
     "a": {
       "item": "bloodmagic:airscribetool"
-    },
-    "s": {
-      "tag": "forge:rods/wooden"
     },
     "d": {
       "tag": "forge:gems/diamond"
@@ -21,11 +14,20 @@
     "f": {
       "item": "bloodmagic:firescribetool"
     },
+    "s": {
+      "tag": "forge:rods/wooden"
+    },
     "w": {
       "item": "bloodmagic:waterscribetool"
     }
   },
+  "pattern": [
+    "dfd",
+    "ase",
+    "dwd"
+  ],
   "result": {
     "item": "bloodmagic:ritualdiviner"
-  }
+  },
+  "show_notification": true
 }

@@ -1,9 +1,10 @@
 {
   "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.0,
   "ingredient": {
     "tag": "forge:dusts/hellforged"
   },
-  "result": "bloodmagic:ingot_hellforged",
-  "experience": 0.0,
-  "cookingtime": 100
+  "result": "bloodmagic:ingot_hellforged"
 }

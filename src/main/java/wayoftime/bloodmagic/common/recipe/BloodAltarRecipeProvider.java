@@ -25,7 +25,7 @@ public class BloodAltarRecipeProvider implements ISubRecipeProvider
 		// ONE
 		BloodAltarRecipeBuilder.altar(Ingredient.of(Tags.Items.GEMS_DIAMOND), new ItemStack(BloodMagicItems.WEAK_BLOOD_ORB.get()), AltarTier.ONE.ordinal(), 2000, 5, 1).build(consumer, new ResourceLocation(BloodMagic.MODID, basePath + "weakbloodorb"));
 		BloodAltarRecipeBuilder.altar(Ingredient.of(Tags.Items.STONE), new ItemStack(BloodMagicItems.SLATE.get()), AltarTier.ONE.ordinal(), 1000, 5, 5).build(consumer, new ResourceLocation(BloodMagic.MODID, basePath + "slate"));
-		BloodAltarRecipeBuilder.altar(Ingredient.of(Items.BUCKET), new ItemStack(BloodMagicBlocks.LIFE_ESSENCE_BUCKET.get()), AltarTier.ONE.ordinal(), 1000, 5, 0).build(consumer, BloodMagic.rl(basePath + "bucket_life"));
+		BloodAltarRecipeBuilder.altar(Ingredient.of(Items.BUCKET), new ItemStack(BloodMagicItems.LIFE_ESSENCE_BUCKET.get()), AltarTier.ONE.ordinal(), 1000, 5, 0).build(consumer, BloodMagic.rl(basePath + "bucket_life"));
 
 		// TWO
 		BloodAltarRecipeBuilder.altar(Ingredient.of(BloodMagicItems.SLATE.get()), new ItemStack(BloodMagicItems.REINFORCED_SLATE.get()), AltarTier.TWO.ordinal(), 2000, 5, 5).build(consumer, BloodMagic.rl(basePath + "reinforcedslate"));

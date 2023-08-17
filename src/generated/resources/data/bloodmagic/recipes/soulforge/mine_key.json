@@ -1,5 +1,6 @@
 {
   "type": "bloodmagic:soulforge",
+  "drain": 50.0,
   "input0": {
     "tag": "forge:ingots/copper"
   },
@@ -26,9 +27,8 @@
   "input3": {
     "item": "bloodmagic:infusedslate"
   },
+  "minimumDrain": 1200.0,
   "output": {
     "item": "bloodmagic:minekey"
-  },
-  "minimumDrain": 1200.0,
-  "drain": 50.0
+  }
 }

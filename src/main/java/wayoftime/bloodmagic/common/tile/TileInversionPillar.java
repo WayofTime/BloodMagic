@@ -1,14 +1,12 @@
 package wayoftime.bloodmagic.common.tile;
 
-import java.util.UUID;
-
 import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -22,6 +20,8 @@ import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import wayoftime.bloodmagic.common.tile.base.TileBase;
 import wayoftime.bloodmagic.util.Constants;
+
+import java.util.UUID;
 
 public class TileInversionPillar extends TileBase implements CommandSource
 {
@@ -56,7 +56,7 @@ public class TileInversionPillar extends TileBase implements CommandSource
 		{
 			String key = tag.getString(Constants.NBT.DUNGEON_TELEPORT_KEY);
 //			System.out.println("Deserialized key: " + key);
-			destinationKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(key));
+			destinationKey = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(key));
 		}
 	}
 
@@ -90,7 +90,7 @@ public class TileInversionPillar extends TileBase implements CommandSource
 
 	public CommandSourceStack getCommandSource(ServerLevel world)
 	{
-		return new CommandSourceStack(this, new Vec3(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()), Vec2.ZERO, world, 2, "Inversion Pillar", new TextComponent("Inversion Pillar"), world.getServer(), (Entity) null);
+		return new CommandSourceStack(this, new Vec3(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()), Vec2.ZERO, world, 2, "Inversion Pillar", Component.literal("Inversion Pillar"), world.getServer(), (Entity) null);
 	}
 
 	public void teleportPlayerToLocation(ServerLevel serverWorld, Player player, ResourceKey<Level> destination, BlockPos destinationPos)
@@ -99,7 +99,7 @@ public class TileInversionPillar extends TileBase implements CommandSource
 //		String command = "execute in bloodmagic:dungeon run teleport Dev 0 100 0";
 		String command = getTextCommandForTeleport(destination, player, destinationPos.getX() + 0.5, destinationPos.getY(), destinationPos.getZ() + 0.5);
 		MinecraftServer mcServer = serverWorld.getServer();
-		mcServer.getCommands().performCommand(getCommandSource(serverWorld), command);
+		mcServer.getCommands().performPrefixedCommand(getCommandSource(serverWorld), command);
 	}
 
 	public String getTextCommandForTeleport(ResourceKey<Level> destination, Player player, double posX, double posY, double posZ)
@@ -110,8 +110,7 @@ public class TileInversionPillar extends TileBase implements CommandSource
 	}
 
 	@Override
-	public void sendMessage(Component component, UUID senderUUID)
-	{
+	public void sendSystemMessage(Component component) {
 		// TODO Auto-generated method stub
 
 	}

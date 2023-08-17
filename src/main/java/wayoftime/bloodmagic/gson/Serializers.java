@@ -114,7 +114,7 @@ public class Serializers
 		public JsonElement serialize(ItemStack src, Type typeOfSrc, JsonSerializationContext context)
 		{
 			JsonObject jsonObject = new JsonObject();
-			jsonObject.add("registryName", context.serialize(src.getItem().getRegistryName()));
+			jsonObject.add("registryName", context.serialize(ForgeRegistries.ITEMS.getKey(src.getItem())));
 			jsonObject.addProperty("meta", src.getDamageValue());
 			return jsonObject;
 		}

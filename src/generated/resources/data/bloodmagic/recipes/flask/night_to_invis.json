@@ -5,14 +5,14 @@
       "item": "minecraft:fermented_spider_eye"
     }
   ],
-  "outputEffect": [
-    {
-      "effect": "minecraft:invisibility",
-      "baseDuration": 3600
-    }
-  ],
   "inputEffect": [
     "minecraft:night_vision"
+  ],
+  "outputEffect": [
+    {
+      "baseDuration": 3600,
+      "effect": "minecraft:invisibility"
+    }
   ],
   "syphon": 500,
   "ticks": 200,

@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
@@ -194,7 +194,8 @@ public class TileDeforesterCharge extends TileExplosiveCharge
 						BlockEntity tileentity = blockstate.getBlock() instanceof EntityBlock
 								? this.level.getBlockEntity(blockPos)
 								: null;
-						LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerLevel) this.level)).withRandom(this.level.random).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockPos)).withParameter(LootContextParams.TOOL, toolStack).withOptionalParameter(LootContextParams.BLOCK_ENTITY, tileentity);
+						//TODO: FIX randomness (look at git history)
+						LootParams.Builder lootcontext$builder = (new LootParams.Builder((ServerLevel) this.level)).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockPos)).withParameter(LootContextParams.TOOL, toolStack).withOptionalParameter(LootContextParams.BLOCK_ENTITY, tileentity);
 //                  if (this.mode == Explosion.Mode.DESTROY) {
 //                     lootcontext$builder.withParameter(LootParameters.EXPLOSION_RADIUS, this.size);
 //                  }

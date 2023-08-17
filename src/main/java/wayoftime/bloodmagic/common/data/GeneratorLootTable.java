@@ -1,21 +1,17 @@
 package wayoftime.bloodmagic.common.data;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import com.google.common.collect.ImmutableList;
-import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.Util;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.loot.BlockLoot;
-import net.minecraft.data.loot.ChestLoot;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.data.loot.packs.VanillaBlockLoot;
+import net.minecraft.data.loot.packs.VanillaChestLoot;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
@@ -30,7 +26,6 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.LootTables;
 import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
@@ -42,7 +37,6 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemDamageFunction;
 import net.minecraft.world.level.storage.loot.functions.SetNbtFunction;
 import net.minecraft.world.level.storage.loot.functions.SetPotionFunction;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -54,6 +48,7 @@ import net.minecraftforge.registries.RegistryObject;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BlockDemonCrystal;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.common.fluid.BloodMagicFluids;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.loot.BMTableLootEntry;
 import wayoftime.bloodmagic.common.loot.SetLivingUpgrade;
@@ -63,21 +58,15 @@ import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 
 public class GeneratorLootTable extends LootTableProvider
 {
-	public GeneratorLootTable(DataGenerator dataGeneratorIn)
+	public GeneratorLootTable(PackOutput output)
 	{
-		super(dataGeneratorIn);
+		super(output, Collections.emptySet(), List.of(new SubProviderEntry(BMBlocks::new, LootContextParamSets.BLOCK), new SubProviderEntry(BMLootTables::new, LootContextParamSets.CHEST)));
 	}
 
-	@Override
-	protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> getTables()
-	{
-		return ImmutableList.of(Pair.of(BMBlocks::new, LootContextParamSets.BLOCK), Pair.of(BMLootTables::new, LootContextParamSets.CHEST));
-	}
-
-	private static class BMLootTables extends ChestLoot
+	private static class BMLootTables extends VanillaChestLoot
 	{
 		@Override
-		public void accept(BiConsumer<ResourceLocation, LootTable.Builder> acceptor)
+		public void generate(BiConsumer<ResourceLocation, LootTable.Builder> acceptor)
 		{
 			generateSimpleDungeonLoot(acceptor);
 		}
@@ -656,10 +645,10 @@ public class GeneratorLootTable extends LootTableProvider
 		}
 	}
 
-	private static class BMBlocks extends BlockLoot
+	private static class BMBlocks extends VanillaBlockLoot
 	{
 		@Override
-		protected void addTables()
+		protected void generate()
 		{
 			for (RegistryObject<Block> block : BloodMagicBlocks.BASICBLOCKS.getEntries())
 			{
@@ -715,8 +704,8 @@ public class GeneratorLootTable extends LootTableProvider
 			dropSelf(BloodMagicBlocks.DUNGEON_POLISHED_GATE.get());
 			dropSelf(BloodMagicBlocks.DUNGEON_SPIKE_TRAP.get());
 			registerNoDropLootTable(BloodMagicBlocks.SPIKES.get());
-			add(BloodMagicBlocks.DUNGEON_BRICK_SLAB.get(), BlockLoot::createSlabItemTable);
-			add(BloodMagicBlocks.DUNGEON_TILE_SLAB.get(), BlockLoot::createSlabItemTable);
+			add(BloodMagicBlocks.DUNGEON_BRICK_SLAB.get(), this::createSlabItemTable);
+			add(BloodMagicBlocks.DUNGEON_TILE_SLAB.get(), this::createSlabItemTable);
 
 			registerNoDropLootTable(BloodMagicBlocks.DUNGEON_CONTROLLER.get());
 			registerNoDropLootTable(BloodMagicBlocks.DUNGEON_SEAL.get());
@@ -747,6 +736,9 @@ public class GeneratorLootTable extends LootTableProvider
 			registerNoDropLootTable(BloodMagicBlocks.INVERSION_PILLAR.get());
 			registerNoDropLootTable(BloodMagicBlocks.INVERSION_PILLAR_CAP.get());
 
+			registerNoDropLootTable(BloodMagicFluids.LIFE_ESSENCE_BLOCK.get());
+			registerNoDropLootTable(BloodMagicFluids.DOUBT_BLOCK.get());
+
 			add(BloodMagicBlocks.DUNGEON_ORE.get(), (block) -> {
 				return createOreDrop(block, BloodMagicItems.DEMONITE_RAW.get());
 			});
@@ -754,7 +746,7 @@ public class GeneratorLootTable extends LootTableProvider
 
 		private void registerNoDropLootTable(Block block)
 		{
-			LootPool.Builder builder = LootPool.lootPool().name(block.getRegistryName().toString());
+			LootPool.Builder builder = LootPool.lootPool().name(ForgeRegistries.BLOCKS.getKey(block).toString());
 			this.add(block, LootTable.lootTable().withPool(builder));
 		}
 
@@ -793,21 +785,21 @@ public class GeneratorLootTable extends LootTableProvider
 			this.add(block, builder);
 		}
 
-		protected static <T extends Comparable<T> & StringRepresentable> LootTable.Builder droppingWhen(Block block, Property<T> property, T value)
-		{
-			return LootTable.lootTable().withPool(applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(block).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(property, value))))));
-		}
+//		protected static <T extends Comparable<T> & StringRepresentable> LootTable.Builder droppingWhen(Block block, Property<T> property, T value)
+//		{
+//			return LootTable.lootTable().withPool(applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(block).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(property, value))))));
+//		}
 
 		@Override
 		protected Iterable<Block> getKnownBlocks()
 		{
-			return ForgeRegistries.BLOCKS.getValues().stream().filter(b -> b.getRegistryName().getNamespace().equals(BloodMagic.MODID)).collect(Collectors.toList());
+			return ForgeRegistries.BLOCKS.getValues().stream().filter(b -> ForgeRegistries.BLOCKS.getKey(b).getNamespace().equals(BloodMagic.MODID)).collect(Collectors.toList());
 		}
 	}
 
-	@Override
-	protected void validate(Map<ResourceLocation, LootTable> map, ValidationContext validationtracker)
-	{
-		map.forEach((name, table) -> LootTables.validate(validationtracker, name, table));
-	}
+//	@Override
+//	protected void validate(Map<ResourceLocation, LootTable> map, ValidationContext validationtracker)
+//	{
+//		map.forEach((name, table) -> validate(validationtracker, name, table));
+//	}
 }

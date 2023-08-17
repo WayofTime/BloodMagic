@@ -22,7 +22,7 @@ public class RenderFakeBlocks
 		Tesselator tessellator = Tesselator.getInstance();
 		BufferBuilder wr = tessellator.getBuilder();
 
-		Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(texture.getName());
+		Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(texture.atlasLocation());
 
 		wr.begin(Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 //		wr.begin(GL11.GL_QUADS, DefaultVertexFormat.POSITION_TEX);

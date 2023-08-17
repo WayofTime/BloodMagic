@@ -1,20 +1,14 @@
 package wayoftime.bloodmagic.client.screens;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -22,11 +16,15 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.apache.commons.lang3.tuple.Pair;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.container.tile.ContainerItemRoutingNode;
 import wayoftime.bloodmagic.common.tile.routing.TileFilteredRoutingNode;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
 import wayoftime.bloodmagic.network.ItemRoutingNodeButtonPacket;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 {
@@ -71,8 +69,7 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 			{
 				dirName = "";
 			}
-
-			Button button = new Button(left + buttonLocation.getLeft(), top + buttonLocation.getRight(), 20, 20, new TextComponent(dirName), new DirectionalPress(this, tileNode, i, dir));
+			Button button = Button.builder(Component.literal(dirName),  new DirectionalPress(this, tileNode, i, dir)).pos(left + buttonLocation.getLeft(), top + buttonLocation.getRight()).size(20,20).build();
 			this.addRenderableWidget(button);
 			this.buttonList.add(button);
 
@@ -82,8 +79,8 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 			}
 		}
 
-		this.addRenderableWidget(new Button(left + 89, top + 50, 8, 20, new TextComponent(">"), new IncrementPress(tileNode, 6)));
-		this.addRenderableWidget(new Button(left + 61, top + 50, 8, 20, new TextComponent("<"), new IncrementPress(tileNode, 7)));
+		this.addRenderableWidget(Button.builder(Component.literal(">"), new IncrementPress(tileNode, 6)).pos(left + 89, top + 50).size( 8, 20).build());
+		this.addRenderableWidget(Button.builder(Component.literal("<"), new IncrementPress(tileNode, 7)).pos(left + 61, top + 50).size( 8, 20).build());
 	}
 
 	/**
@@ -169,9 +166,9 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 	}
 
 	@Override
-	protected void renderLabels(PoseStack stack, int mouseX, int mouseY)
+	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY)
 	{
-		this.font.draw(stack, new TextComponent("" + getCurrentActiveSlotPriority()), 71 + 5, 51 + 5, 0xFFFFFF);
+		guiGraphics.drawString(this.font, Component.literal("" + getCurrentActiveSlotPriority()), 71 + 5, 51 + 5, 0xFFFFFF, false);
 //		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.routingnode.name"), 8, 5, 4210752);
 //		this.font.draw(stack, new TranslationTextComponent("container.inventory"), 8, 111, 4210752);
 
@@ -188,7 +185,7 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 			if (block != null)
 			{
 				ItemStack itemStack = new ItemStack(block);
-				this.drawItemStack(itemStack, buttonLocation.getLeft() + 2, buttonLocation.getRight() + 2, getStringForDirection(dir));
+				this.drawItemStack(guiGraphics ,itemStack, buttonLocation.getLeft() + 2, buttonLocation.getRight() + 2, getStringForDirection(dir));
 			}
 		}
 	}
@@ -239,14 +236,11 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 	}
 
 	@Override
-	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY)
 	{
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		RenderSystem.setShaderTexture(0, background);
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
-		this.blit(stack, i, j, 0, 0, this.imageWidth, this.imageHeight);
-
+		guiGraphics.blit(background, i, j, 0, 0, this.imageWidth, this.imageHeight);
 	}
 
 //	@Override
@@ -265,21 +259,17 @@ public class ScreenItemRoutingNode extends ScreenBase<ContainerItemRoutingNode>
 	 * The z index is increased by 32 (and not decreased afterwards), and the item
 	 * is then rendered at z=200.
 	 */
-	private void drawItemStack(ItemStack stack, int x, int y, String altText)
+	private void drawItemStack(GuiGraphics guiGraphics, ItemStack stack, int x, int y, String altText)
 	{
-//		RenderSystem.translatef(0.0F, 0.0F, 32.0F);
-//		this.getbl
-		this.setBlitOffset(1);
-		this.itemRenderer.blitOffset = 1;
-//		net.minecraft.client.gui.Font font = stack.getItem().getFontRenderer(stack);
+		guiGraphics.pose().pushPose();
+		guiGraphics.pose().translate(0, 0, 1);
 		Font font = null;
 		if (font == null)
 			font = this.font;
-		this.itemRenderer.renderAndDecorateItem(stack, x, y);
+		guiGraphics.renderItem(stack, x, y);
 		int offset = 8; // (this.draggedStack.isEmpty() ? 0 : 8)
-		this.itemRenderer.renderGuiItemDecorations(font, stack, x, y - offset, altText);
-		this.setBlitOffset(0);
-		this.itemRenderer.blitOffset = 0.0F;
+		guiGraphics.renderItemDecorations(font, stack, x, y - offset, altText);
+		guiGraphics.pose().popPose();
 	}
 
 	public class DirectionalPress implements Button.OnPress

@@ -1,25 +1,25 @@
 {
   "type": "bloodmagic:arc",
+  "addedoutput": [
+    {
+      "type": {
+        "item": "bloodmagic:copperfragment"
+      },
+      "chance": 0.5,
+      "mainchance": 0.0
+    }
+  ],
+  "consumeingredient": false,
   "input": {
     "tag": "forge:ores/copper"
   },
   "inputsize": 1,
+  "mainoutputchance": 0.0,
+  "output": {
+    "count": 4,
+    "item": "bloodmagic:copperfragment"
+  },
   "tool": {
     "tag": "bloodmagic:arc/explosive"
-  },
-  "addedoutput": [
-    {
-      "mainchance": 0.0,
-      "chance": 0.5,
-      "type": {
-        "item": "bloodmagic:copperfragment"
-      }
-    }
-  ],
-  "output": {
-    "item": "bloodmagic:copperfragment",
-    "count": 4
-  },
-  "consumeingredient": false,
-  "mainoutputchance": 0.0
+  }
 }

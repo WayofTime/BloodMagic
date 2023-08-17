@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_master_orb": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bloodmagic:masterbloodorb"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bloodmagic:path/path_wornstonetile"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_master_orb",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bloodmagic:path/path_wornstonetile"
+    ]
+  },
+  "sends_telemetry_event": false
+}

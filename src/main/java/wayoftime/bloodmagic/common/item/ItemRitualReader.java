@@ -1,9 +1,5 @@
 package wayoftime.bloodmagic.common.item;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -11,8 +7,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -43,13 +37,17 @@ import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.util.helper.TextHelper;
 import wayoftime.bloodmagic.will.DemonWillHolder;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 public class ItemRitualReader extends Item
 {
 	public static final String tooltipBase = "tooltip.bloodmagic.ritualReader.";
 
 	public ItemRitualReader()
 	{
-		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1));
 	}
 
 	@Override
@@ -60,18 +58,18 @@ public class ItemRitualReader extends Item
 			return;
 
 		EnumRitualReaderState state = this.getState(stack);
-		tooltip.add(new TranslatableComponent(tooltipBase + "currentState", TextHelper.localizeEffect(tooltipBase + state.toString().toLowerCase(Locale.ROOT))).withStyle(ChatFormatting.GRAY));
+		tooltip.add(Component.translatable(tooltipBase + "currentState", TextHelper.localizeEffect(tooltipBase + state.toString().toLowerCase(Locale.ROOT))).withStyle(ChatFormatting.GRAY));
 
-		tooltip.add(new TextComponent(""));
+		tooltip.add(Component.literal(""));
 
 		boolean sneaking = Screen.hasShiftDown();
 
 		if (sneaking)
 		{
-			tooltip.add(new TranslatableComponent(tooltipBase + "desc." + state.toString().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable(tooltipBase + "desc." + state.toString().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GRAY));
 		} else
 		{
-			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.extraInfo").withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("tooltip.bloodmagic.extraInfo").withStyle(ChatFormatting.GRAY));
 		}
 
 		super.appendHoverText(stack, world, tooltip, flag);
@@ -193,7 +191,7 @@ public class ItemRitualReader extends Item
 						{
 							BlockPos pos1 = pos.subtract(masterPos);
 							this.setBlockPos(stack, pos1);
-							player.displayClientMessage(new TranslatableComponent("ritual.bloodmagic.blockRange.firstBlock"), true);
+							player.displayClientMessage(Component.translatable("ritual.bloodmagic.blockRange.firstBlock"), true);
 						} else
 						{
 							tile = world.getBlockEntity(masterPos);
@@ -219,16 +217,16 @@ public class ItemRitualReader extends Item
 								switch (master.setBlockRangeByBounds(player, range, containedPos, pos2))
 								{
 								case SUCCESS:
-									player.displayClientMessage(new TranslatableComponent("ritual.bloodmagic.blockRange.success"), true);
+									player.displayClientMessage(Component.translatable("ritual.bloodmagic.blockRange.success"), true);
 									break;
 								case NOT_WITHIN_BOUNDARIES:
-									player.displayClientMessage(new TranslatableComponent("ritual.bloodmagic.blockRange.tooFar", maxVerticalRange, maxHorizontalRange), false);
+									player.displayClientMessage(Component.translatable("ritual.bloodmagic.blockRange.tooFar", maxVerticalRange, maxHorizontalRange), false);
 									break;
 								case VOLUME_TOO_LARGE:
-									player.displayClientMessage(new TranslatableComponent("ritual.bloodmagic.blockRange.tooBig", maxVolume), false);
+									player.displayClientMessage(Component.translatable("ritual.bloodmagic.blockRange.tooBig", maxVolume), false);
 									break;
 								default:
-									player.displayClientMessage(new TranslatableComponent("ritual.bloodmagic.blockRange.noRange"), false);
+									player.displayClientMessage(Component.translatable("ritual.bloodmagic.blockRange.noRange"), false);
 									break;
 								}
 							}
@@ -321,7 +319,7 @@ public class ItemRitualReader extends Item
 
 	public void notifyPlayerOfStateChange(EnumRitualReaderState state, Player player)
 	{
-		ChatUtil.sendNoSpam(player, new TranslatableComponent(tooltipBase + "currentState", new TranslatableComponent(tooltipBase + state.toString().toLowerCase(Locale.ROOT))));
+		ChatUtil.sendNoSpam(player, Component.translatable(tooltipBase + "currentState", Component.translatable(tooltipBase + state.toString().toLowerCase(Locale.ROOT))));
 	}
 
 	public void setState(ItemStack stack, EnumRitualReaderState state)

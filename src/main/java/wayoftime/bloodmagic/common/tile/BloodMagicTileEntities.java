@@ -13,7 +13,7 @@ import wayoftime.bloodmagic.common.tile.routing.TileRoutingNode;
 
 public class BloodMagicTileEntities
 {
-	public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, BloodMagic.MODID);
+	public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, BloodMagic.MODID);
 
 	public static final RegistryObject<BlockEntityType<TileAltar>> ALTAR_TYPE = TILE_ENTITIES.register("altar", () -> BlockEntityType.Builder.of(TileAltar::new, BloodMagicBlocks.BLOOD_ALTAR.get()).build(null));
 

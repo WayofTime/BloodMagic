@@ -1,22 +1,19 @@
 package wayoftime.bloodmagic.common.block;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.Material;
 import wayoftime.bloodmagic.altar.IBloodRune;
 import wayoftime.bloodmagic.block.enums.BloodRuneType;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class BlockBloodRune extends Block implements IBloodRune
 {
@@ -25,7 +22,7 @@ public class BlockBloodRune extends Block implements IBloodRune
 
 	public BlockBloodRune(BloodRuneType type, int strength)
 	{
-		super(Properties.of(Material.STONE).strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops());
+		super(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops());
 		this.type = type;
 		this.strength = strength;
 	}
@@ -45,7 +42,7 @@ public class BlockBloodRune extends Block implements IBloodRune
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag flag)
 	{
-		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.decoration.safe").withStyle(ChatFormatting.GRAY));
+		tooltip.add(Component.translatable("tooltip.bloodmagic.decoration.safe").withStyle(ChatFormatting.GRAY));
 		super.appendHoverText(stack, world, tooltip, flag);
 	}
 

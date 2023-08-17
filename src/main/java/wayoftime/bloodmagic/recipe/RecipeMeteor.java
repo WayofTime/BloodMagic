@@ -19,6 +19,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Explosion.BlockInteraction;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import wayoftime.bloodmagic.common.meteor.MeteorLayer;
 import wayoftime.bloodmagic.common.recipe.BloodMagicRecipeType;
 import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
@@ -52,7 +53,7 @@ public class RecipeMeteor extends BloodMagicRecipe
 	public void spawnMeteorInWorld(Level world, BlockPos centerPos)
 	{
 		if (explosionRadius > 0)
-			world.explode(null, centerPos.getX(), centerPos.getY(), centerPos.getZ(), explosionRadius, true, BlockInteraction.DESTROY);
+			world.explode(null, centerPos.getX(), centerPos.getY(), centerPos.getZ(), explosionRadius, true, Level.ExplosionInteraction.TNT);
 
 		Map<Integer, MeteorLayer> layerMap = new HashMap<>();
 		for (MeteorLayer layer : layerList)

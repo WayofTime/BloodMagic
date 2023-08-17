@@ -1,15 +1,15 @@
 {
   "type": "bloodmagic:soulforge",
+  "drain": 4.0,
   "input0": {
     "item": "bloodmagic:veinmine_charge_2"
   },
   "input1": {
     "item": "bloodmagic:voiding_anointment_l"
   },
+  "minimumDrain": 300.0,
   "output": {
     "item": "bloodmagic:veinmine_charge_2",
     "nbt": "{anointment_holder:{anointments:[{damage:1,key:\"bloodmagic:voiding\",level:1,max_damage:1}]}}"
-  },
-  "minimumDrain": 300.0,
-  "drain": 4.0
+  }
 }

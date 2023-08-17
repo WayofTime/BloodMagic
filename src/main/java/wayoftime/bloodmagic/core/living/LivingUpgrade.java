@@ -32,10 +32,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.Util;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 @JsonAdapter(LivingUpgrade.Deserializer.class)
-public class LivingUpgrade extends ForgeRegistryEntry<LivingUpgrade>
+public class LivingUpgrade
 {
 	public static final LivingUpgrade DUMMY = new LivingUpgrade(new ResourceLocation("dummy"), levels -> levels.add(new Level(0, 0)));
 

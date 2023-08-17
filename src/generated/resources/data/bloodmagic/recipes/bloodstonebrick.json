@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "ss",
-    "ss"
-  ],
+  "category": "misc",
   "key": {
     "s": {
       "item": "bloodmagic:largebloodstonebrick"
     }
   },
+  "pattern": [
+    "ss",
+    "ss"
+  ],
   "result": {
-    "item": "bloodmagic:bloodstonebrick",
-    "count": 4
-  }
+    "count": 4,
+    "item": "bloodmagic:bloodstonebrick"
+  },
+  "show_notification": true
 }

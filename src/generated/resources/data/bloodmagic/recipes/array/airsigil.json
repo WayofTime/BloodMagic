@@ -1,13 +1,13 @@
 {
   "type": "bloodmagic:array",
-  "texture": "bloodmagic:textures/models/alchemyarrays/airsigil.png",
-  "baseinput": {
-    "item": "bloodmagic:reagentair"
-  },
   "addedinput": {
     "item": "bloodmagic:reinforcedslate"
   },
+  "baseinput": {
+    "item": "bloodmagic:reagentair"
+  },
   "output": {
     "item": "bloodmagic:airsigil"
-  }
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/airsigil.png"
 }

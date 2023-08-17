@@ -1,13 +1,7 @@
 package wayoftime.bloodmagic.core.living;
 
-import java.util.Map;
-import java.util.Map.Entry;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.google.common.collect.Multimap;
-
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,9 +11,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import org.apache.commons.lang3.tuple.Pair;
 import wayoftime.bloodmagic.common.item.ItemLivingTrainer;
 import wayoftime.bloodmagic.core.util.PlayerUtil;
 import wayoftime.bloodmagic.event.LivingEquipmentEvent;
+
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class LivingUtil
 {
@@ -87,7 +85,7 @@ public class LivingUtil
 			MinecraftForge.EVENT_BUS.post(levelUpEvent);
 			didUpgrade = true;
 
-			player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.living_upgrade_level_increase", new TranslatableComponent(upgrade.getTranslationKey()), newLevel), true);
+			player.displayClientMessage(Component.translatable("chat.bloodmagic.living_upgrade_level_increase", Component.translatable(upgrade.getTranslationKey()), newLevel), true);
 		}
 
 //		System.out.println("Adding experience! Total experience is: " + currentExperience);
@@ -202,7 +200,7 @@ public class LivingUtil
 			MinecraftForge.EVENT_BUS.post(levelUpEvent);
 			didUpgrade = true;
 
-			player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.living_upgrade_level_increase", new TranslatableComponent(upgrade.getTranslationKey()), newLevel), true);
+			player.displayClientMessage(Component.translatable("chat.bloodmagic.living_upgrade_level_increase", Component.translatable(upgrade.getTranslationKey()), newLevel), true);
 		}
 
 //			System.out.println("Adding experience! Total experience is: " + currentExperience);
@@ -299,7 +297,7 @@ public class LivingUtil
 			if (stack.isEmpty() || !(stack.getItem() instanceof ILivingContainer))
 				return false;
 
-			if (stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlot.CHEST)
+			if (stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getType() == ArmorItem.Type.CHESTPLATE)
 			{
 				if (stack.getMaxDamage() - stack.getDamageValue() <= 1)
 				{

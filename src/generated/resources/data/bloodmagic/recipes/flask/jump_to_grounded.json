@@ -5,14 +5,14 @@
       "item": "minecraft:cobweb"
     }
   ],
-  "outputEffect": [
-    {
-      "effect": "bloodmagic:grounded",
-      "baseDuration": 1800
-    }
-  ],
   "inputEffect": [
     "minecraft:jump_boost"
+  ],
+  "outputEffect": [
+    {
+      "baseDuration": 1800,
+      "effect": "bloodmagic:grounded"
+    }
   ],
   "syphon": 1000,
   "ticks": 200,

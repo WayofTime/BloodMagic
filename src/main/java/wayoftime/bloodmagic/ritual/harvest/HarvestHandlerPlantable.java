@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fml.ModList;
@@ -70,7 +71,7 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 //		NonNullList<ItemStack> blockDrops = NonNullList.create();
 //		state.getBlock().getDrops(blockDrops, world, pos, state, 0);
 		boolean foundSeed = false;
-		LootContext.Builder lootBuilder = new LootContext.Builder((ServerLevel) world);
+		LootParams.Builder lootBuilder = new LootParams.Builder((ServerLevel) world);
 		Vec3 blockCenter = new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
 		List<ItemStack> blockDrops = state.getDrops(lootBuilder.withParameter(LootContextParams.ORIGIN, blockCenter).withParameter(LootContextParams.TOOL, mockHoe));
 

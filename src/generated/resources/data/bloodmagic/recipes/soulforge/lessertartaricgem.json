@@ -1,5 +1,6 @@
 {
   "type": "bloodmagic:soulforge",
+  "drain": 20.0,
   "input0": {
     "item": "bloodmagic:soulgempetty"
   },
@@ -12,9 +13,8 @@
   "input3": {
     "tag": "forge:storage_blocks/lapis"
   },
+  "minimumDrain": 60.0,
   "output": {
     "item": "bloodmagic:soulgemlesser"
-  },
-  "minimumDrain": 60.0,
-  "drain": 20.0
+  }
 }

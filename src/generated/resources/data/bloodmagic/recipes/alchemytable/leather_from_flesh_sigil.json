@@ -21,8 +21,8 @@
     }
   ],
   "output": {
-    "item": "minecraft:leather",
-    "count": 4
+    "count": 4,
+    "item": "minecraft:leather"
   },
   "syphon": 400,
   "ticks": 200,

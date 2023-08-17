@@ -1,16 +1,9 @@
 package wayoftime.bloodmagic.common.item.routing;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Button.OnPress;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -27,6 +20,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.network.NetworkHooks;
+import org.apache.commons.lang3.tuple.Pair;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.client.button.FilterButtonTogglePress;
 import wayoftime.bloodmagic.common.container.item.ContainerFilter;
@@ -39,6 +33,9 @@ import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.GhostItemHelper;
 import wayoftime.bloodmagic.util.Utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterProvider
 {
 	public static final int inventorySize = 9;
@@ -48,7 +45,7 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 
 	public ItemRouterFilter()
 	{
-		super(new Item.Properties().stacksTo(16).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(16));
 	}
 
 	@Override
@@ -61,7 +58,7 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 
 			if (player instanceof ServerPlayer)
 			{
-				NetworkHooks.openGui((ServerPlayer) player, this, buf -> buf.writeItemStack(stack, false));
+				NetworkHooks.openScreen((ServerPlayer) player, this, buf -> buf.writeItemStack(stack, false));
 			}
 		}
 
@@ -80,7 +77,7 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 	public Component getDisplayName()
 	{
 		// TODO Auto-generated method stub
-		return new TextComponent("Filter");
+		return Component.literal("Filter");
 	}
 
 	@Override
@@ -241,10 +238,10 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 			switch (currentState)
 			{
 			case 1:
-				componentList.add(new TranslatableComponent("filter.bloodmagic.blacklist"));
+				componentList.add(Component.translatable("filter.bloodmagic.blacklist"));
 				break;
 			default:
-				componentList.add(new TranslatableComponent("filter.bloodmagic.whitelist"));
+				componentList.add(Component.translatable("filter.bloodmagic.whitelist"));
 			}
 		}
 

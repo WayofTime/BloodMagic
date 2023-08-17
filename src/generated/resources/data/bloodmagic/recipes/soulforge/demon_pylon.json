@@ -1,5 +1,6 @@
 {
   "type": "bloodmagic:soulforge",
+  "drain": 50.0,
   "input0": [
     {
       "item": "bloodmagic:defaultcrystal"
@@ -26,9 +27,8 @@
   "input3": {
     "tag": "forge:storage_blocks/iron"
   },
+  "minimumDrain": 400.0,
   "output": {
     "item": "bloodmagic:demonpylon"
-  },
-  "minimumDrain": 400.0,
-  "drain": 50.0
+  }
 }

@@ -5,15 +5,15 @@
       "item": "bloodmagic:combinationalcatalyst"
     }
   ],
-  "outputEffect": [
-    {
-      "effect": "bloodmagic:gravity",
-      "baseDuration": 1800
-    }
-  ],
   "inputEffect": [
     "bloodmagic:grounded",
     "minecraft:slow_falling"
+  ],
+  "outputEffect": [
+    {
+      "baseDuration": 1800,
+      "effect": "bloodmagic:gravity"
+    }
   ],
   "syphon": 1000,
   "ticks": 200,

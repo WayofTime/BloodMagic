@@ -1,38 +1,44 @@
 {
   "type": "bloodmagic:meteor",
+  "explosion": 14.0,
   "input": {
     "tag": "forge:storage_blocks/iron"
   },
-  "syphon": 1000000,
-  "explosion": 14.0,
   "layers": [
     {
-      "radius": 4,
       "additionalWeight": 0,
+      "fill": {
+        "block": "minecraft:iron_ore"
+      },
       "minWeight": 0,
+      "radius": 4,
+      "shell": {
+        "index": -1,
+        "tag": "forge:cobblestone"
+      },
       "weightMap": [
         {
           "block": "minecraft:gold_ore",
           "weight": 30
         },
         {
-          "tag": "forge:ores/copper",
           "index": 0,
+          "tag": "forge:ores/copper",
           "weight": 200
         },
         {
-          "tag": "forge:ores/tin",
           "index": 0,
+          "tag": "forge:ores/tin",
           "weight": 140
         },
         {
-          "tag": "forge:ores/silver",
           "index": 0,
+          "tag": "forge:ores/silver",
           "weight": 70
         },
         {
-          "tag": "forge:ores/lead",
           "index": 0,
+          "tag": "forge:ores/lead",
           "weight": 80
         },
         {
@@ -43,19 +49,15 @@
           "block": "minecraft:redstone_ore",
           "weight": 100
         }
-      ],
-      "fill": {
-        "block": "minecraft:iron_ore"
-      },
-      "shell": {
-        "tag": "forge:cobblestone",
-        "index": -1
-      }
+      ]
     },
     {
-      "radius": 7,
       "additionalWeight": 100,
+      "fill": {
+        "block": "minecraft:stone"
+      },
       "minWeight": 1000,
+      "radius": 7,
       "weightMap": [
         {
           "block": "minecraft:iron_ore",
@@ -66,23 +68,23 @@
           "weight": 30
         },
         {
-          "tag": "forge:ores/copper",
           "index": 0,
+          "tag": "forge:ores/copper",
           "weight": 200
         },
         {
-          "tag": "forge:ores/tin",
           "index": 0,
+          "tag": "forge:ores/tin",
           "weight": 140
         },
         {
-          "tag": "forge:ores/silver",
           "index": 0,
+          "tag": "forge:ores/silver",
           "weight": 70
         },
         {
-          "tag": "forge:ores/lead",
           "index": 0,
+          "tag": "forge:ores/lead",
           "weight": 80
         },
         {
@@ -93,10 +95,8 @@
           "block": "minecraft:redstone_ore",
           "weight": 100
         }
-      ],
-      "fill": {
-        "block": "minecraft:stone"
-      }
+      ]
     }
-  ]
+  ],
+  "syphon": 1000000
 }

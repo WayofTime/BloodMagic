@@ -4,8 +4,10 @@
       "model": "bloodmagic:block/fungal_charge_2",
       "x": 180
     },
-    "attached=up": {
-      "model": "bloodmagic:block/fungal_charge_2"
+    "attached=east": {
+      "model": "bloodmagic:block/fungal_charge_2",
+      "x": 90,
+      "y": 90
     },
     "attached=north": {
       "model": "bloodmagic:block/fungal_charge_2",
@@ -15,15 +17,13 @@
       "model": "bloodmagic:block/fungal_charge_2",
       "x": 270
     },
+    "attached=up": {
+      "model": "bloodmagic:block/fungal_charge_2"
+    },
     "attached=west": {
       "model": "bloodmagic:block/fungal_charge_2",
       "x": 90,
       "y": 270
-    },
-    "attached=east": {
-      "model": "bloodmagic:block/fungal_charge_2",
-      "x": 90,
-      "y": 90
     }
   }
 }

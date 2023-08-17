@@ -1,5 +1,6 @@
 {
   "type": "bloodmagic:soulforge",
+  "drain": 1.0,
   "input0": {
     "item": "bloodmagic:deforester_charge"
   },
@@ -17,10 +18,9 @@
       "item": "minecraft:coal"
     }
   ],
+  "minimumDrain": 60.0,
   "output": {
     "item": "bloodmagic:deforester_charge",
     "nbt": "{anointment_holder:{anointments:[{damage:1,key:\"bloodmagic:smelting\",level:1,max_damage:1}]}}"
-  },
-  "minimumDrain": 60.0,
-  "drain": 1.0
+  }
 }

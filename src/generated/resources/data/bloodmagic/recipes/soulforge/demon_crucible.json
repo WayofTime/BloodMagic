@@ -1,5 +1,6 @@
 {
   "type": "bloodmagic:soulforge",
+  "drain": 100.0,
   "input0": {
     "item": "minecraft:cauldron"
   },
@@ -12,9 +13,8 @@
   "input3": {
     "tag": "forge:gems/diamond"
   },
+  "minimumDrain": 400.0,
   "output": {
     "item": "bloodmagic:demoncrucible"
-  },
-  "minimumDrain": 400.0,
-  "drain": 100.0
+  }
 }

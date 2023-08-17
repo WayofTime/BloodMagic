@@ -9,8 +9,8 @@
     }
   ],
   "output": {
-    "item": "bloodmagic:sulfur",
-    "count": 4
+    "count": 4,
+    "item": "bloodmagic:sulfur"
   },
   "syphon": 200,
   "ticks": 100,

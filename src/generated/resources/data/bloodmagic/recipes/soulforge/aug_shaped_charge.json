@@ -1,5 +1,6 @@
 {
   "type": "bloodmagic:soulforge",
+  "drain": 2.5,
   "input0": {
     "tag": "forge:storage_blocks/copper"
   },
@@ -12,10 +13,9 @@
   "input3": {
     "item": "minecraft:brick"
   },
-  "output": {
-    "item": "bloodmagic:aug_shaped_charge",
-    "count": 6
-  },
   "minimumDrain": 80.0,
-  "drain": 2.5
+  "output": {
+    "count": 6,
+    "item": "bloodmagic:aug_shaped_charge"
+  }
 }

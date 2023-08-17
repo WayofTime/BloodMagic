@@ -1,11 +1,14 @@
 package wayoftime.bloodmagic.common.data;
 
 import java.nio.file.Path;
+import java.util.concurrent.CompletableFuture;
 
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BlockTagsProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -13,15 +16,15 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 
-public class GeneratorBlockTags extends BlockTagsProvider
+public class GeneratorBlockTags extends IntrinsicHolderTagsProvider<Block>
 {
-	public GeneratorBlockTags(DataGenerator generatorIn, ExistingFileHelper exFileHelper)
+	public GeneratorBlockTags(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper)
 	{
-		super(generatorIn, BloodMagic.MODID, exFileHelper);
+		super(output, Registries.BLOCK, future, block -> block.builtInRegistryHolder().key(), BloodMagic.MODID, helper);
 	}
 
 	@Override
-	public void addTags()
+	public void addTags(HolderLookup.Provider pProvider)
 	{
 		this.tag(BloodMagicTags.Blocks.ANDESITE).add(Blocks.ANDESITE);
 		this.tag(BloodMagicTags.Blocks.SOUL_SAND).add(Blocks.SOUL_SAND);
@@ -79,11 +82,11 @@ public class GeneratorBlockTags extends BlockTagsProvider
 	/**
 	 * Resolves a Path for the location to save the given tag.
 	 */
-	@Override
-	protected Path getPath(ResourceLocation id)
-	{
-		return this.generator.getOutputFolder().resolve("data/" + id.getNamespace() + "/tags/blocks/" + id.getPath() + ".json");
-	}
+//	@Override
+//	protected Path getPath(ResourceLocation id)
+//	{
+//		return this.generator.getOutputFolder().resolve("data/" + id.getNamespace() + "/tags/blocks/" + id.getPath() + ".json");
+//	}
 
 	/**
 	 * Gets a name for this provider, to use in logging.

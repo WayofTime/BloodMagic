@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import org.apache.commons.lang3.tuple.Triple;
 
 import net.minecraft.core.BlockPos;
@@ -19,7 +20,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import wayoftime.bloodmagic.common.routing.IItemRoutingNode;
 import wayoftime.bloodmagic.common.routing.IMasterRoutingNode;
 import wayoftime.bloodmagic.common.routing.IRoutingNode;
@@ -315,7 +315,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing)
 	{
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && facing != null)
+		if (capability == ForgeCapabilities.ITEM_HANDLER && facing != null)
 		{
 			return LazyOptional.empty();
 		}

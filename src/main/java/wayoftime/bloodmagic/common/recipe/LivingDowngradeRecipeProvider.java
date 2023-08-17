@@ -18,7 +18,6 @@ public class LivingDowngradeRecipeProvider implements ISubRecipeProvider
 	@Override
 	public void addRecipes(Consumer<FinishedRecipe> consumer)
 	{
-		ItemStack waterbottleStack = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER);
 
 		String basePath = "downgrade/";
 

@@ -1,25 +1,25 @@
 {
   "type": "bloodmagic:arc",
+  "addedoutput": [
+    {
+      "type": {
+        "item": "bloodmagic:demonitefragment"
+      },
+      "chance": 0.25,
+      "mainchance": 0.0
+    }
+  ],
+  "consumeingredient": false,
   "input": {
     "tag": "forge:raw_materials/hellforged"
   },
   "inputsize": 1,
+  "mainoutputchance": 0.0,
+  "output": {
+    "count": 2,
+    "item": "bloodmagic:demonitefragment"
+  },
   "tool": {
     "tag": "bloodmagic:arc/explosive"
-  },
-  "addedoutput": [
-    {
-      "mainchance": 0.0,
-      "chance": 0.25,
-      "type": {
-        "item": "bloodmagic:demonitefragment"
-      }
-    }
-  ],
-  "output": {
-    "item": "bloodmagic:demonitefragment",
-    "count": 2
-  },
-  "consumeingredient": false,
-  "mainoutputchance": 0.0
+  }
 }

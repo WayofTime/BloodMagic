@@ -1,17 +1,9 @@
 package wayoftime.bloodmagic.common.tile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -26,11 +18,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
@@ -49,6 +41,12 @@ import wayoftime.bloodmagic.recipe.helper.FluidStackIngredient;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.MultiSlotItemHandler;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 public class TileAlchemicalReactionChamber extends TileInventory implements MenuProvider, WorldlyContainer, IFluidHandler
 {
 	public static final int ARC_TOOL_SLOT = 0;
@@ -58,8 +56,8 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 	public static final int INPUT_BUCKET_SLOT = 7;
 	public static final int OUTPUT_BUCKET_SLOT = 8;
 
-	public FluidTank inputTank = new FluidTank(FluidAttributes.BUCKET_VOLUME * 20);
-	public FluidTank outputTank = new FluidTank(FluidAttributes.BUCKET_VOLUME * 20);
+	public FluidTank inputTank = new FluidTank(FluidType.BUCKET_VOLUME * 20);
+	public FluidTank outputTank = new FluidTank(FluidType.BUCKET_VOLUME * 20);
 
 	public double currentProgress = 0;
 	public static final double DEFAULT_SPEED = 0.005;
@@ -240,7 +238,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 				Optional<SmeltingRecipe> furnaceRecipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, invWrapper, level);
 				if (furnaceRecipe.isPresent())
 				{
-					ItemStack outputStack = furnaceRecipe.get().assemble(invWrapper);
+					ItemStack outputStack = furnaceRecipe.get().assemble(invWrapper, level.registryAccess());
 					if (canCraftFurnace(outputStack, outputSlotHandler))
 					{
 						setIsCrafting(level, worldPosition, getBlockState(), true);
@@ -367,9 +365,9 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 		ItemStack inputStack = getItem(INPUT_SLOT);
 		if (!inputStack.isEmpty())
 		{
-			if (!consumeInput && inputStack.getItem().hasContainerItem(inputStack))
+			if (!consumeInput && inputStack.getItem().hasCraftingRemainingItem(inputStack))
 			{
-				setItem(INPUT_SLOT, inputStack.getItem().getContainerItem(inputStack));
+				setItem(INPUT_SLOT, inputStack.getItem().getCraftingRemainingItem(inputStack));
 			} else
 			{
 				inputStack.shrink(inputCount);
@@ -394,9 +392,9 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 						setItem(ARC_TOOL_SLOT, ItemStack.EMPTY);
 					}
 				}
-			} else if (toolStack.getItem().hasContainerItem(toolStack))
+			} else if (toolStack.getItem().hasCraftingRemainingItem(toolStack))
 			{
-				setItem(ARC_TOOL_SLOT, toolStack.getItem().getContainerItem(inputStack));
+				setItem(ARC_TOOL_SLOT, toolStack.getItem().getCraftingRemainingItem(inputStack));
 			} else
 			{
 				toolStack.shrink(1);
@@ -418,7 +416,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 	@Override
 	public Component getDisplayName()
 	{
-		return new TextComponent("Alchemical Reaction Chamber");
+		return Component.literal("Alchemical Reaction Chamber");
 	}
 
 	public double getProgressForGui()
@@ -478,7 +476,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing)
 	{
-		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+		if (capability == ForgeCapabilities.FLUID_HANDLER)
 		{
 			return fluidOptional.cast();
 		}

@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "aba",
-    "bcb",
-    "ada"
-  ],
+  "category": "misc",
   "key": {
     "a": {
       "tag": "forge:stone"
@@ -19,7 +15,13 @@
       "item": "bloodmagic:infusedslate"
     }
   },
+  "pattern": [
+    "aba",
+    "bcb",
+    "ada"
+  ],
   "result": {
     "item": "bloodmagic:dislocationrune"
-  }
+  },
+  "show_notification": true
 }

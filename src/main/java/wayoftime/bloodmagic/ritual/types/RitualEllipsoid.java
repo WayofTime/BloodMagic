@@ -11,7 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
@@ -68,10 +68,10 @@ public class RitualEllipsoid extends Ritual
 		if (tileInventory != null)
 		{
 //			System.out.println("Tile");
-			if (tileInventory.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).isPresent())
+			if (tileInventory.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN).isPresent())
 			{
 //				System.out.println("Have inv");
-				IItemHandler itemHandler = tileInventory.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).resolve().get();
+				IItemHandler itemHandler = tileInventory.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN).resolve().get();
 
 				if (itemHandler.getSlots() <= 0)
 				{

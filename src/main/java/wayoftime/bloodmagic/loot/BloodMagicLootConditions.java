@@ -7,10 +7,10 @@ import wayoftime.bloodmagic.BloodMagic;
 
 public class BloodMagicLootConditions
 {
-	public static final LootItemConditionType INVERTED = Registry.register(Registry.LOOT_CONDITION_TYPE, BloodMagic.rl("testing"), new LootItemConditionType(new MatchTool.Serializer()));
-
-	static
-	{
-
-	}
+//	public static final LootItemConditionType INVERTED = Registry.register(Registry.LOOT_CONDITION_TYPE, BloodMagic.rl("testing"), new LootItemConditionType(new MatchTool.Serializer()));
+//
+//	static
+//	{
+//
+//	}
 }

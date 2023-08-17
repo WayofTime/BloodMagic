@@ -1,21 +1,11 @@
 package wayoftime.bloodmagic.common.tile;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.UUID;
-
-import javax.annotation.Nullable;
-
 import com.google.common.base.Strings;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -37,12 +27,12 @@ import wayoftime.bloodmagic.ritual.IMasterRitualStone;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.Constants;
-import wayoftime.bloodmagic.util.helper.BindableHelper;
-import wayoftime.bloodmagic.util.helper.NBTHelper;
-import wayoftime.bloodmagic.util.helper.NetworkHelper;
-import wayoftime.bloodmagic.util.helper.PlayerHelper;
-import wayoftime.bloodmagic.util.helper.RitualHelper;
+import wayoftime.bloodmagic.util.helper.*;
 import wayoftime.bloodmagic.will.DemonWillHolder;
+
+import javax.annotation.Nullable;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class TileMasterRitualStone extends TileTicking implements IMasterRitualStone
 {
@@ -188,7 +178,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
 						if (!isRedstoned() && network.getCurrentEssence() < ritual.getActivationCost() && (activator != null && !activator.isCreative()))
 						{
-							activator.displayClientMessage(new TranslatableComponent("chat.bloodmagic.ritual.weak"), true);
+							activator.displayClientMessage(Component.translatable("chat.bloodmagic.ritual.weak"), true);
 							return false;
 						}
 
@@ -200,7 +190,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 						if (MinecraftForge.EVENT_BUS.post(event))
 						{
 							if (activator != null)
-								activator.displayClientMessage(new TranslatableComponent("chat.bloodmagic.ritual.prevent"), true);
+								activator.displayClientMessage(Component.translatable("chat.bloodmagic.ritual.prevent"), true);
 							return false;
 						}
 
@@ -210,7 +200,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 								network.syphon(ticket(ritual.getActivationCost()));
 
 							if (activator != null)
-								activator.displayClientMessage(new TranslatableComponent("chat.bloodmagic.ritual.activate"), true);
+								activator.displayClientMessage(Component.translatable("chat.bloodmagic.ritual.activate"), true);
 
 							this.active = true;
 							this.owner = binding.getOwnerId();
@@ -233,7 +223,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 		} else
 		{
 			if (activator != null)
-				activator.displayClientMessage(new TranslatableComponent("chat.bloodmagic.ritual.notValid"), true);
+				activator.displayClientMessage(Component.translatable("chat.bloodmagic.ritual.notValid"), true);
 		}
 
 		return false;
@@ -423,7 +413,7 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 		// There is probably an easier way to make expanded chat messages
 		if (typeList.size() >= 1)
 		{
-			Object[] translations = new TranslatableComponent[typeList.size()];
+			Object[] translations = new Component[typeList.size()];
 			StringBuilder constructedString = new StringBuilder("%s");
 
 			for (int i = 1; i < typeList.size(); i++)
@@ -433,13 +423,13 @@ public class TileMasterRitualStone extends TileTicking implements IMasterRitualS
 
 			for (int i = 0; i < typeList.size(); i++)
 			{
-				translations[i] = new TranslatableComponent("tooltip.bloodmagic.currentBaseType." + typeList.get(i).name.toLowerCase(Locale.ROOT));
+				translations[i] = Component.translatable("tooltip.bloodmagic.currentBaseType." + typeList.get(i).name.toLowerCase(Locale.ROOT));
 			}
 
-			ChatUtil.sendNoSpam(player, new TranslatableComponent("ritual.bloodmagic.willConfig.set", new TranslatableComponent(constructedString.toString(), translations)));
+			ChatUtil.sendNoSpam(player, Component.translatable("ritual.bloodmagic.willConfig.set", Component.translatable(constructedString.toString(), translations)));
 		} else
 		{
-			ChatUtil.sendNoSpam(player, new TranslatableComponent("ritual.bloodmagic.willConfig.void"));
+			ChatUtil.sendNoSpam(player, Component.translatable("ritual.bloodmagic.willConfig.void"));
 		}
 	}
 

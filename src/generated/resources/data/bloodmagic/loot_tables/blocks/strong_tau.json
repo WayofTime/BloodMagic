@@ -2,57 +2,65 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "block": "bloodmagic:strong_tau",
+            "condition": "minecraft:block_state_property",
+            "properties": {
+              "age": "7"
+            }
+          }
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "bloodmagic:weak_tau"
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:inverted",
-          "term": {
-            "condition": "minecraft:block_state_property",
-            "block": "bloodmagic:strong_tau",
-            "properties": {
-              "age": "7"
-            }
-          }
-        }
-      ]
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "bloodmagic:strong_tau",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "age": "7"
+          }
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "bloodmagic:strong_tau"
         }
       ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
       "conditions": [
         {
-          "condition": "minecraft:block_state_property",
           "block": "bloodmagic:strong_tau",
+          "condition": "minecraft:block_state_property",
           "properties": {
             "age": "7"
           }
         }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "bonus_rolls": 0.0,
+      ],
       "entries": [
         {
           "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:apply_bonus",
               "enchantment": "minecraft:fortune",
               "formula": "minecraft:binomial_with_bonus_count",
+              "function": "minecraft:apply_bonus",
               "parameters": {
                 "extra": 3,
                 "probability": 0.5714286
@@ -62,15 +70,8 @@
           "name": "bloodmagic:strong_tau"
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:block_state_property",
-          "block": "bloodmagic:strong_tau",
-          "properties": {
-            "age": "7"
-          }
-        }
-      ]
+      "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "bloodmagic:blocks/strong_tau"
 }

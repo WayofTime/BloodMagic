@@ -1,10 +1,7 @@
 package wayoftime.bloodmagic.common.item.soul;
 
-import java.util.List;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -20,13 +17,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.entity.projectile.EntitySoulSnare;
 
+import java.util.List;
+
 public class ItemSoulSnare extends Item
 {
 	public static String[] names = { "base" };
 
 	public ItemSoulSnare()
 	{
-		super(new Item.Properties().stacksTo(16).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(16));
 
 //		setTranslationKey(BloodMagic.MODID + ".soulSnare.");
 //		setCreativeTab(BloodMagic.TAB_BM);
@@ -65,7 +64,7 @@ public class ItemSoulSnare extends Item
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
-		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.soulSnare.desc").withStyle(ChatFormatting.GRAY));
+		tooltip.add(Component.translatable("tooltip.bloodmagic.soulSnare.desc").withStyle(ChatFormatting.GRAY));
 
 		super.appendHoverText(stack, world, tooltip, flag);
 	}

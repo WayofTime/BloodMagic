@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import wayoftime.bloodmagic.altar.ComponentType;
 import wayoftime.bloodmagic.api.IBloodMagicAPI;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.common.fluid.BloodMagicFluids;
 import wayoftime.bloodmagic.incense.EnumTranquilityType;
 import wayoftime.bloodmagic.incense.IncenseTranquilityRegistry;
 import wayoftime.bloodmagic.incense.TranquilityStack;
@@ -24,7 +25,7 @@ public class BloodMagicCorePlugin
 //        api.getValueManager().setTranquility(Blocks.FLOWING_LAVA, new TranquilityStack(EnumTranquilityType.LAVA, 1.2D));
 		api.getValueManager().setTranquility(Blocks.WATER, new TranquilityStack(EnumTranquilityType.WATER, 1.0D));
 //        api.getValueManager().setTranquility(Blocks.water, new TranquilityStack(EnumTranquilityType.WATER, 1.0D));
-		api.getValueManager().setTranquility(BloodMagicBlocks.LIFE_ESSENCE_BLOCK.get(), new TranquilityStack(EnumTranquilityType.WATER, 1.5D));
+		api.getValueManager().setTranquility(BloodMagicFluids.LIFE_ESSENCE_BLOCK.get(), new TranquilityStack(EnumTranquilityType.WATER, 1.5D));
 		api.getValueManager().setTranquility(Blocks.NETHERRACK, new TranquilityStack(EnumTranquilityType.FIRE, 0.5D));
 		api.getValueManager().setTranquility(Blocks.DIRT, new TranquilityStack(EnumTranquilityType.EARTHEN, 0.25D));
 		api.getValueManager().setTranquility(Blocks.FARMLAND, new TranquilityStack(EnumTranquilityType.EARTHEN, 1.0D));

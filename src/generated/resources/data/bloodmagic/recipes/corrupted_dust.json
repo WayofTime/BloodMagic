@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "sss",
-    "sss",
-    "sss"
-  ],
+  "category": "misc",
   "key": {
     "s": {
       "tag": "bloodmagic:tiny_dusts/corrupted"
     }
   },
+  "pattern": [
+    "sss",
+    "sss",
+    "sss"
+  ],
   "result": {
     "item": "bloodmagic:corrupted_dust"
-  }
+  },
+  "show_notification": true
 }
