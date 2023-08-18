@@ -25,3 +25,4 @@ run
 forge*changelog.txt
 /src/generated/resources/.cache/
 /run-data/
+*.prefs
