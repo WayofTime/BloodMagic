@@ -33,9 +33,12 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.container.tile.ContainerMasterRoutingNode;
 import wayoftime.bloodmagic.common.item.routing.IRouterUpgrade;
+import wayoftime.bloodmagic.common.routing.IFluidFilter;
+import wayoftime.bloodmagic.common.routing.IInputFluidRoutingNode;
 import wayoftime.bloodmagic.common.routing.IInputItemRoutingNode;
 import wayoftime.bloodmagic.common.routing.IItemFilter;
 import wayoftime.bloodmagic.common.routing.IMasterRoutingNode;
+import wayoftime.bloodmagic.common.routing.IOutputFluidRoutingNode;
 import wayoftime.bloodmagic.common.routing.IOutputItemRoutingNode;
 import wayoftime.bloodmagic.common.routing.IRoutingNode;
 import wayoftime.bloodmagic.common.routing.NodeHelper;
@@ -87,7 +90,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 
 //		System.out.println("Size of input list: " + inputNodeList.size());
 		Map<Integer, List<IItemFilter>> outputMap = new TreeMap<>();
-//      Map<Integer, List<IFluidFilter>> outputFluidMap = new TreeMap<>();
+		Map<Integer, List<IFluidFilter>> outputFluidMap = new TreeMap<>();
 
 		for (BlockPos outputPos : outputNodeList)
 		{
@@ -122,32 +125,38 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 					}
 				}
 
-//              if (outputTile instanceof IOutputFluidRoutingNode) {
-//                  IOutputFluidRoutingNode outputNode = (IOutputFluidRoutingNode) outputTile;
-//
-//                  for (Direction facing : Direction.VALUES) {
-//                      if (!outputNode.isTankConnectedToSide(facing) || !outputNode.isFluidOutput(facing)) {
-//                          continue;
-//                      }
-//
-//                      IFluidFilter filter = outputNode.getOutputFluidFilterForSide(facing);
-//                      if (filter != null) {
-//                          int priority = outputNode.getPriority(facing);
-//                          if (outputFluidMap.containsKey(priority)) {
-//                              outputFluidMap.get(priority).add(filter);
-//                          } else {
-//                              List<IFluidFilter> filterList = new LinkedList<>();
-//                              filterList.add(filter);
-//                              outputFluidMap.put(priority, filterList);
-//                          }
-//                      }
-//                  }
-//              }
+				if (outputTile instanceof IOutputFluidRoutingNode)
+				{
+					IOutputFluidRoutingNode outputNode = (IOutputFluidRoutingNode) outputTile;
+
+					for (Direction facing : Direction.values())
+					{
+						if (!outputNode.isTankConnectedToSide(facing) || !outputNode.isFluidOutput(facing))
+						{
+							continue;
+						}
+
+						IFluidFilter filter = outputNode.getOutputFluidFilterForSide(facing);
+						if (filter != null)
+						{
+							int priority = outputNode.getPriority(facing);
+							if (outputFluidMap.containsKey(priority))
+							{
+								outputFluidMap.get(priority).add(filter);
+							} else
+							{
+								List<IFluidFilter> filterList = new LinkedList<>();
+								filterList.add(filter);
+								outputFluidMap.put(priority, filterList);
+							}
+						}
+					}
+				}
 			}
 		}
 
 		Map<Integer, List<IItemFilter>> inputMap = new TreeMap<>();
-//      Map<Integer, List<IFluidFilter>> inputFluidMap = new TreeMap<>();
+		Map<Integer, List<IFluidFilter>> inputFluidMap = new TreeMap<>();
 
 		for (BlockPos inputPos : inputNodeList)
 		{
@@ -182,36 +191,38 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 					}
 				}
 
-//              if (in	
+				if (inputTile instanceof IInputFluidRoutingNode)
+				{
+					IInputFluidRoutingNode inputNode = (IInputFluidRoutingNode) inputTile;
+
+					for (Direction facing : Direction.values())
+					{
+						if (!inputNode.isTankConnectedToSide(facing) || !inputNode.isFluidInput(facing))
+						{
+							continue;
+						}
+
+						IFluidFilter filter = inputNode.getInputFluidFilterForSide(facing);
+						if (filter != null)
+						{
+							int priority = inputNode.getPriority(facing);
+							if (inputFluidMap.containsKey(priority))
+							{
+								inputFluidMap.get(priority).add(filter);
+							} else
+							{
+								List<IFluidFilter> filterList = new LinkedList<>();
+								filterList.add(filter);
+								inputFluidMap.put(priority, filterList);
+							}
+						}
+					}
+				}
 			}
 		}
 
 		int maxTransfer = this.getMaxTransferForDemonWill(WorldDemonWillHandler.getCurrentWill(getLevel(), worldPosition, EnumDemonWillType.DEFAULT));
-		int maxFluidTransfer = 1000;
-
-//		Set<Entry<Integer, List<IItemFilter>>> outputSet = outputMap.entrySet();
-//		for(int i = outputSet.size()-1; i == 0; i--)
-//		{
-//			Entry<Integer, List<IItemFilter>> outputEntry = outputSet.
-//			List<IItemFilter> outputList = outputEntry.getValue();
-//			for (IItemFilter outputFilter : outputList)
-//			{
-//				for (Entry<Integer, List<IItemFilter>> inputEntry : inputMap.entrySet())
-//				{
-//					List<IItemFilter> inputList = inputEntry.getValue();
-//					for (IItemFilter inputFilter : inputList)
-//					{
-//						int amountTransfered = inputFilter.transferThroughInputFilter(outputFilter, maxTransfer);
-//						maxTransfer -= amountTransfered;
-////						System.out.println("Trying to add through the filters: " + amountTransfered);
-//						if (maxTransfer <= 0)
-//						{
-//							return;
-//						}
-//					}
-//				}
-//			}
-//		}
+		int maxFluidTransfer = 1000 * (maxTransfer / 16); // 16 is without and per upgrade
 
 		for (Entry<Integer, List<IItemFilter>> outputEntry : outputMap.entrySet())
 		{
@@ -235,20 +246,25 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 			}
 		}
 
-//      for (Entry<Integer, List<IFluidFilter>> outputEntry : outputFluidMap.entrySet()) {
-//          List<IFluidFilter> outputList = outputEntry.getValue();
-//          for (IFluidFilter outputFilter : outputList) {
-//              for (Entry<Integer, List<IFluidFilter>> inputEntry : inputFluidMap.entrySet()) {
-//                  List<IFluidFilter> inputList = inputEntry.getValue();
-//                  for (IFluidFilter inputFilter : inputList) {
-//                      maxFluidTransfer -= inputFilter.transferThroughInputFilter(outputFilter, maxFluidTransfer);
-//                      if (maxFluidTransfer <= 0) {
-//                          return;
-//                      }
-//                  }
-//              }
-//          }
-//      }
+		for (Entry<Integer, List<IFluidFilter>> outputEntry : outputFluidMap.entrySet())
+		{
+			List<IFluidFilter> outputList = outputEntry.getValue();
+			for (IFluidFilter outputFilter : outputList)
+			{
+				for (Entry<Integer, List<IFluidFilter>> inputEntry : inputFluidMap.entrySet())
+				{
+					List<IFluidFilter> inputList = inputEntry.getValue();
+					for (IFluidFilter inputFilter : inputList)
+					{
+						maxFluidTransfer -= inputFilter.transferThroughInputFilter(outputFilter, maxFluidTransfer);
+						if (maxFluidTransfer <= 0)
+						{
+							return;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public int getMaxTransferForDemonWill(double will)
@@ -391,11 +407,11 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 		{
 			generalNodeList.add(newPos);
 		}
-		if (node instanceof IInputItemRoutingNode && !inputNodeList.contains(newPos))
+		if (node instanceof IInputItemRoutingNode && node instanceof IInputFluidRoutingNode && !inputNodeList.contains(newPos))
 		{
 			inputNodeList.add(newPos);
 		}
-		if (node instanceof IOutputItemRoutingNode && !outputNodeList.contains(newPos))
+		if (node instanceof IOutputItemRoutingNode && node instanceof IOutputFluidRoutingNode && !outputNodeList.contains(newPos))
 		{
 			outputNodeList.add(newPos);
 		}

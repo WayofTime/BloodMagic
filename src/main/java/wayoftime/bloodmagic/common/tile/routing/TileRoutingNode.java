@@ -20,6 +20,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
+import wayoftime.bloodmagic.common.routing.IFluidRoutingNode;
 import wayoftime.bloodmagic.common.routing.IItemRoutingNode;
 import wayoftime.bloodmagic.common.routing.IMasterRoutingNode;
 import wayoftime.bloodmagic.common.routing.IRoutingNode;
@@ -27,7 +28,7 @@ import wayoftime.bloodmagic.common.tile.BloodMagicTileEntities;
 import wayoftime.bloodmagic.common.tile.TileInventory;
 import wayoftime.bloodmagic.util.Constants;
 
-public class TileRoutingNode extends TileInventory implements IRoutingNode, IItemRoutingNode
+public class TileRoutingNode extends TileInventory implements IRoutingNode, IItemRoutingNode, IFluidRoutingNode
 {
 	private int currentInput;
 	private BlockPos masterPos = BlockPos.ZERO;
@@ -321,5 +322,11 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 		}
 
 		return super.getCapability(capability, facing);
+	}
+
+	@Override
+	public boolean isTankConnectedToSide(Direction side)
+	{
+		return false;
 	}
 }

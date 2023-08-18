@@ -1,25 +1,23 @@
 package wayoftime.bloodmagic.common.item.routing;
 
-import java.util.Map;
-
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraftforge.fluids.FluidStack;
 
-public class NoEnchantsFilterKey implements IFilterKey
+public class FluidFilterKey implements IFilterKey
 {
+	private FluidStack keyStack;
 	private int count;
 
-	public NoEnchantsFilterKey(int count)
+	public FluidFilterKey(FluidStack keyStack, int count)
 	{
+		this.keyStack = keyStack;
 		this.count = count;
 	}
 
 	@Override
 	public boolean doesStackMatch(ItemStack testStack)
 	{
-		Map<Enchantment, Integer> enchantMap = EnchantmentHelper.getEnchantments(testStack);
-		return enchantMap.size() <= 0;
+		return keyStack.isFluidEqual(testStack);
 	}
 
 	@Override
@@ -49,6 +47,6 @@ public class NoEnchantsFilterKey implements IFilterKey
 	@Override
 	public boolean isEmpty()
 	{
-		return count == 0;
+		return count == 0 || keyStack.isEmpty();
 	}
 }

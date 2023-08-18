@@ -12,15 +12,21 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.common.container.tile.ContainerItemRoutingNode;
+import wayoftime.bloodmagic.common.item.routing.IFluidFilterProvider;
 import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
+import wayoftime.bloodmagic.common.routing.IFluidFilter;
 import wayoftime.bloodmagic.common.routing.IItemFilter;
+import wayoftime.bloodmagic.common.routing.IOutputFluidRoutingNode;
 import wayoftime.bloodmagic.common.routing.IOutputItemRoutingNode;
 import wayoftime.bloodmagic.common.tile.BloodMagicTileEntities;
 import wayoftime.bloodmagic.util.Utils;
 
-public class TileOutputRoutingNode extends TileFilteredRoutingNode implements IOutputItemRoutingNode, MenuProvider
+public class TileOutputRoutingNode extends TileFilteredRoutingNode implements IOutputItemRoutingNode, IOutputFluidRoutingNode, MenuProvider
 {
 	public TileOutputRoutingNode(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
@@ -75,34 +81,38 @@ public class TileOutputRoutingNode extends TileFilteredRoutingNode implements IO
 		return new TextComponent("Output Routing Node");
 	}
 
-//	@Override
-//	public boolean isFluidOutput(Direction side)
-//	{
-//		return true;
-//	}
-//
-//	@Override
-//	public IFluidFilter getOutputFluidFilterForSide(Direction side)
-//	{
-//		TileEntity tile = getWorld().getTileEntity(pos.offset(side));
-//		if (tile != null && tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side))
-//		{
-//			IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
-//			ItemStack filterStack = this.getFilterStack(side);
-//			if (filterStack == null || !(filterStack.getItem() instanceof IFluidFilterProvider))
-//			{
-//				return null;
-//			}
-//
-//			return ((IFluidFilterProvider) filterStack.getItem()).getOutputFluidFilter(filterStack, tile, handler);
-//		}
-//
-//		return null;
-//	}
-//
-//	@Override
-//	public boolean isTankConnectedToSide(Direction side)
-//	{
-//		return true;
-//	}
+	@Override
+	public boolean isFluidOutput(Direction side)
+	{
+		return true;
+	}
+
+	@Override
+	public IFluidFilter getOutputFluidFilterForSide(Direction side)
+	{
+		BlockEntity tile = getLevel().getBlockEntity(worldPosition.relative(side));
+		if (tile != null)
+		{
+			LazyOptional potentialHandler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
+			if (tile != null && potentialHandler.isPresent())
+			{
+				IFluidHandler handler = (IFluidHandler) potentialHandler.resolve().get();
+				ItemStack filterStack = this.getFilterStack(side);
+				if (filterStack == null || !(filterStack.getItem() instanceof IFluidFilterProvider))
+				{
+					return null;
+				}
+
+				return ((IFluidFilterProvider) filterStack.getItem()).getOutputFluidFilter(filterStack, tile, handler);
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public boolean isTankConnectedToSide(Direction side)
+	{
+		return true;
+	}
 }

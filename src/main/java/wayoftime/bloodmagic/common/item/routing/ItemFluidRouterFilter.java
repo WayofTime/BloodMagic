@@ -2,9 +2,11 @@ package wayoftime.bloodmagic.common.item.routing;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Button.OnPress;
 import net.minecraft.nbt.CompoundTag;
@@ -21,32 +23,35 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.network.NetworkHooks;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.client.button.FilterButtonTogglePress;
 import wayoftime.bloodmagic.common.container.item.ContainerFilter;
 import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
 import wayoftime.bloodmagic.common.item.inventory.ItemInventory;
-import wayoftime.bloodmagic.common.routing.BasicItemFilter;
-import wayoftime.bloodmagic.common.routing.BlacklistItemFilter;
-import wayoftime.bloodmagic.common.routing.IItemFilter;
+import wayoftime.bloodmagic.common.routing.BasicFluidFilter;
+import wayoftime.bloodmagic.common.routing.BlacklistFluidFilter;
+import wayoftime.bloodmagic.common.routing.IFluidFilter;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.GhostItemHelper;
 import wayoftime.bloodmagic.util.Utils;
 
-public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterProvider
+public class ItemFluidRouterFilter extends Item implements MenuProvider, IFluidFilterProvider
 {
 	public static final int inventorySize = 9;
 	public static final int maxUpgrades = 9;
 
 	public static final String FILTER_INV = "filterInventory";
 
-	public ItemRouterFilter()
+	public ItemFluidRouterFilter()
 	{
 		super(new Item.Properties().stacksTo(16).tab(BloodMagic.TAB));
 	}
@@ -71,7 +76,6 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 	@Override
 	public AbstractContainerMenu createMenu(int p_createMenu_1_, Inventory p_createMenu_2_, Player player)
 	{
-		// TODO Auto-generated method stub
 		assert player.getCommandSenderWorld() != null;
 		return new ContainerFilter(p_createMenu_1_, player, p_createMenu_2_, player.getMainHandItem());
 	}
@@ -79,8 +83,7 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 	@Override
 	public Component getDisplayName()
 	{
-		// TODO Auto-generated method stub
-		return new TextComponent("Filter");
+		return new TextComponent("Fluid Filter");
 	}
 
 	@Override
@@ -92,27 +95,27 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 		return copyStack;
 	}
 
-	protected IItemFilter getFilterTypeFromConfig(ItemStack filterStack)
+	protected IFluidFilter getFilterTypeFromConfig(ItemStack filterStack)
 	{
 		int state = getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
 		if (state == 1)
 		{
-			return new BlacklistItemFilter();
+			return new BlacklistFluidFilter();
 		}
 
-		return new BasicItemFilter();
+		return new BasicFluidFilter();
 	}
 
 	@Override
-	public IFilterKey getFilterKey(ItemStack filterStack, int slot, ItemStack ghostStack, int amount)
+	public IFilterKey getFilterKey(ItemStack filterStack, int slot, FluidStack ghostStack, int amount)
 	{
-		return new BasicFilterKey(ghostStack, amount);
+		return new FluidFilterKey(ghostStack, amount);
 	}
 
 	@Override
-	public IItemFilter getInputItemFilter(ItemStack filterStack, BlockEntity tile, IItemHandler handler)
+	public IFluidFilter getInputFluidFilter(ItemStack filterStack, BlockEntity tile, IFluidHandler handler)
 	{
-		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
+		IFluidFilter testFilter = getFilterTypeFromConfig(filterStack);
 
 		List<IFilterKey> filteredList = new ArrayList<>();
 		ItemInventory inv = new InventoryFilter(filterStack);
@@ -125,10 +128,15 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 				continue;
 			}
 
-			int amount = GhostItemHelper.getItemGhostAmount(stack);
-			ItemStack ghostStack = GhostItemHelper.getSingleStackFromGhost(stack);
+			Optional<FluidStack> optionalStack = FluidUtil.getFluidContained(stack);
+			FluidStack fluidStack = FluidStack.EMPTY;
+			if (optionalStack.isPresent())
+			{
+				fluidStack = optionalStack.get();
+			}
 
-			IFilterKey key = getFilterKey(filterStack, i, ghostStack, amount);
+			int amount = GhostItemHelper.getItemGhostAmount(stack);
+			IFilterKey key = getFilterKey(filterStack, i, fluidStack, amount);
 
 			filteredList.add(key);
 		}
@@ -138,12 +146,12 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 	}
 
 	@Override
-	public IItemFilter getOutputItemFilter(ItemStack filterStack, BlockEntity tile, IItemHandler handler)
+	public IFluidFilter getOutputFluidFilter(ItemStack filterStack, BlockEntity tile, IFluidHandler handler)
 	{
-		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
+		IFluidFilter testFilter = getFilterTypeFromConfig(filterStack);
 
 		List<IFilterKey> filteredList = new ArrayList<>();
-		ItemInventory inv = new InventoryFilter(filterStack); // TODO: Change to grab the filter from the Item
+		ItemInventory inv = new InventoryFilter(filterStack);
 
 		for (int i = 0; i < inv.getContainerSize(); i++)
 		{
@@ -153,13 +161,18 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 				continue;
 			}
 
+			Optional<FluidStack> optionalStack = FluidUtil.getFluidContained(stack);
+			FluidStack ghostStack = FluidStack.EMPTY;
+			if (optionalStack.isPresent())
+			{
+				ghostStack = optionalStack.get();
+			}
+
 			int amount = GhostItemHelper.getItemGhostAmount(stack);
-			ItemStack ghostStack = GhostItemHelper.getSingleStackFromGhost(stack);
 			if (amount == 0)
 			{
 				amount = Integer.MAX_VALUE;
 			}
-
 			IFilterKey key = getFilterKey(filterStack, i, ghostStack, amount);
 
 			filteredList.add(key);
@@ -286,9 +299,9 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 	}
 
 	@Override
-	public IItemFilter getUninitializedItemFilter(ItemStack filterStack)
+	public IFluidFilter getUninitializedFluidFilter(ItemStack filterStack)
 	{
-		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
+		IFluidFilter testFilter = getFilterTypeFromConfig(filterStack);
 
 		List<IFilterKey> filteredList = new ArrayList<>();
 		ItemInventory inv = new InventoryFilter(filterStack);
@@ -301,8 +314,15 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 				continue;
 			}
 
+			Optional<FluidStack> optionalStack = FluidUtil.getFluidContained(stack);
+			FluidStack ghostStack = FluidStack.EMPTY;
+			if (optionalStack.isPresent())
+			{
+				ghostStack = optionalStack.get();
+			}
+
 			int amount = GhostItemHelper.getItemGhostAmount(stack);
-			ItemStack ghostStack = GhostItemHelper.getSingleStackFromGhost(stack);
+			ghostStack.setAmount(amount);
 
 			IFilterKey key = getFilterKey(filterStack, i, ghostStack, amount);
 
@@ -312,5 +332,53 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 		testFilter.initializeFilter(filteredList);
 
 		return testFilter;
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public void appendHoverText(ItemStack filterStack, Level world, List<Component> tooltip, TooltipFlag flag)
+	{
+		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.basicfluidfilter.desc").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY));
+
+		if (filterStack.getTag() == null)
+		{
+			return;
+		}
+
+		int whitelistState = this.getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
+		boolean isWhitelist = whitelistState == 0;
+
+		if (isWhitelist)
+		{
+			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.whitelist").withStyle(ChatFormatting.GRAY));
+		} else
+		{
+			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.blacklist").withStyle(ChatFormatting.GRAY));
+		}
+
+		ItemInventory inv = new InventoryFilter(filterStack);
+		for (int i = 0; i < inv.getContainerSize(); i++)
+		{
+			ItemStack stack = inv.getItem(i);
+			if (stack.isEmpty())
+			{
+				continue;
+			}
+
+			if (isWhitelist)
+			{
+				int amount = GhostItemHelper.getItemGhostAmount(stack);
+				if (amount > 0)
+				{
+					tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.count", amount, stack.getHoverName()));
+				} else
+				{
+					tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.all", stack.getHoverName()));
+				}
+			} else
+			{
+				tooltip.add(stack.getHoverName());
+			}
+		}
 	}
 }

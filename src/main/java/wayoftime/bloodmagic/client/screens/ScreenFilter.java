@@ -25,7 +25,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.container.item.ContainerFilter;
-import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
+import wayoftime.bloodmagic.common.item.routing.IRoutingFilterProvider;
 import wayoftime.bloodmagic.network.RouterFilterPacket;
 import wayoftime.bloodmagic.util.GhostItemHelper;
 
@@ -72,9 +72,9 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 
 		ItemStack filterStack = this.container.filterStack;
 
-		if (filterStack.getItem() instanceof IItemFilterProvider)
+		if (filterStack.getItem() instanceof IRoutingFilterProvider)
 		{
-			IItemFilterProvider provider = (IItemFilterProvider) filterStack.getItem();
+			IRoutingFilterProvider provider = (IRoutingFilterProvider) filterStack.getItem();
 			List<Pair<String, Button.OnPress>> buttonActionList = provider.getButtonAction(this.container);
 
 			for (Pair<String, Button.OnPress> pair : buttonActionList)
@@ -206,9 +206,9 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		{
 			GhostItemHelper.setItemGhostAmount(ghostStack, amount);
 			GhostItemHelper.setItemGhostAmount(container.inventoryFilter.getItem(ghostItemSlot), amount);
-			if (container.filterStack.getItem() instanceof IItemFilterProvider)
+			if (container.filterStack.getItem() instanceof IRoutingFilterProvider)
 			{
-				((IItemFilterProvider) container.filterStack.getItem()).setGhostItemAmount(container.filterStack, ghostItemSlot, amount);
+				((IRoutingFilterProvider) container.filterStack.getItem()).setGhostItemAmount(container.filterStack, ghostItemSlot, amount);
 
 			}
 		}
@@ -274,13 +274,13 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		this.font.draw(stack, new TranslatableComponent("container.inventory"), 8, 93, 4210752);
 		this.font.draw(stack, container.filterStack.getHoverName(), 8, 4, 4210752);
 
-		if (container.filterStack.getItem() instanceof IItemFilterProvider)
+		if (container.filterStack.getItem() instanceof IRoutingFilterProvider)
 		{
 			for (int i = 0; i < numberOfAddedButtons; i++)
 			{
-				int currentButtonState = ((IItemFilterProvider) container.filterStack.getItem()).getCurrentButtonState(container.filterStack, buttonKeyList.get(i), container.lastGhostSlotClicked);
+				int currentButtonState = ((IRoutingFilterProvider) container.filterStack.getItem()).getCurrentButtonState(container.filterStack, buttonKeyList.get(i), container.lastGhostSlotClicked);
 				Pair<Integer, Integer> buttonLocation = getButtonLocation(i);
-				Pair<Integer, Integer> textureLocation = ((IItemFilterProvider) container.filterStack.getItem()).getTexturePositionForState(container.filterStack, buttonKeyList.get(i), currentButtonState);
+				Pair<Integer, Integer> textureLocation = ((IRoutingFilterProvider) container.filterStack.getItem()).getTexturePositionForState(container.filterStack, buttonKeyList.get(i), currentButtonState);
 
 				int w = 20;
 				int h = 20;
@@ -343,7 +343,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 
 		List<Component> tooltip = new ArrayList<>();
 
-		if (container.filterStack.getItem() instanceof IItemFilterProvider)
+		if (container.filterStack.getItem() instanceof IRoutingFilterProvider)
 		{
 			for (int i = 0; i < numberOfAddedButtons; i++)
 			{
@@ -356,7 +356,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 
 				if (mouseX >= x && mouseX < x + w && mouseY >= y && mouseY < y + h)
 				{
-					List<Component> components = ((IItemFilterProvider) container.filterStack.getItem()).getTextForHoverItem(container.filterStack, buttonKeyList.get(i), container.lastGhostSlotClicked);
+					List<Component> components = ((IRoutingFilterProvider) container.filterStack.getItem()).getTextForHoverItem(container.filterStack, buttonKeyList.get(i), container.lastGhostSlotClicked);
 					if (components != null && !components.isEmpty())
 						tooltip.addAll(components);
 				}

@@ -3,10 +3,10 @@ package wayoftime.bloodmagic.common.item.routing;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 public class CollectionEnchantFilterKey implements IFilterKey
 {

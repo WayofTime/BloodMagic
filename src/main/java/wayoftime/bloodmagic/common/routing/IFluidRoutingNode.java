@@ -2,8 +2,8 @@ package wayoftime.bloodmagic.common.routing;
 
 import net.minecraft.core.Direction;
 
-public interface IItemRoutingNode extends IRoutingNode {
-	boolean isInventoryConnectedToSide(Direction side);
+public interface IFluidRoutingNode extends IRoutingNode {
+	boolean isTankConnectedToSide(Direction side);
 
 	int getPriority(Direction side);
 }
