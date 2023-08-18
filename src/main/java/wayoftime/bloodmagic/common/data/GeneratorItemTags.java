@@ -6,6 +6,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -59,6 +60,8 @@ public class GeneratorItemTags extends IntrinsicHolderTagsProvider<Item>
 		this.tag(BloodMagicTags.CRYSTAL_DEMON).add(BloodMagicItems.DESTRUCTIVE_CRYSTAL.get());
 		this.tag(BloodMagicTags.CRYSTAL_DEMON).add(BloodMagicItems.VENGEFUL_CRYSTAL.get());
 		this.tag(BloodMagicTags.CRYSTAL_DEMON).add(BloodMagicItems.STEADFAST_CRYSTAL.get());
+
+		this.tag(ItemTags.MUSIC_DISCS).add(BloodMagicItems.BLEEDING_EDGE_MUSIC.get());
 
 //		this.copy(BloodMagicTags.Blocks.MUSHROOM_STEM, BloodMagicTags.MUSHROOM_STEM); // FIXME
 //		this.copy(BloodMagicTags.Blocks.MUSHROOM_HYPHAE, BloodMagicTags.MUSHROOM_HYPHAE);

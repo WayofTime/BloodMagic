@@ -32,7 +32,7 @@ import wayoftime.bloodmagic.client.key.BloodMagicKeyHandler;
 import wayoftime.bloodmagic.client.key.KeyBindingBloodMagic;
 import wayoftime.bloodmagic.client.model.MimicModelLoader;
 import wayoftime.bloodmagic.client.model.SigilHoldingModelLoader;
-import wayoftime.bloodmagic.client.sounds.SoundRegisterListener;
+import wayoftime.bloodmagic.client.sounds.SoundRegistry;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.*;
 import wayoftime.bloodmagic.common.fluid.BloodMagicFluids;
@@ -111,6 +111,7 @@ public class BloodMagic {
         BloodMagicRecipeType.RECIPE_TYPES.register(modBus);
         BloodMagicPotions.MOB_EFFECTS.register(modBus);
         BloodMagicCreativeTabs.CREATIVE_TABS.register(modBus);
+        SoundRegistry.SOUNDS.register(modBus);
 
         // Register the setup method for modloading
         modBus.addListener(this::setup);
@@ -130,7 +131,6 @@ public class BloodMagic {
         modBus.addListener(ConfigManager::onClientReload);
 
         MinecraftForge.EVENT_BUS.register(new GenericHandler());
-        MinecraftForge.EVENT_BUS.register(new SoundRegisterListener());
         modBus.addListener(this::registerColors);
 
         MinecraftForge.EVENT_BUS.register(new WillHandler());
