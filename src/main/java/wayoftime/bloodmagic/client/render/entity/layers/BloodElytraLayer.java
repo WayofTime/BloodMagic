@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import wayoftime.bloodmagic.common.item.ItemLivingArmor;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
+import wayoftime.bloodmagic.core.living.ILivingContainer;
 import wayoftime.bloodmagic.core.living.LivingStats;
 import wayoftime.bloodmagic.core.living.LivingUtil;
 
@@ -25,7 +26,7 @@ public class BloodElytraLayer<T extends LivingEntity, M extends EntityModel<T>> 
 	@Override
 	public boolean shouldRender(ItemStack stack, T entity)
 	{
-		if (stack.getItem() instanceof ItemLivingArmor && entity instanceof Player && LivingUtil.hasFullSet((Player) entity))
+		if (stack.getItem() instanceof ILivingContainer && entity instanceof Player && LivingUtil.hasFullSet((Player) entity))
 			return LivingStats.fromPlayer((Player) entity, true).getLevel(LivingArmorRegistrar.UPGRADE_ELYTRA.get().getKey()) > 0;
 		return false;
 	}

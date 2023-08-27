@@ -40,6 +40,7 @@ import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
+import wayoftime.bloodmagic.core.living.ILivingContainer;
 import wayoftime.bloodmagic.core.living.LivingStats;
 import wayoftime.bloodmagic.core.living.LivingUtil;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
@@ -1143,7 +1144,7 @@ public class GenericHandler
 	{
 		if (BloodMagic.curiosLoaded)
 		{ // Without Curios, there is nothing this cares about.
-			if (event.getFrom().getItem() instanceof ItemLivingArmor || event.getTo().getItem() instanceof ItemLivingArmor)
+			if (event.getFrom().getItem() instanceof ILivingContainer || event.getTo().getItem() instanceof ILivingContainer)
 			{ // Armor change involves Living Armor
 				LivingEntity entity = event.getEntity();
 				if (entity instanceof Player)
