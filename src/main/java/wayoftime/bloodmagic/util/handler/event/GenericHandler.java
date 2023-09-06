@@ -13,6 +13,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
+import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
@@ -1189,5 +1190,17 @@ public class GenericHandler
 	{
 		int i = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, stack);
 		return i == 0 ? 25 : 25 - 5 * i;
+	}
+
+	@SubscribeEvent
+	public void onEntityInteract(PlayerInteractEvent.EntityInteract event){
+		if (event.getTarget() instanceof Piglin && event.getItemStack().is(Items.GOLD_INGOT))
+		{
+			Player player = event.getEntity();
+			if (LivingUtil.hasFullSet(player))
+			{
+				LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_GILDED.get(), 1);
+			}
+		}
 	}
 }
