@@ -121,8 +121,6 @@ public class BloodMagic {
         modBus.addListener(this::processIMC);
         // Register the doClientStuff method for modloading
         modBus.addListener(this::doClientStuff);
-        modBus.addListener(this::initRenderLayer);
-        modBus.addListener(this::loadModels);
         modBus.addListener(this::gatherData);
         modBus.addListener(this::onRegisterCapabilities);
 
@@ -222,12 +220,6 @@ public class BloodMagic {
 
     }
 
-    private void loadModels(final RegisterGeometryLoaders event) {
-        event.register("mimicloader", new MimicModelLoader(BloodMagic.rl("block/solidopaquemimic")));
-        event.register("mimicloader_ethereal", new MimicModelLoader(BloodMagic.rl("block/etherealopaquemimic")));
-
-        event.register("loader_holding", new SigilHoldingModelLoader(BloodMagic.rl("item/sigilofholding_base")));
-    }
 
     private void setup(final FMLCommonSetupEvent event) {
         packetHandler.initialize();
@@ -242,13 +234,8 @@ public class BloodMagic {
         MinecraftForge.EVENT_BUS.register(new ClientEvents());
         MinecraftForge.EVENT_BUS.register(new KeyBindingBloodMagic());
         new BloodMagicKeyHandler();
-//		IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
-//
     }
 
-    private void initRenderLayer(EntityRenderersEvent.AddLayers event) {
-        ClientEvents.initRenderLayer(event);
-    }
 
     private void registerColors(final RegisterColorHandlersEvent event) {
         if (event instanceof RegisterColorHandlersEvent.Item)

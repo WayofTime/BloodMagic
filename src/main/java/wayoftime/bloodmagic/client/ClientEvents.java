@@ -17,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -28,6 +29,8 @@ import wayoftime.bloodmagic.anointment.AnointmentColor;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.api.compat.IMultiWillTool;
 import wayoftime.bloodmagic.client.model.MimicColor;
+import wayoftime.bloodmagic.client.model.MimicModelLoader;
+import wayoftime.bloodmagic.client.model.SigilHoldingModelLoader;
 import wayoftime.bloodmagic.client.render.BloodMagicModelLayerLocations;
 import wayoftime.bloodmagic.client.render.RenderItemRoutingNode;
 import wayoftime.bloodmagic.client.render.alchemyarray.*;
@@ -184,15 +187,6 @@ public class ClientEvents
 		}
 	}
 
-	@SubscribeEvent
-	public static void initRenderLayer(EntityRenderersEvent.AddLayers event)
-	{
-		PlayerRenderer render = event.getSkin("default");
-		render.addLayer(new BloodElytraLayer(render, event.getEntityModels()));
-		render = event.getSkin("slim");
-		render.addLayer(new BloodElytraLayer(render, event.getEntityModels()));
-	}
-
 	@SuppressWarnings("deprecation")
 	public static void initClientEvents(FMLClientSetupEvent event)
 	{
@@ -250,19 +244,23 @@ public class ClientEvents
 		AlchemyArrayRendererRegistry.registerRenderer(BloodMagic.rl("array/grove"), new BeaconAlchemyCircleRenderer(BloodMagic.rl("textures/models/alchemyarrays/growthsigil.png")));
 		AlchemyArrayRendererRegistry.registerRenderer(BloodMagic.rl("array/bounce"), new LowStaticAlchemyCircleRenderer(BloodMagic.rl("textures/models/alchemyarrays/bouncearray.png")));
 
-//		Map<String, PlayerRenderer> skinMap = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
-//		PlayerRenderer render;
-//		render = skinMap.get("default");
-//		render.addLayer(new BloodElytraLayer(render));
-//		render = skinMap.get("slim");
-//		render.addLayer(new BloodElytraLayer(render));
-//		
-//		Map<String, EntityRenderer<? extends Player>> skinMap = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
-//		PlayerRenderer render;
-//		render = skinMap.get("default");
-//		render.addLayer(new BloodElytraLayer(render));
-//		render = skinMap.get("slim");
-//		render.addLayer(new BloodElytraLayer(render));
+	}
+
+	@SubscribeEvent
+	public static void initRenderLayer(EntityRenderersEvent.AddLayers event)
+	{
+		PlayerRenderer render = event.getSkin("default");
+		render.addLayer(new BloodElytraLayer(render, event.getEntityModels()));
+		render = event.getSkin("slim");
+		render.addLayer(new BloodElytraLayer(render, event.getEntityModels()));
+	}
+
+	@SubscribeEvent
+	public static void loadModels(final ModelEvent.RegisterGeometryLoaders event) {
+		event.register("mimicloader", new MimicModelLoader(BloodMagic.rl("block/solidopaquemimic")));
+		event.register("mimicloader_ethereal", new MimicModelLoader(BloodMagic.rl("block/etherealopaquemimic")));
+
+		event.register("loader_holding", new SigilHoldingModelLoader(BloodMagic.rl("item/sigilofholding_base")));
 	}
 
 	public static void registerItemModelProperties(FMLClientSetupEvent event)
@@ -320,11 +318,4 @@ public class ClientEvents
 			}
 		});
 	}
-
-	// TODO: replace with JSON/datagen
-//	@SubscribeEvent
-//	public static void onTextureStitchEvent(TextureStitchEvent.Pre event)
-//	{
-//		event.addSprite(BloodMagic.rl("item/curios_empty_living_armour_socket"));
-//	}
 }
