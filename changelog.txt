@@ -1,4 +1,15 @@
 ------------------------------------------------------
+Version 3.3.1
+------------------------------------------------------
+- Fixed crash that prevented the mod from working on servers.
+
+------------------------------------------------------
+Version 3.3.0
+------------------------------------------------------
+- Initial update to MC 1.20.x! Expect some breakage. You can thank/blame chonky for the release!
+- Curios/Elytra-render checks no longer specifically check for ItemLivingArmor. 
+
+------------------------------------------------------
 Version 3.2.6
 ------------------------------------------------------
 - Changed Sigil of Holding rendering so that it displays the selected Sigil in the hand.
