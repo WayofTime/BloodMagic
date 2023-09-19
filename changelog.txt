@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 3.3.2
+------------------------------------------------------
+- Fixed Soft Coating and Fortuna Extract; voiding of drops is not part of the "ultimate price"!
+
+------------------------------------------------------
 Version 3.3.1
 ------------------------------------------------------
 - Fixed crash that prevented the mod from working on servers.

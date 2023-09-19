@@ -70,7 +70,7 @@ public class GlobalLootModifier
 			fakeTool.enchant(Enchantments.SILK_TOUCH, 1);
 			LootParams.Builder builder = new LootParams.Builder(context.getLevel());
 			builder.withParameter(LootContextParams.TOOL, fakeTool);
-			LootParams ctx = builder.create(LootContextParamSets.BLOCK);
+			LootParams ctx = builder.create(LootContextParamSets.EMPTY);
 			LootTable loottable = context.getLevel().getServer().getLootData().getLootTable(context.getParamOrNull(LootContextParams.BLOCK_STATE).getBlock().getLootTable());
 			return loottable.getRandomItems(ctx);
 		}
@@ -129,7 +129,7 @@ public class GlobalLootModifier
 
 			LootParams.Builder builder = new LootParams.Builder(context.getLevel());
 			builder.withParameter(LootContextParams.TOOL, fakeTool);
-			LootParams ctx = builder.create(LootContextParamSets.BLOCK);
+			LootParams ctx = builder.create(LootContextParamSets.EMPTY);
 			LootTable loottable = context.getLevel().getServer().getLootData().getLootTable(context.getParamOrNull(LootContextParams.BLOCK_STATE).getBlock().getLootTable());
 			return loottable.getRandomItems(ctx);
 		}
