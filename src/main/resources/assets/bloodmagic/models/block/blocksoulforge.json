@@ -1,5 +1,5 @@
 {
-  "parent": "bloodmagic:block/sub/BlockSoulForge",
+  "parent": "bloodmagic:block/sub/blocksoulforge",
   "textures": {
     "base": "minecraft:blocks/iron_block",
 	"base_bottom": "minecraft:blocks/gold_block",
