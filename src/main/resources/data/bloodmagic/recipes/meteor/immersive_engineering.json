@@ -1,42 +1,55 @@
 {
-  "type": "bloodmagic:meteor",
-  "input": {
-    "item": "immersiveengineering:wirecoil_copper"
-  },
-  "syphon": 500000,
-  "explosion": 24.0,
-  "layers": [
+  "type": "forge:conditional",
+  "recipes": [
     {
-      "radius": 8,
-      "additionalWeight": 200,
-      "minWeight": 0,
-      "weightMap": [
+      "conditions": [
         {
-          "tag": "#forge:ores/copper#0",
-          "weight": 100
-        },
-        {
-          "tag": "#forge:ores/lead#0",
-          "weight": 60
-        },
-        {
-          "tag": "#forge:ores/nickel#0",
-          "weight": 50
-        },
-        {
-          "tag": "#forge:ores/aluminum#0",
-          "weight": 50
-        },
-        {
-          "tag": "#forge:ores/silver#0",
-          "weight": 50
-        },
-        {
-          "tag": "#forge:ores/uranium#0",
-          "weight": 50
+          "type": "forge:mod_loaded",
+          "modid": "immersiveengineering"
         }
       ],
-      "fill": "minecraft:stone"
+      "recipe": {
+        "type": "bloodmagic:meteor",
+        "input": {
+          "item": "immersiveengineering:wirecoil_copper"
+        },
+        "syphon": 500000,
+        "explosion": 24.0,
+        "layers": [
+          {
+            "radius": 8,
+            "additionalWeight": 200,
+            "minWeight": 0,
+            "weightMap": [
+              {
+                "tag": "#forge:ores/copper#0",
+                "weight": 100
+              },
+              {
+                "tag": "#forge:ores/lead#0",
+                "weight": 60
+              },
+              {
+                "tag": "#forge:ores/nickel#0",
+                "weight": 50
+              },
+              {
+                "tag": "#forge:ores/aluminum#0",
+                "weight": 50
+              },
+              {
+                "tag": "#forge:ores/silver#0",
+                "weight": 50
+              },
+              {
+                "tag": "#forge:ores/uranium#0",
+                "weight": 50
+              }
+            ],
+            "fill": "minecraft:stone"
+          }
+        ]
+      }
     }
   ]
 }
