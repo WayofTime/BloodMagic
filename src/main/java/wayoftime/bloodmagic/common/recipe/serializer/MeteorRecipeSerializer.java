@@ -14,6 +14,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.fml.ModList;
+import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.meteor.MeteorLayer;
 import wayoftime.bloodmagic.recipe.RecipeMeteor;
 import wayoftime.bloodmagic.util.Constants;
@@ -31,6 +33,12 @@ public class MeteorRecipeSerializer<RECIPE extends RecipeMeteor>  implements Rec
 	@Override
 	public RECIPE fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json)
 	{
+
+		// "modid" is optional.  If not specified, use our modID.  If the modID isn't present, skip this recipe.
+		String modId = GsonHelper.getAsString(json, Constants.JSON.MODID, BloodMagic.MODID);
+		if (!ModList.get().isLoaded(modId)){
+			return null;
+		}
 
 		JsonElement input = GsonHelper.isArrayNode(json, Constants.JSON.INPUT)
 				? GsonHelper.getAsJsonArray(json, Constants.JSON.INPUT)
