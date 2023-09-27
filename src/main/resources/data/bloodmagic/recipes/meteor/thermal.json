@@ -1,6 +1,5 @@
 {
   "type": "bloodmagic:meteor",
-  "modid": "thermal",
   "input": {
     "item": "thermal:rf_coil"
   },

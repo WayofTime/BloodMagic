@@ -243,7 +243,6 @@ public class Constants
 		public static final String SHELL = "shell";
 		public static final String LAYER = "layers";
 		public static final String EXPLOSION = "explosion";
-		public static final String MODID = "modid";
 
 	}
 

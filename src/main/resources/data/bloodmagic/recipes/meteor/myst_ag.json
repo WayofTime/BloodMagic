@@ -1,6 +1,5 @@
 {
   "type": "bloodmagic:meteor",
-  "modid": "mysticalagriculture",
   "input": {
     "item": "mysticalagriculture:prosperity_shard"
   },

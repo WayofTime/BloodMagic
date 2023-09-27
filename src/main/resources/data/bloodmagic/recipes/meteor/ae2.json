@@ -1,6 +1,5 @@
 {
   "type": "bloodmagic:meteor",
-  "modid": "appliedenergistics2",
   "input": {
     "tag": "forge:gems/certus_quartz"
   },

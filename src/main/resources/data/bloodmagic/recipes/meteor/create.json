@@ -1,6 +1,5 @@
 {
   "type": "bloodmagic:meteor",
-  "modid": "create",
   "input": {
     "item": "create:andesite_alloy"
   },

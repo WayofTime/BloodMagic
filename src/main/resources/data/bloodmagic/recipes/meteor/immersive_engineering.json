@@ -1,6 +1,5 @@
 {
   "type": "bloodmagic:meteor",
-  "modid": "immersiveengineering",
   "input": {
     "item": "immersiveengineering:wirecoil_copper"
   },
