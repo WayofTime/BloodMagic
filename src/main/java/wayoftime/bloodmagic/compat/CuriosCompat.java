@@ -34,21 +34,20 @@ public class CuriosCompat
 
 	public int recalculateCuriosSlots(Player player)
 	{
-		Map<String, ICurioStacksHandler> curiosMap = CuriosApi.getCuriosInventory(player).resolve().get().getCurios();
+		ICurioStacksHandler livingArmourSockets = CuriosApi.getCuriosInventory(player).resolve().get().getCurios().get("living_armour_socket");
 		if (LivingUtil.hasFullSet(player))
 		{
-			Double amount = 0.0;
 			LivingStats stats = LivingStats.fromPlayer(player);
 			int curiosLevel = (stats != null) ? stats.getLevel(LivingArmorRegistrar.UPGRADE_CURIOS_SOCKET.get().getKey()) : 0;
+			livingArmourSockets.removeModifier(player.getUUID());
 			if (curiosLevel != 0)
 			{
-				amount = Double.valueOf(LivingArmorRegistrar.UPGRADE_CURIOS_SOCKET.get().getBonusValue("slots", curiosLevel).intValue());
+				livingArmourSockets.addTransientModifier(new AttributeModifier(player.getUUID(), "legacy", Double.valueOf(LivingArmorRegistrar.UPGRADE_CURIOS_SOCKET.get().getBonusValue("slots", curiosLevel).intValue()), AttributeModifier.Operation.ADDITION));
 			}
-			curiosMap.get("living_armour_socket").addTransientModifier(new AttributeModifier(player.getUUID(), "legacy", amount, AttributeModifier.Operation.ADDITION));
 			return curiosLevel;
 		} else
 		{
-			curiosMap.get("living_armour_socket").addTransientModifier(new AttributeModifier(player.getUUID(), "legacy", 0.0, AttributeModifier.Operation.ADDITION));
+			livingArmourSockets.removeModifier(player.getUUID());
 			return 0;
 		}
 	}
