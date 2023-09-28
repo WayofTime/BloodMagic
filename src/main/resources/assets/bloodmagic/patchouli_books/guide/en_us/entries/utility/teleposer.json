@@ -32,6 +32,10 @@
     {
       "type": "patchouli:text",
       "text": "Teleposers can be linked one-way (such that a redstone signal to the exiting Teleposer does nothing), two-way (such that each Teleposer has a Focus in it linking to the other teleposer, making you teleport back and forth at a redstone signal from either end), or they can even be chained - A to B to C and back to A. From base-traversing elevator systems to complex underground labrynths, go nuts!"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "If you're having difficulty getting your Teleposer to work, make sure that it is being $(thing)strongly redstone powered$(). This means that placing a redstone block next to the block won't power it - you'll need redstone dust or a repeater pointing into the side of the Teleposer, or a lever or  button directly on it. Life Essense isn't free after all, so the Teleposer is designed to minimize accidental misfires. For more information on strong vs weak redstone power, please consult $(l:https://minecraft.fandom.com/wiki/Redstone_mechanics?oldid=2127827#Powered_vs._activated)the Minecraft Wiki.$() "
     }
   ]
 }
