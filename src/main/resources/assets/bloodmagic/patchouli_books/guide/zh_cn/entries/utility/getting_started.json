@@ -1,0 +1,84 @@
+{
+  "name": "等级——入门",
+  "icon": "bloodmagic:sacrificialdagger",
+  "category": "bloodmagic:utility",
+  "priority": "true",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(blood)血魔法3$()的现在仍在重新设计如何发展，前几步就与$(blood)血魔法2$()的进展明显不同。$(br2)我们现在仍在重新设计如何发展，在如何发展被确定下来之前，我们仍会等待，这里还有一个如何游玩$(blood)血魔法3$()的大概过程。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "bloodmagic:altar",
+      "title": "血之祭坛 (Tier-1)",
+      "text": "玩$(blood)血魔法$()第一步就是造出$(l:bloodmagic:altar/blood_altar)血之祭坛$()和$(l:bloodmagic:altar/blood_altar#knife)牺牲匕首$().。使用这些物品自我牺牲来产生 $(blood)LP$()。$(br2)再用这些 $(blood)LP$() 来制作$(l:bloodmagic:altar/soul_network)虚弱气血宝珠$()，几个$(l:bloodmagic:altar/slates)空白石板$()和几个$(l:bloodmagic:demon_will/will_manipulation/soul_snare)灵魂投网$()。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "bloodmagic:alchemytable",
+      "title": "炼金术桌 (Tier-1)",
+      "text": "$(l:bloodmagic:alchemy_table/alchemy_table)炼金术桌$()使用玩家 $(thing)灵魂网络$()中的 $(blood)LP$() （来源为$(l:bloodmagic:altar/soul_network)已绑定的气血宝珠$() ）来制作不同的物品，如：$(li)$(l:bloodmagic:alchemy_array/functional_arrays/arcane_ash)奥术粉灰$()$(li)$(item)Reagents for Sigils$()$(li)$(l:bloodmagic:alchemy_table/anointments)涂物$()$(li)$(thing)2x 矿物处理$()$(li)和其它各种零件。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "bloodmagic:arcaneashes",
+      "title": "炼金矩阵 (Tier-1)",
+      "text": "$(thing)炼金矩阵$()是由在地面上的一些$(l:bloodmagic:alchemy_array/functional_arrays/arcane_ash)奥术粉灰$()制作的。炼金矩阵可以使用 [$(k:use)]来放置 2 $(item)物品$()，来制作一些$(item)物品$()（像$(l:bloodmagic:alchemy_array/sigil/divination)占卜印记$()）或$(thing)执行某种能力$()（像$(l:bloodmagic:alchemy_array/functional_arrays/time_arrays)将白天变成夜晚$()）。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "bloodmagic:soulforge",
+      "title": "狱火熔炉 (Tier-1)",
+      "text": "$(l:bloodmagic:demon_will/will_manipulation/soul_forge)狱火熔炉$()是使用$(l:bloodmagic:demon_will/will_manipulation/demon_will)恶魔意志$()制作的。你可以使用$(l:bloodmagic:demon_will/will_manipulation/soul_snare)灵魂投网$()来获得你的第一分$(raw)意志$()，建议可以用来升级$(l:bloodmagic:demon_will/demonic_items/sentient_sword)感知之剑$()。$(item)狱火熔炉$()用于制作与$(raw)恶魔意志$()相关的物品（像$(l:bloodmagic:demon_will/will_manipulation/soul_gem)地狱魂石$()和$(l:bloodmagic:demon_will/demonic_items/sentient_tools)感知工具$()）和一些消耗品（像$(l:bloodmagic:demon_will/demonic_items/explosive_charges)炸药$()和$(l:bloodmagic:demon_will/demonic_items/throwing_daggers)投掷匕首$()）。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "bloodmagic:daggerofsacrifice",
+      "title": "二级",
+      "text": "在这时，你可以制作一把$(l:bloodmagic:altar/blood_altar#dagger_of_sacrifice)献祭刀$()，使在杀死生物时可以获得更多的 $(blood)LP$()。$(item)血之祭坛$()可以使用各种$(item)升级符文$()，也可以使用更多的$(item)印记$()。和之前一样，应该专注于$(l:bloodmagic:altar/blood_altar)祭坛$()的升级。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "bloodmagic:alchemy_flask",
+      "title": "药剂制作 (Tier-2)",
+      "text": "如果建造$(l:bloodmagic:altar/blood_altar)祭坛$()使人无聊，还要分散注意力，那为什么不试试新添加的$(l:bloodmagic:alchemy_table/potions)药水制作$()系统呢?？可以制作可以装十几种效果的$(thing)炼金瓶$()。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "bloodmagic:ritualdiviner",
+      "title": "三级",
+      "text": "在这时，你也有一定的能力来制造$(l:bloodmagic:alchemy_array/living_equipment/living_basics)束灵盔甲$()和启动一些基本的$(l:bloodmagic:rituals/ritual_basics)仪式$()。这个盔甲的用途十分广，要激发它的全部能力需要十分努力的工作。这时，你可以考虑升级$(l:bloodmagic:altar/blood_altar)祭坛$()和$(l:bloodmagic:rituals/ritual_diviner)仪式推测杖$()来解锁更强大的$(thing)仪式$()。你说怎么办？"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "bloodmagic:simplekey",
+      "title": "地牢 (Tier-3)",
+      "text": "运行$(l:bloodmagic:rituals/ritual_list/ritual_simple_dungeon)隐域之缘仪式$()是可以有限度进入$(thing)恶魔领域$()的好方法！在这你可以获得$(l:bloodmagic:dungeons/tau_fruit)血命果$()，并需要培养成$(thing)饱满血命果$()。然后使用$(l:bloodmagic:utility/alchemical_reaction_chamber)炼金反应炉$()制作成$(item)虚弱气血碎片$()。这个可以用来建造 4 级祭坛，也可以制造出更强大的$(l:bloodmagic:alchemy_table/anointments)试剂$()和$(l:bloodmagic:alchemy_table/potions#average_potions)药剂催化剂$()。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "bloodmagic:vengefulcrystal",
+      "title": "四级",
+      "text": "你可能想要知道$(l:bloodmagic:rituals/ritual_tinkerer)仪式调整器$()和各种$(l:bloodmagic:demon_will/will_manipulation/aspected_will)意志方面$()，并考虑如何使用这些来完善你现有的仪式和改变$(l:bloodmagic:demon_will/demonic_items/sentient_tools)感知工具$()和$(l:bloodmagic:demon_will/demonic_items/sentient_sword)武器$()的运行形式。但是，想要知道这些的进展，需要深入$(l:bloodmagic:rituals/ritual_list/ritual_standard_dungeon)恶魔领域$()中..."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "bloodmagic:mineentrancekey",
+      "title": "恶魔领域 (Tier-4)",
+      "text": "通过使用$(thing)无尽之路$()，可以拥有去往$(thing)恶魔领域$()的机会，以及其中丰富的战利品和无尽的恐怖。来，为了战斗而装备！深入探索，你可以找到丰富的$(l:bloodmagic:dungeons/demonite)恶魔合金锭矿$()，将这些矿物做成矿块，用做祭坛的拱石，和制作$(item)贤者气血宝珠$()。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "bloodmagic:ingot_hellforged",
+      "title": "5级",
+      "text": "这个等级为最高等级。这时，你可以拥有$(blood)血魔法$()的所有。如果继续深入恶魔领域获取战利品，你很可能会获得复杂的$(item)恶魔合金零件$()，这个零件可以与$(item)下界合金碎片$()一同使用，来翻倍祭坛中每一个符文的能力！"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:barrier",
+      "title": "几级？",
+      "text": "什么？不用看了。即使在1.12.2版本这也是给数据包制作者的一种给予，除此之外也没有实施。你已经走太远了，快回去吧。"
+    }
+  ]
+}

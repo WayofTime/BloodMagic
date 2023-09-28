@@ -1,0 +1,25 @@
+{
+  "name": "促速符文",
+  "icon": "bloodmagic:accelerationrune",
+  "category": "bloodmagic:altar/blood_rune",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)促速符文$()可以提升某些操作的速率。正常情况下，$(l:bloodmagic:altar/blood_rune/charging_rune)充能符文$(/l)与$(l:bloodmagic:altar/blood_rune/dislocation_rune)转位符文$(/l)的操作为每 20 tick 进行一次，每个促速符文可以移除 1 tick 的间隔时间，最小值为每个 tick 执行一次操作。 "
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:blood_rune_acceleration"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:blood_rune_acceleration_2",
+      "text":"有了一些$(item)下界合金碎片$()和从$(l:bloodmagic:dungeons/endless_realm)恶魔领域$()带来的$(item)复杂的恶魔合金零件$()，这样就可以使$(item)促速符文$()的效果提高一倍，并且每个符文从可以去除 1 tick 转为可以去除 2 tick，使祭坛有更多的插槽。"
+    },
+    {
+      "type": "bloodmagic:crafting_arc",
+      "recipe": "bloodmagic:arc/reversion/acceleration",
+      "text":"如果改变了主意，你可以撤销 ARC 中的配方。"
+    }
+  ]
+}

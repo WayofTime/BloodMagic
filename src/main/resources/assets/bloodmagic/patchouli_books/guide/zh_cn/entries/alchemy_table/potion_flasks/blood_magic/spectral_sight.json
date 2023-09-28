@@ -1,0 +1,31 @@
+{
+  "name": "灵光视觉",
+  "icon": "minecraft:glowstone_dust",
+  "category": "bloodmagic:alchemy_table/potion_flasks/blood_magic",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)灵光视觉$()可以使周围的生物拥有发光的buff一样的效果。基本范围有24格，高等级增加32格的范围。$(br2)这个是由内含$(l:bloodmagic:alchemy_table/potion_flasks/vanilla/night_vision)夜视$())的炼金瓶制作。"
+    },
+    {
+      "type": "bloodmagic:3x_crafting_flask",
+      "a.heading": "灵光视觉 (3:00)",
+      "a.recipe": "bloodmagic:flask/night_to_spectral",
+      "b.heading": "灵光视觉 (8:00)",
+      "b.recipe": "bloodmagic:flask/length_spectral_sight",
+      "c.heading": "灵光视觉 II (1:30)",
+      "c.recipe": "bloodmagic:flask/potency_spectral_sight"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "可以通过加入$(l:bloodmagic:alchemy_table/potions#average_potions)标准增强催化剂$()来提高炼金瓶的效果。"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_flask",
+      "a.heading": "灵光视觉 III (0:45)",
+      "a.recipe": "bloodmagic:flask/potency_average_spectral_sight",
+      "b.heading": "灵光视觉 (21:20)",
+      "b.recipe": "bloodmagic:flask/length_average_spectral_sight"
+    }
+  ]
+}

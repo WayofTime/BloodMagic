@@ -1,0 +1,17 @@
+{
+  "name": "辉煌金属",
+  "icon": "minecraft:diamond",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "辉煌金属",
+      "recipe": "bloodmagic:alchemytable/upgrade_brilliance",
+      "text": "效果： 提高护甲防御能力。 最高为+5护甲及+8盔甲强度。$(br2)训练：在炼金桌制作束灵之书。 每一卷增加1级。最高等级： 5"
+    },
+    {
+      "type": "bloodmagic:living_armour_upgrade_table",
+      "upgrade": "bloodmagic:diamond_protect"
+    }
+  ]
+}

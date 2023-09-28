@@ -1,0 +1,33 @@
+{
+  "name": "石板等级",
+  "icon": "bloodmagic:blankslate",
+  "category": "bloodmagic:altar",
+  "extra_recipe_mappings": {
+    "bloodmagic:blankslate": 1,
+    "bloodmagic:reinforcedslate": 1,
+    "bloodmagic:infusedslate": 2,
+    "bloodmagic:demonslate": 2
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l:bloodmagic:altar/blood_altar)血之祭坛$(/l)的主要用途为生产$(item)石板$()。一层的石板需要前一层的石板，也需要一个比前一层更好的祭坛。$(br2)注意：$(item)悬幽石板$()默认情况下是不开启的。如果你在玩整合包，那么这个物品可能会被启用。详细情况请查看 JEI 。" 
+    },
+    {
+      "type": "bloodmagic:2x_crafting_altar",
+      "a.heading": "空白石板",
+      "a.recipe": "bloodmagic:altar/slate",
+      "b.heading": "强化石板",
+      "b.recipe": "bloodmagic:altar/reinforcedslate"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_altar",
+      "a.heading": "灌输石板",
+      "a.recipe": "bloodmagic:altar/imbuedslate",
+      "b.heading": "恶魔石板",
+      "b.recipe": "bloodmagic:altar/demonicslate"
+    }
+  ]
+}
+
+

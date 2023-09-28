@@ -1,0 +1,15 @@
+{
+  "name": "健壮体质",
+  "icon": "minecraft:golden_apple",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "效果：给予额外生命值，最多50颗半心的生命值。$(br2)训练：恢复生命值(正常回血，或通过$(item)治疗药水$()或$(item)再生药水$().) $(br2)最高等级：10"
+    },
+    {
+      "type": "bloodmagic:living_armour_upgrade_table",
+      "upgrade": "bloodmagic:health"
+    }
+  ]
+}

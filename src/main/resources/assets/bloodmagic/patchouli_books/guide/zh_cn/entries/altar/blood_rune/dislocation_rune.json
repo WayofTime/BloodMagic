@@ -1,0 +1,25 @@
+{
+  "name": "转位符文",
+  "icon": "bloodmagic:dislocationrune",
+  "category": "bloodmagic:altar/blood_rune",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)转位符文$()可以提升在祭坛与外部进行交换时的$(blood)生命源质$()流动速度，当从外部储罐泵入或泵出源质时，祭坛的作用效果增加 20%。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:blood_rune_displacement"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:blood_rune_displacement_2",
+      "text":"有了一些$(item)下界合金碎片$()和从$(l:bloodmagic:dungeons/endless_realm)恶魔领域$()带来的$(item)复杂的恶魔合金零件$()，这样就可以使$(item)转位符文$()的效果提高，并且每一个符文都会使流速增加 40%。"
+    },
+    {
+      "type": "bloodmagic:crafting_arc",
+      "recipe": "bloodmagic:arc/reversion/displacement",
+      "text":"如果改变了主意，你可以撤销 ARC 中的配方。"
+    }
+  ]
+}

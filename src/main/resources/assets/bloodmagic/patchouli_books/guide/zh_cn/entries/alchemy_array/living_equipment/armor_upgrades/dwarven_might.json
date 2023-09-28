@@ -1,0 +1,15 @@
+{
+  "name": "矮人之力",
+  "icon": "minecraft:diamond_pickaxe",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "text",
+      "text": "效果：在该区块挖掘时增加挖掘速度。在到达一定的等级时会给予急迫的buff。$(br2)训练：M挖掘. $(br2)最高等级：10"
+    },
+    {
+      "type": "bloodmagic:living_armour_upgrade_table",
+      "upgrade": "bloodmagic:digging"
+    }
+  ]
+}

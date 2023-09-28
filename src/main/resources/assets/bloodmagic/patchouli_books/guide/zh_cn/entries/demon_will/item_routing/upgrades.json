@@ -1,0 +1,17 @@
+{
+  "name": "升级",
+  "icon": "bloodmagic:mastercore",
+  "category": "bloodmagic:demon_will/item_routing",
+  "pages":[
+    {
+      "type": "patchouli:text",
+      "text": "目前，路由网络中只有一个$(thing)升级$()可用。$(br2)$(item)基本路由逻辑升级$()提升了每次传输的物品数量（目前是每秒传输 1 个）。默认情况下，每次可以传输16个物品，现在在这个基础上提高8个。"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "基本路由逻辑升级",
+      "recipe": "bloodmagic:soulforge/master_node_upgrade",
+      "text": "这次升级模块可以堆叠16 个，这将可以每秒传输 144 个物品。但是如果有多个不同的物品需要传输，那么将会拆为多栈。"
+    }
+  ]
+}

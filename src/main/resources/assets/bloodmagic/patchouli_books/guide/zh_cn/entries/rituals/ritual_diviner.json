@@ -1,0 +1,53 @@
+{
+  "name": "仪式推测杖",
+  "icon": "bloodmagic:ritualdiviner",
+  "category": "bloodmagic:rituals",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "建造仪式是一个复杂的工作；即使你有的$(item)元素铭文工具$()是正确的，你也不能找个古老的地方将符文刻在上面，期待有事情发生。好消息是$(item)仪式推测杖$()可以帮助你。$(br2)按[$(k:sneak)]并按[$(k:use)]或[$(k:attack)]，同时看向空气，选择所需要的仪式 。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:ritual_diviner_0",
+      "text": "只要在$(item)主仪式石$()上按[$(k:use)]，就可以选定仪式使用仪式推测杖从你的物品栏中拿取$(item)仪式石$()来建造你选定的仪式。这就像魔法！"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "仪式推测杖可以破坏并替换如：高草丛、雪等这些方块；但是不可以破坏石头和泥土这些坚硬的方块。在开始前请确保建造仪式的区域是空旷的，否则$(l:bloodmagic:rituals/activation_crystals)激活水晶$()是无法激活仪式。$(br2)还有需要注意，基本的仪式推测杖只能搭建基本的仪式。如果想要建造更多的仪式，需要使用$(dusk)元素铭文工具：薄暮$()来升级仪式推测杖。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:ritual_diviner_1",
+      "anchor": "dusk",
+      "text": "与元素铭文工具不同的是，仪式推测杖和仪式推测杖 [薄暮]是永不会损坏的。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "基本的仪式推测杖需要$(item)元素铭文工具$()的一种来进行建造，因此需要一个 3 级的$(l:bloodmagic:altar/blood_altar)血之祭坛$(/l)。$(br2)四个元素铭文工具以每个仪式石需要消耗$(blood)1,000 LP$() 进行制作，具体的消耗请看下一页。仪式推测杖 [薄暮] 需要 4 级的祭坛，以每个消耗$(blood)2,000 LP$() 制作 2 个元素铭文工具：薄暮。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "你也可以使用这些工具来手动制作符文，但这些符文只能用于装饰，因为这些符文既缓慢又不精准。"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_altar",
+      "a.heading": "Inscription Tool: Air",
+      "a.recipe": "bloodmagic:altar/air_tool",
+      "b.heading": "元素铭文工具：火",
+      "b.recipe": "bloodmagic:altar/fire_tool"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_altar",
+      "a.heading": "元素铭文工具：水",
+      "a.recipe": "bloodmagic:altar/water_tool",
+      "b.heading": "元素铭文工具：土",
+      "b.recipe": "bloodmagic:altar/earth_tool"
+    },
+    {
+      "type": "bloodmagic:crafting_altar",
+      "heading": "元素铭文工具：薄暮",
+      "recipe": "bloodmagic:altar/dusk_tool"
+    }
+  ]
+}

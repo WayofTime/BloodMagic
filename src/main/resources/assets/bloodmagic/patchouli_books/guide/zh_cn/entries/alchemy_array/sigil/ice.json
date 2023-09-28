@@ -1,0 +1,14 @@
+{
+  "name": "冻湖印记 [NYI]",
+  "icon": "bloodmagic:icesigil",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "extra_recipe_mappings": {
+    "bloodmagic:icesigil": 0
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "[WIP 笔记]$(br)[并没有完成]$(br2)霜冻行者的魔法是一种印记"
+    }
+  ]
+}

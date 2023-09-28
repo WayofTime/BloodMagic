@@ -1,0 +1,20 @@
+{
+  "name": "沉重",
+  "icon": "minecraft:string",
+  "category": "bloodmagic:alchemy_table/potion_flasks/blood_magic",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)沉重$()使目标无法跳跃。但是游泳不受影响。$(br2)这个是由内含$(l:bloodmagic:alchemy_table/potion_flasks/vanilla/jump_boost)跳跃提升$()的炼金瓶制作的。"
+    },
+    {
+      "type": "bloodmagic:3x_crafting_flask",
+      "a.heading": "沉重 (3:00)",
+      "a.recipe": "bloodmagic:flask/jump_to_grounded",
+      "b.heading": "沉重 (8:00)",
+      "b.recipe": "bloodmagic:flask/length_grounded",
+      "c.heading": "沉重 (21:20)",
+      "c.recipe": "bloodmagic:flask/length_average_grounded"
+    }
+  ]
+}

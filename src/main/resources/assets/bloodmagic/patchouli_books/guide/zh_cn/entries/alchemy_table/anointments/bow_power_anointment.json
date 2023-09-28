@@ -1,0 +1,37 @@
+{
+  "name": "铁尖",
+  "icon": "bloodmagic:bow_power_anointment",
+  "category": "bloodmagic:alchemy_table/anointments",
+  "pages": [
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "铁尖",
+      "recipe": "bloodmagic:alchemytable/bow_power_anointment",
+      "text": "提升 25% 你发射的箭矢的伤害，并且效果能与原版附魔叠加。$(br2)有效工具：弓、弩。$(br2)施加：劲射 I（256 发）"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "铁尖 L",
+      "recipe": "bloodmagic:alchemytable/bow_power_anointment_l",
+      "text": "这种升级版的药剂可延长4倍效果次数。$(br2)施加：劲射 I(1024 发)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "铁尖 II",
+      "recipe": "bloodmagic:alchemytable/bow_power_anointment_2",
+      "text": "提升 50% 你发射的箭矢的伤害。$(br2)施加：劲射 II (256 发)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "铁尖 XL",
+      "recipe": "bloodmagic:alchemytable/bow_power_anointment_xl",
+      "text": "这种升级版的药剂可延长16倍效果次数。$(br2)施加：劲射 I (4096 发)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "铁尖 III",
+      "recipe": "bloodmagic:alchemytable/bow_power_anointment_3",
+      "text": "提升 75% 你发射的箭矢的伤害。 $(br2)Applies: 施加：劲射 III (256 发)"
+    }
+  ]
+}

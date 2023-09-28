@@ -1,0 +1,41 @@
+{
+  "name": "苦难之井",
+  "icon": "bloodmagic:life_essence_bucket",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "苦难之井",
+      "multiblock_id": "bloodmagic:well_of_suffering",
+      "text": "使用$(l:bloodmagic:rituals/ritual_diviner#dusk)仪式推测杖 [薄暮] $(/l)更容易建造。"
+    },
+    {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "well_of_suffering",
+      "text_overrides": [
+        ["LP", "blood"],
+        ["blood altar", "l:bloodmagic:altar/blood_altar"]
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "这个仪式会自动攻击在攻击范围内的怪物，并将收集的$(blood)血$()放入附近的$(l:bloodmagic:altar/blood_altar)血之祭坛$()中。在祭坛上放上$(l:bloodmagic:altar/soul_network)气血宝珠$()再加上几个$(l:bloodmagic:altar/blood_rune/sacrifice_rune)献祭符文$()，这样你就不用担心你的 LP 供应了......只要你可以提供足够多的怪物。" 
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "well_of_suffering",
+      "page_type": "altar",
+      "text": "一个仪式只可以连接一个祭坛。",
+      "text_overrides": [
+        ["Blood Altar", "l:bloodmagic:altar/blood_altar"],
+        [" Blood", "blood"]
+      ]
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "well_of_suffering",
+      "page_type": "damage",
+      "text": "怪物仍会掉落并不是玩家击杀的掉落。"
+    }
+  ]
+}

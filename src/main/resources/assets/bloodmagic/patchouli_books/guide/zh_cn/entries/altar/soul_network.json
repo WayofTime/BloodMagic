@@ -1,0 +1,43 @@
+{
+  "name": "灵魂网络",
+  "icon": "bloodmagic:weakbloodorb",
+  "category": "bloodmagic:altar",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)灵魂网络$()是一个连接你的$(thing)灵魂$()和你所绑定的物品，仪式和方块的网络。在功能上，这个网络是全局性质的$(blood)LP$()储存器，这个网络对于每一个玩家都是独一无二的。灵魂网络以你已绑定的物品做媒介，从中添加或提取 LP 。当你第一次按[$(k:use)]时，将有一个可以绑定$(thing)灵魂网络$()的物品将与你绑定，并标记为"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "被你绑定。因此，任何有关于$(blood)LP 消耗$()的行为都会从你的$(thing)灵魂网络$()中消耗。在特殊情况下，有些物品不能从你的$(thing)灵魂网络$()中获取$(blood)LP$()，那么这些物品会直接从你的生命值中获取$(blood)LP$()。$(br2)还有一种情况(比如$(thing)仪式$()耗尽了网络中的 LP )，这个只会导致持续的恶心效果，直到仪式暂停或灵魂网络又被充满。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "为了给$(thing)灵魂网络$()填充，必须要合成一个$(item)气血宝珠$()。$(br2)气血宝珠有两种方法填充$(blood)LP$()。$(li)第一种，玩家可以手持$(item)气血宝珠$()按[$(k:use)]以消耗一颗心来为绑定的$(thing)灵魂网络$()提供 $(blood)200 LP$() 。$(li)第二种：可以将$(item)气血宝珠$()放到有$(blood)生命源质$()的$(l:bloodmagic:altar/blood_altar)血之祭坛$(/l) 中。气血宝珠会以最快的速度吸收$(blood)生命源质$()，但是还是受制于祭坛中$(item)速度符文$()的数量。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "每一种的$(item)气血宝珠$()都需要不同的$(item)血之祭坛$()来制做。下一页有配方。$(li)$(item)虚弱气血宝珠$() - 最大容量: $(blood)5k LP$(). $(li)$(item)学徒气血宝珠$() - 最大容量: $(blood)25k LP$(). $(li)$(item)法师气血宝珠$() - 最大容量: $(blood)150k LP$(). $(li)$(item)导师气血宝珠$() - 最大容量: $(blood)1M LP$(). $(li)$(item)贤者气血宝珠$() - 最大容量: $(blood)10M LP$()."
+    },
+    {
+      "type": "bloodmagic:2x_crafting_altar",
+      "a.heading": "虚弱气血宝珠",
+      "a.recipe": "bloodmagic:altar/weakbloodorb",
+      "b.heading": "学徒气血宝珠",
+      "b.recipe": "bloodmagic:altar/apprenticebloodorb"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_altar",
+      "a.heading": "法师气血宝珠",
+      "a.recipe": "bloodmagic:altar/magicianbloodorb",
+      "b.heading": "导师气血宝珠",
+      "b.recipe": "bloodmagic:altar/masterbloodorb"
+    },
+    {
+      "type": "bloodmagic:crafting_altar",
+      "heading": "贤者气血宝珠",
+      "recipe": "bloodmagic:altar/archmagebloodorb",
+      "text":"如果这些气血宝珠不够$(blood)储存 LP$()，可以考虑使用$(l:bloodmagic:altar/blood_rune/orb_rune)宝珠符文$()。"
+    }
+  ]
+}

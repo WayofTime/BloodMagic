@@ -1,0 +1,35 @@
+{
+  "name": "新月黎明",
+  "icon": "minecraft:ender_pearl",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "patchouli:multiblock",
+      "name": "新月黎明",
+      "multiblock_id": "bloodmagic:sphere",
+      "text": "使用$(l:bloodmagic:rituals/ritual_diviner#dusk)仪式推测杖 [薄暮] $(/l)更容易建造。"
+    },
+    {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "sphere",
+      "text_overrides": [
+        ["LP", "blood"]
+      ]
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "sphere",
+      "page_type": "spheroidRange"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/ritual/sphere_above.png",
+        "bloodmagic:images/entries/ritual/sphere_below.png"
+      ],
+      "title": "默认尺寸",
+      "border": true,
+      "text": "默认设置。"
+    }
+  ]
+}

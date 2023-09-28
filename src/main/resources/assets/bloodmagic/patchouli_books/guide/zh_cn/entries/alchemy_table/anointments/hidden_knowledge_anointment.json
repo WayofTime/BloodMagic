@@ -1,0 +1,37 @@
+{
+  "name": "矿工之秘",
+  "icon": "bloodmagic:hidden_knowledge_anointment",
+  "category": "bloodmagic:alchemy_table/anointments",
+  "pages": [
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "矿工之秘",
+      "recipe": "bloodmagic:alchemytable/hidden_knowledge_anointment",
+      "text": "成功挖掘方块会掉落经验球。每个方块 +2 经验值。$(br2)有效物品：工具、剑、炸药。$(br2)施加：矿工之秘 I（256 个方块）"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "矿工之秘 L",
+      "recipe": "bloodmagic:alchemytable/hidden_knowledge_anointment_l",
+      "text": "这种升级版的药剂可延长4倍效果次数。 $(br2)施加：矿工之秘 I (1024 个方块)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "矿工之秘 II",
+      "recipe": "bloodmagic:alchemytable/hidden_knowledge_anointment_2",
+      "text": "每个方块 +4 经验值。 $(br2)施加：矿工之秘 II (256 个方块)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "矿工之秘 XL",
+      "recipe": "bloodmagic:alchemytable/hidden_knowledge_anointment_xl",
+      "text": "这种升级版的药剂可延长16倍效果次数。 $(br2)施加：矿工之秘 I (4096 个方块)"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "矿工之秘 III",
+      "recipe": "bloodmagic:alchemytable/hidden_knowledge_anointment_3",
+      "text": "每个方块 +6 经验值。$(br2)施加：矿工之秘 III (256 个方块)"
+    }
+  ]
+}

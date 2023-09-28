@@ -1,0 +1,56 @@
+{
+  "name": "占卜印记",
+  "icon": "bloodmagic:divinationsigil",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "在血魔法的众多印记中，$(item)占卜印记$()也许是你最先想要制作出来的印记。若想制作出这一印记，你需要先画出一个$(l:bloodmagic:alchemy_array/functional_arrays/arcane_ash)炼金矩阵$(/l)，并依序放入基底物$(item)红石粉$()，催化剂$(item)空白石板$()。"
+    },
+    {
+      "type": "bloodmagic:crafting_array",
+      "heading": "占卜印记",
+      "recipe": "bloodmagic:array/divinationsigil",
+      "text": " $(italic)窥探灵魂。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/sigil/divination_sigil.png"
+      ],
+      "title": "占卜印记矩阵",
+      "border": true,
+      "text": "占卜印记，旁边的是它的合成矩阵。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "占卜印记有两个主要用途：$(br)$(li)当玩家手持印记对准空气右击，印记会显示出你$(l:bloodmagic:altar/soul_network)灵魂网络$(/l)中的 LP 量。$(li)若是对着$(l:bloodmagic:altar/blood_altar)血之祭坛$(/l)右击，它会告诉玩家祭坛的当前等级、所含 LP 量以及 LP 最大存储量。手持$(item)占卜印记$()，它还能在你使用其他方块时助你一臂之力，但具体细节此处按下不表。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/sigil/divination_sigil_info.png"
+      ],
+      "title": "占卜印记显示",
+      "border": true,
+      "text": "当你在看血色祭坛时，占卜印记会显示这个HUD。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "最后，在按住潜行键时按下[$(k:use)]时，会有一个新的界面打开，这个界面会显示血魔法中所有可用的HUD元素。当一个元素被选中，可以通过点击和拖动这个元素进行移动。当释放元素并点击\"Save\" 时会将当前元素的位置保存。$(br2)选择 \"Default\"会将该元素移动到该元素默认的位置。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/sigil/gui_editing.png"
+      ],
+      "title": "GUI编辑",
+      "border": true,
+      "text": "血魔法的GUI元素。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "这些元素，从上到下，从左到右，如图所示：$(li)$(l:bloodmagic:utility/incense_altar)熏香祭坛$() (浅灰色)$(li)$(l:bloodmagic:alchemy_array/sigil/seer)先知印记$() (紫色)$(li)$(item)占卜印记$() (淡紫色)$(li)$(l:bloodmagic:demon_will/will_manipulation/aura_gauge)灵域测量仪$() (橙色) $(li)$(l:bloodmagic:alchemy_array/sigil/holding)集持印记$() (绿色)"
+    }
+  ]
+}

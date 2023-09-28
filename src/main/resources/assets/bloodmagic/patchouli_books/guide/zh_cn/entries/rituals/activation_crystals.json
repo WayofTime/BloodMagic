@@ -1,0 +1,18 @@
+{
+  "name": "激活水晶",
+  "icon": "bloodmagic:activationcrystalweak",
+  "category": "bloodmagic:rituals",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "仪式不仅需要方块和符文摆放正确，还需要有有一个意志来打开你的灵魂网络到仪式的通道。$(item)激活水晶$()会帮助你集中意志来激活仪式。"
+    },
+    {
+      "type": "bloodmagic:crafting_altar",
+      "heading": "虚弱激活水晶",
+      "recipe": "bloodmagic:weak_activation_crystal",
+      "text": "只需要使用已经绑定的激活水晶在主仪式石上按[$(k:use)]，就可以激活仪式 - 前提是仪式被正确的建造起来。",
+      "anchor": "weak"
+    }
+  ]
+}

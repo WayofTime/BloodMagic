@@ -1,0 +1,32 @@
+{
+  "name": "仪式——入门",
+  "icon": "bloodmagic:activationcrystalcreative",
+  "category": "bloodmagic:rituals",
+  "priority": "true",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "当你的$(l:bloodmagic:altar/blood_altar)血之祭坛$(/l)升级到 3 级，就可以进入到仪式中的神奇世界。$(br2)对于与仪式相关的工作，你需要： $(li)一个$(l:bloodmagic:rituals/activation_crystals)激活水晶$()。在第 3 层只有$(item)虚弱水晶$()可以使用。$(li)所有的仪式中心都需要一个$(item)主仪式石$()。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)还需要足够的仪式石来建造仪式。$(li)(Recommended)虽然$(l:bloodmagic:rituals/ritual_diviner)仪式推测杖$()并不是必须品，但是它会大大简化仪式的建造。$(br2)建造一个仪式是简单的，只需手持仪式推测仪并按住[$(k:sneak)] + [$(k:use)]直到仪式名显现出来。在物品栏中将鼠标放在它上面"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "并按住[$(k:sneak)]来查看所需的符文数量。$(br2)放下一块主仪式石，按住[$(k:use)]直到所有的仪式石被放到了正确的位置。最后，手持激活水晶并在主仪式石上按[$(k:use)]。如果做得对，那么就会有 “一股能量流经这个仪式！”的信息。仪式就被激活了。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "如果没有上述的信息出现，那么可能是有其它问题。如果得到的文字为“你感到有股拉力，但是要完成仪式，你还是弱了点。”那可能是你的$(thing)灵魂网络$()中的 $(blood)LP$() 不够，无法激活该仪式。$(br2)如果得到的文字为“你发现这些仪式石的摆放似乎有些问题...“那就是你的仪式石的放置不正确，请检查该区域是否有不属于仪式的方块，并再次组装仪式。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "记住，有些仪式会在主仪式石的上方和下方会延伸几格。如果没有什么错误，请确保你的激活水晶与你的灵魂网络已绑定——可以按[$(k:use)]来进行绑定。$(br2)有一点需要注意，水晶不一定是绑定你的灵魂网络 - 如果你可以拿到其他玩家的水晶，也可以使用他们的 $(blood)LP$() 来激活仪式。现在快保护好自己的水晶吧！"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "最后一点：$(fire)红石信号$()对所有仪式都有反应，所以在主仪式石的一侧放上拉杆是是仪式停止的好方法。你可以将这些信息与$(l:bloodmagic:altar/redstone_automation)红石与自动化$()这一章的知识结合起来，以便你的$(thing)灵魂网络$()在消耗完前使你的仪式停止运行。"
+    }
+  ]
+}

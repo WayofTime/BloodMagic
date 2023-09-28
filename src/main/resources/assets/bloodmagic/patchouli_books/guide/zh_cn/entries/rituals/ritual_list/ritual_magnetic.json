@@ -1,0 +1,29 @@
+{
+  "name": "磁引仪式",
+  "icon": "minecraft:iron_ore",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "磁引仪式",
+      "multiblock_id": "bloodmagic:magnetism",
+      "text": "使用$(l:bloodmagic:rituals/ritual_diviner)仪式推测杖$(/l)更容易建造。"
+    },
+    {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "magnetism"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "在默认情况下，$()磁引仪式$()为了更好的收集矿石，会搜索$(item)主仪式石$() 3 格的范围瘦素基岩。可以通过在MRS下放置铁块来增大搜索范围。如下面所示：$(br)$(li)$(item)铁块$() - 7 方块。$(li)$(item)金块$() - 15 方块。$(li)$(item)钻石块$() - 31 方块。"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "magnetism",
+      "page_type": "placementRange",
+      "text_overrides": [
+        ["ores", "item"]
+      ]
+    }
+  ]
+}

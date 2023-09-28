@@ -1,0 +1,31 @@
+{
+  "name": "黑曜石斗篷",
+  "icon": "minecraft:diamond",
+  "category": "bloodmagic:alchemy_table/potion_flasks/blood_magic",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)黑曜石斗篷$()每升一级，减少20%非魔法伤害。"
+    },
+    {
+      "type": "bloodmagic:3x_crafting_flask",
+      "a.heading": "黑曜石斗篷 (3:00)",
+      "a.recipe": "bloodmagic:flask/hard_to_obsidian",
+      "b.heading": "黑曜石斗篷 (8:00)",
+      "b.recipe": "bloodmagic:flask/length_obsidian_cloak",
+      "c.heading": "黑曜石斗篷 II (1:30)",
+      "c.recipe": "bloodmagic:flask/potency_obsidian_cloak"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "可以通过加入$(l:bloodmagic:alchemy_table/potions#average_potions)标准增强催化剂$()来提高炼金瓶的效果。"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_flask",
+      "a.heading": "黑曜石斗篷 III (0:45)",
+      "a.recipe": "bloodmagic:flask/potency_average_obsidian_cloak",
+      "b.heading": "黑曜石斗篷 (21:20)",
+      "b.recipe": "bloodmagic:flask/length_average_obsidian_cloak"
+    }
+  ]
+}

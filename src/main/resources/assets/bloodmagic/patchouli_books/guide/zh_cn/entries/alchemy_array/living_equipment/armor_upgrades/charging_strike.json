@@ -1,0 +1,15 @@
+{
+  "name": "冲撞击打",
+  "icon": "minecraft:golden_axe",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "效果：增加在疾跑时攻击的伤害和击退效果，最高可以增加50%。$(br2)训练：在疾跑时造成伤害。$(br2)最高等级： 5"
+    },
+    {
+      "type": "bloodmagic:living_armour_upgrade_table",
+      "upgrade": "bloodmagic:sprint_attack"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "飘浮",
+  "icon": "minecraft:shulker_shell",
+  "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)飘浮$()使目标非主动向上抬升直到效果结束，更高的等级会使目标的漂浮速度更快。$(br2)这个是由内含$(l:bloodmagic:alchemy_table/potion_flasks/vanilla/slow_falling)缓降$()效果的炼金瓶制作。"
+    },
+    {
+      "type": "bloodmagic:3x_crafting_flask",
+      "a.heading": "飘浮 (3:00)",
+      "a.recipe": "bloodmagic:flask/fall_to_levitation",
+      "b.heading": "飘浮 (8:00)",
+      "b.recipe": "bloodmagic:flask/length_levitation",
+      "c.heading": "飘浮 II (1:30)",
+      "c.recipe": "bloodmagic:flask/potency_levitation"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "可以通过加入$(l:bloodmagic:alchemy_table/potions#average_potions)标准增强催化剂$()来提高炼金瓶的效果。"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_flask",
+      "a.heading": "飘浮 III (0:45)",
+      "a.recipe": "bloodmagic:flask/potency_average_levitation",
+      "b.heading": "飘浮 (21:20)",
+      "b.recipe": "bloodmagic:flask/length_average_levitation"
+    }
+  ]
+}

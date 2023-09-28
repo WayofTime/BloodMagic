@@ -1,0 +1,112 @@
+{
+  "name": "熏香祭坛",
+  "icon": "bloodmagic:incensealtar",
+  "category": "bloodmagic:utility",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)熏香祭坛$()是多方块结构，可以提高$(l:bloodmagic:altar/blood_altar)血之祭坛$()的自我牺牲效果。站在设置范围，$(item)熏香祭坛$()会根据该区域的$(thing)静谧值$()来使灵魂安静，增加你的 $(blood)LP$() 可以获取的数值。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:incense_altar"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(item)熏香祭坛$()的 1 级就是祭坛本身；可以将它放在任何地方（你可以建造一个3x3的一个平台，这在后面会有帮助），就可以在熏香祭坛五格范围内获得一个静谧效果。$(br2)当祭坛运作时，在顶部会有火焰粒子，并会转变$(l:bloodmagic:altar/blood_altar#knife)牺牲匕首$()。当你的剑发光时，在$(l:bloodmagic:altar/blood_altar)血之祭坛$()附近并按住并放开右键，这一次将会消耗 90%的生命值。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/utility/incense_altar1.png"
+      ],
+      "title": "基本放置",
+      "border": true,
+      "text": "显示了在放置路径之前的 3x3 正方形平台。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "还有，根据该地区的总$(thing)静谧值$()，附近的$(l:bloodmagic:altar/blood_altar)血之祭坛$()的 $(blood)LP$() 会有奖励。将$(l:bloodmagic:alchemy_array/sigil/divination)占卜印记$(/l)或$(l:bloodmagic:alchemy_array/sigil/seer)先知印记$()放置在$(item)熏香祭坛$()时，会显示设置的总$(thing)静谧值$()（顶部数值）和自我牺牲时获得的奖励百分比（底部数值）。当自我牺牲时，通常获得的 $(blood)LP$() 会乘（1+奖励/100）。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/utility/incense_altar2.png"
+      ],
+      "title": "熏香祭坛 HUD",
+      "border": true,
+      "text": "熏香祭坛 HUD，位置默认在左上方，显示自我牺牲奖励为 20%。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "“但是，这样，我怎么可以增加奖励？” 什么，通过增加该区域的$(thing)静谧值$()？....这样说可能有些不明确。$(br2)想要提高区域的$(thing)静谧值$()，需要在$(item)熏香祭坛$()放置几条道路。这些道路需要由3格宽的$(item)路面$()方块组成，例如$(item)木质路面$()，从 3x3 正方形那里开始向四个方向延伸。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:path/path_wood",
+      "recipe2": "bloodmagic:path/path_woodtile"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:path/path_stone",
+      "recipe2": "bloodmagic:path/path_stonetile"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:path/path_wornstone",
+      "recipe2": "bloodmagic:path/path_wornstonetile"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:path/path_obsidian",
+      "recipe2": "bloodmagic:path/path_obsidiantile"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "每一个新“环”都需要遵守这些规则：$(li)同环上的路面必须在同一 y 轴上。$(li)每一圈路面可以在内圈路面的上下五格之内放置。$(li)在同一高度或高于路面环的两个方块也算作总$(thing)静谧值$() - 这些方块会以图片中玻璃表示。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/utility/incense_altar.png"
+      ],
+      "title": "熏香祭坛",
+      "border": true,
+      "text": "熏香祭坛的不同路面。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "此外，$(li)不同类型的路面的效果都是有一定距离： 木制路面最多 3 环、石质路面最多 5 环、碎石路面最多 7 环、黑曜石路面最多 9 环。$(bn2)显然，并不是每一个方块都可以算成$(thing)静谧值$()。并不是任何一种原石都可以！我们需要农作物、泥土，甚至是...熔岩？"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "有多个方块种类可以算做总$(thing)静谧值$()。排名不分先后，分别为：植物、农作物、树、泥土、水、火和熔岩。$(item)熏香祭坛$()可以查看范围内的所有方块（由路面的范围决定），并计算出每种类型的$(thing)静谧值$()总值。完成后，会对每种类型$(thing)静谧值$()总值进行平方根计算，然后加在一起得出总$(thing)静谧值$()。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "这表明，在后期需要更多类型可以算入$(thing)静谧值$()的方块。可能是 Mod 添加的，但以后也会添加更多。可以算入$(thing)静谧值$()的方块有： 熔岩、水（包括大多数的含水方块）、生命源质、地狱岩、泥土、耕地、马铃薯、胡萝卜、小麦、地狱疣、甜菜根、树叶、原木、火,和草。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/utility/incense_altar3.png"
+      ],
+      "title": "熏香祭坛设置",
+      "border": true,
+      "text": "在游戏后期熏香祭坛的设置有许多不同的等级。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "当然，你可以铺设的很陡峭，也可以平缓（只要在合理的范围内，前面有说明）。$(br2)需要注意，$(thing)静谧值加成$()的上限是根据你的祭坛等级（以及你使用的路面等级）。其上线为：$(li)无路：20%. $(li)木质路面：60%. $(li)石质路面：20%. $(li)碎石路面：200%. $(li)黑曜石路面：300%。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/utility/incense_altar4.png"
+      ],
+      "title": "熏香祭坛放置",
+      "border": true,
+      "text": "一个简单的$(item)熏香祭坛$()放置。Note the (optional) mixing of different path blocks."
+    }
+  ]
+}

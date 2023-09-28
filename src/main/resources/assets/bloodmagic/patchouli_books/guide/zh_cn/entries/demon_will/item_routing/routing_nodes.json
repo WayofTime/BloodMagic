@@ -1,0 +1,86 @@
+{
+  "name": "路由节点",
+  "icon": "bloodmagic:masterroutingnode",
+  "category": "bloodmagic:demon_will/item_routing",
+  "priority": "true",
+  "pages":[
+    {
+      "type": "patchouli:text",
+      "text": "对于一些人，手动搬运物品是好的，但是我们是 Sanguimancer。现在可以使用$(raw)恶魔意志$()了！肯定有更好的东西来解决问题。$(br2)因此，你想到了$(thing)路由节点$()。这些节点可以进行运输，分类和过滤物品，这些强大的功能提供了运输的一种新方法。这些节点可以按照你的命令在一张无形的网络中进行运输。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)路由节点网络$()有三个部分组成：$(item)输入节点$()、$(item)输出节点$()和$(item)主控路由节点$()。$(br2)每一个路由节点网络都需要 1 个$(item)主控路由节点$()，并且网络中的其他节点无论是直接还是通过其它节点，回溯时必须可以回溯到主控路由节点$(br2)输入和输出节点可以从可访问区块内的箱子中随意提取和放进物品。"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "主控路由节点",
+      "recipe": "bloodmagic:soulforge/master_routing_node",
+      "text": "主控路由节点在未来将会进行升级，现在只可以控制和指挥整个网络，相当于一个“大脑”。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(item)主控路由节点$()本身是好的，但是如果没有其它两种类型的节点 ，它本身是没有什么用处的。所以接下来我们来讨论这些东西。$(br2)$(item)输入路由节点$()是将物品传输到网络中，$(item)输出路由节点$()是将物品从网络中传出，而普通的$(item)路由节点$()是用来扩展网络的范围。因为输入和输出路由节点的其他方面是一样的。除非有说明，否则接下来将主要讨论输入路由节点。"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "路由节点",
+      "recipe": "bloodmagic:soulforge/routing_node",
+      "text": "本身是没有什么作用，但是可以用来扩展$(thing)路由节点网络$()，解决只可以连接16格内的节点的问题。"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_soulforge",
+      "a.heading": "输入路由节点",
+      "a.recipe": "bloodmagic:soulforge/input_routing_node",
+      "b.heading": "输出路由节点",
+      "b.recipe": "bloodmagic:soulforge/output_routing_node"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "挡把输出或输入节点放下来时，会自动把$(thing)附近所有的箱子$()连接到网络中。但如果节点中没有安装任何一个$(item)过滤器$()，那么该节点不会启动。例如：可以在熔炉顶部使用安装了$(l:bloodmagic:demon_will/item_routing/standard_item_filter)标准的物品过滤器$()的输入节点，将过滤器设置只允许$(item)铁矿石$()通过；然后在熔炉的侧面放置一个输入节点，安装$(item)过滤器$()，将过滤器设置只允许煤炭通过；然后在熔炉的侧面放置一个输出节点，安装$(item)过滤器$()，将过滤器设置只允许铁锭通过。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/routing/node_demo.png"
+      ],
+      "border": true,
+      "text": "一个普通世界的输出节点。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/routing/node_gui_right.png"
+      ],
+      "border": true,
+      "text": "设置好节点后，就可以打开节点 GUI 了。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "在 GUI 右边，有一些基本方向 - $(bold)下$()、$(bold)上$()、$(bold)北$()、$(bold)南$()、$(bold)西$()和$(bold)东$()。你可以看到，一些按键上会有一些物品的图片，这是代表节点那一面是什么方块。GUI 通常会在有箱子的那一侧打开该物品的 GUI，没有物品则会显示按键。按键遵循的方向是玩家所在的方向，所以上面的按键是“上”，向左的按键是“左”。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/routing/node_gui_left.png"
+      ],
+      "border": true
+    },
+    {
+      "type": "patchouli:text",
+      "text": "在左边，有一个过滤器放置的位置和选择该节点的优先级。$(br2)节点的每一面都可以安装过滤器 - 所以在安装过滤器时要看我们要安装在那一面。（关于过滤器的信息，请看《过滤器入门》这章。）"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "当输入和输出路由节点设置好，并用节点连接工具搭建好了整个网络，还有一个主控路由节点，所有的过滤器也都安装正确，这样整个网络就搭建好了可以开始工作了！你可以根据节点中的过滤器和节点优先级来管理物品，物品会根据你设置的规则进行传输。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/routing/network_demo.png"
+      ],
+      "border": true,
+      "text": "路由节点不必连接$(item)主控路由节点$()，只要连接在这个网络上的节点即可。"
+    }
+  ]
+}

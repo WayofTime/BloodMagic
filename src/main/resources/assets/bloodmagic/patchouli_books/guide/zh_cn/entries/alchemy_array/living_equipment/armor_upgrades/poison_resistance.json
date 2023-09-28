@@ -1,0 +1,15 @@
+{
+  "name": "毒素抗性",
+  "icon": "minecraft:milk_bucket",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "效果：对中毒效果有抗性。该效果每使用一次会有一个冷却时间，随着等级的提升冷却时间会缩短。$(br2)训练：中毒而死。$(br2)最高等级：5"
+    },
+    {
+      "type": "bloodmagic:living_armour_upgrade_table",
+      "upgrade": "bloodmagic:poison_resist"
+    }
+  ]
+}

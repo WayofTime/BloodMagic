@@ -1,0 +1,24 @@
+{
+  "name": "集持印记",
+  "icon": "bloodmagic:sigilofholding",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "这个印记最多可以容纳5个其他的$(item)印记$()，并且可以随时激活并提供印记的被动效果。$(br)按[$(k:bloodmagic.keybind.open_holding)]同时按住印记可以查看印记中的物品。$() $(br)按[$(k:bloodmagic.keybind.cycle_holding_pos)]向前滚动$()或[$(k:bloodmagic.keybind.cycle_holding_neg)]]向后滚动。$()按住[$(k:sneak)]使用鼠标轮也可以进行。"
+    },
+    {
+      "type": "bloodmagic:crafting_2-step_sigil",
+      "alchemy_table.heading": "集持试剂",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_holding",
+      "array.heading": "集持印记",
+      "array.recipe": "bloodmagic:array/holdingsigil",
+      "array.text": "$(italic)印记掌控"
+    },
+    {
+      "type": "patchouli:text",
+      "flag": "mod:curios",
+      "text": "如果你安装了$(thing)Curios API$()，你可以把$(item)印记$()当作饰品。如果你想同时佩戴许多的饰品,，可以使用$(l:bloodmagic:alchemy_array/sigil/holding)集合印记$(),或$(l:bloodmagic:alchemy_array/living_equipment/armor_upgrades/curios_sockets)为你的 $(l:bloodmagic:alchemy_array/living_equipment/living_basics)束灵装备$()升级插槽$() "
+    }
+  ]
+}

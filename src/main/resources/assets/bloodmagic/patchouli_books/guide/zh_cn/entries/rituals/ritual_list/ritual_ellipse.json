@@ -1,0 +1,31 @@
+{
+  "name": "椭圆仪式",
+  "icon": "minecraft:bucket",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "椭圆仪式",
+      "multiblock_id": "bloodmagic:ellipsoid",
+      "text": "使用$(l:bloodmagic:rituals/ritual_diviner#dusk)仪式推测杖 [薄暮] $(/l)更容易建造。"
+    },
+    {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "ellipsoid"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "这个仪式就是为了美观，是我们每个人心中那个刚刚萌芽却又懒惰的建筑家设计的。它十分适合用于建造复杂的形状，就像在你的老窝上面的金色圆顶.....你确定有一个。对吗？"
+    },
+	{
+	  "type": "bloodmagic:ritual_data",
+	  "ritual": "ellipsoid",
+	  "page_type": "chest"
+	},
+	{
+	  "type": "bloodmagic:ritual_data",
+	  "ritual": "ellipsoid",
+	  "page_type": "spheroidRange"
+	}
+  ]
+}

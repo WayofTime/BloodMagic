@@ -1,0 +1,18 @@
+{
+  "name": "插槽",
+  "icon": "bloodmagic:soulsnare",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "flag": "mod:curios",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "增加$(thing)束灵铠甲插槽$()的饰品栏位，能够兼容$(6)Blood Magic$()的物品。$(br2)这种升级不能训练，只能制作。 默认情况下每一本$(l:bloodmagic:alchemy_array/living_equipment/living_tomes)束灵之书$()增加一个插槽。"
+    },
+    {
+      "type": "bloodmagic:crafting_upgrade_alchemy_table",
+      "a.heading": "插槽之书",
+      "a.recipe": "bloodmagic:alchemytable/curios_upgrade",
+      "b.upgrade": "bloodmagic:curios_socket"
+    }
+  ]
+}

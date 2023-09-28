@@ -1,0 +1,29 @@
+{
+  "name": "灵域测量仪",
+  "icon": "bloodmagic:demonwillgauge",
+  "category": "bloodmagic:demon_will/will_manipulation",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "当玩家的物品栏中有$(item)灵域测量仪$()时，会出现 HUD，来显示该区块$(l:bloodmagic:demon_will/will_manipulation/aura)灵气$()中的$(raw)恶魔意识$()数量。 $(br2)测量的意识从上到下分别是：$(li)$(raw)原生$() $(li)$(corrosive)腐蚀$() $(li)$(steadfast)坚毅$() $(li)$(destructive)破坏$() $(li)$(vengeful)复仇$() "
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "recipe": "bloodmagic:soulforge/demon_will_gauge",
+      "heading": "灵域测量仪",
+      "text": "灵域测量仪的 HUD 的图片见下一页。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/demon_will/demon_will_aura_gauge.png"
+      ],
+      "title": "灵域测量仪 HUD",
+      "border": true
+    },
+    {
+      "type": "patchouli:text",
+      "text": "这个仪表盘将会出现在屏幕的左上方。它会显示该区块中$(l:bloodmagic:demon_will/will_manipulation/aspected_will)各种意志$()的数值是多少，并以一个彩色的条形图给予展示。$(br2)你可以按住[$(k:sneak)]来查看各种$(raw)意志$()的数值，每一种$(raw)意志$()的数值在 1 到 100 之间。100 是一个区块中$(raw)意志$()的最大数值。"
+    }
+  ]
+}

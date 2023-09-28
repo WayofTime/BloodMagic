@@ -1,0 +1,37 @@
+{
+  "name": "传送器",
+  "icon": "bloodmagic:teleposerfocus",
+  "category": "bloodmagic:utility",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)传送器$()是一个可以被$(fire)红石控制$()的物品传送装置。可以做一个基础的$(item)传送核心$()（在下一页），将目标传送器与其绑定，然后放到另一个传送器中，并对放入传送核心的传送器施加红石信号。所有的物品 - 方块、物品有、实体、玩家 - 在两个传送器上所规定的区域都会被交换。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:teleposer",
+      "text":"但是，天下没有免费的午餐。使用传送器传送方块或实体要花费 $(blood)1 LP$() ，每个方块/实体最多花费 $(blood)1,000 LP$() ，或一共花费 $(blood)10,000 LP$() 。"
+    },
+    {
+      "type": "bloodmagic:crafting_altar",
+      "heading": "传送核心",
+      "recipe": "bloodmagic:altar/teleposer_focus",
+      "text": "基本的$(item)传送核心$()可以交换两个传送器上 1x1x1 区域内的所有东西。"
+    },
+    {
+      "type": "bloodmagic:crafting_altar",
+      "heading": "[加强]传送核心",
+      "recipe": "bloodmagic:altar/enhanced_teleposer_focus",
+      "text": "$(item)[加强]传送核心$()可以交换两个传送器上 3x3x3 区域内的所有东西。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:enhanced_teleposer_focus",
+      "text": "$(item)[强化]传送核心$()可以交换两个传送器上 5x5x5 区域内的所有东西。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "传送器的信号可以是单向（如，红石信号在交换的传送器上是没用的。）也可以是双向（如：每个传送器都有一个目标使之可以连接到另一个传送器上，而且你可以从两端的传送器控制红石信号来回传送），也可以进行连锁操作 - A 到 B 到 C 然后在回去 A。从基地传过电梯系统到复杂的地下迷宫，来疯狂吧！！！"
+    }
+  ]
+}

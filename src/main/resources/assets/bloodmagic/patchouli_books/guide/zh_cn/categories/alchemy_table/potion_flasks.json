@@ -1,0 +1,6 @@
+{
+  "name": "炼金瓶",
+  "description": "存在各种不同效果，所以为了安全起见，你最好试图按照用途进行分类。",
+  "icon": "bloodmagic:alchemy_flask",
+  "parent": "bloodmagic:alchemy_table"
+}
