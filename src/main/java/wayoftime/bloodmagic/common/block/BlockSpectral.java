@@ -3,12 +3,14 @@ package wayoftime.bloodmagic.common.block;
 import java.util.Random;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -30,22 +32,14 @@ public class BlockSpectral extends Block implements EntityBlock
 		super(prop);
 	}
 
-	public void tick(BlockState state, ServerLevel world, BlockPos pos, Random rand)
-	{
-		switch (state.getValue(SPECTRAL_STATE))
-		{
-		case SOLID:
-			world.setBlock(pos, state.setValue(SPECTRAL_STATE, SpectralBlockType.LEAKING), 3);
-			world.scheduleTick(pos, this, BlockSpectral.DECAY_RATE);
-			break;
-		case LEAKING:
-			BlockEntity tile = world.getBlockEntity(pos);
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+		return (level1, blockPos, blockState, tile) -> {
 			if (tile instanceof TileSpectral)
 			{
-				((TileSpectral) tile).revertToFluid();
+				((TileSpectral) tile).tick();
 			}
-			break;
-		}
+		};
 	}
 
 	@Override

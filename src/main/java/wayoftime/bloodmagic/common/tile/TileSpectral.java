@@ -15,6 +15,10 @@ import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.block.type.SpectralBlockType;
 import wayoftime.bloodmagic.common.tile.base.TileBase;
 
+import java.util.Random;
+
+import static wayoftime.bloodmagic.common.block.BlockSpectral.SPECTRAL_STATE;
+
 public class TileSpectral extends TileBase
 {
 	public BlockState storedBlock;
@@ -81,5 +85,24 @@ public class TileSpectral extends TileBase
 	{
 		tag.put("BlockState", NbtUtils.writeBlockState(storedBlock));
 		return tag;
+	}
+
+	public void tick()
+	{
+		BlockState state = this.getBlockState();
+		BlockPos pos = this.getBlockPos();
+		Level level = this.getLevel();
+		switch (state.getValue(SPECTRAL_STATE)) {
+			case SOLID -> {
+				level.setBlock(pos, state.setValue(SPECTRAL_STATE, SpectralBlockType.LEAKING), 3);
+				level.scheduleTick(pos, state.getBlock(), BlockSpectral.DECAY_RATE);
+			}
+			case LEAKING -> {
+				BlockEntity tile = level.getBlockEntity(pos);
+				if (tile instanceof TileSpectral) {
+					((TileSpectral) tile).revertToFluid();
+				}
+			}
+		}
 	}
 }
