@@ -116,7 +116,7 @@ public class BloodMagic {
         // Register the setup method for modloading
         modBus.addListener(this::setup);
         // Register the enqueueIMC method for modloading
-        modBus.addListener(this::enqueueIMC);
+        // modBus.addListener(this::enqueueIMC);
         // Register the processIMC method for modloading
         modBus.addListener(this::processIMC);
         // Register the doClientStuff method for modloading
@@ -242,11 +242,11 @@ public class BloodMagic {
             ClientEvents.colorHandlerEvent((RegisterColorHandlersEvent.Item) event);
     }
 
-    private void enqueueIMC(final InterModEnqueueEvent event) {
-        if (curiosLoaded) {
-            curiosCompat.setupSlots(event);
-        }
-    }
+//    private void enqueueIMC(final InterModEnqueueEvent event) {
+//        if (curiosLoaded) {
+//            curiosCompat.setupSlots(event);
+//        }
+//    }
 
     private void processIMC(final InterModProcessEvent event) {
     }
