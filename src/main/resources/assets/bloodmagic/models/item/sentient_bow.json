@@ -1,7 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "bloodmagic:items/SentientBow"
+        "layer0": "bloodmagic:item/sentientbow"
     },
     "display": {
         "thirdperson_righthand": {
@@ -30,60 +30,60 @@
             "predicate": {
                 "type": 1
             },
-            "model": "bloodmagic:item/bow/ItemSentientBow_corrosive"
+            "model": "bloodmagic:item/bow/itemsentientbow_corrosive"
         },
         {
             "predicate": {
                 "type": 2
             },
-            "model": "bloodmagic:item/bow/ItemSentientBow_destructive"
+            "model": "bloodmagic:item/bow/itemsentientbow_destructive"
         },
         {
             "predicate": {
                 "type": 3
             },
-            "model": "bloodmagic:item/bow/ItemSentientBow_vengeful"
+            "model": "bloodmagic:item/bow/itemsentientbow_vengeful"
         },
         {
             "predicate": {
                 "type": 4
             },
-            "model": "bloodmagic:item/bow/ItemSentientBow_steadfast"
+            "model": "bloodmagic:item/bow/itemsentientbow_steadfast"
         },
         {
             "predicate": {
             	"type": 0,
                 "pulling": 1
             },
-            "model": "bloodmagic:item/bow/ItemSentientBow_pulling_0"
+            "model": "bloodmagic:item/bow/itemsentientbow_pulling_0"
         },
         {
             "predicate": {
             	"type": 1,
                 "pulling": 1
             },
-            "model": "bloodmagic:item/bow/ItemSentientBow_corrosive_pulling_0"
+            "model": "bloodmagic:item/bow/itemsentientbow_corrosive_pulling_0"
         },
         {
             "predicate": {
             	"type": 2,
                 "pulling": 1
             },
-            "model": "bloodmagic:item/bow/ItemSentientBow_destructive_pulling_0"
+            "model": "bloodmagic:item/bow/itemsentientbow_destructive_pulling_0"
         },
         {
             "predicate": {
             	"type": 3,
                 "pulling": 1
             },
-            "model": "bloodmagic:item/bow/ItemSentientBow_vengeful_pulling_0"
+            "model": "bloodmagic:item/bow/itemsentientbow_vengeful_pulling_0"
         },
         {
             "predicate": {
             	"type": 4,
                 "pulling": 1
             },
-            "model": "bloodmagic:item/bow/ItemSentientBow_steadfast_pulling_0"
+            "model": "bloodmagic:item/bow/itemsentientbow_steadfast_pulling_0"
         },
         {
             "predicate": {
@@ -91,7 +91,7 @@
                 "pulling": 1,
                 "pull": 0.65
             },
-            "model": "bloodmagic:item/bow/ItemSentientBow_pulling_1"
+            "model": "bloodmagic:item/bow/itemsentientbow_pulling_1"
         },
         {
             "predicate": {
@@ -99,7 +99,7 @@
                 "pulling": 1,
                 "pull": 0.65
             },
-            "model": "bloodmagic:item/bow/ItemSentientBow_corrosive_pulling_1"
+            "model": "bloodmagic:item/bow/itemsentientbow_corrosive_pulling_1"
         },
         {
             "predicate": {
@@ -107,7 +107,7 @@
                 "pulling": 1,
                 "pull": 0.65
             },
-            "model": "bloodmagic:item/bow/ItemSentientBow_destructive_pulling_1"
+            "model": "bloodmagic:item/bow/itemsentientbow_destructive_pulling_1"
         },
         {
             "predicate": {
@@ -115,7 +115,7 @@
                 "pulling": 1,
                 "pull": 0.65
             },
-            "model": "bloodmagic:item/bow/ItemSentientBow_vengeful_pulling_1"
+            "model": "bloodmagic:item/bow/itemsentientbow_vengeful_pulling_1"
         },
         {
             "predicate": {
@@ -123,7 +123,7 @@
                 "pulling": 1,
                 "pull": 0.65
             },
-            "model": "bloodmagic:item/bow/ItemSentientBow_steadfast_pulling_1"
+            "model": "bloodmagic:item/bow/itemsentientbow_steadfast_pulling_1"
         },
         {
             "predicate": {
@@ -131,7 +131,7 @@
                 "pulling": 1,
                 "pull": 0.9               
             },
-            "model": "bloodmagic:item/bow/ItemSentientBow_pulling_2"
+            "model": "bloodmagic:item/bow/itemsentientbow_pulling_2"
         },
         {
             "predicate": {
@@ -139,7 +139,7 @@
                 "pulling": 1,
                 "pull": 0.9
             },
-            "model": "bloodmagic:item/bow/ItemSentientBow_corrosive_pulling_2"
+            "model": "bloodmagic:item/bow/itemsentientbow_corrosive_pulling_2"
         },
         {
             "predicate": {
@@ -147,7 +147,7 @@
                 "pulling": 1,
                 "pull": 0.9
             },
-            "model": "bloodmagic:item/bow/ItemSentientBow_destructive_pulling_2"
+            "model": "bloodmagic:item/bow/itemsentientbow_destructive_pulling_2"
         },
         {
             "predicate": {
@@ -155,7 +155,7 @@
                 "pulling": 1,
                 "pull": 0.9
             },
-            "model": "bloodmagic:item/bow/ItemSentientBow_vengeful_pulling_2"
+            "model": "bloodmagic:item/bow/itemsentientbow_vengeful_pulling_2"
         },
         {
             "predicate": {
@@ -163,7 +163,7 @@
                 "pulling": 1,
                 "pull": 0.9
             },
-            "model": "bloodmagic:item/bow/ItemSentientBow_steadfast_pulling_2"
+            "model": "bloodmagic:item/bow/itemsentientbow_steadfast_pulling_2"
         }
     ]
 }

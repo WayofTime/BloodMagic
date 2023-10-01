@@ -1,8 +1,8 @@
 {
   "__comment": "Copyright © InsomniaKitten 2017",
   "textures": {
-    "particle": "bloodmagic:blocks/BlankRune",
-    "texture": "bloodmagic:blocks/BloodTank"
+    "particle": "bloodmagic:block/blankrune",
+    "texture": "bloodmagic:block/bloodtank"
   },
   "elements": [
     {
