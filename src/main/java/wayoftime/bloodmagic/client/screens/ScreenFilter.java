@@ -221,10 +221,20 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	{
 		boolean testBool = super.mouseClicked(mouseX, mouseY, mouseButton);
 
-		if (this.textBox.mouseClicked(mouseX, mouseY, mouseButton))
-		{
-			return true;
+		if (container.lastGhostSlotClicked != -1) { // Text box only selectable if a ghost slot has been clicked.
+			if (this.textBox.mouseClicked(mouseX, mouseY, mouseButton)) { // Left-Clicked
+				this.textBox.setFocused(true);
+				return true;
+			}
+			if (this.textBox.isMouseOver(mouseX, mouseY) && mouseButton == 1) // Right-Clicked
+			{
+				this.textBox.setValue("");
+				setValueOfGhostItemInSlot(container.lastGhostSlotClicked, 0);
+				this.textBox.setFocused(true);
+				return true;
+			}
 		}
+		this.textBox.setFocused(false);
 
 		if (container.lastGhostSlotClicked != -1)
 		{
