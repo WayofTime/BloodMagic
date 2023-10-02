@@ -2,6 +2,12 @@
 Version 3.3.2
 ------------------------------------------------------
 - Fixed Soft Coating and Fortuna Extract; voiding of drops is not part of the "ultimate price"!
+- Fixed Routing Node text box so that it can be properly edited.
+ -> Updated functionality; can now right-click the textbox when an item is selected in the filter to set the filter to "Everything".
+
+- Updated Curios implementation.
+- Fixed the guidebook not showing up in the Creative Tab and JEI.
+- Removed some useless log spam.
 
 ------------------------------------------------------
 Version 3.3.1
