@@ -24,7 +24,10 @@ public class GeneratorLanguage extends LanguageProvider
 		add("itemGroup.bloodmagic.creativeTab", "Blood Magic");
 		add("itemGroup.bloodmagic.upgradeTab", "Blood Magic Living Upgrades");
 
-		add("chat.bloodmagic.damageSource", "%s's soul became too weak");
+		// Death Messages
+		//add("chat.bloodmagic.damageSource", "%s's soul became too weak");
+		add("death.attack.sacrifice", "%1$s sacrificed a bit too much LP");
+		add("death.attack.ritual", "%1$s died in a Well of Suffering");
 
 		// Tile Entitites
 		add("tile.bloodmagic.soulforge.name", "Hellfire Forge");
