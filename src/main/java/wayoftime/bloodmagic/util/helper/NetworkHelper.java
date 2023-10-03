@@ -25,6 +25,9 @@ public class NetworkHelper
 	@Nullable
 	private static BMWorldSavedData dataHandler;
 
+	@Nullable
+	private static DimensionDataStorage cachedDataStorage; // for updating dataHandler Reference
+
 	/**
 	 * Gets the SoulNetwork for the player.
 	 *
@@ -33,16 +36,14 @@ public class NetworkHelper
 	 */
 	public static SoulNetwork getSoulNetwork(String uuid)
 	{
-		if (dataHandler == null)
+		if (ServerLifecycleHooks.getCurrentServer() == null)
+			return null;
+
+		DimensionDataStorage savedData = ServerLifecycleHooks.getCurrentServer().overworld().getDataStorage();
+
+		if (dataHandler == null || cachedDataStorage != savedData)
 		{
-			if (ServerLifecycleHooks.getCurrentServer() == null)
-				return null;
-
-			DimensionDataStorage savedData = ServerLifecycleHooks.getCurrentServer().overworld().getDataStorage();
-
 			dataHandler = savedData.computeIfAbsent(BMWorldSavedData::load, () -> new BMWorldSavedData(), BMWorldSavedData.ID);
-//			dataHandler = savedData.computeIfAbsent(() -> new BMWorldSavedData(), BMWorldSavedData.ID);
-//			dataHandler = BMWorldSavedData.load(tagCompound);
 		}
 
 		return dataHandler.getNetwork(UUID.fromString(uuid));
