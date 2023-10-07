@@ -524,6 +524,10 @@ public class GeneratorLanguage extends LanguageProvider
 		add("bloodmagic.keybind.cycle_holding_pos", "Cycle Sigil (+)");
 		add("bloodmagic.keybind.cycle_holding_neg", "Cycle Sigil (-)");
 
+		// Advancements
+		add("advancements.bloodmagic.root.title", "Blood Magic");
+		add("advancements.bloodmagic.root.description", "Hold a Blood Altar");
+
 		// Block names
 		addBlock(BloodMagicBlocks.BLANK_RUNE, "Blank Rune");
 		addBlock(BloodMagicBlocks.SPEED_RUNE, "Speed Rune");

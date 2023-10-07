@@ -1,0 +1,36 @@
+{
+  "criteria": {
+    "get_blood_altar": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bloodmagic:altar"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "icon": {
+      "item": "bloodmagic:altar"
+    },
+    "title": {
+      "translate": "advancements.bloodmagic.root.title"
+    },
+    "frame": "task",
+    "background": "bloodmagic:textures/gui/advancements_background.png",
+    "description": {
+      "translate": "advancements.bloodmagic.root.description"
+    },
+    "show_toast": false,
+    "announce_to_chat": true
+  },
+  "requirements": [
+    [
+      "get_blood_altar"
+    ]
+  ]
+}
