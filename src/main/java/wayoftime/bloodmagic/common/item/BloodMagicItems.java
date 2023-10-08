@@ -123,7 +123,8 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> MIMIC_ITEM = ITEMS.register("mimic", () -> new ItemBlockMimic(BloodMagicBlocks.MIMIC.get(), new Item.Properties()));
 	public static final RegistryObject<Item> MIMIC_ETHEREAL_ITEM = ITEMS.register("ethereal_mimic", () -> new ItemBlockMimic(BloodMagicBlocks.ETHEREAL_MIMIC.get(), new Item.Properties()));
 
-	public static final RegistryObject<Item> SPECTRAL_ITEM = ITEMS.register("spectral", () -> new ItemBlockMimic(BloodMagicBlocks.SPECTRAL.get(), new Item.Properties()));
+	// THe Spectral Block's Item is never used.  The Block is still registered and works.
+	//public static final RegistryObject<Item> SPECTRAL_ITEM = ITEMS.register("spectral", () -> new ItemBlockMimic(BloodMagicBlocks.SPECTRAL.get(), new Item.Properties()));
 
 	public static final RegistryObject<Item> NETHE_SOIL_ITEM = ITEMS.register("nether_soil", () -> new BlockItem(BloodMagicBlocks.NETHER_SOIL.get(), new Item.Properties()));
 	public static final RegistryObject<Item> GROWING_DOUBT_ITEM = ITEMS.register("growing_doubt", () -> new BlockItem(BloodMagicBlocks.GROWING_DOUBT.get(), new Item.Properties()));
