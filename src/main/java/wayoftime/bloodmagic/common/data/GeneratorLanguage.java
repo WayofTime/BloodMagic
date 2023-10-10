@@ -938,6 +938,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("chat.bloodmagic.ritualLivingDowngrade.trainingBraceletBlock", "Your Training Bracelet vibrates as it prevents the downgrade from being applied.");
 		add("chat.bloodmagic.ritualLivingDowngrade.notEnoughKeyItems", "You sense you need more %s to apply a stronger Downgrade.");
 		add("chat.bloodmagic.ritualLivingDowngrade.notEnoughPoints", "You sense you will need more Upgrade Points to apply these Downgrades.");
+		add("chat.bloodmagic.ritualLivingDowngrade.missingInventory", "No inventory found at %d, %d, %d.");
 
 		// GUI
 		add("gui.bloodmagic.empty", "Empty");

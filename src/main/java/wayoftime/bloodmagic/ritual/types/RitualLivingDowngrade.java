@@ -89,6 +89,7 @@ public class RitualLivingDowngrade extends Ritual
 
 		if (tile == null)
 		{
+			selectedPlayer.displayClientMessage(Component.translatable("chat.bloodmagic.ritualLivingDowngrade.missingInventory", chestPos.getX(), chestPos.getY(), chestPos.getZ()), true);
 			return;
 		}
 
