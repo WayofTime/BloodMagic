@@ -10,6 +10,7 @@ import java.util.function.Consumer;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
@@ -72,7 +73,6 @@ public class RitualLivingDowngrade extends Ritual
 
 		if (selectedPlayer == null)
 		{
-
 			return;
 		}
 
@@ -171,6 +171,7 @@ public class RitualLivingDowngrade extends Ritual
 		// downgrade. 0 means nothing is added.
 		Map<LivingUpgrade, Integer> pointDifferentialMap = new HashMap<LivingUpgrade, Integer>();
 		int totalDifferentialPoints = 0;
+		boolean notEnoughKeyItems = false;
 		for (Entry<LivingUpgrade, Integer> entry : downgradeMap.entrySet())
 		{
 			LivingUpgrade downgrade = entry.getKey();
@@ -178,11 +179,13 @@ public class RitualLivingDowngrade extends Ritual
 			int wantedLevel = Math.min(entry.getValue(), downgrade.getLevel(Integer.MAX_VALUE));
 			if (playerDowngradeLevel >= wantedLevel)
 			{
+				notEnoughKeyItems = true;
 				continue;
 			}
 
 			if (!LivingUtil.canTrain(selectedPlayer, downgrade, playerDowngradeLevel, wantedLevel))
 			{
+				selectedPlayer.displayClientMessage(Component.translatable("chat.bloodmagic.ritualLivingDowngrade.trainingBraceletBlock"), true);
 				return;
 			}
 
@@ -201,13 +204,18 @@ public class RitualLivingDowngrade extends Ritual
 			}
 		}
 
-		if (availablePoints < totalDifferentialPoints || priorityMap.isEmpty() || pointDifferentialMap.isEmpty())
+		if (availablePoints < totalDifferentialPoints)
 		{
-			// Can't upgrade! Not enough points
-			// TODO: Add smoke particles to indicate this?
-
+			selectedPlayer.displayClientMessage(Component.translatable("chat.bloodmagic.ritualLivingDowngrade.notEnoughPoints"), true);
 			return;
 		}
+		if (priorityMap.isEmpty() || pointDifferentialMap.isEmpty())
+		{
+			if (notEnoughKeyItems)
+				selectedPlayer.displayClientMessage(Component.translatable("chat.bloodmagic.ritualLivingDowngrade.notEnoughKeyItems"), true);
+			return;
+		}
+
 
 		List<Integer> slotOrderList = new ArrayList<>();
 
