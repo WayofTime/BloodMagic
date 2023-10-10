@@ -100,6 +100,8 @@ public class RitualLivingDowngrade extends Ritual
 		Direction accessDir = Direction.DOWN;
 
 		Map<Integer, List<Integer>> priorityMap = new HashMap<>();
+		// Contains the ItemStack used for each downgrade.  Used for the insufficient level message.
+		Map<LivingUpgrade, ItemStack> downgradeItemStacksMap= new HashMap<>();
 
 		LazyOptional<IItemHandler> capability = tile.getCapability(ForgeCapabilities.ITEM_HANDLER, accessDir);
 		if (capability.isPresent())
@@ -115,6 +117,7 @@ public class RitualLivingDowngrade extends Ritual
 				{
 					int wantedLevel = getLevelFromStack(invStack);
 					downgradeMap.put(downgrade, downgradeMap.getOrDefault(downgrade, 0) + wantedLevel);
+					downgradeItemStacksMap.put(downgrade, invStack);
 				}
 
 				int priority = getPriorityFromStack(invStack);
@@ -142,6 +145,7 @@ public class RitualLivingDowngrade extends Ritual
 				{
 					int wantedLevel = getLevelFromStack(invStack);
 					downgradeMap.put(downgrade, downgradeMap.getOrDefault(downgrade, 0) + wantedLevel);
+					downgradeItemStacksMap.put(downgrade, invStack);
 				}
 
 				int priority = getPriorityFromStack(invStack);
@@ -171,7 +175,7 @@ public class RitualLivingDowngrade extends Ritual
 		// downgrade. 0 means nothing is added.
 		Map<LivingUpgrade, Integer> pointDifferentialMap = new HashMap<LivingUpgrade, Integer>();
 		int totalDifferentialPoints = 0;
-		boolean notEnoughKeyItems = false;
+		LivingUpgrade lastSkippedDowngrade = null;
 		for (Entry<LivingUpgrade, Integer> entry : downgradeMap.entrySet())
 		{
 			LivingUpgrade downgrade = entry.getKey();
@@ -179,7 +183,7 @@ public class RitualLivingDowngrade extends Ritual
 			int wantedLevel = Math.min(entry.getValue(), downgrade.getLevel(Integer.MAX_VALUE));
 			if (playerDowngradeLevel >= wantedLevel)
 			{
-				notEnoughKeyItems = true;
+				lastSkippedDowngrade = downgrade;
 				continue;
 			}
 
@@ -211,11 +215,18 @@ public class RitualLivingDowngrade extends Ritual
 		}
 		if (priorityMap.isEmpty() || pointDifferentialMap.isEmpty())
 		{
-			if (notEnoughKeyItems)
-				selectedPlayer.displayClientMessage(Component.translatable("chat.bloodmagic.ritualLivingDowngrade.notEnoughKeyItems"), true);
+			if (lastSkippedDowngrade != null)
+			{
+				String itemName = downgradeItemStacksMap.get(lastSkippedDowngrade).getItem().getDefaultInstance().getDisplayName().getString();
+				int lastCharIndex = itemName.length() - 1;
+				if (itemName.charAt(0) == '[' && itemName.charAt(lastCharIndex) == ']')
+				{
+					itemName = itemName.substring(1, lastCharIndex); // remove the brackets around the item name.
+				}
+				selectedPlayer.displayClientMessage(Component.translatable("chat.bloodmagic.ritualLivingDowngrade.notEnoughKeyItems", itemName), true);
+			}
 			return;
 		}
-
 
 		List<Integer> slotOrderList = new ArrayList<>();
 

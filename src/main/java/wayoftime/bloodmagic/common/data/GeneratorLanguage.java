@@ -935,8 +935,8 @@ public class GeneratorLanguage extends LanguageProvider
 		add("chat.bloodmagic.ritual.activate", "A rush of energy flows through the ritual!");
 		add("chat.bloodmagic.ritual.notValid", "You feel that these runes are not configured correctly...");
 		add("chat.bloodmagic.diviner.blockedBuild", "Unable to replace block at %d, %d, %d.");
-		add("chat.bloodmagic.ritualLivingDowngrade.trainingBraceletBlock", "Your Training Bracelet shakes as it prevents the downgrade from being applied.");
-		add("chat.bloodmagic.ritualLivingDowngrade.notEnoughKeyItems", "You sense you need more of a \"Key Item\" to apply a stronger Downgrade.");
+		add("chat.bloodmagic.ritualLivingDowngrade.trainingBraceletBlock", "Your Training Bracelet vibrates as it prevents the downgrade from being applied.");
+		add("chat.bloodmagic.ritualLivingDowngrade.notEnoughKeyItems", "You sense you need more %s to apply a stronger Downgrade.");
 		add("chat.bloodmagic.ritualLivingDowngrade.notEnoughPoints", "You sense you will need more Upgrade Points to apply these Downgrades.");
 
 		// GUI
