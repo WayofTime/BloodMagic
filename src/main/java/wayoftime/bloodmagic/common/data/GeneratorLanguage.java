@@ -184,6 +184,9 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.alchemytable.lperror.title", "Soul Network Error");
 		add("tooltip.bloodmagic.alchemytable.lperror.text", "Insufficient LP in Soul Network, or Blood Orb is not Bound.");
 
+		add("tooltip.bloodmagic.soulforge.willerror.title", "Demon Will Error");
+		add("tooltip.bloodmagic.soulforge.willerror.text", "Not enough Demon Will for this recipe.");
+
 		add("tooltip.bloodmagic.incorrectKey", "The key does not fit in this lock...");
 		add("tooltip.bloodmagic.specialspawn", "You feel a spatial distortion in this room...");
 		add("tooltip.bloodmagic.blockeddoor", "The lock breaks and fizzles out of existence!");

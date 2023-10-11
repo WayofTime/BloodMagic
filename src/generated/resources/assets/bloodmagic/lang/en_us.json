@@ -762,6 +762,8 @@
   "tooltip.bloodmagic.soulGem.lesser": "A gem used to contain some will.",
   "tooltip.bloodmagic.soulGem.petty": "A gem used to contain a little will.",
   "tooltip.bloodmagic.soulSnare.desc": "Throw at a monster and then kill them to obtain their demonic will.",
+  "tooltip.bloodmagic.soulforge.willerror.text": "Not enough Demon Will for this recipe.",
+  "tooltip.bloodmagic.soulforge.willerror.title": "Demon Will Error",
   "tooltip.bloodmagic.specialspawn": "You feel a spatial distortion in this room...",
   "tooltip.bloodmagic.syntheticpoint.desc": "A synthetic living armour point. It's... wriggling.",
   "tooltip.bloodmagic.tagfilter.desc": "Filters based off of an item's ItemTags.",
