@@ -909,7 +909,7 @@ public class GeneratorLanguage extends LanguageProvider
 		// JEI
 		add("jei.bloodmagic.recipe.minimumsouls", "Minimum: %s Will");
 		add("jei.bloodmagic.recipe.soulsdrained", "Drained: %s Will");
-		add("jei.bloodmagic.recipe.requiredlp", "LP: %d");
+		add("jei.bloodmagic.recipe.requiredlp", "LP: %,d");
 		add("jei.bloodmagic.recipe.requiredtier", "Tier: %d");
 		add("jei.bloodmagic.recipe.consumptionrate", "Consumption: %s LP/t");
 		add("jei.bloodmagic.recipe.drainrate", "Drain: %s LP/t");

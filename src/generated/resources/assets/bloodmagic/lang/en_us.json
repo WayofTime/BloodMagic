@@ -401,7 +401,7 @@
   "jei.bloodmagic.recipe.lpDrained": "Drained: %s LP",
   "jei.bloodmagic.recipe.minimumsouls": "Minimum: %s Will",
   "jei.bloodmagic.recipe.potionflask": "Potion Crafting",
-  "jei.bloodmagic.recipe.requiredlp": "LP: %d",
+  "jei.bloodmagic.recipe.requiredlp": "LP: %,d",
   "jei.bloodmagic.recipe.requiredtier": "Tier: %d",
   "jei.bloodmagic.recipe.soulforge": "Hellfire Forge",
   "jei.bloodmagic.recipe.soulsdrained": "Drained: %s Will",
