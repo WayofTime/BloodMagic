@@ -1,6 +1,5 @@
 package wayoftime.bloodmagic.common.data;
 
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 import wayoftime.bloodmagic.BloodMagic;
@@ -925,6 +924,10 @@ public class GeneratorLanguage extends LanguageProvider
 		add("jei.bloodmagic.recipe.arcfurnace", "ARC Furnace Recipe");
 		add("jei.bloodmagic.recipe.alchemytable", "Alchemy Table");
 		add("jei.bloodmagic.recipe.potionflask", "Potion Crafting");
+
+		add("jei.bloodmagic.recipe.lp", "LP");
+		add("jei.bloodmagic.recipe.will", "Will");
+		add("jei.bloodmagic.recipe.info", "Info");
 
 		// Curios
 		add("curios.identifier.living_armour_socket", "Living Armour Socket");
