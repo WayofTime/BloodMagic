@@ -1,0 +1,74 @@
+{
+  "parent": "bloodmagic:bloodmagic/altar_two",
+  "criteria": {
+    "altar3": {
+      "trigger": "minecraft:item_used_on_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "blocks": ["bloodmagic:altar"],
+                "nbt": "{bloodAltar:{upgradeLevel:\"THREE\"}}"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "altar4": {
+      "trigger": "minecraft:item_used_on_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "blocks": ["bloodmagic:altar"],
+                "nbt": "{bloodAltar:{upgradeLevel:\"FOUR\"}}"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "altar5": {
+      "trigger": "minecraft:item_used_on_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "blocks": ["bloodmagic:altar"],
+                "nbt": "{bloodAltar:{upgradeLevel:\"FIVE\"}}"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "icon": {
+      "item": "bloodmagic:altar"
+    },
+    "title": {
+      "translate": "advancements.bloodmagic.altar_three.title"
+    },
+    "frame": "task",
+    "description": {
+      "translate": "advancements.bloodmagic.altar_three.description"
+    },
+    "show_toast": false,
+    "announce_to_chat": true
+  },
+  "requirements": [
+    [
+      "altar3",
+      "altar4",
+      "altar5"
+    ]
+  ]
+}

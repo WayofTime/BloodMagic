@@ -1,6 +1,7 @@
 {
+  "parent": "bloodmagic:bloodmagic/altar_four",
   "criteria": {
-    "use_altar": {
+    "altar5": {
       "trigger": "minecraft:item_used_on_block",
       "conditions": {
         "location": [
@@ -8,7 +9,8 @@
             "condition": "minecraft:location_check",
             "predicate": {
               "block": {
-                "blocks": ["bloodmagic:altar"]
+                "blocks": ["bloodmagic:altar"],
+                "nbt": "{bloodAltar:{upgradeLevel:\"FIVE\"}}"
               }
             }
           }
@@ -21,19 +23,18 @@
       "item": "bloodmagic:altar"
     },
     "title": {
-      "translate": "advancements.bloodmagic.root.title"
+      "translate": "advancements.bloodmagic.altar_five.title"
     },
     "frame": "task",
-    "background": "bloodmagic:textures/gui/advancements_background.png",
     "description": {
-      "translate": "advancements.bloodmagic.root.description"
+      "translate": "advancements.bloodmagic.altar_five.description"
     },
     "show_toast": false,
     "announce_to_chat": true
   },
   "requirements": [
     [
-      "use_altar"
+      "altar5"
     ]
   ]
 }
