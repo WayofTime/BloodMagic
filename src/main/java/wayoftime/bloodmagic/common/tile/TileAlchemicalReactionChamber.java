@@ -466,6 +466,11 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 	@Override
 	public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction)
 	{
+		if (index == ARC_TOOL_SLOT)
+		{
+			return true;
+		}
+		
 		return index >= OUTPUT_SLOT && index < OUTPUT_SLOT + NUM_OUTPUTS;
 	}
 
