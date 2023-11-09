@@ -116,7 +116,7 @@ public class RegisterPatchouliMultiblocks
 
 			BMStateMatcher bloodRuneSM = new BMStateMatcher(bmAPI.getComponentStates(ComponentType.BLOODRUNE));
 			BMStateMatcher blankBloodRuneSM = new BMStateMatcher(BloodMagicBlocks.BLANK_RUNE.get(), bmAPI.getComponentStates(ComponentType.BLOODRUNE));
-			IStateMatcher notAirSM = patAPI.predicateMatcher(Blocks.STONE_BRICKS, state -> state.isSolid());
+			IStateMatcher notAirSM = patAPI.predicateMatcher(Blocks.STONE_BRICKS, state -> !state.isAir() && !state.liquid());
 			BMStateMatcher glowstoneSM = new BMStateMatcher(bmAPI.getComponentStates(ComponentType.GLOWSTONE));
 			BMStateMatcher bloodStoneSM = new BMStateMatcher(bmAPI.getComponentStates(ComponentType.BLOODSTONE));
 			BMStateMatcher beaconSM = new BMStateMatcher(bmAPI.getComponentStates(ComponentType.BEACON));

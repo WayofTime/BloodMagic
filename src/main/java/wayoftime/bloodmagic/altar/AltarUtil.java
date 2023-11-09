@@ -33,7 +33,7 @@ public class AltarUtil
 				BlockPos componentPos = pos.offset(component.getOffset());
 				BlockState worldState = world.getBlockState(componentPos);
 
-				if (component.getComponent() == ComponentType.NOTAIR && worldState.isSolid())
+				if (component.getComponent() == ComponentType.NOTAIR && !worldState.isAir() && !worldState.liquid())
 					continue;
 
 				List<BlockState> validStates = BloodMagicAPI.INSTANCE.getComponentStates(component.getComponent());
@@ -78,7 +78,7 @@ public class AltarUtil
 			{
 				BlockPos componentPos = pos.offset(component.getOffset());
 				BlockState worldState = world.getBlockState(componentPos);
-				if (component.getComponent() == ComponentType.NOTAIR && worldState.isSolid())
+				if (component.getComponent() == ComponentType.NOTAIR && !worldState.isAir() && !worldState.liquid())
 					continue;
 
 				List<BlockState> validStates = BloodMagicAPI.INSTANCE.getComponentStates(component.getComponent());
