@@ -85,7 +85,13 @@ repositories {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    
+
+    annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
+    implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixin_extras}"))
+    implementation(jarJar("io.github.llamalad7:mixinextras-forge:${mixin_extras}")) {
+        jarJar.ranged(it, "[${mixin_extras},)")
+    }
+
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
