@@ -2,10 +2,12 @@
   "required": true,
   "minVersion": "0.8",
   "package": "wayoftime.bloodmagic.mixin",
-  "compatibilityLevel": "JAVA_8",
+  "compatibilityLevel": "JAVA_17",
   "mixins": [
   ],
   "client": [
+    "client.MixinEntity",
+    "client.MixinLivingEntity"
   ],
   "injectors": {
     "defaultRequire": 1

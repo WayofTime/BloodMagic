@@ -7,7 +7,7 @@ buildscript {
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7+'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
@@ -30,7 +30,7 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
-            
+
 //            properties 'mixin.env.disableRefMap': 'true'
 
             // Recommended logging data for a userdev environment
@@ -38,7 +38,7 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-            
+
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
@@ -51,7 +51,7 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
-            
+
 //            properties 'mixin.env.disableRefMap': 'true'
 
             // Recommended logging data for a userdev environment
@@ -59,7 +59,7 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-            
+
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
@@ -72,7 +72,7 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
-            
+
 //            properties 'mixin.env.disableRefMap': 'true'
 
             // Recommended logging data for a userdev environment
@@ -116,16 +116,22 @@ dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.18.2-40.1.51'
-    
+    minecraft 'net.minecraftforge:forge:1.18.2-40.2.4'
+
+    annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
+    implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixin_extras}"))
+    implementation(jarJar("io.github.llamalad7:mixinextras-forge:${mixin_extras}")) {
+        jarJar.ranged(it, "[${mixin_extras},)")
+    }
+
     // compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
     // runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
-        
-    
-    
+
+
+
     compileOnly fg.deobf("mezz.jei:jei-1.18.2:9.5.5.174:api")
     runtimeOnly fg.deobf("mezz.jei:jei-1.18.2:9.5.5.174")
-    
+
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
 
