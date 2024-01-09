@@ -67,14 +67,14 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 	@Override
 	public boolean harvest(Level world, BlockPos pos, BlockState state, List<ItemStack> drops)
 	{
-//		NonNullList<ItemStack> blockDrops = NonNullList.create();
-//		state.getBlock().getDrops(blockDrops, world, pos, state, 0);
+		// NonNullList<ItemStack> blockDrops = NonNullList.create();
+		// state.getBlock().getDrops(blockDrops, world, pos, state, 0);
 		boolean foundSeed = false;
 		LootContext.Builder lootBuilder = new LootContext.Builder((ServerLevel) world);
 		Vec3 blockCenter = new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
 		List<ItemStack> blockDrops = state.getDrops(lootBuilder.withParameter(LootContextParams.ORIGIN, blockCenter).withParameter(LootContextParams.TOOL, mockHoe));
 
-//		System.out.println("Size of list: " + blockDrops.size());
+		// System.out.println("Size of list: " + blockDrops.size());
 
 		for (ItemStack stack : blockDrops)
 		{
@@ -90,7 +90,7 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 			}
 		}
 
-//		System.out.println("Found seed: " + foundSeed);
+		// System.out.println("Found seed: " + foundSeed);
 
 		if (foundSeed)
 		{
@@ -113,9 +113,11 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 	@Override
 	public boolean test(Level world, BlockPos pos, BlockState state)
 	{
-//		state.hasProperty(null);
+		// state.hasProperty(null);
 		return HarvestRegistry.getStandardCrops().containsKey(state.getBlock()) && state.getBlock() instanceof CropBlock && ((CropBlock) state.getBlock()).isMaxAge(state);
-//		return HarvestRegistry.getStandardCrops().containsKey(state.getBlock()) && state.getBlock().getMetaFromState(state) == HarvestRegistry.getStandardCrops().get(state.getBlock());
+		// return HarvestRegistry.getStandardCrops().containsKey(state.getBlock()) &&
+		// state.getBlock().getMetaFromState(state) ==
+		// HarvestRegistry.getStandardCrops().get(state.getBlock());
 	}
 
 	private static void addThirdPartyCrop(String modid, String regName, int matureMeta)
@@ -171,8 +173,8 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 			@SuppressWarnings("unchecked")
 			List<Object> crops = (List<Object>) getCrops.invoke(registry);
 
-			Class<?> mysticalCrop = Class.forName("com.blakebr0.mysticalagriculture.api.crop.ICrop");
-			Method getCrop = mysticalCrop.getMethod("getCrop");
+			Class<?> mysticalCrop = Class.forName("com.blakebr0.mysticalagriculture.api.crop.Crop");
+			Method getCrop = mysticalCrop.getMethod("getCropBlock");
 
 			for (Object maCrop : crops)
 			{
