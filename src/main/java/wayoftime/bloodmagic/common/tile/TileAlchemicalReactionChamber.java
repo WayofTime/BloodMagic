@@ -46,6 +46,7 @@ import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.network.ARCTanksPacket;
 import wayoftime.bloodmagic.recipe.RecipeARC;
 import wayoftime.bloodmagic.recipe.helper.FluidStackIngredient;
+import wayoftime.bloodmagic.util.BMLog;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.MultiSlotItemHandler;
 
@@ -359,7 +360,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 		List<ItemStack> outputList = new ArrayList<>();
 		outputList.add(outputStack);
 		outputSlotHandler.canTransferAllItemsToSlots(outputList, false);
-		consumeInventory(1, false, false);
+		consumeInventory(1, false, true);
 	}
 
 	public void consumeInventory(int inputCount, boolean consumeInput, boolean breakTool)
@@ -396,7 +397,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 				}
 			} else if (toolStack.getItem().hasContainerItem(toolStack))
 			{
-				setItem(ARC_TOOL_SLOT, toolStack.getItem().getContainerItem(inputStack));
+				setItem(ARC_TOOL_SLOT, toolStack.getItem().getContainerItem(toolStack));
 			} else
 			{
 				toolStack.shrink(1);
