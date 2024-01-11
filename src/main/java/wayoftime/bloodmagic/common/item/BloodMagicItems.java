@@ -10,6 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
+import wayoftime.bloodmagic.block.enums.BloodRuneType;
 import wayoftime.bloodmagic.client.sounds.SoundRegistrator;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.arc.ItemARCToolBase;
@@ -153,6 +154,17 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> MAGICIAN_BLOOD_ORB = BASICITEMS.register("magicianbloodorb", () -> new ItemBloodOrb(ORB_MAGICIAN));
 	public static final RegistryObject<Item> MASTER_BLOOD_ORB = BASICITEMS.register("masterbloodorb", () -> new ItemBloodOrb(ORB_MASTER));
 	public static final RegistryObject<Item> ARCHMAGE_BLOOD_ORB = BASICITEMS.register("archmagebloodorb", () -> new ItemBloodOrb(ORB_ARCHMAGE));
+
+	public static final RegistryObject<Item> RUNE_ETCHER_ITEM = BASICITEMS.register("runeetcher", () -> new ItemRuneEtcher());
+	public static final RegistryObject<Item> SPEED_RUNE_KIT_ITEM = BASICITEMS.register("speedrunekit", () -> new ItemUpgradeKit(BloodRuneType.SPEED));
+	public static final RegistryObject<Item> ACCELERATION_RUNE_KIT_ITEM = BASICITEMS.register("accelerationrunekit", () -> new ItemUpgradeKit(BloodRuneType.ACCELERATION));
+	public static final RegistryObject<Item> AUGMENTED_CAPACITY_RUNE_KIT_ITEM = BASICITEMS.register("augmentedcapacityrunekit", () -> new ItemUpgradeKit(BloodRuneType.AUGMENTED_CAPACITY));
+	public static final RegistryObject<Item> CAPACITY_RUNE_KIT_ITEM = BASICITEMS.register("capacityrunekit", () -> new ItemUpgradeKit(BloodRuneType.CAPACITY));
+	public static final RegistryObject<Item> SACRIFICE_RUNE_KIT_ITEM = BASICITEMS.register("sacrificerunekit", () -> new ItemUpgradeKit(BloodRuneType.SACRIFICE));
+	public static final RegistryObject<Item> SELF_SACRIFICE_RUNE_KIT_ITEM = BASICITEMS.register("selfsacrificerunekit", () -> new ItemUpgradeKit(BloodRuneType.SELF_SACRIFICE));
+	public static final RegistryObject<Item> DISPLACEMENT_RUNE_KIT_ITEM = BASICITEMS.register("displacementrunekit", () -> new ItemUpgradeKit(BloodRuneType.DISPLACEMENT));
+	public static final RegistryObject<Item> ORB_RUNE_KIT_ITEM = BASICITEMS.register("orbrunekit", () -> new ItemUpgradeKit(BloodRuneType.ORB));
+	public static final RegistryObject<Item> CHARGING_RUNE_KIT_ITEM = BASICITEMS.register("chargingrunekit", () -> new ItemUpgradeKit(BloodRuneType.CHARGING));
 
 	public static final RegistryObject<Item> DIVINATION_SIGIL = BASICITEMS.register("divinationsigil", () -> new ItemSigilDivination(true));
 	public static final RegistryObject<Item> SEER_SIGIL = BASICITEMS.register("seersigil", () -> new ItemSigilDivination(false));

@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:blood_rune_kit_self_sacrifice"
+    ]
+  },
+  "criteria": {
+    "has_apprentice_orb": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bloodmagic:apprenticebloodorb"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:blood_rune_kit_self_sacrifice"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_apprentice_orb",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RsR",
+    "GrG",
+    "ReR"
+  ],
+  "key": {
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "r": {
+      "item": "bloodmagic:runeetcher"
+    },
+    "s": {
+      "item": "bloodmagic:demonslate"
+    },
+    "e": {
+      "type": "bloodmagic:bloodorb",
+      "orb_tier": 4
+    },
+    "G": {
+      "tag": "forge:dusts/glowstone"
+    }
+  },
+  "result": {
+    "item": "bloodmagic:chargingrunekit"
+  }
+}

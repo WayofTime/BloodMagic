@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "gog",
+    "isi",
+    " s "
+  ],
+  "key": {
+    "s": {
+      "item": "bloodmagic:reinforcedslate"
+    },
+    "g": {
+      "tag": "forge:gems/amethyst"
+    },
+    "i": {
+      "tag": "forge:ingots/iron"
+    },
+    "o": {
+      "type": "bloodmagic:bloodorb",
+      "orb_tier": 2
+    }
+  },
+  "result": {
+    "item": "bloodmagic:runeetcher"
+  }
+}

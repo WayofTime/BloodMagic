@@ -665,6 +665,17 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.SUPPRESSION_SIGIL, "Sigil of Suppression");
 		addItem(BloodMagicItems.TELEPOSITION_SIGIL, "Teleposition Sigil");
 
+		addItem(BloodMagicItems.RUNE_ETCHER_ITEM, "Rune Etching Tool");
+		addItem(BloodMagicItems.ACCELERATION_RUNE_KIT_ITEM, "Acceleration Rune Kit");
+		addItem(BloodMagicItems.SPEED_RUNE_KIT_ITEM, "Speed Rune Kit");
+		addItem(BloodMagicItems.AUGMENTED_CAPACITY_RUNE_KIT_ITEM, "Augmented Capacity Rune Kit");
+		addItem(BloodMagicItems.CAPACITY_RUNE_KIT_ITEM, "Capacity Rune Kit");
+		addItem(BloodMagicItems.SACRIFICE_RUNE_KIT_ITEM, "Sacrifice Rune Kit");
+		addItem(BloodMagicItems.SELF_SACRIFICE_RUNE_KIT_ITEM, "Self Sacrifice Rune Kit");
+		addItem(BloodMagicItems.ORB_RUNE_KIT_ITEM, "Rune Kit of the Orb");
+		addItem(BloodMagicItems.DISPLACEMENT_RUNE_KIT_ITEM, "Displacement Rune Kit");
+		addItem(BloodMagicItems.CHARGING_RUNE_KIT_ITEM, "Charging Rune Kit");
+
 		addItem(BloodMagicBlocks.LIFE_ESSENCE_BUCKET, "Bucket of Life");
 		addItem(BloodMagicItems.ARCANE_ASHES, "Arcane Ashes");
 		addItem(BloodMagicItems.SLATE, "Blank Slate");
