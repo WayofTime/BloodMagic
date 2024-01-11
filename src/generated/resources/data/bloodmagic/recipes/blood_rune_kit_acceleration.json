@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aba",
+    "cdc",
+    "aea"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:bucket"
+    },
+    "b": {
+      "item": "bloodmagic:demonslate"
+    },
+    "c": {
+      "tag": "forge:ingots/gold"
+    },
+    "d": {
+      "item": "bloodmagic:runeetcher"
+    },
+    "e": {
+      "type": "bloodmagic:bloodorb",
+      "orb_tier": 4
+    }
+  },
+  "result": {
+    "item": "bloodmagic:accelerationrunekit"
+  }
+}

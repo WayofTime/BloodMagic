@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:rune_etcher"
+    ]
+  },
+  "criteria": {
+    "has_master_orb": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bloodmagic:apprenticebloodorb"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:rune_etcher"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_master_orb",
+      "has_the_recipe"
+    ]
+  ]
+}

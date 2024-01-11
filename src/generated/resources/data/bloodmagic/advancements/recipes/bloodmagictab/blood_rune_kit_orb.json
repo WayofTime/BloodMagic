@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bloodmagic:blood_rune_kit_orb"
+    ]
+  },
+  "criteria": {
+    "has_master_orb": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bloodmagic:masterbloodorb"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bloodmagic:blood_rune_kit_orb"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_master_orb",
+      "has_the_recipe"
+    ]
+  ]
+}

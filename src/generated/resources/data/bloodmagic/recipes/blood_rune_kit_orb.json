@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ara",
+    "bdb",
+    "aca"
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:stone"
+    },
+    "b": {
+      "type": "bloodmagic:bloodorb",
+      "orb_tier": 1
+    },
+    "c": {
+      "item": "bloodmagic:runeetcher"
+    },
+    "r": {
+      "item": "bloodmagic:blankrune"
+    },
+    "d": {
+      "type": "bloodmagic:bloodorb",
+      "orb_tier": 4
+    }
+  },
+  "result": {
+    "item": "bloodmagic:orbrunekit"
+  }
+}
