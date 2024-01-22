@@ -11,7 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.NetherWartBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 
@@ -23,7 +23,7 @@ public class HarvestHandlerNetherWart implements IHarvestHandler
 	public boolean harvest(Level world, BlockPos pos, BlockState state, List<ItemStack> drops)
 	{
 		boolean foundSeed = false;
-		LootContext.Builder lootBuilder = new LootContext.Builder((ServerLevel) world);
+		LootParams.Builder lootBuilder = new LootParams.Builder((ServerLevel) world);
 		Vec3 blockCenter = new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
 		List<ItemStack> blockDrops = state.getDrops(lootBuilder.withParameter(LootContextParams.ORIGIN, blockCenter).withParameter(LootContextParams.TOOL, mockHoe));
 

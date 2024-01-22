@@ -1,7 +1,7 @@
 {
     "parent": "builtin/generated",
     "textures": {
-        "layer0": "bloodmagic:items/SentientBow_corrosive"
+        "layer0": "bloodmagic:item/sentientbow_corrosive"
     },
 	"display": {
         "thirdperson_righthand": {

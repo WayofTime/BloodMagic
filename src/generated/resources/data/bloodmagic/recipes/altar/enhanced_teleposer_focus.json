@@ -1,13 +1,13 @@
 {
   "type": "bloodmagic:altar",
+  "altarSyphon": 10000,
+  "consumptionRate": 20,
+  "drainRate": 10,
   "input": {
     "item": "bloodmagic:teleposerfocus"
   },
   "output": {
     "item": "bloodmagic:enhancedteleposerfocus"
   },
-  "upgradeLevel": 3,
-  "altarSyphon": 10000,
-  "consumptionRate": 20,
-  "drainRate": 10
+  "upgradeLevel": 3
 }

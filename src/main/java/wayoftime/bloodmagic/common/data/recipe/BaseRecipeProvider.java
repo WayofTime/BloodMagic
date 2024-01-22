@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import wayoftime.bloodmagic.common.recipe.ISubRecipeProvider;
@@ -13,21 +13,21 @@ public abstract class BaseRecipeProvider extends RecipeProvider
 {
 	private final String modid;
 
-	public BaseRecipeProvider(DataGenerator gen, String modid)
+	public BaseRecipeProvider(PackOutput output, String modid)
 	{
-		super(gen);
+		super(output);
 		this.modid = modid;
 	}
 
-	@Override
-	public String getName()
-	{
-		return super.getName() + modid;
-	}
+//	@Override
+//	public String getName()
+//	{
+//		return super.getName() + modid;
+//	}
 
 //	protected void buildShapelessRecipes(Consumer<FinishedRecipe> consumer)
 	@Override
-	protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer)
+	protected void buildRecipes(Consumer<FinishedRecipe> consumer)
 	{
 		getSubRecipeProviders().forEach(subRecipeProvider -> subRecipeProvider.addRecipes(consumer));
 	}

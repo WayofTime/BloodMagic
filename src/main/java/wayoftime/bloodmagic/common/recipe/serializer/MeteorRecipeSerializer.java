@@ -14,12 +14,11 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.common.meteor.MeteorLayer;
 import wayoftime.bloodmagic.recipe.RecipeMeteor;
 import wayoftime.bloodmagic.util.Constants;
 
-public class MeteorRecipeSerializer<RECIPE extends RecipeMeteor> extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RECIPE>
+public class MeteorRecipeSerializer<RECIPE extends RecipeMeteor>  implements RecipeSerializer<RECIPE>
 {
 	private final IFactory<RECIPE> factory;
 

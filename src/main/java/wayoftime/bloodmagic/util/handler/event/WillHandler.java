@@ -1,9 +1,5 @@
 package wayoftime.bloodmagic.util.handler.event;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -25,7 +21,7 @@ import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
-import net.minecraftforge.event.world.ChunkDataEvent;
+import net.minecraftforge.event.level.ChunkDataEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -41,6 +37,10 @@ import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.will.DemonWillHolder;
 import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 @Mod.EventBusSubscriber(modid = BloodMagic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class WillHandler
 {
@@ -53,7 +53,7 @@ public class WillHandler
 		ItemStack stack = event.getItem().getItem();
 		if (stack.getItem() instanceof IDemonWill)
 		{
-			Player player = event.getPlayer();
+			Player player = event.getEntity();
 			EnumDemonWillType pickupType = ((IDemonWill) stack.getItem()).getType(stack);
 			ItemStack remainder = PlayerDemonWillHandler.addDemonWill(player, stack);
 
@@ -83,13 +83,13 @@ public class WillHandler
 	@SubscribeEvent
 	public void onLivingDrops(LivingDropsEvent event)
 	{
-		LivingEntity attackedEntity = event.getEntityLiving();
+		LivingEntity attackedEntity = event.getEntity();
 		DamageSource source = event.getSource();
 		Entity entity = source.getEntity();
 
-		if (attackedEntity.hasEffect(BloodMagicPotions.SOUL_SNARE) && (attackedEntity instanceof Mob || attackedEntity.getCommandSenderWorld().getDifficulty() == Difficulty.PEACEFUL))
+		if (attackedEntity.hasEffect(BloodMagicPotions.SOUL_SNARE.get()) && (attackedEntity instanceof Mob || attackedEntity.getCommandSenderWorld().getDifficulty() == Difficulty.PEACEFUL))
 		{
-			MobEffectInstance eff = attackedEntity.getEffect(BloodMagicPotions.SOUL_SNARE);
+			MobEffectInstance eff = attackedEntity.getEffect(BloodMagicPotions.SOUL_SNARE.get());
 			int lvl = eff.getAmplifier();
 
 			double amountOfSouls = attackedEntity.getCommandSenderWorld().random.nextDouble() * (lvl + 1) * (lvl + 1) * 4 + 1;
@@ -128,12 +128,12 @@ public class WillHandler
 	}
 
 	@SubscribeEvent
-	public void onServerWorldTick(TickEvent.WorldTickEvent event)
+	public void onServerWorldTick(TickEvent.LevelTickEvent event)
 	{
-		if (event.world.isClientSide)
+		if (event.level.isClientSide)
 			return;
 
-		ResourceLocation rl = WorldDemonWillHandler.getDimensionResourceLocation(event.world);
+		ResourceLocation rl = WorldDemonWillHandler.getDimensionResourceLocation(event.level);
 //        int dim = event.world.provider.getDimension();
 		if (event.phase == TickEvent.Phase.END)
 		{
@@ -150,7 +150,7 @@ public class WillHandler
 				{
 					for (PosXY pos : dirtyChunks)
 					{
-						ChunkAccess chunk = event.world.getChunk(pos.x, pos.y, ChunkStatus.FULL, false);
+						ChunkAccess chunk = event.level.getChunk(pos.x, pos.y, ChunkStatus.FULL, false);
 						if (chunk != null)
 						{
 							chunk.setUnsaved(true);
@@ -187,11 +187,11 @@ public class WillHandler
 	@SubscribeEvent
 	public void chunkSave(ChunkDataEvent.Save event)
 	{
-		if (!(event.getWorld() instanceof Level))
+		if (!(event.getLevel() instanceof Level))
 		{
 			return;
 		}
-		ResourceLocation rl = WorldDemonWillHandler.getDimensionResourceLocation((Level) event.getWorld());
+		ResourceLocation rl = WorldDemonWillHandler.getDimensionResourceLocation((Level) event.getLevel());
 //		int dim = event.getWorld().provider.getDimension();
 
 		ChunkPos loc = event.getChunk().getPos();
@@ -214,11 +214,11 @@ public class WillHandler
 	@SubscribeEvent
 	public void chunkUnload(ChunkDataEvent.Unload event)
 	{
-		if (!(event.getWorld() instanceof Level))
+		if (!(event.getLevel() instanceof Level))
 		{
 			return;
 		}
-		ResourceLocation rl = WorldDemonWillHandler.getDimensionResourceLocation((Level) event.getWorld());
+		ResourceLocation rl = WorldDemonWillHandler.getDimensionResourceLocation((Level) event.getLevel());
 
 		ChunkPos loc = event.getChunk().getPos();
 
@@ -232,11 +232,11 @@ public class WillHandler
 	@SubscribeEvent
 	public void chunkLoad(ChunkDataEvent.Load event)
 	{
-		if (!(event.getWorld() instanceof Level))
+		if (!(event.getLevel() instanceof Level))
 		{
 			return;
 		}
-		ResourceLocation rl = WorldDemonWillHandler.getDimensionResourceLocation((Level) event.getWorld());
+		ResourceLocation rl = WorldDemonWillHandler.getDimensionResourceLocation((Level) event.getLevel());
 //		int dim = event.getWorld().provider.getDimension();
 		if (event.getData().getCompound("BloodMagic").contains("base"))
 		{
@@ -247,7 +247,7 @@ public class WillHandler
 			WorldDemonWillHandler.addWillChunk(rl, event.getChunk(), base, current);
 		} else
 		{
-			WorldDemonWillHandler.generateWill(event.getChunk(), (Level) event.getWorld());
+			WorldDemonWillHandler.generateWill(event.getChunk(), (Level) event.getLevel());
 		}
 	}
 }

@@ -14,7 +14,7 @@ public class ItemDungeonTester extends Item
 {
 	public ItemDungeonTester()
 	{
-		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1));
 	}
 
 	@Override

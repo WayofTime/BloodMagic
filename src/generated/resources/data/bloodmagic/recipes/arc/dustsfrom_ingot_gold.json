@@ -1,15 +1,15 @@
 {
   "type": "bloodmagic:arc",
+  "consumeingredient": false,
   "input": {
     "tag": "forge:ingots/gold"
   },
   "inputsize": 1,
-  "tool": {
-    "tag": "bloodmagic:arc/explosive"
-  },
+  "mainoutputchance": 0.0,
   "output": {
     "item": "bloodmagic:goldsand"
   },
-  "consumeingredient": false,
-  "mainoutputchance": 0.0
+  "tool": {
+    "tag": "bloodmagic:arc/explosive"
+  }
 }

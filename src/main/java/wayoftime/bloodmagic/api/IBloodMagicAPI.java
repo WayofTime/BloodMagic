@@ -7,11 +7,11 @@ import javax.annotation.Nonnull;
 
 import org.apache.logging.log4j.LogManager;
 
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.NonNullList;
+import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.util.LazyLoadedValue;
-import net.minecraft.core.NonNullList;
+import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * The main interface between a plugin and Blood Magic's internals.
@@ -128,14 +128,24 @@ public interface IBloodMagicAPI
 	}
 
 	/**
-	 * Registers a {@link Function<PlayerEntity, NonNullList<ItemStack>>} for
+	 * Registers a {@link Function<Player,NonNullList<ItemStack>>} for
 	 * inventory handling.
 	 * 
 	 * @param inventoryIdentifier String identifier for the inventory.
-	 * @param function            Function which inputs a Player Entity and outputs
+	 * @param provider            Function which inputs a Player Entity and outputs
 	 *                            a NonNullList of ItemStacks.
 	 */
 	default void registerInventoryProvider(String inventoryIdentifier, Function<Player, NonNullList<ItemStack>> provider)
+	{
+	}
+
+	/**
+	 * Registers an already registered inventory to be considered active (eg.
+	 * Main/Offhand, Curios)
+	 * 
+	 * @param inventoryIdentifier String identifier for the inventory.
+	 */
+	default void registerActiveInventoryProvider(String inventoryIdentifier)
 	{
 	}
 

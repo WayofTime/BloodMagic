@@ -1,21 +1,17 @@
 package wayoftime.bloodmagic.common.item.routing;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.BloodMagic;
@@ -25,11 +21,14 @@ import wayoftime.bloodmagic.common.routing.IRoutingNode;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class ItemNodeRouter extends Item implements INodeRenderer
 {
 	public ItemNodeRouter()
 	{
-		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1));
 	}
 
 	@Override
@@ -43,7 +42,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 
 		if (coords != null && tag != null)
 		{
-			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.telepositionfocus.coords", coords.getX(), coords.getY(), coords.getZ()));
+			tooltip.add(Component.translatable("tooltip.bloodmagic.telepositionfocus.coords", coords.getX(), coords.getY(), coords.getZ()));
 		}
 	}
 
@@ -70,7 +69,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 			if (!containedPos.equals(BlockPos.ZERO))
 			{
 				this.setBlockPos(stack, BlockPos.ZERO);
-				player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.routing.remove"), true);
+				player.displayClientMessage(Component.translatable("chat.bloodmagic.routing.remove"), true);
 				return InteractionResult.FAIL;
 			}
 			return InteractionResult.FAIL;
@@ -80,17 +79,17 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 		if (containedPos.equals(BlockPos.ZERO))
 		{
 			this.setBlockPos(stack, pos);
-			player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.routing.set"), true);
+			player.displayClientMessage(Component.translatable("chat.bloodmagic.routing.set"), true);
 			return InteractionResult.SUCCESS;
 		} else
 		{
 			if (containedPos.distSqr(pos) > 16 * 16)
 			{
-				player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.routing.distance"), true);
+				player.displayClientMessage(Component.translatable("chat.bloodmagic.routing.distance"), true);
 				return InteractionResult.SUCCESS;
 			} else if (containedPos.equals(pos))
 			{
-				player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.routing.same"), true);
+				player.displayClientMessage(Component.translatable("chat.bloodmagic.routing.same"), true);
 				return InteractionResult.SUCCESS;
 			}
 			BlockEntity pastTile = world.getBlockEntity(containedPos);
@@ -110,7 +109,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 							master.addConnection(pos, containedPos);
 							master.addNodeToList(node);
 							node.addConnection(containedPos);
-							player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.routing.link.master"), true);
+							player.displayClientMessage(Component.translatable("chat.bloodmagic.routing.link.master"), true);
 							this.setBlockPos(stack, BlockPos.ZERO);
 							return InteractionResult.SUCCESS;
 						}
@@ -118,7 +117,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 					{
 						master.addConnection(pos, containedPos);
 						node.addConnection(containedPos);
-						player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.routing.link.master"), true);
+						player.displayClientMessage(Component.translatable("chat.bloodmagic.routing.link.master"), true);
 						this.setBlockPos(stack, BlockPos.ZERO);
 						return InteractionResult.SUCCESS;
 					}
@@ -135,7 +134,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 							master.addConnection(pos, containedPos);
 							pastNode.addConnection(pos);
 							master.addNodeToList(pastNode);
-							player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.routing.link.master"), true);
+							player.displayClientMessage(Component.translatable("chat.bloodmagic.routing.link.master"), true);
 							this.setBlockPos(stack, BlockPos.ZERO);
 							return InteractionResult.SUCCESS;
 						}
@@ -143,7 +142,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 					{
 						master.addConnection(pos, containedPos);
 						pastNode.addConnection(pos);
-						player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.routing.link.master"), true);
+						player.displayClientMessage(Component.translatable("chat.bloodmagic.routing.link.master"), true);
 						this.setBlockPos(stack, BlockPos.ZERO);
 						return InteractionResult.SUCCESS;
 					}
@@ -163,7 +162,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 						}
 						pastNode.addConnection(pos);
 						node.addConnection(containedPos);
-						player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.routing.link"), true);
+						player.displayClientMessage(Component.translatable("chat.bloodmagic.routing.link"), true);
 						this.setBlockPos(stack, BlockPos.ZERO);
 						return InteractionResult.SUCCESS;
 					} else if (pastNode.getMasterPos().equals(BlockPos.ZERO)) // pastNode is not connected to a
@@ -179,7 +178,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 						}
 						pastNode.addConnection(pos);
 						node.addConnection(containedPos);
-						player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.routing.link"), true);
+						player.displayClientMessage(Component.translatable("chat.bloodmagic.routing.link"), true);
 						this.setBlockPos(stack, BlockPos.ZERO);
 						return InteractionResult.SUCCESS;
 					} else if (node.getMasterPos().equals(BlockPos.ZERO)) // node is not connected to a master, but
@@ -195,7 +194,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer
 						}
 						pastNode.addConnection(pos);
 						node.addConnection(containedPos);
-						player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.routing.link"), true);
+						player.displayClientMessage(Component.translatable("chat.bloodmagic.routing.link"), true);
 						this.setBlockPos(stack, BlockPos.ZERO);
 						return InteractionResult.SUCCESS;
 					} else

@@ -1,12 +1,6 @@
 package wayoftime.bloodmagic.common.item;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -15,8 +9,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -55,6 +47,11 @@ import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.util.helper.RitualHelper;
 import wayoftime.bloodmagic.util.helper.TextHelper;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
 public class ItemRitualDiviner extends Item
 {
 	final int type;
@@ -63,7 +60,7 @@ public class ItemRitualDiviner extends Item
 
 	public ItemRitualDiviner(int type)
 	{
-		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1));
 		this.type = type;
 	}
 
@@ -310,7 +307,7 @@ public class ItemRitualDiviner extends Item
 		Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(this.getCurrentRitual(stack));
 		if (ritual != null)
 		{
-			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.diviner.currentRitual", new TranslatableComponent(ritual.getTranslationKey())).withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("tooltip.bloodmagic.diviner.currentRitual", Component.translatable(ritual.getTranslationKey())).withStyle(ChatFormatting.GRAY));
 
 			boolean sneaking = Screen.hasShiftDown();
 //			boolean extraInfo = sneaking && Keyboard.isKeyDown(Keyboard.KEY_M);
@@ -318,19 +315,19 @@ public class ItemRitualDiviner extends Item
 
 			if (extraInfo)
 			{
-				tooltip.add(new TextComponent(""));
+				tooltip.add(Component.literal(""));
 
 				for (EnumDemonWillType type : EnumDemonWillType.values())
 				{
 					if (TextHelper.canTranslate(ritual.getTranslationKey() + "." + type.name().toLowerCase(Locale.ROOT) + ".info"))
 					{
-						tooltip.add(new TranslatableComponent(ritual.getTranslationKey() + "." + type.name().toLowerCase(Locale.ROOT) + ".info"));
+						tooltip.add(Component.translatable(ritual.getTranslationKey() + "." + type.name().toLowerCase(Locale.ROOT) + ".info"));
 					}
 				}
 			} else if (sneaking)
 			{
-				tooltip.add(new TranslatableComponent(tooltipBase + "currentDirection", Utils.toFancyCasing(getDirection(stack).name())).withStyle(ChatFormatting.GRAY));
-				tooltip.add(new TextComponent(""));
+				tooltip.add(Component.translatable(tooltipBase + "currentDirection", Utils.toFancyCasing(getDirection(stack).name())).withStyle(ChatFormatting.GRAY));
+				tooltip.add(Component.literal(""));
 
 				Tuple<Integer, Map<EnumRuneType, Integer>> runeCount = RitualHelper.countRunes(ritual);
 				int totalRunes = runeCount.getA();
@@ -340,22 +337,22 @@ public class ItemRitualDiviner extends Item
 					int count = runeMap.getOrDefault(type, 0);
 					if (count > 0)
 					{
-						tooltip.add(new TranslatableComponent(tooltipBase + type.translationKey, count).withStyle(type.colorCode));
+						tooltip.add(Component.translatable(tooltipBase + type.translationKey, count).withStyle(type.colorCode));
 					}
 				}
-				tooltip.add(new TextComponent(""));
-				tooltip.add(new TranslatableComponent(tooltipBase + "totalRune", totalRunes).withStyle(ChatFormatting.GRAY));
+				tooltip.add(Component.literal(""));
+				tooltip.add(Component.translatable(tooltipBase + "totalRune", totalRunes).withStyle(ChatFormatting.GRAY));
 			} else
 			{
-				tooltip.add(new TextComponent(""));
+				tooltip.add(Component.literal(""));
 				if (TextHelper.canTranslate(ritual.getTranslationKey() + ".info"))
 				{
-					tooltip.add(new TranslatableComponent(ritual.getTranslationKey() + ".info").withStyle(ChatFormatting.GRAY));
-					tooltip.add(new TextComponent(""));
+					tooltip.add(Component.translatable(ritual.getTranslationKey() + ".info").withStyle(ChatFormatting.GRAY));
+					tooltip.add(Component.literal(""));
 				}
 
-				tooltip.add(new TranslatableComponent(tooltipBase + "extraInfo").withStyle(ChatFormatting.BLUE));
-				tooltip.add(new TranslatableComponent(tooltipBase + "extraExtraInfo").withStyle(ChatFormatting.BLUE));
+				tooltip.add(Component.translatable(tooltipBase + "extraInfo").withStyle(ChatFormatting.BLUE));
+				tooltip.add(Component.translatable(tooltipBase + "extraExtraInfo").withStyle(ChatFormatting.BLUE));
 			}
 		}
 	}
@@ -396,11 +393,11 @@ public class ItemRitualDiviner extends Item
 	public void onUseTick(Level worldIn, LivingEntity entityLiving, ItemStack stack, int count)
 	{
 		setActivatedState(stack, false);
-		if (!entityLiving.level.isClientSide && entityLiving instanceof Player)
+		if (!entityLiving.level().isClientSide && entityLiving instanceof Player)
 		{
 			Player player = (Player) entityLiving;
 
-			HitResult ray = getPlayerPOVHitResult(player.level, player, ClipContext.Fluid.NONE);
+			HitResult ray = getPlayerPOVHitResult(player.level(), player, ClipContext.Fluid.NONE);
 
 			if (ray != null && ray.getType() == HitResult.Type.BLOCK)
 			{
@@ -451,7 +448,7 @@ public class ItemRitualDiviner extends Item
 
 	public void notifyDirectionChange(Direction direction, Player player)
 	{
-		player.displayClientMessage(new TranslatableComponent(tooltipBase + "currentDirection", Utils.toFancyCasing(direction.name())), true);
+		player.displayClientMessage(Component.translatable(tooltipBase + "currentDirection", Utils.toFancyCasing(direction.name())), true);
 	}
 
 	public void setDirection(ItemStack stack, Direction direction)
@@ -557,7 +554,7 @@ public class ItemRitualDiviner extends Item
 		Ritual ritual = BloodMagic.RITUAL_MANAGER.getRitual(key);
 		if (ritual != null)
 		{
-			player.displayClientMessage(new TranslatableComponent(ritual.getTranslationKey()), true);
+			player.displayClientMessage(Component.translatable(ritual.getTranslationKey()), true);
 		}
 	}
 
@@ -632,6 +629,6 @@ public class ItemRitualDiviner extends Item
 
 	public void notifyBlockedBuild(Player player, BlockPos pos)
 	{
-		player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.diviner.blockedBuild", pos.getX(), pos.getY(), pos.getZ()), true);
+		player.displayClientMessage(Component.translatable("chat.bloodmagic.diviner.blockedBuild", pos.getX(), pos.getY(), pos.getZ()), true);
 	}
 }

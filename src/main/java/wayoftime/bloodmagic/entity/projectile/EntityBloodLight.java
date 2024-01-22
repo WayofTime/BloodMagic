@@ -5,6 +5,7 @@ import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,7 +15,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
@@ -47,7 +47,7 @@ public class EntityBloodLight extends ThrowableItemProjectile
 	}
 
 	@Override
-	public Packet<?> getAddEntityPacket()
+	public Packet<ClientGamePacketListener> getAddEntityPacket()
 	{
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
@@ -56,14 +56,13 @@ public class EntityBloodLight extends ThrowableItemProjectile
 	public void tick()
 	{
 		super.tick();
-		HitResult raytraceresult = ProjectileUtil.getHitResult(this, this::canHitEntity);
+		HitResult raytraceresult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
 //		boolean flag = false;
 		if (raytraceresult.getType() == HitResult.Type.BLOCK)
 		{
 			BlockPos blockpos = ((BlockHitResult) raytraceresult).getBlockPos().relative(((BlockHitResult) raytraceresult).getDirection());
-			BlockState blockstate = this.level.getBlockState(blockpos);
-			Material material = blockstate.getMaterial();
-			if (blockstate.isAir() || blockstate.is(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable())
+			BlockState blockstate = this.level().getBlockState(blockpos);
+			if (blockstate.isAir() || blockstate.is(BlockTags.FIRE) || blockstate.canBeReplaced() || blockstate.liquid())
 			{
 				this.getCommandSenderWorld().setBlockAndUpdate(blockpos, BloodMagicBlocks.BLOOD_LIGHT.get().defaultBlockState());
 				this.removeAfterChangingDimensions();
@@ -84,9 +83,7 @@ public class EntityBloodLight extends ThrowableItemProjectile
 				: new ItemParticleOption(ParticleTypes.ITEM, itemstack));
 	}
 
-	/**
-	 * Handler for {@link World#setEntityState}
-	 */
+
 	@OnlyIn(Dist.CLIENT)
 	public void handleEntityEvent(byte id)
 	{
@@ -96,7 +93,7 @@ public class EntityBloodLight extends ThrowableItemProjectile
 
 			for (int i = 0; i < 8; ++i)
 			{
-				this.level.addParticle(iparticledata, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+				this.level().addParticle(iparticledata, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 			}
 		}
 	}

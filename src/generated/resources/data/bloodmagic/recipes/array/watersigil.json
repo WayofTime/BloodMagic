@@ -1,13 +1,13 @@
 {
   "type": "bloodmagic:array",
-  "texture": "bloodmagic:textures/models/alchemyarrays/watersigil.png",
-  "baseinput": {
-    "item": "bloodmagic:reagentwater"
-  },
   "addedinput": {
     "item": "bloodmagic:blankslate"
   },
+  "baseinput": {
+    "item": "bloodmagic:reagentwater"
+  },
   "output": {
     "item": "bloodmagic:watersigil"
-  }
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/watersigil.png"
 }

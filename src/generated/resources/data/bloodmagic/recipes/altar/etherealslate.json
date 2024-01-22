@@ -1,13 +1,13 @@
 {
   "type": "bloodmagic:altar",
+  "altarSyphon": 30000,
+  "consumptionRate": 40,
+  "drainRate": 100,
   "input": {
     "item": "bloodmagic:demonslate"
   },
   "output": {
     "item": "bloodmagic:etherealslate"
   },
-  "upgradeLevel": 4,
-  "altarSyphon": 30000,
-  "consumptionRate": 40,
-  "drainRate": 100
+  "upgradeLevel": 4
 }

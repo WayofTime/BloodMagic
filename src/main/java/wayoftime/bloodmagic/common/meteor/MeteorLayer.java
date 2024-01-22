@@ -7,6 +7,7 @@ import java.util.Random;
 
 import javax.annotation.Nonnull;
 
+import net.minecraft.util.RandomSource;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.gson.JsonArray;
@@ -161,7 +162,7 @@ public class MeteorLayer
 		}
 	}
 
-	public void recalculateMaxWeight(Random rand, Level world)
+	public void recalculateMaxWeight(RandomSource rand, Level world)
 	{
 		totalMaxWeight = additionalTotalWeight;
 
@@ -183,7 +184,7 @@ public class MeteorLayer
 		totalMaxWeight = Math.max(minWeight, totalMaxWeight);
 	}
 
-	public BlockState getRandomState(Random rand, Level world)
+	public BlockState getRandomState(RandomSource rand, Level world)
 	{
 		Block block = fillBlock.getRandomBlock(rand, world);
 		if (totalMaxWeight > 0)

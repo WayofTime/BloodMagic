@@ -15,12 +15,11 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
 import wayoftime.bloodmagic.util.Constants;
 
-public class AlchemyTableRecipeSerializer<RECIPE extends RecipeAlchemyTable> extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RECIPE>
+public class AlchemyTableRecipeSerializer<RECIPE extends RecipeAlchemyTable>  implements RecipeSerializer<RECIPE>
 {
 
 	private final IFactory<RECIPE> factory;

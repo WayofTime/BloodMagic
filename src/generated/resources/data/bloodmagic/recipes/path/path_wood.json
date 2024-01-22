@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     {
       "tag": "minecraft:planks"
@@ -19,7 +20,7 @@
     }
   ],
   "result": {
-    "item": "bloodmagic:woodbrickpath",
-    "count": 4
+    "count": 4,
+    "item": "bloodmagic:woodbrickpath"
   }
 }

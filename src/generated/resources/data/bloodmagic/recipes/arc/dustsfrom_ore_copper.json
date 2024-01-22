@@ -1,16 +1,16 @@
 {
   "type": "bloodmagic:arc",
+  "consumeingredient": false,
   "input": {
     "tag": "forge:ores/copper"
   },
   "inputsize": 1,
+  "mainoutputchance": 0.0,
+  "output": {
+    "count": 3,
+    "item": "bloodmagic:coppersand"
+  },
   "tool": {
     "tag": "bloodmagic:arc/cuttingfluid"
-  },
-  "output": {
-    "item": "bloodmagic:coppersand",
-    "count": 3
-  },
-  "consumeingredient": false,
-  "mainoutputchance": 0.0
+  }
 }

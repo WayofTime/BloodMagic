@@ -1,9 +1,8 @@
 package wayoftime.bloodmagic.client.hud.element;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -27,7 +26,7 @@ public abstract class HUDElement
 		return true;
 	}
 
-	public abstract void draw(PoseStack matrixStack, float partialTicks, int drawX, int drawY);
+	public abstract void draw(GuiGraphics guiGraphics, float partialTicks, int drawX, int drawY);
 
 	public final int getWidth()
 	{
@@ -39,10 +38,10 @@ public abstract class HUDElement
 		return height;
 	}
 
-	public void blit(PoseStack matrixStack, int x, int y, int uOffset, int vOffset, int uWidth, int vHeight)
-	{
-		GuiComponent.blit(matrixStack, x, y, this.blitOffset, (float) uOffset, (float) vOffset, uWidth, vHeight, 256, 256);
-	}
+//	public void blit(PoseStack matrixStack, int x, int y, int uOffset, int vOffset, int uWidth, int vHeight)
+//	{
+//		GuiComponent.blit(matrixStack, x, y, this.blitOffset, (float) uOffset, (float) vOffset, uWidth, vHeight, 256, 256);
+//	}
 
 	@Override
 	public String toString()

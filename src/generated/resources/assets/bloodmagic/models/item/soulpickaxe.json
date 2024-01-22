@@ -1,34 +1,34 @@
 {
   "overrides": [
     {
+      "model": "bloodmagic:item/variants/soulpickaxe",
       "predicate": {
         "bloodmagic:type": 0.0
-      },
-      "model": "bloodmagic:item/variants/soulpickaxe"
+      }
     },
     {
+      "model": "bloodmagic:item/variants/soulpickaxe_corrosive",
       "predicate": {
         "bloodmagic:type": 1.0
-      },
-      "model": "bloodmagic:item/variants/soulpickaxe_corrosive"
+      }
     },
     {
+      "model": "bloodmagic:item/variants/soulpickaxe_destructive",
       "predicate": {
         "bloodmagic:type": 2.0
-      },
-      "model": "bloodmagic:item/variants/soulpickaxe_destructive"
+      }
     },
     {
+      "model": "bloodmagic:item/variants/soulpickaxe_vengeful",
       "predicate": {
         "bloodmagic:type": 3.0
-      },
-      "model": "bloodmagic:item/variants/soulpickaxe_vengeful"
+      }
     },
     {
+      "model": "bloodmagic:item/variants/soulpickaxe_steadfast",
       "predicate": {
         "bloodmagic:type": 4.0
-      },
-      "model": "bloodmagic:item/variants/soulpickaxe_steadfast"
+      }
     }
   ]
 }

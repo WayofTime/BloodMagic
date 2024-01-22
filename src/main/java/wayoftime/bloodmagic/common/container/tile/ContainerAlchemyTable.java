@@ -26,7 +26,7 @@ public class ContainerAlchemyTable extends AbstractContainerMenu
 
 	public ContainerAlchemyTable(int windowId, Inventory playerInventory, FriendlyByteBuf extraData)
 	{
-		this((TileAlchemyTable) playerInventory.player.level.getBlockEntity(extraData.readBlockPos()), windowId, playerInventory);
+		this((TileAlchemyTable) playerInventory.player.level().getBlockEntity(extraData.readBlockPos()), windowId, playerInventory);
 	}
 
 	public ContainerAlchemyTable(@Nullable TileAlchemyTable tile, int windowId, Inventory playerInventory)

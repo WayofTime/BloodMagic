@@ -12,7 +12,7 @@ public class ItemDemonCrystal extends Item implements IDiscreteDemonWill
 
 	public ItemDemonCrystal(EnumDemonWillType type)
 	{
-		super(new Item.Properties().tab(BloodMagic.TAB));
+		super(new Item.Properties());
 		this.type = type;
 	}
 

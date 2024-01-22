@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -74,7 +75,7 @@ public class BlockSpikes extends Block
 		if (entityIn.getType() != EntityType.ITEM)
 		{
 			entityIn.makeStuckInBlock(state, new Vec3(0.55D, (double) 0.20F, 0.55D));
-			entityIn.hurt(DamageSource.GENERIC, 2.0F);
+			entityIn.hurt(entityIn.damageSources().generic(), 2.0F);
 		}
 	}
 

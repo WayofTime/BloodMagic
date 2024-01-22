@@ -1,26 +1,20 @@
 package wayoftime.bloodmagic.ritual;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.UUID;
-import java.util.function.Consumer;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.will.DemonWillHolder;
+
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.function.Consumer;
 
 /**
  * Abstract class for creating new rituals. Register your ritual by annotating
@@ -261,7 +255,7 @@ public abstract class Ritual
 		AreaDescriptor descriptor = this.getBlockRange(range);
 		if (descriptor == null)
 		{
-			return new TranslatableComponent("ritual.bloodmagic.blockRange.tooBig", "?");
+			return Component.translatable("ritual.bloodmagic.blockRange.tooBig", "?");
 		}
 
 		List<EnumDemonWillType> willConfig = master.getActiveWillConfig();
@@ -273,26 +267,26 @@ public abstract class Ritual
 
 		if (maxVolume > 0 && descriptor.getVolumeForOffsets(offset1, offset2) > maxVolume)
 		{
-			return new TranslatableComponent("ritual.bloodmagic.blockRange.tooBig", maxVolume);
+			return Component.translatable("ritual.bloodmagic.blockRange.tooBig", maxVolume);
 		} else
 		{
-			return new TranslatableComponent("ritual.bloodmagic.blockRange.tooFar", maxVertical, maxHorizontal);
+			return Component.translatable("ritual.bloodmagic.blockRange.tooFar", maxVertical, maxHorizontal);
 		}
 	}
 
 	public Component[] provideInformationOfRitualToPlayer(Player player)
 	{
-		return new Component[] { new TranslatableComponent(this.getTranslationKey() + ".info") };
+		return new Component[] { Component.translatable(this.getTranslationKey() + ".info") };
 	}
 
 	public Component provideInformationOfRangeToPlayer(Player player, String range)
 	{
 		if (getListOfRanges().contains(range))
 		{
-			return new TranslatableComponent(this.getTranslationKey() + "." + range + ".info");
+			return Component.translatable(this.getTranslationKey() + "." + range + ".info");
 		} else
 		{
-			return new TranslatableComponent("ritual.bloodmagic.blockRange.noRange");
+			return Component.translatable("ritual.bloodmagic.blockRange.noRange");
 		}
 	}
 

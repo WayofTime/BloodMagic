@@ -1,15 +1,15 @@
 {
   "type": "bloodmagic:soulforge",
+  "drain": 0.0,
   "input0": {
     "item": "bloodmagic:soulgempetty"
   },
   "input1": {
     "item": "minecraft:iron_axe"
   },
+  "minimumDrain": 0.0,
   "output": {
     "item": "bloodmagic:soulaxe",
     "nbt": "{Damage:0}"
-  },
-  "minimumDrain": 0.0,
-  "drain": 0.0
+  }
 }

@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.common.item;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.fml.util.thread.EffectiveSide;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.core.data.SoulTicket;
+import wayoftime.bloodmagic.util.BMLog;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 
@@ -29,7 +31,7 @@ public class ItemLavaCrystal extends ItemBindableBase
 	}
 
 	@Override
-	public ItemStack getContainerItem(ItemStack stack)
+	public ItemStack getCraftingRemainingItem(ItemStack stack)
 	{
 		Binding binding = getBinding(stack);
 		if (binding != null)
@@ -41,7 +43,7 @@ public class ItemLavaCrystal extends ItemBindableBase
 	}
 
 	@Override
-	public boolean hasContainerItem(ItemStack stack)
+	public boolean hasCraftingRemainingItem(ItemStack stack)
 	{
 		return true;
 	}
@@ -72,22 +74,25 @@ public class ItemLavaCrystal extends ItemBindableBase
 		return -1;
 	}
 
-//	@Nullable
-//	@Override
-//	public Binding getBinding(ItemStack stack)
-//	{
-//		if (stack.getTag() == null) // hasTagCompound doesn't work on empty stacks with tags
-//			return null;
-//
-//		NBTBase bindingTag = stack.getTag().get("binding");
-//		if (bindingTag == null || bindingTag.getId() != 10 || bindingTag.isEmpty()) // Make sure it's both a tag
-//																					// compound and that it has actual
-//																					// data.
-//			return null;
-//
-//		NBTTagCompound nbt = (NBTTagCompound) bindingTag;
-//		return new Binding(NBTUtil.getUUIDFromTag(nbt.getCompoundTag("id")), nbt.getString("name"));
-//	}
+	// @Nullable
+	// @Override
+	// public Binding getBinding(ItemStack stack)
+	// {
+	// if (stack.getTag() == null) // hasTagCompound doesn't work on empty stacks
+	// with tags
+	// return null;
+	//
+	// NBTBase bindingTag = stack.getTag().get("binding");
+	// if (bindingTag == null || bindingTag.getId() != 10 || bindingTag.isEmpty())
+	// // Make sure it's both a tag
+	// // compound and that it has actual
+	// // data.
+	// return null;
+	//
+	// NBTTagCompound nbt = (NBTTagCompound) bindingTag;
+	// return new Binding(NBTUtil.getUUIDFromTag(nbt.getCompoundTag("id")),
+	// nbt.getString("name"));
+	// }
 
 	@Override
 	public InteractionResult useOn(UseOnContext context)

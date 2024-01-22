@@ -1,16 +1,15 @@
 package wayoftime.bloodmagic.core.living;
 
-import java.util.List;
-
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import wayoftime.bloodmagic.util.Constants;
+
+import java.util.List;
 
 public interface ILivingContainer
 {
@@ -63,7 +62,7 @@ public interface ILivingContainer
 		if (stats != null)
 		{
 			if (trainable)
-				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.livingarmour.upgrade.points", stats.getUsedPoints(), stats.getMaxPoints()).withStyle(ChatFormatting.GOLD));
+				tooltip.add(Component.translatable("tooltip.bloodmagic.livingarmour.upgrade.points", stats.getUsedPoints(), stats.getMaxPoints()).withStyle(ChatFormatting.GOLD));
 
 			stats.getUpgrades().forEach((k, v) -> {
 				if (k.getLevel(v.intValue()) <= 0 && !displayIfLevelZero(stack))
@@ -75,11 +74,11 @@ public interface ILivingContainer
 				{
 					int level = k.getLevel(v.intValue());
 					if (level > 0)
-						tooltip.add(new TranslatableComponent("%s %s", new TranslatableComponent(k.getTranslationKey()), new TranslatableComponent("enchantment.level." + level)).withStyle(ChatFormatting.GRAY));
+						tooltip.add(Component.translatable("%s %s", Component.translatable(k.getTranslationKey()), Component.translatable("enchantment.level." + level)).withStyle(ChatFormatting.GRAY));
 					else
-						tooltip.add(new TranslatableComponent(k.getTranslationKey()).withStyle(ChatFormatting.GRAY));
+						tooltip.add(Component.translatable(k.getTranslationKey()).withStyle(ChatFormatting.GRAY));
 				} else
-					tooltip.add(new TranslatableComponent("%s %s", new TranslatableComponent(k.getTranslationKey()), (": " + v.intValue() + "/" + k.getNextRequirement(v.intValue()))).withStyle(ChatFormatting.GRAY));
+					tooltip.add(Component.translatable("%s %s", Component.translatable(k.getTranslationKey()), (": " + v.intValue() + "/" + k.getNextRequirement(v.intValue()))).withStyle(ChatFormatting.GRAY));
 			});
 		}
 	}

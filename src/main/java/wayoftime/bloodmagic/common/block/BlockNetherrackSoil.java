@@ -55,7 +55,7 @@ public class BlockNetherrackSoil extends Block
 	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos)
 	{
 		BlockState blockstate = worldIn.getBlockState(pos.above());
-		return !blockstate.getMaterial().isSolid() || blockstate.getBlock() instanceof FenceGateBlock || blockstate.getBlock() instanceof MovingPistonBlock;
+		return !blockstate.isSolid() || blockstate.getBlock() instanceof FenceGateBlock || blockstate.getBlock() instanceof MovingPistonBlock;
 	}
 
 	public BlockState getStateForPlacement(BlockPlaceContext context)

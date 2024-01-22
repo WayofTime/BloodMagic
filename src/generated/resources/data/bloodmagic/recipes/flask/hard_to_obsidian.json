@@ -8,14 +8,14 @@
       "item": "minecraft:crying_obsidian"
     }
   ],
-  "outputEffect": [
-    {
-      "effect": "bloodmagic:obsidian_cloak",
-      "baseDuration": 3600
-    }
-  ],
   "inputEffect": [
     "bloodmagic:hard_cloak"
+  ],
+  "outputEffect": [
+    {
+      "baseDuration": 3600,
+      "effect": "bloodmagic:obsidian_cloak"
+    }
   ],
   "syphon": 1000,
   "ticks": 200,

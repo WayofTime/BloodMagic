@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import wayoftime.bloodmagic.BloodMagic;
@@ -109,8 +109,8 @@ public class RitualHarvest extends Ritual
 		BlockState harvestState = world.getBlockState(cropPos);
 		BlockEntity potentialInventory = world.getBlockEntity(controllerPos.above());
 		IItemHandler itemHandler = null;
-		if (potentialInventory != null && potentialInventory.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).isPresent())
-			itemHandler = potentialInventory.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).resolve().get();
+		if (potentialInventory != null && potentialInventory.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN).isPresent())
+			itemHandler = potentialInventory.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN).resolve().get();
 
 		for (IHarvestHandler handler : HarvestRegistry.getHarvestHandlers())
 		{

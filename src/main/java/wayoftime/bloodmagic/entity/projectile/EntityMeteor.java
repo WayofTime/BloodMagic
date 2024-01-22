@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.entity.projectile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -41,7 +42,7 @@ public class EntityMeteor extends ThrowableProjectile
 	}
 
 	@Override
-	public Packet<?> getAddEntityPacket()
+	public Packet<ClientGamePacketListener> getAddEntityPacket()
 	{
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
@@ -95,7 +96,7 @@ public class EntityMeteor extends ThrowableProjectile
 
 	protected void onInsideBlock(BlockState state)
 	{
-		if (level.isClientSide)
+		if (level().isClientSide)
 		{
 			return;
 		}
@@ -113,10 +114,10 @@ public class EntityMeteor extends ThrowableProjectile
 
 //		System.out.println("Contained item: " + containedStack.toString());
 
-		RecipeMeteor recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getMeteor(level, containedStack);
+		RecipeMeteor recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getMeteor(level(), containedStack);
 		if (recipe != null)
 		{
-			recipe.spawnMeteorInWorld(level, blockpos);
+			recipe.spawnMeteorInWorld(level(), blockpos);
 		}
 
 //		this.getEntityWorld().setBlockState(blockpos, BloodMagicBlocks.AIR_RITUAL_STONE.get().getDefaultState());

@@ -1,19 +1,19 @@
 {
   "type": "bloodmagic:arc",
+  "consumeingredient": false,
   "input": {
     "item": "minecraft:terracotta"
-  },
-  "inputsize": 1,
-  "tool": {
-    "tag": "bloodmagic:arc/hydrate"
   },
   "inputFluid": {
     "amount": 200,
     "fluid": "minecraft:water"
   },
+  "inputsize": 1,
+  "mainoutputchance": 0.0,
   "output": {
     "item": "minecraft:clay"
   },
-  "consumeingredient": false,
-  "mainoutputchance": 0.0
+  "tool": {
+    "tag": "bloodmagic:arc/hydrate"
+  }
 }

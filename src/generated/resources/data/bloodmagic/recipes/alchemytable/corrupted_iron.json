@@ -9,8 +9,8 @@
     }
   ],
   "output": {
-    "item": "bloodmagic:irongravel",
-    "count": 2
+    "count": 2,
+    "item": "bloodmagic:irongravel"
   },
   "syphon": 100,
   "ticks": 50,

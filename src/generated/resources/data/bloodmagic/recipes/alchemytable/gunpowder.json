@@ -12,8 +12,8 @@
     }
   ],
   "output": {
-    "item": "minecraft:gunpowder",
-    "count": 3
+    "count": 3,
+    "item": "minecraft:gunpowder"
   },
   "syphon": 0,
   "ticks": 100,

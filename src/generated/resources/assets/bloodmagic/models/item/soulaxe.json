@@ -1,34 +1,34 @@
 {
   "overrides": [
     {
+      "model": "bloodmagic:item/variants/soulaxe",
       "predicate": {
         "bloodmagic:type": 0.0
-      },
-      "model": "bloodmagic:item/variants/soulaxe"
+      }
     },
     {
+      "model": "bloodmagic:item/variants/soulaxe_corrosive",
       "predicate": {
         "bloodmagic:type": 1.0
-      },
-      "model": "bloodmagic:item/variants/soulaxe_corrosive"
+      }
     },
     {
+      "model": "bloodmagic:item/variants/soulaxe_destructive",
       "predicate": {
         "bloodmagic:type": 2.0
-      },
-      "model": "bloodmagic:item/variants/soulaxe_destructive"
+      }
     },
     {
+      "model": "bloodmagic:item/variants/soulaxe_vengeful",
       "predicate": {
         "bloodmagic:type": 3.0
-      },
-      "model": "bloodmagic:item/variants/soulaxe_vengeful"
+      }
     },
     {
+      "model": "bloodmagic:item/variants/soulaxe_steadfast",
       "predicate": {
         "bloodmagic:type": 4.0
-      },
-      "model": "bloodmagic:item/variants/soulaxe_steadfast"
+      }
     }
   ]
 }

@@ -1,5 +1,7 @@
 {
   "type": "bloodmagic:flask_potioneffect",
+  "baseDuration": 0,
+  "effect": "minecraft:instant_health",
   "input": [
     {
       "item": "bloodmagic:simplecatalyst"
@@ -10,7 +12,5 @@
   ],
   "syphon": 500,
   "ticks": 200,
-  "upgradeLevel": 1,
-  "effect": "minecraft:instant_health",
-  "baseDuration": 0
+  "upgradeLevel": 1
 }

@@ -1,13 +1,13 @@
 {
   "type": "bloodmagic:altar",
+  "altarSyphon": 1000,
+  "consumptionRate": 5,
+  "drainRate": 0,
   "input": {
     "item": "minecraft:bucket"
   },
   "output": {
     "item": "bloodmagic:life_essence_bucket"
   },
-  "upgradeLevel": 0,
-  "altarSyphon": 1000,
-  "consumptionRate": 5,
-  "drainRate": 0
+  "upgradeLevel": 0
 }

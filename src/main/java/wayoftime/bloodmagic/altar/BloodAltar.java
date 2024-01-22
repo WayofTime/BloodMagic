@@ -1,7 +1,6 @@
 package wayoftime.bloodmagic.altar;
 
 import com.google.common.base.Enums;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -14,14 +13,15 @@ import net.minecraft.world.level.block.RedstoneLampBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.ItemHandlerHelper;
 import wayoftime.bloodmagic.api.event.BloodMagicCraftedEvent;
 import wayoftime.bloodmagic.block.enums.BloodRuneType;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.common.fluid.BloodMagicFluids;
 import wayoftime.bloodmagic.common.item.BloodOrb;
 import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.IBloodOrb;
@@ -37,10 +37,10 @@ public class BloodAltar// implements IFluidHandler
 
 	public boolean isActive;
 
-	protected FluidStack fluidOutput = new FluidStack(BloodMagicBlocks.LIFE_ESSENCE_FLUID.get(), 0); // TODO: Fix
-	protected FluidStack fluidInput = new FluidStack(BloodMagicBlocks.LIFE_ESSENCE_FLUID.get(), 0);
+	protected FluidStack fluidOutput = new FluidStack(BloodMagicFluids.LIFE_ESSENCE_FLUID.get(), 0);
+	protected FluidStack fluidInput = new FluidStack(BloodMagicFluids.LIFE_ESSENCE_FLUID.get(), 0);
 
-	protected FluidTank tank = new FluidTank(FluidAttributes.BUCKET_VOLUME);
+	protected FluidTank tank = new FluidTank(FluidType.BUCKET_VOLUME);
 
 	private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
 
@@ -48,8 +48,8 @@ public class BloodAltar// implements IFluidHandler
 	private int internalCounter = 0;
 	private AltarTier altarTier = AltarTier.ONE;
 	private AltarUpgrade upgrade;
-	private int capacity = FluidAttributes.BUCKET_VOLUME * 10;
-	private FluidStack fluid = new FluidStack(BloodMagicBlocks.LIFE_ESSENCE_FLUID.get(), 0);
+	private int capacity = FluidType.BUCKET_VOLUME * 10;
+	private FluidStack fluid = new FluidStack(BloodMagicFluids.LIFE_ESSENCE_FLUID.get(), 0);
 	private int liquidRequired; // mB
 	private boolean canBeFilled;
 	private int consumptionRate;
@@ -64,7 +64,7 @@ public class BloodAltar// implements IFluidHandler
 	private int accelerationUpgrades;
 	private boolean isUpgraded;
 	private boolean isResultBlock;
-	private int bufferCapacity = FluidAttributes.BUCKET_VOLUME;
+	private int bufferCapacity = FluidType.BUCKET_VOLUME;
 	private int progress;
 	private int lockdownDuration;
 	private int demonBloodDuration;
@@ -89,17 +89,17 @@ public class BloodAltar// implements IFluidHandler
 
 			if (fluid != null)
 			{
-				setMainFluid(new FluidStack(BloodMagicBlocks.LIFE_ESSENCE_FLUID.get(), fluid.getAmount()));
+				setMainFluid(new FluidStack(BloodMagicFluids.LIFE_ESSENCE_FLUID.get(), fluid.getAmount()));
 //				setMainFluid(fluid);
 			} else
 			{
 //				setMainFluid(new FluidStack(BloodMagicBlocks.LIFE_ESSENCE_FLUID.get(), fluid.getAmount()));
 			}
 
-			FluidStack fluidOut = new FluidStack(BloodMagicBlocks.LIFE_ESSENCE_FLUID.get(), tagCompound.getInt(Constants.NBT.OUTPUT_AMOUNT));
+			FluidStack fluidOut = new FluidStack(BloodMagicFluids.LIFE_ESSENCE_FLUID.get(), tagCompound.getInt(Constants.NBT.OUTPUT_AMOUNT));
 			setOutputFluid(fluidOut);
 
-			FluidStack fluidIn = new FluidStack(BloodMagicBlocks.LIFE_ESSENCE_FLUID.get(), tagCompound.getInt(Constants.NBT.INPUT_AMOUNT));
+			FluidStack fluidIn = new FluidStack(BloodMagicFluids.LIFE_ESSENCE_FLUID.get(), tagCompound.getInt(Constants.NBT.INPUT_AMOUNT));
 			setInputFluid(fluidIn);
 		}
 
@@ -483,11 +483,11 @@ public class BloodAltar// implements IFluidHandler
 			this.orbCapacityMultiplier = (float) (1 + 0.02 * upgrade.getLevel(BloodRuneType.ORB));
 			this.chargingFrequency = Math.max(20 - accelerationUpgrades, 1);
 			this.chargingRate = (int) (10 * upgrade.getLevel(BloodRuneType.CHARGING) * (1 + consumptionMultiplier / 2));
-			this.maxCharge = (int) (FluidAttributes.BUCKET_VOLUME * Math.max(0.5 * capacityMultiplier, 1) * upgrade.getLevel(BloodRuneType.CHARGING));
+			this.maxCharge = (int) (FluidType.BUCKET_VOLUME * Math.max(0.5 * capacityMultiplier, 1) * upgrade.getLevel(BloodRuneType.CHARGING));
 		}
 
-		this.capacity = (int) (FluidAttributes.BUCKET_VOLUME * 10 * capacityMultiplier);
-		this.bufferCapacity = (int) (FluidAttributes.BUCKET_VOLUME * 1 * capacityMultiplier);
+		this.capacity = (int) (FluidType.BUCKET_VOLUME * 10 * capacityMultiplier);
+		this.bufferCapacity = (int) (FluidType.BUCKET_VOLUME * 1 * capacityMultiplier);
 
 		if (this.fluid.getAmount() > this.capacity)
 			this.fluid.setAmount(this.capacity);
@@ -687,7 +687,7 @@ public class BloodAltar// implements IFluidHandler
 
 	public int fill(FluidStack resource, boolean doFill)
 	{
-		if (resource == null || resource.getFluid() != BloodMagicBlocks.LIFE_ESSENCE_FLUID.get())
+		if (resource == null || resource.getFluid() != BloodMagicFluids.LIFE_ESSENCE_FLUID.get())
 		{
 			return 0;
 		}
@@ -831,7 +831,7 @@ public class BloodAltar// implements IFluidHandler
 		@Override
 		public boolean isFluidValid(int tank, FluidStack stack)
 		{
-			return stack.getFluid() == BloodMagicBlocks.LIFE_ESSENCE_FLUID.get();
+			return stack.getFluid() == BloodMagicFluids.LIFE_ESSENCE_FLUID.get();
 		}
 
 		@Override

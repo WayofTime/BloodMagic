@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.common.data;
 
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
@@ -8,9 +9,9 @@ import wayoftime.bloodmagic.common.item.BloodMagicItems;
 
 public class GeneratorLanguage extends LanguageProvider
 {
-	public GeneratorLanguage(DataGenerator gen)
+	public GeneratorLanguage(PackOutput output)
 	{
-		super(gen, BloodMagic.MODID, "en_us");
+		super(output, BloodMagic.MODID, "en_us");
 	}
 
 	@Override
@@ -21,6 +22,7 @@ public class GeneratorLanguage extends LanguageProvider
 
 		// Creative Tab
 		add("itemGroup.bloodmagic.creativeTab", "Blood Magic");
+		add("itemGroup.bloodmagic.upgradeTab", "Blood Magic Living Upgrades");
 
 		add("chat.bloodmagic.damageSource", "%s's soul became too weak");
 
@@ -121,7 +123,6 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.arctool.craftspeed", "Increases crafting speed by: x%s.");
 		add("tooltip.bloodmagic.arctool.uses", "Uses remaining: %s.");
 
-		add("itemGroup.bloodmagictab", "Blood Magic");
 
 		add("tooltip.bloodmagic.experienceTome", "A book used to store experience.");
 		add("tooltip.bloodmagic.experienceTome.exp", "Exp: %0.3f");
@@ -665,7 +666,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.SUPPRESSION_SIGIL, "Sigil of Suppression");
 		addItem(BloodMagicItems.TELEPOSITION_SIGIL, "Teleposition Sigil");
 
-		addItem(BloodMagicBlocks.LIFE_ESSENCE_BUCKET, "Bucket of Life");
+		addItem(BloodMagicItems.LIFE_ESSENCE_BUCKET, "Bucket of Life");
 		addItem(BloodMagicItems.ARCANE_ASHES, "Arcane Ashes");
 		addItem(BloodMagicItems.SLATE, "Blank Slate");
 		addItem(BloodMagicItems.REINFORCED_SLATE, "Reinforced Slate");

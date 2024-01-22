@@ -1,13 +1,13 @@
 {
   "type": "bloodmagic:altar",
+  "altarSyphon": 25000,
+  "consumptionRate": 20,
+  "drainRate": 20,
   "input": {
     "tag": "forge:storage_blocks/gold"
   },
   "output": {
     "item": "bloodmagic:magicianbloodorb"
   },
-  "upgradeLevel": 2,
-  "altarSyphon": 25000,
-  "consumptionRate": 20,
-  "drainRate": 20
+  "upgradeLevel": 2
 }

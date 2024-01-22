@@ -1,11 +1,8 @@
 package wayoftime.bloodmagic.common.item;
 
-import java.util.List;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -21,22 +18,23 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
-import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ConfigManager;
+import wayoftime.bloodmagic.common.registries.BloodMagicDamageTypes;
 import wayoftime.bloodmagic.event.SacrificeKnifeUsedEvent;
 import wayoftime.bloodmagic.util.Constants;
-import wayoftime.bloodmagic.util.DamageSourceBloodMagic;
 import wayoftime.bloodmagic.util.helper.IncenseHelper;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 import wayoftime.bloodmagic.util.helper.PlayerSacrificeHelper;
+
+import java.util.List;
 
 public class ItemSacrificialDagger extends Item
 {
 
 	public ItemSacrificialDagger()
 	{
-		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1));
 	}
 
 	@Override
@@ -44,7 +42,7 @@ public class ItemSacrificialDagger extends Item
 	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
 //		tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.sacrificialDagger.desc"))));
-		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.sacrificialdagger.desc").withStyle(ChatFormatting.GRAY));
+		tooltip.add(Component.translatable("tooltip.bloodmagic.sacrificialdagger.desc").withStyle(ChatFormatting.GRAY));
 
 //		if (stack.getItemDamage() == 1)
 //			list.add(TextHelper.localizeEffect("tooltip.bloodmagic.sacrificialDagger.creative"));
@@ -110,12 +108,12 @@ public class ItemSacrificialDagger extends Item
 			{
 				player.invulnerableTime = 0;
 
-				player.hurt(DamageSourceBloodMagic.INSTANCE, 0.001F);
+				player.hurt(player.damageSources().source(BloodMagicDamageTypes.SACRIFICE), 0.001F);
 				player.setHealth(Math.max(player.getHealth() - 1.998F, 0.0001f));
 				if (player.getHealth() <= 0.001f && !world.isClientSide)
 				{
 					player.invulnerableTime = 0;
-					player.hurt(DamageSourceBloodMagic.INSTANCE, 10);
+					player.hurt(player.damageSources().source(BloodMagicDamageTypes.SACRIFICE), 10);
 				}
 			}
 

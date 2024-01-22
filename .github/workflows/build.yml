@@ -1,0 +1,37 @@
+name: Build jar
+
+on: push
+
+jobs:
+  build: 
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+      - name: Store committed data
+        run: cp -r src/generated generatedBak
+      - name: Build # Build to catch Java errors first
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: build
+      - name: Run data generator
+        uses: gradle/gradle-build-action@v2
+        continue-on-error: true # We have to do this because runDataProd always exits funny
+        with:
+          arguments: runDataProd
+      - name: Check data generated successfully # So we do this to ensure something was done, .cache will always be written
+        continue-on-error: false # reset
+        id: check_files
+        uses: andstor/file-existence-action@v1
+        with:
+          files: "src/generated/resources/.cache/"
+      - name: Upload Artifact 
+        uses: actions/upload-artifact@v2
+        with:
+          path: ./build/libs/

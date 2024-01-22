@@ -1,20 +1,18 @@
 package wayoftime.bloodmagic.util;
 
-import java.text.DecimalFormat;
-import java.util.function.Supplier;
-
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkEvent.Context;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.util.helper.TextHelper;
+
+import java.text.DecimalFormat;
+import java.util.function.Supplier;
 
 public class ChatUtil
 {
@@ -47,7 +45,7 @@ public class ChatUtil
 	 */
 	public static Component wrap(String s)
 	{
-		return new TextComponent(s);
+		return Component.literal(s);
 	}
 
 	/**
@@ -71,7 +69,7 @@ public class ChatUtil
 	 */
 	public static Component wrapFormatted(String s, Object... args)
 	{
-		return new TranslatableComponent(s, args);
+		return Component.translatable(s, args);
 	}
 
 	/**
@@ -106,7 +104,7 @@ public class ChatUtil
 		for (Component c : lines)
 		{
 //			BloodMagic.packetHandler.send
-			player.sendMessage(c, Util.NIL_UUID);
+			player.sendSystemMessage(c);
 //			player.sendMessage(c);
 		}
 	}

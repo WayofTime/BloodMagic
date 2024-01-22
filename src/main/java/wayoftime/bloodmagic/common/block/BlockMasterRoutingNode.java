@@ -75,7 +75,7 @@ public class BlockMasterRoutingNode extends BlockItemRoutingNode
 		if (!(tile instanceof TileMasterRoutingNode))
 			return InteractionResult.FAIL;
 
-		NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) tile, pos);
+		NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) tile, pos);
 //			player.openGui(BloodMagic.instance, Constants.Gui.SOUL_FORGE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
 
 		return InteractionResult.SUCCESS;

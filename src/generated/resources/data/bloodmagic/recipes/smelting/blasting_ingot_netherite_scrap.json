@@ -1,9 +1,10 @@
 {
   "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.0,
   "ingredient": {
     "tag": "forge:dusts/netherite_scrap"
   },
-  "result": "minecraft:netherite_scrap",
-  "experience": 0.0,
-  "cookingtime": 100
+  "result": "minecraft:netherite_scrap"
 }

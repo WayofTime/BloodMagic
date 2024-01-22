@@ -2,10 +2,11 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "name": "bloodmagic:dungeon_seal",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
-      "entries": []
+      "entries": [],
+      "name": "bloodmagic:dungeon_seal",
+      "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "bloodmagic:blocks/dungeon_seal"
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import net.minecraft.util.RandomSource;
 import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.core.BlockPos;
@@ -17,7 +18,7 @@ import wayoftime.bloodmagic.structures.DungeonRoom;
 public class DungeonRoomPlacement
 {
 	public DungeonRoom room;
-	public Random rand;
+	public RandomSource rand;
 	public StructurePlaceSettings settings;
 	public ServerLevel world;
 	public BlockPos roomLocation;

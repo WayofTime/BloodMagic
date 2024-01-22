@@ -1,20 +1,20 @@
 {
   "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "bloodmagic:item/sacrificialdagger"
-  },
   "overrides": [
     {
+      "model": "bloodmagic:item/variants/sacrificialdagger",
       "predicate": {
         "bloodmagic:incense": 0.0
-      },
-      "model": "bloodmagic:item/variants/sacrificialdagger"
+      }
     },
     {
+      "model": "bloodmagic:item/variants/sacrificialdagger_ceremonial",
       "predicate": {
         "bloodmagic:incense": 1.0
-      },
-      "model": "bloodmagic:item/variants/sacrificialdagger_ceremonial"
+      }
     }
-  ]
+  ],
+  "textures": {
+    "layer0": "bloodmagic:item/sacrificialdagger"
+  }
 }

@@ -1,9 +1,7 @@
 package wayoftime.bloodmagic.client;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 
 public class Sprite
@@ -49,9 +47,8 @@ public class Sprite
 		return textureHeight;
 	}
 
-	public void draw(PoseStack matrixStack, int x, int y)
+	public void draw(GuiGraphics guiGraphics, int x, int y)
 	{
-		RenderSystem.setShaderTexture(0, getTextureLocation());
-		GuiComponent.blit(matrixStack, x, y, 0, getTextureX(), getTextureY(), getTextureWidth(), getTextureHeight(), 256, 256);
+		guiGraphics.blit(getTextureLocation(), x, y, 0, getTextureX(), getTextureY(), getTextureWidth(), getTextureHeight(), 256, 256);
 	}
 }

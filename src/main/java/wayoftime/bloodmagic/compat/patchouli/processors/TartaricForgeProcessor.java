@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import net.minecraft.world.level.Level;
 import org.apache.logging.log4j.LogManager;
 
 import net.minecraft.client.Minecraft;
@@ -34,7 +35,7 @@ public class TartaricForgeProcessor implements IComponentProcessor
 	private RecipeTartaricForge recipe;
 
 	@Override
-	public void setup(IVariableProvider variables)
+	public void setup(Level level, IVariableProvider variables)
 	{
 		ResourceLocation id = new ResourceLocation(variables.get("recipe").asString());
 		Optional<? extends Recipe<?>> recipeHandler = Minecraft.getInstance().level.getRecipeManager().byKey(id);
@@ -53,7 +54,7 @@ public class TartaricForgeProcessor implements IComponentProcessor
 	}
 
 	@Override
-	public IVariable process(String key)
+	public IVariable process(Level level,String key)
 	{
 		if (recipe == null)
 		{

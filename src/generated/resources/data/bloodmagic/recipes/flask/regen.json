@@ -1,5 +1,7 @@
 {
   "type": "bloodmagic:flask_potioneffect",
+  "baseDuration": 900,
+  "effect": "minecraft:regeneration",
   "input": [
     {
       "item": "bloodmagic:simplecatalyst"
@@ -10,7 +12,5 @@
   ],
   "syphon": 500,
   "ticks": 200,
-  "upgradeLevel": 1,
-  "effect": "minecraft:regeneration",
-  "baseDuration": 900
+  "upgradeLevel": 1
 }

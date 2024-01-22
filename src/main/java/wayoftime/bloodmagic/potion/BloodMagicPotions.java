@@ -6,50 +6,32 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.RegistryObject;
+import wayoftime.bloodmagic.BloodMagic;
 
-public class BloodMagicPotions
-{
-	public static final MobEffect SOUL_SNARE = new PotionSoulSnare();
-	public static final MobEffect FIRE_FUSE = new PotionFireFuse();
-	public static final MobEffect SOUL_FRAY = new PotionBloodMagic(MobEffectCategory.HARMFUL, 0xFFFFFFFF);
-	public static final MobEffect PLANT_LEECH = new PotionPlantLeech();
-	public static final MobEffect SACRIFICIAL_LAMB = new PotionSacrificialLamb();
-	public static final MobEffect FLIGHT = new PotionBloodMagic(MobEffectCategory.BENEFICIAL, 0x23DDE1);
-	public static final MobEffect SPECTRAL_SIGHT = new PotionBloodMagic(MobEffectCategory.BENEFICIAL, 0x2FB813);
-	public static final MobEffect GRAVITY = new PotionBloodMagic(MobEffectCategory.HARMFUL, 0x800080);
-	public static final MobEffect HEAVY_HEART = new PotionHeavyHeart();
-	public static final MobEffect GROUNDED = new PotionBloodMagic(MobEffectCategory.HARMFUL, 0xBA855B);
-	public static final MobEffect SUSPENDED = new PotionSuspended();
-	public static final MobEffect PASSIVITY = new PotionPassivity();
-	public static final MobEffect BOUNCE = new PotionBloodMagic(MobEffectCategory.BENEFICIAL, 0x57FF2E);
-	public static final MobEffect OBSIDIAN_CLOAK = new PotionBloodMagic(MobEffectCategory.BENEFICIAL, 0x3C1A8D);
-	public static final MobEffect HARD_CLOAK = new PotionBloodMagic(MobEffectCategory.BENEFICIAL, 0x3C1A8D);
-	public static final MobEffect SOFT_FALL = new PotionSoftFall();
+public class BloodMagicPotions {
 
-	public static void registerPotions(RegistryEvent.Register<MobEffect> evt)
-	{
-		IForgeRegistry<MobEffect> reg = evt.getRegistry();
-		reg.register(SOUL_SNARE.setRegistryName("soulsnare"));
-		reg.register(FIRE_FUSE.setRegistryName("firefuse"));
-		reg.register(SOUL_FRAY.setRegistryName("soulfray"));
-		reg.register(PLANT_LEECH.setRegistryName("plantleech"));
-		reg.register(SACRIFICIAL_LAMB.setRegistryName("sacrificiallamb"));
-		reg.register(FLIGHT.setRegistryName("flight"));
-		reg.register(SPECTRAL_SIGHT.setRegistryName("spectral_sight"));
-		reg.register(GRAVITY.addAttributeModifier(ForgeMod.ENTITY_GRAVITY.get(), "AF8B6E3F-3328-4C0A-AA66-6BA6BB6DBEF6", (double) 0.5F, AttributeModifier.Operation.MULTIPLY_BASE).setRegistryName("gravity"));
-		reg.register(HEAVY_HEART.setRegistryName("heavy_heart"));
-		reg.register(GROUNDED.setRegistryName("grounded"));
-		reg.register(SUSPENDED.setRegistryName("suspended"));
-		reg.register(PASSIVITY.setRegistryName("passivity"));
-		reg.register(BOUNCE.setRegistryName("bounce"));
-		reg.register(OBSIDIAN_CLOAK.setRegistryName("obsidian_cloak"));
-		reg.register(HARD_CLOAK.addAttributeModifier(Attributes.ARMOR_TOUGHNESS, "BF8B6E3F-3328-4C0A-AA66-3BA6BB6DBEF6", 3, AttributeModifier.Operation.ADDITION).setRegistryName("hard_cloak"));
-		reg.register(SOFT_FALL.setRegistryName("soft_fall"));
+    public static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, BloodMagic.MODID);
 
-	}
+    public static final RegistryObject<MobEffect> SOUL_SNARE = MOB_EFFECTS.register("soulsnare", PotionSoulSnare::new);
+    public static final RegistryObject<MobEffect> FIRE_FUSE = MOB_EFFECTS.register("firefuse", PotionFireFuse::new);
+    public static final RegistryObject<MobEffect> SOUL_FRAY = MOB_EFFECTS.register("soulfray", () -> new PotionBloodMagic(MobEffectCategory.HARMFUL, 0xFFFFFFFF));
+    public static final RegistryObject<MobEffect> PLANT_LEECH = MOB_EFFECTS.register("plantleech", PotionPlantLeech::new);
+    public static final RegistryObject<MobEffect> SACRIFICIAL_LAMB = MOB_EFFECTS.register("sacrificallamb", PotionSacrificialLamb::new);
+    public static final RegistryObject<MobEffect> FLIGHT = MOB_EFFECTS.register("flight", () -> new PotionBloodMagic(MobEffectCategory.BENEFICIAL, 0x23DDE1));
+    public static final RegistryObject<MobEffect> SPECTRAL_SIGHT = MOB_EFFECTS.register("spectral_sight", () -> new PotionBloodMagic(MobEffectCategory.BENEFICIAL, 0x2FB813));
+    public static final RegistryObject<MobEffect> GRAVITY = MOB_EFFECTS.register("gravity", () -> new PotionBloodMagic(MobEffectCategory.HARMFUL, 0x800080).addAttributeModifier(ForgeMod.ENTITY_GRAVITY.get(), "AF8B6E3F-3328-4C0A-AA66-6BA6BB6DBEF6", 0.5F, AttributeModifier.Operation.MULTIPLY_BASE));
+    public static final RegistryObject<MobEffect> HEAVY_HEART = MOB_EFFECTS.register("heavy_heart", PotionHeavyHeart::new);
+    public static final RegistryObject<MobEffect> GROUNDED = MOB_EFFECTS.register("grounded", () -> new PotionBloodMagic(MobEffectCategory.HARMFUL, 0xBA855B));
+    public static final RegistryObject<MobEffect> SUSPENDED = MOB_EFFECTS.register("suspended", PotionSuspended::new);
+    public static final RegistryObject<MobEffect> PASSIVITY = MOB_EFFECTS.register("passivity", PotionPassivity::new);
+    public static final RegistryObject<MobEffect> BOUNCE = MOB_EFFECTS.register("bounce", () -> new PotionBloodMagic(MobEffectCategory.BENEFICIAL, 0x57FF2E));
+    public static final RegistryObject<MobEffect> OBSIDIAN_CLOAK = MOB_EFFECTS.register("obsidian_cloak", () -> new PotionBloodMagic(MobEffectCategory.BENEFICIAL, 0x3C1A8D));
+    public static final RegistryObject<MobEffect> HARD_CLOAK = MOB_EFFECTS.register("hard_cloak", () -> new PotionBloodMagic(MobEffectCategory.BENEFICIAL, 0x3C1A8D).addAttributeModifier(Attributes.ARMOR_TOUGHNESS, "BF8B6E3F-3328-4C0A-AA66-3BA6BB6DBEF6", 3, AttributeModifier.Operation.ADDITION));
+    public static final RegistryObject<MobEffect> SOFT_FALL = MOB_EFFECTS.register("soft_fall", PotionSoftFall::new);
+
 
 	public static MobEffect getEffect(ResourceLocation rl)
 	{

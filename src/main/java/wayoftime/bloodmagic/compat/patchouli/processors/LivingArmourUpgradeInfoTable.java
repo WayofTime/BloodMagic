@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.compat.patchouli.processors;
 
 import java.util.Map.Entry;
 
+import net.minecraft.world.level.Level;
 import org.apache.logging.log4j.LogManager;
 
 import net.minecraft.resources.ResourceLocation;
@@ -28,7 +29,7 @@ public class LivingArmourUpgradeInfoTable implements IComponentProcessor
 	private String extraText = ""; // (Optional) Text to insert at the end of the entry.
 
 	@Override
-	public void setup(IVariableProvider variables)
+	public void setup(Level level, IVariableProvider variables)
 	{
 		ResourceLocation id = new ResourceLocation(variables.get("upgrade").asString());
 		if (LivingArmorRegistrar.UPGRADE_MAP.containsKey(id))
@@ -46,7 +47,7 @@ public class LivingArmourUpgradeInfoTable implements IComponentProcessor
 	}
 
 	@Override
-	public IVariable process(String key)
+	public IVariable process(Level level,String key)
 	{
 		if (this.upgradeID == null)
 		{
@@ -70,11 +71,11 @@ public class LivingArmourUpgradeInfoTable implements IComponentProcessor
 
 					while ((exp = upgrade.getNextRequirement(exp)) != 0)
 					{
-						int level = upgrade.getLevel(exp);
-						int upgradePoints = upgrade.getLevelCost(level);
+						int upgradeLevel = upgrade.getLevel(exp);
+						int upgradePoints = upgrade.getLevelCost(upgradeLevel);
 
 						String formatStr = String.format("%s %%%dd: %%%dd %s$(br)", i18nLevel, maxLevelLength, maxUpgradePointsLength, i18nUpgradePoints);
-						output.append(String.format(formatStr, level, upgradePoints));
+						output.append(String.format(formatStr, upgradeLevel, upgradePoints));
 					}
 				}
 			}

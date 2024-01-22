@@ -1,5 +1,6 @@
 {
   "type": "bloodmagic:soulforge",
+  "drain": 200.0,
   "input0": {
     "tag": "forge:storage_blocks/iron"
   },
@@ -9,9 +10,8 @@
   "input2": {
     "item": "bloodmagic:infusedslate"
   },
+  "minimumDrain": 400.0,
   "output": {
     "item": "bloodmagic:masterroutingnode"
-  },
-  "minimumDrain": 400.0,
-  "drain": 200.0
+  }
 }

@@ -1,5 +1,6 @@
 {
   "type": "bloodmagic:soulforge",
+  "drain": 400.0,
   "input0": {
     "tag": "forge:gems/amethyst"
   },
@@ -12,10 +13,9 @@
   "input3": {
     "item": "bloodmagic:ingot_hellforged"
   },
+  "minimumDrain": 1200.0,
   "output": {
     "item": "bloodmagic:hellforged_resonator",
     "nbt": "{Damage:0}"
-  },
-  "minimumDrain": 1200.0,
-  "drain": 400.0
+  }
 }

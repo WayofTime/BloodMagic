@@ -1,5 +1,6 @@
 {
   "type": "bloodmagic:soulforge",
+  "drain": 50.0,
   "input0": {
     "tag": "forge:storage_blocks/redstone"
   },
@@ -12,9 +13,8 @@
   "input3": {
     "item": "bloodmagic:infusedslate"
   },
+  "minimumDrain": 300.0,
   "output": {
     "item": "bloodmagic:simplekey"
-  },
-  "minimumDrain": 300.0,
-  "drain": 50.0
+  }
 }

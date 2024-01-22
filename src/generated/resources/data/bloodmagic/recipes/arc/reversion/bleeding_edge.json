@@ -1,16 +1,16 @@
 {
   "type": "bloodmagic:arc",
+  "consumeingredient": false,
   "input": {
     "item": "bloodmagic:bleedingedge"
   },
   "inputsize": 1,
+  "mainoutputchance": 0.0,
+  "output": {
+    "count": 9,
+    "item": "bloodmagic:rawdemonite"
+  },
   "tool": {
     "tag": "bloodmagic:arc/reverter"
-  },
-  "output": {
-    "item": "bloodmagic:rawdemonite",
-    "count": 9
-  },
-  "consumeingredient": false,
-  "mainoutputchance": 0.0
+  }
 }

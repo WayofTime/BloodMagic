@@ -1,13 +1,13 @@
 {
   "type": "bloodmagic:array",
-  "texture": "bloodmagic:textures/models/alchemyarrays/sunarray.png",
-  "baseinput": {
+  "addedinput": {
     "item": "minecraft:coal"
   },
-  "addedinput": {
+  "baseinput": {
     "item": "minecraft:coal"
   },
   "output": {
     "item": "minecraft:bedrock"
-  }
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/sunarray.png"
 }

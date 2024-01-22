@@ -2,7 +2,7 @@ package wayoftime.bloodmagic.common.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.IBindable;
@@ -32,7 +31,7 @@ public class BlockMasterRitualStone extends Block implements EntityBlock
 
 	public BlockMasterRitualStone(boolean isInverted)
 	{
-		super(Properties.of(Material.STONE).sound(SoundType.STONE).strength(2.0F, 5.0F).requiresCorrectToolForDrops());
+		super(Properties.of().sound(SoundType.STONE).strength(2.0F, 5.0F).requiresCorrectToolForDrops());
 		this.isInverted = isInverted;
 //	.harvestTool(ToolType.PICKAXE).harvestLevel(2)
 	}
@@ -68,15 +67,15 @@ public class BlockMasterRitualStone extends Block implements EntityBlock
 							}
 						} else
 						{
-							player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.ritual.notValid"), true);
+							player.displayClientMessage(Component.translatable("chat.bloodmagic.ritual.notValid"), true);
 						}
 					} else
 					{
-						player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.ritual.notValid"), true);
+						player.displayClientMessage(Component.translatable("chat.bloodmagic.ritual.notValid"), true);
 					}
 				} else
 				{
-					player.displayClientMessage(new TranslatableComponent("chat.bloodmagic.ritual.notValid"), true);
+					player.displayClientMessage(Component.translatable("chat.bloodmagic.ritual.notValid"), true);
 				}
 			}
 		}

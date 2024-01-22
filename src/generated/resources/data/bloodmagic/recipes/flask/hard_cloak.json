@@ -1,5 +1,7 @@
 {
   "type": "bloodmagic:flask_potioneffect",
+  "baseDuration": 3600,
+  "effect": "bloodmagic:hard_cloak",
   "input": [
     {
       "item": "bloodmagic:simplecatalyst"
@@ -10,7 +12,5 @@
   ],
   "syphon": 500,
   "ticks": 200,
-  "upgradeLevel": 1,
-  "effect": "bloodmagic:hard_cloak",
-  "baseDuration": 3600
+  "upgradeLevel": 1
 }

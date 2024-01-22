@@ -15,8 +15,8 @@
     }
   ],
   "output": {
-    "item": "bloodmagic:gravel_netherite_scrap",
-    "count": 2
+    "count": 2,
+    "item": "bloodmagic:gravel_netherite_scrap"
   },
   "syphon": 1000,
   "ticks": 50,

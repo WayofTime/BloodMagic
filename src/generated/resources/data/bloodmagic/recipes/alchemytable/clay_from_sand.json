@@ -12,8 +12,8 @@
     }
   ],
   "output": {
-    "item": "minecraft:clay_ball",
-    "count": 2
+    "count": 2,
+    "item": "minecraft:clay_ball"
   },
   "syphon": 50,
   "ticks": 100,

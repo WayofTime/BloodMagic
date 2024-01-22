@@ -1,47 +1,11 @@
 {
   "parent": "minecraft:block/cube",
-  "textures": {
-    "particle": "bloodmagic:block/dungeon/dungeon_pillarspecial",
-    "end": "bloodmagic:block/dungeon/dungeon_pillarheart",
-    "side": "bloodmagic:block/dungeon/dungeon_pillarspecial"
-  },
   "elements": [
     {
-      "from": [
-        0,
-        0,
-        0
-      ],
-      "to": [
-        16,
-        16,
-        16
-      ],
       "faces": {
         "down": {
-          "texture": "#side",
-          "rotation": 270
-        },
-        "up": {
-          "texture": "#side",
-          "rotation": 270
-        },
-        "north": {
-          "texture": "#side",
-          "rotation": 270
-        },
-        "south": {
-          "texture": "#side",
-          "rotation": 270
-        },
-        "west": {
-          "texture": "#end",
-          "uv": [
-            16.0,
-            0.0,
-            0.0,
-            16.0
-          ]
+          "rotation": 270,
+          "texture": "#side"
         },
         "east": {
           "texture": "#end",
@@ -51,8 +15,44 @@
             0.0,
             16.0
           ]
+        },
+        "north": {
+          "rotation": 270,
+          "texture": "#side"
+        },
+        "south": {
+          "rotation": 270,
+          "texture": "#side"
+        },
+        "up": {
+          "rotation": 270,
+          "texture": "#side"
+        },
+        "west": {
+          "texture": "#end",
+          "uv": [
+            16.0,
+            0.0,
+            0.0,
+            16.0
+          ]
         }
-      }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
     }
-  ]
+  ],
+  "textures": {
+    "end": "bloodmagic:block/dungeon/dungeon_pillarheart",
+    "particle": "bloodmagic:block/dungeon/dungeon_pillarspecial",
+    "side": "bloodmagic:block/dungeon/dungeon_pillarspecial"
+  }
 }

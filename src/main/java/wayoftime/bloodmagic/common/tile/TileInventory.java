@@ -1,8 +1,5 @@
 package wayoftime.bloodmagic.common.tile;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -16,12 +13,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import wayoftime.bloodmagic.common.tile.base.TileBase;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class TileInventory extends TileBase implements Container
 {
@@ -258,7 +258,7 @@ public class TileInventory extends TileBase implements Container
 //	@Override
 //	public ITextComponent getDisplayName()
 //	{
-//		return new TextComponentString(getName());
+//		return Component.literalString(getName());
 //	}
 
 	protected void initializeItemHandlers()
@@ -286,7 +286,7 @@ public class TileInventory extends TileBase implements Container
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing)
 	{
-		if (facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		if (facing != null && capability == ForgeCapabilities.ITEM_HANDLER)
 		{
 			switch (facing)
 			{
@@ -303,7 +303,7 @@ public class TileInventory extends TileBase implements Container
 			case WEST:
 				return handlerWest.cast();
 			}
-		} else if (facing == null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		} else if (facing == null && capability == ForgeCapabilities.ITEM_HANDLER)
 		{
 			return handlerDown.cast();
 		}
@@ -337,6 +337,6 @@ public class TileInventory extends TileBase implements Container
 //	@Override
 //	public boolean hasCapability(Capability<?> capability, Direction facing)
 //	{
-//		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
+//		return capability == ForgeCapabilities.ITEM_HANDLER || super.hasCapability(capability, facing);
 //	}
 }

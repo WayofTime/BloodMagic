@@ -29,7 +29,7 @@ public class ContainerAlchemicalReactionChamber extends AbstractContainerMenu
 
 	public ContainerAlchemicalReactionChamber(int windowId, Inventory playerInventory, FriendlyByteBuf extraData)
 	{
-		this((TileAlchemicalReactionChamber) playerInventory.player.level.getBlockEntity(extraData.readBlockPos()), windowId, playerInventory);
+		this((TileAlchemicalReactionChamber) playerInventory.player.level().getBlockEntity(extraData.readBlockPos()), windowId, playerInventory);
 	}
 
 	public ContainerAlchemicalReactionChamber(@Nullable TileAlchemicalReactionChamber tile, int windowId, Inventory playerInventory)

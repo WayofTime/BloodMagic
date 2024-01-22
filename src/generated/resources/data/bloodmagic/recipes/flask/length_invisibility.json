@@ -1,13 +1,13 @@
 {
   "type": "bloodmagic:flask_potionlength",
+  "effect": "minecraft:invisibility",
   "input": [
     {
       "item": "bloodmagic:mundanelengtheningcatalyst"
     }
   ],
+  "lengthDurMod": 2.6667,
   "syphon": 200,
   "ticks": 100,
-  "upgradeLevel": 1,
-  "effect": "minecraft:invisibility",
-  "lengthDurMod": 2.6667
+  "upgradeLevel": 1
 }

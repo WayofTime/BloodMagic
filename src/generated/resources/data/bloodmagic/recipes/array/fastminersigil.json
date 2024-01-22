@@ -1,13 +1,13 @@
 {
   "type": "bloodmagic:array",
-  "texture": "bloodmagic:textures/models/alchemyarrays/fastminersigil.png",
-  "baseinput": {
-    "item": "bloodmagic:reagentfastminer"
-  },
   "addedinput": {
     "item": "bloodmagic:reinforcedslate"
   },
+  "baseinput": {
+    "item": "bloodmagic:reagentfastminer"
+  },
   "output": {
     "item": "bloodmagic:miningsigil"
-  }
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/fastminersigil.png"
 }

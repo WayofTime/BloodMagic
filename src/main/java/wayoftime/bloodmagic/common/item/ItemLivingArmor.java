@@ -36,9 +36,9 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 
 	private static final int MAX_ABSORPTION = 100000;
 
-	public ItemLivingArmor(EquipmentSlot slot)
+	public ItemLivingArmor(ArmorItem.Type type)
 	{
-		super(ArmorMaterialLiving.INSTANCE, slot, new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
+		super(ArmorMaterialLiving.INSTANCE, type, new Item.Properties().stacksTo(1));
 	}
 
 	@Override
@@ -156,41 +156,13 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 //    }
 
 	@Override
-	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items)
-	{
-		if (!allowdedIn(group))
-			return;
-
-		ItemStack stack = new ItemStack(this);
-		if (slot == EquipmentSlot.CHEST)
-			updateLivingStats(stack, new LivingStats());
-
-		items.add(stack);
-	}
-
-//	@Override
-//	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items)
-//	{
-//		if (this.isInGroup(group))
-//		{
-//			for (EnumDemonWillType type : EnumDemonWillType.values())
-//			{
-//				ItemStack stack = new ItemStack(this);
-//				this.setCurrentType(type, stack);
-//				this.setWill(type, stack, maxWill);
-//				items.add(stack);
-//			}
-//		}
-//	}
-
-	@Override
 	public void damageArmor(LivingEntity livingEntity, ItemStack stack, DamageSource source, float damage, EquipmentSlot slot)
 	{
 		if (slot == EquipmentSlot.CHEST && damage > getMaxDamage() - stack.getDamageValue())
 		{
 //			livingEntity.attackEntityFrom(source, amount)
 //		}
-			livingEntity.hurt(DamageSource.MAGIC, 2.0F);
+			livingEntity.hurt(livingEntity.damageSources().magic(), 2.0F);
 			return;
 		}
 
@@ -213,7 +185,7 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 	@Override
 	public boolean elytraFlightTick(ItemStack stack, LivingEntity entity, int flightTicks)
 	{
-		if (!entity.level.isClientSide && (flightTicks + 1) % 40 == 0)
+		if (!entity.level().isClientSide && (flightTicks + 1) % 40 == 0)
 			stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(net.minecraft.world.entity.EquipmentSlot.CHEST));
 		return true;
 	}

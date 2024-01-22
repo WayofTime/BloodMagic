@@ -1,17 +1,12 @@
 package wayoftime.bloodmagic.common.tile;
 
-import java.util.List;
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.Connection;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
@@ -28,13 +23,16 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.model.ModelDataManager;
-import net.minecraftforge.client.model.data.IModelData;
-import net.minecraftforge.client.model.data.ModelDataMap;
+import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.model.data.ModelProperty;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.Utils;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Objects;
 
 public class TileMimic extends TileInventory
 {
@@ -73,7 +71,7 @@ public class TileMimic extends TileInventory
 				{
 					setItem(1, heldItem.copy());
 					world.sendBlockUpdated(pos, state, state, 3);
-					ChatUtil.sendNoSpam(player, new TranslatableComponent("chat.bloodmagic.mimic.potionSet"));
+					ChatUtil.sendNoSpam(player, Component.translatable("chat.bloodmagic.mimic.potionSet"));
 				}
 				return true;
 			}
@@ -147,11 +145,11 @@ public class TileMimic extends TileInventory
 				if (player.isShiftKeyDown())
 				{
 					potionSpawnRadius = Math.max(potionSpawnRadius - 1, 0);
-					ChatUtil.sendNoSpam(player, new TranslatableComponent("chat.bloodmagic.mimic.potionSpawnRadius.down", potionSpawnRadius));
+					ChatUtil.sendNoSpam(player, Component.translatable("chat.bloodmagic.mimic.potionSpawnRadius.down", potionSpawnRadius));
 				} else
 				{
 					potionSpawnRadius++;
-					ChatUtil.sendNoSpam(player, new TranslatableComponent("chat.bloodmagic.mimic.potionSpawnRadius.up", potionSpawnRadius));
+					ChatUtil.sendNoSpam(player, Component.translatable("chat.bloodmagic.mimic.potionSpawnRadius.up", potionSpawnRadius));
 				}
 				break;
 			case NORTH: // When the block is clicked on the NORTH or SOUTH side, detectRadius is edited.
@@ -159,11 +157,11 @@ public class TileMimic extends TileInventory
 				if (player.isShiftKeyDown())
 				{
 					playerCheckRadius = Math.max(playerCheckRadius - 1, 0);
-					ChatUtil.sendNoSpam(player, new TranslatableComponent("chat.bloodmagic.mimic.detectRadius.down", playerCheckRadius));
+					ChatUtil.sendNoSpam(player, Component.translatable("chat.bloodmagic.mimic.detectRadius.down", playerCheckRadius));
 				} else
 				{
 					playerCheckRadius++;
-					ChatUtil.sendNoSpam(player, new TranslatableComponent("chat.bloodmagic.mimic.detectRadius.up", playerCheckRadius));
+					ChatUtil.sendNoSpam(player, Component.translatable("chat.bloodmagic.mimic.detectRadius.up", playerCheckRadius));
 				}
 				break;
 			case UP: // When the block is clicked on the UP or DOWN side, potionSpawnInterval is
@@ -172,11 +170,11 @@ public class TileMimic extends TileInventory
 				if (player.isShiftKeyDown())
 				{
 					potionSpawnInterval = Math.max(potionSpawnInterval - 1, 1);
-					ChatUtil.sendNoSpam(player, new TranslatableComponent("chat.bloodmagic.mimic.potionInterval.down", potionSpawnInterval));
+					ChatUtil.sendNoSpam(player, Component.translatable("chat.bloodmagic.mimic.potionInterval.down", potionSpawnInterval));
 				} else
 				{
 					potionSpawnInterval++;
-					ChatUtil.sendNoSpam(player, new TranslatableComponent("chat.bloodmagic.mimic.potionInterval.up", potionSpawnInterval));
+					ChatUtil.sendNoSpam(player, Component.translatable("chat.bloodmagic.mimic.potionInterval.up", potionSpawnInterval));
 				}
 				break;
 			default:
@@ -285,16 +283,16 @@ public class TileMimic extends TileInventory
 		deserialize(tag);
 		if (!Objects.equals(oldMimic, mimic))
 		{
-			ModelDataManager.requestModelDataRefresh(this);
+			requestModelDataUpdate();
 			level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
 		}
 	}
 
 	@Nonnull
 	@Override
-	public IModelData getModelData()
+	public ModelData getModelData()
 	{
-		return new ModelDataMap.Builder().withInitial(MIMIC, mimic).build();
+		return ModelData.builder().with(MIMIC, mimic).build();
 	}
 
 	@Override
@@ -316,7 +314,7 @@ public class TileMimic extends TileInventory
 	{
 		if (tag.contains("mimic"))
 		{
-			mimic = NbtUtils.readBlockState(tag.getCompound("mimic"));
+			mimic = NbtUtils.readBlockState(this.level.holderLookup(Registries.BLOCK),tag.getCompound("mimic"));
 		}
 	}
 

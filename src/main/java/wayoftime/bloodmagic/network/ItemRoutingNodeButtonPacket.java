@@ -42,7 +42,7 @@ public class ItemRoutingNodeButtonPacket
 	{
 		context.get().enqueueWork(() -> {
 			Player player = context.get().getSender();
-			if (player == null || player.level.isClientSide)
+			if (player == null || player.level().isClientSide)
 			{
 				return;
 			}

@@ -14,12 +14,11 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionCycle;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionEffect;
 import wayoftime.bloodmagic.util.Constants;
 
-public class PotionCycleRecipeSerializer<RECIPE extends RecipePotionCycle> extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RECIPE>
+public class PotionCycleRecipeSerializer<RECIPE extends RecipePotionCycle>  implements RecipeSerializer<RECIPE>
 {
 	private final IFactory<RECIPE> factory;
 

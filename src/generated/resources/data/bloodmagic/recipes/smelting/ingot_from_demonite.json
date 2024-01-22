@@ -1,9 +1,10 @@
 {
   "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.0,
   "ingredient": {
     "item": "bloodmagic:dungeon_ore"
   },
-  "result": "bloodmagic:ingot_hellforged",
-  "experience": 0.0,
-  "cookingtime": 200
+  "result": "bloodmagic:ingot_hellforged"
 }

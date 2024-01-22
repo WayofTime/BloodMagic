@@ -1,12 +1,12 @@
 package wayoftime.bloodmagic.core.data;
 
 import net.minecraft.commands.CommandSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Wrapper for any interactions with the SoulNetwork
@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
  */
 public class SoulTicket
 {
-	private static final Component EMPTY = new TextComponent("");
+	private static final Component EMPTY = Component.literal("");
 
 	private final Component description;
 	private final int amount;
@@ -51,7 +51,7 @@ public class SoulTicket
 	public static SoulTicket block(Level world, BlockPos pos, int amount)
 	{
 		// dimension() = getDimension
-		return new SoulTicket(new TextComponent("block|" + world.dimension().getRegistryName() + "|"
+		return new SoulTicket(Component.literal("block|" + world.dimension().location() + "|"
 				+ pos.asLong()), amount);
 	}
 
@@ -61,8 +61,8 @@ public class SoulTicket
 	 */
 	public static SoulTicket item(ItemStack itemStack, Level world, Entity entity, int amount)
 	{
-		return new SoulTicket(new TextComponent("item|" + itemStack.getItem().getRegistryName() + "|"
-				+ world.dimension().getRegistryName() + "|" + entity.getStringUUID()), amount);
+		return new SoulTicket(Component.literal("item|" + ForgeRegistries.ITEMS.getKey(itemStack.getItem()) + "|"
+				+ world.dimension().location() + "|" + entity.getStringUUID()), amount);
 	}
 
 	/**
@@ -70,8 +70,8 @@ public class SoulTicket
 	 */
 	public static SoulTicket item(ItemStack itemStack, Level world, BlockPos pos, int amount)
 	{
-		return new SoulTicket(new TextComponent("item|" + itemStack.getItem().getRegistryName() + "|"
-				+ world.dimension().getRegistryName() + "|" + pos.asLong()), amount);
+		return new SoulTicket(Component.literal("item|" + ForgeRegistries.ITEMS.getKey(itemStack.getItem()) + "|"
+				+ world.dimension().location() + "|" + pos.asLong()), amount);
 	}
 
 	/**
@@ -79,12 +79,12 @@ public class SoulTicket
 	 */
 	public static SoulTicket item(ItemStack itemStack, int amount)
 	{
-		return new SoulTicket(new TextComponent("item|" + itemStack.getItem().getRegistryName()), amount);
+		return new SoulTicket(Component.literal("item|" + ForgeRegistries.ITEMS.getKey(itemStack.getItem())), amount);
 	}
 
 	public static SoulTicket command(CommandSource sender, String command, int amount)
 	{
-		return new SoulTicket(new TextComponent("command|" + command + "|" + sender.toString()), amount);
+		return new SoulTicket(Component.literal("command|" + command + "|" + sender.toString()), amount);
 	}
 
 	// TODO maybe make it check the amount??
