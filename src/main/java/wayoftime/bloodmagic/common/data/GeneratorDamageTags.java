@@ -21,5 +21,6 @@ public class GeneratorDamageTags extends TagsProvider<DamageType> {
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(DamageTypeTags.BYPASSES_ARMOR).add(BloodMagicDamageTypes.SACRIFICE).add(BloodMagicDamageTypes.RITUAL);
         this.tag(DamageTypeTags.BYPASSES_EFFECTS).add(BloodMagicDamageTypes.SACRIFICE);
+        this.tag(DamageTypeTags.NO_IMPACT).add(BloodMagicDamageTypes.SACRIFICE);
     }
 }
