@@ -1,13 +1,13 @@
 {
   "type": "bloodmagic:array",
-  "texture": "bloodmagic:textures/models/alchemyarrays/moonarray.png",
-  "baseinput": {
+  "addedinput": {
     "item": "minecraft:lapis_lazuli"
   },
-  "addedinput": {
+  "baseinput": {
     "item": "minecraft:lapis_lazuli"
   },
   "output": {
     "item": "minecraft:bedrock"
-  }
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/moonarray.png"
 }

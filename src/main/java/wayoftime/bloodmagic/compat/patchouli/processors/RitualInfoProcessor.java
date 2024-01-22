@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.world.level.Level;
 import org.apache.logging.log4j.LogManager;
 
 import net.minecraft.world.item.ItemStack;
@@ -80,7 +81,7 @@ public class RitualInfoProcessor implements IComponentProcessor
 	private final String DIVINER_BASE = ItemRitualDiviner.tooltipBase; // Ritual Diviner language base.
 
 	@Override
-	public void setup(IVariableProvider variables)
+	public void setup(Level level, IVariableProvider variables)
 	{
 		String id = variables.get("ritual").asString();
 		ritual = BloodMagic.RITUAL_MANAGER.getRitual(id);
@@ -176,7 +177,7 @@ public class RitualInfoProcessor implements IComponentProcessor
 	}
 
 	@Override
-	public IVariable process(String key)
+	public IVariable process(Level level,String key)
 	{
 		if (ritual == null)
 		{

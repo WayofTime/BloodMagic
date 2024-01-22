@@ -12,8 +12,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import wayoftime.bloodmagic.altar.AltarTier;
 import wayoftime.bloodmagic.altar.BloodAltar;
 import wayoftime.bloodmagic.altar.IBloodAltar;
@@ -265,7 +265,7 @@ public class TileAltar extends TileInventory implements IBloodAltar
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing)
 	{
-		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+		if (capability == ForgeCapabilities.FLUID_HANDLER)
 		{
 			if (fluidOptional == null)
 			{

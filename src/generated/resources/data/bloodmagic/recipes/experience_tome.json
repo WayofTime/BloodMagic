@@ -1,16 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "ses",
-    "lbl",
-    "gog"
-  ],
+  "category": "misc",
   "key": {
     "b": {
       "item": "minecraft:enchanted_book"
-    },
-    "s": {
-      "tag": "forge:string"
     },
     "e": {
       "tag": "forge:storage_blocks/lapis"
@@ -24,9 +17,18 @@
     "o": {
       "type": "bloodmagic:bloodorb",
       "orb_tier": 3
+    },
+    "s": {
+      "tag": "forge:string"
     }
   },
+  "pattern": [
+    "ses",
+    "lbl",
+    "gog"
+  ],
   "result": {
     "item": "bloodmagic:experiencebook"
-  }
+  },
+  "show_notification": true
 }

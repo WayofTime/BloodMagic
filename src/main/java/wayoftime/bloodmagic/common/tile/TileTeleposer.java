@@ -1,14 +1,10 @@
 package wayoftime.bloodmagic.common.tile;
 
-import java.util.List;
-import java.util.UUID;
-
 import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -34,6 +30,9 @@ import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.Utils;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
+
+import java.util.List;
+import java.util.UUID;
 
 public class TileTeleposer extends TileInventory implements MenuProvider, CommandSource
 {
@@ -148,7 +147,6 @@ public class TileTeleposer extends TileInventory implements MenuProvider, Comman
 				} else
 				{
 					entity.teleportTo(newPosVec.x, newPosVec.y, newPosVec.z);
-					entity.level = linkedWorld;
 				}
 
 				uses++;
@@ -165,7 +163,6 @@ public class TileTeleposer extends TileInventory implements MenuProvider, Comman
 				{
 					entity.teleportTo(newPosVec.x, newPosVec.y, newPosVec.z);
 //					entity.setLevel(level);
-					entity.level = level;
 				}
 
 				uses++;
@@ -235,12 +232,12 @@ public class TileTeleposer extends TileInventory implements MenuProvider, Comman
 	@Override
 	public Component getDisplayName()
 	{
-		return new TextComponent("Teleposer");
+		return Component.literal("Teleposer");
 	}
 
 	public CommandSourceStack getCommandSource(ServerLevel world)
 	{
-		return new CommandSourceStack(this, new Vec3(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()), Vec2.ZERO, world, 2, "Teleposer", new TextComponent("Teleposer"), world.getServer(), (Entity) null);
+		return new CommandSourceStack(this, new Vec3(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()), Vec2.ZERO, world, 2, "Teleposer", Component.literal("Teleposer"), world.getServer(), (Entity) null);
 	}
 
 	public void teleportPlayerToLocation(ServerLevel serverWorld, Player player, ResourceKey<Level> destination, double x, double y, double z)
@@ -249,7 +246,7 @@ public class TileTeleposer extends TileInventory implements MenuProvider, Comman
 //		String command = "execute in bloodmagic:dungeon run teleport Dev 0 100 0";
 		String command = getTextCommandForTeleport(destination, player, x, y, z);
 		MinecraftServer mcServer = serverWorld.getServer();
-		mcServer.getCommands().performCommand(getCommandSource(serverWorld), command);
+		mcServer.getCommands().performPrefixedCommand(getCommandSource(serverWorld), command);
 	}
 
 	public String getTextCommandForTeleport(ResourceKey<Level> destination, Player player, double posX, double posY, double posZ)
@@ -260,8 +257,7 @@ public class TileTeleposer extends TileInventory implements MenuProvider, Comman
 	}
 
 	@Override
-	public void sendMessage(Component component, UUID senderUUID)
-	{
+	public void sendSystemMessage(Component component) {
 		// TODO Auto-generated method stub
 
 	}

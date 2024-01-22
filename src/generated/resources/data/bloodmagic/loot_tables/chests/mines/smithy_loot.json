@@ -2,947 +2,948 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "rolls": {
-        "type": "minecraft:uniform",
-        "min": 1.0,
-        "max": 2.0
-      },
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 25,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 22.0,
+                "min": 15.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "bloodmagic:copperfragment",
           "quality": -4,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 15.0,
-                "max": 22.0
-              },
-              "add": false
-            }
-          ],
-          "name": "bloodmagic:copperfragment"
+          "weight": 25
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 15.0,
+                "min": 8.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "bloodmagic:ironfragment",
           "quality": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 8.0,
-                "max": 15.0
-              },
-              "add": false
-            }
-          ],
-          "name": "bloodmagic:ironfragment"
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 15,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 13.0,
+                "min": 8.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "bloodmagic:goldfragment",
           "quality": 2,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 8.0,
-                "max": 13.0
-              },
-              "add": false
-            }
-          ],
-          "name": "bloodmagic:goldfragment"
+          "weight": 15
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
-          "quality": 4,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 5.0
+                "max": 5.0,
+                "min": 2.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:fragment_netherite_scrap"
+          "name": "bloodmagic:fragment_netherite_scrap",
+          "quality": 4,
+          "weight": 3
         }
-      ]
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 2.0,
+        "min": 1.0
+      }
     },
     {
-      "rolls": {
-        "type": "minecraft:uniform",
-        "min": 3.0,
-        "max": 5.0
-      },
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 10,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 26.0,
+                "min": 12.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:raw_copper",
           "quality": -4,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 12.0,
-                "max": 26.0
-              },
-              "add": false
-            }
-          ],
-          "name": "minecraft:raw_copper"
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 16,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 15.0,
+                "min": 10.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:raw_iron",
           "quality": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 10.0,
-                "max": 15.0
-              },
-              "add": false
-            }
-          ],
-          "name": "minecraft:raw_iron"
+          "weight": 16
         },
         {
           "type": "minecraft:item",
-          "weight": 14,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 14.0,
+                "min": 7.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:raw_gold",
           "quality": 2,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 7.0,
-                "max": 14.0
-              },
-              "add": false
-            }
-          ],
-          "name": "minecraft:raw_gold"
+          "weight": 14
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 16.0,
+                "min": 10.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:coal",
           "quality": 2,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 10.0,
-                "max": 16.0
-              },
-              "add": false
-            }
-          ],
-          "name": "minecraft:coal"
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 6,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 7.0,
+                "min": 3.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:diamond",
           "quality": 4,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 3.0,
-                "max": 7.0
-              },
-              "add": false
-            }
-          ],
-          "name": "minecraft:diamond"
+          "weight": 6
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 5.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:ancient_debris",
           "quality": 5,
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 5.0
+                "max": 8.0,
+                "min": 4.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:ancient_debris"
+          "name": "bloodmagic:strong_tau",
+          "quality": 3,
+          "weight": 4
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
-          "quality": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 4.0,
-                "max": 8.0
+                "max": 7.0,
+                "min": 5.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:strong_tau"
+          "name": "bloodmagic:sand_hellforged",
+          "quality": 3,
+          "weight": 12
         },
         {
           "type": "minecraft:item",
-          "weight": 12,
-          "quality": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 5.0,
-                "max": 7.0
+                "max": 7.0,
+                "min": 4.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:sand_hellforged"
+          "name": "bloodmagic:dungeon_ore",
+          "quality": 3,
+          "weight": 8
         },
         {
           "type": "minecraft:item",
-          "weight": 8,
-          "quality": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 40.0,
+                "min": 30.0
+              },
+              "treasure": true
+            }
+          ],
+          "name": "minecraft:diamond_pickaxe",
+          "quality": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 40.0,
+                "min": 30.0
+              },
+              "treasure": true
+            }
+          ],
+          "name": "minecraft:diamond_shovel",
+          "quality": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 40.0,
+                "min": 30.0
+              },
+              "treasure": true
+            }
+          ],
+          "name": "minecraft:diamond_axe",
+          "quality": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 40.0,
+                "min": 30.0
+              },
+              "treasure": true
+            }
+          ],
+          "name": "minecraft:diamond_hoe",
+          "quality": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 40.0,
+                "min": 30.0
+              },
+              "treasure": true
+            }
+          ],
+          "name": "minecraft:diamond_sword",
+          "quality": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 40.0,
+                "min": 30.0
+              },
+              "treasure": true
+            }
+          ],
+          "name": "minecraft:netherite_pickaxe",
+          "quality": 6
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 40.0,
+                "min": 30.0
+              },
+              "treasure": true
+            }
+          ],
+          "name": "minecraft:netherite_shovel",
+          "quality": 6
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 40.0,
+                "min": 30.0
+              },
+              "treasure": true
+            }
+          ],
+          "name": "minecraft:netherite_axe",
+          "quality": 6
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 40.0,
+                "min": 30.0
+              },
+              "treasure": true
+            }
+          ],
+          "name": "minecraft:netherite_sword",
+          "quality": 6
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 40.0,
+                "min": 30.0
+              },
+              "treasure": true
+            }
+          ],
+          "name": "minecraft:netherite_hoe",
+          "quality": 6
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 35.0,
+                "min": 25.0
+              },
+              "treasure": true
+            }
+          ],
+          "name": "minecraft:netherite_helmet",
+          "quality": 6
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 35.0,
+                "min": 25.0
+              },
+              "treasure": true
+            }
+          ],
+          "name": "minecraft:netherite_chestplate",
+          "quality": 6
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 35.0,
+                "min": 25.0
+              },
+              "treasure": true
+            }
+          ],
+          "name": "minecraft:netherite_leggings",
+          "quality": 6
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 35.0,
+                "min": 25.0
+              },
+              "treasure": true
+            }
+          ],
+          "name": "minecraft:netherite_boots",
+          "quality": 6
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 4.0,
-                "max": 7.0
+                "max": 5.0,
+                "min": 2.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:dungeon_ore"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 3,
+          "name": "bloodmagic:corrosivecrystal",
           "quality": 3,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1.0,
-              "add": false
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "min": 30.0,
-                "max": 40.0
-              },
-              "treasure": true
-            }
-          ],
-          "name": "minecraft:diamond_pickaxe"
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
-          "quality": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
-              "count": 1.0,
-              "add": false
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "min": 30.0,
-                "max": 40.0
-              },
-              "treasure": true
-            }
-          ],
-          "name": "minecraft:diamond_shovel"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 3,
-          "quality": 3,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1.0,
-              "add": false
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "min": 30.0,
-                "max": 40.0
-              },
-              "treasure": true
-            }
-          ],
-          "name": "minecraft:diamond_axe"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 3,
-          "quality": 3,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1.0,
-              "add": false
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "min": 30.0,
-                "max": 40.0
-              },
-              "treasure": true
-            }
-          ],
-          "name": "minecraft:diamond_hoe"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 3,
-          "quality": 3,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1.0,
-              "add": false
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "min": 30.0,
-                "max": 40.0
-              },
-              "treasure": true
-            }
-          ],
-          "name": "minecraft:diamond_sword"
-        },
-        {
-          "type": "minecraft:item",
-          "quality": 6,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1.0,
-              "add": false
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "min": 30.0,
-                "max": 40.0
-              },
-              "treasure": true
-            }
-          ],
-          "name": "minecraft:netherite_pickaxe"
-        },
-        {
-          "type": "minecraft:item",
-          "quality": 6,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1.0,
-              "add": false
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "min": 30.0,
-                "max": 40.0
-              },
-              "treasure": true
-            }
-          ],
-          "name": "minecraft:netherite_shovel"
-        },
-        {
-          "type": "minecraft:item",
-          "quality": 6,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1.0,
-              "add": false
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "min": 30.0,
-                "max": 40.0
-              },
-              "treasure": true
-            }
-          ],
-          "name": "minecraft:netherite_axe"
-        },
-        {
-          "type": "minecraft:item",
-          "quality": 6,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1.0,
-              "add": false
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "min": 30.0,
-                "max": 40.0
-              },
-              "treasure": true
-            }
-          ],
-          "name": "minecraft:netherite_sword"
-        },
-        {
-          "type": "minecraft:item",
-          "quality": 6,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1.0,
-              "add": false
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "min": 30.0,
-                "max": 40.0
-              },
-              "treasure": true
-            }
-          ],
-          "name": "minecraft:netherite_hoe"
-        },
-        {
-          "type": "minecraft:item",
-          "quality": 6,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1.0,
-              "add": false
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "min": 25.0,
-                "max": 35.0
-              },
-              "treasure": true
-            }
-          ],
-          "name": "minecraft:netherite_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "quality": 6,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1.0,
-              "add": false
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "min": 25.0,
-                "max": 35.0
-              },
-              "treasure": true
-            }
-          ],
-          "name": "minecraft:netherite_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "quality": 6,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1.0,
-              "add": false
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "min": 25.0,
-                "max": 35.0
-              },
-              "treasure": true
-            }
-          ],
-          "name": "minecraft:netherite_leggings"
-        },
-        {
-          "type": "minecraft:item",
-          "quality": 6,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1.0,
-              "add": false
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "min": 25.0,
-                "max": 35.0
-              },
-              "treasure": true
-            }
-          ],
-          "name": "minecraft:netherite_boots"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 2,
-          "quality": 3,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 5.0
+                "max": 5.0,
+                "min": 2.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:corrosivecrystal"
+          "name": "bloodmagic:defaultcrystal",
+          "quality": 3,
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "quality": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 5.0
+                "max": 5.0,
+                "min": 2.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:defaultcrystal"
+          "name": "bloodmagic:steadfastcrystal",
+          "quality": 3,
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "quality": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 5.0
+                "max": 5.0,
+                "min": 2.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:steadfastcrystal"
+          "name": "bloodmagic:vengefulcrystal",
+          "quality": 3,
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "quality": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 5.0
+                "max": 5.0,
+                "min": 2.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:vengefulcrystal"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 2,
+          "name": "bloodmagic:destructivecrystal",
           "quality": 3,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 5.0
-              },
-              "add": false
-            }
-          ],
-          "name": "bloodmagic:destructivecrystal"
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
           "functions": [
             {
               "function": "bloodmagic:set_living_upgrade",
+              "points": {
+                "type": "minecraft:uniform",
+                "max": 300.0,
+                "min": 200.0
+              },
               "upgrades": [
                 "bloodmagic:arrow_protect"
-              ],
-              "points": {
-                "type": "minecraft:uniform",
-                "min": 200.0,
-                "max": 300.0
-              }
+              ]
             }
           ],
-          "name": "bloodmagic:upgradetome"
+          "name": "bloodmagic:upgradetome",
+          "weight": 4
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
           "functions": [
             {
               "function": "bloodmagic:set_living_upgrade",
-              "upgrades": [
-                "bloodmagic:physical_protect"
-              ],
               "points": {
                 "type": "minecraft:uniform",
-                "min": 200.0,
-                "max": 300.0
-              }
+                "max": 300.0,
+                "min": 200.0
+              },
+              "upgrades": [
+                "bloodmagic:physical_protect"
+              ]
             }
           ],
-          "name": "bloodmagic:upgradetome"
+          "name": "bloodmagic:upgradetome",
+          "weight": 4
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
           "functions": [
             {
-              "function": "bloodmagic:set_will_range",
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 40.0,
-                "max": 75.0
-              }
+                "max": 75.0,
+                "min": 40.0
+              },
+              "function": "bloodmagic:set_will_range"
             }
           ],
-          "name": "bloodmagic:basemonstersoul"
+          "name": "bloodmagic:basemonstersoul",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "quality": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:bow_power_anointment_3"
+          "name": "bloodmagic:bow_power_anointment_3",
+          "quality": 3,
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "quality": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:holy_water_anointment_3"
+          "name": "bloodmagic:holy_water_anointment_3",
+          "quality": 3,
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "quality": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:looting_anointment_3"
+          "name": "bloodmagic:looting_anointment_3",
+          "quality": 3,
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "quality": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:melee_anointment_3"
+          "name": "bloodmagic:melee_anointment_3",
+          "quality": 3,
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "quality": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:quick_draw_anointment_3"
+          "name": "bloodmagic:quick_draw_anointment_3",
+          "quality": 3,
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "quality": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:smelting_anointment_xl"
+          "name": "bloodmagic:smelting_anointment_xl",
+          "quality": 3,
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "quality": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:bow_velocity_anointment_3"
+          "name": "bloodmagic:bow_velocity_anointment_3",
+          "quality": 3,
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "quality": 3,
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 25.0,
-                "max": 35.0
+                "max": 35.0,
+                "min": 25.0
               },
               "treasure": true
             }
           ],
-          "name": "minecraft:book"
+          "name": "minecraft:book",
+          "quality": 3,
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "bloodmagic:hellforgedparts",
           "quality": 10,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1.0,
-              "add": false
-            }
-          ],
-          "name": "bloodmagic:hellforgedparts"
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 6,
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "bloodmagic:primitive_explosive_cell",
           "quality": 3,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1.0,
-              "add": false
-            }
-          ],
-          "name": "bloodmagic:primitive_explosive_cell"
+          "weight": 6
         },
         {
           "type": "minecraft:item",
-          "weight": 6,
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "bloodmagic:primitive_crystalline_resonator",
           "quality": 3,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1.0,
-              "add": false
-            }
-          ],
-          "name": "bloodmagic:primitive_crystalline_resonator"
+          "weight": 6
         },
         {
           "type": "minecraft:item",
-          "weight": 6,
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "bloodmagic:intermediatecuttingfluid",
           "quality": 3,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1.0,
-              "add": false
-            }
-          ],
-          "name": "bloodmagic:intermediatecuttingfluid"
+          "weight": 6
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
-          "quality": 5,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:set_damage",
+              "add": false,
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 0.3,
-                "max": 0.7
+                "max": 0.7,
+                "min": 0.3
               },
-              "add": false
+              "function": "minecraft:set_damage"
             }
           ],
-          "name": "bloodmagic:hellforged_explosive_cell"
+          "name": "bloodmagic:hellforged_explosive_cell",
+          "quality": 5,
+          "weight": 4
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
-          "quality": 5,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:set_damage",
+              "add": false,
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 0.3,
-                "max": 0.7
+                "max": 0.7,
+                "min": 0.3
               },
-              "add": false
+              "function": "minecraft:set_damage"
             }
           ],
-          "name": "bloodmagic:hellforged_resonator"
+          "name": "bloodmagic:hellforged_resonator",
+          "quality": 5,
+          "weight": 4
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
-          "quality": 5,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:set_damage",
+              "add": false,
               "damage": {
                 "type": "minecraft:uniform",
-                "min": 0.3,
-                "max": 0.7
+                "max": 0.7,
+                "min": 0.3
               },
-              "add": false
+              "function": "minecraft:set_damage"
             }
           ],
-          "name": "bloodmagic:advancedcuttingfluid"
+          "name": "bloodmagic:advancedcuttingfluid",
+          "quality": 5,
+          "weight": 4
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
-          "quality": 5,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": 1.0,
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "bloodmagic:bleedingedge"
+          "name": "bloodmagic:bleedingedge",
+          "quality": 5,
+          "weight": 3
         }
-      ]
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 5.0,
+        "min": 3.0
+      }
     }
-  ]
+  ],
+  "random_sequence": "bloodmagic:chests/mines/smithy_loot"
 }

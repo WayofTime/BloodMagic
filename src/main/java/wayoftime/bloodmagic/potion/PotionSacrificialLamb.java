@@ -8,6 +8,7 @@ import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.level.Explosion.BlockInteraction;
+import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.entity.goal.SacrificialLambMeleeAttackGoal;
 
 public class PotionSacrificialLamb extends PotionBloodMagic
@@ -35,7 +36,7 @@ public class PotionSacrificialLamb extends PotionBloodMagic
 
 		if (animal.getTarget() != null && animal.distanceToSqr(animal.getTarget()) < 4)
 		{
-			animal.getCommandSenderWorld().explode(null, animal.getX(), animal.getY() + (double) (animal.getBbHeight() / 16.0F), animal.getZ(), 2 + animal.getEffect(BloodMagicPotions.SACRIFICIAL_LAMB).getAmplifier() * 1.5f, false, BlockInteraction.NONE);
+			animal.getCommandSenderWorld().explode(null, animal.getX(), animal.getY() + (double) (animal.getBbHeight() / 16.0F), animal.getZ(), 2 + animal.getEffect(BloodMagicPotions.SACRIFICIAL_LAMB.get()).getAmplifier() * 1.5f, false, Level.ExplosionInteraction.NONE);
 		}
 	}
 

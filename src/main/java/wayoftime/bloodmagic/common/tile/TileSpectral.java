@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.common.tile;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.level.Level;
@@ -72,7 +73,7 @@ public class TileSpectral extends TileBase
 	@Override
 	public void deserialize(CompoundTag tag)
 	{
-		storedBlock = NbtUtils.readBlockState(tag.getCompound("BlockState"));
+		storedBlock = NbtUtils.readBlockState(this.level.holderLookup(Registries.BLOCK), tag.getCompound("BlockState"));
 	}
 
 	@Override

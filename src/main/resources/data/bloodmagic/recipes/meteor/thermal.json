@@ -1,59 +1,72 @@
 {
-  "type": "bloodmagic:meteor",
-  "input": {
-    "item": "thermal:rf_coil"
-  },
-  "syphon": 500000,
-  "explosion": 30.0,
-  "layers": [
+  "type": "forge:conditional",
+  "recipes": [
     {
-      "radius": 9,
-      "additionalWeight": 200,
-      "minWeight": 0,
-      "weightMap": [
+      "conditions": [
         {
-          "tag": "#forge:ores/copper#0",
-          "weight": 100
-        },
-        {
-          "tag": "#forge:ores/tin#0",
-          "weight": 80
-        },
-        {
-          "tag": "#forge:ores/lead#0",
-          "weight": 60
-        },
-        {
-          "tag": "#forge:ores/sulfur#0",
-          "weight": 60
-        },
-        {
-          "tag": "#forge:ores/apatite#0",
-          "weight": 50
-        },
-        {
-          "tag": "#forge:ores/silver#0",
-          "weight": 50
-        },
-        {
-          "tag": "#forge:ores/nickel#0",
-          "weight": 40
-        },
-        {
-          "tag": "#forge:ores/cinnabar#0",
-          "weight": 30
-        },
-        {
-          "tag": "#forge:ores/niter#0",
-          "weight": 30
-        },
-        {
-          "tag": "#forge:ores/ruby#0",
-          "weight": 20
+          "type": "forge:mod_loaded",
+          "modid": "thermal"
         }
       ],
-      "fill": "minecraft:stone",
-      "shell": "#forge:storage_blocks/slag#0"
+      "recipe": {
+        "type": "bloodmagic:meteor",
+        "input": {
+          "item": "thermal:rf_coil"
+        },
+        "syphon": 500000,
+        "explosion": 30.0,
+        "layers": [
+          {
+            "radius": 9,
+            "additionalWeight": 200,
+            "minWeight": 0,
+            "weightMap": [
+              {
+                "tag": "#forge:ores/copper#0",
+                "weight": 100
+              },
+              {
+                "tag": "#forge:ores/tin#0",
+                "weight": 80
+              },
+              {
+                "tag": "#forge:ores/lead#0",
+                "weight": 60
+              },
+              {
+                "tag": "#forge:ores/sulfur#0",
+                "weight": 60
+              },
+              {
+                "tag": "#forge:ores/apatite#0",
+                "weight": 50
+              },
+              {
+                "tag": "#forge:ores/silver#0",
+                "weight": 50
+              },
+              {
+                "tag": "#forge:ores/nickel#0",
+                "weight": 40
+              },
+              {
+                "tag": "#forge:ores/cinnabar#0",
+                "weight": 30
+              },
+              {
+                "tag": "#forge:ores/niter#0",
+                "weight": 30
+              },
+              {
+                "tag": "#forge:ores/ruby#0",
+                "weight": 20
+              }
+            ],
+            "fill": "minecraft:stone",
+            "shell": "#forge:storage_blocks/slag#0"
+          }
+        ]
+      }
     }
   ]
 }

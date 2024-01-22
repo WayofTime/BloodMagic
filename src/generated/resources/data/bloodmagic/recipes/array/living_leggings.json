@@ -1,14 +1,14 @@
 {
   "type": "bloodmagic:array",
-  "texture": "bloodmagic:textures/models/alchemyarrays/bindingarray.png",
-  "baseinput": {
-    "item": "bloodmagic:reagentbinding"
-  },
   "addedinput": {
     "item": "minecraft:iron_leggings"
+  },
+  "baseinput": {
+    "item": "bloodmagic:reagentbinding"
   },
   "output": {
     "item": "bloodmagic:livingleggings",
     "nbt": "{Damage:0}"
-  }
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/bindingarray.png"
 }

@@ -5,14 +5,14 @@
       "item": "minecraft:fermented_spider_eye"
     }
   ],
-  "outputEffect": [
-    {
-      "effect": "bloodmagic:suspended",
-      "baseDuration": 1800
-    }
-  ],
   "inputEffect": [
     "bloodmagic:gravity"
+  ],
+  "outputEffect": [
+    {
+      "baseDuration": 1800,
+      "effect": "bloodmagic:suspended"
+    }
   ],
   "syphon": 1000,
   "ticks": 200,

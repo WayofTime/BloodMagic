@@ -1,59 +1,59 @@
 {
   "type": "bloodmagic:meteor",
+  "explosion": 24.0,
   "input": {
     "tag": "forge:alloys/advanced"
   },
-  "syphon": 500000,
-  "explosion": 24.0,
   "layers": [
     {
-      "radius": 2,
       "additionalWeight": 0,
-      "minWeight": 0,
       "fill": {
-        "tag": "forge:storage_blocks/uranium",
-        "index": -1
-      }
+        "index": -1,
+        "tag": "forge:storage_blocks/uranium"
+      },
+      "minWeight": 0,
+      "radius": 2
     },
     {
-      "radius": 8,
       "additionalWeight": 200,
+      "fill": {
+        "block": "minecraft:stone"
+      },
       "minWeight": 0,
+      "radius": 8,
       "weightMap": [
         {
+          "index": 0,
           "tag": "forge:ores/osmium",
-          "index": 0,
           "weight": 100
         },
         {
+          "index": 0,
           "tag": "forge:ores/copper",
-          "index": 0,
           "weight": 100
         },
         {
-          "tag": "forge:ores/tin",
           "index": 0,
+          "tag": "forge:ores/tin",
           "weight": 80
         },
         {
-          "tag": "forge:ores/lead",
           "index": 0,
+          "tag": "forge:ores/lead",
           "weight": 60
         },
         {
-          "tag": "forge:ores/uranium",
           "index": 0,
+          "tag": "forge:ores/uranium",
           "weight": 80
         },
         {
-          "tag": "forge:ores/fluorite",
           "index": 0,
+          "tag": "forge:ores/fluorite",
           "weight": 50
         }
-      ],
-      "fill": {
-        "block": "minecraft:stone"
-      }
+      ]
     }
-  ]
+  ],
+  "syphon": 500000
 }

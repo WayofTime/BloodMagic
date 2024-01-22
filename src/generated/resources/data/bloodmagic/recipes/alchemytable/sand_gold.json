@@ -9,8 +9,8 @@
     }
   ],
   "output": {
-    "item": "bloodmagic:goldsand",
-    "count": 2
+    "count": 2,
+    "item": "bloodmagic:goldsand"
   },
   "syphon": 400,
   "ticks": 200,

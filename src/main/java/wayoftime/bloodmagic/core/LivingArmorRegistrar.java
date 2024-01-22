@@ -11,7 +11,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.common.ForgeMod;
@@ -87,14 +89,14 @@ public class LivingArmorRegistrar
 //	public static final ItemLivingTome TOME = new ItemLivingTome();
 
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_ARROW_PROTECT = UPGRADES.register("arrow_protect", () -> parseDefinition("arrow_protect").withArmorProvider((player, stats, source, upgrade, level) -> {
-		if (source.isProjectile())
+		if (source.is(DamageTypeTags.IS_PROJECTILE))
 		{
 			return upgrade.getBonusValue("protection", level).doubleValue();
 		}
 		return 0;
 	}));
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_FALL_PROTECT = UPGRADES.register("fall_protect", () -> parseDefinition("fall_protect").withArmorProvider((player, stats, source, upgrade, level) -> {
-		if (source == DamageSource.FALL)
+		if (source.is(DamageTypes.FALL))
 		{
 			return upgrade.getBonusValue("protection", level).doubleValue();
 		}

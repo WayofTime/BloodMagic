@@ -1,13 +1,13 @@
 {
   "type": "bloodmagic:array",
-  "texture": "bloodmagic:textures/models/alchemyarrays/bouncearray.png",
-  "baseinput": {
-    "tag": "forge:slimeballs"
-  },
   "addedinput": {
     "tag": "forge:dusts/redstone"
   },
+  "baseinput": {
+    "tag": "forge:slimeballs"
+  },
   "output": {
     "item": "minecraft:bedrock"
-  }
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/bouncearray.png"
 }

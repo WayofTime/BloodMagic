@@ -3,7 +3,6 @@ package wayoftime.bloodmagic.common.tile.routing;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -72,7 +71,7 @@ public class TileOutputRoutingNode extends TileFilteredRoutingNode implements IO
 	@Override
 	public Component getDisplayName()
 	{
-		return new TextComponent("Output Routing Node");
+		return Component.literal("Output Routing Node");
 	}
 
 //	@Override

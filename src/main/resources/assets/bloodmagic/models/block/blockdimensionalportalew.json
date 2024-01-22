@@ -1,7 +1,7 @@
 {
   "textures": {
-    "particle": "bloodmagic:blocks/lifeEssenceFlowing",
-    "portal": "bloodmagic:blocks/lifeEssenceFlowing"
+    "particle": "bloodmagic:block/lifeessenceflowing",
+    "portal": "bloodmagic:block/lifeessenceflowing"
   },
   "elements": [
     {   "from": [ 6, 0, 0 ],

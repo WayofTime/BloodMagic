@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class SigilHoldingBakedModel implements BakedModel
@@ -27,7 +28,7 @@ public class SigilHoldingBakedModel implements BakedModel
 	}
 
 	@Override
-	public List<BakedQuad> getQuads(BlockState p_119123_, Direction p_119124_, Random p_119125_)
+	public List<BakedQuad> getQuads(BlockState state, Direction direction, RandomSource randomSource)
 	{
 		return new ArrayList<>();
 	}

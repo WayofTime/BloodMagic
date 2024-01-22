@@ -1,12 +1,8 @@
 package wayoftime.bloodmagic.common.tile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -27,6 +23,9 @@ import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.recipe.RecipeTartaricForge;
 import wayoftime.bloodmagic.util.Constants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileSoulForge extends TileInventory implements MenuProvider, IDemonWillConduit
 {
@@ -201,7 +200,7 @@ public class TileSoulForge extends TileInventory implements MenuProvider, IDemon
 			return false;
 		if (currentOutputStack.isEmpty())
 			return true;
-		if (!currentOutputStack.sameItem(recipe.getOutput()))
+		if (!ItemStack.isSameItem(currentOutputStack, recipe.getOutput()))
 			return false;
 		int result = currentOutputStack.getCount() + recipe.getOutput().getCount();
 		return result <= getMaxStackSize() && result <= currentOutputStack.getMaxStackSize();
@@ -245,7 +244,7 @@ public class TileSoulForge extends TileInventory implements MenuProvider, IDemon
 	@Override
 	public Component getDisplayName()
 	{
-		return new TextComponent("Hellfire Forge");
+		return Component.literal("Hellfire Forge");
 	}
 
 	public boolean hasSoulGemOrSoul()
@@ -372,9 +371,9 @@ public class TileSoulForge extends TileInventory implements MenuProvider, IDemon
 			ItemStack inputStack = getItem(i);
 			if (!inputStack.isEmpty())
 			{
-				if (inputStack.getItem().hasContainerItem(inputStack))
+				if (inputStack.getItem().hasCraftingRemainingItem(inputStack))
 				{
-					setItem(i, inputStack.getItem().getContainerItem(inputStack));
+					setItem(i, inputStack.getItem().getCraftingRemainingItem(inputStack));
 					continue;
 				}
 

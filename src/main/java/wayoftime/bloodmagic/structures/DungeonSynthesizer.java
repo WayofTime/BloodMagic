@@ -1,32 +1,22 @@
 package wayoftime.bloodmagic.structures;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Random;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.google.common.collect.Lists;
 import com.google.common.reflect.TypeToken;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import org.apache.commons.lang3.tuple.Pair;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.tile.TileDungeonController;
 import wayoftime.bloodmagic.common.tile.TileDungeonSeal;
@@ -36,6 +26,9 @@ import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.structures.rooms.DungeonRoomPlacement;
 import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.Constants;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 public class DungeonSynthesizer
 {
@@ -156,7 +149,7 @@ public class DungeonSynthesizer
 		}
 	}
 
-	public BlockPos[] generateInitialRoom(ResourceLocation initialType, Random rand, ServerLevel world, BlockPos spawningPosition)
+	public BlockPos[] generateInitialRoom(ResourceLocation initialType, RandomSource rand, ServerLevel world, BlockPos spawningPosition)
 	{
 
 //		String initialDoorName = "default";
@@ -349,8 +342,8 @@ public class DungeonSynthesizer
 					{
 						List<Component> toSend = Lists.newArrayList();
 //						if (!binding.getOwnerId().equals(player.getGameProfile().getId()))
-//							toSend.add(new TranslatableComponent(tooltipBase + "otherNetwork", binding.getOwnerName()));
-						toSend.add(new TranslatableComponent("tooltip.bloodmagic.specialspawn"));
+//							toSend.add(Component.translatable(tooltipBase + "otherNetwork", binding.getOwnerName()));
+						toSend.add(Component.translatable("tooltip.bloodmagic.specialspawn"));
 						ChatUtil.sendNoSpam(player, toSend.toArray(new Component[toSend.size()]));
 					}
 
@@ -419,7 +412,7 @@ public class DungeonSynthesizer
 	// synthesizer and then place a seal that contains the info to reconstruct the
 	// room.
 
-	public boolean checkRequiredRoom(ServerLevel world, BlockPos controllerPos, ResourceLocation specialRoomType, BlockPos doorBlockOffsetPos, DungeonRoom room, Random rand, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, int newRoomDepth, int highestBranchRoomDepth)
+	public boolean checkRequiredRoom(ServerLevel world, BlockPos controllerPos, ResourceLocation specialRoomType, BlockPos doorBlockOffsetPos, DungeonRoom room, RandomSource rand, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, int newRoomDepth, int highestBranchRoomDepth)
 	{
 		StructurePlaceSettings settings = new StructurePlaceSettings();
 		Mirror mir = Mirror.NONE;
@@ -528,7 +521,7 @@ public class DungeonSynthesizer
 	 * @param highestBranchRoomDepth The maximum depth for this path.
 	 * @return
 	 */
-	public int addNewRoomToExistingDungeon(Player player, ServerLevel world, BlockPos controllerPos, ResourceLocation roomType, Random rand, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, List<ResourceLocation> potentialRooms, int activatedRoomDepth, int highestBranchRoomDepth)
+	public int addNewRoomToExistingDungeon(Player player, ServerLevel world, BlockPos controllerPos, ResourceLocation roomType, RandomSource rand, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, List<ResourceLocation> potentialRooms, int activatedRoomDepth, int highestBranchRoomDepth)
 	{
 //		System.out.println("Current room's depth info: " + activatedRoomDepth + "/" + highestBranchRoomDepth);
 		for (int i = 0; i < 10; i++)
@@ -649,7 +642,7 @@ public class DungeonSynthesizer
 		return true;
 	}
 
-	public DungeonRoomPlacement getRandomPlacement(ServerLevel world, BlockPos controllerPos, ResourceLocation roomType, Random rand, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, int previousRoomDepth, int previousMaxDepth, List<ResourceLocation> potentialRooms, boolean extendCorriDoors)
+	public DungeonRoomPlacement getRandomPlacement(ServerLevel world, BlockPos controllerPos, ResourceLocation roomType, RandomSource rand, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, int previousRoomDepth, int previousMaxDepth, List<ResourceLocation> potentialRooms, boolean extendCorriDoors)
 	{
 		StructurePlaceSettings settings = new StructurePlaceSettings();
 		Mirror mir = Mirror.NONE;
@@ -733,7 +726,7 @@ public class DungeonSynthesizer
 		return null;
 	}
 
-	public boolean attemptPlacementOfRandomRoom(Player player, ServerLevel world, BlockPos controllerPos, ResourceLocation roomType, Random rand, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, int previousRoomDepth, int previousMaxDepth, List<ResourceLocation> potentialRooms, boolean extendCorriDoors)
+	public boolean attemptPlacementOfRandomRoom(Player player, ServerLevel world, BlockPos controllerPos, ResourceLocation roomType, RandomSource rand, BlockPos activatedDoorPos, Direction doorFacing, String activatedDoorType, int previousRoomDepth, int previousMaxDepth, List<ResourceLocation> potentialRooms, boolean extendCorriDoors)
 	{
 		Pair<Direction, BlockPos> activatedDoor = Pair.of(doorFacing, activatedDoorPos);
 
@@ -858,7 +851,7 @@ public class DungeonSynthesizer
 //		specialRoomBuffer.addAll(newSpecialPools);
 	}
 
-	public static DungeonRoom getRandomRoom(ResourceLocation roomType, Random rand)
+	public static DungeonRoom getRandomRoom(ResourceLocation roomType, RandomSource rand)
 	{
 //		System.out.println("Dungeon size: " + DungeonRoomRegistry.dungeonWeightMap.size());
 		return DungeonRoomRegistry.getRandomDungeonRoom(roomType, rand);

@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.SugarCaneBlock;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
@@ -40,7 +41,7 @@ public class HarvestHandlerTall implements IHarvestHandler
 		BlockState up = world.getBlockState(pos.above());
 		if (up.getBlock() == state.getBlock())
 		{
-			LootContext.Builder lootBuilder = new LootContext.Builder((ServerLevel) world);
+			LootParams.Builder lootBuilder = new LootParams.Builder((ServerLevel) world);
 			Vec3 blockCenter = new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
 			List<ItemStack> blockDrops = state.getDrops(lootBuilder.withParameter(LootContextParams.ORIGIN, blockCenter).withParameter(LootContextParams.TOOL, mockHoe));
 			drops.addAll(blockDrops);

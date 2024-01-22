@@ -5,15 +5,15 @@
       "item": "bloodmagic:combinationalcatalyst"
     }
   ],
-  "outputEffect": [
-    {
-      "effect": "bloodmagic:flight",
-      "baseDuration": 3600
-    }
-  ],
   "inputEffect": [
     "bloodmagic:suspended",
     "minecraft:levitation"
+  ],
+  "outputEffect": [
+    {
+      "baseDuration": 3600,
+      "effect": "bloodmagic:flight"
+    }
   ],
   "syphon": 1000,
   "ticks": 200,

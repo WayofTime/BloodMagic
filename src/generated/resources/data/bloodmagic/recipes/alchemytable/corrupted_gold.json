@@ -9,8 +9,8 @@
     }
   ],
   "output": {
-    "item": "bloodmagic:goldgravel",
-    "count": 2
+    "count": 2,
+    "item": "bloodmagic:goldgravel"
   },
   "syphon": 300,
   "ticks": 50,

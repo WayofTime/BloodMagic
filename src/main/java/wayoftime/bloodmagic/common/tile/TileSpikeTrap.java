@@ -15,8 +15,8 @@ import wayoftime.bloodmagic.common.tile.base.TileTicking;
 public class TileSpikeTrap extends TileTicking
 {
 
-	@ObjectHolder("bloodmagic:spiketrap")
-	public static BlockEntityType<TileSpikeTrap> TYPE;
+//	@ObjectHolder("bloodmagic:spiketrap")
+//	public static BlockEntityType<TileSpikeTrap> TYPE;
 
 	public TileSpikeTrap(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{

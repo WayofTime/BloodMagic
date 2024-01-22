@@ -29,7 +29,7 @@ public class ContainerSoulForge extends AbstractContainerMenu
 
 	public ContainerSoulForge(int windowId, Inventory playerInventory, FriendlyByteBuf extraData)
 	{
-		this((TileSoulForge) playerInventory.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(5), windowId, playerInventory);
+		this((TileSoulForge) playerInventory.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(5), windowId, playerInventory);
 	}
 
 	public ContainerSoulForge(@Nullable TileSoulForge tile, ContainerData data, int windowId, Inventory playerInventory)

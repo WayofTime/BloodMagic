@@ -12,8 +12,8 @@
     }
   ],
   "output": {
-    "item": "bloodmagic:saltpeter",
-    "count": 3
+    "count": 3,
+    "item": "bloodmagic:saltpeter"
   },
   "syphon": 200,
   "ticks": 200,

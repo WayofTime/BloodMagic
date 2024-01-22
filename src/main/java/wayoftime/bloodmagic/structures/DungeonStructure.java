@@ -1,15 +1,15 @@
 package wayoftime.bloodmagic.structures;
 
 import java.util.Optional;
-import java.util.Random;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import wayoftime.bloodmagic.util.BMLog;
 
 public class DungeonStructure
@@ -21,13 +21,13 @@ public class DungeonStructure
 		this.resource = resource;
 	}
 
-	public boolean placeStructureAtPosition(Random rand, StructurePlaceSettings settings, ServerLevel world, BlockPos pos)
+	public boolean placeStructureAtPosition(RandomSource rand, StructurePlaceSettings settings, ServerLevel world, BlockPos pos)
 	{
 		if (pos == null)
 			return false;
 
 		MinecraftServer minecraftserver = world.getServer();
-		StructureManager templatemanager = world.getStructureManager();
+		StructureTemplateManager templatemanager = world.getStructureManager();
 
 		Optional<StructureTemplate> template = templatemanager.get(resource);
 

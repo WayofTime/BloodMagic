@@ -1,16 +1,16 @@
 {
   "type": "bloodmagic:arc",
+  "consumeingredient": false,
   "input": {
     "tag": "forge:ores/netherite_scrap"
   },
   "inputsize": 1,
+  "mainoutputchance": 0.0,
+  "output": {
+    "count": 3,
+    "item": "bloodmagic:fragment_netherite_scrap"
+  },
   "tool": {
     "tag": "bloodmagic:arc/explosive"
-  },
-  "output": {
-    "item": "bloodmagic:fragment_netherite_scrap",
-    "count": 3
-  },
-  "consumeingredient": false,
-  "mainoutputchance": 0.0
+  }
 }

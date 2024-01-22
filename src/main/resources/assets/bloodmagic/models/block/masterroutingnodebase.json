@@ -1,7 +1,7 @@
 {
   "parent": "block/block",
   "loader": "forge:obj",
-  "flip-v": true, 
+  "flip_v": true, 
   "model": "bloodmagic:models/block/routing/modelmasterroutingnodebase.obj",
   "textures": {
     "base": "bloodmagic:models/modelmasterroutingnode",

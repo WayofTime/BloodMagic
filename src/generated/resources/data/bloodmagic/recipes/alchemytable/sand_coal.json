@@ -12,8 +12,8 @@
     }
   ],
   "output": {
-    "item": "bloodmagic:coalsand",
-    "count": 4
+    "count": 4,
+    "item": "bloodmagic:coalsand"
   },
   "syphon": 400,
   "ticks": 200,

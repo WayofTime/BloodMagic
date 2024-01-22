@@ -18,8 +18,8 @@
     }
   ],
   "output": {
-    "item": "bloodmagic:simplecatalyst",
-    "count": 2
+    "count": 2,
+    "item": "bloodmagic:simplecatalyst"
   },
   "syphon": 200,
   "ticks": 100,

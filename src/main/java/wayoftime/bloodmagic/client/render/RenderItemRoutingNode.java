@@ -4,11 +4,8 @@ import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix3f;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
 
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -16,9 +13,10 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ConfigManager;
 import wayoftime.bloodmagic.common.routing.INodeRenderer;
@@ -104,8 +102,8 @@ public class RenderItemRoutingNode implements BlockEntityRenderer<TileRoutingNod
 				matrixStack.pushPose();
 
 				matrixStack.translate(0.5, 0.5, 0.5);
-				matrixStack.mulPose(new Quaternion(Direction.UP.step(), -rotYaw, true));
-				matrixStack.mulPose(new Quaternion(Direction.WEST.step(), rotPitch - 90, true));
+				matrixStack.mulPose(Axis.YP.rotationDegrees( -rotYaw));
+				matrixStack.mulPose(Axis.XN.rotationDegrees( rotPitch - 90 ));
 				matrixStack.pushPose();
 
 				long i = tileNode.getLevel().getGameTime();
@@ -149,7 +147,7 @@ public class RenderItemRoutingNode implements BlockEntityRenderer<TileRoutingNod
 		float f4 = colors[1];
 		float f5 = colors[2];
 		matrixStackIn.pushPose();
-		matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(f * 2.25F - 45.0F));
+		matrixStackIn.mulPose(Axis.YP.rotationDegrees(f * 2.25F - 45.0F));
 		float f6 = 0.0F;
 		float f8 = 0.0F;
 		float f9 = -beamRadius;

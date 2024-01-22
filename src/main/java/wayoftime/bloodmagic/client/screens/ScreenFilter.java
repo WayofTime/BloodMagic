@@ -1,21 +1,13 @@
 package wayoftime.bloodmagic.client.screens;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
@@ -23,11 +15,16 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import org.apache.commons.lang3.tuple.Pair;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.container.item.ContainerFilter;
 import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
 import wayoftime.bloodmagic.network.RouterFilterPacket;
 import wayoftime.bloodmagic.util.GhostItemHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class ScreenFilter extends ScreenBase<ContainerFilter>
 {
@@ -59,7 +56,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		left = (this.width - this.imageWidth) / 2;
 		top = (this.height - this.imageHeight) / 2;
 
-		this.textBox = new EditBox(Minecraft.getInstance().font, left + 23, top + 19, 70, 12, new TextComponent("itemGroup.search"));
+		this.textBox = new EditBox(Minecraft.getInstance().font, left + 23, top + 19, 70, 12, Component.literal("itemGroup.search"));
 		this.textBox.setBordered(false);
 //		this.textBox.setText("");
 		this.textBox.setMaxLength(50);
@@ -85,7 +82,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 				}
 				buttonKeyList.add(pair.getKey());
 				Pair<Integer, Integer> buttonLocation = getButtonLocation(numberOfAddedButtons);
-				Button addedButton = new Button(left + buttonLocation.getLeft(), top + buttonLocation.getRight(), 20, 20, new TextComponent(""), pair.getRight());
+				Button addedButton = Button.builder(Component.literal(""), pair.getRight()).pos(left + buttonLocation.getLeft(), top + buttonLocation.getRight()).size( 20, 20).build();
 
 				if (!provider.isButtonGlobal(filterStack, pair.getKey()))
 				{
@@ -224,10 +221,20 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	{
 		boolean testBool = super.mouseClicked(mouseX, mouseY, mouseButton);
 
-		if (this.textBox.mouseClicked(mouseX, mouseY, mouseButton))
-		{
-			return true;
+		if (container.lastGhostSlotClicked != -1) { // Text box only selectable if a ghost slot has been clicked.
+			if (this.textBox.mouseClicked(mouseX, mouseY, mouseButton)) { // Left-Clicked
+				this.textBox.setFocused(true);
+				return true;
+			}
+			if (this.textBox.isMouseOver(mouseX, mouseY) && mouseButton == 1) // Right-Clicked
+			{
+				this.textBox.setValue("");
+				setValueOfGhostItemInSlot(container.lastGhostSlotClicked, 0);
+				this.textBox.setFocused(true);
+				return true;
+			}
 		}
+		this.textBox.setFocused(false);
 
 		if (container.lastGhostSlotClicked != -1)
 		{
@@ -268,11 +275,11 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	}
 
 	@Override
-	protected void renderLabels(PoseStack stack, int mouseX, int mouseY)
+	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY)
 	{
 //		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
-		this.font.draw(stack, new TranslatableComponent("container.inventory"), 8, 93, 4210752);
-		this.font.draw(stack, container.filterStack.getHoverName(), 8, 4, 4210752);
+		guiGraphics.drawString(this.font, Component.translatable("container.inventory"), 8, 93, 4210752, false);
+		guiGraphics.drawString(this.font, container.filterStack.getHoverName(), 8, 4, 4210752, false);
 
 		if (container.filterStack.getItem() instanceof IItemFilterProvider)
 		{
@@ -288,18 +295,14 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 				int xl = buttonLocation.getLeft();
 				int yl = buttonLocation.getRight();
 
-				RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-				RenderSystem.setShaderTexture(0, background);
-				this.blit(stack, +xl, +yl, textureLocation.getLeft(), textureLocation.getRight(), w, h);
+				guiGraphics.blit(background, +xl, +yl, textureLocation.getLeft(), textureLocation.getRight(), w, h);
 			}
 		}
 	}
 
 	@Override
-	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY)
 	{
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		RenderSystem.setShaderTexture(0, background);
 //		int i = (this.width - this.xSize) / 2;
 //		int j = (this.height - this.ySize) / 2;
 //		this.blit(stack, i, j, 0, 0, this.xSize, this.ySize);
@@ -322,23 +325,22 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 //        this.mc.getTextureManager().bindTexture(texture);
 		int x = (width - imageWidth) / 2;
 		int y = (height - imageHeight) / 2;
-		this.blit(stack, x, y, 0, 0, imageWidth, imageHeight);
+		guiGraphics.blit(background, x, y, 0, 0, imageWidth, imageHeight);
 		ItemStack held = player.getItemInHand(InteractionHand.MAIN_HAND);
 		if (container.lastGhostSlotClicked >= 0)
 		{
 //            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-			this.blit(stack, 106 + x + 21 * (container.lastGhostSlotClicked % 3), y + 11 + 21 * (container.lastGhostSlotClicked / 3), 0, 187, 24, 24);
+			guiGraphics.blit(background, 106 + x + 21 * (container.lastGhostSlotClicked % 3), y + 11 + 21 * (container.lastGhostSlotClicked / 3), 0, 187, 24, 24);
 		}
 
 	}
 
 	@Override
-	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks)
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks)
 	{
-		super.render(matrixStack, mouseX, mouseY, partialTicks);
+		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 		{
-			this.textBox.render(matrixStack, mouseX, mouseY, partialTicks);
+			this.textBox.render(guiGraphics, mouseX, mouseY, partialTicks);
 		}
 
 		List<Component> tooltip = new ArrayList<>();
@@ -364,7 +366,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		}
 
 		if (!tooltip.isEmpty())
-			this.renderTooltip(matrixStack, tooltip, Optional.empty(), mouseX, mouseY, font);
+			guiGraphics.renderTooltip(this.font, tooltip, Optional.empty(), mouseX, mouseY);
 //			GuiUtils.drawHoveringText(matrixStack, tooltip, mouseX, mouseY, width, height, -1, font);
 	}
 

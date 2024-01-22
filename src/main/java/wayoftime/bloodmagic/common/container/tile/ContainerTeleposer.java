@@ -19,7 +19,7 @@ public class ContainerTeleposer extends AbstractContainerMenu
 
 	public ContainerTeleposer(int windowId, Inventory playerInventory, FriendlyByteBuf extraData)
 	{
-		this((TileTeleposer) playerInventory.player.level.getBlockEntity(extraData.readBlockPos()), windowId, playerInventory);
+		this((TileTeleposer) playerInventory.player.level().getBlockEntity(extraData.readBlockPos()), windowId, playerInventory);
 	}
 
 	public ContainerTeleposer(@Nullable TileTeleposer tile, int windowId, Inventory playerInventory)

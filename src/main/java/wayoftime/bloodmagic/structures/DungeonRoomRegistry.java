@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import net.minecraft.util.RandomSource;
 import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.resources.ResourceLocation;
@@ -55,7 +56,7 @@ public class DungeonRoomRegistry
 //		System.out.println("Registering dungeon pool: " + poolRes);
 	}
 
-	public static DungeonRoom getRandomDungeonRoom(ResourceLocation roomPoolName, Random rand)
+	public static DungeonRoom getRandomDungeonRoom(ResourceLocation roomPoolName, RandomSource rand)
 	{
 //		System.out.println(totalWeightMap);
 		Integer maxWeight = totalWeightMap.get(roomPoolName);
@@ -127,7 +128,7 @@ public class DungeonRoomRegistry
 		}
 	}
 
-	public static DungeonRoom getRandomDungeonRoom(Random rand)
+	public static DungeonRoom getRandomDungeonRoom(RandomSource rand)
 	{
 		int wantedWeight = rand.nextInt(totalWeight);
 		for (Entry<DungeonRoom, Integer> entry : dungeonWeightMap.entrySet())

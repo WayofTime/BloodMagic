@@ -25,6 +25,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -162,7 +163,7 @@ public class RitualFelling extends Ritual
 		if (inventory == null)
 			return;
 
-		LootContext.Builder lootBuilder = new LootContext.Builder((ServerLevel) world);
+		LootParams.Builder lootBuilder = new LootParams.Builder((ServerLevel) world);
 		Vec3 blockCenter = new Vec3(choppedPos.getX() + 0.5, choppedPos.getY() + 0.5, choppedPos.getZ() + 0.5);
 		List<ItemStack> silkDrops = choppedState.getDrops(lootBuilder.withParameter(LootContextParams.ORIGIN, blockCenter).withParameter(LootContextParams.TOOL, mockAxe));
 

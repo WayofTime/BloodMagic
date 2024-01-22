@@ -79,7 +79,7 @@ public class BlockTau extends CropBlock
 					List<LivingEntity> list = worldIn.getEntitiesOfClass(LivingEntity.class, boundingBox);
 					for (LivingEntity entity : list)
 					{
-						if (entity.hurt(DamageSource.CACTUS, 2))
+						if (entity.hurt(entity.damageSources().cactus(), 2))
 						{
 							if (isStrong)
 							{
@@ -137,7 +137,7 @@ public class BlockTau extends CropBlock
 			List<LivingEntity> list = worldIn.getEntitiesOfClass(LivingEntity.class, boundingBox);
 			for (LivingEntity entity : list)
 			{
-				if (entity.hurt(DamageSource.CACTUS, 2))
+				if (entity.hurt(entity.damageSources().cactus(), 2))
 				{
 					if (isStrong)
 					{

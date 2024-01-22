@@ -14,7 +14,7 @@ public class HarvestHandlerGlowberry implements IHarvestHandler
 	@Override
 	public boolean harvest(Level world, BlockPos pos, BlockState state, List<ItemStack> drops)
 	{
-		InteractionResult result = CaveVines.use(state, world, pos);
+		InteractionResult result = CaveVines.use(null, state, world, pos);
 		return result.consumesAction();
 	}
 

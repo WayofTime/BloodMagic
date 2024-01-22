@@ -5,15 +5,15 @@
       "item": "bloodmagic:combinationalcatalyst"
     }
   ],
-  "outputEffect": [
-    {
-      "effect": "bloodmagic:heavy_heart",
-      "baseDuration": 1800
-    }
-  ],
   "inputEffect": [
     "bloodmagic:gravity",
     "minecraft:instant_health"
+  ],
+  "outputEffect": [
+    {
+      "baseDuration": 1800,
+      "effect": "bloodmagic:heavy_heart"
+    }
   ],
   "syphon": 1000,
   "ticks": 200,

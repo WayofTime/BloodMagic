@@ -25,7 +25,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -42,7 +41,7 @@ public class BlockAlchemyTable extends Block implements EntityBlock// implements
 
 	public BlockAlchemyTable()
 	{
-		super(BlockBehaviour.Properties.of(Material.METAL).strength(2.0F, 5.0F).noOcclusion().isRedstoneConductor(BlockAlchemyTable::isntSolid).isViewBlocking(BlockAlchemyTable::isntSolid).requiresCorrectToolForDrops());
+		super(BlockBehaviour.Properties.of().strength(2.0F, 5.0F).noOcclusion().isRedstoneConductor(BlockAlchemyTable::isntSolid).isViewBlocking(BlockAlchemyTable::isntSolid).requiresCorrectToolForDrops());
 //		.harvestTool(ToolType.PICKAXE).harvestLevel(1)
 	}
 
@@ -101,10 +100,10 @@ public class BlockAlchemyTable extends Block implements EntityBlock// implements
 		{
 			if (((TileAlchemyTable) tile).isSlave())
 			{
-				NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) world.getBlockEntity(((TileAlchemyTable) tile).getConnectedPos()), ((TileAlchemyTable) tile).getConnectedPos());
+				NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) world.getBlockEntity(((TileAlchemyTable) tile).getConnectedPos()), ((TileAlchemyTable) tile).getConnectedPos());
 			} else
 			{
-				NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) tile, pos);
+				NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) tile, pos);
 			}
 
 			return InteractionResult.SUCCESS;

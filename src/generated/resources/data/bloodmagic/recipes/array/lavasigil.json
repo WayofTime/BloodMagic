@@ -1,13 +1,13 @@
 {
   "type": "bloodmagic:array",
-  "texture": "bloodmagic:textures/models/alchemyarrays/lavasigil.png",
-  "baseinput": {
-    "item": "bloodmagic:reagentlava"
-  },
   "addedinput": {
     "item": "bloodmagic:blankslate"
   },
+  "baseinput": {
+    "item": "bloodmagic:reagentlava"
+  },
   "output": {
     "item": "bloodmagic:lavasigil"
-  }
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/lavasigil.png"
 }

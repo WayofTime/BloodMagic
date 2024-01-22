@@ -1,11 +1,8 @@
 package wayoftime.bloodmagic.common.item.routing;
 
-import java.util.List;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -23,6 +20,8 @@ import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.GhostItemHelper;
 import wayoftime.bloodmagic.util.Utils;
 
+import java.util.List;
+
 public class ItemStandardFilter extends ItemCompositeFilter
 {
 	@Override
@@ -35,7 +34,7 @@ public class ItemStandardFilter extends ItemCompositeFilter
 
 			if (player instanceof ServerPlayer)
 			{
-				NetworkHooks.openGui((ServerPlayer) player, this, buf -> buf.writeItemStack(stack, false));
+				NetworkHooks.openScreen((ServerPlayer) player, this, buf -> buf.writeItemStack(stack, false));
 			}
 		}
 
@@ -45,7 +44,7 @@ public class ItemStandardFilter extends ItemCompositeFilter
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack filterStack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
-		tooltip.add(new TranslatableComponent("tooltip.bloodmagic.basicfilter.desc").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY));
+		tooltip.add(Component.translatable("tooltip.bloodmagic.basicfilter.desc").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY));
 
 		if (filterStack.getTag() == null)
 		{
@@ -58,10 +57,10 @@ public class ItemStandardFilter extends ItemCompositeFilter
 			boolean sneaking = Screen.hasShiftDown();
 			if (!sneaking)
 			{
-				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.extraInfo").withStyle(ChatFormatting.BLUE));
+				tooltip.add(Component.translatable("tooltip.bloodmagic.extraInfo").withStyle(ChatFormatting.BLUE));
 			} else
 			{
-				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.contained_filters").withStyle(ChatFormatting.BLUE));
+				tooltip.add(Component.translatable("tooltip.bloodmagic.contained_filters").withStyle(ChatFormatting.BLUE));
 				for (ItemStack nestedStack : nestedFilters)
 				{
 					tooltip.add(nestedStack.getHoverName());
@@ -74,10 +73,10 @@ public class ItemStandardFilter extends ItemCompositeFilter
 
 		if (isWhitelist)
 		{
-			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.whitelist").withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("tooltip.bloodmagic.filter.whitelist").withStyle(ChatFormatting.GRAY));
 		} else
 		{
-			tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.blacklist").withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("tooltip.bloodmagic.filter.blacklist").withStyle(ChatFormatting.GRAY));
 		}
 
 		ItemInventory inv = new InventoryFilter(filterStack);
@@ -94,10 +93,10 @@ public class ItemStandardFilter extends ItemCompositeFilter
 				int amount = GhostItemHelper.getItemGhostAmount(stack);
 				if (amount > 0)
 				{
-					tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.count", amount, stack.getHoverName()));
+					tooltip.add(Component.translatable("tooltip.bloodmagic.filter.count", amount, stack.getHoverName()));
 				} else
 				{
-					tooltip.add(new TranslatableComponent("tooltip.bloodmagic.filter.all", stack.getHoverName()));
+					tooltip.add(Component.translatable("tooltip.bloodmagic.filter.all", stack.getHoverName()));
 				}
 			} else
 			{

@@ -1,12 +1,11 @@
 package wayoftime.bloodmagic.common.item;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 /**
  * Base Blood Orb class object for blood orbs
  */
-public final class BloodOrb extends ForgeRegistryEntry<BloodOrb>
+public final class BloodOrb
 {
 	private final ResourceLocation name;
 	private final int tier;

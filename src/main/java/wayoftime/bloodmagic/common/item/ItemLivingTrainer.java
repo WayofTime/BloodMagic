@@ -1,16 +1,8 @@
 package wayoftime.bloodmagic.common.item;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -35,13 +27,19 @@ import wayoftime.bloodmagic.core.living.LivingUpgrade;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.Utils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 public class ItemLivingTrainer extends Item implements ILivingContainer, MenuProvider
 {
 	public static final int MAX_SIZE = 16;
 
 	public ItemLivingTrainer()
 	{
-		super(new Item.Properties().stacksTo(1).tab(BloodMagic.TAB));
+		super(new Item.Properties().stacksTo(1));
 	}
 
 	@Override
@@ -55,7 +53,7 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, MenuPro
 
 			if (player instanceof ServerPlayer)
 			{
-				NetworkHooks.openGui((ServerPlayer) player, this, buf -> buf.writeItemStack(stack, false));
+				NetworkHooks.openScreen((ServerPlayer) player, this, buf -> buf.writeItemStack(stack, false));
 			}
 		}
 
@@ -80,10 +78,10 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, MenuPro
 			boolean isWhitelist = getIsWhitelist(stack);
 			if (isWhitelist)
 			{
-				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.trainer.whitelist"));
+				tooltip.add(Component.translatable("tooltip.bloodmagic.trainer.whitelist"));
 			} else
 			{
-				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.trainer.blacklist"));
+				tooltip.add(Component.translatable("tooltip.bloodmagic.trainer.blacklist"));
 			}
 
 			Map<LivingUpgrade, Integer> positiveUpgradeMap = new HashMap<>();
@@ -98,15 +96,15 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, MenuPro
 			});
 
 			positiveUpgradeMap.forEach((k, v) -> {
-				tooltip.add(new TranslatableComponent("%s %s", new TranslatableComponent(k.getTranslationKey()), new TranslatableComponent("enchantment.level." + v)).withStyle(ChatFormatting.GRAY));
+				tooltip.add(Component.translatable("%s %s", Component.translatable(k.getTranslationKey()), Component.translatable("enchantment.level." + v)).withStyle(ChatFormatting.GRAY));
 			});
 
 			if (!zeroUpgradeList.isEmpty() && !isWhitelist)
 			{
-				tooltip.add(new TranslatableComponent("tooltip.bloodmagic.trainer.deny"));
+				tooltip.add(Component.translatable("tooltip.bloodmagic.trainer.deny"));
 				for (LivingUpgrade upgrade : zeroUpgradeList)
 				{
-					tooltip.add(new TranslatableComponent(upgrade.getTranslationKey()).withStyle(ChatFormatting.GRAY));
+					tooltip.add(Component.translatable(upgrade.getTranslationKey()).withStyle(ChatFormatting.GRAY));
 				}
 			}
 		}
@@ -144,7 +142,7 @@ public class ItemLivingTrainer extends Item implements ILivingContainer, MenuPro
 	public Component getDisplayName()
 	{
 		// TODO Auto-generated method stub
-		return new TextComponent("Bracelet");
+		return Component.literal("Bracelet");
 	}
 
 	public void setTomeLevel(ItemStack trainerStack, int slot, int desiredLevel)

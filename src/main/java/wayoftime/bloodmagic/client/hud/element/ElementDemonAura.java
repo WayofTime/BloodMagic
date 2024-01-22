@@ -7,6 +7,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import wayoftime.bloodmagic.BloodMagic;
@@ -27,14 +28,12 @@ public class ElementDemonAura extends HUDElement
 	}
 
 	@Override
-	public void draw(PoseStack matrixStack, float partialTicks, int drawX, int drawY)
+	public void draw(GuiGraphics guiGraphics, float partialTicks, int drawX, int drawY)
 	{
 		Minecraft minecraft = Minecraft.getInstance();
 		Player player = minecraft.player;
 
-		RenderSystem.setShaderTexture(0, BAR_LOCATION);
-//		GlStateManager.color(1.0F, 1.0F, 1.0F);
-		this.blit(matrixStack, drawX, drawY, 0, 210, 80, 46);
+		guiGraphics.blit(BAR_LOCATION, drawX, drawY, 0, 210, 80, 46);
 
 		double maxAmount = Utils.getDemonWillResolution(player);
 
@@ -42,8 +41,6 @@ public class ElementDemonAura extends HUDElement
 		for (EnumDemonWillType type : orderedTypes)
 		{
 			i++;
-//			GlStateManager.color(1.0F, 1.0F, 1.0F);
-			RenderSystem.setShaderTexture(0, BAR_LOCATION);
 			int textureXOffset = (i > 3) ? (i - 3) : (3 - i);
 			int maxBarSize = 30 - 2 * textureXOffset;
 
@@ -61,16 +58,16 @@ public class ElementDemonAura extends HUDElement
 			double textureX = 2 * textureXOffset + 2 * 42;
 			double textureY = 4 * i + 220;
 
-			this.blit(matrixStack, (int) x, (int) y, (int) textureX, (int) textureY, (int) width, (int) height);
+			guiGraphics.blit(BAR_LOCATION, (int) x, (int) y, (int) textureX, (int) textureY, (int) width, (int) height);
 
 			if (player.isShiftKeyDown())
 			{
-				matrixStack.pushPose();
-				matrixStack.translate(x - 2 * textureXOffset + 70, (y - 2), 0);
-				matrixStack.scale(0.5f, 0.5f, 1f);
-				minecraft.font.drawShadow(matrixStack, String.valueOf((int) amount), 0, 2, 0xffffffff);
-//				RenderSystem.clearTexGen();
-				matrixStack.popPose();
+				PoseStack poseStack = guiGraphics.pose();
+				poseStack.pushPose();
+				poseStack.translate(x - 2 * textureXOffset + 70, (y - 2), 0);
+				poseStack.scale(0.5f, 0.5f, 1f);
+				guiGraphics.drawString(minecraft.font, String.valueOf((int) amount), 0, 2, 0xffffffff, true);
+				poseStack.popPose();
 			}
 		}
 	}

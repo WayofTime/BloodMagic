@@ -14,7 +14,7 @@ public class DungeonTester
 
 	public static void testDungeonElementWithOutput(ServerLevel world, BlockPos pos)
 	{
-		Dungeon.placeStructureAtPosition(new Random(), world, pos);
+		Dungeon.placeStructureAtPosition(world.random, world, pos);
 //		ResourceLocation resource = new ResourceLocation(BloodMagic.MODID, "t_corridor");
 //
 ////		DungeonStructure structure = new DungeonStructure(resource);

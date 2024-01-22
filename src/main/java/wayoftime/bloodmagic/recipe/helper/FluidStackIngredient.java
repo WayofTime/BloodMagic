@@ -210,7 +210,7 @@ public abstract class FluidStackIngredient implements InputIngredient<FluidStack
 		{
 			JsonObject json = new JsonObject();
 			json.addProperty(Constants.JSON.AMOUNT, fluidInstance.getAmount());
-			json.addProperty(Constants.JSON.FLUID, fluidInstance.getFluid().getRegistryName().toString());
+			json.addProperty(Constants.JSON.FLUID, ForgeRegistries.FLUIDS.getKey(fluidInstance.getFluid()).toString());
 			if (fluidInstance.hasTag())
 			{
 				json.addProperty(Constants.JSON.NBT, fluidInstance.getTag().toString());

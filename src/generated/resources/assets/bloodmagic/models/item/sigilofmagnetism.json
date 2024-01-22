@@ -1,16 +1,16 @@
 {
   "overrides": [
     {
+      "model": "bloodmagic:item/variants/sigilofmagnetism_deactivated",
       "predicate": {
         "bloodmagic:active": 0.0
-      },
-      "model": "bloodmagic:item/variants/sigilofmagnetism_deactivated"
+      }
     },
     {
+      "model": "bloodmagic:item/variants/sigilofmagnetism_activated",
       "predicate": {
         "bloodmagic:active": 1.0
-      },
-      "model": "bloodmagic:item/variants/sigilofmagnetism_activated"
+      }
     }
   ]
 }

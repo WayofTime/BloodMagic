@@ -11,10 +11,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -32,9 +33,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.IFluidBlock;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -50,7 +51,7 @@ public class Utils
 	 * @param tile   - The {@link TileInventory} to input the item to
 	 * @param player - The player to take the item from.
 	 * @return {@code true} if the ItemStack is inserted, {@code false} otherwise
-	 * @see #insertItemToTile(TileInventory, PlayerEntity, int)
+	 * @see #insertItemToTile(TileInventory, Player, int)
 	 */
 	public static boolean insertItemToTile(TileInventory tile, Player player)
 	{
@@ -100,7 +101,7 @@ public class Utils
 
 	public static boolean isBlockLiquid(BlockState state)
 	{
-		return (state instanceof IFluidBlock || state.getMaterial().isLiquid());
+		return (state instanceof IFluidBlock || state.liquid());
 	}
 
 	public static boolean isFlowingLiquid(Level world, BlockPos pos, BlockState state)
@@ -253,7 +254,7 @@ public class Utils
 
 	public static ItemStack insertStackIntoTile(ItemStack stack, BlockEntity tile, Direction dir)
 	{
-		LazyOptional<IItemHandler> capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir);
+		LazyOptional<IItemHandler> capability = tile.getCapability(ForgeCapabilities.ITEM_HANDLER, dir);
 		if (capability.isPresent())
 		{
 			IItemHandler handler = capability.resolve().get();
@@ -310,7 +311,7 @@ public class Utils
 	{
 		int slots = 0;
 
-		LazyOptional<IItemHandler> capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir);
+		LazyOptional<IItemHandler> capability = tile.getCapability(ForgeCapabilities.ITEM_HANDLER, dir);
 		if (capability.isPresent())
 		{
 			IItemHandler handler = capability.resolve().get();
@@ -722,8 +723,8 @@ public class Utils
 
 		IItemHandler itemHandler = null;
 
-		if (tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing).isPresent())
-			itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing).resolve().get();
+		if (tile.getCapability(ForgeCapabilities.ITEM_HANDLER, facing).isPresent())
+			itemHandler = tile.getCapability(ForgeCapabilities.ITEM_HANDLER, facing).resolve().get();
 		else if (tile instanceof WorldlyContainer)
 			itemHandler = ((WorldlyContainer) tile).getSlotsForFace(facing).length != 0
 					? new SidedInvWrapper((WorldlyContainer) tile, facing)
@@ -892,11 +893,10 @@ public class Utils
 
 	public static boolean isMeleeDamage(DamageSource source)
 	{
-		if (source.isProjectile() || source.isExplosion() || source.isFall() || source.isFire())
+		if (source.is(DamageTypeTags.IS_PROJECTILE))
 		{
 			return false;
 		}
-
-		return source instanceof EntityDamageSource;
+		return source.is(DamageTypes.MOB_ATTACK) || source.is(DamageTypes.MOB_ATTACK_NO_AGGRO) || source.is(DamageTypes.PLAYER_ATTACK);
 	}
 }

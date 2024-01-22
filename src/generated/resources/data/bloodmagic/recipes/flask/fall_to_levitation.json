@@ -5,14 +5,14 @@
       "item": "minecraft:fermented_spider_eye"
     }
   ],
-  "outputEffect": [
-    {
-      "effect": "minecraft:levitation",
-      "baseDuration": 3600
-    }
-  ],
   "inputEffect": [
     "minecraft:slow_falling"
+  ],
+  "outputEffect": [
+    {
+      "baseDuration": 3600,
+      "effect": "minecraft:levitation"
+    }
   ],
   "syphon": 500,
   "ticks": 200,

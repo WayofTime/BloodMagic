@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "sss",
-    "sss",
-    "sss"
-  ],
+  "category": "misc",
   "key": {
     "s": {
       "tag": "forge:ingots/hellforged"
     }
   },
+  "pattern": [
+    "sss",
+    "sss",
+    "sss"
+  ],
   "result": {
     "item": "bloodmagic:dungeon_metal"
-  }
+  },
+  "show_notification": true
 }

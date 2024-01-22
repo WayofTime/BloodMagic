@@ -3,12 +3,13 @@ package wayoftime.bloodmagic.client.render.alchemyarray;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import com.mojang.math.Quaternion;
+import org.joml.Quaterniond;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer;
 import wayoftime.bloodmagic.client.render.BloodMagicRenderer.Model2D;
 import wayoftime.bloodmagic.common.tile.TileAlchemyArray;
@@ -88,13 +89,13 @@ public class AlchemyArrayRenderer
 
 		matrixStack.pushPose();
 		matrixStack.translate(0, getVerticalOffset(craftTime), 0);
-		matrixStack.mulPose(new Quaternion(Direction.UP.step(), -rotation.toYRot(), true));
+		matrixStack.mulPose(Axis.YP.rotationDegrees(-rotation.toYRot()));
 
 		matrixStack.pushPose();
 
-		matrixStack.mulPose(new Quaternion(Direction.UP.step(), rot, true));
-		matrixStack.mulPose(new Quaternion(Direction.NORTH.step(), secondaryRot, true));
-		matrixStack.mulPose(new Quaternion(Direction.EAST.step(), secondaryRot * 0.45812f, true));
+		matrixStack.mulPose(Axis.YP.rotationDegrees(rot));
+		matrixStack.mulPose(Axis.ZN.rotationDegrees(secondaryRot));
+		matrixStack.mulPose(Axis.XP.rotationDegrees(secondaryRot * 0.45812f));
 
 		VertexConsumer twoDBuffer = renderer.getBuffer(RenderType.entityTranslucent(arrayResource));
 		Model2D arrayModel = new BloodMagicRenderer.Model2D();

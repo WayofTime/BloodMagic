@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bloodmagic:blood_rune_blank"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_weak_orb": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bloodmagic:weakbloodorb"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_weak_orb",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bloodmagic:blood_rune_blank"
+    ]
+  },
+  "sends_telemetry_event": false
+}

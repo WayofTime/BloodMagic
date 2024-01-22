@@ -7,10 +7,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 import net.minecraftforge.registries.RegistryBuilder;
 
-public class WrappedForgeDeferredRegister<T extends IForgeRegistryEntry<T>> extends WrappedDeferredRegister<T>
+public class WrappedForgeDeferredRegister<T> extends WrappedDeferredRegister<T>
 {
 	protected WrappedForgeDeferredRegister(String modid, IForgeRegistry<T> registry)
 	{
@@ -38,7 +37,8 @@ public class WrappedForgeDeferredRegister<T extends IForgeRegistryEntry<T>> exte
 	 */
 	public void createAndRegister(IEventBus bus, Class<T> type, UnaryOperator<RegistryBuilder<T>> builder)
 	{
-		internal.makeRegistry(type, () -> builder.apply(new RegistryBuilder<>()));
+//		internal.makeRegistry(type, () -> builder.apply(new RegistryBuilder<>()));
+		internal.makeRegistry(() -> builder.apply(new RegistryBuilder<>()));
 		register(bus);
 	}
 }

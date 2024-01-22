@@ -1,15 +1,14 @@
 package wayoftime.bloodmagic.common.data.recipe.builder;
 
-import javax.annotation.Nonnull;
-
 import com.google.gson.JsonObject;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import wayoftime.bloodmagic.common.data.recipe.BloodMagicRecipeBuilder;
 import wayoftime.bloodmagic.recipe.helper.SerializerHelper;
 import wayoftime.bloodmagic.util.Constants;
+
+import javax.annotation.Nonnull;
 
 public class BloodAltarRecipeBuilder extends BloodMagicRecipeBuilder<BloodAltarRecipeBuilder>
 {

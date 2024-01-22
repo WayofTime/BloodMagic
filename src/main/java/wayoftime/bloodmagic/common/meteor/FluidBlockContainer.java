@@ -5,10 +5,12 @@ import java.util.Random;
 import com.google.gson.JsonObject;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.util.Constants;
 
 public class FluidBlockContainer extends RandomBlockContainer
@@ -21,7 +23,7 @@ public class FluidBlockContainer extends RandomBlockContainer
 	}
 
 	@Override
-	public Block getRandomBlock(Random rand, Level world)
+	public Block getRandomBlock(RandomSource rand, Level world)
 	{
 		BlockState state = fluid.defaultFluidState().createLegacyBlock();
 		if (state == null)
@@ -36,7 +38,7 @@ public class FluidBlockContainer extends RandomBlockContainer
 	public String getEntry()
 	{
 //		 jsonobject.addProperty("tag", this.tag.location().toString());
-		ResourceLocation rl = fluid.getRegistryName();
+		ResourceLocation rl = ForgeRegistries.FLUIDS.getKey(fluid);
 		String entry = ";" + rl.toString();
 
 		return entry;
@@ -46,7 +48,7 @@ public class FluidBlockContainer extends RandomBlockContainer
 	public JsonObject serialize(int weight)
 	{
 		JsonObject jsonObj = new JsonObject();
-		jsonObj.addProperty(Constants.JSON.FLUID, fluid.getRegistryName().toString());
+		jsonObj.addProperty(Constants.JSON.FLUID, ForgeRegistries.FLUIDS.getKey(fluid).toString());
 		jsonObj.addProperty(Constants.JSON.WEIGHT, weight);
 
 		return jsonObj;
@@ -56,7 +58,7 @@ public class FluidBlockContainer extends RandomBlockContainer
 	public JsonObject serialize()
 	{
 		JsonObject jsonObj = new JsonObject();
-		jsonObj.addProperty(Constants.JSON.FLUID, fluid.getRegistryName().toString());
+		jsonObj.addProperty(Constants.JSON.FLUID, ForgeRegistries.FLUIDS.getKey(fluid).toString());
 
 		return jsonObj;
 	}

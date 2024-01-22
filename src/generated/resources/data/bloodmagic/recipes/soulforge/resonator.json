@@ -1,5 +1,6 @@
 {
   "type": "bloodmagic:soulforge",
+  "drain": 100.0,
   "input0": {
     "tag": "forge:stone"
   },
@@ -9,10 +10,9 @@
   "input2": {
     "item": "bloodmagic:defaultcrystal"
   },
+  "minimumDrain": 1200.0,
   "output": {
     "item": "bloodmagic:resonator",
     "nbt": "{Damage:0}"
-  },
-  "minimumDrain": 1200.0,
-  "drain": 100.0
+  }
 }

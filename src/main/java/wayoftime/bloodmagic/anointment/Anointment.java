@@ -34,11 +34,11 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.Util;
 import net.minecraft.core.Registry;
-import net.minecraftforge.registries.ForgeRegistryEntry;
+import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.core.living.LivingUpgrade.Level;
 
 @JsonAdapter(Anointment.Deserializer.class)
-public class Anointment extends ForgeRegistryEntry<Anointment>
+public class Anointment
 {
 	public static final Anointment DUMMY = new Anointment(new ResourceLocation("dummy"));
 
@@ -135,7 +135,7 @@ public class Anointment extends ForgeRegistryEntry<Anointment>
 					CompoundTag compoundnbt = listnbt.getCompound(i);
 					if (!compoundnbt.contains("Slot", 8) || compoundnbt.getString("Slot").equals(slot.getName()))
 					{
-						Optional<Attribute> optional = Registry.ATTRIBUTE.getOptional(ResourceLocation.tryParse(compoundnbt.getString("AttributeName")));
+						Optional<Attribute> optional = Optional.ofNullable(ForgeRegistries.ATTRIBUTES.getValue(ResourceLocation.tryParse(compoundnbt.getString("AttributeName"))));
 						if (optional.isPresent())
 						{
 							AttributeModifier attributemodifier = AttributeModifier.load(compoundnbt);

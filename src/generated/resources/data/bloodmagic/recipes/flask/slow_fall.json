@@ -1,5 +1,7 @@
 {
   "type": "bloodmagic:flask_potioneffect",
+  "baseDuration": 1800,
+  "effect": "minecraft:slow_falling",
   "input": [
     {
       "item": "bloodmagic:simplecatalyst"
@@ -10,7 +12,5 @@
   ],
   "syphon": 500,
   "ticks": 200,
-  "upgradeLevel": 1,
-  "effect": "minecraft:slow_falling",
-  "baseDuration": 1800
+  "upgradeLevel": 1
 }

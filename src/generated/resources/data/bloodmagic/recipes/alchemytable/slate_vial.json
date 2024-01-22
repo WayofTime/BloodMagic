@@ -21,8 +21,8 @@
     }
   ],
   "output": {
-    "item": "bloodmagic:slate_vial",
-    "count": 8
+    "count": 8,
+    "item": "bloodmagic:slate_vial"
   },
   "syphon": 500,
   "ticks": 200,

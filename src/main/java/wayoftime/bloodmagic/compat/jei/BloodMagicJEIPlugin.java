@@ -40,13 +40,13 @@ public class BloodMagicJEIPlugin implements IModPlugin
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration)
 	{
-		registration.addRecipeCatalyst(new ItemStack(BloodMagicBlocks.SOUL_FORGE.get()), TartaricForgeRecipeCategory.UID);
-		registration.addRecipeCatalyst(new ItemStack(BloodMagicBlocks.BLOOD_ALTAR.get()), BloodAltarRecipeCategory.UID);
-		registration.addRecipeCatalyst(new ItemStack(BloodMagicItems.ARCANE_ASHES.get()), AlchemyArrayCraftingCategory.UID);
-		registration.addRecipeCatalyst(new ItemStack(BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER.get()), ARCRecipeCategory.UID);
-		registration.addRecipeCatalyst(new ItemStack(BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER.get()), ARCFurnaceRecipeCategory.UID);
-		registration.addRecipeCatalyst(new ItemStack(BloodMagicBlocks.ALCHEMY_TABLE.get()), AlchemyTableRecipeCategory.UID);
-		registration.addRecipeCatalyst(new ItemStack(BloodMagicBlocks.ALCHEMY_TABLE.get()), PotionRecipeCategory.UID);
+		registration.addRecipeCatalyst(new ItemStack(BloodMagicBlocks.SOUL_FORGE.get()), TartaricForgeRecipeCategory.RECIPE_TYPE);
+		registration.addRecipeCatalyst(new ItemStack(BloodMagicBlocks.BLOOD_ALTAR.get()), BloodAltarRecipeCategory.RECIPE_TYPE);
+		registration.addRecipeCatalyst(new ItemStack(BloodMagicItems.ARCANE_ASHES.get()), AlchemyArrayCraftingCategory.RECIPE_TYPE);
+		registration.addRecipeCatalyst(new ItemStack(BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER.get()), ARCRecipeCategory.RECIPE_TYPE);
+		registration.addRecipeCatalyst(new ItemStack(BloodMagicBlocks.ALCHEMICAL_REACTION_CHAMBER.get()), ARCFurnaceRecipeCategory.RECIPE_TYPE);
+		registration.addRecipeCatalyst(new ItemStack(BloodMagicBlocks.ALCHEMY_TABLE.get()), AlchemyTableRecipeCategory.RECIPE_TYPE);
+		registration.addRecipeCatalyst(new ItemStack(BloodMagicBlocks.ALCHEMY_TABLE.get()), PotionRecipeCategory.RECIPE_TYPE);
 	}
 
 	@Override
@@ -66,13 +66,13 @@ public class BloodMagicJEIPlugin implements IModPlugin
 	public void registerRecipes(IRecipeRegistration registration)
 	{
 		ClientLevel world = Objects.requireNonNull(Minecraft.getInstance().level);
-		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getTartaricForgeRecipes(world), TartaricForgeRecipeCategory.UID);
-		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAltarRecipes(world), BloodAltarRecipeCategory.UID);
-		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyArrayRecipes(world), AlchemyArrayCraftingCategory.UID);
-		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getARCRecipes(world), ARCRecipeCategory.UID);
-		registration.addRecipes(ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(RecipeType.SMELTING)), ARCFurnaceRecipeCategory.UID);
-		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyTableRecipes(world), AlchemyTableRecipeCategory.UID);
-		registration.addRecipes(BloodMagicAPI.INSTANCE.getRecipeRegistrar().getPotionFlaskRecipes(world), PotionRecipeCategory.UID);
+		registration.addRecipes(TartaricForgeRecipeCategory.RECIPE_TYPE, BloodMagicAPI.INSTANCE.getRecipeRegistrar().getTartaricForgeRecipes(world));
+		registration.addRecipes(BloodAltarRecipeCategory.RECIPE_TYPE, BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAltarRecipes(world));
+		registration.addRecipes(AlchemyArrayCraftingCategory.RECIPE_TYPE, BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyArrayRecipes(world));
+		registration.addRecipes(ARCRecipeCategory.RECIPE_TYPE, BloodMagicAPI.INSTANCE.getRecipeRegistrar().getARCRecipes(world));
+		registration.addRecipes(ARCFurnaceRecipeCategory.RECIPE_TYPE, world.getRecipeManager().getAllRecipesFor(RecipeType.SMELTING));
+		registration.addRecipes(AlchemyTableRecipeCategory.RECIPE_TYPE, BloodMagicAPI.INSTANCE.getRecipeRegistrar().getAlchemyTableRecipes(world));
+		registration.addRecipes(PotionRecipeCategory.RECIPE_TYPE , BloodMagicAPI.INSTANCE.getRecipeRegistrar().getPotionFlaskRecipes(world));
 	}
 
 	@Override

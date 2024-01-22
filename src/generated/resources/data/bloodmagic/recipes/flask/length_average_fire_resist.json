@@ -1,13 +1,13 @@
 {
   "type": "bloodmagic:flask_potionlength",
+  "effect": "minecraft:fire_resistance",
   "input": [
     {
       "item": "bloodmagic:averagelengtheningcatalyst"
     }
   ],
+  "lengthDurMod": 7.1112,
   "syphon": 500,
   "ticks": 100,
-  "upgradeLevel": 4,
-  "effect": "minecraft:fire_resistance",
-  "lengthDurMod": 7.1112
+  "upgradeLevel": 4
 }

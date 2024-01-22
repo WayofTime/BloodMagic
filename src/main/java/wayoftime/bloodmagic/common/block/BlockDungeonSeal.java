@@ -1,12 +1,8 @@
 package wayoftime.bloodmagic.common.block;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -18,17 +14,18 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import wayoftime.bloodmagic.common.item.dungeon.IDungeonKey;
 import wayoftime.bloodmagic.common.tile.TileDungeonSeal;
 import wayoftime.bloodmagic.util.ChatUtil;
 
+import java.util.List;
+
 public class BlockDungeonSeal extends Block implements EntityBlock
 {
 	public BlockDungeonSeal()
 	{
-		super(Properties.of(Material.STONE).strength(20.0F, 50.0F));
+		super(Properties.of().strength(20.0F, 50.0F));
 //		.harvestTool(ToolType.PICKAXE).harvestLevel(1)
 	}
 
@@ -54,7 +51,7 @@ public class BlockDungeonSeal extends Block implements EntityBlock
 		{
 			// Key didn't work
 			List<Component> toSend = Lists.newArrayList();
-			toSend.add(new TranslatableComponent("tooltip.bloodmagic.incorrectKey"));
+			toSend.add(Component.translatable("tooltip.bloodmagic.incorrectKey"));
 			ChatUtil.sendNoSpam(player, toSend.toArray(new Component[toSend.size()]));
 			world.playSound((Player) null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, world.random.nextFloat() * 0.4F + 0.8F);
 		}

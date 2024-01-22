@@ -1,15 +1,9 @@
 package wayoftime.bloodmagic.common.tile;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang3.ArrayUtils;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -21,9 +15,10 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
+import org.apache.commons.lang3.ArrayUtils;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.event.BloodMagicCraftedEvent;
 import wayoftime.bloodmagic.common.container.tile.ContainerAlchemyTable;
@@ -42,6 +37,9 @@ import wayoftime.bloodmagic.recipe.RecipeAlchemyTable;
 import wayoftime.bloodmagic.recipe.flask.RecipePotionFlaskBase;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileAlchemyTable extends TileInventory implements WorldlyContainer, MenuProvider
 {
@@ -222,7 +220,7 @@ public class TileAlchemyTable extends TileInventory implements WorldlyContainer,
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing)
 	{
-		if (facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		if (facing != null && capability == ForgeCapabilities.ITEM_HANDLER)
 		{
 			if (this.isSlave())
 			{
@@ -635,9 +633,9 @@ public class TileAlchemyTable extends TileInventory implements WorldlyContainer,
 					}
 
 					continue;
-				} else if (inputStack.getItem().hasContainerItem(inputStack))
+				} else if (inputStack.getItem().hasCraftingRemainingItem(inputStack))
 				{
-					setItem(i, inputStack.getItem().getContainerItem(inputStack));
+					setItem(i, inputStack.getItem().getCraftingRemainingItem(inputStack));
 					continue;
 				} else if (inputStack.getMaxDamage() > 0)
 				{
@@ -682,9 +680,9 @@ public class TileAlchemyTable extends TileInventory implements WorldlyContainer,
 					}
 
 					continue;
-				} else if (inputStack.getItem().hasContainerItem(inputStack))
+				} else if (inputStack.getItem().hasCraftingRemainingItem(inputStack))
 				{
-					setItem(i, inputStack.getItem().getContainerItem(inputStack));
+					setItem(i, inputStack.getItem().getCraftingRemainingItem(inputStack));
 					continue;
 				}
 
@@ -747,6 +745,6 @@ public class TileAlchemyTable extends TileInventory implements WorldlyContainer,
 	@Override
 	public Component getDisplayName()
 	{
-		return new TextComponent("Alchemy Table");
+		return Component.literal("Alchemy Table");
 	}
 }

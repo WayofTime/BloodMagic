@@ -2,12 +2,12 @@ package wayoftime.bloodmagic.client.model;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
-
-import net.minecraft.server.packs.resources.ResourceManager;
+import com.google.gson.JsonParseException;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.model.IModelLoader;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraftforge.client.model.geometry.IGeometryLoader;
 
-public class MimicModelLoader implements IModelLoader<MimicModelGeometry>
+public class MimicModelLoader implements IGeometryLoader<MimicModelGeometry>
 {
 	public final ResourceLocation texture;
 
@@ -16,15 +16,9 @@ public class MimicModelLoader implements IModelLoader<MimicModelGeometry>
 		this.texture = texture;
 	}
 
-	@Override
-	public void onResourceManagerReload(ResourceManager resourceManager)
-	{
-
-	}
 
 	@Override
-	public MimicModelGeometry read(JsonDeserializationContext deserializationContext, JsonObject modelContents)
-	{
+	public MimicModelGeometry read(JsonObject jsonObject, JsonDeserializationContext deserializationContext) throws JsonParseException {
 		return new MimicModelGeometry(texture);
 	}
 }

@@ -2,37 +2,38 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "name": "keys",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
           "name": "bloodmagic:simplekey"
         }
-      ]
+      ],
+      "name": "keys",
+      "rolls": 1.0
     },
     {
-      "name": "vanilla_dungeon",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "bloodmagic:loot_table",
           "name": "minecraft:chests/simple_dungeon"
         }
-      ]
+      ],
+      "name": "vanilla_dungeon",
+      "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "bloodmagic:chests/simple_dungeon/entrance_chest"
 }

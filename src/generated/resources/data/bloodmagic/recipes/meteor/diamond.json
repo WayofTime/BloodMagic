@@ -1,32 +1,34 @@
 {
   "type": "bloodmagic:meteor",
+  "explosion": 8.0,
   "input": {
     "tag": "forge:gems/diamond"
   },
-  "syphon": 1000000,
-  "explosion": 8.0,
   "layers": [
     {
-      "radius": 2,
       "additionalWeight": 0,
-      "minWeight": 0,
       "fill": {
         "block": "minecraft:diamond_ore"
-      }
+      },
+      "minWeight": 0,
+      "radius": 2
     },
     {
-      "radius": 5,
       "additionalWeight": 0,
+      "fill": {
+        "block": "minecraft:cobblestone"
+      },
       "minWeight": 1000,
+      "radius": 5,
       "weightMap": [
         {
-          "tag": "forge:ores/sapphire",
           "index": 0,
+          "tag": "forge:ores/sapphire",
           "weight": 100
         },
         {
-          "tag": "forge:ores/ruby",
           "index": 0,
+          "tag": "forge:ores/ruby",
           "weight": 100
         },
         {
@@ -38,14 +40,12 @@
           "weight": 75
         },
         {
-          "tag": "forge:ores/cinnabar",
           "index": 0,
+          "tag": "forge:ores/cinnabar",
           "weight": 200
         }
-      ],
-      "fill": {
-        "block": "minecraft:cobblestone"
-      }
+      ]
     }
-  ]
+  ],
+  "syphon": 1000000
 }

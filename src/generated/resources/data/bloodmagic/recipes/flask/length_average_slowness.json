@@ -1,13 +1,13 @@
 {
   "type": "bloodmagic:flask_potionlength",
+  "effect": "minecraft:slowness",
   "input": [
     {
       "item": "bloodmagic:averagelengtheningcatalyst"
     }
   ],
+  "lengthDurMod": 7.1112,
   "syphon": 500,
   "ticks": 100,
-  "upgradeLevel": 4,
-  "effect": "minecraft:slowness",
-  "lengthDurMod": 7.1112
+  "upgradeLevel": 4
 }

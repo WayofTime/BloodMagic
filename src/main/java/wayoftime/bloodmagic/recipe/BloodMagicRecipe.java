@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.recipe;
 
 import javax.annotation.Nonnull;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.network.FriendlyByteBuf;
@@ -49,8 +50,7 @@ public abstract class BloodMagicRecipe implements Recipe<IgnoredIInventory>
 
 	@Nonnull
 	@Override
-	public ItemStack assemble(@Nonnull IgnoredIInventory inv)
-	{
+	public ItemStack assemble(IgnoredIInventory inventory, RegistryAccess access) {
 		return ItemStack.EMPTY;
 	}
 
@@ -60,10 +60,8 @@ public abstract class BloodMagicRecipe implements Recipe<IgnoredIInventory>
 		return true;
 	}
 
-	@Nonnull
 	@Override
-	public ItemStack getResultItem()
-	{
+	public ItemStack getResultItem(RegistryAccess access) {
 		return ItemStack.EMPTY;
 	}
 }

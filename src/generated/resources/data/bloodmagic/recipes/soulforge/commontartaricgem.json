@@ -1,5 +1,6 @@
 {
   "type": "bloodmagic:soulforge",
+  "drain": 50.0,
   "input0": {
     "item": "bloodmagic:soulgemlesser"
   },
@@ -12,9 +13,8 @@
   "input3": {
     "item": "bloodmagic:infusedslate"
   },
+  "minimumDrain": 240.0,
   "output": {
     "item": "bloodmagic:soulgemcommon"
-  },
-  "minimumDrain": 240.0,
-  "drain": 50.0
+  }
 }

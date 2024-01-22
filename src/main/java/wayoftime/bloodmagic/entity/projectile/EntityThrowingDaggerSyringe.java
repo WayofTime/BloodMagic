@@ -39,9 +39,9 @@ public class EntityThrowingDaggerSyringe extends AbstractEntityThrowingDagger
 			double maxHealth = ((LivingEntity) entity).getMaxHealth();
 			if (!entity.isAlive())
 			{
-				int count = (int) (maxHealth / 20D) + (level.random.nextDouble() < ((maxHealth % 20D) / 20D) ? 1 : 0);
+				int count = (int) (maxHealth / 20D) + (level().random.nextDouble() < ((maxHealth % 20D) / 20D) ? 1 : 0);
 				if (count > 0)
-					Containers.dropItemStack(level, this.getX(), this.getY(), this.getZ(), new ItemStack(BloodMagicItems.SLATE_AMPOULE.get(), count));
+					Containers.dropItemStack(level(), this.getX(), this.getY(), this.getZ(), new ItemStack(BloodMagicItems.SLATE_AMPOULE.get(), count));
 			}
 		}
 	}

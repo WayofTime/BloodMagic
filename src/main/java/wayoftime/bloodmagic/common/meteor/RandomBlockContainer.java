@@ -3,6 +3,8 @@ package wayoftime.bloodmagic.common.meteor;
 import java.util.Optional;
 import java.util.Random;
 
+import net.minecraft.core.registries.Registries;
+import net.minecraft.util.RandomSource;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.gson.JsonObject;
@@ -25,7 +27,7 @@ public abstract class RandomBlockContainer
 
 	}
 
-	public abstract Block getRandomBlock(Random rand, Level world);
+	public abstract Block getRandomBlock(RandomSource rand, Level world);
 
 	public static RandomBlockContainer parseEntry(String str)
 	{
@@ -36,7 +38,7 @@ public abstract class RandomBlockContainer
 			int index = -1;
 			String tagName = splitStr[1];
 //			ForgeRegistries.BLOCKS.tags().tag
-			TagKey<Block> tag = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(tagName));
+			TagKey<Block> tag = TagKey.create(Registries.BLOCK, new ResourceLocation(tagName));
 //			TagKey<Block> tag = SerializationTags.getInstance().getBlocks().getTag(new ResourceLocation(tagName));
 
 			if (splitStr.length > 2)
@@ -170,7 +172,7 @@ public abstract class RandomBlockContainer
 
 	public static RandomBlockContainer parseTagEntry(String str, int index)
 	{
-		TagKey<Block> tag = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(str));
+		TagKey<Block> tag = TagKey.create(Registries.BLOCK, new ResourceLocation(str));
 		return new RandomBlockTagContainer(tag, index);
 	}
 

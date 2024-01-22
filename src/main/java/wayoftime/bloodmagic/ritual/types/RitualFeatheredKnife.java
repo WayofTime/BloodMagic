@@ -1,11 +1,7 @@
 package wayoftime.bloodmagic.ritual.types;
 
-import java.util.List;
-import java.util.function.Consumer;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
@@ -22,13 +18,11 @@ import wayoftime.bloodmagic.core.living.LivingUtil;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.network.SetClientHealthPacket;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
-import wayoftime.bloodmagic.ritual.AreaDescriptor;
-import wayoftime.bloodmagic.ritual.EnumRuneType;
-import wayoftime.bloodmagic.ritual.IMasterRitualStone;
-import wayoftime.bloodmagic.ritual.Ritual;
-import wayoftime.bloodmagic.ritual.RitualComponent;
-import wayoftime.bloodmagic.ritual.RitualRegister;
+import wayoftime.bloodmagic.ritual.*;
 import wayoftime.bloodmagic.util.helper.PlayerSacrificeHelper;
+
+import java.util.List;
+import java.util.function.Consumer;
 
 @RitualRegister("feathered_knife")
 public class RitualFeatheredKnife extends Ritual
@@ -138,7 +132,7 @@ public class RitualFeatheredKnife extends Ritual
 				float sacrificedHealth = 1;
 				double lpModifier = 1;
 
-				if ((health / player.getMaxHealth() > healthThreshold) && (!useIncense || !player.hasEffect(BloodMagicPotions.SOUL_FRAY)))
+				if ((health / player.getMaxHealth() > healthThreshold) && (!useIncense || !player.hasEffect(BloodMagicPotions.SOUL_FRAY.get())))
 				{
 					if (useIncense)
 					{
@@ -148,7 +142,7 @@ public class RitualFeatheredKnife extends Ritual
 						lpModifier *= PlayerSacrificeHelper.getModifier(incenseAmount);
 
 						PlayerSacrificeHelper.setPlayerIncense(player, 0);
-						player.addEffect(new MobEffectInstance(BloodMagicPotions.SOUL_FRAY, PlayerSacrificeHelper.soulFrayDuration));
+						player.addEffect(new MobEffectInstance(BloodMagicPotions.SOUL_FRAY.get(), PlayerSacrificeHelper.soulFrayDuration));
 					}
 
 					if (destructiveWill >= destructiveWillDrain * sacrificedHealth)
@@ -227,12 +221,12 @@ public class RitualFeatheredKnife extends Ritual
 	@Override
 	public Component[] provideInformationOfRitualToPlayer(Player player)
 	{
-		return new Component[] { new TranslatableComponent(this.getTranslationKey() + ".info"),
-				new TranslatableComponent(this.getTranslationKey() + ".default.info"),
-				new TranslatableComponent(this.getTranslationKey() + ".corrosive.info"),
-				new TranslatableComponent(this.getTranslationKey() + ".steadfast.info"),
-				new TranslatableComponent(this.getTranslationKey() + ".destructive.info"),
-				new TranslatableComponent(this.getTranslationKey() + ".vengeful.info") };
+		return new Component[] { Component.translatable(this.getTranslationKey() + ".info"),
+				Component.translatable(this.getTranslationKey() + ".default.info"),
+				Component.translatable(this.getTranslationKey() + ".corrosive.info"),
+				Component.translatable(this.getTranslationKey() + ".steadfast.info"),
+				Component.translatable(this.getTranslationKey() + ".destructive.info"),
+				Component.translatable(this.getTranslationKey() + ".vengeful.info") };
 	}
 
 	public double getLPModifierForWill(double destructiveWill)

@@ -1,22 +1,16 @@
 package wayoftime.bloodmagic.client.screens;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
 import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
@@ -25,6 +19,10 @@ import wayoftime.bloodmagic.common.container.tile.ContainerAlchemyTable;
 import wayoftime.bloodmagic.common.tile.TileAlchemyTable;
 import wayoftime.bloodmagic.network.AlchemyTableButtonPacket;
 import wayoftime.bloodmagic.network.BloodMagicPacketHandler;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 {
@@ -43,11 +41,11 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 		this.imageHeight = 205;
 
 		orbError.clear();
-		orbError.add(new TranslatableComponent("tooltip.bloodmagic.alchemytable.orberror.title").withStyle(ChatFormatting.RED));
-		orbError.add(new TranslatableComponent("tooltip.bloodmagic.alchemytable.orberror.text").withStyle(ChatFormatting.GRAY));
+		orbError.add(Component.translatable("tooltip.bloodmagic.alchemytable.orberror.title").withStyle(ChatFormatting.RED));
+		orbError.add(Component.translatable("tooltip.bloodmagic.alchemytable.orberror.text").withStyle(ChatFormatting.GRAY));
 		lpError.clear();
-		lpError.add(new TranslatableComponent("tooltip.bloodmagic.alchemytable.lperror.title").withStyle(ChatFormatting.RED));
-		lpError.add(new TranslatableComponent("tooltip.bloodmagic.alchemytable.lperror.text").withStyle(ChatFormatting.GRAY));
+		lpError.add(Component.translatable("tooltip.bloodmagic.alchemytable.lperror.title").withStyle(ChatFormatting.RED));
+		lpError.add(Component.translatable("tooltip.bloodmagic.alchemytable.lperror.text").withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override
@@ -57,10 +55,10 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 	}
 
 	@Override
-	protected void renderLabels(PoseStack stack, int mouseX, int mouseY)
+	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY)
 	{
-		this.font.draw(stack, new TranslatableComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
-		this.font.draw(stack, new TranslatableComponent("container.inventory"), 8, 111, 4210752);
+		guiGraphics.drawString(this.font, Component.translatable("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752, false);
+		guiGraphics.drawString(this.font, Component.translatable("container.inventory"), 8, 111, 4210752, false);
 	}
 
 	@Override
@@ -72,37 +70,35 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 
 		this.clearWidgets();
 //		this.buttons.add();
-		this.addRenderableWidget(new Button(left + 135, top + 52, 14, 14, new TextComponent("D"), new DirectionalPress(tileTable, Direction.DOWN)));
-		this.addRenderableWidget(new Button(left + 153, top + 52, 14, 14, new TextComponent("U"), new DirectionalPress(tileTable, Direction.UP)));
-		this.addRenderableWidget(new Button(left + 135, top + 70, 14, 14, new TextComponent("N"), new DirectionalPress(tileTable, Direction.NORTH)));
-		this.addRenderableWidget(new Button(left + 153, top + 70, 14, 14, new TextComponent("S"), new DirectionalPress(tileTable, Direction.SOUTH)));
-		this.addRenderableWidget(new Button(left + 135, top + 88, 14, 14, new TextComponent("W"), new DirectionalPress(tileTable, Direction.WEST)));
-		this.addRenderableWidget(new Button(left + 153, top + 88, 14, 14, new TextComponent("E"), new DirectionalPress(tileTable, Direction.EAST)));
+		this.addRenderableWidget(new DirectionalButton(left + 135, top + 52, 14, 14, Component.literal("D"), new DirectionalPress(tileTable, Direction.DOWN)));
+		this.addRenderableWidget(new DirectionalButton(left + 153, top + 52, 14, 14, Component.literal("U"), new DirectionalPress(tileTable, Direction.UP)));
+		this.addRenderableWidget(new DirectionalButton(left + 135, top + 70, 14, 14, Component.literal("N"), new DirectionalPress(tileTable, Direction.NORTH)));
+		this.addRenderableWidget(new DirectionalButton(left + 153, top + 70, 14, 14, Component.literal("S"), new DirectionalPress(tileTable, Direction.SOUTH)));
+		this.addRenderableWidget(new DirectionalButton(left + 135, top + 88, 14, 14, Component.literal("W"), new DirectionalPress(tileTable, Direction.WEST)));
+		this.addRenderableWidget(new DirectionalButton(left + 153, top + 88, 14, 14, Component.literal("E"), new DirectionalPress(tileTable, Direction.EAST)));
 	}
 
 	@Override
-	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY)
 	{
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		RenderSystem.setShaderTexture(0, background);
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
-		this.blit(stack, i, j, 0, 0, this.imageWidth, this.imageHeight);
+		guiGraphics.blit(background, i, j, 0, 0, this.imageWidth, this.imageHeight);
 
 		int l = this.getCookProgressScaled(90);
-		this.blit(stack, i + 106, j + 14 + 90 - l, 176, 90 - l, 18, l);
+		guiGraphics.blit(background, i + 106, j + 14 + 90 - l, 176, 90 - l, 18, l);
 
 		if (this.getOrbFlag())
 		{
-			this.blit(stack, i + 106, j + 24, 194, 55, 18, 18);
+			guiGraphics.blit(background, i + 106, j + 24, 194, 55, 18, 18);
 			if (mouseX >= i + 106 && mouseX < i + 106 + 18 && mouseY >= j + 24 && mouseY < j + 24 + 18)
-				this.renderTooltip(stack, orbError, Optional.empty(), mouseY, mouseY, font);
+				guiGraphics.renderTooltip(this.font, orbError, Optional.empty(), mouseY, mouseY);
 //				this.renderWrappedToolTip(stack, orbError,Optional.empty(), mouseX, mouseY, font);
 		} else if (this.getLPFlag())
 		{
-			this.blit(stack, i + 106, j + 24, 194, 73, 18, 18);
+			guiGraphics.blit(background, i + 106, j + 24, 194, 73, 18, 18);
 			if (mouseX >= i + 106 && mouseX < i + 106 + 18 && mouseY >= j + 24 && mouseY < j + 24 + 18)
-				this.renderTooltip(stack, lpError, Optional.empty(), mouseX, mouseY, font);
+				guiGraphics.renderTooltip(this.font, lpError, Optional.empty(), mouseX, mouseY );
 		}
 
 		int slotId = tileTable.activeSlot;
@@ -112,10 +108,10 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 
 			if (slotId == TileAlchemyTable.outputSlot)
 			{
-				this.blit(stack, i + slot.x, j + slot.y, 195, 37, 16, 16);
+				guiGraphics.blit(background, i + slot.x, j + slot.y, 195, 37, 16, 16);
 			} else
 			{
-				this.blit(stack, i + slot.x, j + slot.y, 195, 19, 16, 16);
+				guiGraphics.blit(background, i + slot.x, j + slot.y, 195, 19, 16, 16);
 			}
 
 			for (int buttonId = 0; buttonId < 6; buttonId++)
@@ -124,10 +120,10 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 				int yOffset = (buttonId / 2) * 18 + 50;
 				if (tileTable.isSlotEnabled(slotId, Direction.from3DDataValue(buttonId)))
 				{
-					this.blit(stack, i + xOffset, j + yOffset, 212, 18, 18, 18);
+					guiGraphics.blit(background, i + xOffset, j + yOffset, 212, 18, 18, 18);
 				} else
 				{
-					this.blit(stack, i + xOffset, j + yOffset, 212, 0, 18, 18);
+					guiGraphics.blit(background, i + xOffset, j + yOffset, 212, 0, 18, 18);
 				}
 			}
 		}
@@ -180,58 +176,58 @@ public class ScreenAlchemyTable extends ScreenBase<ContainerAlchemyTable>
 
 		public DirectionalButton(int x, int y, int width, int height, Component title, OnPress pressedAction)
 		{
-			super(x, y, width, height, title, pressedAction);
+			super(x, y, width, height, title, pressedAction, DEFAULT_NARRATION);
 		}
 
-		@Override
-		public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks)
-		{
-			Minecraft minecraft = Minecraft.getInstance();
-			Font fontrenderer = minecraft.font;
-			minecraft.getTextureManager().bindForSetup(WIDGETS_LOCATION);
-
-			// Vanilla's method
-//			RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
-//			int i = this.getYImage(this.isHovered());
+//		@Override
+//		public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks)
+//		{
+//			Minecraft minecraft = Minecraft.getInstance();
+//			Font fontrenderer = minecraft.font;
+//			minecraft.getTextureManager().bindForSetup(WIDGETS_LOCATION);
+//
+//			// Vanilla's method
+////			RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
+////			int i = this.getYImage(this.isHovered());
+////			RenderSystem.enableBlend();
+////			RenderSystem.defaultBlendFunc();
+////			RenderSystem.enableDepthTest();
+////			this.blit(matrixStack, this.x, this.y, 0, 46 + i * 20, this.width / 2, this.height);
+////			this.blit(matrixStack, this.x + this.width / 2, this.y, 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height);
+////			this.renderBg(matrixStack, minecraft, mouseX, mouseY);
+////			int j = getFGColor();
+////			drawCenteredString(matrixStack, fontrenderer, this.getMessage(), this.x + this.width / 2, this.y + (this.height - 8) / 2, j | MathHelper.ceil(this.alpha * 255.0F) << 24);
+//
+//			// Mekanism's method
+//			int i = this.getYImage(this.isHoveredOrFocused());
 //			RenderSystem.enableBlend();
-//			RenderSystem.defaultBlendFunc();
-//			RenderSystem.enableDepthTest();
-//			this.blit(matrixStack, this.x, this.y, 0, 46 + i * 20, this.width / 2, this.height);
-//			this.blit(matrixStack, this.x + this.width / 2, this.y, 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height);
-//			this.renderBg(matrixStack, minecraft, mouseX, mouseY);
-//			int j = getFGColor();
-//			drawCenteredString(matrixStack, fontrenderer, this.getMessage(), this.x + this.width / 2, this.y + (this.height - 8) / 2, j | MathHelper.ceil(this.alpha * 255.0F) << 24);
-
-			// Mekanism's method
-			int i = this.getYImage(this.isHoveredOrFocused());
-			RenderSystem.enableBlend();
-			RenderSystem.blendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
-			RenderSystem.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
-
-			int width = this.width;
-			int height = this.height;
-			int halfWidthLeft = width / 2;
-			int halfWidthRight = width % 2 == 0 ? halfWidthLeft : halfWidthLeft + 1;
-			int halfHeightTop = height / 2;
-			int halfHeightBottom = height % 2 == 0 ? halfHeightTop : halfHeightTop + 1;
-			int position = i * 20;
-
-			// Left Top Corner
-			blit(matrixStack, x, y, 0, position, halfWidthLeft, halfHeightTop, BUTTON_TEX_X, BUTTON_TEX_Y);
-			// Left Bottom Corner
-			blit(matrixStack, x, y + halfHeightTop, 0, position + 20 - halfHeightBottom, halfWidthLeft, halfHeightBottom, BUTTON_TEX_X, BUTTON_TEX_Y);
-			// Right Top Corner
-			blit(matrixStack, x + halfWidthLeft, y, 200 - halfWidthRight, position, halfWidthRight, halfHeightTop, BUTTON_TEX_X, BUTTON_TEX_Y);
-			// Right Bottom Corner
-			blit(matrixStack, x + halfWidthLeft, y + halfHeightTop, 200 - halfWidthRight, position + 20 - halfHeightBottom, halfWidthRight, halfHeightBottom, BUTTON_TEX_X, BUTTON_TEX_Y);
-			renderBg(matrixStack, minecraft, mouseX, mouseY);
-			RenderSystem.disableBlend();
-
-			if (this.isHoveredOrFocused())
-			{
-				this.renderToolTip(matrixStack, mouseX, mouseY);
-			}
-		}
+//			RenderSystem.blendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
+//			RenderSystem.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+//
+//			int width = this.width;
+//			int height = this.height;
+//			int halfWidthLeft = width / 2;
+//			int halfWidthRight = width % 2 == 0 ? halfWidthLeft : halfWidthLeft + 1;
+//			int halfHeightTop = height / 2;
+//			int halfHeightBottom = height % 2 == 0 ? halfHeightTop : halfHeightTop + 1;
+//			int position = i * 20;
+//
+//			// Left Top Corner
+//			blit(guiGraphics, x, y, 0, position, halfWidthLeft, halfHeightTop, BUTTON_TEX_X, BUTTON_TEX_Y);
+//			// Left Bottom Corner
+//			blit(guiGraphics, x, y + halfHeightTop, 0, position + 20 - halfHeightBottom, halfWidthLeft, halfHeightBottom, BUTTON_TEX_X, BUTTON_TEX_Y);
+//			// Right Top Corner
+//			blit(guiGraphics, x + halfWidthLeft, y, 200 - halfWidthRight, position, halfWidthRight, halfHeightTop, BUTTON_TEX_X, BUTTON_TEX_Y);
+//			// Right Bottom Corner
+//			blit(guiGraphics, x + halfWidthLeft, y + halfHeightTop, 200 - halfWidthRight, position + 20 - halfHeightBottom, halfWidthRight, halfHeightBottom, BUTTON_TEX_X, BUTTON_TEX_Y);
+//			renderBg(guiGraphics, minecraft, mouseX, mouseY);
+//			RenderSystem.disableBlend();
+//
+//			if (this.isHoveredOrFocused())
+//			{
+//				this.renderToolTip(guiGraphics, mouseX, mouseY);
+//			}
+//		}
 	}
 
 	public class DirectionalPress implements Button.OnPress

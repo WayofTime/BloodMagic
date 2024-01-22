@@ -1,16 +1,11 @@
 package wayoftime.bloodmagic.common.tile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -24,6 +19,9 @@ import wayoftime.bloodmagic.common.tile.base.TileBase;
 import wayoftime.bloodmagic.structures.DungeonSynthesizer;
 import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.Constants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileDungeonSeal extends TileBase
 {
@@ -72,8 +70,8 @@ public class TileDungeonSeal extends TileBase
 					{
 						List<Component> toSend = Lists.newArrayList();
 //						if (!binding.getOwnerId().equals(player.getGameProfile().getId()))
-//							toSend.add(new TranslatableComponent(tooltipBase + "otherNetwork", binding.getOwnerName()));
-						toSend.add(new TranslatableComponent("tooltip.bloodmagic.blockeddoor"));
+//							toSend.add(Component.translatable(tooltipBase + "otherNetwork", binding.getOwnerName()));
+						toSend.add(Component.translatable("tooltip.bloodmagic.blockeddoor"));
 						ChatUtil.sendNoSpam(player, toSend.toArray(new Component[toSend.size()]));
 						level.setBlock(worldPosition, BloodMagicBlocks.DUNGEON_TILE_SPECIAL.get().defaultBlockState(), 3);
 						level.playSound((Player) null, worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.4F + 0.8F);

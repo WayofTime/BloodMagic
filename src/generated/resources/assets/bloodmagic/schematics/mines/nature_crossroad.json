@@ -1,15 +1,50 @@
 {
-  "key": null,
-  "dungeonWeight": 1,
-  "structureMap": {
-    "bloodmagic:standard/mine_nature_crossroad": {
-      "x": 0,
-      "y": 0,
-      "z": 0
+  "controllerOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "descriptorList": [
+    {
+      "blockPosCache": [],
+      "cache": false,
+      "maximumOffset": {
+        "x": 15,
+        "y": 9,
+        "z": 19
+      },
+      "minimumOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  ],
+  "doorCoverMap": {
+    "1": {
+      "blockPosCache": [],
+      "cache": true,
+      "maximumOffset": {
+        "x": 3,
+        "y": 3,
+        "z": 1
+      },
+      "minimumOffset": {
+        "x": -2,
+        "y": -2,
+        "z": 0
+      }
     }
   },
   "doorMap": {
     "mine": {
+      "east": [
+        {
+          "x": 14,
+          "y": 1,
+          "z": 7
+        }
+      ],
       "north": [
         {
           "x": 6,
@@ -30,50 +65,10 @@
           "y": 1,
           "z": 11
         }
-      ],
-      "east": [
-        {
-          "x": 14,
-          "y": 1,
-          "z": 7
-        }
       ]
     }
   },
-  "descriptorList": [
-    {
-      "minimumOffset": {
-        "x": 0,
-        "y": 0,
-        "z": 0
-      },
-      "maximumOffset": {
-        "x": 15,
-        "y": 9,
-        "z": 19
-      },
-      "currentPosition": null,
-      "blockPosCache": [],
-      "cachedPosition": null,
-      "cache": false
-    }
-  ],
-  "oreDensity": 0.15,
-  "spawnLocation": {
-    "x": 0,
-    "y": 0,
-    "z": 0
-  },
-  "controllerOffset": {
-    "x": 0,
-    "y": 0,
-    "z": 0
-  },
-  "portalOffset": {
-    "x": 0,
-    "y": 0,
-    "z": 0
-  },
+  "dungeonWeight": 1,
   "indexToDoorMap": {
     "1": [
       {
@@ -105,23 +100,23 @@
       "$bloodmagic:room_pools/mines/mine_deadend"
     ]
   },
+  "oreDensity": 0.15,
+  "portalOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
   "requiredDoorMap": {},
-  "doorCoverMap": {
-    "1": {
-      "minimumOffset": {
-        "x": -2,
-        "y": -2,
-        "z": 0
-      },
-      "maximumOffset": {
-        "x": 3,
-        "y": 3,
-        "z": 1
-      },
-      "currentPosition": null,
-      "blockPosCache": [],
-      "cachedPosition": null,
-      "cache": true
+  "spawnLocation": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "structureMap": {
+    "bloodmagic:standard/mine_nature_crossroad": {
+      "x": 0,
+      "y": 0,
+      "z": 0
     }
   }
 }

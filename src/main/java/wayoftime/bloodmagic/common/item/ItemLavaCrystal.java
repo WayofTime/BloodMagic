@@ -31,7 +31,7 @@ public class ItemLavaCrystal extends ItemBindableBase
 	}
 
 	@Override
-	public ItemStack getContainerItem(ItemStack stack)
+	public ItemStack getCraftingRemainingItem(ItemStack stack)
 	{
 		Binding binding = getBinding(stack);
 		if (binding != null)
@@ -43,7 +43,7 @@ public class ItemLavaCrystal extends ItemBindableBase
 	}
 
 	@Override
-	public boolean hasContainerItem(ItemStack stack)
+	public boolean hasCraftingRemainingItem(ItemStack stack)
 	{
 		return true;
 	}

@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     {
       "item": "bloodmagic:wornstonebrickpath"
@@ -15,7 +16,7 @@
     }
   ],
   "result": {
-    "item": "bloodmagic:wornstonetilepath",
-    "count": 4
+    "count": 4,
+    "item": "bloodmagic:wornstonetilepath"
   }
 }

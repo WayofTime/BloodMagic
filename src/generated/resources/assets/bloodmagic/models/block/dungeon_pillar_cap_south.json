@@ -1,13 +1,41 @@
 {
   "parent": "minecraft:block/cube",
-  "textures": {
-    "particle": "bloodmagic:block/dungeon/dungeon_pillarheart",
-    "sideBottom": "bloodmagic:block/dungeon/dungeon_pillarbottom",
-    "end": "bloodmagic:block/dungeon/dungeon_pillarheart",
-    "sideTop": "bloodmagic:block/dungeon/dungeon_pillartop"
-  },
   "elements": [
     {
+      "faces": {
+        "down": {
+          "texture": "#sideTop"
+        },
+        "east": {
+          "rotation": 270,
+          "texture": "#sideTop",
+          "uv": [
+            16.0,
+            0.0,
+            0.0,
+            16.0
+          ]
+        },
+        "north": {
+          "texture": "#end"
+        },
+        "south": {
+          "texture": "#end"
+        },
+        "up": {
+          "texture": "#sideBottom"
+        },
+        "west": {
+          "rotation": 270,
+          "texture": "#sideBottom",
+          "uv": [
+            16.0,
+            0.0,
+            0.0,
+            16.0
+          ]
+        }
+      },
       "from": [
         0,
         0,
@@ -17,41 +45,13 @@
         16,
         16,
         16
-      ],
-      "faces": {
-        "down": {
-          "texture": "#sideTop"
-        },
-        "up": {
-          "texture": "#sideBottom"
-        },
-        "north": {
-          "texture": "#end"
-        },
-        "south": {
-          "texture": "#end"
-        },
-        "west": {
-          "texture": "#sideBottom",
-          "uv": [
-            16.0,
-            0.0,
-            0.0,
-            16.0
-          ],
-          "rotation": 270
-        },
-        "east": {
-          "texture": "#sideTop",
-          "uv": [
-            16.0,
-            0.0,
-            0.0,
-            16.0
-          ],
-          "rotation": 270
-        }
-      }
+      ]
     }
-  ]
+  ],
+  "textures": {
+    "end": "bloodmagic:block/dungeon/dungeon_pillarheart",
+    "particle": "bloodmagic:block/dungeon/dungeon_pillarheart",
+    "sideBottom": "bloodmagic:block/dungeon/dungeon_pillarbottom",
+    "sideTop": "bloodmagic:block/dungeon/dungeon_pillartop"
+  }
 }
