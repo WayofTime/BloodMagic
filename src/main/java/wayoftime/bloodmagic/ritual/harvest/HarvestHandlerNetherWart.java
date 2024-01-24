@@ -15,6 +15,8 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 
+import wayoftime.bloodmagic.api.compat.IHarvestHandler;
+
 public class HarvestHandlerNetherWart implements IHarvestHandler
 {
 	private static final ItemStack mockHoe = new ItemStack(Items.DIAMOND_HOE, 1);

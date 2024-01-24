@@ -17,6 +17,9 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
+import wayoftime.bloodmagic.api.compat.IHarvestHandler;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
+
 /**
  * Harvest handler for crops with stems such as Pumpkins and Melons. Rotation
  * based crop blocks are a good reason to use this (see pumpkins). <br>
@@ -31,9 +34,10 @@ public class HarvestHandlerStem implements IHarvestHandler
 	{
 		for (int i = 0; i < 4; i++)
 		{
+            HarvestRegistry api = BloodMagicAPI.INSTANCE.getHarvestRegistry();
 			Direction facing = Direction.from2DDataValue(i);
-			HarvestRegistry.registerStemCrop(Blocks.PUMPKIN.defaultBlockState(), Blocks.ATTACHED_PUMPKIN_STEM.defaultBlockState().setValue(AttachedStemBlock.FACING, facing));
-			HarvestRegistry.registerStemCrop(Blocks.MELON.defaultBlockState(), Blocks.ATTACHED_MELON_STEM.defaultBlockState().setValue(AttachedStemBlock.FACING, facing));
+			api.registerStemCrop(Blocks.PUMPKIN.defaultBlockState(), Blocks.ATTACHED_PUMPKIN_STEM.defaultBlockState().setValue(AttachedStemBlock.FACING, facing));
+			api.registerStemCrop(Blocks.MELON.defaultBlockState(), Blocks.ATTACHED_MELON_STEM.defaultBlockState().setValue(AttachedStemBlock.FACING, facing));
 		}
 	}
 
@@ -46,7 +50,7 @@ public class HarvestHandlerStem implements IHarvestHandler
 		{
 			BlockPos cropPos = pos.relative(cropDir);
 			BlockState probableCrop = world.getBlockState(cropPos);
-			Collection<BlockState> registeredCrops = HarvestRegistry.getStemCrops().get(state);
+			Collection<BlockState> registeredCrops = BloodMagicAPI.INSTANCE.getHarvestRegistry().getStemCrops().get(state);
 
 			for (BlockState registeredCrop : registeredCrops)
 			{
@@ -68,6 +72,6 @@ public class HarvestHandlerStem implements IHarvestHandler
 	@Override
 	public boolean test(Level world, BlockPos pos, BlockState state)
 	{
-		return HarvestRegistry.getStemCrops().containsKey(state);
+		return BloodMagicAPI.INSTANCE.getHarvestRegistry().getStemCrops().containsKey(state);
 	}
 }

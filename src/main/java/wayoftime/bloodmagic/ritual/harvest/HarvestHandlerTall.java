@@ -16,6 +16,9 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
+import wayoftime.bloodmagic.api.compat.IHarvestHandler;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
+
 /**
  * Harvest handler for crops that grow vertically such as Sugar Cane and Cactus.
  * <br>
@@ -30,8 +33,9 @@ public class HarvestHandlerTall implements IHarvestHandler
 	{
 		for (int i = 0; i < 15; i++)
 		{
-			HarvestRegistry.registerTallCrop(Blocks.SUGAR_CANE.defaultBlockState().setValue(SugarCaneBlock.AGE, i));
-			HarvestRegistry.registerTallCrop(Blocks.CACTUS.defaultBlockState().setValue(CactusBlock.AGE, i));
+            HarvestRegistry api = BloodMagicAPI.INSTANCE.getHarvestRegistry();
+			api.registerTallCrop(Blocks.SUGAR_CANE.defaultBlockState().setValue(SugarCaneBlock.AGE, i));
+			api.registerTallCrop(Blocks.CACTUS.defaultBlockState().setValue(CactusBlock.AGE, i));
 		}
 	}
 
@@ -55,6 +59,6 @@ public class HarvestHandlerTall implements IHarvestHandler
 	@Override
 	public boolean test(Level world, BlockPos pos, BlockState state)
 	{
-		return HarvestRegistry.getTallCrops().contains(state);
+		return BloodMagicAPI.INSTANCE.getHarvestRegistry().getTallCrops().contains(state);
 	}
 }

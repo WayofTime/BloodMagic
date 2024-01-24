@@ -9,6 +9,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.CaveVines;
 import net.minecraft.world.level.block.state.BlockState;
 
+import wayoftime.bloodmagic.api.compat.IHarvestHandler;
+
 public class HarvestHandlerGlowberry implements IHarvestHandler
 {
 	@Override

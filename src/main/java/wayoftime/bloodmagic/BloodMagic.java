@@ -47,6 +47,7 @@ import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 import wayoftime.bloodmagic.common.tile.BloodMagicTileEntities;
 import wayoftime.bloodmagic.compat.CuriosCompat;
 import wayoftime.bloodmagic.compat.patchouli.RegisterPatchouliMultiblocks;
+import wayoftime.bloodmagic.compat.MysticalAgricultureCompat;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.data.DungeonRoomProvider;
@@ -80,6 +81,7 @@ public class BloodMagic {
     // Custom ItemGroup TAB
     public static final String NAME = "Blood Magic: Alchemical Wizardry";
     public static Boolean curiosLoaded;
+    public static Boolean magLoaded;
 
     public BloodMagic() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -183,7 +185,7 @@ public class BloodMagic {
         OrbRegistry.tierMap.put(BloodMagicItems.ORB_ARCHMAGE.get().getTier(), new ItemStack(BloodMagicItems.ARCHMAGE_BLOOD_ORB.get()));
         BloodMagicCorePlugin.INSTANCE.register(BloodMagicAPI.INSTANCE);
         RITUAL_MANAGER.discover();
-        ModRituals.initHarvestHandlers();
+        //ModRituals.initHarvestHandlers();
         LivingArmorRegistrar.register();
         AnointmentRegistrar.register();
         AlchemyArrayRegistry.registerBaseArrays();
@@ -196,6 +198,9 @@ public class BloodMagic {
         }
         if (ModList.get().isLoaded("patchouli")) {
             new RegisterPatchouliMultiblocks();
+        }
+        if (magLoaded) {
+            new MysticalAgricultureCompat();
         }
     }
 
@@ -225,6 +230,7 @@ public class BloodMagic {
         packetHandler.initialize();
 
         curiosLoaded = ModList.get().isLoaded("curios");
+        magLoaded = ModList.get().isLoaded("mysticalagriculture");
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

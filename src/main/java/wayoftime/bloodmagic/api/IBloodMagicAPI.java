@@ -64,6 +64,19 @@ public interface IBloodMagicAPI
 		};
 	}
 
+    /**
+     * Retrieves the instance of the harvest registry.
+     *
+     * @return the active {@link IHarvestRegistry} instance
+     */
+    @Nonnull
+    default IHarvestRegistry getHarvestRegistry()
+    {
+        return new IHarvestRegistry()
+        {
+        };
+    }
+
 	/**
 	 * Registers a {@link BlockState} as a given component for the Blood Altar.
 	 * <p>

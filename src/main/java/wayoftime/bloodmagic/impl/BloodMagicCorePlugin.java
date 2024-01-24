@@ -13,6 +13,12 @@ import wayoftime.bloodmagic.common.fluid.BloodMagicFluids;
 import wayoftime.bloodmagic.incense.EnumTranquilityType;
 import wayoftime.bloodmagic.incense.IncenseTranquilityRegistry;
 import wayoftime.bloodmagic.incense.TranquilityStack;
+import wayoftime.bloodmagic.ritual.harvest.HarvestHandlerBerryBush;
+import wayoftime.bloodmagic.ritual.harvest.HarvestHandlerGlowberry;
+import wayoftime.bloodmagic.ritual.harvest.HarvestHandlerNetherWart;
+import wayoftime.bloodmagic.ritual.harvest.HarvestHandlerPlantable;
+import wayoftime.bloodmagic.ritual.harvest.HarvestHandlerStem;
+import wayoftime.bloodmagic.ritual.harvest.HarvestHandlerTall;
 
 public class BloodMagicCorePlugin
 {
@@ -106,5 +112,16 @@ public class BloodMagicCorePlugin
 		apiInterface.registerInventoryProvider("mainInventory", player -> player.getInventory().items);
 		apiInterface.registerInventoryProvider("armorInventory", player -> player.getInventory().armor);
 		apiInterface.registerInventoryProvider("offHandInventory", player -> player.getInventory().offhand);
+
+        api.getHarvestRegistry().registerRangeAmplifier(Blocks.DIAMOND_BLOCK.defaultBlockState(), 15);
+		api.getHarvestRegistry().registerRangeAmplifier(Blocks.GOLD_BLOCK.defaultBlockState(), 10);
+		api.getHarvestRegistry().registerRangeAmplifier(Blocks.IRON_BLOCK.defaultBlockState(), 6);
+
+		api.getHarvestRegistry().registerHandler(new HarvestHandlerPlantable());
+		api.getHarvestRegistry().registerHandler(new HarvestHandlerTall());
+		api.getHarvestRegistry().registerHandler(new HarvestHandlerStem());
+		api.getHarvestRegistry().registerHandler(new HarvestHandlerGlowberry());
+		api.getHarvestRegistry().registerHandler(new HarvestHandlerBerryBush());
+		api.getHarvestRegistry().registerHandler(new HarvestHandlerNetherWart());
 	}
 }
