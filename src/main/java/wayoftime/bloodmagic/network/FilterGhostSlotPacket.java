@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent.Context;
 import wayoftime.bloodmagic.common.container.item.ContainerFilter;
 import wayoftime.bloodmagic.common.item.routing.IRoutingFilterProvider;
+import wayoftime.bloodmagic.common.item.routing.ItemItemRouterFilter;
 import wayoftime.bloodmagic.util.GhostItemHelper;
 
 public class FilterGhostSlotPacket
@@ -64,7 +65,7 @@ public class FilterGhostSlotPacket
 //				ItemStack filterStack = this.filterStack;
 				if (filterStack.getItem() instanceof IRoutingFilterProvider)
 				{
-					ItemStack filterCopy = ((IRoutingFilterProvider) filterStack.getItem()).getContainedStackForItem(filterStack, message.stack);
+					ItemStack filterCopy = ((IRoutingFilterProvider) filterStack.getItem()).getContainedStackForType(filterStack, message.stack);
 					slot.set(filterCopy);
 				}
 			}

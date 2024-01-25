@@ -2,7 +2,7 @@ package wayoftime.bloodmagic.common.item.routing;
 
 import net.minecraft.world.item.ItemStack;
 
-public interface ICompositeItemFilterProvider extends IItemFilterProvider
+public interface ICompositeItemFilterProvider extends IRoutingFilterProvider
 {
 	ItemStack nestFilter(ItemStack mainFilterStack, ItemStack nestedFilterStack);
 

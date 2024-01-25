@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -23,18 +24,26 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.container.item.ContainerFilter;
-import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
+import wayoftime.bloodmagic.common.item.routing.IRoutingFilterProvider;
+import wayoftime.bloodmagic.common.item.routing.ItemCollectionFilter;
+import wayoftime.bloodmagic.common.item.routing.ItemFluidRouterFilter;
+import wayoftime.bloodmagic.common.item.routing.ItemItemRouterFilter;
 import wayoftime.bloodmagic.network.RouterFilterPacket;
 import wayoftime.bloodmagic.util.GhostItemHelper;
 
 public class ScreenFilter extends ScreenBase<ContainerFilter>
 {
-	private static final ResourceLocation background = BloodMagic.rl("textures/gui/routingfilter.png");
+	private static ResourceLocation background = BloodMagic.rl("textures/gui/routingfilter.png");
 	public Container filterInventory;
 	private Player player;
 	private int left, top;
+
+	// 0 mixed, 1 item, 2 fluid
+	private int filterType = 0;
 
 	private EditBox textBox;
 
@@ -71,10 +80,18 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		buttonKeyList.clear();
 
 		ItemStack filterStack = this.container.filterStack;
+		this.filterType = filterStack.getItem() instanceof ItemFluidRouterFilter ? 2 : filterStack.getItem() instanceof ItemItemRouterFilter ? 1 : 0;
 
-		if (filterStack.getItem() instanceof IItemFilterProvider)
+		if (filterStack.getItem() instanceof ItemCollectionFilter)
 		{
-			IItemFilterProvider provider = (IItemFilterProvider) filterStack.getItem();
+			this.textBox.setVisible(false);
+			this.background = BloodMagic.rl("textures/gui/routingfilter_notext.png");
+			return;
+		}
+
+		if (filterStack.getItem() instanceof IRoutingFilterProvider)
+		{
+			IRoutingFilterProvider provider = (IRoutingFilterProvider) filterStack.getItem();
 			List<Pair<String, Button.OnPress>> buttonActionList = provider.getButtonAction(this.container);
 
 			for (Pair<String, Button.OnPress> pair : buttonActionList)
@@ -206,9 +223,9 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		{
 			GhostItemHelper.setItemGhostAmount(ghostStack, amount);
 			GhostItemHelper.setItemGhostAmount(container.inventoryFilter.getItem(ghostItemSlot), amount);
-			if (container.filterStack.getItem() instanceof IItemFilterProvider)
+			if (container.filterStack.getItem() instanceof IRoutingFilterProvider)
 			{
-				((IItemFilterProvider) container.filterStack.getItem()).setGhostItemAmount(container.filterStack, ghostItemSlot, amount);
+				((IRoutingFilterProvider) container.filterStack.getItem()).setGhostItemAmount(container.filterStack, ghostItemSlot, amount);
 
 			}
 		}
@@ -274,13 +291,13 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		this.font.draw(stack, new TranslatableComponent("container.inventory"), 8, 93, 4210752);
 		this.font.draw(stack, container.filterStack.getHoverName(), 8, 4, 4210752);
 
-		if (container.filterStack.getItem() instanceof IItemFilterProvider)
+		if (container.filterStack.getItem() instanceof IRoutingFilterProvider)
 		{
 			for (int i = 0; i < numberOfAddedButtons; i++)
 			{
-				int currentButtonState = ((IItemFilterProvider) container.filterStack.getItem()).getCurrentButtonState(container.filterStack, buttonKeyList.get(i), container.lastGhostSlotClicked);
+				int currentButtonState = ((IRoutingFilterProvider) container.filterStack.getItem()).getCurrentButtonState(container.filterStack, buttonKeyList.get(i), container.lastGhostSlotClicked);
 				Pair<Integer, Integer> buttonLocation = getButtonLocation(i);
-				Pair<Integer, Integer> textureLocation = ((IItemFilterProvider) container.filterStack.getItem()).getTexturePositionForState(container.filterStack, buttonKeyList.get(i), currentButtonState);
+				Pair<Integer, Integer> textureLocation = ((IRoutingFilterProvider) container.filterStack.getItem()).getTexturePositionForState(container.filterStack, buttonKeyList.get(i), currentButtonState);
 
 				int w = 20;
 				int h = 20;
@@ -334,6 +351,30 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	}
 
 	@Override
+	public List<Component> getTooltipFromItem(ItemStack itemStack)
+	{
+		List<Component> list = super.getTooltipFromItem(itemStack);
+		if (filterType == 1)
+		{
+			return list;
+		}
+
+		Optional<FluidStack> opt = FluidUtil.getFluidContained(itemStack);
+		if (opt.isPresent())
+		{
+			List<Component> newlist = Lists.newArrayList();
+			newlist.add(opt.get().getDisplayName());
+			if (list.size() > 1)
+			{
+				newlist.add(list.get(1));
+			}
+			list = newlist;
+		}
+
+		return list;
+	}
+
+	@Override
 	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks)
 	{
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
@@ -343,7 +384,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 
 		List<Component> tooltip = new ArrayList<>();
 
-		if (container.filterStack.getItem() instanceof IItemFilterProvider)
+		if (container.filterStack.getItem() instanceof IRoutingFilterProvider)
 		{
 			for (int i = 0; i < numberOfAddedButtons; i++)
 			{
@@ -356,7 +397,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 
 				if (mouseX >= x && mouseX < x + w && mouseY >= y && mouseY < y + h)
 				{
-					List<Component> components = ((IItemFilterProvider) container.filterStack.getItem()).getTextForHoverItem(container.filterStack, buttonKeyList.get(i), container.lastGhostSlotClicked);
+					List<Component> components = ((IRoutingFilterProvider) container.filterStack.getItem()).getTextForHoverItem(container.filterStack, buttonKeyList.get(i), container.lastGhostSlotClicked);
 					if (components != null && !components.isEmpty())
 						tooltip.addAll(components);
 				}
@@ -368,4 +409,8 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 //			GuiUtils.drawHoveringText(matrixStack, tooltip, mouseX, mouseY, width, height, -1, font);
 	}
 
+	public int getFilterType()
+	{
+		return this.filterType;
+	}
 }

@@ -7,7 +7,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class EnchantFilterKey implements IFilterKey
+public class EnchantFilterKey implements IFilterKey<ItemStack>
 {
 	private Enchantment enchantment;
 	private int enchantLevel;
@@ -20,6 +20,12 @@ public class EnchantFilterKey implements IFilterKey
 		this.enchantLevel = enchantLevel;
 		this.isFuzzy = isFuzzy;
 		this.count = count;
+	}
+
+	@Override
+	public ItemStack getType()
+	{
+		return ItemStack.EMPTY;
 	}
 
 	@Override

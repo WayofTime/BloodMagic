@@ -20,8 +20,11 @@ import wayoftime.bloodmagic.common.item.dungeon.ItemDungeonKey;
 import wayoftime.bloodmagic.common.item.potion.ItemAlchemyFlask;
 import wayoftime.bloodmagic.common.item.potion.ItemAlchemyFlaskLingering;
 import wayoftime.bloodmagic.common.item.potion.ItemAlchemyFlaskThrowable;
+import wayoftime.bloodmagic.common.item.routing.ItemCollectionFilter;
 import wayoftime.bloodmagic.common.item.routing.ItemCompositeFilter;
 import wayoftime.bloodmagic.common.item.routing.ItemEnchantFilterCore;
+import wayoftime.bloodmagic.common.item.routing.ItemFluidModFilter;
+import wayoftime.bloodmagic.common.item.routing.ItemFluidRouterFilter;
 import wayoftime.bloodmagic.common.item.routing.ItemModFilter;
 import wayoftime.bloodmagic.common.item.routing.ItemNodeRouter;
 import wayoftime.bloodmagic.common.item.routing.ItemStandardFilter;
@@ -55,8 +58,10 @@ import wayoftime.bloodmagic.structures.ItemDungeonTester;
 public class BloodMagicItems
 {
 
-//	public static Item.ToolMaterial SOUL_TOOL_MATERIAL = EnumHelper.addToolMaterial("demonic", 4, 520, 7, 8, 50);
-//	public static final BloodOrb WEAK_ORB_INSTANCE = new BloodOrb(new ResourceLocation(BloodMagic.MODID, "weakbloodorb"), 0, 5000, 10);
+	// public static Item.ToolMaterial SOUL_TOOL_MATERIAL =
+	// EnumHelper.addToolMaterial("demonic", 4, 520, 7, 8, 50);
+	// public static final BloodOrb WEAK_ORB_INSTANCE = new BloodOrb(new
+	// ResourceLocation(BloodMagic.MODID, "weakbloodorb"), 0, 5000, 10);
 	public static final BloodOrbDeferredRegister BLOOD_ORBS = new BloodOrbDeferredRegister(BloodMagic.MODID);
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, BloodMagic.MODID);
 	public static final DeferredRegister<Item> BASICITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, BloodMagic.MODID);
@@ -66,9 +71,13 @@ public class BloodMagicItems
 	public static final BloodOrbRegistryObject<BloodOrb> ORB_MAGICIAN = BLOOD_ORBS.register("magicianbloodorb", () -> new BloodOrb(new ResourceLocation(BloodMagic.MODID, "magicianbloodorb"), 3, 150000, 15));
 	public static final BloodOrbRegistryObject<BloodOrb> ORB_MASTER = BLOOD_ORBS.register("masterbloodorb", () -> new BloodOrb(new ResourceLocation(BloodMagic.MODID, "masterbloodorb"), 4, 1000000, 25));
 	public static final BloodOrbRegistryObject<BloodOrb> ORB_ARCHMAGE = BLOOD_ORBS.register("archmagebloodorb", () -> new BloodOrb(new ResourceLocation(BloodMagic.MODID, "archmagebloodorb"), 5, 10000000, 50));
-//	public static final DeferredRegister<BloodOrb> BLOOD_ORBS = DeferredRegister.create(RegistrarBloodMagic.BLOOD_ORBS, BloodMagic.MODID);
+	// public static final DeferredRegister<BloodOrb> BLOOD_ORBS =
+	// DeferredRegister.create(RegistrarBloodMagic.BLOOD_ORBS, BloodMagic.MODID);
 
-//	public static final RegistryObject<Item> BLOODSTONE_ITEM = ITEMS.register("ruby_block", () -> new BlockItem(BloodMagicBlocks.BLOODSTONE.get(), new Item.Properties().group(BloodMagic.TAB)));
+	// public static final RegistryObject<Item> BLOODSTONE_ITEM =
+	// ITEMS.register("ruby_block", () -> new
+	// BlockItem(BloodMagicBlocks.BLOODSTONE.get(), new
+	// Item.Properties().group(BloodMagic.TAB)));
 	public static final RegistryObject<Item> SOUL_FORGE_ITEM = ITEMS.register("soulforge", () -> new BlockItem(BloodMagicBlocks.SOUL_FORGE.get(), new Item.Properties().tab(BloodMagic.TAB)));
 	public static final RegistryObject<Item> BLANK_RUNE_ITEM = ITEMS.register("blankrune", () -> new BlockItem(BloodMagicBlocks.BLANK_RUNE.get(), new Item.Properties().tab(BloodMagic.TAB)));
 	public static final RegistryObject<Item> SPEED_RUNE_ITEM = ITEMS.register("speedrune", () -> new BlockItem(BloodMagicBlocks.SPEED_RUNE.get(), new Item.Properties().tab(BloodMagic.TAB)));
@@ -146,8 +155,11 @@ public class BloodMagicItems
 	// TODO: Need to rework the above instantiations for the ItemBlocks so that it's
 	// done with the Blocks.
 
-//	public static final RegistryObject<Item> WEAK_BLOOD_ORB = BASICITEMS.register("weakbloodorb", ItemBloodOrb::new);
-//	public static final RegistryObject<Item> WEAK_BLOOD_ORB = BASICITEMS.register("weakbloodorb", () -> new ItemBloodOrb(WEAK_ORB_INSTANCE));
+	// public static final RegistryObject<Item> WEAK_BLOOD_ORB =
+	// BASICITEMS.register("weakbloodorb", ItemBloodOrb::new);
+	// public static final RegistryObject<Item> WEAK_BLOOD_ORB =
+	// BASICITEMS.register("weakbloodorb", () -> new
+	// ItemBloodOrb(WEAK_ORB_INSTANCE));
 	public static final RegistryObject<Item> WEAK_BLOOD_ORB = BASICITEMS.register("weakbloodorb", () -> new ItemBloodOrb(ORB_WEAK));
 	public static final RegistryObject<Item> APPRENTICE_BLOOD_ORB = BASICITEMS.register("apprenticebloodorb", () -> new ItemBloodOrb(ORB_APPRENTICE));
 	public static final RegistryObject<Item> MAGICIAN_BLOOD_ORB = BASICITEMS.register("magicianbloodorb", () -> new ItemBloodOrb(ORB_MAGICIAN));
@@ -269,6 +281,10 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> NODE_ROUTER = BASICITEMS.register("noderouter", ItemNodeRouter::new);
 	public static final RegistryObject<Item> MASTER_NODE_UPGRADE = BASICITEMS.register("mastercore", ItemBasicNodeUpgrade::new);
 
+	public static final RegistryObject<Item> FLUID_ROUTER_FILTER = BASICITEMS.register("fluidrouterfilterexact", ItemFluidRouterFilter::new);
+	public static final RegistryObject<Item> FLUID_MOD_FILTER = BASICITEMS.register("fluidrouterfiltermod", ItemFluidModFilter::new);
+	public static final RegistryObject<Item> COLLECTION_FILTER = BASICITEMS.register("collectionfilter", ItemCollectionFilter::new);
+
 	public static final RegistryObject<Item> FRAME_PARTS = BASICITEMS.register("componentframeparts", ItemBase::new);
 
 	// Misc
@@ -324,8 +340,10 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> STEADFAST_CRYSTAL_CATALYST = BASICITEMS.register("steadfastcatalyst", () -> new ItemCrystalCatalyst(EnumDemonWillType.STEADFAST, 200, 10, 25, 400));
 	public static final RegistryObject<Item> VENGEFUL_CRYSTAL_CATALYST = BASICITEMS.register("vengefulcatalyst", () -> new ItemCrystalCatalyst(EnumDemonWillType.VENGEFUL, 200, 10, 25, 400));
 
-//	public static final RegistryObject<Item> STRENGTHENED_CATALYST = BASICITEMS.register("strengthenedcatalyst", () -> new ItemBase());
-//	public static final RegistryObject<Item> CONCENTRATED_CATALYST = BASICITEMS.register("concentratedcatalyst", () -> new ItemBase());
+	// public static final RegistryObject<Item> STRENGTHENED_CATALYST =
+	// BASICITEMS.register("strengthenedcatalyst", () -> new ItemBase());
+	// public static final RegistryObject<Item> CONCENTRATED_CATALYST =
+	// BASICITEMS.register("concentratedcatalyst", () -> new ItemBase());
 
 	// Anointments
 	public static final RegistryObject<Item> SLATE_VIAL = ITEMS.register("slate_vial", () -> new ItemBase(16, "slate_vial"));

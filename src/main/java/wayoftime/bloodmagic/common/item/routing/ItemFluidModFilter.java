@@ -11,14 +11,16 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
 import wayoftime.bloodmagic.common.item.inventory.ItemInventory;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.GhostItemHelper;
 
-public class ItemModFilter extends ItemItemRouterFilter implements INestableItemFilterProvider
+public class ItemFluidModFilter extends ItemFluidRouterFilter
 {
-	public ItemModFilter()
+	public ItemFluidModFilter()
 	{
 		super();
 	}
@@ -59,7 +61,8 @@ public class ItemModFilter extends ItemItemRouterFilter implements INestableItem
 					continue;
 				}
 
-				TranslatableComponent modText = new TranslatableComponent("tooltip.bloodmagic.filter.from_mod", stack.getItem().getRegistryName().getNamespace());
+				FluidStack fluidStack = FluidUtil.getFluidContained(stack).get();
+				TranslatableComponent modText = new TranslatableComponent("tooltip.bloodmagic.filter.from_mod", fluidStack.getFluid().getRegistryName().getNamespace());
 
 				if (isWhitelist)
 				{
@@ -83,8 +86,8 @@ public class ItemModFilter extends ItemItemRouterFilter implements INestableItem
 	@Override
 	public IFilterKey getFilterKey(ItemStack filterStack, int slot, ItemStack ghostStack, int amount)
 	{
-		String namespace = ghostStack.getItem().getRegistryName().getNamespace();
+		String namespace = FluidUtil.getFluidContained(ghostStack).get().getFluid().getRegistryName().getNamespace();
 
-		return new ModFilterKey(namespace, amount);
+		return new FluidModFilterKey(namespace, amount);
 	}
 }

@@ -8,7 +8,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class CollectionEnchantFilterKey implements IFilterKey
+public class CollectionEnchantFilterKey implements IFilterKey<ItemStack>
 {
 	private Map<Enchantment, Integer> enchantMap;
 	private boolean isFuzzy;
@@ -88,5 +88,11 @@ public class CollectionEnchantFilterKey implements IFilterKey
 	public boolean isEmpty()
 	{
 		return count == 0;
+	}
+
+	@Override
+	public ItemStack getType()
+	{
+		return ItemStack.EMPTY;
 	}
 }

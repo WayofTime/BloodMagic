@@ -5,7 +5,7 @@ import java.util.UUID;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import wayoftime.bloodmagic.common.item.routing.ItemRouterFilter;
+import wayoftime.bloodmagic.common.item.routing.ItemItemRouterFilter;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.Utils;
 
@@ -13,7 +13,7 @@ public class InventoryFilter extends ItemInventory
 {
 	public InventoryFilter(ItemStack itemStack)
 	{
-		super(itemStack, ItemRouterFilter.inventorySize, "RoutingFilter");
+		super(itemStack, ItemItemRouterFilter.inventorySize, "RoutingFilter");
 	}
 
 	public void onGuiSaved(Player entityPlayer)

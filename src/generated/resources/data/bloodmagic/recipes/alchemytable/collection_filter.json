@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:componentframeparts"
+    },
+    {
+      "item": "bloodmagic:infusedslate"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    },
+    {
+      "tag": "forge:gems/lapis"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:collectionfilter"
+  },
+  "syphon": 500,
+  "ticks": 100,
+  "upgradeLevel": 3
+}

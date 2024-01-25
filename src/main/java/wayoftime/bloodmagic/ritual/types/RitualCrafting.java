@@ -26,8 +26,9 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
 import wayoftime.bloodmagic.common.item.routing.IFilterKey;
-import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
-import wayoftime.bloodmagic.common.routing.IItemFilter;
+import wayoftime.bloodmagic.common.item.routing.IRoutingFilterProvider;
+import wayoftime.bloodmagic.common.item.routing.ItemItemRouterFilter;
+import wayoftime.bloodmagic.common.routing.IRoutingFilter;
 import wayoftime.bloodmagic.common.tile.TileAlchemyTable;
 import wayoftime.bloodmagic.common.tile.TileSoulForge;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
@@ -248,7 +249,7 @@ public class RitualCrafting extends Ritual
 		List<ItemStack> insertionList = new ArrayList<>();
 //		insertionList.add(resultStack);
 
-		IItemFilter itemRecipeFilter = ((IItemFilterProvider) filterStack.getItem()).getUninitializedItemFilter(filterStack);
+		IRoutingFilter<ItemStack> itemRecipeFilter = ((IRoutingFilterProvider) filterStack.getItem()).getUninitializedItemFilter(filterStack);
 		List<IFilterKey> filterKeyList = itemRecipeFilter.getFilterList();
 //		int filterKeyIndex = 0;
 
@@ -292,7 +293,7 @@ public class RitualCrafting extends Ritual
 
 		if (!outputFilterStack.isEmpty())
 		{
-			IItemFilter outputFilter = ((IItemFilterProvider) outputFilterStack.getItem()).getUninitializedItemFilter(outputFilterStack);
+			IRoutingFilter<ItemStack> outputFilter = ((IRoutingFilterProvider) outputFilterStack.getItem()).getUninitializedItemFilter(outputFilterStack);
 
 			List<IFilterKey> keyList = outputFilter.getFilterList();
 			for (IFilterKey outputKey : keyList)
@@ -462,7 +463,7 @@ public class RitualCrafting extends Ritual
 		List<ItemStack> insertionList = new ArrayList<>();
 //		insertionList.add(resultStack);
 
-		IItemFilter itemRecipeFilter = ((IItemFilterProvider) filterStack.getItem()).getUninitializedItemFilter(filterStack);
+		IRoutingFilter<ItemStack> itemRecipeFilter = ((IRoutingFilterProvider) filterStack.getItem()).getUninitializedItemFilter(filterStack);
 		List<IFilterKey> filterKeyList = itemRecipeFilter.getFilterList();
 //		int filterKeyIndex = 0;
 
@@ -506,7 +507,7 @@ public class RitualCrafting extends Ritual
 
 		if (!outputFilterStack.isEmpty())
 		{
-			IItemFilter outputFilter = ((IItemFilterProvider) outputFilterStack.getItem()).getUninitializedItemFilter(outputFilterStack);
+			IRoutingFilter<ItemStack> outputFilter = ((IRoutingFilterProvider) outputFilterStack.getItem()).getUninitializedItemFilter(outputFilterStack);
 
 			List<IFilterKey> keyList = outputFilter.getFilterList();
 			for (IFilterKey outputKey : keyList)
@@ -649,7 +650,7 @@ public class RitualCrafting extends Ritual
 
 		if (!outputFilterStack.isEmpty())
 		{
-			IItemFilter outputFilter = ((IItemFilterProvider) outputFilterStack.getItem()).getUninitializedItemFilter(outputFilterStack);
+			IRoutingFilter<ItemStack> outputFilter = ((IRoutingFilterProvider) outputFilterStack.getItem()).getUninitializedItemFilter(outputFilterStack);
 
 			if (craftingRecipes.size() > 1)
 			{
@@ -692,7 +693,7 @@ public class RitualCrafting extends Ritual
 			}
 		}
 
-		IItemFilter itemRecipeFilter = ((IItemFilterProvider) filterStack.getItem()).getUninitializedItemFilter(filterStack);
+		IRoutingFilter<ItemStack> itemRecipeFilter = ((IRoutingFilterProvider) filterStack.getItem()).getUninitializedItemFilter(filterStack);
 
 		// Map that stores the slots that are going to be syphoned from.
 		Map<Integer, Integer> selectedMap = new HashMap<>();
@@ -846,7 +847,7 @@ public class RitualCrafting extends Ritual
 			{
 				ItemStack frameStack = frame.getItem();
 //				System.out.println("Frames aren't empty. Found: " + frameStack.getItem());
-				if (!frameStack.isEmpty() && frameStack.getItem() instanceof IItemFilterProvider)
+				if (!frameStack.isEmpty() && (ItemItemRouterFilter) frameStack.getItem() instanceof IRoutingFilterProvider)
 				{
 					filterStack = frameStack;
 				}
@@ -866,7 +867,7 @@ public class RitualCrafting extends Ritual
 						for (int i = 0; i < inv.getSlots(); i++)
 						{
 							ItemStack frameStack = inv.getStackInSlot(i);
-							if (!frameStack.isEmpty() && frameStack.getItem() instanceof IItemFilterProvider)
+							if (!frameStack.isEmpty() && (ItemItemRouterFilter) frameStack.getItem() instanceof IRoutingFilterProvider)
 							{
 								filterStack = frameStack;
 								break;
@@ -908,7 +909,7 @@ public class RitualCrafting extends Ritual
 			for (ItemFrame frame : outputFrames)
 			{
 				ItemStack frameStack = frame.getItem();
-				if (!frameStack.isEmpty() && frameStack.getItem() instanceof IItemFilterProvider)
+				if (!frameStack.isEmpty() && (ItemItemRouterFilter) frameStack.getItem() instanceof IRoutingFilterProvider)
 				{
 					outputFilterStack = frameStack;
 				}
@@ -928,7 +929,7 @@ public class RitualCrafting extends Ritual
 						for (int i = 0; i < inv.getSlots(); i++)
 						{
 							ItemStack frameStack = inv.getStackInSlot(i);
-							if (!frameStack.isEmpty() && frameStack.getItem() instanceof IItemFilterProvider)
+							if (!frameStack.isEmpty() && (ItemItemRouterFilter) frameStack.getItem() instanceof IRoutingFilterProvider)
 							{
 								outputFilterStack = frameStack;
 								break;

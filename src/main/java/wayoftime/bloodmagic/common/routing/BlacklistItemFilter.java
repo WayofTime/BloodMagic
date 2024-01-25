@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -18,7 +19,7 @@ import wayoftime.bloodmagic.util.Utils;
  *
  * @author WayofTime
  */
-public class BlacklistItemFilter implements IItemFilter
+public class BlacklistItemFilter implements IRoutingFilter<ItemStack>
 {
 	/*
 	 * This list acts as the way the filter keeps track of its contents. For the
@@ -30,22 +31,28 @@ public class BlacklistItemFilter implements IItemFilter
 	protected BlockEntity accessedTile;
 	protected IItemHandler itemHandler;
 
+	@Override
+	public ItemStack getType()
+	{
+		return ItemStack.EMPTY;
+	}
+
 	/**
 	 * Initializes the filter so that it knows what it wants to fulfill.
 	 *
 	 * @param filteredList   - The list of ItemStacks that the filter is set to.
 	 * @param tile           - The inventory that is being accessed. This inventory
 	 *                       is either being pulled from or pushed to.
-	 * @param itemHandler    - The item handler
+	 * @param fluidHandler    - The item handler
 	 * @param isFilterOutput - Tells the filter what actions to expect. If true, it
 	 *                       should be initialized as an output filter. If false, it
 	 *                       should be initialized as an input filter.
 	 */
 	@Override
-	public void initializeFilter(List<IFilterKey> filteredList, BlockEntity tile, IItemHandler itemHandler, boolean isFilterOutput)
+	public void initializeFilter(List<IFilterKey> filteredList, BlockEntity tile, Direction side, boolean isFilterOutput)
 	{
 		this.accessedTile = tile;
-		this.itemHandler = itemHandler;
+		this.itemHandler = Utils.getInventory(tile, side);
 		if (isFilterOutput)
 		{
 			requestList = filteredList;
@@ -169,7 +176,7 @@ public class BlacklistItemFilter implements IItemFilter
 	 * input inventory to the output inventory.
 	 */
 	@Override
-	public int transferThroughInputFilter(IItemFilter outputFilter, int maxTransfer)
+	public int transferThroughInputFilter(IRoutingFilter<ItemStack> outputFilter, int maxTransfer)
 	{
 		int totalChange = 0;
 		slots: for (int slot = 0; slot < itemHandler.getSlots(); slot++)

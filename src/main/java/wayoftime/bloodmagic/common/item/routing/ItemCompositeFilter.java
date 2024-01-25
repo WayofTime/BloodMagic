@@ -5,7 +5,10 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.google.common.collect.Lists;
+
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.core.Direction;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Button.OnPress;
 import net.minecraft.world.item.TooltipFlag;
@@ -23,18 +26,15 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.client.button.FilterButtonTogglePress;
 import wayoftime.bloodmagic.common.container.item.ContainerFilter;
 import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
 import wayoftime.bloodmagic.common.item.inventory.ItemInventory;
-import wayoftime.bloodmagic.common.routing.BasicItemFilter;
-import wayoftime.bloodmagic.common.routing.BlacklistItemFilter;
-import wayoftime.bloodmagic.common.routing.IItemFilter;
+import wayoftime.bloodmagic.common.routing.IRoutingFilter;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.GhostItemHelper;
 
-public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvider, ICompositeItemFilterProvider
+public class ItemCompositeFilter extends ItemItemRouterFilter implements MenuProvider, ICompositeItemFilterProvider
 {
 	public ItemCompositeFilter()
 	{
@@ -121,16 +121,16 @@ public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvide
 		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 	}
 
-	protected IItemFilter getFilterTypeFromConfig(ItemStack filterStack)
-	{
-		int state = getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
-		if (state == 1)
-		{
-			return new BlacklistItemFilter();
-		}
-
-		return new BasicItemFilter();
-	}
+//	protected IRoutingFilter<ItemStack> getFilterTypeFromConfig(ItemStack filterStack)
+//	{
+//		int state = getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
+//		if (state == 1)
+//		{
+//			return new BlacklistItemFilter();
+//		}
+//
+//		return new BasicItemFilter();
+//	}
 
 	@Override
 	public IFilterKey getFilterKey(ItemStack filterStack, int slot, ItemStack ghostStack, int amount)
@@ -139,9 +139,9 @@ public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvide
 	}
 
 	@Override
-	public IItemFilter getInputItemFilter(ItemStack filterStack, BlockEntity tile, IItemHandler handler)
+	public List<IRoutingFilter> getInputFilter(ItemStack filterStack, BlockEntity tile, Direction side)
 	{
-		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
+		IRoutingFilter<ItemStack> testFilter = getFilterTypeFromConfig(filterStack);
 
 		List<IFilterKey> filteredList = new ArrayList<>();
 		ItemInventory inv = new InventoryFilter(filterStack);
@@ -180,14 +180,16 @@ public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvide
 			}
 		}
 
-		testFilter.initializeFilter(filteredList, tile, handler, false);
-		return testFilter;
+		testFilter.initializeFilter(filteredList, tile, side, false);
+		List<IRoutingFilter> list = Lists.newArrayList();
+		list.add(testFilter);
+		return list;
 	}
 
 	@Override
-	public IItemFilter getOutputItemFilter(ItemStack filterStack, BlockEntity tile, IItemHandler handler)
+	public List<IRoutingFilter> getOutputFilter(ItemStack filterStack, BlockEntity tile, Direction side)
 	{
-		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
+		IRoutingFilter<ItemStack> testFilter = getFilterTypeFromConfig(filterStack);
 
 		List<IFilterKey> filteredList = new ArrayList<>();
 		ItemInventory inv = new InventoryFilter(filterStack); // TODO: Change to grab the filter from the Item
@@ -231,9 +233,11 @@ public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvide
 			}
 		}
 
-		testFilter.initializeFilter(filteredList, tile, handler, true);
+		testFilter.initializeFilter(filteredList, tile, side, true);
 
-		return testFilter;
+		List<IRoutingFilter> list = Lists.newArrayList();
+		list.add(testFilter);
+		return list;
 	}
 
 	@Override

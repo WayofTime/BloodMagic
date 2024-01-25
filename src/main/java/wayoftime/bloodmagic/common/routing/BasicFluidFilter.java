@@ -5,12 +5,13 @@ import java.util.List;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import wayoftime.bloodmagic.common.item.routing.IFilterKey;
-import wayoftime.bloodmagic.util.Utils;
 
 /**
  * This particular implementation of IItemFilter checks to make sure that a) as
@@ -19,53 +20,36 @@ import wayoftime.bloodmagic.util.Utils;
  *
  * @author WayofTime
  */
-public class BasicItemFilter implements IRoutingFilter<ItemStack>
+public class BasicFluidFilter implements IRoutingFilter<FluidStack>
 {
-	/*
-	 * This list acts as the way the filter keeps track of its contents. For the
-	 * case of an output filter, it holds a list of ItemStacks that needs to be
-	 * inserted in the inventory to finish its request. For the case of an input
-	 * filter, it keeps track of how many can be removed.
-	 */
 	protected List<IFilterKey> requestList;
 	protected BlockEntity accessedTile;
-	protected IItemHandler itemHandler;
+	protected IFluidHandler fluidHandler;
 
 	@Override
-	public ItemStack getType()
+	public FluidStack getType()
 	{
-		return ItemStack.EMPTY;
+		return FluidStack.EMPTY;
 	}
 
-	/**
-	 * Initializes the filter so that it knows what it wants to fulfill.
-	 *
-	 * @param filteredList   - The list of ItemStacks that the filter is set to.
-	 * @param tile           - The inventory that is being accessed. This inventory
-	 *                       is either being pulled from or pushed to.
-	 * @param fluidHandler    - The item handler
-	 * @param isFilterOutput - Tells the filter what actions to expect. If true, it
-	 *                       should be initialized as an output filter. If false, it
-	 *                       should be initialized as an input filter.
-	 */
 	@Override
 	public void initializeFilter(List<IFilterKey> filteredList, BlockEntity tile, Direction side, boolean isFilterOutput)
 	{
 		this.accessedTile = tile;
-		this.itemHandler = Utils.getInventory(tile, side);
+		this.fluidHandler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).resolve().orElse(null);
 		if (isFilterOutput)
 		{
 			requestList = filteredList;
 
-			for (int slot = 0; slot < itemHandler.getSlots(); slot++)
+			for (int tank = 0; tank < fluidHandler.getTanks(); tank++)
 			{
-				ItemStack checkedStack = itemHandler.getStackInSlot(slot);
+				FluidStack checkedStack = fluidHandler.getFluidInTank(tank);
 				if (checkedStack.isEmpty())
 				{
 					continue;
 				}
 
-				int stackSize = checkedStack.getCount();
+				int stackSize = checkedStack.getAmount();
 
 				for (IFilterKey filterStack : requestList)
 				{
@@ -89,15 +73,15 @@ public class BasicItemFilter implements IRoutingFilter<ItemStack>
 				filterStack.setCount(filterStack.getCount() * -1); // Invert the stack size so that
 			}
 
-			for (int slot = 0; slot < itemHandler.getSlots(); slot++)
+			for (int tank = 0; tank < fluidHandler.getTanks(); tank++)
 			{
-				ItemStack checkedStack = itemHandler.getStackInSlot(slot);
+				FluidStack checkedStack = fluidHandler.getFluidInTank(tank);
 				if (checkedStack.isEmpty())
 				{
 					continue;
 				}
 
-				int stackSize = checkedStack.getCount();
+				int stackSize = checkedStack.getAmount();
 
 				for (IFilterKey filterStack : filteredList)
 				{
@@ -113,24 +97,15 @@ public class BasicItemFilter implements IRoutingFilter<ItemStack>
 		requestList.removeIf(IFilterKey::isEmpty);
 	}
 
-	/**
-	 * This method is only called when the output inventory this filter is managing
-	 * receives an ItemStack. Should only really be called by the Input filter via
-	 * it's transfer method.
-	 *
-	 * @param inputStack - The stack to transfer
-	 * @return - The remainder of the stack after it has been absorbed into the
-	 *         inventory.
-	 */
 	@Override
-	public ItemStack transferStackThroughOutputFilter(ItemStack inputStack)
+	public FluidStack transferStackThroughOutputFilter(FluidStack inputStack)
 	{
 		int allowedAmount = 0;
 		for (IFilterKey filterStack : requestList)
 		{
 			if (doStacksMatch(filterStack, inputStack))
 			{
-				allowedAmount = Math.min(filterStack.getCount(), inputStack.getCount());
+				allowedAmount = Math.min(filterStack.getCount(), inputStack.getAmount());
 				break;
 			}
 		}
@@ -140,11 +115,10 @@ public class BasicItemFilter implements IRoutingFilter<ItemStack>
 			return inputStack;
 		}
 
-		ItemStack testStack = inputStack.copy();
-		testStack.setCount(allowedAmount);
-		ItemStack remainderStack = Utils.insertStackIntoTile(testStack, itemHandler);
+		FluidStack testStack = inputStack.copy();
+		testStack.setAmount(allowedAmount);
+        int changeAmount = fluidHandler.fill(testStack, FluidAction.EXECUTE);
 
-		int changeAmount = allowedAmount - (remainderStack.isEmpty() ? 0 : remainderStack.getCount());
 		testStack = inputStack.copy();
 		testStack.shrink(changeAmount);
 
@@ -169,25 +143,15 @@ public class BasicItemFilter implements IRoutingFilter<ItemStack>
 		return testStack;
 	}
 
-	/**
-	 * This method is only called on an input filter to transfer ItemStacks from the
-	 * input inventory to the output inventory.
-	 */
 	@Override
-	public int transferThroughInputFilter(IRoutingFilter<ItemStack> outputFilter, int maxTransfer)
+	public int transferThroughInputFilter(IRoutingFilter<FluidStack> outputFilter, int maxTransfer)
 	{
 		int totalChange = 0;
-		for (int slot = 0; slot < itemHandler.getSlots(); slot++)
+		for (int tank = 0; tank < fluidHandler.getTanks(); tank++)
 		{
-			ItemStack inputStack = itemHandler.getStackInSlot(slot);
-			if (inputStack.isEmpty() || itemHandler.extractItem(slot, inputStack.getCount(), true).isEmpty())// (accessedInventory
-																												// instanceof
-																												// ISidedInventory
-																												// &&
-																												// !((ISidedInventory)
-																												// accessedInventory).canExtractItem(slot,
-																												// inputStack,
-																												// accessedSide)))
+			FluidStack availableStack = fluidHandler.getFluidInTank(tank);
+			FluidStack inputStack = fluidHandler.drain(availableStack, FluidAction.SIMULATE);
+            if (inputStack.isEmpty())
 			{
 				continue;
 			}
@@ -197,7 +161,7 @@ public class BasicItemFilter implements IRoutingFilter<ItemStack>
 			{
 				if (doStacksMatch(filterStack, inputStack))
 				{
-					allowedAmount = Math.min(maxTransfer, Math.min(filterStack.getCount(), itemHandler.extractItem(slot, inputStack.getCount(), true).getCount()));
+					allowedAmount = Math.min(maxTransfer, Math.min(filterStack.getCount(), inputStack.getAmount()));
 					break;
 				}
 			}
@@ -207,18 +171,18 @@ public class BasicItemFilter implements IRoutingFilter<ItemStack>
 				continue;
 			}
 
-			ItemStack testStack = inputStack.copy();
-			testStack.setCount(allowedAmount);
-			ItemStack remainderStack = outputFilter.transferStackThroughOutputFilter(testStack);
-			int changeAmount = allowedAmount - (remainderStack.isEmpty() ? 0 : remainderStack.getCount());
+			FluidStack testStack = inputStack.copy();
+			testStack.setAmount(allowedAmount);
+			FluidStack remainderStack = outputFilter.transferStackThroughOutputFilter(testStack);
+			int changeAmount = allowedAmount - (remainderStack.isEmpty() ? 0 : remainderStack.getAmount());
 
-			if (!remainderStack.isEmpty() && remainderStack.getCount() == allowedAmount)
+			if (!remainderStack.isEmpty() && remainderStack.getAmount() == allowedAmount)
 			{
 				// Nothing has changed. Moving on!
 				continue;
 			}
 
-			itemHandler.extractItem(slot, changeAmount, false);
+			fluidHandler.drain(changeAmount, FluidAction.EXECUTE);
 
 			Iterator<IFilterKey> itr = requestList.iterator();
 			while (itr.hasNext())
@@ -250,7 +214,7 @@ public class BasicItemFilter implements IRoutingFilter<ItemStack>
 	}
 
 	@Override
-	public boolean doesStackPassFilter(ItemStack testStack)
+	public boolean doesStackPassFilter(FluidStack testStack)
 	{
 		for (IFilterKey filterStack : requestList)
 		{
@@ -264,7 +228,7 @@ public class BasicItemFilter implements IRoutingFilter<ItemStack>
 	}
 
 	@Override
-	public boolean doStacksMatch(IFilterKey filterStack, ItemStack testStack)
+	public boolean doStacksMatch(IFilterKey filterStack, FluidStack testStack)
 	{
 		return filterStack.doesStackMatch(testStack);
 	}

@@ -2,7 +2,7 @@ package wayoftime.bloodmagic.common.item.routing;
 
 import net.minecraft.world.item.ItemStack;
 
-public class BasicFilterKey implements IFilterKey
+public class BasicFilterKey implements IFilterKey<ItemStack>
 {
 	private ItemStack keyStack;
 	private int count;
@@ -47,5 +47,11 @@ public class BasicFilterKey implements IFilterKey
 	public boolean isEmpty()
 	{
 		return count == 0 || keyStack.isEmpty();
+	}
+
+	@Override
+	public ItemStack getType()
+	{
+		return ItemStack.EMPTY;
 	}
 }

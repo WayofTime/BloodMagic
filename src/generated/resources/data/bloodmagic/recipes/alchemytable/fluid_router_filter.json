@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:componentframeparts"
+    },
+    {
+      "item": "minecraft:bucket"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    },
+    {
+      "tag": "forge:dyes/red"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:fluidrouterfilterexact"
+  },
+  "syphon": 500,
+  "ticks": 100,
+  "upgradeLevel": 3
+}

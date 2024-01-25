@@ -1,10 +1,10 @@
 package wayoftime.bloodmagic.common.item.routing;
 
-import net.minecraft.world.item.ItemStack;
-
-public interface IFilterKey
+public interface IFilterKey<T>
 {
-	public boolean doesStackMatch(ItemStack testStack);
+	public T getType();
+
+	public boolean doesStackMatch(T testStack);
 
 	public int getCount();
 
