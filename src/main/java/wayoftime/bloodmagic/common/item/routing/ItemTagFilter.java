@@ -25,24 +25,21 @@ import wayoftime.bloodmagic.client.button.FilterButtonTogglePress;
 import wayoftime.bloodmagic.common.container.item.ContainerFilter;
 import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
 import wayoftime.bloodmagic.common.item.inventory.ItemInventory;
-import wayoftime.bloodmagic.common.routing.BasicItemFilter;
-import wayoftime.bloodmagic.common.routing.BlacklistItemFilter;
-import wayoftime.bloodmagic.common.routing.IItemFilter;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.GhostItemHelper;
 
-public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilterProvider
+public class ItemTagFilter extends ItemItemRouterFilter implements INestableItemFilterProvider
 {
-	protected IItemFilter getFilterTypeFromConfig(ItemStack filterStack)
-	{
-		int state = getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
-		if (state == 1)
-		{
-			return new BlacklistItemFilter();
-		}
-
-		return new BasicItemFilter();
-	}
+//	protected IRoutingFilter<ItemStack> getFilterTypeFromConfig(ItemStack filterStack)
+//	{
+//		int state = getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
+//		if (state == 1)
+//		{
+//			return new BlacklistItemFilter();
+//		}
+//
+//		return new BasicItemFilter();
+//	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)

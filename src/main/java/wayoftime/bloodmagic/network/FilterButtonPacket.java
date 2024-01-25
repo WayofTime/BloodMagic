@@ -6,7 +6,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent.Context;
-import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
+import wayoftime.bloodmagic.common.item.routing.IRoutingFilterProvider;
 
 public class FilterButtonPacket
 {
@@ -57,9 +57,9 @@ public class FilterButtonPacket
 			itemStack = playerEntity.getInventory().getItem(msg.slot);
 		}
 
-		if (!itemStack.isEmpty() && itemStack.getItem() instanceof IItemFilterProvider)
+		if (!itemStack.isEmpty() && itemStack.getItem() instanceof IRoutingFilterProvider)
 		{
-			((IItemFilterProvider) itemStack.getItem()).receiveButtonPress(itemStack, msg.buttonKey, msg.ghostSlot, msg.currentButtonState);
+			((IRoutingFilterProvider) itemStack.getItem()).receiveButtonPress(itemStack, msg.buttonKey, msg.ghostSlot, msg.currentButtonState);
 		}
 	}
 }

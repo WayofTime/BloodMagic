@@ -16,8 +16,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.IItemHandler;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
-import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
-import wayoftime.bloodmagic.common.routing.IItemFilter;
+import wayoftime.bloodmagic.common.item.routing.IRoutingFilterProvider;
+import wayoftime.bloodmagic.common.routing.IRoutingFilter;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
@@ -185,13 +185,13 @@ public class RitualYawningVoid extends Ritual
 								for (int n = 0; n < inventory.getSlots(); n++)
 								{
 									ItemStack filterStack = inventory.getStackInSlot(n);
-									if (filterStack.isEmpty() || !(filterStack.getItem() instanceof IItemFilterProvider))
+									if (filterStack.isEmpty() || !(filterStack.getItem() instanceof IRoutingFilterProvider))
 									{
 										continue;
 									}
 
-									IItemFilterProvider filterItem = (IItemFilterProvider) filterStack.getItem();
-									IItemFilter filter = filterItem.getUninitializedItemFilter(filterStack);
+									IRoutingFilterProvider filterItem = (IRoutingFilterProvider) filterStack.getItem();
+									IRoutingFilter<ItemStack> filter = filterItem.getUninitializedItemFilter(filterStack);
 									if (filter.doesStackPassFilter(checkStack))
 									{
 										destroy = true;

@@ -7,7 +7,7 @@ package wayoftime.bloodmagic.common.item.routing;
  * @author WayofTime
  *
  */
-public interface INestableItemFilterProvider extends IItemFilterProvider
+public interface INestableItemFilterProvider extends IRoutingFilterProvider
 {
 
 }

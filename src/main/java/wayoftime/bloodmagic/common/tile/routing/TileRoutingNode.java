@@ -49,7 +49,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 		if (!getLevel().isClientSide)
 		{
 			currentInput = getLevel().getBestNeighborSignal(worldPosition);
-//            currentInput = getWorld().getStrongPower(pos);
+			// currentInput = getWorld().getStrongPower(pos);
 		}
 	}
 
@@ -186,8 +186,8 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 				return checkResult;
 			}
 
-//			alreadyChecked.addAll(checkResult.getMiddle());
-//			nodeList.addAll(checkResult.getRight());
+			// alreadyChecked.addAll(checkResult.getMiddle());
+			// nodeList.addAll(checkResult.getRight());
 		}
 
 		nodeList.add(this);
@@ -294,12 +294,12 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
 		return 0;
 	}
 
-//	@Override
-//	@OnlyIn(Dist.CLIENT)
-//	public double getViewDistance()
-//	{
-//		return 10000;
-//	}
+	// @Override
+	// @OnlyIn(Dist.CLIENT)
+	// public double getViewDistance()
+	// {
+	// return 10000;
+	// }
 
 	@Override
 	public AABB getRenderBoundingBox()

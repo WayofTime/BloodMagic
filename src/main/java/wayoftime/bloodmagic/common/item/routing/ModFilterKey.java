@@ -2,7 +2,7 @@ package wayoftime.bloodmagic.common.item.routing;
 
 import net.minecraft.world.item.ItemStack;
 
-public class ModFilterKey implements IFilterKey
+public class ModFilterKey implements IFilterKey<ItemStack>
 {
 	private String namespace;
 	private int count;
@@ -11,6 +11,12 @@ public class ModFilterKey implements IFilterKey
 	{
 		this.namespace = namespace;
 		this.count = count;
+	}
+
+	@Override
+	public ItemStack getType()
+	{
+		return ItemStack.EMPTY;
 	}
 
 	@Override

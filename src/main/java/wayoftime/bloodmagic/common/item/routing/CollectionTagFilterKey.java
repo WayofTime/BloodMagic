@@ -6,7 +6,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-public class CollectionTagFilterKey implements IFilterKey
+public class CollectionTagFilterKey implements IFilterKey<ItemStack>
 {
 	private List<TagKey<Item>> itemTags;
 	private int count;
@@ -15,6 +15,12 @@ public class CollectionTagFilterKey implements IFilterKey
 	{
 		this.itemTags = tagList;
 		this.count = count;
+	}
+
+	@Override
+	public ItemStack getType()
+	{
+		return ItemStack.EMPTY;
 	}
 
 	@Override

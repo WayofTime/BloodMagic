@@ -6,13 +6,19 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.ItemStack;
 
-public class NoEnchantsFilterKey implements IFilterKey
+public class NoEnchantsFilterKey implements IFilterKey<ItemStack>
 {
 	private int count;
 
 	public NoEnchantsFilterKey(int count)
 	{
 		this.count = count;
+	}
+
+	@Override
+	public ItemStack getType()
+	{
+		return ItemStack.EMPTY;
 	}
 
 	@Override

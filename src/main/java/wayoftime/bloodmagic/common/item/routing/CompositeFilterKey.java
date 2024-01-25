@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.minecraft.world.item.ItemStack;
 
-public class CompositeFilterKey implements IFilterKey
+public class CompositeFilterKey implements IFilterKey<ItemStack>
 {
 	private List<IFilterKey> keyList = new ArrayList<IFilterKey>();
 	private int count;
@@ -13,6 +13,12 @@ public class CompositeFilterKey implements IFilterKey
 	public CompositeFilterKey(int count)
 	{
 		this.count = count;
+	}
+
+	@Override
+	public ItemStack getType()
+	{
+		return ItemStack.EMPTY;
 	}
 
 	public void addFilterKey(IFilterKey key)
