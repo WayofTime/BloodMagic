@@ -7,10 +7,10 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.core.living.ILivingContainer;
 import wayoftime.bloodmagic.core.living.LivingStats;
 import wayoftime.bloodmagic.core.living.LivingUtil;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
@@ -51,12 +51,12 @@ public class RitualArmourEvolve extends Ritual
 		{
 			if (LivingUtil.hasFullSet(player))
 			{
-				ItemStack chestStack = player.getItemBySlot(EquipmentSlot.CHEST);
+				ILivingContainer chestpiece = (ILivingContainer) player.getItemBySlot(EquipmentSlot.CHEST).getItem();
 				LivingStats stats = LivingStats.fromPlayer(player);
 
-				if (stats != null && stats.getMaxPoints() < 300)
+				if (stats != null && chestpiece.canLivingEvolve() && !stats.isEvolved())
 				{
-					stats.setMaxPoints(300);
+					stats.setEvolved();
 					LivingStats.toPlayer(player, stats);
 //					((ItemLivingArmour) chestStack.getItem()).setLivingArmour(chestStack, armour, true);
 

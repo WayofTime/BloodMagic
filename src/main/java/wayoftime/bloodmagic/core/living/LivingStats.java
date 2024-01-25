@@ -17,9 +17,11 @@ public class LivingStats
 {
 
 	public static final int DEFAULT_UPGRADE_POINTS = 100;
+    public static final int DEFAULT_EVOLVED_UPGRADE_POINTS = 300;
 
 	protected final Map<LivingUpgrade, Double> upgrades;
 	protected int maxPoints = DEFAULT_UPGRADE_POINTS;
+    protected boolean evolved = false;
 
 	public LivingStats(Map<LivingUpgrade, Double> upgrades)
 	{
@@ -97,6 +99,18 @@ public class LivingStats
 		return this;
 	}
 
+    public boolean isEvolved()
+    {
+        return evolved;
+    }
+
+    public LivingStats setEvolved()
+    {
+        this.evolved = true;
+        this.setMaxPoints(DEFAULT_EVOLVED_UPGRADE_POINTS);
+        return this;
+    }
+
 	public CompoundTag serialize()
 	{
 		CompoundTag compound = new CompoundTag();
@@ -108,8 +122,8 @@ public class LivingStats
 			statList.add(upgrade);
 		});
 		compound.put("upgrades", statList);
-
 		compound.putInt("maxPoints", maxPoints);
+        compound.putBoolean("evolved", evolved);
 
 		return compound;
 	}
@@ -129,6 +143,7 @@ public class LivingStats
 		});
 
 		maxPoints = nbt.getInt("maxPoints");
+        evolved = nbt.getBoolean("evolved");
 	}
 
 	public static LivingStats fromNBT(CompoundTag statTag)

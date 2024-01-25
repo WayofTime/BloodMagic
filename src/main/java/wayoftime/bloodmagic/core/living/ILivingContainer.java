@@ -82,4 +82,8 @@ public interface ILivingContainer
 			});
 		}
 	}
+
+    default boolean canLivingEvolve(){
+        return false;
+    }
 }
