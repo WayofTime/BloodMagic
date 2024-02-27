@@ -45,7 +45,7 @@ public class BloodAltarRecipeCategory implements IRecipeCategory<RecipeBloodAlta
     public List<Component> getTooltipStrings(RecipeBloodAltar recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         List<Component> tooltip = Lists.newArrayList();
 
-        if (mouseX >= 13 && mouseX <= 64 && mouseY >= 27 && mouseY <= 58) {
+        if (mouseX >= 85 && mouseX <= 104 && mouseY >= 30 && mouseY <= 44) {
             tooltip.add(Component.translatable("jei.bloodmagic.recipe.consumptionrate", ChatUtil.DECIMAL_FORMAT.format(recipe.getConsumeRate())));
             tooltip.add(Component.translatable("jei.bloodmagic.recipe.drainrate", ChatUtil.DECIMAL_FORMAT.format(recipe.getDrainRate())));
         }
@@ -93,8 +93,15 @@ public class BloodAltarRecipeCategory implements IRecipeCategory<RecipeBloodAlta
         String[] infoString = new String[]{
                 TextHelper.localize("jei.bloodmagic.recipe.requiredtier", NumeralHelper.toRoman(recipe.getMinimumTier() + 1)),
                 TextHelper.localize("jei.bloodmagic.recipe.requiredlp", recipe.getSyphon())};
-        guiGraphics.drawString(mc.font, infoString[0], 90 - mc.font.width(infoString[0]) / 2, 0, Color.gray.getRGB());
-        guiGraphics.drawString(mc.font, infoString[1], 90 - mc.font.width(infoString[1]) / 2, 10, Color.gray.getRGB());
+        guiGraphics.drawString(mc.font, infoString[0], 90 - mc.font.width(infoString[0]) / 2, 0, Color.gray.getRGB(), false);
+        guiGraphics.drawString(mc.font, infoString[1], 90 - mc.font.width(infoString[1]) / 2, 10, Color.gray.getRGB(), false);
+
+        PoseStack poseStack = guiGraphics.pose();
+        poseStack.pushPose();
+        poseStack.translate(87, 41, 0);
+        poseStack.scale(0.5f, 0.5f, 1f);
+        guiGraphics.drawString(Minecraft.getInstance().font, Component.translatable("jei.bloodmagic.recipe.info"), 0, 0, 0x8b8b8b, false);
+        poseStack.popPose();
     }
 
 }
