@@ -1,0 +1,39 @@
+{
+  "criteria": {
+    "use_altar": {
+      "trigger": "minecraft:item_used_on_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "blocks": ["bloodmagic:altar"]
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "icon": {
+      "item": "bloodmagic:altar"
+    },
+    "title": {
+      "translate": "advancements.bloodmagic.root.title"
+    },
+    "frame": "task",
+    "background": "bloodmagic:textures/gui/advancements_background.png",
+    "description": {
+      "translate": "advancements.bloodmagic.root.description"
+    },
+    "show_toast": false,
+    "announce_to_chat": true
+  },
+  "requirements": [
+    [
+      "use_altar"
+    ]
+  ]
+}

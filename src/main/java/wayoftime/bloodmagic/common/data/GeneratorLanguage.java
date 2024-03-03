@@ -528,6 +528,18 @@ public class GeneratorLanguage extends LanguageProvider
 		add("bloodmagic.keybind.cycle_holding_pos", "Cycle Sigil (+)");
 		add("bloodmagic.keybind.cycle_holding_neg", "Cycle Sigil (-)");
 
+		// Advancements
+		add("advancements.bloodmagic.root.title", "Blood Magic");
+		add("advancements.bloodmagic.root.description", "Use a Blood Altar");
+		add("advancements.bloodmagic.altar_two.title", "Tier-2 Blood Altar");
+		add("advancements.bloodmagic.altar_two.description", "Use a Tier-2+ Blood Altar");
+		add("advancements.bloodmagic.altar_three.title", "Tier-3 Blood Altar");
+		add("advancements.bloodmagic.altar_three.description", "Use a Tier-3+ Blood Altar");
+		add("advancements.bloodmagic.altar_four.title", "Tier-4 Blood Altar");
+		add("advancements.bloodmagic.altar_four.description", "Use a Tier-4+ Blood Altar");
+		add("advancements.bloodmagic.altar_five.title", "Tier-5 Blood Altar");
+		add("advancements.bloodmagic.altar_five.description", "Use a Tier-5 Blood Altar");
+
 		// Block names
 		addBlock(BloodMagicBlocks.BLANK_RUNE, "Blank Rune");
 		addBlock(BloodMagicBlocks.SPEED_RUNE, "Speed Rune");

@@ -1,0 +1,34 @@
+{
+  "parent": "bloodmagic:bloodmagic/demonwill",
+  "criteria": {
+    "hold_item":{
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["bloodmagic:soulgempetty"]
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "icon": {
+      "item": "bloodmagic:soulgempetty"
+    },
+    "title": {
+      "translate": "advancements.bloodmagic.soulgem1.title"
+    },
+    "frame": "task",
+    "description": {
+      "translate": "advancements.bloodmagic.soulgem1.description"
+    },
+    "show_toast": false,
+    "announce_to_chat": true
+  },
+  "requirements": [
+    [
+      "hold_item"
+    ]
+  ]
+}
