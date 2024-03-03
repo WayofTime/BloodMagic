@@ -9,7 +9,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.DimensionDataStorage;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.server.ServerStoppedEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.server.ServerLifecycleHooks;
+import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.BloodOrb;
 import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.IBloodOrb;
@@ -20,6 +24,7 @@ import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
 import wayoftime.bloodmagic.event.SoulNetworkEvent;
 
+@Mod.EventBusSubscriber(modid = BloodMagic.MODID)
 public class NetworkHelper
 {
 	@Nullable
@@ -41,8 +46,6 @@ public class NetworkHelper
 			DimensionDataStorage savedData = ServerLifecycleHooks.getCurrentServer().overworld().getDataStorage();
 
 			dataHandler = savedData.computeIfAbsent(BMWorldSavedData::load, () -> new BMWorldSavedData(), BMWorldSavedData.ID);
-//			dataHandler = savedData.computeIfAbsent(() -> new BMWorldSavedData(), BMWorldSavedData.ID);
-//			dataHandler = BMWorldSavedData.load(tagCompound);
 		}
 
 		return dataHandler.getNetwork(UUID.fromString(uuid));
@@ -251,5 +254,10 @@ public class NetworkHelper
 		int currentNumberOfDungeons = dataHandler.getNumberOfDungeons();
 		dataHandler.setNumberOfDungeons(currentNumberOfDungeons + 1);
 		dataHandler.setDirty();
+	}
+
+	@SubscribeEvent
+	public static void resetDatahandler(ServerStoppedEvent event) {
+		dataHandler = null;
 	}
 }
