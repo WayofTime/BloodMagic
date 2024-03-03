@@ -31,6 +31,7 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.block.BlockAlchemicalReactionChamber;
 import wayoftime.bloodmagic.common.container.tile.ContainerAlchemicalReactionChamber;
+import wayoftime.bloodmagic.common.item.ItemLavaCrystal;
 import wayoftime.bloodmagic.common.item.arc.IARCTool;
 import wayoftime.bloodmagic.common.item.inventory.InventoryWrapper;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
@@ -38,6 +39,7 @@ import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.network.ARCTanksPacket;
 import wayoftime.bloodmagic.recipe.RecipeARC;
 import wayoftime.bloodmagic.recipe.helper.FluidStackIngredient;
+import wayoftime.bloodmagic.util.BMLog;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.MultiSlotItemHandler;
 
@@ -347,6 +349,12 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 
 	private boolean canCraftFurnace(ItemStack outputStack, MultiSlotItemHandler outputSlotHandler)
 	{
+        ItemStack toolStack = this.getItem(ARC_TOOL_SLOT);
+        if (toolStack.getItem() instanceof ItemLavaCrystal)
+        {
+            if (((ItemLavaCrystal) toolStack.getItem()).getBurnTime(toolStack) <= 0)
+                return false;
+        }
 		List<ItemStack> outputList = new ArrayList<>();
 		outputList.add(outputStack);
 		return outputSlotHandler.canTransferAllItemsToSlots(outputList, true);
@@ -357,7 +365,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 		List<ItemStack> outputList = new ArrayList<>();
 		outputList.add(outputStack);
 		outputSlotHandler.canTransferAllItemsToSlots(outputList, false);
-		consumeInventory(1, false, false);
+		consumeInventory(1, false, true);
 	}
 
 	public void consumeInventory(int inputCount, boolean consumeInput, boolean breakTool)
@@ -383,7 +391,8 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 		{
 			if (toolStack.isDamageableItem())
 			{
-				int unbreakingLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, toolStack);
+				// int unbreakingLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, toolStack);
+                int unbreakingLevel = toolStack.getEnchantmentLevel(Enchantments.UNBREAKING);
 				if (unbreakingLevel == 0 || level.random.nextInt(unbreakingLevel + 1) == 0)
 				{
 					toolStack.setDamageValue(toolStack.getDamageValue() + 1);
@@ -394,7 +403,7 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 				}
 			} else if (toolStack.getItem().hasCraftingRemainingItem(toolStack))
 			{
-				setItem(ARC_TOOL_SLOT, toolStack.getItem().getCraftingRemainingItem(inputStack));
+				setItem(ARC_TOOL_SLOT, toolStack.getItem().getCraftingRemainingItem(toolStack));
 			} else
 			{
 				toolStack.shrink(1);
