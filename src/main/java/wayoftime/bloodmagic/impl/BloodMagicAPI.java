@@ -32,6 +32,7 @@ import wayoftime.bloodmagic.incense.IncenseTranquilityRegistry;
 import wayoftime.bloodmagic.incense.TranquilityStack;
 import wayoftime.bloodmagic.util.BMLog;
 import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
+import wayoftime.bloodmagic.ritual.harvest.HarvestRegistry;
 
 public class BloodMagicAPI implements IBloodMagicAPI
 {
@@ -40,6 +41,7 @@ public class BloodMagicAPI implements IBloodMagicAPI
 	private final BloodMagicBlacklist blacklist;
 	private final BloodMagicRecipeRegistrar recipeRegistrar;
 	private final BloodMagicValueManager valueManager;
+    private final HarvestRegistry harvestRegistry;
 	private final Multimap<ComponentType, BlockState> altarComponents;
 	private final Map<String, Function<Player, NonNullList<ItemStack>>> inventoryProvider;
 	private final List<String> activeInventories;
@@ -56,6 +58,7 @@ public class BloodMagicAPI implements IBloodMagicAPI
 		this.blacklist = new BloodMagicBlacklist();
 		this.recipeRegistrar = new BloodMagicRecipeRegistrar();
 		this.valueManager = new BloodMagicValueManager();
+        this.harvestRegistry = new HarvestRegistry();
 		this.altarComponents = ArrayListMultimap.create();
 		this.inventoryProvider = new HashMap<String, Function<Player, NonNullList<ItemStack>>>();
 		this.activeInventories = new ArrayList<String>();
@@ -106,6 +109,13 @@ public class BloodMagicAPI implements IBloodMagicAPI
 	{
 		return valueManager;
 	}
+
+    @Nonnull
+    @Override
+    public HarvestRegistry getHarvestRegistry()
+    {
+        return harvestRegistry;
+    }
 
 	@Nonnull
 	public Map<String, Function<Player, NonNullList<ItemStack>>> getInventoryProvider()

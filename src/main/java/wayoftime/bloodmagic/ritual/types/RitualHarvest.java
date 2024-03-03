@@ -23,7 +23,8 @@ import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.ritual.RitualRegister;
 import wayoftime.bloodmagic.ritual.harvest.HarvestRegistry;
-import wayoftime.bloodmagic.ritual.harvest.IHarvestHandler;
+import wayoftime.bloodmagic.api.compat.IHarvestHandler;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
 
 /**
  * This ritual uses registered {@link IHarvestHandler}'s to harvest blocks.
@@ -112,7 +113,7 @@ public class RitualHarvest extends Ritual
 		if (potentialInventory != null && potentialInventory.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN).isPresent())
 			itemHandler = potentialInventory.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN).resolve().get();
 
-		for (IHarvestHandler handler : HarvestRegistry.getHarvestHandlers())
+		for (IHarvestHandler handler : BloodMagicAPI.INSTANCE.getHarvestRegistry().getHarvestHandlers())
 		{
 			if (handler.test(world, cropPos, harvestState))
 			{

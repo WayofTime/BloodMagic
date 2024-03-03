@@ -24,6 +24,8 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.util.BMLog;
+import wayoftime.bloodmagic.api.compat.IHarvestHandler;
+import wayoftime.bloodmagic.impl.BloodMagicAPI;
 
 /**
  * Harvest handler for standard plantable crops such as Wheat, Potatoes, and
@@ -38,21 +40,29 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 
 	public HarvestHandlerPlantable()
 	{
-		HarvestRegistry.registerStandardCrop(Blocks.CARROTS, 7);
-		HarvestRegistry.registerStandardCrop(Blocks.WHEAT, 7);
-		HarvestRegistry.registerStandardCrop(Blocks.POTATOES, 7);
-		HarvestRegistry.registerStandardCrop(Blocks.BEETROOTS, 3);
-		HarvestRegistry.registerStandardCrop(BloodMagicBlocks.GROWING_DOUBT.get(), 7);
-		HarvestRegistry.registerStandardCrop(BloodMagicBlocks.WEAK_TAU.get(), 7);
-		HarvestRegistry.registerStandardCrop(BloodMagicBlocks.STRONG_TAU.get(), 7);
+		HarvestRegistry api = BloodMagicAPI.INSTANCE.getHarvestRegistry();
+        api.registerStandardCrop(Blocks.CARROTS, 7);
+		api.registerStandardCrop(Blocks.WHEAT, 7);
+		api.registerStandardCrop(Blocks.POTATOES, 7);
+		api.registerStandardCrop(Blocks.BEETROOTS, 3);
+		api.registerStandardCrop(BloodMagicBlocks.GROWING_DOUBT.get(), 7);
+		api.registerStandardCrop(BloodMagicBlocks.WEAK_TAU.get(), 7);
+		api.registerStandardCrop(BloodMagicBlocks.STRONG_TAU.get(), 7);
 
+        /*
+         * as per ellpeck.de/blog/future_actually_additions
+         * he "semi-considers" getting back to it for 1.20
+         * so maybe readd these at some point but for now
+         * there is no point
 		addThirdPartyCrop("actuallyadditions", "flax_block", 7);
 		addThirdPartyCrop("actuallyadditions", "canola_block", 7);
 		addThirdPartyCrop("actuallyadditions", "rice_block", 7);
 
+         * doesnt seem like there is 1.20 or plans for it
 		addThirdPartyCrop("extrautils2", "redorchid", 6);
 		addThirdPartyCrop("extrautils2", "enderlily", 7);
 
+         * last commit is 2 years ago "1.18.2 port begins"
 		addThirdPartyCrop("roots", "moonglow", 7);
 		addThirdPartyCrop("roots", "terra_moss", 7);
 		addThirdPartyCrop("roots", "pereskia", 7);
@@ -60,9 +70,11 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 		addThirdPartyCrop("roots", "aubergine", 7);
 		addThirdPartyCrop("roots", "spirit_herb", 7);
 
+         * there seems to be a 1.20 version but cant find it on github
 		addPamCrops();
 
 		addMysticalCrops();
+        */
 	}
 
 	@Override
@@ -115,10 +127,10 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 	public boolean test(Level world, BlockPos pos, BlockState state)
 	{
 //		state.hasProperty(null);
-		return HarvestRegistry.getStandardCrops().containsKey(state.getBlock()) && state.getBlock() instanceof CropBlock && ((CropBlock) state.getBlock()).isMaxAge(state);
+		return BloodMagicAPI.INSTANCE.getHarvestRegistry().getStandardCrops().containsKey(state.getBlock()) && state.getBlock() instanceof CropBlock && ((CropBlock) state.getBlock()).isMaxAge(state);
 //		return HarvestRegistry.getStandardCrops().containsKey(state.getBlock()) && state.getBlock().getMetaFromState(state) == HarvestRegistry.getStandardCrops().get(state.getBlock());
 	}
-
+/*
 	private static void addThirdPartyCrop(String modid, String regName, int matureMeta)
 	{
 		if (!ModList.get().isLoaded(modid))
@@ -191,4 +203,5 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 			BMLog.DEFAULT.error("MysticalAgriculture integration cancelled: failed to invoke a method: " + e.getMessage());
 		}
 	}
+*/
 }

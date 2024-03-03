@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.ritual.harvest;
+package wayoftime.bloodmagic.api.compat;
 
 import java.util.List;
 
