@@ -1,7 +1,6 @@
 package wayoftime.bloodmagic.client.screens;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -11,10 +10,15 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.container.tile.ContainerSoulForge;
 import wayoftime.bloodmagic.common.tile.TileSoulForge;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 public class ScreenSoulForge extends ScreenBase<ContainerSoulForge>
 {
 	private static final ResourceLocation background = new ResourceLocation(BloodMagic.MODID, "textures/gui/soulforge.png");
 	public Container tileSoulForge;
+	private static final List<Component> willError = new ArrayList<Component>();
 
 	public ScreenSoulForge(ContainerSoulForge container, Inventory playerInventory, Component title)
 	{
@@ -22,6 +26,11 @@ public class ScreenSoulForge extends ScreenBase<ContainerSoulForge>
 		tileSoulForge = container.tileForge;
 		this.imageWidth = 176;
 		this.imageHeight = 205;
+
+
+		willError.clear();
+		willError.add(Component.translatable("tooltip.bloodmagic.soulforge.willerror.title").withStyle(ChatFormatting.RED));
+		willError.add(Component.translatable("tooltip.bloodmagic.soulforge.willerror.text").withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override
@@ -65,6 +74,13 @@ public class ScreenSoulForge extends ScreenBase<ContainerSoulForge>
 
 		int l = this.getCookProgressScaled(90);
 		guiGraphics.blit(background, i + 115, j + 14 + 90 - l, 176, 90 - l, 18, l);
+
+		if (getWillFlag())
+		{
+			guiGraphics.blit(background, i + 116, j + 51, 194, 0, 16, 16);
+			if (mouseX >= i + 116 && mouseX < i + 116 + 16 && mouseY >= j + 51 && mouseY < j + 51 + 16)
+				guiGraphics.renderTooltip(this.font, willError, Optional.empty(), mouseX, mouseY);
+		}
 	}
 
 //
@@ -79,4 +95,6 @@ public class ScreenSoulForge extends ScreenBase<ContainerSoulForge>
 //		System.out.println(this.container.data.get(0));
 		return (int) (progress * scale);
 	}
+
+	public boolean getWillFlag() { return ((TileSoulForge) tileSoulForge).getWillFlagForGUI(); }
 }
