@@ -1,0 +1,34 @@
+{
+  "overrides": [
+    {
+      "model": "bloodmagic:item/variant/raw_will_default",
+      "predicate": {
+        "bloodmagic:will_type": 0.0
+      }
+    },
+    {
+      "model": "bloodmagic:item/variant/raw_will_corrosive",
+      "predicate": {
+        "bloodmagic:will_type": 1.0
+      }
+    },
+    {
+      "model": "bloodmagic:item/variant/raw_will_destructive",
+      "predicate": {
+        "bloodmagic:will_type": 2.0
+      }
+    },
+    {
+      "model": "bloodmagic:item/variant/raw_will_steadfast",
+      "predicate": {
+        "bloodmagic:will_type": 3.0
+      }
+    },
+    {
+      "model": "bloodmagic:item/variant/raw_will_vengeful",
+      "predicate": {
+        "bloodmagic:will_type": 4.0
+      }
+    }
+  ]
+}

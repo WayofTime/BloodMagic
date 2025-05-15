@@ -1,8 +1,26 @@
 {
   "block.bloodmagic.doubt_block": "Liquid Doubt",
+  "block.bloodmagic.hellfire_forge": "Hellfire Forge",
   "block.bloodmagic.life_essence_block": "Life Essence",
   "fluid.bloodmagic.doubt_fluid": "Liquid Doubt",
   "fluid.bloodmagic.life_essence_fluid": "Life Essence",
   "item.bloodmagic.doubt_bucket": "Doubt Bucket",
-  "item.bloodmagic.life_essence_bucket": "Bucket of Life"
+  "item.bloodmagic.life_essence_bucket": "Bucket of Life",
+  "item.bloodmagic.raw_will": "Raw Will",
+  "item.bloodmagic.soul_gem_common": "Common Tartaric Gem",
+  "item.bloodmagic.soul_gem_grand": "Grand Tartaric Gem",
+  "item.bloodmagic.soul_gem_greater": "Greater Tartaric Gem",
+  "item.bloodmagic.soul_gem_lesser": "Lesser Tartaric Gem",
+  "item.bloodmagic.soul_gem_petty": "Petty Tartaric Gem",
+  "tooltip.bloodmagic.current_type.corrosive": "Contains: Corrosive Will",
+  "tooltip.bloodmagic.current_type.default": "Contains: Default Will",
+  "tooltip.bloodmagic.current_type.destructive": "Contains: Destructive Will",
+  "tooltip.bloodmagic.current_type.steadfast": "Contains: Steadfast Will",
+  "tooltip.bloodmagic.current_type.vengeful": "Contains: Vengeful Will",
+  "tooltip.bloodmagic.soul_gem.soul_gem_common": "A gem used to contain more will.",
+  "tooltip.bloodmagic.soul_gem.soul_gem_grand": "A gem used to contain a large amount of will.",
+  "tooltip.bloodmagic.soul_gem.soul_gem_greater": "A gem used to contain a greater amount of will.",
+  "tooltip.bloodmagic.soul_gem.soul_gem_lesser": "A gem used to contain some will.",
+  "tooltip.bloodmagic.soul_gem.soul_gem_petty": "A gem used to contain a little will.",
+  "tooltip.bloodmagic.will": "Will Quality: %s"
 }
