@@ -1,0 +1,14 @@
+{
+  "components": [
+    {
+      "pos": [
+        0,
+        0,
+        0
+      ],
+      "upgrade": false,
+      "valid": "bloodmagic:blood_altar"
+    }
+  ],
+  "tier": 0
+}

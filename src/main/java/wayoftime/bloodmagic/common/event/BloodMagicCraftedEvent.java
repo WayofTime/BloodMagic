@@ -19,6 +19,13 @@ public abstract class BloodMagicCraftedEvent extends Event {
         this.output = outputStack.copy();
     }
 
+    public static class Altar extends BloodMagicCraftedEvent {
+        public Altar(ItemStack output, ItemStack input) {
+            this.inputs = new ItemStack[]{input};
+            this.output = output;
+        }
+    }
+
     public static class Forge extends BloodMagicCraftedEvent {
         public Forge(ItemStack output, ItemStack[] inputs) {
             this.inputs = inputs;

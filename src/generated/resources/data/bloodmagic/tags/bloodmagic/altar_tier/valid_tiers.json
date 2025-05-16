@@ -1,0 +1,10 @@
+{
+  "values": [
+    "bloodmagic:weak",
+    "bloodmagic:apprentice",
+    "bloodmagic:mage",
+    "bloodmagic:master",
+    "bloodmagic:archmage",
+    "bloodmagic:transcendent"
+  ]
+}

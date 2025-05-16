@@ -9,6 +9,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.client.render.blockentity.BloodAltarRenderer;
 import wayoftime.bloodmagic.client.render.blockentity.HellfireForgeRenderer;
 import wayoftime.bloodmagic.common.block.BMBlocks;
 
@@ -20,16 +21,30 @@ public class BMTiles {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<HellfireForgeTile>> HELLFIRE_FORGE_TYPE = TILES.register("hellfire_forge",
             () -> new BlockEntityType<>(HellfireForgeTile::new, Set.of(BMBlocks.HELLFIRE_FORGE.block().get()), null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BloodAltarTile>> BLOOD_ALTAR_TYPE = TILES.register("blood_altar",
+            () -> new BlockEntityType<>(BloodAltarTile::new, Set.of(BMBlocks.BLOOD_ALTAR.block().get()), null));
+
     private static void registerTileCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 HELLFIRE_FORGE_TYPE.get(),
                 HellfireForgeTile::getInventory
         );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                BLOOD_ALTAR_TYPE.get(),
+                (tile, side) -> tile.inv
+        );
+        event.registerBlockEntity(
+                Capabilities.FluidHandler.BLOCK,
+                BLOOD_ALTAR_TYPE.get(),
+                (tile, side) -> tile
+        );
     }
 
     private static void registerBlockEntityRenderer(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(HELLFIRE_FORGE_TYPE.get(), HellfireForgeRenderer::new);
+        event.registerBlockEntityRenderer(BLOOD_ALTAR_TYPE.get(), BloodAltarRenderer::new);
     }
 
     public static void register(IEventBus modBus) {

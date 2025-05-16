@@ -34,6 +34,41 @@ public class BMLanguageProvider extends LanguageProvider {
         addTooltip("current_owner", "Current Owner: %s");
         addTooltip("no_owner", "Not bound yet");
 
+        add(BMBlocks.BLOOD_ALTAR, "Blood Altar");
+        add(BMItems.SACRIFICIAL_DAGGER.get(), "Sacrificial Dagger");
+
+        add(BMBlocks.RUNE_BLANK, "Blank Rune");
+
+        add(BMBlocks.RUNE_SACRIFICE, "Rune of Sacrifice");
+        add(BMBlocks.RUNE_SELF_SACRIFICE, "Rune of Self Sacrifice");
+        add(BMBlocks.RUNE_SPEED, "Speed Rune");
+        add(BMBlocks.RUNE_ACCELERATION, "Acceleration Rune");
+        add(BMBlocks.RUNE_DISLOCATION, "Displacement Rune");
+        add(BMBlocks.RUNE_CAPACITY, "Capacity Rune");
+        add(BMBlocks.RUNE_CAPACITY_AUGMENTED, "Augmented Capacity Rune");
+        add(BMBlocks.RUNE_CHARGING, "Charging Rune");
+        add(BMBlocks.RUNE_ORB, "Rune of the Orb");
+        add(BMBlocks.RUNE_EFFICIENCY, "Rune of Efficiency");
+
+        add(BMBlocks.RUNE_2_SACRIFICE, "Reinforced Rune of Sacrifice");
+        add(BMBlocks.RUNE_2_SELF_SACRIFICE, "Reinforced Rune of Self Sacrifice");
+        add(BMBlocks.RUNE_2_SPEED, "Reinforced Speed Rune");
+        add(BMBlocks.RUNE_2_ACCELERATION, "Reinforced Acceleration Rune");
+        add(BMBlocks.RUNE_2_DISLOCATION, "Reinforced Displacement Rune");
+        add(BMBlocks.RUNE_2_CAPACITY, "Reinforced Capacity Rune");
+        add(BMBlocks.RUNE_2_CAPACITY_AUGMENTED, "Reinforced Augmented Capacity Rune");
+        add(BMBlocks.RUNE_2_CHARGING, "Reinforced Charging Rune");
+        add(BMBlocks.RUNE_2_ORB, "Reinforced Rune of the Orb");
+        add(BMBlocks.RUNE_2_EFFICIENCY, "Reinforced Rune of Efficiency");
+
+        add(BMBlocks.BLOODSTONE, "Polished Bloodstone");
+        add(BMBlocks.BLOODSTONE_BRICK, "Bloodstone Brick");
+
+        add(BMBlocks.HELLFORGED_BLOCK, "Hellforged Block");
+
+        add(BMBlocks.CRYSTAL_CLUSTER, "Crystal Cluster");
+        add(BMBlocks.CRYSTAL_CLUSTER_BRICK, "Crystal Cluster Brick");
+
         add(BMFluids.DOUBT_TYPE.get().getDescriptionId(), "Liquid Doubt");
         add(BMFluids.DOUBT_BUCKET.get(), "Doubt Bucket");
         add(BMFluids.DOUBT_BLOCK.get(), "Liquid Doubt");

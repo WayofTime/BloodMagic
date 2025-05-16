@@ -1,6 +1,5 @@
 package wayoftime.bloodmagic.common.world;
 
-import com.mojang.serialization.Codec;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
