@@ -24,6 +24,9 @@ public class BMTiles {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BloodAltarTile>> BLOOD_ALTAR_TYPE = TILES.register("blood_altar",
             () -> new BlockEntityType<>(BloodAltarTile::new, Set.of(BMBlocks.BLOOD_ALTAR.block().get()), null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ARCTile>> ARC_TYPE = TILES.register("arc",
+            () -> new BlockEntityType<>(ARCTile::new, Set.of(BMBlocks.ARC_BLOCK.block().get()), null));
+
     private static void registerTileCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
@@ -39,6 +42,16 @@ public class BMTiles {
                 Capabilities.FluidHandler.BLOCK,
                 BLOOD_ALTAR_TYPE.get(),
                 (tile, side) -> tile
+        );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                ARC_TYPE.get(),
+                ARCTile::getItemHandler
+        );
+        event.registerBlockEntity(
+                Capabilities.FluidHandler.BLOCK,
+                ARC_TYPE.get(),
+                ARCTile::getFluidHandler
         );
     }
 

@@ -73,6 +73,8 @@ public class BMLanguageProvider extends LanguageProvider {
         add(BMFluids.DOUBT_BUCKET.get(), "Doubt Bucket");
         add(BMFluids.DOUBT_BLOCK.get(), "Liquid Doubt");
 
+        add(BMBlocks.ARC_BLOCK, "Alchemical Reaction Chamber");
+
         add(BMBlocks.HELLFIRE_FORGE, "Hellfire Forge");
         add(BMItems.RAW_WILL.get(), "Raw Will");
 

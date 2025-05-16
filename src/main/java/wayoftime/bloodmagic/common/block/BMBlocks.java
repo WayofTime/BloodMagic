@@ -30,6 +30,8 @@ public class BMBlocks {
 
     public static final BlockWithItemHolder<BloodAltarBlock, BlockItem> BLOOD_ALTAR = BLOCK_REG.register("blood_altar", BloodAltarBlock::new);
 
+    public static final BlockWithItemHolder<ARCBlock, BlockItem> ARC_BLOCK = BLOCK_REG.register("arc", ARCBlock::new);
+
     private static final BlockBehaviour.Properties rune_properties = BlockBehaviour.Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops();
     private static final ItemLore save_decoration = new ItemLore(List.of(BlockEntityHelper.translatableHover("tooltip.bloodmagic.save_for_decoration").withStyle(ChatFormatting.ITALIC)));
     private static final Item.Properties decoration_item_properties = new Item.Properties().component(DataComponents.LORE, save_decoration);

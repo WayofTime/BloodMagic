@@ -6,6 +6,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.registry.BMRegistries;
+import wayoftime.bloodmagic.datagen.content.AltarTiers;
 import wayoftime.bloodmagic.datagen.content.BloodyDamageSources;
 
 import java.util.Set;
@@ -17,7 +19,8 @@ public class BMDataPackProvider extends DatapackBuiltinEntriesProvider {
                 output,
                 registries,
                 new RegistrySetBuilder()
-                        .add(Registries.DAMAGE_TYPE, BloodyDamageSources::bootstrap),
+                        .add(Registries.DAMAGE_TYPE, BloodyDamageSources::bootstrap)
+                        .add(BMRegistries.Keys.ALTAR_TIER_KEY, AltarTiers::bootstrap),
                 Set.of(BloodMagic.MODID)
         );
     }

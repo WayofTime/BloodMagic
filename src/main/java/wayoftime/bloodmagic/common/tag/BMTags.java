@@ -16,6 +16,20 @@ public class BMTags {
 
         public static final TagKey<Item> STORAGE_BLOCKS_HELLFORGED = fromBlock(Blocks.STORAGE_BLOCKS_HELLFORGED);
 
+        public static final TagKey<Item> ARC_TOOL = tag(bm("arc_tool"));
+
+        public static final TagKey<Item> REVERTER = withParent(ARC_TOOL, bm("reverter"));
+        public static final TagKey<Item> RESONATOR = withParent(ARC_TOOL, bm("resonator"));
+        public static final TagKey<Item> EXPLOSIVES = withParent(ARC_TOOL, bm("explosives"));
+        public static final TagKey<Item> CUTTING_FLUIDS = withParent(ARC_TOOL, bm("cutting_fluids"));
+        public static final TagKey<Item> HYDRATION = withParent(ARC_TOOL, bm("hydration"));
+
+        public static final TagKey<Item> ARC_FURNACE = withParent(ARC_TOOL, bm("furnace"));
+        public static final TagKey<Item> ARC_BLASTING = withParent(ARC_FURNACE, bm("blasting"));
+        public static final TagKey<Item> ARC_SMELTING = withParent(ARC_FURNACE, bm("smelting"));
+        public static final TagKey<Item> ARC_SMOKING = withParent(ARC_FURNACE, bm("smoking"));
+
+
         private static TagKey<Item> fromBlock(TagKey<Block> input) {
             return tag(input.location());
         }

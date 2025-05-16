@@ -8,6 +8,8 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.recipe.arc.ARCRecipe;
+import wayoftime.bloodmagic.common.recipe.arc.ARCSerializer;
 import wayoftime.bloodmagic.common.recipe.bloodaltar.BloodAltarRecipe;
 import wayoftime.bloodmagic.common.recipe.bloodaltar.BloodAltarRecipeSerializer;
 import wayoftime.bloodmagic.common.recipe.forge.ForgeRecipe;
@@ -22,6 +24,9 @@ public class BMRecipes {
 
     public static final DeferredHolder<RecipeType<?>, RecipeType<BloodAltarRecipe>> BLOOD_ALTAR_TYPE = TYPES.register(BloodAltarRecipe.RECIPE_TYPE_NAME, () -> RecipeType.simple(bm(BloodAltarRecipe.RECIPE_TYPE_NAME)));
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<BloodAltarRecipe>> BLOOD_ALTAR_SERIALIZER = SERIALIZERS.register(BloodAltarRecipe.RECIPE_TYPE_NAME, BloodAltarRecipeSerializer::new);
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<ARCRecipe>> ARC_TYPE = TYPES.register(ARCRecipe.RECIPE_TYPE_NAME, () -> RecipeType.simple(bm(ARCRecipe.RECIPE_TYPE_NAME)));
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<ARCRecipe>> ARC_SERIALIZER = SERIALIZERS.register(ARCRecipe.RECIPE_TYPE_NAME, ARCSerializer::new);
 
     public static void register(IEventBus modBus) {
         SERIALIZERS.register(modBus);

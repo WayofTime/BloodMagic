@@ -18,5 +18,28 @@ public class BMItemTagProvider extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         copy(BMTags.Blocks.STORAGE_BLOCKS_HELLFORGED, BMTags.Items.STORAGE_BLOCKS_HELLFORGED);
+
+        tag(BMTags.Items.REVERTER);
+        tag(BMTags.Items.EXPLOSIVES);
+        tag(BMTags.Items.RESONATOR);
+        tag(BMTags.Items.CUTTING_FLUIDS);
+        tag(BMTags.Items.HYDRATION);
+
+        tag(BMTags.Items.ARC_BLASTING);
+        tag(BMTags.Items.ARC_SMELTING);
+        tag(BMTags.Items.ARC_SMOKING);
+
+        tag(BMTags.Items.ARC_FURNACE)
+                .addTag(BMTags.Items.ARC_BLASTING)
+                .addTag(BMTags.Items.ARC_SMELTING)
+                .addTag(BMTags.Items.ARC_SMOKING);
+
+        tag(BMTags.Items.ARC_TOOL)
+                .addTag(BMTags.Items.REVERTER)
+                .addTag(BMTags.Items.EXPLOSIVES)
+                .addTag(BMTags.Items.RESONATOR)
+                .addTag(BMTags.Items.CUTTING_FLUIDS)
+                .addTag(BMTags.Items.HYDRATION)
+                .addTag(BMTags.Items.ARC_FURNACE);
     }
 }
