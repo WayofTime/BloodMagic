@@ -4,6 +4,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.DataMapProvider;
 import wayoftime.bloodmagic.datagen.content.datamap.BloodOrbStats;
+import wayoftime.bloodmagic.datagen.content.datamap.BloodRuneData;
 import wayoftime.bloodmagic.datagen.content.datamap.TartaricGemMax;
 
 import java.util.concurrent.CompletableFuture;
@@ -17,5 +18,6 @@ public class BMDataMapProvider extends DataMapProvider {
     protected void gather(HolderLookup.Provider provider) {
         TartaricGemMax.bootstrap(this::builder);
         BloodOrbStats.bootstrap(this::builder);
+        BloodRuneData.bootstrap(this::builder);
     }
 }

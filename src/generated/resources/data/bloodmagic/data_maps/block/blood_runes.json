@@ -1,0 +1,124 @@
+{
+  "values": {
+    "bloodmagic:rune_2_acceleration": [
+      {
+        "type": "acceleration",
+        "amount": 2
+      }
+    ],
+    "bloodmagic:rune_2_capacity": [
+      {
+        "type": "capacity",
+        "amount": 2
+      }
+    ],
+    "bloodmagic:rune_2_capacity_augmented": [
+      {
+        "type": "augmented_capacity",
+        "amount": 2
+      }
+    ],
+    "bloodmagic:rune_2_charging": [
+      {
+        "type": "charging",
+        "amount": 2
+      }
+    ],
+    "bloodmagic:rune_2_dislocation": [
+      {
+        "type": "displacement",
+        "amount": 2
+      }
+    ],
+    "bloodmagic:rune_2_efficiency": [
+      {
+        "type": "efficiency",
+        "amount": 2
+      }
+    ],
+    "bloodmagic:rune_2_orb": [
+      {
+        "type": "orb",
+        "amount": 2
+      }
+    ],
+    "bloodmagic:rune_2_sacrifice": [
+      {
+        "type": "sacrifice",
+        "amount": 2
+      }
+    ],
+    "bloodmagic:rune_2_sacrifice_self": [
+      {
+        "type": "self_sacrifice",
+        "amount": 2
+      }
+    ],
+    "bloodmagic:rune_2_speed": [
+      {
+        "type": "speed",
+        "amount": 2
+      }
+    ],
+    "bloodmagic:rune_acceleration": [
+      {
+        "type": "acceleration",
+        "amount": 1
+      }
+    ],
+    "bloodmagic:rune_capacity": [
+      {
+        "type": "capacity",
+        "amount": 1
+      }
+    ],
+    "bloodmagic:rune_capacity_augmented": [
+      {
+        "type": "augmented_capacity",
+        "amount": 1
+      }
+    ],
+    "bloodmagic:rune_charging": [
+      {
+        "type": "charging",
+        "amount": 1
+      }
+    ],
+    "bloodmagic:rune_dislocation": [
+      {
+        "type": "displacement",
+        "amount": 1
+      }
+    ],
+    "bloodmagic:rune_efficiency": [
+      {
+        "type": "efficiency",
+        "amount": 1
+      }
+    ],
+    "bloodmagic:rune_orb": [
+      {
+        "type": "orb",
+        "amount": 1
+      }
+    ],
+    "bloodmagic:rune_sacrifice": [
+      {
+        "type": "sacrifice",
+        "amount": 1
+      }
+    ],
+    "bloodmagic:rune_sacrifice_self": [
+      {
+        "type": "self_sacrifice",
+        "amount": 1
+      }
+    ],
+    "bloodmagic:rune_speed": [
+      {
+        "type": "speed",
+        "amount": 1
+      }
+    ]
+  }
+}
