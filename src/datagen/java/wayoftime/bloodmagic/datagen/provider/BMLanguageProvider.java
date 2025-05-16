@@ -24,6 +24,16 @@ public class BMLanguageProvider extends LanguageProvider {
         add(BMFluids.LIFE_ESSENCE_BUCKET.get(), "Bucket of Life");
         add(BMFluids.LIFE_ESSENCE_BLOCK.get(), "Life Essence");
 
+        add(BMItems.ORB_WEAK.get(), "Weak Blood Orb");
+        add(BMItems.ORB_APPRENTICE.get(), "Apprentice Blood Orb");
+        add(BMItems.ORB_MAGICIAN.get(), "Magician Blood Orb");
+        add(BMItems.ORB_MASTER.get(), "Master Blood Orb");
+        add(BMItems.ORB_ARCHMAGE.get(), "Archmage Blood Orb");
+        add(BMItems.ORB_TRANSCENDENT.get(), "Transcendent Blood Orb");
+
+        addTooltip("current_owner", "Current Owner: %s");
+        addTooltip("no_owner", "Not bound yet");
+
         add(BMFluids.DOUBT_TYPE.get().getDescriptionId(), "Liquid Doubt");
         add(BMFluids.DOUBT_BUCKET.get(), "Doubt Bucket");
         add(BMFluids.DOUBT_BLOCK.get(), "Liquid Doubt");

@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
+import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import wayoftime.bloodmagic.BloodMagic;
 
 public class BMDataMaps {
@@ -12,4 +13,15 @@ public class BMDataMaps {
             Registries.ITEM,
             Codec.DOUBLE
     ).synced(Codec.DOUBLE, true).build();
+
+    public static final DataMapType<Item, BloodOrb> BLOOD_ORB_STATS = DataMapType.builder(
+            BloodMagic.rl("blood_orb_stats"),
+            Registries.ITEM,
+            BloodOrb.CODEC
+    ).synced(BloodOrb.CODEC, true).build();
+
+    public static void register(RegisterDataMapTypesEvent event) {
+        event.register(TARTARIC_GEM_MAX_AMOUNTS);
+        event.register(BLOOD_ORB_STATS);
+    }
 }

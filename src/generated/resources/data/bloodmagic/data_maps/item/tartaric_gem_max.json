@@ -1,0 +1,9 @@
+{
+  "values": {
+    "bloodmagic:soul_gem_common": 1024.0,
+    "bloodmagic:soul_gem_grand": 16384.0,
+    "bloodmagic:soul_gem_greater": 4096.0,
+    "bloodmagic:soul_gem_lesser": 256.0,
+    "bloodmagic:soul_gem_petty": 64.0
+  }
+}

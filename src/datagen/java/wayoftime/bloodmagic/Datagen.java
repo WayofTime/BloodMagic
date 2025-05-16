@@ -7,6 +7,8 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import wayoftime.bloodmagic.datagen.provider.BMDataMapProvider;
+import wayoftime.bloodmagic.datagen.provider.BMDataPackProvider;
 import wayoftime.bloodmagic.datagen.provider.BMItemModelProvider;
 import wayoftime.bloodmagic.datagen.provider.BMLanguageProvider;
 
@@ -24,5 +26,8 @@ public class Datagen {
 
         generator.addProvider(event.includeClient(), new BMLanguageProvider(output, "en_us"));
         generator.addProvider(event.includeClient(), new BMItemModelProvider(output, fileHelper));
+
+        generator.addProvider(event.includeServer(), new BMDataMapProvider(output, registries));
+        generator.addProvider(event.includeServer(), new BMDataPackProvider(output, registries));
     }
 }
