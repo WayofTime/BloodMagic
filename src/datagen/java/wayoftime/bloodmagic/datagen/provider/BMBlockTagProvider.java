@@ -51,10 +51,10 @@ public class BMBlockTagProvider extends BlockTagsProvider {
                 .addAll(BlockGroups.HELLFORGED_BLOCK);
 
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(BMBlocks.BLOOD_ALTAR.block().getKey());
+                .add(BMBlocks.BLOOD_ALTAR.block().getKey(), BMBlocks.BLOOD_TANK.block().getKey());
 
         this.tag(BlockTags.NEEDS_STONE_TOOL)
-                .add(BMBlocks.BLOOD_ALTAR.block().getKey());
+                .add(BMBlocks.BLOOD_ALTAR.block().getKey(), BMBlocks.BLOOD_TANK.block().getKey());
 
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .addAll(BlockGroups.BLOODSTONE)

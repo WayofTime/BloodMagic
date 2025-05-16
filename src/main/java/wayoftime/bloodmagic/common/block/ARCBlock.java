@@ -33,6 +33,16 @@ public class ARCBlock extends Block implements EntityBlock {
         super(Properties.ofFullCopy(Blocks.FURNACE));
     }
 
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (!state.is(newState.getBlock())) {
+            if (level.getBlockEntity(pos) instanceof ARCTile arc) {
+                BlockEntityHelper.dropContents(level, pos, arc.arcInv);
+            }
+        }
+        super.onRemove(state, level, pos, newState, movedByPiston);
+    }
+
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {

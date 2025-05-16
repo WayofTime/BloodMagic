@@ -35,6 +35,16 @@ public class HellfireForgeBlock extends Block implements EntityBlock {
     }
 
     @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (!state.is(newState.getBlock())) {
+            if (level.getBlockEntity(pos) instanceof HellfireForgeTile tile) {
+                BlockEntityHelper.dropContents(level, pos, tile.inv);
+            }
+        }
+        super.onRemove(state, level, pos, newState, movedByPiston);
+    }
+
+    @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         BlockEntity be = level.getBlockEntity(pos);
         if (!(be instanceof HellfireForgeTile forge)) {

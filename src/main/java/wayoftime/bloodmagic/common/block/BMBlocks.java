@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.common.block;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -11,11 +12,13 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.util.helper.BlockEntityHelper;
 import wayoftime.bloodmagic.util.helper.BlockWithItemHolder;
 import wayoftime.bloodmagic.util.helper.BlockWithItemRegister;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class BMBlocks {
     public static final DeferredRegister<Block> BASIC_BLOCKS = DeferredRegister.createBlocks(BloodMagic.MODID);
@@ -29,6 +32,8 @@ public class BMBlocks {
     public static final BlockWithItemHolder<HellfireForgeBlock, BlockItem> HELLFIRE_FORGE = BLOCK_REG.register("hellfire_forge", HellfireForgeBlock::new);
 
     public static final BlockWithItemHolder<BloodAltarBlock, BlockItem> BLOOD_ALTAR = BLOCK_REG.register("blood_altar", BloodAltarBlock::new);
+
+    public static final BlockWithItemHolder<BloodTankBlock, BlockItem> BLOOD_TANK = BLOCK_REG.register("blood_tank", BloodTankBlock::new, block -> new BlockItem(block, new Item.Properties().component(BMDataComponents.CONTAINER_TIER, 1)));
 
     public static final BlockWithItemHolder<ARCBlock, BlockItem> ARC_BLOCK = BLOCK_REG.register("arc", ARCBlock::new);
 

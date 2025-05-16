@@ -75,6 +75,12 @@ public class BMLanguageProvider extends LanguageProvider {
 
         add(BMBlocks.ARC_BLOCK, "Alchemical Reaction Chamber");
 
+        add(BMBlocks.BLOOD_TANK, "Blood Tank");
+        addTooltip("container_tier_missing", "No Tier found!");
+        addTooltip("container_tier", "Current Tier: %s");
+        addTooltip("fluid_content_empty", "Empty");
+        addTooltip("fluid_content", "Contains: %smB of %s");
+
         add(BMBlocks.HELLFIRE_FORGE, "Hellfire Forge");
         add(BMItems.RAW_WILL.get(), "Raw Will");
 

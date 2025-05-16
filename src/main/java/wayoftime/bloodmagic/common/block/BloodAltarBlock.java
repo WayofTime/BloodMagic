@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.common.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -38,6 +39,16 @@ public class BloodAltarBlock extends Block implements EntityBlock {
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return BOX;
+    }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (!state.is(newState.getBlock())) {
+            if (level.getBlockEntity(pos) instanceof BloodAltarTile tile) {
+                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), tile.inv.getStackInSlot(0));
+            }
+        }
+        super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
     @Override

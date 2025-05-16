@@ -42,11 +42,11 @@ public class BloodMagic {
     }
 
     public BloodMagic(IEventBus modBus, ModContainer container) {
+        BMDataComponents.register(modBus);
         BMFluids.register(modBus);
         BMBlocks.register(modBus);
         BMTiles.register(modBus);
         BMItems.register(modBus);
-        BMDataComponents.register(modBus);
         modBus.addListener(BMDataMaps::register);
         BMRegistries.register(modBus);
         BMDataAttachments.register(modBus);

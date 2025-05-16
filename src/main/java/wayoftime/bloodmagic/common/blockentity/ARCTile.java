@@ -78,7 +78,7 @@ public class ARCTile extends BlockEntity implements MenuProvider {
         return RecipeManager.createCheck((RecipeType<AbstractCookingRecipe>) recipeType);
     }
 
-    private final ItemStackHandler itemHandler = new ItemStackHandler(OUTPUT_SLOT + NUM_OUTPUTS) {
+    public final ItemStackHandler arcInv = new ItemStackHandler(OUTPUT_SLOT + NUM_OUTPUTS) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -109,15 +109,15 @@ public class ARCTile extends BlockEntity implements MenuProvider {
 
     public static IItemHandler getItemHandler(ARCTile tile, @Nullable Direction side) {
         if (side == null) {
-            return tile.itemHandler;
+            return tile.arcInv;
         }
         switch (side) {
             case UP:
-                return new RangedWrapper(tile.itemHandler, TOOL_SLOT, TOOL_SLOT + 1);
+                return new RangedWrapper(tile.arcInv, TOOL_SLOT, TOOL_SLOT + 1);
             case DOWN:
-                new RangedWrapper(tile.itemHandler, OUTPUT_SLOT, OUTPUT_SLOT + NUM_OUTPUTS);
+                new RangedWrapper(tile.arcInv, OUTPUT_SLOT, OUTPUT_SLOT + NUM_OUTPUTS);
             default:
-                return new RangedWrapper(tile.itemHandler, INPUT_SLOT, OUTPUT_BUCKET_SLOT+1);
+                return new RangedWrapper(tile.arcInv, INPUT_SLOT, OUTPUT_BUCKET_SLOT+1);
         }
     }
 
@@ -156,7 +156,7 @@ public class ARCTile extends BlockEntity implements MenuProvider {
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         CompoundTag inv = tag.getCompound("arcinv");
-        itemHandler.deserializeNBT(registries, inv);
+        arcInv.deserializeNBT(registries, inv);
         inputTank.readFromNBT(registries, tag.getCompound("inputtank"));
         outputTank.readFromNBT(registries, tag.getCompound("outputtank"));
         progress = tag.getDouble("arcprogress");
@@ -165,7 +165,7 @@ public class ARCTile extends BlockEntity implements MenuProvider {
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        CompoundTag inv = itemHandler.serializeNBT(registries);
+        CompoundTag inv = arcInv.serializeNBT(registries);
         tag.put("arcinv", inv);
         CompoundTag input = new CompoundTag();
         CompoundTag output = new CompoundTag();
@@ -195,17 +195,17 @@ public class ARCTile extends BlockEntity implements MenuProvider {
         }
 
         ItemStack[] outputItems = {
-                arcTile.itemHandler.getStackInSlot(OUTPUT_SLOT),
-                arcTile.itemHandler.getStackInSlot(OUTPUT_SLOT + 1),
-                arcTile.itemHandler.getStackInSlot(OUTPUT_SLOT + 2),
-                arcTile.itemHandler.getStackInSlot(OUTPUT_SLOT + 3),
-                arcTile.itemHandler.getStackInSlot(OUTPUT_SLOT + 4)
+                arcTile.arcInv.getStackInSlot(OUTPUT_SLOT),
+                arcTile.arcInv.getStackInSlot(OUTPUT_SLOT + 1),
+                arcTile.arcInv.getStackInSlot(OUTPUT_SLOT + 2),
+                arcTile.arcInv.getStackInSlot(OUTPUT_SLOT + 3),
+                arcTile.arcInv.getStackInSlot(OUTPUT_SLOT + 4)
         };
         ARCOutputHandler itemOutputHandler = new ARCOutputHandler(outputItems, 64);
         boolean outputChanged = arcTile.handleSlots(itemOutputHandler);
         arcTile.updateType();
-        ItemStack toolStack = arcTile.itemHandler.getStackInSlot(TOOL_SLOT);
-        ItemStack inputStack = arcTile.itemHandler.getStackInSlot(INPUT_SLOT);
+        ItemStack toolStack = arcTile.arcInv.getStackInSlot(TOOL_SLOT);
+        ItemStack inputStack = arcTile.arcInv.getStackInSlot(INPUT_SLOT);
         boolean didProgress = false;
         if (toolStack.is(BMTags.Items.ARC_TOOL)) {
             if (toolStack.is(BMTags.Items.ARC_FURNACE)) {
@@ -247,7 +247,7 @@ public class ARCTile extends BlockEntity implements MenuProvider {
 
         if (outputChanged) {
             for (int i = 0; i < NUM_OUTPUTS; i++) {
-                arcTile.itemHandler.setStackInSlot(OUTPUT_SLOT + i, itemOutputHandler.getStackInSlot(i));
+                arcTile.arcInv.setStackInSlot(OUTPUT_SLOT + i, itemOutputHandler.getStackInSlot(i));
             }
         }
     }
@@ -297,13 +297,13 @@ public class ARCTile extends BlockEntity implements MenuProvider {
         if (!outputHandler.canTransferAllItemsToSlots(toOutput, false)) {
             BloodMagic.LOGGER.info("couldnt stash all {}", toOutput);
         }
-        itemHandler.getStackInSlot(INPUT_SLOT).shrink(1);
+        arcInv.getStackInSlot(INPUT_SLOT).shrink(1);
         progress = 0;
 
-        ItemStack toolStack = itemHandler.getStackInSlot(TOOL_SLOT);
+        ItemStack toolStack = arcInv.getStackInSlot(TOOL_SLOT);
         if (!toolStack.has(DataComponents.UNBREAKABLE)) {
             if (toolStack.hasCraftingRemainingItem()) {
-                itemHandler.setStackInSlot(TOOL_SLOT, toolStack.getCraftingRemainingItem());
+                arcInv.setStackInSlot(TOOL_SLOT, toolStack.getCraftingRemainingItem());
             } else if (toolStack.has(DataComponents.MAX_DAMAGE)){
                 int lost = EnchantmentHelper.processDurabilityChange((ServerLevel) level, toolStack, 1); // this *should* apply enchantments like unbreaking
                 toolStack.set(DataComponents.DAMAGE, toolStack.getOrDefault(DataComponents.DAMAGE, 0) + lost);
@@ -320,15 +320,15 @@ public class ARCTile extends BlockEntity implements MenuProvider {
     }
 
     public void updateType() {
-        EnumWillType type = itemHandler.getStackInSlot(TOOL_SLOT).getOrDefault(BMDataComponents.DEMON_WILL_TYPE, EnumWillType.DEFAULT);
+        EnumWillType type = arcInv.getStackInSlot(TOOL_SLOT).getOrDefault(BMDataComponents.DEMON_WILL_TYPE, EnumWillType.DEFAULT);
         if (getBlockState().getValue(ARCBlock.TYPE) != type) {
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState().setValue(ARCBlock.TYPE, type), Block.UPDATE_ALL);
         }
     }
 
     public boolean handleSlots(ARCOutputHandler itemOutputHandler) {
-        IFluidHandlerItem testInputHandler = FluidUtil.getFluidHandler(itemHandler.getStackInSlot(INPUT_BUCKET_SLOT).copy()).orElse(null);
-        IFluidHandlerItem testOutputHandler = FluidUtil.getFluidHandler(itemHandler.getStackInSlot(OUTPUT_BUCKET_SLOT).copy()).orElse(null);
+        IFluidHandlerItem testInputHandler = FluidUtil.getFluidHandler(arcInv.getStackInSlot(INPUT_BUCKET_SLOT).copy()).orElse(null);
+        IFluidHandlerItem testOutputHandler = FluidUtil.getFluidHandler(arcInv.getStackInSlot(OUTPUT_BUCKET_SLOT).copy()).orElse(null);
 
         boolean outputChanged = false;
         if (testInputHandler != null) {
@@ -341,7 +341,7 @@ public class ARCTile extends BlockEntity implements MenuProvider {
                     outputChanged = true;
                     inputTank.fill(transferredStack, FluidAction.EXECUTE);
                     itemOutputHandler.canTransferAllItemsToSlots(arraylist, false);
-                    itemHandler.setStackInSlot(INPUT_BUCKET_SLOT, ItemStack.EMPTY);
+                    arcInv.setStackInSlot(INPUT_BUCKET_SLOT, ItemStack.EMPTY);
                 }
             } else {
                 transferredStack = FluidUtil.tryFluidTransfer(testInputHandler, inputTank, inputTank.getFluidAmount(), false);
@@ -353,7 +353,7 @@ public class ARCTile extends BlockEntity implements MenuProvider {
                         outputChanged = true;
                         inputTank.drain(transferredStack, FluidAction.EXECUTE);
                         itemOutputHandler.canTransferAllItemsToSlots(arrayList, false);
-                        itemHandler.setStackInSlot(INPUT_BUCKET_SLOT, ItemStack.EMPTY);
+                        arcInv.setStackInSlot(INPUT_BUCKET_SLOT, ItemStack.EMPTY);
                     }
                 }
             }
@@ -384,13 +384,13 @@ public class ARCTile extends BlockEntity implements MenuProvider {
                     outputChanged = true;
                     outputTank.drain(transferredStack, FluidAction.EXECUTE);
                     itemOutputHandler.canTransferAllItemsToSlots(arrayList, false);
-                    itemHandler.setStackInSlot(OUTPUT_BUCKET_SLOT, ItemStack.EMPTY);
+                    arcInv.setStackInSlot(OUTPUT_BUCKET_SLOT, ItemStack.EMPTY);
                 }
             }
             //}
         }
 
-        ItemStack toolStack = itemHandler.getStackInSlot(TOOL_SLOT).copy();
+        ItemStack toolStack = arcInv.getStackInSlot(TOOL_SLOT).copy();
         if (toolStack.getDamageValue() >= toolStack.getMaxDamage()) {
             List<ItemStack> arrayList = new ArrayList<>();
             toolStack.setDamageValue(toolStack.getMaxDamage());
@@ -398,7 +398,7 @@ public class ARCTile extends BlockEntity implements MenuProvider {
             if (itemOutputHandler.canTransferAllItemsToSlots(arrayList, true)) {
                 outputChanged = true;
                 itemOutputHandler.canTransferAllItemsToSlots(arrayList, false);
-                itemHandler.setStackInSlot(TOOL_SLOT, ItemStack.EMPTY);
+                arcInv.setStackInSlot(TOOL_SLOT, ItemStack.EMPTY);
                 updateType();
             }
         }

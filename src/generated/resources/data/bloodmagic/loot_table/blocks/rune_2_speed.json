@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "bloodmagic:rune_2_speed"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "bloodmagic:blocks/rune_2_speed"
+}
