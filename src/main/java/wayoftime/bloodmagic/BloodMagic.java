@@ -15,6 +15,7 @@ import wayoftime.bloodmagic.common.attribute.BMAttributes;
 import wayoftime.bloodmagic.common.block.BMBlocks;
 import wayoftime.bloodmagic.common.blockentity.BMTiles;
 import wayoftime.bloodmagic.common.command.BMCommands;
+import wayoftime.bloodmagic.common.creativetab.BMTabs;
 import wayoftime.bloodmagic.common.dataattachment.BMDataAttachments;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.datamap.BMDataMaps;
@@ -54,6 +55,7 @@ public class BloodMagic {
         BMRecipes.register(modBus);
         BMMultiblock.register(NeoForge.EVENT_BUS);
         BMMenus.register(modBus);
+        BMTabs.register(modBus);
 
         container.registerConfig(ModConfig.Type.SERVER, SERVER_CONFIG_SPEC);
 

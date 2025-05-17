@@ -69,6 +69,8 @@ public class BMLanguageProvider extends LanguageProvider {
         add(BMBlocks.CRYSTAL_CLUSTER, "Crystal Cluster");
         add(BMBlocks.CRYSTAL_CLUSTER_BRICK, "Crystal Cluster Brick");
 
+        addTooltip("save_for_decoration", "Save for Decoration");
+
         add(BMFluids.DOUBT_TYPE.get().getDescriptionId(), "Liquid Doubt");
         add(BMFluids.DOUBT_BUCKET.get(), "Doubt Bucket");
         add(BMFluids.DOUBT_BLOCK.get(), "Liquid Doubt");
@@ -99,6 +101,7 @@ public class BMLanguageProvider extends LanguageProvider {
         for (EnumWillType type : EnumWillType.values()) {
             addTooltip("current_type." + type.getSerializedName(), String.format("Contains: %s Will", type.toCapitalized()));
         }
+        add("item_group.bloodmagic.main", "Blood Magic");
     }
 
     public void addGemDesc(DeferredHolder holder, String desc) {

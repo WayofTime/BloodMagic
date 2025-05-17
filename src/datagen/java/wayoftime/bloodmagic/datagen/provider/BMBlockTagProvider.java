@@ -50,6 +50,9 @@ public class BMBlockTagProvider extends BlockTagsProvider {
         this.tag(BMTags.Blocks.STORAGE_BLOCKS_HELLFORGED)
                 .addAll(BlockGroups.HELLFORGED_BLOCK);
 
+        this.tag(BlockTags.BEACON_BASE_BLOCKS)
+                .addAll(BlockGroups.HELLFORGED_BLOCK);
+
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(BMBlocks.BLOOD_ALTAR.block().getKey(), BMBlocks.BLOOD_TANK.block().getKey());
 

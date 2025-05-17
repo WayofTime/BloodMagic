@@ -26,9 +26,9 @@ public class ClientEventHandler {
         Binding binding = eventStack.get(BMDataComponents.BINDING);
         if (binding != null) {
             if (binding.isEmpty()) {
-                tooltipElements.add(Either.left(Component.translatable("tooltip.bloodmagic.no_owner").withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC)));
+                tooltipElements.add(tooltipElements.size() - 1, Either.left(Component.translatable("tooltip.bloodmagic.no_owner").withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC)));
             } else {
-                tooltipElements.add(Either.left(binding.getHoverText()));
+                tooltipElements.add(tooltipElements.size() - 1, Either.left(binding.getHoverText()));
             }
         }
     }
