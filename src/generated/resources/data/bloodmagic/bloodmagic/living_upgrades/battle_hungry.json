@@ -1,0 +1,78 @@
+{
+  "effects": {
+    "bloodmagic:dealing_damage": [
+      {
+        "effect": {
+          "type": "bloodmagic:delegate",
+          "delegate_effect": {
+            "type": "bloodmagic:reset_cooldown",
+            "amounts": {
+              "type": "minecraft:lookup",
+              "fallback": 300.0,
+              "values": [
+                600.0,
+                600.0,
+                600.0,
+                500.0,
+                400.0
+              ]
+            },
+            "id": "bloodmagic:battle_hungry"
+          }
+        }
+      }
+    ],
+    "bloodmagic:tick": [
+      {
+        "effect": {
+          "type": "bloodmagic:cooldown",
+          "id": "bloodmagic:battle_hungry"
+        }
+      },
+      {
+        "effect": {
+          "type": "bloodmagic:reset_cooldown",
+          "amounts": 20.0,
+          "id": "bloodmagic:battle_hungry",
+          "reset_effect": {
+            "type": "bloodmagic:exhaust",
+            "amounts": {
+              "type": "minecraft:lookup",
+              "fallback": 0.0,
+              "values": [
+                0.02,
+                0.04,
+                0.06,
+                0.08,
+                0.1
+              ]
+            }
+          }
+        },
+        "requirements": {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "nbt": "{\"neoforge:attachments\":{\"bloodmagic:living_cooldown\":{\"bloodmagic:battle_hungry\":0.0d}}}"
+          }
+        }
+      }
+    ]
+  },
+  "levels": {
+    "exp_to_level": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5
+    },
+    "level_to_cost": {
+      "1": -10,
+      "2": -20,
+      "3": -30,
+      "4": -40,
+      "5": -50
+    }
+  }
+}

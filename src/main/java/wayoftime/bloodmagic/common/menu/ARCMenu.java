@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.client.menu;
+package wayoftime.bloodmagic.common.menu;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;

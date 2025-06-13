@@ -10,7 +10,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.NeoForge;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
-import wayoftime.bloodmagic.client.menu.BMMenus;
+import wayoftime.bloodmagic.common.menu.BMMenus;
 import wayoftime.bloodmagic.common.attribute.BMAttributes;
 import wayoftime.bloodmagic.common.block.BMBlocks;
 import wayoftime.bloodmagic.common.blockentity.BMTiles;
@@ -21,6 +21,7 @@ import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.datamap.BMDataMaps;
 import wayoftime.bloodmagic.common.fluid.BMFluids;
 import wayoftime.bloodmagic.common.item.BMItems;
+import wayoftime.bloodmagic.common.item.BMMaterialsAndTiers;
 import wayoftime.bloodmagic.common.recipe.BMRecipes;
 import wayoftime.bloodmagic.common.registry.BMRegistries;
 import wayoftime.bloodmagic.common.structure.BMMultiblock;
@@ -43,13 +44,14 @@ public class BloodMagic {
     }
 
     public BloodMagic(IEventBus modBus, ModContainer container) {
+        BMRegistries.register(modBus);
         BMDataComponents.register(modBus);
         BMFluids.register(modBus);
         BMBlocks.register(modBus);
         BMTiles.register(modBus);
+        BMMaterialsAndTiers.register(modBus);
         BMItems.register(modBus);
         modBus.addListener(BMDataMaps::register);
-        BMRegistries.register(modBus);
         BMDataAttachments.register(modBus);
         BMAttributes.register(modBus);
         BMRecipes.register(modBus);
@@ -60,8 +62,6 @@ public class BloodMagic {
         container.registerConfig(ModConfig.Type.SERVER, SERVER_CONFIG_SPEC);
 
         NeoForge.EVENT_BUS.addListener(BMCommands::register);
-        NeoForge.EVENT_BUS.addListener(BMCommands::register);
-
     }
 
     public static ResourceLocation rl(String path) {

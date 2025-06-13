@@ -10,6 +10,7 @@ import wayoftime.bloodmagic.common.block.BMBlocks;
 import wayoftime.bloodmagic.common.datacomponent.EnumWillType;
 import wayoftime.bloodmagic.common.fluid.BMFluids;
 import wayoftime.bloodmagic.common.item.BMItems;
+import wayoftime.bloodmagic.datagen.content.LivingUpgrades;
 import wayoftime.bloodmagic.util.helper.BlockWithItemHolder;
 
 public class BMLanguageProvider extends LanguageProvider {
@@ -102,6 +103,46 @@ public class BMLanguageProvider extends LanguageProvider {
             addTooltip("current_type." + type.getSerializedName(), String.format("Contains: %s Will", type.toCapitalized()));
         }
         add("item_group.bloodmagic.main", "Blood Magic");
+        add("item_group.bloodmagic.tomes", "Blood Magic Upgrade Tomes");
+        add("item_group.bloodmagic.trainers", "Blood Magic Trainer Tomes");
+
+        add(BMItems.LIVING_HELMET.get(), "Living Helmet");
+        add(BMItems.LIVING_PLATE.get(), "Living Plate");
+        add(BMItems.LIVING_LEGGINGS.get(), "Living Leggings");
+        add(BMItems.LIVING_BOOTS.get(), "Living Boots");
+        add(BMItems.UPGRADE_TOME.get(), "Upgrade Tome");
+
+        add(BMBlocks.LIVING_STATION, "Living Upgrade Station");
+        add(BMItems.UPGRADE_SCRAP.get(), "Upgrade Tome Scrap");
+        add(BMItems.SYNTHETIC_POINT.get(), "Synthetic Upgrade Points");
+        addTooltip("scrap", "Contained Upgrade Points: %s");
+
+        add(BMItems.TRAINING_BRACELET.get(), "Living Training Bracelet");
+        add("trainer.bloodmagic.allow_others", "Allow Others");
+        add("trainer.bloodmagic.deny_others", "Deny Others");
+        add("trainer.bloodmagic.save", "Save");
+
+        add("item.bloodmagic.living_plate.dead", "Formerly Living Plate");
+        addTooltip("has_living_stats", "Theres some kind of notes, but you cant decipher them");
+
+        addCommand("upgrade.get", "%s has the following upgrades:\n");
+        addCommand("upgrade.set", "Set %s to %s exp for %s");
+        addCommand("upgrade.no_armour", "The chestplate %s is wearing does not have a bloodmagic:required_set component set. Upgrades cannot take effect like this");
+        addCommand("cap.success", "Set max upgrade points to %s");
+        addCommand("recalc.success", "Upgrades use up %s points");
+        addCommand("limit.get", "%s is in '%s' mode and has the following limits:\n");
+        addCommand("limit.set", "Set limit of %s to %s exp for %s");
+        addCommand("limit.mode.allow", "allow others");
+        addCommand("limit.mode.deny", "deny others");
+
+        addTooltip("upgrade_points", "Upgrade Points: %s/%s");
+        add("chat.bloodmagic.living_upgrade.level_up", "%s has levelled up to %s!");
+
+        LivingUpgrades.translations(this::add);
+    }
+
+    public void addCommand(String key, String value) {
+        add("commands.bloodmagic." + key, value);
     }
 
     public void addGemDesc(DeferredHolder holder, String desc) {

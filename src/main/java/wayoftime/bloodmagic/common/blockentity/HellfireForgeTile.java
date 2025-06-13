@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class HellfireForgeTile extends BlockEntity {
+public class HellfireForgeTile extends BaseTile {
     public ItemStackHandler inv = new ItemStackHandler(6) {
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
@@ -157,18 +157,6 @@ public class HellfireForgeTile extends BlockEntity {
         super.saveAdditional(tag, registries);
         CompoundTag inventory = inv.serializeNBT(registries);
         tag.put("inventory", inventory);
-    }
-
-    @Override
-    public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        CompoundTag tag = new CompoundTag();
-        saveAdditional(tag, registries);
-        return tag;
     }
 
     public @Nullable IItemHandler getInventory(Direction side) {

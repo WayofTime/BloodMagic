@@ -11,6 +11,7 @@ import wayoftime.bloodmagic.BloodMagic;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 public class BMDataAttachments {
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, BloodMagic.MODID);
@@ -19,7 +20,7 @@ public class BMDataAttachments {
             "incense", () -> AttachmentType.builder(() -> 0D).serialize(Codec.DOUBLE).build()
     );
 
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Map<ResourceLocation, Integer>>> LIVING_COOLDOWN = ATTACHMENT_TYPES.register("living_cooldown", () -> AttachmentType.<Map<ResourceLocation, Integer>>builder(() -> new HashMap<>()).serialize(Codec.unboundedMap(ResourceLocation.CODEC, Codec.INT)).build());
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Map<ResourceLocation, Double>>> LIVING_ADDITIONAL = ATTACHMENT_TYPES.register("living_cooldown", () -> AttachmentType.<Map<ResourceLocation, Double>>builder(() -> new HashMap<>()).serialize(Codec.unboundedMap(ResourceLocation.CODEC, Codec.DOUBLE).xmap(HashMap::new, Function.identity())).build());
 
     public static void register(IEventBus modBus) {
         ATTACHMENT_TYPES.register(modBus);

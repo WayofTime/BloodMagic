@@ -9,4 +9,5 @@ gradle
 build
 run
 run-data
+run-server
 src/generated/resources/.cache

@@ -18,17 +18,33 @@ public class BloodyDamageSources {
     }
 
     public static void tags(Function<TagKey<DamageType>, TagsProvider.TagAppender<DamageType>> setter) {
-        setter.apply(DamageTypeTags.BYPASSES_ARMOR).add(BMDamageSources.SACRIFICE);
-        setter.apply(DamageTypeTags.BYPASSES_EFFECTS).add(BMDamageSources.SACRIFICE);
-        setter.apply(DamageTypeTags.BYPASSES_ENCHANTMENTS).add(BMDamageSources.SACRIFICE);
-        setter.apply(DamageTypeTags.BYPASSES_INVULNERABILITY).add(BMDamageSources.SACRIFICE);
-        setter.apply(DamageTypeTags.BYPASSES_RESISTANCE).add(BMDamageSources.SACRIFICE);
+        setter.apply(DamageTypeTags.BYPASSES_ARMOR)
+                .add(BMDamageSources.SELF_SACRIFICE)
+                .add(BMDamageSources.SACRIFICE);
 
-        setter.apply(DamageTypeTags.BYPASSES_ARMOR).add(BMDamageSources.SELF_SACRIFICE);
-        setter.apply(DamageTypeTags.BYPASSES_EFFECTS).add(BMDamageSources.SELF_SACRIFICE);
-        setter.apply(DamageTypeTags.BYPASSES_ENCHANTMENTS).add(BMDamageSources.SELF_SACRIFICE);
-        setter.apply(DamageTypeTags.BYPASSES_INVULNERABILITY).add(BMDamageSources.SELF_SACRIFICE);
-        setter.apply(DamageTypeTags.BYPASSES_RESISTANCE).add(BMDamageSources.SELF_SACRIFICE);
-        setter.apply(BMTags.DamageTypes.SELF_SACRIFICE).add(BMDamageSources.SELF_SACRIFICE); // needed later for damage predicates
+        setter.apply(DamageTypeTags.BYPASSES_EFFECTS)
+                .add(BMDamageSources.SELF_SACRIFICE)
+                .add(BMDamageSources.SACRIFICE);
+
+        setter.apply(DamageTypeTags.BYPASSES_INVULNERABILITY)
+                .add(BMDamageSources.SELF_SACRIFICE)
+                .add(BMDamageSources.SACRIFICE);
+
+        setter.apply(DamageTypeTags.NO_IMPACT)
+                .add(BMDamageSources.SELF_SACRIFICE)
+                .add(BMDamageSources.SACRIFICE);
+
+        setter.apply(DamageTypeTags.NO_KNOCKBACK)
+                .add(BMDamageSources.SELF_SACRIFICE)
+                .add(BMDamageSources.SACRIFICE);
+
+        setter.apply(BMTags.DamageTypes.SELF_SACRIFICE)
+                .add(BMDamageSources.SELF_SACRIFICE); // needed later for damage predicates
+
+        setter.apply(BMTags.DamageTypes.TOUGH_IGNORED)
+                .addTag(DamageTypeTags.IS_FIRE)
+                .addTag(DamageTypeTags.IS_EXPLOSION)
+                .addTag(DamageTypeTags.IS_FALL)
+                .addTag(DamageTypeTags.IS_PROJECTILE);
     }
 }

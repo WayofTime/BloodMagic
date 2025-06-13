@@ -7,6 +7,8 @@ import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.item.BMMaterialsAndTiers;
+import wayoftime.bloodmagic.common.living.LivingUpgrade;
 import wayoftime.bloodmagic.common.registry.AltarTier;
 import wayoftime.bloodmagic.common.registry.BMRegistries;
 
@@ -29,6 +31,8 @@ public class BMTags {
         public static final TagKey<Item> ARC_SMELTING = withParent(ARC_FURNACE, bm("smelting"));
         public static final TagKey<Item> ARC_SMOKING = withParent(ARC_FURNACE, bm("smoking"));
 
+        public static final TagKey<Item> LIVING_UPGRADE_SET = tag(bm("living_upgrade_set"));
+        public static final TagKey<Item> LIVING_SET = withParent(LIVING_UPGRADE_SET, BMMaterialsAndTiers.LIVING_ARMOUR_MATERIAL.getId());
 
         private static TagKey<Item> fromBlock(TagKey<Block> input) {
             return tag(input.location());
@@ -63,10 +67,24 @@ public class BMTags {
 
     public static class DamageTypes {
         public static final TagKey<DamageType> SELF_SACRIFICE = TagKey.create(Registries.DAMAGE_TYPE, bm("self_sacrifice"));
+        public static final TagKey<DamageType> TOUGH_IGNORED = TagKey.create(Registries.DAMAGE_TYPE, bm("tough_ignored"));
     }
 
     public static class Tiers {
         public static final TagKey<AltarTier> VALID_TIERS = TagKey.create(BMRegistries.Keys.ALTAR_TIER_KEY, bm("valid_tiers"));
+    }
+
+    public static class Living {
+        public static final TagKey<LivingUpgrade> TOOLTIP_ORDER = tag(bm("tooltip_order"));
+        public static final TagKey<LivingUpgrade> TOOLTIP_HIDE = tag(bm("tooltip_hide"));
+        public static final TagKey<LivingUpgrade> IS_DOWNGRADE = tag(bm("is_downgrade"));
+        public static final TagKey<LivingUpgrade> LIVING_START = tag(bm("living_start"));
+        public static final TagKey<LivingUpgrade> TRAINERS = tag(bm("trainer"));
+        public static final TagKey<LivingUpgrade> IS_SCRAPPABLE = tag(bm("is_scrappable"));
+
+        private static TagKey<LivingUpgrade> tag(ResourceLocation id) {
+            return TagKey.create(BMRegistries.Keys.LIVING_UPGRADES, id);
+        }
     }
 
     private static ResourceLocation bm(String path) {

@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 
-public class BloodTankTile extends BlockEntity {
+public class BloodTankTile extends BaseTile {
     private int tier;
     public static final int[] CAPACITIES = {16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288};
     private final FluidTank tank = new FluidTank(FluidType.BUCKET_VOLUME) {
@@ -46,11 +46,6 @@ public class BloodTankTile extends BlockEntity {
     }
 
     @Override
-    public void setChanged() {
-        super.setChanged();
-    }
-
-    @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         CompoundTag tankTag = tag.getCompound("tank");
@@ -66,18 +61,6 @@ public class BloodTankTile extends BlockEntity {
         tank.writeToNBT(registries, tankTag);
         tag.put("tank", tankTag);
         tag.putInt("tier", tier);
-    }
-
-    @Override
-    public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        CompoundTag tag = new CompoundTag();
-        saveAdditional(tag, registries);
-        return tag;
     }
 
     public static @Nullable IFluidHandler getFluidHandler(BloodTankTile tile, @Nullable Direction direction) {
@@ -107,5 +90,4 @@ public class BloodTankTile extends BlockEntity {
         components.set(BMDataComponents.CONTAINER_TIER, this.tier);
         components.set(BMDataComponents.FLUID_CONTENT, SimpleFluidContent.copyOf(this.tank.getFluid()));
     }
-
 }

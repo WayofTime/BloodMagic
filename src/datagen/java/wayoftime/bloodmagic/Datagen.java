@@ -11,6 +11,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 import wayoftime.bloodmagic.common.registry.BMRegistries;
 import wayoftime.bloodmagic.datagen.content.AltarTiers;
 import wayoftime.bloodmagic.datagen.content.BloodyDamageSources;
+import wayoftime.bloodmagic.datagen.content.LivingUpgrades;
 import wayoftime.bloodmagic.datagen.provider.*;
 
 
@@ -36,6 +37,7 @@ public class Datagen {
         BMTagsProvider tags = new BMTagsProvider(output, dataPack.getRegistryProvider(), fileHelper);
         generator.addProvider(event.includeServer(), tags.setup(BMRegistries.Keys.ALTAR_TIER_KEY, AltarTiers::tags));
         generator.addProvider(event.includeServer(), tags.setup(Registries.DAMAGE_TYPE, BloodyDamageSources::tags));
+        generator.addProvider(event.includeServer(), tags.setup(BMRegistries.Keys.LIVING_UPGRADES, LivingUpgrades::tags));
 
         BMBlockTagProvider blockTags = generator.addProvider(event.includeServer(), new BMBlockTagProvider(output, registries, fileHelper));
         generator.addProvider(event.includeServer(), new BMItemTagProvider(output, registries, blockTags.contentsGetter(), fileHelper));

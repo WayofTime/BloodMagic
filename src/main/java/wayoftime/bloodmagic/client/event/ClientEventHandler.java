@@ -1,35 +1,54 @@
 package wayoftime.bloodmagic.client.event;
 
-import com.mojang.datafixers.util.Either;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
-import net.minecraft.world.inventory.tooltip.TooltipComponent;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipProvider;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.RenderTooltipEvent;
+import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
+import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
-import wayoftime.bloodmagic.common.datacomponent.Binding;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
-@EventBusSubscriber(Dist.CLIENT)
+@EventBusSubscriber(value = Dist.CLIENT, modid = BloodMagic.MODID)
 public class ClientEventHandler {
 
     @SubscribeEvent
-    public static void onHoverText(RenderTooltipEvent.GatherComponents event) {
-        List<Either<FormattedText, TooltipComponent>> tooltipElements = event.getTooltipElements();
-        ItemStack eventStack = event.getItemStack();
+    public static void onHoverText(ItemTooltipEvent event) {
+        List<Component> tooltip = event.getToolTip();
 
-        Binding binding = eventStack.get(BMDataComponents.BINDING);
-        if (binding != null) {
-            if (binding.isEmpty()) {
-                tooltipElements.add(tooltipElements.size() - 1, Either.left(Component.translatable("tooltip.bloodmagic.no_owner").withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC)));
-            } else {
-                tooltipElements.add(tooltipElements.size() - 1, Either.left(binding.getHoverText()));
-            }
+        ItemStack stack = event.getItemStack();
+        Item.TooltipContext context = event.getContext();
+        TooltipFlag flags = event.getFlags();
+        List<Component> toAdd = new ArrayList<>();
+
+        addToTooltip(BMDataComponents.BINDING.get(), context, toAdd::add, flags, stack);
+        int max = stack.getOrDefault(BMDataComponents.CURRENT_MAX_UPGRADE_POINTS, 0);
+        if (max > 0) {
+            int current = stack.getOrDefault(BMDataComponents.CURRENT_UPGRADE_POINTS, 0);
+            toAdd.add(Component.translatable("tooltip.bloodmagic.upgrade_points", current, max).withStyle(ChatFormatting.GOLD));
+        }
+        addToTooltip(BMDataComponents.UPGRADES.get(), context, toAdd::add, flags, stack);
+
+        // add after name. idgaf
+        tooltip.addAll(1, toAdd);
+    }
+
+
+    public static <T extends TooltipProvider> void addToTooltip(
+            DataComponentType<T> component, Item.TooltipContext context, Consumer<Component> tooltipAdder, TooltipFlag tooltipFlag, ItemStack stack
+    ) {
+        T tooltipProvider = stack.get(component);
+        if (tooltipProvider != null) {
+            tooltipProvider.addToTooltip(context, tooltipAdder, tooltipFlag);
         }
     }
 }

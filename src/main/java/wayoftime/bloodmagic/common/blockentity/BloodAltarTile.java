@@ -40,7 +40,7 @@ import wayoftime.bloodmagic.util.helper.SoulNetworkHelper;
 import java.util.Map;
 import java.util.Optional;
 
-public class BloodAltarTile extends BlockEntity implements IFluidHandler {
+public class BloodAltarTile extends BaseTile implements IFluidHandler {
 
     public boolean isActive = false;
     public boolean canFill = false;
@@ -198,7 +198,7 @@ public class BloodAltarTile extends BlockEntity implements IFluidHandler {
             if (binding.isEmpty() || orb == null) {
                 return;
             }
-            if (orb.tier() >= tile.tier && tile.mainTank > 0) {
+            if (tile.mainTank > 0) {
                 int available = Math.min(tile.mainTank, (int) (orb.fillRate() * (1 + tile.consumptionMod)));
                 int drained = SoulNetworkHelper.getSoulNetwork(binding.uuid()).add(SoulTicket.block(level, pos, available), (int) (orb.capacity() * (1 + tile.orbCapMod)));
                 tile.mainTank -= drained;
@@ -329,18 +329,6 @@ public class BloodAltarTile extends BlockEntity implements IFluidHandler {
         tag.put("stats", stats);
         tag.putInt("tier", this.tier);
         tag.putBoolean("signal", isSignaling);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        CompoundTag tag = new CompoundTag();
-        saveAdditional(tag, registries);
-        return tag;
-    }
-
-    @Override
-    public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override

@@ -6,7 +6,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.client.menu.ARCMenu;
+import wayoftime.bloodmagic.common.menu.ARCMenu;
 
 public class ARCScreen extends AbstractContainerScreen<ARCMenu> {
     private final ResourceLocation background = ResourceLocation.fromNamespaceAndPath(BloodMagic.MODID, "textures/gui/arc_gui.png");

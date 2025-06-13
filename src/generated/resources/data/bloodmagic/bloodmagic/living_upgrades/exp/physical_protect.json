@@ -1,0 +1,36 @@
+{
+  "effects": {
+    "bloodmagic:damage_taken_exp": [
+      {
+        "effect": {
+          "type": "bloodmagic:living_exp",
+          "upgrade": "bloodmagic:physical_protect",
+          "victim": true
+        },
+        "requirements": {
+          "condition": "minecraft:damage_source_properties",
+          "predicate": {
+            "tags": [
+              {
+                "expected": false,
+                "id": "minecraft:bypasses_invulnerability"
+              },
+              {
+                "expected": false,
+                "id": "bloodmagic:tough_ignored"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "levels": {
+    "exp_to_level": {
+      "1": 1
+    },
+    "level_to_cost": {
+      "1": 0
+    }
+  }
+}

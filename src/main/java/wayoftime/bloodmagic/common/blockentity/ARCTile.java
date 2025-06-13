@@ -7,9 +7,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -20,7 +17,6 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
@@ -33,7 +29,7 @@ import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.RangedWrapper;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.client.menu.ARCMenu;
+import wayoftime.bloodmagic.common.menu.ARCMenu;
 import wayoftime.bloodmagic.common.block.ARCBlock;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.datacomponent.EnumWillType;
@@ -48,7 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ARCTile extends BlockEntity implements MenuProvider {
+public class ARCTile extends BaseTile implements MenuProvider {
 
     public static final int TOOL_SLOT = 0;
     public static final int INPUT_SLOT = 1;
@@ -138,18 +134,6 @@ public class ARCTile extends BlockEntity implements MenuProvider {
     @Override
     public Component getDisplayName() {
         return Component.literal("Alchemical Reaction Chamber");
-    }
-
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        CompoundTag tag = new CompoundTag();
-        saveAdditional(tag, registries);
-        return tag;
-    }
-
-    @Override
-    public @org.jetbrains.annotations.Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override

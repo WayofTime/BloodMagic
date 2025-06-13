@@ -30,7 +30,7 @@ public class MineBlock extends BlockLootSubProvider {
         dropSelfList.add(toAdd.block().get());
     }
 
-    private final List<Block> specialDropList = List.of(BMBlocks.BLOOD_TANK.block().get());
+    private final List<Block> specialDropList = List.of(BMBlocks.BLOOD_TANK.block().get(), BMBlocks.LIVING_STATION.block().get());
     private List<Block> dropSelfList = new ArrayList<>();
 
     @Override
@@ -44,12 +44,17 @@ public class MineBlock extends BlockLootSubProvider {
     @Override
     protected void generate() {
         dropSelfList.forEach(this::dropSelf);
+        copyComponents(BMBlocks.BLOOD_TANK);
+        copyComponents(BMBlocks.LIVING_STATION);
+    }
+
+    private void copyComponents(BlockWithItemHolder<? extends Block, ? extends BlockItem> holder) {
         add(
-                BMBlocks.BLOOD_TANK.block().get(),
+                holder.block().get(),
                 LootTable.lootTable().withPool(
-                        this.applyExplosionCondition(BMBlocks.BLOOD_TANK.block().get(), LootPool.lootPool()
-                                .setRolls(ConstantValue.exactly(1.0F))
-                                .add(LootItem.lootTableItem(BMBlocks.BLOOD_TANK)
+                        this.applyExplosionCondition(holder.block().get(), LootPool.lootPool()
+                                .setRolls(ConstantValue.exactly(1))
+                                .add(LootItem.lootTableItem(holder)
                                         .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY))
                                 )
                         )

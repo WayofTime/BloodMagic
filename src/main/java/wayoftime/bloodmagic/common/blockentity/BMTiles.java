@@ -1,11 +1,13 @@
 package wayoftime.bloodmagic.common.blockentity;
 
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.items.wrapper.RangedWrapper;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import wayoftime.bloodmagic.BloodMagic;
@@ -30,6 +32,9 @@ public class BMTiles {
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BloodTankTile>> BLOOD_TANK_TYPE = TILES.register("blood_tank",
             () -> new BlockEntityType<>(BloodTankTile::new, Set.of(BMBlocks.BLOOD_TANK.block().get()), null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LivingStationTile>> LIVING_STATION_TYPE = TILES.register("living_station",
+            () -> new BlockEntityType<>(LivingStationTile::new, Set.of(BMBlocks.LIVING_STATION.block().get()), null));
 
     private static void registerTileCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
@@ -61,6 +66,19 @@ public class BMTiles {
                 Capabilities.FluidHandler.BLOCK,
                 BLOOD_TANK_TYPE.get(),
                 BloodTankTile::getFluidHandler
+        );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                LIVING_STATION_TYPE.get(),
+                (tile, side) -> {
+                    int start = 0;
+                    int end = 1;
+                    if (side == Direction.UP) { // top = scrap
+                        start++;
+                        end++;
+                    }
+                    return new RangedWrapper(tile.itemCap, start, end);
+                }
         );
     }
 

@@ -6,6 +6,7 @@ import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.item.BMItems;
 import wayoftime.bloodmagic.common.tag.BMTags;
 
 import java.util.concurrent.CompletableFuture;
@@ -18,6 +19,12 @@ public class BMItemTagProvider extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         copy(BMTags.Blocks.STORAGE_BLOCKS_HELLFORGED, BMTags.Items.STORAGE_BLOCKS_HELLFORGED);
+
+        tag(BMTags.Items.LIVING_SET)
+                .add(BMItems.LIVING_HELMET.get(), BMItems.LIVING_PLATE.get(), BMItems.LIVING_LEGGINGS.get(), BMItems.LIVING_BOOTS.get());
+
+        tag(BMTags.Items.LIVING_UPGRADE_SET)
+                .addTag(BMTags.Items.LIVING_SET);
 
         tag(BMTags.Items.REVERTER);
         tag(BMTags.Items.EXPLOSIVES);

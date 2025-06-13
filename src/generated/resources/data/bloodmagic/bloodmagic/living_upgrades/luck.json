@@ -1,0 +1,38 @@
+{
+  "effects": {
+    "bloodmagic:attributes": [
+      {
+        "amounts": {
+          "type": "minecraft:lookup",
+          "fallback": 0.0,
+          "values": [
+            2.0,
+            4.0,
+            6.0,
+            8.0,
+            10.0
+          ]
+        },
+        "attribute": "minecraft:generic.luck",
+        "id": "bloodmagic:luck",
+        "operation": "add_value"
+      }
+    ]
+  },
+  "levels": {
+    "exp_to_level": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5
+    },
+    "level_to_cost": {
+      "1": 10,
+      "2": 25,
+      "3": 40,
+      "4": 65,
+      "5": 90
+    }
+  }
+}

@@ -9,9 +9,9 @@ public class ChatUtil {
     private static final char[] fives = new char[]{'V', 'L', 'D'};
 
     public static String toRoman(int in) {
-        String input = Integer.toString(in);
+        String input = new StringBuilder(Integer.toString(in)).reverse().toString();
         StringBuilder output = new StringBuilder();
-        for (int i = input.length() -1; i >= 0; i--) {
+        for (int i = 0; i < input.length(); i++) {
             output.append(romanDigit(input.charAt(i), ones[i], fives[i], ones[i+1]));
         }
         return output.toString();
