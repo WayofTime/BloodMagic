@@ -4,6 +4,7 @@ import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.server.packs.PackType;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -33,9 +34,12 @@ public class Datagen {
             .add(BMRegistries.Keys.ALTAR_TIER_KEY, AltarTiers::bootstrap)
             .add(BMRegistries.Keys.LIVING_UPGRADES, LivingUpgrades::bootstrap)
         );
-        event.createProvider(ProviderHelper.tagsFor(BMRegistries.Keys.ALTAR_TIER_KEY, AltarTiers::tags));
-        event.createProvider(ProviderHelper.tagsFor(BMRegistries.Keys.LIVING_UPGRADES, LivingUpgrades::tags));
-        event.createProvider(ProviderHelper.tagsFor(Registries.DAMAGE_TYPE, BloodyDamageSources::tags));
+
+        ProviderHelper helper = new ProviderHelper(fileHelper);
+
+        event.createProvider(helper.tagsFor(BMRegistries.Keys.ALTAR_TIER_KEY, AltarTiers::tags));
+        event.createProvider(helper.tagsFor(BMRegistries.Keys.LIVING_UPGRADES, LivingUpgrades::tags));
+        event.createProvider(helper.tagsFor(Registries.DAMAGE_TYPE, BloodyDamageSources::tags));
         event.createBlockAndItemTags(BMBlockTagProvider::new, BMItemTagProvider::new);
 
         event.createProvider(BMDataMapProvider::new);
