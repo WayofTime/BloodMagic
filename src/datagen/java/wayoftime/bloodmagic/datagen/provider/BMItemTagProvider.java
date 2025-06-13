@@ -12,8 +12,8 @@ import wayoftime.bloodmagic.common.tag.BMTags;
 import java.util.concurrent.CompletableFuture;
 
 public class BMItemTagProvider extends ItemTagsProvider {
-    public BMItemTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags, ExistingFileHelper existingFileHelper) {
-        super(output, lookupProvider, blockTags, BloodMagic.MODID, existingFileHelper);
+    public BMItemTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags) {
+        super(output, lookupProvider, blockTags, BloodMagic.MODID, null);
     }
 
     @Override

@@ -16,8 +16,8 @@ import wayoftime.bloodmagic.datagen.BlockGroups;
 import java.util.concurrent.CompletableFuture;
 
 public class BMBlockTagProvider extends BlockTagsProvider {
-    public BMBlockTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
-        super(output, lookupProvider, BloodMagic.MODID, existingFileHelper);
+    public BMBlockTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(output, lookupProvider, BloodMagic.MODID, null);
     }
 
     @Override

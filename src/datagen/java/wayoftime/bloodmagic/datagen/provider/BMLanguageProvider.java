@@ -15,8 +15,8 @@ import wayoftime.bloodmagic.util.helper.BlockWithItemHolder;
 
 public class BMLanguageProvider extends LanguageProvider {
 
-    public BMLanguageProvider(PackOutput output, String locale) {
-        super(output, BloodMagic.MODID, locale);
+    public BMLanguageProvider(PackOutput output) {
+        super(output, BloodMagic.MODID, "en_us");
     }
 
     @Override

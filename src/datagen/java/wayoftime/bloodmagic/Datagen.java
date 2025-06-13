@@ -1,6 +1,6 @@
 package wayoftime.bloodmagic;
 
-import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -14,9 +14,6 @@ import wayoftime.bloodmagic.datagen.content.BloodyDamageSources;
 import wayoftime.bloodmagic.datagen.content.LivingUpgrades;
 import wayoftime.bloodmagic.datagen.provider.*;
 
-
-import java.util.concurrent.CompletableFuture;
-
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 public class Datagen {
 
@@ -24,24 +21,25 @@ public class Datagen {
     public static void gatherData(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
         PackOutput output = generator.getPackOutput();
-        CompletableFuture<HolderLookup.Provider> registries = event.getLookupProvider();
         ExistingFileHelper fileHelper = event.getExistingFileHelper();
 
-        generator.addProvider(event.includeClient(), new BMLanguageProvider(output, "en_us"));
         generator.addProvider(event.includeClient(), new BMItemModelProvider(output, fileHelper));
         generator.addProvider(event.includeClient(), new BMBlockstateProvider(output, fileHelper));
 
-        generator.addProvider(event.includeServer(), new BMDataMapProvider(output, registries));
+        event.createProvider(BMLanguageProvider::new);
 
-        BMDataPackProvider dataPack = generator.addProvider(event.includeServer(), new BMDataPackProvider(output, registries));
-        BMTagsProvider tags = new BMTagsProvider(output, dataPack.getRegistryProvider(), fileHelper);
-        generator.addProvider(event.includeServer(), tags.setup(BMRegistries.Keys.ALTAR_TIER_KEY, AltarTiers::tags));
-        generator.addProvider(event.includeServer(), tags.setup(Registries.DAMAGE_TYPE, BloodyDamageSources::tags));
-        generator.addProvider(event.includeServer(), tags.setup(BMRegistries.Keys.LIVING_UPGRADES, LivingUpgrades::tags));
+        event.createDatapackRegistryObjects(new RegistrySetBuilder()
+            .add(Registries.DAMAGE_TYPE, BloodyDamageSources::bootstrap)
+            .add(BMRegistries.Keys.ALTAR_TIER_KEY, AltarTiers::bootstrap)
+            .add(BMRegistries.Keys.LIVING_UPGRADES, LivingUpgrades::bootstrap)
+        );
+        event.createProvider(ProviderHelper.tagsFor(BMRegistries.Keys.ALTAR_TIER_KEY, AltarTiers::tags));
+        event.createProvider(ProviderHelper.tagsFor(BMRegistries.Keys.LIVING_UPGRADES, LivingUpgrades::tags));
+        event.createProvider(ProviderHelper.tagsFor(Registries.DAMAGE_TYPE, BloodyDamageSources::tags));
+        event.createBlockAndItemTags(BMBlockTagProvider::new, BMItemTagProvider::new);
 
-        BMBlockTagProvider blockTags = generator.addProvider(event.includeServer(), new BMBlockTagProvider(output, registries, fileHelper));
-        generator.addProvider(event.includeServer(), new BMItemTagProvider(output, registries, blockTags.contentsGetter(), fileHelper));
+        event.createProvider(BMDataMapProvider::new);
 
-        generator.addProvider(event.includeServer(), new BMLootTableProvider(output, registries));
+        event.createProvider(BMLootTableProvider::new);
     }
 }
