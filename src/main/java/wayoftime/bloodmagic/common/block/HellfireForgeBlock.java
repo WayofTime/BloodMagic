@@ -51,6 +51,10 @@ public class HellfireForgeBlock extends Block implements EntityBlock {
             return ItemInteractionResult.FAIL;
         }
 
+        if (hand == InteractionHand.OFF_HAND) {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+
         ItemStack forgeStack = forge.inv.getStackInSlot(HellfireForgeTile.OUTPUT_SLOT);
 
         if (player.isShiftKeyDown() && !forgeStack.isEmpty() && stack.isEmpty()) {
@@ -64,16 +68,15 @@ public class HellfireForgeBlock extends Block implements EntityBlock {
         int slot = switch (side) {
             case UP -> {
                 Vec3 relative = hitResult.getLocation().subtract(pos.getX(), pos.getY(), pos.getZ());
-                double x = relative.x - 0.5D;
-                double z = relative.z - 0.5D;
-                if (Math.abs(x) < 3/16D && Math.abs(z) < 3/16D && (stack.isEmpty() || forge.inv.isItemValid(HellfireForgeTile.GEM_SLOT, stack))) {
+                double x = relative.x;
+                double z = relative.z;
+                if (Math.abs(x - 0.5) < 3/16D && Math.abs(z - 0.5) < 3/16D && (stack.isEmpty() || forge.inv.isItemValid(HellfireForgeTile.GEM_SLOT, stack))) {
                     yield HellfireForgeTile.GEM_SLOT;
                 }
-                double max = Math.max(Math.abs(x), Math.abs(z));
-                if (max == Math.abs(x)) {
-                    yield x < 0 ? HellfireForgeTile.WEST : HellfireForgeTile.EAST;
+                if (z > 0.5) {
+                    yield x < 0.5 ? HellfireForgeTile.SOUTH : HellfireForgeTile.EAST;
                 } else {
-                    yield z < 0 ? HellfireForgeTile.NORTH : HellfireForgeTile.SOUTH;
+                    yield x < 0.5 ? HellfireForgeTile.WEST : HellfireForgeTile.NORTH;
                 }
             }
 
