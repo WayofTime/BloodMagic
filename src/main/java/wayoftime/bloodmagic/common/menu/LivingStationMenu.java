@@ -1,12 +1,15 @@
 package wayoftime.bloodmagic.common.menu;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import wayoftime.bloodmagic.common.block.BMBlocks;
 import wayoftime.bloodmagic.common.blockentity.LivingStationTile;
@@ -15,7 +18,7 @@ import wayoftime.bloodmagic.common.item.BMItems;
 public class LivingStationMenu extends AbstractContainerMenu {
 
     public LivingStationMenu(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf buf) {
-        this(containerId, playerInventory, (LivingStationTile) playerInventory.player.level().getBlockEntity(buf.readBlockPos()));
+        this(containerId, playerInventory, new ItemStackHandler(buf.readInt()));
     }
 
     // apparently these are evaluated before the constructor. I thought this only applied to static vars...
@@ -23,16 +26,32 @@ public class LivingStationMenu extends AbstractContainerMenu {
     private int playerInvEnd;
     private int hotbarStart;
     private int hotbarEnd;
-    public LivingStationMenu(int containerId, Inventory playerInventory, LivingStationTile tile) {
+    public LivingStationMenu(int containerId, Inventory playerInventory, IItemHandler inv) {
         super(BMMenus.LIVING_STATION.get(), containerId);
-        playerInvStart = tile.inv.getSlots();
+        playerInvStart = inv.getSlots();
         playerInvEnd = playerInvStart + 27;
         hotbarStart = playerInvEnd + 1;
         hotbarEnd = hotbarStart + 8;
 
-        this.addSlot(new SlotItemHandler(tile.inv, 0, 12, 22));
-        this.addSlot(new SlotItemHandler(tile.inv, 1, 84, 22));
-        this.addSlot(new SlotItemHandler(tile.inv, 2, 148, 22));
+        // TODO override mayPlace
+        this.addSlot(new SlotItemHandler(inv, 0, 12, 22) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return stack.is(BMItems.UPGRADE_TOME); // TODO only tooltip order ones
+            }
+        });
+        this.addSlot(new SlotItemHandler(inv, 1, 84, 22) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return stack.is(BMItems.UPGRADE_SCRAP); // TODO scrappable tomes
+            }
+        });
+        this.addSlot(new SlotItemHandler(inv, 2, 148, 22) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return false;
+            }
+        });
 
         int rows = 5;
         int xOff = 8;
@@ -41,10 +60,15 @@ public class LivingStationMenu extends AbstractContainerMenu {
         setup:
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < 9; j++) {
-                if (3 + i * 9 + j >= tile.inv.getSlots()) {
+                if (3 + i * 9 + j >= inv.getSlots()) {
                     break setup;
                 }
-                this.addSlot(new SlotItemHandler(tile.inv, 3 + i * 9 + j, xOff + j * side, yOff + i * side));
+                this.addSlot(new SlotItemHandler(inv, 3 + i * 9 + j, xOff + j * side, yOff + i * side) {
+                    @Override
+                    public boolean mayPlace(ItemStack stack) {
+                        return false;
+                    }
+                });
             }
         }
 

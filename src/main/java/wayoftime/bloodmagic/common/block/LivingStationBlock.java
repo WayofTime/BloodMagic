@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 import wayoftime.bloodmagic.common.blockentity.LivingStationTile;
+import wayoftime.bloodmagic.common.tag.TagsCache;
 
 public class LivingStationBlock extends Block implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
@@ -44,7 +45,7 @@ public class LivingStationBlock extends Block implements EntityBlock {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
-            serverPlayer.openMenu(state.getMenuProvider(level, pos), buf -> buf.writeBlockPos(pos));
+            serverPlayer.openMenu(state.getMenuProvider(level, pos), buf -> buf.writeInt(3 + TagsCache.getUpgradeTooltipOrder().size()));
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }

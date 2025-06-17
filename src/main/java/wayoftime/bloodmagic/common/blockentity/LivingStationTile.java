@@ -243,6 +243,6 @@ public class LivingStationTile extends BaseTile implements MenuProvider {
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-        return new LivingStationMenu(containerId, playerInventory, this);
+        return new LivingStationMenu(containerId, playerInventory, this.inv);
     }
 }
