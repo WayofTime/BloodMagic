@@ -2,11 +2,26 @@ package wayoftime.bloodmagic.util.helper;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 public class RenderHelper {
+
+    public static void renderGuiFluid(GuiGraphics guiGraphics, Fluid content, int x, int y, int width, int height) {
+        IClientFluidTypeExtensions fluidClientInfo = IClientFluidTypeExtensions.of(content);
+        TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(fluidClientInfo.getStillTexture());
+        guiGraphics.blit(x, y, 0, width, height, sprite);
+    }
+
     public static void addVertex (
             VertexConsumer buf, Matrix4f matrix, float x, float y, float z, float u, float v, int colour, int light, int overlay, Vector3f norm
     ){
