@@ -29,8 +29,8 @@ import java.util.*;
 public class BMMultiblock {
 
     public static void register(IEventBus eventBus) {
-        eventBus.addListener(BMMultiblock::onServerStarted);
-        eventBus.addListener(BMMultiblock::onServerStopped);
+        //eventBus.addListener(BMMultiblock::onServerStarted); // FU world crashing because it "already exists" y u no clear on server stop patchouli >:(
+        //eventBus.addListener(BMMultiblock::onServerStopped);
     }
 
     public static ResourceLocation[] TIER_KEYS = new ResourceLocation[]{};
