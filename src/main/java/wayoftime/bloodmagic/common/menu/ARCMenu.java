@@ -18,13 +18,13 @@ public class ARCMenu extends AbstractContainerMenu {
         super(BMMenus.ARC.get(), containerId);
 
         this.tile = tile;
-        this.addSlot(new SlotItemHandler(ARCTile.getItemHandler(tile, null), ARCTile.INPUT_BUCKET_SLOT, 8, 15));
-        this.addSlot(new SlotItemHandler(ARCTile.getItemHandler(tile, null), ARCTile.OUTPUT_BUCKET_SLOT, 152, 87));
-        this.addSlot(new SlotItemHandler(ARCTile.getItemHandler(tile, null), ARCTile.TOOL_SLOT, 35, 51));
-        this.addSlot(new SlotItemHandler(ARCTile.getItemHandler(tile, null), ARCTile.INPUT_SLOT, 71, 15));
+        this.addSlot(new SlotItemHandler(ARCTile.getItemHandler(tile, null), ARCTile.INPUT_BUCKET_SLOT, 8, 18));
+        this.addSlot(new SlotItemHandler(ARCTile.getItemHandler(tile, null), ARCTile.OUTPUT_BUCKET_SLOT, 152, 90));
+        this.addSlot(new SlotItemHandler(ARCTile.getItemHandler(tile, null), ARCTile.TOOL_SLOT, 35, 54));
+        this.addSlot(new SlotItemHandler(ARCTile.getItemHandler(tile, null), ARCTile.INPUT_SLOT, 71, 18));
 
         for (int i = 0; i < ARCTile.NUM_OUTPUTS; i++) {
-            this.addSlot(new SlotItemHandler(ARCTile.getItemHandler(tile, null), ARCTile.OUTPUT_SLOT + i, 116, 15 + i * 18) {
+            this.addSlot(new SlotItemHandler(ARCTile.getItemHandler(tile, null), ARCTile.OUTPUT_SLOT + i, 116, 18 + i * 18) {
                 @Override
                 public boolean mayPlace(ItemStack stack) {
                     return false;
@@ -41,13 +41,13 @@ public class ARCMenu extends AbstractContainerMenu {
         // player inv
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 123 + i * 18));
+                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 126 + i * 18));
             }
         }
 
         // player hotbar
         for (int i = 0; i < 9; i++) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 181));
+            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 184));
         }
     }
 

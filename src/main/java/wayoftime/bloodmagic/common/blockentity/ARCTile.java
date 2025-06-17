@@ -117,14 +117,14 @@ public class ARCTile extends BaseTile implements MenuProvider {
         }
     }
 
-    private final FluidTank inputTank = new FluidTank(20 * FluidType.BUCKET_VOLUME) {
+    public final FluidTank inputTank = new FluidTank(20 * FluidType.BUCKET_VOLUME) {
         @Override
         protected void onContentsChanged() {
             setChanged();
         }
     };
 
-    private final FluidTank outputTank = new FluidTank(20 * FluidType.BUCKET_VOLUME) {
+    public final FluidTank outputTank = new FluidTank(20 * FluidType.BUCKET_VOLUME) {
         @Override
         protected void onContentsChanged() {
             setChanged();
