@@ -477,7 +477,6 @@ public class LivingUpgrades {
         context.register(
                 exp(ARROW_PROTECT),
                 new LivingUpgrade.Builder()
-                        .level(1, 0) // TODO separate into individual upgrades, one for each "trainable"
                         .withEffect(LivingEffectComponents.DAMAGE_TAKEN_EXP.get(), new ValueBasedExp(lookup.getOrThrow(ARROW_PROTECT), ValueBasedExp.THIS_ENTITY), arrowDamage)
                         .build()
         );

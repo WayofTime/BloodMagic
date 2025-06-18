@@ -251,20 +251,4 @@ public class LivingEventHandler {
             }
         }
     }
-
-    // TODO decide whether to use this or the "old" behaviour of just not getting destroyed is the way to go (and do it in LAI#hurt instead of here if going with it)
-    //@SubscribeEvent(priority = EventPriority.LOWEST, receiveCanceled = true)
-    public static void armourBreak(ArmorHurtEvent event) {
-        ItemStack stack = event.getArmorItemStack(EquipmentSlot.CHEST);
-        float damage = event.getNewDamage(EquipmentSlot.CHEST);
-        if (stack.is(BMItems.LIVING_PLATE)) {
-            if (damage + stack.getDamageValue() >= stack.getMaxDamage()) {
-                stack.set(DataComponents.CUSTOM_NAME, Component.translatable("item.bloodmagic.living_plate.dead"));
-                stack.set(DataComponents.LORE, new ItemLore(List.of(Component.translatable("tooltip.bloodmagic.has_living_stats"))));
-                ItemStack converted = stack.hurtAndConvertOnBreak((int) Math.ceil(damage), Items.IRON_CHESTPLATE, event.getEntity(), EquipmentSlot.CHEST);
-                event.getEntity().setItemSlot(EquipmentSlot.CHEST, converted);
-                event.setNewDamage(EquipmentSlot.CHEST, 0);
-            }
-        }
-    }
 }

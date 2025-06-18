@@ -24,7 +24,6 @@ public class MultiIconButton extends AbstractButton {
     }
 
     private int state = 0;
-    // TODO upgrade this to potentially multiple and find a way to make it acceptable as slot listener so it can change itself based on a DataSlot
     public int getState() {
         return this.state;
     }

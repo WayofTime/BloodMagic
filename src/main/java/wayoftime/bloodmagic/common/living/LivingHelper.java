@@ -192,7 +192,6 @@ public class LivingHelper {
         return applyExp(wearer, upgrade, amount, false);
     }
 
-    // TODO pass a boolean for "natural" gain vs from tomes
     public static float applyExp(Player wearer, Holder<LivingUpgrade> upgrade, float amount, boolean fromTome) {
         ItemStack chest = getChest(wearer);
         Object2FloatOpenHashMap<Holder<LivingUpgrade>> upgrades = chest.getOrDefault(BMDataComponents.UPGRADES, LivingStats.EMPTY).upgrades().clone();
