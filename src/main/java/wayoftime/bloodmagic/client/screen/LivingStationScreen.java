@@ -9,7 +9,7 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.menu.LivingStationMenu;
 
 public class LivingStationScreen extends AbstractContainerScreen<LivingStationMenu> {
-    private final ResourceLocation background = ResourceLocation.fromNamespaceAndPath(BloodMagic.MODID, "textures/gui/living_station.png");
+    private final ResourceLocation background = ResourceLocation.fromNamespaceAndPath(BloodMagic.MODID, "textures/gui/container/living_station.png");
     public LivingStationScreen(LivingStationMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
         this.imageWidth = 176;
