@@ -19,6 +19,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.common.NeoForge;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.commons.lang3.mutable.MutableFloat;
 import wayoftime.bloodmagic.BloodMagic;
@@ -26,6 +27,7 @@ import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.datacomponent.LivingStats;
 import wayoftime.bloodmagic.common.datacomponent.UpgradeLimits;
 import wayoftime.bloodmagic.common.datacomponent.UpgradeTome;
+import wayoftime.bloodmagic.common.event.LivingArmourEvent;
 import wayoftime.bloodmagic.common.registry.BMRegistries;
 import wayoftime.bloodmagic.common.tag.BMTags;
 import wayoftime.bloodmagic.util.ChatUtil;
@@ -199,8 +201,11 @@ public class LivingHelper {
         int maxPoints = chest.getOrDefault(BMDataComponents.CURRENT_MAX_UPGRADE_POINTS, 0);
         int currentPoints = chest.getOrDefault(BMDataComponents.CURRENT_UPGRADE_POINTS, 0);
 
-        MutableFloat toAdd = new MutableFloat(amount);
-        // TODO LIVING EXP GAIN EVENT FOR CHONKY, AND MAKE IT WORK THIS TIME
+        LivingArmourEvent.ExpGain event = NeoForge.EVENT_BUS.post(new LivingArmourEvent.ExpGain(wearer, upgrade, amount, fromTome));
+        if (event.getCurrentAmount() <= 0) { // not dealing with negative exp gain. also dont need to calc this if we know its 0
+            return 0;
+        }
+        MutableFloat toAdd = new MutableFloat(event.getCurrentAmount());
         upgrades.computeFloat(upgrade, (holder, exp) -> {
             exp = exp == null ? 0f : exp;
             float maxExp = limits.getLimit(upgrade);

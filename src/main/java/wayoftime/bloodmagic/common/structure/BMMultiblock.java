@@ -28,6 +28,7 @@ import java.util.*;
 
 public class BMMultiblock {
 
+    // TODO keeping this until I get around to adding modopedia as replacement
     public static void register(IEventBus eventBus) {
         //eventBus.addListener(BMMultiblock::onServerStarted); // FU world crashing because it "already exists" y u no clear on server stop patchouli >:(
         //eventBus.addListener(BMMultiblock::onServerStopped);
