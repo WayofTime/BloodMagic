@@ -13,7 +13,10 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import wayoftime.bloodmagic.common.block.BMBlocks;
 import wayoftime.bloodmagic.common.blockentity.LivingStationTile;
+import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
+import wayoftime.bloodmagic.common.datacomponent.UpgradeTome;
 import wayoftime.bloodmagic.common.item.BMItems;
+import wayoftime.bloodmagic.common.tag.BMTags;
 
 public class LivingStationMenu extends AbstractContainerMenu {
 
@@ -33,17 +36,21 @@ public class LivingStationMenu extends AbstractContainerMenu {
         hotbarStart = playerInvEnd + 1;
         hotbarEnd = hotbarStart + 8;
 
-        // TODO override mayPlace
+        // TODO whether or not something can go into a given slot is essentially duplicated between here and the actual inventory...
         this.addSlot(new SlotItemHandler(inv, 0, 12, 22) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.is(BMItems.UPGRADE_TOME); // TODO only tooltip order ones
+                UpgradeTome tome = stack.get(BMDataComponents.UPGRADE_TOME_DATA);
+                return tome != null && tome.upgrade().is(BMTags.Living.TOOLTIP_ORDER);
             }
         });
         this.addSlot(new SlotItemHandler(inv, 1, 84, 22) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.is(BMItems.UPGRADE_SCRAP); // TODO scrappable tomes
+                UpgradeTome tome = stack.get(BMDataComponents.UPGRADE_TOME_DATA);
+                return (tome != null && tome.upgrade().is(BMTags.Living.IS_SCRAPPABLE))
+                        || stack.is(BMItems.UPGRADE_SCRAP)
+                        || stack.is(BMItems.SYNTHETIC_POINT);
             }
         });
         this.addSlot(new SlotItemHandler(inv, 2, 148, 22) {
