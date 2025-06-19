@@ -14,7 +14,7 @@ public class TrainerMenu extends AbstractGhostMenu<TrainerMenu> {
 
     // CLIENT constructor
     public TrainerMenu(int containerId, Inventory playerInv, RegistryFriendlyByteBuf buf) {
-        // buf ->  int heldSlot
+        // buf -> int heldSlot
         super(BMMenus.TRAINER.get(), containerId, playerInv, 3 + 16, 4, 4, 89, 15, 105, buf.readInt());
     }
 

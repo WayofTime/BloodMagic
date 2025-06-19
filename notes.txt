@@ -9,7 +9,8 @@ Altar
 - datapackable structure, by default looking at tags (bloodmagic:altar/runes, bloodmagic:altar/tN_capstones, bloodmagic:altar/pillars) with the pillars tag being special in that when its empty it just requires solid blocks
 - should be working exactly like the old one from user perspective
 - the blocks to enable redstone pulse on crafting and reading the soul network instead of the altar fill level are based on the block tags bloodmagic:altar/pulse_on_crafting and bloodmagic:altar/soul_network_comparator
-- now has its 2 in/out put tanks visible for jade
+- now has its 2 in/out put tanks visible for jade (as well as the main tank)
+- there is a 5 second grace period when swapping altar structure before the tanks get capped at current max capacity instead of it happening immediately
 
 Blood Tank
 - stores any fluid (emits the same light level the inserted fluid does)
@@ -52,3 +53,5 @@ Training Bracelet
 - will allow at most the minimum exp required for the selected level for each of the set tomes
  - in deny others mode all "unknown" upgrades (the ones not set) will return the limit of 0 meaning nothing else can be trained
  - in allow others mode all "unknown" upgrades will return the limit of -1 signifying that there is no limit set and can be trained as normal
+
+Transfer Nodes
