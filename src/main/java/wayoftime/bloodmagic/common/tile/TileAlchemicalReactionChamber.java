@@ -381,10 +381,10 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 		ItemStack toolStack = getItem(ARC_TOOL_SLOT);
 		if (!toolStack.isEmpty())
 		{
-			if (toolStack.isDamageableItem())
+			if (toolStack.getItem().isDamageable(toolStack))
 			{
 				int unbreakingLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, toolStack);
-				if (unbreakingLevel == 0 || level.random.nextInt(unbreakingLevel + 1) == 0)
+				if (toolStack.isDamageableItem() && (unbreakingLevel == 0 || level.random.nextInt(unbreakingLevel + 1) == 0))
 				{
 					toolStack.setDamageValue(toolStack.getDamageValue() + 1);
 					if (toolStack.getDamageValue() >= toolStack.getMaxDamage() && breakTool)
