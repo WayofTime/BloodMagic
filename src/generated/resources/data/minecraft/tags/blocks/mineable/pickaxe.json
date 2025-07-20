@@ -88,6 +88,15 @@
     "bloodmagic:shaped_charge",
     "bloodmagic:fungal_charge",
     "bloodmagic:aug_shaped_charge",
-    "bloodmagic:shaped_charge_deep"
+    "bloodmagic:shaped_charge_deep",
+    "bloodmagic:speedrune2",
+    "bloodmagic:sacrificerune2",
+    "bloodmagic:selfsacrificerune2",
+    "bloodmagic:dislocationrune2",
+    "bloodmagic:altarcapacityrune2",
+    "bloodmagic:bettercapacityrune2",
+    "bloodmagic:orbcapacityrune2",
+    "bloodmagic:accelerationrune2",
+    "bloodmagic:chargingrune2"
   ]
 }

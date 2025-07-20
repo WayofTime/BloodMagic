@@ -25,7 +25,7 @@ public class BloodMagicFluids {
 
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, BloodMagic.MODID);
     public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, BloodMagic.MODID);
-    public static final RegistryObject<FluidType> LIFE_ESSENCE_FLUID_TYPE = FLUID_TYPES.register("life_essence_fluid_type", () -> new FluidType(FluidType.Properties.create().descriptionId("life_essence_fluid_type").fallDistanceModifier(0F).canExtinguish(false).canConvertToSource(false).supportsBoating(false).sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL).sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY).sound(SoundActions.FLUID_VAPORIZE, SoundEvents.FIRE_EXTINGUISH).canHydrate(false).viscosity(1000)) {
+    public static final RegistryObject<FluidType> LIFE_ESSENCE_FLUID_TYPE = FLUID_TYPES.register("life_essence_fluid_type", () -> new FluidType(FluidType.Properties.create().descriptionId("fluid.bloodmagic.life_essence_fluid").fallDistanceModifier(0F).canExtinguish(false).canConvertToSource(false).supportsBoating(false).sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL).sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY).sound(SoundActions.FLUID_VAPORIZE, SoundEvents.FIRE_EXTINGUISH).canHydrate(false).viscosity(1000)) {
         @Override
         public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
             consumer.accept(new IClientFluidTypeExtensions() {
@@ -44,7 +44,7 @@ public class BloodMagicFluids {
             });
         }
     });
-    public static final RegistryObject<FluidType> DOUBT_FLUID_TYPE = FLUID_TYPES.register("doubt_fluid_type", () -> new FluidType(FluidType.Properties.create().descriptionId("doubt_fluid_type").fallDistanceModifier(0F).canExtinguish(false).canConvertToSource(false).supportsBoating(false).sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL).sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY).sound(SoundActions.FLUID_VAPORIZE, SoundEvents.FIRE_EXTINGUISH).canHydrate(false).viscosity(1000)) {
+    public static final RegistryObject<FluidType> DOUBT_FLUID_TYPE = FLUID_TYPES.register("doubt_fluid_type", () -> new FluidType(FluidType.Properties.create().descriptionId("fluid.bloodmagic.doubt_fluid").fallDistanceModifier(0F).canExtinguish(false).canConvertToSource(false).supportsBoating(false).sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL).sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY).sound(SoundActions.FLUID_VAPORIZE, SoundEvents.FIRE_EXTINGUISH).canHydrate(false).viscosity(1000)) {
         @Override
         public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
             consumer.accept(new IClientFluidTypeExtensions() {
