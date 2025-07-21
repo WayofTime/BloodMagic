@@ -11,7 +11,9 @@
       "type": "bloodmagic:manual_recipe",
           "input1": "bloodmagic:itemrouterfilterexact{Items: [{Slot: 0b, id: \"minecraft:leather\", Count: 1b, tag: {stackSize: 1}}], \"button:blackwhitelist\": 0}",
           "input2": "bloodmagic:itemrouterfilterexact",
-          "output": "bloodmagic:itemrouterfilterexact#3{Items: [{Slot: 0b, id: \"minecraft:leather\", Count: 1b, tag: {stackSize: 1}}], \"button:blackwhitelist\": 0}"
+          "input9": "bloodmagic:itemrouterfilterexact",
+
+      "output": "bloodmagic:itemrouterfilterexact#3{Items: [{Slot: 0b, id: \"minecraft:leather\", Count: 1b, tag: {stackSize: 1}}], \"button:blackwhitelist\": 0}"
     }
   ]
 }

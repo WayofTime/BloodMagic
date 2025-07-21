@@ -28,7 +28,7 @@
     },
     {
       "type": "patchouli:item",
-      "item": "#input2#",
+      "item": "#input9#",
       "framed": false,
       "x": "50",
       "y": "45"
