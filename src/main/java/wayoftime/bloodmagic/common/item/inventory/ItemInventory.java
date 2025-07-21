@@ -80,7 +80,7 @@ public class ItemInventory implements Container
 		{
 			NBTHelper.checkNBT(masterStack);
 			CompoundTag tag = masterStack.getTag();
-			readFromNBT(tag.getCompound(Constants.NBT.ITEM_INVENTORY + name));
+			readFromNBT(tag);
 		}
 	}
 
@@ -92,7 +92,7 @@ public class ItemInventory implements Container
 			CompoundTag tag = masterStack.getTag();
 			CompoundTag invTag = new CompoundTag();
 			writeToNBT(invTag);
-			tag.put(Constants.NBT.ITEM_INVENTORY + name, invTag);
+			//tag.put(Constants.NBT.ITEM_INVENTORY + name, invTag);
 		}
 	}
 
