@@ -81,6 +81,10 @@ repositories {
         // Curios
         url = "https://maven.theillusivec4.top/"
     }
+    maven {
+        // Mystical Agriculture, Cucumber (library)
+        url = "https://maven.blakesmods.com/"
+    }
 }
 
 dependencies {
@@ -97,6 +101,11 @@ dependencies {
     
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
+
+    compileOnly fg.deobf("com.blakebr0.mysticalagriculture:MysticalAgriculture:${minecraft_version}-${mysticalag_version}:api")
+    // enable below to get MAG enabled in the runs
+    //runtimeOnly fg.deobf("com.blakebr0.mysticalagriculture:MysticalAgriculture:${minecraft_version}-${mysticalag_version}")
+    //runtimeOnly fg.deobf("com.blakebr0.cucumber:Cucumber:${minecraft_version}-${cucumber_version}")
 }
 
 tasks.named('processResources', ProcessResources).configure {
