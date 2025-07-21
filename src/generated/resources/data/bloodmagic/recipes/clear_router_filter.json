@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "bloodmagic:itemrouterfilterexact"
+    }
+  ],
+  "result": {
+    "item": "bloodmagic:itemrouterfilterexact"
+  }
+}
