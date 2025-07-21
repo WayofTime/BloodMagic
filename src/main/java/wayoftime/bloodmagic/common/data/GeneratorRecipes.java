@@ -6,9 +6,11 @@ import java.util.function.Consumer;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
@@ -83,6 +85,15 @@ public class GeneratorRecipes extends BaseRecipeProvider
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC,BloodMagicBlocks.RAW_HELLFORGED_BLOCK.get()).define('s', BloodMagicItems.DEMONITE_RAW.get()).pattern("sss").pattern("sss").pattern("sss").unlockedBy("has_raw_hellforged", has(BloodMagicItems.DEMONITE_RAW.get())).save(consumer, BloodMagic.rl("raw_hellforged_block"));
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,BloodMagicItems.DEMONITE_RAW.get(), 9).requires(BloodMagicBlocks.RAW_HELLFORGED_BLOCK.get()).unlockedBy("has_raw_hellforged_block", has(BloodMagicBlocks.RAW_HELLFORGED_BLOCK.get())).save(consumer, BloodMagic.rl("raw_hellforged_block_to_item"));
 
+		clearFilter(BloodMagicItems.ITEM_ROUTER_FILTER.get(), BloodMagic.rl("clear_router_filter"), consumer);
+		clearFilter(BloodMagicItems.ITEM_TAG_FILTER.get(), BloodMagic.rl("clear_tag_filter"), consumer);
+		clearFilter(BloodMagicItems.ITEM_ENCHANT_FILTER.get(), BloodMagic.rl("clear_enchant_filter"), consumer);
+		clearFilter(BloodMagicItems.ITEM_MOD_FILTER.get(), BloodMagic.rl("clear_mod_filter"), consumer);
+		clearFilter(BloodMagicItems.ITEM_COMPOSITE_FILTER.get(), BloodMagic.rl("clear_composite_filter"), consumer);
+	}
+
+	private void clearFilter(ItemLike filter, ResourceLocation path, Consumer<FinishedRecipe> output) {
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, filter).requires(filter).unlockedBy("has_filter", has(filter)).save(output, path);
 	}
 
 	private void addVanillaSmithingRecipes(Consumer<FinishedRecipe> consumer)
