@@ -28,6 +28,13 @@
     },
     {
       "type": "patchouli:item",
+      "item": "#input2#",
+      "framed": false,
+      "x": "50",
+      "y": "45"
+    },
+    {
+      "type": "patchouli:item",
       "item": "#output#",
       "framed": false,
       "x":"88",

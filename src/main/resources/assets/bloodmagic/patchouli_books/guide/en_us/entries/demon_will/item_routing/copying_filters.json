@@ -5,13 +5,13 @@
   "pages":[
     {
       "type": "patchouli:text",
-      "text": "if you are configuring a large number of $(thing)filters$(), or want to expand your existing filter setups, simply place two filters into a crafting table to copy the filter in slot one onto the filter in slot two."
+      "text": "If you are configuring a large number of $(thing)filters$(), or want to expand your existing filter setups, simply place between two and 9 filters into a crafting table to copy the filter in slot one onto all the other filters."
     },
     {
       "type": "bloodmagic:manual_recipe",
-          "input1": "bloodmagic:itemrouterfilterexact{itemInventoryRoutingFilter: {Items: [{Slot: 0b, id: \"minecraft:leather\", Count: 1b, tag: {stackSize: 1}}]}, Items: [{Slot: 0b, id: \"minecraft:leather\", Count: 1b, tag: {stackSize: 1}}], \"button:blackwhitelist\": 0, leastSig: -8112316981097356963L, mostSig: 4875194384706061509L}",
+          "input1": "bloodmagic:itemrouterfilterexact{Items: [{Slot: 0b, id: \"minecraft:leather\", Count: 1b, tag: {stackSize: 1}}], \"button:blackwhitelist\": 0}",
           "input2": "bloodmagic:itemrouterfilterexact",
-          "output": "bloodmagic:itemrouterfilterexact#2{itemInventoryRoutingFilter: {Items: [{Slot: 0b, id: \"minecraft:leather\", Count: 1b, tag: {stackSize: 1}}]}, Items: [{Slot: 0b, id: \"minecraft:leather\", Count: 1b, tag: {stackSize: 1}}], \"button:blackwhitelist\": 0, leastSig: -8112316981097356963L, mostSig: 4875194384706061509L}"
+          "output": "bloodmagic:itemrouterfilterexact#3{Items: [{Slot: 0b, id: \"minecraft:leather\", Count: 1b, tag: {stackSize: 1}}], \"button:blackwhitelist\": 0}"
     }
   ]
 }
