@@ -24,10 +24,6 @@ public class RecipeFilterCopy extends CustomRecipe {
     public boolean matches(CraftingContainer grid, Level level) {
         List<ItemStack> inputs = grid.getItems();
         ItemStack primary = inputs.get(0);
-        ItemStack secondary = inputs.get(1);
-        if (!primary.is(secondary.getItem())) { // not the same kind
-            return false;
-        }
         if (!(primary.is(BloodMagicItems.ITEM_ROUTER_FILTER.get())
                 || primary.is(BloodMagicItems.ITEM_TAG_FILTER.get())
                 || primary.is(BloodMagicItems.ITEM_MOD_FILTER.get())
@@ -36,13 +32,30 @@ public class RecipeFilterCopy extends CustomRecipe {
         { // not a filter
             return false;
         }
+        boolean found = false;
+        for (int i = 1; i < inputs.size(); i++) {
+            if (!inputs.get(i).isEmpty()) {
+                if (!inputs.get(i).is(primary.getItem())) {
+                    return false;
+                } else {
+                    found = true;
+                }
+            }
+        }
 
-        return true;
+        return found; // if only primary is present its not actually copying anything
     }
 
     @Override
     public ItemStack assemble(CraftingContainer grid, RegistryAccess registries) {
-        return grid.getItems().get(0).copyWithCount(2);
+        // if assemble is called we know #matches returns true, so all the items are correct, just need to count them
+        int count = 0;
+        for (ItemStack stack : grid.getItems()) {
+            if (!stack.isEmpty()) {
+                count++;
+            }
+        }
+        return grid.getItems().get(0).copyWithCount(count);
     }
 
     @Override
