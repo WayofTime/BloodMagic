@@ -91,12 +91,11 @@ public class GeneratorRecipes extends BaseRecipeProvider
 		clearFilter(BloodMagicItems.ITEM_ENCHANT_FILTER.get(), BloodMagic.rl("clear_enchant_filter"), consumer);
 		clearFilter(BloodMagicItems.ITEM_MOD_FILTER.get(), BloodMagic.rl("clear_mod_filter"), consumer);
 		clearFilter(BloodMagicItems.ITEM_COMPOSITE_FILTER.get(), BloodMagic.rl("clear_composite_filter"), consumer);
+		SpecialRecipeBuilder.special(BloodMagicRecipeSerializers.FILTER_COPY.getRecipeSerializer()).save(consumer, "bloodmagic:filter_copy");
 	}
 
 	private void clearFilter(ItemLike filter, ResourceLocation path, Consumer<FinishedRecipe> output) {
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, filter).requires(filter).unlockedBy("has_filter", has(filter)).save(output, path);
-
-        SpecialRecipeBuilder.special(BloodMagicRecipeSerializers.FILTER_COPY.getRecipeSerializer()).save(consumer, "bloodmagic:filter_copy");
 	}
 
 	private void addVanillaSmithingRecipes(Consumer<FinishedRecipe> consumer)
