@@ -16,6 +16,7 @@ import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.recipe.BaseRecipeProvider;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.recipe.*;
+import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 import wayoftime.bloodmagic.core.recipe.IngredientBloodOrb;
 
@@ -83,6 +84,7 @@ public class GeneratorRecipes extends BaseRecipeProvider
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC,BloodMagicBlocks.RAW_HELLFORGED_BLOCK.get()).define('s', BloodMagicItems.DEMONITE_RAW.get()).pattern("sss").pattern("sss").pattern("sss").unlockedBy("has_raw_hellforged", has(BloodMagicItems.DEMONITE_RAW.get())).save(consumer, BloodMagic.rl("raw_hellforged_block"));
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,BloodMagicItems.DEMONITE_RAW.get(), 9).requires(BloodMagicBlocks.RAW_HELLFORGED_BLOCK.get()).unlockedBy("has_raw_hellforged_block", has(BloodMagicBlocks.RAW_HELLFORGED_BLOCK.get())).save(consumer, BloodMagic.rl("raw_hellforged_block_to_item"));
 
+		SpecialRecipeBuilder.special(BloodMagicRecipeSerializers.FILTER_COPY.getRecipeSerializer()).save(consumer, "bloodmagic:filter_copy");
 	}
 
 	private void addVanillaSmithingRecipes(Consumer<FinishedRecipe> consumer)
