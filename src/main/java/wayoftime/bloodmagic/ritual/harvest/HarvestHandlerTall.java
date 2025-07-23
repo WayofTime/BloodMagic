@@ -2,12 +2,14 @@ package wayoftime.bloodmagic.ritual.harvest;
 
 import java.util.List;
 
+import net.minecraft.world.level.block.BambooStalkBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CactusBlock;
 import net.minecraft.world.level.block.SugarCaneBlock;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.state.properties.BambooLeaves;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -28,11 +30,14 @@ public class HarvestHandlerTall implements IHarvestHandler
 
 	public HarvestHandlerTall()
 	{
-		for (int i = 0; i < 15; i++)
-		{
-			HarvestRegistry.registerTallCrop(Blocks.SUGAR_CANE.defaultBlockState().setValue(SugarCaneBlock.AGE, i));
-			HarvestRegistry.registerTallCrop(Blocks.CACTUS.defaultBlockState().setValue(CactusBlock.AGE, i));
-		}
+		// bottom block is set to age 0 when one grows above
+		HarvestRegistry.registerTallCrop(Blocks.SUGAR_CANE.defaultBlockState().setValue(SugarCaneBlock.AGE, 0));
+		HarvestRegistry.registerTallCrop(Blocks.CACTUS.defaultBlockState().setValue(CactusBlock.AGE, 0));
+
+		HarvestRegistry.registerTallCrop(Blocks.BAMBOO.defaultBlockState().setValue(BambooStalkBlock.STAGE, 0).setValue(BambooStalkBlock.AGE, 1).setValue(BambooStalkBlock.LEAVES, BambooLeaves.NONE));
+
+		// Should be its own thing since it grows slightly differently from the others here and more like the vines but it works
+		HarvestRegistry.registerTallCrop(Blocks.KELP_PLANT.defaultBlockState());
 	}
 
 	@Override
