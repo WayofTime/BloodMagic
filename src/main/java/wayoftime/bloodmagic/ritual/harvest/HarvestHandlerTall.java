@@ -35,9 +35,6 @@ public class HarvestHandlerTall implements IHarvestHandler
 		HarvestRegistry.registerTallCrop(Blocks.CACTUS.defaultBlockState().setValue(CactusBlock.AGE, 0));
 
 		HarvestRegistry.registerTallCrop(Blocks.BAMBOO.defaultBlockState().setValue(BambooStalkBlock.STAGE, 0).setValue(BambooStalkBlock.AGE, 1).setValue(BambooStalkBlock.LEAVES, BambooLeaves.NONE));
-
-		// Should be its own thing since it grows slightly differently from the others here and more like the vines but it works
-		HarvestRegistry.registerTallCrop(Blocks.KELP_PLANT.defaultBlockState());
 	}
 
 	@Override
