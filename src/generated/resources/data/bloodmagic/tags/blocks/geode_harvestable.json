@@ -1,0 +1,61 @@
+{
+  "values": [
+    "minecraft:amethyst_cluster",
+    {
+      "id": "forge:clusters",
+      "required": false
+    },
+    {
+      "id": "geode_plus:nether_quartz_crystal",
+      "required": false
+    },
+    {
+      "id": "geode_plus:diamond_crystal",
+      "required": false
+    },
+    {
+      "id": "geode_plus:pink_topaz_crystal",
+      "required": false
+    },
+    {
+      "id": "geode_plus:echo_crystal",
+      "required": false
+    },
+    {
+      "id": "geode_plus:redstone_crystal",
+      "required": false
+    },
+    {
+      "id": "geode_plus:lapis_cluster",
+      "required": false
+    },
+    {
+      "id": "geode_plus:emerald_cluster",
+      "required": false
+    },
+    {
+      "id": "geode_plus:nether_glowstone_cluster",
+      "required": false
+    },
+    {
+      "id": "geode_plus:nether_gold_nugget_cluster",
+      "required": false
+    },
+    {
+      "id": "geode_plus:nether_ancient_debris_cluster",
+      "required": false
+    },
+    {
+      "id": "geode_plus:celestite_cluster",
+      "required": false
+    },
+    {
+      "id": "geode_plus:prismarine_cluster",
+      "required": false
+    },
+    {
+      "id": "geode_plus:wrappist_cluster",
+      "required": false
+    }
+  ]
+}

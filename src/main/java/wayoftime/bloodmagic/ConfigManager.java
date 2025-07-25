@@ -39,6 +39,22 @@ public class ConfigManager
 		public final ConfigValue<List<? extends String>> sacrificialValues;
 		public final ForgeConfigSpec.BooleanValue makeDungeonRitualCreativeOnly;
 
+		public final ConfigValue<Integer> activation_cost;
+		public final ConfigValue<Integer> refresh_cost;
+		public final ConfigValue<Double> min_raw_will;
+		public final ConfigValue<Double> min_corrosive_will;
+		public final ConfigValue<Double> min_destructive_will;
+		public final ConfigValue<Double> min_steadfast_will;
+		public final ConfigValue<Double> min_vengeful_will;
+		public final ConfigValue<Double> store_cost;
+		public final ConfigValue<Double> harm_cost;
+		public final ConfigValue<Double> fortune_cost;
+		public final ConfigValue<Double> silk_touch_cost;
+		public final ConfigValue<Double> growth_cost;
+		public final ConfigValue<Integer> hurt_damage;
+		public final ConfigValue<Integer> max_budding_blocks;
+		public final ConfigValue<Integer> max_mobs_harmed;
+
 		CommonConfig(ForgeConfigSpec.Builder builder)
 		{
 			builder.comment("Stops the listed entities from being used in the Well of Suffering.", "Use the registry name of the entity. Vanilla entities do not require the modid.").push("Blacklist");
@@ -57,6 +73,23 @@ public class ConfigManager
 			makeDungeonRitualCreativeOnly = builder.define("makeDungeonRitualCreativeOnly", false);
 
 			builder.pop();
+
+			builder.push("Geode Ritual");
+			activation_cost = builder.define("activation_cost", 50_000);
+			refresh_cost = builder.define("refresh_cost", 50);
+			min_raw_will = builder.define("min_raw_will", 50D);
+			min_corrosive_will = builder.define("min_corrosive_will", 50D);
+			min_destructive_will = builder.define("min_destructive_will", 50D);
+			min_steadfast_will = builder.define("min_steadfast_will", 50D);
+			min_vengeful_will = builder.define("min_vengeful_will", 50D);
+			store_cost = builder.define("store_cost", 1D);
+			harm_cost = builder.define("harm_cost", 0.125D);
+			fortune_cost = builder.define("fortune_cost", 1D);
+			silk_touch_cost = builder.define("silk_touch_cost", 1D);
+			growth_cost = builder.define("growth_cost", 0.5D);
+			hurt_damage = builder.define("hurt_damage", 2);
+			max_budding_blocks = builder.defineInRange("max_budding_blocks", 7, 1, 15);
+			max_mobs_harmed = builder.define("max_harmed", 8);
 		}
 	}
 
