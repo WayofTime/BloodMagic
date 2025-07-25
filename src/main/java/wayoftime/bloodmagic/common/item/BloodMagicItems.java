@@ -266,7 +266,8 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> ITEM_MOD_FILTER = BASICITEMS.register("itemrouterfiltermoditems", ItemModFilter::new);
 	public static final RegistryObject<Item> ITEM_COMPOSITE_FILTER = BASICITEMS.register("itemrouterfiltercomposite", ItemCompositeFilter::new);
 	public static final RegistryObject<Item> NODE_ROUTER = BASICITEMS.register("noderouter", ItemNodeRouter::new);
-	public static final RegistryObject<Item> MASTER_NODE_UPGRADE = BASICITEMS.register("mastercore", ItemBasicNodeUpgrade::new);
+	public static final RegistryObject<Item> MASTER_NODE_UPGRADE = BASICITEMS.register("mastercore", () -> new ItemBasicNodeUpgrade(16));
+	public static final RegistryObject<Item> MASTER_NODE_UPGRADE_SPEED = BASICITEMS.register("mastercorespeed", () -> new ItemBasicNodeUpgrade(19));
 
 	public static final RegistryObject<Item> FRAME_PARTS = BASICITEMS.register("componentframeparts", ItemBase::new);
 

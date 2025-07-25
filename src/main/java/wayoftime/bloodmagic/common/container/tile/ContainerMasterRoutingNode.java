@@ -31,7 +31,8 @@ public class ContainerMasterRoutingNode extends AbstractContainerMenu
 
 	public void setup(Inventory inventory, Container tileARC)
 	{
-		this.addSlot(new SlotRouterUpgrade(tileARC, tileMasterRoutingNode.SLOT, 80, 15));
+		this.addSlot(new SlotRouterUpgrade(tileARC, TileMasterRoutingNode.SLOT_STACK_UPGRADE, 62, 15));
+		this.addSlot(new SlotRouterUpgrade(tileARC, TileMasterRoutingNode.SLOT_SPEED_UPGRADE, 98, 15));
 
 		for (int i = 0; i < 3; i++)
 		{
@@ -58,20 +59,20 @@ public class ContainerMasterRoutingNode extends AbstractContainerMenu
 			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 
-			if (index == 0)// Attempting to transfer from output slots
+			if (index == 0 || index == 1)// Attempting to transfer from output slots
 							// or bucket slots
 			{
-				if (!this.moveItemStackTo(itemstack1, 1, 1 + 36, true))
+				if (!this.moveItemStackTo(itemstack1, 2, 2 + 36, true))
 				{
 					return ItemStack.EMPTY;
 				}
 
 				slot.onQuickCraft(itemstack1, itemstack);
-			} else if (index >= 1) // Attempting to transfer from main inventory
+			} else if (index >= 2) // Attempting to transfer from main inventory
 			{
 				if (itemstack1.getItem() instanceof IRouterUpgrade) // Try the tool slot first
 				{
-					if (!this.moveItemStackTo(itemstack1, 0, 1, false))
+					if (!this.moveItemStackTo(itemstack1, 0, 2, false))
 					{
 						return ItemStack.EMPTY;
 					}

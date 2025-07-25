@@ -15,9 +15,9 @@ import java.util.List;
 
 public class ItemBasicNodeUpgrade extends Item implements IRouterUpgrade
 {
-	public ItemBasicNodeUpgrade()
+	public ItemBasicNodeUpgrade(int stackSize)
 	{
-		super(new Item.Properties().stacksTo(16));
+		super(new Item.Properties().stacksTo(stackSize));
 	}
 
 	@Override

@@ -783,6 +783,7 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addItem(BloodMagicItems.NODE_ROUTER, "Node Router");
 		addItem(BloodMagicItems.MASTER_NODE_UPGRADE, "Basic Routing Logic Upgrade");
+		addItem(BloodMagicItems.MASTER_NODE_UPGRADE_SPEED, "Basic Routing Speed Upgrade");
 		addItem(BloodMagicItems.ITEM_ROUTER_FILTER, "Standard Item Filter");
 		addItem(BloodMagicItems.ITEM_TAG_FILTER, "Tag Item Filter");
 		addItem(BloodMagicItems.ITEM_ENCHANT_FILTER, "Enchantments Item Filter");
