@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.common.tile;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
@@ -10,6 +11,7 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BlockSpectral;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.block.type.SpectralBlockType;
@@ -44,8 +46,11 @@ public class TileSpectral extends TileBase
 			BlockEntity spectralTile = world.getBlockEntity(pos);
 			if (spectralTile instanceof TileSpectral)
 			{
+				BloodMagic.LOGGER.info("was a spectral tile");
 				((TileSpectral) spectralTile).setContainedBlockInfo(potentialFluidBlockState);
 				world.scheduleTick(pos, spectralTile.getBlockState().getBlock(), BlockSpectral.DECAY_RATE);
+			} else {
+				BloodMagic.LOGGER.info("it was not, in fact, a spectral tile");
 			}
 		} else if (potentialFluidBlockState.getBlock() == BloodMagicBlocks.SPECTRAL.get() && potentialFluidBlockState.getValue(BlockSpectral.SPECTRAL_STATE) == SpectralBlockType.LEAKING)
 		{
@@ -73,7 +78,7 @@ public class TileSpectral extends TileBase
 	@Override
 	public void deserialize(CompoundTag tag)
 	{
-		storedBlock = NbtUtils.readBlockState(this.level.holderLookup(Registries.BLOCK), tag.getCompound("BlockState"));
+		storedBlock = NbtUtils.readBlockState(BuiltInRegistries.BLOCK.asLookup(), tag.getCompound("BlockState"));
 	}
 
 	@Override
