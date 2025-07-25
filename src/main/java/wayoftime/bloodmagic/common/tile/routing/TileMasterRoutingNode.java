@@ -70,7 +70,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 //          System.out.println(currentInput);
 		}
 
-		if (getLevel().isClientSide || getLevel().getGameTime() % Math.min(1, tickRate - getItem(SLOT_SPEED_UPGRADE).getCount()) != 0) // Temporary tick rate solver
+		if (getLevel().isClientSide || getLevel().getGameTime() % Math.max(1, tickRate - getItem(SLOT_SPEED_UPGRADE).getCount()) != 0) // Temporary tick rate solver
 		{
 			return;
 		}
