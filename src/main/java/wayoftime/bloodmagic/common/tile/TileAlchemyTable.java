@@ -388,10 +388,10 @@ public class TileAlchemyTable extends TileInventory implements WorldlyContainer,
 							}
 						}
 
-						ItemStack[] inputs = new ItemStack[0];
-						for (ItemStack stack : inputList) ArrayUtils.add(inputs, stack.copy());
+						List<ItemStack> inputs = new ArrayList<>();
+						for (ItemStack stack : inputList) inputs.add(stack.copy());
 
-						BloodMagicCraftedEvent.AlchemyTable event = new BloodMagicCraftedEvent.AlchemyTable(recipeAlchemyTable.getOutput(inputList).copy(), inputs);
+						BloodMagicCraftedEvent.AlchemyTable event = new BloodMagicCraftedEvent.AlchemyTable(recipeAlchemyTable.getOutput(inputList).copy(), inputs.toArray(ItemStack[]::new));
 						MinecraftForge.EVENT_BUS.post(event);
 
 						ItemStack outputSlotStack = getItem(outputSlot);
@@ -581,10 +581,10 @@ public class TileAlchemyTable extends TileInventory implements WorldlyContainer,
 		{
 			ItemStack currentOutputStack = getItem(outputSlot);
 
-			ItemStack[] inputs = new ItemStack[0];
-			for (ItemStack stack : inputList) ArrayUtils.add(inputs, stack.copy());
+			List<ItemStack> inputs = new ArrayList<>();
+			for (ItemStack stack : inputList) inputs.add(stack.copy());
 
-			BloodMagicCraftedEvent.AlchemyTable event = new BloodMagicCraftedEvent.AlchemyTable(outputStack.copy(), inputs);
+			BloodMagicCraftedEvent.AlchemyTable event = new BloodMagicCraftedEvent.AlchemyTable(outputStack.copy(), inputs.toArray(ItemStack[]::new));
 			MinecraftForge.EVENT_BUS.post(event);
 			outputStack = event.getOutput();
 
