@@ -42,6 +42,8 @@ public class TileSoulForge extends TileInventory implements MenuProvider, IDemon
 
 	public int burnTime = 0;
 
+	public boolean showWillFlag = false; // show an insufficient will flag in the GUI.
+
 	public TileSoulForge(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
 		super(type, 6, "soulforge", pos, state);
@@ -104,6 +106,7 @@ public class TileSoulForge extends TileInventory implements MenuProvider, IDemon
 	{
 		if (!hasSoulGemOrSoul())
 		{
+			showWillFlag = false; // clear flag if there is no Will Holder.
 			burnTime = 0;
 			return;
 		}
@@ -148,10 +151,11 @@ public class TileSoulForge extends TileInventory implements MenuProvider, IDemon
 					typeInGem = type;
 				}
 			}
-			if (soulsInGem >= recipe.getMinimumSouls() || burnTime > 0)
+			if (soulsInGem >= recipe.getMinimumSouls())
 			{
 				if (canCraft(recipe))
 				{
+					showWillFlag = false; // clear flag if crafting is in progress.
 					burnTime++;
 
 					if (burnTime == ticksRequired)
@@ -161,16 +165,10 @@ public class TileSoulForge extends TileInventory implements MenuProvider, IDemon
 							double requiredSouls = recipe.getSoulDrain();
 							if (requiredSouls > 0)
 							{
-								if (!getLevel().isClientSide && soulsInGem >= recipe.getMinimumSouls())
-								{
-									consumeSouls(typeInGem, requiredSouls);
-								}
+								consumeSouls(typeInGem, requiredSouls);
 							}
-
-							if (!getLevel().isClientSide && soulsInGem >= recipe.getMinimumSouls())
-								craftItem(recipe);
+							craftItem(recipe);
 						}
-
 						burnTime = 0;
 					} else if (burnTime > ticksRequired + 10)
 					{
@@ -178,14 +176,17 @@ public class TileSoulForge extends TileInventory implements MenuProvider, IDemon
 					}
 				} else
 				{
+					showWillFlag = false; // clear flag if something else is blocking the crafting process.
 					burnTime = 0;
 				}
 			} else
 			{
+				showWillFlag = true; // show flag if not enough souls.
 				burnTime = 0;
 			}
 		} else
 		{
+			showWillFlag = false; // clear flag if no recipe.
 			burnTime = 0;
 		}
 	}
@@ -458,4 +459,6 @@ public class TileSoulForge extends TileInventory implements MenuProvider, IDemon
 	{
 		return 0;
 	}
+
+	public boolean getWillFlagForGUI() { return this.showWillFlag; }
 }
