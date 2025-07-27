@@ -335,7 +335,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.forsakenSoulRitual.info", "Applies Will catalysts to crystals within range from the attached inventory.");
 		add("ritual.bloodmagic.crystalHarvestRitual.info", "Breaks Demon Will Crystal Clusters of all aspects within its range, dropping the results on top of the crystals.");
 		add("ritual.bloodmagic.placerRitual.info", "Grabs blocks that are inside of the connected inventory and places them into the world.");
-		add("ritual.bloodmagic.fellingRitual.info", "A standard tree-cutting machine, this ritual will cut down all trees and leaves within its area and collect the drops.");
+		add("ritual.bloodmagic.fellingRitual.info", "Summons tree-felling spirits to chop down nearby trees and collect their drops into a chest atop the Master Ritual Stone.");
 		add("ritual.bloodmagic.pumpRitual.info", "Looks around the world and grabs fluids from the defined area. Will only remove and put the fluid into the connected tank if the tank has at least a bucket's worth of the same fluid.");
 		add("ritual.bloodmagic.altarBuilderRitual.info", "Builds an altar out of the components inside of the connected inventory.");
 		add("ritual.bloodmagic.portalRitual.info", "Creates a portal network based on the activator and the immediately surrounding blocks. Blocks can be changed after activation without changing the network of portals, and portals with the same \"key\" will link together.");
