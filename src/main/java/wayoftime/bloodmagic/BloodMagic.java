@@ -5,6 +5,8 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.dispenser.DispenseItemBehavior;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent.RegisterGeometryLoaders;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
@@ -14,6 +16,7 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fluids.DispenseFluidContainer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -223,6 +226,8 @@ public class BloodMagic {
 
     private void setup(final FMLCommonSetupEvent event) {
         packetHandler.initialize();
+        DispenserBlock.registerBehavior(BloodMagicItems.LIFE_ESSENCE_BUCKET.get(), DispenseFluidContainer.getInstance());
+        DispenserBlock.registerBehavior(BloodMagicItems.DOUBT_BUCKET.get(), DispenseFluidContainer.getInstance());
 
         curiosLoaded = ModList.get().isLoaded("curios");
     }
