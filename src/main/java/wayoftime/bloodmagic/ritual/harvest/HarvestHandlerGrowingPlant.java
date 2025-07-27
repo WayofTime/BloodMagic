@@ -31,7 +31,8 @@ public class HarvestHandlerGrowingPlant implements IHarvestHandler {
     @Override
     public boolean test(Level world, BlockPos pos, BlockState state) {
         if (state.getBlock() instanceof GrowingPlantHeadBlock head) {
-            return world.getBlockState(pos.relative(head.growthDirection.getOpposite())).is(head.getBodyBlock());
+            //return world.getBlockState(pos.relative(head.growthDirection.getOpposite())).is(head.getBodyBlock());
+            return false;
         }
 
         return false;
