@@ -1,13 +1,64 @@
 {
   "variants": {
-    "axis=x": {
-      "model": "bloodmagic:block/dungeon_pillar_special_x"
+    "axis=x,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_pillar_special_c",
+      "x": 90
     },
-    "axis=y": {
-      "model": "bloodmagic:block/dungeon_pillar_special"
+    "axis=x,will_type=default": {
+      "model": "bloodmagic:block/dungeon_pillar_special",
+      "x": 90
     },
-    "axis=z": {
-      "model": "bloodmagic:block/dungeon_pillar_special_z"
+    "axis=x,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_pillar_special_d",
+      "x": 90
+    },
+    "axis=x,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_pillar_special_s",
+      "x": 90
+    },
+    "axis=x,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_pillar_special_v",
+      "x": 90
+    },
+    "axis=y,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_pillar_special_c",
+      "y": 90
+    },
+    "axis=y,will_type=default": {
+      "model": "bloodmagic:block/dungeon_pillar_special",
+      "y": 90
+    },
+    "axis=y,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_pillar_special_d",
+      "y": 90
+    },
+    "axis=y,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_pillar_special_s",
+      "y": 90
+    },
+    "axis=y,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_pillar_special_v",
+      "y": 90
+    },
+    "axis=z,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_pillar_special_c",
+      "x": 90
+    },
+    "axis=z,will_type=default": {
+      "model": "bloodmagic:block/dungeon_pillar_special",
+      "x": 90
+    },
+    "axis=z,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_pillar_special_d",
+      "x": 90
+    },
+    "axis=z,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_pillar_special_s",
+      "x": 90
+    },
+    "axis=z,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_pillar_special_v",
+      "x": 90
     }
   }
 }

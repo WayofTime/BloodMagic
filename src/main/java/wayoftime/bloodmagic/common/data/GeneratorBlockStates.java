@@ -102,7 +102,8 @@ public class GeneratorBlockStates extends BlockStateProvider
 		willStairsBlock((WillStairBlock) BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get(), BloodMagic.rl("block/dungeon/dungeon_polished"));
 		willStairsBlock((WillStairBlock) BloodMagicBlocks.DUNGEON_STONE_STAIRS.get(), BloodMagic.rl("block/dungeon/dungeon_stone"));
 		buildPillarCenter(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get(), BloodMagic.rl("block/dungeon/dungeon_pillar"), BloodMagic.rl("block/dungeon/dungeon_pillarheart"));
-		buildPillarCenter(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get(), BloodMagic.rl("block/dungeon/dungeon_pillarspecial"), BloodMagic.rl("block/dungeon/dungeon_pillarheart"));
+		buildWillPillarCenter(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get(), BloodMagic.rl("block/dungeon/dungeon_pillar"), BloodMagic.rl("block/dungeon/dungeon_pillarheart"));
+		//buildPillarCenter(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get(), BloodMagic.rl("block/dungeon/dungeon_pillarspecial"), BloodMagic.rl("block/dungeon/dungeon_pillarheart"));
 		buildWallInventory((WallBlock) BloodMagicBlocks.DUNGEON_BRICK_WALL.get(), BloodMagic.rl("block/dungeon/dungeon_brick1"));
 		buildWallInventory((WallBlock) BloodMagicBlocks.DUNGEON_POLISHED_WALL.get(), BloodMagic.rl("block/dungeon/dungeon_polished"));
 		fenceGateBlock((FenceGateBlock) BloodMagicBlocks.DUNGEON_BRICK_GATE.get(), BloodMagic.rl("block/dungeon/dungeon_brick1"));
@@ -349,6 +350,22 @@ public class GeneratorBlockStates extends BlockStateProvider
 //		builder.partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.Y).modelForState().modelFile(yModel).addModel();
 //		builder.partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.Z).modelForState().modelFile(zModel).addModel();
 //	}
+
+	private void buildWillPillarCenter(Block block, ResourceLocation side, ResourceLocation end) {
+		String basePath = ForgeRegistries.BLOCKS.getKey(block).getPath();
+
+		getVariantBuilder(block).forAllStates(state -> {
+			Direction.Axis axis = state.getValue(RotatedPillarBlock.AXIS);
+			ModelFile modelFile = models().withExistingParent(basePath + suffixMap.get(state.getValue(BlockWillType.WILL_TYPE)), "cube_column")
+					.texture("side", side)
+					.texture("end", end);
+			return ConfiguredModel.builder()
+					.modelFile(modelFile)
+					.rotationX(axis != Direction.Axis.Y ? 90 : 0)
+					.rotationY(axis == Direction.Axis.X ? 90 : 0)
+					.build();
+		});
+	}
 
 	private void buildPillarCenter(Block block, ResourceLocation side, ResourceLocation pillarEnd)
 	{
