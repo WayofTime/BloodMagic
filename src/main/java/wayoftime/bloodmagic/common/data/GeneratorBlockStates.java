@@ -1,11 +1,9 @@
 package wayoftime.bloodmagic.common.data;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import net.minecraft.core.Direction;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -16,7 +14,9 @@ import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.StairsShape;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -40,6 +40,8 @@ import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
 import wayoftime.bloodmagic.common.block.BlockSpecialDungeonSeal;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.block.base.BlockPillarCap;
+import wayoftime.bloodmagic.common.block.decoration.BlockWillType;
+import wayoftime.bloodmagic.common.block.decoration.WillStairBlock;
 import wayoftime.bloodmagic.common.block.type.PillarCapType;
 import wayoftime.bloodmagic.common.block.type.SpecialSealType;
 
@@ -66,6 +68,11 @@ public class GeneratorBlockStates extends BlockStateProvider
 			buildDungeonBlock(block.get());
 		}
 
+		for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_DUNGEON.getEntries())
+		{
+			buildDecorative(block.get());
+		}
+
 		buildCubeAll(BloodMagicBlocks.BLOOD_LIGHT.get());
 		buildCubeAll(BloodMagicBlocks.BLANK_RITUAL_STONE.get());
 		buildCubeAll(BloodMagicBlocks.AIR_RITUAL_STONE.get());
@@ -90,8 +97,10 @@ public class GeneratorBlockStates extends BlockStateProvider
 		buildMasterRoutingNode(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get());
 
 		buildRandomStone(BloodMagicBlocks.DUNGEON_STONE.get(), BloodMagic.rl("block/dungeon/dungeon_stone"));
-		stairsBlock((StairBlock) BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get(), BloodMagic.rl("block/dungeon/dungeon_brick1"));
-		stairsBlock((StairBlock) BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get(), BloodMagic.rl("block/dungeon/dungeon_polished"));
+		//stairsBlock((StairBlock) BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get(), BloodMagic.rl("block/dungeon/dungeon_brick1"));
+		willStairsBlock((WillStairBlock) BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get(), BloodMagic.rl("block/dungeon/dungeon_brick1"));
+		willStairsBlock((WillStairBlock) BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get(), BloodMagic.rl("block/dungeon/dungeon_polished"));
+		willStairsBlock((WillStairBlock) BloodMagicBlocks.DUNGEON_STONE_STAIRS.get(), BloodMagic.rl("block/dungeon/dungeon_stone"));
 		buildPillarCenter(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get(), BloodMagic.rl("block/dungeon/dungeon_pillar"), BloodMagic.rl("block/dungeon/dungeon_pillarheart"));
 		buildPillarCenter(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get(), BloodMagic.rl("block/dungeon/dungeon_pillarspecial"), BloodMagic.rl("block/dungeon/dungeon_pillarheart"));
 		buildWallInventory((WallBlock) BloodMagicBlocks.DUNGEON_BRICK_WALL.get(), BloodMagic.rl("block/dungeon/dungeon_brick1"));
@@ -269,9 +278,20 @@ public class GeneratorBlockStates extends BlockStateProvider
 	private void buildRandomStone(Block block, ResourceLocation texture)
 	{
 		String basePath = ForgeRegistries.BLOCKS.getKey(block).getPath();
-		ModelFile modelFile = models().cubeAll(basePath, texture);
-		ModelFile modelFile_mirrored = models().withExistingParent(basePath + "_mirrored", "cube_mirrored_all").texture("all", texture);
-		getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder().modelFile(modelFile).nextModel().modelFile(modelFile_mirrored).nextModel().modelFile(modelFile).rotationY(180).nextModel().modelFile(modelFile_mirrored).rotationY(180).build());
+		VariantBlockStateBuilder variantBuilder = getVariantBuilder(block);
+
+		variantBuilder.forAllStates(state -> {
+			String suffix = suffixMap.get(state.getValue(BlockWillType.WILL_TYPE));
+			ResourceLocation willTexture = texture.withSuffix(suffix);
+			ModelFile modelFile = models().cubeAll(basePath + suffix, willTexture);
+			ModelFile modelFile_mirrored = models().withExistingParent(basePath + "_mirrored" + suffix, "cube_mirrored_all").texture("all", willTexture);
+
+			return ConfiguredModel.builder()
+					.modelFile(modelFile).nextModel()
+					.modelFile(modelFile_mirrored).nextModel()
+					.modelFile(modelFile).rotationY(180).nextModel()
+					.modelFile(modelFile_mirrored).rotationY(180).build();
+		});
 	}
 
 	private void buildWallInventory(WallBlock block, ResourceLocation texture)
@@ -569,17 +589,59 @@ public class GeneratorBlockStates extends BlockStateProvider
 		}
 	}
 
+	private static Map<EnumDemonWillType, String> suffixMap = Map.of(
+			EnumDemonWillType.DEFAULT, "",
+			EnumDemonWillType.CORROSIVE, "_c",
+			EnumDemonWillType.DESTRUCTIVE, "_d",
+			EnumDemonWillType.STEADFAST, "_s",
+			EnumDemonWillType.VENGEFUL, "_v"
+	);
+
+	private void buildDecorative(Block block)
+	{
+		VariantBlockStateBuilder builder = getVariantBuilder(block);
+		String basePath = ForgeRegistries.BLOCKS.getKey(block).getPath();
+
+		builder.forAllStates(state -> {
+			String suffix = suffixMap.get(state.getValue(BlockWillType.WILL_TYPE));
+			return ConfiguredModel.builder()
+					.modelFile(models().cubeAll(basePath + suffix, BloodMagic.rl("block/dungeon/" + basePath + suffix)))
+					.build();
+		});
+	}
+
+	private void willStairsBlock(WillStairBlock block, ResourceLocation textureBase) {
+		getVariantBuilder(block)
+				.forAllStatesExcept(state -> {
+					Direction facing = state.getValue(StairBlock.FACING);
+					Half half = state.getValue(StairBlock.HALF);
+					StairsShape shape = state.getValue(StairBlock.SHAPE);
+					int yRot = (int) facing.getClockWise().toYRot(); // Stairs model is rotated 90 degrees clockwise for some reason
+					if (shape == StairsShape.INNER_LEFT || shape == StairsShape.OUTER_LEFT) {
+						yRot += 270; // Left facing stairs are rotated 90 degrees clockwise
+					}
+					if (shape != StairsShape.STRAIGHT && half == Half.TOP) {
+						yRot += 90; // Top stairs are rotated 90 degrees clockwise
+					}
+					yRot %= 360;
+					boolean uvlock = yRot != 0 || half == Half.TOP; // Don't set uvlock for states that have no rotation
+
+					String suffix = suffixMap.get(state.getValue(BlockWillType.WILL_TYPE));
+					String basePath = ForgeRegistries.BLOCKS.getKey(block).getPath();
+					ResourceLocation texture = textureBase.withSuffix(suffix);
+
+					return ConfiguredModel.builder()
+							.modelFile(shape == StairsShape.STRAIGHT ? models().stairs(basePath + suffix, texture, texture, texture) : shape == StairsShape.INNER_LEFT || shape == StairsShape.INNER_RIGHT ? models().stairsInner(basePath + "_inner" + suffix, texture, texture, texture) : models().stairsOuter(basePath + "_outer" + suffix, texture, texture, texture))
+							.rotationX(half == Half.BOTTOM ? 0 : 180)
+							.rotationY(yRot)
+							.uvLock(uvlock)
+							.build();
+				}, StairBlock.WATERLOGGED);
+	}
+
 	private void buildFurnace(Block block)
 	{
 		VariantBlockStateBuilder builder = getVariantBuilder(block);
-
-		Map<EnumDemonWillType, String> suffixMap = new HashMap<>();
-
-		suffixMap.put(EnumDemonWillType.DEFAULT, "");
-		suffixMap.put(EnumDemonWillType.CORROSIVE, "_c");
-		suffixMap.put(EnumDemonWillType.VENGEFUL, "_v");
-		suffixMap.put(EnumDemonWillType.DESTRUCTIVE, "_d");
-		suffixMap.put(EnumDemonWillType.STEADFAST, "_s");
 
 		for (Entry<EnumDemonWillType, String> entry : suffixMap.entrySet())
 		{
