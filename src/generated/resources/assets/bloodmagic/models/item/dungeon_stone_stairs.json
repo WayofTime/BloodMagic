@@ -1,0 +1,34 @@
+{
+  "overrides": [
+    {
+      "model": "bloodmagic:block/dungeon_stone_stairs",
+      "predicate": {
+        "bloodmagic:will_type": 0.0
+      }
+    },
+    {
+      "model": "bloodmagic:block/dungeon_stone_stairs_c",
+      "predicate": {
+        "bloodmagic:will_type": 1.0
+      }
+    },
+    {
+      "model": "bloodmagic:block/dungeon_stone_stairs_d",
+      "predicate": {
+        "bloodmagic:will_type": 2.0
+      }
+    },
+    {
+      "model": "bloodmagic:block/dungeon_stone_stairs_v",
+      "predicate": {
+        "bloodmagic:will_type": 3.0
+      }
+    },
+    {
+      "model": "bloodmagic:block/dungeon_stone_stairs_s",
+      "predicate": {
+        "bloodmagic:will_type": 4.0
+      }
+    }
+  ]
+}

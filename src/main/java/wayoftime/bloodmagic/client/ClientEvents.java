@@ -9,9 +9,12 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.item.ItemPropertyFunction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -23,10 +26,12 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.registries.RegistryObject;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ConfigManager;
 import wayoftime.bloodmagic.anointment.AnointmentColor;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.api.compat.IMultiWillTool;
 import wayoftime.bloodmagic.client.model.MimicColor;
 import wayoftime.bloodmagic.client.model.MimicModelLoader;
@@ -55,6 +60,7 @@ import wayoftime.bloodmagic.network.SigilHoldingPacket;
 import wayoftime.bloodmagic.potion.FlaskColor;
 import wayoftime.bloodmagic.potion.TippedDaggerColor;
 import wayoftime.bloodmagic.util.GhostItemHelper;
+import wayoftime.bloodmagic.util.helper.NBTHelper;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = BloodMagic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientEvents
@@ -231,6 +237,18 @@ public class ClientEvents
 					return ((ItemSentientSword) stack.getItem()).getActivated(stack) ? 1 : 0;
 				}
 			});
+
+			for (RegistryObject<Item> item : BloodMagicItems.DECORATIVE_DUNGEON.getEntries()) {
+				ItemProperties.register(item.get(), BloodMagic.rl("will_type"), (stack, level, entity, value) -> {
+					CompoundTag tag = stack.getTag();
+					if (tag == null) {
+						return 0;
+					}
+					CompoundTag stateTag = tag.getCompound(BlockItem.BLOCK_STATE_TAG);
+					EnumDemonWillType type = EnumDemonWillType.getType(stateTag.getString("will_type"));
+					return type == null ? 0 : type.ordinal();
+				});
+			}
 
 			Minecraft.getInstance().getBlockColors().register(new MimicColor(), BloodMagicBlocks.MIMIC.get());
 			ItemBlockRenderTypes.setRenderLayer(BloodMagicBlocks.MIMIC.get(), (RenderType) -> true);

@@ -11,6 +11,15 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "block": "bloodmagic:dungeon_polished_stairs",
+              "function": "minecraft:copy_state",
+              "properties": [
+                "will_type"
+              ]
+            }
+          ],
           "name": "bloodmagic:dungeon_polished_stairs"
         }
       ],

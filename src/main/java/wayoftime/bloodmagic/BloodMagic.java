@@ -100,6 +100,8 @@ public class BloodMagic {
         BloodMagicItems.BASICITEMS.register(modBus);
         BloodMagicBlocks.BASICBLOCKS.register(modBus);
         BloodMagicBlocks.DUNGEONBLOCKS.register(modBus);
+        BloodMagicBlocks.DECORATIVE_DUNGEON.register(modBus);
+        BloodMagicItems.DECORATIVE_DUNGEON.register(modBus);
         BloodMagicFluids.FLUID_TYPES.register(modBus);
         BloodMagicFluids.FLUIDS.register(modBus);
         BloodMagicBlocks.CONTAINERS.register(modBus);

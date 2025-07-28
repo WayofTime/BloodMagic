@@ -16,7 +16,9 @@ import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class GeneratorItemModels extends ItemModelProvider {
     public GeneratorItemModels(PackOutput output, ExistingFileHelper existingFileHelper) {
@@ -38,6 +40,10 @@ public class GeneratorItemModels extends ItemModelProvider {
 
         for (RegistryObject<Block> block : BloodMagicBlocks.DUNGEONBLOCKS.getEntries()) {
             registerBlockModel(block.get());
+        }
+
+        for (RegistryObject<Item> block : BloodMagicItems.DECORATIVE_DUNGEON.getEntries()) {
+            registerDecorativeModel(block.get());
         }
 
         registerBlockModel(BloodMagicBlocks.BLANK_RITUAL_STONE.get());
@@ -64,7 +70,6 @@ public class GeneratorItemModels extends ItemModelProvider {
         registerCustomBlockPath(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get(), "masterroutingnodecombined");
 
         registerCustomBlockPath(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get(), "dungeon_brick1");
-        registerBlockModel(BloodMagicBlocks.DUNGEON_STONE.get());
         registerBlockModel(BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get());
         registerBlockModel(BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get());
         registerBlockModel(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get());
@@ -254,6 +259,23 @@ public class GeneratorItemModels extends ItemModelProvider {
         ModelFile activatedFile = singleTexture("item/variants/" + path + "_activated", mcLoc("item/handheld"), "layer0", modLoc("item/" + path + "_activated"));
         ModelFile deactivatedFile = singleTexture("item/variants/" + path + "_deactivated", mcLoc("item/handheld"), "layer0", modLoc("item/" + path + "_deactivated"));
         getBuilder(path).override().predicate(BloodMagic.rl("active"), 0).model(deactivatedFile).end().override().predicate(BloodMagic.rl("active"), 1).model(activatedFile).end();
+    }
+
+    private void registerDecorativeModel(Item block) {
+        String path = ForgeRegistries.ITEMS.getKey(block).getPath();
+        ResourceLocation predicate = BloodMagic.rl("will_type");
+        ItemModelBuilder builder = getBuilder(path);
+
+        Map<EnumDemonWillType, String> suffixMap = new HashMap<>();
+        suffixMap.put(EnumDemonWillType.DEFAULT, "");
+        suffixMap.put(EnumDemonWillType.CORROSIVE, "_c");
+        suffixMap.put(EnumDemonWillType.VENGEFUL, "_v");
+        suffixMap.put(EnumDemonWillType.DESTRUCTIVE, "_d");
+        suffixMap.put(EnumDemonWillType.STEADFAST, "_s");
+        for (EnumDemonWillType type : EnumDemonWillType.values()) {
+            String suffix = suffixMap.get(type);
+            builder.override().predicate(predicate, type.ordinal()).model(new ModelFile.UncheckedModelFile(modLoc("block/" + path + suffix))).end();
+        }
     }
 
     private void registerDemonWillVariantItem(Item item) {

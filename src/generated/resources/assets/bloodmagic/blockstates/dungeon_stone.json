@@ -1,6 +1,22 @@
 {
   "variants": {
-    "": [
+    "will_type=corrosive": [
+      {
+        "model": "bloodmagic:block/dungeon_stone_c"
+      },
+      {
+        "model": "bloodmagic:block/dungeon_stone_mirrored_c"
+      },
+      {
+        "model": "bloodmagic:block/dungeon_stone_c",
+        "y": 180
+      },
+      {
+        "model": "bloodmagic:block/dungeon_stone_mirrored_c",
+        "y": 180
+      }
+    ],
+    "will_type=default": [
       {
         "model": "bloodmagic:block/dungeon_stone"
       },
@@ -13,6 +29,54 @@
       },
       {
         "model": "bloodmagic:block/dungeon_stone_mirrored",
+        "y": 180
+      }
+    ],
+    "will_type=destructive": [
+      {
+        "model": "bloodmagic:block/dungeon_stone_d"
+      },
+      {
+        "model": "bloodmagic:block/dungeon_stone_mirrored_d"
+      },
+      {
+        "model": "bloodmagic:block/dungeon_stone_d",
+        "y": 180
+      },
+      {
+        "model": "bloodmagic:block/dungeon_stone_mirrored_d",
+        "y": 180
+      }
+    ],
+    "will_type=steadfast": [
+      {
+        "model": "bloodmagic:block/dungeon_stone_s"
+      },
+      {
+        "model": "bloodmagic:block/dungeon_stone_mirrored_s"
+      },
+      {
+        "model": "bloodmagic:block/dungeon_stone_s",
+        "y": 180
+      },
+      {
+        "model": "bloodmagic:block/dungeon_stone_mirrored_s",
+        "y": 180
+      }
+    ],
+    "will_type=vengeful": [
+      {
+        "model": "bloodmagic:block/dungeon_stone_v"
+      },
+      {
+        "model": "bloodmagic:block/dungeon_stone_mirrored_v"
+      },
+      {
+        "model": "bloodmagic:block/dungeon_stone_v",
+        "y": 180
+      },
+      {
+        "model": "bloodmagic:block/dungeon_stone_mirrored_v",
         "y": 180
       }
     ]

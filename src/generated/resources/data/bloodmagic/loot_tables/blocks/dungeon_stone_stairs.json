@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "block": "bloodmagic:dungeon_stone_stairs",
+              "function": "minecraft:copy_state",
+              "properties": [
+                "will_type"
+              ]
+            }
+          ],
+          "name": "bloodmagic:dungeon_stone_stairs"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "bloodmagic:blocks/dungeon_stone_stairs"
+}

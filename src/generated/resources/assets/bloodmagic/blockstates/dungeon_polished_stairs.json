@@ -1,206 +1,1026 @@
 {
   "variants": {
-    "facing=east,half=bottom,shape=inner_left": {
+    "facing=east,half=bottom,shape=inner_left,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_c",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,half=bottom,shape=inner_left,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_inner",
       "uvlock": true,
       "y": 270
     },
-    "facing=east,half=bottom,shape=inner_right": {
+    "facing=east,half=bottom,shape=inner_left,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_d",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,half=bottom,shape=inner_left,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_s",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,half=bottom,shape=inner_left,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_v",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,half=bottom,shape=inner_right,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_c"
+    },
+    "facing=east,half=bottom,shape=inner_right,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_inner"
     },
-    "facing=east,half=bottom,shape=outer_left": {
+    "facing=east,half=bottom,shape=inner_right,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_d"
+    },
+    "facing=east,half=bottom,shape=inner_right,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_s"
+    },
+    "facing=east,half=bottom,shape=inner_right,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_v"
+    },
+    "facing=east,half=bottom,shape=outer_left,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_c",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,half=bottom,shape=outer_left,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_outer",
       "uvlock": true,
       "y": 270
     },
-    "facing=east,half=bottom,shape=outer_right": {
+    "facing=east,half=bottom,shape=outer_left,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_d",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,half=bottom,shape=outer_left,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_s",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,half=bottom,shape=outer_left,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_v",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,half=bottom,shape=outer_right,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_c"
+    },
+    "facing=east,half=bottom,shape=outer_right,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_outer"
     },
-    "facing=east,half=bottom,shape=straight": {
+    "facing=east,half=bottom,shape=outer_right,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_d"
+    },
+    "facing=east,half=bottom,shape=outer_right,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_s"
+    },
+    "facing=east,half=bottom,shape=outer_right,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_v"
+    },
+    "facing=east,half=bottom,shape=straight,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_c"
+    },
+    "facing=east,half=bottom,shape=straight,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs"
     },
-    "facing=east,half=top,shape=inner_left": {
+    "facing=east,half=bottom,shape=straight,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_d"
+    },
+    "facing=east,half=bottom,shape=straight,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_s"
+    },
+    "facing=east,half=bottom,shape=straight,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_v"
+    },
+    "facing=east,half=top,shape=inner_left,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_c",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,shape=inner_left,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_inner",
       "uvlock": true,
       "x": 180
     },
-    "facing=east,half=top,shape=inner_right": {
+    "facing=east,half=top,shape=inner_left,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_d",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,shape=inner_left,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_s",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,shape=inner_left,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_v",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,shape=inner_right,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_c",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=east,half=top,shape=inner_right,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_inner",
       "uvlock": true,
       "x": 180,
       "y": 90
     },
-    "facing=east,half=top,shape=outer_left": {
+    "facing=east,half=top,shape=inner_right,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_d",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=east,half=top,shape=inner_right,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_s",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=east,half=top,shape=inner_right,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_v",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=east,half=top,shape=outer_left,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_c",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,shape=outer_left,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_outer",
       "uvlock": true,
       "x": 180
     },
-    "facing=east,half=top,shape=outer_right": {
+    "facing=east,half=top,shape=outer_left,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_d",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,shape=outer_left,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_s",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,shape=outer_left,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_v",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,shape=outer_right,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_c",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=east,half=top,shape=outer_right,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_outer",
       "uvlock": true,
       "x": 180,
       "y": 90
     },
-    "facing=east,half=top,shape=straight": {
+    "facing=east,half=top,shape=outer_right,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_d",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=east,half=top,shape=outer_right,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_s",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=east,half=top,shape=outer_right,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_v",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=east,half=top,shape=straight,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_c",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,shape=straight,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs",
       "uvlock": true,
       "x": 180
     },
-    "facing=north,half=bottom,shape=inner_left": {
+    "facing=east,half=top,shape=straight,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_d",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,shape=straight,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_s",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,shape=straight,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_v",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=north,half=bottom,shape=inner_left,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_c",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,half=bottom,shape=inner_left,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_inner",
       "uvlock": true,
       "y": 180
     },
-    "facing=north,half=bottom,shape=inner_right": {
+    "facing=north,half=bottom,shape=inner_left,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_d",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,half=bottom,shape=inner_left,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_s",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,half=bottom,shape=inner_left,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_v",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,half=bottom,shape=inner_right,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_c",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,shape=inner_right,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_inner",
       "uvlock": true,
       "y": 270
     },
-    "facing=north,half=bottom,shape=outer_left": {
+    "facing=north,half=bottom,shape=inner_right,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_d",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,shape=inner_right,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_s",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,shape=inner_right,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_v",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,shape=outer_left,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_c",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,half=bottom,shape=outer_left,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_outer",
       "uvlock": true,
       "y": 180
     },
-    "facing=north,half=bottom,shape=outer_right": {
+    "facing=north,half=bottom,shape=outer_left,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_d",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,half=bottom,shape=outer_left,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_s",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,half=bottom,shape=outer_left,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_v",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,half=bottom,shape=outer_right,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_c",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,shape=outer_right,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_outer",
       "uvlock": true,
       "y": 270
     },
-    "facing=north,half=bottom,shape=straight": {
+    "facing=north,half=bottom,shape=outer_right,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_d",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,shape=outer_right,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_s",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,shape=outer_right,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_v",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,shape=straight,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_c",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,shape=straight,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs",
       "uvlock": true,
       "y": 270
     },
-    "facing=north,half=top,shape=inner_left": {
+    "facing=north,half=bottom,shape=straight,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_d",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,shape=straight,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_s",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,shape=straight,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_v",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=top,shape=inner_left,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_c",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,shape=inner_left,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_inner",
       "uvlock": true,
       "x": 180,
       "y": 270
     },
-    "facing=north,half=top,shape=inner_right": {
+    "facing=north,half=top,shape=inner_left,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_d",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,shape=inner_left,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_s",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,shape=inner_left,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_v",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,shape=inner_right,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_c",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=north,half=top,shape=inner_right,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_inner",
       "uvlock": true,
       "x": 180
     },
-    "facing=north,half=top,shape=outer_left": {
+    "facing=north,half=top,shape=inner_right,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_d",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=north,half=top,shape=inner_right,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_s",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=north,half=top,shape=inner_right,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_v",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=north,half=top,shape=outer_left,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_c",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,shape=outer_left,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_outer",
       "uvlock": true,
       "x": 180,
       "y": 270
     },
-    "facing=north,half=top,shape=outer_right": {
+    "facing=north,half=top,shape=outer_left,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_d",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,shape=outer_left,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_s",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,shape=outer_left,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_v",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,shape=outer_right,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_c",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=north,half=top,shape=outer_right,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_outer",
       "uvlock": true,
       "x": 180
     },
-    "facing=north,half=top,shape=straight": {
+    "facing=north,half=top,shape=outer_right,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_d",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=north,half=top,shape=outer_right,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_s",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=north,half=top,shape=outer_right,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_v",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=north,half=top,shape=straight,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_c",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,shape=straight,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs",
       "uvlock": true,
       "x": 180,
       "y": 270
     },
-    "facing=south,half=bottom,shape=inner_left": {
+    "facing=north,half=top,shape=straight,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_d",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,shape=straight,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_s",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,shape=straight,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_v",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=south,half=bottom,shape=inner_left,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_c"
+    },
+    "facing=south,half=bottom,shape=inner_left,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_inner"
     },
-    "facing=south,half=bottom,shape=inner_right": {
+    "facing=south,half=bottom,shape=inner_left,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_d"
+    },
+    "facing=south,half=bottom,shape=inner_left,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_s"
+    },
+    "facing=south,half=bottom,shape=inner_left,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_v"
+    },
+    "facing=south,half=bottom,shape=inner_right,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_c",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,shape=inner_right,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_inner",
       "uvlock": true,
       "y": 90
     },
-    "facing=south,half=bottom,shape=outer_left": {
+    "facing=south,half=bottom,shape=inner_right,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_d",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,shape=inner_right,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_s",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,shape=inner_right,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_v",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,shape=outer_left,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_c"
+    },
+    "facing=south,half=bottom,shape=outer_left,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_outer"
     },
-    "facing=south,half=bottom,shape=outer_right": {
+    "facing=south,half=bottom,shape=outer_left,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_d"
+    },
+    "facing=south,half=bottom,shape=outer_left,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_s"
+    },
+    "facing=south,half=bottom,shape=outer_left,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_v"
+    },
+    "facing=south,half=bottom,shape=outer_right,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_c",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,shape=outer_right,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_outer",
       "uvlock": true,
       "y": 90
     },
-    "facing=south,half=bottom,shape=straight": {
+    "facing=south,half=bottom,shape=outer_right,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_d",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,shape=outer_right,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_s",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,shape=outer_right,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_v",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,shape=straight,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_c",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,shape=straight,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs",
       "uvlock": true,
       "y": 90
     },
-    "facing=south,half=top,shape=inner_left": {
+    "facing=south,half=bottom,shape=straight,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_d",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,shape=straight,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_s",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,shape=straight,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_v",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=top,shape=inner_left,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_c",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,shape=inner_left,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_inner",
       "uvlock": true,
       "x": 180,
       "y": 90
     },
-    "facing=south,half=top,shape=inner_right": {
+    "facing=south,half=top,shape=inner_left,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_d",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,shape=inner_left,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_s",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,shape=inner_left,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_v",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,shape=inner_right,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_c",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,half=top,shape=inner_right,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_inner",
       "uvlock": true,
       "x": 180,
       "y": 180
     },
-    "facing=south,half=top,shape=outer_left": {
+    "facing=south,half=top,shape=inner_right,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_d",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,half=top,shape=inner_right,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_s",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,half=top,shape=inner_right,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_v",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,half=top,shape=outer_left,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_c",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,shape=outer_left,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_outer",
       "uvlock": true,
       "x": 180,
       "y": 90
     },
-    "facing=south,half=top,shape=outer_right": {
+    "facing=south,half=top,shape=outer_left,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_d",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,shape=outer_left,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_s",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,shape=outer_left,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_v",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,shape=outer_right,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_c",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,half=top,shape=outer_right,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_outer",
       "uvlock": true,
       "x": 180,
       "y": 180
     },
-    "facing=south,half=top,shape=straight": {
+    "facing=south,half=top,shape=outer_right,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_d",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,half=top,shape=outer_right,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_s",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,half=top,shape=outer_right,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_v",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,half=top,shape=straight,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_c",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,shape=straight,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs",
       "uvlock": true,
       "x": 180,
       "y": 90
     },
-    "facing=west,half=bottom,shape=inner_left": {
+    "facing=south,half=top,shape=straight,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_d",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,shape=straight,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_s",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,shape=straight,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_v",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=west,half=bottom,shape=inner_left,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_c",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,half=bottom,shape=inner_left,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_inner",
       "uvlock": true,
       "y": 90
     },
-    "facing=west,half=bottom,shape=inner_right": {
+    "facing=west,half=bottom,shape=inner_left,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_d",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,half=bottom,shape=inner_left,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_s",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,half=bottom,shape=inner_left,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_v",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,half=bottom,shape=inner_right,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_c",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,shape=inner_right,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_inner",
       "uvlock": true,
       "y": 180
     },
-    "facing=west,half=bottom,shape=outer_left": {
+    "facing=west,half=bottom,shape=inner_right,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_d",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,shape=inner_right,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_s",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,shape=inner_right,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_v",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,shape=outer_left,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_c",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,half=bottom,shape=outer_left,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_outer",
       "uvlock": true,
       "y": 90
     },
-    "facing=west,half=bottom,shape=outer_right": {
+    "facing=west,half=bottom,shape=outer_left,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_d",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,half=bottom,shape=outer_left,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_s",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,half=bottom,shape=outer_left,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_v",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,half=bottom,shape=outer_right,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_c",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,shape=outer_right,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_outer",
       "uvlock": true,
       "y": 180
     },
-    "facing=west,half=bottom,shape=straight": {
+    "facing=west,half=bottom,shape=outer_right,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_d",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,shape=outer_right,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_s",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,shape=outer_right,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_v",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,shape=straight,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_c",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,shape=straight,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs",
       "uvlock": true,
       "y": 180
     },
-    "facing=west,half=top,shape=inner_left": {
+    "facing=west,half=bottom,shape=straight,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_d",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,shape=straight,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_s",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,shape=straight,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_v",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=top,shape=inner_left,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_c",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,shape=inner_left,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_inner",
       "uvlock": true,
       "x": 180,
       "y": 180
     },
-    "facing=west,half=top,shape=inner_right": {
+    "facing=west,half=top,shape=inner_left,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_d",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,shape=inner_left,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_s",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,shape=inner_left,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_v",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,shape=inner_right,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_c",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,half=top,shape=inner_right,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_inner",
       "uvlock": true,
       "x": 180,
       "y": 270
     },
-    "facing=west,half=top,shape=outer_left": {
+    "facing=west,half=top,shape=inner_right,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_d",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,half=top,shape=inner_right,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_s",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,half=top,shape=inner_right,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_inner_v",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,half=top,shape=outer_left,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_c",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,shape=outer_left,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_outer",
       "uvlock": true,
       "x": 180,
       "y": 180
     },
-    "facing=west,half=top,shape=outer_right": {
+    "facing=west,half=top,shape=outer_left,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_d",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,shape=outer_left,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_s",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,shape=outer_left,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_v",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,shape=outer_right,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_c",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,half=top,shape=outer_right,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs_outer",
       "uvlock": true,
       "x": 180,
       "y": 270
     },
-    "facing=west,half=top,shape=straight": {
+    "facing=west,half=top,shape=outer_right,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_d",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,half=top,shape=outer_right,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_s",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,half=top,shape=outer_right,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_outer_v",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,half=top,shape=straight,will_type=corrosive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_c",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,shape=straight,will_type=default": {
       "model": "bloodmagic:block/dungeon_polished_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,shape=straight,will_type=destructive": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_d",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,shape=straight,will_type=steadfast": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_s",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,shape=straight,will_type=vengeful": {
+      "model": "bloodmagic:block/dungeon_polished_stairs_v",
       "uvlock": true,
       "x": 180,
       "y": 180

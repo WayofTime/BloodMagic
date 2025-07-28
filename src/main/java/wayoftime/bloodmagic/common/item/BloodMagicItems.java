@@ -58,6 +58,7 @@ public class BloodMagicItems
 	public static final BloodOrbDeferredRegister BLOOD_ORBS = new BloodOrbDeferredRegister(BloodMagic.MODID);
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, BloodMagic.MODID);
 	public static final DeferredRegister<Item> BASICITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, BloodMagic.MODID);
+	public static final DeferredRegister<Item> DECORATIVE_DUNGEON = DeferredRegister.create(ForgeRegistries.ITEMS, BloodMagic.MODID);
 
 	public static final BloodOrbRegistryObject<BloodOrb> ORB_WEAK = BLOOD_ORBS.register("weakbloodorb", () -> new BloodOrb(new ResourceLocation(BloodMagic.MODID, "weakbloodorb"), 1, 5000, 2));
 	public static final BloodOrbRegistryObject<BloodOrb> ORB_APPRENTICE = BLOOD_ORBS.register("apprenticebloodorb", () -> new BloodOrb(new ResourceLocation(BloodMagic.MODID, "apprenticebloodorb"), 2, 25000, 5));
@@ -422,30 +423,37 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> DEMONITE_RAW = BASICITEMS.register("rawdemonite", () -> new ItemBase());
 	public static final RegistryObject<Item> HELLFORGED_INGOT = BASICITEMS.register("ingot_hellforged", () -> new ItemBase());
 
-	public static final RegistryObject<Item> DUNGEON_BRICK_1_BLOCK = ITEMS.register("dungeon_brick1", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_1.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_BRICK_2_BLOCK = ITEMS.register("dungeon_brick2", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_2.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_BRICK_3_BLOCK = ITEMS.register("dungeon_brick3", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_3.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_BRICK_ASSORTED_BLOCK = ITEMS.register("dungeon_brick_assorted", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_STONE_BLOCK = ITEMS.register("dungeon_stone", () -> new BlockItem(BloodMagicBlocks.DUNGEON_STONE.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_EYE = ITEMS.register("dungeon_eye", () -> new BlockItem(BloodMagicBlocks.DUNGEON_EYE.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_POLISHED_STONE_BLOCK = ITEMS.register("dungeon_polished", () -> new BlockItem(BloodMagicBlocks.DUNGEON_POLISHED_STONE.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_TILE_BLOCK = ITEMS.register("dungeon_tile", () -> new BlockItem(BloodMagicBlocks.DUNGEON_TILE.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_TILE_SPECIAL_BLOCK = ITEMS.register("dungeon_tilespecial", () -> new BlockItem(BloodMagicBlocks.DUNGEON_TILE_SPECIAL.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_SMALL_BRICK_BLOCK = ITEMS.register("dungeon_smallbrick", () -> new BlockItem(BloodMagicBlocks.DUNGEON_SMALL_BRICK.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_EMITTER = ITEMS.register("dungeon_emitter", () -> new BlockItem(BloodMagicBlocks.DUNGEON_EMITTER.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_ALTERNATOR = ITEMS.register("dungeon_alternator", () -> new BlockItem(BloodMagicBlocks.DUNGEON_ALTERNATOR.get(), new Item.Properties()));
+	public static final RegistryObject<Item> DUNGEON_STONE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_stone", () -> new BlockItem(BloodMagicBlocks.DUNGEON_STONE.get(), new Item.Properties()));
+	public static final RegistryObject<Item> DUNGEON_POLISHED_STONE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished", () -> new BlockItem(BloodMagicBlocks.DUNGEON_POLISHED_STONE.get(), new Item.Properties()));
+	public static final RegistryObject<Item> DUNGEON_TILE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_tile", () -> new BlockItem(BloodMagicBlocks.DUNGEON_TILE.get(), new Item.Properties()));
+	public static final RegistryObject<Item> DUNGEON_TILE_SPECIAL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_tilespecial", () -> new BlockItem(BloodMagicBlocks.DUNGEON_TILE_SPECIAL.get(), new Item.Properties()));
+	public static final RegistryObject<Item> DUNGEON_BRICK_1_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_1.get(), new Item.Properties()));
+	public static final RegistryObject<Item> DUNGEON_BRICK_2_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick2", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_2.get(), new Item.Properties()));
+	public static final RegistryObject<Item> DUNGEON_BRICK_3_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick3", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_3.get(), new Item.Properties()));
+	public static final RegistryObject<Item> DUNGEON_SMALL_BRICK_BLOCK = DECORATIVE_DUNGEON.register("dungeon_smallbrick", () -> new BlockItem(BloodMagicBlocks.DUNGEON_SMALL_BRICK.get(), new Item.Properties()));
 
-	public static final RegistryObject<Item> DUNGEON_BRICK_STAIRS_BLOCK = ITEMS.register("dungeon_brick_stairs", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_POLISHED_STAIRS_BLOCK = ITEMS.register("dungeon_polished_stairs", () -> new BlockItem(BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get(), new Item.Properties()));
+	public static final RegistryObject<Item> DUNGEON_TILE_SLAB_BLOCK = ITEMS.register("dungeon_tile_slab", () -> new BlockItem(BloodMagicBlocks.DUNGEON_TILE_SLAB.get(), new Item.Properties()));
+	public static final RegistryObject<Item> DUNGEON_BRICK_SLAB_BLOCK = ITEMS.register("dungeon_brick_slab", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_SLAB.get(), new Item.Properties()));
+
+	public static final RegistryObject<Item> DUNGEON_POLISHED_STAIRS_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_stairs", () -> new BlockItem(BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get(), new Item.Properties()));
+	public static final RegistryObject<Item> DUNGEON_STONE_STAIRS_BLOCK = DECORATIVE_DUNGEON.register("dungeon_stone_stairs", () -> new BlockItem(BloodMagicBlocks.DUNGEON_STONE_STAIRS.get(), new Item.Properties()));
+	public static final RegistryObject<Item> DUNGEON_BRICK_STAIRS_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick_stairs", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get(), new Item.Properties()));
+
+	public static final RegistryObject<Item> DUNGEON_POLISHED_WALL_BLOCK = ITEMS.register("dungeon_polished_wall", () -> new BlockItem(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get(), new Item.Properties()));
+	public static final RegistryObject<Item> DUNGEON_BRICK_WALL_BLOCK = ITEMS.register("dungeon_brick_wall", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_WALL.get(), new Item.Properties()));
+
+	public static final RegistryObject<Item> DUNGEON_POLISHED_GATE_BLOCK = ITEMS.register("dungeon_polished_gate", () -> new BlockItem(BloodMagicBlocks.DUNGEON_POLISHED_GATE.get(), new Item.Properties()));
+	public static final RegistryObject<Item> DUNGEON_BRICK_GATE_BLOCK = ITEMS.register("dungeon_brick_gate", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_GATE.get(), new Item.Properties()));
+
+	public static final RegistryObject<Item> DUNGEON_EYE = DECORATIVE_DUNGEON.register("dungeon_eye", () -> new BlockItem(BloodMagicBlocks.DUNGEON_EYE.get(), new Item.Properties()));
+
 	public static final RegistryObject<Item> DUNGEON_PILLAR_CENTER_BLOCK = ITEMS.register("dungeon_pillar_center", () -> new BlockItem(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get(), new Item.Properties()));
 	public static final RegistryObject<Item> DUNGEON_PILLAR_SPECIAL_BLOCK = ITEMS.register("dungeon_pillar_special", () -> new BlockItem(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get(), new Item.Properties()));
 	public static final RegistryObject<Item> DUNGEON_PILLAR_CAP_BLOCK = ITEMS.register("dungeon_pillar_cap", () -> new BlockItem(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_BRICK_WALL_BLOCK = ITEMS.register("dungeon_brick_wall", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_WALL.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_POLISHED_WALL_BLOCK = ITEMS.register("dungeon_polished_wall", () -> new BlockItem(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_BRICK_GATE_BLOCK = ITEMS.register("dungeon_brick_gate", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_GATE.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_POLISHED_GATE_BLOCK = ITEMS.register("dungeon_polished_gate", () -> new BlockItem(BloodMagicBlocks.DUNGEON_POLISHED_GATE.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_BRICK_SLAB_BLOCK = ITEMS.register("dungeon_brick_slab", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_SLAB.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_TILE_SLAB_BLOCK = ITEMS.register("dungeon_tile_slab", () -> new BlockItem(BloodMagicBlocks.DUNGEON_TILE_SLAB.get(), new Item.Properties()));
+
+	public static final RegistryObject<Item> DUNGEON_EMITTER = ITEMS.register("dungeon_emitter", () -> new BlockItem(BloodMagicBlocks.DUNGEON_EMITTER.get(), new Item.Properties()));
+	public static final RegistryObject<Item> DUNGEON_ALTERNATOR = ITEMS.register("dungeon_alternator", () -> new BlockItem(BloodMagicBlocks.DUNGEON_ALTERNATOR.get(), new Item.Properties()));
+	public static final RegistryObject<Item> DUNGEON_BRICK_ASSORTED_BLOCK = ITEMS.register("dungeon_brick_assorted", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get(), new Item.Properties()));
 
 	public static final RegistryObject<Item> DUNGEON_CRACKED_BRICK_1_BLOCK = ITEMS.register("dungeon_regular_cracked_brick1", () -> new BlockItem(BloodMagicBlocks.DUNGEON_CRACKED_BRICK_1.get(), new Item.Properties()));
 	public static final RegistryObject<Item> DUNGEON_GLOWING_CRACKED_BRICK_1_BLOCK = ITEMS.register("dungeon_cracked_brick1", () -> new BlockItem(BloodMagicBlocks.DUNGEON_GLOWING_CRACKED_BRICK_1.get(), new Item.Properties()));
