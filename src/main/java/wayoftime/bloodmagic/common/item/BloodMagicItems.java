@@ -448,7 +448,7 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> DUNGEON_EYE = DECORATIVE_DUNGEON.register("dungeon_eye", () -> new BlockItem(BloodMagicBlocks.DUNGEON_EYE.get(), new Item.Properties()));
 
 	public static final RegistryObject<Item> DUNGEON_PILLAR_CENTER_BLOCK = ITEMS.register("dungeon_pillar_center", () -> new BlockItem(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_PILLAR_SPECIAL_BLOCK = ITEMS.register("dungeon_pillar_special", () -> new BlockItem(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get(), new Item.Properties()));
+	public static final RegistryObject<Item> DUNGEON_PILLAR_SPECIAL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_pillar_special", () -> new BlockItem(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get(), new Item.Properties()));
 	public static final RegistryObject<Item> DUNGEON_PILLAR_CAP_BLOCK = ITEMS.register("dungeon_pillar_cap", () -> new BlockItem(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get(), new Item.Properties()));
 
 	public static final RegistryObject<Item> DUNGEON_EMITTER = ITEMS.register("dungeon_emitter", () -> new BlockItem(BloodMagicBlocks.DUNGEON_EMITTER.get(), new Item.Properties()));
