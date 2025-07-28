@@ -72,8 +72,6 @@ public class GeneratorItemModels extends ItemModelProvider {
         registerCustomBlockPath(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get(), "dungeon_brick1");
         registerBlockModel(BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get());
         registerBlockModel(BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get());
-        registerBlockModel(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get());
-        registerBlockModel(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get());
         registerBlockModel(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get());
         registerCustomBlockPath(BloodMagicBlocks.DUNGEON_BRICK_WALL.get(), "dungeon_brick_wall_inventory");
         registerCustomBlockPath(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get(), "dungeon_polished_wall_inventory");
