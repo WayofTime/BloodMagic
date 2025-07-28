@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import wayoftime.bloodmagic.common.block.decoration.BlockWillType;
 
 public class BlockPillarCap extends Block
 {
@@ -55,6 +56,6 @@ public class BlockPillarCap extends Block
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
 	{
-		builder.add(FACING);
+		builder.add(FACING, BlockWillType.WILL_TYPE);
 	}
 }
