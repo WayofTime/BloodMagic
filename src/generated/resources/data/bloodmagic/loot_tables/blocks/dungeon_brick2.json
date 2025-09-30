@@ -11,15 +11,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "block": "bloodmagic:dungeon_brick2",
-              "function": "minecraft:copy_state",
-              "properties": [
-                "will_type"
-              ]
-            }
-          ],
           "name": "bloodmagic:dungeon_brick2"
         }
       ],

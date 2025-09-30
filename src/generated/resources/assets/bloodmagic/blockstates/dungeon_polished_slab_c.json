@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "bloodmagic:block/dungeon_polished_slab_c"
+    },
+    "type=double": {
+      "model": "bloodmagic:block/dungeon_polished_c"
+    },
+    "type=top": {
+      "model": "bloodmagic:block/dungeon_polished_slab_c_top"
+    }
+  }
+}

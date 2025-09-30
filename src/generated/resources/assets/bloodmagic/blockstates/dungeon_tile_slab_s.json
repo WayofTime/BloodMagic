@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "bloodmagic:block/dungeon_tile_slab_s"
+    },
+    "type=double": {
+      "model": "bloodmagic:block/dungeon_tile_s"
+    },
+    "type=top": {
+      "model": "bloodmagic:block/dungeon_tile_slab_s_top"
+    }
+  }
+}

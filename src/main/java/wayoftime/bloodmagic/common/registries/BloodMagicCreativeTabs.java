@@ -62,17 +62,9 @@ public class BloodMagicCreativeTabs {
             .title(Component.translatable("itemGroup.bloodmagic.decorativeTab"))
             .icon(() -> BloodMagicItems.DUNGEON_EYE.get().getDefaultInstance())
             .displayItems((params, output) -> {
-                for (EnumDemonWillType type : EnumDemonWillType.values()) {
-                    CompoundTag tag = new CompoundTag();
-                    CompoundTag stateTag = new CompoundTag();
-                    stateTag.putString("will_type", type.getSerializedName());
-                    tag.put(BlockItem.BLOCK_STATE_TAG, stateTag);
                     for (RegistryObject<Item> item : BloodMagicItems.DECORATIVE_DUNGEON.getEntries()) {
-                        ItemStack blockStack = new ItemStack(item.get());
-                        blockStack.setTag(tag);
-                        output.accept(blockStack);
+                        output.accept(new ItemStack(item.get()));
                     }
-                }
             })
             .withTabsBefore(BLOODMAGIC_UPGRADES.getKey())
             .build());

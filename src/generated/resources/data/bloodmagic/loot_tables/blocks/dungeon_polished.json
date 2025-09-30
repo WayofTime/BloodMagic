@@ -11,15 +11,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "block": "bloodmagic:dungeon_polished",
-              "function": "minecraft:copy_state",
-              "properties": [
-                "will_type"
-              ]
-            }
-          ],
           "name": "bloodmagic:dungeon_polished"
         }
       ],

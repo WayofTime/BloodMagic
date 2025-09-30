@@ -21,6 +21,8 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -39,7 +41,6 @@ import net.minecraftforge.registries.RegistryObject;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BlockDemonCrystal;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
-import wayoftime.bloodmagic.common.block.decoration.BlockWillType;
 import wayoftime.bloodmagic.common.fluid.BloodMagicFluids;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.loot.BMTableLootEntry;
@@ -652,24 +653,51 @@ public class GeneratorLootTable extends LootTableProvider
 				this.dropSelf(block.get());
 			}
 
-			for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_DUNGEON.getEntries())
+			for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_SLAB.getEntries())
 			{
-				this.dropWithState(block.get());
+                add(block.get(), this::createSlabItemTable);
 			}
 
-			dropWithState(BloodMagicBlocks.DUNGEON_STONE.get());
-			dropWithState(BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get());
-			dropWithState(BloodMagicBlocks.DUNGEON_STONE_STAIRS.get());
-			dropWithState(BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get());
-			dropSelf(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get());
-			dropSelf(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get());
-			dropSelf(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get());
-			dropSelf(BloodMagicBlocks.DUNGEON_BRICK_WALL.get());
-			dropSelf(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get());
-			dropSelf(BloodMagicBlocks.DUNGEON_BRICK_GATE.get());
-			dropSelf(BloodMagicBlocks.DUNGEON_POLISHED_GATE.get());
-			add(BloodMagicBlocks.DUNGEON_BRICK_SLAB.get(), this::createSlabItemTable);
-			add(BloodMagicBlocks.DUNGEON_TILE_SLAB.get(), this::createSlabItemTable);
+            for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_WALL.getEntries())
+            {
+                dropSelf(block.get());
+            }
+
+            for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_GATE.getEntries())
+            {
+                dropSelf(block.get());
+            }
+
+            for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_STAIR.getEntries())
+            {
+                dropSelf(block.get());
+            }
+
+            dropSelf(BloodMagicBlocks.DUNGEON_STONE.get());
+            dropSelf(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE.get());
+            dropSelf(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE.get());
+            dropSelf(BloodMagicBlocks.STEADFAST_DUNGEON_STONE.get());
+            dropSelf(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE.get());
+
+            dropSelf(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get());
+            dropSelf(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get());
+            dropSelf(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get());
+
+            dropSelf(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CAP.get());
+            dropSelf(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CENTER.get());
+            dropSelf(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_SPECIAL.get());
+
+            dropSelf(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CAP.get());
+            dropSelf(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CENTER.get());
+            dropSelf(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_SPECIAL.get());
+
+            dropSelf(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CAP.get());
+            dropSelf(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CENTER.get());
+            dropSelf(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_SPECIAL.get());
+
+            dropSelf(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CAP.get());
+            dropSelf(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CENTER.get());
+            dropSelf(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_SPECIAL.get());
 
 			dropSelf(BloodMagicBlocks.BLOOD_ALTAR.get());
 			registerNoDropLootTable(BloodMagicBlocks.ALCHEMY_ARRAY.get());
@@ -740,21 +768,6 @@ public class GeneratorLootTable extends LootTableProvider
 			add(BloodMagicBlocks.DUNGEON_ORE.get(), (block) -> {
 				return createOreDrop(block, BloodMagicItems.DEMONITE_RAW.get());
 			});
-		}
-
-		private void dropWithState(Block block)
-		{
-			add(block,
-					LootTable.lootTable().withPool(
-							applyExplosionCondition(block, LootPool.lootPool()
-									.setRolls(ConstantValue.exactly(1))
-									.add(
-											LootItem.lootTableItem(block)
-													.apply(CopyBlockState.copyState(block).copy(BlockWillType.WILL_TYPE))
-									)
-							)
-					)
-			);
 		}
 
 		private void registerNoDropLootTable(Block block)

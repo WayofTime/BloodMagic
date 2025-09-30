@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "bloodmagic:block/dungeon/dungeon_tile_s",
+    "side": "bloodmagic:block/dungeon/dungeon_tile_s",
+    "top": "bloodmagic:block/dungeon/dungeon_tile_s"
+  }
+}

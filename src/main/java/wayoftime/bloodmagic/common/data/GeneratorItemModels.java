@@ -42,9 +42,26 @@ public class GeneratorItemModels extends ItemModelProvider {
             registerBlockModel(block.get());
         }
 
-        for (RegistryObject<Item> block : BloodMagicItems.DECORATIVE_DUNGEON.getEntries()) {
-            registerDecorativeModel(block.get());
+        for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_SLAB.getEntries()) {
+            registerBlockModel(block.get());
         }
+
+        for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_WALL.getEntries()) {
+            registerCustomBlockPath(block.get(), block.getId().withSuffix("_inventory").getPath());
+        }
+
+        for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_STAIR.getEntries()) {
+            registerBlockModel(block.get());
+        }
+
+        for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_GATE.getEntries()) {
+            registerBlockModel(block.get());
+        }
+
+        registerBlockModel(BloodMagicBlocks.DUNGEON_STONE.get());
+        registerBlockModel(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get());
+        registerBlockModel(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get());
+        registerBlockModel(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get());
 
         registerBlockModel(BloodMagicBlocks.BLANK_RITUAL_STONE.get());
         registerBlockModel(BloodMagicBlocks.AIR_RITUAL_STONE.get());
@@ -70,17 +87,6 @@ public class GeneratorItemModels extends ItemModelProvider {
         registerCustomBlockPath(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get(), "masterroutingnodecombined");
 
         registerCustomBlockPath(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get(), "dungeon_brick1");
-        registerBlockModel(BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get());
-        registerBlockModel(BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get());
-        registerBlockModel(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get());
-        registerCustomBlockPath(BloodMagicBlocks.DUNGEON_BRICK_WALL.get(), "dungeon_brick_wall_inventory");
-        registerCustomBlockPath(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get(), "dungeon_polished_wall_inventory");
-        registerBlockModel(BloodMagicBlocks.DUNGEON_BRICK_GATE.get());
-        registerBlockModel(BloodMagicBlocks.DUNGEON_POLISHED_GATE.get());
-        registerBlockModel(BloodMagicBlocks.DUNGEON_BRICK_SLAB.get());
-        registerBlockModel(BloodMagicBlocks.DUNGEON_TILE_SLAB.get());
-
-//		registerBlockModel(BloodMagicBlocks.INVERSION_PILLAR_CAP.get());
 
         registerBlockModel(BloodMagicBlocks.DUNGEON_CONTROLLER.get());
         registerBlockModel(BloodMagicBlocks.DUNGEON_SEAL.get());
@@ -125,11 +131,6 @@ public class GeneratorItemModels extends ItemModelProvider {
         registerBlockModel(BloodMagicBlocks.VEINMINE_CHARGE_2.get());
         registerBlockModel(BloodMagicBlocks.FUNGAL_CHARGE_2.get());
         registerBlockModel(BloodMagicBlocks.SHAPED_CHARGE_DEEP.get());
-
-//		registerBlockModel(BloodMagicBlocks.INVERSION_PILLAR.get());
-//		registerBlockModel(BloodMagicBlocks.INVERSION_PILLAR_CAP.get());
-
-//		registerBlockModel(BloodMagicBlocks.INVERSION_PILLAR.get());
 
         registerMultiLayerItem(BloodMagicItems.SLATE_VIAL.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
         registerMultiLayerItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
@@ -259,23 +260,6 @@ public class GeneratorItemModels extends ItemModelProvider {
         ModelFile activatedFile = singleTexture("item/variants/" + path + "_activated", mcLoc("item/handheld"), "layer0", modLoc("item/" + path + "_activated"));
         ModelFile deactivatedFile = singleTexture("item/variants/" + path + "_deactivated", mcLoc("item/handheld"), "layer0", modLoc("item/" + path + "_deactivated"));
         getBuilder(path).override().predicate(BloodMagic.rl("active"), 0).model(deactivatedFile).end().override().predicate(BloodMagic.rl("active"), 1).model(activatedFile).end();
-    }
-
-    private void registerDecorativeModel(Item block) {
-        String path = ForgeRegistries.ITEMS.getKey(block).getPath();
-        ResourceLocation predicate = BloodMagic.rl("will_type");
-        ItemModelBuilder builder = getBuilder(path);
-
-        Map<EnumDemonWillType, String> suffixMap = new HashMap<>();
-        suffixMap.put(EnumDemonWillType.DEFAULT, "");
-        suffixMap.put(EnumDemonWillType.CORROSIVE, "_c");
-        suffixMap.put(EnumDemonWillType.VENGEFUL, "_v");
-        suffixMap.put(EnumDemonWillType.DESTRUCTIVE, "_d");
-        suffixMap.put(EnumDemonWillType.STEADFAST, "_s");
-        for (EnumDemonWillType type : EnumDemonWillType.values()) {
-            String suffix = suffixMap.get(type);
-            builder.override().predicate(predicate, type.ordinal()).model(new ModelFile.UncheckedModelFile(modLoc("block/" + path + suffix))).end();
-        }
     }
 
     private void registerDemonWillVariantItem(Item item) {

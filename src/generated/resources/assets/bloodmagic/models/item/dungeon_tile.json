@@ -1,34 +1,3 @@
 {
-  "overrides": [
-    {
-      "model": "bloodmagic:block/dungeon_tile",
-      "predicate": {
-        "bloodmagic:will_type": 0.0
-      }
-    },
-    {
-      "model": "bloodmagic:block/dungeon_tile_c",
-      "predicate": {
-        "bloodmagic:will_type": 1.0
-      }
-    },
-    {
-      "model": "bloodmagic:block/dungeon_tile_d",
-      "predicate": {
-        "bloodmagic:will_type": 2.0
-      }
-    },
-    {
-      "model": "bloodmagic:block/dungeon_tile_v",
-      "predicate": {
-        "bloodmagic:will_type": 3.0
-      }
-    },
-    {
-      "model": "bloodmagic:block/dungeon_tile_s",
-      "predicate": {
-        "bloodmagic:will_type": 4.0
-      }
-    }
-  ]
+  "parent": "bloodmagic:block/dungeon_tile"
 }

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "bloodmagic:block/dungeon_pillar_special_s",
+      "x": 270,
+      "y": 270
+    },
+    "axis=y": {
+      "model": "bloodmagic:block/dungeon_pillar_special_s"
+    },
+    "axis=z": {
+      "model": "bloodmagic:block/dungeon_pillar_special_s",
+      "x": 270
+    }
+  }
+}

@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import wayoftime.bloodmagic.altar.ComponentType;
 import wayoftime.bloodmagic.api.IBloodMagicAPI;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.fluid.BloodMagicFluids;
 import wayoftime.bloodmagic.incense.EnumTranquilityType;
@@ -79,8 +80,12 @@ public class BloodMagicCorePlugin
 
 		apiInterface.registerAltarComponent(BloodMagicBlocks.BLOODSTONE.get().defaultBlockState(), ComponentType.BLOODSTONE.name());
 		apiInterface.registerAltarComponent(BloodMagicBlocks.BLOODSTONE_BRICK.get().defaultBlockState(), ComponentType.BLOODSTONE.name());
-//		apiInterface.registerAltarComponent(Blocks.BEACON.defaultBlockState(), ComponentType.BEACON.name());
-		apiInterface.registerAltarComponent(BloodMagicBlocks.HELLFORGED_BLOCK.get().defaultBlockState(), ComponentType.BEACON.name());
+
+        apiInterface.registerAltarComponent(BloodMagicBlocks.HELLFORGED_BLOCK.get().defaultBlockState(), ComponentType.BEACON.name());
+        apiInterface.registerAltarComponent(BloodMagicBlocks.CORROSIVE_HELLFORGED_BLOCK.get().defaultBlockState(), ComponentType.BEACON.name());
+        apiInterface.registerAltarComponent(BloodMagicBlocks.DESTRUCTIVE_HELLFORGED_BLOCK.get().defaultBlockState(), ComponentType.BEACON.name());
+        apiInterface.registerAltarComponent(BloodMagicBlocks.STEADFAST_HELLFORGED_BLOCK.get().defaultBlockState(), ComponentType.BEACON.name());
+        apiInterface.registerAltarComponent(BloodMagicBlocks.VENGEFUL_HELLFORGED_BLOCK.get().defaultBlockState(), ComponentType.BEACON.name());
 
 		apiInterface.registerAltarComponent(BloodMagicBlocks.BLANK_RUNE.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
 		apiInterface.registerAltarComponent(BloodMagicBlocks.SPEED_RUNE.get().defaultBlockState(), ComponentType.BLOODRUNE.name());

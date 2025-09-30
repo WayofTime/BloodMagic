@@ -22,6 +22,7 @@ public class GeneratorLanguage extends LanguageProvider
 		// Creative Tab
 		add("itemGroup.bloodmagic.creativeTab", "Blood Magic");
 		add("itemGroup.bloodmagic.upgradeTab", "Blood Magic Living Upgrades");
+		add("itemGroup.bloodmagic.decorativeTab", "Blood Magic Decorative Tab");
 
 		// Death Messages
 		//add("chat.bloodmagic.damageSource", "%s's soul became too weak");
@@ -602,14 +603,20 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.DUNGEON_POLISHED_GATE, "Demon Stone Gate");
 
 		addBlock(BloodMagicBlocks.DUNGEON_BRICK_STAIRS, "Demon Brick Stairs");
-		addBlock(BloodMagicBlocks.DUNGEON_POLISHED_STAIRS, "Demon Stone Stairs");
+		addBlock(BloodMagicBlocks.DUNGEON_POLISHED_STAIRS, "Demon Polished Stone Stairs");
+		addBlock(BloodMagicBlocks.DUNGEON_STONE_STAIRS, "Demon Stone Stairs");
 
 		addBlock(BloodMagicBlocks.DUNGEON_BRICK_WALL, "Demon Brick Wall");
-		addBlock(BloodMagicBlocks.DUNGEON_POLISHED_WALL, "Demon Stone Wall");
+		addBlock(BloodMagicBlocks.DUNGEON_POLISHED_WALL, "Demon Polished Stone Wall");
+		addBlock(BloodMagicBlocks.DUNGEON_STONE_WALL, "Demon Stone Wall");
+		addBlock(BloodMagicBlocks.DUNGEON_TILE_WALL, "Demon Tile Wall");
 
 		addBlock(BloodMagicBlocks.DUNGEON_PILLAR_CAP, "Demon Stone Pillar Cap");
 		addBlock(BloodMagicBlocks.DUNGEON_PILLAR_CENTER, "Demon Stone Pillar");
 		addBlock(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL, "Accented Demon Stone Pillar");
+		addBlock(BloodMagicBlocks.INVERSION_PILLAR_CAP, "Demon Inversion Pillar Cap");
+		addBlock(BloodMagicBlocks.INVERSION_PILLAR, "Demon Inversion Pillar");
+
 		addBlock(BloodMagicBlocks.DUNGEON_EYE, "Demon Eye");
 		addBlock(BloodMagicBlocks.DUNGEON_EMITTER, "Demon Emitter");
 		addBlock(BloodMagicBlocks.DUNGEON_ALTERNATOR, "Demon Alternator");
@@ -622,6 +629,8 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addBlock(BloodMagicBlocks.DUNGEON_BRICK_SLAB, "Demon Brick Slab");
 		addBlock(BloodMagicBlocks.DUNGEON_TILE_SLAB, "Demon Stone Tile Slab");
+		addBlock(BloodMagicBlocks.DUNGEON_STONE_SLAB, "Demon Stone Slab");
+		addBlock(BloodMagicBlocks.DUNGEON_POLISHED_SLAB, "Demon Polished Stone Slab");
 
 		addBlock(BloodMagicBlocks.SHAPED_CHARGE, "Shaped Charge");
 		addBlock(BloodMagicBlocks.DEFORESTER_CHARGE, "Deforester Charge");
