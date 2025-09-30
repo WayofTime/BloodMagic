@@ -1,19 +1,7 @@
 {
   "variants": {
-    "will_type=corrosive": {
-      "model": "bloodmagic:block/dungeon_brick1_c"
-    },
-    "will_type=default": {
+    "": {
       "model": "bloodmagic:block/dungeon_brick1"
-    },
-    "will_type=destructive": {
-      "model": "bloodmagic:block/dungeon_brick1_d"
-    },
-    "will_type=steadfast": {
-      "model": "bloodmagic:block/dungeon_brick1_s"
-    },
-    "will_type=vengeful": {
-      "model": "bloodmagic:block/dungeon_brick1_v"
     }
   }
 }

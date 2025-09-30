@@ -1,19 +1,7 @@
 {
   "variants": {
-    "will_type=corrosive": {
-      "model": "bloodmagic:block/dungeon_eye_c"
-    },
-    "will_type=default": {
+    "": {
       "model": "bloodmagic:block/dungeon_eye"
-    },
-    "will_type=destructive": {
-      "model": "bloodmagic:block/dungeon_eye_d"
-    },
-    "will_type=steadfast": {
-      "model": "bloodmagic:block/dungeon_eye_s"
-    },
-    "will_type=vengeful": {
-      "model": "bloodmagic:block/dungeon_eye_v"
     }
   }
 }

@@ -1,19 +1,7 @@
 {
   "variants": {
-    "will_type=corrosive": {
-      "model": "bloodmagic:block/dungeon_tilespecial_c"
-    },
-    "will_type=default": {
+    "": {
       "model": "bloodmagic:block/dungeon_tilespecial"
-    },
-    "will_type=destructive": {
-      "model": "bloodmagic:block/dungeon_tilespecial_d"
-    },
-    "will_type=steadfast": {
-      "model": "bloodmagic:block/dungeon_tilespecial_s"
-    },
-    "will_type=vengeful": {
-      "model": "bloodmagic:block/dungeon_tilespecial_v"
     }
   }
 }

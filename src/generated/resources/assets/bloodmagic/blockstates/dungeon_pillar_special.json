@@ -1,64 +1,16 @@
 {
   "variants": {
-    "axis=x,will_type=corrosive": {
-      "model": "bloodmagic:block/dungeon_pillar_special_c",
-      "x": 90,
-      "y": 90
-    },
-    "axis=x,will_type=default": {
+    "axis=x": {
       "model": "bloodmagic:block/dungeon_pillar_special",
-      "x": 90,
-      "y": 90
+      "x": 270,
+      "y": 270
     },
-    "axis=x,will_type=destructive": {
-      "model": "bloodmagic:block/dungeon_pillar_special_d",
-      "x": 90,
-      "y": 90
-    },
-    "axis=x,will_type=steadfast": {
-      "model": "bloodmagic:block/dungeon_pillar_special_s",
-      "x": 90,
-      "y": 90
-    },
-    "axis=x,will_type=vengeful": {
-      "model": "bloodmagic:block/dungeon_pillar_special_v",
-      "x": 90,
-      "y": 90
-    },
-    "axis=y,will_type=corrosive": {
-      "model": "bloodmagic:block/dungeon_pillar_special_c"
-    },
-    "axis=y,will_type=default": {
+    "axis=y": {
       "model": "bloodmagic:block/dungeon_pillar_special"
     },
-    "axis=y,will_type=destructive": {
-      "model": "bloodmagic:block/dungeon_pillar_special_d"
-    },
-    "axis=y,will_type=steadfast": {
-      "model": "bloodmagic:block/dungeon_pillar_special_s"
-    },
-    "axis=y,will_type=vengeful": {
-      "model": "bloodmagic:block/dungeon_pillar_special_v"
-    },
-    "axis=z,will_type=corrosive": {
-      "model": "bloodmagic:block/dungeon_pillar_special_c",
-      "x": 90
-    },
-    "axis=z,will_type=default": {
+    "axis=z": {
       "model": "bloodmagic:block/dungeon_pillar_special",
-      "x": 90
-    },
-    "axis=z,will_type=destructive": {
-      "model": "bloodmagic:block/dungeon_pillar_special_d",
-      "x": 90
-    },
-    "axis=z,will_type=steadfast": {
-      "model": "bloodmagic:block/dungeon_pillar_special_s",
-      "x": 90
-    },
-    "axis=z,will_type=vengeful": {
-      "model": "bloodmagic:block/dungeon_pillar_special_v",
-      "x": 90
+      "x": 270
     }
   }
 }
