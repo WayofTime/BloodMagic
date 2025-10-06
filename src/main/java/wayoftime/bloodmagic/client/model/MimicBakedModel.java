@@ -61,17 +61,15 @@ public class MimicBakedModel implements IDynamicBakedModel
 		quadBaker.endVertex();
 	}
 
-	private BakedQuad createQuad(Vec3 v1, Vec3 v2, Vec3 v3, Vec3 v4, TextureAtlasSprite sprite)
+	private BakedQuad createQuad(Vec3 vec1, Vec3 v2, Vec3 v3, Vec3 v4, TextureAtlasSprite sprite)
 	{
-		Vec3 normal = v3.subtract(v2).cross(v1.subtract(v2)).normalize();
-		int tw = sprite.getX();
-		int th = sprite.getY();
+		Vec3 normal = v3.subtract(v2).cross(vec1.subtract(v2)).normalize();
 
-		QuadBakingVertexConsumer.Buffered quadBaker = new QuadBakingVertexConsumer.Buffered();
-		putVertex(quadBaker, normal, v1.x, v1.y, v1.z, 0, 0, sprite, 1.0f, 1.0f, 1.0f);
-		putVertex(quadBaker, normal, v2.x, v2.y, v2.z, 0, th, sprite, 1.0f, 1.0f, 1.0f);
-		putVertex(quadBaker, normal, v3.x, v3.y, v3.z, tw, th, sprite, 1.0f, 1.0f, 1.0f);
-		putVertex(quadBaker, normal, v4.x, v4.y, v4.z, tw, 0, sprite, 1.0f, 1.0f, 1.0f);
+        QuadBakingVertexConsumer.Buffered quadBaker = new QuadBakingVertexConsumer.Buffered();
+		putVertex(quadBaker, normal, vec1.x, vec1.y, vec1.z, 0, 0, sprite, 1.0f, 1.0f, 1.0f);
+		putVertex(quadBaker, normal, v2.x, v2.y, v2.z, 0, 16, sprite, 1.0f, 1.0f, 1.0f);
+		putVertex(quadBaker, normal, v3.x, v3.y, v3.z, 16, 16, sprite, 1.0f, 1.0f, 1.0f);
+		putVertex(quadBaker, normal, v4.x, v4.y, v4.z, 16, 0, sprite, 1.0f, 1.0f, 1.0f);
 		return quadBaker.getQuad();
 	}
 
