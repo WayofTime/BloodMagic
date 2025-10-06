@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dungeon_tile_s": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bloodmagic:dungeon_tile_s"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bloodmagic:dungeon_tile_wall_s"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_dungeon_tile_s",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bloodmagic:dungeon_tile_wall_s"
+    ]
+  },
+  "sends_telemetry_event": false
+}

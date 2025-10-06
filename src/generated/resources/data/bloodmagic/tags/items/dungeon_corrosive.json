@@ -1,0 +1,25 @@
+{
+  "values": [
+    "bloodmagic:dungeon_stone_c",
+    "bloodmagic:dungeon_stone_stairs_c",
+    "bloodmagic:dungeon_brick1_stairs_c",
+    "bloodmagic:dungeon_polished_stairs_c",
+    "bloodmagic:dungeon_stone_wall_c",
+    "bloodmagic:dungeon_brick1_wall_c",
+    "bloodmagic:dungeon_polished_wall_c",
+    "bloodmagic:dungeon_tile_wall_c",
+    "bloodmagic:dungeon_brick1_gate_c",
+    "bloodmagic:dungeon_polished_gate_c",
+    "bloodmagic:dungeon_eye_c",
+    "bloodmagic:dungeon_pillar_cap_c",
+    "bloodmagic:dungeon_pillar_center_c",
+    "bloodmagic:dungeon_pillar_special_c",
+    "bloodmagic:dungeon_brick1_c",
+    "bloodmagic:dungeon_brick2_c",
+    "bloodmagic:dungeon_brick3_c",
+    "bloodmagic:dungeon_tile_c",
+    "bloodmagic:dungeon_tilespecial_c",
+    "bloodmagic:dungeon_smallbrick_c",
+    "bloodmagic:dungeon_polished_c"
+  ]
+}

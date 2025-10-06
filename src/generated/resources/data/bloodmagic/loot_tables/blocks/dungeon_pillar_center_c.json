@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:air"
+          "name": "bloodmagic:dungeon_pillar_center_c"
         }
       ],
       "rolls": 1.0

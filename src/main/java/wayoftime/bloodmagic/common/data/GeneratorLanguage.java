@@ -588,11 +588,16 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.OBSIDIAN_PATH, "Obsidian Path");
 		addBlock(BloodMagicBlocks.OBSIDIAN_TILE_PATH, "Tiled Obsidian Path");
 
+        addBlock(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED, "Assorted Demon Bricks");
+        addBlock(BloodMagicBlocks.INVERSION_PILLAR_CAP, "Demon Inversion Pillar Cap");
+        addBlock(BloodMagicBlocks.INVERSION_PILLAR, "Demon Inversion Pillar");
+        addBlock(BloodMagicBlocks.DUNGEON_EMITTER, "Demon Emitter");
+        addBlock(BloodMagicBlocks.DUNGEON_ALTERNATOR, "Demon Alternator");
+
 		addBlock(BloodMagicBlocks.DUNGEON_BRICK_1, "Demon Bricks");
 		addBlock(BloodMagicBlocks.DUNGEON_BRICK_2, "Offset Demon Bricks");
 		addBlock(BloodMagicBlocks.DUNGEON_BRICK_3, "Long Demon Bricks");
 		addBlock(BloodMagicBlocks.DUNGEON_SMALL_BRICK, "Small Demon Bricks");
-		addBlock(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED, "Assorted Demon Bricks");
 
 		addBlock(BloodMagicBlocks.DUNGEON_STONE, "Demon Stone");
 		addBlock(BloodMagicBlocks.DUNGEON_POLISHED_STONE, "Polished Demon Stone");
@@ -606,6 +611,11 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.DUNGEON_POLISHED_STAIRS, "Demon Polished Stone Stairs");
 		addBlock(BloodMagicBlocks.DUNGEON_STONE_STAIRS, "Demon Stone Stairs");
 
+        addBlock(BloodMagicBlocks.DUNGEON_BRICK_SLAB, "Demon Brick Slab");
+        addBlock(BloodMagicBlocks.DUNGEON_TILE_SLAB, "Demon Stone Tile Slab");
+        addBlock(BloodMagicBlocks.DUNGEON_STONE_SLAB, "Demon Stone Slab");
+        addBlock(BloodMagicBlocks.DUNGEON_POLISHED_SLAB, "Demon Polished Stone Slab");
+
 		addBlock(BloodMagicBlocks.DUNGEON_BRICK_WALL, "Demon Brick Wall");
 		addBlock(BloodMagicBlocks.DUNGEON_POLISHED_WALL, "Demon Polished Stone Wall");
 		addBlock(BloodMagicBlocks.DUNGEON_STONE_WALL, "Demon Stone Wall");
@@ -614,12 +624,140 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.DUNGEON_PILLAR_CAP, "Demon Stone Pillar Cap");
 		addBlock(BloodMagicBlocks.DUNGEON_PILLAR_CENTER, "Demon Stone Pillar");
 		addBlock(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL, "Accented Demon Stone Pillar");
-		addBlock(BloodMagicBlocks.INVERSION_PILLAR_CAP, "Demon Inversion Pillar Cap");
-		addBlock(BloodMagicBlocks.INVERSION_PILLAR, "Demon Inversion Pillar");
 
 		addBlock(BloodMagicBlocks.DUNGEON_EYE, "Demon Eye");
-		addBlock(BloodMagicBlocks.DUNGEON_EMITTER, "Demon Emitter");
-		addBlock(BloodMagicBlocks.DUNGEON_ALTERNATOR, "Demon Alternator");
+
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_1, "Corrosive Demon Bricks");
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_2, "Corrosive Offset Demon Bricks");
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_3, "Corrosive Long Demon Bricks");
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_SMALL_BRICK, "Corrosive Small Demon Bricks");
+
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE, "Corrosive Demon Stone");
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_STONE, "Corrosive Polished Demon Stone");
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_TILE, "Corrosive Demon Stone Tiles");
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_TILE_SPECIAL, "Corrosive Accented Demon Stone Tiles");
+
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_GATE, "Corrosive Demon Brick Gate");
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_GATE, "Corrosive Demon Stone Gate");
+
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_STAIRS, "Corrosive Demon Brick Stairs");
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_STAIRS, "Corrosive Demon Polished Stone Stairs");
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE_STAIRS, "Corrosive Demon Stone Stairs");
+
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_SLAB, "Corrosive Demon Brick Slab");
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_TILE_SLAB, "Corrosive Demon Stone Tile Slab");
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE_SLAB, "Corrosive Demon Stone Slab");
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_SLAB, "Corrosive Demon Polished Stone Slab");
+
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_WALL, "Corrosive Demon Brick Wall");
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_WALL, "Corrosive Demon Polished Stone Wall");
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE_WALL, "Corrosive Demon Stone Wall");
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_TILE_WALL, "Corrosive Demon Tile Wall");
+
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CAP, "Corrosive Demon Stone Pillar Cap");
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CENTER, "Corrosive Demon Stone Pillar");
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_SPECIAL, "Corrosive Accented Demon Stone Pillar");
+
+        addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_EYE, "Corrosive Demon Eye");
+
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_1, "Destructive Demon Bricks");
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_2, "Destructive Offset Demon Bricks");
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_3, "Destructive Long Demon Bricks");
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_SMALL_BRICK, "Destructive Small Demon Bricks");
+
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE, "Destructive Demon Stone");
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_STONE, "Destructive Polished Demon Stone");
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE, "Destructive Demon Stone Tiles");
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE_SPECIAL, "Destructive Accented Demon Stone Tiles");
+
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_GATE, "Destructive Demon Brick Gate");
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_GATE, "Destructive Demon Stone Gate");
+
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_STAIRS, "Destructive Demon Brick Stairs");
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_STAIRS, "Destructive Demon Polished Stone Stairs");
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE_STAIRS, "Destructive Demon Stone Stairs");
+
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_SLAB, "Destructive Demon Brick Slab");
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE_SLAB, "Destructive Demon Stone Tile Slab");
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE_SLAB, "Destructive Demon Stone Slab");
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_SLAB, "Destructive Demon Polished Stone Slab");
+
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_WALL, "Destructive Demon Brick Wall");
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_WALL, "Destructive Demon Polished Stone Wall");
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE_WALL, "Destructive Demon Stone Wall");
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE_WALL, "Destructive Demon Tile Wall");
+
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CAP, "Destructive Demon Stone Pillar Cap");
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CENTER, "Destructive Demon Stone Pillar");
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_SPECIAL, "Destructive Accented Demon Stone Pillar");
+
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_EYE, "Destructive Demon Eye");
+
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_1, "Steadfast Demon Bricks");
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_2, "Steadfast Offset Demon Bricks");
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_3, "Steadfast Long Demon Bricks");
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_SMALL_BRICK, "Steadfast Small Demon Bricks");
+
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_STONE, "Steadfast Demon Stone");
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_STONE, "Steadfast Polished Demon Stone");
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_TILE, "Steadfast Demon Stone Tiles");
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_TILE_SPECIAL, "Steadfast Accented Demon Stone Tiles");
+
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_GATE, "Steadfast Demon Brick Gate");
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_GATE, "Steadfast Demon Stone Gate");
+
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_STAIRS, "Steadfast Demon Brick Stairs");
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_STAIRS, "Steadfast Demon Polished Stone Stairs");
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_STONE_STAIRS, "Steadfast Demon Stone Stairs");
+
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_SLAB, "Steadfast Demon Brick Slab");
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_TILE_SLAB, "Steadfast Demon Stone Tile Slab");
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_STONE_SLAB, "Steadfast Demon Stone Slab");
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_SLAB, "Steadfast Demon Polished Stone Slab");
+
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_WALL, "Steadfast Demon Brick Wall");
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_WALL, "Steadfast Demon Polished Stone Wall");
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_STONE_WALL, "Steadfast Demon Stone Wall");
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_TILE_WALL, "Steadfast Demon Tile Wall");
+
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CAP, "Steadfast Demon Stone Pillar Cap");
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CENTER, "Steadfast Demon Stone Pillar");
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_SPECIAL, "Steadfast Accented Demon Stone Pillar");
+
+        addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_EYE, "Steadfast Demon Eye");
+
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_1, "Vengeful Demon Bricks");
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_2, "Vengeful Offset Demon Bricks");
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_3, "Vengeful Long Demon Bricks");
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_SMALL_BRICK, "Vengeful Small Demon Bricks");
+
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE, "Vengeful Demon Stone");
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_STONE, "Vengeful Polished Demon Stone");
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_TILE, "Vengeful Demon Stone Tiles");
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_TILE_SPECIAL, "Vengeful Accented Demon Stone Tiles");
+
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_GATE, "Vengeful Demon Brick Gate");
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_GATE, "Vengeful Demon Stone Gate");
+
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_STAIRS, "Vengeful Demon Brick Stairs");
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_STAIRS, "Vengeful Demon Polished Stone Stairs");
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE_STAIRS, "Vengeful Demon Stone Stairs");
+
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_SLAB, "Vengeful Demon Brick Slab");
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_TILE_SLAB, "Vengeful Demon Stone Tile Slab");
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE_SLAB, "Vengeful Demon Stone Slab");
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_SLAB, "Vengeful Demon Polished Stone Slab");
+
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_WALL, "Vengeful Demon Brick Wall");
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_WALL, "Vengeful Demon Polished Stone Wall");
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE_WALL, "Vengeful Demon Stone Wall");
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_TILE_WALL, "Vengeful Demon Tile Wall");
+
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CAP, "Vengeful Demon Stone Pillar Cap");
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CENTER, "Vengeful Demon Stone Pillar");
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_SPECIAL, "Vengeful Accented Demon Stone Pillar");
+
+        addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_EYE, "Vengeful Demon Eye");
 
         addBlock(BloodMagicBlocks.INVERSION_PILLAR, "Inversion Pillar");
         addBlock(BloodMagicBlocks.INVERSION_PILLAR_CAP, "Inversion Pillar Cap");
@@ -629,11 +767,6 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addBlock(BloodMagicBlocks.DUNGEON_ORE, "Demonite");
 		addBlock(BloodMagicBlocks.RAW_HELLFORGED_BLOCK, "Block of Raw Demonite");
-
-		addBlock(BloodMagicBlocks.DUNGEON_BRICK_SLAB, "Demon Brick Slab");
-		addBlock(BloodMagicBlocks.DUNGEON_TILE_SLAB, "Demon Stone Tile Slab");
-		addBlock(BloodMagicBlocks.DUNGEON_STONE_SLAB, "Demon Stone Slab");
-		addBlock(BloodMagicBlocks.DUNGEON_POLISHED_SLAB, "Demon Polished Stone Slab");
 
 		addBlock(BloodMagicBlocks.SHAPED_CHARGE, "Shaped Charge");
 		addBlock(BloodMagicBlocks.DEFORESTER_CHARGE, "Deforester Charge");

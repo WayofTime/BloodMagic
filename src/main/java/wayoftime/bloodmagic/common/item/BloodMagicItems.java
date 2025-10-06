@@ -449,24 +449,155 @@ public class BloodMagicItems
 	public static final RegistryObject<Item> DUNGEON_POLISHED_GATE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_gate", () -> new BlockItem(BloodMagicBlocks.DUNGEON_POLISHED_GATE.get(), new Item.Properties()));
 	public static final RegistryObject<Item> DUNGEON_BRICK_GATE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_gate", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_GATE.get(), new Item.Properties()));
 
-	public static final RegistryObject<Item> DUNGEON_EYE = DECORATIVE_DUNGEON.register("dungeon_eye", () -> new BlockItem(BloodMagicBlocks.DUNGEON_EYE.get(), new Item.Properties()));
-
 	public static final RegistryObject<Item> DUNGEON_PILLAR_CENTER_BLOCK = DECORATIVE_DUNGEON.register("dungeon_pillar_center", () -> new BlockItem(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get(), new Item.Properties()));
 	public static final RegistryObject<Item> DUNGEON_PILLAR_SPECIAL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_pillar_special", () -> new BlockItem(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get(), new Item.Properties()));
 	public static final RegistryObject<Item> DUNGEON_PILLAR_CAP_BLOCK = DECORATIVE_DUNGEON.register("dungeon_pillar_cap", () -> new BlockItem(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get(), new Item.Properties()));
 
-	public static final RegistryObject<Item> DUNGEON_EMITTER = ITEMS.register("dungeon_emitter", () -> new BlockItem(BloodMagicBlocks.DUNGEON_EMITTER.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_ALTERNATOR = ITEMS.register("dungeon_alternator", () -> new BlockItem(BloodMagicBlocks.DUNGEON_ALTERNATOR.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_BRICK_ASSORTED_BLOCK = ITEMS.register("dungeon_brick_assorted", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get(), new Item.Properties()));
-
-	public static final RegistryObject<Item> DUNGEON_CRACKED_BRICK_1_BLOCK = ITEMS.register("dungeon_regular_cracked_brick1", () -> new BlockItem(BloodMagicBlocks.DUNGEON_CRACKED_BRICK_1.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_GLOWING_CRACKED_BRICK_1_BLOCK = ITEMS.register("dungeon_cracked_brick1", () -> new BlockItem(BloodMagicBlocks.DUNGEON_GLOWING_CRACKED_BRICK_1.get(), new Item.Properties()));
-
-	public static final RegistryObject<Item> DUNGEON_ORE_BLOCK = ITEMS.register("dungeon_ore", () -> new BlockItem(BloodMagicBlocks.DUNGEON_ORE.get(), new Item.Properties()));
-	public static final RegistryObject<Item> SPIKES = ITEMS.register("spikes", () -> new BlockItem(BloodMagicBlocks.SPIKES.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DUNGEON_SPIKE_TRAP = ITEMS.register("dungeon_spike_trap", () -> new BlockItem(BloodMagicBlocks.DUNGEON_SPIKE_TRAP.get(), new Item.Properties()));
-
+    public static final RegistryObject<Item> DUNGEON_EYE = DECORATIVE_DUNGEON.register("dungeon_eye", () -> new BlockItem(BloodMagicBlocks.DUNGEON_EYE.get(), new Item.Properties()));
 	public static final RegistryObject<Item> HELLFORGED_BLOCK = DECORATIVE_DUNGEON.register("dungeon_metal", () -> new BlockItem(BloodMagicBlocks.HELLFORGED_BLOCK.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_STONE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_stone_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_POLISHED_STONE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_STONE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_TILE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_tile_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_TILE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_TILE_SPECIAL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_tilespecial_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_TILE_SPECIAL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_BRICK_1_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_1.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_BRICK_2_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick2_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_2.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_BRICK_3_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick3_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_3.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_SMALL_BRICK_BLOCK = DECORATIVE_DUNGEON.register("dungeon_smallbrick_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_SMALL_BRICK.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_TILE_SLAB_BLOCK = DECORATIVE_DUNGEON.register("dungeon_tile_slab_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_TILE_SLAB.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_BRICK_SLAB_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_slab_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_SLAB.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_STONE_SLAB_BLOCK = DECORATIVE_DUNGEON.register("dungeon_stone_slab_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE_SLAB.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_POLISHED_SLAB_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_slab_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_SLAB.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_POLISHED_STAIRS_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_stairs_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_STAIRS.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_STONE_STAIRS_BLOCK = DECORATIVE_DUNGEON.register("dungeon_stone_stairs_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE_STAIRS.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_BRICK_STAIRS_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_stairs_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_STAIRS.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_POLISHED_WALL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_wall_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_WALL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_BRICK_WALL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_wall_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_WALL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_TILE_WALL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_tile_wall_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_TILE_WALL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_STONE_WALL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_stone_wall_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE_WALL.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_POLISHED_GATE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_gate_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_GATE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_BRICK_GATE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_gate_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_GATE.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_PILLAR_CENTER_BLOCK = DECORATIVE_DUNGEON.register("dungeon_pillar_center_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CENTER.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_PILLAR_SPECIAL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_pillar_special_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_SPECIAL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_PILLAR_CAP_BLOCK = DECORATIVE_DUNGEON.register("dungeon_pillar_cap_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CAP.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_EYE = DECORATIVE_DUNGEON.register("dungeon_eye_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_EYE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORROSIVE_HELLFORGED_BLOCK = DECORATIVE_DUNGEON.register("dungeon_metal_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_HELLFORGED_BLOCK.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_STONE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_stone_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_POLISHED_STONE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_STONE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_TILE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_tile_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_TILE_SPECIAL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_tilespecial_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE_SPECIAL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_BRICK_1_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_1.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_BRICK_2_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick2_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_2.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_BRICK_3_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick3_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_3.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_SMALL_BRICK_BLOCK = DECORATIVE_DUNGEON.register("dungeon_smallbrick_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_SMALL_BRICK.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_TILE_SLAB_BLOCK = DECORATIVE_DUNGEON.register("dungeon_tile_slab_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE_SLAB.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_BRICK_SLAB_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_slab_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_SLAB.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_STONE_SLAB_BLOCK = DECORATIVE_DUNGEON.register("dungeon_stone_slab_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE_SLAB.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_POLISHED_SLAB_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_slab_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_SLAB.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_POLISHED_STAIRS_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_stairs_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_STAIRS.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_STONE_STAIRS_BLOCK = DECORATIVE_DUNGEON.register("dungeon_stone_stairs_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE_STAIRS.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_BRICK_STAIRS_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_stairs_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_STAIRS.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_POLISHED_WALL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_wall_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_WALL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_BRICK_WALL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_wall_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_WALL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_TILE_WALL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_tile_wall_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE_WALL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_STONE_WALL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_stone_wall_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE_WALL.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_POLISHED_GATE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_gate_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_GATE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_BRICK_GATE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_gate_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_GATE.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_PILLAR_CENTER_BLOCK = DECORATIVE_DUNGEON.register("dungeon_pillar_center_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CENTER.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_PILLAR_SPECIAL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_pillar_special_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_SPECIAL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_PILLAR_CAP_BLOCK = DECORATIVE_DUNGEON.register("dungeon_pillar_cap_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CAP.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> DESTRUCTIVE_DUNGEON_EYE = DECORATIVE_DUNGEON.register("dungeon_eye_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_EYE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DESTRUCTIVE_HELLFORGED_BLOCK = DECORATIVE_DUNGEON.register("dungeon_metal_d",() -> new BlockItem(BloodMagicBlocks.DESTRUCTIVE_HELLFORGED_BLOCK.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_STONE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_stone_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_STONE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_POLISHED_STONE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_STONE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_TILE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_tile_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_TILE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_TILE_SPECIAL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_tilespecial_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_TILE_SPECIAL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_BRICK_1_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_1.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_BRICK_2_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick2_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_2.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_BRICK_3_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick3_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_3.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_SMALL_BRICK_BLOCK = DECORATIVE_DUNGEON.register("dungeon_smallbrick_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_SMALL_BRICK.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_TILE_SLAB_BLOCK = DECORATIVE_DUNGEON.register("dungeon_tile_slab_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_TILE_SLAB.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_BRICK_SLAB_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_slab_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_SLAB.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_STONE_SLAB_BLOCK = DECORATIVE_DUNGEON.register("dungeon_stone_slab_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_STONE_SLAB.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_POLISHED_SLAB_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_slab_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_SLAB.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_POLISHED_STAIRS_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_stairs_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_STAIRS.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_STONE_STAIRS_BLOCK = DECORATIVE_DUNGEON.register("dungeon_stone_stairs_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_STONE_STAIRS.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_BRICK_STAIRS_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_stairs_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_STAIRS.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_POLISHED_WALL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_wall_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_WALL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_BRICK_WALL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_wall_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_WALL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_TILE_WALL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_tile_wall_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_TILE_WALL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_STONE_WALL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_stone_wall_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_STONE_WALL.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_POLISHED_GATE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_gate_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_GATE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_BRICK_GATE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_gate_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_GATE.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_PILLAR_CENTER_BLOCK = DECORATIVE_DUNGEON.register("dungeon_pillar_center_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CENTER.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_PILLAR_SPECIAL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_pillar_special_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_SPECIAL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_PILLAR_CAP_BLOCK = DECORATIVE_DUNGEON.register("dungeon_pillar_cap_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CAP.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> STEADFAST_DUNGEON_EYE = DECORATIVE_DUNGEON.register("dungeon_eye_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_DUNGEON_EYE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STEADFAST_HELLFORGED_BLOCK = DECORATIVE_DUNGEON.register("dungeon_metal_s", () -> new BlockItem(BloodMagicBlocks.STEADFAST_HELLFORGED_BLOCK.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_STONE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_stone_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_POLISHED_STONE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_STONE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_TILE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_tile_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_TILE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_TILE_SPECIAL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_tilespecial_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_TILE_SPECIAL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_BRICK_1_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_1.get(), new Item.Properties()));
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_BRICK_2_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick2_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_2.get(), new Item.Properties()));
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_BRICK_3_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick3_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_3.get(), new Item.Properties()));
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_SMALL_BRICK_BLOCK = DECORATIVE_DUNGEON.register("dungeon_smallbrick_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_SMALL_BRICK.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_TILE_SLAB_BLOCK = DECORATIVE_DUNGEON.register("dungeon_tile_slab_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_TILE_SLAB.get(), new Item.Properties()));
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_BRICK_SLAB_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_slab_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_SLAB.get(), new Item.Properties()));
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_STONE_SLAB_BLOCK = DECORATIVE_DUNGEON.register("dungeon_stone_slab_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE_SLAB.get(), new Item.Properties()));
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_POLISHED_SLAB_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_slab_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_SLAB.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_POLISHED_STAIRS_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_stairs_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_STAIRS.get(), new Item.Properties()));
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_STONE_STAIRS_BLOCK = DECORATIVE_DUNGEON.register("dungeon_stone_stairs_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE_STAIRS.get(), new Item.Properties()));
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_BRICK_STAIRS_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_stairs_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_STAIRS.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_POLISHED_WALL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_wall_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_WALL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_BRICK_WALL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_wall_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_WALL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_TILE_WALL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_tile_wall_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_TILE_WALL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_STONE_WALL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_stone_wall_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE_WALL.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_POLISHED_GATE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_gate_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_GATE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_BRICK_GATE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_gate_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_GATE.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_PILLAR_CENTER_BLOCK = DECORATIVE_DUNGEON.register("dungeon_pillar_center_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CENTER.get(), new Item.Properties()));
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_PILLAR_SPECIAL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_pillar_special_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_SPECIAL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_PILLAR_CAP_BLOCK = DECORATIVE_DUNGEON.register("dungeon_pillar_cap_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CAP.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> VENGEFUL_DUNGEON_EYE = DECORATIVE_DUNGEON.register("dungeon_eye_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_DUNGEON_EYE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> VENGEFUL_HELLFORGED_BLOCK = DECORATIVE_DUNGEON.register("dungeon_metal_v", () -> new BlockItem(BloodMagicBlocks.VENGEFUL_HELLFORGED_BLOCK.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> DUNGEON_EMITTER = ITEMS.register("dungeon_emitter", () -> new BlockItem(BloodMagicBlocks.DUNGEON_EMITTER.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DUNGEON_ALTERNATOR = ITEMS.register("dungeon_alternator", () -> new BlockItem(BloodMagicBlocks.DUNGEON_ALTERNATOR.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DUNGEON_BRICK_ASSORTED_BLOCK = ITEMS.register("dungeon_brick_assorted", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> DUNGEON_CRACKED_BRICK_1_BLOCK = ITEMS.register("dungeon_regular_cracked_brick1", () -> new BlockItem(BloodMagicBlocks.DUNGEON_CRACKED_BRICK_1.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DUNGEON_GLOWING_CRACKED_BRICK_1_BLOCK = ITEMS.register("dungeon_cracked_brick1", () -> new BlockItem(BloodMagicBlocks.DUNGEON_GLOWING_CRACKED_BRICK_1.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> DUNGEON_ORE_BLOCK = ITEMS.register("dungeon_ore", () -> new BlockItem(BloodMagicBlocks.DUNGEON_ORE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> SPIKES = ITEMS.register("spikes", () -> new BlockItem(BloodMagicBlocks.SPIKES.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DUNGEON_SPIKE_TRAP = ITEMS.register("dungeon_spike_trap", () -> new BlockItem(BloodMagicBlocks.DUNGEON_SPIKE_TRAP.get(), new Item.Properties()));
 	public static final RegistryObject<Item> RAW_HELLFORGED_BLOCK = ITEMS.register("rawdemoniteblock", () -> new BlockItem(BloodMagicBlocks.RAW_HELLFORGED_BLOCK.get(), new Item.Properties()));
 	public static final RegistryObject<Item> INVERSION_PILLAR_BLOCK = ITEMS.register("inversion_pillar", () -> new BlockItem(BloodMagicBlocks.INVERSION_PILLAR.get(), new Item.Properties()));
 	public static final RegistryObject<Item> INVERSION_PILLAR_CAP_BLOCK = ITEMS.register("inversion_pillar_cap", () -> new BlockItem(BloodMagicBlocks.INVERSION_PILLAR_CAP.get(), new Item.Properties()));

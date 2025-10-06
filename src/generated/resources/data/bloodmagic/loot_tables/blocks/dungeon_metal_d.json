@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:air"
+          "name": "bloodmagic:dungeon_metal_d"
         }
       ],
       "rolls": 1.0

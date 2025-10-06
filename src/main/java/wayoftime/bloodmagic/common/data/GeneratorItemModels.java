@@ -63,6 +63,26 @@ public class GeneratorItemModels extends ItemModelProvider {
         registerBlockModel(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get());
         registerBlockModel(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get());
 
+        registerBlockModel(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE.get());
+        registerBlockModel(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CAP.get());
+        registerBlockModel(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CENTER.get());
+        registerBlockModel(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_SPECIAL.get());
+
+        registerBlockModel(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE.get());
+        registerBlockModel(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CAP.get());
+        registerBlockModel(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CENTER.get());
+        registerBlockModel(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_SPECIAL.get());
+
+        registerBlockModel(BloodMagicBlocks.STEADFAST_DUNGEON_STONE.get());
+        registerBlockModel(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CAP.get());
+        registerBlockModel(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CENTER.get());
+        registerBlockModel(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_SPECIAL.get());
+
+        registerBlockModel(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE.get());
+        registerBlockModel(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CAP.get());
+        registerBlockModel(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CENTER.get());
+        registerBlockModel(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_SPECIAL.get());
+
         registerBlockModel(BloodMagicBlocks.BLANK_RITUAL_STONE.get());
         registerBlockModel(BloodMagicBlocks.AIR_RITUAL_STONE.get());
         registerBlockModel(BloodMagicBlocks.WATER_RITUAL_STONE.get());

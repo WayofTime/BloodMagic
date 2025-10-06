@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dungeon_corrosive": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "bloodmagic:dungeon_corrosive"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bloodmagic:dungeon_brick1_stairs_c_from_dungeon_corrosive_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_dungeon_corrosive",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bloodmagic:dungeon_brick1_stairs_c_from_dungeon_corrosive_stonecutting"
+    ]
+  },
+  "sends_telemetry_event": false
+}
