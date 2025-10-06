@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "s": {
+      "item": "bloodmagic:dungeon_brick1_slab_d"
+    }
+  },
+  "pattern": [
+    "s",
+    "s"
+  ],
+  "result": {
+    "item": "bloodmagic:dungeon_brick1_d"
+  },
+  "show_notification": true
+}

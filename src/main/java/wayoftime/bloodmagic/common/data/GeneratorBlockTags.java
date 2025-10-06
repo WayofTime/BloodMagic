@@ -30,13 +30,91 @@ public class GeneratorBlockTags extends IntrinsicHolderTagsProvider<Block>
 		this.tag(BloodMagicTags.Blocks.SOUL_SAND).add(Blocks.SOUL_SAND);
 		this.tag(BloodMagicTags.Blocks.SOUL_SOIL).add(Blocks.SOUL_SOIL);
 
-		this.tag(BlockTags.WALLS)
-				.add(BloodMagicBlocks.DUNGEON_BRICK_WALL.get())
-				.add(BloodMagicBlocks.DUNGEON_TILE_WALL.get())
-				.add(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get())
-				.add(BloodMagicBlocks.DUNGEON_STONE_WALL.get());
+        this.tag(BloodMagicTags.Blocks.BLOCK_HELLFORGED)
+                .add(BloodMagicBlocks.HELLFORGED_BLOCK.get())
+                .add(BloodMagicBlocks.CORROSIVE_HELLFORGED_BLOCK.get())
+                .add(BloodMagicBlocks.DESTRUCTIVE_HELLFORGED_BLOCK.get())
+                .add(BloodMagicBlocks.STEADFAST_HELLFORGED_BLOCK.get())
+                .add(BloodMagicBlocks.VENGEFUL_HELLFORGED_BLOCK.get());
 
-		this.tag(BloodMagicTags.Blocks.MUSHROOM_STEM).add(Blocks.MUSHROOM_STEM).add(Blocks.CRIMSON_STEM).add(Blocks.WARPED_STEM);
+		this.tag(BlockTags.WALLS)
+                .add(BloodMagicBlocks.DUNGEON_BRICK_WALL.get())
+                .add(BloodMagicBlocks.DUNGEON_TILE_WALL.get())
+                .add(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get())
+                .add(BloodMagicBlocks.DUNGEON_STONE_WALL.get())
+                .add(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_WALL.get())
+                .add(BloodMagicBlocks.CORROSIVE_DUNGEON_TILE_WALL.get())
+                .add(BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_WALL.get())
+                .add(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE_WALL.get())
+                .add(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_WALL.get())
+                .add(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE_WALL.get())
+                .add(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_WALL.get())
+                .add(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE_WALL.get())
+                .add(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_WALL.get())
+                .add(BloodMagicBlocks.STEADFAST_DUNGEON_TILE_WALL.get())
+                .add(BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_WALL.get())
+                .add(BloodMagicBlocks.STEADFAST_DUNGEON_STONE_WALL.get())
+                .add(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_WALL.get())
+                .add(BloodMagicBlocks.VENGEFUL_DUNGEON_TILE_WALL.get())
+                .add(BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_WALL.get())
+                .add(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE_WALL.get());
+
+        this.tag(BloodMagicTags.Blocks.DUNGEON_RAW)
+                .add(BloodMagicBlocks.DUNGEON_STONE.get())
+                //.add(BloodMagicBlocks.DUNGEON_STONE_SLAB.get(), BloodMagicBlocks.DUNGEON_BRICK_SLAB.get(), BloodMagicBlocks.DUNGEON_POLISHED_SLAB.get(), BloodMagicBlocks.DUNGEON_TILE_SLAB.get())
+                .add(BloodMagicBlocks.DUNGEON_STONE_STAIRS.get(), BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get(), BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get())
+                .add(BloodMagicBlocks.DUNGEON_STONE_WALL.get(), BloodMagicBlocks.DUNGEON_BRICK_WALL.get(), BloodMagicBlocks.DUNGEON_POLISHED_WALL.get(), BloodMagicBlocks.DUNGEON_TILE_WALL.get())
+                .add(BloodMagicBlocks.DUNGEON_BRICK_GATE.get(), BloodMagicBlocks.DUNGEON_POLISHED_GATE.get())
+                .add(BloodMagicBlocks.DUNGEON_EYE.get())
+                .add(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get(), BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get(), BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get())
+                .add(BloodMagicBlocks.DUNGEON_BRICK_1.get(), BloodMagicBlocks.DUNGEON_BRICK_2.get(), BloodMagicBlocks.DUNGEON_BRICK_3.get())
+                .add(BloodMagicBlocks.DUNGEON_TILE.get(), BloodMagicBlocks.DUNGEON_TILE_SPECIAL.get(), BloodMagicBlocks.DUNGEON_SMALL_BRICK.get(), BloodMagicBlocks.DUNGEON_POLISHED_STONE.get());
+
+        this.tag(BloodMagicTags.Blocks.DUNGEON_CORROSIVE)
+                .add(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE.get())
+                //.add(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE_SLAB.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_SLAB.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_SLAB.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_TILE_SLAB.get())
+                .add(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE_STAIRS.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_STAIRS.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_STAIRS.get())
+                .add(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE_WALL.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_WALL.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_WALL.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_TILE_WALL.get())
+                .add(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_GATE.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_GATE.get())
+                .add(BloodMagicBlocks.CORROSIVE_DUNGEON_EYE.get())
+                .add(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CAP.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CENTER.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_SPECIAL.get())
+                .add(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_1.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_2.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_3.get())
+                .add(BloodMagicBlocks.CORROSIVE_DUNGEON_TILE.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_TILE_SPECIAL.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_SMALL_BRICK.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_STONE.get());
+
+        this.tag(BloodMagicTags.Blocks.DUNGEON_DESTRUCTIVE)
+                .add(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE.get())
+                //.add(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE_SLAB.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_SLAB.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_SLAB.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE_SLAB.get())
+                .add(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE_STAIRS.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_STAIRS.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_STAIRS.get())
+                .add(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE_WALL.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_WALL.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_WALL.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE_WALL.get())
+                .add(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_GATE.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_GATE.get())
+                .add(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_EYE.get())
+                .add(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CAP.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CENTER.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_SPECIAL.get())
+                .add(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_1.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_2.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_3.get())
+                .add(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE_SPECIAL.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_SMALL_BRICK.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_STONE.get());
+
+        this.tag(BloodMagicTags.Blocks.DUNGEON_STEADFAST)
+                .add(BloodMagicBlocks.STEADFAST_DUNGEON_STONE.get())
+                //.add(BloodMagicBlocks.STEADFAST_DUNGEON_STONE_SLAB.get(), BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_SLAB.get(), BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_SLAB.get(), BloodMagicBlocks.STEADFAST_DUNGEON_TILE_SLAB.get())
+                .add(BloodMagicBlocks.STEADFAST_DUNGEON_STONE_STAIRS.get(), BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_STAIRS.get(), BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_STAIRS.get())
+                .add(BloodMagicBlocks.STEADFAST_DUNGEON_STONE_WALL.get(), BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_WALL.get(), BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_WALL.get(), BloodMagicBlocks.STEADFAST_DUNGEON_TILE_WALL.get())
+                .add(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_GATE.get(), BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_GATE.get())
+                .add(BloodMagicBlocks.STEADFAST_DUNGEON_EYE.get())
+                .add(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CAP.get(), BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CENTER.get(), BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_SPECIAL.get())
+                .add(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_1.get(), BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_2.get(), BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_3.get())
+                .add(BloodMagicBlocks.STEADFAST_DUNGEON_TILE.get(), BloodMagicBlocks.STEADFAST_DUNGEON_TILE_SPECIAL.get(), BloodMagicBlocks.STEADFAST_DUNGEON_SMALL_BRICK.get(), BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_STONE.get());
+
+        this.tag(BloodMagicTags.Blocks.DUNGEON_VENGEFUL)
+                .add(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE.get())
+                //.add(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE_SLAB.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_SLAB.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_SLAB.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_TILE_SLAB.get())
+                .add(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE_STAIRS.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_STAIRS.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_STAIRS.get())
+                .add(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE_WALL.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_WALL.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_WALL.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_TILE_WALL.get())
+                .add(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_GATE.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_GATE.get())
+                .add(BloodMagicBlocks.VENGEFUL_DUNGEON_EYE.get())
+                .add(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CAP.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CENTER.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_SPECIAL.get())
+                .add(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_1.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_2.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_3.get())
+                .add(BloodMagicBlocks.VENGEFUL_DUNGEON_TILE.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_TILE_SPECIAL.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_SMALL_BRICK.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_STONE.get());
+
+        this.tag(BloodMagicTags.Blocks.MUSHROOM_STEM).add(Blocks.MUSHROOM_STEM).add(Blocks.CRIMSON_STEM).add(Blocks.WARPED_STEM);
 		this.tag(BloodMagicTags.Blocks.MUSHROOM_HYPHAE).add(Blocks.BROWN_MUSHROOM_BLOCK).add(Blocks.RED_MUSHROOM_BLOCK).add(Blocks.CRIMSON_HYPHAE).add(Blocks.WARPED_HYPHAE).add(Blocks.STRIPPED_CRIMSON_HYPHAE).add(Blocks.STRIPPED_WARPED_HYPHAE).add(Blocks.NETHER_WART_BLOCK).add(Blocks.WARPED_WART_BLOCK).add(Blocks.SHROOMLIGHT);
 
 		tag(BloodMagicTags.BLOCK_ORE_ALUMINUM);

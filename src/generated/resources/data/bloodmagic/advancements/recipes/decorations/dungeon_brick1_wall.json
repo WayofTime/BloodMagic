@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dungeon_brick1": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bloodmagic:dungeon_brick1"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bloodmagic:dungeon_brick1_wall"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_dungeon_brick1",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bloodmagic:dungeon_brick1_wall"
+    ]
+  },
+  "sends_telemetry_event": false
+}

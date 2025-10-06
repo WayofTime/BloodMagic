@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 2,
+  "ingredient": {
+    "tag": "bloodmagic:dungeon_vengeful"
+  },
+  "result": "bloodmagic:dungeon_polished_slab_v"
+}
