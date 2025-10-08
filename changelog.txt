@@ -1,4 +1,16 @@
 ------------------------------------------------------
+Version 3.3.3
+------------------------------------------------------
+- Updated the description of the music disc to properly credit Firel.
+- Added the "Gilded" Living Armour Upgrade, which pacifies Piglins when equiped. Trained by giving Gold Ingots directly to piglins.
+- Updated the death messages for dying to the Well of Suffering or the Sacrificial Knife.
+- Deregistered the SPectral Block's item.
+ -> Stop placing random things out of your test worlds! ;-;
+- Modified some miscilaneous Curios stuff.
+- Removed the fact that sacrificial damage would stop momentum.
+
+
+------------------------------------------------------
 Version 3.3.2
 ------------------------------------------------------
 - Fixed Soft Coating and Fortuna Extract; voiding of drops is not part of the "ultimate price"!

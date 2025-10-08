@@ -1,5 +1,8 @@
-# Blood Magic: Alchemical Wizardry [![](http://cf.way2muchnoise.eu/full_blood-magic_downloads.svg)](https://minecraft.curseforge.com/projects/blood-magic) [![Discord](https://img.shields.io/discord/259683256348311552.svg?colorB=7289DA&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHYAAABWAgMAAABnZYq0AAAACVBMVEUAAB38%2FPz%2F%2F%2F%2Bm8P%2F9AAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfhBxwQJhxy2iqrAAABoElEQVRIx7WWzdGEIAyGgcMeKMESrMJ6rILZCiiBg4eYKr%2Fd1ZAfgXFm98sJfAyGNwno3G9sLucgYGpQ4OGVRxQTREMDZjF7ILSWjoiHo1n%2BE03Aw8p7CNY5IhkYd%2F%2F6MtO3f8BNhR1QWnarCH4tr6myl0cWgUVNcfMcXACP1hKrGMt8wcAyxide7Ymcgqale7hN6846uJCkQxw6GG7h2MH4Czz3cLqD1zHu0VOXMfZjHLoYvsdd0Q7ZvsOkafJ1P4QXxrWFd14wMc60h8JKCbyQvImzlFjyGoZTKzohwWR2UzSONHhYXBQOaKKsySsahwGGDnb%2FiYPJw22sCqzirSULYy1qtHhXGbtgrM0oagBV4XiTJok3GoLoDNH8ooTmBm7ZMsbpFzi2bgPGoXWXME6XT%2BRJ4GLddxJ4PpQy7tmfoU2HPN6cKg%2BledKHBKlF8oNSt5w5g5o8eXhu1IOlpl5kGerDxIVT%2BztzKepulD8utXqpChamkzzuo7xYGk%2FkpSYuviLXun5bzdRf0Krejzqyz7Z3p0I1v2d6HmA07dofmS48njAiuMgAAAAASUVORK5CYII%3D)](https://discord.gg/VtNrGrs)
-
+# Blood Magic: Alchemical Wizardry 
+[![Curseforge](https://img.shields.io/curseforge/dt/224791.svg?style=for-the-badge&label=Curseforge&logo=curseforge&color=f16436)](https://minecraft.curseforge.com/projects/blood-magic)
+[![Modrinth](https://img.shields.io/modrinth/dt/PbNc6qBY.svg?style=for-the-badge&label=Modrinth&logo=modrinth&color=1bd96a)](https://modrinth.com/mod/blood-magic)
+[![Discord](https://img.shields.io/discord/259683256348311552.svg?style=for-the-badge&label=Discord&logo=discord&color=404eed)](https://discord.gg/VtNrGrs)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg?style=for-the-badge)](https://creativecommons.org/licenses/by/4.0/)
 ### Gruesome? Probably. Worth it? Definitely!
 ### [Downloads](http://minecraft.curseforge.com/projects/blood-magic/files)
 
@@ -20,12 +23,7 @@ Blood Magic is an arcane art that is practiced by mages who attempt to gather a 
 ## Development Setup
 
 1. Fork this project to your own Github repository and clone it to your desktop.
-2. Navigate to the directory you cloned to. Follow the [Forge Documentation](http://mcforge.readthedocs.io/en/latest/gettingstarted/#from-zero-to-modding) (start at step 4) to setup your workspace. If you use IDEA, follow [this set](http://mcforge.readthedocs.io/en/latest/gettingstarted/#terminal-free-intellij-idea-configuration) of steps.
-
-#### IntelliJ IDEA extra steps
-
-1. Navigate to `File > Settings > Plugins > Browse repositories...`. Search for Lombok and install the plugin.
-2. Navigate to `File > Settings > Build, Execution, Deployment > Compiler > Annotation Processors`. Check `Enable annotation processing`. 
+2. Navigate to the directory you cloned to. Follow the [Forge Documentation](https://docs.minecraftforge.net/en/latest/gettingstarted/#from-zero-to-modding) (start at step 4) to setup your workspace. If you use IDEA, follow [this set](http://mcforge.readthedocs.io/en/latest/gettingstarted/#terminal-free-intellij-idea-configuration) of steps.
 
 [Setup video](https://www.youtube.com/watch?v=8VEdtQLuLO0&feature=youtu.be) by LexManos. For more information, refer to the [Forge Forums](http://www.minecraftforge.net/forum/index.php/topic,14048.0.html).
 
@@ -60,7 +58,7 @@ Add to your build.gradle:
 
 ![CCA4.0](https://licensebuttons.net/l/by/4.0/88x31.png)
 
-Blood Magic: AlchemicalWizardry by WayofTime is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).
+Blood Magic: Alchemical Wizardry by WayofTime is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).
 
 ## Installation Instructions
 

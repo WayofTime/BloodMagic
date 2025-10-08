@@ -54,8 +54,6 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 		ItemStack stack = player.getItemInHand(hand);
 		if (!world.isClientSide)
 		{
-			Utils.setUUID(stack);
-
 			if (player instanceof ServerPlayer)
 			{
 				NetworkHooks.openScreen((ServerPlayer) player, this, buf -> buf.writeItemStack(stack, false));

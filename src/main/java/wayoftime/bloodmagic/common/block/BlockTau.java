@@ -3,13 +3,13 @@ package wayoftime.bloodmagic.common.block;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
@@ -60,7 +60,8 @@ public class BlockTau extends CropBlock
 	/**
 	 * Performs a random tick on a block.
 	 */
-	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random)
+    @Override
+	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random)
 	{
 		if (!worldIn.isAreaLoaded(pos, 1))
 			return; // Forge: prevent loading unloaded chunks when checking neighbor's light
@@ -110,14 +111,8 @@ public class BlockTau extends CropBlock
 		}
 	}
 
-	/**
-	 * Whether this IGrowable can grow
-	 */
-	public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient)
-	{
-		return !this.isMaxAge(state);
-	}
 
+    //REVIEW: method not called. Add @override and change Random to RandomSource
 	public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state)
 	{
 		return false;

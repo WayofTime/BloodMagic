@@ -96,6 +96,7 @@ public class ElementRegistry
 			toWrite.put(entry.getKey().toString(), entry.getValue().getPosition());
 
 		String json = GSON.toJson(toWrite);
+		FMLPaths.getOrCreateGameRelativePath(FMLPaths.CONFIGDIR.get().resolve(BloodMagic.MODID));
 		try (FileWriter writer = new FileWriter(CONFIG))
 		{
 			writer.write(json);

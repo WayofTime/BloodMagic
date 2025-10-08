@@ -226,6 +226,7 @@ public class TileInventory extends TileBase implements Container
 	public void clearContent()
 	{
 		this.inventory = NonNullList.withSize(size, ItemStack.EMPTY);
+		setChanged();
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 package wayoftime.bloodmagic.common.data;
 
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 import wayoftime.bloodmagic.BloodMagic;
@@ -24,7 +23,10 @@ public class GeneratorLanguage extends LanguageProvider
 		add("itemGroup.bloodmagic.creativeTab", "Blood Magic");
 		add("itemGroup.bloodmagic.upgradeTab", "Blood Magic Living Upgrades");
 
-		add("chat.bloodmagic.damageSource", "%s's soul became too weak");
+		// Death Messages
+		//add("chat.bloodmagic.damageSource", "%s's soul became too weak");
+		add("death.attack.sacrifice", "%1$s sacrificed a bit too much LP");
+		add("death.attack.ritual", "%1$s died in a Well of Suffering");
 
 		// Tile Entitites
 		add("tile.bloodmagic.soulforge.name", "Hellfire Forge");
@@ -86,7 +88,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.soulGem.grand", "A gem used to contain a large amount of will.");
 		add("tooltip.bloodmagic.soulSnare.desc", "Throw at a monster and then kill them to obtain their demonic will.");
 		add("tooltip.bloodmagic.willGauge", "A strange device that can measure the Demon Will in the Aura.");
-		add("item.bloodmagic.bleedingedge.desc", "Bleeding Edge of the Hidden Realm");
+		add("item.bloodmagic.bleedingedge.desc", "Firel - Bleeding Edge of the Hidden Realm");
 
 		add("tooltip.bloodmagic.syntheticpoint.desc", "A synthetic living armour point. It's... wriggling.");
 
@@ -122,7 +124,6 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.arctool.additionaldrops", "Increases chance of additional outputs by: x%s.");
 		add("tooltip.bloodmagic.arctool.craftspeed", "Increases crafting speed by: x%s.");
 		add("tooltip.bloodmagic.arctool.uses", "Uses remaining: %s.");
-
 
 		add("tooltip.bloodmagic.experienceTome", "A book used to store experience.");
 		add("tooltip.bloodmagic.experienceTome.exp", "Exp: %0.3f");
@@ -183,6 +184,9 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.alchemytable.orberror.text", "Orb's Tier is not high enough for this recipe.");
 		add("tooltip.bloodmagic.alchemytable.lperror.title", "Soul Network Error");
 		add("tooltip.bloodmagic.alchemytable.lperror.text", "Insufficient LP in Soul Network, or Blood Orb is not Bound.");
+
+		add("tooltip.bloodmagic.soulforge.willerror.title", "Demon Will Error");
+		add("tooltip.bloodmagic.soulforge.willerror.text", "Not enough Demon Will for this recipe.");
 
 		add("tooltip.bloodmagic.incorrectKey", "The key does not fit in this lock...");
 		add("tooltip.bloodmagic.specialspawn", "You feel a spatial distortion in this room...");
@@ -331,7 +335,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.forsakenSoulRitual.info", "Applies Will catalysts to crystals within range from the attached inventory.");
 		add("ritual.bloodmagic.crystalHarvestRitual.info", "Breaks Demon Will Crystal Clusters of all aspects within its range, dropping the results on top of the crystals.");
 		add("ritual.bloodmagic.placerRitual.info", "Grabs blocks that are inside of the connected inventory and places them into the world.");
-		add("ritual.bloodmagic.fellingRitual.info", "A standard tree-cutting machine, this ritual will cut down all trees and leaves within its area and collect the drops.");
+		add("ritual.bloodmagic.fellingRitual.info", "Summons tree-felling spirits to chop down nearby trees and collect their drops into a chest atop the Master Ritual Stone.");
 		add("ritual.bloodmagic.pumpRitual.info", "Looks around the world and grabs fluids from the defined area. Will only remove and put the fluid into the connected tank if the tank has at least a bucket's worth of the same fluid.");
 		add("ritual.bloodmagic.altarBuilderRitual.info", "Builds an altar out of the components inside of the connected inventory.");
 		add("ritual.bloodmagic.portalRitual.info", "Creates a portal network based on the activator and the immediately surrounding blocks. Blocks can be changed after activation without changing the network of portals, and portals with the same \"key\" will link together.");
@@ -445,6 +449,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("living_upgrade.bloodmagic.repair", "Repairing");
 		add("living_upgrade.bloodmagic.curios_socket", "Socketed");
 		add("living_upgrade.bloodmagic.diamond_protect", "Brilliance");
+		add("living_upgrade.bloodmagic.gilded", "Gilded");
 
 		add("living_upgrade.bloodmagic.slowness", "Limp Leg");
 		add("living_upgrade.bloodmagic.crippled_arm", "Crippled Arm");
@@ -666,6 +671,7 @@ public class GeneratorLanguage extends LanguageProvider
 		addItem(BloodMagicItems.SUPPRESSION_SIGIL, "Sigil of Suppression");
 		addItem(BloodMagicItems.TELEPOSITION_SIGIL, "Teleposition Sigil");
 
+		addItem(BloodMagicItems.DOUBT_BUCKET, "Bucket of Doubt");
 		addItem(BloodMagicItems.LIFE_ESSENCE_BUCKET, "Bucket of Life");
 		addItem(BloodMagicItems.ARCANE_ASHES, "Arcane Ashes");
 		addItem(BloodMagicItems.SLATE, "Blank Slate");
@@ -910,7 +916,7 @@ public class GeneratorLanguage extends LanguageProvider
 		// JEI
 		add("jei.bloodmagic.recipe.minimumsouls", "Minimum: %s Will");
 		add("jei.bloodmagic.recipe.soulsdrained", "Drained: %s Will");
-		add("jei.bloodmagic.recipe.requiredlp", "LP: %d");
+		add("jei.bloodmagic.recipe.requiredlp", "LP: %,d");
 		add("jei.bloodmagic.recipe.requiredtier", "Tier: %d");
 		add("jei.bloodmagic.recipe.consumptionrate", "Consumption: %s LP/t");
 		add("jei.bloodmagic.recipe.drainrate", "Drain: %s LP/t");
@@ -926,6 +932,10 @@ public class GeneratorLanguage extends LanguageProvider
 		add("jei.bloodmagic.recipe.alchemytable", "Alchemy Table");
 		add("jei.bloodmagic.recipe.potionflask", "Potion Crafting");
 
+		add("jei.bloodmagic.recipe.lp", "LP");
+		add("jei.bloodmagic.recipe.will", "Will");
+		add("jei.bloodmagic.recipe.info", "Info");
+
 		// Curios
 		add("curios.identifier.living_armour_socket", "Living Armour Socket");
 
@@ -935,6 +945,10 @@ public class GeneratorLanguage extends LanguageProvider
 		add("chat.bloodmagic.ritual.activate", "A rush of energy flows through the ritual!");
 		add("chat.bloodmagic.ritual.notValid", "You feel that these runes are not configured correctly...");
 		add("chat.bloodmagic.diviner.blockedBuild", "Unable to replace block at %d, %d, %d.");
+		add("chat.bloodmagic.ritualLivingDowngrade.trainingBraceletBlock", "Your Training Bracelet vibrates as it prevents the downgrade from being applied.");
+		add("chat.bloodmagic.ritualLivingDowngrade.notEnoughKeyItems", "You sense you need more %s to apply a stronger Downgrade.");
+		add("chat.bloodmagic.ritualLivingDowngrade.notEnoughPoints", "You sense you will need more Upgrade Points to apply these Downgrades.");
+		add("chat.bloodmagic.ritualLivingDowngrade.missingInventory", "No inventory found at %d, %d, %d.");
 
 		// GUI
 		add("gui.bloodmagic.empty", "Empty");

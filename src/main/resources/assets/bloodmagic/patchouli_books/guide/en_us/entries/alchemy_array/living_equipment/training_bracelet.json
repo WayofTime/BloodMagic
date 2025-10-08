@@ -11,7 +11,7 @@
       "type": "bloodmagic:crafting_array",
       "heading": "Training Bracelet",
       "recipe": "bloodmagic:array/living_trainer",
-      "text": "$(italic)*Insert Rocky Training Montage here*$()"
+      "text": "$(italic)*Insert Rocky Training Montage here*$()$(br2)Only one of these bracelets will work at a time. Off-hand > Curios (if available) > Main Inventory (including main hand) > add-on inventories."
     },
     {
       "type": "patchouli:image",

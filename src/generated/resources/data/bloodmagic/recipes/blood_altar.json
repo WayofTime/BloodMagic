@@ -10,15 +10,12 @@
     },
     "c": {
       "tag": "forge:ingots/gold"
-    },
-    "d": {
-      "item": "minecraft:gold_ingot"
     }
   },
   "pattern": [
     "a a",
     "aba",
-    "cdc"
+    "ccc"
   ],
   "result": {
     "item": "bloodmagic:altar"

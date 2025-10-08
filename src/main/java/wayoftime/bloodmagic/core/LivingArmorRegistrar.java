@@ -63,6 +63,7 @@ public class LivingArmorRegistrar
 		def.put("curios_socket", BloodMagic.rl("curios_socket"));
 		def.put("diamond_protect", BloodMagic.rl("diamond_protect"));
 		def.put("repair", BloodMagic.rl("repair"));
+		def.put("gilded", BloodMagic.rl("gilded"));
 		def.put("downgrade/quenched", BloodMagic.rl("downgrade/quenched"));
 		def.put("downgrade/storm_trooper", BloodMagic.rl("downgrade/storm_trooper"));
 		def.put("downgrade/battle_hungry", BloodMagic.rl("downgrade/battle_hungry"));
@@ -145,7 +146,7 @@ public class LivingArmorRegistrar
 		attributeMap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Damage Modifier 3", upgrade.getBonusValue("damage", level).doubleValue(), AttributeModifier.Operation.ADDITION));
 	}));
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_REPAIR = UPGRADES.register("repair", () -> parseDefinition("repair"));
-
+	public static final LivingUpgradeRegistryObject<LivingUpgrade> UPGRADE_GILDED = UPGRADES.register("gilded", () -> parseDefinition("gilded"));
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_QUENCHED = UPGRADES.register("downgrade/quenched", () -> parseDefinition("downgrade/quenched").asDowngrade());
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_STORM_TROOPER = UPGRADES.register("downgrade/storm_trooper", () -> parseDefinition("downgrade/storm_trooper").asDowngrade());
 	public static final LivingUpgradeRegistryObject<LivingUpgrade> DOWNGRADE_BATTLE_HUNGRY = UPGRADES.register("downgrade/battle_hungry", () -> parseDefinition("downgrade/battle_hungry").asDowngrade());
@@ -198,6 +199,7 @@ public class LivingArmorRegistrar
 		registerUpgrade(UPGRADE_DIAMOND.get());
 		registerUpgrade(UPGRADE_MELEE_DAMAGE.get());
 		registerUpgrade(UPGRADE_REPAIR.get());
+		registerUpgrade(UPGRADE_GILDED.get());
 		registerUpgrade(DOWNGRADE_QUENCHED.get());
 		registerUpgrade(DOWNGRADE_STORM_TROOPER.get());
 		registerUpgrade(DOWNGRADE_BATTLE_HUNGRY.get());

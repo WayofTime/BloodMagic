@@ -196,9 +196,12 @@ public class TileTeleposer extends TileInventory implements MenuProvider, Comman
 	private SoulNetwork getNetwork()
 	{
 		ItemStack focusStack = this.getItem(FOCUS_SLOT);
-		if (!focusStack.isEmpty() && focusStack.getItem() instanceof ITeleposerFocus)
+		if (!focusStack.isEmpty() && focusStack.getItem() instanceof ITeleposerFocus focus)
 		{
-			return NetworkHelper.getSoulNetwork(((ITeleposerFocus) focusStack.getItem()).getBinding(focusStack));
+			if (focus.getBinding(focusStack) != null)
+			{
+				return NetworkHelper.getSoulNetwork(focus.getBinding(focusStack));
+			}
 		}
 
 		return null;

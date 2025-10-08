@@ -7,25 +7,19 @@ import java.util.function.Consumer;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.extensions.IForgeItem;
-import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.living.ILivingContainer;
 import wayoftime.bloodmagic.core.living.LivingStats;
@@ -169,7 +163,12 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 //        stack.damage((int) damage, livingEntity, entity -> {});
 	}
 
-	@Override
+    @Override
+    public boolean canLivingEvolve() {
+        return true;
+    }
+
+    @Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
@@ -196,5 +195,13 @@ public class ItemLivingArmor extends ArmorItem implements ILivingContainer, Expa
 			return LivingStats.fromPlayer((Player) entity, true).getLevel(LivingArmorRegistrar.UPGRADE_ELYTRA.get().getKey()) > 0;
 		else
 			return false;
+	}
+
+	public boolean makesPiglinsNeutral(ItemStack stack, LivingEntity wearer)
+	{
+		if (stack.getItem() instanceof ItemLivingArmor && wearer instanceof Player && LivingUtil.hasFullSet((Player) wearer)) {
+			return LivingStats.fromPlayer((Player) wearer, true).getLevel(LivingArmorRegistrar.UPGRADE_GILDED.get().getKey()) > 0;
+		}
+		return false;
 	}
 }

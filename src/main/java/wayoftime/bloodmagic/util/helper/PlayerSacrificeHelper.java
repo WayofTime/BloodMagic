@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
-import wayoftime.bloodmagic.ConfigHandler;
+import wayoftime.bloodmagic.ConfigManager;
 import wayoftime.bloodmagic.altar.IBloodAltar;
 import wayoftime.bloodmagic.event.SacrificeKnifeUsedEvent;
 
@@ -74,7 +74,7 @@ public class PlayerSacrificeHelper
 			if (health > maxHealth / 10.0)
 			{
 				float sacrificedHealth = health - maxHealth / 10.0f;
-				int lpAdded = (int) (sacrificedHealth * ConfigHandler.values.sacrificialDaggerConversion * getModifier(amount));
+				int lpAdded = (int) (sacrificedHealth * ConfigManager.COMMON.sacrificialDaggerConversion.get() * getModifier(amount));
 
 				IBloodAltar altar = getAltar(player.getCommandSenderWorld(), player.blockPosition());
 				if (altar != null)

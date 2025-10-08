@@ -6,6 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import wayoftime.bloodmagic.common.item.routing.ItemRouterFilter;
+import wayoftime.bloodmagic.common.routing.IRoutingFilter;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.Utils;
 
@@ -18,7 +19,10 @@ public class InventoryFilter extends ItemInventory
 
 	public void onGuiSaved(Player entityPlayer)
 	{
-		masterStack = findParentStack(entityPlayer);
+		if (entityPlayer.getInventory().getItem(entityPlayer.getInventory().selected).getItem() instanceof IRoutingFilter)
+		{
+			masterStack = entityPlayer.getInventory().getItem(entityPlayer.getInventory().selected);
+		}
 
 		if (!masterStack.isEmpty())
 		{
@@ -26,6 +30,7 @@ public class InventoryFilter extends ItemInventory
 		}
 	}
 
+	/*
 	public ItemStack findParentStack(Player entityPlayer)
 	{
 		if (Utils.hasUUID(masterStack))
@@ -47,6 +52,7 @@ public class InventoryFilter extends ItemInventory
 
 		return ItemStack.EMPTY;
 	}
+	*/
 
 	public void save()
 	{
