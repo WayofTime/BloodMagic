@@ -4,8 +4,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.GrowingPlantBlock;
+import net.minecraft.world.level.block.GrowingPlantBodyBlock;
 import net.minecraft.world.level.block.GrowingPlantHeadBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
@@ -31,8 +33,7 @@ public class HarvestHandlerGrowingPlant implements IHarvestHandler {
     @Override
     public boolean test(Level world, BlockPos pos, BlockState state) {
         if (state.getBlock() instanceof GrowingPlantHeadBlock head) {
-            //return world.getBlockState(pos.relative(head.growthDirection.getOpposite())).is(head.getBodyBlock());
-            return false;
+            return world.getBlockState(pos.relative(head.growthDirection.getOpposite())).getBlock() instanceof GrowingPlantBodyBlock;
         }
 
         return false;
