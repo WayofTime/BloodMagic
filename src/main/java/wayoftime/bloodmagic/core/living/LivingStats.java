@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.core.living;
 
 import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
@@ -11,21 +12,20 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
+import wayoftime.bloodmagic.ConfigManager;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 
 public class LivingStats
 {
 
-	public static final int DEFAULT_UPGRADE_POINTS = 100;
-    public static final int DEFAULT_EVOLVED_UPGRADE_POINTS = 300;
-
 	protected final Map<LivingUpgrade, Double> upgrades;
-	protected int maxPoints = DEFAULT_UPGRADE_POINTS;
+	protected Supplier<Integer> maxPoints;
     protected boolean evolved = false;
 
 	public LivingStats(Map<LivingUpgrade, Double> upgrades)
 	{
 		this.upgrades = upgrades;
+        this.maxPoints = ConfigManager.COMMON.defaultUpgradePoints;
 	}
 
 	public LivingStats()
@@ -90,12 +90,12 @@ public class LivingStats
 
 	public int getMaxPoints()
 	{
-		return maxPoints;
+		return maxPoints.get();
 	}
 
 	public LivingStats setMaxPoints(int maxPoints)
 	{
-		this.maxPoints = maxPoints;
+		this.maxPoints = () -> maxPoints;
 		return this;
 	}
 
@@ -107,7 +107,7 @@ public class LivingStats
     public LivingStats setEvolved()
     {
         this.evolved = true;
-        this.setMaxPoints(DEFAULT_EVOLVED_UPGRADE_POINTS);
+        this.setMaxPoints(ConfigManager.COMMON.evolvedUpgradePoints.get());
         return this;
     }
 
@@ -122,7 +122,7 @@ public class LivingStats
 			statList.add(upgrade);
 		});
 		compound.put("upgrades", statList);
-		compound.putInt("maxPoints", maxPoints);
+		compound.putInt("maxPoints", maxPoints.get());
         compound.putBoolean("evolved", evolved);
 
 		return compound;
@@ -142,7 +142,7 @@ public class LivingStats
 			upgrades.put(upgrade, experience);
 		});
 
-		maxPoints = nbt.getInt("maxPoints");
+		maxPoints = () -> nbt.getInt("maxPoints");
         evolved = nbt.getBoolean("evolved");
 	}
 

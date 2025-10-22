@@ -25,11 +25,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.level.block.NetherPortalBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -43,6 +39,7 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import wayoftime.bloodmagic.api.compat.IDemonWillViewer;
+import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 import wayoftime.bloodmagic.common.tile.TileInventory;
 import wayoftime.bloodmagic.util.helper.InventoryHelper;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
@@ -177,25 +174,24 @@ public class Utils
 
 	public static boolean swapLocations(Level initialWorld, BlockPos initialPos, Level finalWorld, BlockPos finalPos, boolean playSound)
 	{
-		BlockEntity initialTile = initialWorld.getBlockEntity(initialPos);
+        BlockState initialState = initialWorld.getBlockState(initialPos);
+        BlockState finalState = finalWorld.getBlockState(finalPos);
+
+        if ((initialState.getBlock().equals(Blocks.AIR) && finalState.getBlock().equals(Blocks.AIR))
+                || initialState.is(BloodMagicTags.TELEPOSE_BLOCK_BLACKLIST)
+                || finalState.is(BloodMagicTags.TELEPOSE_BLOCK_BLACKLIST)) {
+            return false;
+        }
+
+        BlockEntity initialTile = initialWorld.getBlockEntity(initialPos);
 		BlockEntity finalTile = finalWorld.getBlockEntity(finalPos);
 		CompoundTag initialTag = new CompoundTag();
 		CompoundTag finalTag = new CompoundTag();
-//		if (initialTile != null)
-//			initialTile.save(initialTag);
-//		if (finalTile != null)
-//			finalTile.save(finalTag);
 
 		if (initialTile != null)
 			initialTag = initialTile.saveWithFullMetadata();
 		if (finalTile != null)
 			finalTag = finalTile.saveWithFullMetadata();
-
-		BlockState initialState = initialWorld.getBlockState(initialPos);
-		BlockState finalState = finalWorld.getBlockState(finalPos);
-
-		if ((initialState.getBlock().equals(Blocks.AIR) && finalState.getBlock().equals(Blocks.AIR)) || initialState.getBlock() instanceof NetherPortalBlock || finalState.getBlock() instanceof NetherPortalBlock)
-			return false;
 
 		if (playSound)
 		{
