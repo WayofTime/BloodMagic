@@ -61,7 +61,7 @@ public class RitualPlacer extends Ritual
 		{
 			IItemHandler itemHandler = Utils.getInventory(tileEntity, null);
 
-			if (itemHandler.getSlots() <= 0)
+			if (itemHandler == null)
 			{
 				return;
 			}
