@@ -12,6 +12,10 @@
       "heading": "Slate-infused Vial",
       "recipe": "bloodmagic:alchemytable/slate_vial",
       "text": "A sturdy Vial that can contain otherwise uncontainable mixtures."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Its also possible to apply an $(item)anointment$() to an applicable item using a smithing table. The $(item)anointment$() takes the role of a smithing template in this process."
     }
   ]
 }
