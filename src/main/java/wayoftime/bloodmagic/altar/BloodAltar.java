@@ -7,6 +7,7 @@ import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.RedstoneLampBlock;
@@ -27,8 +28,10 @@ import wayoftime.bloodmagic.common.item.IBindable;
 import wayoftime.bloodmagic.common.item.IBloodOrb;
 import wayoftime.bloodmagic.common.tile.TileAltar;
 import wayoftime.bloodmagic.core.data.Binding;
+import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.recipe.RecipeBloodAltar;
+import wayoftime.bloodmagic.util.BMLog;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 
@@ -793,7 +796,12 @@ public class BloodAltar// implements IFluidHandler
 			if (binding == null || orb == null)
 				return 0;
 
-			return NetworkHelper.getSoulNetwork(binding).getCurrentEssence() * 15 / orb.getCapacity();
+            SoulNetwork network = NetworkHelper.getSoulNetwork(binding);
+            if (network == null)
+                return 0;
+
+            // see AbstractContainerMenu#getRedstoneSignalFromContainer
+            return Mth.floor((float) network.getCurrentEssence() / (float) orb.getCapacity() * 14.0F) + (network.getCurrentEssence() > 0 ? 1 : 0);
 
 		default:
 			return 0;
