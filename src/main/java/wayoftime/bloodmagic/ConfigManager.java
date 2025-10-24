@@ -45,31 +45,26 @@ public class ConfigManager
 
 		CommonConfig(ForgeConfigSpec.Builder builder)
 		{
-			builder.comment("Stops the listed entities from being used in the Well of Suffering.", "Use the registry name of the entity. Vanilla entities do not require the modid.").push("Blacklist");
-			wellOfSuffering = builder.defineList("wellOfSuffering", ImmutableList.of("dummmmmmy:target_dummy"), obj -> true);
-
-			builder.pop();
-
-			builder.comment("Amount of LP the Sacrificial Dagger should provide for each damage dealt.").push("Config Values");
+			builder.comment("Amount of LP the Sacrificial Dagger should provide for each damage dealt. Default value 100");
 			sacrificialDaggerConversion = builder.defineInRange("sacrificialDaggerConversion", 100, 0, 10000);
-//			builder.pop();
 
 			builder.comment("Declares the amount of LP gained per HP sacrificed for the given entity.", "Setting the value to 0 will blacklist it.", "Use the registry name of the entity followed by a ';' and then the value you want.", "Vanilla entities do not require the modid.");
 			sacrificialValues = builder.defineList("sacrificialValues", ImmutableList.of("villager;100", "slime;15", "enderman;10", "cow;100", "chicken;100", "horse;100", "sheep;100", "wolf;100", "ocelot;100", "pig;100", "rabbit;100", "dummmmmmy:target_dummy;0"), obj -> true);
 
-            builder.comment("Declares the amount of LP gained per HP sacrificed for any entity not defined specifically");
+            builder.comment("Stops the listed entities from being used in the Well of Suffering.", "Use the registry name of the entity. Vanilla entities do not require the modid.");
+            wellOfSuffering = builder.defineList("wellOfSuffering", ImmutableList.of("dummmmmmy:target_dummy"), obj -> true);
+
+            builder.comment("Declares the amount of LP gained per HP sacrificed for any entity not defined specifically. Default value 25");
             entitySacrificeDefault = builder.defineInRange("defaultSacrificeValue", 25, 0, 10000);
-
-			builder.comment("State that the dungeon spawning ritual can only be activated when using a Creative Activation Crystal.", "Used on servers for if you do not trust your players to not destroy other people's bases.");
-			makeDungeonRitualCreativeOnly = builder.define("makeDungeonRitualCreativeOnly", false);
-
-			builder.pop();
 
             builder.comment("Amount of upgrade points the living armour has by default. Default value 100");
             defaultUpgradePoints = builder.defineInRange("default_upgrade_points", 100, 0, 2_000_000_000);
 
             builder.comment("Amount of upgrade points the living armour has when evolved. Default value 300");
             evolvedUpgradePoints = builder.defineInRange("evolved_upgrade_points", 300, 0, 2_000_000_000);
+
+			builder.comment("State that the dungeon spawning ritual can only be activated when using a Creative Activation Crystal.", "Used on servers for if you do not trust your players to not destroy other people's bases.");
+			makeDungeonRitualCreativeOnly = builder.define("makeDungeonRitualCreativeOnly", false);
 		}
 	}
 
