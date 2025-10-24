@@ -65,11 +65,11 @@ public class ConfigManager
 
 			builder.pop();
 
-            builder.comment("Amount of upgrade points the living armour has by default");
-            defaultUpgradePoints = builder.defineInRange("default_upgrade_points", 100, 0, Integer.MAX_VALUE);
+            builder.comment("Amount of upgrade points the living armour has by default. Default value 100");
+            defaultUpgradePoints = builder.defineInRange("default_upgrade_points", 100, 0, 2_000_000_000);
 
-            builder.comment("Amount of upgrade points the living armour has when evolved");
-            evolvedUpgradePoints = builder.defineInRange("evolved_upgrade_points", 300, 0, Integer.MAX_VALUE);
+            builder.comment("Amount of upgrade points the living armour has when evolved. Default value 300");
+            evolvedUpgradePoints = builder.defineInRange("evolved_upgrade_points", 300, 0, 2_000_000_000);
 		}
 	}
 
