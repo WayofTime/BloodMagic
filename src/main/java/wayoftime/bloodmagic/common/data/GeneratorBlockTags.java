@@ -7,6 +7,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -33,6 +34,16 @@ public class GeneratorBlockTags extends IntrinsicHolderTagsProvider<Block>
 		this.tag(BlockTags.WALLS).add(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get());
 		this.tag(BloodMagicTags.Blocks.MUSHROOM_STEM).add(Blocks.MUSHROOM_STEM).add(Blocks.CRIMSON_STEM).add(Blocks.WARPED_STEM);
 		this.tag(BloodMagicTags.Blocks.MUSHROOM_HYPHAE).add(Blocks.BROWN_MUSHROOM_BLOCK).add(Blocks.RED_MUSHROOM_BLOCK).add(Blocks.CRIMSON_HYPHAE).add(Blocks.WARPED_HYPHAE).add(Blocks.STRIPPED_CRIMSON_HYPHAE).add(Blocks.STRIPPED_WARPED_HYPHAE).add(Blocks.NETHER_WART_BLOCK).add(Blocks.WARPED_WART_BLOCK).add(Blocks.SHROOMLIGHT);
+
+        tag(BloodMagicTags.TELEPOSE_BLOCK_BLACKLIST)
+                .add(Blocks.BEDROCK, Blocks.END_PORTAL_FRAME)
+                .add(Blocks.PISTON_HEAD, Blocks.MOVING_PISTON)
+                .add(BloodMagicBlocks.ALCHEMY_TABLE.get())
+                .addTag(BlockTags.PORTALS)
+                .addTag(BlockTags.DOORS)
+                .addTag(BlockTags.BEDS)
+                .addOptionalTag(new ResourceLocation("forge:immovable"))
+                .addOptionalTag(new ResourceLocation("forge:relocation_not_supported"));
 
 		tag(BloodMagicTags.BLOCK_ORE_ALUMINUM);
 		tag(BloodMagicTags.BLOCK_ORE_APATITE);

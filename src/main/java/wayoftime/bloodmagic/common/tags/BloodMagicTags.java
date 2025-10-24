@@ -1,10 +1,9 @@
 package wayoftime.bloodmagic.common.tags;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
+import net.minecraft.tags.*;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
@@ -27,6 +26,10 @@ public class BloodMagicTags
 
 	public static final TagKey<Item> MUSHROOM_STEM = ItemTags.create(new ResourceLocation("minecraft:mushroom_stem"));
 	public static final TagKey<Item> MUSHROOM_HYPHAE = ItemTags.create(new ResourceLocation("minecraft:mushroom_hyphae"));
+
+    public static final TagKey<Block> TELEPOSE_BLOCK_BLACKLIST = BlockTags.create(BloodMagic.rl("telepose_blacklist"));
+    public static final TagKey<EntityType<?>> TELEPOSE_BLACKLIST = TagKey.create(Registries.ENTITY_TYPE, BloodMagic.rl("telepose_blacklist"));
+
 
 	// Storage Blocks
 	public static final TagKey<Block> BLOCK_QUARTZ = getForgeBlockStorageTag("quartz");

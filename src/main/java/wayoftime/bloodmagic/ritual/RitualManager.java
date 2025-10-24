@@ -11,7 +11,9 @@ import com.google.common.collect.Sets;
 
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModList;
+import wayoftime.bloodmagic.ConfigManager;
 import wayoftime.bloodmagic.ritual.imperfect.ImperfectRitual;
 import wayoftime.bloodmagic.util.BMLog;
 

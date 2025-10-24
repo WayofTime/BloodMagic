@@ -1,0 +1,20 @@
+{
+  "values": [
+    "minecraft:bedrock",
+    "minecraft:end_portal_frame",
+    "minecraft:piston_head",
+    "minecraft:moving_piston",
+    "bloodmagic:alchemytable",
+    "#minecraft:portals",
+    "#minecraft:doors",
+    "#minecraft:beds",
+    {
+      "id": "#forge:immovable",
+      "required": false
+    },
+    {
+      "id": "#forge:relocation_not_supported",
+      "required": false
+    }
+  ]
+}

@@ -39,7 +39,7 @@ public class LivingStatsDummy extends LivingStats
 		});
 		compound.put("upgrades", statList);
 
-		compound.putInt("maxPoints", maxPoints);
+		compound.putInt("maxPoints", maxPoints.get());
 
 		return compound;
 	}

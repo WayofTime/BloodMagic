@@ -12,6 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.ConfigManager;
 import wayoftime.bloodmagic.common.registries.BloodMagicDamageTypes;
 import wayoftime.bloodmagic.common.tile.TileAltar;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
@@ -28,7 +29,7 @@ public class RitualWellOfSuffering extends Ritual
 	public static final String ALTAR_RANGE = "altar";
 	public static final String DAMAGE_RANGE = "damage";
 
-	public static final int SACRIFICE_AMOUNT = 25;
+	public static final int SACRIFICE_AMOUNT = ConfigManager.COMMON.entitySacrificeDefault.get();
 
 	public BlockPos altarOffsetPos = new BlockPos(0, 0, 0); // TODO: Save!
 
