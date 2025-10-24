@@ -27,8 +27,8 @@ public class ItemAnointmentProvider extends Item
 //	public Anointment anointment;
 	public ResourceLocation anointRL;
 	private int colour;
-	private int level;
-	private int maxDamage;
+	public int level;
+	public int maxDamage;
 
 	public ItemAnointmentProvider(ResourceLocation anointRL, int colour, int level, int maxDamage)
 	{

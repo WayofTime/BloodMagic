@@ -59,6 +59,8 @@ public class BloodMagicRecipeSerializers
 
 	public static final IRecipeSerializerRegistryObject<RecipeFilterCopy> FILTER_COPY = RECIPE_SERIALIZERS.register("filter_copy", () -> new SimpleCraftingRecipeSerializer<>(RecipeFilterCopy::new));
 
+    public static final IRecipeSerializerRegistryObject<RecipeAnointmentApply> ANOINTMENT_APPLY = RECIPE_SERIALIZERS.register("anointment_apply", RecipeAnointmentApply.Serializer::new);
+
 //	public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, BloodMagic.MODID);
 
 //	public static final DeferredObject<RecipeBloodAltar> REC = RECIPE_SERIALIZERS.register("test", () -> new BloodAltarRecipeSerializer<>(IRecipeBloodAltar::new));
