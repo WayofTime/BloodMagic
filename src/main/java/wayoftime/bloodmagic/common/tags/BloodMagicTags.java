@@ -32,8 +32,8 @@ public class BloodMagicTags
 	public static final TagKey<Block> BLOCK_QUARTZ = getForgeBlockStorageTag("quartz");
 	public static final TagKey<Block> BLOCK_URANIUM = getForgeBlockStorageTag("uranium");
 	public static final TagKey<Block> BLOCK_SLAG = getForgeBlockStorageTag("slag");
-	public static final TagKey<Block> BLOCK_FLUIX = BlockTags.create(new ResourceLocation("appliedenergistics2:fluix_block"));
-	public static final TagKey<Block> BLOCK_SKY_STONE = BlockTags.create(new ResourceLocation("appliedenergistics2:sky_stone_block"));
+	public static final TagKey<Block> BLOCK_FLUIX = BlockTags.create(new ResourceLocation("ae2:fluix_block"));
+	public static final TagKey<Block> BLOCK_SKY_STONE = BlockTags.create(new ResourceLocation("ae2:sky_stone_block"));
 
 	// Ores
 	public static final TagKey<Item> ORE_COPPER = getForgeOreTag("copper");
