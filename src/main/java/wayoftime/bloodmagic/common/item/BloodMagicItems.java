@@ -590,7 +590,7 @@ public class BloodMagicItems
 
     public static final RegistryObject<Item> DUNGEON_EMITTER = ITEMS.register("dungeon_emitter", () -> new BlockItem(BloodMagicBlocks.DUNGEON_EMITTER.get(), new Item.Properties()));
     public static final RegistryObject<Item> DUNGEON_ALTERNATOR = ITEMS.register("dungeon_alternator", () -> new BlockItem(BloodMagicBlocks.DUNGEON_ALTERNATOR.get(), new Item.Properties()));
-    public static final RegistryObject<Item> DUNGEON_BRICK_ASSORTED_BLOCK = ITEMS.register("dungeon_brick_assorted", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DUNGEON_BRICK_ASSORTED_BLOCK = ITEMS.register("dungeon_brick1_assorted", () -> new BlockItem(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get(), new Item.Properties()));
 
     public static final RegistryObject<Item> DUNGEON_CRACKED_BRICK_1_BLOCK = ITEMS.register("dungeon_regular_cracked_brick1", () -> new BlockItem(BloodMagicBlocks.DUNGEON_CRACKED_BRICK_1.get(), new Item.Properties()));
     public static final RegistryObject<Item> DUNGEON_GLOWING_CRACKED_BRICK_1_BLOCK = ITEMS.register("dungeon_cracked_brick1", () -> new BlockItem(BloodMagicBlocks.DUNGEON_GLOWING_CRACKED_BRICK_1.get(), new Item.Properties()));

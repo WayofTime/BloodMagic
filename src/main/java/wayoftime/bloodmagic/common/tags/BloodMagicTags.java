@@ -44,18 +44,6 @@ public class BloodMagicTags
 	public static final TagKey<Block> TELEPOSE_BLOCK_BLACKLIST = BlockTags.create(BloodMagic.rl("telepose_blacklist"));
 	public static final TagKey<EntityType<?>> TELEPOSE_BLACKLIST = TagKey.create(Registries.ENTITY_TYPE, BloodMagic.rl("telepose_blacklist"));
 
-    public static final TagKey<Item> DUNGEON_RAW = ItemTags.create(BloodMagic.rl("dungeon_raw"));
-    public static final TagKey<Item> DUNGEON_CORROSIVE = ItemTags.create(BloodMagic.rl("dungeon_corrosive"));
-    public static final TagKey<Item> DUNGEON_DESTRUCTIVE = ItemTags.create(BloodMagic.rl("dungeon_destructive"));
-    public static final TagKey<Item> DUNGEON_STEADFAST = ItemTags.create(BloodMagic.rl("dungeon_steadfast"));
-    public static final TagKey<Item> DUNGEON_VENGEFUL = ItemTags.create(BloodMagic.rl("dungeon_vengeful"));
-
-	// Storage Blocks
-	public static final TagKey<Block> BLOCK_QUARTZ = getForgeBlockStorageTag("quartz");
-	public static final TagKey<Block> BLOCK_URANIUM = getForgeBlockStorageTag("uranium");
-	public static final TagKey<Block> BLOCK_SLAG = getForgeBlockStorageTag("slag");
-    public static final TagKey<Item> BLOCK_HELLFORGED = ItemTags.create(new ResourceLocation("forge:storage_blocks/hellforged"));
-
 	// Ores
 	public static final TagKey<Item> ORE_COPPER = getForgeOreTag("copper");
 	public static final TagKey<Item> ORE_TIN = getForgeOreTag("tin");
