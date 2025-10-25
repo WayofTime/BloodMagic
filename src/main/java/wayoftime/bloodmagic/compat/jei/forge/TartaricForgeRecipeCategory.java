@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.compat.jei.forge;
 
 import com.google.common.collect.Lists;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -10,6 +11,8 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import wayoftime.bloodmagic.BloodMagic;
@@ -48,6 +51,19 @@ public class TartaricForgeRecipeCategory implements IRecipeCategory<RecipeTartar
             tooltip.add(Component.translatable("jei.bloodmagic.recipe.soulsdrained", ChatUtil.DECIMAL_FORMAT.format(recipe.getSoulDrain())));
         }
         return tooltip;
+    }
+
+    @Override
+    public void draw(RecipeTartaricForge recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY)
+    {
+        PoseStack poseStack = guiGraphics.pose();
+        poseStack.pushPose();
+        poseStack.translate(45, 23, 0);
+        poseStack.scale(0.5f, 0.5f, 1f);
+        guiGraphics.drawString(Minecraft.getInstance().font, Component.translatable("jei.bloodmagic.recipe.will"), 0, 0, 0x8b8b8b, false);
+        poseStack.translate(-6, 15, 0);
+        guiGraphics.drawString(Minecraft.getInstance().font, Component.translatable("jei.bloodmagic.recipe.info"), 0, 0, 0x8b8b8b, false);
+        poseStack.popPose();
     }
 
     @Nonnull

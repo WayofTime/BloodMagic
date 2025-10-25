@@ -25,6 +25,7 @@ import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import wayoftime.bloodmagic.common.container.tile.ContainerTeleposer;
 import wayoftime.bloodmagic.common.item.ITeleposerFocus;
+import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.util.Constants;
@@ -139,6 +140,10 @@ public class TileTeleposer extends TileInventory implements MenuProvider, Comman
 
 			for (Entity entity : originalEntities)
 			{
+                if (entity.getType().is(BloodMagicTags.TELEPOSE_BLACKLIST)) {
+                    continue;
+                }
+
 				Vec3 newPosVec = entity.position().subtract(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()).add(linkedPos.getX(), linkedPos.getY(), linkedPos.getZ());
 
 				if (entity instanceof Player && !(linkedWorld.equals(level)))
@@ -154,6 +159,10 @@ public class TileTeleposer extends TileInventory implements MenuProvider, Comman
 
 			for (Entity entity : focusEntities)
 			{
+                if (entity.getType().is(BloodMagicTags.TELEPOSE_BLACKLIST)) {
+                    continue;
+                }
+
 				Vec3 newPosVec = entity.position().add(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()).subtract(linkedPos.getX(), linkedPos.getY(), linkedPos.getZ());
 
 				if (entity instanceof Player && !(linkedWorld.equals(level)))

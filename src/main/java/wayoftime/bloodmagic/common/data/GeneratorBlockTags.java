@@ -8,7 +8,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
@@ -44,6 +43,15 @@ public class GeneratorBlockTags extends IntrinsicHolderTagsProvider<Block>
 						.add(Blocks.AMETHYST_CLUSTER)
 						.addOptional(new ResourceLocation("forge:clusters"))
 		);
+        tag(BloodMagicTags.TELEPOSE_BLOCK_BLACKLIST)
+                .add(Blocks.BEDROCK, Blocks.END_PORTAL_FRAME)
+                .add(Blocks.PISTON_HEAD, Blocks.MOVING_PISTON)
+                .add(BloodMagicBlocks.ALCHEMY_TABLE.get())
+                .addTag(BlockTags.PORTALS)
+                .addTag(BlockTags.DOORS)
+                .addTag(BlockTags.BEDS)
+                .addOptionalTag(new ResourceLocation("forge:immovable"))
+                .addOptionalTag(new ResourceLocation("forge:relocation_not_supported"));
 
 		tag(BloodMagicTags.BLOCK_ORE_ALUMINUM);
 		tag(BloodMagicTags.BLOCK_ORE_APATITE);

@@ -9,7 +9,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.ConfigHandler;
+import wayoftime.bloodmagic.ConfigManager;
 import wayoftime.bloodmagic.altar.IBloodAltar;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
@@ -163,7 +163,7 @@ public class RitualFeatheredKnife extends Ritual
 					player.setHealth(health - sacrificedHealth);
 					BloodMagic.packetHandler.sendTo(new SetClientHealthPacket(health - sacrificedHealth), (ServerPlayer) player);
 
-					tileAltar.sacrificialDaggerCall((int) (ConfigHandler.values.sacrificialDaggerConversion * lpModifier * sacrificedHealth), false);
+					tileAltar.sacrificialDaggerCall((int) (ConfigManager.COMMON.sacrificialDaggerConversion.get() * lpModifier * sacrificedHealth), false);
 
 					totalEffects++;
 
