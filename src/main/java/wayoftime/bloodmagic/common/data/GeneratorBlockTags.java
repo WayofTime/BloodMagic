@@ -152,8 +152,6 @@ public class GeneratorBlockTags extends IntrinsicHolderTagsProvider<Block>
 		tag(BloodMagicTags.BLOCK_SLAG);
 		tag(BloodMagicTags.BLOCK_URANIUM);
 		tag(BloodMagicTags.BLOCK_QUARTZ);
-		tag(BloodMagicTags.BLOCK_FLUIX);
-		tag(BloodMagicTags.BLOCK_SKY_STONE);
 
 		tag(BloodMagicTags.BLOCK_STONE_UNPOLISHED).add(Blocks.STONE, Blocks.ANDESITE, Blocks.DIORITE, Blocks.GRANITE);
 

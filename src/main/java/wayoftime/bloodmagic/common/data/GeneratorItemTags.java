@@ -44,7 +44,6 @@ public class GeneratorItemTags extends ItemTagsProvider
 		registerCuttingFluids();
 
 		registerVanillaTools();
-		registerModdedItems();
 
 		this.tag(BloodMagicTags.DUST_SULFUR).add(BloodMagicItems.SULFUR.get());
 		this.tag(BloodMagicTags.DUST_SALTPETER).add(BloodMagicItems.SALTPETER.get());
@@ -205,17 +204,6 @@ public class GeneratorItemTags extends ItemTagsProvider
 		tag(BloodMagicTags.SHOVELS).add(Items.DIAMOND_SHOVEL, Items.GOLDEN_SHOVEL, Items.IRON_SHOVEL, Items.NETHERITE_SHOVEL, Items.STONE_SHOVEL, Items.WOODEN_SHOVEL, BloodMagicItems.SENTIENT_SHOVEL.get());
 		tag(BloodMagicTags.PICKAXES).add(Items.DIAMOND_PICKAXE, Items.GOLDEN_PICKAXE, Items.IRON_PICKAXE, Items.NETHERITE_PICKAXE, Items.STONE_PICKAXE, Items.WOODEN_PICKAXE, BloodMagicItems.SENTIENT_PICKAXE.get());
 		tag(BloodMagicTags.HOES).add(Items.DIAMOND_HOE, Items.GOLDEN_HOE, Items.IRON_HOE, Items.NETHERITE_HOE, Items.STONE_HOE, Items.WOODEN_HOE, BloodMagicItems.SENTIENT_SCYTHE.get());
-	}
-
-	private void registerModdedItems()
-	{
-		tag(BloodMagicTags.ADVANCED_ALLOY);
-		tag(BloodMagicTags.ANDESITE_ALLOY);
-		tag(BloodMagicTags.DRAGON_BONE);
-		tag(BloodMagicTags.GEM_CERTUS_QUARTZ);
-		tag(BloodMagicTags.PROSPERITY_SHARD);
-		tag(BloodMagicTags.RF_COIL);
-		tag(BloodMagicTags.WIRECOIL_COPPER);
 	}
 
 	/**

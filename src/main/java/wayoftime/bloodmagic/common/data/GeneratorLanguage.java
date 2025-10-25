@@ -588,11 +588,17 @@ public class GeneratorLanguage extends LanguageProvider
 		addBlock(BloodMagicBlocks.OBSIDIAN_PATH, "Obsidian Path");
 		addBlock(BloodMagicBlocks.OBSIDIAN_TILE_PATH, "Tiled Obsidian Path");
 
-        addBlock(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED, "Assorted Demon Bricks");
         addBlock(BloodMagicBlocks.INVERSION_PILLAR_CAP, "Demon Inversion Pillar Cap");
         addBlock(BloodMagicBlocks.INVERSION_PILLAR, "Demon Inversion Pillar");
+        addBlock(BloodMagicBlocks.DUNGEON_CONTROLLER, "Dungeon Master");
+        addBlock(BloodMagicBlocks.DUNGEON_SEAL, "Lock");
+        addBlock(BloodMagicBlocks.SPECIAL_DUNGEON_SEAL, "Special Lock");
+
+        addBlock(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED, "Assorted Demon Bricks");
         addBlock(BloodMagicBlocks.DUNGEON_EMITTER, "Demon Emitter");
         addBlock(BloodMagicBlocks.DUNGEON_ALTERNATOR, "Demon Alternator");
+        addBlock(BloodMagicBlocks.DUNGEON_CRACKED_BRICK_1, "Cracked Brick");
+        addBlock(BloodMagicBlocks.DUNGEON_GLOWING_CRACKED_BRICK_1, "Glowing Cracked Brick");
 
 		addBlock(BloodMagicBlocks.DUNGEON_BRICK_1, "Demon Bricks");
 		addBlock(BloodMagicBlocks.DUNGEON_BRICK_2, "Offset Demon Bricks");
@@ -659,6 +665,7 @@ public class GeneratorLanguage extends LanguageProvider
         addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_SPECIAL, "Corrosive Accented Demon Stone Pillar");
 
         addBlock(BloodMagicBlocks.CORROSIVE_DUNGEON_EYE, "Corrosive Demon Eye");
+        addBlock(BloodMagicBlocks.CORROSIVE_HELLFORGED_BLOCK, "Hellforged Block (Corrosive)");
 
         addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_1, "Destructive Demon Bricks");
         addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_2, "Destructive Offset Demon Bricks");
@@ -692,6 +699,7 @@ public class GeneratorLanguage extends LanguageProvider
         addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_SPECIAL, "Destructive Accented Demon Stone Pillar");
 
         addBlock(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_EYE, "Destructive Demon Eye");
+        addBlock(BloodMagicBlocks.DESTRUCTIVE_HELLFORGED_BLOCK, "Hellforged Block (Destructive)");
 
         addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_1, "Steadfast Demon Bricks");
         addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_2, "Steadfast Offset Demon Bricks");
@@ -725,6 +733,7 @@ public class GeneratorLanguage extends LanguageProvider
         addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_SPECIAL, "Steadfast Accented Demon Stone Pillar");
 
         addBlock(BloodMagicBlocks.STEADFAST_DUNGEON_EYE, "Steadfast Demon Eye");
+        addBlock(BloodMagicBlocks.STEADFAST_HELLFORGED_BLOCK, "Hellforged Block (Steadfast)");
 
         addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_1, "Vengeful Demon Bricks");
         addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_2, "Vengeful Offset Demon Bricks");
@@ -758,9 +767,7 @@ public class GeneratorLanguage extends LanguageProvider
         addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_SPECIAL, "Vengeful Accented Demon Stone Pillar");
 
         addBlock(BloodMagicBlocks.VENGEFUL_DUNGEON_EYE, "Vengeful Demon Eye");
-
-        addBlock(BloodMagicBlocks.INVERSION_PILLAR, "Inversion Pillar");
-        addBlock(BloodMagicBlocks.INVERSION_PILLAR_CAP, "Inversion Pillar Cap");
+        addBlock(BloodMagicBlocks.VENGEFUL_HELLFORGED_BLOCK, "Hellforged Block (Vengeful)");
 
 		addBlock(BloodMagicBlocks.SPIKES, "Spikes");
 		addBlock(BloodMagicBlocks.DUNGEON_SPIKE_TRAP, "Demon Spike Trap");
@@ -788,7 +795,8 @@ public class GeneratorLanguage extends LanguageProvider
 
 		addBlock(BloodMagicBlocks.WEAK_TAU, "Tau Fruit");
 		addBlock(BloodMagicBlocks.STRONG_TAU, "Saturated Tau");
-		addBlock(BloodMagicBlocks.GROWING_DOUBT, "Seeds of Doubt");
+		addBlock(BloodMagicBlocks.GROWING_DOUBT, "Seeds of Doubt (NYI)");
+        addBlock(BloodMagicBlocks.NETHER_SOIL, "Nether Soil (NYI)");
 
 		addBlock(BloodMagicBlocks.MIMIC, "Opaque Mimic");
 		addBlock(BloodMagicBlocks.ETHEREAL_MIMIC, "Ethereal Mimic");

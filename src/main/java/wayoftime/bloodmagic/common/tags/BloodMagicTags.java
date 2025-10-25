@@ -1,10 +1,8 @@
 package wayoftime.bloodmagic.common.tags;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
+import net.minecraft.tags.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -39,7 +37,6 @@ public class BloodMagicTags
 	public static final TagKey<Block> BLOCK_FLUIX = BlockTags.create(new ResourceLocation("appliedenergistics2:fluix_block"));
 	public static final TagKey<Block> BLOCK_SKY_STONE = BlockTags.create(new ResourceLocation("appliedenergistics2:sky_stone_block"));
     public static final TagKey<Item> BLOCK_HELLFORGED = ItemTags.create(new ResourceLocation("forge:storage_blocks/hellforged"));
-
 
 	// Ores
 	public static final TagKey<Item> ORE_COPPER = getForgeOreTag("copper");
@@ -132,12 +129,7 @@ public class BloodMagicTags
 
 	// Modded (for meteor rituals)
 	public static final TagKey<Item> ADVANCED_ALLOY = getForgeAlloyTag("advanced");
-	public static final TagKey<Item> ANDESITE_ALLOY = ItemTags.create(new ResourceLocation("create:andesite_alloy"));
-	public static final TagKey<Item> DRAGON_BONE = getForgeBoneTag("dragon");
-	public static final TagKey<Item> GEM_CERTUS_QUARTZ = getForgeGemTag("certus_quartz");
-	public static final TagKey<Item> PROSPERITY_SHARD = ItemTags.create(new ResourceLocation("mysticalagriculture:prosperity_shard"));
-	public static final TagKey<Item> RF_COIL = ItemTags.create(new ResourceLocation("thermal:rf_coil"));
-	public static final TagKey<Item> WIRECOIL_COPPER = ItemTags.create(new ResourceLocation("immersiveengineering:wirecoil_copper"));
+	public static final TagKey<Item> DRAGON_BONE = ItemTags.create(new ResourceLocation("forge:bones"));
 
 	public static class Blocks
 	{
