@@ -5,6 +5,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
@@ -148,6 +149,13 @@ public class BloodMagicTags
 		public static final TagKey<Block> BLOCK_TELEPOSER_BLACKLIST = BlockTags.create(new ResourceLocation("bloodmagic:teleposer_blacklist"));
 
 		public static final TagKey<Block> MUNDANE_BLOCK = BlockTags.create(BloodMagic.rl("mundane_block"));
+
+        public static final TagKey<Block> BLOCK_HELLFORGED = getForgeBlockStorageTag("hellforged");
+        public static final TagKey<Block> DUNGEON_RAW = BlockTags.create(BloodMagic.rl("dungeon_raw"));
+        public static final TagKey<Block> DUNGEON_CORROSIVE = BlockTags.create(BloodMagic.rl("dungeon_corrosive"));
+        public static final TagKey<Block> DUNGEON_DESTRUCTIVE = BlockTags.create(BloodMagic.rl("dungeon_destructive"));
+        public static final TagKey<Block> DUNGEON_STEADFAST = BlockTags.create(BloodMagic.rl("dungeon_steadfast"));
+        public static final TagKey<Block> DUNGEON_VENGEFUL = BlockTags.create(BloodMagic.rl("dungeon_vengeful"));
 	}
 
 	public static TagKey<Item> getForgeOreTag(String name)
