@@ -226,7 +226,7 @@ public class BloodMagic {
         gen.addProvider(event.includeServer(), new GeneratorItemTags(output, provider, blockTags.contentsGetter(), event.getExistingFileHelper()));
         gen.addProvider(event.includeServer(), new GeneratorFluidTags(output, provider, event.getExistingFileHelper()));
         gen.addProvider(event.includeServer(), new GeneratorDamageTags(output, provider, event.getExistingFileHelper()));
-
+        gen.addProvider(event.includeServer(), new GeneratorEntityTags(output, provider, event.getExistingFileHelper()));
     }
 
 

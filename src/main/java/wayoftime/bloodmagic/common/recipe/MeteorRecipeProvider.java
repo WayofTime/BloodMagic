@@ -69,6 +69,9 @@ public class MeteorRecipeProvider implements ISubRecipeProvider
 		// all below this point are disabled due to requiring items rather than tags and
 		// i don't know how to do that or if it's even possible aaa
 
+		//other meteors are located in src/main/resources/data/bloodmagic/recipes/meteor/
+		// specifically ae2, create, immersive_engineering, myst_ag and thermal.
+
 		/*
 		 * //Immersive Engineering - adds blocks mostly used in IE.
 		 * MeteorRecipeBuilder.meteor(Ingredient.of(BloodMagicTags.WIRECOIL_COPPER),
