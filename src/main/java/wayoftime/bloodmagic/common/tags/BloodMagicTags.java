@@ -145,6 +145,9 @@ public class BloodMagicTags
 		public static final TagKey<Block> SOUL_SOIL = BlockTags.create(new ResourceLocation("minecraft:soul_soil"));
 		public static final TagKey<Block> BLOCK_TELEPOSER_BLACKLIST = BlockTags.create(new ResourceLocation("bloodmagic:teleposer_blacklist"));
 
+		public static final TagKey<Block> GEODE_ACCELERATABLE = BlockTags.create(new ResourceLocation("bloodmagic:geode_acceleratable"));
+		public static final TagKey<Block> GEODE_HARVESTABLE = BlockTags.create(new ResourceLocation("bloodmagic:geode_harvestable"));
+
 		public static final TagKey<Block> MUNDANE_BLOCK = BlockTags.create(BloodMagic.rl("mundane_block"));
 	}
 

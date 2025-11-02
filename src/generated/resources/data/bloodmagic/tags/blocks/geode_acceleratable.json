@@ -1,0 +1,125 @@
+{
+  "values": [
+    "minecraft:budding_amethyst",
+    {
+      "id": "#forge:budding",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_lapis",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_deepslate_lapis",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_sculk_lapis",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_redstone",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_deepslate_redstone",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_sculk_redstone",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_emerald",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_deepslate_emerald",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_sculk_emerald",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_diamond",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_deepslate_diamond",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_sculk_diamond",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_nether_quartz",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_basalt_quartz",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_blackstone_quartz",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_nether_glowstone",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_basalt_glowstone",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_blackstone_glowstone",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_nether_gold_nugget",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_basalt_gold_nugget",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_blackstone_gold_nugget",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_nether_ancient_debris",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_basalt_ancient_debris",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_blackstone_ancient_debris",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_pink_topaz",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_celestite",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_prismarine",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_wrappist",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_echo",
+      "required": false
+    }
+  ]
+}

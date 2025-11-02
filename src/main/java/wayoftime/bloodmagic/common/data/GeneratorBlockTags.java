@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.common.data;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import net.minecraft.core.HolderLookup;
@@ -35,6 +36,13 @@ public class GeneratorBlockTags extends IntrinsicHolderTagsProvider<Block>
 		this.tag(BloodMagicTags.Blocks.MUSHROOM_STEM).add(Blocks.MUSHROOM_STEM).add(Blocks.CRIMSON_STEM).add(Blocks.WARPED_STEM);
 		this.tag(BloodMagicTags.Blocks.MUSHROOM_HYPHAE).add(Blocks.BROWN_MUSHROOM_BLOCK).add(Blocks.RED_MUSHROOM_BLOCK).add(Blocks.CRIMSON_HYPHAE).add(Blocks.WARPED_HYPHAE).add(Blocks.STRIPPED_CRIMSON_HYPHAE).add(Blocks.STRIPPED_WARPED_HYPHAE).add(Blocks.NETHER_WART_BLOCK).add(Blocks.WARPED_WART_BLOCK).add(Blocks.SHROOMLIGHT);
 
+		addGeode(this.tag(BloodMagicTags.Blocks.GEODE_ACCELERATABLE)
+						.add(Blocks.BUDDING_AMETHYST)
+						.addOptionalTag(new ResourceLocation("forge:budding")),
+				this.tag(BloodMagicTags.Blocks.GEODE_HARVESTABLE)
+						.add(Blocks.AMETHYST_CLUSTER)
+						.addOptional(new ResourceLocation("forge:clusters"))
+		);
         tag(BloodMagicTags.TELEPOSE_BLOCK_BLACKLIST)
                 .add(Blocks.BEDROCK, Blocks.END_PORTAL_FRAME)
                 .add(Blocks.PISTON_HEAD, Blocks.MOVING_PISTON)
@@ -90,6 +98,46 @@ public class GeneratorBlockTags extends IntrinsicHolderTagsProvider<Block>
 		tag(BlockTags.BEACON_BASE_BLOCKS).add(BloodMagicBlocks.HELLFORGED_BLOCK.get());
 
 		tag(BloodMagicTags.Blocks.MUNDANE_BLOCK).addTag(Tags.Blocks.COBBLESTONE).addTag(Tags.Blocks.STONE).addTag(BlockTags.SAND).addTag(BlockTags.DIRT).add(Blocks.GRAVEL).add(Blocks.NETHERRACK);
+	}
+
+	private static void addGeode(TagAppender<Block> buddingAppender, TagAppender<Block> clusterAppender) {
+		List<String> overworld_prefix = List.of("budding", "budding_deepslate", "budding_sculk");
+		List<String> overworld_mat = List.of("lapis", "redstone", "emerald", "diamond");
+		List<String> nether_prefix = List.of("budding_nether", "budding_basalt", "budding_blackstone");
+		List<String> nether_mat = List.of("quartz", "glowstone", "gold_nugget", "ancient_debris");
+
+		List<String> crystal = List.of("nether_quartz", "diamond", "pink_topaz", "echo", "redstone");
+		List<String> cluster = List.of("lapis", "emerald", "nether_glowstone", "nether_gold_nugget", "nether_ancient_debris", "celestite", "prismarine", "wrappist");
+
+		List<String> bud_only = List.of("pink_topaz", "celestite", "prismarine", "wrappist", "echo");
+
+		for (String mat : overworld_mat) {
+			for (String prefix : overworld_prefix) {
+				buddingAppender.addOptional(geode(prefix + "_" + mat));
+			}
+		}
+
+		for (String mat : nether_mat) {
+			for (String prefix : nether_prefix) {
+				buddingAppender.addOptional(geode(prefix + "_" + mat));
+			}
+		}
+
+		for (String bud : bud_only) {
+			buddingAppender.addOptional(geode("budding_" + bud));
+		}
+
+		for (String name : crystal) {
+			clusterAppender.addOptional(geode(name + "_crystal"));
+		}
+
+		for (String name : cluster) {
+			clusterAppender.addOptional(geode(name + "_cluster"));
+		}
+	}
+
+	private static ResourceLocation geode(String path) {
+		return new ResourceLocation("geode_plus", path);
 	}
 
 	/**

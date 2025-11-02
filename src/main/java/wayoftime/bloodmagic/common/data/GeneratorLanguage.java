@@ -249,6 +249,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.yawningVoidRitual", "Yawning of the Void");
 		add("ritual.bloodmagic.groundingRitual", "The Sinner's Burden");
 		add("ritual.bloodmagic.craftingRitual", "Rhythm of the Beating Anvil");
+		add("ritual.bloodmagic.geode", "Ritual of the Geode's Bounty");
 
 		add("ritual.bloodmagic.cobblestoneRitual", "Le Vulcanos Frigius");
 		add("ritual.bloodmagic.placerRitual", "Domain of The Filler");
@@ -259,6 +260,18 @@ public class GeneratorLanguage extends LanguageProvider
 
 		add("ritual.bloodmagic.sphereRitual", "Dawn of the New Moon");
 		add("ritual.bloodmagic.meteorRitual", "Mark of the Falling Tower");
+
+		add("ritual.bloodmagic.geode.info", "Harvests fully grown buds from Geodes");
+		add("ritual.bloodmagic.geode.corrosive.info", "(Corrosive) Accelerates nearby budding blocks");
+		add("ritual.bloodmagic.geode.default.info", "(Raw) Causes items to be placed into an inventory instead of dropped into the world");
+		add("ritual.bloodmagic.geode.destructive.info", "(Destructive) Blocks are broken down forcefully: all blocks broken are affected by Fortune III.");
+		add("ritual.bloodmagic.geode.steadfast.info", "(Steadfast) Causes all blocks that are broken to be picked up with Silk Touch. Overrides Fortune where applicable.");
+		add("ritual.bloodmagic.geode.vengeful.info", "(Vengeful) Entities in this area have their life drained to accelerate nearby budding blocks.");
+
+		add("ritual.bloodmagic.geode.chest.info", "(Chest) The location of the inventory that the ritual will place the picked up items into if given Raw Will.");
+		add("ritual.bloodmagic.geode.harvest.info", "(Harvest) The range in which fully grown buds are harvested");
+		add("ritual.bloodmagic.geode.harm.info", "(Harm) The range in which mobs are hurt to speed up growth");
+		add("ritual.bloodmagic.geode.acceleration.info", "(Acceleration) The range in which growth is sped up");
 
 		add("ritual.bloodmagic.waterRitual.info", "Generates a source of water from the Master Ritual Stone.");
 		add("ritual.bloodmagic.lavaRitual.info", "Generates a source of lava from the master ritual stone.");
