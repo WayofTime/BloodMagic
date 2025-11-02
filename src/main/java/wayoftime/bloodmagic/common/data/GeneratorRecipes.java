@@ -4,16 +4,25 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.StonecutterRecipe;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.recipe.BaseRecipeProvider;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
@@ -36,12 +45,181 @@ public class GeneratorRecipes extends BaseRecipeProvider
 		addVanillaRecipes(consumer);
 		addVanillaSmithingRecipes(consumer);
 		addBloodOrbRecipes(consumer);
+        addDecorativeRecipes(consumer);
 	}
 
 	@Override
 	protected List<ISubRecipeProvider> getSubRecipeProviders() {
 		return Arrays.asList(new BloodAltarRecipeProvider(), new AlchemyArrayRecipeProvider(), new TartaricForgeRecipeProvider(), new ARCRecipeProvider(), new AlchemyTableRecipeProvider(), new LivingDowngradeRecipeProvider(), new PotionRecipeProvider(), new MeteorRecipeProvider());
 	}
+
+    private void addDecorativeRecipes(Consumer<FinishedRecipe> consumer) {
+        addHellstone(consumer, BloodMagicBlocks.DUNGEON_STONE.get(), BloodMagicItems.RAW_CRYSTAL.get());
+        addHellstone(consumer, BloodMagicBlocks.CORROSIVE_DUNGEON_STONE.get(), BloodMagicItems.CORROSIVE_CRYSTAL.get());
+        addHellstone(consumer, BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE.get(), BloodMagicItems.DESTRUCTIVE_CRYSTAL.get());
+        addHellstone(consumer, BloodMagicBlocks.STEADFAST_DUNGEON_STONE.get(), BloodMagicItems.STEADFAST_CRYSTAL.get());
+        addHellstone(consumer, BloodMagicBlocks.VENGEFUL_DUNGEON_STONE.get(), BloodMagicItems.VENGEFUL_CRYSTAL.get());
+
+        addHellstair(consumer, BloodMagicBlocks.DUNGEON_STONE_STAIRS.get(), BloodMagicBlocks.DUNGEON_STONE.get());
+        addHellstair(consumer, BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get(), BloodMagicBlocks.DUNGEON_POLISHED_STONE.get());
+        addHellstair(consumer, BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get(), BloodMagicBlocks.DUNGEON_BRICK_1.get());
+        addHellstair(consumer, BloodMagicBlocks.CORROSIVE_DUNGEON_STONE_STAIRS.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_STONE.get());
+        addHellstair(consumer, BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_STAIRS.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_STONE.get());
+        addHellstair(consumer, BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_STAIRS.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_1.get());
+        addHellstair(consumer, BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE_STAIRS.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE.get());
+        addHellstair(consumer, BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_STAIRS.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_STONE.get());
+        addHellstair(consumer, BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_STAIRS.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_1.get());
+        addHellstair(consumer, BloodMagicBlocks.STEADFAST_DUNGEON_STONE_STAIRS.get(), BloodMagicBlocks.STEADFAST_DUNGEON_STONE.get());
+        addHellstair(consumer, BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_STAIRS.get(), BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_STONE.get());
+        addHellstair(consumer, BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_STAIRS.get(), BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_1.get());
+        addHellstair(consumer, BloodMagicBlocks.VENGEFUL_DUNGEON_STONE_STAIRS.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_STONE.get());
+        addHellstair(consumer, BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_STAIRS.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_STONE.get());
+        addHellstair(consumer, BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_STAIRS.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_1.get());
+
+        addHellslab(consumer, BloodMagicBlocks.DUNGEON_STONE_SLAB.get(), BloodMagicBlocks.DUNGEON_STONE.get());
+        addHellslab(consumer, BloodMagicBlocks.DUNGEON_POLISHED_SLAB.get(), BloodMagicBlocks.DUNGEON_POLISHED_STONE.get());
+        addHellslab(consumer, BloodMagicBlocks.DUNGEON_TILE_SLAB.get(), BloodMagicBlocks.DUNGEON_TILE.get());
+        addHellslab(consumer, BloodMagicBlocks.DUNGEON_BRICK_SLAB.get(), BloodMagicBlocks.DUNGEON_BRICK_1.get());
+        addHellslab(consumer, BloodMagicBlocks.CORROSIVE_DUNGEON_STONE_SLAB.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_STONE.get());
+        addHellslab(consumer, BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_SLAB.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_STONE.get());
+        addHellslab(consumer, BloodMagicBlocks.CORROSIVE_DUNGEON_TILE_SLAB.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_TILE.get());
+        addHellslab(consumer, BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_SLAB.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_1.get());
+        addHellslab(consumer, BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE_SLAB.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE.get());
+        addHellslab(consumer, BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_SLAB.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_STONE.get());
+        addHellslab(consumer, BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE_SLAB.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE.get());
+        addHellslab(consumer, BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_SLAB.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_1.get());
+        addHellslab(consumer, BloodMagicBlocks.STEADFAST_DUNGEON_STONE_SLAB.get(), BloodMagicBlocks.STEADFAST_DUNGEON_STONE.get());
+        addHellslab(consumer, BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_SLAB.get(), BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_STONE.get());
+        addHellslab(consumer, BloodMagicBlocks.STEADFAST_DUNGEON_TILE_SLAB.get(), BloodMagicBlocks.STEADFAST_DUNGEON_TILE.get());
+        addHellslab(consumer, BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_SLAB.get(), BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_1.get());
+        addHellslab(consumer, BloodMagicBlocks.VENGEFUL_DUNGEON_STONE_SLAB.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_STONE.get());
+        addHellslab(consumer, BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_SLAB.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_STONE.get());
+        addHellslab(consumer, BloodMagicBlocks.VENGEFUL_DUNGEON_TILE_SLAB.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_TILE.get());
+        addHellslab(consumer, BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_SLAB.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_1.get());
+
+        wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.DUNGEON_STONE_WALL.get(), BloodMagicBlocks.DUNGEON_STONE.get());
+        wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.DUNGEON_POLISHED_WALL.get(), BloodMagicBlocks.DUNGEON_POLISHED_STONE.get());
+        wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.DUNGEON_TILE_WALL.get(), BloodMagicBlocks.DUNGEON_TILE.get());
+        wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.DUNGEON_BRICK_WALL.get(), BloodMagicBlocks.DUNGEON_BRICK_1.get());
+        wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.CORROSIVE_DUNGEON_STONE_WALL.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_STONE.get());
+        wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_WALL.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_STONE.get());
+        wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.CORROSIVE_DUNGEON_TILE_WALL.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_TILE.get());
+        wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_WALL.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_1.get());
+        wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE_WALL.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE.get());
+        wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_WALL.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_STONE.get());
+        wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE_WALL.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE.get());
+        wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_WALL.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_1.get());
+        wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.STEADFAST_DUNGEON_STONE_WALL.get(), BloodMagicBlocks.STEADFAST_DUNGEON_STONE.get());
+        wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_WALL.get(), BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_STONE.get());
+        wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.STEADFAST_DUNGEON_TILE_WALL.get(), BloodMagicBlocks.STEADFAST_DUNGEON_TILE.get());
+        wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_WALL.get(), BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_1.get());
+        wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.VENGEFUL_DUNGEON_STONE_WALL.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_STONE.get());
+        wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_WALL.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_STONE.get());
+        wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.VENGEFUL_DUNGEON_TILE_WALL.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_TILE.get());
+        wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_WALL.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_1.get());
+
+        decoHelper(consumer, BloodMagicTags.DUNGEON_RAW,
+                Pair.of(BloodMagicBlocks.DUNGEON_STONE_SLAB.get(), 2), Pair.of(BloodMagicBlocks.DUNGEON_BRICK_SLAB.get(), 2), Pair.of(BloodMagicBlocks.DUNGEON_POLISHED_SLAB.get(), 2), Pair.of(BloodMagicBlocks.DUNGEON_TILE_SLAB.get(), 2),
+                Pair.of(BloodMagicBlocks.DUNGEON_STONE_STAIRS.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get(), 1),
+                Pair.of(BloodMagicBlocks.DUNGEON_STONE_WALL.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_BRICK_WALL.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_TILE_WALL.get(), 1),
+                Pair.of(BloodMagicBlocks.DUNGEON_BRICK_GATE.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_POLISHED_GATE.get(), 1),
+                Pair.of(BloodMagicBlocks.DUNGEON_EYE.get(), 1),
+                Pair.of(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get(), 1),
+                Pair.of(BloodMagicBlocks.DUNGEON_STONE.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_BRICK_1.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_BRICK_2.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_BRICK_3.get(), 1),
+                Pair.of(BloodMagicBlocks.DUNGEON_TILE.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_TILE_SPECIAL.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_SMALL_BRICK.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_POLISHED_STONE.get(), 1)
+        );
+
+        decoHelper(consumer, BloodMagicTags.DUNGEON_CORROSIVE,
+                Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE_SLAB.get(), 2), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_SLAB.get(), 2), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_SLAB.get(), 2), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_TILE_SLAB.get(), 2),
+                Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE_STAIRS.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_STAIRS.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_STAIRS.get(), 1),
+                Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE_WALL.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_WALL.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_WALL.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_TILE_WALL.get(), 1),
+                Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_GATE.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_GATE.get(), 1),
+                Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_EYE.get(), 1),
+                Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CAP.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CENTER.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_SPECIAL.get(), 1),
+                Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_1.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_2.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_3.get(), 1),
+                Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_TILE.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_TILE_SPECIAL.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_SMALL_BRICK.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_STONE.get(), 1)
+        );
+
+        decoHelper(consumer, BloodMagicTags.DUNGEON_DESTRUCTIVE,
+                Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE_SLAB.get(), 2), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_SLAB.get(), 2), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_SLAB.get(), 2), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE_SLAB.get(), 2),
+                Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE_STAIRS.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_STAIRS.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_STAIRS.get(), 1),
+                Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE_WALL.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_WALL.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_WALL.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE_WALL.get(), 1),
+                Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_GATE.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_GATE.get(), 1),
+                Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_EYE.get(), 1),
+                Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CAP.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CENTER.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_SPECIAL.get(), 1),
+                Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_1.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_2.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_3.get(), 1),
+                Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE_SPECIAL.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_SMALL_BRICK.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_STONE.get(), 1)
+        );
+
+        decoHelper(consumer, BloodMagicTags.DUNGEON_STEADFAST,
+                Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_STONE_SLAB.get(), 2), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_SLAB.get(), 2), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_SLAB.get(), 2), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_TILE_SLAB.get(), 2),
+                Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_STONE_STAIRS.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_STAIRS.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_STAIRS.get(), 1),
+                Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_STONE_WALL.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_WALL.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_WALL.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_TILE_WALL.get(), 1),
+                Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_GATE.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_GATE.get(), 1),
+                Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_EYE.get(), 1),
+                Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CAP.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CENTER.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_SPECIAL.get(), 1),
+                Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_STONE.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_1.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_2.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_3.get(), 1),
+                Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_TILE.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_TILE_SPECIAL.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_SMALL_BRICK.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_STONE.get(), 1)
+        );
+
+        decoHelper(consumer, BloodMagicTags.DUNGEON_VENGEFUL,
+                Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE_SLAB.get(), 2), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_SLAB.get(), 2), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_SLAB.get(), 2), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_TILE_SLAB.get(), 2),
+                Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE_STAIRS.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_STAIRS.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_STAIRS.get(), 1),
+                Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE_WALL.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_WALL.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_WALL.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_TILE_WALL.get(), 1),
+                Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_GATE.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_GATE.get(), 1),
+                Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_EYE.get(), 1),
+                Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CAP.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CENTER.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_SPECIAL.get(), 1),
+                Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_1.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_2.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_3.get(), 1),
+                Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_TILE.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_TILE_SPECIAL.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_SMALL_BRICK.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_STONE.get(), 1)
+        );
+
+        decoHelper(consumer, BloodMagicTags.BLOCK_HELLFORGED,
+                Pair.of(BloodMagicBlocks.HELLFORGED_BLOCK.get(), 1),
+                Pair.of(BloodMagicBlocks.CORROSIVE_HELLFORGED_BLOCK.get(), 1),
+                Pair.of(BloodMagicBlocks.DESTRUCTIVE_HELLFORGED_BLOCK.get(), 1),
+                Pair.of(BloodMagicBlocks.STEADFAST_HELLFORGED_BLOCK.get(), 1),
+                Pair.of(BloodMagicBlocks.VENGEFUL_HELLFORGED_BLOCK.get(), 1)
+                );
+    }
+
+    private void addHellstair(Consumer<FinishedRecipe> consumer, Block stair, Block material) {
+        stairBuilder(stair, Ingredient.of(material)).unlockedBy(getHasName(material), has(material)).save(consumer);
+    }
+
+    private void addHellslab(Consumer<FinishedRecipe> consumer, Block slab, Block full) {
+        slab(consumer, RecipeCategory.DECORATIONS, slab, full);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, full)
+                .pattern("s")
+                .pattern("s")
+                .define('s', slab)
+                .unlockedBy(getHasName(slab), has(slab))
+                .save(consumer, BloodMagic.rl(getItemName(full) + "_slab_revert"));
+    }
+
+    private void addHellstone(Consumer<FinishedRecipe> consumer, Block stone, Item crystal) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, stone, 64)
+                .pattern("sss")
+                .pattern("scs")
+                .pattern("sss")
+                .define('s', Blocks.STONE)
+                .define('c', crystal)
+                .unlockedBy(getHasName(crystal), has(crystal))
+                .save(consumer, BloodMagic.rl(getItemName(stone)));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, stone, 4)
+                .pattern("hs")
+                .pattern("ss")
+                .define('h', stone)
+                .define('s', Blocks.STONE)
+                .unlockedBy(getHasName(stone), has(stone))
+                .save(consumer, BloodMagic.rl(getItemName(stone) + "_spread"));
+    }
+
+    private void decoHelper(Consumer<FinishedRecipe> consumer, TagKey<Item> base, Pair<ItemLike, Integer>... results) {
+        for (Pair<ItemLike, Integer> result : results) {
+            SingleItemRecipeBuilder.stonecutting(Ingredient.of(base), RecipeCategory.DECORATIONS, result.getFirst(), result.getSecond()).unlockedBy("has_" + base.location().getPath(), has(base)).save(consumer, new ResourceLocation(BloodMagic.MODID, getItemName(result.getFirst()) + "_from_" + base.location().getPath() + "_stonecutting"));
+        }
+    }
 
 	private void addVanillaRecipes(Consumer<FinishedRecipe> consumer)
 	{
@@ -64,7 +242,7 @@ public class GeneratorRecipes extends BaseRecipeProvider
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,BloodMagicItems.ALCHEMY_FLASK_THROWABLE.get()).requires(BloodMagicItems.ALCHEMY_FLASK_THROWABLE.get()).requires(Ingredient.of(Items.WATER_BUCKET)).unlockedBy("has_flask", has(BloodMagicItems.ALCHEMY_FLASK.get())).save(consumer, BloodMagic.rl("alchemy_flask_throwable"));
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,BloodMagicItems.ALCHEMY_FLASK_LINGERING.get()).requires(BloodMagicItems.ALCHEMY_FLASK_LINGERING.get()).requires(Ingredient.of(Items.WATER_BUCKET)).unlockedBy("has_flask", has(BloodMagicItems.ALCHEMY_FLASK.get())).save(consumer, BloodMagic.rl("alchemy_flask_lingering"));
 
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,BloodMagicItems.HELLFORGED_INGOT.get(), 9).requires(BloodMagicBlocks.HELLFORGED_BLOCK.get()).unlockedBy("has_hellforged_block", has(BloodMagicBlocks.HELLFORGED_BLOCK.get())).save(consumer, BloodMagic.rl("hellforged_block_to_ingot"));
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,BloodMagicItems.HELLFORGED_INGOT.get(), 9).requires(BloodMagicTags.BLOCK_HELLFORGED).unlockedBy("has_hellforged_block", has(BloodMagicBlocks.HELLFORGED_BLOCK.get())).save(consumer, BloodMagic.rl("hellforged_block_to_ingot"));
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC,BloodMagicBlocks.TELEPOSER.get()).pattern("ggg").pattern("ete").pattern("ggg").define('g', Ingredient.of(Tags.Items.INGOTS_GOLD)).define('e', Ingredient.of(Tags.Items.ENDER_PEARLS)).define('t', Ingredient.of(BloodMagicItems.TELEPOSER_FOCUS.get())).unlockedBy("has_gold", has(BloodMagicItems.TELEPOSER_FOCUS.get())).save(consumer, BloodMagic.rl("teleposer"));
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,BloodMagicItems.REINFORCED_TELEPOSER_FOCUS.get()).requires(BloodMagicItems.ENHANCED_TELEPOSER_FOCUS.get()).requires(BloodMagicItems.WEAK_BLOOD_SHARD.get()).unlockedBy("has_shard", has(BloodMagicItems.WEAK_BLOOD_SHARD.get())).save(consumer, BloodMagic.rl("enhanced_teleposer_focus"));

@@ -16,7 +16,9 @@ import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class GeneratorItemModels extends ItemModelProvider {
     public GeneratorItemModels(PackOutput output, ExistingFileHelper existingFileHelper) {
@@ -39,6 +41,47 @@ public class GeneratorItemModels extends ItemModelProvider {
         for (RegistryObject<Block> block : BloodMagicBlocks.DUNGEONBLOCKS.getEntries()) {
             registerBlockModel(block.get());
         }
+
+        for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_SLAB.getEntries()) {
+            registerBlockModel(block.get());
+        }
+
+        for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_WALL.getEntries()) {
+            registerCustomBlockPath(block.get(), block.getId().withSuffix("_inventory").getPath());
+        }
+
+        for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_STAIR.getEntries()) {
+            registerBlockModel(block.get());
+        }
+
+        for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_GATE.getEntries()) {
+            registerBlockModel(block.get());
+        }
+
+        registerBlockModel(BloodMagicBlocks.DUNGEON_STONE.get());
+        registerBlockModel(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get());
+        registerBlockModel(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get());
+        registerBlockModel(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get());
+
+        registerBlockModel(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE.get());
+        registerBlockModel(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CAP.get());
+        registerBlockModel(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CENTER.get());
+        registerBlockModel(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_SPECIAL.get());
+
+        registerBlockModel(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE.get());
+        registerBlockModel(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CAP.get());
+        registerBlockModel(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CENTER.get());
+        registerBlockModel(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_SPECIAL.get());
+
+        registerBlockModel(BloodMagicBlocks.STEADFAST_DUNGEON_STONE.get());
+        registerBlockModel(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CAP.get());
+        registerBlockModel(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CENTER.get());
+        registerBlockModel(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_SPECIAL.get());
+
+        registerBlockModel(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE.get());
+        registerBlockModel(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CAP.get());
+        registerBlockModel(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CENTER.get());
+        registerBlockModel(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_SPECIAL.get());
 
         registerBlockModel(BloodMagicBlocks.BLANK_RITUAL_STONE.get());
         registerBlockModel(BloodMagicBlocks.AIR_RITUAL_STONE.get());
@@ -64,18 +107,6 @@ public class GeneratorItemModels extends ItemModelProvider {
         registerCustomBlockPath(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get(), "masterroutingnodecombined");
 
         registerCustomBlockPath(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get(), "dungeon_brick1");
-        registerBlockModel(BloodMagicBlocks.DUNGEON_STONE.get());
-        registerBlockModel(BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get());
-        registerBlockModel(BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get());
-        registerBlockModel(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get());
-        registerBlockModel(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get());
-        registerBlockModel(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get());
-        registerCustomBlockPath(BloodMagicBlocks.DUNGEON_BRICK_WALL.get(), "dungeon_brick_wall_inventory");
-        registerCustomBlockPath(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get(), "dungeon_polished_wall_inventory");
-        registerBlockModel(BloodMagicBlocks.DUNGEON_BRICK_GATE.get());
-        registerBlockModel(BloodMagicBlocks.DUNGEON_POLISHED_GATE.get());
-        registerBlockModel(BloodMagicBlocks.DUNGEON_BRICK_SLAB.get());
-        registerBlockModel(BloodMagicBlocks.DUNGEON_TILE_SLAB.get());
 
         registerBlockModel(BloodMagicBlocks.DUNGEON_CONTROLLER.get());
         registerBlockModel(BloodMagicBlocks.DUNGEON_SEAL.get());
@@ -120,11 +151,6 @@ public class GeneratorItemModels extends ItemModelProvider {
         registerBlockModel(BloodMagicBlocks.VEINMINE_CHARGE_2.get());
         registerBlockModel(BloodMagicBlocks.FUNGAL_CHARGE_2.get());
         registerBlockModel(BloodMagicBlocks.SHAPED_CHARGE_DEEP.get());
-
-//		registerBlockModel(BloodMagicBlocks.INVERSION_PILLAR.get());
-//		registerBlockModel(BloodMagicBlocks.INVERSION_PILLAR_CAP.get());
-
-//		registerBlockModel(BloodMagicBlocks.INVERSION_PILLAR.get());
 
         registerMultiLayerItem(BloodMagicItems.SLATE_VIAL.get(), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));
         registerMultiLayerItem(BloodMagicItems.MELEE_DAMAGE_ANOINTMENT.get(), modLoc("item/alchemic_liquid"), modLoc("item/alchemic_vial"), modLoc("item/alchemic_ribbon"));

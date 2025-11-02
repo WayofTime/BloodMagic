@@ -27,16 +27,22 @@ public class BloodMagicTags
 	public static final TagKey<Item> MUSHROOM_STEM = ItemTags.create(new ResourceLocation("minecraft:mushroom_stem"));
 	public static final TagKey<Item> MUSHROOM_HYPHAE = ItemTags.create(new ResourceLocation("minecraft:mushroom_hyphae"));
 
-    public static final TagKey<Block> TELEPOSE_BLOCK_BLACKLIST = BlockTags.create(BloodMagic.rl("telepose_blacklist"));
-    public static final TagKey<EntityType<?>> TELEPOSE_BLACKLIST = TagKey.create(Registries.ENTITY_TYPE, BloodMagic.rl("telepose_blacklist"));
-
+	public static final TagKey<Item> DUNGEON_RAW = ItemTags.create(BloodMagic.rl("dungeon_raw"));
+	public static final TagKey<Item> DUNGEON_CORROSIVE = ItemTags.create(BloodMagic.rl("dungeon_corrosive"));
+	public static final TagKey<Item> DUNGEON_DESTRUCTIVE = ItemTags.create(BloodMagic.rl("dungeon_destructive"));
+	public static final TagKey<Item> DUNGEON_STEADFAST = ItemTags.create(BloodMagic.rl("dungeon_steadfast"));
+	public static final TagKey<Item> DUNGEON_VENGEFUL = ItemTags.create(BloodMagic.rl("dungeon_vengeful"));
 
 	// Storage Blocks
 	public static final TagKey<Block> BLOCK_QUARTZ = getForgeBlockStorageTag("quartz");
 	public static final TagKey<Block> BLOCK_URANIUM = getForgeBlockStorageTag("uranium");
 	public static final TagKey<Block> BLOCK_SLAG = getForgeBlockStorageTag("slag");
-	public static final TagKey<Block> BLOCK_FLUIX = BlockTags.create(new ResourceLocation("ae2:fluix_block"));
-	public static final TagKey<Block> BLOCK_SKY_STONE = BlockTags.create(new ResourceLocation("ae2:sky_stone_block"));
+	public static final TagKey<Block> BLOCK_FLUIX = BlockTags.create(new ResourceLocation("appliedenergistics2:fluix_block"));
+	public static final TagKey<Block> BLOCK_SKY_STONE = BlockTags.create(new ResourceLocation("appliedenergistics2:sky_stone_block"));
+	public static final TagKey<Item> BLOCK_HELLFORGED = ItemTags.create(new ResourceLocation("forge:storage_blocks/hellforged"));
+
+	public static final TagKey<Block> TELEPOSE_BLOCK_BLACKLIST = BlockTags.create(BloodMagic.rl("telepose_blacklist"));
+	public static final TagKey<EntityType<?>> TELEPOSE_BLACKLIST = TagKey.create(Registries.ENTITY_TYPE, BloodMagic.rl("telepose_blacklist"));
 
 	// Ores
 	public static final TagKey<Item> ORE_COPPER = getForgeOreTag("copper");
@@ -129,12 +135,7 @@ public class BloodMagicTags
 
 	// Modded (for meteor rituals)
 	public static final TagKey<Item> ADVANCED_ALLOY = getForgeAlloyTag("advanced");
-	public static final TagKey<Item> ANDESITE_ALLOY = ItemTags.create(new ResourceLocation("create:andesite_alloy"));
-	public static final TagKey<Item> DRAGON_BONE = getForgeBoneTag("dragon");
-	public static final TagKey<Item> GEM_CERTUS_QUARTZ = getForgeGemTag("certus_quartz");
-	public static final TagKey<Item> PROSPERITY_SHARD = ItemTags.create(new ResourceLocation("mysticalagriculture:prosperity_shard"));
-	public static final TagKey<Item> RF_COIL = ItemTags.create(new ResourceLocation("thermal:rf_coil"));
-	public static final TagKey<Item> WIRECOIL_COPPER = ItemTags.create(new ResourceLocation("immersiveengineering:wirecoil_copper"));
+	public static final TagKey<Item> DRAGON_BONE = ItemTags.create(new ResourceLocation("forge:bones"));
 
 	public static class Blocks
 	{
@@ -149,6 +150,13 @@ public class BloodMagicTags
 		public static final TagKey<Block> GEODE_HARVESTABLE = BlockTags.create(new ResourceLocation("bloodmagic:geode_harvestable"));
 
 		public static final TagKey<Block> MUNDANE_BLOCK = BlockTags.create(BloodMagic.rl("mundane_block"));
+
+        public static final TagKey<Block> BLOCK_HELLFORGED = getForgeBlockStorageTag("hellforged");
+        public static final TagKey<Block> DUNGEON_RAW = BlockTags.create(BloodMagic.rl("dungeon_raw"));
+        public static final TagKey<Block> DUNGEON_CORROSIVE = BlockTags.create(BloodMagic.rl("dungeon_corrosive"));
+        public static final TagKey<Block> DUNGEON_DESTRUCTIVE = BlockTags.create(BloodMagic.rl("dungeon_destructive"));
+        public static final TagKey<Block> DUNGEON_STEADFAST = BlockTags.create(BloodMagic.rl("dungeon_steadfast"));
+        public static final TagKey<Block> DUNGEON_VENGEFUL = BlockTags.create(BloodMagic.rl("dungeon_vengeful"));
 	}
 
 	public static TagKey<Item> getForgeOreTag(String name)

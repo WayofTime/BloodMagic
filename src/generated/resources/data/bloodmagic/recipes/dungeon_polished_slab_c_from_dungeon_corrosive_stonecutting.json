@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 2,
+  "ingredient": {
+    "tag": "bloodmagic:dungeon_corrosive"
+  },
+  "result": "bloodmagic:dungeon_polished_slab_c"
+}

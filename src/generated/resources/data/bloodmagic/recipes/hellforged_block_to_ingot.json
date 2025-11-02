@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "bloodmagic:dungeon_metal"
+      "tag": "forge:storage_blocks/hellforged"
     }
   ],
   "result": {

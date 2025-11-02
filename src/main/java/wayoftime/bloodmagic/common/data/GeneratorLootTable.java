@@ -14,7 +14,6 @@ import net.minecraft.data.loot.packs.VanillaBlockLoot;
 import net.minecraft.data.loot.packs.VanillaChestLoot;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
@@ -22,21 +21,15 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
-import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
-import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
-import net.minecraft.world.level.storage.loot.functions.EnchantWithLevelsFunction;
+import net.minecraft.world.level.storage.loot.functions.*;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction.Builder;
-import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.functions.SetItemDamageFunction;
-import net.minecraft.world.level.storage.loot.functions.SetNbtFunction;
-import net.minecraft.world.level.storage.loot.functions.SetPotionFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -660,6 +653,52 @@ public class GeneratorLootTable extends LootTableProvider
 				this.dropSelf(block.get());
 			}
 
+			for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_SLAB.getEntries())
+			{
+                add(block.get(), this::createSlabItemTable);
+			}
+
+            for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_WALL.getEntries())
+            {
+                dropSelf(block.get());
+            }
+
+            for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_GATE.getEntries())
+            {
+                dropSelf(block.get());
+            }
+
+            for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_STAIR.getEntries())
+            {
+                dropSelf(block.get());
+            }
+
+            dropSelf(BloodMagicBlocks.DUNGEON_STONE.get());
+            dropSelf(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE.get());
+            dropSelf(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE.get());
+            dropSelf(BloodMagicBlocks.STEADFAST_DUNGEON_STONE.get());
+            dropSelf(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE.get());
+
+            dropSelf(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get());
+            dropSelf(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get());
+            dropSelf(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get());
+
+            dropSelf(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CAP.get());
+            dropSelf(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CENTER.get());
+            dropSelf(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_SPECIAL.get());
+
+            dropSelf(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CAP.get());
+            dropSelf(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CENTER.get());
+            dropSelf(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_SPECIAL.get());
+
+            dropSelf(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CAP.get());
+            dropSelf(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CENTER.get());
+            dropSelf(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_SPECIAL.get());
+
+            dropSelf(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CAP.get());
+            dropSelf(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CENTER.get());
+            dropSelf(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_SPECIAL.get());
+
 			dropSelf(BloodMagicBlocks.BLOOD_ALTAR.get());
 			registerNoDropLootTable(BloodMagicBlocks.ALCHEMY_ARRAY.get());
 			registerNoDropLootTable(BloodMagicBlocks.BLOOD_LIGHT.get());
@@ -692,21 +731,8 @@ public class GeneratorLootTable extends LootTableProvider
 			dropSelf(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get());
 
 			dropSelf(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get());
-			dropSelf(BloodMagicBlocks.DUNGEON_STONE.get());
-			dropSelf(BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get());
-			dropSelf(BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get());
-			dropSelf(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get());
-			dropSelf(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get());
-			dropSelf(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get());
-			dropSelf(BloodMagicBlocks.DUNGEON_BRICK_WALL.get());
-			dropSelf(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get());
-			dropSelf(BloodMagicBlocks.DUNGEON_BRICK_GATE.get());
-			dropSelf(BloodMagicBlocks.DUNGEON_POLISHED_GATE.get());
 			dropSelf(BloodMagicBlocks.DUNGEON_SPIKE_TRAP.get());
 			registerNoDropLootTable(BloodMagicBlocks.SPIKES.get());
-			add(BloodMagicBlocks.DUNGEON_BRICK_SLAB.get(), this::createSlabItemTable);
-			add(BloodMagicBlocks.DUNGEON_TILE_SLAB.get(), this::createSlabItemTable);
-
 			registerNoDropLootTable(BloodMagicBlocks.DUNGEON_CONTROLLER.get());
 			registerNoDropLootTable(BloodMagicBlocks.DUNGEON_SEAL.get());
 			registerNoDropLootTable(BloodMagicBlocks.SPECIAL_DUNGEON_SEAL.get());

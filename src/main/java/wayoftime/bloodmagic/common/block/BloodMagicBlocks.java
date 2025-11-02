@@ -1,23 +1,14 @@
 package wayoftime.bloodmagic.common.block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.minecraft.world.level.material.FlowingFluid;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.minecraftforge.common.SoundActions;
 import net.minecraftforge.common.extensions.IForgeMenuType;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -29,10 +20,7 @@ import wayoftime.bloodmagic.common.container.item.ContainerFilter;
 import wayoftime.bloodmagic.common.container.item.ContainerHolding;
 import wayoftime.bloodmagic.common.container.item.ContainerTrainingBracelet;
 import wayoftime.bloodmagic.common.container.tile.*;
-import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
-
-import java.util.function.Consumer;
 
 public class BloodMagicBlocks
 {
@@ -40,6 +28,10 @@ public class BloodMagicBlocks
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BloodMagic.MODID);
 	public static final DeferredRegister<Block> BASICBLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BloodMagic.MODID);
 	public static final DeferredRegister<Block> DUNGEONBLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BloodMagic.MODID);
+    public static final DeferredRegister<Block> DECORATIVE_STAIR = DeferredRegister.create(ForgeRegistries.BLOCKS, BloodMagic.MODID);
+    public static final DeferredRegister<Block> DECORATIVE_GATE = DeferredRegister.create(ForgeRegistries.BLOCKS, BloodMagic.MODID);
+    public static final DeferredRegister<Block> DECORATIVE_WALL = DeferredRegister.create(ForgeRegistries.BLOCKS, BloodMagic.MODID);
+    public static final DeferredRegister<Block> DECORATIVE_SLAB = DeferredRegister.create(ForgeRegistries.BLOCKS, BloodMagic.MODID);
 	public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, BloodMagic.MODID);
 
 //	public static final RegistryObject<Block> BLOODSTONE = BASICBLOCKS.register("ruby_block", BloodstoneBlock::new);
@@ -128,46 +120,206 @@ public class BloodMagicBlocks
 	public static final RegistryObject<MenuType<ContainerTrainingBracelet>> TRAINING_BRACELET_CONTAINER = CONTAINERS.register("training_bracelet_container", () -> IForgeMenuType.create(ContainerTrainingBracelet::new));
 	public static final RegistryObject<MenuType<ContainerMasterRoutingNode>> MASTER_ROUTING_NODE_CONTAINER = CONTAINERS.register("master_routing_node_container", () -> IForgeMenuType.create(ContainerMasterRoutingNode::new));
 
-	// Dungeon Blocks
-	public static final RegistryObject<Block> DUNGEON_BRICK_1 = DUNGEONBLOCKS.register("dungeon_brick1", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> DUNGEON_BRICK_2 = DUNGEONBLOCKS.register("dungeon_brick2", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> DUNGEON_BRICK_3 = DUNGEONBLOCKS.register("dungeon_brick3", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    // Dungeon Blocks
 	public static final RegistryObject<Block> DUNGEON_ORE = BLOCKS.register("dungeon_ore", () -> new Block(Properties.of().strength(3.0F, 3.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DUNGEON_EMITTER = DUNGEONBLOCKS.register("dungeon_emitter", () -> new PoweredBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops().lightLevel((state) -> {
+        return 8;
+    })));
+    public static final RegistryObject<Block> DUNGEON_ALTERNATOR = DUNGEONBLOCKS.register("dungeon_alternator", () -> new BlockAlternator(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    // this one is what the dungeons are built out of for the most part. it essentially picks a random of the 3 raw numbered dungeon bricks
+    public static final RegistryObject<Block> DUNGEON_BRICK_ASSORTED = BLOCKS.register("dungeon_brick1_assorted", () -> new Block(Properties.of().strength(20.0F, 50.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> RAW_HELLFORGED_BLOCK = BASICBLOCKS.register("rawdemoniteblock", () -> new Block(Properties.of().strength(5.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+
+    // Decorative Start
+
+    // Raw
+    public static final RegistryObject<Block> DUNGEON_BRICK_1 = DUNGEONBLOCKS.register("dungeon_brick1", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DUNGEON_BRICK_2 = DUNGEONBLOCKS.register("dungeon_brick2", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DUNGEON_BRICK_3 = DUNGEONBLOCKS.register("dungeon_brick3", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 
 	public static final RegistryObject<Block> DUNGEON_STONE = BLOCKS.register("dungeon_stone", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> DUNGEON_EYE = DUNGEONBLOCKS.register("dungeon_eye", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops().lightLevel((state) -> {
 		return 15;
 	})));
-	public static final RegistryObject<Block> DUNGEON_EMITTER = DUNGEONBLOCKS.register("dungeon_emitter", () -> new PoweredBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops().lightLevel((state) -> {
-		return 8;
-	})));
-	public static final RegistryObject<Block> DUNGEON_ALTERNATOR = DUNGEONBLOCKS.register("dungeon_alternator", () -> new BlockAlternator(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> DUNGEON_POLISHED_STONE = DUNGEONBLOCKS.register("dungeon_polished", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> DUNGEON_TILE = DUNGEONBLOCKS.register("dungeon_tile", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> DUNGEON_SMALL_BRICK = DUNGEONBLOCKS.register("dungeon_smallbrick", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> DUNGEON_TILE_SPECIAL = DUNGEONBLOCKS.register("dungeon_tilespecial", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 
-	public static final RegistryObject<Block> DUNGEON_BRICK_ASSORTED = BLOCKS.register("dungeon_brick_assorted", () -> new Block(Properties.of().strength(20.0F, 50.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> HELLFORGED_BLOCK = DUNGEONBLOCKS.register("dungeon_metal", () -> new Block(Properties.of().strength(5.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 
-	public static final RegistryObject<Block> DUNGEON_BRICK_STAIRS = BLOCKS.register("dungeon_brick_stairs", () -> new StairBlock(() -> DUNGEON_BRICK_1.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> DUNGEON_POLISHED_STAIRS = BLOCKS.register("dungeon_polished_stairs", () -> new StairBlock(() -> DUNGEON_POLISHED_STONE.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DUNGEON_PILLAR_CENTER = BLOCKS.register("dungeon_pillar_center", () -> new RotatedPillarBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DUNGEON_PILLAR_SPECIAL = BLOCKS.register("dungeon_pillar_special", () -> new RotatedPillarBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DUNGEON_PILLAR_CAP = BLOCKS.register("dungeon_pillar_cap", () -> new BlockPillarCap(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 
-	public static final RegistryObject<Block> DUNGEON_PILLAR_CENTER = BLOCKS.register("dungeon_pillar_center", () -> new RotatedPillarBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> DUNGEON_PILLAR_SPECIAL = BLOCKS.register("dungeon_pillar_special", () -> new RotatedPillarBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> DUNGEON_PILLAR_CAP = BLOCKS.register("dungeon_pillar_cap", () -> new BlockPillarCap(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DUNGEON_BRICK_STAIRS = DECORATIVE_STAIR.register("dungeon_brick1_stairs", () -> new StairBlock(() -> DUNGEON_BRICK_1.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_POLISHED_STAIRS = DECORATIVE_STAIR.register("dungeon_polished_stairs", () -> new StairBlock(() -> DUNGEON_POLISHED_STONE.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_STONE_STAIRS = DECORATIVE_STAIR.register("dungeon_stone_stairs", () -> new StairBlock(() -> DUNGEON_STONE.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 
-	public static final RegistryObject<Block> DUNGEON_BRICK_WALL = BLOCKS.register("dungeon_brick_wall", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> DUNGEON_POLISHED_WALL = BLOCKS.register("dungeon_polished_wall", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> DUNGEON_BRICK_GATE = BLOCKS.register("dungeon_brick_gate", () -> new FenceGateBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops() , WoodType.OAK ));
-	public static final RegistryObject<Block> DUNGEON_POLISHED_GATE = BLOCKS.register("dungeon_polished_gate", () -> new FenceGateBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops(), WoodType.OAK));
+	public static final RegistryObject<Block> DUNGEON_BRICK_WALL = DECORATIVE_WALL.register("dungeon_brick1_wall", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_TILE_WALL = DECORATIVE_WALL.register("dungeon_tile_wall", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_POLISHED_WALL = DECORATIVE_WALL.register("dungeon_polished_wall", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_STONE_WALL = DECORATIVE_WALL.register("dungeon_stone_wall", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 
-	public static final RegistryObject<Block> DUNGEON_BRICK_SLAB = BLOCKS.register("dungeon_brick_slab", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> DUNGEON_TILE_SLAB = BLOCKS.register("dungeon_tile_slab", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_BRICK_GATE = DECORATIVE_GATE.register("dungeon_brick1_gate", () -> new FenceGateBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops() , WoodType.OAK ));
+	public static final RegistryObject<Block> DUNGEON_POLISHED_GATE = DECORATIVE_GATE.register("dungeon_polished_gate", () -> new FenceGateBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops(), WoodType.OAK));
 
-	public static final RegistryObject<Block> HELLFORGED_BLOCK = DUNGEONBLOCKS.register("dungeon_metal", () -> new Block(Properties.of().strength(5.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> RAW_HELLFORGED_BLOCK = BASICBLOCKS.register("rawdemoniteblock", () -> new Block(Properties.of().strength(5.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_BRICK_SLAB = DECORATIVE_SLAB.register("dungeon_brick1_slab", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_TILE_SLAB = DECORATIVE_SLAB.register("dungeon_tile_slab", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_STONE_SLAB = DECORATIVE_SLAB.register("dungeon_stone_slab", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> DUNGEON_POLISHED_SLAB = DECORATIVE_SLAB.register("dungeon_polished_slab", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 
-	public static final RegistryObject<Block> DUNGEON_CRACKED_BRICK_1 = DUNGEONBLOCKS.register("dungeon_regular_cracked_brick1", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    // Corrosive
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_BRICK_1 = DUNGEONBLOCKS.register("dungeon_brick1_c", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_BRICK_2 = DUNGEONBLOCKS.register("dungeon_brick2_c", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_BRICK_3 = DUNGEONBLOCKS.register("dungeon_brick3_c", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_STONE = BLOCKS.register("dungeon_stone_c", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_EYE = DUNGEONBLOCKS.register("dungeon_eye_c", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops().lightLevel((state) -> {
+        return 15;
+    })));
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_POLISHED_STONE = DUNGEONBLOCKS.register("dungeon_polished_c", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_TILE = DUNGEONBLOCKS.register("dungeon_tile_c", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_SMALL_BRICK = DUNGEONBLOCKS.register("dungeon_smallbrick_c", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_TILE_SPECIAL = DUNGEONBLOCKS.register("dungeon_tilespecial_c", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> CORROSIVE_HELLFORGED_BLOCK = DUNGEONBLOCKS.register("dungeon_metal_c", () -> new Block(Properties.of().strength(5.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_PILLAR_CENTER = BLOCKS.register("dungeon_pillar_center_c", () -> new RotatedPillarBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_PILLAR_SPECIAL = BLOCKS.register("dungeon_pillar_special_c", () -> new RotatedPillarBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_PILLAR_CAP = BLOCKS.register("dungeon_pillar_cap_c", () -> new BlockPillarCap(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_BRICK_STAIRS = DECORATIVE_STAIR.register("dungeon_brick1_stairs_c", () -> new StairBlock(() -> CORROSIVE_DUNGEON_BRICK_1.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_POLISHED_STAIRS = DECORATIVE_STAIR.register("dungeon_polished_stairs_c", () -> new StairBlock(() -> CORROSIVE_DUNGEON_POLISHED_STONE.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_STONE_STAIRS = DECORATIVE_STAIR.register("dungeon_stone_stairs_c", () -> new StairBlock(() -> CORROSIVE_DUNGEON_STONE.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_BRICK_WALL = DECORATIVE_WALL.register("dungeon_brick1_wall_c", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_TILE_WALL = DECORATIVE_WALL.register("dungeon_tile_wall_c", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_POLISHED_WALL = DECORATIVE_WALL.register("dungeon_polished_wall_c", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_STONE_WALL = DECORATIVE_WALL.register("dungeon_stone_wall_c", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_BRICK_GATE = DECORATIVE_GATE.register("dungeon_brick1_gate_c", () -> new FenceGateBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops() , WoodType.OAK ));
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_POLISHED_GATE = DECORATIVE_GATE.register("dungeon_polished_gate_c", () -> new FenceGateBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops(), WoodType.OAK));
+
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_BRICK_SLAB = DECORATIVE_SLAB.register("dungeon_brick1_slab_c", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_TILE_SLAB = DECORATIVE_SLAB.register("dungeon_tile_slab_c", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_STONE_SLAB = DECORATIVE_SLAB.register("dungeon_stone_slab_c", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_POLISHED_SLAB = DECORATIVE_SLAB.register("dungeon_polished_slab_c", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    // Destructive
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_BRICK_1 = DUNGEONBLOCKS.register("dungeon_brick1_d", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_BRICK_2 = DUNGEONBLOCKS.register("dungeon_brick2_d", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_BRICK_3 = DUNGEONBLOCKS.register("dungeon_brick3_d", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_STONE = BLOCKS.register("dungeon_stone_d", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_EYE = DUNGEONBLOCKS.register("dungeon_eye_d", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops().lightLevel((state) -> {
+        return 15;
+    })));
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_POLISHED_STONE = DUNGEONBLOCKS.register("dungeon_polished_d", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_TILE = DUNGEONBLOCKS.register("dungeon_tile_d", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_SMALL_BRICK = DUNGEONBLOCKS.register("dungeon_smallbrick_d", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_TILE_SPECIAL = DUNGEONBLOCKS.register("dungeon_tilespecial_d", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> DESTRUCTIVE_HELLFORGED_BLOCK = DUNGEONBLOCKS.register("dungeon_metal_d", () -> new Block(Properties.of().strength(5.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_PILLAR_CENTER = BLOCKS.register("dungeon_pillar_center_d", () -> new RotatedPillarBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_PILLAR_SPECIAL = BLOCKS.register("dungeon_pillar_special_d", () -> new RotatedPillarBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_PILLAR_CAP = BLOCKS.register("dungeon_pillar_cap_d", () -> new BlockPillarCap(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_BRICK_STAIRS = DECORATIVE_STAIR.register("dungeon_brick1_stairs_d", () -> new StairBlock(() -> DESTRUCTIVE_DUNGEON_BRICK_1.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_POLISHED_STAIRS = DECORATIVE_STAIR.register("dungeon_polished_stairs_d", () -> new StairBlock(() -> DESTRUCTIVE_DUNGEON_POLISHED_STONE.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_STONE_STAIRS = DECORATIVE_STAIR.register("dungeon_stone_stairs_d", () -> new StairBlock(() -> DESTRUCTIVE_DUNGEON_STONE.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_BRICK_WALL = DECORATIVE_WALL.register("dungeon_brick1_wall_d", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_TILE_WALL = DECORATIVE_WALL.register("dungeon_tile_wall_d", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_POLISHED_WALL = DECORATIVE_WALL.register("dungeon_polished_wall_d", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_STONE_WALL = DECORATIVE_WALL.register("dungeon_stone_wall_d", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_BRICK_GATE = DECORATIVE_GATE.register("dungeon_brick1_gate_d", () -> new FenceGateBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops() , WoodType.OAK ));
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_POLISHED_GATE = DECORATIVE_GATE.register("dungeon_polished_gate_d", () -> new FenceGateBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops(), WoodType.OAK));
+
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_BRICK_SLAB = DECORATIVE_SLAB.register("dungeon_brick1_slab_d", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_TILE_SLAB = DECORATIVE_SLAB.register("dungeon_tile_slab_d", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_STONE_SLAB = DECORATIVE_SLAB.register("dungeon_stone_slab_d", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DESTRUCTIVE_DUNGEON_POLISHED_SLAB = DECORATIVE_SLAB.register("dungeon_polished_slab_d", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    // Steadfast
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_BRICK_1 = DUNGEONBLOCKS.register("dungeon_brick1_s", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_BRICK_2 = DUNGEONBLOCKS.register("dungeon_brick2_s", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_BRICK_3 = DUNGEONBLOCKS.register("dungeon_brick3_s", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_STONE = BLOCKS.register("dungeon_stone_s", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_EYE = DUNGEONBLOCKS.register("dungeon_eye_s", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops().lightLevel((state) -> {
+        return 15;
+    })));
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_POLISHED_STONE = DUNGEONBLOCKS.register("dungeon_polished_s", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_TILE = DUNGEONBLOCKS.register("dungeon_tile_s", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_SMALL_BRICK = DUNGEONBLOCKS.register("dungeon_smallbrick_s", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_TILE_SPECIAL = DUNGEONBLOCKS.register("dungeon_tilespecial_s", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> STEADFAST_HELLFORGED_BLOCK = DUNGEONBLOCKS.register("dungeon_metal_s", () -> new Block(Properties.of().strength(5.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_PILLAR_CENTER = BLOCKS.register("dungeon_pillar_center_s", () -> new RotatedPillarBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_PILLAR_SPECIAL = BLOCKS.register("dungeon_pillar_special_s", () -> new RotatedPillarBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_PILLAR_CAP = BLOCKS.register("dungeon_pillar_cap_s", () -> new BlockPillarCap(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_BRICK_STAIRS = DECORATIVE_STAIR.register("dungeon_brick1_stairs_s", () -> new StairBlock(() -> STEADFAST_DUNGEON_BRICK_1.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_POLISHED_STAIRS = DECORATIVE_STAIR.register("dungeon_polished_stairs_s", () -> new StairBlock(() -> STEADFAST_DUNGEON_POLISHED_STONE.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_STONE_STAIRS = DECORATIVE_STAIR.register("dungeon_stone_stairs_s", () -> new StairBlock(() -> STEADFAST_DUNGEON_STONE.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_BRICK_WALL = DECORATIVE_WALL.register("dungeon_brick1_wall_s", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_TILE_WALL = DECORATIVE_WALL.register("dungeon_tile_wall_s", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_POLISHED_WALL = DECORATIVE_WALL.register("dungeon_polished_wall_s", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_STONE_WALL = DECORATIVE_WALL.register("dungeon_stone_wall_s", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_BRICK_GATE = DECORATIVE_GATE.register("dungeon_brick1_gate_s", () -> new FenceGateBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops() , WoodType.OAK ));
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_POLISHED_GATE = DECORATIVE_GATE.register("dungeon_polished_gate_s", () -> new FenceGateBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops(), WoodType.OAK));
+
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_BRICK_SLAB = DECORATIVE_SLAB.register("dungeon_brick1_slab_s", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_TILE_SLAB = DECORATIVE_SLAB.register("dungeon_tile_slab_s", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_STONE_SLAB = DECORATIVE_SLAB.register("dungeon_stone_slab_s", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> STEADFAST_DUNGEON_POLISHED_SLAB = DECORATIVE_SLAB.register("dungeon_polished_slab_s", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    // Vengeful
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_BRICK_1 = DUNGEONBLOCKS.register("dungeon_brick1_v", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_BRICK_2 = DUNGEONBLOCKS.register("dungeon_brick2_v", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_BRICK_3 = DUNGEONBLOCKS.register("dungeon_brick3_v", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_STONE = BLOCKS.register("dungeon_stone_v", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_EYE = DUNGEONBLOCKS.register("dungeon_eye_v", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops().lightLevel((state) -> {
+        return 15;
+    })));
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_POLISHED_STONE = DUNGEONBLOCKS.register("dungeon_polished_v", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_TILE = DUNGEONBLOCKS.register("dungeon_tile_v", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_SMALL_BRICK = DUNGEONBLOCKS.register("dungeon_smallbrick_v", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_TILE_SPECIAL = DUNGEONBLOCKS.register("dungeon_tilespecial_v", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> VENGEFUL_HELLFORGED_BLOCK = DUNGEONBLOCKS.register("dungeon_metal_v", () -> new Block(Properties.of().strength(5.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_PILLAR_CENTER = BLOCKS.register("dungeon_pillar_center_v", () -> new RotatedPillarBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_PILLAR_SPECIAL = BLOCKS.register("dungeon_pillar_special_v", () -> new RotatedPillarBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_PILLAR_CAP = BLOCKS.register("dungeon_pillar_cap_v", () -> new BlockPillarCap(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_BRICK_STAIRS = DECORATIVE_STAIR.register("dungeon_brick1_stairs_v", () -> new StairBlock(() -> VENGEFUL_DUNGEON_BRICK_1.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_POLISHED_STAIRS = DECORATIVE_STAIR.register("dungeon_polished_stairs_v", () -> new StairBlock(() -> VENGEFUL_DUNGEON_POLISHED_STONE.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_STONE_STAIRS = DECORATIVE_STAIR.register("dungeon_stone_stairs_v", () -> new StairBlock(() -> VENGEFUL_DUNGEON_STONE.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_BRICK_WALL = DECORATIVE_WALL.register("dungeon_brick1_wall_v", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_TILE_WALL = DECORATIVE_WALL.register("dungeon_tile_wall_v", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_POLISHED_WALL = DECORATIVE_WALL.register("dungeon_polished_wall_v", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_STONE_WALL = DECORATIVE_WALL.register("dungeon_stone_wall_v", () -> new WallBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_BRICK_GATE = DECORATIVE_GATE.register("dungeon_brick1_gate_v", () -> new FenceGateBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops() , WoodType.OAK ));
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_POLISHED_GATE = DECORATIVE_GATE.register("dungeon_polished_gate_v", () -> new FenceGateBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops(), WoodType.OAK));
+
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_BRICK_SLAB = DECORATIVE_SLAB.register("dungeon_brick1_slab_v", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_TILE_SLAB = DECORATIVE_SLAB.register("dungeon_tile_slab_v", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_STONE_SLAB = DECORATIVE_SLAB.register("dungeon_stone_slab_v", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> VENGEFUL_DUNGEON_POLISHED_SLAB = DECORATIVE_SLAB.register("dungeon_polished_slab_v", () -> new SlabBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
+    // End decorative
+
+    public static final RegistryObject<Block> DUNGEON_CRACKED_BRICK_1 = DUNGEONBLOCKS.register("dungeon_regular_cracked_brick1", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> DUNGEON_GLOWING_CRACKED_BRICK_1 = DUNGEONBLOCKS.register("dungeon_cracked_brick1", () -> new Block(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 
 	public static final RegistryObject<Block> DUNGEON_CONTROLLER = BLOCKS.register("dungeon_controller", () -> new BlockDungeonController());

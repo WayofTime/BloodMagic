@@ -4,6 +4,9 @@
   "category": "bloodmagic:dungeons",
   "extra_recipe_mappings": {
     "bloodmagic:special_dungeon_seal": 0,
+    "bloodmagic:bleedingedge": 0,
+    "bloodmagic:mimic": 0,
+    "bloodmagic:ethereal_mimic": 0,
     "bloodmagic:hellforgedparts": 3
   },
   "pages": [

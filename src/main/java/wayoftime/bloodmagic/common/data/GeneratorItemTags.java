@@ -6,21 +6,23 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
+import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 
-public class GeneratorItemTags extends IntrinsicHolderTagsProvider<Item>
+public class GeneratorItemTags extends ItemTagsProvider
 {
-	public GeneratorItemTags(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper)
+	public GeneratorItemTags(PackOutput output, CompletableFuture<HolderLookup.Provider> future, CompletableFuture<TagLookup<Block>> blockTags, ExistingFileHelper helper)
 	{
-		super(output, Registries.ITEM, future, block -> block.builtInRegistryHolder().key(), BloodMagic.MODID, helper);
+		super(output, future, blockTags, BloodMagic.MODID, helper);
 	}
 
 	@Override
@@ -42,7 +44,6 @@ public class GeneratorItemTags extends IntrinsicHolderTagsProvider<Item>
 		registerCuttingFluids();
 
 		registerVanillaTools();
-		registerModdedItems();
 
 		this.tag(BloodMagicTags.DUST_SULFUR).add(BloodMagicItems.SULFUR.get());
 		this.tag(BloodMagicTags.DUST_SALTPETER).add(BloodMagicItems.SALTPETER.get());
@@ -63,8 +64,16 @@ public class GeneratorItemTags extends IntrinsicHolderTagsProvider<Item>
 
 		this.tag(ItemTags.MUSIC_DISCS).add(BloodMagicItems.BLEEDING_EDGE_MUSIC.get());
 
-//		this.copy(BloodMagicTags.Blocks.MUSHROOM_STEM, BloodMagicTags.MUSHROOM_STEM); // FIXME
-//		this.copy(BloodMagicTags.Blocks.MUSHROOM_HYPHAE, BloodMagicTags.MUSHROOM_HYPHAE);
+        this.copy(BloodMagicTags.Blocks.DUNGEON_RAW, BloodMagicTags.DUNGEON_RAW);
+        this.copy(BloodMagicTags.Blocks.DUNGEON_CORROSIVE, BloodMagicTags.DUNGEON_CORROSIVE);
+        this.copy(BloodMagicTags.Blocks.DUNGEON_DESTRUCTIVE, BloodMagicTags.DUNGEON_DESTRUCTIVE);
+        this.copy(BloodMagicTags.Blocks.DUNGEON_STEADFAST, BloodMagicTags.DUNGEON_STEADFAST);
+        this.copy(BloodMagicTags.Blocks.DUNGEON_VENGEFUL, BloodMagicTags.DUNGEON_VENGEFUL);
+
+        this.copy(BloodMagicTags.Blocks.BLOCK_HELLFORGED, BloodMagicTags.BLOCK_HELLFORGED);
+
+		this.copy(BloodMagicTags.Blocks.MUSHROOM_STEM, BloodMagicTags.MUSHROOM_STEM);
+		this.copy(BloodMagicTags.Blocks.MUSHROOM_HYPHAE, BloodMagicTags.MUSHROOM_HYPHAE);
 
 //		this.tag(GOORESISTANT).addTag(BlockTags.DOORS);
 //		this.tag(GOORESISTANT).addTag(BlockTags.BEDS);
@@ -195,17 +204,6 @@ public class GeneratorItemTags extends IntrinsicHolderTagsProvider<Item>
 		tag(BloodMagicTags.SHOVELS).add(Items.DIAMOND_SHOVEL, Items.GOLDEN_SHOVEL, Items.IRON_SHOVEL, Items.NETHERITE_SHOVEL, Items.STONE_SHOVEL, Items.WOODEN_SHOVEL, BloodMagicItems.SENTIENT_SHOVEL.get());
 		tag(BloodMagicTags.PICKAXES).add(Items.DIAMOND_PICKAXE, Items.GOLDEN_PICKAXE, Items.IRON_PICKAXE, Items.NETHERITE_PICKAXE, Items.STONE_PICKAXE, Items.WOODEN_PICKAXE, BloodMagicItems.SENTIENT_PICKAXE.get());
 		tag(BloodMagicTags.HOES).add(Items.DIAMOND_HOE, Items.GOLDEN_HOE, Items.IRON_HOE, Items.NETHERITE_HOE, Items.STONE_HOE, Items.WOODEN_HOE, BloodMagicItems.SENTIENT_SCYTHE.get());
-	}
-
-	private void registerModdedItems()
-	{
-		tag(BloodMagicTags.ADVANCED_ALLOY);
-		tag(BloodMagicTags.ANDESITE_ALLOY);
-		tag(BloodMagicTags.DRAGON_BONE);
-		tag(BloodMagicTags.GEM_CERTUS_QUARTZ);
-		tag(BloodMagicTags.PROSPERITY_SHARD);
-		tag(BloodMagicTags.RF_COIL);
-		tag(BloodMagicTags.WIRECOIL_COPPER);
 	}
 
 	/**

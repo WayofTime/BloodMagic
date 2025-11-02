@@ -9,8 +9,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
 public class BlockPillarCap extends Block
 {
 	public static final DirectionProperty FACING = BlockStateProperties.FACING;

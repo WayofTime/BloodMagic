@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dungeon_raw": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "bloodmagic:dungeon_raw"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bloodmagic:dungeon_polished_stairs_from_dungeon_raw_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_dungeon_raw",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bloodmagic:dungeon_polished_stairs_from_dungeon_raw_stonecutting"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -1,11 +1,9 @@
 package wayoftime.bloodmagic.common.data;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import net.minecraft.core.Direction;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -15,14 +13,10 @@ import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraftforge.client.model.generators.BlockModelBuilder;
+import net.minecraft.world.level.block.state.properties.*;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ConfiguredModel.Builder;
-import net.minecraftforge.client.model.generators.ModelBuilder.ElementBuilder;
-import net.minecraftforge.client.model.generators.ModelBuilder.FaceRotation;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder.PartBuilder;
@@ -53,9 +47,6 @@ public class GeneratorBlockStates extends BlockStateProvider
 	@Override
 	protected void registerStatesAndModels()
 	{
-//		buildCubeAll(BloodMagicBlocks.TARTARICFORGE.get());
-//		buildCubeAll(BloodMagicBlocks.SPEED_RUNE.get());
-
 		for (RegistryObject<Block> block : BloodMagicBlocks.BASICBLOCKS.getEntries())
 		{
 			buildCubeAll(block.get());
@@ -66,7 +57,64 @@ public class GeneratorBlockStates extends BlockStateProvider
 			buildDungeonBlock(block.get());
 		}
 
-		buildCubeAll(BloodMagicBlocks.BLOOD_LIGHT.get());
+        buildRandomStone(BloodMagicBlocks.DUNGEON_STONE.get());
+        buildRandomStone(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE.get());
+        buildRandomStone(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE.get());
+        buildRandomStone(BloodMagicBlocks.STEADFAST_DUNGEON_STONE.get());
+        buildRandomStone(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE.get());
+
+        for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_STAIR.getEntries())
+        {
+            String basePath = ForgeRegistries.BLOCKS.getKey(block.get()).getPath();
+            ResourceLocation texture = new ResourceLocation(BloodMagic.MODID, "block/dungeon/" + basePath.replaceAll("_stairs", ""));
+            stairsBlock((StairBlock) block.get(), texture);
+        }
+
+        for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_SLAB.getEntries())
+        {
+            String basePath = ForgeRegistries.BLOCKS.getKey(block.get()).getPath();
+            ResourceLocation texture = new ResourceLocation(BloodMagic.MODID, "block/dungeon/" + basePath.replaceAll("_slab", ""));
+            ResourceLocation fullBlock = new ResourceLocation(BloodMagic.MODID, "block/" + basePath.replaceAll("_slab", ""));
+            slabBlock((SlabBlock) block.get(), fullBlock, texture);
+        }
+
+        for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_WALL.getEntries())
+        {
+            String basePath = ForgeRegistries.BLOCKS.getKey(block.get()).getPath();
+            ResourceLocation texture = new ResourceLocation(BloodMagic.MODID, "block/dungeon/" + basePath.replaceAll("_wall", ""));
+            wallBlock((WallBlock) block.get(), texture);
+            ModelFile file = models().wallInventory(basePath + "_inventory", texture);
+            file.assertExistence();
+        }
+
+        for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_GATE.getEntries())
+        {
+            String basePath = ForgeRegistries.BLOCKS.getKey(block.get()).getPath();
+            ResourceLocation texture = new ResourceLocation(BloodMagic.MODID, "block/dungeon/" + basePath.replaceAll("_gate", ""));
+            fenceGateBlock((FenceGateBlock) block.get(), texture);
+        }
+
+        buildWillPillarCap(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get(), BloodMagic.rl("block/dungeon/dungeon_pillarheart"), BloodMagic.rl("block/dungeon/dungeon_pillarbottom"), BloodMagic.rl("block/dungeon/dungeon_pillartop"));
+        buildWillPillarCenter(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get(), BloodMagic.rl("block/dungeon/dungeon_pillar"), BloodMagic.rl("block/dungeon/dungeon_pillarheart"));
+        buildWillPillarCenter(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get(), BloodMagic.rl("block/dungeon/dungeon_pillarspecial"), BloodMagic.rl("block/dungeon/dungeon_pillarheart"));
+
+        buildWillPillarCap(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CAP.get(), BloodMagic.rl("block/dungeon/dungeon_pillarheart_c"), BloodMagic.rl("block/dungeon/dungeon_pillarbottom_c"), BloodMagic.rl("block/dungeon/dungeon_pillartop_c"));
+        buildWillPillarCenter(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CENTER.get(), BloodMagic.rl("block/dungeon/dungeon_pillar_c"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_c"));
+        buildWillPillarCenter(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_SPECIAL.get(), BloodMagic.rl("block/dungeon/dungeon_pillarspecial_c"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_c"));
+
+        buildWillPillarCap(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CAP.get(), BloodMagic.rl("block/dungeon/dungeon_pillarheart_d"), BloodMagic.rl("block/dungeon/dungeon_pillarbottom_d"), BloodMagic.rl("block/dungeon/dungeon_pillartop_d"));
+        buildWillPillarCenter(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CENTER.get(), BloodMagic.rl("block/dungeon/dungeon_pillar_d"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_d"));
+        buildWillPillarCenter(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_SPECIAL.get(), BloodMagic.rl("block/dungeon/dungeon_pillarspecial_d"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_d"));
+
+        buildWillPillarCap(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CAP.get(), BloodMagic.rl("block/dungeon/dungeon_pillarheart_s"), BloodMagic.rl("block/dungeon/dungeon_pillarbottom_s"), BloodMagic.rl("block/dungeon/dungeon_pillartop_s"));
+        buildWillPillarCenter(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CENTER.get(), BloodMagic.rl("block/dungeon/dungeon_pillar_s"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_s"));
+        buildWillPillarCenter(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_SPECIAL.get(), BloodMagic.rl("block/dungeon/dungeon_pillarspecial_s"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_s"));
+
+        buildWillPillarCap(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CAP.get(), BloodMagic.rl("block/dungeon/dungeon_pillarheart_v"), BloodMagic.rl("block/dungeon/dungeon_pillarbottom_v"), BloodMagic.rl("block/dungeon/dungeon_pillartop_v"));
+        buildWillPillarCenter(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CENTER.get(), BloodMagic.rl("block/dungeon/dungeon_pillar_v"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_v"));
+        buildWillPillarCenter(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_SPECIAL.get(), BloodMagic.rl("block/dungeon/dungeon_pillarspecial_v"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_v"));
+
+        buildCubeAll(BloodMagicBlocks.BLOOD_LIGHT.get());
 		buildCubeAll(BloodMagicBlocks.BLANK_RITUAL_STONE.get());
 		buildCubeAll(BloodMagicBlocks.AIR_RITUAL_STONE.get());
 		buildCubeAll(BloodMagicBlocks.WATER_RITUAL_STONE.get());
@@ -88,21 +136,6 @@ public class GeneratorBlockStates extends BlockStateProvider
 		buildRoutingNode(BloodMagicBlocks.INPUT_ROUTING_NODE_BLOCK.get(), "inputroutingnode");
 		buildRoutingNode(BloodMagicBlocks.OUTPUT_ROUTING_NODE_BLOCK.get(), "outputroutingnode");
 		buildMasterRoutingNode(BloodMagicBlocks.MASTER_ROUTING_NODE_BLOCK.get());
-
-		buildRandomStone(BloodMagicBlocks.DUNGEON_STONE.get(), BloodMagic.rl("block/dungeon/dungeon_stone"));
-		stairsBlock((StairBlock) BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get(), BloodMagic.rl("block/dungeon/dungeon_brick1"));
-		stairsBlock((StairBlock) BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get(), BloodMagic.rl("block/dungeon/dungeon_polished"));
-		buildPillarCenter(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get(), BloodMagic.rl("block/dungeon/dungeon_pillar"), BloodMagic.rl("block/dungeon/dungeon_pillarheart"));
-		buildPillarCenter(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get(), BloodMagic.rl("block/dungeon/dungeon_pillarspecial"), BloodMagic.rl("block/dungeon/dungeon_pillarheart"));
-		buildWallInventory((WallBlock) BloodMagicBlocks.DUNGEON_BRICK_WALL.get(), BloodMagic.rl("block/dungeon/dungeon_brick1"));
-		buildWallInventory((WallBlock) BloodMagicBlocks.DUNGEON_POLISHED_WALL.get(), BloodMagic.rl("block/dungeon/dungeon_polished"));
-		fenceGateBlock((FenceGateBlock) BloodMagicBlocks.DUNGEON_BRICK_GATE.get(), BloodMagic.rl("block/dungeon/dungeon_brick1"));
-		fenceGateBlock((FenceGateBlock) BloodMagicBlocks.DUNGEON_POLISHED_GATE.get(), BloodMagic.rl("block/dungeon/dungeon_polished"));
-
-		slabBlock((SlabBlock) BloodMagicBlocks.DUNGEON_BRICK_SLAB.get(), BloodMagic.rl("dungeon_brick1"), BloodMagic.rl("block/dungeon/dungeon_brick1"));
-		slabBlock((SlabBlock) BloodMagicBlocks.DUNGEON_TILE_SLAB.get(), BloodMagic.rl("dungeon_tile"), BloodMagic.rl("block/dungeon/dungeon_tile"));
-
-		buildPillarCap(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get(), BloodMagic.rl("block/dungeon/dungeon_pillarheart"), BloodMagic.rl("block/dungeon/dungeon_pillarbottom"), BloodMagic.rl("block/dungeon/dungeon_pillartop"));
 
 		buildAssortedBlock(BloodMagicBlocks.DUNGEON_BRICK_ASSORTED.get(), modLoc("dungeon_brick1"), modLoc("dungeon_brick2"), modLoc("dungeon_brick3"));
 		buildDungeonBlock(BloodMagicBlocks.DUNGEON_ORE.get());
@@ -126,7 +159,6 @@ public class GeneratorBlockStates extends BlockStateProvider
 		buildCrossCrop(BloodMagicBlocks.WEAK_TAU.get(), CropBlock.AGE, 7, modLoc("block/weak_tau_1"), modLoc("block/weak_tau_2"), modLoc("block/weak_tau_3"), modLoc("block/weak_tau_4"), modLoc("block/weak_tau_5"), modLoc("block/weak_tau_6"), modLoc("block/weak_tau_7"), modLoc("block/weak_tau_8"));
 		buildCrossCrop(BloodMagicBlocks.STRONG_TAU.get(), CropBlock.AGE, 7, modLoc("block/weak_tau_1"), modLoc("block/strong_tau_2"), modLoc("block/strong_tau_3"), modLoc("block/strong_tau_4"), modLoc("block/strong_tau_5"), modLoc("block/strong_tau_6"), modLoc("block/strong_tau_7"), modLoc("block/strong_tau_8"));
 
-//		buildOrientable(BloodMagicBlocks.SHAPED_CHARGE.get(), "shaped_charge", modLoc("block/sub/shaped_charge"), modLoc("block/dungeon/dungeon_stone"), modLoc("block/dungeon/dungeon_tile"), new ResourceLocation("block/copper_block"), modLoc("block/largebloodstonebrick"), modLoc("models/defaultcrystal"));
 		buildShapedCharge(BloodMagicBlocks.SHAPED_CHARGE.get(), "shaped_charge", modLoc("block/sub/shaped_charge"), modLoc("block/dungeon/dungeon_stone"), modLoc("block/dungeon/dungeon_tile"), modLoc("block/blankrune"), modLoc("block/largebloodstonebrick"), modLoc("models/defaultcrystal"));
 		buildShapedCharge(BloodMagicBlocks.DEFORESTER_CHARGE.get(), "deforester_charge", modLoc("block/sub/shaped_charge"), new ResourceLocation("block/oak_log_top"), new ResourceLocation("block/oak_log_top"), modLoc("block/blankrune"), new ResourceLocation("block/oak_planks"), modLoc("models/defaultcrystal"));
 		buildShapedCharge(BloodMagicBlocks.VEINMINE_CHARGE.get(), "veinmine_charge", modLoc("block/sub/shaped_charge"), new ResourceLocation("block/sandstone_bottom"), new ResourceLocation("block/sandstone_bottom"), modLoc("block/blankrune"), new ResourceLocation("block/sand"), modLoc("models/defaultcrystal"));
@@ -173,8 +205,6 @@ public class GeneratorBlockStates extends BlockStateProvider
 
 	private void buildShapedCharge(Block block, String name, ResourceLocation modelPath, ResourceLocation base, ResourceLocation edges, ResourceLocation centerCap, ResourceLocation binding, ResourceLocation core)
 	{
-//		ModelFile furnace_off = models().orientableWithBottom("alchemicalreactionchamber", BloodMagic.rl("block/arc_side"), BloodMagic.rl("block/arc_front"), BloodMagic.rl("block/arc_bottom"), BloodMagic.rl("block/arc_top"));
-//		getVariantBuilder(block).addModels(block.getDefaultState().with(BlockAlchemicalReactionChamber.FACING, Direction.NORTH).with(BlockAlchemicalReactionChamber.LIT, false), furnaceModel);
 		ModelFile model = models().withExistingParent(name, modelPath).texture("1", edges).texture("3", base).texture("4", centerCap).texture("5", binding).texture("6", core).texture("particle", core);
 
 		VariantBlockStateBuilder builder = getVariantBuilder(block);
@@ -189,8 +219,6 @@ public class GeneratorBlockStates extends BlockStateProvider
 
 	private void buildAugmentedShapedCharge(Block block, String name, ResourceLocation modelPath, ResourceLocation base, ResourceLocation edges, ResourceLocation centerCap, ResourceLocation binding, ResourceLocation core, ResourceLocation bracket)
 	{
-//		ModelFile furnace_off = models().orientableWithBottom("alchemicalreactionchamber", BloodMagic.rl("block/arc_side"), BloodMagic.rl("block/arc_front"), BloodMagic.rl("block/arc_bottom"), BloodMagic.rl("block/arc_top"));
-//		getVariantBuilder(block).addModels(block.getDefaultState().with(BlockAlchemicalReactionChamber.FACING, Direction.NORTH).with(BlockAlchemicalReactionChamber.LIT, false), furnaceModel);
 		ModelFile model = models().withExistingParent(name, modelPath).texture("1", edges).texture("3", base).texture("4", centerCap).texture("5", binding).texture("2", core).texture("7", bracket).texture("particle", core);
 
 		VariantBlockStateBuilder builder = getVariantBuilder(block);
@@ -266,20 +294,23 @@ public class GeneratorBlockStates extends BlockStateProvider
 		});
 	}
 
-	private void buildRandomStone(Block block, ResourceLocation texture)
+	private void buildRandomStone(Block block)
 	{
-		String basePath = ForgeRegistries.BLOCKS.getKey(block).getPath();
-		ModelFile modelFile = models().cubeAll(basePath, texture);
-		ModelFile modelFile_mirrored = models().withExistingParent(basePath + "_mirrored", "cube_mirrored_all").texture("all", texture);
-		getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder().modelFile(modelFile).nextModel().modelFile(modelFile_mirrored).nextModel().modelFile(modelFile).rotationY(180).nextModel().modelFile(modelFile_mirrored).rotationY(180).build());
-	}
+		ResourceLocation modelLoc = ForgeRegistries.BLOCKS.getKey(block).withPrefix("block/");
+        ResourceLocation textureLoc = ForgeRegistries.BLOCKS.getKey(block).withPrefix("block/dungeon/");
 
-	private void buildWallInventory(WallBlock block, ResourceLocation texture)
-	{
-		String basePath = ForgeRegistries.BLOCKS.getKey(block).getPath();
-		wallBlock(block, texture);
-		ModelFile file = models().wallInventory(basePath + "_inventory", texture);
-		file.assertExistence();
+		VariantBlockStateBuilder variantBuilder = getVariantBuilder(block);
+
+		variantBuilder.forAllStates(state -> {
+			ModelFile modelFile = models().cubeAll(modelLoc.getPath(), textureLoc);
+			ModelFile modelFile_mirrored = models().withExistingParent(modelLoc + "_mirrored", "cube_mirrored_all").texture("all", textureLoc);
+
+			return ConfiguredModel.builder()
+					.modelFile(modelFile).nextModel()
+					.modelFile(modelFile_mirrored).nextModel()
+					.modelFile(modelFile).rotationY(180).nextModel()
+					.modelFile(modelFile_mirrored).rotationY(180).build();
+		});
 	}
 
 	private void buildDungeonBlock(Block block)
@@ -287,152 +318,52 @@ public class GeneratorBlockStates extends BlockStateProvider
 		String basePath = ForgeRegistries.BLOCKS.getKey(block).getPath();
 		ModelFile modelFile = models().cubeAll(basePath, BloodMagic.rl("block/dungeon/" + basePath));
 		getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder().modelFile(modelFile).build());
-//		ModelFile furnace_off = models().cubeAll(block.getRegistryName().toString(), texture)\
 	}
 
 	private void buildCubeTop(Block block, ResourceLocation side, ResourceLocation top)
 	{
-//		this.top
-//		String basePath = block.getRegistryName().getPath();
-//		models().cubeAll(texture, BloodMagic.rl("block/" + texture)).assertExistence();
 		String basePath = ForgeRegistries.BLOCKS.getKey(block).getPath();
 		ModelFile model = models().cubeBottomTop(basePath, side, side, top);
 
 		getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder().modelFile(model).build());
 	}
 
-//	private void buildCubeTop(Block block, ResourceLocation side, ResourceLocation top)
-//	{
-//		String basePath = block.getRegistryName().getPath();
-//		ModelFile yModel = models().cubeBottomTop(basePath, side, side, top);
-//
-//		ElementBuilder xElementBuilder = models().withExistingParent(basePath + "_x", "cube").texture("particle", side).texture("end", pillarEnd).texture("side", side).element();
-//		xElementBuilder.face(Direction.UP).uvs(0, 0, 16, 16).texture("#side").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-//		xElementBuilder.face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#side").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-//		xElementBuilder.face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#side").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-//		xElementBuilder.face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#side").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-//		xElementBuilder.face(Direction.WEST).uvs(16, 0, 0, 16).texture("#end").end();
-//		xElementBuilder.face(Direction.EAST).uvs(16, 0, 0, 16).texture("#end").end();
-//		ModelFile xModel = xElementBuilder.end();
-//
-//		ElementBuilder zElementBuilder = models().withExistingParent(basePath + "_z", "cube").texture("particle", side).texture("end", pillarEnd).texture("side", side).element();
-//		zElementBuilder.face(Direction.UP).uvs(0, 0, 16, 16).texture("#side").end();
-//		zElementBuilder.face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#side").end();
-//		zElementBuilder.face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#end").end();
-//		zElementBuilder.face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#end").end();
-//		zElementBuilder.face(Direction.WEST).uvs(16, 0, 0, 16).texture("#side").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-//		zElementBuilder.face(Direction.EAST).uvs(16, 0, 0, 16).texture("#side").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-//		ModelFile zModel = zElementBuilder.end();
-//
-//		VariantBlockStateBuilder builder = getVariantBuilder(block);
-//		builder.partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.X).modelForState().modelFile(xModel).addModel();
-//		builder.partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.Y).modelForState().modelFile(yModel).addModel();
-//		builder.partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.Z).modelForState().modelFile(zModel).addModel();
-//	}
-
-	private void buildPillarCenter(Block block, ResourceLocation side, ResourceLocation pillarEnd)
-	{
+	private void buildWillPillarCenter(Block block, ResourceLocation side, ResourceLocation end) {
 		String basePath = ForgeRegistries.BLOCKS.getKey(block).getPath();
-		ModelFile yModel = models().cubeColumn(basePath, side, pillarEnd);
 
-		ElementBuilder xElementBuilder = models().withExistingParent(basePath + "_x", "cube").texture("particle", side).texture("end", pillarEnd).texture("side", side).element();
-		xElementBuilder.face(Direction.UP).uvs(0, 0, 16, 16).texture("#side").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-		xElementBuilder.face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#side").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-		xElementBuilder.face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#side").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-		xElementBuilder.face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#side").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-		xElementBuilder.face(Direction.WEST).uvs(16, 0, 0, 16).texture("#end").end();
-		xElementBuilder.face(Direction.EAST).uvs(16, 0, 0, 16).texture("#end").end();
-		ModelFile xModel = xElementBuilder.end();
-
-		ElementBuilder zElementBuilder = models().withExistingParent(basePath + "_z", "cube").texture("particle", side).texture("end", pillarEnd).texture("side", side).element();
-		zElementBuilder.face(Direction.UP).uvs(0, 0, 16, 16).texture("#side").end();
-		zElementBuilder.face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#side").end();
-		zElementBuilder.face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#end").end();
-		zElementBuilder.face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#end").end();
-		zElementBuilder.face(Direction.WEST).uvs(16, 0, 0, 16).texture("#side").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-		zElementBuilder.face(Direction.EAST).uvs(16, 0, 0, 16).texture("#side").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-		ModelFile zModel = zElementBuilder.end();
-
-		VariantBlockStateBuilder builder = getVariantBuilder(block);
-		builder.partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.X).modelForState().modelFile(xModel).addModel();
-		builder.partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.Y).modelForState().modelFile(yModel).addModel();
-		builder.partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.Z).modelForState().modelFile(zModel).addModel();
+		getVariantBuilder(block).forAllStates(state -> {
+			Direction.Axis axis = state.getValue(RotatedPillarBlock.AXIS);
+			ModelFile modelFile = models().withExistingParent(basePath, "cube_column")
+					.texture("side", side)
+					.texture("end", end);
+			return ConfiguredModel.builder()
+					.modelFile(modelFile)
+					.rotationX(axis != Direction.Axis.Y ? 270 : 0)
+					.rotationY(axis == Direction.Axis.X ? 270 : 0)
+					.build();
+		});
 	}
 
-	private void buildPillarCap(Block block, ResourceLocation pillarEnd, ResourceLocation sideBottom, ResourceLocation sideTop)
-	{
-		String basePath = ForgeRegistries.BLOCKS.getKey(block).getPath();
-		ModelFile upModel = models().cubeBottomTop(basePath, sideTop, pillarEnd, pillarEnd);
-		ModelFile downModel = models().cubeBottomTop(basePath + "_down", sideBottom, pillarEnd, pillarEnd);
+    private void buildWillPillarCap(Block block, ResourceLocation end, ResourceLocation bottom, ResourceLocation top) {
+        String basePath = ForgeRegistries.BLOCKS.getKey(block).getPath();
 
-		ElementBuilder northElementBuilder = models().withExistingParent(basePath + "_north", "cube").texture("particle", pillarEnd).texture("sideBottom", sideBottom).texture("end", pillarEnd).texture("sideTop", sideTop).element();
-		northElementBuilder.face(Direction.UP).uvs(0, 0, 16, 16).texture("#sideTop").end();
-		northElementBuilder.face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#sideBottom").end();
-		northElementBuilder.face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#end").end();
-		northElementBuilder.face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#end").end();
-		northElementBuilder.face(Direction.WEST).uvs(16, 0, 0, 16).texture("#sideTop").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-		northElementBuilder.face(Direction.EAST).uvs(16, 0, 0, 16).texture("#sideBottom").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-		ModelFile northModel = northElementBuilder.end();
+        VariantBlockStateBuilder builder = getVariantBuilder(block);
+        ModelFile upModel = models().cubeBottomTop(basePath, top, end, end);
+        ModelFile downModel = models().cubeBottomTop(basePath + "_down", bottom, end, end);
 
-		ElementBuilder southElementBuilder = models().withExistingParent(basePath + "_south", "cube").texture("particle", pillarEnd).texture("sideBottom", sideBottom).texture("end", pillarEnd).texture("sideTop", sideTop).element();
-		southElementBuilder.face(Direction.UP).uvs(0, 0, 16, 16).texture("#sideBottom").end();
-		southElementBuilder.face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#sideTop").end();
-		southElementBuilder.face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#end").end();
-		southElementBuilder.face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#end").end();
-		southElementBuilder.face(Direction.WEST).uvs(16, 0, 0, 16).texture("#sideBottom").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-		southElementBuilder.face(Direction.EAST).uvs(16, 0, 0, 16).texture("#sideTop").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-		ModelFile southModel = southElementBuilder.end();
+        builder.addModels(builder.partialState().with(BlockPillarCap.FACING, Direction.UP), ConfiguredModel.builder().modelFile(upModel).build());
+        builder.addModels(builder.partialState().with(BlockPillarCap.FACING, Direction.SOUTH), ConfiguredModel.builder().modelFile(upModel).rotationX(270).build());
+        builder.addModels(builder.partialState().with(BlockPillarCap.FACING, Direction.EAST), ConfiguredModel.builder().modelFile(upModel).rotationX(90).rotationY(90).build());
 
-		ElementBuilder westElementBuilder = models().withExistingParent(basePath + "_west", "cube").texture("particle", pillarEnd).texture("sideBottom", sideBottom).texture("end", pillarEnd).texture("sideTop", sideTop).element();
-		westElementBuilder.face(Direction.UP).uvs(0, 0, 16, 16).texture("#sideTop").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-		westElementBuilder.face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#sideTop").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-		westElementBuilder.face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#sideBottom").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-		westElementBuilder.face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#sideTop").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-		westElementBuilder.face(Direction.WEST).uvs(16, 0, 0, 16).texture("#end").end();
-		westElementBuilder.face(Direction.EAST).uvs(16, 0, 0, 16).texture("#end").end();
-		ModelFile westModel = westElementBuilder.end();
-
-		ElementBuilder eastElementBuilder = models().withExistingParent(basePath + "_east", "cube").texture("particle", pillarEnd).texture("sideBottom", sideBottom).texture("end", pillarEnd).texture("sideTop", sideTop).element();
-		eastElementBuilder.face(Direction.UP).uvs(0, 0, 16, 16).texture("#sideBottom").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-		eastElementBuilder.face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#sideBottom").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-		eastElementBuilder.face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#sideTop").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-		eastElementBuilder.face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#sideBottom").rotation(FaceRotation.COUNTERCLOCKWISE_90).end();
-		eastElementBuilder.face(Direction.WEST).uvs(16, 0, 0, 16).texture("#end").end();
-		eastElementBuilder.face(Direction.EAST).uvs(16, 0, 0, 16).texture("#end").end();
-		ModelFile eastModel = eastElementBuilder.end();
-
-		VariantBlockStateBuilder builder = getVariantBuilder(block);
-		builder.partialState().with(BlockPillarCap.FACING, Direction.UP).modelForState().modelFile(upModel).addModel();
-		builder.partialState().with(BlockPillarCap.FACING, Direction.DOWN).modelForState().modelFile(downModel).addModel();
-		builder.partialState().with(BlockPillarCap.FACING, Direction.NORTH).modelForState().modelFile(northModel).addModel();
-		builder.partialState().with(BlockPillarCap.FACING, Direction.SOUTH).modelForState().modelFile(southModel).addModel();
-		builder.partialState().with(BlockPillarCap.FACING, Direction.WEST).modelForState().modelFile(westModel).addModel();
-		builder.partialState().with(BlockPillarCap.FACING, Direction.EAST).modelForState().modelFile(eastModel).addModel();
-	}
-
-	private BlockModelBuilder rotateTextureFace(BlockModelBuilder file, Direction face, FaceRotation rotation, String texture)
-	{
-//		BiConsumer<Direction, ModelBuilder<BlockModelBuilder>.ElementBuilder.FaceBuilder> biCon = (fc, rot) -> {
-//			rot.rotation(rotation).texture(texture);
-//		};
-		return file.element().face(face).uvs(16, 0, 0, 16).rotation(rotation).texture("#east").end().end();
-//		return file.element().faces(biCon).texture("#east").end();
-	}
+        builder.addModels(builder.partialState().with(BlockPillarCap.FACING, Direction.DOWN), ConfiguredModel.builder().modelFile(downModel).build());
+        builder.addModels(builder.partialState().with(BlockPillarCap.FACING, Direction.NORTH), ConfiguredModel.builder().modelFile(downModel).rotationX(270).build());
+        builder.addModels(builder.partialState().with(BlockPillarCap.FACING, Direction.WEST), ConfiguredModel.builder().modelFile(downModel).rotationX(90).rotationY(90).build());
+    }
 
 	private void buildCubeAll(Block block)
 	{
 		getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder().modelFile(cubeAll(block)).build());
 	}
-
-	private void buildCubeTop(Block block)
-	{
-		getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder().modelFile(cubeAll(block)).build());
-	}
-
-//	private void buildStairs(StairsBlock block, ResourceLocation texture)
-//	{
-//		getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder().modelFile(stairsBlock(block, texture)).build());
-//	}
 
 	private void buildCrystal(Block block, String name)
 	{
@@ -569,17 +500,17 @@ public class GeneratorBlockStates extends BlockStateProvider
 		}
 	}
 
+	private static Map<EnumDemonWillType, String> suffixMap = Map.of(
+			EnumDemonWillType.DEFAULT, "",
+			EnumDemonWillType.CORROSIVE, "_c",
+			EnumDemonWillType.DESTRUCTIVE, "_d",
+			EnumDemonWillType.STEADFAST, "_s",
+			EnumDemonWillType.VENGEFUL, "_v"
+	);
+
 	private void buildFurnace(Block block)
 	{
 		VariantBlockStateBuilder builder = getVariantBuilder(block);
-
-		Map<EnumDemonWillType, String> suffixMap = new HashMap<>();
-
-		suffixMap.put(EnumDemonWillType.DEFAULT, "");
-		suffixMap.put(EnumDemonWillType.CORROSIVE, "_c");
-		suffixMap.put(EnumDemonWillType.VENGEFUL, "_v");
-		suffixMap.put(EnumDemonWillType.DESTRUCTIVE, "_d");
-		suffixMap.put(EnumDemonWillType.STEADFAST, "_s");
 
 		for (Entry<EnumDemonWillType, String> entry : suffixMap.entrySet())
 		{
@@ -588,7 +519,6 @@ public class GeneratorBlockStates extends BlockStateProvider
 
 			ModelFile furnace_off = models().orientableWithBottom("alchemicalreactionchamber" + suffix, BloodMagic.rl("block/arc_side" + suffix), BloodMagic.rl("block/arc_front" + suffix), BloodMagic.rl("block/arc_bottom"), BloodMagic.rl("block/arc_top" + suffix));
 			ModelFile furnace_on = models().orientableWithBottom("alchemicalreactionchamber" + suffix + "_lit", BloodMagic.rl("block/arc_side" + suffix + "_lit"), BloodMagic.rl("block/arc_front" + suffix + "_lit"), BloodMagic.rl("block/arc_bottom"), BloodMagic.rl("block/arc_top" + suffix));
-//			getVariantBuilder(block).addModels(block.getDefaultState().with(BlockAlchemicalReactionChamber.FACING, Direction.NORTH).with(BlockAlchemicalReactionChamber.LIT, false), furnaceModel);
 
 			builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.NORTH).with(BlockAlchemicalReactionChamber.LIT, false).with(BlockAlchemicalReactionChamber.TYPE, type).modelForState().modelFile(furnace_off).addModel();
 			builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.EAST).with(BlockAlchemicalReactionChamber.LIT, false).with(BlockAlchemicalReactionChamber.TYPE, type).modelForState().modelFile(furnace_off).rotationY(90).addModel();
@@ -598,22 +528,6 @@ public class GeneratorBlockStates extends BlockStateProvider
 			builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.EAST).with(BlockAlchemicalReactionChamber.LIT, true).with(BlockAlchemicalReactionChamber.TYPE, type).modelForState().modelFile(furnace_on).rotationY(90).addModel();
 			builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.SOUTH).with(BlockAlchemicalReactionChamber.LIT, true).with(BlockAlchemicalReactionChamber.TYPE, type).modelForState().modelFile(furnace_on).rotationY(180).addModel();
 			builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.WEST).with(BlockAlchemicalReactionChamber.LIT, true).with(BlockAlchemicalReactionChamber.TYPE, type).modelForState().modelFile(furnace_on).rotationY(270).addModel();
-
 		}
-////		ConfiguredModel[] furnaceModel = ConfiguredModel.builder().modelFile().build();
-//		ModelFile furnace_off = models().orientableWithBottom("alchemicalreactionchamber", BloodMagic.rl("block/arc_side"), BloodMagic.rl("block/arc_front"), BloodMagic.rl("block/arc_bottom"), BloodMagic.rl("block/arc_top"));
-//		ModelFile furnace_on = models().orientableWithBottom("alchemicalreactionchamber_lit", BloodMagic.rl("block/arc_side_lit"), BloodMagic.rl("block/arc_front_lit"), BloodMagic.rl("block/arc_bottom"), BloodMagic.rl("block/arc_top"));
-////		getVariantBuilder(block).addModels(block.getDefaultState().with(BlockAlchemicalReactionChamber.FACING, Direction.NORTH).with(BlockAlchemicalReactionChamber.LIT, false), furnaceModel);
-//
-//		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.NORTH).with(BlockAlchemicalReactionChamber.LIT, false).modelForState().modelFile(furnace_off).addModel();
-//		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.EAST).with(BlockAlchemicalReactionChamber.LIT, false).modelForState().modelFile(furnace_off).rotationY(90).addModel();
-//		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.SOUTH).with(BlockAlchemicalReactionChamber.LIT, false).modelForState().modelFile(furnace_off).rotationY(180).addModel();
-//		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.WEST).with(BlockAlchemicalReactionChamber.LIT, false).modelForState().modelFile(furnace_off).rotationY(270).addModel();
-//		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.NORTH).with(BlockAlchemicalReactionChamber.LIT, true).modelForState().modelFile(furnace_on).addModel();
-//		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.EAST).with(BlockAlchemicalReactionChamber.LIT, true).modelForState().modelFile(furnace_on).rotationY(90).addModel();
-//		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.SOUTH).with(BlockAlchemicalReactionChamber.LIT, true).modelForState().modelFile(furnace_on).rotationY(180).addModel();
-//		builder.partialState().with(BlockAlchemicalReactionChamber.FACING, Direction.WEST).with(BlockAlchemicalReactionChamber.LIT, true).modelForState().modelFile(furnace_on).rotationY(270).addModel();
-
-//		getVariantBuilder(block).
 	}
 }

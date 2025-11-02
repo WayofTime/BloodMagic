@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.common.registries;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
 import net.minecraftforge.registries.DeferredRegister;
@@ -55,6 +56,17 @@ public class BloodMagicCreativeTabs {
                 });
             })
             .withTabsBefore(BLOODMAGIC.getKey())
+            .build());
+
+    public static final RegistryObject<CreativeModeTab> BLOODMAGIC_DECORATIVE = CREATIVE_TABS.register("bloodmagic_decorative", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.bloodmagic.decorativeTab"))
+            .icon(() -> BloodMagicItems.DUNGEON_EYE.get().getDefaultInstance())
+            .displayItems((params, output) -> {
+                    for (RegistryObject<Item> item : BloodMagicItems.DECORATIVE_DUNGEON.getEntries()) {
+                        output.accept(new ItemStack(item.get()));
+                    }
+            })
+            .withTabsBefore(BLOODMAGIC_UPGRADES.getKey())
             .build());
 
     public static void variantBuilder(Item item, Consumer<ItemStack> consumer) {

@@ -100,6 +100,11 @@ public class BloodMagic {
         BloodMagicItems.BASICITEMS.register(modBus);
         BloodMagicBlocks.BASICBLOCKS.register(modBus);
         BloodMagicBlocks.DUNGEONBLOCKS.register(modBus);
+        BloodMagicBlocks.DECORATIVE_STAIR.register(modBus);
+        BloodMagicBlocks.DECORATIVE_SLAB.register(modBus);
+        BloodMagicBlocks.DECORATIVE_GATE.register(modBus);
+        BloodMagicBlocks.DECORATIVE_WALL.register(modBus);
+        BloodMagicItems.DECORATIVE_DUNGEON.register(modBus);
         BloodMagicFluids.FLUID_TYPES.register(modBus);
         BloodMagicFluids.FLUIDS.register(modBus);
         BloodMagicBlocks.CONTAINERS.register(modBus);
@@ -216,8 +221,9 @@ public class BloodMagic {
         gen.addProvider(event.includeServer(), new DungeonRoomProvider(output));
 
         CompletableFuture<HolderLookup.Provider> provider = event.getLookupProvider();
-        gen.addProvider(event.includeServer(), new GeneratorBlockTags(output, provider, event.getExistingFileHelper()));
-        gen.addProvider(event.includeServer(), new GeneratorItemTags(output, provider, event.getExistingFileHelper()));
+        GeneratorBlockTags blockTags = new GeneratorBlockTags(output, provider, event.getExistingFileHelper());
+        gen.addProvider(event.includeServer(), blockTags);
+        gen.addProvider(event.includeServer(), new GeneratorItemTags(output, provider, blockTags.contentsGetter(), event.getExistingFileHelper()));
         gen.addProvider(event.includeServer(), new GeneratorFluidTags(output, provider, event.getExistingFileHelper()));
         gen.addProvider(event.includeServer(), new GeneratorDamageTags(output, provider, event.getExistingFileHelper()));
         gen.addProvider(event.includeServer(), new GeneratorEntityTags(output, provider, event.getExistingFileHelper()));
