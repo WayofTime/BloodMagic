@@ -801,7 +801,11 @@ public class BloodAltar// implements IFluidHandler
                 return 0;
 
             // see AbstractContainerMenu#getRedstoneSignalFromContainer
-            return Mth.floor((float) network.getCurrentEssence() / (float) orb.getCapacity() * 14.0F) + (network.getCurrentEssence() > 0 ? 1 : 0);
+			//compare the soul network's fill level to the orb's capacity and output a redstone signal.
+			//capped at 15 in case the orb is smaller than the network.
+
+            return Math.min(15,
+					Mth.floor((float) network.getCurrentEssence() / (float) orb.getCapacity() * 14.0F) + (network.getCurrentEssence() > 0 ? 1 : 0));
 
 		default:
 			return 0;
