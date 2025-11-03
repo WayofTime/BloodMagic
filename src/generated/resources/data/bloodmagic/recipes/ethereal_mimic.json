@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "bloodmagic:etherealslate"
+    },
+    "S": {
+      "item": "bloodmagic:dungeon_stone"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "SES",
+    "SSS"
+  ],
+  "result": {
+    "count": 8,
+    "item": "bloodmagic:ethereal_mimic"
+  },
+  "show_notification": true
+}

@@ -67,7 +67,6 @@ public class GeneratorBlockTags extends IntrinsicHolderTagsProvider<Block>
                 .add(BloodMagicBlocks.DUNGEON_STONE_STAIRS.get(), BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get(), BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get())
                 .add(BloodMagicBlocks.DUNGEON_STONE_WALL.get(), BloodMagicBlocks.DUNGEON_BRICK_WALL.get(), BloodMagicBlocks.DUNGEON_POLISHED_WALL.get(), BloodMagicBlocks.DUNGEON_TILE_WALL.get())
                 .add(BloodMagicBlocks.DUNGEON_BRICK_GATE.get(), BloodMagicBlocks.DUNGEON_POLISHED_GATE.get())
-                .add(BloodMagicBlocks.DUNGEON_EYE.get())
                 .add(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get(), BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get(), BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get())
                 .add(BloodMagicBlocks.DUNGEON_BRICK_1.get(), BloodMagicBlocks.DUNGEON_BRICK_2.get(), BloodMagicBlocks.DUNGEON_BRICK_3.get())
                 .add(BloodMagicBlocks.DUNGEON_TILE.get(), BloodMagicBlocks.DUNGEON_TILE_SPECIAL.get(), BloodMagicBlocks.DUNGEON_SMALL_BRICK.get(), BloodMagicBlocks.DUNGEON_POLISHED_STONE.get());
@@ -78,7 +77,6 @@ public class GeneratorBlockTags extends IntrinsicHolderTagsProvider<Block>
                 .add(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE_STAIRS.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_STAIRS.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_STAIRS.get())
                 .add(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE_WALL.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_WALL.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_WALL.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_TILE_WALL.get())
                 .add(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_GATE.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_GATE.get())
-                .add(BloodMagicBlocks.CORROSIVE_DUNGEON_EYE.get())
                 .add(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CAP.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CENTER.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_SPECIAL.get())
                 .add(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_1.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_2.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_3.get())
                 .add(BloodMagicBlocks.CORROSIVE_DUNGEON_TILE.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_TILE_SPECIAL.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_SMALL_BRICK.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_STONE.get());
@@ -89,7 +87,6 @@ public class GeneratorBlockTags extends IntrinsicHolderTagsProvider<Block>
                 .add(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE_STAIRS.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_STAIRS.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_STAIRS.get())
                 .add(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE_WALL.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_WALL.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_WALL.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE_WALL.get())
                 .add(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_GATE.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_GATE.get())
-                .add(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_EYE.get())
                 .add(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CAP.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CENTER.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_SPECIAL.get())
                 .add(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_1.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_2.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_3.get())
                 .add(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE_SPECIAL.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_SMALL_BRICK.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_STONE.get());
@@ -100,7 +97,6 @@ public class GeneratorBlockTags extends IntrinsicHolderTagsProvider<Block>
                 .add(BloodMagicBlocks.STEADFAST_DUNGEON_STONE_STAIRS.get(), BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_STAIRS.get(), BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_STAIRS.get())
                 .add(BloodMagicBlocks.STEADFAST_DUNGEON_STONE_WALL.get(), BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_WALL.get(), BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_WALL.get(), BloodMagicBlocks.STEADFAST_DUNGEON_TILE_WALL.get())
                 .add(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_GATE.get(), BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_GATE.get())
-                .add(BloodMagicBlocks.STEADFAST_DUNGEON_EYE.get())
                 .add(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CAP.get(), BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CENTER.get(), BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_SPECIAL.get())
                 .add(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_1.get(), BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_2.get(), BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_3.get())
                 .add(BloodMagicBlocks.STEADFAST_DUNGEON_TILE.get(), BloodMagicBlocks.STEADFAST_DUNGEON_TILE_SPECIAL.get(), BloodMagicBlocks.STEADFAST_DUNGEON_SMALL_BRICK.get(), BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_STONE.get());
@@ -111,7 +107,6 @@ public class GeneratorBlockTags extends IntrinsicHolderTagsProvider<Block>
                 .add(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE_STAIRS.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_STAIRS.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_STAIRS.get())
                 .add(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE_WALL.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_WALL.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_WALL.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_TILE_WALL.get())
                 .add(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_GATE.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_GATE.get())
-                .add(BloodMagicBlocks.VENGEFUL_DUNGEON_EYE.get())
                 .add(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CAP.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CENTER.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_SPECIAL.get())
                 .add(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_1.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_2.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_3.get())
                 .add(BloodMagicBlocks.VENGEFUL_DUNGEON_TILE.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_TILE_SPECIAL.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_SMALL_BRICK.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_STONE.get());

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "tag": "forge:dusts/glowstone"
+    },
+    "S": {
+      "item": "bloodmagic:dungeon_stone_s"
+    }
+  },
+  "pattern": [
+    " D ",
+    "DSD",
+    " D "
+  ],
+  "result": {
+    "item": "bloodmagic:dungeon_eye_s"
+  },
+  "show_notification": true
+}

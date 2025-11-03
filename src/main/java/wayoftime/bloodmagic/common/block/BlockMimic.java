@@ -98,6 +98,9 @@ public class BlockMimic extends Block implements EntityBlock
 //		return state.getBlock()
 //	}
 
+
+    /*
+     * no need to drop anything anymore
 	@Override
 	public void destroy(LevelAccessor world, BlockPos blockPos, BlockState blockState)
 	{
@@ -122,4 +125,5 @@ public class BlockMimic extends Block implements EntityBlock
 			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
+     */
 }
