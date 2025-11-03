@@ -475,7 +475,9 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.slate_vial", "A glass vial infused with a simple slate.");
 		add("tooltip.bloodmagic.blood_provider.slate.desc", "A simple ampoule containing 500LP.");
 
-		add("tooltip.bloodmagic.basicnodeupgrade", "Increases a Master Routing Node's speed.");
+		add("tooltip.bloodmagic.mastercore", "Increases a Master Routing Node's transfer speed");
+		add("tooltip.bloodmagic.mastercorespeed", "Lets the  Master Routing Node transfer more items at once.");
+
 
 		add("chat.bloodmagic.living_upgrade_level_increase", "%s has leveled up to %d!");
 

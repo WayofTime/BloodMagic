@@ -35,6 +35,6 @@ public class ItemBasicNodeUpgrade extends Item implements IRouterUpgrade
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
-		tooltip.add(Component.translatable("tooltip.bloodmagic.basicnodeupgrade").withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
+		tooltip.add(Component.translatable(stack.getItem().getDescriptionId().replace("item", "tooltip")).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
 	}
 }
