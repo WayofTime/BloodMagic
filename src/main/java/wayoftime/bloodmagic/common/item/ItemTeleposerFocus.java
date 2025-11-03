@@ -18,9 +18,11 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
+import wayoftime.bloodmagic.common.tile.TileInversionPillar;
 import wayoftime.bloodmagic.common.tile.TileTeleposer;
 import wayoftime.bloodmagic.core.data.Binding;
 import wayoftime.bloodmagic.event.ItemBindEvent;
+import wayoftime.bloodmagic.util.BMLog;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.BindableHelper;
 import wayoftime.bloodmagic.util.helper.TextHelper;
@@ -62,6 +64,13 @@ public class ItemTeleposerFocus extends ItemBindableBase implements ITeleposerFo
 				}
 			}
 		}
+
+        if (world.getBlockEntity(pos) instanceof TileInversionPillar pillar && !world.isClientSide) {
+            if (!pillar.hasDestination() && getStoredPos(stack) != BlockPos.ZERO) {
+                pillar.setDestination(getStoredWorld(stack, world), getStoredPos(stack));
+                pillar.setChanged();
+            }
+        }
 
 		return InteractionResult.SUCCESS;
 	}

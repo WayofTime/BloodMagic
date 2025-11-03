@@ -12,6 +12,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -24,6 +25,7 @@ import wayoftime.bloodmagic.common.tile.TileSpecialRoomDungeonSeal;
 import wayoftime.bloodmagic.gson.Serializers;
 import wayoftime.bloodmagic.ritual.AreaDescriptor;
 import wayoftime.bloodmagic.structures.rooms.DungeonRoomPlacement;
+import wayoftime.bloodmagic.util.BMLog;
 import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.Constants;
 
@@ -225,13 +227,15 @@ public class DungeonSynthesizer
 	public void addNewControllerBlock(ServerLevel world, BlockPos controllerPos)
 	{
 //		world.setBlockState(controllerPos, Blocks.LAPIS_BLOCK.getDefaultState(), 3);
-		world.setBlock(controllerPos, BloodMagicBlocks.DUNGEON_CONTROLLER.get().defaultBlockState(), 3);
+		world.setBlock(controllerPos, BloodMagicBlocks.DUNGEON_CONTROLLER.get().defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
 		BlockEntity tile = world.getBlockEntity(controllerPos);
 		if (tile instanceof TileDungeonController)
 		{
 			((TileDungeonController) tile).setDungeonSynthesizer(this);
 //			((TileDungeonSeal) tile).acceptDoorInformation(controllerPos, doorBlockPos, doorFacing, doorType, potentialRoomTypes);
-		}
+		} else {
+            BMLog.DEFAULT.warn("Failed to find controller BE at {}", controllerPos);
+        }
 	}
 
 	public boolean isBlockInDescriptor(BlockPos blockPos)
@@ -358,12 +362,14 @@ public class DungeonSynthesizer
 
 		potentialRoomTypes = modifyRoomTypes(potentialRoomTypes);
 
-		world.setBlock(doorBlockOffsetPos, BloodMagicBlocks.DUNGEON_SEAL.get().defaultBlockState(), 3);
+		world.setBlock(doorBlockOffsetPos, BloodMagicBlocks.DUNGEON_SEAL.get().defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
 		BlockEntity tile = world.getBlockEntity(doorBlockOffsetPos);
 		if (tile instanceof TileDungeonSeal)
 		{
 			((TileDungeonSeal) tile).acceptDoorInformation(controllerPos, doorBlockPos, doorFacing, doorType, newRoomDepth, highestBranchRoomDepth, potentialRoomTypes);
-		}
+		} else {
+            BMLog.DEFAULT.warn("Failed to find seal BE at {}", doorBlockOffsetPos);
+        }
 
 		return true;
 	}

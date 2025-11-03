@@ -127,7 +127,7 @@ public class BloodMagicBlocks
     })));
     public static final RegistryObject<Block> DUNGEON_ALTERNATOR = DUNGEONBLOCKS.register("dungeon_alternator", () -> new BlockAlternator(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     // this one is what the dungeons are built out of for the most part. it essentially picks a random of the 3 raw numbered dungeon bricks
-    public static final RegistryObject<Block> DUNGEON_BRICK_ASSORTED = BLOCKS.register("dungeon_brick1_assorted", () -> new Block(Properties.of().strength(20.0F, 50.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DUNGEON_BRICK_ASSORTED = BLOCKS.register("dungeon_brick_assorted", () -> new Block(Properties.of().strength(20.0F, 50.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> RAW_HELLFORGED_BLOCK = BASICBLOCKS.register("rawdemoniteblock", () -> new Block(Properties.of().strength(5.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 
     // Decorative Start
