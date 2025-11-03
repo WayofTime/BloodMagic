@@ -82,8 +82,6 @@ public class ConfigManager
 			builder.comment("State that the dungeon spawning ritual can only be activated when using a Creative Activation Crystal.", "Used on servers for if you do not trust your players to not destroy other people's bases.");
 			makeDungeonRitualCreativeOnly = builder.define("makeDungeonRitualCreativeOnly", false);
 
-			builder.pop();
-
 			builder.push("Geode Ritual");
 			activation_cost = builder.define("activation_cost", 50_000);
 			refresh_cost = builder.define("refresh_cost", 50);
