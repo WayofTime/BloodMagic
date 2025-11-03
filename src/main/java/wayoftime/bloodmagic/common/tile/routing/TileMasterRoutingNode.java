@@ -20,6 +20,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import org.apache.commons.lang3.tuple.Triple;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.container.tile.ContainerMasterRoutingNode;
+import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.item.routing.IRouterUpgrade;
 import wayoftime.bloodmagic.common.routing.*;
 import wayoftime.bloodmagic.common.tile.BloodMagicTileEntities;
@@ -43,11 +44,12 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 	private List<BlockPos> inputNodeList = new LinkedList<>();
 	private static final int TREE_OFFSET = 10;
 
-	public static final int SLOT = 0;
+	public static final int SLOT_STACK_UPGRADE = 0;
+	public static final int SLOT_SPEED_UPGRADE = 1;
 
 	public TileMasterRoutingNode(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
-		super(type, 1, "masterroutingnode", pos, state);
+		super(type, 2, "masterroutingnode", pos, state);
 	}
 
 	public TileMasterRoutingNode(BlockPos pos, BlockState state)
@@ -68,7 +70,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 //          System.out.println(currentInput);
 		}
 
-		if (getLevel().isClientSide || getLevel().getGameTime() % tickRate != 0) // Temporary tick rate solver
+		if (getLevel().isClientSide || getLevel().getGameTime() % Math.max(1, tickRate - getItem(SLOT_SPEED_UPGRADE).getCount()) != 0) // Temporary tick rate solver
 		{
 			return;
 		}
@@ -242,7 +244,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 	public int getMaxTransferForDemonWill(double will)
 	{
 		int rate = 16;
-		ItemStack upgradeStack = getItem(SLOT);
+		ItemStack upgradeStack = getItem(SLOT_STACK_UPGRADE);
 		if (!upgradeStack.isEmpty() && upgradeStack.getItem() instanceof IRouterUpgrade)
 		{
 			rate += ((IRouterUpgrade) upgradeStack.getItem()).getMaxTransferIncrease(upgradeStack);
@@ -534,6 +536,15 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 		}
 
 		return super.getCapability(capability, facing);
+	}
+
+	@Override
+	public boolean canPlaceItem(int index, ItemStack stack) {
+		return switch (index) {
+			case SLOT_STACK_UPGRADE -> stack.is(BloodMagicItems.MASTER_NODE_UPGRADE.get());
+			case SLOT_SPEED_UPGRADE -> stack.is(BloodMagicItems.MASTER_NODE_UPGRADE_SPEED.get());
+			default -> false;
+		};
 	}
 
 	@Override
