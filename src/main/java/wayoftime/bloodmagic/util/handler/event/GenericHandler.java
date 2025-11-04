@@ -943,7 +943,7 @@ public class GenericHandler
 				LivingUtil.applyNewExperience(player, LivingArmorRegistrar.UPGRADE_JUMP.get(), 1);
 				if (!player.isShiftKeyDown())
 				{
-					LivingStats stats = LivingStats.fromPlayer(player);
+					LivingStats stats = LivingStats.fromPlayer(player, true);
 					double jumpModifier = LivingArmorRegistrar.UPGRADE_JUMP.get().getBonusValue("jump", stats.getLevel(LivingArmorRegistrar.UPGRADE_JUMP.get().getKey())).doubleValue();
 					player.setDeltaMovement(player.getDeltaMovement().add(0, jumpModifier, 0));
 				}
