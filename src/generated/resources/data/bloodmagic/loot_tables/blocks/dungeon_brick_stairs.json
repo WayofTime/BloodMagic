@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "bloodmagic:dungeon_brick1_stairs"
+          "name": "bloodmagic:dungeon_brick_stairs"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "bloodmagic:blocks/dungeon_brick1_stairs"
+  "random_sequence": "bloodmagic:blocks/dungeon_brick_stairs"
 }

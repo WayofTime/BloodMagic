@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "bloodmagic:dungeon_brick1_assorted"
+          "name": "bloodmagic:dungeon_brick_assorted"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "bloodmagic:blocks/dungeon_brick1_assorted"
+  "random_sequence": "bloodmagic:blocks/dungeon_brick_assorted"
 }

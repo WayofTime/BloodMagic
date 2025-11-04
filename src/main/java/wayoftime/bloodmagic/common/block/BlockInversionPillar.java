@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.common.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -45,7 +46,7 @@ public class BlockInversionPillar extends Block implements EntityBlock
 		BlockEntity tile = world.getBlockEntity(pos);
 		if (tile != null)
 		{
-			((TileInversionPillar) tile).handlePlayerInteraction(player);
+			((TileInversionPillar) tile).handlePlayerInteraction((ServerPlayer) player);
 		}
 //			player.openGui(BloodMagic.instance, Constants.Gui.SOUL_FORGE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
 

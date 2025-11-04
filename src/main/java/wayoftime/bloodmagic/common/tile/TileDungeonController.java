@@ -22,7 +22,7 @@ import wayoftime.bloodmagic.util.Constants;
 
 public class TileDungeonController extends TileBase
 {
-	private DungeonSynthesizer dungeon = null;
+	public DungeonSynthesizer dungeon = null;
 
 	public TileDungeonController(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{

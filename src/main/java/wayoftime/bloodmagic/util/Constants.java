@@ -174,6 +174,8 @@ public class Constants
 
 		public static final String ITEM = "item";
 
+        public static final String DUNGEON_EXIT = "dungeon_exit";
+
 	}
 
 	public static class BUTTONID

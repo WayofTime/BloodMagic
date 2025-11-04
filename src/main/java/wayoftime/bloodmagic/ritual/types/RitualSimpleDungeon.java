@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 
 import com.google.common.collect.Lists;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
@@ -31,6 +32,7 @@ import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.ritual.RitualRegister;
 import wayoftime.bloodmagic.structures.DungeonSynthesizer;
+import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 
 @RitualRegister("simple_dungeon")
@@ -54,6 +56,13 @@ public class RitualSimpleDungeon extends Ritual
 
 			return false;
 		}
+
+        CompoundTag exit = new CompoundTag();
+        exit.putInt("xCoord", player.getBlockX());
+        exit.putInt("yCoord", player.getBlockY());
+        exit.putInt("zCoord", player.getBlockZ());
+        exit.putString("dimension_key", player.level().dimension().location().toString());
+        player.getPersistentData().put(Constants.NBT.DUNGEON_EXIT, exit);
 		return true;
 	}
 
