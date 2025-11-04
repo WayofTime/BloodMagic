@@ -23,6 +23,7 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.recipe.builder.ARCPotionRecipeBuilder;
 import wayoftime.bloodmagic.common.data.recipe.builder.ARCRecipeBuilder;
+import wayoftime.bloodmagic.common.fluid.BloodMagicFluids;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 import wayoftime.bloodmagic.recipe.helper.FluidStackIngredient;
@@ -88,6 +89,8 @@ public class ARCRecipeProvider implements ISubRecipeProvider
         ARCRecipeBuilder.arc(Ingredient.of(ItemTags.WOOL_CARPETS), hydration, cauldron_use, new ItemStack(Items.WHITE_CARPET), null).build(consumer, BloodMagic.rl(basePath + "wash_carpet"));
         ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.GLASS), hydration, cauldron_use, new ItemStack(Items.GLASS), null).build(consumer, BloodMagic.rl(basePath + "wash_glass"));
         ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.GLASS_PANES), hydration, cauldron_use, new ItemStack(Items.GLASS_PANE), null).build(consumer, BloodMagic.rl(basePath + "wash_glass_pane"));
+
+        ARCRecipeBuilder.arc(Ingredient.of(BloodMagicItems.WEAK_TAU_ITEM.get()), hydration, FluidStackIngredient.from(BloodMagicFluids.LIFE_ESSENCE_FLUID.get(), 1600), new ItemStack(BloodMagicItems.STRONG_TAU_ITEM.get()), null).build(consumer, BloodMagic.rl(basePath + "strengthen_tau"));
 
 		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicItems.STRONG_TAU_ITEM.get()), Ingredient.of(BloodMagicTags.ARC_TOOL_REVERTER), null, new ItemStack(BloodMagicItems.WEAK_BLOOD_SHARD.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.WEAK_BLOOD_SHARD.get()), 0.2).build(consumer, BloodMagic.rl(basePath + "weakbloodshard_tau"));
 //		ARCRecipeBuilder.arc(Ingredient.fromItems(BloodMagicItems.IMBUED_SLATE.get()), Ingredient.fromTag(BloodMagicTags.ARC_TOOL_REVERTER), null, new ItemStack(BloodMagicItems.WEAK_BLOOD_SHARD.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.WEAK_BLOOD_SHARD.get()), 0.2).build(consumer, BloodMagic.rl(basePath + "weakbloodshard"));

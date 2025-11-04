@@ -1,0 +1,19 @@
+{
+  "type": "bloodmagic:arc",
+  "consumeingredient": false,
+  "input": {
+    "item": "bloodmagic:weak_tau"
+  },
+  "inputFluid": {
+    "amount": 1600,
+    "fluid": "bloodmagic:life_essence_fluid"
+  },
+  "inputsize": 1,
+  "mainoutputchance": 0.0,
+  "output": {
+    "item": "bloodmagic:strong_tau"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc/hydrate"
+  }
+}
