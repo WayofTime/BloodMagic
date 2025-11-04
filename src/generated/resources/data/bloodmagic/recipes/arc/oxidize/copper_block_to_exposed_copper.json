@@ -1,0 +1,19 @@
+{
+  "type": "bloodmagic:arc",
+  "consumeingredient": false,
+  "input": {
+    "item": "minecraft:copper_block"
+  },
+  "inputFluid": {
+    "amount": 200,
+    "fluid": "minecraft:water"
+  },
+  "inputsize": 1,
+  "mainoutputchance": 0.0,
+  "output": {
+    "item": "minecraft:exposed_copper"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc/hydrate"
+  }
+}

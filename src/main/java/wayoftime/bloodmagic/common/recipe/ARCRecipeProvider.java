@@ -3,11 +3,14 @@ package wayoftime.bloodmagic.common.recipe;
 import java.util.function.Consumer;
 
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.Tags;
@@ -15,6 +18,7 @@ import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.NotCondition;
 import net.minecraftforge.common.crafting.conditions.TagEmptyCondition;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.recipe.builder.ARCPotionRecipeBuilder;
@@ -25,6 +29,11 @@ import wayoftime.bloodmagic.recipe.helper.FluidStackIngredient;
 
 public class ARCRecipeProvider implements ISubRecipeProvider
 {
+
+    private static final Ingredient hydration = Ingredient.of(BloodMagicTags.ARC_TOOL_HYDRATE);
+    private static final FluidStackIngredient water = FluidStackIngredient.from(Fluids.WATER, 200);
+    private static final FluidStackIngredient cauldron_use = FluidStackIngredient.from(Fluids.WATER, 333);
+
 	@Override
 	public void addRecipes(Consumer<FinishedRecipe> consumer)
 	{
@@ -37,9 +46,48 @@ public class ARCRecipeProvider implements ISubRecipeProvider
 		ARCRecipeBuilder.arc(Ingredient.of(Items.IRON_ORE), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.IRON_SAND.get(), 3), null).build(consumer, BloodMagic.rl(basePath + "ore/dustiron"));
 		ARCRecipeBuilder.arc(Ingredient.of(Items.GOLD_ORE), Ingredient.of(BloodMagicTags.ARC_TOOL_CUTTINGFLUID), null, new ItemStack(BloodMagicItems.GOLD_SAND.get(), 3), null).build(consumer, BloodMagic.rl(basePath + "ore/dustgold"));
 		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.NETHERRACK), Ingredient.of(BloodMagicTags.ARC_TOOL_EXPLOSIVE), null, new ItemStack(BloodMagicItems.SULFUR.get()), new FluidStack(Fluids.LAVA, 50)).build(consumer, BloodMagic.rl(basePath + "netherrack_to_sulfer"));
-		ARCRecipeBuilder.arc(Ingredient.of(Items.TERRACOTTA), Ingredient.of(BloodMagicTags.ARC_TOOL_HYDRATE), FluidStackIngredient.from(Fluids.WATER, 200), new ItemStack(Blocks.CLAY), null).build(consumer, BloodMagic.rl(basePath + "clay_from_terracotta"));
-		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.SAND), Ingredient.of(BloodMagicTags.ARC_TOOL_HYDRATE), FluidStackIngredient.from(Fluids.WATER, 200), new ItemStack(Items.CLAY_BALL), null).addRandomOutput(new ItemStack(Items.CLAY_BALL), 0.5).build(consumer, BloodMagic.rl(basePath + "clay_from_sand"));
-        ARCRecipeBuilder.arc(Ingredient.of(Blocks.DIRT), Ingredient.of(BloodMagicTags.ARC_TOOL_HYDRATE), FluidStackIngredient.from(Fluids.WATER, 200), new ItemStack(Blocks.MUD), null).build(consumer, BloodMagic.rl(basePath + "mud_from_dirt"));
+
+		ARCRecipeBuilder.arc(Ingredient.of(Items.TERRACOTTA), hydration, water, new ItemStack(Blocks.CLAY), null).build(consumer, BloodMagic.rl(basePath + "clay_from_terracotta"));
+		ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.SAND), hydration, water, new ItemStack(Items.CLAY_BALL), null).addRandomOutput(new ItemStack(Items.CLAY_BALL), 0.5).build(consumer, BloodMagic.rl(basePath + "clay_from_sand"));
+        ARCRecipeBuilder.arc(Ingredient.of(Blocks.DIRT), hydration, water, new ItemStack(Blocks.MUD), null).build(consumer, BloodMagic.rl(basePath + "mud_from_dirt"));
+
+        ARCRecipeBuilder.arc(Ingredient.of(Blocks.COBBLESTONE), hydration, water, new ItemStack(Blocks.MOSSY_COBBLESTONE), null).build(consumer, BloodMagic.rl(basePath + "mossify_cobblestone"));
+        ARCRecipeBuilder.arc(Ingredient.of(Blocks.COBBLESTONE_SLAB), hydration, water, new ItemStack(Blocks.MOSSY_COBBLESTONE_SLAB), null).build(consumer, BloodMagic.rl(basePath + "mossify_cobblestone_slab"));
+        ARCRecipeBuilder.arc(Ingredient.of(Blocks.COBBLESTONE_STAIRS), hydration, water, new ItemStack(Blocks.MOSSY_COBBLESTONE_STAIRS), null).build(consumer, BloodMagic.rl(basePath + "mossify_cobblestone_stairs"));
+        ARCRecipeBuilder.arc(Ingredient.of(Blocks.COBBLESTONE_WALL), hydration, water, new ItemStack(Blocks.MOSSY_COBBLESTONE_WALL), null).build(consumer, BloodMagic.rl(basePath + "mossify_cobblestone_wall"));
+
+        ARCRecipeBuilder.arc(Ingredient.of(Blocks.STONE_BRICKS), hydration, water, new ItemStack(Blocks.MOSSY_STONE_BRICKS), null).build(consumer, BloodMagic.rl(basePath + "mossify_stone_bricks"));
+        ARCRecipeBuilder.arc(Ingredient.of(Blocks.STONE_BRICK_SLAB), hydration, water, new ItemStack(Blocks.MOSSY_STONE_BRICK_SLAB), null).build(consumer, BloodMagic.rl(basePath + "mossify_stone_brick_slab"));
+        ARCRecipeBuilder.arc(Ingredient.of(Blocks.STONE_BRICK_STAIRS), hydration, water, new ItemStack(Blocks.MOSSY_STONE_BRICK_STAIRS), null).build(consumer, BloodMagic.rl(basePath + "mossify_stone_brick_stairs"));
+        ARCRecipeBuilder.arc(Ingredient.of(Blocks.STONE_BRICK_WALL), hydration, water, new ItemStack(Blocks.MOSSY_STONE_BRICK_WALL), null).build(consumer, BloodMagic.rl(basePath + "mossify_stone_brick_wall"));
+
+        oxidize(consumer, Blocks.COPPER_BLOCK, Blocks.EXPOSED_COPPER, Blocks.WEATHERED_COPPER, Blocks.OXIDIZED_COPPER);
+        oxidize(consumer, Blocks.CUT_COPPER, Blocks.EXPOSED_CUT_COPPER, Blocks.WEATHERED_CUT_COPPER, Blocks.OXIDIZED_CUT_COPPER);
+        oxidize(consumer, Blocks.CUT_COPPER_STAIRS, Blocks.EXPOSED_CUT_COPPER_STAIRS, Blocks.WEATHERED_CUT_COPPER_STAIRS, Blocks.OXIDIZED_CUT_COPPER_STAIRS);
+        oxidize(consumer, Blocks.CUT_COPPER_SLAB, Blocks.EXPOSED_CUT_COPPER_SLAB, Blocks.WEATHERED_CUT_COPPER_SLAB, Blocks.OXIDIZED_CUT_COPPER_SLAB);
+
+        solidifyConcrete(consumer, Blocks.WHITE_CONCRETE_POWDER, Blocks.WHITE_CONCRETE);
+        solidifyConcrete(consumer, Blocks.ORANGE_CONCRETE_POWDER, Blocks.ORANGE_CONCRETE);
+        solidifyConcrete(consumer, Blocks.MAGENTA_CONCRETE_POWDER, Blocks.MAGENTA_CONCRETE);
+        solidifyConcrete(consumer, Blocks.LIGHT_BLUE_CONCRETE_POWDER, Blocks.LIGHT_BLUE_CONCRETE);
+        solidifyConcrete(consumer, Blocks.YELLOW_CONCRETE_POWDER, Blocks.YELLOW_CONCRETE_POWDER);
+        solidifyConcrete(consumer, Blocks.LIME_CONCRETE_POWDER, Blocks.LIME_CONCRETE_POWDER);
+        solidifyConcrete(consumer, Blocks.PINK_CONCRETE_POWDER, Blocks.PINK_CONCRETE_POWDER);
+        solidifyConcrete(consumer, Blocks.GRAY_CONCRETE_POWDER, Blocks.GRAY_CONCRETE_POWDER);
+        solidifyConcrete(consumer, Blocks.LIGHT_GRAY_CONCRETE_POWDER, Blocks.LIGHT_GRAY_CONCRETE_POWDER);
+        solidifyConcrete(consumer, Blocks.CYAN_CONCRETE_POWDER, Blocks.CYAN_CONCRETE_POWDER);
+        solidifyConcrete(consumer, Blocks.PURPLE_CONCRETE_POWDER, Blocks.PURPLE_CONCRETE_POWDER);
+        solidifyConcrete(consumer, Blocks.BLUE_CONCRETE_POWDER, Blocks.BLUE_CONCRETE_POWDER);
+        solidifyConcrete(consumer, Blocks.BROWN_CONCRETE_POWDER, Blocks.BROWN_CONCRETE_POWDER);
+        solidifyConcrete(consumer, Blocks.GREEN_CONCRETE_POWDER, Blocks.GREEN_CONCRETE_POWDER);
+        solidifyConcrete(consumer, Blocks.RED_CONCRETE_POWDER, Blocks.RED_CONCRETE_POWDER);
+        solidifyConcrete(consumer, Blocks.BLACK_CONCRETE_POWDER, Blocks.BLACK_CONCRETE_POWDER);
+
+        ARCRecipeBuilder.arc(Ingredient.of(ItemTags.BEDS), hydration, cauldron_use, new ItemStack(Items.WHITE_BED), null).build(consumer, BloodMagic.rl(basePath + "wash_bed"));
+        ARCRecipeBuilder.arc(Ingredient.of(ItemTags.WOOL), hydration, cauldron_use, new ItemStack(Items.WHITE_WOOL), null).build(consumer, BloodMagic.rl(basePath + "wash_wool"));
+        ARCRecipeBuilder.arc(Ingredient.of(ItemTags.WOOL_CARPETS), hydration, cauldron_use, new ItemStack(Items.WHITE_CARPET), null).build(consumer, BloodMagic.rl(basePath + "wash_carpet"));
+        ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.GLASS), hydration, cauldron_use, new ItemStack(Items.GLASS), null).build(consumer, BloodMagic.rl(basePath + "wash_glass"));
+        ARCRecipeBuilder.arc(Ingredient.of(Tags.Items.GLASS_PANES), hydration, cauldron_use, new ItemStack(Items.GLASS_PANE), null).build(consumer, BloodMagic.rl(basePath + "wash_glass_pane"));
 
 		ARCRecipeBuilder.arc(Ingredient.of(BloodMagicItems.STRONG_TAU_ITEM.get()), Ingredient.of(BloodMagicTags.ARC_TOOL_REVERTER), null, new ItemStack(BloodMagicItems.WEAK_BLOOD_SHARD.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.WEAK_BLOOD_SHARD.get()), 0.2).build(consumer, BloodMagic.rl(basePath + "weakbloodshard_tau"));
 //		ARCRecipeBuilder.arc(Ingredient.fromItems(BloodMagicItems.IMBUED_SLATE.get()), Ingredient.fromTag(BloodMagicTags.ARC_TOOL_REVERTER), null, new ItemStack(BloodMagicItems.WEAK_BLOOD_SHARD.get()), null).addRandomOutput(new ItemStack(BloodMagicItems.WEAK_BLOOD_SHARD.get()), 0.2).build(consumer, BloodMagic.rl(basePath + "weakbloodshard"));
@@ -53,6 +101,16 @@ public class ARCRecipeProvider implements ISubRecipeProvider
 		addFragmentRecipes(consumer);
 		addGravelRecipes(consumer);
 	}
+
+    private void solidifyConcrete(Consumer<FinishedRecipe> consumer, Block powder, Block concrete) {
+        ARCRecipeBuilder.arc(Ingredient.of(powder), hydration, water, new ItemStack(concrete), null).build(consumer, BloodMagic.rl("arc/solidify_" + ForgeRegistries.BLOCKS.getKey(concrete).getPath()));
+    }
+
+    private void oxidize(Consumer<FinishedRecipe> consumer, Block start, Block exposed, Block weathered, Block oxidized) {
+        ARCRecipeBuilder.arc(Ingredient.of(start), hydration, water, new ItemStack(exposed), null).build(consumer, BloodMagic.rl("arc/oxidize/" + ForgeRegistries.BLOCKS.getKey(start).getPath() + "_to_" + ForgeRegistries.BLOCKS.getKey(exposed).getPath()));
+        ARCRecipeBuilder.arc(Ingredient.of(exposed), hydration, water, new ItemStack(weathered), null).build(consumer, BloodMagic.rl("arc/oxidize/" + ForgeRegistries.BLOCKS.getKey(exposed).getPath() + "_to_" + ForgeRegistries.BLOCKS.getKey(weathered).getPath()));
+        ARCRecipeBuilder.arc(Ingredient.of(weathered), hydration, water, new ItemStack(oxidized), null).build(consumer, BloodMagic.rl("arc/oxidize/" + ForgeRegistries.BLOCKS.getKey(weathered).getPath() + "_to_" + ForgeRegistries.BLOCKS.getKey(oxidized).getPath()));
+    }
 
 	private ICondition getTagCondition(TagKey<Item> tag)
 	{

@@ -1,0 +1,19 @@
+{
+  "type": "bloodmagic:arc",
+  "consumeingredient": false,
+  "input": {
+    "tag": "minecraft:wool_carpets"
+  },
+  "inputFluid": {
+    "amount": 333,
+    "fluid": "minecraft:water"
+  },
+  "inputsize": 1,
+  "mainoutputchance": 0.0,
+  "output": {
+    "item": "minecraft:white_carpet"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc/hydrate"
+  }
+}
