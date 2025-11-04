@@ -65,13 +65,6 @@ public class ItemTeleposerFocus extends ItemBindableBase implements ITeleposerFo
 			}
 		}
 
-        if (world.getBlockEntity(pos) instanceof TileInversionPillar pillar && !world.isClientSide) {
-            if (!pillar.hasDestination() && getStoredPos(stack) != BlockPos.ZERO) {
-                pillar.setDestination(getStoredWorld(stack, world), getStoredPos(stack));
-                pillar.setChanged();
-            }
-        }
-
 		return InteractionResult.SUCCESS;
 	}
 

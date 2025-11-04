@@ -69,6 +69,7 @@ public class GeneratorBlockStates extends BlockStateProvider
             ResourceLocation texture = new ResourceLocation(BloodMagic.MODID, "block/dungeon/" + basePath.replaceAll("_stairs", ""));
             stairsBlock((StairBlock) block.get(), texture);
         }
+        stairsBlock((StairBlock) BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get(), BloodMagic.rl("block/dungeon/dungeon_brick1"));
 
         for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_SLAB.getEntries())
         {

@@ -138,6 +138,7 @@ public class BlockAlchemicalReactionChamber extends Block implements EntityBlock
 	 * @deprecated call via {@link IBlockState#withRotation(Rotation)} whenever
 	 *             possible. Implementing/overriding is fine.
 	 */
+    @Deprecated
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot)
 	{
@@ -151,6 +152,7 @@ public class BlockAlchemicalReactionChamber extends Block implements EntityBlock
 	 * @deprecated call via {@link IBlockState#withMirror(Mirror)} whenever
 	 *             possible. Implementing/overriding is fine.
 	 */
+    @Deprecated
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirrorIn)
 	{

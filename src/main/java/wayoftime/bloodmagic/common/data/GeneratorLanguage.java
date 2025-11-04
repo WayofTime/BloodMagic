@@ -505,7 +505,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("chat.bloodmagic.routing.same", "Invalid - cannot link a node with itself.");
 
         add("chat.bloodmagic.dungeon.controller_fix", "Dimensional Threading Reforked (and potentially some other similar mods) prevent the dungeon from generating like normal.\nAt this moment we dont really know how to actually fix this so instead we had you trigger the generation again by trying to leave like you just did.\nIt *should* be fixed now meaning the locks should generate rooms now.\nIf this message is triggered from this same dungeon again it did NOT work and you might want to report this to us on the Blood Magic discord.\nBest of luck to you");
-        add("chat.bloodmagic.dungeon.position_fix", "Unfortunately the inversion pillar is affected by the same issue as the dungeon doors but we cant just fix it by having you do things you would naturally.\nInstead it will take you to your current respawn point. If you would rather set the position you get teleported to you can USE (default right click) a Teleposition Focus (that has a position stored) on this inversion pillar to permanently inscribe that location to it.\nIf you dont you will see this message every time (so noone misses it by accident) and you'll be taken to your current respawn point instead");
+        add("chat.bloodmagic.dungeon.position_fix", "Exit position has been set to %s in %s");
 
 		add("tooltip.bloodmagic.telepositionfocus.coords", "Current coordinates: (%d, %d, %d).");
 		add("tooltip.bloodmagic.telepositionfocus.world", "World: %d.");

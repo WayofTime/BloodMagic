@@ -152,7 +152,7 @@ public class BloodMagicBlocks
     public static final RegistryObject<Block> DUNGEON_PILLAR_SPECIAL = BLOCKS.register("dungeon_pillar_special", () -> new RotatedPillarBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> DUNGEON_PILLAR_CAP = BLOCKS.register("dungeon_pillar_cap", () -> new BlockPillarCap(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 
-    public static final RegistryObject<Block> DUNGEON_BRICK_STAIRS = DECORATIVE_STAIR.register("dungeon_brick1_stairs", () -> new StairBlock(() -> DUNGEON_BRICK_1.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> DUNGEON_BRICK_STAIRS = BLOCKS.register("dungeon_brick_stairs", () -> new StairBlock(() -> DUNGEON_BRICK_1.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> DUNGEON_POLISHED_STAIRS = DECORATIVE_STAIR.register("dungeon_polished_stairs", () -> new StairBlock(() -> DUNGEON_POLISHED_STONE.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> DUNGEON_STONE_STAIRS = DECORATIVE_STAIR.register("dungeon_stone_stairs", () -> new StairBlock(() -> DUNGEON_STONE.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 

@@ -1,5 +1,7 @@
 package wayoftime.bloodmagic.common.tile;
 
+import com.sun.jna.platform.win32.WinDef;
+import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
@@ -54,6 +56,7 @@ public class TileInversionPillar extends TileBase implements CommandSource
 
 	public void setDestination(Level destinationWorld, BlockPos destinationPos)
 	{
+        BMLog.DEFAULT.info("Pillar at {} set to {} in {}", getBlockPos(), teleportPos, destinationKey);
 		this.destinationKey = destinationWorld.dimension();
 		this.teleportPos = destinationPos;
 	}
@@ -105,36 +108,45 @@ public class TileInversionPillar extends TileBase implements CommandSource
 
         // no controller block above pillar? probably used to be the ritual side so skipping check
         if (level.getBlockState(controllerPos).is(BloodMagicBlocks.DUNGEON_CONTROLLER.get())) {
+            boolean regen = false;
             if (level.getBlockEntity(controllerPos) instanceof TileDungeonController controller) {
-                if (controller.dungeon.availableDoorMasterMap.isEmpty()) {
-                    DungeonSynthesizer dungeon = new DungeonSynthesizer();
-                    dungeon.generateInitialRoom(BloodMagic.rl(isEndless ? "room_pools/entrances/standard_dungeon_entrances" : "room_pools/entrances/mini_dungeon_entrances"), level.random, (ServerLevel) level, controllerPos);
-
-                    // dungeon nbt file has regular pillars here, fix that
-                    level.setBlockAndUpdate(pillarPos, BloodMagicBlocks.INVERSION_PILLAR.get().defaultBlockState());
-                    level.setBlockAndUpdate(pillarPos.relative(Direction.DOWN), BloodMagicBlocks.INVERSION_PILLAR_CAP.get().defaultBlockState().setValue(BlockInversionPillarEnd.TYPE, PillarCapType.BOTTOM));
-                    level.setBlockAndUpdate(pillarPos.relative(Direction.UP), BloodMagicBlocks.INVERSION_PILLAR_CAP.get().defaultBlockState().setValue(BlockInversionPillarEnd.TYPE, PillarCapType.TOP));
-
-                    ChatUtil.sendNoSpam(player, Component.translatable("chat.bloodmagic.dungeon.controller_fix"));
-
-                    // no teleporty, bad teleporty
-                    return;
+                if (controller.dungeon == null // not like it should ever be null. like once it saves it fills this if it is null. but BCL doesnt care I guess...
+                        || controller.dungeon.availableDoorMasterMap.isEmpty()) {
+                    BMLog.DEFAULT.warn("Trouble generating dungeon detected, attempting to fix");
+                    regen = true;
                 }
-            } else {
-                BMLog.DEFAULT.warn("No controller BE (but block is there) found at {} while attempting to fix already broken dungeon. I pray we never see this message in a log");
+            }
+
+            if (regen) {
+                DungeonSynthesizer dungeon = new DungeonSynthesizer();
+                dungeon.generateInitialRoom(BloodMagic.rl(isEndless ? "room_pools/entrances/standard_dungeon_entrances" : "room_pools/entrances/mini_dungeon_entrances"), level.random, (ServerLevel) level, controllerPos);
+
+                // dungeon nbt file has regular pillars here, fix that
+                level.setBlockAndUpdate(pillarPos, BloodMagicBlocks.INVERSION_PILLAR.get().defaultBlockState());
+                level.setBlockAndUpdate(pillarPos.relative(Direction.DOWN), BloodMagicBlocks.INVERSION_PILLAR_CAP.get().defaultBlockState().setValue(BlockInversionPillarEnd.TYPE, PillarCapType.BOTTOM));
+                level.setBlockAndUpdate(pillarPos.relative(Direction.UP), BloodMagicBlocks.INVERSION_PILLAR_CAP.get().defaultBlockState().setValue(BlockInversionPillarEnd.TYPE, PillarCapType.TOP));
+
+                if (level.getBlockEntity(pillarPos) instanceof TileInversionPillar tilePillar && player.getPersistentData().contains(Constants.NBT.DUNGEON_EXIT)) {
+                    CompoundTag exit = player.getPersistentData().getCompound(Constants.NBT.DUNGEON_EXIT);
+                    BlockPos exitPos = new BlockPos(exit.getInt("xCoord"), exit.getInt("yCoord"), exit.getInt("zCoord"));
+                    ResourceKey<Level> exitDim = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(exit.getString("dimension_key")));
+                    tilePillar.setDestination(level.getServer().getLevel(exitDim), exitPos);
+                    tilePillar.setChanged();
+                    ChatUtil.sendNoSpam(player, Component.translatable("chat.bloodmagic.dungeon.position_fix", tilePillar.teleportPos, tilePillar.destinationKey).withStyle(ChatFormatting.LIGHT_PURPLE));
+                }
+
+                ChatUtil.sendNoSpam(player, Component.translatable("chat.bloodmagic.dungeon.controller_fix").withStyle(ChatFormatting.DARK_GREEN));
+                return;
             }
         }
 
 		if (teleportPos.equals(BlockPos.ZERO))
 		{
-            ChatUtil.sendNoSpam(player, Component.translatable("chat.bloodmagic.dungeon.position_fix"));
-            ResourceKey<Level> dimKey = player.getRespawnDimension();
-            BlockPos respawnPos = player.getRespawnPosition();
-            if (respawnPos == null) {
-                LevelData data = level.getServer().getLevel(dimKey).getLevelData();
-                respawnPos = new BlockPos(data.getXSpawn(), data.getYSpawn(), data.getZSpawn());
-            }
-            teleportPlayerToLocation((ServerLevel) level, player, player.getRespawnDimension(), respawnPos);
+            CompoundTag exit = player.getPersistentData().getCompound(Constants.NBT.DUNGEON_EXIT);
+            this.teleportPos = new BlockPos(exit.getInt("xCoord"), exit.getInt("yCoord"), exit.getInt("zCoord"));
+            this.destinationKey = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(exit.getString("dimension_key")));
+            this.setChanged();
+            ChatUtil.sendNoSpam(player, Component.translatable("chat.bloodmagic.dungeon.position_fix", teleportPos, destinationKey).withStyle(ChatFormatting.DARK_PURPLE));
 			return;
 		}
 

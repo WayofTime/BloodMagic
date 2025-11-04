@@ -8,6 +8,7 @@ import com.google.common.collect.Lists;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
@@ -31,6 +32,7 @@ import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.ritual.RitualRegister;
 import wayoftime.bloodmagic.structures.DungeonSynthesizer;
+import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 
 @RitualRegister("standard_dungeon")
@@ -54,6 +56,13 @@ public class RitualStandardDungeon extends Ritual
 
 			return false;
 		}
+
+        CompoundTag exit = new CompoundTag();
+        exit.putInt("xCoord", player.getBlockX());
+        exit.putInt("yCoord", player.getBlockY());
+        exit.putInt("zCoord", player.getBlockZ());
+        exit.putString("dimension_key", player.level().dimension().location().toString());
+        player.getPersistentData().put(Constants.NBT.DUNGEON_EXIT, exit);
 		return true;
 	}
 

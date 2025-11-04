@@ -672,6 +672,7 @@ public class GeneratorLootTable extends LootTableProvider
             {
                 dropSelf(block.get());
             }
+            dropSelf(BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get());
 
             dropSelf(BloodMagicBlocks.DUNGEON_STONE.get());
             dropSelf(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE.get());
