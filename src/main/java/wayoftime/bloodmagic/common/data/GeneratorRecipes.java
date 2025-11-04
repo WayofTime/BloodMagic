@@ -118,12 +118,44 @@ public class GeneratorRecipes extends BaseRecipeProvider
         wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.VENGEFUL_DUNGEON_TILE_WALL.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_TILE.get());
         wall(consumer, RecipeCategory.DECORATIONS, BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_WALL.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_1.get());
 
+        Ingredient glowstone = Ingredient.of(Tags.Items.DUSTS_GLOWSTONE);
+        eye(consumer, RecipeCategory.DECORATIONS, glowstone, BloodMagicBlocks.DUNGEON_STONE.get(), BloodMagicBlocks.DUNGEON_EYE.get());
+        eye(consumer, RecipeCategory.DECORATIONS, glowstone, BloodMagicBlocks.CORROSIVE_DUNGEON_STONE.get(), BloodMagicBlocks.CORROSIVE_DUNGEON_EYE.get());
+        eye(consumer, RecipeCategory.DECORATIONS, glowstone, BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE.get(), BloodMagicBlocks.DESTRUCTIVE_DUNGEON_EYE.get());
+        eye(consumer, RecipeCategory.DECORATIONS, glowstone, BloodMagicBlocks.STEADFAST_DUNGEON_STONE.get(), BloodMagicBlocks.STEADFAST_DUNGEON_EYE.get());
+        eye(consumer, RecipeCategory.DECORATIONS, glowstone, BloodMagicBlocks.VENGEFUL_DUNGEON_STONE.get(), BloodMagicBlocks.VENGEFUL_DUNGEON_EYE.get());
+
+        Ingredient redstone = Ingredient.of(Tags.Items.DUSTS_REDSTONE);
+        eye(consumer, RecipeCategory.REDSTONE, redstone, BloodMagicBlocks.DUNGEON_STONE.get(), BloodMagicBlocks.DUNGEON_EMITTER.get());
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, BloodMagicBlocks.DUNGEON_ALTERNATOR.get())
+                .requires(BloodMagicBlocks.DUNGEON_STONE.get())
+                .requires(redstone, 3)
+                .requires(Items.COMPARATOR)
+                .unlockedBy(getHasName(BloodMagicBlocks.DUNGEON_STONE.get()), has(BloodMagicBlocks.DUNGEON_STONE.get()))
+                .save(consumer, BloodMagic.rl(getItemName(BloodMagicBlocks.DUNGEON_ALTERNATOR.get())));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, BloodMagicBlocks.DUNGEON_SPIKE_TRAP.get())
+                .requires(BloodMagicBlocks.DUNGEON_STONE.get())
+                .requires(Blocks.PISTON)
+                .requires(Items.IRON_SWORD)
+                .unlockedBy(getHasName(BloodMagicBlocks.DUNGEON_STONE.get()), has(BloodMagicBlocks.DUNGEON_STONE.get()))
+                .save(consumer, BloodMagic.rl(getItemName(BloodMagicBlocks.DUNGEON_SPIKE_TRAP.get())));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BloodMagicBlocks.ETHEREAL_MIMIC.get(), 8)
+                .pattern("SSS")
+                .pattern("SES")
+                .pattern("SSS")
+                .define('E', BloodMagicItems.ETHEREAL_SLATE.get())
+                .define('S', BloodMagicBlocks.DUNGEON_STONE.get())
+                .unlockedBy(getHasName(BloodMagicItems.ETHEREAL_SLATE.get()), has(BloodMagicItems.ETHEREAL_SLATE.get()))
+                .save(consumer, BloodMagic.rl(getItemName(BloodMagicBlocks.ETHEREAL_MIMIC.get())));
+
         decoHelper(consumer, BloodMagicTags.DUNGEON_RAW,
                 Pair.of(BloodMagicBlocks.DUNGEON_STONE_SLAB.get(), 2), Pair.of(BloodMagicBlocks.DUNGEON_BRICK_SLAB.get(), 2), Pair.of(BloodMagicBlocks.DUNGEON_POLISHED_SLAB.get(), 2), Pair.of(BloodMagicBlocks.DUNGEON_TILE_SLAB.get(), 2),
                 Pair.of(BloodMagicBlocks.DUNGEON_STONE_STAIRS.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_POLISHED_STAIRS.get(), 1),
                 Pair.of(BloodMagicBlocks.DUNGEON_STONE_WALL.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_BRICK_WALL.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_POLISHED_WALL.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_TILE_WALL.get(), 1),
                 Pair.of(BloodMagicBlocks.DUNGEON_BRICK_GATE.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_POLISHED_GATE.get(), 1),
-                Pair.of(BloodMagicBlocks.DUNGEON_EYE.get(), 1),
                 Pair.of(BloodMagicBlocks.DUNGEON_PILLAR_CAP.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get(), 1),
                 Pair.of(BloodMagicBlocks.DUNGEON_STONE.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_BRICK_1.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_BRICK_2.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_BRICK_3.get(), 1),
                 Pair.of(BloodMagicBlocks.DUNGEON_TILE.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_TILE_SPECIAL.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_SMALL_BRICK.get(), 1), Pair.of(BloodMagicBlocks.DUNGEON_POLISHED_STONE.get(), 1)
@@ -134,7 +166,6 @@ public class GeneratorRecipes extends BaseRecipeProvider
                 Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE_STAIRS.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_STAIRS.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_STAIRS.get(), 1),
                 Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE_WALL.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_WALL.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_WALL.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_TILE_WALL.get(), 1),
                 Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_GATE.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_GATE.get(), 1),
-                Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_EYE.get(), 1),
                 Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CAP.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CENTER.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_SPECIAL.get(), 1),
                 Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_STONE.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_1.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_2.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_3.get(), 1),
                 Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_TILE.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_TILE_SPECIAL.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_SMALL_BRICK.get(), 1), Pair.of(BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_STONE.get(), 1)
@@ -145,7 +176,6 @@ public class GeneratorRecipes extends BaseRecipeProvider
                 Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE_STAIRS.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_STAIRS.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_STAIRS.get(), 1),
                 Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE_WALL.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_WALL.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_WALL.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE_WALL.get(), 1),
                 Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_GATE.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_GATE.get(), 1),
-                Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_EYE.get(), 1),
                 Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CAP.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CENTER.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_SPECIAL.get(), 1),
                 Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_STONE.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_1.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_2.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_BRICK_3.get(), 1),
                 Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_TILE_SPECIAL.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_SMALL_BRICK.get(), 1), Pair.of(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_POLISHED_STONE.get(), 1)
@@ -156,7 +186,6 @@ public class GeneratorRecipes extends BaseRecipeProvider
                 Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_STONE_STAIRS.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_STAIRS.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_STAIRS.get(), 1),
                 Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_STONE_WALL.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_WALL.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_WALL.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_TILE_WALL.get(), 1),
                 Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_GATE.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_GATE.get(), 1),
-                Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_EYE.get(), 1),
                 Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CAP.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CENTER.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_SPECIAL.get(), 1),
                 Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_STONE.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_1.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_2.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_BRICK_3.get(), 1),
                 Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_TILE.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_TILE_SPECIAL.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_SMALL_BRICK.get(), 1), Pair.of(BloodMagicBlocks.STEADFAST_DUNGEON_POLISHED_STONE.get(), 1)
@@ -167,7 +196,6 @@ public class GeneratorRecipes extends BaseRecipeProvider
                 Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE_STAIRS.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_STAIRS.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_STAIRS.get(), 1),
                 Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE_WALL.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_WALL.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_WALL.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_TILE_WALL.get(), 1),
                 Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_GATE.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_GATE.get(), 1),
-                Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_EYE.get(), 1),
                 Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CAP.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CENTER.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_SPECIAL.get(), 1),
                 Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_STONE.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_1.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_2.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_BRICK_3.get(), 1),
                 Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_TILE.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_TILE_SPECIAL.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_SMALL_BRICK.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_STONE.get(), 1)
@@ -180,6 +208,17 @@ public class GeneratorRecipes extends BaseRecipeProvider
                 Pair.of(BloodMagicBlocks.STEADFAST_HELLFORGED_BLOCK.get(), 1),
                 Pair.of(BloodMagicBlocks.VENGEFUL_HELLFORGED_BLOCK.get(), 1)
                 );
+    }
+
+    private void eye(Consumer<FinishedRecipe> consumer, RecipeCategory category, Ingredient dust, Block stone, Block eye) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, eye)
+                .pattern(" D ")
+                .pattern("DSD")
+                .pattern(" D ")
+                .define('D', dust)
+                .define('S', stone)
+                .unlockedBy(getHasName(stone), has(stone))
+                .save(consumer, BloodMagic.rl(getItemName(eye)));
     }
 
     private void addHellstair(Consumer<FinishedRecipe> consumer, Block stair, Block material) {

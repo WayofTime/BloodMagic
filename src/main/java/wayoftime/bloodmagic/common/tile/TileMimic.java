@@ -105,18 +105,20 @@ public class TileMimic extends TileInventory
 		if (!dropItemsOnBreak && !player.isCreative())
 			return false;
 
-		Utils.insertItemToTile(this, player, 0);
-		ItemStack stack = getItem(0);
+		ItemStack stack = player.getItemInHand(hand);
 		if (mimic == null || mimic == Blocks.AIR.defaultBlockState())
-		{
-			if (!stack.isEmpty() && stack.getItem() instanceof BlockItem && !world.isClientSide)
-			{
-				Block block = ((BlockItem) stack.getItem()).getBlock();
-				this.setMimic(block.defaultBlockState());
+        {
+            if (!stack.isEmpty() && stack.getItem() instanceof BlockItem && !world.isClientSide)
+            {
+                Block block = ((BlockItem) stack.getItem()).getBlock();
+                BlockState mimicState = block.defaultBlockState();
+                if (!mimicState.is(BloodMagicBlocks.MIMIC.get()) && !mimicState.is(BloodMagicBlocks.ETHEREAL_MIMIC.get())) {
+                    this.setMimic(mimicState);
+                }
 //				mimic = block.getDefaultState();
 //				markDirty();
-			}
-		}
+            }
+        }
 		this.refreshTileEntity();
 
 		if (player.isCreative())
@@ -201,7 +203,9 @@ public class TileMimic extends TileInventory
 	{
 		if (!getLevel().isClientSide && mimicedTile instanceof Container)
 		{
-			Containers.dropContents(getLevel(), getBlockPos(), (Container) mimicedTile);
+			//Containers.dropContents(getLevel(), getBlockPos(), (Container) mimicedTile);
+            setItem(0, ItemStack.EMPTY);
+            setItem(1, ItemStack.EMPTY);
 		}
 	}
 
@@ -344,7 +348,9 @@ public class TileMimic extends TileInventory
 	{
 		if (dropItemsOnBreak)
 		{
-			Containers.dropContents(getLevel(), getBlockPos(), this);
+			//Containers.dropContents(getLevel(), getBlockPos(), this);
+            setItem(0, ItemStack.EMPTY);
+            setItem(1, ItemStack.EMPTY);
 		}
 
 		dropMimicedTileInventory();

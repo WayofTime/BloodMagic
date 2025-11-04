@@ -1,11 +1,13 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_dungeon_corrosive": {
+    "has_dungeon_stone": {
       "conditions": {
         "items": [
           {
-            "tag": "bloodmagic:dungeon_corrosive"
+            "items": [
+              "bloodmagic:dungeon_stone"
+            ]
           }
         ]
       },
@@ -13,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "bloodmagic:dungeon_eye_c_from_dungeon_corrosive_stonecutting"
+        "recipe": "bloodmagic:dungeon_eye"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_dungeon_corrosive",
+      "has_dungeon_stone",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "bloodmagic:dungeon_eye_c_from_dungeon_corrosive_stonecutting"
+      "bloodmagic:dungeon_eye"
     ]
   },
   "sends_telemetry_event": false
