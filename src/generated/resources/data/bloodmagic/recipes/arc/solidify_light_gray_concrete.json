@@ -11,7 +11,7 @@
   "inputsize": 1,
   "mainoutputchance": 0.0,
   "output": {
-    "item": "minecraft:light_gray_concrete_powder"
+    "item": "minecraft:light_gray_concrete"
   },
   "tool": {
     "tag": "bloodmagic:arc/hydrate"

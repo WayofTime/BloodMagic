@@ -2,7 +2,7 @@
   "type": "bloodmagic:arc",
   "consumeingredient": false,
   "input": {
-    "item": "minecraft:red_concrete_powder"
+    "item": "minecraft:green_concrete_powder"
   },
   "inputFluid": {
     "amount": 200,
@@ -11,7 +11,7 @@
   "inputsize": 1,
   "mainoutputchance": 0.0,
   "output": {
-    "item": "minecraft:red_concrete_powder"
+    "item": "minecraft:green_concrete"
   },
   "tool": {
     "tag": "bloodmagic:arc/hydrate"
