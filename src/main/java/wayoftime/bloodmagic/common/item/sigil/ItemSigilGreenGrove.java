@@ -1,5 +1,6 @@
 package wayoftime.bloodmagic.common.item.sigil;
 
+import com.agricraft.agricraft.common.block.entity.CropBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
@@ -65,6 +66,10 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
 							{
 								if (worldIn.random.nextInt(50) == 0)
 								{
+
+                                    if (worldIn.getBlockEntity(blockPos) instanceof CropBlockEntity crop) {
+                                        crop.removeWeeds();
+                                    }
 									BlockState preBlockState = worldIn.getBlockState(blockPos);
 									if (((BonemealableBlock) state.getBlock()).isValidBonemealTarget(serverWorld, blockPos, preBlockState, worldIn.isClientSide))
 									{
