@@ -1,0 +1,30 @@
+{
+  "name": "ARC Hydration",
+  "icon": "bloodmagic:primitive_hydration_cell",
+  "category": "bloodmagic:utility",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "with a $(thing)Primitive Hydration Cell$(), the ARC can aggressively hydrate and moisteurize all sorts of substances. Don't forget to supply it with $(water)Water!$()"
+    },
+    {
+      "type": "patchouli:crafting",
+      "heading": "Hydration Cell",
+      "recipe": "bloodmagic:primitive_hydration_cell",
+      "text": "Among other things, the Hydration Cell can be used to make Clay, the Cornerstone of Balance."
+    },
+    {
+      "type": "bloodmagic:2x_crafting_arc",
+      "a.heading": "Clay from Sand",
+      "a.recipe": "bloodmagic:arc/clay_from_sand",
+      "a.fluid_input": "minecraft:water_bucket",
+      "b.heading": "Clay from Terracotta",
+      "b.recipe": "bloodmagic:arc/clay_from_terracotta",
+      "b.fluid_input": "minecraft:water_bucket"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "lol whatever - it can do lots of other things! ... right? Stella?"
+    }
+  ]
+}
