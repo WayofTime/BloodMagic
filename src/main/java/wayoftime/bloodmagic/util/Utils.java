@@ -22,6 +22,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -606,63 +607,48 @@ public class Utils
 		return placedBlocks;
 	}
 
-	public static int plantItemStack(Level world, BlockPos centralPos, ItemStack stack, int horizontalRadius, int verticalRadius)
-	{
-		if (stack.isEmpty())
-		{
-			return 0;
-		}
+    public static int plantItemStack(Level world, BlockPos centralPos, ItemStack stack, int horizontalRadius, int verticalRadius) {
+        if (stack.isEmpty()) {
+            return 0;
+        }
 
-		Item item = stack.getItem();
-		if (!(item instanceof IPlantable))
-		{
-			return 0;
-		}
+        if (!(stack.getItem() instanceof BlockItem blockItem)) {
+            return 0;
+        }
 
-		int planted = 0;
+        Block plantBlock = blockItem.getBlock();
 
-		for (int hR = 0; hR <= horizontalRadius; hR++)
-		{
-			for (int vR = 0; vR <= verticalRadius; vR++)
-			{
-				for (int i = -hR; i <= hR; i++)
-				{
-					for (int k = -hR; k <= hR; k++)
-					{
-						for (int j = -vR; j <= vR; j += 2 * vR + (vR > 0 ? 0 : 1))
-						{
-							if (!(Math.abs(i) == hR || Math.abs(k) == hR))
-							{
-								continue;
-							}
+        if (!(plantBlock instanceof IPlantable plantable)) {
+            return 0;
+        }
 
-							BlockPos newPos = centralPos.offset(i, j, k);
-							if (world.isEmptyBlock(newPos))
-							{
-								BlockPos offsetPos = newPos.relative(Direction.DOWN);
-								BlockState state = world.getBlockState(offsetPos);
-								if (state.getBlock().canSustainPlant(state, world, offsetPos, Direction.UP, (IPlantable) item))
-								{
-									BlockState plantState = ((IPlantable) item).getPlant(world, newPos);
-									world.setBlock(newPos, plantState, 3);
-//									Block.
-									world.levelEvent(2001, newPos, Block.getId(plantState));
-									stack.shrink(1);
-									planted++;
-									if (stack.isEmpty() || stack.getCount() <= 0)
-									{
-										return planted;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
+        int planted = 0;
 
-		return planted;
-	}
+        for (int y = -verticalRadius; y <= verticalRadius; y++) {
+            for (int x = -horizontalRadius; x <= horizontalRadius; x++) {
+                for (int z = -horizontalRadius; z <= horizontalRadius; z++) {
+
+                        BlockPos newPos = centralPos.offset(x, y, z);
+                        if (world.isEmptyBlock(newPos)) {
+                            BlockPos offsetPos = newPos.relative(Direction.DOWN);
+                            BlockState state = world.getBlockState(offsetPos);
+                            if (state.getBlock().canSustainPlant(state, world, offsetPos, Direction.UP, plantable)) {
+                                BlockState plantState = plantable.getPlant(world, newPos);
+                                world.setBlock(newPos, plantState, Block.UPDATE_ALL);
+                                world.levelEvent(2001, newPos, Block.getId(plantState));
+                                stack.shrink(1);
+                                planted++;
+                                if (stack.isEmpty() || stack.getCount() <= 0) {
+                                    return planted;
+                                }
+                        }
+                    }
+                }
+            }
+        }
+
+        return planted;
+    }
 
 	public static int plantEntityItem(ItemEntity itemEntity, int horizontalRadius, int verticalRadius)
 	{
