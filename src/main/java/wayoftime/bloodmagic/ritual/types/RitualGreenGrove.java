@@ -43,8 +43,8 @@ public class RitualGreenGrove extends Ritual
 	{
 		super("ritualGreenGrove", 0, 5000, "ritual." + BloodMagic.MODID + ".greenGroveRitual");
 		addBlockRange(GROW_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-1, 2, -1), 3, 1, 3));
-		addBlockRange(LEECH_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 0, 0), 1));
-		addBlockRange(HYDRATE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 0, 0), 1));
+		addBlockRange(LEECH_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-1, 2, -1), 3, 1, 3));
+		addBlockRange(HYDRATE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-1, 1, -1), 3, 2, 3));
 		setMaximumVolumeAndDistanceOfRange(GROW_RANGE, 81, 4, 4);
 		setMaximumVolumeAndDistanceOfRange(LEECH_RANGE, 0, 15, 15);
 		setMaximumVolumeAndDistanceOfRange(HYDRATE_RANGE, 0, 15, 15);
