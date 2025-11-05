@@ -46,28 +46,28 @@ import java.util.UUID;
 
 public class ItemSentientShovel extends ShovelItem implements IDemonWillWeapon, IMultiWillTool
 {
-	public static int[] soulBracket = new int[] { 16, 60, 200, 400, 1000 };
-	public static double[] defaultDamageAdded = new double[] { 1, 2, 3, 3.5, 4 };
-	public static double[] destructiveDamageAdded = new double[] { 2, 3, 4, 5, 6 };
-	public static double[] vengefulDamageAdded = new double[] { 0, 0.5, 1, 1.5, 2 };
-	public static double[] steadfastDamageAdded = new double[] { 0, 0.5, 1, 1.5, 2 };
-	public static double[] defaultDigSpeedAdded = new double[] { 1, 1.5, 2, 3, 4 };
-	public static double[] soulDrainPerSwing = new double[] { 0.05, 0.1, 0.2, 0.4, 0.75 };
-	public static double[] soulDrop = new double[] { 2, 4, 7, 10, 13 };
-	public static double[] staticDrop = new double[] { 1, 1, 2, 3, 3 };
+    public static int[] soulBracket = new int[] { 16, 60, 200, 400, 1000, 2000, 4000 };
+    public static double[] defaultDamageAdded = new double[] { 1, 2, 3, 3.5, 4, 4.5, 5 };
+    public static double[] destructiveDamageAdded = new double[] { 2, 3, 4, 5, 6, 7, 8 };
+    public static double[] vengefulDamageAdded = new double[] { 0, 0.5, 1, 1.5, 2, 2.5, 3 };
+    public static double[] steadfastDamageAdded = new double[] { 0, 0.5, 1, 1.5, 2, 2.5, 3 };
+    public static double[] defaultDigSpeedAdded = new double[] { 1, 1.5, 2, 3, 4, 5, 6 };
+    public static double[] soulDrainPerSwing = new double[] { 0.05, 0.1, 0.2, 0.4, 0.75, 1, 1.25 };
+    public static double[] soulDrop = new double[] { 2, 4, 7, 10, 13, 15, 18 };
+    public static double[] staticDrop = new double[] { 1, 1, 2, 3, 3, 4, 4 };
 
-	public static double[] healthBonus = new double[] { 0, 0, 0, 0, 0 }; // TODO: Think of implementing this later
-	public static double[] vengefulAttackSpeed = new double[] { -3, -2.8, -2.7, -2.6, -2.5 };
-	public static double[] destructiveAttackSpeed = new double[] { -3.1, -3.1, -3.2, -3.3, -3.3 };
+    public static double[] healthBonus = new double[] { 0, 0, 0, 0, 0, 0, 0 }; // TODO: Think of implementing this later
+    public static double[] vengefulAttackSpeed = new double[] { -3, -2.8, -2.7, -2.6, -2.5, -2.4, -2.3 };
+    public static double[] destructiveAttackSpeed = new double[] { -3.1, -3.1, -3.2, -3.3, -3.3, -3.3, -3.3 };
 
-	public static int[] absorptionTime = new int[] { 200, 300, 400, 500, 600 };
+    public static int[] absorptionTime = new int[] { 200, 300, 400, 500, 600, 700, 800 };
 
-	public static double maxAbsorptionHearts = 10;
+    public static double maxAbsorptionHearts = 10;
 
-	public static int[] poisonTime = new int[] { 25, 50, 60, 80, 100 };
-	public static int[] poisonLevel = new int[] { 0, 0, 0, 1, 1 };
+    public static int[] poisonTime = new int[] { 25, 50, 60, 80, 100, 120, 150 };
+    public static int[] poisonLevel = new int[] { 0, 0, 0, 1, 1, 1, 1 };
 
-	public static double[] movementSpeed = new double[] { 0.05, 0.1, 0.15, 0.2, 0.25 };
+    public static double[] movementSpeed = new double[] { 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4 };
 
 	public static final double baseAttackDamage = 3;
 	public static final double baseAttackSpeed = -2.8;

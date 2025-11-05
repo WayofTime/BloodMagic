@@ -1,0 +1,19 @@
+{
+  "type": "bloodmagic:arc",
+  "consumeingredient": false,
+  "input": {
+    "item": "minecraft:magenta_concrete_powder"
+  },
+  "inputFluid": {
+    "amount": 200,
+    "fluid": "minecraft:water"
+  },
+  "inputsize": 1,
+  "mainoutputchance": 0.0,
+  "output": {
+    "item": "minecraft:magenta_concrete"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc/hydrate"
+  }
+}
