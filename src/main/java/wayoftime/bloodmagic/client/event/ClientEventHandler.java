@@ -1,12 +1,16 @@
 package wayoftime.bloodmagic.client.event;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.GlobalPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipProvider;
+import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -38,10 +42,22 @@ public class ClientEventHandler {
         }
         addToTooltip(BMDataComponents.UPGRADES.get(), context, toAdd::add, flags, stack);
 
+        if (stack.has(BMDataComponents.STORED_POSITION)) {
+            GlobalPos storedPos = stack.get(BMDataComponents.STORED_POSITION);
+            toAdd.add(Component.translatable("tooltip.bloodmagic.stored_position", posString(storedPos.pos()), dimensionString(storedPos.dimension())).withStyle(ChatFormatting.GRAY));
+        }
+
         // add after name. idgaf
         tooltip.addAll(1, toAdd);
     }
 
+    private static String posString(BlockPos pos) {
+        return "%d, %d, %d".formatted(pos.getX(), pos.getY(), pos.getZ());
+    }
+
+    private static String dimensionString(ResourceKey<Level> dim) {
+        return "%s:%s".formatted(dim.location().getNamespace(), dim.location().getPath());
+    }
 
     public static <T extends TooltipProvider> void addToTooltip(
             DataComponentType<T> component, Item.TooltipContext context, Consumer<Component> tooltipAdder, TooltipFlag tooltipFlag, ItemStack stack
