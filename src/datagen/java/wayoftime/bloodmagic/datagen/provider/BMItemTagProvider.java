@@ -48,5 +48,12 @@ public class BMItemTagProvider extends ItemTagsProvider {
                 .addTag(BMTags.Items.CUTTING_FLUIDS)
                 .addTag(BMTags.Items.HYDRATION)
                 .addTag(BMTags.Items.ARC_FURNACE);
+
+        tag(BMTags.Items.SOUL_GEM)
+                .add(BMItems.SOUL_GEM_PETTY.get())
+                .add(BMItems.SOUL_GEM_LESSER.get())
+                .add(BMItems.SOUL_GEM_COMMON.get())
+                .add(BMItems.SOUL_GEM_GREATER.get())
+                .add(BMItems.SOUL_GEM_GRAND.get());
     }
 }

@@ -17,6 +17,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
+import wayoftime.bloodmagic.util.ChatUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,19 +45,11 @@ public class ClientEventHandler {
 
         if (stack.has(BMDataComponents.STORED_POSITION)) {
             GlobalPos storedPos = stack.get(BMDataComponents.STORED_POSITION);
-            toAdd.add(Component.translatable("tooltip.bloodmagic.stored_position", posString(storedPos.pos()), dimensionString(storedPos.dimension())).withStyle(ChatFormatting.GRAY));
+            toAdd.add(Component.translatable("tooltip.bloodmagic.stored_position", ChatUtil.posString(storedPos.pos()), ChatUtil.dimensionString(storedPos.dimension())).withStyle(ChatFormatting.GRAY));
         }
 
         // add after name. idgaf
         tooltip.addAll(1, toAdd);
-    }
-
-    private static String posString(BlockPos pos) {
-        return "%d, %d, %d".formatted(pos.getX(), pos.getY(), pos.getZ());
-    }
-
-    private static String dimensionString(ResourceKey<Level> dim) {
-        return "%s:%s".formatted(dim.location().getNamespace(), dim.location().getPath());
     }
 
     public static <T extends TooltipProvider> void addToTooltip(

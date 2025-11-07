@@ -15,7 +15,7 @@ import wayoftime.bloodmagic.datagen.content.BloodyDamageSources;
 import wayoftime.bloodmagic.datagen.content.LivingUpgrades;
 import wayoftime.bloodmagic.datagen.provider.*;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber
 public class Datagen {
 
     @SubscribeEvent

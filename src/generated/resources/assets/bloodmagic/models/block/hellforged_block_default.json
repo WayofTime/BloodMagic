@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "bloodmagic:block/hellforged_block"
+    "all": "bloodmagic:block/hellforged_block_default"
   }
 }

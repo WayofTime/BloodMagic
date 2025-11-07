@@ -79,6 +79,11 @@ public class MasterNodeTile extends RoutingNodeTile implements MenuProvider {
     }
 
     @Override
+    public boolean addToNetwork(BlockPos parent) {
+        return false;
+    }
+
+    @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         ticks = tag.getInt("ticks");

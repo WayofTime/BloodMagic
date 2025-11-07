@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.RoutingNodeBlock;
 
 import java.util.HashSet;
@@ -26,6 +27,20 @@ public class RoutingNodeTile extends BaseTile {
 
     public RoutingNodeTile(BlockPos pos, BlockState state) {
         super(BMTiles.ROUTING_NODE.get(), pos, state);
+    }
+
+    public static void tick(Level level, BlockPos blockPos, BlockState blockState, RoutingNodeTile node) {
+        if (!(level.getGameTime() % 20 == 0)) {
+            return;
+        }
+
+        if (!node.hasMaster() && node.hasParent()) {
+            if (level.getBlockEntity(node.parentPos) instanceof RoutingNodeTile parent) {
+                if (parent.hasMaster()) {
+                    node.masterPos = parent.masterPos;
+                }
+            }
+        }
     }
 
     protected BlockPos masterPos = BlockPos.ZERO;
@@ -48,8 +63,6 @@ public class RoutingNodeTile extends BaseTile {
 
     public void setParent(BlockPos parent) {
         this.parentPos = parent;
-        this.setChanged();
-        this.level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL); // send block update for sync so client knows and can render lines appropriately
     }
 
     public boolean hasParent() {
@@ -60,21 +73,33 @@ public class RoutingNodeTile extends BaseTile {
         return this.parentPos;
     }
 
-    public void addConnection(BlockPos child) {
-        children.add(child);
+    public boolean addToNetwork(BlockPos parent) {
+        if (!(level.getBlockEntity(parent) instanceof RoutingNodeTile parentNode)) {
+            return false;
+        }
+        if (masterPos != BlockPos.ZERO && parentNode.masterPos != BlockPos.ZERO) {
+            return false;
+        }
+
+        parentPos = parent;
+        if (masterPos == BlockPos.ZERO && parentNode.masterPos != BlockPos.ZERO) {
+            masterPos = parentNode.masterPos;
+        } else if (masterPos != BlockPos.ZERO && parentNode.masterPos == BlockPos.ZERO) {
+            parentNode.masterPos = masterPos;
+        }
+
+        parentNode.addChild(getBlockPos());
+        parentNode.setChanged();
+        level.sendBlockUpdated(parentPos, parentNode.getBlockState(), parentNode.getBlockState(), Block.UPDATE_CLIENTS);
+
         this.setChanged();
-        this.level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL); // send block update for sync so client knows and can render lines appropriately
+        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
+
+        return true;
     }
 
-    public void removeConnection(BlockPos child) {
-        this.parentPos = BlockPos.ZERO;
-        children.remove(child);
-        BlockEntity be = this.level.getBlockEntity(child);
-        if (be instanceof RoutingNodeTile node) {
-            node.removeFromNetwork();
-        }
-        this.setChanged();
-        this.level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL); // send block update for sync so client knows and can render lines appropriately
+    public void addChild(BlockPos child) {
+        this.children.add(child);
     }
 
     public void removeFromNetwork() {
@@ -82,8 +107,7 @@ public class RoutingNodeTile extends BaseTile {
 
         // TODO filtering nodes should remove their info from master here
         children.forEach(child -> {
-            BlockEntity be = this.level.getBlockEntity(child);
-            if (be instanceof RoutingNodeTile node) {
+            if (level.getBlockEntity(child) instanceof RoutingNodeTile node) {
                 node.removeFromNetwork();
             } else { // you in da wrong neighbourhood dawg
                 children.remove(child);
@@ -99,17 +123,12 @@ public class RoutingNodeTile extends BaseTile {
         return this.masterPos;
     }
 
-    public void setMasterPos(BlockPos masterPos) {
-        this.masterPos = masterPos;
-        this.setChanged();
-        this.level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL); // send block update for sync so client knows and can render lines appropriately
-    }
-
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         CompoundTag nodeInfo = new CompoundTag();
         nodeInfo.put("master", posToTag(masterPos));
+        nodeInfo.put("parent", posToTag(parentPos));
         ListTag childTag = new ListTag();
         children.forEach(pos -> childTag.add(posToTag(pos)));
         nodeInfo.put("children", childTag);
@@ -120,7 +139,8 @@ public class RoutingNodeTile extends BaseTile {
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         CompoundTag nodeInfo = tag.getCompound("node_info");
-        masterPos = tagToPos(tag.getCompound("master"));
+        masterPos = tagToPos(nodeInfo.getCompound("master"));
+        parentPos = tagToPos(nodeInfo.getCompound("parent"));
         ListTag childrenTag = nodeInfo.getList("children", ListTag.TAG_COMPOUND);
         children.clear(); // just to be sure theres no weird overflow happening
         childrenTag.forEach(childTag -> children.add(tagToPos((CompoundTag) childTag))); // cast should be fine since we tell .getList its a list of TC's. I *think*

@@ -3,6 +3,8 @@ package wayoftime.bloodmagic.client.render.blockentity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -11,7 +13,9 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.block.RoutingNodeBlock;
 import wayoftime.bloodmagic.common.blockentity.RoutingNodeTile;
+import wayoftime.bloodmagic.common.item.BMItems;
 
 public class NodeRenderer implements BlockEntityRenderer<RoutingNodeTile> {
 
@@ -26,6 +30,19 @@ public class NodeRenderer implements BlockEntityRenderer<RoutingNodeTile> {
     public void render(RoutingNodeTile node, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         BlockPos parentPos = node.getParentPos();
         if (parentPos == BlockPos.ZERO) {
+            return;
+        }
+
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player == null) { // what are we even doing lmao
+            return;
+        }
+        boolean shouldRenderLine = BloodMagic.CLIENT_CONFIG.ALWAYS_RENDER_NODE_LINES.get() // config override
+                || node.getBlockState().getValue(RoutingNodeBlock.RENDER_LINE) // node override
+                || player.getMainHandItem().is(BMItems.NODE_ROUTER) // has router in mainhand -> maybe should be a tag and also check curio? routing glasses, anyone?
+                || player.getOffhandItem().is(BMItems.NODE_ROUTER); // has router in offhand
+
+        if (!shouldRenderLine) {
             return;
         }
 
@@ -47,7 +64,16 @@ public class NodeRenderer implements BlockEntityRenderer<RoutingNodeTile> {
         poseStack.mulPose(Axis.YP.rotationDegrees(-rotYaw));
         poseStack.mulPose(Axis.XN.rotationDegrees(rotPitch - 90));
 
-        renderBeaconBeam(poseStack, bufferSource, DEFAULT, time, (float) distance, 0.06f, 0.1f, node.hasMaster());
+        ResourceLocation kind = switch (node.getBlockState().getValue(RoutingNodeBlock.WILL)) {
+            case DEFAULT -> DEFAULT;
+            case CORROSIVE -> CORROSIVE;
+            case DESTRUCTIVE -> DESTRUCTIVE;
+            case STEADFAST -> STEADFAST;
+            case VENGEFUL -> VENGEFUL;
+        };
+
+        renderBeaconBeam(poseStack, bufferSource, kind, time, (float) distance, 0.06f, 0.1f, node.getBlockState().getValue(RoutingNodeBlock.ENABLED));
+        poseStack.popPose();
     }
 
     public static void renderBeaconBeam(
@@ -61,7 +87,6 @@ public class NodeRenderer implements BlockEntityRenderer<RoutingNodeTile> {
             boolean isConnected
     ) {
         poseStack.pushPose();
-        poseStack.translate(0.5, 0.5, 0.5);
         poseStack.pushPose();
         poseStack.mulPose(Axis.YP.rotationDegrees(time * 2.25F - 45.0F));
         renderPart(

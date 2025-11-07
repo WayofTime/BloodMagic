@@ -139,6 +139,23 @@ public class BMLanguageProvider extends LanguageProvider {
         add("chat.bloodmagic.living_upgrade.level_up", "%s has levelled up to %s!");
 
         LivingUpgrades.translations(this::add);
+
+        addTooltip("stored_position", "Stored: %s in %s");
+
+        add(BMBlocks.ROUTING_NODE, "Routing Node");
+        add(BMBlocks.MASTER_NODE, "Master Routing Node");
+        add(BMBlocks.INPUT_ROUTING_NODE, "Input Routing Node");
+        add(BMBlocks.OUTPUT_ROUTING_NODE, "Output Routing Node");
+        add(BMItems.NODE_ROUTER.get(), "Node Router");
+
+        addTooltip("router.connected", "Successfully connected nodes!");
+        addTooltip("router.pos_cleared", "Cleared stored position!");
+        addTooltip("router.pos_set", "Stored %s!");
+
+        addTooltip("router.master_child", "Cannot add Master as a child node!");
+        addTooltip("router.no_node", "Block at %s is not a Routing Node!");
+        addTooltip("router.distance", "Nodes are too far apart, max 16 blocks");
+        addTooltip("router.same", "Cannot link node to itself!");
     }
 
     public void addCommand(String key, String value) {
