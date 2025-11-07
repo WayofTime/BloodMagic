@@ -1,0 +1,6 @@
+{
+  "parent": "bloodmagic:block/routing_node_core",
+  "textures": {
+    "core": "bloodmagic:block/routing_node_output"
+  }
+}

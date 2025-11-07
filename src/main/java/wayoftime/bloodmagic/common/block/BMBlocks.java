@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.common.block;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.BlockItem;
@@ -8,10 +9,15 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.component.ItemLore;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.Nullable;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.blockentity.BMTiles;
+import wayoftime.bloodmagic.common.blockentity.FilterNodeTile;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.util.helper.BlockEntityHelper;
 import wayoftime.bloodmagic.util.helper.BlockWithItemHolder;
@@ -33,6 +39,11 @@ public class BMBlocks {
     public static final BlockWithItemHolder<BloodTankBlock, BlockItem> BLOOD_TANK = BLOCK_REG.register("blood_tank", BloodTankBlock::new, block -> new BlockItem(block, new Item.Properties().component(BMDataComponents.CONTAINER_TIER, 1)));
     public static final BlockWithItemHolder<HellfireForgeBlock, BlockItem> HELLFIRE_FORGE = BLOCK_REG.register("hellfire_forge", HellfireForgeBlock::new);
     public static final BlockWithItemHolder<ARCBlock, BlockItem> ARC_BLOCK = BLOCK_REG.register("arc", ARCBlock::new);
+
+    public static final BlockWithItemHolder<RoutingNodeBlock, BlockItem> MASTER_NODE = BLOCK_REG.register("routing_node_master", MasterNodeBlock::new);
+    public static final BlockWithItemHolder<RoutingNodeBlock, BlockItem> ROUTING_NODE = BLOCK_REG.register("routing_node", RoutingNodeBlock::new);
+    public static final BlockWithItemHolder<RoutingNodeBlock, BlockItem> INPUT_ROUTING_NODE = BLOCK_REG.register("routing_node_input", () -> new FilterNodeBlock(false));
+    public static final BlockWithItemHolder<RoutingNodeBlock, BlockItem> OUTPUT_ROUTING_NODE = BLOCK_REG.register("routing_node_output", () -> new FilterNodeBlock(true));
 
     // TODO add model/textures for this and change registry to BASIC_REG
     public static final BlockWithItemHolder<LivingStationBlock, BlockItem> LIVING_STATION = BLOCK_REG.register("living_station", LivingStationBlock::new);

@@ -1,0 +1,11 @@
+{
+  "parent": "block/block",
+  "render_type": "minecraft:translucent",
+  "loader": "neoforge:obj",
+  "flip_v": true, 
+  "model": "bloodmagic:models/block/routing/modelroutingnodecore.obj",
+  "textures": {
+    "core": "bloodmagic:block/routing_node",
+    "particle": "#core"
+  }
+}

@@ -19,7 +19,7 @@ import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.datacomponent.EnumWillType;
 import wayoftime.bloodmagic.common.item.BMItems;
 
-@EventBusSubscriber(value = Dist.CLIENT, modid = BloodMagic.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(value = Dist.CLIENT, modid = BloodMagic.MODID)
 public class ClientModEventHandler {
 
     @SubscribeEvent

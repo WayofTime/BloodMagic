@@ -32,7 +32,6 @@ public class CommonEventHandler {
 
         Binding binding = held.get(BMDataComponents.BINDING);
         if (binding == null) {
-            BloodMagic.LOGGER.info("binding was null");
             return;
         }
         BloodMagic.LOGGER.info("binding: {}:{}", binding.name(), binding.uuid());

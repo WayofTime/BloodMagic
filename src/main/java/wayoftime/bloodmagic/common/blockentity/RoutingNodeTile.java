@@ -9,66 +9,41 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import wayoftime.bloodmagic.common.block.RoutingNodeBlock;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class RoutingNodeTile extends BaseTile {
 
+    // somebody please think of the children
     public RoutingNodeTile(BlockEntityType<? extends RoutingNodeTile> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
     }
 
-    protected BlockPos masterPos = BlockPos.ZERO; // TODO 0, 0, 0 is NOT an invalid coordinate (at least not in every DIM) and putting a master node there WILL make it NOT work
-    protected BlockPos parentPos = BlockPos.ZERO; // same thing here
+    public RoutingNodeTile(BlockPos pos, BlockState state) {
+        super(BMTiles.ROUTING_NODE.get(), pos, state);
+    }
+
+    protected BlockPos masterPos = BlockPos.ZERO;
+    protected BlockPos parentPos = BlockPos.ZERO;
     protected Set<BlockPos> children = new HashSet<>();
-    protected boolean isActive = true;
 
-    public static <T extends RoutingNodeTile> void tick(Level level, BlockPos pos, BlockState state, T node) {
-        // TODO might want to do something to prevent fast clocks from permanently dis- and re-enabling half the network. not that you *should* have one next to your network but it might cause some lag
-        int signal = level.getBestNeighborSignal(pos);
-        node.setActive(signal == 0);
+    public void propagateNetwork(BiConsumer<BlockPos, Optional<Boolean>> collector, boolean requireEnabled) {
+        if (requireEnabled && !getBlockState().getValue(RoutingNodeBlock.ENABLED)) {
+            return;
+        }
 
-        if (node.parentPos != BlockPos.ZERO) {
-            BlockEntity be = node.level.getBlockEntity(node.parentPos);
-            if (!(be instanceof RoutingNodeTile)) {
-                node.removeFromNetwork();
+        collector.accept(getBlockPos(), Optional.empty());
+
+        for (BlockPos pos : children) {
+            if (level.getBlockEntity(pos) instanceof RoutingNodeTile node) {
+                node.propagateNetwork(collector, requireEnabled);
             }
         }
-    }
-
-    // when master node wants to (re)evaluate the network.
-    // general nodes dont need to do anything here except pass it on, filter nodes will have to resend their filter config
-    public void masterCheckinRequest() {
-        children.forEach(child -> {
-            BlockEntity be = this.level.getBlockEntity(child);
-            if (be instanceof RoutingNodeTile node) {
-                node.masterCheckinRequest();
-            } else { // you in da wrong neighbourhood dawg
-                children.remove(child);
-            }
-        });
-    }
-
-    public void setActive(boolean newState) {
-        if (this.isActive == newState) {
-            return; // no change, done
-        }
-        this.isActive = newState;
-        this.setChanged();
-        this.level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL); // send block update for sync so client knows and can render lines appropriately
-
-        children.forEach(child -> {
-            BlockEntity be = this.level.getBlockEntity(child);
-            if (be instanceof RoutingNodeTile node) {
-                node.setActive(newState);
-            }
-        });
-        // TODO filter nodes should update the master node with their filter info from here
-    }
-
-    public boolean isActive() {
-        return isActive;
     }
 
     public void setParent(BlockPos parent) {
@@ -92,6 +67,7 @@ public class RoutingNodeTile extends BaseTile {
     }
 
     public void removeConnection(BlockPos child) {
+        this.parentPos = BlockPos.ZERO;
         children.remove(child);
         BlockEntity be = this.level.getBlockEntity(child);
         if (be instanceof RoutingNodeTile node) {
@@ -102,7 +78,6 @@ public class RoutingNodeTile extends BaseTile {
     }
 
     public void removeFromNetwork() {
-        this.parentPos = BlockPos.ZERO;
         this.masterPos = BlockPos.ZERO;
 
         // TODO filtering nodes should remove their info from master here
@@ -134,7 +109,6 @@ public class RoutingNodeTile extends BaseTile {
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         CompoundTag nodeInfo = new CompoundTag();
-        nodeInfo.putBoolean("active", isActive);
         nodeInfo.put("master", posToTag(masterPos));
         ListTag childTag = new ListTag();
         children.forEach(pos -> childTag.add(posToTag(pos)));
@@ -146,7 +120,6 @@ public class RoutingNodeTile extends BaseTile {
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         CompoundTag nodeInfo = tag.getCompound("node_info");
-        this.isActive = nodeInfo.getBoolean("active");
         masterPos = tagToPos(tag.getCompound("master"));
         ListTag childrenTag = nodeInfo.getList("children", ListTag.TAG_COMPOUND);
         children.clear(); // just to be sure theres no weird overflow happening
@@ -155,13 +128,18 @@ public class RoutingNodeTile extends BaseTile {
 
     protected CompoundTag posToTag(BlockPos pos) {
         CompoundTag tag = new CompoundTag();
-        tag.putInt("x", pos.getX());
-        tag.putInt("y", pos.getY());
-        tag.putInt("z", pos.getZ());
+        if (pos != BlockPos.ZERO) {
+            tag.putInt("x", pos.getX());
+            tag.putInt("y", pos.getY());
+            tag.putInt("z", pos.getZ());
+        }
         return tag;
     }
 
     protected BlockPos tagToPos(CompoundTag tag) {
-        return new BlockPos(tag.getInt("x"), tag.getInt("y"), tag.getInt("z"));
+        if (tag.contains("x") && tag.contains("y") && tag.contains("z")) {
+            return new BlockPos(tag.getInt("x"), tag.getInt("y"), tag.getInt("z"));
+        }
+        return BlockPos.ZERO;
     }
 }

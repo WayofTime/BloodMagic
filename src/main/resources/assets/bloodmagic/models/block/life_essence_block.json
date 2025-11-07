@@ -1,3 +1,5 @@
 {
-  "render_type": "minecraft:solid"
+  "textures": {
+    "particle": "bloodmagic:block/life_essence_still"
+  }
 }

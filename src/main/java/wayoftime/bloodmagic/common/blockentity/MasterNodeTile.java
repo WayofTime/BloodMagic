@@ -1,73 +1,103 @@
 package wayoftime.bloodmagic.common.blockentity;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
-import wayoftime.bloodmagic.common.routing.IFluidFilter;
-import wayoftime.bloodmagic.common.routing.IItemFilter;
+import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.block.BMBlocks;
+import wayoftime.bloodmagic.common.routing.IRoutingFilter;
 
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class MasterNodeTile extends RoutingNodeTile implements MenuProvider {
 
     public MasterNodeTile(BlockPos pos, BlockState blockState) {
-        super(BMTiles.MASTER_NODE.get(), pos, blockState);
+        super(BMTiles.MASTER_ROUTING_NODE.get(), pos, blockState);
     }
 
+    public ItemStackHandler upgradeInv = new ItemStackHandler(2) {
+        @Override
+        public int getSlotLimit(int slot) {
+            return switch (slot) {
+                case 0 -> BloodMagic.SERVER_CONFIG.MAX_AMOUNT_UPGRADES.get();
+                case 1 -> BloodMagic.SERVER_CONFIG.MAX_SPEED_UPGRADES.get();
+                default -> 0;
+            };
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return switch (slot) {
+                // TODO replace with the actual upgrades after adding them
+                case 0 -> stack.is(BMBlocks.RUNE_CAPACITY.item());
+                case 1 -> stack.is(BMBlocks.RUNE_ACCELERATION.item());
+                default -> false;
+            };
+        }
+
+        @Override
+        protected void onContentsChanged(int slot) {
+            setChanged();
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+        }
+    };
+
+    public int ticks = 0;
+    private Set<BlockPos> outputNodes;
+    private Set<BlockPos> inputNodes;
     public static void tick(Level level, BlockPos pos, BlockState state, MasterNodeTile node) {
+        if (level.isClientSide) {
+            return;
+        }
+
+        if (node.inputNodes == null || node.outputNodes == null) {
+
+        }
+
+        if (node.ticks % Math.min(1, 20 - node.upgradeInv.getStackInSlot(1).getCount()) != 0) {
+            return;
+        }
 
     }
 
-    private Map<BlockPos, EnumMap<Direction, IItemFilter>> inputItemFilterMap = new HashMap<>();
-    private Map<BlockPos, EnumMap<Direction, IItemFilter>> outputItemFilterMap = new HashMap<>();
-    public void addItemInputFilterInfo(BlockPos pos, EnumMap<Direction, IItemFilter> filters) {
-        inputItemFilterMap.put(pos, filters);
-        setChanged();
-    }
+    public void markNodeDirty(BlockPos nodePos) {
 
-    public void addItemOutputFilterInfo(BlockPos pos, EnumMap<Direction, IItemFilter> filters) {
-        outputItemFilterMap.put(pos, filters);
-        setChanged();
-    }
-
-    private Map<BlockPos, EnumMap<Direction, IFluidFilter>> inputFluidFilterMap = new HashMap<>();
-    private Map<BlockPos, EnumMap<Direction, IFluidFilter>> outputFluidFilterMap = new HashMap<>();
-    public void addFluidInputFilterInfo(BlockPos pos, EnumMap<Direction, IFluidFilter> filters) {
-        inputFluidFilterMap.put(pos, filters);
-        setChanged();
-    }
-
-    public void addFluidOutputFilterInfo(BlockPos pos, EnumMap<Direction, IFluidFilter> filters) {
-        outputFluidFilterMap.put(pos, filters);
-        setChanged();
-    }
-
-    private Map<BlockPos, EnumMap<Direction, Byte>> priorityMap = new HashMap<>();
-    public void addPriorityInfo(BlockPos pos, EnumMap<Direction, Byte> priority) {
-        priorityMap.put(pos, priority);
-    }
-
-    public void removeNodeInfo(BlockPos pos) {
-        inputItemFilterMap.remove(pos);
-        outputItemFilterMap.remove(pos);
-        inputFluidFilterMap.remove(pos);
-        outputFluidFilterMap.remove(pos);
     }
 
     @Override
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        ticks = tag.getInt("ticks");
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        tag.putInt("ticks", ticks % 20);
+    }
+
+    // TODO fix these two
+    @Override
     public Component getDisplayName() {
+        return null;
     }
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
+        return null;
     }
 }
