@@ -23,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.RoutingNodeBlock;
 import wayoftime.bloodmagic.common.capability.BMCaps;
+import wayoftime.bloodmagic.common.menu.NodeFilterMenu;
 import wayoftime.bloodmagic.common.routing.IRoutingFilter;
 import wayoftime.bloodmagic.common.routing.NodeContext;
 
@@ -41,9 +42,6 @@ public class FilterNodeTile extends RoutingNodeTile implements MenuProvider {
     public FilterNodeTile(BlockPos pos, BlockState state) {
         this(pos, state, false);
     }
-
-    private Map<Direction, BlockCapabilityCache<IItemHandler, Direction>> itemCapCache = new HashMap<>();
-    private Map<Direction, BlockCapabilityCache<IFluidHandler, Direction>> fluidCapCache = new HashMap<>();
 
     public final SimpleContainerData priorities = new SimpleContainerData(6);
 
@@ -80,14 +78,13 @@ public class FilterNodeTile extends RoutingNodeTile implements MenuProvider {
         }
     }
 
-    // TODO not return null for both below
     @Override
     public Component getDisplayName() {
-        return null;
+        return Component.translatable("gui.bloodmagic.node." + (isOutput ? "output" : "input"));
     }
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-        return null;
+        return new NodeFilterMenu(containerId, playerInventory, filterInv, priorities);
     }
 }

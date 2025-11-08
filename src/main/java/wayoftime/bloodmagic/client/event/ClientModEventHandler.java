@@ -10,11 +10,9 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.client.screen.TrainerScreen;
+import wayoftime.bloodmagic.client.screen.*;
 import wayoftime.bloodmagic.common.menu.BMMenus;
 import wayoftime.bloodmagic.client.render.entity.layer.LivingElytraLayer;
-import wayoftime.bloodmagic.client.screen.ARCScreen;
-import wayoftime.bloodmagic.client.screen.LivingStationScreen;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.datacomponent.EnumWillType;
 import wayoftime.bloodmagic.common.item.BMItems;
@@ -47,5 +45,7 @@ public class ClientModEventHandler {
         event.register(BMMenus.ARC.get(), ARCScreen::new);
         event.register(BMMenus.LIVING_STATION.get(), LivingStationScreen::new);
         event.register(BMMenus.TRAINER.get(), TrainerScreen::new);
+        event.register(BMMenus.MASTER_NODE.get(), NodeMasterScreen::new);
+        event.register(BMMenus.FILTERED_NODE.get(), NodeFilterScreen::new);
     }
 }

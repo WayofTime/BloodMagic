@@ -36,6 +36,8 @@ public class BMItems {
     public static final DeferredHolder<Item, BloodOrbItem> ORB_TRANSCENDENT = BASIC_ITEMS.register("blood_orb_transcendent", BloodOrbItem::new);
 
     public static final DeferredHolder<Item, NodeRouterItem> NODE_ROUTER = BASIC_ITEMS.register("node_router", NodeRouterItem::new);
+    public static final DeferredHolder<Item, Item> NODE_AMOUNT_UPGRADE = BASIC_ITEMS.register("node_upgrade_amount", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> NODE_SPEED_UPGRADE = BASIC_ITEMS.register("node_upgrade_speed", () -> new Item(new Item.Properties().stacksTo(19)));
 
     private static Supplier<ArmorItem> makeLivingArmour(ArmorItem.Type type) {
         return () -> new ArmorItem(BMMaterialsAndTiers.LIVING_ARMOUR_MATERIAL, type, new Item.Properties().durability(type.getDurability(33)));

@@ -12,18 +12,20 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.RoutingNodeBlock;
 import wayoftime.bloodmagic.common.blockentity.RoutingNodeTile;
-import wayoftime.bloodmagic.common.item.BMItems;
+import wayoftime.bloodmagic.common.tag.BMTags;
 
 public class NodeRenderer implements BlockEntityRenderer<RoutingNodeTile> {
 
-    public static final ResourceLocation DEFAULT = BloodMagic.rl("textures/block/crystal_default.png");
-    public static final ResourceLocation CORROSIVE = BloodMagic.rl("textures/block/crystal_corrosive.png");
-    public static final ResourceLocation DESTRUCTIVE = BloodMagic.rl("textures/block/crystal_destructive.png");
-    public static final ResourceLocation STEADFAST = BloodMagic.rl("textures/block/crystal_steadfast.png");
-    public static final ResourceLocation VENGEFUL = BloodMagic.rl("textures/block/crystal_vengeful.png");
+    public static final ResourceLocation BEAM = ResourceLocation.withDefaultNamespace("textures/entity/beacon_beam.png");
+    public static final int DEFAULT = 0x91CCC6;
+    public static final int CORROSIVE = 0xA7CE90;
+    public static final int DESTRUCTIVE = 0xD9BFA2;
+    public static final int STEADFAST = 0x9794CD;
+    public static final int VENGEFUL = 0xCFB98F;
     public NodeRenderer(BlockEntityRendererProvider.Context context) {
     }
 
@@ -39,8 +41,8 @@ public class NodeRenderer implements BlockEntityRenderer<RoutingNodeTile> {
         }
         boolean shouldRenderLine = BloodMagic.CLIENT_CONFIG.ALWAYS_RENDER_NODE_LINES.get() // config override
                 || node.getBlockState().getValue(RoutingNodeBlock.RENDER_LINE) // node override
-                || player.getMainHandItem().is(BMItems.NODE_ROUTER) // has router in mainhand -> maybe should be a tag and also check curio? routing glasses, anyone?
-                || player.getOffhandItem().is(BMItems.NODE_ROUTER); // has router in offhand
+                || player.getMainHandItem().is(BMTags.Items.NODE_DEBUGGER)
+                || player.getOffhandItem().is(BMTags.Items.NODE_DEBUGGER);
 
         if (!shouldRenderLine) {
             return;
@@ -49,7 +51,7 @@ public class NodeRenderer implements BlockEntityRenderer<RoutingNodeTile> {
         long gameTime = node.getLevel().getGameTime();
         float time = (float)Math.floorMod(gameTime, 40) + partialTick;
 
-        BlockPos offsetPos = parentPos.subtract(node.getBlockPos());
+        BlockPos offsetPos = node.getBlockPos().subtract(parentPos);
         int xd = offsetPos.getX();
         int yd = offsetPos.getY();
         int zd = offsetPos.getZ();
@@ -63,8 +65,9 @@ public class NodeRenderer implements BlockEntityRenderer<RoutingNodeTile> {
         poseStack.translate(0.5f, 0.5f, 0.5f);
         poseStack.mulPose(Axis.YP.rotationDegrees(-rotYaw));
         poseStack.mulPose(Axis.XN.rotationDegrees(rotPitch - 90));
+        poseStack.translate(0, -distance, 0);
 
-        ResourceLocation kind = switch (node.getBlockState().getValue(RoutingNodeBlock.WILL)) {
+        int colour = switch (node.getBlockState().getValue(RoutingNodeBlock.WILL)) {
             case DEFAULT -> DEFAULT;
             case CORROSIVE -> CORROSIVE;
             case DESTRUCTIVE -> DESTRUCTIVE;
@@ -72,7 +75,7 @@ public class NodeRenderer implements BlockEntityRenderer<RoutingNodeTile> {
             case VENGEFUL -> VENGEFUL;
         };
 
-        renderBeaconBeam(poseStack, bufferSource, kind, time, (float) distance, 0.06f, 0.1f, node.getBlockState().getValue(RoutingNodeBlock.ENABLED));
+        renderBeaconBeam(poseStack, bufferSource, BEAM, colour, time, (float) distance, 0.06f, node.getBlockState().getValue(RoutingNodeBlock.ENABLED));
         poseStack.popPose();
     }
 
@@ -80,18 +83,23 @@ public class NodeRenderer implements BlockEntityRenderer<RoutingNodeTile> {
             PoseStack poseStack,
             MultiBufferSource bufferSource,
             ResourceLocation beamLocation,
+            int colour,
             float time,
             float height,
             float beamRadius,
-            float glowRadius,
             boolean isConnected
     ) {
-        poseStack.pushPose();
+        float f1 = height < 0 ? time : -time;
+        float f2 = Mth.frac(f1 * 0.2F - (float)Mth.floor(f1 * 0.1F));
+        float v1 = -1 + f2;
+        float v0 = height * (0.5F / beamRadius) + v1;
+
         poseStack.pushPose();
         poseStack.mulPose(Axis.YP.rotationDegrees(time * 2.25F - 45.0F));
         renderPart(
                 poseStack,
                 bufferSource.getBuffer(RenderType.beaconBeam(beamLocation, false)),
+                colour,
                 0,
                 height,
                 0.0F,
@@ -102,22 +110,8 @@ public class NodeRenderer implements BlockEntityRenderer<RoutingNodeTile> {
                 0.0F,
                 0.0F,
                 -beamRadius,
-                isConnected
-        );
-        poseStack.popPose();
-        renderPart(
-                poseStack,
-                bufferSource.getBuffer(RenderType.beaconBeam(beamLocation, true)),
-                0,
-                height,
-                -glowRadius,
-                -glowRadius,
-                glowRadius,
-                -glowRadius,
-                -glowRadius,
-                glowRadius,
-                glowRadius,
-                glowRadius,
+                v0,
+                v1,
                 isConnected
         );
         poseStack.popPose();
@@ -125,6 +119,7 @@ public class NodeRenderer implements BlockEntityRenderer<RoutingNodeTile> {
     private static void renderPart(
             PoseStack poseStack,
             VertexConsumer consumer,
+            int colour,
             int minY,
             float maxY,
             float x1,
@@ -135,49 +130,50 @@ public class NodeRenderer implements BlockEntityRenderer<RoutingNodeTile> {
             float z3,
             float x4,
             float z4,
+            float v0,
+            float v1,
             boolean isConnected
     ) {
         PoseStack.Pose posestack$pose = poseStack.last();
         renderQuad(
-                posestack$pose, consumer, minY, maxY, x1, z1, x2, z2, isConnected
+                posestack$pose, consumer, colour, minY, maxY, x1, z1, x2, z2, v0, v1, isConnected
         );
         renderQuad(
-                posestack$pose, consumer, minY, maxY, x4, z4, x3, z3, isConnected
+                posestack$pose, consumer, colour, minY, maxY, x4, z4, x3, z3, v0, v1, isConnected
         );
         renderQuad(
-                posestack$pose, consumer, minY, maxY, x2, z2, x4, z4, isConnected
+                posestack$pose, consumer, colour, minY, maxY, x2, z2, x4, z4, v0, v1, isConnected
         );
         renderQuad(
-                posestack$pose, consumer, minY, maxY, x3, z3, x1, z1, isConnected
+                posestack$pose, consumer, colour, minY, maxY, x3, z3, x1, z1, v0, v1, isConnected
         );
     }
 
     private static void renderQuad(
             PoseStack.Pose pose,
             VertexConsumer consumer,
+            int colour,
             int minY,
             float maxY,
             float minX,
             float minZ,
             float maxX,
             float maxZ,
+            float v0,
+            float v1,
             boolean isConnected
     ) {
-        float minU = 1/16.0f;
-        float maxU = 15/16.0f;
-        float minV = 1/16.0f;
-        float maxV = 15/16.0f;
-        addVertex(pose, consumer, maxY, minX, minZ, maxU, minV, isConnected);
-        addVertex(pose, consumer, minY, minX, minZ, maxU, maxV, isConnected);
-        addVertex(pose, consumer, minY, maxX, maxZ, minU, maxV, isConnected);
-        addVertex(pose, consumer, maxY, maxX, maxZ, minU, minV, isConnected);
+        addVertex(pose, consumer, colour, maxY, minX, minZ, 1, v0, isConnected);
+        addVertex(pose, consumer, colour, minY, minX, minZ, 1, v1, isConnected);
+        addVertex(pose, consumer, colour, minY, maxX, maxZ, 0, v1, isConnected);
+        addVertex(pose, consumer, colour, maxY, maxX, maxZ, 0, v0, isConnected);
     }
 
     private static void addVertex(
-            PoseStack.Pose pose, VertexConsumer consumer, float y, float x, float z, float u, float v, boolean isConnected
+            PoseStack.Pose pose, VertexConsumer consumer, int colour, float y, float x, float z, float u, float v, boolean isConnected
     ) {
         consumer.addVertex(pose, x, y, z)
-                .setColor(isConnected ? 0xFFFFFF : 0x666666)
+                .setColor((isConnected ? colour : 0x666666))
                 .setUv(u, v)
                 .setOverlay(OverlayTexture.NO_OVERLAY)
                 .setLight(15728880)

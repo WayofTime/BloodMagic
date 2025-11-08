@@ -19,6 +19,8 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BMBlocks;
+import wayoftime.bloodmagic.common.item.BMItems;
+import wayoftime.bloodmagic.common.menu.NodeMasterMenu;
 import wayoftime.bloodmagic.common.routing.IRoutingFilter;
 
 import java.util.*;
@@ -43,8 +45,8 @@ public class MasterNodeTile extends RoutingNodeTile implements MenuProvider {
         public boolean isItemValid(int slot, ItemStack stack) {
             return switch (slot) {
                 // TODO replace with the actual upgrades after adding them
-                case 0 -> stack.is(BMBlocks.RUNE_CAPACITY.item());
-                case 1 -> stack.is(BMBlocks.RUNE_ACCELERATION.item());
+                case 0 -> stack.is(BMItems.NODE_AMOUNT_UPGRADE.get());
+                case 1 -> stack.is(BMItems.NODE_SPEED_UPGRADE.get());
                 default -> false;
             };
         }
@@ -87,22 +89,24 @@ public class MasterNodeTile extends RoutingNodeTile implements MenuProvider {
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         ticks = tag.getInt("ticks");
+        upgradeInv.deserializeNBT(registries, tag.getCompound("upgrades"));
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.putInt("ticks", ticks % 20);
+        tag.put("upgrades", upgradeInv.serializeNBT(registries));
     }
 
     // TODO fix these two
     @Override
     public Component getDisplayName() {
-        return null;
+        return Component.translatable("gui.bloodmagic.node.master");
     }
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-        return null;
+        return new NodeMasterMenu(containerId, playerInventory, this.upgradeInv);
     }
 }

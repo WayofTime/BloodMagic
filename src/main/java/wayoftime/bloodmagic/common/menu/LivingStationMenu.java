@@ -34,7 +34,7 @@ public class LivingStationMenu extends AbstractContainerMenu {
         playerInvStart = inv.getSlots();
         playerInvEnd = playerInvStart + 27;
         hotbarStart = playerInvEnd + 1;
-        hotbarEnd = hotbarStart + 8;
+        hotbarEnd = hotbarStart + 9;
 
         // TODO whether or not something can go into a given slot is essentially duplicated between here and the actual inventory...
         this.addSlot(new SlotItemHandler(inv, 0, 12, 22) {

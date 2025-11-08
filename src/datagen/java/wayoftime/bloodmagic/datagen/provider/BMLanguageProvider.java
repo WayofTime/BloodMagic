@@ -148,6 +148,13 @@ public class BMLanguageProvider extends LanguageProvider {
         add(BMBlocks.OUTPUT_ROUTING_NODE, "Output Routing Node");
         add(BMItems.NODE_ROUTER.get(), "Node Router");
 
+        add(BMItems.NODE_AMOUNT_UPGRADE.get(), "Basic Routing Logic Upgrade");
+        add(BMItems.NODE_SPEED_UPGRADE.get(), "Basic Routing Speed Upgrade");
+
+        add("gui.bloodmagic.node.master", "Master Routing Node");
+        add("gui.bloodmagic.node.input", "Input Routing Node");
+        add("gui.bloodmagic.node.output", "Output Routing Node");
+
         addTooltip("router.connected", "Successfully connected nodes!");
         addTooltip("router.pos_cleared", "Cleared stored position!");
         addTooltip("router.pos_set", "Stored %s!");

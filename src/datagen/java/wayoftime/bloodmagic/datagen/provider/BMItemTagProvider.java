@@ -6,6 +6,7 @@ import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.block.BMBlocks;
 import wayoftime.bloodmagic.common.item.BMItems;
 import wayoftime.bloodmagic.common.tag.BMTags;
 
@@ -55,5 +56,10 @@ public class BMItemTagProvider extends ItemTagsProvider {
                 .add(BMItems.SOUL_GEM_COMMON.get())
                 .add(BMItems.SOUL_GEM_GREATER.get())
                 .add(BMItems.SOUL_GEM_GRAND.get());
+
+        tag(BMTags.Items.NODE_DEBUGGER)
+                .add(BMItems.NODE_ROUTER.get())
+                .add(BMBlocks.MASTER_NODE.asItem(), BMBlocks.ROUTING_NODE.asItem(), BMBlocks.INPUT_ROUTING_NODE.asItem(), BMBlocks.OUTPUT_ROUTING_NODE.asItem())
+                .addTag(BMTags.Items.SOUL_GEM);
     }
 }

@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.common.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -88,6 +89,13 @@ public class RoutingNodeBlock extends Block implements EntityBlock {
     }
 
     @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        if (!state.getValue(ENABLED) && random.nextFloat() < 0.3) {
+            level.addParticle(new DustParticleOptions(DustParticleOptions.REDSTONE_PARTICLE_COLOR, 1.1f), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5f, 0.0, 0.0, 0.0);
+        }
+    }
+
+    @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         level.setBlock(pos, state.setValue(RENDER_LINE, false), UPDATE_ALL);
     }
@@ -95,7 +103,9 @@ public class RoutingNodeBlock extends Block implements EntityBlock {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (stack.is(BMTags.Items.SOUL_GEM)) {
-            level.setBlock(pos, state.setValue(WILL, stack.getOrDefault(BMDataComponents.DEMON_WILL_TYPE, EnumWillType.DEFAULT)), UPDATE_ALL);
+            EnumWillType gemType = stack.getOrDefault(BMDataComponents.DEMON_WILL_TYPE, EnumWillType.DEFAULT);
+            EnumWillType setType = state.getValue(WILL) == gemType ? EnumWillType.DEFAULT : gemType;
+            level.setBlock(pos, state.setValue(WILL, setType), UPDATE_ALL);
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
 
