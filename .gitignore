@@ -1,0 +1,13 @@
+# Gradle
+gradle
+.gradle
+
+# IntelliJ
+.idea
+
+# general
+build
+run
+run-data
+run-server
+src/generated/resources/.cache

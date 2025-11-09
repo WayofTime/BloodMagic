@@ -1,0 +1,54 @@
+Living Tinker Station (name subject to change)
+- stores Upgrade tomes and Upgrade Scrap
+- stored upgrades can be accessed from the gui only
+- shift clicking upgrade tomes always puts them in storage
+- inserting items into the top puts them into the scrap slot
+- inserting items into other sides puts them into the storage slot
+
+Altar
+- datapackable structure, by default looking at tags (bloodmagic:altar/runes, bloodmagic:altar/tN_capstones, bloodmagic:altar/pillars) with the pillars tag being special in that when its empty it just requires solid blocks
+- should be working exactly like the old one from user perspective
+- the blocks to enable redstone pulse on crafting and reading the soul network instead of the altar fill level are based on the block tags bloodmagic:altar/pulse_on_crafting and bloodmagic:altar/soul_network_comparator
+- now has its 2 in/out put tanks visible for jade
+
+Blood Tank
+- stores any fluid (emits the same light level the inserted fluid does)
+- to get fluid in or out click with an item that has a fluid handler capability
+- should also work with fluid pipes
+- retains fluid when broken
+- havent managed to put the upgrade recipe in jei since its a special one, but its the "same" recipe as the base tank except the glass is replaced by 2 tanks of the same tier to make a next tier tank
+ - tiers are the same as the blood tanks from 1.12 but there is talk about changing how fluid (and item) handlers work in NF and they might change the default capacity from using ints to longs which would mean I could expand it to a lot more tiers and an ungodly amount of storage easily
+
+Hellfire forge
+- recipes can require a will type (none of the old recipes will but I might add some for the demon stone types)
+- no more gui, each of the 4 cardinal sides corresponds to 1 slot, right click item on that side to fill manually, right click with empty hand to take out
+- center is for the gem, same principle
+- when something is in the output slot it can be taken out from the bottom or by holding down shift while interacting with an empty hand
+
+ARC
+- there is the option to add tools for smoking and blasting recipes (item tags bloodmagic:arc_tool/furnace/blasting and bloodmagic:arc_tool/furnace/smoking)
+- tools can be extracted (new) and inserted via automation from the top
+- inputs (and filled/empty buckets) go into the sides
+- outputs can be extracted from the bottom
+- putting an empty item fluid handler into the input bucket slot fills it with fluid from the input tank
+- putting a filled item fluid handler into the input bucket slot empties it into the tank (if same fluid should some be present)
+- putting an empty item fluid handler into the output bucket slot fills it with fluid from the output tank
+- debating whether to have it keep the fluids when mined, currently does not (but would be a simple change)
+
+Blood Orbs
+- anything can be a blood orb as long as its in the blood orb data map and has the binding component set
+- works as it used to from user perspective
+
+Living Armour
+- Anything can be a living armour set as long as it has the correct data components set
+- Otherwise should work mostly like the old one except attributes update immediately so no more cheesing more health for self sacrifice with 2 plates
+- EXP will stack up infinitely (well, to the signed float limit) when not capped by trainer
+
+Tartaric gems
+- similar to blood orbs, as of now at least, anything can be a tartaric gem as long as its in the tartaric gem data map
+- currently no way of filling it, just here because I needed something for the hellfire forge
+
+Training Bracelet
+- will allow at most the minimum exp required for the selected level for each of the set tomes
+ - in deny others mode all "unknown" upgrades (the ones not set) will return the limit of 0 meaning nothing else can be trained
+ - in allow others mode all "unknown" upgrades will return the limit of -1 signifying that there is no limit set and can be trained as normal

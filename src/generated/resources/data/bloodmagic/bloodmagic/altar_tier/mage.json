@@ -1,0 +1,410 @@
+{
+  "components": [
+    {
+      "pos": [
+        0,
+        0,
+        0
+      ],
+      "upgrade": false,
+      "valid": "bloodmagic:blood_altar"
+    },
+    {
+      "pos": [
+        1,
+        -1,
+        1
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        1,
+        -1,
+        0
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        1,
+        -1,
+        -1
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        0,
+        -1,
+        1
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        0,
+        -1,
+        -1
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        -1,
+        -1,
+        1
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        -1,
+        -1,
+        0
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        -1,
+        -1,
+        -1
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        -2,
+        -2,
+        3
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        -2,
+        -2,
+        -3
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        3,
+        -2,
+        -2
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        -3,
+        -2,
+        -2
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        -1,
+        -2,
+        3
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        -1,
+        -2,
+        -3
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        3,
+        -2,
+        -1
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        -3,
+        -2,
+        -1
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        0,
+        -2,
+        3
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        0,
+        -2,
+        -3
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        3,
+        -2,
+        0
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        -3,
+        -2,
+        0
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        1,
+        -2,
+        3
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        1,
+        -2,
+        -3
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        3,
+        -2,
+        1
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        -3,
+        -2,
+        1
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        2,
+        -2,
+        3
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        2,
+        -2,
+        -3
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        3,
+        -2,
+        2
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        -3,
+        -2,
+        2
+      ],
+      "upgrade": true,
+      "valid": "#bloodmagic:altar/runes"
+    },
+    {
+      "pos": [
+        3,
+        -1,
+        3
+      ],
+      "upgrade": false,
+      "valid": "#bloodmagic:altar/pillars"
+    },
+    {
+      "pos": [
+        3,
+        -1,
+        -3
+      ],
+      "upgrade": false,
+      "valid": "#bloodmagic:altar/pillars"
+    },
+    {
+      "pos": [
+        -3,
+        -1,
+        3
+      ],
+      "upgrade": false,
+      "valid": "#bloodmagic:altar/pillars"
+    },
+    {
+      "pos": [
+        -3,
+        -1,
+        -3
+      ],
+      "upgrade": false,
+      "valid": "#bloodmagic:altar/pillars"
+    },
+    {
+      "pos": [
+        3,
+        0,
+        3
+      ],
+      "upgrade": false,
+      "valid": "#bloodmagic:altar/pillars"
+    },
+    {
+      "pos": [
+        3,
+        0,
+        -3
+      ],
+      "upgrade": false,
+      "valid": "#bloodmagic:altar/pillars"
+    },
+    {
+      "pos": [
+        -3,
+        0,
+        3
+      ],
+      "upgrade": false,
+      "valid": "#bloodmagic:altar/pillars"
+    },
+    {
+      "pos": [
+        -3,
+        0,
+        -3
+      ],
+      "upgrade": false,
+      "valid": "#bloodmagic:altar/pillars"
+    },
+    {
+      "pos": [
+        3,
+        1,
+        3
+      ],
+      "upgrade": false,
+      "valid": "#bloodmagic:altar/pillars"
+    },
+    {
+      "pos": [
+        3,
+        1,
+        -3
+      ],
+      "upgrade": false,
+      "valid": "#bloodmagic:altar/pillars"
+    },
+    {
+      "pos": [
+        -3,
+        1,
+        3
+      ],
+      "upgrade": false,
+      "valid": "#bloodmagic:altar/pillars"
+    },
+    {
+      "pos": [
+        -3,
+        1,
+        -3
+      ],
+      "upgrade": false,
+      "valid": "#bloodmagic:altar/pillars"
+    },
+    {
+      "pos": [
+        3,
+        1,
+        3
+      ],
+      "upgrade": false,
+      "valid": "#bloodmagic:altar/t3_capstones"
+    },
+    {
+      "pos": [
+        3,
+        1,
+        -3
+      ],
+      "upgrade": false,
+      "valid": "#bloodmagic:altar/t3_capstones"
+    },
+    {
+      "pos": [
+        -3,
+        1,
+        3
+      ],
+      "upgrade": false,
+      "valid": "#bloodmagic:altar/t3_capstones"
+    },
+    {
+      "pos": [
+        -3,
+        1,
+        -3
+      ],
+      "upgrade": false,
+      "valid": "#bloodmagic:altar/t3_capstones"
+    }
+  ],
+  "tier": 2
+}

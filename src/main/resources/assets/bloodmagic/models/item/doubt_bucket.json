@@ -1,0 +1,5 @@
+{
+  "parent": "neoforge:item/bucket_drip",
+  "loader": "neoforge:fluid_container",
+  "fluid": "bloodmagic:doubt_fluid_type"
+}

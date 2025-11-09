@@ -1,0 +1,25 @@
+{
+  "values": [
+    "bloodmagic:rune_blank",
+    "bloodmagic:rune_efficiency",
+    "bloodmagic:rune_sacrifice",
+    "bloodmagic:rune_sacrifice_self",
+    "bloodmagic:rune_speed",
+    "bloodmagic:rune_acceleration",
+    "bloodmagic:rune_dislocation",
+    "bloodmagic:rune_capacity",
+    "bloodmagic:rune_capacity_augmented",
+    "bloodmagic:rune_orb",
+    "bloodmagic:rune_charging",
+    "bloodmagic:rune_2_efficiency",
+    "bloodmagic:rune_2_sacrifice",
+    "bloodmagic:rune_2_sacrifice_self",
+    "bloodmagic:rune_2_speed",
+    "bloodmagic:rune_2_acceleration",
+    "bloodmagic:rune_2_dislocation",
+    "bloodmagic:rune_2_capacity",
+    "bloodmagic:rune_2_capacity_augmented",
+    "bloodmagic:rune_2_orb",
+    "bloodmagic:rune_2_charging"
+  ]
+}

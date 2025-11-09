@@ -1,0 +1,19 @@
+{
+  "values": [
+    "bloodmagic:exp/arrow_protect",
+    "bloodmagic:exp/physical_protect",
+    "bloodmagic:exp/fall_protect",
+    "bloodmagic:exp/digging",
+    "bloodmagic:exp/experienced",
+    "bloodmagic:exp/fire_resist",
+    "bloodmagic:exp/health",
+    "bloodmagic:exp/jump",
+    "bloodmagic:exp/knockback_resist",
+    "bloodmagic:exp/melee_damage",
+    "bloodmagic:exp/poison_resist",
+    "bloodmagic:exp/repair",
+    "bloodmagic:exp/self_sacrifice",
+    "bloodmagic:exp/speed",
+    "bloodmagic:exp/sprint_attack"
+  ]
+}

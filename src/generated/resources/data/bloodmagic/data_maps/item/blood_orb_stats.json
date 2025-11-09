@@ -1,0 +1,34 @@
+{
+  "values": {
+    "bloodmagic:blood_orb_apprentice": {
+      "capacity": 25000,
+      "fillRate": 5,
+      "tier": 1
+    },
+    "bloodmagic:blood_orb_archmage": {
+      "capacity": 5000000,
+      "fillRate": 50,
+      "tier": 4
+    },
+    "bloodmagic:blood_orb_magician": {
+      "capacity": 150000,
+      "fillRate": 15,
+      "tier": 2
+    },
+    "bloodmagic:blood_orb_master": {
+      "capacity": 1000000,
+      "fillRate": 25,
+      "tier": 3
+    },
+    "bloodmagic:blood_orb_transcendent": {
+      "capacity": 10000000,
+      "fillRate": 50,
+      "tier": 5
+    },
+    "bloodmagic:blood_orb_weak": {
+      "capacity": 5000,
+      "fillRate": 2,
+      "tier": 0
+    }
+  }
+}

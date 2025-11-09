@@ -1,0 +1,103 @@
+{
+  "effects": {
+    "bloodmagic:attributes": [
+      {
+        "amounts": {
+          "type": "minecraft:lookup",
+          "fallback": 0.0,
+          "values": [
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6,
+            0.7,
+            0.9,
+            1.1,
+            1.3,
+            1.5
+          ]
+        },
+        "attribute": "minecraft:generic.movement_speed",
+        "id": "bloodmagic:speed",
+        "operation": "add_multiplied_base"
+      }
+    ],
+    "bloodmagic:tick": [
+      {
+        "effect": {
+          "type": "bloodmagic:add_mob_effect",
+          "amplifier": {
+            "type": "minecraft:lookup",
+            "fallback": 0.0,
+            "values": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              1.0,
+              2.0
+            ]
+          },
+          "duration": {
+            "type": "minecraft:lookup",
+            "fallback": 0.0,
+            "values": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              20.0,
+              60.0,
+              60.0,
+              100.0,
+              200.0
+            ]
+          },
+          "mob_effect": "minecraft:speed"
+        },
+        "requirements": {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "flags": {
+              "is_sprinting": true
+            }
+          }
+        }
+      }
+    ]
+  },
+  "levels": {
+    "exp_to_level": {
+      "1000": 2,
+      "15000": 6,
+      "200": 1,
+      "2000": 3,
+      "25000": 7,
+      "35000": 8,
+      "4000": 4,
+      "50000": 9,
+      "7000": 5,
+      "70000": 10
+    },
+    "level_to_cost": {
+      "1": 3,
+      "10": 250,
+      "2": 7,
+      "3": 13,
+      "4": 26,
+      "5": 42,
+      "6": 60,
+      "7": 90,
+      "8": 130,
+      "9": 180
+    }
+  }
+}

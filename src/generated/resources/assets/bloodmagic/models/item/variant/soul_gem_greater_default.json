@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "bloodmagic:item/soul_gem_greater_default"
+  }
+}
