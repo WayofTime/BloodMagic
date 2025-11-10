@@ -4,6 +4,7 @@ import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -11,6 +12,7 @@ import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootParams;
@@ -18,6 +20,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -70,6 +73,16 @@ public class GlobalLootModifier
 			fakeTool.enchant(Enchantments.SILK_TOUCH, 1);
 			LootParams.Builder builder = new LootParams.Builder(context.getLevel());
 			builder.withParameter(LootContextParams.TOOL, fakeTool);
+
+            Vec3 vec = context.getParam(LootContextParams.ORIGIN);
+            if (vec != null) {
+                BlockPos pos = BlockPos.containing(vec);
+                BlockEntity be = context.getLevel().getBlockEntity(pos);
+                if (be != null) {
+                    builder.withParameter(LootContextParams.BLOCK_ENTITY, be);
+                }
+            }
+
 			LootParams ctx = builder.create(LootContextParamSets.EMPTY);
 			LootTable loottable = context.getLevel().getServer().getLootData().getLootTable(context.getParamOrNull(LootContextParams.BLOCK_STATE).getBlock().getLootTable());
 			return loottable.getRandomItems(ctx);
@@ -129,7 +142,17 @@ public class GlobalLootModifier
 
 			LootParams.Builder builder = new LootParams.Builder(context.getLevel());
 			builder.withParameter(LootContextParams.TOOL, fakeTool);
-			LootParams ctx = builder.create(LootContextParamSets.EMPTY);
+
+            Vec3 vec = context.getParam(LootContextParams.ORIGIN);
+            if (vec != null) {
+                BlockPos pos = BlockPos.containing(vec);
+                BlockEntity be = context.getLevel().getBlockEntity(pos);
+                if (be != null) {
+                    builder.withParameter(LootContextParams.BLOCK_ENTITY, be);
+                }
+            }
+
+            LootParams ctx = builder.create(LootContextParamSets.EMPTY);
 			LootTable loottable = context.getLevel().getServer().getLootData().getLootTable(context.getParamOrNull(LootContextParams.BLOCK_STATE).getBlock().getLootTable());
 			return loottable.getRandomItems(ctx);
 		}
