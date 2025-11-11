@@ -132,6 +132,7 @@ public class BloodMagicTags
 	public static final TagKey<Item> SHOVELS = ItemTags.create(new ResourceLocation("forge:shovels"));
 	public static final TagKey<Item> PICKAXES = ItemTags.create(new ResourceLocation("forge:pickaxes"));
 	public static final TagKey<Item> HOES = ItemTags.create(new ResourceLocation("forge:hoes"));
+    public static final TagKey<Item> SCYTHES = ItemTags.create(new ResourceLocation("forge:tool/scythes"));
 
 	// Modded (for meteor rituals)
 	public static final TagKey<Item> ADVANCED_ALLOY = getForgeAlloyTag("advanced");

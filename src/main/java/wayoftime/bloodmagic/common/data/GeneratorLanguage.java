@@ -82,6 +82,7 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.sentientAxe.desc", "Uses demon will to unleash its full potential.");
 		add("tooltip.bloodmagic.sentientPickaxe.desc", "Uses demon will to unleash its full potential.");
 		add("tooltip.bloodmagic.sentientShovel.desc", "Uses demon will to unleash its full potential.");
+        add("tooltip.bloodmagic.sentientScythe.desc", "Uses demon will to unleash its full potential.");
 		add("tooltip.bloodmagic.soulGem.petty", "A gem used to contain a little will.");
 		add("tooltip.bloodmagic.soulGem.lesser", "A gem used to contain some will.");
 		add("tooltip.bloodmagic.soulGem.common", "A gem used to contain more will.");
