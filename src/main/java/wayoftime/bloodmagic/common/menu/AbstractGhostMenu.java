@@ -63,7 +63,7 @@ public abstract class AbstractGhostMenu<T extends AbstractContainerMenu> extends
                             // I clicked on the slot with an empty hand. Selecting!
                             updateGhostSelection(tracker.get(0), slotId);
                             BloodMagic.LOGGER.info("selected ghost slot {} index {}", slotId, slot.getSlotIndex());
-                            tracker.set(0, slot.getSlotIndex());
+                            setData(0, slot.getSlotIndex());
                             // Return here to not save the server-side inventory
                             return;
                         } else if (!heldStack.isEmpty() && slotStack.isEmpty() && ghostSlot.isValid(heldStack)) {

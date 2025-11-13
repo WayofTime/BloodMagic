@@ -13,14 +13,14 @@ import wayoftime.bloodmagic.common.living.LivingHelper;
 public class TrainerMenu extends AbstractGhostMenu<TrainerMenu> {
 
     // CLIENT constructor
-    public TrainerMenu(int containerId, Inventory playerInv, RegistryFriendlyByteBuf buf) {
+    public TrainerMenu(int containerId, Inventory playerInv) {
         // buf -> int heldSlot
-        super(BMMenus.TRAINER.get(), containerId, playerInv, 3 + 16, 4, 4, 89, 15, 105, buf.readInt());
+        super(BMMenus.TRAINER.get(), containerId, playerInv, 3 + 16, 4, 4, 89, 15, 105, playerInv.selected);
     }
 
     // SERVER constructor
-    public TrainerMenu(int containerId, Inventory playerInv, GhostItemHandler handler, ContainerData trainerData, int heldSlot) {
-        super(BMMenus.TRAINER.get(), containerId, playerInv, trainerData, handler, 4, 4, 89, 15, 105, heldSlot);
+    public TrainerMenu(int containerId, Inventory playerInv, GhostItemHandler handler, ContainerData trainerData) {
+        super(BMMenus.TRAINER.get(), containerId, playerInv, trainerData, handler, 4, 4, 89, 15, 105, playerInv.selected);
     }
 
     @Override

@@ -2,6 +2,8 @@ package wayoftime.bloodmagic.common.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -43,7 +45,7 @@ public class FilterNodeTile extends RoutingNodeTile implements MenuProvider {
         this(pos, state, false);
     }
 
-    public final SimpleContainerData priorities = new SimpleContainerData(6);
+    public int[] priorities = new int[] {0, 0, 0, 0, 0, 0};
 
     public final ItemStackHandler filterInv = new ItemStackHandler(6) {
         @Override
@@ -63,6 +65,21 @@ public class FilterNodeTile extends RoutingNodeTile implements MenuProvider {
         }
     };
 
+    @Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        CompoundTag invTag = filterInv.serializeNBT(registries);
+        tag.put("filter_inv", invTag);
+        IntArrayTag prioTag = new IntArrayTag(priorities);
+        tag.put("priorities", prioTag);
+    }
+
+    @Override
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        filterInv.deserializeNBT(registries, tag.getCompound("filter_inv"));
+        priorities = tag.getIntArray("priorities");
+    }
 
     public void propagateNetwork(BiConsumer<BlockPos, Optional<Boolean>> collector, boolean requireEnabled) {
         if (requireEnabled && !getBlockState().getValue(RoutingNodeBlock.ENABLED)) {
@@ -85,6 +102,26 @@ public class FilterNodeTile extends RoutingNodeTile implements MenuProvider {
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-        return new NodeFilterMenu(containerId, playerInventory, filterInv, priorities);
+        return new NodeFilterMenu(containerId, playerInventory, filterInv, new SimpleContainerData(7) {
+            private int side;
+            @Override
+            public int get(int index) {
+                if (index < 6) {
+                    return FilterNodeTile.this.priorities[index];
+                } else {
+                    return side;
+                }
+            }
+
+            @Override
+            public void set(int index, int value) {
+                if (index < 6) {
+                    FilterNodeTile.this.priorities[index] = value;
+                    FilterNodeTile.this.setChanged();
+                } else {
+                    side = value;
+                }
+            }
+        }, getBlockPos(), isOutput);
     }
 }

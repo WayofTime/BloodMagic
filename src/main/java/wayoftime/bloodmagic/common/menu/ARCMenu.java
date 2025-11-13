@@ -52,6 +52,7 @@ public class ARCMenu extends AbstractContainerMenu {
     }
 
     public ARCMenu(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
+        // TODO nonono, bad! just pass the tanks & inv sis
         this(containerId, playerInventory, (ARCTile) playerInventory.player.level().getBlockEntity(buf.readBlockPos()));
     }
 
