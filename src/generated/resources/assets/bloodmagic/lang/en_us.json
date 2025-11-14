@@ -249,6 +249,8 @@
   "curios.identifier.living_armour_socket": "Living Armour Socket",
   "death.attack.ritual": "%1$s died in a Well of Suffering",
   "death.attack.sacrifice": "%1$s sacrificed a bit too much LP",
+  "death.attack.spike": "%1$s was impaled on spikes",
+  "death.attack.spike.player": "%1$s was impaled on spikes while fighting %2$s",
   "effect.bloodmagic.bounce": "Bounce",
   "effect.bloodmagic.flight": "Flight",
   "effect.bloodmagic.gravity": "Gravity",
