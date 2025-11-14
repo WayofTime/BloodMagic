@@ -1,11 +1,17 @@
 package wayoftime.bloodmagic;
 
+import net.minecraft.Util;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent.RegisterGeometryLoaders;
@@ -57,6 +63,7 @@ import wayoftime.bloodmagic.core.living.LivingUpgrade;
 import wayoftime.bloodmagic.core.recipe.IngredientBloodOrb;
 import wayoftime.bloodmagic.core.registry.AlchemyArrayRegistry;
 import wayoftime.bloodmagic.core.registry.OrbRegistry;
+import wayoftime.bloodmagic.entity.projectile.EntitySoulSnare;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.impl.BloodMagicCorePlugin;
 import wayoftime.bloodmagic.loot.GlobalLootModifier;
@@ -234,6 +241,14 @@ public class BloodMagic {
         packetHandler.initialize();
         DispenserBlock.registerBehavior(BloodMagicItems.LIFE_ESSENCE_BUCKET.get(), DispenseFluidContainer.getInstance());
         DispenserBlock.registerBehavior(BloodMagicItems.DOUBT_BUCKET.get(), DispenseFluidContainer.getInstance());
+        // adapted from Snowball behavior
+        DispenserBlock.registerBehavior(BloodMagicItems.SOUL_SNARE.get(), new AbstractProjectileDispenseBehavior() {
+            protected Projectile getProjectile(Level level, Position pos, ItemStack itemStack) {
+                return Util.make(new EntitySoulSnare(level, pos.x(), pos.y(), pos.z()), (snare) -> {
+                    snare.setItem(itemStack);
+                });
+            }
+        });
 
         curiosLoaded = ModList.get().isLoaded("curios");
     }
