@@ -1,4 +1,66 @@
 ------------------------------------------------------
+Version 3.3.4
+------------------------------------------------------
+Buckle up, this one's a doozy...
+Added:
+- A new ritual!
+-> The "Ritual of the Geode's Bounty" will accelerate the growth of nearby budding blocks and automatically harvest their crystals, dropping them on the ground.
+- more configuration options!
+-> LP per heart from sacrifice / self-sacrifice can be tweaked
+--> Specific mobs can also give more or less LP per heart of damage
+--> Specific mobs can also be blacklisted from the Well of Suffering (if you want to allow for them to be manually sacrificed)
+-> Living armour's total upgrade points can now be configured (both standard and evolved)
+-> added configuration options for the new Geode Ritual - expect more of this in 1.21
+- Filters now have recipes for copying or clearing their settings
+- Reap of the Harvest Moon now supports more things!
+-> Vanilla: bamboo, kelp, sugarcane, cactus, and vines (both normal, twisting, and weeping)
+-> Modded: Agricraft, Mystical Agriculture
+- Green Grove ritual now supports Agricraft (and acts as a [highly un-]natural weed-killer!)
+- Improved recipes in JEI to better display requirements for the Alchemy Table, Hellfire Forge, and Blood Altar (with tooltips)
+-> Alchemy Table displays required LP for a given craft in a tooltip
+-> Hellfire Forge displays required and consumed Will in a tooltip
+-> Blood Altar displays required tier and LP
+-> All of them say 'info' under the arrow to tell people to mouse over
+- Hellfire Forge now has a little flag that pops out when you've not got enough will to craft a recipe
+- Added some error messages to the Penance of the Leadened Soul ritual to cover some common issues
+-> Downgrade blocked by training bracelet, not enough of key item / upgrade pointspresent in chest, no chest present
+- Added dispenser behaviour for Buckets of Life
+-> Now you can Carrie people in minecraft!
+- Anointments can now be added in the smithing table, for 2-handed weapons and other circumstances where you're unable to apply the anointment in the i ntended way.
+- Re-worked the AE2 Meteor within the Mark of the Falling Tower ritual to spawn budding quartz blocks (including flawless, if you're lucky!)
+- Added recipes for all of the dungeon blocks, plus recipes for their aspected counterparts. Now you too can utilize the fierce red dungeon asthetic!
+- Added some functional dungeon blocks, including the dungeon eye, dungeon emitter, dungeon alternator, and MASHY SPIKE PLATE.
+- Added speed upgrades for routing nodes. Now you can move more items AND move them faster!
+- Added more uses for the hydration cell, including making copper more nasty and concrete powder less powdery.
+
+Fixed:
+- Mimic blocks now render properly when they've not been given a block to mimic
+- Added models for inversion pillar caps
+- Fixed an interaction with the dungeon rituals and certain optimisation mods (such as Better Chunk Loading) that prevented the dungeons from working.
+- Fixed a crash with Domain of the Filler
+- Fixed a dupe glitch with the blood altar
+- Lava crystals no longer lose their binding when used in the ARC in furnace mode
+-> Unbound lava crystals are no longer a free fuel source for the ARC. Sorry!
+-> Also items won't end up with negative durability when being used in the ARC.
+- Comparators no longer have a redstone value > 15 when measuring the fill-level of your soul network.
+-> Fixes a crash when placing / looking at comparators next to blood altars with certain WALIA/TOP style mods.
+- The Sigil of Suppression no longer leaves Spectral Blocks lying around the place
+-> Was causing crashes and potentially world-corruption
+-> Can be fixed by using 'setblock' to turn any lingering spectral blocks into air
+- Dummies from the dummmmmmy mod are blacklisted by default and give 0 LP when sacrificed.
+- Fixed a logspam issue / crash when dying while wearing living armour with Curios installed
+- Reinforced runes can now be properly broken.
+- Fixed a crash when activating a teleposer with an unbound focus in it.
+- The ARC now respects the 'unbreakable' tag when using items with durability.
+- Configuring the HUD with the Seer's Sigil / Divination Sigil / etc should now properly save your changes
+- Added some missing names for e.g. life essence buckets
+- Tau Fruit / Saturated Tau now grows properly (rather than requiring bonemeal)
+- Re-implemented the Spectral Sight potion effect
+- The Blood Altar structure is now more permissive about what constitutes a 'solid block' for the purposes of supporting your glowstone/bloodstone blocks.
+-> Stairs, walls, fenceposts, even stacks of signs will all work for this now.
+- LP wasn't saving consistently in singleplayer mode sometimes
+
+------------------------------------------------------
 Version 3.3.3
 ------------------------------------------------------
 - Updated the description of the music disc to properly credit Firel.
