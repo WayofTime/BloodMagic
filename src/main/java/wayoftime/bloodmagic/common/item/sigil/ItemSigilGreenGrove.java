@@ -1,5 +1,6 @@
 package wayoftime.bloodmagic.common.item.sigil;
 
+import com.agricraft.agricraft.common.block.entity.CropBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
@@ -65,10 +66,17 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
 							{
 								if (worldIn.random.nextInt(50) == 0)
 								{
+
+                                    if (worldIn.getBlockEntity(blockPos) instanceof CropBlockEntity crop) {
+                                        crop.removeWeeds();
+                                    }
 									BlockState preBlockState = worldIn.getBlockState(blockPos);
 									if (((BonemealableBlock) state.getBlock()).isValidBonemealTarget(serverWorld, blockPos, preBlockState, worldIn.isClientSide))
 									{
 										((BonemealableBlock) state.getBlock()).performBonemeal(serverWorld, worldIn.random, blockPos, state);
+                                        if (worldIn.getBlockEntity(blockPos) instanceof CropBlockEntity crop) {
+                                            crop.removeWeeds();
+                                        }
 
 										BlockState newState = worldIn.getBlockState(blockPos);
 										if (!newState.equals(preBlockState) && !worldIn.isClientSide)
@@ -97,10 +105,16 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
 			{
 				if (worldIn instanceof ServerLevel)
 				{
+                    if (worldIn.getBlockEntity(pos) instanceof CropBlockEntity crop) {
+                        crop.removeWeeds();
+                    }
 					if (igrowable.isBonemealSuccess(worldIn, worldIn.random, pos, blockstate))
 					{
 						igrowable.performBonemeal((ServerLevel) worldIn, worldIn.random, pos, blockstate);
 					}
+                    if (worldIn.getBlockEntity(pos) instanceof CropBlockEntity crop) {
+                        crop.removeWeeds();
+                    }
 
 				}
 

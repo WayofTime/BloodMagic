@@ -72,7 +72,7 @@ public class RitualGeode extends Ritual {
         addBlockRange(CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
         addBlockRange(HARM_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-1, -3, -1), 3, 3, 3));
 
-        setMaximumVolumeAndDistanceOfRange(HARVEST_RANGE, 3 * 3 * MAX_BLOCKS, 15, 15);
+        setMaximumVolumeAndDistanceOfRange(HARVEST_RANGE, 2 + 2 * 3 * MAX_BLOCKS, 15, 15);
         setMaximumVolumeAndDistanceOfRange(ACCELERATION_RANGE, MAX_BLOCKS, 15, 15);
         setMaximumVolumeAndDistanceOfRange(CHEST_RANGE, 1, 15, 15);
         setMaximumVolumeAndDistanceOfRange(HARM_RANGE, 5 * 5 * 3, 15, 15);

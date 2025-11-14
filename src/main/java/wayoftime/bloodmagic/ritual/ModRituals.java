@@ -18,6 +18,7 @@ public class ModRituals
 		HarvestRegistry.registerHandler(new HarvestHandlerNetherWart());
 		HarvestRegistry.registerHandler(new HarvestHandlerGrowingPlant());
 		HarvestRegistry.registerHandler(new HarvestHandlerJungleVines());
+        HarvestRegistry.registerHandler(new HarvestHandlerAgricraft());
 	}
 //
 //    public static void initCuttingFluids() {

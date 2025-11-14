@@ -1,5 +1,6 @@
 package wayoftime.bloodmagic.ritual.types;
 
+import com.agricraft.agricraft.common.block.entity.CropBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -108,7 +109,13 @@ public class RitualGreenGrove extends Ritual
 				{
 					if (world.random.nextDouble() < growthChance)
 					{
+                        if (world.getBlockEntity(newPos) instanceof CropBlockEntity crop) {
+                            crop.removeWeeds();
+                        }
 						state.getBlock().randomTick(state, serverWorld, newPos, serverWorld.random);
+                        if (world.getBlockEntity(newPos) instanceof CropBlockEntity crop) {
+                            crop.removeWeeds();
+                        }
 						BlockState newState = world.getBlockState(newPos);
 						if (!newState.equals(state))
 						{
