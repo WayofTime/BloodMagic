@@ -32,6 +32,7 @@ Added:
 - Added some functional dungeon blocks, including the dungeon eye, dungeon emitter, dungeon alternator, and MASHY SPIKE PLATE.
 - Added speed upgrades for routing nodes. Now you can move more items AND move them faster!
 - Added more uses for the hydration cell, including making copper more nasty and concrete powder less powdery.
+- dispensers can now throw soul snares
 
 Fixed:
 - Mimic blocks now render properly when they've not been given a block to mimic
@@ -59,6 +60,9 @@ Fixed:
 - The Blood Altar structure is now more permissive about what constitutes a 'solid block' for the purposes of supporting your glowstone/bloodstone blocks.
 -> Stairs, walls, fenceposts, even stacks of signs will all work for this now.
 - LP wasn't saving consistently in singleplayer mode sometimes
+- Fortuna Extract / Soft Coating no longer voids Shulker Boxes
+- fungal charges no longer use an empty tag in their crafting recipe
+- the Sentient Scythe is now officially 20% more Scythe-y.
 
 ------------------------------------------------------
 Version 3.3.3
