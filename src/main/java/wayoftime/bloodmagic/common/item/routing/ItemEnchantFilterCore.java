@@ -32,7 +32,13 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 		super();
 	}
 
-	@Override
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("gui.bloodmagic.filter.enchant");
+    }
+
+    @Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack filterStack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{

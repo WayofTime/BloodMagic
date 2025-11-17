@@ -12,6 +12,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -21,9 +22,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.network.NetworkHooks;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.client.button.FilterButtonTogglePress;
 import wayoftime.bloodmagic.common.container.item.ContainerFilter;
+import wayoftime.bloodmagic.common.item.inventory.DataFilter;
 import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
 import wayoftime.bloodmagic.common.item.inventory.ItemInventory;
 import wayoftime.bloodmagic.common.routing.BasicItemFilter;
@@ -43,39 +46,86 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 
 	public static final String FILTER_INV = "filterInventory";
 
+    public boolean HAS_BWLIST = true;
+    public boolean HAS_TAG = false;
+    public boolean HAS_ENCHANT_KIND = false;
+    public boolean HAS_ENCHANT_LEVEL = false;
+
+    public static final int DATA_BWLIST = 0;
+    public static final int DATA_TAG = 1; // + slot (0-8)
+    public static final int DATA_ENCHANT = DATA_TAG + 9; // + slot (0-8)
+    public static final int DATA_ENCHANT_LVL = DATA_ENCHANT + 9; // + slot (0-8)
+
+    public static final int BUTTON_BWLIST = 0;
+    public static final int BUTTON_TAG = 1;
+    public static final int BUTTON_ENCHANT_KIND = 2;
+    public static final int BUTTON_ENCHANT_LEVEL = 3;
+
 	public ItemRouterFilter()
 	{
 		super(new Item.Properties().stacksTo(16));
 	}
 
+    // dont override on children, or make sure its
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
-		ItemStack stack = player.getItemInHand(hand);
+        ItemStack stack = player.getItemInHand(hand);
+        if (hand == InteractionHand.OFF_HAND) {
+            return InteractionResultHolder.pass(stack); // we always assume main hand item, offhand no good
+        }
+
 		if (!world.isClientSide)
 		{
 			if (player instanceof ServerPlayer)
 			{
-				NetworkHooks.openScreen((ServerPlayer) player, this, buf -> buf.writeItemStack(stack, false));
+				NetworkHooks.openScreen((ServerPlayer) player, this);
 			}
 		}
 
-		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+		return new InteractionResultHolder<>(InteractionResult.sidedSuccess(world.isClientSide), stack);
 	}
 
 	@Override
-	public AbstractContainerMenu createMenu(int p_createMenu_1_, Inventory p_createMenu_2_, Player player)
+	public AbstractContainerMenu createMenu(int containerId, Inventory playerInv, Player player)
 	{
-		// TODO Auto-generated method stub
 		assert player.getCommandSenderWorld() != null;
-		return new ContainerFilter(p_createMenu_1_, player, p_createMenu_2_, player.getMainHandItem());
+        ItemStack stack = player.getMainHandItem();
+        InventoryFilter filterInv = new InventoryFilter(9) {
+            @Override
+            public void setStackInSlot(int slot, @NotNull ItemStack stack) {
+                super.setStackInSlot(slot, stack);
+                // save NBT here
+            }
+        };
+        List<Integer> content = new ArrayList<>(1 + 3 * 9);
+        if (stack.hasTag()) {
+            CompoundTag tag = stack.getTag();
+            filterInv.deserializeNBT(tag);
+            content.add(tag.getInt(Constants.BUTTONID.BLACKWHITELIST));
+        }
+        DataFilter data = new DataFilter(List.of()) {
+            @Override
+            public void save(int index) {
+                if (index == DATA_BWLIST) {
+                    // this is global, just write state as NBT to Constant.BUTTONID.BLACKWHITELIST
+                    return;
+                }
+                // locate which kind
+                // offset = index - DATA_whatever
+                // get Constant.BUTTONID.{thing}
+                // write state as NBT to constant + offset
+            }
+        };
+
+		return new ContainerFilter(containerId, player, playerInv, filterInv, HAS_BWLIST, HAS_TAG, HAS_ENCHANT_KIND, HAS_ENCHANT_LEVEL);
 	}
 
 	@Override
 	public Component getDisplayName()
 	{
-		// TODO Auto-generated method stub
-		return Component.literal("Filter");
+        // this should be overridden by the actual filter classes and return a Component#translatable instead
+		return Component.literal("Whoops, forgot to override getDisplayName here I guess");
 	}
 
 	@Override

@@ -24,22 +24,12 @@ import java.util.List;
 
 public class ItemStandardFilter extends ItemCompositeFilter
 {
-	@Override
-	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
-	{
-		ItemStack stack = player.getItemInHand(hand);
-		if (!world.isClientSide)
-		{
-			if (player instanceof ServerPlayer)
-			{
-				NetworkHooks.openScreen((ServerPlayer) player, this, buf -> buf.writeItemStack(stack, false));
-			}
-		}
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("gui.bloodmagic.filter.standard");
+    }
 
-		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
-	}
-
-	@OnlyIn(Dist.CLIENT)
+    @OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack filterStack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
 		tooltip.add(Component.translatable("tooltip.bloodmagic.basicfilter.desc").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY));

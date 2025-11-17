@@ -23,7 +23,12 @@ public class ItemModFilter extends ItemRouterFilter implements INestableItemFilt
 		super();
 	}
 
-	@Override
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("gui.bloodmagic.filter.mod");
+    }
+
+    @Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack filterStack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{

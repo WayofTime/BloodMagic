@@ -9,6 +9,9 @@ import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.util.thread.EffectiveSide;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.SlotItemHandler;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
 import wayoftime.bloodmagic.common.item.routing.IRoutingFilterProvider;
@@ -20,39 +23,32 @@ public class ContainerFilter extends AbstractContainerMenu
 	private final int PLAYER_INVENTORY_ROWS = 3;
 	private final int PLAYER_INVENTORY_COLUMNS = 9;
 	public final Player player;
-	public final ItemStack filterStack;
 
 	public int lastGhostSlotClicked = -1;
 	private int slotsOccupied = 9;
 
-	public ContainerFilter(int windowId, Inventory playerInventory, FriendlyByteBuf extraData)
+	public ContainerFilter(int windowId, Inventory playerInventory)
 	{
-		this(windowId, playerInventory.player, playerInventory, extraData.readItem());
+		this(windowId, playerInventory.player, playerInventory, new InventoryFilter(9));
 	}
 
-	public ContainerFilter(int windowId, Player player, Inventory playerInventory, ItemStack filterStack)
+	public ContainerFilter(int windowId, Player player, Inventory playerInventory, InventoryFilter filterInv)
 	{
 		super(BloodMagicBlocks.FILTER_CONTAINER.get(), windowId);
 		this.player = player;
-		this.filterStack = filterStack;
-		this.inventoryFilter = new InventoryFilter(filterStack);
+		this.inventoryFilter = filterInv;
 		int currentSlotHeldIn = player.getInventory().selected;
 		this.setup(playerInventory, currentSlotHeldIn);
 	}
 
-	public void setup(Inventory inventory, int currentSlotHeldIn)
+	public void setup(Inventory playerInv, int currentSlotHeldIn)
 	{
-//		for (int columnIndex = 0; columnIndex < ItemRouterFilter.inventorySize; ++columnIndex)
-//		{
-//			this.addSlot(new SlotGhostItem(this, inventoryFilter, player, columnIndex, 8 + columnIndex * 36, 17));
-//		}
 
 		for (int i = 0; i < 3; i++)
 		{
 			for (int j = 0; j < 3; j++)
 			{
-				this.addSlot(new SlotGhostItem(this, inventoryFilter, player, j + i * 3, 110 + j * 21, 15 + i * 21));
-//				addSlot(new SlotGhostItem(itemInventory, j + i * 3, 26 + j * 18, 15 + i * 18));
+				this.addSlot(new SlotGhostItem(inventoryFilter, j + i * 3, 110 + j * 21, 15 + i * 21));
 			}
 		}
 
@@ -60,7 +56,7 @@ public class ContainerFilter extends AbstractContainerMenu
 		{
 			for (int columnIndex = 0; columnIndex < PLAYER_INVENTORY_COLUMNS; ++columnIndex)
 			{
-				this.addSlot(new Slot(player.getInventory(), columnIndex + rowIndex * 9 + 9, 8 + columnIndex * 18, 105 + rowIndex * 18));
+				this.addSlot(new Slot(playerInv, columnIndex + rowIndex * 9 + 9, 8 + columnIndex * 18, 105 + rowIndex * 18));
 			}
 		}
 
@@ -68,10 +64,10 @@ public class ContainerFilter extends AbstractContainerMenu
 		{
 			if (actionBarIndex == currentSlotHeldIn)
 			{
-				this.addSlot(new SlotDisabled(player.getInventory(), actionBarIndex, 8 + actionBarIndex * 18, 163));
+				this.addSlot(new SlotDisabled(playerInv, actionBarIndex, 8 + actionBarIndex * 18, 163));
 			} else
 			{
-				this.addSlot(new Slot(player.getInventory(), actionBarIndex, 8 + actionBarIndex * 18, 163));
+				this.addSlot(new Slot(playerInv, actionBarIndex, 8 + actionBarIndex * 18, 163));
 			}
 		}
 
@@ -79,65 +75,55 @@ public class ContainerFilter extends AbstractContainerMenu
 
 	@Override
 	public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player)
-	{
+    {
+        if (slotId >= 0)
+        {
+            Slot slot = this.slots.get(slotId);
 
-		Inventory inventoryPlayer = player.getInventory();
-//      if (!player.worldObj.isRemote)
-		{
-			if (slotId >= 0)
-			{
-				Slot slot = this.slots.get(slotId);
+            if (slot instanceof SlotGhostItem)
+            {
+                lastGhostSlotClicked = slot.getSlotIndex();
+                if ((dragType == 0 || dragType == 1))
+                {
+                    ItemStack slotStack = slot.getItem();
+                    ItemStack heldStack = this.getCarried();
 
-				if (slot instanceof SlotGhostItem) // TODO: make the slot clicking work!
-				{
-					lastGhostSlotClicked = slot.getSlotIndex();
-					if ((dragType == 0 || dragType == 1))
-					{
-						ItemStack slotStack = slot.getItem();
-						ItemStack heldStack = this.getCarried();
-
-						if (dragType == 0) // Left mouse click-eth
-						{
-							{
-								if (heldStack.isEmpty() && !slotStack.isEmpty())
-								{
-									// I clicked on the slot with an empty hand. Selecting!
-									// Return here to not save the server-side inventory
+                    if (dragType == 0) // Left mouse click-eth
+                    {
+                        if (heldStack.isEmpty() && !slotStack.isEmpty())
+                        {
+                            // I clicked on the slot with an empty hand. Selecting!
+                            // Return here to not save the server-side inventory
 //									return ItemStack.EMPTY;
-									return;
-								} else if (!heldStack.isEmpty() && slotStack.isEmpty())
-								{
-									if (!((SlotGhostItem) slot).canBeAccessed())
-									{
-										super.clicked(slotId, dragType, clickTypeIn, player);
-										return;
-									}
-
-									ItemStack copyStack = heldStack.copy();
-									GhostItemHelper.setItemGhostAmount(copyStack, 0);
-									copyStack.setCount(1);
-									slot.set(copyStack);
+                            return;
+                        } else if (!heldStack.isEmpty() && slotStack.isEmpty())
+                        {
+                            ItemStack copyStack = heldStack.copy();
+                            GhostItemHelper.setItemGhostAmount(copyStack, 0); // here we set to 0, but thats if the slot was previously empty
+                            copyStack.setCount(1);
+                            slot.set(copyStack);
 
 //									ItemStack filterStack = this.filterStack;
+
+                                    /* this does literally the same thing, so might as well cut it out
 									if (filterStack.getItem() instanceof IRoutingFilterProvider)
 									{
 										ItemStack filterCopy = ((IRoutingFilterProvider) filterStack.getItem()).getContainedStackForItem(filterStack, heldStack);
 										slot.set(filterCopy);
 									}
-								}
-							}
-						} else
-						// Right mouse click-eth away
-						{
-							slot.set(ItemStack.EMPTY);
-						}
-					}
-				}
-			}
-		}
+                                     */
+                        }
+                    } else
+                    // Right mouse click-eth away
+                    {
+                        slot.set(ItemStack.EMPTY);
+                    }
+                }
+            }
+        }
 
-		super.clicked(slotId, dragType, clickTypeIn, player);
-	}
+        super.clicked(slotId, dragType, clickTypeIn, player);
+    }
 
 	@Override
 	public boolean stillValid(Player entityPlayer)
@@ -145,29 +131,13 @@ public class ContainerFilter extends AbstractContainerMenu
 		return true;
 	}
 
-	@Override
-	public void removed(Player entityPlayer)
-	{
-		super.removed(entityPlayer);
+    @Override
+    public void removed(Player p_38940_) {
+        super.removed(p_38940_);
+        player.getMainHandItem().setTag(inventoryFilter.serializeNBT()); // can only ever be in this menu if item is in main hand -> this wont work in 1.21 due to the edit button btw
+    }
 
-		if (!entityPlayer.getCommandSenderWorld().isClientSide)
-		{
-			saveInventory(entityPlayer);
-		}
-	}
-
-	@Override
-	public void broadcastChanges()
-	{
-		super.broadcastChanges();
-
-		if (!player.getCommandSenderWorld().isClientSide)
-		{
-			saveInventory(player);
-		}
-	}
-
-	@Override
+    @Override
 	public ItemStack quickMoveStack(Player entityPlayer, int slotIndex)
 	{
 		ItemStack itemstack = ItemStack.EMPTY;
@@ -212,35 +182,13 @@ public class ContainerFilter extends AbstractContainerMenu
 		return itemstack;
 	}
 
-	public void saveInventory(Player entityPlayer)
+	public class SlotGhostItem extends SlotItemHandler
 	{
-		inventoryFilter.onGuiSaved(entityPlayer);
-	}
+        public SlotGhostItem(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
+            super(itemHandler, index, xPosition, yPosition);
+        }
 
-	public class SlotGhostItem extends Slot
-	{
-		private final Player player;
-		private ContainerFilter containerHolding;
-
-		public SlotGhostItem(ContainerFilter containerHolding, Container inventory, Player player, int slotIndex, int x, int y)
-		{
-			super(inventory, slotIndex, x, y);
-			this.player = player;
-			this.containerHolding = containerHolding;
-		}
-
-		@Override
-		public void setChanged()
-		{
-			super.setChanged();
-
-			if (EffectiveSide.get().isServer())
-			{
-				containerHolding.saveInventory(player);
-			}
-		}
-
-		@Override
+        @Override
 		public boolean mayPlace(ItemStack stack)
 		{
 			return false;
@@ -250,11 +198,6 @@ public class ContainerFilter extends AbstractContainerMenu
 		public boolean mayPickup(Player playerIn)
 		{
 			return false;
-		}
-
-		public boolean canBeAccessed()
-		{
-			return containerHolding.inventoryFilter.canInventoryBeManipulated();
 		}
 	}
 

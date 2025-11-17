@@ -31,7 +31,12 @@ import java.util.stream.Stream;
 
 public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilterProvider
 {
-	protected IItemFilter getFilterTypeFromConfig(ItemStack filterStack)
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("gui.bloodmagic.filter.tag");
+    }
+
+    protected IItemFilter getFilterTypeFromConfig(ItemStack filterStack)
 	{
 		int state = getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
 		if (state == 1)

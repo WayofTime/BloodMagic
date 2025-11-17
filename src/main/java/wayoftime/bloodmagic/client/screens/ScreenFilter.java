@@ -18,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang3.tuple.Pair;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.container.item.ContainerFilter;
+import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
 import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
 import wayoftime.bloodmagic.network.RouterFilterPacket;
 import wayoftime.bloodmagic.util.GhostItemHelper;
@@ -29,7 +30,7 @@ import java.util.Optional;
 public class ScreenFilter extends ScreenBase<ContainerFilter>
 {
 	private static final ResourceLocation background = BloodMagic.rl("textures/gui/routingfilter.png");
-	public Container filterInventory;
+	public InventoryFilter filterInventory;
 	private Player player;
 	private int left, top;
 

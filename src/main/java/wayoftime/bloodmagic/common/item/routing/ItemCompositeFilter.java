@@ -39,7 +39,12 @@ public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvide
 		super();
 	}
 
-	@Override
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("gui.bloodmagic.filter.composite");
+    }
+
+    @Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack filterStack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
@@ -104,19 +109,6 @@ public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvide
 		}
 
 //		super.addInformation(filterStack, world, tooltip, flag);
-	}
-
-	@Override
-	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
-	{
-		ItemStack stack = player.getItemInHand(hand);
-		List<ItemStack> nestedFilters = getNestedFilters(stack);
-		if (nestedFilters.size() > 0)
-		{
-			return super.use(world, player, hand);
-		}
-
-		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 	}
 
 	protected IItemFilter getFilterTypeFromConfig(ItemStack filterStack)
