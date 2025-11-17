@@ -23,22 +23,28 @@ public class ContainerFilter extends AbstractContainerMenu
 	private final int PLAYER_INVENTORY_ROWS = 3;
 	private final int PLAYER_INVENTORY_COLUMNS = 9;
 	public final Player player;
+    public final boolean hasTag;
+    public final boolean hasEnchant;
+    public final boolean hasEnchantLvl;
 
 	public int lastGhostSlotClicked = -1;
 	private int slotsOccupied = 9;
 
-	public ContainerFilter(int windowId, Inventory playerInventory)
+	public ContainerFilter(int windowId, Inventory playerInventory, FriendlyByteBuf buf)
 	{
-		this(windowId, playerInventory.player, playerInventory, new InventoryFilter(9));
+		this(windowId, playerInventory.player, playerInventory, new InventoryFilter(9), buf.readBoolean(), buf.readBoolean(), buf.readBoolean());
 	}
 
-	public ContainerFilter(int windowId, Player player, Inventory playerInventory, InventoryFilter filterInv)
+	public ContainerFilter(int windowId, Player player, Inventory playerInventory, InventoryFilter filterInv, boolean hasTag, boolean hasEnchant, boolean hasEnchantLvl)
 	{
 		super(BloodMagicBlocks.FILTER_CONTAINER.get(), windowId);
 		this.player = player;
 		this.inventoryFilter = filterInv;
 		int currentSlotHeldIn = player.getInventory().selected;
 		this.setup(playerInventory, currentSlotHeldIn);
+        this.hasTag = hasTag;
+        this.hasEnchant = hasEnchant;
+        this.hasEnchantLvl = hasEnchantLvl;
 	}
 
 	public void setup(Inventory playerInv, int currentSlotHeldIn)

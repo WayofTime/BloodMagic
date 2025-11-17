@@ -32,6 +32,7 @@ import wayoftime.bloodmagic.common.item.inventory.ItemInventory;
 import wayoftime.bloodmagic.common.routing.BasicItemFilter;
 import wayoftime.bloodmagic.common.routing.BlacklistItemFilter;
 import wayoftime.bloodmagic.common.routing.IItemFilter;
+import wayoftime.bloodmagic.util.BMLog;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.GhostItemHelper;
 import wayoftime.bloodmagic.util.Utils;
@@ -46,7 +47,6 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 
 	public static final String FILTER_INV = "filterInventory";
 
-    public boolean HAS_BWLIST = true;
     public boolean HAS_TAG = false;
     public boolean HAS_ENCHANT_KIND = false;
     public boolean HAS_ENCHANT_LEVEL = false;
@@ -79,7 +79,11 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 		{
 			if (player instanceof ServerPlayer)
 			{
-				NetworkHooks.openScreen((ServerPlayer) player, this);
+				NetworkHooks.openScreen((ServerPlayer) player, this, buf -> {
+                    buf.writeBoolean(HAS_TAG);
+                    buf.writeBoolean(HAS_ENCHANT_KIND);
+                    buf.writeBoolean(HAS_ENCHANT_LEVEL);
+                });
 			}
 		}
 
@@ -88,38 +92,73 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 
 	@Override
 	public AbstractContainerMenu createMenu(int containerId, Inventory playerInv, Player player)
-	{
-		assert player.getCommandSenderWorld() != null;
+    {
+        assert player.getCommandSenderWorld() != null;
         ItemStack stack = player.getMainHandItem();
+        List<Integer> content = new ArrayList<>(1 + 3 * 9);
+        CompoundTag tag = stack.getOrCreateTag();
+
         InventoryFilter filterInv = new InventoryFilter(9) {
             @Override
-            public void setStackInSlot(int slot, @NotNull ItemStack stack) {
+            public void setStackInSlot(int slot, @NotNull ItemStack contentStack) {
                 super.setStackInSlot(slot, stack);
-                // save NBT here
-            }
-        };
-        List<Integer> content = new ArrayList<>(1 + 3 * 9);
-        if (stack.hasTag()) {
-            CompoundTag tag = stack.getTag();
-            filterInv.deserializeNBT(tag);
-            content.add(tag.getInt(Constants.BUTTONID.BLACKWHITELIST));
-        }
-        DataFilter data = new DataFilter(List.of()) {
-            @Override
-            public void save(int index) {
-                if (index == DATA_BWLIST) {
-                    // this is global, just write state as NBT to Constant.BUTTONID.BLACKWHITELIST
-                    return;
-                }
-                // locate which kind
-                // offset = index - DATA_whatever
-                // get Constant.BUTTONID.{thing}
-                // write state as NBT to constant + offset
+                // save NBT here, ALSO print the NBT here to make sure it gets the ghost size on server side!
+                tag.put(Constants.NBT.ITEM_INVENTORY, this.serializeNBT());
+                stack.setTag(tag);
+                BMLog.DEFAULT.info("Stack saved in slot {} has the following tag: '{}'\nNew filter NBT: '{}'", slot, contentStack.getTag(), stack.getTag()); // dont create it here, if its null I wanna know
             }
         };
 
-		return new ContainerFilter(containerId, player, playerInv, filterInv, HAS_BWLIST, HAS_TAG, HAS_ENCHANT_KIND, HAS_ENCHANT_LEVEL);
-	}
+        filterInv.deserializeNBT(tag.getCompound(Constants.NBT.ITEM_INVENTORY));
+        if (tag.contains(Constants.BUTTONID.BLACKWHITELIST)) {
+            content.set(0, tag.getInt(Constants.BUTTONID.BLACKWHITELIST));
+        }
+        for (int i = 0; i < 9; i++) {
+            if (tag.contains(Constants.BUTTONID.ITEMTAG + i)) {
+                content.set(DATA_TAG + i, tag.getInt(Constants.BUTTONID.ITEMTAG));
+            }
+            if (tag.contains(Constants.BUTTONID.ENCHANT + i)) {
+                content.set(DATA_ENCHANT + i, tag.getInt(Constants.BUTTONID.ENCHANT));
+            }
+            if (tag.contains(Constants.BUTTONID.ENCHANT_LVL + i)) {
+                content.set(DATA_ENCHANT_LVL + i, tag.getInt(Constants.BUTTONID.ENCHANT_LVL));
+            }
+        }
+
+        DataFilter data = new DataFilter(content) {
+            @Override
+            public void save(int index) {
+                if (index == DATA_BWLIST) {
+                    tag.putInt(Constants.BUTTONID.BLACKWHITELIST, content.get(index));
+                    stack.setTag(tag);
+                    return;
+                }
+
+                String nbt = "";
+                int offset = -1;
+                if (index >= DATA_ENCHANT_LVL) {
+                    nbt = Constants.BUTTONID.ENCHANT_LVL;
+                    offset = index - DATA_ENCHANT_LVL;
+                } else if (index >= DATA_ENCHANT) {
+                    nbt = Constants.BUTTONID.ENCHANT;
+                    offset = index - DATA_ENCHANT;
+                } else if (index >= DATA_TAG) {
+                    nbt = Constants.BUTTONID.ITEMTAG;
+                    offset = index - DATA_TAG;
+                }
+
+                if (nbt.equalsIgnoreCase("") || offset == -1) {
+                    BMLog.DEFAULT.warn("Trying to save index {} but its unknown", index);
+                    return;
+                }
+
+                tag.putInt(nbt + offset, content.get(index));
+                stack.setTag(tag);
+            }
+        };
+
+        return new ContainerFilter(containerId, player, playerInv, filterInv, HAS_TAG, HAS_ENCHANT_KIND, HAS_ENCHANT_LEVEL);
+    }
 
 	@Override
 	public Component getDisplayName()
@@ -154,17 +193,23 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 		return new BasicFilterKey(ghostStack, amount);
 	}
 
+    public static InventoryFilter getInv(ItemStack filterStack) {
+        InventoryFilter ret = new InventoryFilter(9);
+        ret.deserializeNBT(filterStack.getOrCreateTag().getCompound(Constants.NBT.ITEM_INVENTORY));
+        return ret;
+    }
+
 	@Override
 	public IItemFilter getInputItemFilter(ItemStack filterStack, BlockEntity tile, IItemHandler handler)
 	{
 		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
 
 		List<IFilterKey> filteredList = new ArrayList<>();
-		ItemInventory inv = new InventoryFilter(filterStack);
+		InventoryFilter inv = getInv(filterStack);
 
-		for (int i = 0; i < inv.getContainerSize(); i++)
+		for (int i = 0; i < inv.getSlots(); i++)
 		{
-			ItemStack stack = inv.getItem(i);
+			ItemStack stack = inv.getStackInSlot(i);
 			if (stack.isEmpty())
 			{
 				continue;
@@ -188,11 +233,11 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
 
 		List<IFilterKey> filteredList = new ArrayList<>();
-		ItemInventory inv = new InventoryFilter(filterStack); // TODO: Change to grab the filter from the Item
+		InventoryFilter inv = getInv(filterStack);
 
-		for (int i = 0; i < inv.getContainerSize(); i++)
+		for (int i = 0; i < inv.getSlots(); i++)
 		{
-			ItemStack stack = inv.getItem(i);
+			ItemStack stack = inv.getStackInSlot(i);
 			if (stack.isEmpty())
 			{
 				continue;
@@ -218,13 +263,16 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 	@Override
 	public void setGhostItemAmount(ItemStack filterStack, int ghostItemSlot, int amount)
 	{
-		ItemInventory inv = new InventoryFilter(filterStack);
-		ItemStack stack = inv.getItem(ghostItemSlot);
+		InventoryFilter inv = getInv(filterStack);
+		ItemStack stack = inv.getStackInSlot(ghostItemSlot);
 		if (!stack.isEmpty())
 		{
 			GhostItemHelper.setItemGhostAmount(stack, amount);
 
-			inv.writeToStack(filterStack);
+			CompoundTag tag = filterStack.getTag();
+
+            tag.put(Constants.NBT.ITEM_INVENTORY, inv.serializeNBT());
+            filterStack.setTag(tag);
 		}
 	}
 
@@ -335,11 +383,11 @@ public class ItemRouterFilter extends Item implements MenuProvider, IItemFilterP
 		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
 
 		List<IFilterKey> filteredList = new ArrayList<>();
-		ItemInventory inv = new InventoryFilter(filterStack);
+		InventoryFilter inv = getInv(filterStack);
 
-		for (int i = 0; i < inv.getContainerSize(); i++)
+		for (int i = 0; i < inv.getSlots(); i++)
 		{
-			ItemStack stack = inv.getItem(i);
+			ItemStack stack = inv.getStackInSlot(i);
 			if (stack.isEmpty())
 			{
 				continue;

@@ -2,14 +2,16 @@ package wayoftime.bloodmagic.common.item.inventory;
 
 import net.minecraft.world.inventory.ContainerData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class DataFilter implements ContainerData {
 
-    private final List<Integer> content;
+    public final List<Integer> content;
 
     public DataFilter(List<Integer> buttonStates) {
-        this.content = buttonStates;
+        // copy so neither this nor the caller do weird stuff for whatever reason
+        this.content = new ArrayList<>(buttonStates);
     }
 
     @Override

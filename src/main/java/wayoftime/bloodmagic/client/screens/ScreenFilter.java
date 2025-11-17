@@ -279,6 +279,7 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY)
 	{
 //		this.font.draw(stack, new TranslationTextComponent("tile.bloodmagic.alchemytable.name"), 8, 5, 4210752);
+        // TODO these should probably be replaced by super.renderLabels()
 		guiGraphics.drawString(this.font, Component.translatable("container.inventory"), 8, 93, 4210752, false);
 		guiGraphics.drawString(this.font, container.filterStack.getHoverName(), 8, 4, 4210752, false);
 
@@ -286,8 +287,11 @@ public class ScreenFilter extends ScreenBase<ContainerFilter>
 		{
 			for (int i = 0; i < numberOfAddedButtons; i++)
 			{
+                // TODO move getCurrentButtonState to static? method on here and unify them, the buttons all have set IDs
 				int currentButtonState = ((IItemFilterProvider) container.filterStack.getItem()).getCurrentButtonState(container.filterStack, buttonKeyList.get(i), container.lastGhostSlotClicked);
+                // TODO check if its fine, but should
 				Pair<Integer, Integer> buttonLocation = getButtonLocation(i);
+                // TODO check if the 1.21 thingies exist and use those instead
 				Pair<Integer, Integer> textureLocation = ((IItemFilterProvider) container.filterStack.getItem()).getTexturePositionForState(container.filterStack, buttonKeyList.get(i), currentButtonState);
 
 				int w = 20;

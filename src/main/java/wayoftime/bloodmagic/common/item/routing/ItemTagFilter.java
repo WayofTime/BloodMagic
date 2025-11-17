@@ -31,6 +31,9 @@ import java.util.stream.Stream;
 
 public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilterProvider
 {
+
+    public boolean HAS_TAG = true;
+
     @Override
     public Component getDisplayName() {
         return Component.translatable("gui.bloodmagic.filter.tag");

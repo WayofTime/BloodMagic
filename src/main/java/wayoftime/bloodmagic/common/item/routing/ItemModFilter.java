@@ -55,10 +55,10 @@ public class ItemModFilter extends ItemRouterFilter implements INestableItemFilt
 			{
 				tooltip.add(Component.translatable("tooltip.bloodmagic.filter.blacklist").withStyle(ChatFormatting.GRAY));
 			}
-			ItemInventory inv = new InventoryFilter(filterStack);
-			for (int i = 0; i < inv.getContainerSize(); i++)
+			InventoryFilter inv = getInv(filterStack);
+			for (int i = 0; i < inv.getSlots(); i++)
 			{
-				ItemStack stack = inv.getItem(i);
+				ItemStack stack = inv.getStackInSlot(i);
 				if (stack.isEmpty())
 				{
 					continue;
