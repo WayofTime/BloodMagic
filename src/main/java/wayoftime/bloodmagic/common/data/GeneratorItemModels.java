@@ -53,6 +53,7 @@ public class GeneratorItemModels extends ItemModelProvider {
         for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_STAIR.getEntries()) {
             registerBlockModel(block.get());
         }
+        registerBlockModel(BloodMagicBlocks.DUNGEON_BRICK_STAIRS.get());
 
         for (RegistryObject<Block> block : BloodMagicBlocks.DECORATIVE_GATE.getEntries()) {
             registerBlockModel(block.get());

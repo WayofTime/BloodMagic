@@ -205,6 +205,7 @@ public class GeneratorItemTags extends ItemTagsProvider
 		tag(BloodMagicTags.PICKAXES).add(Items.DIAMOND_PICKAXE, Items.GOLDEN_PICKAXE, Items.IRON_PICKAXE, Items.NETHERITE_PICKAXE, Items.STONE_PICKAXE, Items.WOODEN_PICKAXE, BloodMagicItems.SENTIENT_PICKAXE.get());
 		tag(BloodMagicTags.HOES).add(Items.DIAMOND_HOE, Items.GOLDEN_HOE, Items.IRON_HOE, Items.NETHERITE_HOE, Items.STONE_HOE, Items.WOODEN_HOE, BloodMagicItems.SENTIENT_SCYTHE.get());
         tag(BloodMagicTags.SCYTHES).add(BloodMagicItems.SENTIENT_SCYTHE.get());
+        tag(ItemTags.CLUSTER_MAX_HARVESTABLES).add(BloodMagicItems.SENTIENT_PICKAXE.get());
 
         tag(Tags.Items.ARMORS_HELMETS).add(BloodMagicItems.LIVING_HELMET.get());
         tag(Tags.Items.ARMORS_CHESTPLATES).add(BloodMagicItems.LIVING_PLATE.get());

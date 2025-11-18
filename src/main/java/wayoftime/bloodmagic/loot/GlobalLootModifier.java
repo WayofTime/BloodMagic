@@ -29,6 +29,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.anointment.AnointmentData;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
@@ -69,6 +70,11 @@ public class GlobalLootModifier
 			{
 				return generatedLoot;
 			}
+            AnointmentData data = holder.getAnointments().get(AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get());
+            if (data.getDamage() == data.getMaxDamage()) { // dont work with charges, they all have 1 used out of 1 max -> 0 durability
+                return generatedLoot;
+            }
+
 			ItemStack fakeTool = ctxTool.copy();
 			fakeTool.enchant(Enchantments.SILK_TOUCH, 1);
 			LootParams.Builder builder = new LootParams.Builder(context.getLevel());
@@ -129,6 +135,10 @@ public class GlobalLootModifier
 			{
 				return generatedLoot;
 			}
+            AnointmentData data = holder.getAnointments().get(AnointmentRegistrar.ANOINTMENT_FORTUNE.get());
+            if (data.getDamage() == data.getMaxDamage()) { // dont work with charges, they all have 1 used out of 1 max -> 0 durability
+                return generatedLoot;
+            }
 
 			ItemStack fakeTool = ctxTool.copy();
 			fakeTool.getOrCreateTag().putBoolean("bloodmagic:checked_fortune", true);
@@ -264,6 +274,10 @@ public class GlobalLootModifier
 			{
 				return generatedLoot;
 			}
+            AnointmentData data = holder.getAnointments().get(AnointmentRegistrar.ANOINTMENT_SMELTING.get());
+            if (data.getDamage() == data.getMaxDamage()) { // dont work with charges, they all have 1 used out of 1 max -> 0 durability
+                return generatedLoot;
+            }
 
 			ObjectArrayList<ItemStack> ret = new ObjectArrayList<>();
 			generatedLoot.forEach((stack) -> ret.add(smelt(stack, context)));
@@ -326,6 +340,10 @@ public class GlobalLootModifier
 			{
 				return generatedLoot;
 			}
+            AnointmentData data = holder.getAnointments().get(AnointmentRegistrar.ANOINTMENT_VOIDING.get());
+            if (data.getDamage() == data.getMaxDamage()) { // dont work with charges, they all have 1 used out of 1 max -> 0 durability
+                return generatedLoot;
+            }
 
 			ObjectArrayList<ItemStack> ret = new ObjectArrayList<>();
 //			generatedLoot.forEach((stack) -> ret.add(smelt(stack, context)));
