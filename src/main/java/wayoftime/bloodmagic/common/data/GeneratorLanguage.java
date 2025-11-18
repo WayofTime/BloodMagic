@@ -161,6 +161,11 @@ public class GeneratorLanguage extends LanguageProvider
 		add("filter.bloodmagic.enchantnotfuzzy", "Exact Level");
 //		add("filter.bloodmagic.specifiedenchant", "Valid Tag:");
 
+        add("gui.bloodmagic.filter.standard", "Standard Filter");
+        add("gui.bloodmagic.filter.tag", "Tag Filter");
+        add("gui.bloodmagic.filter.enchant", "Enchantment Filter");
+        add("gui.bloodmagic.filter.mod", "Mod Filter");
+
 		add("trainer.bloodmagic.whitelist", "Deny other upgrades");
 		add("trainer.bloodmagic.blacklist", "Allow other upgrades");
 		add("trainer.bloodmagic.allowupgrade", "Allow up to: %s %s");

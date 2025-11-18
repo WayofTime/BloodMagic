@@ -27,10 +27,12 @@ import java.util.Map.Entry;
 
 public class ItemEnchantFilterCore extends ItemRouterFilter implements INestableItemFilterProvider
 {
-    public boolean HAS_ENCHANT_KIND = true;
-    public boolean HAS_ENCHANT_LEVEL = true;
+    @Override
+    public boolean hasEnchantButtons() {
+        return true;
+    }
 
-	public ItemEnchantFilterCore()
+    public ItemEnchantFilterCore()
 	{
 		super();
 	}

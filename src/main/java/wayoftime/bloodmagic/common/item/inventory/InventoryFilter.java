@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.common.item.inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
+import wayoftime.bloodmagic.common.item.routing.ItemRouterFilter;
 
 public class InventoryFilter extends ItemStackHandler {
     public InventoryFilter(int size) {

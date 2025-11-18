@@ -176,7 +176,8 @@ public class Constants
 
         public static final String DUNGEON_EXIT = "dungeon_exit";
 
-	}
+        public static final String SELECTED_SLOT = "selected_slot";
+    }
 
 	public static class BUTTONID
 	{

@@ -24,6 +24,28 @@ import java.util.List;
 
 public class ItemStandardFilter extends ItemCompositeFilter
 {
+    // of course this inherits from composite... anyways, copy-paste from IRF
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (hand == InteractionHand.OFF_HAND) {
+            return InteractionResultHolder.pass(stack);
+        }
+
+		if (!world.isClientSide)
+		{
+			if (player instanceof ServerPlayer)
+			{
+				NetworkHooks.openScreen((ServerPlayer) player, this, buf -> {
+                    buf.writeBoolean(hasTagButton());
+                    buf.writeBoolean(hasEnchantButtons());
+                });
+			}
+		}
+
+		return new InteractionResultHolder<>(InteractionResult.sidedSuccess(world.isClientSide), stack);
+    }
+
     @Override
     public Component getDisplayName() {
         return Component.translatable("gui.bloodmagic.filter.standard");

@@ -1,21 +1,33 @@
 package wayoftime.bloodmagic.common.container.item;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fml.util.thread.EffectiveSide;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
+import wayoftime.bloodmagic.common.item.inventory.DataFilter;
 import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
 import wayoftime.bloodmagic.common.item.routing.IRoutingFilterProvider;
+import wayoftime.bloodmagic.common.item.routing.ItemRouterFilter;
+import wayoftime.bloodmagic.util.BMLog;
+import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.GhostItemHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class ContainerFilter extends AbstractContainerMenu
 {
@@ -23,28 +35,32 @@ public class ContainerFilter extends AbstractContainerMenu
 	private final int PLAYER_INVENTORY_ROWS = 3;
 	private final int PLAYER_INVENTORY_COLUMNS = 9;
 	public final Player player;
-    public final boolean hasTag;
-    public final boolean hasEnchant;
-    public final boolean hasEnchantLvl;
-
-	public int lastGhostSlotClicked = -1;
+    public final boolean isTag;
+    public final boolean isEnchant;
+    private final DataFilter data;
 	private int slotsOccupied = 9;
 
 	public ContainerFilter(int windowId, Inventory playerInventory, FriendlyByteBuf buf)
 	{
-		this(windowId, playerInventory.player, playerInventory, new InventoryFilter(9), buf.readBoolean(), buf.readBoolean(), buf.readBoolean());
+		this(windowId, playerInventory.player, playerInventory, new InventoryFilter(9), new DataFilter(2 + 3 * 9) {
+            @Override
+            public void save(int index) {
+                BMLog.DEFAULT.info("client says hi. also index {}", index);
+            }
+        }, buf.readBoolean(), buf.readBoolean());
 	}
 
-	public ContainerFilter(int windowId, Player player, Inventory playerInventory, InventoryFilter filterInv, boolean hasTag, boolean hasEnchant, boolean hasEnchantLvl)
+	public ContainerFilter(int windowId, Player player, Inventory playerInventory, InventoryFilter filterInv, DataFilter data, boolean isTag, boolean isEnchant)
 	{
 		super(BloodMagicBlocks.FILTER_CONTAINER.get(), windowId);
+        this.addDataSlots(data);
 		this.player = player;
 		this.inventoryFilter = filterInv;
 		int currentSlotHeldIn = player.getInventory().selected;
 		this.setup(playerInventory, currentSlotHeldIn);
-        this.hasTag = hasTag;
-        this.hasEnchant = hasEnchant;
-        this.hasEnchantLvl = hasEnchantLvl;
+        this.isTag = isTag;
+        this.isEnchant = isEnchant;
+        this.data = data;
 	}
 
 	public void setup(Inventory playerInv, int currentSlotHeldIn)
@@ -79,7 +95,73 @@ public class ContainerFilter extends AbstractContainerMenu
 
 	}
 
-	@Override
+    public int getData(int index) {
+        return data.get(index);
+    }
+
+    @Override
+    public boolean clickMenuButton(Player player, int buttonId) {
+        return switch (buttonId) {
+            case ItemRouterFilter.BUTTON_BWLIST -> {
+                int state = data.get(ItemRouterFilter.DATA_BWLIST);
+                setData(ItemRouterFilter.DATA_BWLIST, state == 0 ? 1 : 0);
+                yield true;
+            }
+            case ItemRouterFilter.BUTTON_ENCHANT_LEVEL -> {
+                int slot = data.get(ItemRouterFilter.DATA_SLOT);
+                int state = data.get(ItemRouterFilter.DATA_ENCHANT_LVL + slot);
+                setData(ItemRouterFilter.DATA_ENCHANT_LVL + slot, state == 0 ? 1 : 0);
+                yield true;
+            }
+            case ItemRouterFilter.BUTTON_TAG -> {
+                int slot = data.get(ItemRouterFilter.DATA_SLOT);
+                int state = data.get(ItemRouterFilter.DATA_TAG + slot) + 1;
+
+                ItemStack tagStack = inventoryFilter.getStackInSlot(slot);
+                if (tagStack.isEmpty()) {
+                    yield false;
+                }
+                List<TagKey<Item>> tagList = new ArrayList<>();
+                tagStack.getTags().forEach(tagList::add);
+
+                if (state > tagList.size()) { // size 9, last index 8, would be 9 with 0 being any + 1 from above would be 10 -> 0. seems to check out
+                    state = 0;
+                }
+                CompoundTag tag = tagStack.getOrCreateTag();
+                if (state != 0) {
+                    tag.putString(Constants.NBT.TAG, tagList.get(state - 1).location().toString());
+                } else {
+                    tag.remove(Constants.NBT.TAG);
+                }
+                tagStack.setTag(tag);
+                getSlot(slot).set(tagStack);
+
+                setData(ItemRouterFilter.DATA_TAG + slot, state);
+                yield true;
+            }
+            case ItemRouterFilter.BUTTON_ENCHANT_KIND -> {
+                int slot = data.get(ItemRouterFilter.DATA_SLOT);
+                int state = data.get(ItemRouterFilter.DATA_ENCHANT + slot) + 1;
+                ItemStack enchStack = inventoryFilter.getStackInSlot(slot);
+                if (enchStack.isEmpty()) {
+                    yield false;
+                }
+                Map<Enchantment, Integer> enchMap = EnchantmentHelper.getEnchantments(enchStack);
+                if (state >= enchMap.size() + 2 || enchMap.isEmpty()) {
+                    state = 0;
+                }
+                if (enchMap.size() == 1 && state == 1) { // state would have been 0 before, so changing from 1 to 2 means skipping over "any" if there is only 1 enchant since it'd be the same as "every"
+                    state = 2;
+                }
+
+                setData(ItemRouterFilter.DATA_ENCHANT + slot, state);
+                yield true;
+            }
+            default -> false;
+        };
+    }
+
+    @Override
 	public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player)
     {
         if (slotId >= 0)
@@ -88,7 +170,8 @@ public class ContainerFilter extends AbstractContainerMenu
 
             if (slot instanceof SlotGhostItem)
             {
-                lastGhostSlotClicked = slot.getSlotIndex();
+                setData(ItemRouterFilter.DATA_SLOT, slot.getSlotIndex());
+
                 if ((dragType == 0 || dragType == 1))
                 {
                     ItemStack slotStack = slot.getItem();
@@ -131,17 +214,17 @@ public class ContainerFilter extends AbstractContainerMenu
         super.clicked(slotId, dragType, clickTypeIn, player);
     }
 
-	@Override
+    @Override
+    public void setData(int p_38855_, int p_38856_) {
+        super.setData(p_38855_, p_38856_);
+        broadcastChanges();
+    }
+
+    @Override
 	public boolean stillValid(Player entityPlayer)
 	{
 		return true;
 	}
-
-    @Override
-    public void removed(Player p_38940_) {
-        super.removed(p_38940_);
-        player.getMainHandItem().setTag(inventoryFilter.serializeNBT()); // can only ever be in this menu if item is in main hand -> this wont work in 1.21 due to the edit button btw
-    }
 
     @Override
 	public ItemStack quickMoveStack(Player entityPlayer, int slotIndex)

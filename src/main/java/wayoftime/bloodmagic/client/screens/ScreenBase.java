@@ -13,7 +13,7 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
 {
 	private static final ResourceLocation background = new ResourceLocation(BloodMagic.MODID, "textures/gui/soulforge.png");
 
-	protected final T container;
+	public final T container;
 
 	public ScreenBase(T container, Inventory playerInventory, Component title)
 	{

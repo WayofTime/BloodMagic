@@ -40,6 +40,12 @@ public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvide
 	}
 
     @Override
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+        // pretty sure this isnt supposed to have a menu, so we stop this here
+        return InteractionResultHolder.pass(player.getItemInHand(hand));
+    }
+
+    @Override
     public Component getDisplayName() {
         return Component.translatable("gui.bloodmagic.filter.composite");
     }

@@ -14,6 +14,13 @@ public abstract class DataFilter implements ContainerData {
         this.content = new ArrayList<>(buttonStates);
     }
 
+    public DataFilter(int size) {
+        this.content = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            content.add(0);
+        }
+    }
+
     @Override
     public int get(int index) {
         return content.get(index);
