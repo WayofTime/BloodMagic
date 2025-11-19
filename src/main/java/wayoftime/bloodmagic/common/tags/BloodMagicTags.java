@@ -137,8 +137,9 @@ public class BloodMagicTags
 	// Modded (for meteor rituals)
 	public static final TagKey<Item> ADVANCED_ALLOY = getForgeAlloyTag("advanced");
 	public static final TagKey<Item> DRAGON_BONE = ItemTags.create(new ResourceLocation("forge:bones"));
+    public static final TagKey<Item> CHARGES = ItemTags.create(BloodMagic.rl("charges"));
 
-	public static class Blocks
+    public static class Blocks
 	{
 		public static final TagKey<Block> MUSHROOM_STEM = BlockTags.create(new ResourceLocation("minecraft:mushroom_stem"));
 		public static final TagKey<Block> MUSHROOM_HYPHAE = BlockTags.create(new ResourceLocation("minecraft:mushroom_hyphae"));

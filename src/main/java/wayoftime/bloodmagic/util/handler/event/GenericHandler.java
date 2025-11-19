@@ -39,6 +39,7 @@ import wayoftime.bloodmagic.anointment.Anointment;
 import wayoftime.bloodmagic.anointment.AnointmentData;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.common.item.*;
+import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.data.Binding;
@@ -919,17 +920,8 @@ public class GenericHandler
 					}
 				}
 
-                Map<Anointment, AnointmentData> map = holder.getAnointments();
-                AnointmentData def = new AnointmentData(0, 0, 1);
-                AnointmentData silkTouch = map.getOrDefault(AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get(), def);
-                AnointmentData fortune = map.getOrDefault(AnointmentRegistrar.ANOINTMENT_FORTUNE.get(), def);
-                AnointmentData voiding = map.getOrDefault(AnointmentRegistrar.ANOINTMENT_VOIDING.get(), def);
-                AnointmentData smelting = map.getOrDefault(AnointmentRegistrar.ANOINTMENT_SMELTING.get(), def);
-                if (silkTouch.getMaxDamage() == silkTouch.getDamage()
-                        || fortune.getMaxDamage() == fortune.getDamage()
-                        || voiding.getMaxDamage() == voiding.getDamage()
-                        || smelting.getMaxDamage() == smelting.getDamage()) {
-                    return; // this is a charge, dont deduce
+                if (heldStack.is(BloodMagicTags.CHARGES)) {
+                    return;
                 }
 				if (holder.consumeAnointmentDurabilityOnHarvest(heldStack, EquipmentSlot.MAINHAND, player) || hasAnointmentChanged) {
                     holder.toItemStack(heldStack);

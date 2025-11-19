@@ -61,6 +61,9 @@ public class GlobalLootModifier
 		@Override
 		protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 			ItemStack ctxTool = context.getParamOrNull(LootContextParams.TOOL);
+            if (ctxTool.is(BloodMagicTags.CHARGES)) {
+                return generatedLoot;
+            }
 			// return early if silk-touch is already applied (otherwise we'll get stuck in
 			// an infinite loop).
 			if (EnchantmentHelper.getEnchantments(ctxTool).containsKey(Enchantments.SILK_TOUCH))
@@ -70,10 +73,6 @@ public class GlobalLootModifier
 			{
 				return generatedLoot;
 			}
-            AnointmentData data = holder.getAnointments().get(AnointmentRegistrar.ANOINTMENT_SILK_TOUCH.get());
-            if (data.getDamage() == data.getMaxDamage()) { // dont work with charges, they all have 1 used out of 1 max -> 0 durability
-                return generatedLoot;
-            }
 
 			ItemStack fakeTool = ctxTool.copy();
 			fakeTool.enchant(Enchantments.SILK_TOUCH, 1);
@@ -121,6 +120,9 @@ public class GlobalLootModifier
 			{
 				return generatedLoot;
 			}
+            if (ctxTool.is(BloodMagicTags.CHARGES)) {
+                return generatedLoot;
+            }
 
 			if (EnchantmentHelper.getEnchantments(ctxTool).containsKey(Enchantments.SILK_TOUCH))
 				return generatedLoot;
@@ -135,10 +137,6 @@ public class GlobalLootModifier
 			{
 				return generatedLoot;
 			}
-            AnointmentData data = holder.getAnointments().get(AnointmentRegistrar.ANOINTMENT_FORTUNE.get());
-            if (data.getDamage() == data.getMaxDamage()) { // dont work with charges, they all have 1 used out of 1 max -> 0 durability
-                return generatedLoot;
-            }
 
 			ItemStack fakeTool = ctxTool.copy();
 			fakeTool.getOrCreateTag().putBoolean("bloodmagic:checked_fortune", true);
@@ -262,6 +260,9 @@ public class GlobalLootModifier
 			{
 				return generatedLoot;
 			}
+            if (ctxTool.is(BloodMagicTags.CHARGES)) {
+                return generatedLoot;
+            }
 
 			AnointmentHolder holder = AnointmentHolder.fromItemStack(ctxTool);
 			if (holder == null)
@@ -274,10 +275,6 @@ public class GlobalLootModifier
 			{
 				return generatedLoot;
 			}
-            AnointmentData data = holder.getAnointments().get(AnointmentRegistrar.ANOINTMENT_SMELTING.get());
-            if (data.getDamage() == data.getMaxDamage()) { // dont work with charges, they all have 1 used out of 1 max -> 0 durability
-                return generatedLoot;
-            }
 
 			ObjectArrayList<ItemStack> ret = new ObjectArrayList<>();
 			generatedLoot.forEach((stack) -> ret.add(smelt(stack, context)));
@@ -328,6 +325,9 @@ public class GlobalLootModifier
 			{
 				return generatedLoot;
 			}
+            if (ctxTool.is(BloodMagicTags.CHARGES)) {
+                return generatedLoot;
+            }
 
 			AnointmentHolder holder = AnointmentHolder.fromItemStack(ctxTool);
 			if (holder == null)
@@ -340,10 +340,6 @@ public class GlobalLootModifier
 			{
 				return generatedLoot;
 			}
-            AnointmentData data = holder.getAnointments().get(AnointmentRegistrar.ANOINTMENT_VOIDING.get());
-            if (data.getDamage() == data.getMaxDamage()) { // dont work with charges, they all have 1 used out of 1 max -> 0 durability
-                return generatedLoot;
-            }
 
 			ObjectArrayList<ItemStack> ret = new ObjectArrayList<>();
 //			generatedLoot.forEach((stack) -> ret.add(smelt(stack, context)));
