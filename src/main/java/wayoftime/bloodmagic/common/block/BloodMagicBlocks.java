@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.common.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;

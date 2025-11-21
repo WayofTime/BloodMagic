@@ -28,6 +28,8 @@ public class GeneratorLanguage extends LanguageProvider
 		//add("chat.bloodmagic.damageSource", "%s's soul became too weak");
 		add("death.attack.sacrifice", "%1$s sacrificed a bit too much LP");
 		add("death.attack.ritual", "%1$s died in a Well of Suffering");
+        add("death.attack.spike", "%1$s was impaled on spikes");
+        add("death.attack.spike.player", "%1$s was impaled on spikes while fighting %2$s");
 
 		// Tile Entitites
 		add("tile.bloodmagic.soulforge.name", "Hellfire Forge");
@@ -158,6 +160,11 @@ public class GeneratorLanguage extends LanguageProvider
 		add("filter.bloodmagic.enchantfuzzy", "Any Level");
 		add("filter.bloodmagic.enchantnotfuzzy", "Exact Level");
 //		add("filter.bloodmagic.specifiedenchant", "Valid Tag:");
+
+        add("gui.bloodmagic.filter.standard", "Standard Filter");
+        add("gui.bloodmagic.filter.tag", "Tag Filter");
+        add("gui.bloodmagic.filter.enchant", "Enchantment Filter");
+        add("gui.bloodmagic.filter.mod", "Mod Filter");
 
 		add("trainer.bloodmagic.whitelist", "Deny other upgrades");
 		add("trainer.bloodmagic.blacklist", "Allow other upgrades");

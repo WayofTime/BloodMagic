@@ -20,6 +20,7 @@ import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
 import wayoftime.bloodmagic.common.item.routing.IFilterKey;
 import wayoftime.bloodmagic.common.item.routing.IItemFilterProvider;
+import wayoftime.bloodmagic.common.item.routing.ItemRouterFilter;
 import wayoftime.bloodmagic.common.routing.IItemFilter;
 import wayoftime.bloodmagic.common.tile.TileAlchemyTable;
 import wayoftime.bloodmagic.common.tile.TileSoulForge;
@@ -191,14 +192,14 @@ public class RitualCrafting extends Ritual
 			return 0;
 		}
 
-		InventoryFilter filterInv = new InventoryFilter(filterStack);
+		InventoryFilter filterInv = ItemRouterFilter.getInv(filterStack);
 
 		List<ItemStack> inputList = new ArrayList<>(4);
 		int slotsFilled = 0;
 
-		for (int i = 0; i < filterInv.getContainerSize(); i++)
+		for (int i = 0; i < filterInv.getSlots(); i++)
 		{
-			ItemStack containedStack = filterInv.getItem(i);
+			ItemStack containedStack = filterInv.getStackInSlot(i);
 			if (!containedStack.isEmpty())
 			{
 				inputList.add(containedStack);
@@ -405,14 +406,14 @@ public class RitualCrafting extends Ritual
 			return 0;
 		}
 
-		InventoryFilter filterInv = new InventoryFilter(filterStack);
+		InventoryFilter filterInv = ItemRouterFilter.getInv(filterStack);
 
 		List<ItemStack> inputList = new ArrayList<>(4);
 		int slotsFilled = 0;
 
-		for (int i = 0; i < filterInv.getContainerSize(); i++)
+		for (int i = 0; i < filterInv.getSlots(); i++)
 		{
-			ItemStack containedStack = filterInv.getItem(i);
+			ItemStack containedStack = filterInv.getStackInSlot(i);
 			if (!containedStack.isEmpty())
 			{
 				inputList.add(containedStack);
@@ -619,12 +620,12 @@ public class RitualCrafting extends Ritual
 			return;
 		}
 
-		InventoryFilter filterInv = new InventoryFilter(filterStack);
+		InventoryFilter filterInv = ItemRouterFilter.getInv(filterStack);
 		CraftingContainer craftingContainer = makeContainer();
 
-		for (int i = 0; i < filterInv.getContainerSize(); i++)
+		for (int i = 0; i < filterInv.getSlots(); i++)
 		{
-			craftingContainer.setItem(i, filterInv.getItem(i));
+			craftingContainer.setItem(i, filterInv.getStackInSlot(i));
 		}
 
 		List<CraftingRecipe> craftingRecipes = level.getRecipeManager().getRecipesFor(RecipeType.CRAFTING, craftingContainer, level);
@@ -694,9 +695,9 @@ public class RitualCrafting extends Ritual
 		List<IFilterKey> filterKeyList = itemRecipeFilter.getFilterList();
 		int filterKeyIndex = 0;
 
-		for (int filterSlot = 0; filterSlot < Math.min(filterInv.getContainerSize(), 9); filterSlot++)
+		for (int filterSlot = 0; filterSlot < Math.min(filterInv.getSlots(), 9); filterSlot++)
 		{
-			ItemStack filterKeyStack = filterInv.getItem(filterSlot);
+			ItemStack filterKeyStack = filterInv.getStackInSlot(filterSlot);
 			if (filterKeyStack.isEmpty())
 			{
 				continue;

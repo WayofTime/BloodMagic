@@ -27,12 +27,23 @@ import java.util.Map.Entry;
 
 public class ItemEnchantFilterCore extends ItemRouterFilter implements INestableItemFilterProvider
 {
-	public ItemEnchantFilterCore()
+    @Override
+    public boolean hasEnchantButtons() {
+        return true;
+    }
+
+    public ItemEnchantFilterCore()
 	{
 		super();
 	}
 
-	@Override
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("gui.bloodmagic.filter.enchant");
+    }
+
+    @Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack filterStack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
@@ -61,10 +72,10 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 				tooltip.add(Component.translatable("tooltip.bloodmagic.filter.blacklist").withStyle(ChatFormatting.GRAY));
 			}
 
-			ItemInventory inv = new InventoryFilter(filterStack);
-			for (int i = 0; i < inv.getContainerSize(); i++)
+			InventoryFilter inv = getInv(filterStack);
+			for (int i = 0; i < inv.getSlots(); i++)
 			{
-				ItemStack stack = inv.getItem(i);
+				ItemStack stack = inv.getStackInSlot(i);
 				if (stack.isEmpty())
 				{
 					continue;
@@ -158,9 +169,9 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 
 	public void cycleToNextEnchant(ItemStack filterStack, int slot)
 	{
-		ItemInventory inv = new InventoryFilter(filterStack);
+		InventoryFilter inv = getInv(filterStack);
 
-		ItemStack ghostStack = inv.getItem(slot);
+		ItemStack ghostStack = inv.getStackInSlot(slot);
 		if (ghostStack.isEmpty())
 		{
 			return;
@@ -194,9 +205,9 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 
 		index -= 2;
 
-		ItemInventory inv = new InventoryFilter(filterStack);
+		InventoryFilter inv = getInv(filterStack);
 
-		ItemStack ghostStack = inv.getItem(slot);
+		ItemStack ghostStack = inv.getStackInSlot(slot);
 		if (ghostStack.isEmpty())
 		{
 			return null;
@@ -243,13 +254,6 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 	public int receiveButtonPress(ItemStack filterStack, String buttonKey, int ghostItemSlot, int currentButtonState)
 	{
 		// Returns new state that the pressed button is in. -1 for an invalid button.
-		CompoundTag tag = filterStack.getTag();
-		if (tag == null)
-		{
-			filterStack.setTag(new CompoundTag());
-			tag = filterStack.getTag();
-		}
-
 		if (buttonKey.equals(Constants.BUTTONID.ENCHANT))
 		{
 			cycleToNextEnchant(filterStack, ghostItemSlot);
@@ -294,9 +298,9 @@ public class ItemEnchantFilterCore extends ItemRouterFilter implements INestable
 		{
 			if (currentState == 0 || currentState == 1)
 			{
-				ItemInventory inv = new InventoryFilter(filterStack);
+				InventoryFilter inv = getInv(filterStack);
 
-				ItemStack ghostStack = inv.getItem(ghostItemSlot);
+				ItemStack ghostStack = inv.getStackInSlot(ghostItemSlot);
 				if (ghostStack.isEmpty())
 				{
 					componentList.add(Component.translatable("filter.bloodmagic.noenchant"));
