@@ -10,6 +10,11 @@
     },
     {
       "type": "patchouli:text",
+      "title": "3.2.6",
+      "text": "Woof, this is a doozy of a changelog, so buckle in... $(li)Fixed it so that the Fishing Rod actually works.$(li)Don't ask."
+    },
+    {
+      "type": "patchouli:text",
       "title": "3.2.5",
       "text": "$(li)Fixed it so that the Fishing Rod actually works.$(li)Don't ask."
     },
