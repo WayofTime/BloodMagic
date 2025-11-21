@@ -34,6 +34,7 @@ import wayoftime.bloodmagic.demonaura.PosXY;
 import wayoftime.bloodmagic.demonaura.WillChunk;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
+import wayoftime.bloodmagic.util.BMLog;
 import wayoftime.bloodmagic.will.DemonWillHolder;
 import wayoftime.bloodmagic.will.PlayerDemonWillHandler;
 
@@ -196,14 +197,15 @@ public class WillHandler
 
 		ChunkPos loc = event.getChunk().getPos();
 
-		CompoundTag nbt = new CompoundTag();
-		event.getData().put("BloodMagic", nbt);
 
 		WillChunk ac = WorldDemonWillHandler.getWillChunk(rl, loc.x, loc.z);
 		if (ac != null)
 		{
+            CompoundTag nbt = new CompoundTag();
 			nbt.putShort("base", ac.getBase());
 			ac.getCurrentWill().writeToNBT(nbt, "current");
+
+            event.getData().put("BloodMagic", nbt);
 //			if (event.getChunk() instanceof Chunk && !((Chunk) event.getChunk()).setLoaded(loaded);)
 //			event.getWorld().getChunkSource().getChunk(p_62228_, p_62229_, p_62230_)
 //			if (!event.getWorld().getChunkSource().isEntityTickingChunk(event.getChunk().getPos()))
