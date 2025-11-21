@@ -35,8 +35,11 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.anointment.Anointment;
+import wayoftime.bloodmagic.anointment.AnointmentData;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.common.item.*;
+import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 import wayoftime.bloodmagic.core.LivingArmorRegistrar;
 import wayoftime.bloodmagic.core.data.Binding;
@@ -917,8 +920,12 @@ public class GenericHandler
 					}
 				}
 
-				if (holder.consumeAnointmentDurabilityOnHarvest(heldStack, EquipmentSlot.MAINHAND, player) || hasAnointmentChanged)
-					holder.toItemStack(heldStack);
+                if (heldStack.is(BloodMagicTags.CHARGES)) {
+                    return;
+                }
+				if (holder.consumeAnointmentDurabilityOnHarvest(heldStack, EquipmentSlot.MAINHAND, player) || hasAnointmentChanged) {
+                    holder.toItemStack(heldStack);
+                }
 			}
 		}
 	}

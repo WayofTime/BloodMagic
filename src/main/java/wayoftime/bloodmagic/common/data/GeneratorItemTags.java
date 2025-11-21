@@ -56,6 +56,12 @@ public class GeneratorItemTags extends ItemTagsProvider
 		this.tag(BloodMagicTags.ARC_TOOL).addTag(BloodMagicTags.ARC_TOOL_CUTTINGFLUID);
 		this.tag(BloodMagicTags.ARC_TOOL).add(BloodMagicItems.ALCHEMY_FLASK_LINGERING.get());
 
+        this.tag(BloodMagicTags.CHARGES)
+                .add(BloodMagicItems.SHAPED_CHARGE_ITEM.get(), BloodMagicItems.SHAPED_CHARGE_DEEP_ITEM.get(), BloodMagicItems.AUG_SHAPED_CHARGE_ITEM.get())
+                .add(BloodMagicItems.DEFORESTER_CHARGE_ITEM.get(), BloodMagicItems.DEFORESTER_CHARGE_2_ITEM.get())
+                .add(BloodMagicItems.FUNGAL_CHARGE_ITEM.get(), BloodMagicItems.FUNGAL_CHARGE_2_ITEM.get())
+                .add(BloodMagicItems.VEINMINE_CHARGE_ITEM.get(), BloodMagicItems.VEINMINE_CHARGE_2_ITEM.get());
+
 		this.tag(BloodMagicTags.CRYSTAL_DEMON).add(BloodMagicItems.RAW_CRYSTAL.get());
 		this.tag(BloodMagicTags.CRYSTAL_DEMON).add(BloodMagicItems.CORROSIVE_CRYSTAL.get());
 		this.tag(BloodMagicTags.CRYSTAL_DEMON).add(BloodMagicItems.DESTRUCTIVE_CRYSTAL.get());
@@ -205,6 +211,7 @@ public class GeneratorItemTags extends ItemTagsProvider
 		tag(BloodMagicTags.PICKAXES).add(Items.DIAMOND_PICKAXE, Items.GOLDEN_PICKAXE, Items.IRON_PICKAXE, Items.NETHERITE_PICKAXE, Items.STONE_PICKAXE, Items.WOODEN_PICKAXE, BloodMagicItems.SENTIENT_PICKAXE.get());
 		tag(BloodMagicTags.HOES).add(Items.DIAMOND_HOE, Items.GOLDEN_HOE, Items.IRON_HOE, Items.NETHERITE_HOE, Items.STONE_HOE, Items.WOODEN_HOE, BloodMagicItems.SENTIENT_SCYTHE.get());
         tag(BloodMagicTags.SCYTHES).add(BloodMagicItems.SENTIENT_SCYTHE.get());
+        tag(ItemTags.CLUSTER_MAX_HARVESTABLES).add(BloodMagicItems.SENTIENT_PICKAXE.get());
 
         tag(Tags.Items.ARMORS_HELMETS).add(BloodMagicItems.LIVING_HELMET.get());
         tag(Tags.Items.ARMORS_CHESTPLATES).add(BloodMagicItems.LIVING_PLATE.get());

@@ -29,6 +29,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.anointment.AnointmentData;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
@@ -60,6 +61,9 @@ public class GlobalLootModifier
 		@Override
 		protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 			ItemStack ctxTool = context.getParamOrNull(LootContextParams.TOOL);
+            if (ctxTool.is(BloodMagicTags.CHARGES)) {
+                return generatedLoot;
+            }
 			// return early if silk-touch is already applied (otherwise we'll get stuck in
 			// an infinite loop).
 			if (EnchantmentHelper.getEnchantments(ctxTool).containsKey(Enchantments.SILK_TOUCH))
@@ -69,6 +73,7 @@ public class GlobalLootModifier
 			{
 				return generatedLoot;
 			}
+
 			ItemStack fakeTool = ctxTool.copy();
 			fakeTool.enchant(Enchantments.SILK_TOUCH, 1);
 			LootParams.Builder builder = new LootParams.Builder(context.getLevel());
@@ -115,6 +120,9 @@ public class GlobalLootModifier
 			{
 				return generatedLoot;
 			}
+            if (ctxTool.is(BloodMagicTags.CHARGES)) {
+                return generatedLoot;
+            }
 
 			if (EnchantmentHelper.getEnchantments(ctxTool).containsKey(Enchantments.SILK_TOUCH))
 				return generatedLoot;
@@ -252,6 +260,9 @@ public class GlobalLootModifier
 			{
 				return generatedLoot;
 			}
+            if (ctxTool.is(BloodMagicTags.CHARGES)) {
+                return generatedLoot;
+            }
 
 			AnointmentHolder holder = AnointmentHolder.fromItemStack(ctxTool);
 			if (holder == null)
@@ -314,6 +325,9 @@ public class GlobalLootModifier
 			{
 				return generatedLoot;
 			}
+            if (ctxTool.is(BloodMagicTags.CHARGES)) {
+                return generatedLoot;
+            }
 
 			AnointmentHolder holder = AnointmentHolder.fromItemStack(ctxTool);
 			if (holder == null)
