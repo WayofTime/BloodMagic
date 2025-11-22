@@ -23,7 +23,7 @@ displayName="${mod_name}" #mandatory
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="logo.png" #optional
 # A text field displayed in the mod UI
-credits="Thanks for this example mod goes to Java" #optional
+credits="MystChonky, StellaNera, VT-14, Wrincewind" #optional
 # A text field displayed in the mod UI
 authors="${mod_authors}" #optional
 # The description text for the mod (multi line!) (#mandatory)
