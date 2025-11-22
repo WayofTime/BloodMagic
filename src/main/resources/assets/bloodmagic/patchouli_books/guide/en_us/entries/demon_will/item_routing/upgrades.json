@@ -19,7 +19,7 @@
     },
     {
       "type": "bloodmagic:crafting_soulforge",
-      "heading": "Basic Routing Logic Upgrade",
+      "heading": "Basic Routing Speed Upgrade",
       "recipe": "bloodmagic:soulforge/master_node_upgrade_speed",
       "text": "$(italic)they stack to 19? that feels ... $(underline)wrong$()$(italic), somehow, but it was this or alter the universe such that everything ticks 65 times a second, and that would have made people even more upset.$()"
     }

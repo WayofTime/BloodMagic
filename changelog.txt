@@ -33,6 +33,7 @@ Added:
 - Added speed upgrades for routing nodes. Now you can move more items AND move them faster!
 - Added more uses for the hydration cell, including making copper more nasty and concrete powder less powdery.
 - Dispensers can now throw soul snares
+- Sentient Tools now have 2 higher tiers, unlocked at 2k and 4k will respectively, that further improve their stats, bringing them in line with the Sentient Sword.
 
 Fixed:
 - Mimic blocks now render properly when they've not been given a block to mimic

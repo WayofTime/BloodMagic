@@ -39,7 +39,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "$(li)Added more uses for the $(l:bloodmagic:utility/hydration)hydration cell$(), including making copper more nasty and concrete powder less powdery.$(li)Dispensers can now throw $(l:bloodmagic:demon_will/will_manipulation/soul_snare)soul snares$()"
+      "text": "$(li)Added more uses for the $(l:bloodmagic:utility/hydration)hydration cell$(), including making copper more nasty and concrete powder less powdery.$(li)Dispensers can now throw $(l:bloodmagic:demon_will/will_manipulation/soul_snare)soul snares$()$(li)$(l:bloodmagic:demon_will/demonic_items/sentient_tools)Sentient Tools$() now have 2 higher tiers, unlocked at 2k and 4k $(raw)Will$() respectively, that further improve their stats, bringing them in line with the $(l:bloodmagic:demon_will/demonic_items/sentient_sword)Sentient Sword$()."
     },
     {
       "type": "patchouli:text",
@@ -72,7 +72,7 @@
     {
       "type": "patchouli:text",
       "title": "3.3.3",
-      "text": "$(li)Updated the description of the music disc to properly credit Firel.$(li)Added the $(l:bloodmagic:alchemy_array/living_equipment/armor_upgrades/gilded)Gilded$() Living Armour Upgrade, which pacifies Piglins when equiped. Trained by giving Gold Ingots directly to piglins.$(li)Updated the death messages for dying to the $(l:bloodmagic:rituals/ritual_list/ritual_well_of_suffering)Well of Suffering$() or the $(l:bloodmagic:altar/blood_altar#knife)Sacrificial Knife$()."
+      "text": "$(li)Updated the description of the music disc to properly credit $(l:https://www.youtube.com/watch?v=lVwp8Z8eFYc)Firel$().$(li)Added the $(l:bloodmagic:alchemy_array/living_equipment/armor_upgrades/gilded)Gilded$() Living Armour Upgrade, which pacifies Piglins when equiped. Trained by giving Gold Ingots directly to piglins.$(li)Updated the death messages for dying to the $(l:bloodmagic:rituals/ritual_list/ritual_well_of_suffering)Well of Suffering$() or the $(l:bloodmagic:altar/blood_altar#knife)Sacrificial Knife$()."
     },
     {
       "type": "patchouli:text",
