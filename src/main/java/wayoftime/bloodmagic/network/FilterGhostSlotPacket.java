@@ -2,14 +2,19 @@ package wayoftime.bloodmagic.network;
 
 import java.util.function.Supplier;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent.Context;
 import wayoftime.bloodmagic.common.container.item.ContainerFilter;
+import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
 import wayoftime.bloodmagic.common.item.routing.IRoutingFilterProvider;
+import wayoftime.bloodmagic.util.BMLog;
+import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.GhostItemHelper;
 
 public class FilterGhostSlotPacket
@@ -36,6 +41,7 @@ public class FilterGhostSlotPacket
 	public static FilterGhostSlotPacket decode(FriendlyByteBuf buf)
 	{
 		FilterGhostSlotPacket pkt = new FilterGhostSlotPacket(buf.readInt(), buf.readItem());
+        BMLog.DEFAULT.info("decoded slot {} and stack {} with tag '{}'", pkt.ghostSlot, pkt.stack, pkt.stack.getTag());
 
 		return pkt;
 	}
@@ -44,30 +50,20 @@ public class FilterGhostSlotPacket
 	{
 		context.get().enqueueWork(() -> {
 			ServerPlayer sender = context.get().getSender();
-			if (sender == null)
-				return;
+			if (sender == null) {
+                return;
+            }
 
-			AbstractContainerMenu container = sender.containerMenu;
-			if (container == null)
-				return;
-
-//			ItemStack filterStack = container.filterStack;
-			Slot slot = container.slots.get(message.ghostSlot);
-			if (container instanceof ContainerFilter)
-			{
-//				ItemStack copyStack = heldStack.copy();
-				ItemStack filterStack = ((ContainerFilter) container).filterStack;
-				GhostItemHelper.setItemGhostAmount(message.stack, 0);
-				message.stack.setCount(1);
-				slot.set(message.stack);
-
-//				ItemStack filterStack = this.filterStack;
-				if (filterStack.getItem() instanceof IRoutingFilterProvider)
-				{
-					ItemStack filterCopy = ((IRoutingFilterProvider) filterStack.getItem()).getContainedStackForItem(filterStack, message.stack);
-					slot.set(filterCopy);
-				}
-			}
+            if (!(sender.containerMenu instanceof ContainerFilter)) {
+                return;
+            }
+            ItemStack filterStack = sender.getItemInHand(InteractionHand.MAIN_HAND);
+            CompoundTag tag = filterStack.getOrCreateTag();
+            InventoryFilter filterInv = new InventoryFilter(9);
+            filterInv.deserializeNBT(tag.getCompound(Constants.NBT.ITEM_INVENTORY));
+            filterInv.setStackInSlot(message.ghostSlot, message.stack);
+            tag.put(Constants.NBT.ITEM_INVENTORY, filterInv.serializeNBT());
+            filterStack.setTag(tag);
 		});
 		context.get().setPacketHandled(true);
 	}

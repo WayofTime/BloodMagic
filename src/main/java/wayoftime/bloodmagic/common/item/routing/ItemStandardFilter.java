@@ -24,22 +24,34 @@ import java.util.List;
 
 public class ItemStandardFilter extends ItemCompositeFilter
 {
-	@Override
-	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
-	{
-		ItemStack stack = player.getItemInHand(hand);
+    // of course this inherits from composite... anyways, copy-paste from IRF
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (hand == InteractionHand.OFF_HAND) {
+            return InteractionResultHolder.pass(stack);
+        }
+
 		if (!world.isClientSide)
 		{
 			if (player instanceof ServerPlayer)
 			{
-				NetworkHooks.openScreen((ServerPlayer) player, this, buf -> buf.writeItemStack(stack, false));
+				NetworkHooks.openScreen((ServerPlayer) player, this, buf -> {
+                    buf.writeBoolean(hasTagButton());
+                    buf.writeBoolean(hasEnchantButtons());
+                });
 			}
 		}
 
-		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
-	}
+		return new InteractionResultHolder<>(InteractionResult.sidedSuccess(world.isClientSide), stack);
+    }
 
-	@OnlyIn(Dist.CLIENT)
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("gui.bloodmagic.filter.standard");
+    }
+
+    @OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack filterStack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
 		tooltip.add(Component.translatable("tooltip.bloodmagic.basicfilter.desc").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY));
@@ -77,10 +89,10 @@ public class ItemStandardFilter extends ItemCompositeFilter
 			tooltip.add(Component.translatable("tooltip.bloodmagic.filter.blacklist").withStyle(ChatFormatting.GRAY));
 		}
 
-		ItemInventory inv = new InventoryFilter(filterStack);
-		for (int i = 0; i < inv.getContainerSize(); i++)
+		InventoryFilter inv = getInv(filterStack);
+		for (int i = 0; i < inv.getSlots(); i++)
 		{
-			ItemStack stack = inv.getItem(i);
+			ItemStack stack = inv.getStackInSlot(i);
 			if (stack.isEmpty())
 			{
 				continue;

@@ -2,7 +2,6 @@ package wayoftime.bloodmagic.common.item.routing;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -18,7 +17,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import wayoftime.bloodmagic.client.button.FilterButtonTogglePress;
 import wayoftime.bloodmagic.common.container.item.ContainerFilter;
 import wayoftime.bloodmagic.common.item.inventory.InventoryFilter;
-import wayoftime.bloodmagic.common.item.inventory.ItemInventory;
 import wayoftime.bloodmagic.common.routing.BasicItemFilter;
 import wayoftime.bloodmagic.common.routing.BlacklistItemFilter;
 import wayoftime.bloodmagic.common.routing.IItemFilter;
@@ -31,7 +29,18 @@ import java.util.stream.Stream;
 
 public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilterProvider
 {
-	protected IItemFilter getFilterTypeFromConfig(ItemStack filterStack)
+
+    @Override
+    public boolean hasTagButton() {
+        return true;
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("gui.bloodmagic.filter.tag");
+    }
+
+    protected IItemFilter getFilterTypeFromConfig(ItemStack filterStack)
 	{
 		int state = getCurrentButtonState(filterStack, Constants.BUTTONID.BLACKWHITELIST, 0);
 		if (state == 1)
@@ -64,10 +73,10 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 			tooltip.add(Component.translatable("tooltip.bloodmagic.filter.blacklist").withStyle(ChatFormatting.GRAY));
 		}
 
-		ItemInventory inv = new InventoryFilter(filterStack);
-		for (int i = 0; i < inv.getContainerSize(); i++)
+		InventoryFilter inv = getInv(filterStack);
+		for (int i = 0; i < inv.getSlots(); i++)
 		{
-			ItemStack stack = inv.getItem(i);
+			ItemStack stack = inv.getStackInSlot(i);
 			if (stack.isEmpty())
 			{
 				continue;
@@ -150,9 +159,9 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 
 	public void cycleToNextTag(ItemStack filterStack, int slot)
 	{
-		ItemInventory inv = new InventoryFilter(filterStack);
+		InventoryFilter inv = getInv(filterStack);
 
-		ItemStack ghostStack = inv.getItem(slot);
+		ItemStack ghostStack = inv.getStackInSlot(slot);
 		if (ghostStack.isEmpty())
 		{
 			return;
@@ -204,9 +213,9 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 
 		index--;
 
-		ItemInventory inv = new InventoryFilter(filterStack);
+		InventoryFilter inv = getInv(filterStack);
 
-		ItemStack ghostStack = inv.getItem(slot);
+		ItemStack ghostStack = inv.getStackInSlot(slot);
 		if (ghostStack.isEmpty())
 		{
 			return null;
@@ -247,9 +256,9 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 
 	public List<TagKey<Item>> getAllItemTags(ItemStack filterStack, int slot)
 	{
-		ItemInventory inv = new InventoryFilter(filterStack);
+		InventoryFilter inv = getInv(filterStack);
 
-		ItemStack ghostStack = inv.getItem(slot);
+		ItemStack ghostStack = inv.getStackInSlot(slot);
 		if (ghostStack.isEmpty())
 		{
 			return new ArrayList<>();
@@ -324,9 +333,9 @@ public class ItemTagFilter extends ItemRouterFilter implements INestableItemFilt
 		{
 			if (currentState == 0)
 			{
-				ItemInventory inv = new InventoryFilter(filterStack);
+				InventoryFilter inv = getInv(filterStack);
 
-				ItemStack ghostStack = inv.getItem(ghostItemSlot);
+				ItemStack ghostStack = inv.getStackInSlot(ghostItemSlot);
 				if (ghostStack.isEmpty())
 				{
 					componentList.add(Component.translatable("filter.bloodmagic.novalidtag"));

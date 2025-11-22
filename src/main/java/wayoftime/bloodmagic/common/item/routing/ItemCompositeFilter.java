@@ -39,7 +39,18 @@ public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvide
 		super();
 	}
 
-	@Override
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+        // pretty sure this isnt supposed to have a menu, so we stop this here
+        return InteractionResultHolder.pass(player.getItemInHand(hand));
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("gui.bloodmagic.filter.composite");
+    }
+
+    @Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack filterStack, Level world, List<Component> tooltip, TooltipFlag flag)
 	{
@@ -78,10 +89,10 @@ public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvide
 			tooltip.add(Component.translatable("tooltip.bloodmagic.filter.blacklist").withStyle(ChatFormatting.GRAY));
 		}
 
-		ItemInventory inv = new InventoryFilter(filterStack);
-		for (int i = 0; i < inv.getContainerSize(); i++)
+		InventoryFilter inv = getInv(filterStack);
+		for (int i = 0; i < inv.getSlots(); i++)
 		{
-			ItemStack stack = inv.getItem(i);
+			ItemStack stack = inv.getStackInSlot(i);
 			if (stack.isEmpty())
 			{
 				continue;
@@ -104,19 +115,6 @@ public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvide
 		}
 
 //		super.addInformation(filterStack, world, tooltip, flag);
-	}
-
-	@Override
-	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
-	{
-		ItemStack stack = player.getItemInHand(hand);
-		List<ItemStack> nestedFilters = getNestedFilters(stack);
-		if (nestedFilters.size() > 0)
-		{
-			return super.use(world, player, hand);
-		}
-
-		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 	}
 
 	protected IItemFilter getFilterTypeFromConfig(ItemStack filterStack)
@@ -142,12 +140,12 @@ public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvide
 		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
 
 		List<IFilterKey> filteredList = new ArrayList<>();
-		ItemInventory inv = new InventoryFilter(filterStack);
+		InventoryFilter inv = getInv(filterStack);
 
 		List<ItemStack> nestedList = getNestedFilters(filterStack);
-		for (int i = 0; i < inv.getContainerSize(); i++)
+		for (int i = 0; i < inv.getSlots(); i++)
 		{
-			ItemStack stack = inv.getItem(i);
+			ItemStack stack = inv.getStackInSlot(i);
 			if (stack.isEmpty())
 			{
 				continue;
@@ -188,13 +186,13 @@ public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvide
 		IItemFilter testFilter = getFilterTypeFromConfig(filterStack);
 
 		List<IFilterKey> filteredList = new ArrayList<>();
-		ItemInventory inv = new InventoryFilter(filterStack); // TODO: Change to grab the filter from the Item
+		InventoryFilter inv = getInv(filterStack); // TODO: Change to grab the filter from the Item
 
 		List<ItemStack> nestedList = getNestedFilters(filterStack);
 		// later.
-		for (int i = 0; i < inv.getContainerSize(); i++)
+		for (int i = 0; i < inv.getSlots(); i++)
 		{
-			ItemStack stack = inv.getItem(i);
+			ItemStack stack = inv.getStackInSlot(i);
 			if (stack.isEmpty())
 			{
 				continue;
@@ -329,6 +327,7 @@ public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvide
 		return componentList;
 	}
 
+    /* this would be annoying to fix but it'll be part of ContainerFilter now anyways so its gone now
 	@OnlyIn(Dist.CLIENT)
 	public List<Pair<String, Button.OnPress>> getButtonAction(ContainerFilter container)
 	{
@@ -345,6 +344,7 @@ public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvide
 
 		return buttonList;
 	}
+     */
 
 	@Override
 	public Pair<Integer, Integer> getTexturePositionForState(ItemStack filterStack, String buttonKey, int currentButtonState)

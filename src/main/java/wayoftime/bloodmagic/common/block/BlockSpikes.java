@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import wayoftime.bloodmagic.common.registries.BloodMagicDamageTypes;
 
 public class BlockSpikes extends Block
 {
@@ -75,7 +76,7 @@ public class BlockSpikes extends Block
 		if (entityIn.getType() != EntityType.ITEM)
 		{
 			entityIn.makeStuckInBlock(state, new Vec3(0.55D, (double) 0.20F, 0.55D));
-			entityIn.hurt(entityIn.damageSources().generic(), 2.0F);
+			entityIn.hurt(entityIn.damageSources().source(BloodMagicDamageTypes.SPIKE), 2.0F);
 		}
 	}
 

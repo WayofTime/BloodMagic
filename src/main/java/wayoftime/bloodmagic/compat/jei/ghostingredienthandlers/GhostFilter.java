@@ -44,12 +44,10 @@ public class GhostFilter implements IGhostIngredientHandler<ScreenFilter>
 					public void accept(I ingredient)
 					{
 						ItemStack stack = (ItemStack) ingredient;
+                        stack.setCount(1);
+                        GhostItemHelper.setItemGhostAmount(stack, 0);
+                        slot.set(stack);
 						BloodMagic.packetHandler.sendToServer(new FilterGhostSlotPacket(slot.index, stack));
-
-						GhostItemHelper.setItemGhostAmount(stack, 0);
-						stack.setCount(1);
-						slot.set(stack);
-
 					}
 				});
 			}
