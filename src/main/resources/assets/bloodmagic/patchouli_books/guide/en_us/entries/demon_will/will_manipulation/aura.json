@@ -34,6 +34,7 @@
       "type": "bloodmagic:crafting_soulforge",
       "heading": "Demon Pylon",
       "recipe": "bloodmagic:soulforge/demon_pylon",
+      "anchor": "pylon",
       "text": "The Pylon will draw in all kinds of will from all adjacent chunks (not including diagnonals). Multiple Pylons can be chained in order to transfer Will over larger distances."
     },
     {

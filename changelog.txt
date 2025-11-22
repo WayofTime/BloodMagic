@@ -15,7 +15,7 @@ Added:
 - Reap of the Harvest Moon now supports more things!
 -> Vanilla: bamboo, kelp, sugarcane, cactus, and vines (both normal, twisting, and weeping)
 -> Modded: Agricraft, Mystical Agriculture
-- Green Grove ritual now supports Agricraft (and acts as a [highly un-]natural weed-killer!)
+- Green Grove ritual and sigil now support Agricraft (and acts as a [highly un-]natural weed-killer!)
 - Improved recipes in JEI to better display requirements for the Alchemy Table, Hellfire Forge, and Blood Altar (with tooltips)
 -> Alchemy Table displays required LP for a given craft in a tooltip
 -> Hellfire Forge displays required and consumed Will in a tooltip
@@ -23,16 +23,16 @@ Added:
 -> All of them say 'info' under the arrow to tell people to mouse over
 - Hellfire Forge now has a little flag that pops out when you've not got enough will to craft a recipe
 - Added some error messages to the Penance of the Leadened Soul ritual to cover some common issues
--> Downgrade blocked by training bracelet, not enough of key item / upgrade pointspresent in chest, no chest present
+-> Downgrade blocked by training bracelet, not enough of key item / upgrade points present in chest, no chest present
 - Added dispenser behaviour for Buckets of Life
--> Now you can Carrie people in minecraft!
-- Anointments can now be added in the smithing table, for 2-handed weapons and other circumstances where you're unable to apply the anointment in the i ntended way.
+-> Now you can Carrie people in Minecraft!
+- Anointments can now be added in the smithing table, for 2-handed weapons and other circumstances where you're unable to apply the anointment in the intended way.
 - Re-worked the AE2 Meteor within the Mark of the Falling Tower ritual to spawn budding quartz blocks (including flawless, if you're lucky!)
 - Added recipes for all of the dungeon blocks, plus recipes for their aspected counterparts. Now you too can utilize the fierce red dungeon asthetic!
 - Added some functional dungeon blocks, including the dungeon eye, dungeon emitter, dungeon alternator, and MASHY SPIKE PLATE.
 - Added speed upgrades for routing nodes. Now you can move more items AND move them faster!
 - Added more uses for the hydration cell, including making copper more nasty and concrete powder less powdery.
-- dispensers can now throw soul snares
+- Dispensers can now throw soul snares
 
 Fixed:
 - Mimic blocks now render properly when they've not been given a block to mimic
@@ -50,9 +50,10 @@ Fixed:
 -> Can be fixed by using 'setblock' to turn any lingering spectral blocks into air
 - Dummies from the dummmmmmy mod are blacklisted by default and give 0 LP when sacrificed.
 - Fixed a logspam issue / crash when dying while wearing living armour with Curios installed
-- Reinforced runes can now be properly broken.
+- Reinforced runes can now be properly mined.
 - Fixed a crash when activating a teleposer with an unbound focus in it.
 - The ARC now respects the 'unbreakable' tag when using items with durability.
+- > This includes the Eternal Stella!
 - Configuring the HUD with the Seer's Sigil / Divination Sigil / etc should now properly save your changes
 - Added some missing names for e.g. life essence buckets
 - Tau Fruit / Saturated Tau now grows properly (rather than requiring bonemeal)
@@ -61,8 +62,12 @@ Fixed:
 -> Stairs, walls, fenceposts, even stacks of signs will all work for this now.
 - LP wasn't saving consistently in singleplayer mode sometimes
 - Fortuna Extract / Soft Coating no longer voids Shulker Boxes
-- fungal charges no longer use an empty tag in their crafting recipe
-- the Sentient Scythe is now officially 20% more Scythe-y.
+- Fungal charges no longer use an empty tag in their crafting recipe
+- The Sentient Scythe is now officially 20% more Scythe-y. (and tagged as one, too!)
+- Re-worked the Green Grove's Steadfast Will upgrade, it should now properly replant seeds on harvest.
+- Fixed filters not saving item quantities properly
+- Explosive charges no longer lose their anointments if held in hand when breaking a block
+- Will stored within the chunk's Aura is no longer lost upon chunk unload.
 
 ------------------------------------------------------
 Version 3.3.3
