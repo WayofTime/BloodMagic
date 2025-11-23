@@ -10,6 +10,11 @@
     },
     {
       "type": "patchouli:text",
+      "title": "3.3.5",
+      "text": "$(li)Missing Recipe Serializer prevented people from joining servers. Its been found and put where it belongs"
+    },
+    {
+      "type": "patchouli:text",
       "title": "3.3.4",
       "text": "Buckle up, this one's a doozy...Added:$(li)A new ritual!$(li2)The $(l:bloodmagic:rituals/ritual_list/ritual_geode)Ritual of the Geode's Bounty$() will accelerate the growth of nearby $(thing)budding blocks$() and automatically harvest their crystals, dropping them on the ground.$(li)more $(thing)configuration options$()!$(li2)LP per heart from sacrifice / self-sacrifice can be tweaked"
     },

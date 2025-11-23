@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 3.3.5
+------------------------------------------------------
+Fixed:
+- Missing Recipe Serializer prevented people from joining servers. Its been found and put where it belongs
+------------------------------------------------------
 Version 3.3.4
 ------------------------------------------------------
 Buckle up, this one's a doozy...
