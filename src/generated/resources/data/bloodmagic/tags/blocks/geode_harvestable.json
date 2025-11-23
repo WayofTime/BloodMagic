@@ -6,6 +6,14 @@
       "required": false
     },
     {
+      "id": "magichem:cluster_signalite",
+      "required": false
+    },
+    {
+      "id": "magichem:cluster_vinteum",
+      "required": false
+    },
+    {
       "id": "geode_plus:nether_quartz_crystal",
       "required": false
     },

@@ -21,6 +21,7 @@ build
 eclipse
 
 # Files from Forge MDK
+/mcmodsrepo/
 forge*changelog.txt
 /src/generated/resources/.cache/
 /run/

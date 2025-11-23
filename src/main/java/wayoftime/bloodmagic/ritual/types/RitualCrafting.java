@@ -747,6 +747,10 @@ public class RitualCrafting extends Ritual
 			}
 		}
 
+        if (!recipe.matches(craftingContainer, level)) {
+            return;
+        }
+
 		AreaDescriptor outputDesc = masterRitualStone.getBlockRange(OUTPUT_CHEST_RANGE);
 		List<BlockPos> outputPosList = outputDesc.getContainedPositions(pos);
 		BlockEntity outputTile = null;
