@@ -120,6 +120,8 @@ public class GeneratorBlockTags extends IntrinsicHolderTagsProvider<Block>
 				this.tag(BloodMagicTags.Blocks.GEODE_HARVESTABLE)
 						.add(Blocks.AMETHYST_CLUSTER)
 						.addOptional(new ResourceLocation("forge:clusters"))
+                        .addOptional(new ResourceLocation("magichem", "cluster_signalite")) // budding blocks are already in forge:budding
+                        .addOptional(new ResourceLocation("magichem", "cluster_vinteum"))
 		);
         tag(BloodMagicTags.TELEPOSE_BLOCK_BLACKLIST)
                 .add(Blocks.BEDROCK, Blocks.END_PORTAL_FRAME)
