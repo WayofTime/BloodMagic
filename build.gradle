@@ -25,8 +25,6 @@ minecraft {
     runs {
 
         configureEach {
-            workingDirectory project.file('run')
-
 //            properties 'mixin.env.disableRefMap': 'true'
 
             // Recommended logging data for a userdev environment
@@ -46,10 +44,12 @@ minecraft {
 
         }
         client {
+            workingDirectory project.file('run')
             property 'forge.enabledGameTestNamespaces', mod_id
         }
 
         server {
+            workingDirectory project.file('run-server')
             property 'forge.enabledGameTestNamespaces', mod_id
             args '--nogui'
         }

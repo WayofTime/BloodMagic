@@ -15,6 +15,7 @@ import wayoftime.bloodmagic.anointment.AnointmentData;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.common.item.ItemAnointmentProvider;
 import wayoftime.bloodmagic.common.item.ItemBowAnointmentProvider;
+import wayoftime.bloodmagic.common.registries.BloodMagicRecipeSerializers;
 import wayoftime.bloodmagic.core.AnointmentRegistrar;
 
 public class RecipeAnointmentApply implements SmithingRecipe {
@@ -81,7 +82,7 @@ public class RecipeAnointmentApply implements SmithingRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return null;
+        return BloodMagicRecipeSerializers.ANOINTMENT_APPLY.getRecipeSerializer();
     }
 
     public static class Serializer implements RecipeSerializer<RecipeAnointmentApply> {
