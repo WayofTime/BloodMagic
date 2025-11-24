@@ -5,6 +5,7 @@ Fixed:
 - Ritual of the Beating Anvil didnt check to see if the recipe as valid and just produced the result. Recipe checking has been added, so you do now actually need the correct inputs
 - MagiChem's fully grown clusters have been added to the geode_harvestable tag to work out of the box rather than requiring a datapack. The budding blocks are already in the forge:budding tag which is already part of geode_acceleratable
 - Apparently Oculus doesnt take _s to mean steadfast version but something else and doesnt put the texture into the texture atlas, so we've literally spelled it out for it
+- Blood Orbs could be used without getting damaged while spawn protection lasts. It now does the same thing the rest of the sacrifice stuff does and first gets rid of invulnerability
 ------------------------------------------------------
 Version 3.3.5
 ------------------------------------------------------
