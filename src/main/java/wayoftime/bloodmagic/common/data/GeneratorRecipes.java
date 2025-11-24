@@ -309,6 +309,7 @@ public class GeneratorRecipes extends BaseRecipeProvider
 		clearFilter(BloodMagicItems.ITEM_MOD_FILTER.get(), BloodMagic.rl("clear_mod_filter"), consumer);
 		clearFilter(BloodMagicItems.ITEM_COMPOSITE_FILTER.get(), BloodMagic.rl("clear_composite_filter"), consumer);
 		SpecialRecipeBuilder.special(BloodMagicRecipeSerializers.FILTER_COPY.getRecipeSerializer()).save(consumer, "bloodmagic:filter_copy");
+        SpecialRecipeBuilder.special(BloodMagicRecipeSerializers.TOME_COMBINE.getRecipeSerializer()).save(consumer, "bloodmagic:tome_combine");
 	}
 
 	private void clearFilter(ItemLike filter, ResourceLocation path, Consumer<FinishedRecipe> output) {
