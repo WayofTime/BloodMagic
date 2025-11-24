@@ -503,10 +503,10 @@ public class GeneratorBlockStates extends BlockStateProvider
 
 	private static Map<EnumDemonWillType, String> suffixMap = Map.of(
 			EnumDemonWillType.DEFAULT, "",
-			EnumDemonWillType.CORROSIVE, "_c",
-			EnumDemonWillType.DESTRUCTIVE, "_d",
-			EnumDemonWillType.STEADFAST, "_s",
-			EnumDemonWillType.VENGEFUL, "_v"
+			EnumDemonWillType.CORROSIVE, "_corrosive",
+			EnumDemonWillType.DESTRUCTIVE, "_destructive",
+			EnumDemonWillType.STEADFAST, "_steadfast",
+			EnumDemonWillType.VENGEFUL, "_vengeful"
 	);
 
 	private void buildFurnace(Block block)
