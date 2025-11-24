@@ -11,7 +11,7 @@
     {
       "type": "patchouli:text",
       "title": "3.3.6",
-      "text": "Added:$(li)Upgrade Tomes holding the same Up- or Downgrade can now be combined in a crafting grid to add their points together"
+      "text": "Added:$(li)Upgrade Tomes holding the same Up- or Downgrade can now be combined in a crafting grid to add their points together$(li)Commands to manipulate a players soul network"
     },
     {
       "type": "patchouli:text",

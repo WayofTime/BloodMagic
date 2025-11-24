@@ -3,6 +3,7 @@ Version 3.3.6
 ------------------------------------------------------
 Added:
 - Upgrade Tomes holding the same Up- or Downgrade can now be combined in a crafting grid to add their points together
+- Commands to manipulate a players soul network
 
 Fixed:
 - Ritual of the Beating Anvil didnt check to see if the recipe as valid and just produced the result. Recipe checking has been added, so you do now actually need the correct inputs

@@ -21,6 +21,7 @@ import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.AddPackFindersEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.DispenseFluidContainer;
@@ -30,9 +31,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.javafmlmod.FMLModContainer;
-import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.forgespi.locating.IModFile;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.resource.PathPackResources;
@@ -45,6 +43,7 @@ import wayoftime.bloodmagic.client.hud.Elements;
 import wayoftime.bloodmagic.client.key.BloodMagicKeyHandler;
 import wayoftime.bloodmagic.client.key.KeyBindingBloodMagic;
 import wayoftime.bloodmagic.client.sounds.SoundRegistry;
+import wayoftime.bloodmagic.command.SoulNetworkCommand;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.*;
 import wayoftime.bloodmagic.common.fluid.BloodMagicFluids;
@@ -80,7 +79,6 @@ import wayoftime.bloodmagic.structures.ModRoomPools;
 import wayoftime.bloodmagic.util.handler.event.GenericHandler;
 import wayoftime.bloodmagic.util.handler.event.WillHandler;
 
-import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
 
 @Mod("bloodmagic")
@@ -151,6 +149,8 @@ public class BloodMagic {
         MinecraftForge.EVENT_BUS.register(new GenericHandler());
         modBus.addListener(this::registerColors);
 
+        MinecraftForge.EVENT_BUS.addListener(this::registerCommands);
+
         MinecraftForge.EVENT_BUS.register(new WillHandler());
 //		MinecraftForge.EVENT_BUS.register(new BloodMagicBlocks());
 //		MinecraftForge.EVENT_BUS.addListener(this::commonSetup);
@@ -168,6 +168,10 @@ public class BloodMagic {
 
     public static ResourceLocation rl(String name) {
         return new ResourceLocation(BloodMagic.MODID, name);
+    }
+
+    public void registerCommands(RegisterCommandsEvent event) {
+        SoulNetworkCommand.register(event.getDispatcher());
     }
 
     public static void handleConfigValues(BloodMagicAPI api) {
