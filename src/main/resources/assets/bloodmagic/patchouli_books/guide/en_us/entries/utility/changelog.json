@@ -11,7 +11,11 @@
     {
       "type": "patchouli:text",
       "title": "3.3.6",
-      "text": "Added:$(li)Upgrade Tomes holding the same Up- or Downgrade can now be combined in a crafting grid to add their points together$(li)Commands to manipulate a players soul network"
+      "text": "Added:$(li)Upgrade Tomes holding the same Up- or Downgrade can now be combined in a crafting grid to add their points together$(li)Commands to manipulate a players soul network$(li)ARC input tank can be emptied by putting buckets or other fluid handler items into the input bucket slot. It will also try to transfer as much as possible instead of only ever 1 bucket at a time"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)ARC tanks can be interacted with from in-world now. Order of operations tried is Fill input tank > Empty output tank > Empty input tank > Open GUI"
     },
     {
       "type": "patchouli:text",

@@ -4,6 +4,8 @@ Version 3.3.6
 Added:
 - Upgrade Tomes holding the same Up- or Downgrade can now be combined in a crafting grid to add their points together
 - Commands to manipulate a players soul network
+- ARC input tank can be emptied by putting buckets or other fluid handler items into the input bucket slot. It will also try to transfer as much as possible instead of only ever 1 bucket at a time
+- ARC tanks can be interacted with from in-world now. Order of operations tried is Fill input tank > Empty output tank > Empty input tank > Open GUI
 
 Fixed:
 - Ritual of the Beating Anvil didnt check to see if the recipe as valid and just produced the result. Recipe checking has been added, so you do now actually need the correct inputs
