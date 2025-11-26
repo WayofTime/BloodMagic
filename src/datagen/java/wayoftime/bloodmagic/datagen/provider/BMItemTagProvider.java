@@ -61,5 +61,16 @@ public class BMItemTagProvider extends ItemTagsProvider {
                 .add(BMItems.NODE_ROUTER.get())
                 .add(BMBlocks.MASTER_NODE.asItem(), BMBlocks.ROUTING_NODE.asItem(), BMBlocks.INPUT_ROUTING_NODE.asItem(), BMBlocks.OUTPUT_ROUTING_NODE.asItem())
                 .addTag(BMTags.Items.SOUL_GEM);
+
+        tag(BMTags.Items.TAG_FILTER)
+                .add(BMItems.TAG_FILTER.get());
+
+        tag(BMTags.Items.ENCHANT_FILTER)
+                .add(BMItems.ENCHANT_FILTER.get());
+
+        tag(BMTags.Items.FILTERS)
+                .addTag(BMTags.Items.TAG_FILTER)
+                .addTag(BMTags.Items.ENCHANT_FILTER)
+                .add(BMItems.STANDARD_FILTER.get(), BMItems.MOD_FILTER.get(), BMItems.COMPOSITE_FILTER.get());
     }
 }

@@ -22,6 +22,7 @@ import wayoftime.bloodmagic.common.datamap.BMDataMaps;
 import wayoftime.bloodmagic.common.fluid.BMFluids;
 import wayoftime.bloodmagic.common.item.BMItems;
 import wayoftime.bloodmagic.common.item.BMMaterialsAndTiers;
+import wayoftime.bloodmagic.common.network.BMPackets;
 import wayoftime.bloodmagic.common.recipe.BMRecipes;
 import wayoftime.bloodmagic.common.registry.BMRegistries;
 import wayoftime.bloodmagic.common.structure.BMMultiblock;
@@ -59,6 +60,7 @@ public class BloodMagic {
         BMMaterialsAndTiers.register(modBus);
         BMItems.register(modBus);
         modBus.addListener(BMDataMaps::register);
+        modBus.addListener(BMPackets::register);
         BMDataAttachments.register(modBus);
         BMAttributes.register(modBus);
         BMRecipes.register(modBus);

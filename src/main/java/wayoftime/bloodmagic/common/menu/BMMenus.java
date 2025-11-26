@@ -21,6 +21,8 @@ public class BMMenus {
     public static final DeferredHolder<MenuType<?>, MenuType<NodeMasterMenu>> MASTER_NODE = MENUS.register("node_master", () -> new MenuType<>(NodeMasterMenu::new, FeatureFlags.DEFAULT_FLAGS));
     public static final DeferredHolder<MenuType<?>, MenuType<NodeFilterMenu>> FILTERED_NODE = MENUS.register("node_filtered", () -> IMenuTypeExtension.create(NodeFilterMenu::new));
 
+    public static final DeferredHolder<MenuType<?>, MenuType<FilterMenu>> ITEM_FILTER = MENUS.register("item_filter", () -> IMenuTypeExtension.create(FilterMenu::new));
+
     public static void register(IEventBus modbus) {
         MENUS.register(modbus);
     }

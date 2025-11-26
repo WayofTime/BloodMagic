@@ -39,6 +39,12 @@ public class BMItems {
     public static final DeferredHolder<Item, Item> NODE_AMOUNT_UPGRADE = BASIC_ITEMS.register("node_upgrade_amount", () -> new Item(new Item.Properties()));
     public static final DeferredHolder<Item, Item> NODE_SPEED_UPGRADE = BASIC_ITEMS.register("node_upgrade_speed", () -> new Item(new Item.Properties().stacksTo(19)));
 
+    public static final DeferredHolder<Item, FilterItem> STANDARD_FILTER = BASIC_ITEMS.register("filter_standard", () -> new FilterItem(new Item.Properties().stacksTo(16)));
+    public static final DeferredHolder<Item, FilterItem> TAG_FILTER = BASIC_ITEMS.register("filter_tag", () -> new FilterItem(new Item.Properties().stacksTo(16)));
+    public static final DeferredHolder<Item, FilterItem> ENCHANT_FILTER = BASIC_ITEMS.register("filter_enchant", () -> new FilterItem(new Item.Properties().stacksTo(16)));
+    public static final DeferredHolder<Item, FilterItem> MOD_FILTER = BASIC_ITEMS.register("filter_mod", () -> new FilterItem(new Item.Properties().stacksTo(16)));
+    public static final DeferredHolder<Item, FilterItem> COMPOSITE_FILTER = BASIC_ITEMS.register("filter_composite", () -> new FilterItem(new Item.Properties().stacksTo(16)));
+
     private static Supplier<ArmorItem> makeLivingArmour(ArmorItem.Type type) {
         return () -> new ArmorItem(BMMaterialsAndTiers.LIVING_ARMOUR_MATERIAL, type, new Item.Properties().durability(type.getDurability(33)));
     }

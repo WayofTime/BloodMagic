@@ -1,0 +1,9 @@
+{
+  "values": [
+    "#bloodmagic:routing_filter/tag",
+    "#bloodmagic:routing_filter/enchant",
+    "bloodmagic:filter_standard",
+    "bloodmagic:filter_mod",
+    "bloodmagic:filter_composite"
+  ]
+}

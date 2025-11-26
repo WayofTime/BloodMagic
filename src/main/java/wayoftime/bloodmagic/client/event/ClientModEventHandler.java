@@ -47,5 +47,6 @@ public class ClientModEventHandler {
         event.register(BMMenus.TRAINER.get(), TrainerScreen::new);
         event.register(BMMenus.MASTER_NODE.get(), NodeMasterScreen::new);
         event.register(BMMenus.FILTERED_NODE.get(), NodeFilterScreen::new);
+        event.register(BMMenus.ITEM_FILTER.get(), FilterScreen::new);
     }
 }

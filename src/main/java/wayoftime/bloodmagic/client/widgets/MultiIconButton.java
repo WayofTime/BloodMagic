@@ -4,28 +4,35 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import wayoftime.bloodmagic.BloodMagic;
+
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class MultiIconButton extends AbstractButton {
 
     private final ResourceLocation[] icons;
     private final Component[] tooltips;
     private final OnPress onPress;
-    public MultiIconButton(int x, int y, int width, int height, Component[] tooltips, ResourceLocation[] icons, OnPress onPress) {
+    private final Function<Integer, Integer> stateGetter;
+    public MultiIconButton(int x, int y, int width, int height, Component[] tooltips, ResourceLocation[] icons, OnPress onPress, Function<Integer, Integer> stateGetter) {
         super(x, y, width, height, Component.literal(""));
         this.onPress = onPress;
         this.icons = icons;
         this.tooltips = tooltips;
+        this.stateGetter = stateGetter;
     }
 
     public MultiIconButton(Builder builder) {
-        this(builder.x, builder.y, builder.width, builder.height, builder.tooltips, builder.icons, builder.onPress);
+        this(builder.x, builder.y, builder.width, builder.height, builder.tooltips, builder.icons, builder.onPress, builder.stateGetter);
     }
 
     private int state = 0;
     public int getState() {
-        return this.state;
+        return this.stateGetter.apply(state);
     }
 
     public void setState(int state) {
@@ -38,13 +45,16 @@ public class MultiIconButton extends AbstractButton {
     }
 
     public Component getHoverText() {
-        return tooltips[state % tooltips.length];
+        return tooltips.length > 0 ? tooltips[stateGetter.apply(state) % tooltips.length] : CommonComponents.EMPTY;
     }
 
     @Override
     protected void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         super.renderWidget(guiGraphics, mouseX, mouseY, partialTick);
-        guiGraphics.blitSprite(icons[state % icons.length], this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        int index = stateGetter.apply(state);
+        ResourceLocation sprite = icons[index % icons.length];
+        // BloodMagic.LOGGER.info("got state {}, index {} and res loc {}", state, index, sprite);
+        guiGraphics.blitSprite(sprite, this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
 
     @Override
@@ -64,6 +74,7 @@ public class MultiIconButton extends AbstractButton {
         private int height = 20;
         private ResourceLocation[] icons;
         private Component[] tooltips;
+        private Function<Integer, Integer> stateGetter = Function.identity();
 
         public Builder(OnPress onPress) {
             this.onPress = onPress;
@@ -97,6 +108,11 @@ public class MultiIconButton extends AbstractButton {
 
         public Builder icons(ResourceLocation... icons) {
             this.icons = icons;
+            return this;
+        }
+
+        public Builder stateGetter(Function<Integer, Integer> stateGetter) {
+            this.stateGetter = stateGetter;
             return this;
         }
 
