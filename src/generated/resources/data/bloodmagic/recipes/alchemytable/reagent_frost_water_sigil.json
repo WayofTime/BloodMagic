@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "minecraft:packed_ice"
+    },
+    {
+      "item": "minecraft:snow_block"
+    },
+    {
+      "item": "minecraft:snowball"
+    },
+    {
+      "item": "bloodmagic:watersigil"
+    }
+  ],
+  "output": {
+    "item": "bloodmagic:reagentfrost"
+  },
+  "syphon": 3000,
+  "ticks": 200,
+  "upgradeLevel": 3
+}

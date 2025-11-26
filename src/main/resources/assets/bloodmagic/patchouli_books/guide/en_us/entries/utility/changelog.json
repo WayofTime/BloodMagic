@@ -15,7 +15,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "$(li)ARC tanks can be interacted with from in-world now. Order of operations tried is Fill input tank > Empty output tank > Empty input tank > Open GUI"
+      "text": "$(li)ARC tanks can be interacted with from in-world now. Order of operations tried is Fill input tank > Empty output tank > Empty input tank > Open GUI$(li)Sigil of the Frozen Lake is now craftable"
     },
     {
       "type": "patchouli:text",
