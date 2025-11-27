@@ -1,9 +1,11 @@
 package wayoftime.bloodmagic.common.tile;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -13,6 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.items.ItemHandlerHelper;
+import org.jetbrains.annotations.Nullable;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.api.compat.IDemonWill;
 import wayoftime.bloodmagic.api.compat.IDemonWillConduit;
@@ -27,7 +30,7 @@ import wayoftime.bloodmagic.util.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileSoulForge extends TileInventory implements MenuProvider, IDemonWillConduit
+public class TileSoulForge extends TileInventory implements MenuProvider, IDemonWillConduit, WorldlyContainer
 {
 //	@ObjectHolder("bloodmagic:soulforge")
 //	public static BlockEntityType<TileSoulForge> TYPE;
@@ -461,4 +464,35 @@ public class TileSoulForge extends TileInventory implements MenuProvider, IDemon
 	}
 
 	public boolean getWillFlagForGUI() { return this.showWillFlag; }
+
+    public static final int INPUT = 0;
+    public static final int INPUT_COUNT = 4;
+    public static final int GEM = INPUT + INPUT_COUNT;
+    public static final int OUTPUT = GEM + 1;
+    @Override
+    public int[] getSlotsForFace(Direction direction) {
+        return switch (direction) {
+            // since its been a free for all anyways still have all slots accessible from any side, just prioritize differently
+            case UP -> new int[] {GEM, 0, 1, 2, 3, OUTPUT};
+            case DOWN -> new int[] {OUTPUT, 0, 1, 2, 3, GEM};
+            case SOUTH -> new int [] {0, 1, 2, 3, GEM, OUTPUT};
+            case WEST -> new int [] {1, 0, 2, 3, GEM, OUTPUT};
+            case NORTH ->  new int [] {2, 0, 1, 3, GEM, OUTPUT};
+            case EAST -> new int [] {3, 0, 1, 2, GEM, OUTPUT};
+        };
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int slot, ItemStack stack, @Nullable Direction direction) {
+        return switch (slot) {
+            case GEM -> stack.getItem() instanceof IDemonWillGem || stack.getItem() instanceof IDemonWill; // only gems/will go here ever
+            case OUTPUT -> false; // do NOT place stuff here
+            default -> true; // anything else is free to go wherever
+        };
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction direction) {
+        return direction != Direction.DOWN || slot == OUTPUT; // limit taking out stuff from bottom face to output slot only
+    }
 }

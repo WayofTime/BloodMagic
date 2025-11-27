@@ -13,6 +13,8 @@ Fixed:
 - MagiChem's fully grown clusters have been added to the geode_harvestable tag to work out of the box rather than requiring a datapack. The budding blocks are already in the forge:budding tag which is already part of geode_acceleratable
 - Apparently Oculus doesnt take _s to mean steadfast version but something else and doesnt put the texture into the texture atlas, so we've literally spelled it out for it
 - Blood Orbs could be used without getting damaged while spawn protection lasts. It now does the same thing the rest of the sacrifice stuff does and first gets rid of invulnerability
+- Hellfire Forge does not let item automation stuff place items into the autput slot anymore. Its also learned some other handy things like prioritizing a different input slot for each of the different sides as well as targeting the gem slot first from above and only ever taking from the output slot from below
+
 ------------------------------------------------------
 Version 3.3.5
 ------------------------------------------------------

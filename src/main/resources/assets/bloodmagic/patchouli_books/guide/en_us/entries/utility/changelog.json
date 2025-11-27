@@ -27,6 +27,10 @@
     },
     {
       "type": "patchouli:text",
+      "text": "$(li)improved item automation interactions for the Hellfire Forge. More on this $(l:bloodmagic:demon_will/will_manipulation/soul_forge)here$()"
+    },
+    {
+      "type": "patchouli:text",
       "title": "3.3.5",
       "text": "$(li)Missing Recipe Serializer prevented people from joining servers. Its been found and put where it belongs"
     },
