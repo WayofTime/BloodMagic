@@ -43,7 +43,8 @@ import wayoftime.bloodmagic.client.hud.Elements;
 import wayoftime.bloodmagic.client.key.BloodMagicKeyHandler;
 import wayoftime.bloodmagic.client.key.KeyBindingBloodMagic;
 import wayoftime.bloodmagic.client.sounds.SoundRegistry;
-import wayoftime.bloodmagic.command.SoulNetworkCommand;
+import wayoftime.bloodmagic.command.CommandBloodMagic;
+import wayoftime.bloodmagic.command.sub.SoulNetworkCommand;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.*;
 import wayoftime.bloodmagic.common.fluid.BloodMagicFluids;
@@ -149,7 +150,7 @@ public class BloodMagic {
         MinecraftForge.EVENT_BUS.register(new GenericHandler());
         modBus.addListener(this::registerColors);
 
-        MinecraftForge.EVENT_BUS.addListener(this::registerCommands);
+        MinecraftForge.EVENT_BUS.addListener(CommandBloodMagic::register);
 
         MinecraftForge.EVENT_BUS.register(new WillHandler());
 //		MinecraftForge.EVENT_BUS.register(new BloodMagicBlocks());
@@ -168,10 +169,6 @@ public class BloodMagic {
 
     public static ResourceLocation rl(String name) {
         return new ResourceLocation(BloodMagic.MODID, name);
-    }
-
-    public void registerCommands(RegisterCommandsEvent event) {
-        SoulNetworkCommand.register(event.getDispatcher());
     }
 
     public static void handleConfigValues(BloodMagicAPI api) {
