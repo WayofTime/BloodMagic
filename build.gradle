@@ -149,7 +149,13 @@ tasks.named('jar', Jar).configure {
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
+    archiveClassifier = 'slim'  // Rename slim jar without JarJar dependencies
     finalizedBy 'reobfJar'
+}
+
+// Make the jarJar (with bundled dependencies like MixinExtras) the default jar
+tasks.named('jarJar', Jar).configure {
+    archiveClassifier = ''
 }
 
 
