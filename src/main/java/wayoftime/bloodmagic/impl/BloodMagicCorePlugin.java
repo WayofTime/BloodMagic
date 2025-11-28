@@ -35,6 +35,8 @@ public class BloodMagicCorePlugin
 		api.getValueManager().setTranquility(Blocks.WHEAT, new TranquilityStack(EnumTranquilityType.CROP, 1.0D));
 		api.getValueManager().setTranquility(Blocks.NETHER_WART, new TranquilityStack(EnumTranquilityType.CROP, 1.0D));
 		api.getValueManager().setTranquility(Blocks.BEETROOTS, new TranquilityStack(EnumTranquilityType.CROP, 1.0D));
+        api.getValueManager().setTranquility(BloodMagicBlocks.WEAK_TAU.get(), new TranquilityStack(EnumTranquilityType.CROP, 1.2D));
+        api.getValueManager().setTranquility(BloodMagicBlocks.STRONG_TAU.get(), new TranquilityStack(EnumTranquilityType.CROP, 1.5D));
 
 		//Added some blocks to the list at Tara's suggestion.
 		api.getValueManager().setTranquility(Blocks.CRIMSON_NYLIUM, new TranquilityStack(EnumTranquilityType.FIRE, 0.75D));
@@ -47,24 +49,9 @@ public class BloodMagicCorePlugin
 		api.getValueManager().setTranquility(Blocks.VINE, new TranquilityStack(EnumTranquilityType.PLANT, 0.25D));
 		api.getValueManager().setTranquility(Blocks.WEEPING_VINES, new TranquilityStack(EnumTranquilityType.PLANT, 0.5D));
 		api.getValueManager().setTranquility(Blocks.TWISTING_VINES, new TranquilityStack(EnumTranquilityType.PLANT, 0.5D));
-		api.getValueManager().setTranquility(Blocks.CANDLE, new TranquilityStack(EnumTranquilityType.FIRE, 0.2D));
-		api.getValueManager().setTranquility(Blocks.WHITE_CANDLE, new TranquilityStack(EnumTranquilityType.FIRE, 0.2D));
-		api.getValueManager().setTranquility(Blocks.ORANGE_CANDLE, new TranquilityStack(EnumTranquilityType.FIRE, 0.2D));
-		api.getValueManager().setTranquility(Blocks.MAGENTA_CANDLE, new TranquilityStack(EnumTranquilityType.FIRE, 0.2D));
-		api.getValueManager().setTranquility(Blocks.LIGHT_BLUE_CANDLE, new TranquilityStack(EnumTranquilityType.FIRE, 0.2D));
-		api.getValueManager().setTranquility(Blocks.YELLOW_CANDLE, new TranquilityStack(EnumTranquilityType.FIRE, 0.2D));
-		api.getValueManager().setTranquility(Blocks.LIME_CANDLE, new TranquilityStack(EnumTranquilityType.FIRE, 0.2D));
-		api.getValueManager().setTranquility(Blocks.PINK_CANDLE, new TranquilityStack(EnumTranquilityType.FIRE, 0.2D));
-		api.getValueManager().setTranquility(Blocks.GRAY_CANDLE, new TranquilityStack(EnumTranquilityType.FIRE, 0.2D));
-		api.getValueManager().setTranquility(Blocks.LIGHT_GRAY_CANDLE, new TranquilityStack(EnumTranquilityType.FIRE, 0.2D));
-		api.getValueManager().setTranquility(Blocks.CYAN_CANDLE, new TranquilityStack(EnumTranquilityType.FIRE, 0.2D));
-		api.getValueManager().setTranquility(Blocks.PURPLE_CANDLE, new TranquilityStack(EnumTranquilityType.FIRE, 0.2D));
-		api.getValueManager().setTranquility(Blocks.BLUE_CANDLE, new TranquilityStack(EnumTranquilityType.FIRE, 0.2D));
-		api.getValueManager().setTranquility(Blocks.BROWN_CANDLE, new TranquilityStack(EnumTranquilityType.FIRE, 0.2D));
-		api.getValueManager().setTranquility(Blocks.GREEN_CANDLE, new TranquilityStack(EnumTranquilityType.FIRE, 0.2D));
-		api.getValueManager().setTranquility(Blocks.RED_CANDLE, new TranquilityStack(EnumTranquilityType.FIRE, 0.2D));
-		api.getValueManager().setTranquility(Blocks.BLACK_CANDLE, new TranquilityStack(EnumTranquilityType.FIRE, 0.2D));
+        api.getValueManager().setTranquility(Blocks.CAVE_VINES, new TranquilityStack(EnumTranquilityType.PLANT, 0.5D));
 
+        apiInterface.registerTranquilityHandler(state -> state.is(BlockTags.CANDLES), EnumTranquilityType.FIRE.name(), 0.2D);
 		apiInterface.registerTranquilityHandler(state -> state.getBlock() instanceof LeavesBlock, EnumTranquilityType.PLANT.name(), 1.0D);
 		apiInterface.registerTranquilityHandler(state -> state.getBlock() instanceof FireBlock, EnumTranquilityType.FIRE.name(), 1.0D);
 		apiInterface.registerTranquilityHandler(state -> state.getBlock() instanceof GrassBlock, EnumTranquilityType.EARTHEN.name(), 0.5D);
@@ -77,6 +64,9 @@ public class BloodMagicCorePlugin
 		apiInterface.registerAltarComponent(Blocks.GLOWSTONE.defaultBlockState(), ComponentType.GLOWSTONE.name());
 		apiInterface.registerAltarComponent(Blocks.SEA_LANTERN.defaultBlockState(), ComponentType.GLOWSTONE.name());
 		apiInterface.registerAltarComponent(Blocks.SHROOMLIGHT.defaultBlockState(), ComponentType.GLOWSTONE.name());
+        apiInterface.registerAltarComponent(Blocks.OCHRE_FROGLIGHT.defaultBlockState(), ComponentType.GLOWSTONE.name());
+        apiInterface.registerAltarComponent(Blocks.PEARLESCENT_FROGLIGHT.defaultBlockState(), ComponentType.GLOWSTONE.name());
+        apiInterface.registerAltarComponent(Blocks.VERDANT_FROGLIGHT.defaultBlockState(), ComponentType.GLOWSTONE.name());
 
 		apiInterface.registerAltarComponent(BloodMagicBlocks.BLOODSTONE.get().defaultBlockState(), ComponentType.BLOODSTONE.name());
 		apiInterface.registerAltarComponent(BloodMagicBlocks.BLOODSTONE_BRICK.get().defaultBlockState(), ComponentType.BLOODSTONE.name());
@@ -86,6 +76,9 @@ public class BloodMagicCorePlugin
         apiInterface.registerAltarComponent(BloodMagicBlocks.DESTRUCTIVE_HELLFORGED_BLOCK.get().defaultBlockState(), ComponentType.BEACON.name());
         apiInterface.registerAltarComponent(BloodMagicBlocks.STEADFAST_HELLFORGED_BLOCK.get().defaultBlockState(), ComponentType.BEACON.name());
         apiInterface.registerAltarComponent(BloodMagicBlocks.VENGEFUL_HELLFORGED_BLOCK.get().defaultBlockState(), ComponentType.BEACON.name());
+
+        // literally call this to get t6 in your pack/add-on
+        // apiInterface.registerAltarComponent(<t6 capstone blockstate here>, ComponentType.CRYSTAL.name());
 
 		apiInterface.registerAltarComponent(BloodMagicBlocks.BLANK_RUNE.get().defaultBlockState(), ComponentType.BLOODRUNE.name());
 		apiInterface.registerAltarComponent(BloodMagicBlocks.SPEED_RUNE.get().defaultBlockState(), ComponentType.BLOODRUNE.name());

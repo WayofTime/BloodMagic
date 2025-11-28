@@ -7,6 +7,8 @@ Added:
 - ARC input tank can be emptied by putting buckets or other fluid handler items into the input bucket slot. It will also try to transfer as much as possible instead of only ever 1 bucket at a time
 - ARC tanks can be interacted with from in-world now. Order of operations tried is Fill input tank > Empty output tank > Empty input tank > Open GUI
 - Sigil of the Frozen Lake is now craftable
+- Weak and Saturated Tau now count towards tranquility
+- Froglight variants are now valid in place of glowstone for the altar
 
 Fixed:
 - Ritual of the Beating Anvil didnt check to see if the recipe as valid and just produced the result. Recipe checking has been added, so you do now actually need the correct inputs
@@ -14,6 +16,8 @@ Fixed:
 - Apparently Oculus doesnt take _s to mean steadfast version but something else and doesnt put the texture into the texture atlas, so we've literally spelled it out for it
 - Blood Orbs could be used without getting damaged while spawn protection lasts. It now does the same thing the rest of the sacrifice stuff does and first gets rid of invulnerability
 - Hellfire Forge does not let item automation stuff place items into the autput slot anymore. Its also learned some other handy things like prioritizing a different input slot for each of the different sides as well as targeting the gem slot first from above and only ever taking from the output slot from below
+- Composite Item Filters didnt work, now they do
+- forge:storage_blocks/hellforged block and item tags were not added to the respective forge:storage_blocks tag
 
 ------------------------------------------------------
 Version 3.3.5
