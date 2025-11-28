@@ -66,7 +66,9 @@ public class RecipeFilterMergeAlchemyTable extends RecipeAlchemyTable
 			if (((ICompositeItemFilterProvider) filterStack.getItem()).canReceiveNestedFilter(filterStack, inputStack))
 			{
 				filterStack = ((ICompositeItemFilterProvider) filterStack.getItem()).nestFilter(filterStack, inputStack);
-			}
+			} else {
+                return ItemStack.EMPTY;
+            }
 		}
 
 		return filterStack;

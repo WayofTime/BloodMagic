@@ -1,6 +1,5 @@
 package wayoftime.bloodmagic.common.data;
 
-import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -32,12 +31,15 @@ public class GeneratorBlockTags extends IntrinsicHolderTagsProvider<Block>
 		this.tag(BloodMagicTags.Blocks.SOUL_SAND).add(Blocks.SOUL_SAND);
 		this.tag(BloodMagicTags.Blocks.SOUL_SOIL).add(Blocks.SOUL_SOIL);
 
-        this.tag(BloodMagicTags.Blocks.BLOCK_HELLFORGED)
+        this.tag(BloodMagicTags.Blocks.STORAGE_BLOCKS_HELLFORGED)
                 .add(BloodMagicBlocks.HELLFORGED_BLOCK.get())
                 .add(BloodMagicBlocks.CORROSIVE_HELLFORGED_BLOCK.get())
                 .add(BloodMagicBlocks.DESTRUCTIVE_HELLFORGED_BLOCK.get())
                 .add(BloodMagicBlocks.STEADFAST_HELLFORGED_BLOCK.get())
                 .add(BloodMagicBlocks.VENGEFUL_HELLFORGED_BLOCK.get());
+
+        this.tag(Tags.Blocks.STORAGE_BLOCKS)
+                .addTag(BloodMagicTags.Blocks.STORAGE_BLOCKS_HELLFORGED);
 
 		this.tag(BlockTags.WALLS)
                 .add(BloodMagicBlocks.DUNGEON_BRICK_WALL.get())
@@ -289,7 +291,7 @@ public class GeneratorBlockTags extends IntrinsicHolderTagsProvider<Block>
 
 		tag(BlockTags.NEEDS_DIAMOND_TOOL).add(BloodMagicBlocks.SPEED_RUNE_2.get(), BloodMagicBlocks.SACRIFICE_RUNE_2.get(), BloodMagicBlocks.SELF_SACRIFICE_RUNE_2.get(), BloodMagicBlocks.DISPLACEMENT_RUNE_2.get(), BloodMagicBlocks.CAPACITY_RUNE_2.get(), BloodMagicBlocks.AUGMENTED_CAPACITY_RUNE_2.get(), BloodMagicBlocks.ORB_RUNE_2.get(), BloodMagicBlocks.ACCELERATION_RUNE_2.get(), BloodMagicBlocks.CHARGING_RUNE_2.get());
 		tag(BlockTags.NEEDS_DIAMOND_TOOL).add(BloodMagicBlocks.OBSIDIAN_PATH.get(), BloodMagicBlocks.OBSIDIAN_TILE_PATH.get());
-		tag(BlockTags.BEACON_BASE_BLOCKS).add(BloodMagicBlocks.HELLFORGED_BLOCK.get());
+		tag(BlockTags.BEACON_BASE_BLOCKS).addTag(BloodMagicTags.Blocks.STORAGE_BLOCKS_HELLFORGED);
 
 		tag(BloodMagicTags.Blocks.MUNDANE_BLOCK).addTag(Tags.Blocks.COBBLESTONE).addTag(Tags.Blocks.STONE).addTag(BlockTags.SAND).addTag(BlockTags.DIRT).add(Blocks.GRAVEL).add(Blocks.NETHERRACK);
 	}
