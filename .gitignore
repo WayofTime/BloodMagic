@@ -11,3 +11,8 @@ run
 run-data
 run-server
 src/generated/resources/.cache
+BloodMagic.iml
+
+BloodMagic.ipr
+
+BloodMagic.iws
