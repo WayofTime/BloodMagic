@@ -239,6 +239,52 @@ public class BMRecipeProvider extends RecipeProvider {
                 .drain(200)
                 .unlockedBy("has_archmage_orb", has(BMItems.ORB_ARCHMAGE.get()))
                 .save(output, BloodMagic.rl("transcendent_blood_orb"));
+
+        // Slates
+        AltarRecipeBuilder.build(BMItems.SLATE_BLANK.get())
+                .from(Items.STONE)
+                .minTier(0)
+                .bloodNeeded(1000)
+                .consumption(5)
+                .drain(5)
+                .unlockedBy("has_altar", has(BMBlocks.BLOOD_ALTAR.block().get()))
+                .save(output, BloodMagic.rl("blank_slate"));
+
+        AltarRecipeBuilder.build(BMItems.SLATE_REINFORCED.get())
+                .from(BMItems.SLATE_BLANK.get())
+                .minTier(1)
+                .bloodNeeded(2000)
+                .consumption(5)
+                .drain(5)
+                .unlockedBy("has_blank_slate", has(BMItems.SLATE_BLANK.get()))
+                .save(output, BloodMagic.rl("reinforced_slate"));
+
+        AltarRecipeBuilder.build(BMItems.SLATE_IMBUED.get())
+                .from(BMItems.SLATE_REINFORCED.get())
+                .minTier(2)
+                .bloodNeeded(5000)
+                .consumption(5)
+                .drain(5)
+                .unlockedBy("has_reinforced_slate", has(BMItems.SLATE_REINFORCED.get()))
+                .save(output, BloodMagic.rl("imbued_slate"));
+
+        AltarRecipeBuilder.build(BMItems.SLATE_DEMONIC.get())
+                .from(BMItems.SLATE_IMBUED.get())
+                .minTier(3)
+                .bloodNeeded(15000)
+                .consumption(20)
+                .drain(20)
+                .unlockedBy("has_imbued_slate", has(BMItems.SLATE_IMBUED.get()))
+                .save(output, BloodMagic.rl("demonic_slate"));
+
+        AltarRecipeBuilder.build(BMItems.SLATE_ETHEREAL.get())
+                .from(BMItems.SLATE_DEMONIC.get())
+                .minTier(4)
+                .bloodNeeded(30000)
+                .consumption(30)
+                .drain(50)
+                .unlockedBy("has_demonic_slate", has(BMItems.SLATE_DEMONIC.get()))
+                .save(output, BloodMagic.rl("ethereal_slate"));
     }
 
     private void addSoulForgeRecipes(RecipeOutput output) {
@@ -299,10 +345,10 @@ public class BMRecipeProvider extends RecipeProvider {
         // ARC Block (shaped crafting recipe)
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BMBlocks.ARC_BLOCK.block().get())
                 .pattern("sss")
-                .pattern("BoB")
+                .pattern("SoS")
                 .pattern("IfI")
                 .define('s', Tags.Items.STONES)
-                .define('B', BMBlocks.BLOODSTONE.block().get()) // Substitute for imbued slate until slates are ported
+                .define('S', BMItems.SLATE_IMBUED.get())
                 .define('o', BMItems.ORB_MAGICIAN.get())
                 .define('I', Items.IRON_BLOCK)
                 .define('f', Items.FURNACE)
