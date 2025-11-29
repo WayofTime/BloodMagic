@@ -54,6 +54,10 @@ public class AltarUtil {
 
     public static Map<EnumRuneType, Integer> getUpgrades(int tier, Level level, BlockPos altarPos) {
         Map<EnumRuneType, Integer> upgrades = new HashMap<>();
+        // Tier -1 means no valid structure, so no upgrades
+        if (tier < 0 || tier >= BMMultiblock.TIER_LIST.length) {
+            return upgrades;
+        }
         for (AltarComponent component : BMMultiblock.TIER_LIST[tier].components()) {
             if (component.isUpgrade()) {
                 List<BloodRune> runes = level.getBlockState(altarPos.offset(component.pos())).getBlockHolder().getData(BMDataMaps.BLOOD_RUNES);
