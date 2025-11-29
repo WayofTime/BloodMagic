@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "G": {
+      "tag": "c:ingots/gold"
+    },
+    "g": {
+      "item": "minecraft:glass"
+    },
+    "i": {
+      "tag": "c:ingots/iron"
+    }
+  },
+  "pattern": [
+    " g ",
+    " G ",
+    " i "
+  ],
+  "result": {
+    "count": 1,
+    "id": "bloodmagic:sacrificial_dagger"
+  }
+}

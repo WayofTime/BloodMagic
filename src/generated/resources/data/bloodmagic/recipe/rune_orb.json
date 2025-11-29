@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "O": {
+      "item": "bloodmagic:blood_orb_master"
+    },
+    "b": {
+      "item": "bloodmagic:bloodstone"
+    },
+    "o": {
+      "item": "bloodmagic:blood_orb_weak"
+    },
+    "r": {
+      "item": "bloodmagic:rune_blank"
+    }
+  },
+  "pattern": [
+    "ror",
+    "ObO",
+    "ror"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bloodmagic:rune_orb"
+  }
+}

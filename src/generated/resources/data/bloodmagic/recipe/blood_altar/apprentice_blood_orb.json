@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:blood_altar_recipe",
+  "bloodNeeded": 5000,
+  "craftSpeed": 5,
+  "drainSpeed": 5,
+  "input": {
+    "item": "bloodmagic:blood_orb_weak"
+  },
+  "minTier": 1,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:blood_orb_apprentice"
+  }
+}

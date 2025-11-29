@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "b": {
+      "item": "bloodmagic:bloodstone"
+    },
+    "n": {
+      "item": "minecraft:netherite_scrap"
+    },
+    "r": {
+      "item": "bloodmagic:rune_sacrifice"
+    }
+  },
+  "pattern": [
+    "nbn",
+    "brb",
+    "nbn"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bloodmagic:rune_2_sacrifice"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:blood_altar_recipe",
+  "bloodNeeded": 2000,
+  "craftSpeed": 5,
+  "drainSpeed": 1,
+  "input": {
+    "item": "minecraft:diamond"
+  },
+  "minTier": 0,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:blood_orb_weak"
+  }
+}

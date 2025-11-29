@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "c": {
+      "item": "minecraft:obsidian"
+    },
+    "o": {
+      "item": "bloodmagic:blood_orb_master"
+    },
+    "r": {
+      "item": "bloodmagic:rune_blank"
+    },
+    "s": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "scs",
+    "ror",
+    "srs"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bloodmagic:rune_capacity_augmented"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "b": {
+      "item": "minecraft:iron_block"
+    },
+    "i": {
+      "tag": "c:ingots/iron"
+    },
+    "o": {
+      "item": "bloodmagic:blood_orb_weak"
+    },
+    "s": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "i i",
+    "sbs",
+    "sos"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bloodmagic:hellfire_forge"
+  }
+}

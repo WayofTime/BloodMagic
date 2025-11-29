@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:soul_forge",
+  "drain": 20.0,
+  "inputs": [
+    {
+      "item": "bloodmagic:soul_gem_petty"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:lapis_block"
+    },
+    {
+      "item": "bloodmagic:bloodstone"
+    }
+  ],
+  "minDrain": 60.0,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:soul_gem_lesser"
+  }
+}

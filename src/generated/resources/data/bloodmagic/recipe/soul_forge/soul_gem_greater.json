@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:soul_forge",
+  "drain": 100.0,
+  "inputs": [
+    {
+      "item": "bloodmagic:soul_gem_common"
+    },
+    {
+      "item": "minecraft:diamond_block"
+    },
+    {
+      "item": "minecraft:diamond_block"
+    },
+    {
+      "item": "bloodmagic:bloodstone_brick"
+    }
+  ],
+  "minDrain": 500.0,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:soul_gem_greater"
+  }
+}

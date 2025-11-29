@@ -1,0 +1,28 @@
+{
+  "type": "bloodmagic:fluid_tiered",
+  "category": "misc",
+  "pattern": {
+    "key": {
+      "g": {
+        "item": "minecraft:glass"
+      },
+      "s": {
+        "item": "bloodmagic:bloodstone"
+      },
+      "t": {
+        "item": "bloodmagic:blood_tank"
+      }
+    },
+    "pattern": [
+      "g g",
+      "tgt",
+      "gsg"
+    ]
+  },
+  "primary": 3,
+  "result": {
+    "count": 1,
+    "id": "bloodmagic:blood_tank"
+  },
+  "secondary": 5
+}

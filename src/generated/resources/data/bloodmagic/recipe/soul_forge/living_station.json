@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:soul_forge",
+  "drain": 10.0,
+  "inputs": [
+    {
+      "item": "bloodmagic:bloodstone"
+    },
+    {
+      "item": "bloodmagic:bloodstone"
+    },
+    {
+      "item": "minecraft:stone"
+    },
+    {
+      "item": "minecraft:stone"
+    }
+  ],
+  "minDrain": 50.0,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:living_station"
+  }
+}

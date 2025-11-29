@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:blood_altar_recipe",
+  "bloodNeeded": 40000,
+  "craftSpeed": 30,
+  "drainSpeed": 50,
+  "input": {
+    "item": "bloodmagic:blood_orb_magician"
+  },
+  "minTier": 3,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:blood_orb_master"
+  }
+}

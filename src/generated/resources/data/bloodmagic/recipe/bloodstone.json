@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "b": {
+      "item": "bloodmagic:life_essence_bucket"
+    },
+    "s": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "sss",
+    "sbs",
+    "sss"
+  ],
+  "result": {
+    "count": 8,
+    "id": "bloodmagic:bloodstone"
+  }
+}

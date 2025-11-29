@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bloodmagic:rune_2_dislocation"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_tier1_rune": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bloodmagic:rune_dislocation"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_tier1_rune"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bloodmagic:rune_2_dislocation"
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "a": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "b": {
+      "item": "bloodmagic:life_essence_bucket"
+    }
+  },
+  "pattern": [
+    "aba",
+    "bab",
+    "aba"
+  ],
+  "result": {
+    "count": 4,
+    "id": "bloodmagic:crystal_cluster"
+  }
+}

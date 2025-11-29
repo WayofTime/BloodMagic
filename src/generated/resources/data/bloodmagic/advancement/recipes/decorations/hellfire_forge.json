@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bloodmagic:hellfire_forge"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_weak_orb": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bloodmagic:blood_orb_weak"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_weak_orb"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bloodmagic:hellfire_forge"
+    ]
+  }
+}

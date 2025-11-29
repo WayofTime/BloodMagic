@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:soul_forge",
+  "drain": 5.0,
+  "inputs": [
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "bloodmagic:raw_will"
+    }
+  ],
+  "minDrain": 10.0,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:training_bracelet"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "o": {
+      "item": "bloodmagic:blood_orb_weak"
+    },
+    "s": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "sos",
+    "s s",
+    "sss"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bloodmagic:rune_blank"
+  }
+}

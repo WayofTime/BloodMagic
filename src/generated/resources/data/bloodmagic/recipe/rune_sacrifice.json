@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "c": {
+      "item": "minecraft:gold_ingot"
+    },
+    "o": {
+      "item": "bloodmagic:blood_orb_apprentice"
+    },
+    "r": {
+      "item": "bloodmagic:rune_blank"
+    },
+    "s": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "scs",
+    "coc",
+    "srs"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bloodmagic:rune_sacrifice"
+  }
+}

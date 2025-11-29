@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_life_essence": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bloodmagic:life_essence_bucket"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bloodmagic:bloodstone"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_life_essence"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bloodmagic:bloodstone"
+    ]
+  }
+}
