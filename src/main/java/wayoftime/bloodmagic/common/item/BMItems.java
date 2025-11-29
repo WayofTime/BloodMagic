@@ -48,6 +48,38 @@ public class BMItems {
     public static final DeferredHolder<Item, SoulGemItem> SOUL_GEM_GREATER = WILL_ITEMS.register("soul_gem_greater", SoulGemItem::new);
     public static final DeferredHolder<Item, SoulGemItem> SOUL_GEM_GRAND = WILL_ITEMS.register("soul_gem_grand", SoulGemItem::new);
 
+    // Slates
+    public static final DeferredHolder<Item, Item> SLATE_BLANK = BASIC_ITEMS.register("blank_slate", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> SLATE_REINFORCED = BASIC_ITEMS.register("reinforced_slate", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> SLATE_IMBUED = BASIC_ITEMS.register("imbued_slate", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> SLATE_DEMONIC = BASIC_ITEMS.register("demonic_slate", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> SLATE_ETHEREAL = BASIC_ITEMS.register("ethereal_slate", () -> new Item(new Item.Properties()));
+
+    // Sigils (placeholder items - functionality to be added later)
+    public static final DeferredHolder<Item, Item> SIGIL_DIVINATION = BASIC_ITEMS.register("sigil_divination", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<Item, Item> SIGIL_SEER = BASIC_ITEMS.register("sigil_seer", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<Item, Item> SIGIL_WATER = BASIC_ITEMS.register("sigil_water", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<Item, Item> SIGIL_LAVA = BASIC_ITEMS.register("sigil_lava", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<Item, Item> SIGIL_VOID = BASIC_ITEMS.register("sigil_void", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<Item, Item> SIGIL_GREEN_GROVE = BASIC_ITEMS.register("sigil_green_grove", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<Item, Item> SIGIL_AIR = BASIC_ITEMS.register("sigil_air", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<Item, Item> SIGIL_BLOOD_LIGHT = BASIC_ITEMS.register("sigil_blood_light", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<Item, Item> SIGIL_FAST_MINER = BASIC_ITEMS.register("sigil_fast_miner", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<Item, Item> SIGIL_MAGNETISM = BASIC_ITEMS.register("sigil_magnetism", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<Item, Item> SIGIL_FROST = BASIC_ITEMS.register("sigil_frost", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<Item, Item> SIGIL_SUPPRESSION = BASIC_ITEMS.register("sigil_suppression", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<Item, Item> SIGIL_HOLDING = BASIC_ITEMS.register("sigil_holding", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<Item, Item> SIGIL_TELEPOSITION = BASIC_ITEMS.register("sigil_teleposition", () -> new Item(new Item.Properties().stacksTo(1)));
+
+    // Alchemy items
+    public static final DeferredHolder<Item, Item> ARCANE_ASHES = BASIC_ITEMS.register("arcane_ashes", () -> new Item(new Item.Properties()));
+
+    // Misc items
+    public static final DeferredHolder<Item, Item> SOUL_SNARE = BASIC_ITEMS.register("soul_snare", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> WEAK_BLOOD_SHARD = BASIC_ITEMS.register("weak_blood_shard", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> DAGGER_OF_SACRIFICE = ITEMS.register("dagger_of_sacrifice", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<Item, Item> LAVA_CRYSTAL = BASIC_ITEMS.register("lava_crystal", () -> new Item(new Item.Properties()));
+
     public static void register(IEventBus modBus) {
         BASIC_ITEMS.register(modBus);
         ITEMS.register(modBus);
