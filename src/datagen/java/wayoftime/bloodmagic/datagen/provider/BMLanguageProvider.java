@@ -139,6 +139,18 @@ public class BMLanguageProvider extends LanguageProvider {
         add("chat.bloodmagic.living_upgrade.level_up", "%s has levelled up to %s!");
 
         LivingUpgrades.translations(this::add);
+
+        // JEI Integration
+        addJei("recipe.altar", "Blood Altar");
+        addJei("recipe.soulforge", "Hellfire Forge");
+        addJei("recipe.requiredtier", "Required Tier: %s");
+        addJei("recipe.requiredlp", "Required LP: %s");
+        addJei("recipe.consumptionrate", "Consumption Rate: %s LP/t");
+        addJei("recipe.drainrate", "Drain Rate: %s LP/t");
+        addJei("recipe.minimumsouls", "Minimum Souls: %s");
+        addJei("recipe.soulsdrained", "Souls Drained: %s");
+        addJei("recipe.will", "Will");
+        addJei("recipe.info", "Hover for info");
     }
 
     public void addCommand(String key, String value) {
@@ -155,5 +167,9 @@ public class BMLanguageProvider extends LanguageProvider {
 
     public void addTooltip(String name, String value) {
         add("tooltip.bloodmagic." + name, value);
+    }
+
+    public void addJei(String name, String value) {
+        add("jei.bloodmagic." + name, value);
     }
 }
