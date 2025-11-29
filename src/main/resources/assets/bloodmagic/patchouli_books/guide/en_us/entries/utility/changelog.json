@@ -31,7 +31,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "$(li)improved item automation interactions for the Hellfire Forge. More on this $(l:bloodmagic:demon_will/will_manipulation/soul_forge)here$()$(li)Composite Item Filters didnt work, now they do$(li)forge:storage_blocks/hellforged wasnt added to forge:storage_blocks"
+      "text": "$(li)improved item automation interactions for the Hellfire Forge. More on this $(l:bloodmagic:demon_will/will_manipulation/soul_forge)here$()$(li)Composite Item Filters didnt work, now they do$(li)forge:storage_blocks/hellforged wasnt added to forge:storage_blocks$(li)prevent a crash when opening the Edit HUD position screen while looking at an entity"
     },
     {
       "type": "patchouli:text",
