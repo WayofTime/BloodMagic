@@ -95,11 +95,14 @@ public class BMRecipeProvider extends RecipeProvider {
                 .save(output, BloodMagic.rl("hellforged_block_from_ingots"));
 
         // Synthetic Point
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, BMItems.SYNTHETIC_POINT.get(), 2)
-                .requires(Items.ROTTEN_FLESH)
-                .requires(Tags.Items.NUGGETS_IRON)
-                .requires(Items.REDSTONE)
-                .unlockedBy("has_rotten_flesh", has(Items.ROTTEN_FLESH))
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BMItems.SYNTHETIC_POINT.get(), 2)
+                .pattern("imi")
+                .pattern("mrm")
+                .pattern("imi")
+                .define('i', Tags.Items.NUGGETS_IRON)
+                .define('m', ItemTags.MEAT)
+                .define('r', Items.REDSTONE)
+                .unlockedBy("has_meat", has(ItemTags.MEAT))
                 .save(output);
 
         // Blank Rune

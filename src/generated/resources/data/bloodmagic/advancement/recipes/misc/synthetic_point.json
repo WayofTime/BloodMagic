@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_rotten_flesh": {
+    "has_meat": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:rotten_flesh"
+            "items": "#minecraft:meat"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_rotten_flesh"
+      "has_meat"
     ]
   ],
   "rewards": {

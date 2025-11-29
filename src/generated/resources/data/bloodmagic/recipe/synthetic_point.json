@@ -1,16 +1,21 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "ingredients": [
-    {
-      "item": "minecraft:rotten_flesh"
-    },
-    {
+  "key": {
+    "i": {
       "tag": "c:nuggets/iron"
     },
-    {
+    "m": {
+      "tag": "minecraft:meat"
+    },
+    "r": {
       "item": "minecraft:redstone"
     }
+  },
+  "pattern": [
+    "imi",
+    "mrm",
+    "imi"
   ],
   "result": {
     "count": 2,
