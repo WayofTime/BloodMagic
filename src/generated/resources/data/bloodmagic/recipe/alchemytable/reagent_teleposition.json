@@ -1,0 +1,21 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "minecraft:ender_pearl"
+    },
+    {
+      "tag": "c:gems/diamond"
+    },
+    {
+      "item": "bloodmagic:soul_snare"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:reagentteleposition"
+  },
+  "syphon": 3000,
+  "ticks": 200,
+  "upgradeLevel": 4
+}

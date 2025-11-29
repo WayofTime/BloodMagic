@@ -1,0 +1,21 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "minecraft:water_bucket"
+    },
+    {
+      "item": "minecraft:lava_bucket"
+    },
+    {
+      "item": "minecraft:nether_star"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:reagentsuppression"
+  },
+  "syphon": 5000,
+  "ticks": 200,
+  "upgradeLevel": 4
+}

@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:array",
+  "addedinput": {
+    "item": "bloodmagic:imbued_slate"
+  },
+  "baseinput": {
+    "item": "minecraft:powder_snow_bucket"
+  },
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:sigil_frost"
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/frostsigil.png"
+}

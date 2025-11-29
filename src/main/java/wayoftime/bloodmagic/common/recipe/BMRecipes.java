@@ -10,6 +10,10 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.recipe.arc.ARCRecipe;
 import wayoftime.bloodmagic.common.recipe.arc.ARCSerializer;
+import wayoftime.bloodmagic.common.recipe.alchemyarray.AlchemyArrayRecipe;
+import wayoftime.bloodmagic.common.recipe.alchemyarray.AlchemyArraySerializer;
+import wayoftime.bloodmagic.common.recipe.alchemytable.AlchemyTableRecipe;
+import wayoftime.bloodmagic.common.recipe.alchemytable.AlchemyTableSerializer;
 import wayoftime.bloodmagic.common.recipe.bloodaltar.BloodAltarRecipe;
 import wayoftime.bloodmagic.common.recipe.bloodaltar.BloodAltarRecipeSerializer;
 import wayoftime.bloodmagic.common.recipe.forge.ForgeRecipe;
@@ -37,6 +41,12 @@ public class BMRecipes {
 
     public static final DeferredHolder<RecipeType<?>, RecipeType<EnergyTieredRecipe>> ENERGY_TIERED_TYPE = TYPES.register(EnergyTieredRecipe.NAME, () -> RecipeType.simple(bm(EnergyTieredRecipe.NAME)));
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<EnergyTieredRecipe>> ENERGY_TIERED_SERIALIZER = SERIALIZERS.register(EnergyTieredRecipe.NAME, EnergyTieredSerializer::new);
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<AlchemyArrayRecipe>> ALCHEMY_ARRAY_TYPE = TYPES.register(AlchemyArrayRecipe.RECIPE_TYPE_NAME, () -> RecipeType.simple(bm(AlchemyArrayRecipe.RECIPE_TYPE_NAME)));
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<AlchemyArrayRecipe>> ALCHEMY_ARRAY_SERIALIZER = SERIALIZERS.register(AlchemyArrayRecipe.RECIPE_TYPE_NAME, AlchemyArraySerializer::new);
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<AlchemyTableRecipe>> ALCHEMY_TABLE_TYPE = TYPES.register(AlchemyTableRecipe.RECIPE_TYPE_NAME, () -> RecipeType.simple(bm(AlchemyTableRecipe.RECIPE_TYPE_NAME)));
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<AlchemyTableRecipe>> ALCHEMY_TABLE_SERIALIZER = SERIALIZERS.register(AlchemyTableRecipe.RECIPE_TYPE_NAME, AlchemyTableSerializer::new);
 
     public static void register(IEventBus modBus) {
         SERIALIZERS.register(modBus);

@@ -72,7 +72,22 @@ public class BMItems {
     public static final DeferredHolder<Item, Item> SIGIL_TELEPOSITION = BASIC_ITEMS.register("sigil_teleposition", () -> new Item(new Item.Properties().stacksTo(1)));
 
     // Alchemy items
-    public static final DeferredHolder<Item, Item> ARCANE_ASHES = BASIC_ITEMS.register("arcane_ashes", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, ItemArcaneAshes> ARCANE_ASHES = BASIC_ITEMS.register("arcane_ashes", ItemArcaneAshes::new);
+
+    // Reagents (used to make Sigils via Alchemy Array)
+    public static final DeferredHolder<Item, Item> REAGENT_WATER = BASIC_ITEMS.register("reagentwater", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> REAGENT_LAVA = BASIC_ITEMS.register("reagentlava", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> REAGENT_VOID = BASIC_ITEMS.register("reagentvoid", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> REAGENT_GROWTH = BASIC_ITEMS.register("reagentgrowth", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> REAGENT_FAST_MINER = BASIC_ITEMS.register("reagentfastminer", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> REAGENT_MAGNETISM = BASIC_ITEMS.register("reagentmagnetism", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> REAGENT_AIR = BASIC_ITEMS.register("reagentair", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> REAGENT_BLOOD_LIGHT = BASIC_ITEMS.register("reagentbloodlight", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> REAGENT_SIGHT = BASIC_ITEMS.register("reagentsight", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> REAGENT_BINDING = BASIC_ITEMS.register("reagentbinding", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> REAGENT_HOLDING = BASIC_ITEMS.register("reagentholding", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> REAGENT_SUPPRESSION = BASIC_ITEMS.register("reagentsuppression", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> REAGENT_TELEPOSITION = BASIC_ITEMS.register("reagentteleposition", () -> new Item(new Item.Properties()));
 
     // Misc items
     public static final DeferredHolder<Item, Item> SOUL_SNARE = BASIC_ITEMS.register("soul_snare", () -> new Item(new Item.Properties()));

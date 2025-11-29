@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": {
+      "item": "bloodmagic:blank_slate"
+    },
+    "g": {
+      "tag": "c:ingots/gold"
+    },
+    "o": {
+      "item": "bloodmagic:blood_orb_weak"
+    },
+    "s": {
+      "tag": "c:stones"
+    }
+  },
+  "pattern": [
+    "sss",
+    "S S",
+    "gog"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bloodmagic:alchemytable"
+  }
+}

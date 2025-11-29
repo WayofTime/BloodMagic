@@ -36,6 +36,12 @@ public class BMTiles {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LivingStationTile>> LIVING_STATION_TYPE = TILES.register("living_station",
             () -> new BlockEntityType<>(LivingStationTile::new, Set.of(BMBlocks.LIVING_STATION.block().get()), null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AlchemyArrayTile>> ALCHEMY_ARRAY_TYPE = TILES.register("alchemy_array",
+            () -> new BlockEntityType<>(AlchemyArrayTile::new, Set.of(BMBlocks.ALCHEMY_ARRAY.get()), null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AlchemyTableTile>> ALCHEMY_TABLE_TYPE = TILES.register("alchemy_table",
+            () -> new BlockEntityType<>(AlchemyTableTile::new, Set.of(BMBlocks.ALCHEMY_TABLE.block().get()), null));
+
     private static void registerTileCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,

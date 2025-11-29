@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:array",
+  "addedinput": {
+    "item": "bloodmagic:imbued_slate"
+  },
+  "baseinput": {
+    "item": "bloodmagic:reagentbloodlight"
+  },
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:sigil_blood_light"
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/bloodlightsigil.png"
+}

@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:array",
+  "addedinput": {
+    "item": "bloodmagic:reinforced_slate"
+  },
+  "baseinput": {
+    "item": "bloodmagic:reagentgrowth"
+  },
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:sigil_green_grove"
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/growthsigil.png"
+}

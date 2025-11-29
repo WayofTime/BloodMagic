@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:array",
+  "addedinput": {
+    "item": "bloodmagic:blank_slate"
+  },
+  "baseinput": {
+    "item": "minecraft:redstone"
+  },
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:sigil_divination"
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/divinationsigil.png"
+}

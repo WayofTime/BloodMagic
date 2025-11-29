@@ -12,6 +12,8 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BMBlocks;
 import wayoftime.bloodmagic.common.fluid.BMFluids;
 import wayoftime.bloodmagic.common.item.BMItems;
+import wayoftime.bloodmagic.datagen.builder.AlchemyArrayRecipeBuilder;
+import wayoftime.bloodmagic.datagen.builder.AlchemyTableRecipeBuilder;
 import wayoftime.bloodmagic.datagen.builder.recipe.AltarRecipeBuilder;
 import wayoftime.bloodmagic.datagen.builder.recipe.ForgeRecipeBuilder;
 import wayoftime.bloodmagic.datagen.builder.recipe.TieredRecipeBuilder;
@@ -30,6 +32,8 @@ public class BMRecipeProvider extends RecipeProvider {
         addTieredRecipes(output);
         addBloodAltarRecipes(output);
         addSoulForgeRecipes(output);
+        addAlchemyArrayRecipes(output);
+        addAlchemyTableRecipes(output);
     }
 
     private void addVanillaCraftingRecipes(RecipeOutput output) {
@@ -436,5 +440,264 @@ public class BMRecipeProvider extends RecipeProvider {
                 .define('r', tier1Rune)
                 .unlockedBy("has_tier1_rune", has(tier1Rune))
                 .save(output);
+    }
+
+    private void addAlchemyArrayRecipes(RecipeOutput output) {
+        // Divination Sigil - base: redstone, added: blank slate
+        AlchemyArrayRecipeBuilder.build(BMItems.SIGIL_DIVINATION.get())
+                .base(Items.REDSTONE)
+                .added(BMItems.SLATE_BLANK.get())
+                .texture("textures/models/alchemyarrays/divinationsigil.png")
+                .save(output, "divination_sigil");
+
+        // Seer Sigil - base: reagent_sight, added: reinforced slate
+        AlchemyArrayRecipeBuilder.build(BMItems.SIGIL_SEER.get())
+                .base(BMItems.REAGENT_SIGHT.get())
+                .added(BMItems.SLATE_REINFORCED.get())
+                .texture("textures/models/alchemyarrays/sightsigil.png")
+                .save(output, "seer_sigil");
+
+        // Water Sigil - base: reagent_water, added: blank slate
+        AlchemyArrayRecipeBuilder.build(BMItems.SIGIL_WATER.get())
+                .base(BMItems.REAGENT_WATER.get())
+                .added(BMItems.SLATE_BLANK.get())
+                .texture("textures/models/alchemyarrays/watersigil.png")
+                .save(output, "water_sigil");
+
+        // Lava Sigil - base: reagent_lava, added: blank slate
+        AlchemyArrayRecipeBuilder.build(BMItems.SIGIL_LAVA.get())
+                .base(BMItems.REAGENT_LAVA.get())
+                .added(BMItems.SLATE_BLANK.get())
+                .texture("textures/models/alchemyarrays/lavasigil.png")
+                .save(output, "lava_sigil");
+
+        // Void Sigil - base: reagent_void, added: reinforced slate
+        AlchemyArrayRecipeBuilder.build(BMItems.SIGIL_VOID.get())
+                .base(BMItems.REAGENT_VOID.get())
+                .added(BMItems.SLATE_REINFORCED.get())
+                .texture("textures/models/alchemyarrays/voidsigil.png")
+                .save(output, "void_sigil");
+
+        // Green Grove Sigil - base: reagent_growth, added: reinforced slate
+        AlchemyArrayRecipeBuilder.build(BMItems.SIGIL_GREEN_GROVE.get())
+                .base(BMItems.REAGENT_GROWTH.get())
+                .added(BMItems.SLATE_REINFORCED.get())
+                .texture("textures/models/alchemyarrays/growthsigil.png")
+                .save(output, "green_grove_sigil");
+
+        // Fast Miner Sigil - base: reagent_fast_miner, added: reinforced slate
+        AlchemyArrayRecipeBuilder.build(BMItems.SIGIL_FAST_MINER.get())
+                .base(BMItems.REAGENT_FAST_MINER.get())
+                .added(BMItems.SLATE_REINFORCED.get())
+                .texture("textures/models/alchemyarrays/fastminersigil.png")
+                .save(output, "fast_miner_sigil");
+
+        // Air Sigil - base: reagent_air, added: reinforced slate
+        AlchemyArrayRecipeBuilder.build(BMItems.SIGIL_AIR.get())
+                .base(BMItems.REAGENT_AIR.get())
+                .added(BMItems.SLATE_REINFORCED.get())
+                .texture("textures/models/alchemyarrays/airsigil.png")
+                .save(output, "air_sigil");
+
+        // Blood Light Sigil - base: reagent_blood_light, added: imbued slate
+        AlchemyArrayRecipeBuilder.build(BMItems.SIGIL_BLOOD_LIGHT.get())
+                .base(BMItems.REAGENT_BLOOD_LIGHT.get())
+                .added(BMItems.SLATE_IMBUED.get())
+                .texture("textures/models/alchemyarrays/bloodlightsigil.png")
+                .save(output, "blood_light_sigil");
+
+        // Magnetism Sigil - base: reagent_magnetism, added: imbued slate
+        AlchemyArrayRecipeBuilder.build(BMItems.SIGIL_MAGNETISM.get())
+                .base(BMItems.REAGENT_MAGNETISM.get())
+                .added(BMItems.SLATE_IMBUED.get())
+                .texture("textures/models/alchemyarrays/magnetismsigil.png")
+                .save(output, "magnetism_sigil");
+
+        // Holding Sigil - base: reagent_holding, added: imbued slate
+        AlchemyArrayRecipeBuilder.build(BMItems.SIGIL_HOLDING.get())
+                .base(BMItems.REAGENT_HOLDING.get())
+                .added(BMItems.SLATE_IMBUED.get())
+                .texture("textures/models/alchemyarrays/holdingsigil.png")
+                .save(output, "holding_sigil");
+
+        // Suppression Sigil - base: reagent_suppression, added: demonic slate
+        AlchemyArrayRecipeBuilder.build(BMItems.SIGIL_SUPPRESSION.get())
+                .base(BMItems.REAGENT_SUPPRESSION.get())
+                .added(BMItems.SLATE_DEMONIC.get())
+                .texture("textures/models/alchemyarrays/suppressionsigil.png")
+                .save(output, "suppression_sigil");
+
+        // Teleposition Sigil - base: reagent_teleposition, added: demonic slate
+        AlchemyArrayRecipeBuilder.build(BMItems.SIGIL_TELEPOSITION.get())
+                .base(BMItems.REAGENT_TELEPOSITION.get())
+                .added(BMItems.SLATE_DEMONIC.get())
+                .texture("textures/models/alchemyarrays/telepositionsigil.png")
+                .save(output, "teleposition_sigil");
+
+        // Frost/Ice Sigil - base: reagent_frost (using lava bucket as temp), added: imbued slate
+        // Note: Frost sigil uses special reagent that may not exist, using placeholder
+        AlchemyArrayRecipeBuilder.build(BMItems.SIGIL_FROST.get())
+                .base(Items.POWDER_SNOW_BUCKET)
+                .added(BMItems.SLATE_IMBUED.get())
+                .texture("textures/models/alchemyarrays/frostsigil.png")
+                .save(output, "frost_sigil");
+    }
+
+    private void addAlchemyTableRecipes(RecipeOutput output) {
+        // Reagent Water - sugar, water bucket x2
+        AlchemyTableRecipeBuilder.build(BMItems.REAGENT_WATER.get())
+                .input(Items.SUGAR)
+                .input(Items.WATER_BUCKET)
+                .input(Items.WATER_BUCKET)
+                .syphon(300)
+                .ticks(200)
+                .minimumTier(1)
+                .save(output, "reagent_water");
+
+        // Reagent Lava - lava bucket, redstone dust, cobblestone, coal block
+        AlchemyTableRecipeBuilder.build(BMItems.REAGENT_LAVA.get())
+                .input(Items.LAVA_BUCKET)
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .input(Ingredient.of(Tags.Items.COBBLESTONES))
+                .input(Items.COAL_BLOCK)
+                .syphon(1000)
+                .ticks(200)
+                .minimumTier(1)
+                .save(output, "reagent_lava");
+
+        // Reagent Air - ghast tear, feather x2
+        AlchemyTableRecipeBuilder.build(BMItems.REAGENT_AIR.get())
+                .input(Items.GHAST_TEAR)
+                .input(Items.FEATHER)
+                .input(Items.FEATHER)
+                .syphon(2000)
+                .ticks(200)
+                .minimumTier(2)
+                .save(output, "reagent_air");
+
+        // Reagent Void - ender pearl, obsidian, bucket
+        AlchemyTableRecipeBuilder.build(BMItems.REAGENT_VOID.get())
+                .input(Items.ENDER_PEARL)
+                .input(Items.OBSIDIAN)
+                .input(Items.BUCKET)
+                .syphon(1000)
+                .ticks(200)
+                .minimumTier(2)
+                .save(output, "reagent_void");
+
+        // Reagent Growth - sugar, bonemeal, sapling, tall grass
+        AlchemyTableRecipeBuilder.build(BMItems.REAGENT_GROWTH.get())
+                .input(Items.SUGAR)
+                .input(Items.BONE_MEAL)
+                .input(Ingredient.of(ItemTags.SAPLINGS))
+                .input(Items.SHORT_GRASS)
+                .syphon(1000)
+                .ticks(200)
+                .minimumTier(2)
+                .save(output, "reagent_growth");
+
+        // Reagent Fast Miner - gold nugget, iron pickaxe, iron shovel
+        AlchemyTableRecipeBuilder.build(BMItems.REAGENT_FAST_MINER.get())
+                .input(Ingredient.of(Tags.Items.NUGGETS_GOLD))
+                .input(Items.IRON_PICKAXE)
+                .input(Items.IRON_SHOVEL)
+                .syphon(2000)
+                .ticks(200)
+                .minimumTier(2)
+                .save(output, "reagent_fast_miner");
+
+        // Reagent Magnetism - gold ingot, gold block, iron block
+        AlchemyTableRecipeBuilder.build(BMItems.REAGENT_MAGNETISM.get())
+                .input(Ingredient.of(Tags.Items.INGOTS_GOLD))
+                .input(Items.GOLD_BLOCK)
+                .input(Items.IRON_BLOCK)
+                .syphon(3000)
+                .ticks(200)
+                .minimumTier(3)
+                .save(output, "reagent_magnetism");
+
+        // Reagent Blood Light - torch, glowstone dust, redstone
+        AlchemyTableRecipeBuilder.build(BMItems.REAGENT_BLOOD_LIGHT.get())
+                .input(Items.TORCH)
+                .input(Ingredient.of(Tags.Items.DUSTS_GLOWSTONE))
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .syphon(1000)
+                .ticks(200)
+                .minimumTier(3)
+                .save(output, "reagent_blood_light");
+
+        // Reagent Sight - glass x2, divination sigil
+        AlchemyTableRecipeBuilder.build(BMItems.REAGENT_SIGHT.get())
+                .input(Ingredient.of(Tags.Items.GLASS_BLOCKS))
+                .input(Ingredient.of(Tags.Items.GLASS_BLOCKS))
+                .input(BMItems.SIGIL_DIVINATION.get())
+                .syphon(500)
+                .ticks(200)
+                .minimumTier(2)
+                .save(output, "reagent_sight");
+
+        // Reagent Binding - skeleton skull, leather
+        AlchemyTableRecipeBuilder.build(BMItems.REAGENT_BINDING.get())
+                .input(Items.SKELETON_SKULL)
+                .input(Items.LEATHER)
+                .syphon(2000)
+                .ticks(200)
+                .minimumTier(2)
+                .save(output, "reagent_binding");
+
+        // Reagent Holding - chest, leather, string
+        AlchemyTableRecipeBuilder.build(BMItems.REAGENT_HOLDING.get())
+                .input(Ingredient.of(Tags.Items.CHESTS))
+                .input(Items.LEATHER)
+                .input(Ingredient.of(Tags.Items.STRINGS))
+                .syphon(2000)
+                .ticks(200)
+                .minimumTier(3)
+                .save(output, "reagent_holding");
+
+        // Reagent Suppression - water bucket, lava bucket, nether star
+        AlchemyTableRecipeBuilder.build(BMItems.REAGENT_SUPPRESSION.get())
+                .input(Items.WATER_BUCKET)
+                .input(Items.LAVA_BUCKET)
+                .input(Items.NETHER_STAR)
+                .syphon(5000)
+                .ticks(200)
+                .minimumTier(4)
+                .save(output, "reagent_suppression");
+
+        // Reagent Teleposition - ender pearl, diamond, soul snare
+        AlchemyTableRecipeBuilder.build(BMItems.REAGENT_TELEPOSITION.get())
+                .input(Items.ENDER_PEARL)
+                .input(Ingredient.of(Tags.Items.GEMS_DIAMOND))
+                .input(BMItems.SOUL_SNARE.get())
+                .syphon(3000)
+                .ticks(200)
+                .minimumTier(4)
+                .save(output, "reagent_teleposition");
+
+        // Arcane Ash - redstone x4, bone x2, coal
+        AlchemyTableRecipeBuilder.build(BMItems.ARCANE_ASHES.get())
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .input(Ingredient.of(Tags.Items.BONES))
+                .input(Items.COAL)
+                .syphon(200)
+                .ticks(200)
+                .minimumTier(1)
+                .save(output, "arcane_ash");
+
+        // Alchemy Table recipe (crafting recipe for the table itself)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BMBlocks.ALCHEMY_TABLE.block().get())
+                .pattern("sss")
+                .pattern("S S")
+                .pattern("gog")
+                .define('s', Tags.Items.STONES)
+                .define('S', BMItems.SLATE_BLANK.get())
+                .define('g', Tags.Items.INGOTS_GOLD)
+                .define('o', BMItems.ORB_WEAK.get())
+                .unlockedBy("has_weak_orb", has(BMItems.ORB_WEAK.get()))
+                .save(output, BloodMagic.rl("alchemy_table"));
     }
 }

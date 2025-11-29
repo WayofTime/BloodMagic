@@ -81,6 +81,16 @@ public class SoulNetwork {
         return val;
     }
 
+    public int syphon(SoulTicket ticket) {
+        int amount = ticket.getAmount();
+        if (amount <= 0) return 0;
+
+        int curr = getCurrentEssence();
+        int toRemove = Math.min(curr, amount);
+        setCurrentEssence(curr - toRemove);
+        return toRemove;
+    }
+
     public void hurtPlayer(Player user, float syphon) {
         if (user != null) {
             if (syphon > 0) {

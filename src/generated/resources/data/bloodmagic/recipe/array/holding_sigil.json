@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:array",
+  "addedinput": {
+    "item": "bloodmagic:imbued_slate"
+  },
+  "baseinput": {
+    "item": "bloodmagic:reagentholding"
+  },
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:sigil_holding"
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/holdingsigil.png"
+}

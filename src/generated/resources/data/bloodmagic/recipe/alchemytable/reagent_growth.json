@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:bone_meal"
+    },
+    {
+      "tag": "minecraft:saplings"
+    },
+    {
+      "item": "minecraft:short_grass"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:reagentgrowth"
+  },
+  "syphon": 1000,
+  "ticks": 200,
+  "upgradeLevel": 2
+}

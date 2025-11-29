@@ -123,6 +123,27 @@ public class BMLanguageProvider extends LanguageProvider {
 
         // Alchemy & Misc
         add(BMItems.ARCANE_ASHES.get(), "Arcane Ashes");
+        addTooltip("arcaneAshes", "Draws an alchemy circle when placed");
+
+        // Reagents
+        add(BMItems.REAGENT_WATER.get(), "Reagent Water");
+        add(BMItems.REAGENT_LAVA.get(), "Reagent Lava");
+        add(BMItems.REAGENT_VOID.get(), "Reagent Void");
+        add(BMItems.REAGENT_GROWTH.get(), "Reagent Growth");
+        add(BMItems.REAGENT_FAST_MINER.get(), "Reagent Fast Miner");
+        add(BMItems.REAGENT_MAGNETISM.get(), "Reagent Magnetism");
+        add(BMItems.REAGENT_AIR.get(), "Reagent Air");
+        add(BMItems.REAGENT_BLOOD_LIGHT.get(), "Reagent Blood Light");
+        add(BMItems.REAGENT_SIGHT.get(), "Reagent Sight");
+        add(BMItems.REAGENT_BINDING.get(), "Reagent Binding");
+        add(BMItems.REAGENT_HOLDING.get(), "Reagent Holding");
+        add(BMItems.REAGENT_SUPPRESSION.get(), "Reagent Suppression");
+        add(BMItems.REAGENT_TELEPOSITION.get(), "Reagent Teleposition");
+
+        // Alchemy Array and Table Blocks
+        add(BMBlocks.ALCHEMY_ARRAY.get(), "Alchemy Array");
+        add(BMBlocks.ALCHEMY_TABLE, "Alchemy Table");
+
         add(BMItems.SOUL_SNARE.get(), "Soul Snare");
         add(BMItems.WEAK_BLOOD_SHARD.get(), "Weak Blood Shard");
         add(BMItems.DAGGER_OF_SACRIFICE.get(), "Dagger of Sacrifice");

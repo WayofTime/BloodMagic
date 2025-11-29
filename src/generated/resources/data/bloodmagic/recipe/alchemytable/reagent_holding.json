@@ -1,0 +1,21 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "c:chests"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "tag": "c:strings"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:reagentholding"
+  },
+  "syphon": 2000,
+  "ticks": 200,
+  "upgradeLevel": 3
+}

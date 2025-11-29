@@ -1,0 +1,21 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "c:glass_blocks"
+    },
+    {
+      "tag": "c:glass_blocks"
+    },
+    {
+      "item": "bloodmagic:sigil_divination"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:reagentsight"
+  },
+  "syphon": 500,
+  "ticks": 200,
+  "upgradeLevel": 2
+}

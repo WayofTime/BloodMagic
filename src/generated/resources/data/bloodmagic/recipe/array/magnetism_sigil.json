@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:array",
+  "addedinput": {
+    "item": "bloodmagic:imbued_slate"
+  },
+  "baseinput": {
+    "item": "bloodmagic:reagentmagnetism"
+  },
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:sigil_magnetism"
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/magnetismsigil.png"
+}

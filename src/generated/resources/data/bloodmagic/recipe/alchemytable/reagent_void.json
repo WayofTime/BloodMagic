@@ -1,0 +1,21 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "minecraft:ender_pearl"
+    },
+    {
+      "item": "minecraft:obsidian"
+    },
+    {
+      "item": "minecraft:bucket"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:reagentvoid"
+  },
+  "syphon": 1000,
+  "ticks": 200,
+  "upgradeLevel": 2
+}

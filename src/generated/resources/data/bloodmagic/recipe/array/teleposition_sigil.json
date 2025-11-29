@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:array",
+  "addedinput": {
+    "item": "bloodmagic:demonic_slate"
+  },
+  "baseinput": {
+    "item": "bloodmagic:reagentteleposition"
+  },
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:sigil_teleposition"
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/telepositionsigil.png"
+}
