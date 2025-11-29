@@ -6,13 +6,13 @@
       "item": "bloodmagic:soul_gem_petty"
     },
     {
-      "item": "minecraft:diamond"
+      "tag": "c:gems/diamond"
     },
     {
-      "item": "minecraft:lapis_block"
+      "tag": "c:storage_blocks/redstone"
     },
     {
-      "item": "bloodmagic:bloodstone"
+      "tag": "c:storage_blocks/lapis"
     }
   ],
   "minDrain": 60.0,

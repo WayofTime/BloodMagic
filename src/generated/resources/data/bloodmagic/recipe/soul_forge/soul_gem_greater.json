@@ -6,16 +6,16 @@
       "item": "bloodmagic:soul_gem_common"
     },
     {
-      "item": "minecraft:diamond_block"
+      "item": "bloodmagic:demonic_slate"
     },
     {
-      "item": "minecraft:diamond_block"
+      "item": "bloodmagic:weak_blood_shard"
     },
     {
-      "item": "bloodmagic:bloodstone_brick"
+      "item": "bloodmagic:weak_blood_shard"
     }
   ],
-  "minDrain": 500.0,
+  "minDrain": 1000.0,
   "output": {
     "count": 1,
     "id": "bloodmagic:soul_gem_greater"

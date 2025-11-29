@@ -6,13 +6,13 @@
       "item": "bloodmagic:soul_gem_lesser"
     },
     {
-      "item": "minecraft:diamond_block"
+      "tag": "c:gems/diamond"
     },
     {
-      "item": "minecraft:gold_block"
+      "tag": "c:storage_blocks/gold"
     },
     {
-      "item": "bloodmagic:bloodstone"
+      "item": "bloodmagic:imbued_slate"
     }
   ],
   "minDrain": 240.0,

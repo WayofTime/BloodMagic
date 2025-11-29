@@ -4,7 +4,7 @@
   "craftSpeed": 20,
   "drainSpeed": 20,
   "input": {
-    "item": "bloodmagic:blood_orb_apprentice"
+    "tag": "c:storage_blocks/gold"
   },
   "minTier": 2,
   "output": {

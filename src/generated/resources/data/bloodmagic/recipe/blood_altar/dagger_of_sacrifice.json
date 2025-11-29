@@ -1,14 +1,14 @@
 {
   "type": "bloodmagic:blood_altar_recipe",
-  "bloodNeeded": 5000,
+  "bloodNeeded": 3000,
   "craftSpeed": 5,
   "drainSpeed": 5,
   "input": {
-    "tag": "c:storage_blocks/redstone"
+    "item": "minecraft:iron_sword"
   },
   "minTier": 1,
   "output": {
     "count": 1,
-    "id": "bloodmagic:blood_orb_apprentice"
+    "id": "bloodmagic:dagger_of_sacrifice"
   }
 }

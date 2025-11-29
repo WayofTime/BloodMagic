@@ -33,12 +33,12 @@ public class BMRecipeProvider extends RecipeProvider {
     }
 
     private void addVanillaCraftingRecipes(RecipeOutput output) {
-        // Sacrificial Dagger
+        // Sacrificial Dagger - diagonal dagger shape
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, BMItems.SACRIFICIAL_DAGGER.get())
-                .pattern(" g ")
-                .pattern(" G ")
-                .pattern(" i ")
-                .define('g', Items.GLASS)
+                .pattern("ggg")
+                .pattern(" Gg")
+                .pattern("i g")
+                .define('g', Tags.Items.GLASS_BLOCKS)
                 .define('G', Tags.Items.INGOTS_GOLD)
                 .define('i', Tags.Items.INGOTS_IRON)
                 .unlockedBy("has_gold", has(Tags.Items.INGOTS_GOLD))
@@ -185,9 +185,9 @@ public class BMRecipeProvider extends RecipeProvider {
     }
 
     private void addBloodAltarRecipes(RecipeOutput output) {
-        // Blood Orb progression
+        // Blood Orb progression - each orb is made from different materials, NOT from previous orb
         AltarRecipeBuilder.build(BMItems.ORB_WEAK.get())
-                .from(Items.DIAMOND)
+                .from(Tags.Items.GEMS_DIAMOND)
                 .minTier(0)
                 .bloodNeeded(2000)
                 .consumption(5)
@@ -196,7 +196,7 @@ public class BMRecipeProvider extends RecipeProvider {
                 .save(output, BloodMagic.rl("weak_blood_orb"));
 
         AltarRecipeBuilder.build(BMItems.ORB_APPRENTICE.get())
-                .from(BMItems.ORB_WEAK.get())
+                .from(Tags.Items.STORAGE_BLOCKS_REDSTONE)  // Redstone Block
                 .minTier(1)
                 .bloodNeeded(5000)
                 .consumption(5)
@@ -205,7 +205,7 @@ public class BMRecipeProvider extends RecipeProvider {
                 .save(output, BloodMagic.rl("apprentice_blood_orb"));
 
         AltarRecipeBuilder.build(BMItems.ORB_MAGICIAN.get())
-                .from(BMItems.ORB_APPRENTICE.get())
+                .from(Tags.Items.STORAGE_BLOCKS_GOLD)  // Gold Block
                 .minTier(2)
                 .bloodNeeded(25000)
                 .consumption(20)
@@ -214,7 +214,7 @@ public class BMRecipeProvider extends RecipeProvider {
                 .save(output, BloodMagic.rl("magician_blood_orb"));
 
         AltarRecipeBuilder.build(BMItems.ORB_MASTER.get())
-                .from(BMItems.ORB_MAGICIAN.get())
+                .from(BMItems.WEAK_BLOOD_SHARD.get())  // Weak Blood Shard
                 .minTier(3)
                 .bloodNeeded(40000)
                 .consumption(30)
@@ -223,7 +223,7 @@ public class BMRecipeProvider extends RecipeProvider {
                 .save(output, BloodMagic.rl("master_blood_orb"));
 
         AltarRecipeBuilder.build(BMItems.ORB_ARCHMAGE.get())
-                .from(BMItems.ORB_MASTER.get())
+                .from(BMBlocks.HELLFORGED_BLOCK.block().get())  // Hellforged Block
                 .minTier(4)
                 .bloodNeeded(80000)
                 .consumption(50)
@@ -231,18 +231,11 @@ public class BMRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_master_orb", has(BMItems.ORB_MASTER.get()))
                 .save(output, BloodMagic.rl("archmage_blood_orb"));
 
-        AltarRecipeBuilder.build(BMItems.ORB_TRANSCENDENT.get())
-                .from(BMItems.ORB_ARCHMAGE.get())
-                .minTier(5)
-                .bloodNeeded(200000)
-                .consumption(100)
-                .drain(200)
-                .unlockedBy("has_archmage_orb", has(BMItems.ORB_ARCHMAGE.get()))
-                .save(output, BloodMagic.rl("transcendent_blood_orb"));
+        // Note: Transcendent orb doesn't exist in 1.20.1 - removed
 
         // Slates
         AltarRecipeBuilder.build(BMItems.SLATE_BLANK.get())
-                .from(Items.STONE)
+                .from(Tags.Items.STONES)
                 .minTier(0)
                 .bloodNeeded(1000)
                 .consumption(5)
@@ -263,8 +256,8 @@ public class BMRecipeProvider extends RecipeProvider {
                 .from(BMItems.SLATE_REINFORCED.get())
                 .minTier(2)
                 .bloodNeeded(5000)
-                .consumption(5)
-                .drain(5)
+                .consumption(15)
+                .drain(10)
                 .unlockedBy("has_reinforced_slate", has(BMItems.SLATE_REINFORCED.get()))
                 .save(output, BloodMagic.rl("imbued_slate"));
 
@@ -281,66 +274,87 @@ public class BMRecipeProvider extends RecipeProvider {
                 .from(BMItems.SLATE_DEMONIC.get())
                 .minTier(4)
                 .bloodNeeded(30000)
-                .consumption(30)
-                .drain(50)
+                .consumption(40)
+                .drain(100)
                 .unlockedBy("has_demonic_slate", has(BMItems.SLATE_DEMONIC.get()))
                 .save(output, BloodMagic.rl("ethereal_slate"));
+
+        // Additional Blood Altar recipes
+        AltarRecipeBuilder.build(BMItems.SOUL_SNARE.get())
+                .from(Tags.Items.STRINGS)
+                .minTier(0)
+                .bloodNeeded(500)
+                .consumption(5)
+                .drain(1)
+                .unlockedBy("has_altar", has(BMBlocks.BLOOD_ALTAR.block().get()))
+                .save(output, BloodMagic.rl("soul_snare"));
+
+        AltarRecipeBuilder.build(BMItems.DAGGER_OF_SACRIFICE.get())
+                .from(Items.IRON_SWORD)
+                .minTier(1)
+                .bloodNeeded(3000)
+                .consumption(5)
+                .drain(5)
+                .unlockedBy("has_altar", has(BMBlocks.BLOOD_ALTAR.block().get()))
+                .save(output, BloodMagic.rl("dagger_of_sacrifice"));
+
+        AltarRecipeBuilder.build(BMFluids.LIFE_ESSENCE_BUCKET.get())
+                .from(Items.BUCKET)
+                .minTier(0)
+                .bloodNeeded(1000)
+                .consumption(5)
+                .drain(0)
+                .unlockedBy("has_altar", has(BMBlocks.BLOOD_ALTAR.block().get()))
+                .save(output, BloodMagic.rl("bucket_life"));
     }
 
     private void addSoulForgeRecipes(RecipeOutput output) {
-        // Petty Soul Gem
+        // Petty Soul Gem - redstone dust, gold ingot, glass, lapis gem
         ForgeRecipeBuilder.build(BMItems.SOUL_GEM_PETTY.get())
-                .requires(BMItems.RAW_WILL.get())
-                .requires(Items.DIAMOND)
-                .requires(Items.REDSTONE_BLOCK)
-                .requires(Items.LAPIS_BLOCK)
+                .requires(Tags.Items.DUSTS_REDSTONE)
+                .requires(Tags.Items.INGOTS_GOLD)
+                .requires(Tags.Items.GLASS_BLOCKS)
+                .requires(Tags.Items.GEMS_LAPIS)
                 .minWill(1)
                 .drain(1)
                 .unlockedBy("has_raw_will", has(BMItems.RAW_WILL.get()))
                 .save(output, BloodMagic.rl("soul_gem_petty"));
 
-        // Lesser Soul Gem
+        // Lesser Soul Gem - petty gem, diamond, redstone block, lapis block
         ForgeRecipeBuilder.build(BMItems.SOUL_GEM_LESSER.get())
                 .requires(BMItems.SOUL_GEM_PETTY.get())
-                .requires(Items.DIAMOND)
-                .requires(Items.LAPIS_BLOCK)
-                .requires(BMBlocks.BLOODSTONE.block().get())
+                .requires(Tags.Items.GEMS_DIAMOND)
+                .requires(Tags.Items.STORAGE_BLOCKS_REDSTONE)
+                .requires(Tags.Items.STORAGE_BLOCKS_LAPIS)
                 .minWill(60)
                 .drain(20)
                 .unlockedBy("has_petty_gem", has(BMItems.SOUL_GEM_PETTY.get()))
                 .save(output, BloodMagic.rl("soul_gem_lesser"));
 
-        // Common Soul Gem
+        // Common Soul Gem - lesser gem, diamond, gold block, imbued slate
         ForgeRecipeBuilder.build(BMItems.SOUL_GEM_COMMON.get())
                 .requires(BMItems.SOUL_GEM_LESSER.get())
-                .requires(Items.DIAMOND_BLOCK)
-                .requires(Items.GOLD_BLOCK)
-                .requires(BMBlocks.BLOODSTONE.block().get())
+                .requires(Tags.Items.GEMS_DIAMOND)
+                .requires(Tags.Items.STORAGE_BLOCKS_GOLD)
+                .requires(BMItems.SLATE_IMBUED.get())
                 .minWill(240)
                 .drain(50)
                 .unlockedBy("has_lesser_gem", has(BMItems.SOUL_GEM_LESSER.get()))
                 .save(output, BloodMagic.rl("soul_gem_common"));
 
-        // Greater Soul Gem
+        // Greater Soul Gem - common gem, demonic slate, weak blood shard, demon crystal
+        // Note: demon crystal tag not implemented yet, using weak blood shard x2 as placeholder
         ForgeRecipeBuilder.build(BMItems.SOUL_GEM_GREATER.get())
                 .requires(BMItems.SOUL_GEM_COMMON.get())
-                .requires(Items.DIAMOND_BLOCK, 2)
-                .requires(BMBlocks.BLOODSTONE_BRICK.block().get())
-                .minWill(500)
+                .requires(BMItems.SLATE_DEMONIC.get())
+                .requires(BMItems.WEAK_BLOOD_SHARD.get())
+                .requires(BMItems.WEAK_BLOOD_SHARD.get())  // TODO: Replace with demon crystal tag when available
+                .minWill(1000)
                 .drain(100)
                 .unlockedBy("has_common_gem", has(BMItems.SOUL_GEM_COMMON.get()))
                 .save(output, BloodMagic.rl("soul_gem_greater"));
 
-        // Grand Soul Gem
-        ForgeRecipeBuilder.build(BMItems.SOUL_GEM_GRAND.get())
-                .requires(BMItems.SOUL_GEM_GREATER.get())
-                .requires(Items.NETHERITE_BLOCK)
-                .requires(Items.DIAMOND_BLOCK)
-                .requires(BMBlocks.BLOODSTONE_BRICK.block().get())
-                .minWill(1000)
-                .drain(200)
-                .unlockedBy("has_greater_gem", has(BMItems.SOUL_GEM_GREATER.get()))
-                .save(output, BloodMagic.rl("soul_gem_grand"));
+        // Note: Grand Soul Gem doesn't exist in 1.20.1 - removed
 
         // ARC Block (shaped crafting recipe)
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BMBlocks.ARC_BLOCK.block().get())

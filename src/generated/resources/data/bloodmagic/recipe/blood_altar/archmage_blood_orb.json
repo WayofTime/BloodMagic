@@ -4,7 +4,7 @@
   "craftSpeed": 50,
   "drainSpeed": 100,
   "input": {
-    "item": "bloodmagic:blood_orb_master"
+    "item": "bloodmagic:hellforged_block"
   },
   "minTier": 4,
   "output": {

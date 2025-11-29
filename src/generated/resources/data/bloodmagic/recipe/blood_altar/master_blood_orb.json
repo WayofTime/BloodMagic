@@ -4,7 +4,7 @@
   "craftSpeed": 30,
   "drainSpeed": 50,
   "input": {
-    "item": "bloodmagic:blood_orb_magician"
+    "item": "bloodmagic:weak_blood_shard"
   },
   "minTier": 3,
   "output": {

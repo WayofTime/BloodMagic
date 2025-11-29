@@ -6,16 +6,16 @@
       "tag": "c:ingots/gold"
     },
     "g": {
-      "item": "minecraft:glass"
+      "tag": "c:glass_blocks"
     },
     "i": {
       "tag": "c:ingots/iron"
     }
   },
   "pattern": [
-    " g ",
-    " G ",
-    " i "
+    "ggg",
+    " Gg",
+    "i g"
   ],
   "result": {
     "count": 1,

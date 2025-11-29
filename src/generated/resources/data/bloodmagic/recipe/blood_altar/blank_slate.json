@@ -4,7 +4,7 @@
   "craftSpeed": 5,
   "drainSpeed": 5,
   "input": {
-    "item": "minecraft:stone"
+    "tag": "c:stones"
   },
   "minTier": 0,
   "output": {

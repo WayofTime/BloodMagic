@@ -1,14 +1,14 @@
 {
   "type": "bloodmagic:blood_altar_recipe",
-  "bloodNeeded": 2000,
+  "bloodNeeded": 500,
   "craftSpeed": 5,
   "drainSpeed": 1,
   "input": {
-    "tag": "c:gems/diamond"
+    "tag": "c:strings"
   },
   "minTier": 0,
   "output": {
     "count": 1,
-    "id": "bloodmagic:blood_orb_weak"
+    "id": "bloodmagic:soul_snare"
   }
 }

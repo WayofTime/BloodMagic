@@ -1,8 +1,8 @@
 {
   "type": "bloodmagic:blood_altar_recipe",
   "bloodNeeded": 5000,
-  "craftSpeed": 5,
-  "drainSpeed": 5,
+  "craftSpeed": 15,
+  "drainSpeed": 10,
   "input": {
     "item": "bloodmagic:reinforced_slate"
   },

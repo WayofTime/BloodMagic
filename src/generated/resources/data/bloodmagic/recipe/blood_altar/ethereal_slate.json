@@ -1,8 +1,8 @@
 {
   "type": "bloodmagic:blood_altar_recipe",
   "bloodNeeded": 30000,
-  "craftSpeed": 30,
-  "drainSpeed": 50,
+  "craftSpeed": 40,
+  "drainSpeed": 100,
   "input": {
     "item": "bloodmagic:demonic_slate"
   },

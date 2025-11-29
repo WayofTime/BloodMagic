@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_archmage_orb": {
+    "has_altar": {
       "conditions": {
         "items": [
           {
-            "items": "bloodmagic:blood_orb_archmage"
+            "items": "bloodmagic:blood_altar"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "bloodmagic:transcendent_blood_orb"
+        "recipe": "bloodmagic:soul_snare"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_archmage_orb"
+      "has_altar"
     ]
   ],
   "rewards": {
     "recipes": [
-      "bloodmagic:transcendent_blood_orb"
+      "bloodmagic:soul_snare"
     ]
   }
 }

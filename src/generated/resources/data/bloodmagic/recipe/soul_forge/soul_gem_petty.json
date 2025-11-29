@@ -3,16 +3,16 @@
   "drain": 1.0,
   "inputs": [
     {
-      "item": "bloodmagic:raw_will"
+      "tag": "c:dusts/redstone"
     },
     {
-      "item": "minecraft:diamond"
+      "tag": "c:ingots/gold"
     },
     {
-      "item": "minecraft:redstone_block"
+      "tag": "c:glass_blocks"
     },
     {
-      "item": "minecraft:lapis_block"
+      "tag": "c:gems/lapis"
     }
   ],
   "minDrain": 1.0,
