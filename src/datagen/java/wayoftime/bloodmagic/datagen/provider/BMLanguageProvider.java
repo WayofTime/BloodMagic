@@ -98,6 +98,36 @@ public class BMLanguageProvider extends LanguageProvider {
         addGemDesc(BMItems.SOUL_GEM_GREATER, "a greater amount of");
         addGemDesc(BMItems.SOUL_GEM_GRAND, "a large amount of");
 
+        // Slates
+        add(BMItems.SLATE_BLANK.get(), "Blank Slate");
+        add(BMItems.SLATE_REINFORCED.get(), "Reinforced Slate");
+        add(BMItems.SLATE_IMBUED.get(), "Imbued Slate");
+        add(BMItems.SLATE_DEMONIC.get(), "Demonic Slate");
+        add(BMItems.SLATE_ETHEREAL.get(), "Ethereal Slate");
+
+        // Sigils
+        add(BMItems.SIGIL_DIVINATION.get(), "Divination Sigil");
+        add(BMItems.SIGIL_SEER.get(), "Seer's Sigil");
+        add(BMItems.SIGIL_WATER.get(), "Water Sigil");
+        add(BMItems.SIGIL_LAVA.get(), "Lava Sigil");
+        add(BMItems.SIGIL_VOID.get(), "Void Sigil");
+        add(BMItems.SIGIL_GREEN_GROVE.get(), "Sigil of the Green Grove");
+        add(BMItems.SIGIL_AIR.get(), "Air Sigil");
+        add(BMItems.SIGIL_BLOOD_LIGHT.get(), "Sigil of the Blood Lamp");
+        add(BMItems.SIGIL_FAST_MINER.get(), "Sigil of the Fast Miner");
+        add(BMItems.SIGIL_MAGNETISM.get(), "Sigil of Magnetism");
+        add(BMItems.SIGIL_FROST.get(), "Sigil of the Phantom Bridge");
+        add(BMItems.SIGIL_SUPPRESSION.get(), "Sigil of Suppression");
+        add(BMItems.SIGIL_HOLDING.get(), "Sigil of Holding");
+        add(BMItems.SIGIL_TELEPOSITION.get(), "Sigil of Teleposition");
+
+        // Alchemy & Misc
+        add(BMItems.ARCANE_ASHES.get(), "Arcane Ashes");
+        add(BMItems.SOUL_SNARE.get(), "Soul Snare");
+        add(BMItems.WEAK_BLOOD_SHARD.get(), "Weak Blood Shard");
+        add(BMItems.DAGGER_OF_SACRIFICE.get(), "Dagger of Sacrifice");
+        add(BMItems.LAVA_CRYSTAL.get(), "Lava Crystal");
+
         addTooltip("will", "Will Quality: %s");
         for (EnumWillType type : EnumWillType.values()) {
             addTooltip("current_type." + type.getSerializedName(), String.format("Contains: %s Will", type.toCapitalized()));
