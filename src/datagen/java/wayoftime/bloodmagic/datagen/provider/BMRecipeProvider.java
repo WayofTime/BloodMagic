@@ -49,7 +49,7 @@ public class BMRecipeProvider extends RecipeProvider {
                 .pattern("s s")
                 .pattern("sfs")
                 .pattern("gsg")
-                .define('s', Items.STONE)
+                .define('s', Tags.Items.STONES)
                 .define('f', Items.FURNACE)
                 .define('g', Tags.Items.INGOTS_GOLD)
                 .unlockedBy("has_furnace", has(Items.FURNACE))
@@ -61,7 +61,7 @@ public class BMRecipeProvider extends RecipeProvider {
                 .pattern("sbs")
                 .pattern("sos")
                 .define('i', Tags.Items.INGOTS_IRON)
-                .define('s', Items.STONE)
+                .define('s', Tags.Items.STONES)
                 .define('b', Items.IRON_BLOCK)
                 .define('o', BMItems.ORB_WEAK.get())
                 .unlockedBy("has_weak_orb", has(BMItems.ORB_WEAK.get()))
@@ -296,13 +296,16 @@ public class BMRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_greater_gem", has(BMItems.SOUL_GEM_GREATER.get()))
                 .save(output, BloodMagic.rl("soul_gem_grand"));
 
-        // ARC Block
-        ForgeRecipeBuilder.build(BMBlocks.ARC_BLOCK.block().get())
-                .requires(Items.FURNACE)
-                .requires(Items.IRON_BLOCK, 2)
-                .requires(BMItems.ORB_MAGICIAN.get())
-                .minWill(100)
-                .drain(30)
+        // ARC Block (shaped crafting recipe)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BMBlocks.ARC_BLOCK.block().get())
+                .pattern("sss")
+                .pattern("BoB")
+                .pattern("IfI")
+                .define('s', Tags.Items.STONES)
+                .define('B', BMBlocks.BLOODSTONE.block().get()) // Substitute for imbued slate until slates are ported
+                .define('o', BMItems.ORB_MAGICIAN.get())
+                .define('I', Items.IRON_BLOCK)
+                .define('f', Items.FURNACE)
                 .unlockedBy("has_magician_orb", has(BMItems.ORB_MAGICIAN.get()))
                 .save(output, BloodMagic.rl("arc_block"));
 

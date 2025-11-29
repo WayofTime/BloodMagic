@@ -12,7 +12,7 @@
       "item": "bloodmagic:blood_orb_weak"
     },
     "s": {
-      "item": "minecraft:stone"
+      "tag": "c:stones"
     }
   },
   "pattern": [

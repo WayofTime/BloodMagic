@@ -2,23 +2,29 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
+    "B": {
+      "item": "bloodmagic:bloodstone"
+    },
+    "I": {
+      "item": "minecraft:iron_block"
+    },
     "f": {
       "item": "minecraft:furnace"
     },
-    "g": {
-      "tag": "c:ingots/gold"
+    "o": {
+      "item": "bloodmagic:blood_orb_magician"
     },
     "s": {
       "tag": "c:stones"
     }
   },
   "pattern": [
-    "s s",
-    "sfs",
-    "gsg"
+    "sss",
+    "BoB",
+    "IfI"
   ],
   "result": {
     "count": 1,
-    "id": "bloodmagic:blood_altar"
+    "id": "bloodmagic:arc"
   }
 }
