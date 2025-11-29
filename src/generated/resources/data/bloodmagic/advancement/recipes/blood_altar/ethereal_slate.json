@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_demonic_slate": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bloodmagic:demonic_slate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bloodmagic:ethereal_slate"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_demonic_slate"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bloodmagic:ethereal_slate"
+    ]
+  }
+}

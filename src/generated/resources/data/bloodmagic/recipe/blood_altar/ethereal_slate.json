@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:blood_altar_recipe",
+  "bloodNeeded": 30000,
+  "craftSpeed": 30,
+  "drainSpeed": 50,
+  "input": {
+    "item": "bloodmagic:demonic_slate"
+  },
+  "minTier": 4,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:ethereal_slate"
+  }
+}

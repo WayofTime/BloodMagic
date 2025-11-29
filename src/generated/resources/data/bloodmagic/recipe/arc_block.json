@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "bloodmagic:bloodstone"
-    },
     "I": {
       "item": "minecraft:iron_block"
+    },
+    "S": {
+      "item": "bloodmagic:imbued_slate"
     },
     "f": {
       "item": "minecraft:furnace"
@@ -20,7 +20,7 @@
   },
   "pattern": [
     "sss",
-    "BoB",
+    "SoS",
     "IfI"
   ],
   "result": {
