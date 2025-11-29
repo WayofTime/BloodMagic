@@ -194,6 +194,8 @@ public class BMLanguageProvider extends LanguageProvider {
         // JEI Integration
         addJei("recipe.altar", "Blood Altar");
         addJei("recipe.soulforge", "Hellfire Forge");
+        addJei("recipe.alchemyarraycrafting", "Alchemy Array");
+        addJei("recipe.alchemytable", "Alchemy Table");
         addJei("recipe.requiredtier", "Required Tier: %s");
         addJei("recipe.requiredlp", "Required LP: %s");
         addJei("recipe.consumptionrate", "Consumption Rate: %s LP/t");
@@ -202,6 +204,9 @@ public class BMLanguageProvider extends LanguageProvider {
         addJei("recipe.soulsdrained", "Souls Drained: %s");
         addJei("recipe.will", "Will");
         addJei("recipe.info", "Hover for info");
+        addJei("recipe.lp", "LP");
+        addJei("recipe.lpDrained", "LP Drained: %s");
+        addJei("recipe.ticksRequired", "Ticks: %s");
     }
 
     public void addCommand(String key, String value) {

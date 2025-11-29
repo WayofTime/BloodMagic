@@ -13,10 +13,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BMBlocks;
+import wayoftime.bloodmagic.common.item.BMItems;
 import wayoftime.bloodmagic.common.recipe.BMRecipes;
+import wayoftime.bloodmagic.common.recipe.alchemyarray.AlchemyArrayRecipe;
+import wayoftime.bloodmagic.common.recipe.alchemytable.AlchemyTableRecipe;
 import wayoftime.bloodmagic.common.recipe.bloodaltar.BloodAltarRecipe;
 import wayoftime.bloodmagic.common.recipe.forge.ForgeRecipe;
+import wayoftime.bloodmagic.compat.jei.alchemytable.AlchemyTableRecipeCategory;
 import wayoftime.bloodmagic.compat.jei.altar.BloodAltarRecipeCategory;
+import wayoftime.bloodmagic.compat.jei.array.AlchemyArrayCraftingCategory;
 import wayoftime.bloodmagic.compat.jei.forge.SoulForgeRecipeCategory;
 
 import java.util.List;
@@ -38,12 +43,16 @@ public class BloodMagicJEIPlugin implements IModPlugin {
         jeiHelper = registration.getJeiHelpers();
         registration.addRecipeCategories(new SoulForgeRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new BloodAltarRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new AlchemyArrayCraftingCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new AlchemyTableRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(BMBlocks.HELLFIRE_FORGE.block().get()), SoulForgeRecipeCategory.RECIPE_TYPE);
         registration.addRecipeCatalyst(new ItemStack(BMBlocks.BLOOD_ALTAR.block().get()), BloodAltarRecipeCategory.RECIPE_TYPE);
+        registration.addRecipeCatalyst(new ItemStack(BMItems.ARCANE_ASHES.get()), AlchemyArrayCraftingCategory.RECIPE_TYPE);
+        registration.addRecipeCatalyst(new ItemStack(BMBlocks.ALCHEMY_TABLE.block().get()), AlchemyTableRecipeCategory.RECIPE_TYPE);
     }
 
     @Override
@@ -65,5 +74,21 @@ public class BloodMagicJEIPlugin implements IModPlugin {
                 .map(RecipeHolder::value)
                 .toList();
         registration.addRecipes(BloodAltarRecipeCategory.RECIPE_TYPE, altarRecipes);
+
+        // Alchemy Array recipes
+        List<AlchemyArrayRecipe> arrayRecipes = world.getRecipeManager()
+                .getAllRecipesFor(BMRecipes.ALCHEMY_ARRAY_TYPE.get())
+                .stream()
+                .map(RecipeHolder::value)
+                .toList();
+        registration.addRecipes(AlchemyArrayCraftingCategory.RECIPE_TYPE, arrayRecipes);
+
+        // Alchemy Table recipes
+        List<AlchemyTableRecipe> tableRecipes = world.getRecipeManager()
+                .getAllRecipesFor(BMRecipes.ALCHEMY_TABLE_TYPE.get())
+                .stream()
+                .map(RecipeHolder::value)
+                .toList();
+        registration.addRecipes(AlchemyTableRecipeCategory.RECIPE_TYPE, tableRecipes);
     }
 }
