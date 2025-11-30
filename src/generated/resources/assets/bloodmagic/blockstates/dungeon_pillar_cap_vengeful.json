@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "bloodmagic:block/dungeon_pillar_cap_vengeful_down"
+    },
+    "facing=east": {
+      "model": "bloodmagic:block/dungeon_pillar_cap_vengeful",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "bloodmagic:block/dungeon_pillar_cap_vengeful_down",
+      "x": 270
+    },
+    "facing=south": {
+      "model": "bloodmagic:block/dungeon_pillar_cap_vengeful",
+      "x": 270
+    },
+    "facing=up": {
+      "model": "bloodmagic:block/dungeon_pillar_cap_vengeful"
+    },
+    "facing=west": {
+      "model": "bloodmagic:block/dungeon_pillar_cap_vengeful_down",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "bloodmagic:block/dungeon_stone_slab_steadfast"
+    },
+    "type=double": {
+      "model": "bloodmagic:block/dungeon_stone_steadfast"
+    },
+    "type=top": {
+      "model": "bloodmagic:block/dungeon_stone_slab_steadfast_top"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "bloodmagic:dungeon_stone_steadfast"
+    }
+  },
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "result": {
+    "count": 6,
+    "item": "bloodmagic:dungeon_stone_wall_steadfast"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "bloodmagic:block/dungeon/dungeon_brick1_corrosive",
+    "side": "bloodmagic:block/dungeon/dungeon_brick1_corrosive",
+    "top": "bloodmagic:block/dungeon/dungeon_brick1_corrosive"
+  }
+}

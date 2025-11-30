@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "bloodmagic:block/dungeon/dungeon_brick1_v"
-  }
-}

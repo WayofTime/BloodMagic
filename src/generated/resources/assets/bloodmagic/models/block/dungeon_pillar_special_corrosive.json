@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "bloodmagic:block/dungeon/dungeon_pillarheart_corrosive",
+    "side": "bloodmagic:block/dungeon/dungeon_pillarspecial_corrosive"
+  }
+}

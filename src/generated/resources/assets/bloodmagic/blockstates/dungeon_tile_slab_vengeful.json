@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "bloodmagic:block/dungeon_tile_slab_vengeful"
+    },
+    "type=double": {
+      "model": "bloodmagic:block/dungeon_tile_vengeful"
+    },
+    "type=top": {
+      "model": "bloodmagic:block/dungeon_tile_slab_vengeful_top"
+    }
+  }
+}

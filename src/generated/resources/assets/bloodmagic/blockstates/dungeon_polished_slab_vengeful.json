@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "bloodmagic:block/dungeon_polished_slab_vengeful"
+    },
+    "type=double": {
+      "model": "bloodmagic:block/dungeon_polished_vengeful"
+    },
+    "type=top": {
+      "model": "bloodmagic:block/dungeon_polished_slab_vengeful_top"
+    }
+  }
+}

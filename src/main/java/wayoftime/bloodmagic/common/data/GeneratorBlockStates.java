@@ -99,21 +99,21 @@ public class GeneratorBlockStates extends BlockStateProvider
         buildWillPillarCenter(BloodMagicBlocks.DUNGEON_PILLAR_CENTER.get(), BloodMagic.rl("block/dungeon/dungeon_pillar"), BloodMagic.rl("block/dungeon/dungeon_pillarheart"));
         buildWillPillarCenter(BloodMagicBlocks.DUNGEON_PILLAR_SPECIAL.get(), BloodMagic.rl("block/dungeon/dungeon_pillarspecial"), BloodMagic.rl("block/dungeon/dungeon_pillarheart"));
 
-        buildWillPillarCap(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CAP.get(), BloodMagic.rl("block/dungeon/dungeon_pillarheart_c"), BloodMagic.rl("block/dungeon/dungeon_pillarbottom_c"), BloodMagic.rl("block/dungeon/dungeon_pillartop_c"));
-        buildWillPillarCenter(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CENTER.get(), BloodMagic.rl("block/dungeon/dungeon_pillar_c"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_c"));
-        buildWillPillarCenter(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_SPECIAL.get(), BloodMagic.rl("block/dungeon/dungeon_pillarspecial_c"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_c"));
+        buildWillPillarCap(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CAP.get(), BloodMagic.rl("block/dungeon/dungeon_pillarheart_corrosive"), BloodMagic.rl("block/dungeon/dungeon_pillarbottom_corrosive"), BloodMagic.rl("block/dungeon/dungeon_pillartop_corrosive"));
+        buildWillPillarCenter(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CENTER.get(), BloodMagic.rl("block/dungeon/dungeon_pillar_corrosive"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_corrosive"));
+        buildWillPillarCenter(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_SPECIAL.get(), BloodMagic.rl("block/dungeon/dungeon_pillarspecial_corrosive"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_corrosive"));
 
-        buildWillPillarCap(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CAP.get(), BloodMagic.rl("block/dungeon/dungeon_pillarheart_d"), BloodMagic.rl("block/dungeon/dungeon_pillarbottom_d"), BloodMagic.rl("block/dungeon/dungeon_pillartop_d"));
-        buildWillPillarCenter(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CENTER.get(), BloodMagic.rl("block/dungeon/dungeon_pillar_d"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_d"));
-        buildWillPillarCenter(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_SPECIAL.get(), BloodMagic.rl("block/dungeon/dungeon_pillarspecial_d"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_d"));
+        buildWillPillarCap(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CAP.get(), BloodMagic.rl("block/dungeon/dungeon_pillarheart_destructive"), BloodMagic.rl("block/dungeon/dungeon_pillarbottom_destructive"), BloodMagic.rl("block/dungeon/dungeon_pillartop_destructive"));
+        buildWillPillarCenter(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_CENTER.get(), BloodMagic.rl("block/dungeon/dungeon_pillar_destructive"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_destructive"));
+        buildWillPillarCenter(BloodMagicBlocks.DESTRUCTIVE_DUNGEON_PILLAR_SPECIAL.get(), BloodMagic.rl("block/dungeon/dungeon_pillarspecial_destructive"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_destructive"));
 
-        buildWillPillarCap(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CAP.get(), BloodMagic.rl("block/dungeon/dungeon_pillarheart_s"), BloodMagic.rl("block/dungeon/dungeon_pillarbottom_s"), BloodMagic.rl("block/dungeon/dungeon_pillartop_s"));
-        buildWillPillarCenter(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CENTER.get(), BloodMagic.rl("block/dungeon/dungeon_pillar_s"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_s"));
-        buildWillPillarCenter(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_SPECIAL.get(), BloodMagic.rl("block/dungeon/dungeon_pillarspecial_s"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_s"));
+        buildWillPillarCap(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CAP.get(), BloodMagic.rl("block/dungeon/dungeon_pillarheart_steadfast"), BloodMagic.rl("block/dungeon/dungeon_pillarbottom_steadfast"), BloodMagic.rl("block/dungeon/dungeon_pillartop_steadfast"));
+        buildWillPillarCenter(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_CENTER.get(), BloodMagic.rl("block/dungeon/dungeon_pillar_steadfast"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_steadfast"));
+        buildWillPillarCenter(BloodMagicBlocks.STEADFAST_DUNGEON_PILLAR_SPECIAL.get(), BloodMagic.rl("block/dungeon/dungeon_pillarspecial_steadfast"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_steadfast"));
 
-        buildWillPillarCap(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CAP.get(), BloodMagic.rl("block/dungeon/dungeon_pillarheart_v"), BloodMagic.rl("block/dungeon/dungeon_pillarbottom_v"), BloodMagic.rl("block/dungeon/dungeon_pillartop_v"));
-        buildWillPillarCenter(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CENTER.get(), BloodMagic.rl("block/dungeon/dungeon_pillar_v"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_v"));
-        buildWillPillarCenter(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_SPECIAL.get(), BloodMagic.rl("block/dungeon/dungeon_pillarspecial_v"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_v"));
+        buildWillPillarCap(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CAP.get(), BloodMagic.rl("block/dungeon/dungeon_pillarheart_vengeful"), BloodMagic.rl("block/dungeon/dungeon_pillarbottom_vengeful"), BloodMagic.rl("block/dungeon/dungeon_pillartop_vengeful"));
+        buildWillPillarCenter(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_CENTER.get(), BloodMagic.rl("block/dungeon/dungeon_pillar_vengeful"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_vengeful"));
+        buildWillPillarCenter(BloodMagicBlocks.VENGEFUL_DUNGEON_PILLAR_SPECIAL.get(), BloodMagic.rl("block/dungeon/dungeon_pillarspecial_vengeful"), BloodMagic.rl("block/dungeon/dungeon_pillarheart_vengeful"));
 
         buildCubeAll(BloodMagicBlocks.BLOOD_LIGHT.get());
 		buildCubeAll(BloodMagicBlocks.BLANK_RITUAL_STONE.get());

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "tag": "bloodmagic:dungeon_destructive"
+  },
+  "result": "bloodmagic:dungeon_stone_stairs_destructive"
+}

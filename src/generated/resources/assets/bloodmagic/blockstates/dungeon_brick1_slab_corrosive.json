@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "bloodmagic:block/dungeon_brick1_slab_corrosive"
+    },
+    "type=double": {
+      "model": "bloodmagic:block/dungeon_brick1_corrosive"
+    },
+    "type=top": {
+      "model": "bloodmagic:block/dungeon_brick1_slab_corrosive_top"
+    }
+  }
+}

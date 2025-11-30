@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "bottom": "bloodmagic:block/dungeon/dungeon_pillarheart_d",
-    "side": "bloodmagic:block/dungeon/dungeon_pillarbottom_d",
-    "top": "bloodmagic:block/dungeon/dungeon_pillarheart_d"
-  }
-}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "bloodmagic:block/dungeon_polished_slab_destructive"
+    },
+    "type=double": {
+      "model": "bloodmagic:block/dungeon_polished_destructive"
+    },
+    "type=top": {
+      "model": "bloodmagic:block/dungeon_polished_slab_destructive_top"
+    }
+  }
+}

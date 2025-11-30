@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 2,
-  "ingredient": {
-    "tag": "bloodmagic:dungeon_steadfast"
-  },
-  "result": "bloodmagic:dungeon_brick1_slab_s"
-}

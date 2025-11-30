@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "bottom": "bloodmagic:block/dungeon/dungeon_polished_v",
-    "side": "bloodmagic:block/dungeon/dungeon_polished_v",
-    "top": "bloodmagic:block/dungeon/dungeon_polished_v"
-  }
-}

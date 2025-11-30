@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "s": {
+      "item": "bloodmagic:dungeon_stone_slab_destructive"
+    }
+  },
+  "pattern": [
+    "s",
+    "s"
+  ],
+  "result": {
+    "item": "bloodmagic:dungeon_stone_destructive"
+  },
+  "show_notification": true
+}
