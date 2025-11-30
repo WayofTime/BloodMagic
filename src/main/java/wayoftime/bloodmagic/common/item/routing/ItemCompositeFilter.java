@@ -61,22 +61,18 @@ public class ItemCompositeFilter extends ItemRouterFilter implements MenuProvide
             for (ItemStack nestedStack : nestedFilters)
             {
                 tooltip.add(nestedStack.getHoverName());
+                if (Screen.hasShiftDown() && nestedStack.getItem() instanceof ItemRouterFilter nestedFilter) {
+                    List<Component> sublist = new ArrayList<>();
+                    nestedFilter.appendHoverText(nestedStack, world, sublist, flag);
+                    sublist.remove(0); // dont need description of filter
+                    tooltip.addAll(sublist);
+                }
             }
 
 			boolean sneaking = Screen.hasShiftDown();
 			if (!sneaking)
 			{
 				tooltip.add(Component.translatable("tooltip.bloodmagic.extraInfo").withStyle(ChatFormatting.BLUE));
-			} else
-			{
-                for (ItemStack nestedStack : nestedFilters) {
-                    if (nestedStack.getItem() instanceof ItemRouterFilter nestedFilter) {
-                        List<Component> sublist = new ArrayList<>();
-                        nestedFilter.appendHoverText(nestedStack, world, sublist, flag);
-                        sublist.remove(0); // dont need description of filter
-                        tooltip.addAll(sublist);
-                    }
-                }
 			}
 		}
 	}
