@@ -2,13 +2,16 @@
   "type": "bloodmagic:alchemytable",
   "input": [
     {
-      "tag": "c:nuggets/gold"
-    },
-    {
       "item": "minecraft:iron_pickaxe"
     },
     {
+      "item": "minecraft:iron_axe"
+    },
+    {
       "item": "minecraft:iron_shovel"
+    },
+    {
+      "tag": "c:gunpowders"
     }
   ],
   "output": {

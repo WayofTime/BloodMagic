@@ -11,7 +11,7 @@
       "tag": "c:cobblestones"
     },
     {
-      "item": "minecraft:coal_block"
+      "tag": "c:storage_blocks/coal"
     }
   ],
   "output": {

@@ -2,10 +2,13 @@
   "type": "bloodmagic:alchemytable",
   "input": [
     {
+      "tag": "c:dusts/glowstone"
+    },
+    {
       "item": "minecraft:torch"
     },
     {
-      "tag": "c:dusts/glowstone"
+      "tag": "c:dusts/redstone"
     },
     {
       "tag": "c:dusts/redstone"

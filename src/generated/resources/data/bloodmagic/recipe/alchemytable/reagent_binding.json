@@ -2,17 +2,23 @@
   "type": "bloodmagic:alchemytable",
   "input": [
     {
-      "item": "minecraft:skeleton_skull"
+      "tag": "c:dusts/glowstone"
     },
     {
-      "item": "minecraft:leather"
+      "tag": "c:dusts/redstone"
+    },
+    {
+      "tag": "c:gunpowders"
+    },
+    {
+      "tag": "c:nuggets/gold"
     }
   ],
   "output": {
     "count": 1,
     "id": "bloodmagic:reagentbinding"
   },
-  "syphon": 2000,
+  "syphon": 1000,
   "ticks": 200,
-  "upgradeLevel": 2
+  "upgradeLevel": 3
 }

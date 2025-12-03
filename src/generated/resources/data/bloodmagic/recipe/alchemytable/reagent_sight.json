@@ -2,6 +2,9 @@
   "type": "bloodmagic:alchemytable",
   "input": [
     {
+      "tag": "c:dusts/glowstone"
+    },
+    {
       "tag": "c:glass_blocks"
     },
     {
@@ -17,5 +20,5 @@
   },
   "syphon": 500,
   "ticks": 200,
-  "upgradeLevel": 2
+  "upgradeLevel": 1
 }

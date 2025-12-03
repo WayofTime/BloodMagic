@@ -5,10 +5,10 @@
       "item": "minecraft:ghast_tear"
     },
     {
-      "item": "minecraft:feather"
+      "tag": "c:feathers"
     },
     {
-      "item": "minecraft:feather"
+      "tag": "c:feathers"
     }
   ],
   "output": {

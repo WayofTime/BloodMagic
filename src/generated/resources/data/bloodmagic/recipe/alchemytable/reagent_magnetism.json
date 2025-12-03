@@ -2,20 +2,23 @@
   "type": "bloodmagic:alchemytable",
   "input": [
     {
+      "tag": "c:strings"
+    },
+    {
       "tag": "c:ingots/gold"
     },
     {
-      "item": "minecraft:gold_block"
+      "tag": "c:ingots/gold"
     },
     {
-      "item": "minecraft:iron_block"
+      "tag": "c:storage_blocks/iron"
     }
   ],
   "output": {
     "count": 1,
     "id": "bloodmagic:reagentmagnetism"
   },
-  "syphon": 3000,
+  "syphon": 1000,
   "ticks": 200,
   "upgradeLevel": 3
 }

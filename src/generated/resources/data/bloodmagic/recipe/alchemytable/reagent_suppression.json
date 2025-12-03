@@ -2,20 +2,23 @@
   "type": "bloodmagic:alchemytable",
   "input": [
     {
-      "item": "minecraft:water_bucket"
+      "item": "bloodmagic:teleposer"
     },
     {
-      "item": "minecraft:lava_bucket"
+      "item": "bloodmagic:sigil_void"
     },
     {
-      "item": "minecraft:nether_star"
+      "tag": "c:ingots/gold"
+    },
+    {
+      "item": "minecraft:bucket"
     }
   ],
   "output": {
     "count": 1,
     "id": "bloodmagic:reagentsuppression"
   },
-  "syphon": 5000,
+  "syphon": 10000,
   "ticks": 200,
   "upgradeLevel": 4
 }
