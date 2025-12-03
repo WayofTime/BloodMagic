@@ -186,9 +186,9 @@ public class BloodMagicBlocks
 
     public static final RegistryObject<Block> CORROSIVE_HELLFORGED_BLOCK = DUNGEONBLOCKS.register("dungeon_metal_corrosive", () -> new Block(Properties.of().strength(5.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 
-    public static final RegistryObject<Block> CORROSIVE_DUNGEON_PILLAR_CENTER = BLOCKS.register("dungeon_pillar_corrosiveenter_c", () -> new RotatedPillarBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_PILLAR_CENTER = BLOCKS.register("dungeon_pillar_center_corrosive", () -> new RotatedPillarBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> CORROSIVE_DUNGEON_PILLAR_SPECIAL = BLOCKS.register("dungeon_pillar_special_corrosive", () -> new RotatedPillarBlock(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
-    public static final RegistryObject<Block> CORROSIVE_DUNGEON_PILLAR_CAP = BLOCKS.register("dungeon_pillar_corrosiveap_c", () -> new BlockPillarCap(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CORROSIVE_DUNGEON_PILLAR_CAP = BLOCKS.register("dungeon_pillar_cap_corrosive", () -> new BlockPillarCap(Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> CORROSIVE_DUNGEON_BRICK_STAIRS = DECORATIVE_STAIR.register("dungeon_brick1_stairs_corrosive", () -> new StairBlock(() -> CORROSIVE_DUNGEON_BRICK_1.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> CORROSIVE_DUNGEON_POLISHED_STAIRS = DECORATIVE_STAIR.register("dungeon_polished_stairs_corrosive", () -> new StairBlock(() -> CORROSIVE_DUNGEON_POLISHED_STONE.get().defaultBlockState(), Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));

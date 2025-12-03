@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "bloodmagic:dungeon_pillar_corrosiveap_c_from_dungeon_corrosive_stonecutting"
+        "recipe": "bloodmagic:dungeon_pillar_center_corrosive_from_dungeon_corrosive_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "bloodmagic:dungeon_pillar_corrosiveap_c_from_dungeon_corrosive_stonecutting"
+      "bloodmagic:dungeon_pillar_center_corrosive_from_dungeon_corrosive_stonecutting"
     ]
   },
   "sends_telemetry_event": false

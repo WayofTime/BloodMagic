@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "bloodmagic:dungeon_pillar_corrosiveenter_c"
+          "name": "bloodmagic:dungeon_pillar_cap_corrosive"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "bloodmagic:blocks/dungeon_pillar_corrosiveenter_c"
+  "random_sequence": "bloodmagic:blocks/dungeon_pillar_cap_corrosive"
 }

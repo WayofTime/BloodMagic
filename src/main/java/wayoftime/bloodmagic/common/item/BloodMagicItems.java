@@ -478,9 +478,9 @@ public class BloodMagicItems
     public static final RegistryObject<Item> CORROSIVE_DUNGEON_POLISHED_GATE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_polished_gate_corrosive", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_POLISHED_GATE.get(), new Item.Properties()));
     public static final RegistryObject<Item> CORROSIVE_DUNGEON_BRICK_GATE_BLOCK = DECORATIVE_DUNGEON.register("dungeon_brick1_gate_corrosive", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_BRICK_GATE.get(), new Item.Properties()));
 
-    public static final RegistryObject<Item> CORROSIVE_DUNGEON_PILLAR_CENTER_BLOCK = DECORATIVE_DUNGEON.register("dungeon_pillar_corrosiveenter_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CENTER.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_PILLAR_CENTER_BLOCK = DECORATIVE_DUNGEON.register("dungeon_pillar_center_corrosive", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CENTER.get(), new Item.Properties()));
     public static final RegistryObject<Item> CORROSIVE_DUNGEON_PILLAR_SPECIAL_BLOCK = DECORATIVE_DUNGEON.register("dungeon_pillar_special_corrosive", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_SPECIAL.get(), new Item.Properties()));
-    public static final RegistryObject<Item> CORROSIVE_DUNGEON_PILLAR_CAP_BLOCK = DECORATIVE_DUNGEON.register("dungeon_pillar_corrosiveap_c", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CAP.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORROSIVE_DUNGEON_PILLAR_CAP_BLOCK = DECORATIVE_DUNGEON.register("dungeon_pillar_cap_corrosive", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_PILLAR_CAP.get(), new Item.Properties()));
 
     public static final RegistryObject<Item> CORROSIVE_DUNGEON_EYE = DECORATIVE_DUNGEON.register("dungeon_eye_corrosive", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_DUNGEON_EYE.get(), new Item.Properties()));
     public static final RegistryObject<Item> CORROSIVE_HELLFORGED_BLOCK = DECORATIVE_DUNGEON.register("dungeon_metal_corrosive", () -> new BlockItem(BloodMagicBlocks.CORROSIVE_HELLFORGED_BLOCK.get(), new Item.Properties()));
