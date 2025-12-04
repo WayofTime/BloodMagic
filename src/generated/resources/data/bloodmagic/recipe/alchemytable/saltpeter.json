@@ -1,0 +1,21 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:plantoil"
+    },
+    {
+      "item": "bloodmagic:plantoil"
+    },
+    {
+      "tag": "bloodmagic:dusts/coal"
+    }
+  ],
+  "output": {
+    "count": 3,
+    "id": "bloodmagic:saltpeter"
+  },
+  "syphon": 200,
+  "ticks": 200,
+  "upgradeLevel": 1
+}

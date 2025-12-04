@@ -1,0 +1,27 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:melee_anointment"
+    },
+    {
+      "item": "bloodmagic:tauoil"
+    },
+    {
+      "tag": "c:gems/quartz"
+    },
+    {
+      "item": "bloodmagic:sand_hellforged"
+    },
+    {
+      "item": "minecraft:amethyst_shard"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:melee_anointment_xl"
+  },
+  "syphon": 2000,
+  "ticks": 100,
+  "upgradeLevel": 4
+}

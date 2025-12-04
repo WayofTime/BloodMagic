@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "bloodmagic:item/quick_draw_anointment_2"
+  }
+}

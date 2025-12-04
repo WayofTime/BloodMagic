@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:soul_forge",
+  "drain": 2.5,
+  "inputs": [
+    {
+      "tag": "c:storage_blocks/copper"
+    },
+    {
+      "item": "minecraft:charcoal"
+    },
+    {
+      "tag": "c:sands"
+    },
+    {
+      "tag": "c:stones"
+    }
+  ],
+  "minDrain": 80.0,
+  "output": {
+    "count": 4,
+    "id": "bloodmagic:shaped_charge_deep"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:tauoil"
+    },
+    {
+      "tag": "c:dusts/glowstone"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "tag": "bloodmagic:dusts/sulfur"
+    },
+    {
+      "item": "minecraft:water_bucket"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:intermediatecuttingfluid"
+  },
+  "syphon": 2000,
+  "ticks": 200,
+  "upgradeLevel": 3
+}

@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:melee_anointment"
+    },
+    {
+      "item": "bloodmagic:strong_tau"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "tag": "c:gems/quartz"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:melee_anointment_2"
+  },
+  "syphon": 1000,
+  "ticks": 100,
+  "upgradeLevel": 3
+}

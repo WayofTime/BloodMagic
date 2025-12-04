@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "bloodmagic:item/silk_touch_anointment_l"
+  }
+}

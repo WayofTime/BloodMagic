@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:slate_vial"
+    },
+    {
+      "tag": "c:crops/nether_wart"
+    },
+    {
+      "tag": "c:gems/lapis"
+    },
+    {
+      "tag": "c:bones"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:looting_anointment"
+  },
+  "syphon": 500,
+  "ticks": 100,
+  "upgradeLevel": 1
+}

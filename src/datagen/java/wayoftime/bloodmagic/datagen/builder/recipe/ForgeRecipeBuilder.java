@@ -31,6 +31,10 @@ public class ForgeRecipeBuilder extends BaseRecipeBuilder {
         return new ForgeRecipeBuilder(new ItemStack(result));
     }
 
+    public static ForgeRecipeBuilder build(ItemLike result, int count) {
+        return new ForgeRecipeBuilder(new ItemStack(result, count));
+    }
+
     public ForgeRecipeBuilder requires(TagKey<Item> tag) {
         return this.requires(Ingredient.of(tag));
     }

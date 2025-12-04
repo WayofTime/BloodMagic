@@ -1,0 +1,21 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "c:crops/potato"
+    },
+    {
+      "tag": "c:crops/potato"
+    },
+    {
+      "item": "minecraft:bone_meal"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:plantoil"
+  },
+  "syphon": 100,
+  "ticks": 100,
+  "upgradeLevel": 1
+}

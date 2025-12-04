@@ -839,7 +839,7 @@ public class BMRecipeProvider extends RecipeProvider {
                 .save(output, BloodMagic.rl("steadfast_catalyst"));
 
         // Explosive Charges
-        ForgeRecipeBuilder.build(new ItemStack(BMBlocks.SHAPED_CHARGE.item().get(), 8))
+        ForgeRecipeBuilder.build(BMBlocks.SHAPED_CHARGE.item().get(), 8)
                 .requires(Tags.Items.COBBLESTONES)
                 .requires(Items.CHARCOAL)
                 .requires(Tags.Items.SANDS)
@@ -849,7 +849,7 @@ public class BMRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_charcoal", has(Items.CHARCOAL))
                 .save(output, BloodMagic.rl("shaped_charge"));
 
-        ForgeRecipeBuilder.build(new ItemStack(BMBlocks.DEFORESTER_CHARGE.item().get(), 8))
+        ForgeRecipeBuilder.build(BMBlocks.DEFORESTER_CHARGE.item().get(), 8)
                 .requires(Tags.Items.COBBLESTONES)
                 .requires(Items.CHARCOAL)
                 .requires(ItemTags.LOGS)
@@ -859,7 +859,7 @@ public class BMRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_charcoal", has(Items.CHARCOAL))
                 .save(output, BloodMagic.rl("deforester_charge"));
 
-        ForgeRecipeBuilder.build(new ItemStack(BMBlocks.VEINMINE_CHARGE.item().get(), 8))
+        ForgeRecipeBuilder.build(BMBlocks.VEINMINE_CHARGE.item().get(), 8)
                 .requires(Tags.Items.COBBLESTONES)
                 .requires(Items.CHARCOAL)
                 .requires(Tags.Items.SANDSTONE_BLOCKS)
@@ -869,7 +869,7 @@ public class BMRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_charcoal", has(Items.CHARCOAL))
                 .save(output, BloodMagic.rl("veinmine_charge"));
 
-        ForgeRecipeBuilder.build(new ItemStack(BMBlocks.FUNGAL_CHARGE.item().get(), 8))
+        ForgeRecipeBuilder.build(BMBlocks.FUNGAL_CHARGE.item().get(), 8)
                 .requires(Tags.Items.COBBLESTONES)
                 .requires(Items.CHARCOAL)
                 .requires(ItemTags.CRIMSON_STEMS)
@@ -880,7 +880,7 @@ public class BMRecipeProvider extends RecipeProvider {
                 .save(output, BloodMagic.rl("fungal_charge"));
 
         // Tier 2 charges
-        ForgeRecipeBuilder.build(new ItemStack(BMBlocks.AUG_SHAPED_CHARGE.item().get(), 6))
+        ForgeRecipeBuilder.build(BMBlocks.AUG_SHAPED_CHARGE.item().get(), 6)
                 .requires(Tags.Items.STORAGE_BLOCKS_COPPER)
                 .requires(Items.CHARCOAL)
                 .requires(Tags.Items.SANDS)
@@ -890,7 +890,7 @@ public class BMRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_copper_block", has(Tags.Items.STORAGE_BLOCKS_COPPER))
                 .save(output, BloodMagic.rl("aug_shaped_charge"));
 
-        ForgeRecipeBuilder.build(new ItemStack(BMBlocks.DEFORESTER_CHARGE_2.item().get(), 4))
+        ForgeRecipeBuilder.build(BMBlocks.DEFORESTER_CHARGE_2.item().get(), 4)
                 .requires(Tags.Items.STORAGE_BLOCKS_COPPER)
                 .requires(Items.CHARCOAL)
                 .requires(ItemTags.LOGS)
@@ -900,7 +900,7 @@ public class BMRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_copper_block", has(Tags.Items.STORAGE_BLOCKS_COPPER))
                 .save(output, BloodMagic.rl("deforester_charge_2"));
 
-        ForgeRecipeBuilder.build(new ItemStack(BMBlocks.VEINMINE_CHARGE_2.item().get(), 4))
+        ForgeRecipeBuilder.build(BMBlocks.VEINMINE_CHARGE_2.item().get(), 4)
                 .requires(Tags.Items.STORAGE_BLOCKS_COPPER)
                 .requires(Items.CHARCOAL)
                 .requires(Tags.Items.SANDSTONE_BLOCKS)
@@ -910,7 +910,7 @@ public class BMRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_copper_block", has(Tags.Items.STORAGE_BLOCKS_COPPER))
                 .save(output, BloodMagic.rl("veinmine_charge_2"));
 
-        ForgeRecipeBuilder.build(new ItemStack(BMBlocks.FUNGAL_CHARGE_2.item().get(), 4))
+        ForgeRecipeBuilder.build(BMBlocks.FUNGAL_CHARGE_2.item().get(), 4)
                 .requires(Tags.Items.STORAGE_BLOCKS_COPPER)
                 .requires(Items.CHARCOAL)
                 .requires(ItemTags.CRIMSON_STEMS)
@@ -920,7 +920,7 @@ public class BMRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_copper_block", has(Tags.Items.STORAGE_BLOCKS_COPPER))
                 .save(output, BloodMagic.rl("fungal_charge_2"));
 
-        ForgeRecipeBuilder.build(new ItemStack(BMBlocks.SHAPED_CHARGE_DEEP.item().get(), 4))
+        ForgeRecipeBuilder.build(BMBlocks.SHAPED_CHARGE_DEEP.item().get(), 4)
                 .requires(Tags.Items.STORAGE_BLOCKS_COPPER)
                 .requires(Items.CHARCOAL)
                 .requires(Tags.Items.SANDS)
@@ -1585,6 +1585,393 @@ public class BMRecipeProvider extends RecipeProvider {
                 .ticks(200)
                 .minimumTier(3)
                 .save(output, "composite_router_filter");
+
+        // Intermediate Cutting Fluid - tau oil + glowstone + gunpowder + sugar + sulfur + water
+        AlchemyTableRecipeBuilder.build(BMItems.INTERMEDIATE_CUTTING_FLUID.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Ingredient.of(Tags.Items.DUSTS_GLOWSTONE))
+                .input(Items.GUNPOWDER)
+                .input(Items.SUGAR)
+                .input(Ingredient.of(BMTags.Items.DUSTS_SULFUR))
+                .input(Items.WATER_BUCKET)
+                .syphon(2000)
+                .ticks(200)
+                .minimumTier(3)
+                .save(output, "intermediate_cutting_fluid");
+
+        // Advanced Cutting Fluid - tau oil + hellforged dust + glow berries + saltpeter + sulfur + water
+        AlchemyTableRecipeBuilder.build(BMItems.ADVANCED_CUTTING_FLUID.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Ingredient.of(BMTags.Items.DUSTS_HELLFORGED))
+                .input(Items.GLOW_BERRIES)
+                .input(BMItems.SALTPETER.get())
+                .input(Ingredient.of(BMTags.Items.DUSTS_SULFUR))
+                .input(Items.WATER_BUCKET)
+                .syphon(4000)
+                .ticks(200)
+                .minimumTier(4)
+                .save(output, "advanced_cutting_fluid");
+
+        // Anointment _L variants (extended duration - use tau oil)
+        AlchemyTableRecipeBuilder.build(BMItems.FORTUNE_ANOINTMENT_L.get())
+                .input(BMItems.FORTUNE_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .input(Ingredient.of(BMTags.Items.DUSTS_COAL))
+                .syphon(1000).ticks(100).minimumTier(3)
+                .save(output, "fortune_anointment_l");
+
+        AlchemyTableRecipeBuilder.build(BMItems.SILK_TOUCH_ANOINTMENT_L.get())
+                .input(BMItems.SILK_TOUCH_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Items.COBWEB)
+                .input(Ingredient.of(Tags.Items.NUGGETS_GOLD))
+                .syphon(1000).ticks(100).minimumTier(3)
+                .save(output, "silk_touch_anointment_l");
+
+        AlchemyTableRecipeBuilder.build(BMItems.MELEE_DAMAGE_ANOINTMENT_L.get())
+                .input(BMItems.MELEE_DAMAGE_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Items.BLAZE_POWDER)
+                .input(Ingredient.of(Tags.Items.GEMS_QUARTZ))
+                .syphon(1000).ticks(100).minimumTier(3)
+                .save(output, "melee_damage_anointment_l");
+
+        AlchemyTableRecipeBuilder.build(BMItems.HOLY_WATER_ANOINTMENT_L.get())
+                .input(BMItems.HOLY_WATER_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Items.GLISTERING_MELON_SLICE)
+                .input(Ingredient.of(Tags.Items.GEMS_QUARTZ))
+                .syphon(1000).ticks(100).minimumTier(3)
+                .save(output, "holy_water_anointment_l");
+
+        AlchemyTableRecipeBuilder.build(BMItems.HIDDEN_KNOWLEDGE_ANOINTMENT_L.get())
+                .input(BMItems.HIDDEN_KNOWLEDGE_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Items.GLASS_BOTTLE)
+                .input(Items.ENCHANTED_BOOK)
+                .syphon(1000).ticks(100).minimumTier(3)
+                .save(output, "hidden_knowledge_anointment_l");
+
+        AlchemyTableRecipeBuilder.build(BMItems.QUICK_DRAW_ANOINTMENT_L.get())
+                .input(BMItems.QUICK_DRAW_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Ingredient.of(Tags.Items.STRINGS))
+                .input(Items.SPECTRAL_ARROW)
+                .syphon(1000).ticks(100).minimumTier(3)
+                .save(output, "quick_draw_anointment_l");
+
+        AlchemyTableRecipeBuilder.build(BMItems.LOOTING_ANOINTMENT_L.get())
+                .input(BMItems.LOOTING_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Ingredient.of(Tags.Items.GEMS_LAPIS))
+                .input(Ingredient.of(Tags.Items.BONES))
+                .syphon(1000).ticks(100).minimumTier(3)
+                .save(output, "looting_anointment_l");
+
+        AlchemyTableRecipeBuilder.build(BMItems.BOW_POWER_ANOINTMENT_L.get())
+                .input(BMItems.BOW_POWER_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Ingredient.of(Tags.Items.INGOTS_IRON))
+                .input(Items.BOW)
+                .syphon(1000).ticks(100).minimumTier(3)
+                .save(output, "bow_power_anointment_l");
+
+        AlchemyTableRecipeBuilder.build(BMItems.SMELTING_ANOINTMENT_L.get())
+                .input(BMItems.SMELTING_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Items.FURNACE)
+                .input(Items.CHARCOAL)
+                .syphon(1000).ticks(100).minimumTier(3)
+                .save(output, "smelting_anointment_l");
+
+        AlchemyTableRecipeBuilder.build(BMItems.VOIDING_ANOINTMENT_L.get())
+                .input(BMItems.VOIDING_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Items.NETHERRACK)
+                .input(Items.COBBLED_DEEPSLATE)
+                .syphon(1000).ticks(100).minimumTier(3)
+                .save(output, "voiding_anointment_l");
+
+        AlchemyTableRecipeBuilder.build(BMItems.BOW_VELOCITY_ANOINTMENT_L.get())
+                .input(BMItems.BOW_VELOCITY_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Ingredient.of(Tags.Items.NUGGETS_GOLD))
+                .input(Items.BOW)
+                .syphon(1000).ticks(100).minimumTier(3)
+                .save(output, "bow_velocity_anointment_l");
+
+        AlchemyTableRecipeBuilder.build(BMItems.WEAPON_REPAIR_ANOINTMENT_L.get())
+                .input(BMItems.WEAPON_REPAIR_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Ingredient.of(Tags.Items.INGOTS_COPPER))
+                .input(Ingredient.of(BMTags.Items.DUSTS_GOLD))
+                .syphon(1000).ticks(100).minimumTier(3)
+                .save(output, "weapon_repair_anointment_l");
+
+        // Anointment _2 variants (level 2 - use strong tau)
+        AlchemyTableRecipeBuilder.build(BMItems.FORTUNE_ANOINTMENT_2.get())
+                .input(BMItems.FORTUNE_ANOINTMENT.get())
+                .input(BMBlocks.STRONG_TAU.item().get())
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .input(Ingredient.of(BMTags.Items.DUSTS_COAL))
+                .syphon(1000).ticks(100).minimumTier(3)
+                .save(output, "fortune_anointment_2");
+
+        AlchemyTableRecipeBuilder.build(BMItems.MELEE_DAMAGE_ANOINTMENT_2.get())
+                .input(BMItems.MELEE_DAMAGE_ANOINTMENT.get())
+                .input(BMBlocks.STRONG_TAU.item().get())
+                .input(Items.BLAZE_POWDER)
+                .input(Ingredient.of(Tags.Items.GEMS_QUARTZ))
+                .syphon(1000).ticks(100).minimumTier(3)
+                .save(output, "melee_damage_anointment_2");
+
+        AlchemyTableRecipeBuilder.build(BMItems.HOLY_WATER_ANOINTMENT_2.get())
+                .input(BMItems.HOLY_WATER_ANOINTMENT.get())
+                .input(BMBlocks.STRONG_TAU.item().get())
+                .input(Items.GLISTERING_MELON_SLICE)
+                .input(Ingredient.of(Tags.Items.GEMS_QUARTZ))
+                .syphon(1000).ticks(100).minimumTier(3)
+                .save(output, "holy_water_anointment_2");
+
+        AlchemyTableRecipeBuilder.build(BMItems.HIDDEN_KNOWLEDGE_ANOINTMENT_2.get())
+                .input(BMItems.HIDDEN_KNOWLEDGE_ANOINTMENT.get())
+                .input(BMBlocks.STRONG_TAU.item().get())
+                .input(Items.GLASS_BOTTLE)
+                .input(Items.ENCHANTED_BOOK)
+                .syphon(1000).ticks(100).minimumTier(3)
+                .save(output, "hidden_knowledge_anointment_2");
+
+        AlchemyTableRecipeBuilder.build(BMItems.QUICK_DRAW_ANOINTMENT_2.get())
+                .input(BMItems.QUICK_DRAW_ANOINTMENT.get())
+                .input(BMBlocks.STRONG_TAU.item().get())
+                .input(Ingredient.of(Tags.Items.STRINGS))
+                .input(Items.SPECTRAL_ARROW)
+                .syphon(1000).ticks(100).minimumTier(3)
+                .save(output, "quick_draw_anointment_2");
+
+        AlchemyTableRecipeBuilder.build(BMItems.LOOTING_ANOINTMENT_2.get())
+                .input(BMItems.LOOTING_ANOINTMENT.get())
+                .input(BMBlocks.STRONG_TAU.item().get())
+                .input(Ingredient.of(Tags.Items.GEMS_LAPIS))
+                .input(Ingredient.of(Tags.Items.BONES))
+                .syphon(1000).ticks(100).minimumTier(3)
+                .save(output, "looting_anointment_2");
+
+        AlchemyTableRecipeBuilder.build(BMItems.BOW_POWER_ANOINTMENT_2.get())
+                .input(BMItems.BOW_POWER_ANOINTMENT.get())
+                .input(BMBlocks.STRONG_TAU.item().get())
+                .input(Ingredient.of(Tags.Items.INGOTS_IRON))
+                .input(Items.BOW)
+                .syphon(1000).ticks(100).minimumTier(3)
+                .save(output, "bow_power_anointment_2");
+
+        AlchemyTableRecipeBuilder.build(BMItems.BOW_VELOCITY_ANOINTMENT_2.get())
+                .input(BMItems.BOW_VELOCITY_ANOINTMENT.get())
+                .input(BMBlocks.STRONG_TAU.item().get())
+                .input(Ingredient.of(Tags.Items.NUGGETS_GOLD))
+                .input(Items.BOW)
+                .syphon(1000).ticks(100).minimumTier(3)
+                .save(output, "bow_velocity_anointment_2");
+
+        AlchemyTableRecipeBuilder.build(BMItems.WEAPON_REPAIR_ANOINTMENT_2.get())
+                .input(BMItems.WEAPON_REPAIR_ANOINTMENT.get())
+                .input(BMBlocks.STRONG_TAU.item().get())
+                .input(Ingredient.of(Tags.Items.INGOTS_COPPER))
+                .input(Ingredient.of(BMTags.Items.DUSTS_GOLD))
+                .syphon(1000).ticks(100).minimumTier(3)
+                .save(output, "weapon_repair_anointment_2");
+
+        // Anointment _XL variants (extra long - use tau oil + hellforged sand + amethyst)
+        AlchemyTableRecipeBuilder.build(BMItems.FORTUNE_ANOINTMENT_XL.get())
+                .input(BMItems.FORTUNE_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Ingredient.of(BMTags.Items.DUSTS_COAL))
+                .input(BMItems.HELLFORGED_SAND.get())
+                .input(Items.AMETHYST_SHARD)
+                .syphon(2000).ticks(100).minimumTier(4)
+                .save(output, "fortune_anointment_xl");
+
+        AlchemyTableRecipeBuilder.build(BMItems.SILK_TOUCH_ANOINTMENT_XL.get())
+                .input(BMItems.SILK_TOUCH_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Items.COBWEB)
+                .input(BMItems.HELLFORGED_SAND.get())
+                .input(Items.AMETHYST_SHARD)
+                .syphon(2000).ticks(100).minimumTier(4)
+                .save(output, "silk_touch_anointment_xl");
+
+        AlchemyTableRecipeBuilder.build(BMItems.MELEE_DAMAGE_ANOINTMENT_XL.get())
+                .input(BMItems.MELEE_DAMAGE_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Ingredient.of(Tags.Items.GEMS_QUARTZ))
+                .input(BMItems.HELLFORGED_SAND.get())
+                .input(Items.AMETHYST_SHARD)
+                .syphon(2000).ticks(100).minimumTier(4)
+                .save(output, "melee_damage_anointment_xl");
+
+        AlchemyTableRecipeBuilder.build(BMItems.HOLY_WATER_ANOINTMENT_XL.get())
+                .input(BMItems.HOLY_WATER_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Items.GLISTERING_MELON_SLICE)
+                .input(BMItems.HELLFORGED_SAND.get())
+                .input(Items.AMETHYST_SHARD)
+                .syphon(2000).ticks(100).minimumTier(4)
+                .save(output, "holy_water_anointment_xl");
+
+        AlchemyTableRecipeBuilder.build(BMItems.HIDDEN_KNOWLEDGE_ANOINTMENT_XL.get())
+                .input(BMItems.HIDDEN_KNOWLEDGE_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Items.ENCHANTED_BOOK)
+                .input(BMItems.HELLFORGED_SAND.get())
+                .input(Items.AMETHYST_SHARD)
+                .syphon(2000).ticks(100).minimumTier(4)
+                .save(output, "hidden_knowledge_anointment_xl");
+
+        AlchemyTableRecipeBuilder.build(BMItems.QUICK_DRAW_ANOINTMENT_XL.get())
+                .input(BMItems.QUICK_DRAW_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Items.SPECTRAL_ARROW)
+                .input(BMItems.HELLFORGED_SAND.get())
+                .input(Items.AMETHYST_SHARD)
+                .syphon(2000).ticks(100).minimumTier(4)
+                .save(output, "quick_draw_anointment_xl");
+
+        AlchemyTableRecipeBuilder.build(BMItems.LOOTING_ANOINTMENT_XL.get())
+                .input(BMItems.LOOTING_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Ingredient.of(Tags.Items.GEMS_LAPIS))
+                .input(BMItems.HELLFORGED_SAND.get())
+                .input(Items.AMETHYST_SHARD)
+                .syphon(2000).ticks(100).minimumTier(4)
+                .save(output, "looting_anointment_xl");
+
+        AlchemyTableRecipeBuilder.build(BMItems.BOW_POWER_ANOINTMENT_XL.get())
+                .input(BMItems.BOW_POWER_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Ingredient.of(Tags.Items.INGOTS_IRON))
+                .input(BMItems.HELLFORGED_SAND.get())
+                .input(Items.AMETHYST_SHARD)
+                .syphon(2000).ticks(100).minimumTier(4)
+                .save(output, "bow_power_anointment_xl");
+
+        AlchemyTableRecipeBuilder.build(BMItems.SMELTING_ANOINTMENT_XL.get())
+                .input(BMItems.SMELTING_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Items.CHARCOAL)
+                .input(BMItems.HELLFORGED_SAND.get())
+                .input(Items.AMETHYST_SHARD)
+                .syphon(2000).ticks(100).minimumTier(4)
+                .save(output, "smelting_anointment_xl");
+
+        AlchemyTableRecipeBuilder.build(BMItems.VOIDING_ANOINTMENT_XL.get())
+                .input(BMItems.VOIDING_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Items.COBBLED_DEEPSLATE)
+                .input(BMItems.HELLFORGED_SAND.get())
+                .input(Items.AMETHYST_SHARD)
+                .syphon(2000).ticks(100).minimumTier(4)
+                .save(output, "voiding_anointment_xl");
+
+        AlchemyTableRecipeBuilder.build(BMItems.BOW_VELOCITY_ANOINTMENT_XL.get())
+                .input(BMItems.BOW_VELOCITY_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Ingredient.of(Tags.Items.NUGGETS_GOLD))
+                .input(BMItems.HELLFORGED_SAND.get())
+                .input(Items.AMETHYST_SHARD)
+                .syphon(2000).ticks(100).minimumTier(4)
+                .save(output, "bow_velocity_anointment_xl");
+
+        AlchemyTableRecipeBuilder.build(BMItems.WEAPON_REPAIR_ANOINTMENT_XL.get())
+                .input(BMItems.WEAPON_REPAIR_ANOINTMENT.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Ingredient.of(Tags.Items.INGOTS_COPPER))
+                .input(BMItems.HELLFORGED_SAND.get())
+                .input(Items.AMETHYST_SHARD)
+                .syphon(2000).ticks(100).minimumTier(4)
+                .save(output, "weapon_repair_anointment_xl");
+
+        // Anointment _3 variants (level 3 - use strong tau + hellforged sand + glow berries)
+        AlchemyTableRecipeBuilder.build(BMItems.FORTUNE_ANOINTMENT_3.get())
+                .input(BMItems.FORTUNE_ANOINTMENT.get())
+                .input(BMBlocks.STRONG_TAU.item().get())
+                .input(BMItems.HELLFORGED_SAND.get())
+                .input(Items.GLOW_BERRIES)
+                .input(Ingredient.of(BMTags.Items.DUSTS_COAL))
+                .syphon(2000).ticks(100).minimumTier(4)
+                .save(output, "fortune_anointment_3");
+
+        AlchemyTableRecipeBuilder.build(BMItems.MELEE_DAMAGE_ANOINTMENT_3.get())
+                .input(BMItems.MELEE_DAMAGE_ANOINTMENT.get())
+                .input(BMBlocks.STRONG_TAU.item().get())
+                .input(BMItems.HELLFORGED_SAND.get())
+                .input(Items.GLOW_BERRIES)
+                .input(Ingredient.of(Tags.Items.GEMS_QUARTZ))
+                .syphon(2000).ticks(100).minimumTier(4)
+                .save(output, "melee_damage_anointment_3");
+
+        AlchemyTableRecipeBuilder.build(BMItems.HOLY_WATER_ANOINTMENT_3.get())
+                .input(BMItems.HOLY_WATER_ANOINTMENT.get())
+                .input(BMBlocks.STRONG_TAU.item().get())
+                .input(BMItems.HELLFORGED_SAND.get())
+                .input(Items.GLOW_BERRIES)
+                .input(Items.GLISTERING_MELON_SLICE)
+                .syphon(2000).ticks(100).minimumTier(4)
+                .save(output, "holy_water_anointment_3");
+
+        AlchemyTableRecipeBuilder.build(BMItems.HIDDEN_KNOWLEDGE_ANOINTMENT_3.get())
+                .input(BMItems.HIDDEN_KNOWLEDGE_ANOINTMENT.get())
+                .input(BMBlocks.STRONG_TAU.item().get())
+                .input(BMItems.HELLFORGED_SAND.get())
+                .input(Items.GLOW_BERRIES)
+                .input(Items.ENCHANTED_BOOK)
+                .syphon(2000).ticks(100).minimumTier(4)
+                .save(output, "hidden_knowledge_anointment_3");
+
+        AlchemyTableRecipeBuilder.build(BMItems.QUICK_DRAW_ANOINTMENT_3.get())
+                .input(BMItems.QUICK_DRAW_ANOINTMENT.get())
+                .input(BMBlocks.STRONG_TAU.item().get())
+                .input(BMItems.HELLFORGED_SAND.get())
+                .input(Items.GLOW_BERRIES)
+                .input(Items.SPECTRAL_ARROW)
+                .syphon(2000).ticks(100).minimumTier(4)
+                .save(output, "quick_draw_anointment_3");
+
+        AlchemyTableRecipeBuilder.build(BMItems.LOOTING_ANOINTMENT_3.get())
+                .input(BMItems.LOOTING_ANOINTMENT.get())
+                .input(BMBlocks.STRONG_TAU.item().get())
+                .input(BMItems.HELLFORGED_SAND.get())
+                .input(Items.GLOW_BERRIES)
+                .input(Ingredient.of(Tags.Items.GEMS_LAPIS))
+                .syphon(2000).ticks(100).minimumTier(4)
+                .save(output, "looting_anointment_3");
+
+        AlchemyTableRecipeBuilder.build(BMItems.BOW_POWER_ANOINTMENT_3.get())
+                .input(BMItems.BOW_POWER_ANOINTMENT.get())
+                .input(BMBlocks.STRONG_TAU.item().get())
+                .input(BMItems.HELLFORGED_SAND.get())
+                .input(Items.GLOW_BERRIES)
+                .input(Ingredient.of(Tags.Items.INGOTS_IRON))
+                .syphon(2000).ticks(100).minimumTier(4)
+                .save(output, "bow_power_anointment_3");
+
+        AlchemyTableRecipeBuilder.build(BMItems.BOW_VELOCITY_ANOINTMENT_3.get())
+                .input(BMItems.BOW_VELOCITY_ANOINTMENT.get())
+                .input(BMBlocks.STRONG_TAU.item().get())
+                .input(BMItems.HELLFORGED_SAND.get())
+                .input(Items.GLOW_BERRIES)
+                .input(Ingredient.of(Tags.Items.NUGGETS_GOLD))
+                .syphon(2000).ticks(100).minimumTier(4)
+                .save(output, "bow_velocity_anointment_3");
+
+        AlchemyTableRecipeBuilder.build(BMItems.WEAPON_REPAIR_ANOINTMENT_3.get())
+                .input(BMItems.WEAPON_REPAIR_ANOINTMENT.get())
+                .input(BMBlocks.STRONG_TAU.item().get())
+                .input(BMItems.HELLFORGED_SAND.get())
+                .input(Items.GLOW_BERRIES)
+                .input(Ingredient.of(Tags.Items.INGOTS_COPPER))
+                .syphon(2000).ticks(100).minimumTier(4)
+                .save(output, "weapon_repair_anointment_3");
 
         // Alchemy Table recipe (crafting recipe for the table itself)
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BMBlocks.ALCHEMY_TABLE.block().get())

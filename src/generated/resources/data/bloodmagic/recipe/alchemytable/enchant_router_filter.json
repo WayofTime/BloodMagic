@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:componentframeparts"
+    },
+    {
+      "item": "minecraft:enchanted_book"
+    },
+    {
+      "tag": "c:dusts/redstone"
+    },
+    {
+      "item": "minecraft:paper"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:itemrouterfilterenchant"
+  },
+  "syphon": 500,
+  "ticks": 100,
+  "upgradeLevel": 3
+}

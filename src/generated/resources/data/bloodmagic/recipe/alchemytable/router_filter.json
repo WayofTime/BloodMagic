@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:componentframeparts"
+    },
+    {
+      "tag": "c:leathers"
+    },
+    {
+      "tag": "c:dusts/redstone"
+    },
+    {
+      "tag": "c:dyes/red"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:itemrouterfilterexact"
+  },
+  "syphon": 500,
+  "ticks": 100,
+  "upgradeLevel": 3
+}

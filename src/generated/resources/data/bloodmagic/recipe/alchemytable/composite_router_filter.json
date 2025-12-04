@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:componentframeparts"
+    },
+    {
+      "tag": "c:dusts/glowstone"
+    },
+    {
+      "tag": "c:dusts/redstone"
+    },
+    {
+      "item": "bloodmagic:imbued_slate"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:itemrouterfiltercomposite"
+  },
+  "syphon": 1000,
+  "ticks": 200,
+  "upgradeLevel": 3
+}

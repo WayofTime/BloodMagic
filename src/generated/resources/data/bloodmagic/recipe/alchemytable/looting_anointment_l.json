@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:looting_anointment"
+    },
+    {
+      "item": "bloodmagic:tauoil"
+    },
+    {
+      "tag": "c:gems/lapis"
+    },
+    {
+      "tag": "c:bones"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:looting_anointment_l"
+  },
+  "syphon": 1000,
+  "ticks": 100,
+  "upgradeLevel": 3
+}

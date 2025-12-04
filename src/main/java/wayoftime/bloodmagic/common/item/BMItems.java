@@ -132,6 +132,8 @@ public class BMItems {
 
     // ARC Tools
     public static final DeferredHolder<Item, ItemARCToolBase> BASIC_CUTTING_FLUID = BASIC_ITEMS.register("basiccuttingfluid", () -> new ItemARCToolBase(64, 1, EnumWillType.CORROSIVE));
+    public static final DeferredHolder<Item, ItemARCToolBase> INTERMEDIATE_CUTTING_FLUID = BASIC_ITEMS.register("intermediatecuttingfluid", () -> new ItemARCToolBase(256, 1.5, EnumWillType.CORROSIVE));
+    public static final DeferredHolder<Item, ItemARCToolBase> ADVANCED_CUTTING_FLUID = BASIC_ITEMS.register("advancedcuttingfluid", () -> new ItemARCToolBase(1024, 2, 2, EnumWillType.CORROSIVE));
     public static final DeferredHolder<Item, ItemARCToolBase> EXPLOSIVE_POWDER = BASIC_ITEMS.register("explosivepowder", () -> new ItemARCToolBase(64, 1, EnumWillType.DESTRUCTIVE));
     public static final DeferredHolder<Item, ItemARCToolBase> RESONATOR = BASIC_ITEMS.register("resonator", () -> new ItemARCToolBase(64, 1, EnumWillType.VENGEFUL));
     public static final DeferredHolder<Item, ItemARCToolBase> SANGUINE_REVERTER = BASIC_ITEMS.register("sanguinereverter", () -> new ItemARCToolBase(32, 2, EnumWillType.STEADFAST));
@@ -207,6 +209,7 @@ public class BMItems {
     public static final DeferredHolder<Item, Item> ALCHEMY_FLASK_LINGERING = BASIC_ITEMS.register("alchemy_flask_lingering", () -> new Item(new Item.Properties().stacksTo(1)));
 
     // Anointment Items (placeholder - weapon upgrade functionality to be added later)
+    // Base tier anointments
     public static final DeferredHolder<Item, Item> MELEE_DAMAGE_ANOINTMENT = BASIC_ITEMS.register("melee_anointment", () -> new Item(new Item.Properties()));
     public static final DeferredHolder<Item, Item> SILK_TOUCH_ANOINTMENT = BASIC_ITEMS.register("silk_touch_anointment", () -> new Item(new Item.Properties()));
     public static final DeferredHolder<Item, Item> FORTUNE_ANOINTMENT = BASIC_ITEMS.register("fortune_anointment", () -> new Item(new Item.Properties()));
@@ -215,10 +218,62 @@ public class BMItems {
     public static final DeferredHolder<Item, Item> QUICK_DRAW_ANOINTMENT = BASIC_ITEMS.register("quick_draw_anointment", () -> new Item(new Item.Properties()));
     public static final DeferredHolder<Item, Item> LOOTING_ANOINTMENT = BASIC_ITEMS.register("looting_anointment", () -> new Item(new Item.Properties()));
     public static final DeferredHolder<Item, Item> BOW_POWER_ANOINTMENT = BASIC_ITEMS.register("bow_power_anointment", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> WILL_POWER_ANOINTMENT = BASIC_ITEMS.register("will_power_anointment", () -> new Item(new Item.Properties()));
     public static final DeferredHolder<Item, Item> SMELTING_ANOINTMENT = BASIC_ITEMS.register("smelting_anointment", () -> new Item(new Item.Properties()));
     public static final DeferredHolder<Item, Item> VOIDING_ANOINTMENT = BASIC_ITEMS.register("voiding_anointment", () -> new Item(new Item.Properties()));
     public static final DeferredHolder<Item, Item> BOW_VELOCITY_ANOINTMENT = BASIC_ITEMS.register("bow_velocity_anointment", () -> new Item(new Item.Properties()));
     public static final DeferredHolder<Item, Item> WEAPON_REPAIR_ANOINTMENT = BASIC_ITEMS.register("weapon_repair_anointment", () -> new Item(new Item.Properties()));
+
+    // Anointment _L variants (extended duration - 1024 uses)
+    public static final DeferredHolder<Item, Item> MELEE_DAMAGE_ANOINTMENT_L = BASIC_ITEMS.register("melee_anointment_l", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> SILK_TOUCH_ANOINTMENT_L = BASIC_ITEMS.register("silk_touch_anointment_l", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> FORTUNE_ANOINTMENT_L = BASIC_ITEMS.register("fortune_anointment_l", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> HOLY_WATER_ANOINTMENT_L = BASIC_ITEMS.register("holy_water_anointment_l", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> HIDDEN_KNOWLEDGE_ANOINTMENT_L = BASIC_ITEMS.register("hidden_knowledge_anointment_l", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> QUICK_DRAW_ANOINTMENT_L = BASIC_ITEMS.register("quick_draw_anointment_l", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> LOOTING_ANOINTMENT_L = BASIC_ITEMS.register("looting_anointment_l", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> BOW_POWER_ANOINTMENT_L = BASIC_ITEMS.register("bow_power_anointment_l", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> SMELTING_ANOINTMENT_L = BASIC_ITEMS.register("smelting_anointment_l", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> VOIDING_ANOINTMENT_L = BASIC_ITEMS.register("voiding_anointment_l", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> BOW_VELOCITY_ANOINTMENT_L = BASIC_ITEMS.register("bow_velocity_anointment_l", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> WEAPON_REPAIR_ANOINTMENT_L = BASIC_ITEMS.register("weapon_repair_anointment_l", () -> new Item(new Item.Properties()));
+
+    // Anointment _2 variants (level 2 effect)
+    public static final DeferredHolder<Item, Item> MELEE_DAMAGE_ANOINTMENT_2 = BASIC_ITEMS.register("melee_anointment_2", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> FORTUNE_ANOINTMENT_2 = BASIC_ITEMS.register("fortune_anointment_2", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> HOLY_WATER_ANOINTMENT_2 = BASIC_ITEMS.register("holy_water_anointment_2", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> HIDDEN_KNOWLEDGE_ANOINTMENT_2 = BASIC_ITEMS.register("hidden_knowledge_anointment_2", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> QUICK_DRAW_ANOINTMENT_2 = BASIC_ITEMS.register("quick_draw_anointment_2", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> LOOTING_ANOINTMENT_2 = BASIC_ITEMS.register("looting_anointment_2", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> BOW_POWER_ANOINTMENT_2 = BASIC_ITEMS.register("bow_power_anointment_2", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> BOW_POWER_ANOINTMENT_STRONG = BASIC_ITEMS.register("bow_power_anointment_strong", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> BOW_VELOCITY_ANOINTMENT_2 = BASIC_ITEMS.register("bow_velocity_anointment_2", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> WEAPON_REPAIR_ANOINTMENT_2 = BASIC_ITEMS.register("weapon_repair_anointment_2", () -> new Item(new Item.Properties()));
+
+    // Anointment _XL variants (extra long duration - 4096 uses)
+    public static final DeferredHolder<Item, Item> MELEE_DAMAGE_ANOINTMENT_XL = BASIC_ITEMS.register("melee_anointment_xl", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> SILK_TOUCH_ANOINTMENT_XL = BASIC_ITEMS.register("silk_touch_anointment_xl", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> FORTUNE_ANOINTMENT_XL = BASIC_ITEMS.register("fortune_anointment_xl", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> HOLY_WATER_ANOINTMENT_XL = BASIC_ITEMS.register("holy_water_anointment_xl", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> HIDDEN_KNOWLEDGE_ANOINTMENT_XL = BASIC_ITEMS.register("hidden_knowledge_anointment_xl", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> QUICK_DRAW_ANOINTMENT_XL = BASIC_ITEMS.register("quick_draw_anointment_xl", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> LOOTING_ANOINTMENT_XL = BASIC_ITEMS.register("looting_anointment_xl", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> BOW_POWER_ANOINTMENT_XL = BASIC_ITEMS.register("bow_power_anointment_xl", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> SMELTING_ANOINTMENT_XL = BASIC_ITEMS.register("smelting_anointment_xl", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> VOIDING_ANOINTMENT_XL = BASIC_ITEMS.register("voiding_anointment_xl", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> BOW_VELOCITY_ANOINTMENT_XL = BASIC_ITEMS.register("bow_velocity_anointment_xl", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> WEAPON_REPAIR_ANOINTMENT_XL = BASIC_ITEMS.register("weapon_repair_anointment_xl", () -> new Item(new Item.Properties()));
+
+    // Anointment _3 variants (level 3 effect)
+    public static final DeferredHolder<Item, Item> MELEE_DAMAGE_ANOINTMENT_3 = BASIC_ITEMS.register("melee_anointment_3", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> FORTUNE_ANOINTMENT_3 = BASIC_ITEMS.register("fortune_anointment_3", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> HOLY_WATER_ANOINTMENT_3 = BASIC_ITEMS.register("holy_water_anointment_3", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> HIDDEN_KNOWLEDGE_ANOINTMENT_3 = BASIC_ITEMS.register("hidden_knowledge_anointment_3", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> QUICK_DRAW_ANOINTMENT_3 = BASIC_ITEMS.register("quick_draw_anointment_3", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> LOOTING_ANOINTMENT_3 = BASIC_ITEMS.register("looting_anointment_3", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> BOW_POWER_ANOINTMENT_3 = BASIC_ITEMS.register("bow_power_anointment_3", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> BOW_VELOCITY_ANOINTMENT_3 = BASIC_ITEMS.register("bow_velocity_anointment_3", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> WEAPON_REPAIR_ANOINTMENT_3 = BASIC_ITEMS.register("weapon_repair_anointment_3", () -> new Item(new Item.Properties()));
 
     // Routing/Filter Items (placeholder - routing system functionality to be added later)
     public static final DeferredHolder<Item, Item> FRAME_PARTS = BASIC_ITEMS.register("componentframeparts", () -> new Item(new Item.Properties()));

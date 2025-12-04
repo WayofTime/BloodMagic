@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:bow_velocity_anointment"
+    },
+    {
+      "item": "bloodmagic:strong_tau"
+    },
+    {
+      "tag": "c:nuggets/gold"
+    },
+    {
+      "item": "minecraft:bow"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:bow_velocity_anointment_2"
+  },
+  "syphon": 1000,
+  "ticks": 100,
+  "upgradeLevel": 3
+}

@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:soul_forge",
+  "drain": 400.0,
+  "inputs": [
+    {
+      "tag": "c:gems/amethyst"
+    },
+    {
+      "tag": "c:ingots/gold"
+    },
+    {
+      "item": "bloodmagic:defaultcrystal"
+    },
+    {
+      "item": "bloodmagic:ingot_hellforged"
+    }
+  ],
+  "minDrain": 1200.0,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:hellforged_resonator"
+  }
+}

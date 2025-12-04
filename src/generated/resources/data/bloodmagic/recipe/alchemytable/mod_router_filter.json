@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:componentframeparts"
+    },
+    {
+      "item": "bloodmagic:reinforced_slate"
+    },
+    {
+      "tag": "c:dusts/redstone"
+    },
+    {
+      "tag": "c:dyes/yellow"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:itemrouterfiltermoditems"
+  },
+  "syphon": 500,
+  "ticks": 100,
+  "upgradeLevel": 3
+}

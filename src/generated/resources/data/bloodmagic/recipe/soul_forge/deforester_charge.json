@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:soul_forge",
+  "drain": 0.5,
+  "inputs": [
+    {
+      "tag": "c:cobblestones"
+    },
+    {
+      "item": "minecraft:charcoal"
+    },
+    {
+      "tag": "minecraft:logs"
+    },
+    {
+      "tag": "minecraft:planks"
+    }
+  ],
+  "minDrain": 10.0,
+  "output": {
+    "count": 8,
+    "id": "bloodmagic:deforester_charge"
+  }
+}

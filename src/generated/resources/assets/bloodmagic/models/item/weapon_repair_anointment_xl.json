@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "bloodmagic:item/weapon_repair_anointment_xl"
+  }
+}

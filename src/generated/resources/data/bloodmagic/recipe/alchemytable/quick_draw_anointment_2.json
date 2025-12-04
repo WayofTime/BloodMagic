@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:quick_draw_anointment"
+    },
+    {
+      "item": "bloodmagic:strong_tau"
+    },
+    {
+      "tag": "c:strings"
+    },
+    {
+      "item": "minecraft:spectral_arrow"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:quick_draw_anointment_2"
+  },
+  "syphon": 1000,
+  "ticks": 100,
+  "upgradeLevel": 3
+}

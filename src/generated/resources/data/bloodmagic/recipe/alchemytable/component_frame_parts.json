@@ -1,0 +1,21 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "c:glass_blocks"
+    },
+    {
+      "tag": "c:stones"
+    },
+    {
+      "item": "bloodmagic:blank_slate"
+    }
+  ],
+  "output": {
+    "count": 2,
+    "id": "bloodmagic:componentframeparts"
+  },
+  "syphon": 1000,
+  "ticks": 100,
+  "upgradeLevel": 3
+}

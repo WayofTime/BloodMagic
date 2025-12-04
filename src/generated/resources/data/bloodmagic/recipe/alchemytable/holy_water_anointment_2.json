@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:holy_water_anointment"
+    },
+    {
+      "item": "bloodmagic:strong_tau"
+    },
+    {
+      "item": "minecraft:glistering_melon_slice"
+    },
+    {
+      "tag": "c:gems/quartz"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:holy_water_anointment_2"
+  },
+  "syphon": 1000,
+  "ticks": 100,
+  "upgradeLevel": 3
+}

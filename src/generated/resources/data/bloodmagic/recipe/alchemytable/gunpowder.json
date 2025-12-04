@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "bloodmagic:dusts/sulfur"
+    },
+    {
+      "tag": "bloodmagic:dusts/saltpeter"
+    },
+    {
+      "tag": "minecraft:coals"
+    }
+  ],
+  "output": {
+    "count": 3,
+    "id": "minecraft:gunpowder"
+  },
+  "syphon": 0,
+  "ticks": 100
+}

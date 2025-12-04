@@ -240,7 +240,7 @@ public class BMLanguageProvider extends LanguageProvider {
         add(BMItems.ALCHEMY_FLASK_THROWABLE.get(), "Throwable Alchemy Flask");
         add(BMItems.ALCHEMY_FLASK_LINGERING.get(), "Lingering Alchemy Flask");
 
-        // Anointment Items
+        // Anointment Items - Base tier
         add(BMItems.MELEE_DAMAGE_ANOINTMENT.get(), "Anointment: Melee Damage");
         add(BMItems.SILK_TOUCH_ANOINTMENT.get(), "Anointment: Silk Touch");
         add(BMItems.FORTUNE_ANOINTMENT.get(), "Anointment: Fortune");
@@ -249,10 +249,62 @@ public class BMLanguageProvider extends LanguageProvider {
         add(BMItems.QUICK_DRAW_ANOINTMENT.get(), "Anointment: Quick Draw");
         add(BMItems.LOOTING_ANOINTMENT.get(), "Anointment: Looting");
         add(BMItems.BOW_POWER_ANOINTMENT.get(), "Anointment: Bow Power");
+        add(BMItems.WILL_POWER_ANOINTMENT.get(), "Anointment: Will Power");
         add(BMItems.SMELTING_ANOINTMENT.get(), "Anointment: Smelting");
         add(BMItems.VOIDING_ANOINTMENT.get(), "Anointment: Voiding");
         add(BMItems.BOW_VELOCITY_ANOINTMENT.get(), "Anointment: Bow Velocity");
         add(BMItems.WEAPON_REPAIR_ANOINTMENT.get(), "Anointment: Weapon Repair");
+
+        // Anointment Items - L variants (extended duration)
+        add(BMItems.MELEE_DAMAGE_ANOINTMENT_L.get(), "Anointment: Melee Damage (L)");
+        add(BMItems.SILK_TOUCH_ANOINTMENT_L.get(), "Anointment: Silk Touch (L)");
+        add(BMItems.FORTUNE_ANOINTMENT_L.get(), "Anointment: Fortune (L)");
+        add(BMItems.HOLY_WATER_ANOINTMENT_L.get(), "Anointment: Holy Water (L)");
+        add(BMItems.HIDDEN_KNOWLEDGE_ANOINTMENT_L.get(), "Anointment: Hidden Knowledge (L)");
+        add(BMItems.QUICK_DRAW_ANOINTMENT_L.get(), "Anointment: Quick Draw (L)");
+        add(BMItems.LOOTING_ANOINTMENT_L.get(), "Anointment: Looting (L)");
+        add(BMItems.BOW_POWER_ANOINTMENT_L.get(), "Anointment: Bow Power (L)");
+        add(BMItems.SMELTING_ANOINTMENT_L.get(), "Anointment: Smelting (L)");
+        add(BMItems.VOIDING_ANOINTMENT_L.get(), "Anointment: Voiding (L)");
+        add(BMItems.BOW_VELOCITY_ANOINTMENT_L.get(), "Anointment: Bow Velocity (L)");
+        add(BMItems.WEAPON_REPAIR_ANOINTMENT_L.get(), "Anointment: Weapon Repair (L)");
+
+        // Anointment Items - 2 variants (level 2)
+        add(BMItems.MELEE_DAMAGE_ANOINTMENT_2.get(), "Anointment: Melee Damage II");
+        add(BMItems.FORTUNE_ANOINTMENT_2.get(), "Anointment: Fortune II");
+        add(BMItems.HOLY_WATER_ANOINTMENT_2.get(), "Anointment: Holy Water II");
+        add(BMItems.HIDDEN_KNOWLEDGE_ANOINTMENT_2.get(), "Anointment: Hidden Knowledge II");
+        add(BMItems.QUICK_DRAW_ANOINTMENT_2.get(), "Anointment: Quick Draw II");
+        add(BMItems.LOOTING_ANOINTMENT_2.get(), "Anointment: Looting II");
+        add(BMItems.BOW_POWER_ANOINTMENT_2.get(), "Anointment: Bow Power II");
+        add(BMItems.BOW_POWER_ANOINTMENT_STRONG.get(), "Anointment: Bow Power II (L)");
+        add(BMItems.BOW_VELOCITY_ANOINTMENT_2.get(), "Anointment: Bow Velocity II");
+        add(BMItems.WEAPON_REPAIR_ANOINTMENT_2.get(), "Anointment: Weapon Repair II");
+
+        // Anointment Items - XL variants (extra long duration)
+        add(BMItems.MELEE_DAMAGE_ANOINTMENT_XL.get(), "Anointment: Melee Damage (XL)");
+        add(BMItems.SILK_TOUCH_ANOINTMENT_XL.get(), "Anointment: Silk Touch (XL)");
+        add(BMItems.FORTUNE_ANOINTMENT_XL.get(), "Anointment: Fortune (XL)");
+        add(BMItems.HOLY_WATER_ANOINTMENT_XL.get(), "Anointment: Holy Water (XL)");
+        add(BMItems.HIDDEN_KNOWLEDGE_ANOINTMENT_XL.get(), "Anointment: Hidden Knowledge (XL)");
+        add(BMItems.QUICK_DRAW_ANOINTMENT_XL.get(), "Anointment: Quick Draw (XL)");
+        add(BMItems.LOOTING_ANOINTMENT_XL.get(), "Anointment: Looting (XL)");
+        add(BMItems.BOW_POWER_ANOINTMENT_XL.get(), "Anointment: Bow Power (XL)");
+        add(BMItems.SMELTING_ANOINTMENT_XL.get(), "Anointment: Smelting (XL)");
+        add(BMItems.VOIDING_ANOINTMENT_XL.get(), "Anointment: Voiding (XL)");
+        add(BMItems.BOW_VELOCITY_ANOINTMENT_XL.get(), "Anointment: Bow Velocity (XL)");
+        add(BMItems.WEAPON_REPAIR_ANOINTMENT_XL.get(), "Anointment: Weapon Repair (XL)");
+
+        // Anointment Items - 3 variants (level 3)
+        add(BMItems.MELEE_DAMAGE_ANOINTMENT_3.get(), "Anointment: Melee Damage III");
+        add(BMItems.FORTUNE_ANOINTMENT_3.get(), "Anointment: Fortune III");
+        add(BMItems.HOLY_WATER_ANOINTMENT_3.get(), "Anointment: Holy Water III");
+        add(BMItems.HIDDEN_KNOWLEDGE_ANOINTMENT_3.get(), "Anointment: Hidden Knowledge III");
+        add(BMItems.QUICK_DRAW_ANOINTMENT_3.get(), "Anointment: Quick Draw III");
+        add(BMItems.LOOTING_ANOINTMENT_3.get(), "Anointment: Looting III");
+        add(BMItems.BOW_POWER_ANOINTMENT_3.get(), "Anointment: Bow Power III");
+        add(BMItems.BOW_VELOCITY_ANOINTMENT_3.get(), "Anointment: Bow Velocity III");
+        add(BMItems.WEAPON_REPAIR_ANOINTMENT_3.get(), "Anointment: Weapon Repair III");
 
         // Routing/Filter Items
         add(BMItems.FRAME_PARTS.get(), "Frame Parts");
@@ -261,7 +313,6 @@ public class BMLanguageProvider extends LanguageProvider {
         add(BMItems.ITEM_ENCHANT_FILTER.get(), "Enchantment Filter");
         add(BMItems.ITEM_MOD_FILTER.get(), "Mod Filter");
         add(BMItems.ITEM_COMPOSITE_FILTER.get(), "Composite Filter");
-        add(BMItems.NODE_ROUTER.get(), "Node Router");
 
         // Teleposer Focus Items
         add(BMItems.TELEPOSER_FOCUS.get(), "Teleposer Focus");
@@ -309,6 +360,8 @@ public class BMLanguageProvider extends LanguageProvider {
 
         // ARC Items
         add(BMItems.BASIC_CUTTING_FLUID.get(), "Basic Cutting Fluid");
+        add(BMItems.INTERMEDIATE_CUTTING_FLUID.get(), "Intermediate Cutting Fluid");
+        add(BMItems.ADVANCED_CUTTING_FLUID.get(), "Advanced Cutting Fluid");
         add(BMItems.EXPLOSIVE_POWDER.get(), "Explosive Powder");
         add(BMItems.RESONATOR.get(), "Crystal Resonator");
         add(BMItems.PRIMITIVE_CRYSTALLINE_RESONATOR.get(), "Reinforced Resonator");
