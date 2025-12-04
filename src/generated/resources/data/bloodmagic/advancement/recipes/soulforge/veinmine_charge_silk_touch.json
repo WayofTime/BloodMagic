@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bloodmagic:veinmine_charge_silk_touch"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_veinmine_charge": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bloodmagic:veinmine_charge"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_veinmine_charge"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bloodmagic:veinmine_charge_silk_touch"
+    ]
+  }
+}

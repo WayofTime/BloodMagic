@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_aug_shaped_charge": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bloodmagic:aug_shaped_charge"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bloodmagic:aug_shaped_charge_fortune_2_l"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_aug_shaped_charge"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bloodmagic:aug_shaped_charge_fortune_2_l"
+    ]
+  }
+}

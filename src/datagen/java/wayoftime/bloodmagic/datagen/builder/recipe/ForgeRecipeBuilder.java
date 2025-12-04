@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.datagen.builder.recipe;
 
 import net.minecraft.advancements.Advancement;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -8,6 +9,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import wayoftime.bloodmagic.common.datacomponent.AnointmentHolder;
+import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.datacomponent.EnumWillType;
 import wayoftime.bloodmagic.common.recipe.forge.ForgeRecipe;
 
@@ -72,6 +75,25 @@ public class ForgeRecipeBuilder extends BaseRecipeBuilder {
 
     public ForgeRecipeBuilder requiredWillType(EnumWillType type) {
         this.willType = Optional.of(type);
+        return this;
+    }
+
+    /**
+     * Adds an anointment to the result item.
+     * @param key The anointment key (e.g., "bloodmagic:fortune")
+     * @param level The anointment level
+     * @param maxDamage The max uses before the anointment expires
+     */
+    public ForgeRecipeBuilder withAnointment(String key, int level, int maxDamage) {
+        this.result.set(BMDataComponents.ANOINTMENT_HOLDER.get(), AnointmentHolder.single(key, level, maxDamage));
+        return this;
+    }
+
+    /**
+     * Adds a data component to the result item.
+     */
+    public <T> ForgeRecipeBuilder withComponent(DataComponentType<T> component, T value) {
+        this.result.set(component, value);
         return this;
     }
 

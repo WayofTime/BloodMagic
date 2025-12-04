@@ -52,6 +52,9 @@ public class BMDataComponents {
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> PREVIOUS_DAMAGE = DATA_COMPONENTS.registerComponentType("previous_damage", builder -> builder.persistent(Codec.INT));
 
+    // Anointment data component (replaces NBT-based anointment_holder)
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<AnointmentHolder>> ANOINTMENT_HOLDER = DATA_COMPONENTS.registerComponentType("anointment_holder", builder -> builder.persistent(AnointmentHolder.CODEC).networkSynchronized(AnointmentHolder.STREAM_CODEC));
+
     // Teleposer data components
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<BlockPos>> TELEPOSER_POS = DATA_COMPONENTS.registerComponentType("teleposer_pos", builder -> builder.persistent(BlockPos.CODEC).networkSynchronized(BlockPos.STREAM_CODEC));
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> TELEPOSER_DIMENSION = DATA_COMPONENTS.registerComponentType("teleposer_dimension", builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));

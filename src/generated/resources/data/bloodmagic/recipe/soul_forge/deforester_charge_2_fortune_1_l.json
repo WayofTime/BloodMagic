@@ -1,0 +1,29 @@
+{
+  "type": "bloodmagic:soul_forge",
+  "drain": 4.0,
+  "inputs": [
+    {
+      "item": "bloodmagic:deforester_charge_2"
+    },
+    {
+      "item": "bloodmagic:fortune_anointment_l"
+    }
+  ],
+  "minDrain": 300.0,
+  "output": {
+    "components": {
+      "bloodmagic:anointment_holder": {
+        "anointments": [
+          {
+            "damage": 0,
+            "key": "bloodmagic:fortune",
+            "level": 1,
+            "max_damage": 1
+          }
+        ]
+      }
+    },
+    "count": 1,
+    "id": "bloodmagic:deforester_charge_2"
+  }
+}

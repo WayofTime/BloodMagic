@@ -931,6 +931,377 @@ public class BMRecipeProvider extends RecipeProvider {
                 .drain(2.5)
                 .unlockedBy("has_copper_block", has(Tags.Items.STORAGE_BLOCKS_COPPER))
                 .save(output, BloodMagic.rl("shaped_charge_deep"));
+
+        // Charge upgrade recipes - Tier 1 charges with basic anointments
+        // Shaped Charge variants
+        ForgeRecipeBuilder.build(BMBlocks.SHAPED_CHARGE.item().get())
+                .requires(BMBlocks.SHAPED_CHARGE.item().get())
+                .requires(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .requires(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .requires(Ingredient.of(BMTags.Items.DUSTS_COAL))
+                .minWill(60).drain(1.0)
+                .withAnointment("bloodmagic:fortune", 1, 1)
+                .unlockedBy("has_shaped_charge", has(BMBlocks.SHAPED_CHARGE.item().get()))
+                .save(output, BloodMagic.rl("shaped_charge_fortune_1"));
+
+        ForgeRecipeBuilder.build(BMBlocks.SHAPED_CHARGE.item().get())
+                .requires(BMBlocks.SHAPED_CHARGE.item().get())
+                .requires(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .requires(Items.COBWEB)
+                .requires(Ingredient.of(Tags.Items.NUGGETS_GOLD))
+                .minWill(60).drain(1.0)
+                .withAnointment("bloodmagic:silk_touch", 1, 1)
+                .unlockedBy("has_shaped_charge", has(BMBlocks.SHAPED_CHARGE.item().get()))
+                .save(output, BloodMagic.rl("shaped_charge_silk_touch"));
+
+        ForgeRecipeBuilder.build(BMBlocks.SHAPED_CHARGE.item().get())
+                .requires(BMBlocks.SHAPED_CHARGE.item().get())
+                .requires(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .requires(Items.FURNACE)
+                .requires(Items.CHARCOAL)
+                .minWill(60).drain(1.0)
+                .withAnointment("bloodmagic:smelting", 1, 1)
+                .unlockedBy("has_shaped_charge", has(BMBlocks.SHAPED_CHARGE.item().get()))
+                .save(output, BloodMagic.rl("shaped_charge_smelting"));
+
+        ForgeRecipeBuilder.build(BMBlocks.SHAPED_CHARGE.item().get())
+                .requires(BMBlocks.SHAPED_CHARGE.item().get())
+                .requires(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .requires(Items.NETHERRACK)
+                .requires(Items.COBBLED_DEEPSLATE)
+                .minWill(60).drain(1.0)
+                .withAnointment("bloodmagic:voiding", 1, 1)
+                .unlockedBy("has_shaped_charge", has(BMBlocks.SHAPED_CHARGE.item().get()))
+                .save(output, BloodMagic.rl("shaped_charge_voiding"));
+
+        // Deforester Charge variants
+        ForgeRecipeBuilder.build(BMBlocks.DEFORESTER_CHARGE.item().get())
+                .requires(BMBlocks.DEFORESTER_CHARGE.item().get())
+                .requires(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .requires(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .requires(Ingredient.of(BMTags.Items.DUSTS_COAL))
+                .minWill(60).drain(1.0)
+                .withAnointment("bloodmagic:fortune", 1, 1)
+                .unlockedBy("has_deforester_charge", has(BMBlocks.DEFORESTER_CHARGE.item().get()))
+                .save(output, BloodMagic.rl("deforester_charge_fortune_1"));
+
+        ForgeRecipeBuilder.build(BMBlocks.DEFORESTER_CHARGE.item().get())
+                .requires(BMBlocks.DEFORESTER_CHARGE.item().get())
+                .requires(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .requires(Items.COBWEB)
+                .requires(Ingredient.of(Tags.Items.NUGGETS_GOLD))
+                .minWill(60).drain(1.0)
+                .withAnointment("bloodmagic:silk_touch", 1, 1)
+                .unlockedBy("has_deforester_charge", has(BMBlocks.DEFORESTER_CHARGE.item().get()))
+                .save(output, BloodMagic.rl("deforester_charge_silk_touch"));
+
+        ForgeRecipeBuilder.build(BMBlocks.DEFORESTER_CHARGE.item().get())
+                .requires(BMBlocks.DEFORESTER_CHARGE.item().get())
+                .requires(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .requires(Items.FURNACE)
+                .requires(Items.CHARCOAL)
+                .minWill(60).drain(1.0)
+                .withAnointment("bloodmagic:smelting", 1, 1)
+                .unlockedBy("has_deforester_charge", has(BMBlocks.DEFORESTER_CHARGE.item().get()))
+                .save(output, BloodMagic.rl("deforester_charge_smelting"));
+
+        ForgeRecipeBuilder.build(BMBlocks.DEFORESTER_CHARGE.item().get())
+                .requires(BMBlocks.DEFORESTER_CHARGE.item().get())
+                .requires(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .requires(Items.NETHERRACK)
+                .requires(Items.COBBLED_DEEPSLATE)
+                .minWill(60).drain(1.0)
+                .withAnointment("bloodmagic:voiding", 1, 1)
+                .unlockedBy("has_deforester_charge", has(BMBlocks.DEFORESTER_CHARGE.item().get()))
+                .save(output, BloodMagic.rl("deforester_charge_voiding"));
+
+        // Veinmine Charge variants
+        ForgeRecipeBuilder.build(BMBlocks.VEINMINE_CHARGE.item().get())
+                .requires(BMBlocks.VEINMINE_CHARGE.item().get())
+                .requires(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .requires(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .requires(Ingredient.of(BMTags.Items.DUSTS_COAL))
+                .minWill(60).drain(1.0)
+                .withAnointment("bloodmagic:fortune", 1, 1)
+                .unlockedBy("has_veinmine_charge", has(BMBlocks.VEINMINE_CHARGE.item().get()))
+                .save(output, BloodMagic.rl("veinmine_charge_fortune_1"));
+
+        ForgeRecipeBuilder.build(BMBlocks.VEINMINE_CHARGE.item().get())
+                .requires(BMBlocks.VEINMINE_CHARGE.item().get())
+                .requires(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .requires(Items.COBWEB)
+                .requires(Ingredient.of(Tags.Items.NUGGETS_GOLD))
+                .minWill(60).drain(1.0)
+                .withAnointment("bloodmagic:silk_touch", 1, 1)
+                .unlockedBy("has_veinmine_charge", has(BMBlocks.VEINMINE_CHARGE.item().get()))
+                .save(output, BloodMagic.rl("veinmine_charge_silk_touch"));
+
+        ForgeRecipeBuilder.build(BMBlocks.VEINMINE_CHARGE.item().get())
+                .requires(BMBlocks.VEINMINE_CHARGE.item().get())
+                .requires(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .requires(Items.FURNACE)
+                .requires(Items.CHARCOAL)
+                .minWill(60).drain(1.0)
+                .withAnointment("bloodmagic:smelting", 1, 1)
+                .unlockedBy("has_veinmine_charge", has(BMBlocks.VEINMINE_CHARGE.item().get()))
+                .save(output, BloodMagic.rl("veinmine_charge_smelting"));
+
+        ForgeRecipeBuilder.build(BMBlocks.VEINMINE_CHARGE.item().get())
+                .requires(BMBlocks.VEINMINE_CHARGE.item().get())
+                .requires(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .requires(Items.NETHERRACK)
+                .requires(Items.COBBLED_DEEPSLATE)
+                .minWill(60).drain(1.0)
+                .withAnointment("bloodmagic:voiding", 1, 1)
+                .unlockedBy("has_veinmine_charge", has(BMBlocks.VEINMINE_CHARGE.item().get()))
+                .save(output, BloodMagic.rl("veinmine_charge_voiding"));
+
+        // Fungal Charge variants
+        ForgeRecipeBuilder.build(BMBlocks.FUNGAL_CHARGE.item().get())
+                .requires(BMBlocks.FUNGAL_CHARGE.item().get())
+                .requires(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .requires(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .requires(Ingredient.of(BMTags.Items.DUSTS_COAL))
+                .minWill(60).drain(1.0)
+                .withAnointment("bloodmagic:fortune", 1, 1)
+                .unlockedBy("has_fungal_charge", has(BMBlocks.FUNGAL_CHARGE.item().get()))
+                .save(output, BloodMagic.rl("fungal_charge_fortune_1"));
+
+        ForgeRecipeBuilder.build(BMBlocks.FUNGAL_CHARGE.item().get())
+                .requires(BMBlocks.FUNGAL_CHARGE.item().get())
+                .requires(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .requires(Items.COBWEB)
+                .requires(Ingredient.of(Tags.Items.NUGGETS_GOLD))
+                .minWill(60).drain(1.0)
+                .withAnointment("bloodmagic:silk_touch", 1, 1)
+                .unlockedBy("has_fungal_charge", has(BMBlocks.FUNGAL_CHARGE.item().get()))
+                .save(output, BloodMagic.rl("fungal_charge_silk_touch"));
+
+        ForgeRecipeBuilder.build(BMBlocks.FUNGAL_CHARGE.item().get())
+                .requires(BMBlocks.FUNGAL_CHARGE.item().get())
+                .requires(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .requires(Items.FURNACE)
+                .requires(Items.CHARCOAL)
+                .minWill(60).drain(1.0)
+                .withAnointment("bloodmagic:smelting", 1, 1)
+                .unlockedBy("has_fungal_charge", has(BMBlocks.FUNGAL_CHARGE.item().get()))
+                .save(output, BloodMagic.rl("fungal_charge_smelting"));
+
+        ForgeRecipeBuilder.build(BMBlocks.FUNGAL_CHARGE.item().get())
+                .requires(BMBlocks.FUNGAL_CHARGE.item().get())
+                .requires(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .requires(Items.NETHERRACK)
+                .requires(Items.COBBLED_DEEPSLATE)
+                .minWill(60).drain(1.0)
+                .withAnointment("bloodmagic:voiding", 1, 1)
+                .unlockedBy("has_fungal_charge", has(BMBlocks.FUNGAL_CHARGE.item().get()))
+                .save(output, BloodMagic.rl("fungal_charge_voiding"));
+
+        // Tier 2 charges - using anointment items directly
+        // Aug Shaped Charge variants (uses _l anointments)
+        ForgeRecipeBuilder.build(BMBlocks.AUG_SHAPED_CHARGE.item().get())
+                .requires(BMBlocks.AUG_SHAPED_CHARGE.item().get())
+                .requires(BMItems.FORTUNE_ANOINTMENT_L.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:fortune", 1, 1)
+                .unlockedBy("has_aug_shaped_charge", has(BMBlocks.AUG_SHAPED_CHARGE.item().get()))
+                .save(output, BloodMagic.rl("aug_shaped_charge_fortune_1_l"));
+
+        ForgeRecipeBuilder.build(BMBlocks.AUG_SHAPED_CHARGE.item().get())
+                .requires(BMBlocks.AUG_SHAPED_CHARGE.item().get())
+                .requires(BMItems.FORTUNE_ANOINTMENT_2.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:fortune", 2, 1)
+                .unlockedBy("has_aug_shaped_charge", has(BMBlocks.AUG_SHAPED_CHARGE.item().get()))
+                .save(output, BloodMagic.rl("aug_shaped_charge_fortune_2_l"));
+
+        ForgeRecipeBuilder.build(BMBlocks.AUG_SHAPED_CHARGE.item().get())
+                .requires(BMBlocks.AUG_SHAPED_CHARGE.item().get())
+                .requires(BMItems.SILK_TOUCH_ANOINTMENT_L.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:silk_touch", 1, 1)
+                .unlockedBy("has_aug_shaped_charge", has(BMBlocks.AUG_SHAPED_CHARGE.item().get()))
+                .save(output, BloodMagic.rl("aug_shaped_charge_silk_touch_l"));
+
+        ForgeRecipeBuilder.build(BMBlocks.AUG_SHAPED_CHARGE.item().get())
+                .requires(BMBlocks.AUG_SHAPED_CHARGE.item().get())
+                .requires(BMItems.SMELTING_ANOINTMENT_L.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:smelting", 1, 1)
+                .unlockedBy("has_aug_shaped_charge", has(BMBlocks.AUG_SHAPED_CHARGE.item().get()))
+                .save(output, BloodMagic.rl("aug_shaped_charge_smelting_l"));
+
+        ForgeRecipeBuilder.build(BMBlocks.AUG_SHAPED_CHARGE.item().get())
+                .requires(BMBlocks.AUG_SHAPED_CHARGE.item().get())
+                .requires(BMItems.VOIDING_ANOINTMENT.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:voiding", 1, 1)
+                .unlockedBy("has_aug_shaped_charge", has(BMBlocks.AUG_SHAPED_CHARGE.item().get()))
+                .save(output, BloodMagic.rl("aug_shaped_charge_voiding"));
+
+        // Shaped Charge Deep variants (uses _l anointments)
+        ForgeRecipeBuilder.build(BMBlocks.SHAPED_CHARGE_DEEP.item().get())
+                .requires(BMBlocks.SHAPED_CHARGE_DEEP.item().get())
+                .requires(BMItems.FORTUNE_ANOINTMENT_L.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:fortune", 1, 1)
+                .unlockedBy("has_shaped_charge_deep", has(BMBlocks.SHAPED_CHARGE_DEEP.item().get()))
+                .save(output, BloodMagic.rl("shaped_charge_deep_fortune_1_l"));
+
+        ForgeRecipeBuilder.build(BMBlocks.SHAPED_CHARGE_DEEP.item().get())
+                .requires(BMBlocks.SHAPED_CHARGE_DEEP.item().get())
+                .requires(BMItems.FORTUNE_ANOINTMENT_2.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:fortune", 2, 1)
+                .unlockedBy("has_shaped_charge_deep", has(BMBlocks.SHAPED_CHARGE_DEEP.item().get()))
+                .save(output, BloodMagic.rl("shaped_charge_deep_fortune_2_l"));
+
+        ForgeRecipeBuilder.build(BMBlocks.SHAPED_CHARGE_DEEP.item().get())
+                .requires(BMBlocks.SHAPED_CHARGE_DEEP.item().get())
+                .requires(BMItems.SILK_TOUCH_ANOINTMENT_L.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:silk_touch", 1, 1)
+                .unlockedBy("has_shaped_charge_deep", has(BMBlocks.SHAPED_CHARGE_DEEP.item().get()))
+                .save(output, BloodMagic.rl("shaped_charge_deep_silk_touch_l"));
+
+        ForgeRecipeBuilder.build(BMBlocks.SHAPED_CHARGE_DEEP.item().get())
+                .requires(BMBlocks.SHAPED_CHARGE_DEEP.item().get())
+                .requires(BMItems.SMELTING_ANOINTMENT_L.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:smelting", 1, 1)
+                .unlockedBy("has_shaped_charge_deep", has(BMBlocks.SHAPED_CHARGE_DEEP.item().get()))
+                .save(output, BloodMagic.rl("shaped_charge_deep_smelting_l"));
+
+        ForgeRecipeBuilder.build(BMBlocks.SHAPED_CHARGE_DEEP.item().get())
+                .requires(BMBlocks.SHAPED_CHARGE_DEEP.item().get())
+                .requires(BMItems.VOIDING_ANOINTMENT.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:voiding", 1, 1)
+                .unlockedBy("has_shaped_charge_deep", has(BMBlocks.SHAPED_CHARGE_DEEP.item().get()))
+                .save(output, BloodMagic.rl("shaped_charge_deep_voiding"));
+
+        // Deforester Charge 2 variants
+        ForgeRecipeBuilder.build(BMBlocks.DEFORESTER_CHARGE_2.item().get())
+                .requires(BMBlocks.DEFORESTER_CHARGE_2.item().get())
+                .requires(BMItems.FORTUNE_ANOINTMENT_L.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:fortune", 1, 1)
+                .unlockedBy("has_deforester_charge_2", has(BMBlocks.DEFORESTER_CHARGE_2.item().get()))
+                .save(output, BloodMagic.rl("deforester_charge_2_fortune_1_l"));
+
+        ForgeRecipeBuilder.build(BMBlocks.DEFORESTER_CHARGE_2.item().get())
+                .requires(BMBlocks.DEFORESTER_CHARGE_2.item().get())
+                .requires(BMItems.FORTUNE_ANOINTMENT_2.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:fortune", 2, 1)
+                .unlockedBy("has_deforester_charge_2", has(BMBlocks.DEFORESTER_CHARGE_2.item().get()))
+                .save(output, BloodMagic.rl("deforester_charge_2_fortune_2_l"));
+
+        ForgeRecipeBuilder.build(BMBlocks.DEFORESTER_CHARGE_2.item().get())
+                .requires(BMBlocks.DEFORESTER_CHARGE_2.item().get())
+                .requires(BMItems.SILK_TOUCH_ANOINTMENT_L.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:silk_touch", 1, 1)
+                .unlockedBy("has_deforester_charge_2", has(BMBlocks.DEFORESTER_CHARGE_2.item().get()))
+                .save(output, BloodMagic.rl("deforester_charge_2_silk_touch_l"));
+
+        ForgeRecipeBuilder.build(BMBlocks.DEFORESTER_CHARGE_2.item().get())
+                .requires(BMBlocks.DEFORESTER_CHARGE_2.item().get())
+                .requires(BMItems.SMELTING_ANOINTMENT_L.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:smelting", 1, 1)
+                .unlockedBy("has_deforester_charge_2", has(BMBlocks.DEFORESTER_CHARGE_2.item().get()))
+                .save(output, BloodMagic.rl("deforester_charge_2_smelting_l"));
+
+        ForgeRecipeBuilder.build(BMBlocks.DEFORESTER_CHARGE_2.item().get())
+                .requires(BMBlocks.DEFORESTER_CHARGE_2.item().get())
+                .requires(BMItems.VOIDING_ANOINTMENT.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:voiding", 1, 1)
+                .unlockedBy("has_deforester_charge_2", has(BMBlocks.DEFORESTER_CHARGE_2.item().get()))
+                .save(output, BloodMagic.rl("deforester_charge_2_voiding"));
+
+        // Veinmine Charge 2 variants
+        ForgeRecipeBuilder.build(BMBlocks.VEINMINE_CHARGE_2.item().get())
+                .requires(BMBlocks.VEINMINE_CHARGE_2.item().get())
+                .requires(BMItems.FORTUNE_ANOINTMENT_L.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:fortune", 1, 1)
+                .unlockedBy("has_veinmine_charge_2", has(BMBlocks.VEINMINE_CHARGE_2.item().get()))
+                .save(output, BloodMagic.rl("veinmine_charge_2_fortune_1_l"));
+
+        ForgeRecipeBuilder.build(BMBlocks.VEINMINE_CHARGE_2.item().get())
+                .requires(BMBlocks.VEINMINE_CHARGE_2.item().get())
+                .requires(BMItems.FORTUNE_ANOINTMENT_2.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:fortune", 2, 1)
+                .unlockedBy("has_veinmine_charge_2", has(BMBlocks.VEINMINE_CHARGE_2.item().get()))
+                .save(output, BloodMagic.rl("veinmine_charge_2_fortune_2_l"));
+
+        ForgeRecipeBuilder.build(BMBlocks.VEINMINE_CHARGE_2.item().get())
+                .requires(BMBlocks.VEINMINE_CHARGE_2.item().get())
+                .requires(BMItems.SILK_TOUCH_ANOINTMENT_L.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:silk_touch", 1, 1)
+                .unlockedBy("has_veinmine_charge_2", has(BMBlocks.VEINMINE_CHARGE_2.item().get()))
+                .save(output, BloodMagic.rl("veinmine_charge_2_silk_touch_l"));
+
+        ForgeRecipeBuilder.build(BMBlocks.VEINMINE_CHARGE_2.item().get())
+                .requires(BMBlocks.VEINMINE_CHARGE_2.item().get())
+                .requires(BMItems.SMELTING_ANOINTMENT_L.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:smelting", 1, 1)
+                .unlockedBy("has_veinmine_charge_2", has(BMBlocks.VEINMINE_CHARGE_2.item().get()))
+                .save(output, BloodMagic.rl("veinmine_charge_2_smelting_l"));
+
+        ForgeRecipeBuilder.build(BMBlocks.VEINMINE_CHARGE_2.item().get())
+                .requires(BMBlocks.VEINMINE_CHARGE_2.item().get())
+                .requires(BMItems.VOIDING_ANOINTMENT.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:voiding", 1, 1)
+                .unlockedBy("has_veinmine_charge_2", has(BMBlocks.VEINMINE_CHARGE_2.item().get()))
+                .save(output, BloodMagic.rl("veinmine_charge_2_voiding"));
+
+        // Fungal Charge 2 variants
+        ForgeRecipeBuilder.build(BMBlocks.FUNGAL_CHARGE_2.item().get())
+                .requires(BMBlocks.FUNGAL_CHARGE_2.item().get())
+                .requires(BMItems.FORTUNE_ANOINTMENT_L.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:fortune", 1, 1)
+                .unlockedBy("has_fungal_charge_2", has(BMBlocks.FUNGAL_CHARGE_2.item().get()))
+                .save(output, BloodMagic.rl("fungal_charge_2_fortune_1_l"));
+
+        ForgeRecipeBuilder.build(BMBlocks.FUNGAL_CHARGE_2.item().get())
+                .requires(BMBlocks.FUNGAL_CHARGE_2.item().get())
+                .requires(BMItems.FORTUNE_ANOINTMENT_2.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:fortune", 2, 1)
+                .unlockedBy("has_fungal_charge_2", has(BMBlocks.FUNGAL_CHARGE_2.item().get()))
+                .save(output, BloodMagic.rl("fungal_charge_2_fortune_2_l"));
+
+        ForgeRecipeBuilder.build(BMBlocks.FUNGAL_CHARGE_2.item().get())
+                .requires(BMBlocks.FUNGAL_CHARGE_2.item().get())
+                .requires(BMItems.SILK_TOUCH_ANOINTMENT_L.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:silk_touch", 1, 1)
+                .unlockedBy("has_fungal_charge_2", has(BMBlocks.FUNGAL_CHARGE_2.item().get()))
+                .save(output, BloodMagic.rl("fungal_charge_2_silk_touch_l"));
+
+        ForgeRecipeBuilder.build(BMBlocks.FUNGAL_CHARGE_2.item().get())
+                .requires(BMBlocks.FUNGAL_CHARGE_2.item().get())
+                .requires(BMItems.SMELTING_ANOINTMENT_L.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:smelting", 1, 1)
+                .unlockedBy("has_fungal_charge_2", has(BMBlocks.FUNGAL_CHARGE_2.item().get()))
+                .save(output, BloodMagic.rl("fungal_charge_2_smelting_l"));
+
+        ForgeRecipeBuilder.build(BMBlocks.FUNGAL_CHARGE_2.item().get())
+                .requires(BMBlocks.FUNGAL_CHARGE_2.item().get())
+                .requires(BMItems.VOIDING_ANOINTMENT.get())
+                .minWill(300).drain(4.0)
+                .withAnointment("bloodmagic:voiding", 1, 1)
+                .unlockedBy("has_fungal_charge_2", has(BMBlocks.FUNGAL_CHARGE_2.item().get()))
+                .save(output, BloodMagic.rl("fungal_charge_2_voiding"));
     }
 
     // Helper methods

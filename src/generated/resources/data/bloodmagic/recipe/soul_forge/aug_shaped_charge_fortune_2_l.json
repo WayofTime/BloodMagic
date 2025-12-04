@@ -1,0 +1,29 @@
+{
+  "type": "bloodmagic:soul_forge",
+  "drain": 4.0,
+  "inputs": [
+    {
+      "item": "bloodmagic:aug_shaped_charge"
+    },
+    {
+      "item": "bloodmagic:fortune_anointment_2"
+    }
+  ],
+  "minDrain": 300.0,
+  "output": {
+    "components": {
+      "bloodmagic:anointment_holder": {
+        "anointments": [
+          {
+            "damage": 0,
+            "key": "bloodmagic:fortune",
+            "level": 2,
+            "max_damage": 1
+          }
+        ]
+      }
+    },
+    "count": 1,
+    "id": "bloodmagic:aug_shaped_charge"
+  }
+}
