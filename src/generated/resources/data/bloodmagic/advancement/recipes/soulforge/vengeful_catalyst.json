@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bloodmagic:vengeful_catalyst"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_vengeful_crystal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bloodmagic:vengefulcrystal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_vengeful_crystal"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bloodmagic:vengeful_catalyst"
+    ]
+  }
+}

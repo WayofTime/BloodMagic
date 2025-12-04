@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:soul_forge",
+  "drain": 50.0,
+  "inputs": [
+    {
+      "tag": "c:ingots/iron"
+    },
+    {
+      "tag": "c:ingots/iron"
+    },
+    {
+      "tag": "c:glass_blocks"
+    },
+    {
+      "tag": "c:storage_blocks/lapis"
+    }
+  ],
+  "minDrain": 400.0,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:mastercore"
+  }
+}

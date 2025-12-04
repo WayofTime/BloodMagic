@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_amethyst_dagger": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bloodmagic:amethystthrowingdagger"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bloodmagic:throwing_dagger_syringe"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_amethyst_dagger"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bloodmagic:throwing_dagger_syringe"
+    ]
+  }
+}

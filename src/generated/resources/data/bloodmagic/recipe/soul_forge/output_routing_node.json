@@ -1,0 +1,17 @@
+{
+  "type": "bloodmagic:soul_forge",
+  "drain": 10.0,
+  "inputs": [
+    {
+      "item": "bloodmagic:itemroutingnode"
+    },
+    {
+      "item": "minecraft:dispenser"
+    }
+  ],
+  "minDrain": 200.0,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:outputroutingnode"
+  }
+}

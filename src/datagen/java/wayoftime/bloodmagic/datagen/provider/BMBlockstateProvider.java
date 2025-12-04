@@ -20,7 +20,9 @@ public class BMBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         BMBlocks.BASIC_BLOCKS.getEntries().forEach(block -> {
-            if (block.getId().getPath().contains("tau")) {
+            String path = block.getId().getPath();
+            // Skip blocks without textures (tau, demon crystals, routing nodes)
+            if (path.contains("tau") || path.contains("demoncrystal") || path.contains("routingnode")) {
                 return;
             }
             simpleBlockWithItem(block.get(), cubeAll(block.get()));

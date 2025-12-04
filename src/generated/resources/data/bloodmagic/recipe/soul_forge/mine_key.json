@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soul_forge",
+  "drain": 25.0,
+  "inputs": [
+    {
+      "tag": "c:ingots/gold"
+    },
+    {
+      "tag": "c:ingots/gold"
+    },
+    {
+      "tag": "c:gems/diamond"
+    }
+  ],
+  "minDrain": 200.0,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:minekey"
+  }
+}

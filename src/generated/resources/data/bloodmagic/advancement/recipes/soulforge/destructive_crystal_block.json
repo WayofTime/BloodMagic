@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_destructive_crystal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bloodmagic:destructivecrystal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bloodmagic:destructive_crystal_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_destructive_crystal"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bloodmagic:destructive_crystal_block"
+    ]
+  }
+}

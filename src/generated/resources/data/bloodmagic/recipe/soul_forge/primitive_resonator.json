@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:soul_forge",
+  "drain": 200.0,
+  "inputs": [
+    {
+      "tag": "c:gems/amethyst"
+    },
+    {
+      "tag": "c:ingots"
+    },
+    {
+      "item": "bloodmagic:defaultcrystal"
+    },
+    {
+      "item": "bloodmagic:tauoil"
+    }
+  ],
+  "minDrain": 1200.0,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:primitive_crystalline_resonator"
+  }
+}

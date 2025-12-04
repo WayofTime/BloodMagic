@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:soul_forge",
+  "drain": 100.0,
+  "inputs": [
+    {
+      "item": "bloodmagic:hellfire_forge"
+    },
+    {
+      "tag": "c:stones"
+    },
+    {
+      "tag": "c:gems/lapis"
+    },
+    {
+      "tag": "c:glass_blocks"
+    }
+  ],
+  "minDrain": 500.0,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:demoncrystallizer"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "bloodmagic:soul_forge",
+  "drain": 0.0,
+  "inputs": [
+    {
+      "item": "bloodmagic:soul_gem_petty"
+    },
+    {
+      "item": "minecraft:iron_pickaxe"
+    }
+  ],
+  "minDrain": 0.0,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:soulpickaxe"
+  }
+}

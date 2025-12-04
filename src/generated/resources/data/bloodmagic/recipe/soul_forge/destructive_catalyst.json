@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soul_forge",
+  "drain": 50.0,
+  "inputs": [
+    {
+      "item": "bloodmagic:destructivecrystal"
+    },
+    {
+      "tag": "c:dusts/glowstone"
+    },
+    {
+      "tag": "c:dusts/redstone"
+    }
+  ],
+  "minDrain": 500.0,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:destructivecatalyst"
+  }
+}

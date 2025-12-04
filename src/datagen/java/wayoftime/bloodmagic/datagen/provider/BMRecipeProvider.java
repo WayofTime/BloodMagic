@@ -477,6 +477,309 @@ public class BMRecipeProvider extends RecipeProvider {
                 .drain(5)
                 .unlockedBy("has_raw_will", has(BMItems.RAW_WILL.get()))
                 .save(output, BloodMagic.rl("training_bracelet"));
+
+        // Sentient Tools
+        ForgeRecipeBuilder.build(BMItems.SENTIENT_SWORD.get())
+                .requires(BMItems.SOUL_GEM_PETTY.get())
+                .requires(Items.IRON_SWORD)
+                .minWill(0)
+                .drain(0)
+                .unlockedBy("has_petty_gem", has(BMItems.SOUL_GEM_PETTY.get()))
+                .save(output, BloodMagic.rl("sentient_sword"));
+
+        ForgeRecipeBuilder.build(BMItems.SENTIENT_AXE.get())
+                .requires(BMItems.SOUL_GEM_PETTY.get())
+                .requires(Items.IRON_AXE)
+                .minWill(0)
+                .drain(0)
+                .unlockedBy("has_petty_gem", has(BMItems.SOUL_GEM_PETTY.get()))
+                .save(output, BloodMagic.rl("sentient_axe"));
+
+        ForgeRecipeBuilder.build(BMItems.SENTIENT_PICKAXE.get())
+                .requires(BMItems.SOUL_GEM_PETTY.get())
+                .requires(Items.IRON_PICKAXE)
+                .minWill(0)
+                .drain(0)
+                .unlockedBy("has_petty_gem", has(BMItems.SOUL_GEM_PETTY.get()))
+                .save(output, BloodMagic.rl("sentient_pickaxe"));
+
+        ForgeRecipeBuilder.build(BMItems.SENTIENT_SHOVEL.get())
+                .requires(BMItems.SOUL_GEM_PETTY.get())
+                .requires(Items.IRON_SHOVEL)
+                .minWill(0)
+                .drain(0)
+                .unlockedBy("has_petty_gem", has(BMItems.SOUL_GEM_PETTY.get()))
+                .save(output, BloodMagic.rl("sentient_shovel"));
+
+        ForgeRecipeBuilder.build(BMItems.SENTIENT_SCYTHE.get())
+                .requires(BMItems.SOUL_GEM_PETTY.get())
+                .requires(Items.IRON_HOE)
+                .minWill(0)
+                .drain(0)
+                .unlockedBy("has_petty_gem", has(BMItems.SOUL_GEM_PETTY.get()))
+                .save(output, BloodMagic.rl("sentient_scythe"));
+
+        // Demon Will Blocks
+        ForgeRecipeBuilder.build(BMBlocks.DEMON_CRUCIBLE.block().get())
+                .requires(Items.CAULDRON)
+                .requires(Tags.Items.STONES)
+                .requires(Tags.Items.GEMS_LAPIS)
+                .requires(Tags.Items.GEMS_DIAMOND)
+                .minWill(400)
+                .drain(100)
+                .unlockedBy("has_common_gem", has(BMItems.SOUL_GEM_COMMON.get()))
+                .save(output, BloodMagic.rl("demon_crucible"));
+
+        ForgeRecipeBuilder.build(BMBlocks.DEMON_CRYSTALLIZER.block().get())
+                .requires(BMBlocks.HELLFIRE_FORGE.block().get())
+                .requires(Tags.Items.STONES)
+                .requires(Tags.Items.GEMS_LAPIS)
+                .requires(Tags.Items.GLASS_BLOCKS)
+                .minWill(500)
+                .drain(100)
+                .unlockedBy("has_hellfire_forge", has(BMBlocks.HELLFIRE_FORGE.block().get()))
+                .save(output, BloodMagic.rl("demon_crystallizer"));
+
+        ForgeRecipeBuilder.build(BMBlocks.DEMON_PYLON.block().get())
+                .requires(BMTags.Items.DEMON_CRYSTALS)
+                .requires(Tags.Items.STONES)
+                .requires(Tags.Items.GEMS_LAPIS)
+                .requires(Tags.Items.STORAGE_BLOCKS_IRON)
+                .minWill(400)
+                .drain(50)
+                .unlockedBy("has_demon_crystal", has(BMItems.DEMON_CRYSTAL_DEFAULT.get()))
+                .save(output, BloodMagic.rl("demon_pylon"));
+
+        // Crystal Blocks
+        ForgeRecipeBuilder.build(BMBlocks.RAW_CRYSTAL_BLOCK.block().get())
+                .requires(BMItems.RAW_CRYSTAL.get(), 4)
+                .minWill(1200)
+                .drain(100)
+                .unlockedBy("has_raw_crystal", has(BMItems.RAW_CRYSTAL.get()))
+                .save(output, BloodMagic.rl("raw_crystal_block"));
+
+        ForgeRecipeBuilder.build(BMBlocks.CORROSIVE_CRYSTAL_BLOCK.block().get())
+                .requires(BMItems.CORROSIVE_CRYSTAL.get(), 4)
+                .minWill(1200)
+                .drain(100)
+                .unlockedBy("has_corrosive_crystal", has(BMItems.CORROSIVE_CRYSTAL.get()))
+                .save(output, BloodMagic.rl("corrosive_crystal_block"));
+
+        ForgeRecipeBuilder.build(BMBlocks.DESTRUCTIVE_CRYSTAL_BLOCK.block().get())
+                .requires(BMItems.DESTRUCTIVE_CRYSTAL.get(), 4)
+                .minWill(1200)
+                .drain(100)
+                .unlockedBy("has_destructive_crystal", has(BMItems.DESTRUCTIVE_CRYSTAL.get()))
+                .save(output, BloodMagic.rl("destructive_crystal_block"));
+
+        ForgeRecipeBuilder.build(BMBlocks.VENGEFUL_CRYSTAL_BLOCK.block().get())
+                .requires(BMItems.VENGEFUL_CRYSTAL.get(), 4)
+                .minWill(1200)
+                .drain(100)
+                .unlockedBy("has_vengeful_crystal", has(BMItems.VENGEFUL_CRYSTAL.get()))
+                .save(output, BloodMagic.rl("vengeful_crystal_block"));
+
+        ForgeRecipeBuilder.build(BMBlocks.STEADFAST_CRYSTAL_BLOCK.block().get())
+                .requires(BMItems.STEADFAST_CRYSTAL.get(), 4)
+                .minWill(1200)
+                .drain(100)
+                .unlockedBy("has_steadfast_crystal", has(BMItems.STEADFAST_CRYSTAL.get()))
+                .save(output, BloodMagic.rl("steadfast_crystal_block"));
+
+        // Routing Nodes
+        ForgeRecipeBuilder.build(BMBlocks.ROUTING_NODE.block().get())
+                .requires(Ingredient.of(Tags.Items.STONES), 2)
+                .requires(Tags.Items.INGOTS_IRON)
+                .requires(Tags.Items.GLASS_BLOCKS)
+                .minWill(100)
+                .drain(5)
+                .unlockedBy("has_lesser_gem", has(BMItems.SOUL_GEM_LESSER.get()))
+                .save(output, BloodMagic.rl("routing_node"));
+
+        ForgeRecipeBuilder.build(BMBlocks.INPUT_ROUTING_NODE.block().get())
+                .requires(BMBlocks.ROUTING_NODE.block().get())
+                .requires(Items.HOPPER)
+                .minWill(200)
+                .drain(10)
+                .unlockedBy("has_routing_node", has(BMBlocks.ROUTING_NODE.block().get()))
+                .save(output, BloodMagic.rl("input_routing_node"));
+
+        ForgeRecipeBuilder.build(BMBlocks.OUTPUT_ROUTING_NODE.block().get())
+                .requires(BMBlocks.ROUTING_NODE.block().get())
+                .requires(Items.DISPENSER)
+                .minWill(200)
+                .drain(10)
+                .unlockedBy("has_routing_node", has(BMBlocks.ROUTING_NODE.block().get()))
+                .save(output, BloodMagic.rl("output_routing_node"));
+
+        ForgeRecipeBuilder.build(BMBlocks.MASTER_ROUTING_NODE.block().get())
+                .requires(BMBlocks.ROUTING_NODE.block().get())
+                .requires(Tags.Items.GEMS_DIAMOND)
+                .requires(Tags.Items.STORAGE_BLOCKS_LAPIS)
+                .minWill(400)
+                .drain(25)
+                .unlockedBy("has_routing_node", has(BMBlocks.ROUTING_NODE.block().get()))
+                .save(output, BloodMagic.rl("master_routing_node"));
+
+        // Node Upgrades
+        ForgeRecipeBuilder.build(BMItems.MASTER_NODE_UPGRADE.get())
+                .requires(Ingredient.of(Tags.Items.INGOTS_IRON), 2)
+                .requires(Tags.Items.GLASS_BLOCKS)
+                .requires(Tags.Items.STORAGE_BLOCKS_LAPIS)
+                .minWill(400)
+                .drain(50)
+                .unlockedBy("has_master_routing_node", has(BMBlocks.MASTER_ROUTING_NODE.block().get()))
+                .save(output, BloodMagic.rl("master_node_upgrade"));
+
+        ForgeRecipeBuilder.build(BMItems.MASTER_NODE_UPGRADE_SPEED.get())
+                .requires(Ingredient.of(Tags.Items.INGOTS_GOLD), 2)
+                .requires(Tags.Items.GLASS_BLOCKS)
+                .requires(Tags.Items.STORAGE_BLOCKS_REDSTONE)
+                .minWill(400)
+                .drain(50)
+                .unlockedBy("has_master_routing_node", has(BMBlocks.MASTER_ROUTING_NODE.block().get()))
+                .save(output, BloodMagic.rl("master_node_upgrade_speed"));
+
+        // Node Router
+        ForgeRecipeBuilder.build(BMItems.NODE_ROUTER.get())
+                .requires(Ingredient.of(Tags.Items.STONES), 2)
+                .requires(Tags.Items.INGOTS_IRON)
+                .requires(Tags.Items.DUSTS_REDSTONE)
+                .minWill(50)
+                .drain(5)
+                .unlockedBy("has_routing_node", has(BMBlocks.ROUTING_NODE.block().get()))
+                .save(output, BloodMagic.rl("node_router"));
+
+        // Demon Will Gauge
+        ForgeRecipeBuilder.build(BMItems.DEMON_WILL_GAUGE.get())
+                .requires(Tags.Items.INGOTS_GOLD)
+                .requires(Tags.Items.DUSTS_REDSTONE)
+                .requires(Tags.Items.GLASS_BLOCKS)
+                .requires(BMTags.Items.DEMON_CRYSTALS)
+                .minWill(400)
+                .drain(50)
+                .unlockedBy("has_demon_crystal", has(BMItems.DEMON_CRYSTAL_DEFAULT.get()))
+                .save(output, BloodMagic.rl("demon_will_gauge"));
+
+        // Sanguine Reverter (soul forge recipe)
+        ForgeRecipeBuilder.build(BMItems.SANGUINE_REVERTER.get())
+                .requires(Items.SHEARS)
+                .requires(Tags.Items.STONES)
+                .requires(BMItems.SLATE_IMBUED.get())
+                .requires(Tags.Items.INGOTS_IRON)
+                .minWill(350)
+                .drain(30)
+                .unlockedBy("has_imbued_slate", has(BMItems.SLATE_IMBUED.get()))
+                .save(output, BloodMagic.rl("sanguine_reverter"));
+
+        // Resonator (soul forge recipe)
+        ForgeRecipeBuilder.build(BMItems.RESONATOR.get())
+                .requires(Tags.Items.STONES)
+                .requires(Tags.Items.INGOTS_COPPER)
+                .requires(BMItems.RAW_CRYSTAL.get())
+                .minWill(1200)
+                .drain(100)
+                .unlockedBy("has_raw_crystal", has(BMItems.RAW_CRYSTAL.get()))
+                .save(output, BloodMagic.rl("resonator"));
+
+        // Primitive Crystalline Resonator
+        ForgeRecipeBuilder.build(BMItems.PRIMITIVE_CRYSTALLINE_RESONATOR.get())
+                .requires(Tags.Items.GEMS_AMETHYST)
+                .requires(Tags.Items.INGOTS)
+                .requires(BMItems.RAW_CRYSTAL.get())
+                .requires(BMItems.TAU_OIL.get())
+                .minWill(1200)
+                .drain(200)
+                .unlockedBy("has_tau_oil", has(BMItems.TAU_OIL.get()))
+                .save(output, BloodMagic.rl("primitive_resonator"));
+
+        // Throwing Daggers
+        ForgeRecipeBuilder.build(BMItems.THROWING_DAGGER.get())
+                .requires(Tags.Items.INGOTS_IRON)
+                .requires(Tags.Items.RODS_WOODEN)
+                .minWill(100)
+                .drain(5)
+                .unlockedBy("has_lesser_gem", has(BMItems.SOUL_GEM_LESSER.get()))
+                .save(output, BloodMagic.rl("throwing_dagger"));
+
+        ForgeRecipeBuilder.build(BMItems.THROWING_DAGGER_AMETHYST.get())
+                .requires(Tags.Items.INGOTS_COPPER)
+                .requires(Tags.Items.GEMS_AMETHYST)
+                .minWill(100)
+                .drain(5)
+                .unlockedBy("has_lesser_gem", has(BMItems.SOUL_GEM_LESSER.get()))
+                .save(output, BloodMagic.rl("throwing_dagger_copper"));
+
+        ForgeRecipeBuilder.build(BMItems.THROWING_DAGGER_SYRINGE.get())
+                .requires(BMItems.THROWING_DAGGER_AMETHYST.get())
+                .requires(Items.GLASS_BOTTLE)
+                .minWill(200)
+                .drain(10)
+                .unlockedBy("has_amethyst_dagger", has(BMItems.THROWING_DAGGER_AMETHYST.get()))
+                .save(output, BloodMagic.rl("throwing_dagger_syringe"));
+
+        // Keys
+        ForgeRecipeBuilder.build(BMItems.SIMPLE_KEY.get())
+                .requires(Ingredient.of(Tags.Items.INGOTS_IRON), 2)
+                .requires(Tags.Items.NUGGETS_GOLD)
+                .minWill(100)
+                .drain(10)
+                .unlockedBy("has_lesser_gem", has(BMItems.SOUL_GEM_LESSER.get()))
+                .save(output, BloodMagic.rl("simple_key"));
+
+        ForgeRecipeBuilder.build(BMItems.MINE_KEY.get())
+                .requires(Ingredient.of(Tags.Items.INGOTS_GOLD), 2)
+                .requires(Tags.Items.GEMS_DIAMOND)
+                .minWill(200)
+                .drain(25)
+                .unlockedBy("has_common_gem", has(BMItems.SOUL_GEM_COMMON.get()))
+                .save(output, BloodMagic.rl("mine_key"));
+
+        // Crystal Catalysts
+        ForgeRecipeBuilder.build(BMItems.RAW_CRYSTAL_CATALYST.get())
+                .requires(BMItems.RAW_CRYSTAL.get())
+                .requires(Tags.Items.DUSTS_GLOWSTONE)
+                .requires(Tags.Items.DUSTS_REDSTONE)
+                .minWill(500)
+                .drain(50)
+                .unlockedBy("has_raw_crystal", has(BMItems.RAW_CRYSTAL.get()))
+                .save(output, BloodMagic.rl("raw_catalyst"));
+
+        ForgeRecipeBuilder.build(BMItems.CORROSIVE_CRYSTAL_CATALYST.get())
+                .requires(BMItems.CORROSIVE_CRYSTAL.get())
+                .requires(Tags.Items.DUSTS_GLOWSTONE)
+                .requires(Tags.Items.DUSTS_REDSTONE)
+                .minWill(500)
+                .drain(50)
+                .unlockedBy("has_corrosive_crystal", has(BMItems.CORROSIVE_CRYSTAL.get()))
+                .save(output, BloodMagic.rl("corrosive_catalyst"));
+
+        ForgeRecipeBuilder.build(BMItems.DESTRUCTIVE_CRYSTAL_CATALYST.get())
+                .requires(BMItems.DESTRUCTIVE_CRYSTAL.get())
+                .requires(Tags.Items.DUSTS_GLOWSTONE)
+                .requires(Tags.Items.DUSTS_REDSTONE)
+                .minWill(500)
+                .drain(50)
+                .unlockedBy("has_destructive_crystal", has(BMItems.DESTRUCTIVE_CRYSTAL.get()))
+                .save(output, BloodMagic.rl("destructive_catalyst"));
+
+        ForgeRecipeBuilder.build(BMItems.VENGEFUL_CRYSTAL_CATALYST.get())
+                .requires(BMItems.VENGEFUL_CRYSTAL.get())
+                .requires(Tags.Items.DUSTS_GLOWSTONE)
+                .requires(Tags.Items.DUSTS_REDSTONE)
+                .minWill(500)
+                .drain(50)
+                .unlockedBy("has_vengeful_crystal", has(BMItems.VENGEFUL_CRYSTAL.get()))
+                .save(output, BloodMagic.rl("vengeful_catalyst"));
+
+        ForgeRecipeBuilder.build(BMItems.STEADFAST_CRYSTAL_CATALYST.get())
+                .requires(BMItems.STEADFAST_CRYSTAL.get())
+                .requires(Tags.Items.DUSTS_GLOWSTONE)
+                .requires(Tags.Items.DUSTS_REDSTONE)
+                .minWill(500)
+                .drain(50)
+                .unlockedBy("has_steadfast_crystal", has(BMItems.STEADFAST_CRYSTAL.get()))
+                .save(output, BloodMagic.rl("steadfast_catalyst"));
     }
 
     // Helper methods

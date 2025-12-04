@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:soul_forge",
+  "drain": 100.0,
+  "inputs": [
+    {
+      "item": "minecraft:cauldron"
+    },
+    {
+      "tag": "c:stones"
+    },
+    {
+      "tag": "c:gems/lapis"
+    },
+    {
+      "tag": "c:gems/diamond"
+    }
+  ],
+  "minDrain": 400.0,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:demoncrucible"
+  }
+}

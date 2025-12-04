@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:soul_forge",
+  "drain": 25.0,
+  "inputs": [
+    {
+      "item": "bloodmagic:itemroutingnode"
+    },
+    {
+      "tag": "c:gems/diamond"
+    },
+    {
+      "tag": "c:storage_blocks/lapis"
+    }
+  ],
+  "minDrain": 400.0,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:masterroutingnode"
+  }
+}

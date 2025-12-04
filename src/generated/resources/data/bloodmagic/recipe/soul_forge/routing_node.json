@@ -1,0 +1,23 @@
+{
+  "type": "bloodmagic:soul_forge",
+  "drain": 5.0,
+  "inputs": [
+    {
+      "tag": "c:stones"
+    },
+    {
+      "tag": "c:stones"
+    },
+    {
+      "tag": "c:ingots/iron"
+    },
+    {
+      "tag": "c:glass_blocks"
+    }
+  ],
+  "minDrain": 100.0,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:itemroutingnode"
+  }
+}

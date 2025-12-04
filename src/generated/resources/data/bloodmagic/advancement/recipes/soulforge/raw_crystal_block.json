@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_raw_crystal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bloodmagic:defaultcrystal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bloodmagic:raw_crystal_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_raw_crystal"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bloodmagic:raw_crystal_block"
+    ]
+  }
+}

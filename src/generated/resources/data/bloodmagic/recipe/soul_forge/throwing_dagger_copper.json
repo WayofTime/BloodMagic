@@ -1,0 +1,17 @@
+{
+  "type": "bloodmagic:soul_forge",
+  "drain": 5.0,
+  "inputs": [
+    {
+      "tag": "c:ingots/copper"
+    },
+    {
+      "tag": "c:gems/amethyst"
+    }
+  ],
+  "minDrain": 100.0,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:amethystthrowingdagger"
+  }
+}
