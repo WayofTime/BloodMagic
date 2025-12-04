@@ -20,6 +20,7 @@ import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.datacomponent.Binding;
 import wayoftime.bloodmagic.common.datacomponent.SoulNetwork;
 import wayoftime.bloodmagic.common.item.BloodOrbItem;
+import wayoftime.bloodmagic.common.menu.AlchemyTableMenu;
 import wayoftime.bloodmagic.common.recipe.BMRecipes;
 import wayoftime.bloodmagic.common.recipe.alchemytable.AlchemyTableInput;
 import wayoftime.bloodmagic.common.recipe.alchemytable.AlchemyTableRecipe;
@@ -252,7 +253,11 @@ public class AlchemyTableTile extends BaseTile implements MenuProvider {
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-        // TODO: Implement AlchemyTableMenu when GUI is added
-        return null;
+        return new AlchemyTableMenu(containerId, playerInventory, this);
+    }
+
+    public double getProgressForGui() {
+        if (ticksRequired <= 0) return 0;
+        return (double) burnTime / (double) ticksRequired;
     }
 }

@@ -89,15 +89,20 @@ public class AlchemyTableBlock extends BaseEntityBlock {
         if (world.isClientSide)
             return InteractionResult.SUCCESS;
 
+        if (!(player instanceof ServerPlayer serverPlayer)) {
+            return InteractionResult.FAIL;
+        }
+
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof AlchemyTableTile tableTile) {
             if (tableTile.isSlave()) {
-                BlockEntity masterTile = world.getBlockEntity(tableTile.getConnectedPos());
-                if (masterTile instanceof MenuProvider menuProvider) {
-                    player.openMenu(menuProvider);
+                BlockPos masterPos = tableTile.getConnectedPos();
+                BlockEntity masterTile = world.getBlockEntity(masterPos);
+                if (masterTile instanceof AlchemyTableTile masterTable) {
+                    serverPlayer.openMenu(masterTable, buf -> buf.writeBlockPos(masterPos));
                 }
             } else {
-                player.openMenu(tableTile);
+                serverPlayer.openMenu(tableTile, buf -> buf.writeBlockPos(pos));
             }
             return InteractionResult.SUCCESS;
         }
