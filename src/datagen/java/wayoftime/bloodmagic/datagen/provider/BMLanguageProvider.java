@@ -70,6 +70,38 @@ public class BMLanguageProvider extends LanguageProvider {
         add(BMBlocks.CRYSTAL_CLUSTER, "Crystal Cluster");
         add(BMBlocks.CRYSTAL_CLUSTER_BRICK, "Crystal Cluster Brick");
 
+        // Demon Will Blocks
+        add(BMBlocks.DEMON_CRUCIBLE, "Demon Crucible");
+        add(BMBlocks.DEMON_CRYSTALLIZER, "Demon Crystallizer");
+        add(BMBlocks.DEMON_PYLON, "Demon Pylon");
+
+        // Demon Crystal Blocks (placeholder)
+        add(BMBlocks.RAW_CRYSTAL_BLOCK, "Raw Demon Crystal");
+        add(BMBlocks.CORROSIVE_CRYSTAL_BLOCK, "Corrosive Demon Crystal");
+        add(BMBlocks.DESTRUCTIVE_CRYSTAL_BLOCK, "Destructive Demon Crystal");
+        add(BMBlocks.VENGEFUL_CRYSTAL_BLOCK, "Vengeful Demon Crystal");
+        add(BMBlocks.STEADFAST_CRYSTAL_BLOCK, "Steadfast Demon Crystal");
+
+        // Routing Node Blocks
+        add(BMBlocks.ROUTING_NODE, "Item Routing Node");
+        add(BMBlocks.INPUT_ROUTING_NODE, "Input Routing Node");
+        add(BMBlocks.OUTPUT_ROUTING_NODE, "Output Routing Node");
+        add(BMBlocks.MASTER_ROUTING_NODE, "Master Routing Node");
+
+        // Tau Blocks
+        add(BMBlocks.WEAK_TAU, "Weak Tau");
+        add(BMBlocks.STRONG_TAU, "Strong Tau");
+
+        // Ritual Stones
+        add(BMBlocks.BLANK_RITUAL_STONE, "Ritual Stone");
+        add(BMBlocks.AIR_RITUAL_STONE, "Air Ritual Stone");
+        add(BMBlocks.WATER_RITUAL_STONE, "Water Ritual Stone");
+        add(BMBlocks.FIRE_RITUAL_STONE, "Fire Ritual Stone");
+        add(BMBlocks.EARTH_RITUAL_STONE, "Earth Ritual Stone");
+        add(BMBlocks.DUSK_RITUAL_STONE, "Dusk Ritual Stone");
+        add(BMBlocks.DAWN_RITUAL_STONE, "Dawn Ritual Stone");
+        add(BMBlocks.MASTER_RITUAL_STONE, "Master Ritual Stone");
+
         addTooltip("save_for_decoration", "Save for Decoration");
 
         add(BMFluids.DOUBT_TYPE.get().getDescriptionId(), "Liquid Doubt");
@@ -148,6 +180,93 @@ public class BMLanguageProvider extends LanguageProvider {
         add(BMItems.WEAK_BLOOD_SHARD.get(), "Weak Blood Shard");
         add(BMItems.DAGGER_OF_SACRIFICE.get(), "Dagger of Sacrifice");
         add(BMItems.LAVA_CRYSTAL.get(), "Lava Crystal");
+
+        // Demon Crystal Items
+        add(BMItems.DEMON_CRYSTAL_DEFAULT.get(), "Raw Demon Crystal");
+        add(BMItems.DEMON_CRYSTAL_CORROSIVE.get(), "Corrosive Demon Crystal");
+        add(BMItems.DEMON_CRYSTAL_DESTRUCTIVE.get(), "Destructive Demon Crystal");
+        add(BMItems.DEMON_CRYSTAL_VENGEFUL.get(), "Vengeful Demon Crystal");
+        add(BMItems.DEMON_CRYSTAL_STEADFAST.get(), "Steadfast Demon Crystal");
+
+        // Crystal Items (bloodmagic crystals)
+        add(BMItems.RAW_CRYSTAL.get(), "Demon Will Crystal");
+        add(BMItems.CORROSIVE_CRYSTAL.get(), "Corrosive Will Crystal");
+        add(BMItems.DESTRUCTIVE_CRYSTAL.get(), "Destructive Will Crystal");
+        add(BMItems.VENGEFUL_CRYSTAL.get(), "Vengeful Will Crystal");
+        add(BMItems.STEADFAST_CRYSTAL.get(), "Steadfast Will Crystal");
+        add(BMItems.DEMON_WILL_GAUGE.get(), "Demon Will Aura Gauge");
+
+        // Crystal Catalysts
+        add(BMItems.RAW_CRYSTAL_CATALYST.get(), "Raw Crystal Catalyst");
+        add(BMItems.CORROSIVE_CRYSTAL_CATALYST.get(), "Corrosive Crystal Catalyst");
+        add(BMItems.DESTRUCTIVE_CRYSTAL_CATALYST.get(), "Destructive Crystal Catalyst");
+        add(BMItems.VENGEFUL_CRYSTAL_CATALYST.get(), "Vengeful Crystal Catalyst");
+        add(BMItems.STEADFAST_CRYSTAL_CATALYST.get(), "Steadfast Crystal Catalyst");
+
+        // Sentient Tools
+        add(BMItems.SENTIENT_SWORD.get(), "Sentient Sword");
+        add(BMItems.SENTIENT_AXE.get(), "Sentient Axe");
+        add(BMItems.SENTIENT_PICKAXE.get(), "Sentient Pickaxe");
+        add(BMItems.SENTIENT_SHOVEL.get(), "Sentient Shovel");
+        add(BMItems.SENTIENT_SCYTHE.get(), "Sentient Scythe");
+
+        // Routing Items
+        add(BMItems.NODE_ROUTER.get(), "Node Router");
+        add(BMItems.MASTER_NODE_UPGRADE.get(), "Master Routing Node Core");
+        add(BMItems.MASTER_NODE_UPGRADE_SPEED.get(), "Speed Core");
+
+        // Throwing Daggers
+        add(BMItems.THROWING_DAGGER.get(), "Throwing Dagger");
+        add(BMItems.THROWING_DAGGER_AMETHYST.get(), "Amethyst Throwing Dagger");
+        add(BMItems.THROWING_DAGGER_SYRINGE.get(), "Syringe Throwing Dagger");
+
+        // Keys
+        add(BMItems.SIMPLE_KEY.get(), "Simple Key");
+        add(BMItems.MINE_KEY.get(), "Mine Key");
+
+        // Teleposer Focus Items
+        add(BMItems.TELEPOSER_FOCUS.get(), "Teleposer Focus");
+        add(BMItems.TELEPOSER_FOCUS_ENHANCED.get(), "Enhanced Teleposer Focus");
+        add(BMItems.TELEPOSER_FOCUS_REINFORCED.get(), "Reinforced Teleposer Focus");
+        addTooltip("telepositionfocus.coords", "Coordinates: %s, %s, %s");
+        addTooltip("telepositionfocus.world", "Dimension: %s");
+
+        // Activation Crystals
+        add(BMItems.ACTIVATION_CRYSTAL_WEAK.get(), "Weak Activation Crystal");
+        add(BMItems.ACTIVATION_CRYSTAL_AWAKENED.get(), "Awakened Activation Crystal");
+        add(BMItems.ACTIVATION_CRYSTAL_CREATIVE.get(), "Creative Activation Crystal");
+        addTooltip("activationcrystal.weak", "Activates low-level rituals.");
+        addTooltip("activationcrystal.awakened", "Activates more powerful rituals.");
+        addTooltip("activationcrystal.creative", "Creative Only - Activates any ritual.");
+
+        // Inscription Tools
+        add(BMItems.INSCRIPTION_TOOL_AIR.get(), "Inscription Tool: Air");
+        add(BMItems.INSCRIPTION_TOOL_FIRE.get(), "Inscription Tool: Fire");
+        add(BMItems.INSCRIPTION_TOOL_WATER.get(), "Inscription Tool: Water");
+        add(BMItems.INSCRIPTION_TOOL_EARTH.get(), "Inscription Tool: Earth");
+        add(BMItems.INSCRIPTION_TOOL_DUSK.get(), "Inscription Tool: Dusk");
+        addTooltip("inscriber.desc", "The writing is on the wall...");
+
+        // Ritual Diviners
+        add(BMItems.RITUAL_DIVINER.get(), "Ritual Diviner");
+        add(BMItems.RITUAL_DIVINER_DUSK.get(), "Ritual Diviner [Dusk]");
+        addTooltip("diviner.desc", "Used to build rituals.");
+        addTooltip("diviner.currentRitual", "Current Ritual: %s");
+        addTooltip("diviner.currentDirection", "Current Direction: %s");
+        addTooltip("diviner.blankRune", "Blank Runes: %d");
+        addTooltip("diviner.airRune", "Air Runes: %d");
+        addTooltip("diviner.waterRune", "Water Runes: %d");
+        addTooltip("diviner.fireRune", "Fire Runes: %d");
+        addTooltip("diviner.earthRune", "Earth Runes: %d");
+        addTooltip("diviner.duskRune", "Dusk Runes: %d");
+        addTooltip("diviner.dawnRune", "Dawn Runes: %d");
+        addTooltip("diviner.totalRune", "Total Runes: %d");
+        addTooltip("diviner.extraInfo", "Press shift for extra info.");
+        addTooltip("diviner.extraExtraInfo", "-Hold shift + alt for augmentation info-");
+        add("chat.bloodmagic.diviner.blockedBuild", "Unable to replace block at %d, %d, %d.");
+
+        // Tau Oil
+        add(BMItems.TAU_OIL.get(), "Tau Oil");
 
         addTooltip("will", "Will Quality: %s");
         for (EnumWillType type : EnumWillType.values()) {
