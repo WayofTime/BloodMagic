@@ -15,6 +15,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
+import wayoftime.bloodmagic.common.item.block.ItemBlockAlchemyTable;
 import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.util.helper.BlockEntityHelper;
 import wayoftime.bloodmagic.util.helper.BlockWithItemHolder;
@@ -81,7 +82,7 @@ public class BMBlocks {
     public static final DeferredHolder<Block, AlchemyArrayBlock> ALCHEMY_ARRAY = BLOCKS.register("alchemyarray", (Supplier<AlchemyArrayBlock>) AlchemyArrayBlock::new);
 
     // Alchemy Table
-    public static final BlockWithItemHolder<AlchemyTableBlock, BlockItem> ALCHEMY_TABLE = BLOCK_REG.register("alchemytable", AlchemyTableBlock::new);
+    public static final BlockWithItemHolder<AlchemyTableBlock, ItemBlockAlchemyTable> ALCHEMY_TABLE = BLOCK_REG.register("alchemytable", AlchemyTableBlock::new, block -> new ItemBlockAlchemyTable(block, new Item.Properties()));
 
     // Tau Blocks (TODO: Implement crop-like growth mechanics - these are placeholder blocks for now)
     private static final BlockBehaviour.Properties tau_properties = BlockBehaviour.Properties.of().noCollission().instabreak().sound(SoundType.CROP).pushReaction(PushReaction.DESTROY);

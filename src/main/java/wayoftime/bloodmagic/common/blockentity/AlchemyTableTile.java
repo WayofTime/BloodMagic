@@ -35,8 +35,10 @@ public class AlchemyTableTile extends BaseTile implements MenuProvider {
     public static final int OUTPUT_SLOT = 7;
 
     public Direction direction = Direction.NORTH;
+    public boolean isSlave = false;
     public int burnTime = 0;
     public int ticksRequired = 1;
+    public BlockPos connectedPos = BlockPos.ZERO;
 
     private AlchemyTableRecipe cachedRecipe = null;
 
@@ -69,8 +71,10 @@ public class AlchemyTableTile extends BaseTile implements MenuProvider {
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         direction = Direction.from3DDataValue(tag.getInt("direction"));
+        isSlave = tag.getBoolean("isSlave");
         burnTime = tag.getInt("burnTime");
         ticksRequired = tag.getInt("ticksRequired");
+        connectedPos = new BlockPos(tag.getInt("connectedX"), tag.getInt("connectedY"), tag.getInt("connectedZ"));
         inv.deserializeNBT(registries, tag.getCompound("inventory"));
     }
 
@@ -78,9 +82,28 @@ public class AlchemyTableTile extends BaseTile implements MenuProvider {
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.putInt("direction", direction.get3DDataValue());
+        tag.putBoolean("isSlave", isSlave);
         tag.putInt("burnTime", burnTime);
         tag.putInt("ticksRequired", ticksRequired);
+        tag.putInt("connectedX", connectedPos.getX());
+        tag.putInt("connectedY", connectedPos.getY());
+        tag.putInt("connectedZ", connectedPos.getZ());
         tag.put("inventory", inv.serializeNBT(registries));
+    }
+
+    public void setInitialTableParameters(Direction direction, boolean isSlave, BlockPos connectedPos) {
+        this.direction = direction;
+        this.isSlave = isSlave;
+        this.connectedPos = connectedPos;
+        setChanged();
+    }
+
+    public boolean isSlave() {
+        return isSlave;
+    }
+
+    public BlockPos getConnectedPos() {
+        return connectedPos;
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, AlchemyTableTile tile) {
@@ -88,7 +111,7 @@ public class AlchemyTableTile extends BaseTile implements MenuProvider {
     }
 
     public void tick() {
-        if (level == null || level.isClientSide) return;
+        if (level == null || level.isClientSide || isSlave) return;
 
         // Check if we can craft
         Optional<AlchemyTableRecipe> recipeOpt = getRecipe();
@@ -212,7 +235,7 @@ public class AlchemyTableTile extends BaseTile implements MenuProvider {
     }
 
     public void dropItems() {
-        if (level != null && !level.isClientSide) {
+        if (level != null && !level.isClientSide && !isSlave) {
             for (int i = 0; i < inv.getSlots(); i++) {
                 ItemStack stack = inv.getStackInSlot(i);
                 if (!stack.isEmpty()) {
