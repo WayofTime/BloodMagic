@@ -1,3 +1,6 @@
 {
-  "values": []
+  "values": [
+    "bloodmagic:furnacecell_primitive",
+    "bloodmagic:lava_crystal"
+  ]
 }

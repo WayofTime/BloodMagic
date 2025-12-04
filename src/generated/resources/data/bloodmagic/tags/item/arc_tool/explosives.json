@@ -1,3 +1,7 @@
 {
-  "values": []
+  "values": [
+    "bloodmagic:explosivepowder",
+    "bloodmagic:primitive_explosive_cell",
+    "bloodmagic:hellforged_explosive_cell"
+  ]
 }

@@ -1,3 +1,7 @@
 {
-  "values": []
+  "values": [
+    "bloodmagic:resonator",
+    "bloodmagic:primitive_crystalline_resonator",
+    "bloodmagic:hellforged_resonator"
+  ]
 }

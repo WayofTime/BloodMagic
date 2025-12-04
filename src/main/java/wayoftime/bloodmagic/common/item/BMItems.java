@@ -8,6 +8,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.datacomponent.EnumWillType;
+import wayoftime.bloodmagic.common.item.arc.ItemARCToolBase;
 
 import java.util.function.Supplier;
 
@@ -110,6 +111,18 @@ public class BMItems {
     public static final DeferredHolder<Item, TeleposerFocusItem> TELEPOSER_FOCUS = ITEMS.register("teleposerfocus", () -> new TeleposerFocusItem(0));
     public static final DeferredHolder<Item, TeleposerFocusItem> TELEPOSER_FOCUS_ENHANCED = ITEMS.register("enhancedteleposerfocus", () -> new TeleposerFocusItem(1));
     public static final DeferredHolder<Item, TeleposerFocusItem> TELEPOSER_FOCUS_REINFORCED = ITEMS.register("reinforcedteleposerfocus", () -> new TeleposerFocusItem(2));
+
+    // ARC Tools
+    public static final DeferredHolder<Item, ItemARCToolBase> BASIC_CUTTING_FLUID = BASIC_ITEMS.register("basiccuttingfluid", () -> new ItemARCToolBase(64, 1, EnumWillType.CORROSIVE));
+    public static final DeferredHolder<Item, ItemARCToolBase> EXPLOSIVE_POWDER = BASIC_ITEMS.register("explosivepowder", () -> new ItemARCToolBase(64, 1, EnumWillType.DESTRUCTIVE));
+    public static final DeferredHolder<Item, ItemARCToolBase> RESONATOR = BASIC_ITEMS.register("resonator", () -> new ItemARCToolBase(64, 1, EnumWillType.VENGEFUL));
+    public static final DeferredHolder<Item, ItemARCToolBase> SANGUINE_REVERTER = BASIC_ITEMS.register("sanguinereverter", () -> new ItemARCToolBase(32, 2, EnumWillType.STEADFAST));
+    public static final DeferredHolder<Item, ItemARCToolBase> PRIMITIVE_FURNACE_CELL = BASIC_ITEMS.register("furnacecell_primitive", () -> new ItemARCToolBase(128, 3));
+    public static final DeferredHolder<Item, ItemARCToolBase> PRIMITIVE_EXPLOSIVE_CELL = BASIC_ITEMS.register("primitive_explosive_cell", () -> new ItemARCToolBase(256, 1.5, EnumWillType.DESTRUCTIVE));
+    public static final DeferredHolder<Item, ItemARCToolBase> PRIMITIVE_HYDRATION_CELL = BASIC_ITEMS.register("primitive_hydration_cell", () -> new ItemARCToolBase(128, 1.5));
+    public static final DeferredHolder<Item, ItemARCToolBase> PRIMITIVE_CRYSTALLINE_RESONATOR = BASIC_ITEMS.register("primitive_crystalline_resonator", () -> new ItemARCToolBase(256, 1.5, EnumWillType.VENGEFUL));
+    public static final DeferredHolder<Item, ItemARCToolBase> HELLFORGED_EXPLOSIVE_CELL = BASIC_ITEMS.register("hellforged_explosive_cell", () -> new ItemARCToolBase(1024, 2, EnumWillType.DESTRUCTIVE));
+    public static final DeferredHolder<Item, ItemARCToolBase> HELLFORGED_RESONATOR = BASIC_ITEMS.register("hellforged_resonator", () -> new ItemARCToolBase(1024, 2, 2, EnumWillType.VENGEFUL));
 
     public static void register(IEventBus modBus) {
         BASIC_ITEMS.register(modBus);
