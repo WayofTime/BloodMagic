@@ -99,6 +99,27 @@ public class BMBlocks {
     public static final BlockWithItemHolder<BlockRitualStone, BlockItem> DAWN_RITUAL_STONE = BLOCK_REG.register("lightritualstone", () -> new BlockRitualStone(EnumRuneType.DAWN));
     public static final BlockWithItemHolder<BlockMasterRitualStone, BlockItem> MASTER_RITUAL_STONE = BLOCK_REG.register("masterritualstone", () -> new BlockMasterRitualStone(false));
 
+    // Demon Will Blocks (placeholder - functionality to be added later)
+    private static final BlockBehaviour.Properties demon_block_properties = BlockBehaviour.Properties.of().strength(5.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops();
+    public static final BlockWithItemHolder<Block, BlockItem> DEMON_CRUCIBLE = BLOCK_REG.register("demoncrucible", demon_block_properties, new Item.Properties());
+    public static final BlockWithItemHolder<Block, BlockItem> DEMON_CRYSTALLIZER = BLOCK_REG.register("demoncrystallizer", demon_block_properties, new Item.Properties());
+    public static final BlockWithItemHolder<Block, BlockItem> DEMON_PYLON = BLOCK_REG.register("demonpylon", demon_block_properties, new Item.Properties());
+
+    // Crystal Blocks (placeholder)
+    private static final BlockBehaviour.Properties crystal_block_properties = BlockBehaviour.Properties.of().strength(3.0F, 3.0F).sound(SoundType.AMETHYST).requiresCorrectToolForDrops().lightLevel(state -> 7);
+    public static final BlockWithItemHolder<Block, BlockItem> RAW_CRYSTAL_BLOCK = BASIC_REG.register("rawdemoncrystal", crystal_block_properties, new Item.Properties());
+    public static final BlockWithItemHolder<Block, BlockItem> CORROSIVE_CRYSTAL_BLOCK = BASIC_REG.register("corrosivedemoncrystal", crystal_block_properties, new Item.Properties());
+    public static final BlockWithItemHolder<Block, BlockItem> DESTRUCTIVE_CRYSTAL_BLOCK = BASIC_REG.register("destructivedemoncrystal", crystal_block_properties, new Item.Properties());
+    public static final BlockWithItemHolder<Block, BlockItem> VENGEFUL_CRYSTAL_BLOCK = BASIC_REG.register("vengefuldemoncrystal", crystal_block_properties, new Item.Properties());
+    public static final BlockWithItemHolder<Block, BlockItem> STEADFAST_CRYSTAL_BLOCK = BASIC_REG.register("steadfastdemoncrystal", crystal_block_properties, new Item.Properties());
+
+    // Routing Nodes (placeholder)
+    private static final BlockBehaviour.Properties routing_node_properties = BlockBehaviour.Properties.of().strength(2.0F, 5.0F).sound(SoundType.METAL).requiresCorrectToolForDrops();
+    public static final BlockWithItemHolder<Block, BlockItem> ROUTING_NODE = BLOCK_REG.register("itemroutingnode", routing_node_properties, new Item.Properties());
+    public static final BlockWithItemHolder<Block, BlockItem> INPUT_ROUTING_NODE = BLOCK_REG.register("inputroutingnode", routing_node_properties, new Item.Properties());
+    public static final BlockWithItemHolder<Block, BlockItem> OUTPUT_ROUTING_NODE = BLOCK_REG.register("outputroutingnode", routing_node_properties, new Item.Properties());
+    public static final BlockWithItemHolder<Block, BlockItem> MASTER_ROUTING_NODE = BLOCK_REG.register("masterroutingnode", routing_node_properties, new Item.Properties());
+
     public static void register(IEventBus modBus) {
         BASIC_BLOCKS.register(modBus);
         BASIC_BLOCK_ITEMS.register(modBus);

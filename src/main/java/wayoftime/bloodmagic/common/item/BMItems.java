@@ -165,6 +165,42 @@ public class BMItems {
     public static final DeferredHolder<Item, ItemRitualDiviner> RITUAL_DIVINER = BASIC_ITEMS.register("ritualdiviner", () -> new ItemRitualDiviner(0));
     public static final DeferredHolder<Item, ItemRitualDiviner> RITUAL_DIVINER_DUSK = BASIC_ITEMS.register("ritualdivinerdusk", () -> new ItemRitualDiviner(1));
 
+    // Sentient Tools (placeholder - functionality to be added later)
+    public static final DeferredHolder<Item, Item> SENTIENT_SWORD = BASIC_ITEMS.register("soulsword", () -> new Item(new Item.Properties().stacksTo(1).durability(520)));
+    public static final DeferredHolder<Item, Item> SENTIENT_AXE = BASIC_ITEMS.register("soulaxe", () -> new Item(new Item.Properties().stacksTo(1).durability(520)));
+    public static final DeferredHolder<Item, Item> SENTIENT_PICKAXE = BASIC_ITEMS.register("soulpickaxe", () -> new Item(new Item.Properties().stacksTo(1).durability(520)));
+    public static final DeferredHolder<Item, Item> SENTIENT_SHOVEL = BASIC_ITEMS.register("soulshovel", () -> new Item(new Item.Properties().stacksTo(1).durability(520)));
+    public static final DeferredHolder<Item, Item> SENTIENT_SCYTHE = BASIC_ITEMS.register("soulscythe", () -> new Item(new Item.Properties().stacksTo(1).durability(520)));
+
+    // Demon Will Items
+    public static final DeferredHolder<Item, Item> RAW_CRYSTAL = BASIC_ITEMS.register("defaultcrystal", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> CORROSIVE_CRYSTAL = BASIC_ITEMS.register("corrosivecrystal", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> DESTRUCTIVE_CRYSTAL = BASIC_ITEMS.register("destructivecrystal", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> VENGEFUL_CRYSTAL = BASIC_ITEMS.register("vengefulcrystal", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> STEADFAST_CRYSTAL = BASIC_ITEMS.register("steadfastcrystal", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> DEMON_WILL_GAUGE = BASIC_ITEMS.register("demonwillgauge", () -> new Item(new Item.Properties().stacksTo(1)));
+
+    // Crystal Catalysts (used in soul forge recipes)
+    public static final DeferredHolder<Item, Item> RAW_CRYSTAL_CATALYST = BASIC_ITEMS.register("rawcatalyst", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> CORROSIVE_CRYSTAL_CATALYST = BASIC_ITEMS.register("corrosivecatalyst", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> DESTRUCTIVE_CRYSTAL_CATALYST = BASIC_ITEMS.register("destructivecatalyst", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> VENGEFUL_CRYSTAL_CATALYST = BASIC_ITEMS.register("vengefulcatalyst", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> STEADFAST_CRYSTAL_CATALYST = BASIC_ITEMS.register("steadfastcatalyst", () -> new Item(new Item.Properties()));
+
+    // Routing Node Items
+    public static final DeferredHolder<Item, Item> NODE_ROUTER = BASIC_ITEMS.register("noderouter", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<Item, Item> MASTER_NODE_UPGRADE = BASIC_ITEMS.register("mastercore", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> MASTER_NODE_UPGRADE_SPEED = BASIC_ITEMS.register("mastercorespeed", () -> new Item(new Item.Properties()));
+
+    // Throwing Daggers
+    public static final DeferredHolder<Item, Item> THROWING_DAGGER = BASIC_ITEMS.register("throwing_dagger", () -> new Item(new Item.Properties().stacksTo(16)));
+    public static final DeferredHolder<Item, Item> THROWING_DAGGER_AMETHYST = BASIC_ITEMS.register("amethystthrowingdagger", () -> new Item(new Item.Properties().stacksTo(16)));
+    public static final DeferredHolder<Item, Item> THROWING_DAGGER_SYRINGE = BASIC_ITEMS.register("throwing_dagger_syringe", () -> new Item(new Item.Properties().stacksTo(16)));
+
+    // Dungeon/Key Items
+    public static final DeferredHolder<Item, Item> SIMPLE_KEY = BASIC_ITEMS.register("simplekey", () -> new Item(new Item.Properties().stacksTo(16)));
+    public static final DeferredHolder<Item, Item> MINE_KEY = BASIC_ITEMS.register("minekey", () -> new Item(new Item.Properties().stacksTo(16)));
+
     public static void register(IEventBus modBus) {
         BASIC_ITEMS.register(modBus);
         ITEMS.register(modBus);
