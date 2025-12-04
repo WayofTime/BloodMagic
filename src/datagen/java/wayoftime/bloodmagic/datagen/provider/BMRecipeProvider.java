@@ -739,6 +739,17 @@ public class BMRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_tau_oil", has(BMItems.TAU_OIL.get()))
                 .save(output, BloodMagic.rl("primitive_resonator"));
 
+        // Hellforged Resonator
+        ForgeRecipeBuilder.build(BMItems.HELLFORGED_RESONATOR.get())
+                .requires(Tags.Items.GEMS_AMETHYST)
+                .requires(Tags.Items.INGOTS_GOLD)
+                .requires(BMItems.RAW_CRYSTAL.get())
+                .requires(BMItems.HELLFORGED_INGOT.get())
+                .minWill(1200)
+                .drain(400)
+                .unlockedBy("has_hellforged_ingot", has(BMItems.HELLFORGED_INGOT.get()))
+                .save(output, BloodMagic.rl("hellforged_resonator"));
+
         // Throwing Daggers
         ForgeRecipeBuilder.build(BMItems.THROWING_DAGGER.get())
                 .requires(Tags.Items.INGOTS_IRON)
@@ -1207,6 +1218,87 @@ public class BMRecipeProvider extends RecipeProvider {
                 .ticks(200)
                 .minimumTier(1)
                 .save(output, "explosive_powder");
+
+        // Sulfur from lava bucket + cobblestone
+        AlchemyTableRecipeBuilder.build(new ItemStack(BMItems.SULFUR.get(), 4))
+                .input(Items.LAVA_BUCKET)
+                .input(Ingredient.of(Tags.Items.COBBLESTONES))
+                .syphon(200)
+                .ticks(100)
+                .minimumTier(0)
+                .save(output, "sulfur_from_lava");
+
+        // Saltpeter from plant oil x2 + coal dust
+        AlchemyTableRecipeBuilder.build(new ItemStack(BMItems.SALTPETER.get(), 3))
+                .input(BMItems.PLANT_OIL.get())
+                .input(BMItems.PLANT_OIL.get())
+                .input(Ingredient.of(BMTags.Items.DUSTS_COAL))
+                .syphon(200)
+                .ticks(200)
+                .minimumTier(1)
+                .save(output, "saltpeter");
+
+        // Gunpowder from sulfur + saltpeter + coal
+        AlchemyTableRecipeBuilder.build(new ItemStack(Items.GUNPOWDER, 3))
+                .input(Ingredient.of(BMTags.Items.DUSTS_SULFUR))
+                .input(Ingredient.of(BMTags.Items.DUSTS_SALTPETER))
+                .input(Ingredient.of(ItemTags.COALS))
+                .syphon(0)
+                .ticks(100)
+                .minimumTier(0)
+                .save(output, "gunpowder");
+
+        // Plant Oil recipes - from various crops
+        AlchemyTableRecipeBuilder.build(BMItems.PLANT_OIL.get())
+                .input(Ingredient.of(Tags.Items.CROPS_CARROT))
+                .input(Ingredient.of(Tags.Items.CROPS_CARROT))
+                .input(Ingredient.of(Tags.Items.CROPS_CARROT))
+                .input(Items.BONE_MEAL)
+                .syphon(100)
+                .ticks(100)
+                .minimumTier(1)
+                .save(output, "plantoil_from_carrots");
+
+        AlchemyTableRecipeBuilder.build(BMItems.PLANT_OIL.get())
+                .input(Ingredient.of(Tags.Items.CROPS_POTATO))
+                .input(Ingredient.of(Tags.Items.CROPS_POTATO))
+                .input(Items.BONE_MEAL)
+                .syphon(100)
+                .ticks(100)
+                .minimumTier(1)
+                .save(output, "plantoil_from_potatoes");
+
+        AlchemyTableRecipeBuilder.build(BMItems.PLANT_OIL.get())
+                .input(Ingredient.of(Tags.Items.CROPS_WHEAT))
+                .input(Ingredient.of(Tags.Items.CROPS_WHEAT))
+                .input(Items.BONE_MEAL)
+                .syphon(100)
+                .ticks(100)
+                .minimumTier(1)
+                .save(output, "plantoil_from_wheat");
+
+        AlchemyTableRecipeBuilder.build(BMItems.PLANT_OIL.get())
+                .input(Ingredient.of(Tags.Items.CROPS_BEETROOT))
+                .input(Ingredient.of(Tags.Items.CROPS_BEETROOT))
+                .input(Ingredient.of(Tags.Items.CROPS_BEETROOT))
+                .input(Items.BONE_MEAL)
+                .syphon(100)
+                .ticks(100)
+                .minimumTier(1)
+                .save(output, "plantoil_from_beets");
+
+        // Basic Cutting Fluid - plant oil + redstone + gunpowder + sugar + coal dust + water
+        AlchemyTableRecipeBuilder.build(BMItems.BASIC_CUTTING_FLUID.get())
+                .input(BMItems.PLANT_OIL.get())
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .input(Items.GUNPOWDER)
+                .input(Items.SUGAR)
+                .input(Ingredient.of(BMTags.Items.DUSTS_COAL))
+                .input(Items.WATER_BUCKET)
+                .syphon(1000)
+                .ticks(200)
+                .minimumTier(1)
+                .save(output, "basic_cutting_fluid");
 
         // Alchemy Table recipe (crafting recipe for the table itself)
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BMBlocks.ALCHEMY_TABLE.block().get())

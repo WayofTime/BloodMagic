@@ -83,5 +83,20 @@ public class BMItemTagProvider extends ItemTagsProvider {
         tag(BMTags.Items.GRAVELS_COPPER).add(BMItems.COPPER_GRAVEL.get());
         tag(BMTags.Items.GRAVELS_NETHERITE_SCRAP).add(BMItems.NETHERITE_SCRAP_GRAVEL.get());
         tag(BMTags.Items.GRAVELS_HELLFORGED).add(BMItems.DEMONITE_GRAVEL.get());
+
+        // Dust tags (sands)
+        tag(BMTags.Items.DUSTS_IRON).add(BMItems.IRON_SAND.get());
+        tag(BMTags.Items.DUSTS_GOLD).add(BMItems.GOLD_SAND.get());
+        tag(BMTags.Items.DUSTS_COPPER).add(BMItems.COPPER_SAND.get());
+        tag(BMTags.Items.DUSTS_COAL).add(BMItems.COAL_SAND.get());
+        tag(BMTags.Items.DUSTS_SULFUR).add(BMItems.SULFUR.get());
+        tag(BMTags.Items.DUSTS_SALTPETER).add(BMItems.SALTPETER.get());
+        tag(BMTags.Items.DUSTS_NETHERITE_SCRAP).add(BMItems.NETHERITE_SCRAP_SAND.get());
+        tag(BMTags.Items.DUSTS_HELLFORGED).add(BMItems.HELLFORGED_SAND.get());
+        tag(BMTags.Items.DUSTS_CORRUPTED).add(BMItems.CORRUPTED_DUST.get());
+        tag(BMTags.Items.TINY_DUSTS_CORRUPTED).add(BMItems.CORRUPTED_DUST_TINY.get());
+
+        // Ingot tags
+        tag(BMTags.Items.INGOTS_HELLFORGED).add(BMItems.HELLFORGED_INGOT.get());
     }
 }

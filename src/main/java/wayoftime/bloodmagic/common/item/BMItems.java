@@ -194,6 +194,12 @@ public class BMItems {
     public static final DeferredHolder<Item, Item> SIMPLE_KEY = BASIC_ITEMS.register("simplekey", () -> new Item(new Item.Properties().stacksTo(16)));
     public static final DeferredHolder<Item, Item> MINE_KEY = BASIC_ITEMS.register("minekey", () -> new Item(new Item.Properties().stacksTo(16)));
 
+    // Simple Recipe Ingredients
+    public static final DeferredHolder<Item, Item> SULFUR = BASIC_ITEMS.register("sulfur", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> SALTPETER = BASIC_ITEMS.register("saltpeter", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> PLANT_OIL = BASIC_ITEMS.register("plantoil", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> HELLFORGED_INGOT = BASIC_ITEMS.register("ingot_hellforged", () -> new Item(new Item.Properties()));
+
     public static void register(IEventBus modBus) {
         BASIC_ITEMS.register(modBus);
         ITEMS.register(modBus);

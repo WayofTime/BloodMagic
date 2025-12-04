@@ -49,6 +49,21 @@ public class BMTags {
         public static final TagKey<Item> GRAVELS_NETHERITE_SCRAP = tag(bm("gravels/netherite_scrap"));
         public static final TagKey<Item> GRAVELS_HELLFORGED = tag(bm("gravels/hellforged"));
 
+        // Dust tags (sands)
+        public static final TagKey<Item> DUSTS_IRON = tag(bm("dusts/iron"));
+        public static final TagKey<Item> DUSTS_GOLD = tag(bm("dusts/gold"));
+        public static final TagKey<Item> DUSTS_COPPER = tag(bm("dusts/copper"));
+        public static final TagKey<Item> DUSTS_COAL = tag(bm("dusts/coal"));
+        public static final TagKey<Item> DUSTS_SULFUR = tag(bm("dusts/sulfur"));
+        public static final TagKey<Item> DUSTS_SALTPETER = tag(bm("dusts/saltpeter"));
+        public static final TagKey<Item> DUSTS_NETHERITE_SCRAP = tag(bm("dusts/netherite_scrap"));
+        public static final TagKey<Item> DUSTS_HELLFORGED = tag(bm("dusts/hellforged"));
+        public static final TagKey<Item> DUSTS_CORRUPTED = tag(bm("dusts/corrupted"));
+        public static final TagKey<Item> TINY_DUSTS_CORRUPTED = tag(bm("tiny_dusts/corrupted"));
+
+        // Ingot tags
+        public static final TagKey<Item> INGOTS_HELLFORGED = tag(c("ingots/hellforged"));
+
         private static TagKey<Item> fromBlock(TagKey<Block> input) {
             return tag(input.location());
         }

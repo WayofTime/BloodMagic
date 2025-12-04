@@ -217,6 +217,12 @@ public class BMLanguageProvider extends LanguageProvider {
         add(BMItems.SIMPLE_KEY.get(), "Simple Key");
         add(BMItems.MINE_KEY.get(), "Mine Key");
 
+        // Simple Recipe Ingredients
+        add(BMItems.SULFUR.get(), "Sulfur");
+        add(BMItems.SALTPETER.get(), "Saltpeter");
+        add(BMItems.PLANT_OIL.get(), "Plant Oil");
+        add(BMItems.HELLFORGED_INGOT.get(), "Hellforged Ingot");
+
         // Teleposer Focus Items
         add(BMItems.TELEPOSER_FOCUS.get(), "Teleposer Focus");
         add(BMItems.TELEPOSER_FOCUS_ENHANCED.get(), "Enhanced Teleposer Focus");
