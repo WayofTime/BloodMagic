@@ -234,6 +234,12 @@ public class BMLanguageProvider extends LanguageProvider {
         add(BMBlocks.FUNGAL_CHARGE_2, "Reinforced Fungal Charge");
         add(BMBlocks.SHAPED_CHARGE_DEEP, "Deep Shaped Charge");
 
+        // Alchemy Flask Items
+        add(BMItems.SLATE_VIAL.get(), "Slate Vial");
+        add(BMItems.ALCHEMY_FLASK.get(), "Alchemy Flask");
+        add(BMItems.ALCHEMY_FLASK_THROWABLE.get(), "Throwable Alchemy Flask");
+        add(BMItems.ALCHEMY_FLASK_LINGERING.get(), "Lingering Alchemy Flask");
+
         // Teleposer Focus Items
         add(BMItems.TELEPOSER_FOCUS.get(), "Teleposer Focus");
         add(BMItems.TELEPOSER_FOCUS_ENHANCED.get(), "Enhanced Teleposer Focus");

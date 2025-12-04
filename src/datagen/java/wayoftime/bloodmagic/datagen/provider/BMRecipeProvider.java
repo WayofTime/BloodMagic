@@ -1392,6 +1392,19 @@ public class BMRecipeProvider extends RecipeProvider {
                 .minimumTier(1)
                 .save(output, "basic_cutting_fluid");
 
+        // Slate Vial - blank slate + 5 glass
+        AlchemyTableRecipeBuilder.build(new ItemStack(BMItems.SLATE_VIAL.get(), 8))
+                .input(BMItems.SLATE_BLANK.get())
+                .input(Ingredient.of(Tags.Items.GLASS_BLOCKS))
+                .input(Ingredient.of(Tags.Items.GLASS_BLOCKS))
+                .input(Ingredient.of(Tags.Items.GLASS_BLOCKS))
+                .input(Ingredient.of(Tags.Items.GLASS_BLOCKS))
+                .input(Ingredient.of(Tags.Items.GLASS_BLOCKS))
+                .syphon(500)
+                .ticks(200)
+                .minimumTier(1)
+                .save(output, "slate_vial");
+
         // Alchemy Table recipe (crafting recipe for the table itself)
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BMBlocks.ALCHEMY_TABLE.block().get())
                 .pattern("sss")
