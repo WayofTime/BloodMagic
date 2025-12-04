@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:array",
+  "addedinput": {
+    "item": "minecraft:iron_chestplate"
+  },
+  "baseinput": {
+    "item": "bloodmagic:reagentbinding"
+  },
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:living_plate"
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/bindingarray.png"
+}

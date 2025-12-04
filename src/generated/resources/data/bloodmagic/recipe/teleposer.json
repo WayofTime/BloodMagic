@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "e": {
+      "tag": "c:ender_pearls"
+    },
+    "g": {
+      "tag": "c:ingots/gold"
+    },
+    "t": {
+      "item": "bloodmagic:teleposerfocus"
+    }
+  },
+  "pattern": [
+    "ggg",
+    "ete",
+    "ggg"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bloodmagic:teleposer"
+  }
+}

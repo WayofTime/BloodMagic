@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "bloodmagic:enhancedteleposerfocus"
+    },
+    {
+      "item": "bloodmagic:weak_blood_shard"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "bloodmagic:reinforcedteleposerfocus"
+  }
+}

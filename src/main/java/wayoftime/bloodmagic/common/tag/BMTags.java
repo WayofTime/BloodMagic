@@ -16,6 +16,7 @@ import wayoftime.bloodmagic.common.registry.BMRegistries;
 public class BMTags {
     public static class Items {
         public static final TagKey<Item> SOUL_GEM = tag(bm("soul_gems"));
+        public static final TagKey<Item> DEMON_CRYSTALS = tag(bm("crystals/demon"));
 
         public static final TagKey<Item> STORAGE_BLOCKS_HELLFORGED = fromBlock(Blocks.STORAGE_BLOCKS_HELLFORGED);
 

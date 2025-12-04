@@ -12,6 +12,7 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BMBlocks;
 import wayoftime.bloodmagic.common.fluid.BMFluids;
 import wayoftime.bloodmagic.common.item.BMItems;
+import wayoftime.bloodmagic.common.tag.BMTags;
 import wayoftime.bloodmagic.datagen.builder.AlchemyArrayRecipeBuilder;
 import wayoftime.bloodmagic.datagen.builder.AlchemyTableRecipeBuilder;
 import wayoftime.bloodmagic.datagen.builder.recipe.AltarRecipeBuilder;
@@ -171,6 +172,37 @@ public class BMRecipeProvider extends RecipeProvider {
                 .define('c', BMBlocks.CRYSTAL_CLUSTER.block().get())
                 .unlockedBy("has_crystal_cluster", has(BMBlocks.CRYSTAL_CLUSTER.block().get()))
                 .save(output);
+
+        // Teleposer block
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BMBlocks.TELEPOSER.block().get())
+                .pattern("ggg")
+                .pattern("ete")
+                .pattern("ggg")
+                .define('g', Tags.Items.INGOTS_GOLD)
+                .define('e', Tags.Items.ENDER_PEARLS)
+                .define('t', BMItems.TELEPOSER_FOCUS.get())
+                .unlockedBy("has_teleposer_focus", has(BMItems.TELEPOSER_FOCUS.get()))
+                .save(output);
+
+        // Reinforced Teleposer Focus
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, BMItems.TELEPOSER_FOCUS_REINFORCED.get())
+                .requires(BMItems.TELEPOSER_FOCUS_ENHANCED.get())
+                .requires(BMItems.WEAK_BLOOD_SHARD.get())
+                .unlockedBy("has_enhanced_focus", has(BMItems.TELEPOSER_FOCUS_ENHANCED.get()))
+                .save(output);
+
+        // Lava Crystal
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BMItems.LAVA_CRYSTAL.get())
+                .pattern("aba")
+                .pattern("bcb")
+                .pattern("ded")
+                .define('a', Tags.Items.GLASS_BLOCKS)
+                .define('b', Items.LAVA_BUCKET)
+                .define('c', BMItems.ORB_WEAK.get())
+                .define('d', Tags.Items.OBSIDIANS)
+                .define('e', Tags.Items.GEMS_DIAMOND)
+                .unlockedBy("has_weak_orb", has(BMItems.ORB_WEAK.get()))
+                .save(output);
     }
 
     private void addTieredRecipes(RecipeOutput output) {
@@ -310,6 +342,26 @@ public class BMRecipeProvider extends RecipeProvider {
                 .drain(0)
                 .unlockedBy("has_altar", has(BMBlocks.BLOOD_ALTAR.block().get()))
                 .save(output, BloodMagic.rl("bucket_life"));
+
+        // Teleposer Focus - ender pearl on tier 3 altar
+        AltarRecipeBuilder.build(BMItems.TELEPOSER_FOCUS.get())
+                .from(Tags.Items.ENDER_PEARLS)
+                .minTier(3)
+                .bloodNeeded(2000)
+                .consumption(10)
+                .drain(10)
+                .unlockedBy("has_demonic_slate", has(BMItems.SLATE_DEMONIC.get()))
+                .save(output, BloodMagic.rl("teleposer_focus"));
+
+        // Enhanced Teleposer Focus - from teleposer focus on tier 3 altar
+        AltarRecipeBuilder.build(BMItems.TELEPOSER_FOCUS_ENHANCED.get())
+                .from(BMItems.TELEPOSER_FOCUS.get())
+                .minTier(3)
+                .bloodNeeded(10000)
+                .consumption(20)
+                .drain(10)
+                .unlockedBy("has_teleposer_focus", has(BMItems.TELEPOSER_FOCUS.get()))
+                .save(output, BloodMagic.rl("enhanced_teleposer_focus"));
     }
 
     private void addSoulForgeRecipes(RecipeOutput output) {
@@ -347,12 +399,11 @@ public class BMRecipeProvider extends RecipeProvider {
                 .save(output, BloodMagic.rl("soul_gem_common"));
 
         // Greater Soul Gem - common gem, demonic slate, weak blood shard, demon crystal
-        // Note: demon crystal tag not implemented yet, using weak blood shard x2 as placeholder
         ForgeRecipeBuilder.build(BMItems.SOUL_GEM_GREATER.get())
                 .requires(BMItems.SOUL_GEM_COMMON.get())
                 .requires(BMItems.SLATE_DEMONIC.get())
                 .requires(BMItems.WEAK_BLOOD_SHARD.get())
-                .requires(BMItems.WEAK_BLOOD_SHARD.get())  // TODO: Replace with demon crystal tag when available
+                .requires(BMTags.Items.DEMON_CRYSTALS)
                 .minWill(1000)
                 .drain(100)
                 .unlockedBy("has_common_gem", has(BMItems.SOUL_GEM_COMMON.get()))
@@ -541,6 +592,31 @@ public class BMRecipeProvider extends RecipeProvider {
                 .added(BMItems.SLATE_IMBUED.get())
                 .texture("textures/models/alchemyarrays/frostsigil.png")
                 .save(output, "frost_sigil");
+
+        // Living Armor - reagent_binding + iron armor pieces
+        AlchemyArrayRecipeBuilder.build(BMItems.LIVING_HELMET.get())
+                .base(BMItems.REAGENT_BINDING.get())
+                .added(Items.IRON_HELMET)
+                .texture("textures/models/alchemyarrays/bindingarray.png")
+                .save(output, "living_helmet");
+
+        AlchemyArrayRecipeBuilder.build(BMItems.LIVING_PLATE.get())
+                .base(BMItems.REAGENT_BINDING.get())
+                .added(Items.IRON_CHESTPLATE)
+                .texture("textures/models/alchemyarrays/bindingarray.png")
+                .save(output, "living_plate");
+
+        AlchemyArrayRecipeBuilder.build(BMItems.LIVING_LEGGINGS.get())
+                .base(BMItems.REAGENT_BINDING.get())
+                .added(Items.IRON_LEGGINGS)
+                .texture("textures/models/alchemyarrays/bindingarray.png")
+                .save(output, "living_leggings");
+
+        AlchemyArrayRecipeBuilder.build(BMItems.LIVING_BOOTS.get())
+                .base(BMItems.REAGENT_BINDING.get())
+                .added(Items.IRON_BOOTS)
+                .texture("textures/models/alchemyarrays/bindingarray.png")
+                .save(output, "living_boots");
     }
 
     private void addAlchemyTableRecipes(RecipeOutput output) {
