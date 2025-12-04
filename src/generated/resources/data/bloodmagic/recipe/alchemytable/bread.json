@@ -1,0 +1,18 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "c:crops/wheat"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "minecraft:bread"
+  },
+  "syphon": 100,
+  "ticks": 100,
+  "upgradeLevel": 1
+}

@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:blood_altar_recipe",
+  "bloodNeeded": 2000,
+  "craftSpeed": 20,
+  "drainSpeed": 10,
+  "input": {
+    "tag": "c:storage_blocks/coal"
+  },
+  "minTier": 3,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:duskscribetool"
+  }
+}

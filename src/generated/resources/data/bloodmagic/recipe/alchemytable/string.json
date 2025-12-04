@@ -1,0 +1,17 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "minecraft:wool"
+    },
+    {
+      "item": "minecraft:flint"
+    }
+  ],
+  "output": {
+    "count": 4,
+    "id": "minecraft:string"
+  },
+  "syphon": 100,
+  "ticks": 100
+}

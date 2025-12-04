@@ -1,0 +1,21 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "minecraft:gunpowder"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    },
+    {
+      "item": "minecraft:coal"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:explosivepowder"
+  },
+  "syphon": 500,
+  "ticks": 200,
+  "upgradeLevel": 1
+}

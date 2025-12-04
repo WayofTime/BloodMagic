@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:array",
+  "addedinput": {
+    "item": "minecraft:diamond"
+  },
+  "baseinput": {
+    "item": "bloodmagic:reagentbinding"
+  },
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:training_bracelet"
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/bindingarray.png"
+}

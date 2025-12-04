@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_reinforced_slate": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bloodmagic:reinforced_slate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bloodmagic:water_tool"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_reinforced_slate"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bloodmagic:water_tool"
+    ]
+  }
+}

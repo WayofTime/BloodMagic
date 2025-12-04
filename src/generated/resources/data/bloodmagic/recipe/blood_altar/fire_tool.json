@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:blood_altar_recipe",
+  "bloodNeeded": 1000,
+  "craftSpeed": 5,
+  "drainSpeed": 5,
+  "input": {
+    "item": "minecraft:magma_cream"
+  },
+  "minTier": 2,
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:firescribetool"
+  }
+}
