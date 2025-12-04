@@ -388,6 +388,52 @@ public class BMRecipeProvider extends RecipeProvider {
                 .drain(10)
                 .unlockedBy("has_teleposer_focus", has(BMItems.TELEPOSER_FOCUS.get()))
                 .save(output, BloodMagic.rl("enhanced_teleposer_focus"));
+
+        // Inscription Tools
+        AltarRecipeBuilder.build(BMItems.INSCRIPTION_TOOL_AIR.get())
+                .from(Items.GHAST_TEAR)
+                .minTier(2)
+                .bloodNeeded(1000)
+                .consumption(5)
+                .drain(5)
+                .unlockedBy("has_reinforced_slate", has(BMItems.SLATE_REINFORCED.get()))
+                .save(output, BloodMagic.rl("air_tool"));
+
+        AltarRecipeBuilder.build(BMItems.INSCRIPTION_TOOL_FIRE.get())
+                .from(Items.MAGMA_CREAM)
+                .minTier(2)
+                .bloodNeeded(1000)
+                .consumption(5)
+                .drain(5)
+                .unlockedBy("has_reinforced_slate", has(BMItems.SLATE_REINFORCED.get()))
+                .save(output, BloodMagic.rl("fire_tool"));
+
+        AltarRecipeBuilder.build(BMItems.INSCRIPTION_TOOL_WATER.get())
+                .from(Tags.Items.STORAGE_BLOCKS_LAPIS)
+                .minTier(2)
+                .bloodNeeded(1000)
+                .consumption(5)
+                .drain(5)
+                .unlockedBy("has_reinforced_slate", has(BMItems.SLATE_REINFORCED.get()))
+                .save(output, BloodMagic.rl("water_tool"));
+
+        AltarRecipeBuilder.build(BMItems.INSCRIPTION_TOOL_EARTH.get())
+                .from(Tags.Items.OBSIDIANS)
+                .minTier(2)
+                .bloodNeeded(1000)
+                .consumption(5)
+                .drain(5)
+                .unlockedBy("has_reinforced_slate", has(BMItems.SLATE_REINFORCED.get()))
+                .save(output, BloodMagic.rl("earth_tool"));
+
+        AltarRecipeBuilder.build(BMItems.INSCRIPTION_TOOL_DUSK.get())
+                .from(Tags.Items.STORAGE_BLOCKS_COAL)
+                .minTier(3)
+                .bloodNeeded(2000)
+                .consumption(20)
+                .drain(10)
+                .unlockedBy("has_demonic_slate", has(BMItems.SLATE_DEMONIC.get()))
+                .save(output, BloodMagic.rl("dusk_tool"));
     }
 
     private void addSoulForgeRecipes(RecipeOutput output) {
