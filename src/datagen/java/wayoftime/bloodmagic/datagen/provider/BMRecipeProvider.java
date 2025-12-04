@@ -1405,6 +1405,187 @@ public class BMRecipeProvider extends RecipeProvider {
                 .minimumTier(1)
                 .save(output, "slate_vial");
 
+        // Anointment Recipes
+        AlchemyTableRecipeBuilder.build(BMItems.FORTUNE_ANOINTMENT.get())
+                .input(BMItems.SLATE_VIAL.get())
+                .input(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .input(Ingredient.of(BMTags.Items.DUSTS_COAL))
+                .syphon(500)
+                .ticks(100)
+                .minimumTier(1)
+                .save(output, "fortune_anointment");
+
+        AlchemyTableRecipeBuilder.build(BMItems.SILK_TOUCH_ANOINTMENT.get())
+                .input(BMItems.SLATE_VIAL.get())
+                .input(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .input(Items.COBWEB)
+                .input(Ingredient.of(Tags.Items.NUGGETS_GOLD))
+                .syphon(500)
+                .ticks(100)
+                .minimumTier(1)
+                .save(output, "silk_touch_anointment");
+
+        AlchemyTableRecipeBuilder.build(BMItems.MELEE_DAMAGE_ANOINTMENT.get())
+                .input(BMItems.SLATE_VIAL.get())
+                .input(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .input(Items.BLAZE_POWDER)
+                .input(Ingredient.of(Tags.Items.GEMS_QUARTZ))
+                .syphon(500)
+                .ticks(100)
+                .minimumTier(1)
+                .save(output, "melee_damage_anointment");
+
+        AlchemyTableRecipeBuilder.build(BMItems.HOLY_WATER_ANOINTMENT.get())
+                .input(BMItems.SLATE_VIAL.get())
+                .input(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .input(Items.GLISTERING_MELON_SLICE)
+                .input(Ingredient.of(Tags.Items.GEMS_QUARTZ))
+                .syphon(500)
+                .ticks(100)
+                .minimumTier(1)
+                .save(output, "holy_water_anointment");
+
+        AlchemyTableRecipeBuilder.build(BMItems.HIDDEN_KNOWLEDGE_ANOINTMENT.get())
+                .input(BMItems.SLATE_VIAL.get())
+                .input(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .input(Items.GLASS_BOTTLE)
+                .input(Items.ENCHANTED_BOOK)
+                .syphon(500)
+                .ticks(100)
+                .minimumTier(1)
+                .save(output, "hidden_knowledge_anointment");
+
+        AlchemyTableRecipeBuilder.build(BMItems.QUICK_DRAW_ANOINTMENT.get())
+                .input(BMItems.SLATE_VIAL.get())
+                .input(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .input(Ingredient.of(Tags.Items.STRINGS))
+                .input(Items.SPECTRAL_ARROW)
+                .syphon(500)
+                .ticks(100)
+                .minimumTier(1)
+                .save(output, "quick_draw_anointment");
+
+        AlchemyTableRecipeBuilder.build(BMItems.LOOTING_ANOINTMENT.get())
+                .input(BMItems.SLATE_VIAL.get())
+                .input(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .input(Ingredient.of(Tags.Items.GEMS_LAPIS))
+                .input(Ingredient.of(Tags.Items.BONES))
+                .syphon(500)
+                .ticks(100)
+                .minimumTier(1)
+                .save(output, "looting_anointment");
+
+        AlchemyTableRecipeBuilder.build(BMItems.BOW_POWER_ANOINTMENT.get())
+                .input(BMItems.SLATE_VIAL.get())
+                .input(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .input(Ingredient.of(Tags.Items.INGOTS_IRON))
+                .input(Items.BOW)
+                .syphon(500)
+                .ticks(100)
+                .minimumTier(1)
+                .save(output, "bow_power_anointment");
+
+        AlchemyTableRecipeBuilder.build(BMItems.SMELTING_ANOINTMENT.get())
+                .input(BMItems.SLATE_VIAL.get())
+                .input(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .input(Items.FURNACE)
+                .input(Items.CHARCOAL)
+                .syphon(500)
+                .ticks(100)
+                .minimumTier(1)
+                .save(output, "smelting_anointment");
+
+        AlchemyTableRecipeBuilder.build(BMItems.VOIDING_ANOINTMENT.get())
+                .input(BMItems.SLATE_VIAL.get())
+                .input(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .input(Items.NETHERRACK)
+                .input(Items.COBBLED_DEEPSLATE)
+                .syphon(500)
+                .ticks(100)
+                .minimumTier(1)
+                .save(output, "voiding_anointment");
+
+        AlchemyTableRecipeBuilder.build(BMItems.BOW_VELOCITY_ANOINTMENT.get())
+                .input(BMItems.SLATE_VIAL.get())
+                .input(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .input(Ingredient.of(Tags.Items.NUGGETS_GOLD))
+                .input(Items.BOW)
+                .syphon(500)
+                .ticks(100)
+                .minimumTier(1)
+                .save(output, "bow_velocity_anointment");
+
+        AlchemyTableRecipeBuilder.build(BMItems.WEAPON_REPAIR_ANOINTMENT.get())
+                .input(BMItems.SLATE_VIAL.get())
+                .input(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
+                .input(Ingredient.of(Tags.Items.INGOTS_COPPER))
+                .input(Ingredient.of(BMTags.Items.DUSTS_GOLD))
+                .syphon(500)
+                .ticks(100)
+                .minimumTier(1)
+                .save(output, "weapon_repair_anointment");
+
+        // Frame Parts and Filter Recipes
+        AlchemyTableRecipeBuilder.build(new ItemStack(BMItems.FRAME_PARTS.get(), 2))
+                .input(Ingredient.of(Tags.Items.GLASS_BLOCKS))
+                .input(Ingredient.of(Tags.Items.STONES))
+                .input(BMItems.SLATE_BLANK.get())
+                .syphon(1000)
+                .ticks(100)
+                .minimumTier(3)
+                .save(output, "component_frame_parts");
+
+        AlchemyTableRecipeBuilder.build(BMItems.ITEM_ROUTER_FILTER.get())
+                .input(BMItems.FRAME_PARTS.get())
+                .input(Ingredient.of(Tags.Items.LEATHERS))
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .input(Ingredient.of(Tags.Items.DYES_RED))
+                .syphon(500)
+                .ticks(100)
+                .minimumTier(3)
+                .save(output, "router_filter");
+
+        AlchemyTableRecipeBuilder.build(BMItems.ITEM_TAG_FILTER.get())
+                .input(BMItems.FRAME_PARTS.get())
+                .input(Ingredient.of(Tags.Items.INGOTS))
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .input(Items.CLAY_BALL)
+                .syphon(500)
+                .ticks(100)
+                .minimumTier(3)
+                .save(output, "tag_router_filter");
+
+        AlchemyTableRecipeBuilder.build(BMItems.ITEM_MOD_FILTER.get())
+                .input(BMItems.FRAME_PARTS.get())
+                .input(BMItems.SLATE_REINFORCED.get())
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .input(Ingredient.of(Tags.Items.DYES_YELLOW))
+                .syphon(500)
+                .ticks(100)
+                .minimumTier(3)
+                .save(output, "mod_router_filter");
+
+        AlchemyTableRecipeBuilder.build(BMItems.ITEM_ENCHANT_FILTER.get())
+                .input(BMItems.FRAME_PARTS.get())
+                .input(Items.ENCHANTED_BOOK)
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .input(Items.PAPER)
+                .syphon(500)
+                .ticks(100)
+                .minimumTier(3)
+                .save(output, "enchant_router_filter");
+
+        AlchemyTableRecipeBuilder.build(BMItems.ITEM_COMPOSITE_FILTER.get())
+                .input(BMItems.FRAME_PARTS.get())
+                .input(Ingredient.of(Tags.Items.DUSTS_GLOWSTONE))
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .input(BMItems.SLATE_IMBUED.get())
+                .syphon(1000)
+                .ticks(200)
+                .minimumTier(3)
+                .save(output, "composite_router_filter");
+
         // Alchemy Table recipe (crafting recipe for the table itself)
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BMBlocks.ALCHEMY_TABLE.block().get())
                 .pattern("sss")

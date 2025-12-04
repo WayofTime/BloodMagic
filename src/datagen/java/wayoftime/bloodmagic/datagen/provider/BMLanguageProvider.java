@@ -240,6 +240,29 @@ public class BMLanguageProvider extends LanguageProvider {
         add(BMItems.ALCHEMY_FLASK_THROWABLE.get(), "Throwable Alchemy Flask");
         add(BMItems.ALCHEMY_FLASK_LINGERING.get(), "Lingering Alchemy Flask");
 
+        // Anointment Items
+        add(BMItems.MELEE_DAMAGE_ANOINTMENT.get(), "Anointment: Melee Damage");
+        add(BMItems.SILK_TOUCH_ANOINTMENT.get(), "Anointment: Silk Touch");
+        add(BMItems.FORTUNE_ANOINTMENT.get(), "Anointment: Fortune");
+        add(BMItems.HOLY_WATER_ANOINTMENT.get(), "Anointment: Holy Water");
+        add(BMItems.HIDDEN_KNOWLEDGE_ANOINTMENT.get(), "Anointment: Hidden Knowledge");
+        add(BMItems.QUICK_DRAW_ANOINTMENT.get(), "Anointment: Quick Draw");
+        add(BMItems.LOOTING_ANOINTMENT.get(), "Anointment: Looting");
+        add(BMItems.BOW_POWER_ANOINTMENT.get(), "Anointment: Bow Power");
+        add(BMItems.SMELTING_ANOINTMENT.get(), "Anointment: Smelting");
+        add(BMItems.VOIDING_ANOINTMENT.get(), "Anointment: Voiding");
+        add(BMItems.BOW_VELOCITY_ANOINTMENT.get(), "Anointment: Bow Velocity");
+        add(BMItems.WEAPON_REPAIR_ANOINTMENT.get(), "Anointment: Weapon Repair");
+
+        // Routing/Filter Items
+        add(BMItems.FRAME_PARTS.get(), "Frame Parts");
+        add(BMItems.ITEM_ROUTER_FILTER.get(), "Standard Filter");
+        add(BMItems.ITEM_TAG_FILTER.get(), "Tag Filter");
+        add(BMItems.ITEM_ENCHANT_FILTER.get(), "Enchantment Filter");
+        add(BMItems.ITEM_MOD_FILTER.get(), "Mod Filter");
+        add(BMItems.ITEM_COMPOSITE_FILTER.get(), "Composite Filter");
+        add(BMItems.NODE_ROUTER.get(), "Node Router");
+
         // Teleposer Focus Items
         add(BMItems.TELEPOSER_FOCUS.get(), "Teleposer Focus");
         add(BMItems.TELEPOSER_FOCUS_ENHANCED.get(), "Enhanced Teleposer Focus");

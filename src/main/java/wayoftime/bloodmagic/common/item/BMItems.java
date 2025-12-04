@@ -206,6 +206,28 @@ public class BMItems {
     public static final DeferredHolder<Item, Item> ALCHEMY_FLASK_THROWABLE = BASIC_ITEMS.register("alchemy_flask_throwable", () -> new Item(new Item.Properties().stacksTo(1)));
     public static final DeferredHolder<Item, Item> ALCHEMY_FLASK_LINGERING = BASIC_ITEMS.register("alchemy_flask_lingering", () -> new Item(new Item.Properties().stacksTo(1)));
 
+    // Anointment Items (placeholder - weapon upgrade functionality to be added later)
+    public static final DeferredHolder<Item, Item> MELEE_DAMAGE_ANOINTMENT = BASIC_ITEMS.register("melee_anointment", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> SILK_TOUCH_ANOINTMENT = BASIC_ITEMS.register("silk_touch_anointment", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> FORTUNE_ANOINTMENT = BASIC_ITEMS.register("fortune_anointment", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> HOLY_WATER_ANOINTMENT = BASIC_ITEMS.register("holy_water_anointment", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> HIDDEN_KNOWLEDGE_ANOINTMENT = BASIC_ITEMS.register("hidden_knowledge_anointment", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> QUICK_DRAW_ANOINTMENT = BASIC_ITEMS.register("quick_draw_anointment", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> LOOTING_ANOINTMENT = BASIC_ITEMS.register("looting_anointment", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> BOW_POWER_ANOINTMENT = BASIC_ITEMS.register("bow_power_anointment", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> SMELTING_ANOINTMENT = BASIC_ITEMS.register("smelting_anointment", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> VOIDING_ANOINTMENT = BASIC_ITEMS.register("voiding_anointment", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> BOW_VELOCITY_ANOINTMENT = BASIC_ITEMS.register("bow_velocity_anointment", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> WEAPON_REPAIR_ANOINTMENT = BASIC_ITEMS.register("weapon_repair_anointment", () -> new Item(new Item.Properties()));
+
+    // Routing/Filter Items (placeholder - routing system functionality to be added later)
+    public static final DeferredHolder<Item, Item> FRAME_PARTS = BASIC_ITEMS.register("componentframeparts", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> ITEM_ROUTER_FILTER = BASIC_ITEMS.register("itemrouterfilterexact", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> ITEM_TAG_FILTER = BASIC_ITEMS.register("itemrouterfilteroredict", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> ITEM_ENCHANT_FILTER = BASIC_ITEMS.register("itemrouterfilterenchant", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> ITEM_MOD_FILTER = BASIC_ITEMS.register("itemrouterfiltermoditems", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> ITEM_COMPOSITE_FILTER = BASIC_ITEMS.register("itemrouterfiltercomposite", () -> new Item(new Item.Properties()));
+
     public static void register(IEventBus modBus) {
         BASIC_ITEMS.register(modBus);
         ITEMS.register(modBus);
