@@ -1146,6 +1146,68 @@ public class BMRecipeProvider extends RecipeProvider {
                 .minimumTier(1)
                 .save(output, "arcane_ash");
 
+        // Tau Oil - 3x weak tau + bone meal
+        AlchemyTableRecipeBuilder.build(BMItems.TAU_OIL.get())
+                .input(BMBlocks.WEAK_TAU.item().get())
+                .input(BMBlocks.WEAK_TAU.item().get())
+                .input(BMBlocks.WEAK_TAU.item().get())
+                .input(Items.BONE_MEAL)
+                .syphon(500)
+                .ticks(200)
+                .minimumTier(3)
+                .save(output, "tau_oil");
+
+        // Utility recipes
+        // Leather from rotten flesh
+        AlchemyTableRecipeBuilder.build(new ItemStack(Items.LEATHER, 4))
+                .input(Items.ROTTEN_FLESH)
+                .input(Items.ROTTEN_FLESH)
+                .input(Items.ROTTEN_FLESH)
+                .input(Items.ROTTEN_FLESH)
+                .input(Items.FLINT)
+                .input(Items.WATER_BUCKET)
+                .syphon(100)
+                .ticks(200)
+                .minimumTier(1)
+                .save(output, "leather_from_flesh");
+
+        // String from wool
+        AlchemyTableRecipeBuilder.build(new ItemStack(Items.STRING, 4))
+                .input(Ingredient.of(ItemTags.WOOL))
+                .input(Items.FLINT)
+                .syphon(100)
+                .ticks(100)
+                .minimumTier(0)
+                .save(output, "string");
+
+        // Flint duplication
+        AlchemyTableRecipeBuilder.build(new ItemStack(Items.FLINT, 2))
+                .input(Items.GRAVEL)
+                .input(Items.FLINT)
+                .syphon(50)
+                .ticks(20)
+                .minimumTier(0)
+                .save(output, "flint_from_gravel");
+
+        // Bread from wheat
+        AlchemyTableRecipeBuilder.build(Items.BREAD)
+                .input(Ingredient.of(Tags.Items.CROPS_WHEAT))
+                .input(Items.SUGAR)
+                .syphon(100)
+                .ticks(100)
+                .minimumTier(1)
+                .save(output, "bread");
+
+        // Explosive Powder - gunpowder x2 + coal
+        AlchemyTableRecipeBuilder.build(BMItems.EXPLOSIVE_POWDER.get())
+                .input(Items.GUNPOWDER)
+                .input(Items.GUNPOWDER)
+                .input(Items.COAL)
+                .syphon(500)
+                .ticks(200)
+                .minimumTier(1)
+                .save(output, "explosive_powder");
+
         // Alchemy Table recipe (crafting recipe for the table itself)
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BMBlocks.ALCHEMY_TABLE.block().get())
                 .pattern("sss")
