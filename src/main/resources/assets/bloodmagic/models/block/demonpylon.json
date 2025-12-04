@@ -4,7 +4,7 @@
   "flip_v": true, 
   "model": "bloodmagic:models/block/blockdemonpylon.obj",
   "textures": {
-    "default": "bloodmagic:models/demonpylon",
+    "default": "bloodmagic:block/demonpylon",
     "particle": "#default"
   }
 }

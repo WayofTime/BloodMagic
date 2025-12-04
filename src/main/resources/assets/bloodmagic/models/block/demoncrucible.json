@@ -4,7 +4,7 @@
   "flip_v": true, 
   "model": "bloodmagic:models/block/blockdemoncrucible.obj",
   "textures": {
-    "default": "bloodmagic:models/demoncrucible",
+    "default": "bloodmagic:block/demoncrucible",
     "particle": "#default"
   }
 }

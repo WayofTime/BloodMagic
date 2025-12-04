@@ -4,7 +4,7 @@
   "flip_v": true, 
   "model": "bloodmagic:models/block/blockdemoncrystallizer.obj",
   "textures": {
-    "default": "bloodmagic:models/demoncrystallizer",
+    "default": "bloodmagic:block/demoncrystallizer",
     "particle": "#default"
   }
 }
