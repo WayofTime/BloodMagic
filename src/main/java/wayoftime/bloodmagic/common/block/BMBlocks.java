@@ -15,6 +15,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
+import wayoftime.bloodmagic.ritual.EnumRuneType;
 import wayoftime.bloodmagic.util.helper.BlockEntityHelper;
 import wayoftime.bloodmagic.util.helper.BlockWithItemHolder;
 import wayoftime.bloodmagic.util.helper.BlockWithItemRegister;
@@ -86,6 +87,16 @@ public class BMBlocks {
     private static final BlockBehaviour.Properties tau_properties = BlockBehaviour.Properties.of().noCollission().instabreak().sound(SoundType.CROP).pushReaction(PushReaction.DESTROY);
     public static final BlockWithItemHolder<Block, BlockItem> WEAK_TAU = BASIC_REG.register("weak_tau", tau_properties, new Item.Properties());
     public static final BlockWithItemHolder<Block, BlockItem> STRONG_TAU = BASIC_REG.register("strong_tau", tau_properties, new Item.Properties());
+
+    // Ritual Stones (TODO: Full ritual system implementation pending)
+    public static final BlockWithItemHolder<BlockRitualStone, BlockItem> BLANK_RITUAL_STONE = BLOCK_REG.register("ritualstone", () -> new BlockRitualStone(EnumRuneType.BLANK));
+    public static final BlockWithItemHolder<BlockRitualStone, BlockItem> AIR_RITUAL_STONE = BLOCK_REG.register("airritualstone", () -> new BlockRitualStone(EnumRuneType.AIR));
+    public static final BlockWithItemHolder<BlockRitualStone, BlockItem> WATER_RITUAL_STONE = BLOCK_REG.register("waterritualstone", () -> new BlockRitualStone(EnumRuneType.WATER));
+    public static final BlockWithItemHolder<BlockRitualStone, BlockItem> FIRE_RITUAL_STONE = BLOCK_REG.register("fireritualstone", () -> new BlockRitualStone(EnumRuneType.FIRE));
+    public static final BlockWithItemHolder<BlockRitualStone, BlockItem> EARTH_RITUAL_STONE = BLOCK_REG.register("earthritualstone", () -> new BlockRitualStone(EnumRuneType.EARTH));
+    public static final BlockWithItemHolder<BlockRitualStone, BlockItem> DUSK_RITUAL_STONE = BLOCK_REG.register("duskritualstone", () -> new BlockRitualStone(EnumRuneType.DUSK));
+    public static final BlockWithItemHolder<BlockRitualStone, BlockItem> DAWN_RITUAL_STONE = BLOCK_REG.register("lightritualstone", () -> new BlockRitualStone(EnumRuneType.DAWN));
+    public static final BlockWithItemHolder<BlockMasterRitualStone, BlockItem> MASTER_RITUAL_STONE = BLOCK_REG.register("masterritualstone", () -> new BlockMasterRitualStone(false));
 
     public static void register(IEventBus modBus) {
         BASIC_BLOCKS.register(modBus);
