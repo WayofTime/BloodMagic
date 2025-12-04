@@ -12,7 +12,7 @@
       "item": "bloodmagic:weak_blood_shard"
     },
     {
-      "item": "bloodmagic:weak_blood_shard"
+      "tag": "bloodmagic:crystals/demon"
     }
   ],
   "minDrain": 1000.0,
