@@ -1,13 +1,16 @@
 package wayoftime.bloodmagic.common.event;
 
 import com.mojang.authlib.GameProfile;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
@@ -46,6 +49,18 @@ public class CommonEventHandler {
         } else if (binding.uuid() == profile.getId() && !Objects.equals(binding.name(), profile.getName())) {
             binding = new Binding(profile.getId(), profile.getName());
             held.set(BMDataComponents.BINDING, binding);
+        }
+    }
+
+    // Auto-op players in dev environment
+    @SubscribeEvent
+    public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        if (!FMLLoader.isProduction() && event.getEntity() instanceof ServerPlayer serverPlayer) {
+            var server = serverPlayer.getServer();
+            if (server != null && !server.getPlayerList().isOp(serverPlayer.getGameProfile())) {
+                server.getPlayerList().op(serverPlayer.getGameProfile());
+                BloodMagic.LOGGER.info("Auto-opped {} in dev environment", serverPlayer.getName().getString());
+            }
         }
     }
 }

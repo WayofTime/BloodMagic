@@ -1,0 +1,10 @@
+{
+  "parent": "block/block",
+  "loader": "forge:obj",
+  "flip_v": true, 
+  "model": "bloodmagic:models/block/modelalchemytable.obj",
+  "textures": {
+    "default": "bloodmagic:models/alchemytable",
+    "particle": "#default"
+  }
+}
