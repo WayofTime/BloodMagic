@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemical_reaction_chamber",
+  "chance_outputs": [
+    {
+      "chance": 0.33,
+      "item": {
+        "count": 1,
+        "id": "bloodmagic:coppersand"
+      }
+    }
+  ],
+  "guaranteed_outputs": [
+    {
+      "count": 1,
+      "id": "bloodmagic:coppersand"
+    }
+  ],
+  "input": {
+    "tag": "c:raw_materials/copper"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc_tool/cutting_fluids"
+  }
+}

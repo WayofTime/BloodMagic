@@ -436,6 +436,16 @@ public class BMRecipeProvider extends RecipeProvider {
                 .drain(10)
                 .unlockedBy("has_demonic_slate", has(BMItems.SLATE_DEMONIC.get()))
                 .save(output, BloodMagic.rl("dusk_tool"));
+
+        // Alchemy Flask - glass bottle on tier 1 altar
+        AltarRecipeBuilder.build(BMItems.ALCHEMY_FLASK.get())
+                .from(Items.GLASS_BOTTLE)
+                .minTier(1)
+                .bloodNeeded(4000)
+                .consumption(5)
+                .drain(5)
+                .unlockedBy("has_apprentice_orb", has(BMItems.ORB_APPRENTICE.get()))
+                .save(output, BloodMagic.rl("alchemy_flask"));
     }
 
     private void addSoulForgeRecipes(RecipeOutput output) {
@@ -2399,6 +2409,13 @@ public class BMRecipeProvider extends RecipeProvider {
                 .guaranteedOutput(new ItemStack(BMItems.IRON_SAND.get()))
                 .save(output, BloodMagic.rl("dustsfrom_ingot_iron"));
 
+        // Raw material -> Sand (1x + 17% extra, 33% for 2nd extra) with cutting fluid
+        ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
+                .input(Ingredient.of(Tags.Items.RAW_MATERIALS_IRON))
+                .guaranteedOutput(new ItemStack(BMItems.IRON_SAND.get()))
+                .chancedOutput(new ItemStack(BMItems.IRON_SAND.get()), 0.33)
+                .save(output, BloodMagic.rl("dustsfrom_raw_iron"));
+
         // Gold processing chain
         ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
                 .input(Ingredient.of(Tags.Items.ORES_GOLD))
@@ -2432,6 +2449,12 @@ public class BMRecipeProvider extends RecipeProvider {
                 .guaranteedOutput(new ItemStack(BMItems.GOLD_SAND.get()))
                 .save(output, BloodMagic.rl("dustsfrom_ingot_gold"));
 
+        ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
+                .input(Ingredient.of(Tags.Items.RAW_MATERIALS_GOLD))
+                .guaranteedOutput(new ItemStack(BMItems.GOLD_SAND.get()))
+                .chancedOutput(new ItemStack(BMItems.GOLD_SAND.get()), 0.33)
+                .save(output, BloodMagic.rl("dustsfrom_raw_gold"));
+
         // Copper processing chain
         ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
                 .input(Ingredient.of(Tags.Items.ORES_COPPER))
@@ -2464,6 +2487,12 @@ public class BMRecipeProvider extends RecipeProvider {
                 .input(Ingredient.of(Tags.Items.INGOTS_COPPER))
                 .guaranteedOutput(new ItemStack(BMItems.COPPER_SAND.get()))
                 .save(output, BloodMagic.rl("dustsfrom_ingot_copper"));
+
+        ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
+                .input(Ingredient.of(Tags.Items.RAW_MATERIALS_COPPER))
+                .guaranteedOutput(new ItemStack(BMItems.COPPER_SAND.get()))
+                .chancedOutput(new ItemStack(BMItems.COPPER_SAND.get()), 0.33)
+                .save(output, BloodMagic.rl("dustsfrom_raw_copper"));
 
         // Netherite scrap processing chain
         ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
@@ -2504,6 +2533,12 @@ public class BMRecipeProvider extends RecipeProvider {
                 .input(Ingredient.of(BMTags.Items.GRAVELS_HELLFORGED))
                 .guaranteedOutput(new ItemStack(BMItems.HELLFORGED_SAND.get()))
                 .save(output, BloodMagic.rl("dustsfrom_gravel_hellforged"));
+
+        // Hellforged ingot -> sand (uses explosives, not cutting fluid)
+        ARCRecipeBuilder.build(BMTags.Items.EXPLOSIVES)
+                .input(Ingredient.of(BMTags.Items.INGOTS_HELLFORGED))
+                .guaranteedOutput(new ItemStack(BMItems.HELLFORGED_SAND.get()))
+                .save(output, BloodMagic.rl("dustsfrom_ingot_hellforged"));
 
         // Coal processing - coal -> coal sand with cutting fluid
         ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
