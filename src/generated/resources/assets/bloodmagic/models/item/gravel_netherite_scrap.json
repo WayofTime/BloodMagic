@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "bloodmagic:item/gravel_netherite_scrap"
+  }
+}

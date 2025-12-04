@@ -112,6 +112,30 @@ public class BMItems {
     public static final DeferredHolder<Item, TeleposerFocusItem> TELEPOSER_FOCUS_ENHANCED = ITEMS.register("enhancedteleposerfocus", () -> new TeleposerFocusItem(1));
     public static final DeferredHolder<Item, TeleposerFocusItem> TELEPOSER_FOCUS_REINFORCED = ITEMS.register("reinforcedteleposerfocus", () -> new TeleposerFocusItem(2));
 
+    // Fragments
+    public static final DeferredHolder<Item, Item> IRON_FRAGMENT = BASIC_ITEMS.register("ironfragment", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> GOLD_FRAGMENT = BASIC_ITEMS.register("goldfragment", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> COPPER_FRAGMENT = BASIC_ITEMS.register("copperfragment", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> NETHERITE_SCRAP_FRAGMENT = BASIC_ITEMS.register("fragment_netherite_scrap", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> DEMONITE_FRAGMENT = BASIC_ITEMS.register("demonitefragment", () -> new Item(new Item.Properties()));
+
+    // Gravels
+    public static final DeferredHolder<Item, Item> IRON_GRAVEL = BASIC_ITEMS.register("irongravel", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> GOLD_GRAVEL = BASIC_ITEMS.register("goldgravel", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> COPPER_GRAVEL = BASIC_ITEMS.register("coppergravel", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> NETHERITE_SCRAP_GRAVEL = BASIC_ITEMS.register("gravel_netherite_scrap", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> DEMONITE_GRAVEL = BASIC_ITEMS.register("demonitegravel", () -> new Item(new Item.Properties()));
+
+    // Sands/Dusts
+    public static final DeferredHolder<Item, Item> IRON_SAND = BASIC_ITEMS.register("ironsand", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> GOLD_SAND = BASIC_ITEMS.register("goldsand", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> COPPER_SAND = BASIC_ITEMS.register("coppersand", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> COAL_SAND = BASIC_ITEMS.register("coalsand", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> NETHERITE_SCRAP_SAND = BASIC_ITEMS.register("sand_netherite", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> HELLFORGED_SAND = BASIC_ITEMS.register("sand_hellforged", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> CORRUPTED_DUST = BASIC_ITEMS.register("corrupted_dust", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> CORRUPTED_DUST_TINY = BASIC_ITEMS.register("corrupted_tinydust", () -> new Item(new Item.Properties()));
+
     // ARC Tools
     public static final DeferredHolder<Item, ItemARCToolBase> BASIC_CUTTING_FLUID = BASIC_ITEMS.register("basiccuttingfluid", () -> new ItemARCToolBase(64, 1, EnumWillType.CORROSIVE));
     public static final DeferredHolder<Item, ItemARCToolBase> EXPLOSIVE_POWDER = BASIC_ITEMS.register("explosivepowder", () -> new ItemARCToolBase(64, 1, EnumWillType.DESTRUCTIVE));
