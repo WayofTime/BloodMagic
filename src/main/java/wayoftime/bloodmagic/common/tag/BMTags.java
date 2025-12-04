@@ -36,6 +36,19 @@ public class BMTags {
         public static final TagKey<Item> LIVING_UPGRADE_SET = tag(bm("living_upgrade_set"));
         public static final TagKey<Item> LIVING_SET = withParent(LIVING_UPGRADE_SET, BMMaterialsAndTiers.LIVING_ARMOUR_MATERIAL.getId());
 
+        // Processing item tags
+        public static final TagKey<Item> FRAGMENTS_IRON = tag(bm("fragments/iron"));
+        public static final TagKey<Item> FRAGMENTS_GOLD = tag(bm("fragments/gold"));
+        public static final TagKey<Item> FRAGMENTS_COPPER = tag(bm("fragments/copper"));
+        public static final TagKey<Item> FRAGMENTS_NETHERITE_SCRAP = tag(bm("fragments/netherite_scrap"));
+        public static final TagKey<Item> FRAGMENTS_HELLFORGED = tag(bm("fragments/hellforged"));
+
+        public static final TagKey<Item> GRAVELS_IRON = tag(bm("gravels/iron"));
+        public static final TagKey<Item> GRAVELS_GOLD = tag(bm("gravels/gold"));
+        public static final TagKey<Item> GRAVELS_COPPER = tag(bm("gravels/copper"));
+        public static final TagKey<Item> GRAVELS_NETHERITE_SCRAP = tag(bm("gravels/netherite_scrap"));
+        public static final TagKey<Item> GRAVELS_HELLFORGED = tag(bm("gravels/hellforged"));
+
         private static TagKey<Item> fromBlock(TagKey<Block> input) {
             return tag(input.location());
         }

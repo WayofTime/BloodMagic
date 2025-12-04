@@ -4,6 +4,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
@@ -15,6 +16,7 @@ import wayoftime.bloodmagic.common.item.BMItems;
 import wayoftime.bloodmagic.common.tag.BMTags;
 import wayoftime.bloodmagic.datagen.builder.AlchemyArrayRecipeBuilder;
 import wayoftime.bloodmagic.datagen.builder.AlchemyTableRecipeBuilder;
+import wayoftime.bloodmagic.datagen.builder.recipe.ARCRecipeBuilder;
 import wayoftime.bloodmagic.datagen.builder.recipe.AltarRecipeBuilder;
 import wayoftime.bloodmagic.datagen.builder.recipe.ForgeRecipeBuilder;
 import wayoftime.bloodmagic.datagen.builder.recipe.TieredRecipeBuilder;
@@ -35,6 +37,7 @@ public class BMRecipeProvider extends RecipeProvider {
         addSoulForgeRecipes(output);
         addAlchemyArrayRecipes(output);
         addAlchemyTableRecipes(output);
+        addARCRecipes(output);
     }
 
     private void addVanillaCraftingRecipes(RecipeOutput output) {
@@ -798,5 +801,195 @@ public class BMRecipeProvider extends RecipeProvider {
                 .define('o', BMItems.ORB_WEAK.get())
                 .unlockedBy("has_weak_orb", has(BMItems.ORB_WEAK.get()))
                 .save(output, BloodMagic.rl("alchemy_table"));
+    }
+
+    private void addARCRecipes(RecipeOutput output) {
+        // Iron processing chain
+        // Ore -> Sand (3x) with cutting fluid
+        ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
+                .input(Ingredient.of(Tags.Items.ORES_IRON))
+                .guaranteedOutput(new ItemStack(BMItems.IRON_SAND.get(), 3))
+                .save(output, BloodMagic.rl("dustsfrom_ore_iron"));
+
+        // Raw material -> Fragment (2x + 25% extra) with explosive
+        ARCRecipeBuilder.build(BMTags.Items.EXPLOSIVES)
+                .input(Ingredient.of(Tags.Items.RAW_MATERIALS_IRON))
+                .guaranteedOutput(new ItemStack(BMItems.IRON_FRAGMENT.get(), 2))
+                .chancedOutput(new ItemStack(BMItems.IRON_FRAGMENT.get()), 0.25)
+                .save(output, BloodMagic.rl("fragmentsiron"));
+
+        // Ore -> Fragment (3x) with explosive
+        ARCRecipeBuilder.build(BMTags.Items.EXPLOSIVES)
+                .input(Ingredient.of(Tags.Items.ORES_IRON))
+                .guaranteedOutput(new ItemStack(BMItems.IRON_FRAGMENT.get(), 3))
+                .save(output, BloodMagic.rl("fragmentsfrom_ore_iron"));
+
+        // Fragment -> Gravel (1x + 50% corrupted tinydust) with resonator
+        ARCRecipeBuilder.build(BMTags.Items.RESONATOR)
+                .input(Ingredient.of(BMTags.Items.FRAGMENTS_IRON))
+                .guaranteedOutput(new ItemStack(BMItems.IRON_GRAVEL.get()))
+                .chancedOutput(new ItemStack(BMItems.CORRUPTED_DUST_TINY.get()), 0.5)
+                .save(output, BloodMagic.rl("gravelsiron"));
+
+        // Gravel -> Sand (1x) with cutting fluid
+        ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
+                .input(Ingredient.of(BMTags.Items.GRAVELS_IRON))
+                .guaranteedOutput(new ItemStack(BMItems.IRON_SAND.get()))
+                .save(output, BloodMagic.rl("dustsfrom_gravel_iron"));
+
+        // Ingot -> Sand (1x) with cutting fluid
+        ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
+                .input(Ingredient.of(Tags.Items.INGOTS_IRON))
+                .guaranteedOutput(new ItemStack(BMItems.IRON_SAND.get()))
+                .save(output, BloodMagic.rl("dustsfrom_ingot_iron"));
+
+        // Gold processing chain
+        ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
+                .input(Ingredient.of(Tags.Items.ORES_GOLD))
+                .guaranteedOutput(new ItemStack(BMItems.GOLD_SAND.get(), 3))
+                .save(output, BloodMagic.rl("dustsfrom_ore_gold"));
+
+        ARCRecipeBuilder.build(BMTags.Items.EXPLOSIVES)
+                .input(Ingredient.of(Tags.Items.RAW_MATERIALS_GOLD))
+                .guaranteedOutput(new ItemStack(BMItems.GOLD_FRAGMENT.get(), 2))
+                .chancedOutput(new ItemStack(BMItems.GOLD_FRAGMENT.get()), 0.25)
+                .save(output, BloodMagic.rl("fragmentsgold"));
+
+        ARCRecipeBuilder.build(BMTags.Items.EXPLOSIVES)
+                .input(Ingredient.of(Tags.Items.ORES_GOLD))
+                .guaranteedOutput(new ItemStack(BMItems.GOLD_FRAGMENT.get(), 3))
+                .save(output, BloodMagic.rl("fragmentsfrom_ore_gold"));
+
+        ARCRecipeBuilder.build(BMTags.Items.RESONATOR)
+                .input(Ingredient.of(BMTags.Items.FRAGMENTS_GOLD))
+                .guaranteedOutput(new ItemStack(BMItems.GOLD_GRAVEL.get()))
+                .chancedOutput(new ItemStack(BMItems.CORRUPTED_DUST_TINY.get()), 0.5)
+                .save(output, BloodMagic.rl("gravelsgold"));
+
+        ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
+                .input(Ingredient.of(BMTags.Items.GRAVELS_GOLD))
+                .guaranteedOutput(new ItemStack(BMItems.GOLD_SAND.get()))
+                .save(output, BloodMagic.rl("dustsfrom_gravel_gold"));
+
+        ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
+                .input(Ingredient.of(Tags.Items.INGOTS_GOLD))
+                .guaranteedOutput(new ItemStack(BMItems.GOLD_SAND.get()))
+                .save(output, BloodMagic.rl("dustsfrom_ingot_gold"));
+
+        // Copper processing chain
+        ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
+                .input(Ingredient.of(Tags.Items.ORES_COPPER))
+                .guaranteedOutput(new ItemStack(BMItems.COPPER_SAND.get(), 3))
+                .save(output, BloodMagic.rl("dustsfrom_ore_copper"));
+
+        ARCRecipeBuilder.build(BMTags.Items.EXPLOSIVES)
+                .input(Ingredient.of(Tags.Items.RAW_MATERIALS_COPPER))
+                .guaranteedOutput(new ItemStack(BMItems.COPPER_FRAGMENT.get(), 2))
+                .chancedOutput(new ItemStack(BMItems.COPPER_FRAGMENT.get()), 0.25)
+                .save(output, BloodMagic.rl("fragmentscopper"));
+
+        ARCRecipeBuilder.build(BMTags.Items.EXPLOSIVES)
+                .input(Ingredient.of(Tags.Items.ORES_COPPER))
+                .guaranteedOutput(new ItemStack(BMItems.COPPER_FRAGMENT.get(), 3))
+                .save(output, BloodMagic.rl("fragmentsfrom_ore_copper"));
+
+        ARCRecipeBuilder.build(BMTags.Items.RESONATOR)
+                .input(Ingredient.of(BMTags.Items.FRAGMENTS_COPPER))
+                .guaranteedOutput(new ItemStack(BMItems.COPPER_GRAVEL.get()))
+                .chancedOutput(new ItemStack(BMItems.CORRUPTED_DUST_TINY.get()), 0.5)
+                .save(output, BloodMagic.rl("gravelscopper"));
+
+        ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
+                .input(Ingredient.of(BMTags.Items.GRAVELS_COPPER))
+                .guaranteedOutput(new ItemStack(BMItems.COPPER_SAND.get()))
+                .save(output, BloodMagic.rl("dustsfrom_gravel_copper"));
+
+        ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
+                .input(Ingredient.of(Tags.Items.INGOTS_COPPER))
+                .guaranteedOutput(new ItemStack(BMItems.COPPER_SAND.get()))
+                .save(output, BloodMagic.rl("dustsfrom_ingot_copper"));
+
+        // Netherite scrap processing chain
+        ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
+                .input(Ingredient.of(Items.ANCIENT_DEBRIS))
+                .guaranteedOutput(new ItemStack(BMItems.NETHERITE_SCRAP_SAND.get(), 3))
+                .save(output, BloodMagic.rl("dustsfrom_ore_netherite_scrap"));
+
+        ARCRecipeBuilder.build(BMTags.Items.EXPLOSIVES)
+                .input(Ingredient.of(Items.NETHERITE_SCRAP))
+                .guaranteedOutput(new ItemStack(BMItems.NETHERITE_SCRAP_FRAGMENT.get(), 2))
+                .chancedOutput(new ItemStack(BMItems.NETHERITE_SCRAP_FRAGMENT.get()), 0.25)
+                .save(output, BloodMagic.rl("fragmentsnetherite_scrap"));
+
+        ARCRecipeBuilder.build(BMTags.Items.RESONATOR)
+                .input(Ingredient.of(BMTags.Items.FRAGMENTS_NETHERITE_SCRAP))
+                .guaranteedOutput(new ItemStack(BMItems.NETHERITE_SCRAP_GRAVEL.get()))
+                .chancedOutput(new ItemStack(BMItems.CORRUPTED_DUST_TINY.get()), 0.5)
+                .save(output, BloodMagic.rl("gravelsnetherite_scrap"));
+
+        ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
+                .input(Ingredient.of(BMTags.Items.GRAVELS_NETHERITE_SCRAP))
+                .guaranteedOutput(new ItemStack(BMItems.NETHERITE_SCRAP_SAND.get()))
+                .save(output, BloodMagic.rl("dustsfrom_gravel_netherite_scrap"));
+
+        ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
+                .input(Ingredient.of(Items.NETHERITE_SCRAP))
+                .guaranteedOutput(new ItemStack(BMItems.NETHERITE_SCRAP_SAND.get()))
+                .save(output, BloodMagic.rl("dustsfrom_ingot_netherite_scrap"));
+
+        // Hellforged/Demonite processing (only gravel->sand, others need hellforged ore/ingot)
+        ARCRecipeBuilder.build(BMTags.Items.RESONATOR)
+                .input(Ingredient.of(BMTags.Items.FRAGMENTS_HELLFORGED))
+                .guaranteedOutput(new ItemStack(BMItems.DEMONITE_GRAVEL.get()))
+                .chancedOutput(new ItemStack(BMItems.CORRUPTED_DUST_TINY.get()), 0.5)
+                .save(output, BloodMagic.rl("gravelshellforged"));
+
+        ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
+                .input(Ingredient.of(BMTags.Items.GRAVELS_HELLFORGED))
+                .guaranteedOutput(new ItemStack(BMItems.HELLFORGED_SAND.get()))
+                .save(output, BloodMagic.rl("dustsfrom_gravel_hellforged"));
+
+        // Coal processing - coal -> coal sand with cutting fluid
+        ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
+                .input(Ingredient.of(Tags.Items.ORES_COAL))
+                .guaranteedOutput(new ItemStack(BMItems.COAL_SAND.get(), 6))
+                .save(output, BloodMagic.rl("coalsand_from_ore"));
+
+        ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
+                .input(Ingredient.of(Items.COAL))
+                .guaranteedOutput(new ItemStack(BMItems.COAL_SAND.get()))
+                .save(output, BloodMagic.rl("coalsand_from_coal"));
+
+        // Utility recipes - hydration
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Tags.Items.SANDS))
+                .guaranteedOutput(new ItemStack(Items.CLAY_BALL, 4))
+                .save(output, BloodMagic.rl("clay_from_sand"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.TERRACOTTA))
+                .guaranteedOutput(new ItemStack(Items.CLAY, 1))
+                .save(output, BloodMagic.rl("clay_from_terracotta"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.DIRT))
+                .guaranteedOutput(new ItemStack(Items.MUD))
+                .save(output, BloodMagic.rl("mud_from_dirt"));
+
+        // Furnace recipes - sand to ingot
+        ARCRecipeBuilder.build(BMTags.Items.ARC_SMELTING)
+                .input(Ingredient.of(BMItems.IRON_SAND.get()))
+                .guaranteedOutput(new ItemStack(Items.IRON_INGOT))
+                .save(output, BloodMagic.rl("iron_ingot_from_sand"));
+
+        ARCRecipeBuilder.build(BMTags.Items.ARC_SMELTING)
+                .input(Ingredient.of(BMItems.GOLD_SAND.get()))
+                .guaranteedOutput(new ItemStack(Items.GOLD_INGOT))
+                .save(output, BloodMagic.rl("gold_ingot_from_sand"));
+
+        ARCRecipeBuilder.build(BMTags.Items.ARC_SMELTING)
+                .input(Ingredient.of(BMItems.COPPER_SAND.get()))
+                .guaranteedOutput(new ItemStack(Items.COPPER_INGOT))
+                .save(output, BloodMagic.rl("copper_ingot_from_sand"));
     }
 }

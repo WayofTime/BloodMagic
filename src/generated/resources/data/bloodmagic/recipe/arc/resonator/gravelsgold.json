@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemical_reaction_chamber",
+  "chance_outputs": [
+    {
+      "chance": 0.5,
+      "item": {
+        "count": 1,
+        "id": "bloodmagic:corrupted_tinydust"
+      }
+    }
+  ],
+  "guaranteed_outputs": [
+    {
+      "count": 1,
+      "id": "bloodmagic:goldgravel"
+    }
+  ],
+  "input": {
+    "tag": "bloodmagic:fragments/gold"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc_tool/resonator"
+  }
+}

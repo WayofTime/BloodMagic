@@ -1,0 +1,16 @@
+{
+  "type": "bloodmagic:alchemical_reaction_chamber",
+  "chance_outputs": [],
+  "guaranteed_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:copper_ingot"
+    }
+  ],
+  "input": {
+    "item": "bloodmagic:coppersand"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc_tool/furnace/smelting"
+  }
+}

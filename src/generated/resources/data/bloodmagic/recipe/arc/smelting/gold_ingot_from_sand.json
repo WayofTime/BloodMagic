@@ -1,0 +1,16 @@
+{
+  "type": "bloodmagic:alchemical_reaction_chamber",
+  "chance_outputs": [],
+  "guaranteed_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:gold_ingot"
+    }
+  ],
+  "input": {
+    "item": "bloodmagic:goldsand"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc_tool/furnace/smelting"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "bloodmagic:alchemical_reaction_chamber",
+  "chance_outputs": [],
+  "guaranteed_outputs": [
+    {
+      "count": 1,
+      "id": "bloodmagic:sand_hellforged"
+    }
+  ],
+  "input": {
+    "tag": "bloodmagic:gravels/hellforged"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc_tool/cutting_fluids"
+  }
+}

@@ -70,5 +70,18 @@ public class BMItemTagProvider extends ItemTagsProvider {
                 .addTag(BMTags.Items.CUTTING_FLUIDS)
                 .addTag(BMTags.Items.HYDRATION)
                 .addTag(BMTags.Items.ARC_FURNACE);
+
+        // Processing item tags
+        tag(BMTags.Items.FRAGMENTS_IRON).add(BMItems.IRON_FRAGMENT.get());
+        tag(BMTags.Items.FRAGMENTS_GOLD).add(BMItems.GOLD_FRAGMENT.get());
+        tag(BMTags.Items.FRAGMENTS_COPPER).add(BMItems.COPPER_FRAGMENT.get());
+        tag(BMTags.Items.FRAGMENTS_NETHERITE_SCRAP).add(BMItems.NETHERITE_SCRAP_FRAGMENT.get());
+        tag(BMTags.Items.FRAGMENTS_HELLFORGED).add(BMItems.DEMONITE_FRAGMENT.get());
+
+        tag(BMTags.Items.GRAVELS_IRON).add(BMItems.IRON_GRAVEL.get());
+        tag(BMTags.Items.GRAVELS_GOLD).add(BMItems.GOLD_GRAVEL.get());
+        tag(BMTags.Items.GRAVELS_COPPER).add(BMItems.COPPER_GRAVEL.get());
+        tag(BMTags.Items.GRAVELS_NETHERITE_SCRAP).add(BMItems.NETHERITE_SCRAP_GRAVEL.get());
+        tag(BMTags.Items.GRAVELS_HELLFORGED).add(BMItems.DEMONITE_GRAVEL.get());
     }
 }

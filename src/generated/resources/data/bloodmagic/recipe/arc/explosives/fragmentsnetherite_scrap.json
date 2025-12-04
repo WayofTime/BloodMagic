@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemical_reaction_chamber",
+  "chance_outputs": [
+    {
+      "chance": 0.25,
+      "item": {
+        "count": 1,
+        "id": "bloodmagic:fragment_netherite_scrap"
+      }
+    }
+  ],
+  "guaranteed_outputs": [
+    {
+      "count": 2,
+      "id": "bloodmagic:fragment_netherite_scrap"
+    }
+  ],
+  "input": {
+    "item": "minecraft:netherite_scrap"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc_tool/explosives"
+  }
+}
