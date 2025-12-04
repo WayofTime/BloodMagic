@@ -120,6 +120,18 @@ public class BMBlocks {
     public static final BlockWithItemHolder<Block, BlockItem> OUTPUT_ROUTING_NODE = BLOCK_REG.register("outputroutingnode", routing_node_properties, new Item.Properties());
     public static final BlockWithItemHolder<Block, BlockItem> MASTER_ROUTING_NODE = BLOCK_REG.register("masterroutingnode", routing_node_properties, new Item.Properties());
 
+    // Explosive Charges (placeholder - functionality to be added later)
+    private static final BlockBehaviour.Properties charge_properties = BlockBehaviour.Properties.of().strength(2.0F, 6.0F).sound(SoundType.METAL).requiresCorrectToolForDrops();
+    public static final BlockWithItemHolder<Block, BlockItem> SHAPED_CHARGE = BASIC_REG.register("shaped_charge", charge_properties, new Item.Properties());
+    public static final BlockWithItemHolder<Block, BlockItem> DEFORESTER_CHARGE = BASIC_REG.register("deforester_charge", charge_properties, new Item.Properties());
+    public static final BlockWithItemHolder<Block, BlockItem> VEINMINE_CHARGE = BASIC_REG.register("veinmine_charge", charge_properties, new Item.Properties());
+    public static final BlockWithItemHolder<Block, BlockItem> FUNGAL_CHARGE = BASIC_REG.register("fungal_charge", charge_properties, new Item.Properties());
+    public static final BlockWithItemHolder<Block, BlockItem> AUG_SHAPED_CHARGE = BASIC_REG.register("aug_shaped_charge", charge_properties, new Item.Properties());
+    public static final BlockWithItemHolder<Block, BlockItem> DEFORESTER_CHARGE_2 = BASIC_REG.register("deforester_charge_2", charge_properties, new Item.Properties());
+    public static final BlockWithItemHolder<Block, BlockItem> VEINMINE_CHARGE_2 = BASIC_REG.register("veinmine_charge_2", charge_properties, new Item.Properties());
+    public static final BlockWithItemHolder<Block, BlockItem> FUNGAL_CHARGE_2 = BASIC_REG.register("fungal_charge_2", charge_properties, new Item.Properties());
+    public static final BlockWithItemHolder<Block, BlockItem> SHAPED_CHARGE_DEEP = BASIC_REG.register("shaped_charge_deep", charge_properties, new Item.Properties());
+
     public static void register(IEventBus modBus) {
         BASIC_BLOCKS.register(modBus);
         BASIC_BLOCK_ITEMS.register(modBus);

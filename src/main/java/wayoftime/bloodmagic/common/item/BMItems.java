@@ -200,6 +200,12 @@ public class BMItems {
     public static final DeferredHolder<Item, Item> PLANT_OIL = BASIC_ITEMS.register("plantoil", () -> new Item(new Item.Properties()));
     public static final DeferredHolder<Item, Item> HELLFORGED_INGOT = BASIC_ITEMS.register("ingot_hellforged", () -> new Item(new Item.Properties()));
 
+    // Alchemy Flask Items (placeholder - potions system functionality to be added later)
+    public static final DeferredHolder<Item, Item> SLATE_VIAL = BASIC_ITEMS.register("slate_vial", () -> new Item(new Item.Properties().stacksTo(16)));
+    public static final DeferredHolder<Item, Item> ALCHEMY_FLASK = BASIC_ITEMS.register("alchemy_flask", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<Item, Item> ALCHEMY_FLASK_THROWABLE = BASIC_ITEMS.register("alchemy_flask_throwable", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<Item, Item> ALCHEMY_FLASK_LINGERING = BASIC_ITEMS.register("alchemy_flask_lingering", () -> new Item(new Item.Properties().stacksTo(1)));
+
     public static void register(IEventBus modBus) {
         BASIC_ITEMS.register(modBus);
         ITEMS.register(modBus);

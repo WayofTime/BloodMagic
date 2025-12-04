@@ -837,6 +837,98 @@ public class BMRecipeProvider extends RecipeProvider {
                 .drain(50)
                 .unlockedBy("has_steadfast_crystal", has(BMItems.STEADFAST_CRYSTAL.get()))
                 .save(output, BloodMagic.rl("steadfast_catalyst"));
+
+        // Explosive Charges
+        ForgeRecipeBuilder.build(new ItemStack(BMBlocks.SHAPED_CHARGE.item().get(), 8))
+                .requires(Tags.Items.COBBLESTONES)
+                .requires(Items.CHARCOAL)
+                .requires(Tags.Items.SANDS)
+                .requires(Tags.Items.STONES)
+                .minWill(10)
+                .drain(0.5)
+                .unlockedBy("has_charcoal", has(Items.CHARCOAL))
+                .save(output, BloodMagic.rl("shaped_charge"));
+
+        ForgeRecipeBuilder.build(new ItemStack(BMBlocks.DEFORESTER_CHARGE.item().get(), 8))
+                .requires(Tags.Items.COBBLESTONES)
+                .requires(Items.CHARCOAL)
+                .requires(ItemTags.LOGS)
+                .requires(ItemTags.PLANKS)
+                .minWill(10)
+                .drain(0.5)
+                .unlockedBy("has_charcoal", has(Items.CHARCOAL))
+                .save(output, BloodMagic.rl("deforester_charge"));
+
+        ForgeRecipeBuilder.build(new ItemStack(BMBlocks.VEINMINE_CHARGE.item().get(), 8))
+                .requires(Tags.Items.COBBLESTONES)
+                .requires(Items.CHARCOAL)
+                .requires(Tags.Items.SANDSTONE_BLOCKS)
+                .requires(Tags.Items.SANDS)
+                .minWill(10)
+                .drain(0.5)
+                .unlockedBy("has_charcoal", has(Items.CHARCOAL))
+                .save(output, BloodMagic.rl("veinmine_charge"));
+
+        ForgeRecipeBuilder.build(new ItemStack(BMBlocks.FUNGAL_CHARGE.item().get(), 8))
+                .requires(Tags.Items.COBBLESTONES)
+                .requires(Items.CHARCOAL)
+                .requires(ItemTags.CRIMSON_STEMS)
+                .requires(Tags.Items.MUSHROOMS)
+                .minWill(10)
+                .drain(0.5)
+                .unlockedBy("has_charcoal", has(Items.CHARCOAL))
+                .save(output, BloodMagic.rl("fungal_charge"));
+
+        // Tier 2 charges
+        ForgeRecipeBuilder.build(new ItemStack(BMBlocks.AUG_SHAPED_CHARGE.item().get(), 6))
+                .requires(Tags.Items.STORAGE_BLOCKS_COPPER)
+                .requires(Items.CHARCOAL)
+                .requires(Tags.Items.SANDS)
+                .requires(Items.BRICK)
+                .minWill(80)
+                .drain(2.5)
+                .unlockedBy("has_copper_block", has(Tags.Items.STORAGE_BLOCKS_COPPER))
+                .save(output, BloodMagic.rl("aug_shaped_charge"));
+
+        ForgeRecipeBuilder.build(new ItemStack(BMBlocks.DEFORESTER_CHARGE_2.item().get(), 4))
+                .requires(Tags.Items.STORAGE_BLOCKS_COPPER)
+                .requires(Items.CHARCOAL)
+                .requires(ItemTags.LOGS)
+                .requires(ItemTags.PLANKS)
+                .minWill(80)
+                .drain(2.5)
+                .unlockedBy("has_copper_block", has(Tags.Items.STORAGE_BLOCKS_COPPER))
+                .save(output, BloodMagic.rl("deforester_charge_2"));
+
+        ForgeRecipeBuilder.build(new ItemStack(BMBlocks.VEINMINE_CHARGE_2.item().get(), 4))
+                .requires(Tags.Items.STORAGE_BLOCKS_COPPER)
+                .requires(Items.CHARCOAL)
+                .requires(Tags.Items.SANDSTONE_BLOCKS)
+                .requires(Tags.Items.SANDS)
+                .minWill(80)
+                .drain(2.5)
+                .unlockedBy("has_copper_block", has(Tags.Items.STORAGE_BLOCKS_COPPER))
+                .save(output, BloodMagic.rl("veinmine_charge_2"));
+
+        ForgeRecipeBuilder.build(new ItemStack(BMBlocks.FUNGAL_CHARGE_2.item().get(), 4))
+                .requires(Tags.Items.STORAGE_BLOCKS_COPPER)
+                .requires(Items.CHARCOAL)
+                .requires(ItemTags.CRIMSON_STEMS)
+                .requires(Tags.Items.MUSHROOMS)
+                .minWill(80)
+                .drain(2.5)
+                .unlockedBy("has_copper_block", has(Tags.Items.STORAGE_BLOCKS_COPPER))
+                .save(output, BloodMagic.rl("fungal_charge_2"));
+
+        ForgeRecipeBuilder.build(new ItemStack(BMBlocks.SHAPED_CHARGE_DEEP.item().get(), 4))
+                .requires(Tags.Items.STORAGE_BLOCKS_COPPER)
+                .requires(Items.CHARCOAL)
+                .requires(Tags.Items.SANDS)
+                .requires(Tags.Items.STONES)
+                .minWill(80)
+                .drain(2.5)
+                .unlockedBy("has_copper_block", has(Tags.Items.STORAGE_BLOCKS_COPPER))
+                .save(output, BloodMagic.rl("shaped_charge_deep"));
     }
 
     // Helper methods

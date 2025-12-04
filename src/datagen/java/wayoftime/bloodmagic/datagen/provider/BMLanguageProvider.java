@@ -223,6 +223,17 @@ public class BMLanguageProvider extends LanguageProvider {
         add(BMItems.PLANT_OIL.get(), "Plant Oil");
         add(BMItems.HELLFORGED_INGOT.get(), "Hellforged Ingot");
 
+        // Explosive Charges
+        add(BMBlocks.SHAPED_CHARGE, "Shaped Charge");
+        add(BMBlocks.DEFORESTER_CHARGE, "Deforester Charge");
+        add(BMBlocks.VEINMINE_CHARGE, "Veinmine Charge");
+        add(BMBlocks.FUNGAL_CHARGE, "Fungal Charge");
+        add(BMBlocks.AUG_SHAPED_CHARGE, "Augmented Shaped Charge");
+        add(BMBlocks.DEFORESTER_CHARGE_2, "Reinforced Deforester Charge");
+        add(BMBlocks.VEINMINE_CHARGE_2, "Reinforced Veinmine Charge");
+        add(BMBlocks.FUNGAL_CHARGE_2, "Reinforced Fungal Charge");
+        add(BMBlocks.SHAPED_CHARGE_DEEP, "Deep Shaped Charge");
+
         // Teleposer Focus Items
         add(BMItems.TELEPOSER_FOCUS.get(), "Teleposer Focus");
         add(BMItems.TELEPOSER_FOCUS_ENHANCED.get(), "Enhanced Teleposer Focus");
