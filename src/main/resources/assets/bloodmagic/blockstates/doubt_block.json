@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": "block/doubt_block"
+    "": {
+      "model": "bloodmagic:block/doubt_block"
+    }
   }
 }

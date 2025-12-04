@@ -1,10 +1,10 @@
 {
   "parent": "block/block",
-  "loader": "forge:obj",
-  "flip_v": true, 
+  "loader": "neoforge:obj",
+  "flip_v": true,
   "model": "bloodmagic:models/block/modelalchemytable.obj",
   "textures": {
-    "default": "bloodmagic:models/alchemytable",
-    "particle": "#default"
+    "None": "bloodmagic:block/alchemytable",
+    "particle": "bloodmagic:block/alchemytable"
   }
 }

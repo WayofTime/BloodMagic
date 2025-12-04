@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": "block/life_essence_block"
+    "": {
+      "model": "bloodmagic:block/life_essence_block"
+    }
   }
 }
