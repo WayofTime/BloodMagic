@@ -20,6 +20,9 @@ public class BMBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         BMBlocks.BASIC_BLOCKS.getEntries().forEach(block -> {
+            if (block.getId().getPath().contains("tau")) {
+                return;
+            }
             simpleBlockWithItem(block.get(), cubeAll(block.get()));
         });
 
