@@ -547,7 +547,7 @@ public class BMRecipeProvider extends RecipeProvider {
                 .requires(Tags.Items.STORAGE_BLOCKS_IRON)
                 .minWill(400)
                 .drain(50)
-                .unlockedBy("has_demon_crystal", has(BMItems.DEMON_CRYSTAL_DEFAULT.get()))
+                .unlockedBy("has_demon_crystal", has(BMItems.RAW_CRYSTAL.get()))
                 .save(output, BloodMagic.rl("demon_pylon"));
 
         // Crystal Blocks
@@ -658,7 +658,7 @@ public class BMRecipeProvider extends RecipeProvider {
                 .requires(BMTags.Items.DEMON_CRYSTALS)
                 .minWill(400)
                 .drain(50)
-                .unlockedBy("has_demon_crystal", has(BMItems.DEMON_CRYSTAL_DEFAULT.get()))
+                .unlockedBy("has_demon_crystal", has(BMItems.RAW_CRYSTAL.get()))
                 .save(output, BloodMagic.rl("demon_will_gauge"));
 
         // Sanguine Reverter (soul forge recipe)

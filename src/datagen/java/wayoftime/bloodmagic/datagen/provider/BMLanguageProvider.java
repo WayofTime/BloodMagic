@@ -181,13 +181,6 @@ public class BMLanguageProvider extends LanguageProvider {
         add(BMItems.DAGGER_OF_SACRIFICE.get(), "Dagger of Sacrifice");
         add(BMItems.LAVA_CRYSTAL.get(), "Lava Crystal");
 
-        // Demon Crystal Items
-        add(BMItems.DEMON_CRYSTAL_DEFAULT.get(), "Raw Demon Crystal");
-        add(BMItems.DEMON_CRYSTAL_CORROSIVE.get(), "Corrosive Demon Crystal");
-        add(BMItems.DEMON_CRYSTAL_DESTRUCTIVE.get(), "Destructive Demon Crystal");
-        add(BMItems.DEMON_CRYSTAL_VENGEFUL.get(), "Vengeful Demon Crystal");
-        add(BMItems.DEMON_CRYSTAL_STEADFAST.get(), "Steadfast Demon Crystal");
-
         // Crystal Items (bloodmagic crystals)
         add(BMItems.RAW_CRYSTAL.get(), "Demon Will Crystal");
         add(BMItems.CORROSIVE_CRYSTAL.get(), "Corrosive Will Crystal");

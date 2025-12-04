@@ -27,11 +27,11 @@ public class BMItemTagProvider extends ItemTagsProvider {
                 .addTag(BMTags.Items.LIVING_SET);
 
         tag(BMTags.Items.DEMON_CRYSTALS)
-                .add(BMItems.DEMON_CRYSTAL_DEFAULT.get())
-                .add(BMItems.DEMON_CRYSTAL_CORROSIVE.get())
-                .add(BMItems.DEMON_CRYSTAL_DESTRUCTIVE.get())
-                .add(BMItems.DEMON_CRYSTAL_STEADFAST.get())
-                .add(BMItems.DEMON_CRYSTAL_VENGEFUL.get());
+                .add(BMItems.RAW_CRYSTAL.get())
+                .add(BMItems.CORROSIVE_CRYSTAL.get())
+                .add(BMItems.DESTRUCTIVE_CRYSTAL.get())
+                .add(BMItems.STEADFAST_CRYSTAL.get())
+                .add(BMItems.VENGEFUL_CRYSTAL.get());
 
         tag(BMTags.Items.REVERTER)
                 .add(BMItems.SANGUINE_REVERTER.get());

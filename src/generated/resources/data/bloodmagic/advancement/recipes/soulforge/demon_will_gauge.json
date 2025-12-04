@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "bloodmagic:demon_crystal_default"
+            "items": "bloodmagic:defaultcrystal"
           }
         ]
       },

@@ -1,9 +1,9 @@
 {
   "values": [
-    "bloodmagic:demon_crystal_default",
-    "bloodmagic:demon_crystal_corrosive",
-    "bloodmagic:demon_crystal_destructive",
-    "bloodmagic:demon_crystal_steadfast",
-    "bloodmagic:demon_crystal_vengeful"
+    "bloodmagic:defaultcrystal",
+    "bloodmagic:corrosivecrystal",
+    "bloodmagic:destructivecrystal",
+    "bloodmagic:steadfastcrystal",
+    "bloodmagic:vengefulcrystal"
   ]
 }

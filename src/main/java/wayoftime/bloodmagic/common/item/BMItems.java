@@ -51,13 +51,6 @@ public class BMItems {
     public static final DeferredHolder<Item, SoulGemItem> SOUL_GEM_GREATER = WILL_ITEMS.register("soul_gem_greater", SoulGemItem::new);
     public static final DeferredHolder<Item, SoulGemItem> SOUL_GEM_GRAND = WILL_ITEMS.register("soul_gem_grand", SoulGemItem::new);
 
-    // Demon Crystals (use BASIC_ITEMS since they ARE specific will types, not items that hold variable will types)
-    public static final DeferredHolder<Item, DemonCrystalItem> DEMON_CRYSTAL_DEFAULT = BASIC_ITEMS.register("demon_crystal_default", () -> new DemonCrystalItem(EnumWillType.DEFAULT));
-    public static final DeferredHolder<Item, DemonCrystalItem> DEMON_CRYSTAL_CORROSIVE = BASIC_ITEMS.register("demon_crystal_corrosive", () -> new DemonCrystalItem(EnumWillType.CORROSIVE));
-    public static final DeferredHolder<Item, DemonCrystalItem> DEMON_CRYSTAL_DESTRUCTIVE = BASIC_ITEMS.register("demon_crystal_destructive", () -> new DemonCrystalItem(EnumWillType.DESTRUCTIVE));
-    public static final DeferredHolder<Item, DemonCrystalItem> DEMON_CRYSTAL_STEADFAST = BASIC_ITEMS.register("demon_crystal_steadfast", () -> new DemonCrystalItem(EnumWillType.STEADFAST));
-    public static final DeferredHolder<Item, DemonCrystalItem> DEMON_CRYSTAL_VENGEFUL = BASIC_ITEMS.register("demon_crystal_vengeful", () -> new DemonCrystalItem(EnumWillType.VENGEFUL));
-
     // Slates
     public static final DeferredHolder<Item, Item> SLATE_BLANK = BASIC_ITEMS.register("blank_slate", () -> new Item(new Item.Properties()));
     public static final DeferredHolder<Item, Item> SLATE_REINFORCED = BASIC_ITEMS.register("reinforced_slate", () -> new Item(new Item.Properties()));
@@ -172,12 +165,12 @@ public class BMItems {
     public static final DeferredHolder<Item, Item> SENTIENT_SHOVEL = BASIC_ITEMS.register("soulshovel", () -> new Item(new Item.Properties().stacksTo(1).durability(520)));
     public static final DeferredHolder<Item, Item> SENTIENT_SCYTHE = BASIC_ITEMS.register("soulscythe", () -> new Item(new Item.Properties().stacksTo(1).durability(520)));
 
-    // Demon Will Items
-    public static final DeferredHolder<Item, Item> RAW_CRYSTAL = BASIC_ITEMS.register("defaultcrystal", () -> new Item(new Item.Properties()));
-    public static final DeferredHolder<Item, Item> CORROSIVE_CRYSTAL = BASIC_ITEMS.register("corrosivecrystal", () -> new Item(new Item.Properties()));
-    public static final DeferredHolder<Item, Item> DESTRUCTIVE_CRYSTAL = BASIC_ITEMS.register("destructivecrystal", () -> new Item(new Item.Properties()));
-    public static final DeferredHolder<Item, Item> VENGEFUL_CRYSTAL = BASIC_ITEMS.register("vengefulcrystal", () -> new Item(new Item.Properties()));
-    public static final DeferredHolder<Item, Item> STEADFAST_CRYSTAL = BASIC_ITEMS.register("steadfastcrystal", () -> new Item(new Item.Properties()));
+    // Demon Will Items (crystal items - same naming as 1.20.1)
+    public static final DeferredHolder<Item, DemonCrystalItem> RAW_CRYSTAL = BASIC_ITEMS.register("defaultcrystal", () -> new DemonCrystalItem(EnumWillType.DEFAULT));
+    public static final DeferredHolder<Item, DemonCrystalItem> CORROSIVE_CRYSTAL = BASIC_ITEMS.register("corrosivecrystal", () -> new DemonCrystalItem(EnumWillType.CORROSIVE));
+    public static final DeferredHolder<Item, DemonCrystalItem> DESTRUCTIVE_CRYSTAL = BASIC_ITEMS.register("destructivecrystal", () -> new DemonCrystalItem(EnumWillType.DESTRUCTIVE));
+    public static final DeferredHolder<Item, DemonCrystalItem> VENGEFUL_CRYSTAL = BASIC_ITEMS.register("vengefulcrystal", () -> new DemonCrystalItem(EnumWillType.VENGEFUL));
+    public static final DeferredHolder<Item, DemonCrystalItem> STEADFAST_CRYSTAL = BASIC_ITEMS.register("steadfastcrystal", () -> new DemonCrystalItem(EnumWillType.STEADFAST));
     public static final DeferredHolder<Item, Item> DEMON_WILL_GAUGE = BASIC_ITEMS.register("demonwillgauge", () -> new Item(new Item.Properties().stacksTo(1)));
 
     // Crystal Catalysts (used in soul forge recipes)
