@@ -110,14 +110,15 @@ public class BMRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_meat", has(ItemTags.MEAT))
                 .save(output);
 
-        // Blank Rune
+        // Blank Rune - stone around, blank slate at top center, blood orb in center
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BMBlocks.RUNE_BLANK.block().get())
-                .pattern("sos")
-                .pattern("s s")
-                .pattern("sss")
-                .define('s', Items.STONE)
+                .pattern("asa")
+                .pattern("aoa")
+                .pattern("aaa")
+                .define('a', Tags.Items.STONES)
+                .define('s', BMItems.SLATE_BLANK.get())
                 .define('o', BMItems.ORB_WEAK.get())
-                .unlockedBy("has_weak_orb", has(BMItems.ORB_WEAK.get()))
+                .unlockedBy("has_blank_slate", has(BMItems.SLATE_BLANK.get()))
                 .save(output);
 
         // Tier 1 Runes
