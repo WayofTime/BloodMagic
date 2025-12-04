@@ -18,6 +18,8 @@ public class BMMenus {
 
     public static final DeferredHolder<MenuType<?>, MenuType<TrainerMenu>> TRAINER = MENUS.register("trainer", () -> IMenuTypeExtension.create(TrainerMenu::new));
 
+    public static final DeferredHolder<MenuType<?>, MenuType<TeleposerMenu>> TELEPOSER = MENUS.register("teleposer", () -> IMenuTypeExtension.create(TeleposerMenu::new));
+
     public static void register(IEventBus modbus) {
         MENUS.register(modbus);
     }

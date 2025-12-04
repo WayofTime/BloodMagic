@@ -4,6 +4,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import wayoftime.bloodmagic.BloodMagic;
@@ -68,6 +69,14 @@ public class BMTags {
     public static class DamageTypes {
         public static final TagKey<DamageType> SELF_SACRIFICE = TagKey.create(Registries.DAMAGE_TYPE, bm("self_sacrifice"));
         public static final TagKey<DamageType> TOUGH_IGNORED = TagKey.create(Registries.DAMAGE_TYPE, bm("tough_ignored"));
+    }
+
+    public static class Entities {
+        public static final TagKey<EntityType<?>> TELEPOSE_BLACKLIST = tag(bm("telepose_blacklist"));
+
+        private static TagKey<EntityType<?>> tag(ResourceLocation id) {
+            return TagKey.create(Registries.ENTITY_TYPE, id);
+        }
     }
 
     public static class Tiers {

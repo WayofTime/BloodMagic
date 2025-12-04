@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.common.datacomponent;
 
 import com.mojang.serialization.Codec;
 import it.unimi.dsi.fastutil.objects.Object2FloatOpenHashMap;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
@@ -50,6 +51,10 @@ public class BMDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> UPGRADE_SCRAP = DATA_COMPONENTS.registerComponentType("upgrade_scrap", builder -> builder.persistent(Codec.INT));
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> PREVIOUS_DAMAGE = DATA_COMPONENTS.registerComponentType("previous_damage", builder -> builder.persistent(Codec.INT));
+
+    // Teleposer data components
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<BlockPos>> TELEPOSER_POS = DATA_COMPONENTS.registerComponentType("teleposer_pos", builder -> builder.persistent(BlockPos.CODEC).networkSynchronized(BlockPos.STREAM_CODEC));
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> TELEPOSER_DIMENSION = DATA_COMPONENTS.registerComponentType("teleposer_dimension", builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
 
     public static void register(IEventBus modBus) {
         DATA_COMPONENTS.register(modBus);

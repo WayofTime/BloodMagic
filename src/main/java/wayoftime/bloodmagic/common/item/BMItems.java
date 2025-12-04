@@ -95,6 +95,11 @@ public class BMItems {
     public static final DeferredHolder<Item, Item> DAGGER_OF_SACRIFICE = ITEMS.register("dagger_of_sacrifice", () -> new Item(new Item.Properties().stacksTo(1)));
     public static final DeferredHolder<Item, Item> LAVA_CRYSTAL = BASIC_ITEMS.register("lava_crystal", () -> new Item(new Item.Properties()));
 
+    // Teleposer Focus items
+    public static final DeferredHolder<Item, TeleposerFocusItem> TELEPOSER_FOCUS = ITEMS.register("teleposerfocus", () -> new TeleposerFocusItem(0));
+    public static final DeferredHolder<Item, TeleposerFocusItem> TELEPOSER_FOCUS_ENHANCED = ITEMS.register("enhancedteleposerfocus", () -> new TeleposerFocusItem(1));
+    public static final DeferredHolder<Item, TeleposerFocusItem> TELEPOSER_FOCUS_REINFORCED = ITEMS.register("reinforcedteleposerfocus", () -> new TeleposerFocusItem(2));
+
     public static void register(IEventBus modBus) {
         BASIC_ITEMS.register(modBus);
         ITEMS.register(modBus);

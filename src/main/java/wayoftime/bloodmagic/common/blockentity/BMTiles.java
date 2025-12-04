@@ -42,6 +42,9 @@ public class BMTiles {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AlchemyTableTile>> ALCHEMY_TABLE_TYPE = TILES.register("alchemy_table",
             () -> new BlockEntityType<>(AlchemyTableTile::new, Set.of(BMBlocks.ALCHEMY_TABLE.block().get()), null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TeleposerTile>> TELEPOSER_TYPE = TILES.register("teleposer",
+            () -> new BlockEntityType<>(TeleposerTile::new, Set.of(BMBlocks.TELEPOSER.block().get()), null));
+
     private static void registerTileCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,

@@ -15,6 +15,7 @@ import wayoftime.bloodmagic.common.menu.BMMenus;
 import wayoftime.bloodmagic.client.render.entity.layer.LivingElytraLayer;
 import wayoftime.bloodmagic.client.screen.ARCScreen;
 import wayoftime.bloodmagic.client.screen.LivingStationScreen;
+import wayoftime.bloodmagic.client.screen.TeleposerScreen;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.datacomponent.EnumWillType;
 import wayoftime.bloodmagic.common.item.BMItems;
@@ -47,5 +48,6 @@ public class ClientModEventHandler {
         event.register(BMMenus.ARC.get(), ARCScreen::new);
         event.register(BMMenus.LIVING_STATION.get(), LivingStationScreen::new);
         event.register(BMMenus.TRAINER.get(), TrainerScreen::new);
+        event.register(BMMenus.TELEPOSER.get(), TeleposerScreen::new);
     }
 }
