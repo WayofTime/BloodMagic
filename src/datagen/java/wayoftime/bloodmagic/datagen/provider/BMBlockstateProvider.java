@@ -21,8 +21,8 @@ public class BMBlockStateProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
         BMBlocks.BASIC_BLOCKS.getEntries().forEach(block -> {
             String path = block.getId().getPath();
-            // Skip blocks without textures (tau, demon crystals, routing nodes)
-            if (path.contains("tau") || path.contains("demoncrystal") || path.contains("routingnode")) {
+            // Skip tau blocks (special crop-like rendering)
+            if (path.contains("tau")) {
                 return;
             }
             simpleBlockWithItem(block.get(), cubeAll(block.get()));
@@ -36,6 +36,12 @@ public class BMBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(BMBlocks.DUSK_RITUAL_STONE.block().get(), cubeAll(BMBlocks.DUSK_RITUAL_STONE.block().get()));
         simpleBlockWithItem(BMBlocks.DAWN_RITUAL_STONE.block().get(), cubeAll(BMBlocks.DAWN_RITUAL_STONE.block().get()));
         simpleBlockWithItem(BMBlocks.MASTER_RITUAL_STONE.block().get(), cubeAll(BMBlocks.MASTER_RITUAL_STONE.block().get()));
+
+        // Routing nodes (placeholder cubes)
+        simpleBlockWithItem(BMBlocks.ROUTING_NODE.block().get(), cubeAll(BMBlocks.ROUTING_NODE.block().get()));
+        simpleBlockWithItem(BMBlocks.INPUT_ROUTING_NODE.block().get(), cubeAll(BMBlocks.INPUT_ROUTING_NODE.block().get()));
+        simpleBlockWithItem(BMBlocks.OUTPUT_ROUTING_NODE.block().get(), cubeAll(BMBlocks.OUTPUT_ROUTING_NODE.block().get()));
+        simpleBlockWithItem(BMBlocks.MASTER_ROUTING_NODE.block().get(), cubeAll(BMBlocks.MASTER_ROUTING_NODE.block().get()));
 
         VariantBlockStateBuilder builder = getVariantBuilder(BMBlocks.ARC_BLOCK.block().get());
         String bottom = "block/arc_bottom";
