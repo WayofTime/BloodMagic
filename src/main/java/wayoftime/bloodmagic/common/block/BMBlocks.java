@@ -9,6 +9,7 @@ import net.minecraft.world.item.component.ItemLore;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -80,6 +81,11 @@ public class BMBlocks {
 
     // Alchemy Table
     public static final BlockWithItemHolder<AlchemyTableBlock, BlockItem> ALCHEMY_TABLE = BLOCK_REG.register("alchemytable", AlchemyTableBlock::new);
+
+    // Tau Blocks (TODO: Implement crop-like growth mechanics - these are placeholder blocks for now)
+    private static final BlockBehaviour.Properties tau_properties = BlockBehaviour.Properties.of().noCollission().instabreak().sound(SoundType.CROP).pushReaction(PushReaction.DESTROY);
+    public static final BlockWithItemHolder<Block, BlockItem> WEAK_TAU = BASIC_REG.register("weak_tau", tau_properties, new Item.Properties());
+    public static final BlockWithItemHolder<Block, BlockItem> STRONG_TAU = BASIC_REG.register("strong_tau", tau_properties, new Item.Properties());
 
     public static void register(IEventBus modBus) {
         BASIC_BLOCKS.register(modBus);

@@ -2,17 +2,20 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
+    "a": {
+      "tag": "c:stones"
+    },
     "o": {
       "item": "bloodmagic:blood_orb_weak"
     },
     "s": {
-      "item": "minecraft:stone"
+      "item": "bloodmagic:blank_slate"
     }
   },
   "pattern": [
-    "sos",
-    "s s",
-    "sss"
+    "asa",
+    "aoa",
+    "aaa"
   ],
   "result": {
     "count": 1,

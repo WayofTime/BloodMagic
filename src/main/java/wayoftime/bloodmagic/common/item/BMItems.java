@@ -82,6 +82,9 @@ public class BMItems {
     // Alchemy items
     public static final DeferredHolder<Item, ItemArcaneAshes> ARCANE_ASHES = BASIC_ITEMS.register("arcane_ashes", ItemArcaneAshes::new);
 
+    // Tau items (TODO: Add tau functionality - crop-like growth mechanics)
+    public static final DeferredHolder<Item, Item> TAU_OIL = BASIC_ITEMS.register("tauoil", () -> new Item(new Item.Properties()));
+
     // Reagents (used to make Sigils via Alchemy Array)
     public static final DeferredHolder<Item, Item> REAGENT_WATER = BASIC_ITEMS.register("reagentwater", () -> new Item(new Item.Properties()));
     public static final DeferredHolder<Item, Item> REAGENT_LAVA = BASIC_ITEMS.register("reagentlava", () -> new Item(new Item.Properties()));
