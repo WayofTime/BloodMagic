@@ -9,6 +9,7 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.datacomponent.EnumWillType;
 import wayoftime.bloodmagic.common.item.arc.ItemARCToolBase;
+import wayoftime.bloodmagic.ritual.EnumRuneType;
 
 import java.util.function.Supplier;
 
@@ -147,6 +148,22 @@ public class BMItems {
     public static final DeferredHolder<Item, ItemARCToolBase> PRIMITIVE_CRYSTALLINE_RESONATOR = BASIC_ITEMS.register("primitive_crystalline_resonator", () -> new ItemARCToolBase(256, 1.5, EnumWillType.VENGEFUL));
     public static final DeferredHolder<Item, ItemARCToolBase> HELLFORGED_EXPLOSIVE_CELL = BASIC_ITEMS.register("hellforged_explosive_cell", () -> new ItemARCToolBase(1024, 2, EnumWillType.DESTRUCTIVE));
     public static final DeferredHolder<Item, ItemARCToolBase> HELLFORGED_RESONATOR = BASIC_ITEMS.register("hellforged_resonator", () -> new ItemARCToolBase(1024, 2, 2, EnumWillType.VENGEFUL));
+
+    // Activation Crystals
+    public static final DeferredHolder<Item, ItemActivationCrystal> ACTIVATION_CRYSTAL_WEAK = BASIC_ITEMS.register("activationcrystalweak", () -> new ItemActivationCrystal(ItemActivationCrystal.CrystalType.WEAK));
+    public static final DeferredHolder<Item, ItemActivationCrystal> ACTIVATION_CRYSTAL_AWAKENED = BASIC_ITEMS.register("activationcrystalawakened", () -> new ItemActivationCrystal(ItemActivationCrystal.CrystalType.AWAKENED));
+    public static final DeferredHolder<Item, ItemActivationCrystal> ACTIVATION_CRYSTAL_CREATIVE = BASIC_ITEMS.register("activationcrystalcreative", () -> new ItemActivationCrystal(ItemActivationCrystal.CrystalType.CREATIVE));
+
+    // Inscription Tools
+    public static final DeferredHolder<Item, ItemInscriptionTool> INSCRIPTION_TOOL_AIR = BASIC_ITEMS.register("airscribetool", () -> new ItemInscriptionTool(EnumRuneType.AIR));
+    public static final DeferredHolder<Item, ItemInscriptionTool> INSCRIPTION_TOOL_FIRE = BASIC_ITEMS.register("firescribetool", () -> new ItemInscriptionTool(EnumRuneType.FIRE));
+    public static final DeferredHolder<Item, ItemInscriptionTool> INSCRIPTION_TOOL_WATER = BASIC_ITEMS.register("waterscribetool", () -> new ItemInscriptionTool(EnumRuneType.WATER));
+    public static final DeferredHolder<Item, ItemInscriptionTool> INSCRIPTION_TOOL_EARTH = BASIC_ITEMS.register("earthscribetool", () -> new ItemInscriptionTool(EnumRuneType.EARTH));
+    public static final DeferredHolder<Item, ItemInscriptionTool> INSCRIPTION_TOOL_DUSK = BASIC_ITEMS.register("duskscribetool", () -> new ItemInscriptionTool(EnumRuneType.DUSK));
+
+    // Ritual Diviners
+    public static final DeferredHolder<Item, ItemRitualDiviner> RITUAL_DIVINER = BASIC_ITEMS.register("ritualdiviner", () -> new ItemRitualDiviner(0));
+    public static final DeferredHolder<Item, ItemRitualDiviner> RITUAL_DIVINER_DUSK = BASIC_ITEMS.register("ritualdivinerdusk", () -> new ItemRitualDiviner(1));
 
     public static void register(IEventBus modBus) {
         BASIC_ITEMS.register(modBus);
