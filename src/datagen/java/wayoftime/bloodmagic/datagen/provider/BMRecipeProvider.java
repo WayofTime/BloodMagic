@@ -992,6 +992,13 @@ public class BMRecipeProvider extends RecipeProvider {
                 .added(Items.IRON_BOOTS)
                 .texture("textures/models/alchemyarrays/bindingarray.png")
                 .save(output, "living_boots");
+
+        // Training Bracelet
+        AlchemyArrayRecipeBuilder.build(BMItems.TRAINING_BRACELET.get())
+                .base(BMItems.REAGENT_BINDING.get())
+                .added(Items.DIAMOND)
+                .texture("textures/models/alchemyarrays/bindingarray.png")
+                .save(output, "living_trainer");
     }
 
     private void addAlchemyTableRecipes(RecipeOutput output) {
