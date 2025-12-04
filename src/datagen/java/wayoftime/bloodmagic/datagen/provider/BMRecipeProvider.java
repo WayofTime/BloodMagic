@@ -204,6 +204,28 @@ public class BMRecipeProvider extends RecipeProvider {
                 .define('e', Tags.Items.GEMS_DIAMOND)
                 .unlockedBy("has_weak_orb", has(BMItems.ORB_WEAK.get()))
                 .save(output);
+
+        // Blank Ritual Stone - obsidian around, reinforced slate corners, apprentice orb center
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BMBlocks.BLANK_RITUAL_STONE.block().get(), 4)
+                .pattern("sos")
+                .pattern("oco")
+                .pattern("sos")
+                .define('o', Tags.Items.OBSIDIANS)
+                .define('s', BMItems.SLATE_REINFORCED.get())
+                .define('c', BMItems.ORB_APPRENTICE.get())
+                .unlockedBy("has_reinforced_slate", has(BMItems.SLATE_REINFORCED.get()))
+                .save(output, BloodMagic.rl("ritual_stone_blank"));
+
+        // Master Ritual Stone - obsidian around, ritual stones corners, magician orb center
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BMBlocks.MASTER_RITUAL_STONE.block().get())
+                .pattern("oso")
+                .pattern("scs")
+                .pattern("oso")
+                .define('o', Tags.Items.OBSIDIANS)
+                .define('s', BMBlocks.BLANK_RITUAL_STONE.block().get())
+                .define('c', BMItems.ORB_MAGICIAN.get())
+                .unlockedBy("has_ritual_stone", has(BMBlocks.BLANK_RITUAL_STONE.block().get()))
+                .save(output, BloodMagic.rl("ritual_stone_master"));
     }
 
     private void addTieredRecipes(RecipeOutput output) {

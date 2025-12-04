@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "c": {
+      "item": "bloodmagic:blood_orb_magician"
+    },
+    "o": {
+      "tag": "c:obsidians"
+    },
+    "s": {
+      "item": "bloodmagic:ritualstone"
+    }
+  },
+  "pattern": [
+    "oso",
+    "scs",
+    "oso"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bloodmagic:masterritualstone"
+  }
+}

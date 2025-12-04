@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "c": {
+      "item": "bloodmagic:blood_orb_apprentice"
+    },
+    "o": {
+      "tag": "c:obsidians"
+    },
+    "s": {
+      "item": "bloodmagic:reinforced_slate"
+    }
+  },
+  "pattern": [
+    "sos",
+    "oco",
+    "sos"
+  ],
+  "result": {
+    "count": 4,
+    "id": "bloodmagic:ritualstone"
+  }
+}

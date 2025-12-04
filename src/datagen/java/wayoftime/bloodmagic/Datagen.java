@@ -25,7 +25,7 @@ public class Datagen {
         ExistingFileHelper fileHelper = event.getExistingFileHelper();
 
         generator.addProvider(event.includeClient(), new BMItemModelProvider(output, fileHelper));
-        generator.addProvider(event.includeClient(), new BMBlockstateProvider(output, fileHelper));
+        generator.addProvider(event.includeClient(), new BMBlockStateProvider(output, fileHelper));
 
         event.createProvider(BMLanguageProvider::new);
 

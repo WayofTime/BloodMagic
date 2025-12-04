@@ -12,8 +12,8 @@ import wayoftime.bloodmagic.common.block.ARCBlock;
 import wayoftime.bloodmagic.common.block.BMBlocks;
 import wayoftime.bloodmagic.common.datacomponent.EnumWillType;
 
-public class BMBlockstateProvider extends BlockStateProvider {
-    public BMBlockstateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
+public class BMBlockStateProvider extends BlockStateProvider {
+    public BMBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, BloodMagic.MODID, exFileHelper);
     }
 
@@ -22,6 +22,15 @@ public class BMBlockstateProvider extends BlockStateProvider {
         BMBlocks.BASIC_BLOCKS.getEntries().forEach(block -> {
             simpleBlockWithItem(block.get(), cubeAll(block.get()));
         });
+
+        simpleBlockWithItem(BMBlocks.BLANK_RITUAL_STONE.block().get(), cubeAll(BMBlocks.BLANK_RITUAL_STONE.block().get()));
+        simpleBlockWithItem(BMBlocks.AIR_RITUAL_STONE.block().get(), cubeAll(BMBlocks.AIR_RITUAL_STONE.block().get()));
+        simpleBlockWithItem(BMBlocks.WATER_RITUAL_STONE.block().get(), cubeAll(BMBlocks.WATER_RITUAL_STONE.block().get()));
+        simpleBlockWithItem(BMBlocks.FIRE_RITUAL_STONE.block().get(), cubeAll(BMBlocks.FIRE_RITUAL_STONE.block().get()));
+        simpleBlockWithItem(BMBlocks.EARTH_RITUAL_STONE.block().get(), cubeAll(BMBlocks.EARTH_RITUAL_STONE.block().get()));
+        simpleBlockWithItem(BMBlocks.DUSK_RITUAL_STONE.block().get(), cubeAll(BMBlocks.DUSK_RITUAL_STONE.block().get()));
+        simpleBlockWithItem(BMBlocks.DAWN_RITUAL_STONE.block().get(), cubeAll(BMBlocks.DAWN_RITUAL_STONE.block().get()));
+        simpleBlockWithItem(BMBlocks.MASTER_RITUAL_STONE.block().get(), cubeAll(BMBlocks.MASTER_RITUAL_STONE.block().get()));
 
         VariantBlockStateBuilder builder = getVariantBuilder(BMBlocks.ARC_BLOCK.block().get());
         String bottom = "block/arc_bottom";
