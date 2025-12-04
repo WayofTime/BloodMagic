@@ -41,10 +41,14 @@ public class ForgeRecipe implements Recipe<ForgeInput> {
         }
 
         List<Ingredient> ingredientList = new ArrayList<>(ingredients);
-        for (int i = 0; i < input.size(); i++) {
+        for (int i = 0; i < 4; i++) {
+            ItemStack stack = input.getItem(i);
+            if (stack.isEmpty()) {
+                continue;
+            }
             boolean matched = false;
             for (int j = 0; j < ingredientList.size(); j++) {
-                if (ingredientList.get(j).test(input.getItem(i))) {
+                if (ingredientList.get(j).test(stack)) {
                     matched = true;
                     ingredientList.remove(j);
                     break;
@@ -55,7 +59,7 @@ public class ForgeRecipe implements Recipe<ForgeInput> {
             }
         }
 
-        return true;
+        return ingredientList.isEmpty();
     }
 
     @Override

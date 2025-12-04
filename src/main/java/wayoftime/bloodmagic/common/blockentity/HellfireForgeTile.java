@@ -5,24 +5,25 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.RangedWrapper;
-import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.event.BloodMagicCraftedEvent;
 import wayoftime.bloodmagic.common.item.BMItems;
+import wayoftime.bloodmagic.common.menu.SoulForgeMenu;
 import wayoftime.bloodmagic.common.recipe.BMRecipes;
 import wayoftime.bloodmagic.common.recipe.forge.ForgeInput;
 import wayoftime.bloodmagic.common.recipe.forge.ForgeRecipe;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class HellfireForgeTile extends BaseTile {
+public class HellfireForgeTile extends BaseTile implements MenuProvider {
     public ItemStackHandler inv = new ItemStackHandler(6) {
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
@@ -51,7 +52,6 @@ public class HellfireForgeTile extends BaseTile {
         @Override
         protected void onContentsChanged(int slot) {
             super.onContentsChanged(slot);
-            BloodMagic.LOGGER.info("called for {}", slot);
             setChanged();
         }
     };
@@ -78,57 +78,86 @@ public class HellfireForgeTile extends BaseTile {
         super(BMTiles.HELLFIRE_FORGE_TYPE.get(), pos, blockState);
     }
 
-    public static void tick(Level level, BlockPos pos, BlockState state, HellfireForgeTile hellfireForgeTile) {
-        ForgeInput input = hellfireForgeTile.getInput();
-        Optional<RecipeHolder<ForgeRecipe>> recipeOptional = level.getRecipeManager().getRecipeFor(BMRecipes.SOUL_FORGE_TYPE.get(), input, level);
-        if (recipeOptional.isEmpty()) {
+    public static void tick(Level level, BlockPos pos, BlockState state, HellfireForgeTile tile) {
+        if (level.isClientSide) {
             return;
         }
+
+        ForgeInput input = tile.getInput();
+        Optional<RecipeHolder<ForgeRecipe>> recipeOptional = level.getRecipeManager().getRecipeFor(BMRecipes.SOUL_FORGE_TYPE.get(), input, level);
+        if (recipeOptional.isEmpty()) {
+            if (tile.progress > 0) {
+                tile.progress = 0;
+                tile.setChanged();
+            }
+            return;
+        }
+
         ForgeRecipe recipe = recipeOptional.get().value();
         ItemStack output = recipe.assemble(input, level.registryAccess());
         if (output.isEmpty()) {
-            BloodMagic.LOGGER.info("input matched but no result");
-            return;
-        }
-        ItemStack currentOutput = hellfireForgeTile.inv.getStackInSlot(OUTPUT_SLOT);
-        if (!currentOutput.isEmpty() && !ItemStack.isSameItemSameComponents(currentOutput, output)) {
-            BloodMagic.LOGGER.info("outputs dont stack!");
+            if (tile.progress > 0) {
+                tile.progress = 0;
+                tile.setChanged();
+            }
             return;
         }
 
-        hellfireForgeTile.progress++;
-        if (!(hellfireForgeTile.progress >= MAX_PROGRESS)) {
+        ItemStack currentOutput = tile.inv.getStackInSlot(OUTPUT_SLOT);
+        if (!currentOutput.isEmpty()) {
+            if (!ItemStack.isSameItemSameComponents(currentOutput, output) ||
+                    currentOutput.getCount() + output.getCount() > currentOutput.getMaxStackSize()) {
+                if (tile.progress > 0) {
+                    tile.progress = 0;
+                    tile.setChanged();
+                }
+                return;
+            }
+        }
+
+        tile.progress++;
+        if (tile.progress < MAX_PROGRESS) {
             ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0.1, 0, 0.1, 0);
             return;
         }
+
         BloodMagicCraftedEvent.Forge event = new BloodMagicCraftedEvent.Forge(output, input.asArray());
         NeoForge.EVENT_BUS.post(event);
 
-        ItemStack gemStack = hellfireForgeTile.inv.getStackInSlot(GEM_SLOT);
+        ItemStack gemStack = tile.inv.getStackInSlot(GEM_SLOT);
         if (!gemStack.isEmpty()) {
             double will = gemStack.getOrDefault(BMDataComponents.DEMON_WILL_AMOUNT, 0D);
             will -= recipe.usedWill;
-            if (will == 0 && gemStack.is(BMItems.RAW_WILL)) {
-                hellfireForgeTile.inv.setStackInSlot(GEM_SLOT, ItemStack.EMPTY);
+            if (will <= 0 && gemStack.is(BMItems.RAW_WILL)) {
+                tile.inv.setStackInSlot(GEM_SLOT, ItemStack.EMPTY);
             } else {
-                gemStack.set(BMDataComponents.DEMON_WILL_AMOUNT, will);
+                gemStack.set(BMDataComponents.DEMON_WILL_AMOUNT, Math.max(0, will));
             }
         }
 
         for (int i = SOUTH; i < GEM_SLOT; i++) {
-            ItemStack item = hellfireForgeTile.inv.getStackInSlot(i);
+            ItemStack item = tile.inv.getStackInSlot(i);
+            if (item.isEmpty()) {
+                continue;
+            }
             if (item.hasCraftingRemainingItem()) {
-                hellfireForgeTile.inv.setStackInSlot(i, item.getCraftingRemainingItem());
+                tile.inv.setStackInSlot(i, item.getCraftingRemainingItem());
                 continue;
             }
             item.shrink(1);
             if (item.isEmpty()) {
-                hellfireForgeTile.inv.setStackInSlot(i, ItemStack.EMPTY);
+                tile.inv.setStackInSlot(i, ItemStack.EMPTY);
             }
         }
-        hellfireForgeTile.inv.setStackInSlot(OUTPUT_SLOT, event.getOutput());
 
-        hellfireForgeTile.setChanged();
+        if (currentOutput.isEmpty()) {
+            tile.inv.setStackInSlot(OUTPUT_SLOT, event.getOutput());
+        } else {
+            currentOutput.grow(event.getOutput().getCount());
+        }
+
+        tile.progress = 0;
+        tile.setChanged();
     }
 
     public ForgeInput getInput() {
@@ -150,13 +179,14 @@ public class HellfireForgeTile extends BaseTile {
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         inv.deserializeNBT(registries, tag.getCompound("inventory"));
+        progress = tag.getInt("progress");
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        CompoundTag inventory = inv.serializeNBT(registries);
-        tag.put("inventory", inventory);
+        tag.put("inventory", inv.serializeNBT(registries));
+        tag.putInt("progress", progress);
     }
 
     public @Nullable IItemHandler getInventory(Direction side) {
@@ -169,5 +199,19 @@ public class HellfireForgeTile extends BaseTile {
             case DOWN -> new RangedWrapper(inv, OUTPUT_SLOT, OUTPUT_SLOT + 1);
             default -> new RangedWrapper(inv, side.get2DDataValue(), side.get2DDataValue() + 1);
         };
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("block.bloodmagic.hellfire_forge");
+    }
+
+    @Override
+    public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
+        return new SoulForgeMenu(containerId, playerInventory, this);
+    }
+
+    public double getProgressForGui() {
+        return (double) progress / (double) MAX_PROGRESS;
     }
 }

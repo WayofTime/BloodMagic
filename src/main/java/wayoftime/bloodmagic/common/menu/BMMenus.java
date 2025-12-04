@@ -22,6 +22,8 @@ public class BMMenus {
 
     public static final DeferredHolder<MenuType<?>, MenuType<AlchemyTableMenu>> ALCHEMY_TABLE = MENUS.register("alchemy_table", () -> IMenuTypeExtension.create(AlchemyTableMenu::new));
 
+    public static final DeferredHolder<MenuType<?>, MenuType<SoulForgeMenu>> SOUL_FORGE = MENUS.register("soul_forge", () -> IMenuTypeExtension.create(SoulForgeMenu::new));
+
     public static void register(IEventBus modbus) {
         MENUS.register(modbus);
     }

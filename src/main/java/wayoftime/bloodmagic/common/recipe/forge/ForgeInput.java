@@ -36,6 +36,6 @@ public class ForgeInput implements RecipeInput {
 
     @Override
     public int size() {
-        return inputStacks.size();
+        return (int) inputStacks.stream().filter(stack -> !stack.isEmpty()).count();
     }
 }
