@@ -1,0 +1,16 @@
+{
+  "type": "bloodmagic:alchemical_reaction_chamber",
+  "chance_outputs": [],
+  "guaranteed_outputs": [
+    {
+      "count": 2,
+      "id": "bloodmagic:sulfur"
+    }
+  ],
+  "input": {
+    "item": "minecraft:netherrack"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc_tool/cutting_fluids"
+  }
+}

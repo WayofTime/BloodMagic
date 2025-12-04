@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:alchemical_reaction_chamber",
+  "chance_outputs": [],
+  "guaranteed_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:oxidized_copper"
+    }
+  ],
+  "input": {
+    "item": "minecraft:weathered_copper"
+  },
+  "input_fluid": {
+    "amount": 500,
+    "id": "minecraft:water"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc_tool/hydration"
+  }
+}

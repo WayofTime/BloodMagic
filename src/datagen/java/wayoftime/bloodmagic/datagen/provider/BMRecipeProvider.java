@@ -8,7 +8,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.fluids.FluidStack;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BMBlocks;
 import wayoftime.bloodmagic.common.fluid.BMFluids;
@@ -2174,5 +2176,294 @@ public class BMRecipeProvider extends RecipeProvider {
                 .input(Ingredient.of(BMItems.COPPER_SAND.get()))
                 .guaranteedOutput(new ItemStack(Items.COPPER_INGOT))
                 .save(output, BloodMagic.rl("copper_ingot_from_sand"));
+
+        // Netherite ingot from 4x scrap sand + 4x gold sand
+        ARCRecipeBuilder.build(BMTags.Items.ARC_SMELTING)
+                .input(Ingredient.of(BMItems.NETHERITE_SCRAP_SAND.get()))
+                .input(Ingredient.of(BMItems.NETHERITE_SCRAP_SAND.get()))
+                .input(Ingredient.of(BMItems.NETHERITE_SCRAP_SAND.get()))
+                .input(Ingredient.of(BMItems.NETHERITE_SCRAP_SAND.get()))
+                .input(Ingredient.of(BMItems.GOLD_SAND.get()))
+                .input(Ingredient.of(BMItems.GOLD_SAND.get()))
+                .input(Ingredient.of(BMItems.GOLD_SAND.get()))
+                .input(Ingredient.of(BMItems.GOLD_SAND.get()))
+                .guaranteedOutput(new ItemStack(Items.NETHERITE_INGOT))
+                .save(output, BloodMagic.rl("netherite_ingot"));
+
+        // Hellforged ingot from hellforged sand
+        ARCRecipeBuilder.build(BMTags.Items.ARC_SMELTING)
+                .input(Ingredient.of(BMItems.HELLFORGED_SAND.get()))
+                .guaranteedOutput(new ItemStack(BMItems.HELLFORGED_INGOT.get()))
+                .save(output, BloodMagic.rl("hellforged_ingot_from_sand"));
+
+        // Netherrack to sulfur
+        ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
+                .input(Ingredient.of(Items.NETHERRACK))
+                .guaranteedOutput(new ItemStack(BMItems.SULFUR.get(), 2))
+                .save(output, BloodMagic.rl("netherrack_to_sulfur"));
+
+        // Mossify recipes - use hydration with water
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.COBBLESTONE))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.MOSSY_COBBLESTONE))
+                .save(output, BloodMagic.rl("mossify_cobblestone"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.COBBLESTONE_SLAB))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.MOSSY_COBBLESTONE_SLAB))
+                .save(output, BloodMagic.rl("mossify_cobblestone_slab"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.COBBLESTONE_STAIRS))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.MOSSY_COBBLESTONE_STAIRS))
+                .save(output, BloodMagic.rl("mossify_cobblestone_stairs"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.COBBLESTONE_WALL))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.MOSSY_COBBLESTONE_WALL))
+                .save(output, BloodMagic.rl("mossify_cobblestone_wall"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.STONE_BRICKS))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.MOSSY_STONE_BRICKS))
+                .save(output, BloodMagic.rl("mossify_stone_bricks"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.STONE_BRICK_SLAB))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.MOSSY_STONE_BRICK_SLAB))
+                .save(output, BloodMagic.rl("mossify_stone_brick_slab"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.STONE_BRICK_STAIRS))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.MOSSY_STONE_BRICK_STAIRS))
+                .save(output, BloodMagic.rl("mossify_stone_brick_stairs"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.STONE_BRICK_WALL))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.MOSSY_STONE_BRICK_WALL))
+                .save(output, BloodMagic.rl("mossify_stone_brick_wall"));
+
+        // Solidify concrete recipes (16 colors)
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.WHITE_CONCRETE_POWDER))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.WHITE_CONCRETE))
+                .save(output, BloodMagic.rl("solidify_white_concrete"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.ORANGE_CONCRETE_POWDER))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.ORANGE_CONCRETE))
+                .save(output, BloodMagic.rl("solidify_orange_concrete"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.MAGENTA_CONCRETE_POWDER))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.MAGENTA_CONCRETE))
+                .save(output, BloodMagic.rl("solidify_magenta_concrete"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.LIGHT_BLUE_CONCRETE_POWDER))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.LIGHT_BLUE_CONCRETE))
+                .save(output, BloodMagic.rl("solidify_light_blue_concrete"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.YELLOW_CONCRETE_POWDER))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.YELLOW_CONCRETE))
+                .save(output, BloodMagic.rl("solidify_yellow_concrete"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.LIME_CONCRETE_POWDER))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.LIME_CONCRETE))
+                .save(output, BloodMagic.rl("solidify_lime_concrete"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.PINK_CONCRETE_POWDER))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.PINK_CONCRETE))
+                .save(output, BloodMagic.rl("solidify_pink_concrete"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.GRAY_CONCRETE_POWDER))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.GRAY_CONCRETE))
+                .save(output, BloodMagic.rl("solidify_gray_concrete"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.LIGHT_GRAY_CONCRETE_POWDER))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.LIGHT_GRAY_CONCRETE))
+                .save(output, BloodMagic.rl("solidify_light_gray_concrete"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.CYAN_CONCRETE_POWDER))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.CYAN_CONCRETE))
+                .save(output, BloodMagic.rl("solidify_cyan_concrete"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.PURPLE_CONCRETE_POWDER))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.PURPLE_CONCRETE))
+                .save(output, BloodMagic.rl("solidify_purple_concrete"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.BLUE_CONCRETE_POWDER))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.BLUE_CONCRETE))
+                .save(output, BloodMagic.rl("solidify_blue_concrete"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.BROWN_CONCRETE_POWDER))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.BROWN_CONCRETE))
+                .save(output, BloodMagic.rl("solidify_brown_concrete"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.GREEN_CONCRETE_POWDER))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.GREEN_CONCRETE))
+                .save(output, BloodMagic.rl("solidify_green_concrete"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.RED_CONCRETE_POWDER))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.RED_CONCRETE))
+                .save(output, BloodMagic.rl("solidify_red_concrete"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.BLACK_CONCRETE_POWDER))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.BLACK_CONCRETE))
+                .save(output, BloodMagic.rl("solidify_black_concrete"));
+
+        // Wash recipes - washing colors back to white
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(ItemTags.WOOL))
+                .fluidInput(new FluidStack(Fluids.WATER, 333))
+                .guaranteedOutput(new ItemStack(Items.WHITE_WOOL))
+                .save(output, BloodMagic.rl("wash_wool"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(ItemTags.BEDS))
+                .fluidInput(new FluidStack(Fluids.WATER, 333))
+                .guaranteedOutput(new ItemStack(Items.WHITE_BED))
+                .save(output, BloodMagic.rl("wash_bed"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(ItemTags.WOOL_CARPETS))
+                .fluidInput(new FluidStack(Fluids.WATER, 333))
+                .guaranteedOutput(new ItemStack(Items.WHITE_CARPET))
+                .save(output, BloodMagic.rl("wash_carpet"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Tags.Items.GLASS_BLOCKS))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.GLASS))
+                .save(output, BloodMagic.rl("wash_glass"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Tags.Items.GLASS_PANES))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.GLASS_PANE))
+                .save(output, BloodMagic.rl("wash_glass_pane"));
+
+        // Copper oxidization recipes
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.COPPER_BLOCK))
+                .fluidInput(new FluidStack(Fluids.WATER, 500))
+                .guaranteedOutput(new ItemStack(Items.EXPOSED_COPPER))
+                .save(output, BloodMagic.rl("copper_block_to_exposed_copper"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.EXPOSED_COPPER))
+                .fluidInput(new FluidStack(Fluids.WATER, 500))
+                .guaranteedOutput(new ItemStack(Items.WEATHERED_COPPER))
+                .save(output, BloodMagic.rl("exposed_copper_to_weathered_copper"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.WEATHERED_COPPER))
+                .fluidInput(new FluidStack(Fluids.WATER, 500))
+                .guaranteedOutput(new ItemStack(Items.OXIDIZED_COPPER))
+                .save(output, BloodMagic.rl("weathered_copper_to_oxidized_copper"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.CUT_COPPER))
+                .fluidInput(new FluidStack(Fluids.WATER, 500))
+                .guaranteedOutput(new ItemStack(Items.EXPOSED_CUT_COPPER))
+                .save(output, BloodMagic.rl("cut_copper_to_exposed_cut_copper"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.EXPOSED_CUT_COPPER))
+                .fluidInput(new FluidStack(Fluids.WATER, 500))
+                .guaranteedOutput(new ItemStack(Items.WEATHERED_CUT_COPPER))
+                .save(output, BloodMagic.rl("exposed_cut_copper_to_weathered_cut_copper"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.WEATHERED_CUT_COPPER))
+                .fluidInput(new FluidStack(Fluids.WATER, 500))
+                .guaranteedOutput(new ItemStack(Items.OXIDIZED_CUT_COPPER))
+                .save(output, BloodMagic.rl("weathered_cut_copper_to_oxidized_cut_copper"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.CUT_COPPER_STAIRS))
+                .fluidInput(new FluidStack(Fluids.WATER, 500))
+                .guaranteedOutput(new ItemStack(Items.EXPOSED_CUT_COPPER_STAIRS))
+                .save(output, BloodMagic.rl("cut_copper_stairs_to_exposed_cut_copper_stairs"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.EXPOSED_CUT_COPPER_STAIRS))
+                .fluidInput(new FluidStack(Fluids.WATER, 500))
+                .guaranteedOutput(new ItemStack(Items.WEATHERED_CUT_COPPER_STAIRS))
+                .save(output, BloodMagic.rl("exposed_cut_copper_stairs_to_weathered_cut_copper_stairs"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.WEATHERED_CUT_COPPER_STAIRS))
+                .fluidInput(new FluidStack(Fluids.WATER, 500))
+                .guaranteedOutput(new ItemStack(Items.OXIDIZED_CUT_COPPER_STAIRS))
+                .save(output, BloodMagic.rl("weathered_cut_copper_stairs_to_oxidized_cut_copper_stairs"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.CUT_COPPER_SLAB))
+                .fluidInput(new FluidStack(Fluids.WATER, 500))
+                .guaranteedOutput(new ItemStack(Items.EXPOSED_CUT_COPPER_SLAB))
+                .save(output, BloodMagic.rl("cut_copper_slab_to_exposed_cut_copper_slab"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.EXPOSED_CUT_COPPER_SLAB))
+                .fluidInput(new FluidStack(Fluids.WATER, 500))
+                .guaranteedOutput(new ItemStack(Items.WEATHERED_CUT_COPPER_SLAB))
+                .save(output, BloodMagic.rl("exposed_cut_copper_slab_to_weathered_cut_copper_slab"));
+
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(Ingredient.of(Items.WEATHERED_CUT_COPPER_SLAB))
+                .fluidInput(new FluidStack(Fluids.WATER, 500))
+                .guaranteedOutput(new ItemStack(Items.OXIDIZED_CUT_COPPER_SLAB))
+                .save(output, BloodMagic.rl("weathered_cut_copper_slab_to_oxidized_cut_copper_slab"));
+
+        // Tau strengthening - weak tau + life essence -> strong tau
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(BMBlocks.WEAK_TAU.item().get())
+                .fluidInput(new FluidStack(BMFluids.LIFE_ESSENCE_SOURCE.get(), 1600))
+                .guaranteedOutput(new ItemStack(BMBlocks.STRONG_TAU.item().get()))
+                .save(output, BloodMagic.rl("strengthen_tau"));
+
+        // Weak blood shard from tau + life essence
+        ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
+                .input(BMBlocks.STRONG_TAU.item().get())
+                .fluidInput(new FluidStack(BMFluids.LIFE_ESSENCE_SOURCE.get(), 3200))
+                .guaranteedOutput(new ItemStack(BMItems.WEAK_BLOOD_SHARD.get()))
+                .save(output, BloodMagic.rl("weakbloodshard_tau"));
     }
 }

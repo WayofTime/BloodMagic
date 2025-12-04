@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:alchemical_reaction_chamber",
+  "chance_outputs": [],
+  "guaranteed_outputs": [
+    {
+      "count": 1,
+      "id": "bloodmagic:weak_blood_shard"
+    }
+  ],
+  "input": {
+    "item": "bloodmagic:strong_tau"
+  },
+  "input_fluid": {
+    "amount": 3200,
+    "id": "bloodmagic:life_essence_fluid_source"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc_tool/hydration"
+  }
+}

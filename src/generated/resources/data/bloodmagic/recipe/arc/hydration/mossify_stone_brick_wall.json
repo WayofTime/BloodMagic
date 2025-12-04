@@ -1,0 +1,20 @@
+{
+  "type": "bloodmagic:alchemical_reaction_chamber",
+  "chance_outputs": [],
+  "guaranteed_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:mossy_stone_brick_wall"
+    }
+  ],
+  "input": {
+    "item": "minecraft:stone_brick_wall"
+  },
+  "input_fluid": {
+    "amount": 200,
+    "id": "minecraft:water"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc_tool/hydration"
+  }
+}
