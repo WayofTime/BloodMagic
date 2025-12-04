@@ -261,6 +261,38 @@ public class BMLanguageProvider extends LanguageProvider {
         // Tau Oil
         add(BMItems.TAU_OIL.get(), "Tau Oil");
 
+        // ARC Items
+        add(BMItems.BASIC_CUTTING_FLUID.get(), "Basic Cutting Fluid");
+        add(BMItems.EXPLOSIVE_POWDER.get(), "Explosive Powder");
+        add(BMItems.RESONATOR.get(), "Crystal Resonator");
+        add(BMItems.PRIMITIVE_CRYSTALLINE_RESONATOR.get(), "Reinforced Resonator");
+        add(BMItems.HELLFORGED_RESONATOR.get(), "Hellforged Resonator");
+        add(BMItems.PRIMITIVE_FURNACE_CELL.get(), "Primitive Fuel Cell");
+        add(BMItems.PRIMITIVE_HYDRATION_CELL.get(), "Primitive Hydration Cell");
+        add(BMItems.PRIMITIVE_EXPLOSIVE_CELL.get(), "Reinforced Explosive Cell");
+        add(BMItems.HELLFORGED_EXPLOSIVE_CELL.get(), "Hellforged Explosive Cell");
+        add(BMItems.SANGUINE_REVERTER.get(), "Sanguine Reverter");
+
+        // Ore Processing Items
+        add(BMItems.IRON_FRAGMENT.get(), "Iron Fragment");
+        add(BMItems.IRON_GRAVEL.get(), "Iron Gravel");
+        add(BMItems.IRON_SAND.get(), "Iron Sand");
+        add(BMItems.GOLD_FRAGMENT.get(), "Gold Fragment");
+        add(BMItems.GOLD_GRAVEL.get(), "Gold Gravel");
+        add(BMItems.GOLD_SAND.get(), "Gold Sand");
+        add(BMItems.COPPER_FRAGMENT.get(), "Copper Fragment");
+        add(BMItems.COPPER_GRAVEL.get(), "Copper Gravel");
+        add(BMItems.COPPER_SAND.get(), "Copper Sand");
+        add(BMItems.COAL_SAND.get(), "Coal Sand");
+        add(BMItems.DEMONITE_FRAGMENT.get(), "Demonite Fragment");
+        add(BMItems.DEMONITE_GRAVEL.get(), "Demonite Gravel");
+        add(BMItems.NETHERITE_SCRAP_FRAGMENT.get(), "Ancient Debris Fragment");
+        add(BMItems.NETHERITE_SCRAP_GRAVEL.get(), "Ancient Debris Gravel");
+        add(BMItems.NETHERITE_SCRAP_SAND.get(), "Netherite Scrap Sand");
+        add(BMItems.HELLFORGED_SAND.get(), "Hellforged Sand");
+        add(BMItems.CORRUPTED_DUST.get(), "Corrupted Dust");
+        add(BMItems.CORRUPTED_DUST_TINY.get(), "Tiny Corrupted Dust");
+
         addTooltip("will", "Will Quality: %s");
         for (EnumWillType type : EnumWillType.values()) {
             addTooltip("current_type." + type.getSerializedName(), String.format("Contains: %s Will", type.toCapitalized()));
