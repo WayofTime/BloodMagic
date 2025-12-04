@@ -49,12 +49,12 @@ public class BMItems {
     public static final DeferredHolder<Item, SoulGemItem> SOUL_GEM_GREATER = WILL_ITEMS.register("soul_gem_greater", SoulGemItem::new);
     public static final DeferredHolder<Item, SoulGemItem> SOUL_GEM_GRAND = WILL_ITEMS.register("soul_gem_grand", SoulGemItem::new);
 
-    // Demon Crystals
-    public static final DeferredHolder<Item, DemonCrystalItem> DEMON_CRYSTAL_DEFAULT = WILL_ITEMS.register("demon_crystal_default", () -> new DemonCrystalItem(EnumWillType.DEFAULT));
-    public static final DeferredHolder<Item, DemonCrystalItem> DEMON_CRYSTAL_CORROSIVE = WILL_ITEMS.register("demon_crystal_corrosive", () -> new DemonCrystalItem(EnumWillType.CORROSIVE));
-    public static final DeferredHolder<Item, DemonCrystalItem> DEMON_CRYSTAL_DESTRUCTIVE = WILL_ITEMS.register("demon_crystal_destructive", () -> new DemonCrystalItem(EnumWillType.DESTRUCTIVE));
-    public static final DeferredHolder<Item, DemonCrystalItem> DEMON_CRYSTAL_STEADFAST = WILL_ITEMS.register("demon_crystal_steadfast", () -> new DemonCrystalItem(EnumWillType.STEADFAST));
-    public static final DeferredHolder<Item, DemonCrystalItem> DEMON_CRYSTAL_VENGEFUL = WILL_ITEMS.register("demon_crystal_vengeful", () -> new DemonCrystalItem(EnumWillType.VENGEFUL));
+    // Demon Crystals (use BASIC_ITEMS since they ARE specific will types, not items that hold variable will types)
+    public static final DeferredHolder<Item, DemonCrystalItem> DEMON_CRYSTAL_DEFAULT = BASIC_ITEMS.register("demon_crystal_default", () -> new DemonCrystalItem(EnumWillType.DEFAULT));
+    public static final DeferredHolder<Item, DemonCrystalItem> DEMON_CRYSTAL_CORROSIVE = BASIC_ITEMS.register("demon_crystal_corrosive", () -> new DemonCrystalItem(EnumWillType.CORROSIVE));
+    public static final DeferredHolder<Item, DemonCrystalItem> DEMON_CRYSTAL_DESTRUCTIVE = BASIC_ITEMS.register("demon_crystal_destructive", () -> new DemonCrystalItem(EnumWillType.DESTRUCTIVE));
+    public static final DeferredHolder<Item, DemonCrystalItem> DEMON_CRYSTAL_STEADFAST = BASIC_ITEMS.register("demon_crystal_steadfast", () -> new DemonCrystalItem(EnumWillType.STEADFAST));
+    public static final DeferredHolder<Item, DemonCrystalItem> DEMON_CRYSTAL_VENGEFUL = BASIC_ITEMS.register("demon_crystal_vengeful", () -> new DemonCrystalItem(EnumWillType.VENGEFUL));
 
     // Slates
     public static final DeferredHolder<Item, Item> SLATE_BLANK = BASIC_ITEMS.register("blank_slate", () -> new Item(new Item.Properties()));

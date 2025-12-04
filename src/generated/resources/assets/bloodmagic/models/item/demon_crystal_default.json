@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "bloodmagic:item/demon_crystal_vengeful"
+    "layer0": "bloodmagic:item/demon_crystal_default"
   }
 }
