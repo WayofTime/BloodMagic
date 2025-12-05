@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:array",
+  "addedinput": {
+    "item": "minecraft:lapis_lazuli"
+  },
+  "baseinput": {
+    "item": "minecraft:lapis_lazuli"
+  },
+  "output": {
+    "count": 1,
+    "id": "minecraft:bedrock"
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/moonarray.png"
+}

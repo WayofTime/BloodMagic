@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:array",
+  "addedinput": {
+    "item": "minecraft:glowstone_dust"
+  },
+  "baseinput": {
+    "item": "minecraft:feather"
+  },
+  "output": {
+    "count": 1,
+    "id": "minecraft:bedrock"
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/updraftarray.png"
+}

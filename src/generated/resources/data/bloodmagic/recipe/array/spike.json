@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:array",
+  "addedinput": {
+    "item": "minecraft:iron_ingot"
+  },
+  "baseinput": {
+    "item": "minecraft:cobblestone"
+  },
+  "output": {
+    "count": 1,
+    "id": "minecraft:bedrock"
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/spikearray.png"
+}

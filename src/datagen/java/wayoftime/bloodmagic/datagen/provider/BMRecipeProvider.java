@@ -1485,6 +1485,49 @@ public class BMRecipeProvider extends RecipeProvider {
                 .added(Items.DIAMOND)
                 .texture("textures/models/alchemyarrays/bindingarray.png")
                 .save(output, "living_trainer");
+
+        // Effect Arrays (placeholder recipes - create effects, not items)
+        // Bounce Array - slimeball + redstone
+        AlchemyArrayRecipeBuilder.build(Items.BEDROCK) // placeholder output
+                .base(Items.SLIME_BALL)
+                .added(Items.REDSTONE)
+                .texture("textures/models/alchemyarrays/bouncearray.png")
+                .save(output, "bounce");
+
+        // Movement Array - feather + redstone
+        AlchemyArrayRecipeBuilder.build(Items.BEDROCK)
+                .base(Items.FEATHER)
+                .added(Items.REDSTONE)
+                .texture("textures/models/alchemyarrays/movementarray.png")
+                .save(output, "movement");
+
+        // Spike Array - cobblestone + iron ingot
+        AlchemyArrayRecipeBuilder.build(Items.BEDROCK)
+                .base(Items.COBBLESTONE)
+                .added(Items.IRON_INGOT)
+                .texture("textures/models/alchemyarrays/spikearray.png")
+                .save(output, "spike");
+
+        // Updraft Array - feather + glowstone dust
+        AlchemyArrayRecipeBuilder.build(Items.BEDROCK)
+                .base(Items.FEATHER)
+                .added(Items.GLOWSTONE_DUST)
+                .texture("textures/models/alchemyarrays/updraftarray.png")
+                .save(output, "updraft");
+
+        // Day Array (Sun) - coal + coal
+        AlchemyArrayRecipeBuilder.build(Items.BEDROCK)
+                .base(Items.COAL)
+                .added(Items.COAL)
+                .texture("textures/models/alchemyarrays/sunarray.png")
+                .save(output, "day");
+
+        // Night Array (Moon) - lapis + lapis
+        AlchemyArrayRecipeBuilder.build(Items.BEDROCK)
+                .base(Items.LAPIS_LAZULI)
+                .added(Items.LAPIS_LAZULI)
+                .texture("textures/models/alchemyarrays/moonarray.png")
+                .save(output, "night");
     }
 
     private void addAlchemyTableRecipes(RecipeOutput output) {

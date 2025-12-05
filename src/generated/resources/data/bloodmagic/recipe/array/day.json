@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:array",
+  "addedinput": {
+    "item": "minecraft:coal"
+  },
+  "baseinput": {
+    "item": "minecraft:coal"
+  },
+  "output": {
+    "count": 1,
+    "id": "minecraft:bedrock"
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/sunarray.png"
+}

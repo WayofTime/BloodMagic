@@ -1,0 +1,14 @@
+{
+  "type": "bloodmagic:array",
+  "addedinput": {
+    "item": "minecraft:redstone"
+  },
+  "baseinput": {
+    "item": "minecraft:slime_ball"
+  },
+  "output": {
+    "count": 1,
+    "id": "minecraft:bedrock"
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/bouncearray.png"
+}
