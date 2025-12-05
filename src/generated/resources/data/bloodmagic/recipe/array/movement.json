@@ -1,10 +1,10 @@
 {
   "type": "bloodmagic:array",
   "addedinput": {
-    "item": "minecraft:redstone"
+    "tag": "c:dusts/redstone"
   },
   "baseinput": {
-    "item": "minecraft:feather"
+    "tag": "c:feathers"
   },
   "output": {
     "count": 1,

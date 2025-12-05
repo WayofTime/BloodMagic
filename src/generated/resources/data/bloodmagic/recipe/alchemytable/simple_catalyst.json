@@ -14,7 +14,7 @@
       "tag": "c:gunpowders"
     },
     {
-      "item": "minecraft:nether_wart"
+      "tag": "c:crops/nether_wart"
     }
   ],
   "output": {

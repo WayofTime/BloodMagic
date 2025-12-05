@@ -1,10 +1,10 @@
 {
   "type": "bloodmagic:array",
   "addedinput": {
-    "item": "minecraft:glowstone_dust"
+    "tag": "c:dusts/glowstone"
   },
   "baseinput": {
-    "item": "minecraft:feather"
+    "tag": "c:feathers"
   },
   "output": {
     "count": 1,

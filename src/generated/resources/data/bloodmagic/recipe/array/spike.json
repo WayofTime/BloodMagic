@@ -1,10 +1,10 @@
 {
   "type": "bloodmagic:array",
   "addedinput": {
-    "item": "minecraft:iron_ingot"
+    "tag": "c:ingots/iron"
   },
   "baseinput": {
-    "item": "minecraft:cobblestone"
+    "tag": "c:cobblestones"
   },
   "output": {
     "count": 1,

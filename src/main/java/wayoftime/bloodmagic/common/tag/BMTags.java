@@ -49,10 +49,10 @@ public class BMTags {
         public static final TagKey<Item> GRAVELS_NETHERITE_SCRAP = tag(bm("gravels/netherite_scrap"));
         public static final TagKey<Item> GRAVELS_HELLFORGED = tag(bm("gravels/hellforged"));
 
-        // Dust tags (sands)
-        public static final TagKey<Item> DUSTS_IRON = tag(bm("dusts/iron"));
-        public static final TagKey<Item> DUSTS_GOLD = tag(bm("dusts/gold"));
-        public static final TagKey<Item> DUSTS_COPPER = tag(bm("dusts/copper"));
+        // Dust tags (sands) - iron/gold/copper use c: convention tags for cross-mod compat
+        public static final TagKey<Item> DUSTS_IRON = tag(c("dusts/iron"));
+        public static final TagKey<Item> DUSTS_GOLD = tag(c("dusts/gold"));
+        public static final TagKey<Item> DUSTS_COPPER = tag(c("dusts/copper"));
         public static final TagKey<Item> DUSTS_COAL = tag(bm("dusts/coal"));
         public static final TagKey<Item> DUSTS_SULFUR = tag(bm("dusts/sulfur"));
         public static final TagKey<Item> DUSTS_SALTPETER = tag(bm("dusts/saltpeter"));

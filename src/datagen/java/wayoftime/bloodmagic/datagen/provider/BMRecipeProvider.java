@@ -1499,29 +1499,29 @@ public class BMRecipeProvider extends RecipeProvider {
         // Effect Arrays (placeholder recipes - create effects, not items)
         // Bounce Array - slimeball + redstone
         AlchemyArrayRecipeBuilder.build(Items.BEDROCK) // placeholder output
-                .base(Items.SLIME_BALL)
-                .added(Items.REDSTONE)
+                .base(Ingredient.of(Tags.Items.SLIME_BALLS))
+                .added(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
                 .texture("textures/models/alchemyarrays/bouncearray.png")
                 .save(output, "bounce");
 
         // Movement Array - feather + redstone
         AlchemyArrayRecipeBuilder.build(Items.BEDROCK)
-                .base(Items.FEATHER)
-                .added(Items.REDSTONE)
+                .base(Ingredient.of(Tags.Items.FEATHERS))
+                .added(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
                 .texture("textures/models/alchemyarrays/movementarray.png")
                 .save(output, "movement");
 
         // Spike Array - cobblestone + iron ingot
         AlchemyArrayRecipeBuilder.build(Items.BEDROCK)
-                .base(Items.COBBLESTONE)
-                .added(Items.IRON_INGOT)
+                .base(Ingredient.of(Tags.Items.COBBLESTONES))
+                .added(Ingredient.of(Tags.Items.INGOTS_IRON))
                 .texture("textures/models/alchemyarrays/spikearray.png")
                 .save(output, "spike");
 
         // Updraft Array - feather + glowstone dust
         AlchemyArrayRecipeBuilder.build(Items.BEDROCK)
-                .base(Items.FEATHER)
-                .added(Items.GLOWSTONE_DUST)
+                .base(Ingredient.of(Tags.Items.FEATHERS))
+                .added(Ingredient.of(Tags.Items.DUSTS_GLOWSTONE))
                 .texture("textures/models/alchemyarrays/updraftarray.png")
                 .save(output, "updraft");
 
@@ -1534,8 +1534,8 @@ public class BMRecipeProvider extends RecipeProvider {
 
         // Night Array (Moon) - lapis + lapis
         AlchemyArrayRecipeBuilder.build(Items.BEDROCK)
-                .base(Items.LAPIS_LAZULI)
-                .added(Items.LAPIS_LAZULI)
+                .base(Ingredient.of(Tags.Items.GEMS_LAPIS))
+                .added(Ingredient.of(Tags.Items.GEMS_LAPIS))
                 .texture("textures/models/alchemyarrays/moonarray.png")
                 .save(output, "night");
     }
@@ -2417,7 +2417,7 @@ public class BMRecipeProvider extends RecipeProvider {
                 .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
                 .input(Ingredient.of(Tags.Items.DUSTS_GLOWSTONE))
                 .input(Ingredient.of(Tags.Items.GUNPOWDERS))
-                .input(Items.NETHER_WART)
+                .input(Ingredient.of(Tags.Items.CROPS_NETHER_WART))
                 .syphon(200)
                 .ticks(100)
                 .minimumTier(2)

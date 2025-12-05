@@ -1,10 +1,10 @@
 {
   "type": "bloodmagic:array",
   "addedinput": {
-    "item": "minecraft:lapis_lazuli"
+    "tag": "c:gems/lapis"
   },
   "baseinput": {
-    "item": "minecraft:lapis_lazuli"
+    "tag": "c:gems/lapis"
   },
   "output": {
     "count": 1,
