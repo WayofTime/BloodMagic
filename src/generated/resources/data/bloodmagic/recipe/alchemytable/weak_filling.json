@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:simplecatalyst"
+    },
+    {
+      "item": "minecraft:sugar_cane"
+    },
+    {
+      "item": "minecraft:crimson_fungus"
+    },
+    {
+      "item": "minecraft:warped_fungus"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:weakfillingagent"
+  },
+  "syphon": 2000,
+  "ticks": 100,
+  "upgradeLevel": 2
+}

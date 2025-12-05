@@ -1,0 +1,21 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "minecraft:dirt"
+    },
+    {
+      "item": "minecraft:bone_meal"
+    },
+    {
+      "item": "minecraft:wheat_seeds"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "minecraft:grass_block"
+  },
+  "syphon": 200,
+  "ticks": 200,
+  "upgradeLevel": 1
+}

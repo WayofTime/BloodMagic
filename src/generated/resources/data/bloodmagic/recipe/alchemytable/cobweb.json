@@ -1,0 +1,21 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "c:strings"
+    },
+    {
+      "tag": "c:strings"
+    },
+    {
+      "tag": "c:strings"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "minecraft:cobweb"
+  },
+  "syphon": 50,
+  "ticks": 50,
+  "upgradeLevel": 1
+}

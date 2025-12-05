@@ -1,0 +1,27 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:simplecatalyst"
+    },
+    {
+      "tag": "c:gems/lapis"
+    },
+    {
+      "tag": "c:gems/lapis"
+    },
+    {
+      "tag": "c:dyes/green"
+    },
+    {
+      "tag": "c:sands"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:cyclingcatalyst"
+  },
+  "syphon": 1000,
+  "ticks": 100,
+  "upgradeLevel": 2
+}

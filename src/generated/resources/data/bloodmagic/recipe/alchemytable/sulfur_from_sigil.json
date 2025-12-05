@@ -1,0 +1,17 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:sigil_lava"
+    },
+    {
+      "tag": "c:cobblestones"
+    }
+  ],
+  "output": {
+    "count": 4,
+    "id": "bloodmagic:sulfur"
+  },
+  "syphon": 1200,
+  "ticks": 100
+}

@@ -1,0 +1,18 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "c:ores/gold"
+    },
+    {
+      "tag": "bloodmagic:arc_tool/cutting_fluids"
+    }
+  ],
+  "output": {
+    "count": 2,
+    "id": "bloodmagic:goldsand"
+  },
+  "syphon": 400,
+  "ticks": 200,
+  "upgradeLevel": 1
+}

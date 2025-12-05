@@ -1,0 +1,18 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "bloodmagic:fragments/copper"
+    },
+    {
+      "item": "bloodmagic:corrupted_dust"
+    }
+  ],
+  "output": {
+    "count": 2,
+    "id": "bloodmagic:coppergravel"
+  },
+  "syphon": 50,
+  "ticks": 50,
+  "upgradeLevel": 3
+}

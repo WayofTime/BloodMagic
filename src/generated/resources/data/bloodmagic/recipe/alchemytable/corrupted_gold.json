@@ -1,0 +1,18 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "bloodmagic:fragments/gold"
+    },
+    {
+      "item": "bloodmagic:corrupted_dust"
+    }
+  ],
+  "output": {
+    "count": 2,
+    "id": "bloodmagic:goldgravel"
+  },
+  "syphon": 300,
+  "ticks": 50,
+  "upgradeLevel": 3
+}

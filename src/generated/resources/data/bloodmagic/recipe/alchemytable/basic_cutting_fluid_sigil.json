@@ -1,0 +1,30 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:plantoil"
+    },
+    {
+      "tag": "c:dusts/redstone"
+    },
+    {
+      "tag": "c:gunpowders"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "tag": "bloodmagic:dusts/coal"
+    },
+    {
+      "item": "bloodmagic:sigil_water"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:basiccuttingfluid"
+  },
+  "syphon": 1100,
+  "ticks": 200,
+  "upgradeLevel": 1
+}

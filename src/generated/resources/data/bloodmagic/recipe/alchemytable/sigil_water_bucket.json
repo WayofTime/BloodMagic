@@ -1,0 +1,18 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:sigil_water"
+    },
+    {
+      "item": "minecraft:bucket"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "minecraft:water_bucket"
+  },
+  "syphon": 300,
+  "ticks": 60,
+  "upgradeLevel": 1
+}

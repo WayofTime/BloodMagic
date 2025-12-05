@@ -1,0 +1,30 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "minecraft:rotten_flesh"
+    },
+    {
+      "item": "minecraft:rotten_flesh"
+    },
+    {
+      "item": "minecraft:rotten_flesh"
+    },
+    {
+      "item": "minecraft:rotten_flesh"
+    },
+    {
+      "item": "minecraft:flint"
+    },
+    {
+      "item": "bloodmagic:sigil_water"
+    }
+  ],
+  "output": {
+    "count": 4,
+    "id": "minecraft:leather"
+  },
+  "syphon": 400,
+  "ticks": 200,
+  "upgradeLevel": 1
+}

@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "bloodmagic:fragments/netherite_scrap"
+    },
+    {
+      "item": "bloodmagic:corrupted_dust"
+    },
+    {
+      "item": "bloodmagic:corrupted_dust"
+    },
+    {
+      "item": "bloodmagic:corrupted_dust"
+    }
+  ],
+  "output": {
+    "count": 2,
+    "id": "bloodmagic:gravel_netherite_scrap"
+  },
+  "syphon": 1000,
+  "ticks": 50,
+  "upgradeLevel": 3
+}

@@ -1,0 +1,30 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "tag": "c:gunpowders"
+    },
+    {
+      "tag": "bloodmagic:dusts/sulfur"
+    },
+    {
+      "tag": "c:dusts/redstone"
+    },
+    {
+      "tag": "c:gems/quartz"
+    },
+    {
+      "tag": "bloodmagic:dusts/hellforged"
+    },
+    {
+      "tag": "bloodmagic:dusts/coal"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:hellforged_explosive_cell"
+  },
+  "syphon": 4000,
+  "ticks": 200,
+  "upgradeLevel": 4
+}

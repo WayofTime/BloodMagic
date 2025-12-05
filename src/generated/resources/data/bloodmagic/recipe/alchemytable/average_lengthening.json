@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:weak_tau"
+    },
+    {
+      "item": "bloodmagic:strengthenedcatalyst"
+    },
+    {
+      "tag": "c:dusts/redstone"
+    },
+    {
+      "tag": "bloodmagic:dusts/hellforged"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:averagelengtheningcatalyst"
+  },
+  "syphon": 2000,
+  "ticks": 100,
+  "upgradeLevel": 4
+}

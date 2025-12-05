@@ -2409,6 +2409,358 @@ public class BMRecipeProvider extends RecipeProvider {
                 .syphon(2000).ticks(100).minimumTier(4)
                 .save(output, "weapon_repair_anointment_3");
 
+
+        // === CATALYST RECIPES ===
+        // Simple Catalyst - sugar, redstone, glowstone, gunpowder, nether wart
+        AlchemyTableRecipeBuilder.build(new ItemStack(BMItems.SIMPLE_CATALYST.get(), 2))
+                .input(Items.SUGAR)
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .input(Ingredient.of(Tags.Items.DUSTS_GLOWSTONE))
+                .input(Ingredient.of(Tags.Items.GUNPOWDERS))
+                .input(Items.NETHER_WART)
+                .syphon(200)
+                .ticks(100)
+                .minimumTier(2)
+                .save(output, "simple_catalyst");
+
+        // Strengthened Catalyst - simple catalyst, copper dust, glow berries, cobbled deepslate
+        AlchemyTableRecipeBuilder.build(BMItems.STRENGTHENED_CATALYST.get())
+                .input(BMItems.SIMPLE_CATALYST.get())
+                .input(Ingredient.of(BMTags.Items.DUSTS_COPPER))
+                .input(Items.GLOW_BERRIES)
+                .input(Items.COBBLED_DEEPSLATE)
+                .syphon(1000)
+                .ticks(100)
+                .minimumTier(4)
+                .save(output, "strengthened_catalyst");
+
+        // Cycling Catalyst - simple catalyst, lapis x2, green dye, sand
+        AlchemyTableRecipeBuilder.build(BMItems.CYCLING_CATALYST.get())
+                .input(BMItems.SIMPLE_CATALYST.get())
+                .input(Ingredient.of(Tags.Items.GEMS_LAPIS))
+                .input(Ingredient.of(Tags.Items.GEMS_LAPIS))
+                .input(Ingredient.of(Tags.Items.DYES_GREEN))
+                .input(Ingredient.of(Tags.Items.SANDS))
+                .syphon(1000)
+                .ticks(100)
+                .minimumTier(2)
+                .save(output, "cycling_catalyst");
+
+        // Combinational Catalyst - simple catalyst, brown mushroom, red mushroom, slime ball, coal dust
+        AlchemyTableRecipeBuilder.build(BMItems.COMBINATIONAL_CATALYST.get())
+                .input(BMItems.SIMPLE_CATALYST.get())
+                .input(Items.BROWN_MUSHROOM)
+                .input(Items.RED_MUSHROOM)
+                .input(Items.SLIME_BALL)
+                .input(Ingredient.of(BMTags.Items.DUSTS_COAL))
+                .syphon(2000)
+                .ticks(100)
+                .minimumTier(4)
+                .save(output, "combinational");
+
+        // Mundane Lengthening Catalyst - weak tau, simple catalyst, redstone x2
+        AlchemyTableRecipeBuilder.build(BMItems.MUNDANE_LENGTHENING_CATALYST.get())
+                .input(BMBlocks.WEAK_TAU.item().get())
+                .input(BMItems.SIMPLE_CATALYST.get())
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .syphon(1000)
+                .ticks(100)
+                .minimumTier(4)
+                .save(output, "mundane_lengthening");
+
+        // Mundane Power Catalyst - strong tau, simple catalyst, glowstone x2
+        AlchemyTableRecipeBuilder.build(BMItems.MUNDANE_POWER_CATALYST.get())
+                .input(BMBlocks.STRONG_TAU.item().get())
+                .input(BMItems.SIMPLE_CATALYST.get())
+                .input(Ingredient.of(Tags.Items.DUSTS_GLOWSTONE))
+                .input(Ingredient.of(Tags.Items.DUSTS_GLOWSTONE))
+                .syphon(1000)
+                .ticks(100)
+                .minimumTier(4)
+                .save(output, "mundane_power");
+
+        // Average Lengthening Catalyst - weak tau, strengthened catalyst, redstone, hellforged dust
+        AlchemyTableRecipeBuilder.build(BMItems.AVERAGE_LENGTHENING_CATALYST.get())
+                .input(BMBlocks.WEAK_TAU.item().get())
+                .input(BMItems.STRENGTHENED_CATALYST.get())
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .input(Ingredient.of(BMTags.Items.DUSTS_HELLFORGED))
+                .syphon(2000)
+                .ticks(100)
+                .minimumTier(4)
+                .save(output, "average_lengthening");
+
+        // Average Power Catalyst - strong tau, strengthened catalyst, glowstone, hellforged dust
+        AlchemyTableRecipeBuilder.build(BMItems.AVERAGE_POWER_CATALYST.get())
+                .input(BMBlocks.STRONG_TAU.item().get())
+                .input(BMItems.STRENGTHENED_CATALYST.get())
+                .input(Ingredient.of(Tags.Items.DUSTS_GLOWSTONE))
+                .input(Ingredient.of(BMTags.Items.DUSTS_HELLFORGED))
+                .syphon(2000)
+                .ticks(100)
+                .minimumTier(4)
+                .save(output, "average_power");
+
+        // === SIGIL-POWERED RECIPES ===
+        // Water Bucket from Water Sigil
+        AlchemyTableRecipeBuilder.build(Items.WATER_BUCKET)
+                .input(BMItems.SIGIL_WATER.get())
+                .input(Items.BUCKET)
+                .syphon(300)
+                .ticks(60)
+                .minimumTier(1)
+                .save(output, "sigil_water_bucket");
+
+        // Lava Bucket from Lava Sigil
+        AlchemyTableRecipeBuilder.build(Items.LAVA_BUCKET)
+                .input(BMItems.SIGIL_LAVA.get())
+                .input(Items.BUCKET)
+                .syphon(1000)
+                .ticks(100)
+                .minimumTier(1)
+                .save(output, "sigil_lava_bucket");
+
+        // Clay from Sand with Water Sigil
+        AlchemyTableRecipeBuilder.build(new ItemStack(Items.CLAY_BALL, 2))
+                .input(Ingredient.of(Tags.Items.SANDS))
+                .input(Ingredient.of(Tags.Items.SANDS))
+                .input(BMItems.SIGIL_WATER.get())
+                .syphon(350)
+                .ticks(100)
+                .minimumTier(2)
+                .save(output, "clay_from_sand_sigil");
+
+        // Leather from Rotten Flesh with Water Sigil
+        AlchemyTableRecipeBuilder.build(new ItemStack(Items.LEATHER, 4))
+                .input(Items.ROTTEN_FLESH)
+                .input(Items.ROTTEN_FLESH)
+                .input(Items.ROTTEN_FLESH)
+                .input(Items.ROTTEN_FLESH)
+                .input(Items.FLINT)
+                .input(BMItems.SIGIL_WATER.get())
+                .syphon(400)
+                .ticks(200)
+                .minimumTier(1)
+                .save(output, "leather_from_flesh_sigil");
+
+        // Sulfur from Lava Sigil
+        AlchemyTableRecipeBuilder.build(new ItemStack(BMItems.SULFUR.get(), 4))
+                .input(BMItems.SIGIL_LAVA.get())
+                .input(Ingredient.of(Tags.Items.COBBLESTONES))
+                .syphon(1200)
+                .ticks(100)
+                .minimumTier(0)
+                .save(output, "sulfur_from_sigil");
+
+        // Basic Cutting Fluid with Water Sigil
+        AlchemyTableRecipeBuilder.build(BMItems.BASIC_CUTTING_FLUID.get())
+                .input(BMItems.PLANT_OIL.get())
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .input(Ingredient.of(Tags.Items.GUNPOWDERS))
+                .input(Items.SUGAR)
+                .input(Ingredient.of(BMTags.Items.DUSTS_COAL))
+                .input(BMItems.SIGIL_WATER.get())
+                .syphon(1100)
+                .ticks(200)
+                .minimumTier(1)
+                .save(output, "basic_cutting_fluid_sigil");
+
+        // Intermediate Cutting Fluid with Water Sigil
+        AlchemyTableRecipeBuilder.build(BMItems.INTERMEDIATE_CUTTING_FLUID.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Ingredient.of(Tags.Items.DUSTS_GLOWSTONE))
+                .input(Ingredient.of(Tags.Items.GUNPOWDERS))
+                .input(Items.SUGAR)
+                .input(Ingredient.of(BMTags.Items.DUSTS_SULFUR))
+                .input(BMItems.SIGIL_WATER.get())
+                .syphon(2100)
+                .ticks(200)
+                .minimumTier(3)
+                .save(output, "intermediate_cutting_fluid_sigil");
+
+        // Advanced Cutting Fluid with Water Sigil
+        AlchemyTableRecipeBuilder.build(BMItems.ADVANCED_CUTTING_FLUID.get())
+                .input(BMItems.TAU_OIL.get())
+                .input(Ingredient.of(BMTags.Items.DUSTS_HELLFORGED))
+                .input(Items.GLOW_BERRIES)
+                .input(BMItems.SALTPETER.get())
+                .input(Ingredient.of(BMTags.Items.DUSTS_SULFUR))
+                .input(BMItems.SIGIL_WATER.get())
+                .syphon(4100)
+                .ticks(200)
+                .minimumTier(4)
+                .save(output, "advance_cutting_fluid_sigil");
+
+        // === CORRUPTED DUST RECIPES ===
+        // Corrupted Coal -> Coal Sand x3
+        AlchemyTableRecipeBuilder.build(new ItemStack(BMItems.COAL_SAND.get(), 3))
+                .input(Ingredient.of(BMTags.Items.DUSTS_COAL))
+                .input(BMItems.CORRUPTED_DUST.get())
+                .syphon(50)
+                .ticks(50)
+                .minimumTier(3)
+                .save(output, "corrupted_coal");
+
+        // Corrupted Copper -> Copper Gravel x2
+        AlchemyTableRecipeBuilder.build(new ItemStack(BMItems.COPPER_GRAVEL.get(), 2))
+                .input(Ingredient.of(BMTags.Items.FRAGMENTS_COPPER))
+                .input(BMItems.CORRUPTED_DUST.get())
+                .syphon(50)
+                .ticks(50)
+                .minimumTier(3)
+                .save(output, "corrupted_copper");
+
+        // Corrupted Gold -> Gold Gravel x2
+        AlchemyTableRecipeBuilder.build(new ItemStack(BMItems.GOLD_GRAVEL.get(), 2))
+                .input(Ingredient.of(BMTags.Items.FRAGMENTS_GOLD))
+                .input(BMItems.CORRUPTED_DUST.get())
+                .syphon(300)
+                .ticks(50)
+                .minimumTier(3)
+                .save(output, "corrupted_gold");
+
+        // Corrupted Iron -> Iron Gravel x2
+        AlchemyTableRecipeBuilder.build(new ItemStack(BMItems.IRON_GRAVEL.get(), 2))
+                .input(Ingredient.of(BMTags.Items.FRAGMENTS_IRON))
+                .input(BMItems.CORRUPTED_DUST.get())
+                .syphon(100)
+                .ticks(50)
+                .minimumTier(3)
+                .save(output, "corrupted_iron");
+
+        // Corrupted Netherite -> Netherite Gravel x2
+        AlchemyTableRecipeBuilder.build(new ItemStack(BMItems.NETHERITE_SCRAP_GRAVEL.get(), 2))
+                .input(Ingredient.of(BMTags.Items.FRAGMENTS_NETHERITE_SCRAP))
+                .input(BMItems.CORRUPTED_DUST.get())
+                .input(BMItems.CORRUPTED_DUST.get())
+                .input(BMItems.CORRUPTED_DUST.get())
+                .syphon(1000)
+                .ticks(50)
+                .minimumTier(3)
+                .save(output, "corrupted_netherite");
+
+        // === SAND RECIPES ===
+        // Coal Sand from Coal
+        AlchemyTableRecipeBuilder.build(new ItemStack(BMItems.COAL_SAND.get(), 4))
+                .input(Items.COAL)
+                .input(Items.COAL)
+                .input(Items.FLINT)
+                .syphon(400)
+                .ticks(200)
+                .minimumTier(1)
+                .save(output, "sand_coal");
+
+        // Gold Sand from Gold Ore
+        AlchemyTableRecipeBuilder.build(new ItemStack(BMItems.GOLD_SAND.get(), 2))
+                .input(Ingredient.of(Tags.Items.ORES_GOLD))
+                .input(Ingredient.of(BMTags.Items.CUTTING_FLUIDS))
+                .syphon(400)
+                .ticks(200)
+                .minimumTier(1)
+                .save(output, "sand_gold");
+
+        // Iron Sand from Iron Ore
+        AlchemyTableRecipeBuilder.build(new ItemStack(BMItems.IRON_SAND.get(), 2))
+                .input(Ingredient.of(Tags.Items.ORES_IRON))
+                .input(Ingredient.of(BMTags.Items.CUTTING_FLUIDS))
+                .syphon(400)
+                .ticks(200)
+                .minimumTier(1)
+                .save(output, "sand_iron");
+
+        // === OTHER UTILITY RECIPES ===
+        // Cobweb from String
+        AlchemyTableRecipeBuilder.build(Items.COBWEB)
+                .input(Ingredient.of(Tags.Items.STRINGS))
+                .input(Ingredient.of(Tags.Items.STRINGS))
+                .input(Ingredient.of(Tags.Items.STRINGS))
+                .syphon(50)
+                .ticks(50)
+                .minimumTier(1)
+                .save(output, "cobweb");
+
+        // Explosive Cell (primitive)
+        AlchemyTableRecipeBuilder.build(BMItems.PRIMITIVE_EXPLOSIVE_CELL.get())
+                .input(Ingredient.of(Tags.Items.GUNPOWDERS))
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .input(BMBlocks.WEAK_TAU.item().get())
+                .input(Ingredient.of(BMTags.Items.DUSTS_COAL))
+                .syphon(1000)
+                .ticks(200)
+                .minimumTier(3)
+                .save(output, "explosive_cell");
+
+        // Hellforged Explosive Cell
+        AlchemyTableRecipeBuilder.build(BMItems.HELLFORGED_EXPLOSIVE_CELL.get())
+                .input(Ingredient.of(Tags.Items.GUNPOWDERS))
+                .input(Ingredient.of(BMTags.Items.DUSTS_SULFUR))
+                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                .input(Ingredient.of(Tags.Items.GEMS_QUARTZ))
+                .input(Ingredient.of(BMTags.Items.DUSTS_HELLFORGED))
+                .input(Ingredient.of(BMTags.Items.DUSTS_COAL))
+                .syphon(4000)
+                .ticks(200)
+                .minimumTier(4)
+                .save(output, "hellforged_explosive_cell");
+
+        // Gold Nuggets from Gilded Blackstone
+        AlchemyTableRecipeBuilder.build(new ItemStack(Items.GOLD_NUGGET, 9))
+                .input(Items.GILDED_BLACKSTONE)
+                .syphon(200)
+                .ticks(100)
+                .minimumTier(2)
+                .save(output, "gold_ore_from_gilded");
+
+        // Grass Block from Dirt
+        AlchemyTableRecipeBuilder.build(Items.GRASS_BLOCK)
+                .input(Items.DIRT)
+                .input(Items.BONE_MEAL)
+                .input(Items.WHEAT_SEEDS)
+                .syphon(200)
+                .ticks(200)
+                .minimumTier(1)
+                .save(output, "grass_block");
+
+        // Nether Wart from Nether Wart Block
+        AlchemyTableRecipeBuilder.build(Items.NETHER_WART)
+                .input(Items.NETHER_WART_BLOCK)
+                .syphon(50)
+                .ticks(40)
+                .minimumTier(1)
+                .save(output, "nether_wart_from_block");
+
+        // Plant Oil from Potatoes
+        AlchemyTableRecipeBuilder.build(BMItems.PLANT_OIL.get())
+                .input(Items.POTATO)
+                .input(Items.POTATO)
+                .input(Items.BONE_MEAL)
+                .syphon(100)
+                .ticks(100)
+                .minimumTier(1)
+                .save(output, "plantoil_from_taters");
+
+        // Reagent Fast Miner (alt recipe with tools)
+        AlchemyTableRecipeBuilder.build(BMItems.REAGENT_FAST_MINER.get())
+                .input(Items.IRON_PICKAXE)
+                .input(Items.IRON_AXE)
+                .input(Items.IRON_SHOVEL)
+                .input(Ingredient.of(Tags.Items.GUNPOWDERS))
+                .syphon(2000)
+                .ticks(200)
+                .minimumTier(2)
+                .save(output, "reagent_fastminer");
+
+        // Weak Filling Agent
+        AlchemyTableRecipeBuilder.build(BMItems.WEAK_FILLING_AGENT.get())
+                .input(BMItems.SIMPLE_CATALYST.get())
+                .input(Items.SUGAR_CANE)
+                .input(Items.CRIMSON_FUNGUS)
+                .input(Items.WARPED_FUNGUS)
+                .syphon(2000)
+                .ticks(100)
+                .minimumTier(2)
+                .save(output, "weak_filling");
         // Alchemy Table recipe (crafting recipe for the table itself)
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BMBlocks.ALCHEMY_TABLE.block().get())
                 .pattern("sss")

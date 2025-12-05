@@ -1,0 +1,30 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:tauoil"
+    },
+    {
+      "tag": "bloodmagic:dusts/hellforged"
+    },
+    {
+      "item": "minecraft:glow_berries"
+    },
+    {
+      "item": "bloodmagic:saltpeter"
+    },
+    {
+      "tag": "bloodmagic:dusts/sulfur"
+    },
+    {
+      "item": "bloodmagic:sigil_water"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:advancedcuttingfluid"
+  },
+  "syphon": 4100,
+  "ticks": 200,
+  "upgradeLevel": 4
+}

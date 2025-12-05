@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:weak_tau"
+    },
+    {
+      "item": "bloodmagic:simplecatalyst"
+    },
+    {
+      "tag": "c:dusts/redstone"
+    },
+    {
+      "tag": "c:dusts/redstone"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:mundanelengtheningcatalyst"
+  },
+  "syphon": 1000,
+  "ticks": 100,
+  "upgradeLevel": 4
+}

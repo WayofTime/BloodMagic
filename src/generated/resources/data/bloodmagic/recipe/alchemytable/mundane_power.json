@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "bloodmagic:strong_tau"
+    },
+    {
+      "item": "bloodmagic:simplecatalyst"
+    },
+    {
+      "tag": "c:dusts/glowstone"
+    },
+    {
+      "tag": "c:dusts/glowstone"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:mundanepowercatalyst"
+  },
+  "syphon": 1000,
+  "ticks": 100,
+  "upgradeLevel": 4
+}

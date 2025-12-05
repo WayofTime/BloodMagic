@@ -1,0 +1,24 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "minecraft:iron_pickaxe"
+    },
+    {
+      "item": "minecraft:iron_axe"
+    },
+    {
+      "item": "minecraft:iron_shovel"
+    },
+    {
+      "tag": "c:gunpowders"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "bloodmagic:reagentfastminer"
+  },
+  "syphon": 2000,
+  "ticks": 200,
+  "upgradeLevel": 2
+}

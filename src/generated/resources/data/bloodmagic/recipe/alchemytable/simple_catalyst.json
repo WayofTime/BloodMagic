@@ -1,0 +1,27 @@
+{
+  "type": "bloodmagic:alchemytable",
+  "input": [
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "tag": "c:dusts/redstone"
+    },
+    {
+      "tag": "c:dusts/glowstone"
+    },
+    {
+      "tag": "c:gunpowders"
+    },
+    {
+      "item": "minecraft:nether_wart"
+    }
+  ],
+  "output": {
+    "count": 2,
+    "id": "bloodmagic:simplecatalyst"
+  },
+  "syphon": 200,
+  "ticks": 100,
+  "upgradeLevel": 2
+}
