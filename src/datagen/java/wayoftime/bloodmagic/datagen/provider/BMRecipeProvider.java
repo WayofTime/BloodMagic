@@ -2954,19 +2954,23 @@ public class BMRecipeProvider extends RecipeProvider {
                 .guaranteedOutput(new ItemStack(BMItems.COAL_SAND.get()))
                 .save(output, BloodMagic.rl("coalsand_from_coal"));
 
-        // Utility recipes - hydration
+        // Utility recipes - hydration (all require 200mB water)
         ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
                 .input(Ingredient.of(Tags.Items.SANDS))
-                .guaranteedOutput(new ItemStack(Items.CLAY_BALL, 4))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
+                .guaranteedOutput(new ItemStack(Items.CLAY_BALL, 1))
+                .chancedOutput(new ItemStack(Items.CLAY_BALL, 1), 0.5)
                 .save(output, BloodMagic.rl("clay_from_sand"));
 
         ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
                 .input(Ingredient.of(Items.TERRACOTTA))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
                 .guaranteedOutput(new ItemStack(Items.CLAY, 1))
                 .save(output, BloodMagic.rl("clay_from_terracotta"));
 
         ARCRecipeBuilder.build(BMTags.Items.HYDRATION)
                 .input(Ingredient.of(Items.DIRT))
+                .fluidInput(new FluidStack(Fluids.WATER, 200))
                 .guaranteedOutput(new ItemStack(Items.MUD))
                 .save(output, BloodMagic.rl("mud_from_dirt"));
 

@@ -10,6 +10,10 @@
   "input": {
     "item": "minecraft:dirt"
   },
+  "input_fluid": {
+    "amount": 200,
+    "id": "minecraft:water"
+  },
   "tool": {
     "tag": "bloodmagic:arc_tool/hydration"
   }
