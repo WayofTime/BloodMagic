@@ -1,0 +1,16 @@
+{
+  "type": "bloodmagic:alchemical_reaction_chamber",
+  "chance_outputs": [],
+  "guaranteed_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:diamond"
+    }
+  ],
+  "input": {
+    "item": "bloodmagic:blood_orb_weak"
+  },
+  "tool": {
+    "tag": "bloodmagic:arc_tool/reverter"
+  }
+}

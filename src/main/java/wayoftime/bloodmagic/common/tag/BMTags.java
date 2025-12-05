@@ -63,6 +63,8 @@ public class BMTags {
 
         // Ingot tags
         public static final TagKey<Item> INGOTS_HELLFORGED = tag(c("ingots/hellforged"));
+        // Raw material tags
+        public static final TagKey<Item> RAW_MATERIALS_HELLFORGED = tag(c("raw_materials/hellforged"));
 
         private static TagKey<Item> fromBlock(TagKey<Block> input) {
             return tag(input.location());

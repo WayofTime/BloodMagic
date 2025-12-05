@@ -3276,5 +3276,126 @@ public class BMRecipeProvider extends RecipeProvider {
                 .fluidInput(new FluidStack(BMFluids.LIFE_ESSENCE_SOURCE.get(), 3200))
                 .guaranteedOutput(new ItemStack(BMItems.WEAK_BLOOD_SHARD.get()))
                 .save(output, BloodMagic.rl("weakbloodshard_tau"));
+
+        // === RUNE REVERSION RECIPES ===
+        // Speed Rune 2 -> Speed Rune + hellforged parts + netherite scrap
+        ARCRecipeBuilder.build(BMTags.Items.REVERTER)
+                .input(BMBlocks.RUNE_2_SPEED.item().get())
+                .guaranteedOutput(new ItemStack(BMBlocks.RUNE_SPEED.item().get()))
+                .chancedOutput(new ItemStack(BMItems.HELLFORGED_PARTS.get()), 1.0)
+                .chancedOutput(new ItemStack(Items.NETHERITE_SCRAP, 4), 1.0)
+                .save(output, BloodMagic.rl("reversion/speed"));
+
+        // Acceleration Rune 2 -> Acceleration Rune
+        ARCRecipeBuilder.build(BMTags.Items.REVERTER)
+                .input(BMBlocks.RUNE_2_ACCELERATION.item().get())
+                .guaranteedOutput(new ItemStack(BMBlocks.RUNE_ACCELERATION.item().get()))
+                .chancedOutput(new ItemStack(BMItems.HELLFORGED_PARTS.get()), 1.0)
+                .chancedOutput(new ItemStack(Items.NETHERITE_SCRAP, 4), 1.0)
+                .save(output, BloodMagic.rl("reversion/acceleration"));
+
+        // Capacity Rune 2 -> Capacity Rune
+        ARCRecipeBuilder.build(BMTags.Items.REVERTER)
+                .input(BMBlocks.RUNE_2_CAPACITY.item().get())
+                .guaranteedOutput(new ItemStack(BMBlocks.RUNE_CAPACITY.item().get()))
+                .chancedOutput(new ItemStack(BMItems.HELLFORGED_PARTS.get()), 1.0)
+                .chancedOutput(new ItemStack(Items.NETHERITE_SCRAP, 4), 1.0)
+                .save(output, BloodMagic.rl("reversion/capacity"));
+
+        // Augmented Capacity Rune 2 -> Augmented Capacity Rune
+        ARCRecipeBuilder.build(BMTags.Items.REVERTER)
+                .input(BMBlocks.RUNE_2_CAPACITY_AUGMENTED.item().get())
+                .guaranteedOutput(new ItemStack(BMBlocks.RUNE_CAPACITY_AUGMENTED.item().get()))
+                .chancedOutput(new ItemStack(BMItems.HELLFORGED_PARTS.get()), 1.0)
+                .chancedOutput(new ItemStack(Items.NETHERITE_SCRAP, 4), 1.0)
+                .save(output, BloodMagic.rl("reversion/aug_capacity"));
+
+        // Charging Rune 2 -> Charging Rune
+        ARCRecipeBuilder.build(BMTags.Items.REVERTER)
+                .input(BMBlocks.RUNE_2_CHARGING.item().get())
+                .guaranteedOutput(new ItemStack(BMBlocks.RUNE_CHARGING.item().get()))
+                .chancedOutput(new ItemStack(BMItems.HELLFORGED_PARTS.get()), 1.0)
+                .chancedOutput(new ItemStack(Items.NETHERITE_SCRAP, 4), 1.0)
+                .save(output, BloodMagic.rl("reversion/charging"));
+
+        // Dislocation Rune 2 -> Dislocation Rune
+        ARCRecipeBuilder.build(BMTags.Items.REVERTER)
+                .input(BMBlocks.RUNE_2_DISLOCATION.item().get())
+                .guaranteedOutput(new ItemStack(BMBlocks.RUNE_DISLOCATION.item().get()))
+                .chancedOutput(new ItemStack(BMItems.HELLFORGED_PARTS.get()), 1.0)
+                .chancedOutput(new ItemStack(Items.NETHERITE_SCRAP, 4), 1.0)
+                .save(output, BloodMagic.rl("reversion/displacement"));
+
+        // Orb Rune 2 -> Orb Rune
+        ARCRecipeBuilder.build(BMTags.Items.REVERTER)
+                .input(BMBlocks.RUNE_2_ORB.item().get())
+                .guaranteedOutput(new ItemStack(BMBlocks.RUNE_ORB.item().get()))
+                .chancedOutput(new ItemStack(BMItems.HELLFORGED_PARTS.get()), 1.0)
+                .chancedOutput(new ItemStack(Items.NETHERITE_SCRAP, 4), 1.0)
+                .save(output, BloodMagic.rl("reversion/orb_rune"));
+
+        // Sacrifice Rune 2 -> Sacrifice Rune
+        ARCRecipeBuilder.build(BMTags.Items.REVERTER)
+                .input(BMBlocks.RUNE_2_SACRIFICE.item().get())
+                .guaranteedOutput(new ItemStack(BMBlocks.RUNE_SACRIFICE.item().get()))
+                .chancedOutput(new ItemStack(BMItems.HELLFORGED_PARTS.get()), 1.0)
+                .chancedOutput(new ItemStack(Items.NETHERITE_SCRAP, 4), 1.0)
+                .save(output, BloodMagic.rl("reversion/sac"));
+
+        // Self-Sacrifice Rune 2 -> Self-Sacrifice Rune
+        ARCRecipeBuilder.build(BMTags.Items.REVERTER)
+                .input(BMBlocks.RUNE_2_SELF_SACRIFICE.item().get())
+                .guaranteedOutput(new ItemStack(BMBlocks.RUNE_SELF_SACRIFICE.item().get()))
+                .chancedOutput(new ItemStack(BMItems.HELLFORGED_PARTS.get()), 1.0)
+                .chancedOutput(new ItemStack(Items.NETHERITE_SCRAP, 4), 1.0)
+                .save(output, BloodMagic.rl("reversion/self_sac"));
+
+        // === BLOOD ORB REVERSION ===
+        // Weak Blood Orb -> Diamond
+        ARCRecipeBuilder.build(BMTags.Items.REVERTER)
+                .input(BMItems.ORB_WEAK.get())
+                .guaranteedOutput(new ItemStack(Items.DIAMOND))
+                .save(output, BloodMagic.rl("reversion/weak_blood_orb"));
+
+        // Apprentice Blood Orb -> Redstone Block
+        ARCRecipeBuilder.build(BMTags.Items.REVERTER)
+                .input(BMItems.ORB_APPRENTICE.get())
+                .guaranteedOutput(new ItemStack(Items.REDSTONE_BLOCK))
+                .save(output, BloodMagic.rl("reversion/apprentice_blood_orb"));
+
+        // Magician Blood Orb -> Gold Block
+        ARCRecipeBuilder.build(BMTags.Items.REVERTER)
+                .input(BMItems.ORB_MAGICIAN.get())
+                .guaranteedOutput(new ItemStack(Items.GOLD_BLOCK))
+                .save(output, BloodMagic.rl("reversion/magician_blood_orb"));
+
+        // Master Blood Orb -> Weak Blood Shard
+        ARCRecipeBuilder.build(BMTags.Items.REVERTER)
+                .input(BMItems.ORB_MASTER.get())
+                .guaranteedOutput(new ItemStack(BMItems.WEAK_BLOOD_SHARD.get()))
+                .save(output, BloodMagic.rl("reversion/master_blood_orb"));
+
+        // === HELLFORGED PROCESSING ===
+        // Hellforged Fragments from raw hellforged (explosive)
+        ARCRecipeBuilder.build(BMTags.Items.EXPLOSIVES)
+                .input(Ingredient.of(BMTags.Items.RAW_MATERIALS_HELLFORGED))
+                .guaranteedOutput(new ItemStack(BMItems.DEMONITE_FRAGMENT.get(), 2))
+                .chancedOutput(new ItemStack(BMItems.DEMONITE_FRAGMENT.get()), 0.25)
+                .save(output, BloodMagic.rl("fragmentshellforged"));
+
+        // Hellforged Sand from raw hellforged (cutting fluid)
+        ARCRecipeBuilder.build(BMTags.Items.CUTTING_FLUIDS)
+                .input(Ingredient.of(BMTags.Items.RAW_MATERIALS_HELLFORGED))
+                .guaranteedOutput(new ItemStack(BMItems.HELLFORGED_SAND.get()))
+                .chancedOutput(new ItemStack(BMItems.HELLFORGED_SAND.get()), 0.33)
+                .save(output, BloodMagic.rl("dustsfrom_raw_hellforged"));
+
+        // === OTHER UTILITY ===
+        // Netherrack to Sulfur + Lava
+        ARCRecipeBuilder.build(BMTags.Items.EXPLOSIVES)
+                .input(Ingredient.of(Tags.Items.NETHERRACKS))
+                .guaranteedOutput(new ItemStack(BMItems.SULFUR.get()))
+                .fluidOutput(new FluidStack(Fluids.LAVA, 50))
+                .save(output, BloodMagic.rl("netherrack_to_sulfur"));
     }
 }
