@@ -446,6 +446,16 @@ public class BMRecipeProvider extends RecipeProvider {
                 .drain(5)
                 .unlockedBy("has_apprentice_orb", has(BMItems.ORB_APPRENTICE.get()))
                 .save(output, BloodMagic.rl("alchemy_flask"));
+
+        // Bleeding Edge Music Disc - raw demonite block on tier 4 altar
+        AltarRecipeBuilder.build(BMItems.BLEEDING_EDGE.get())
+                .from(BMBlocks.RAW_DEMONITE_BLOCK.item().get())
+                .minTier(4)
+                .bloodNeeded(10000)
+                .consumption(20)
+                .drain(10)
+                .unlockedBy("has_archmage_orb", has(BMItems.ORB_ARCHMAGE.get()))
+                .save(output, BloodMagic.rl("bleeding_edge_music"));
     }
 
     private void addSoulForgeRecipes(RecipeOutput output) {

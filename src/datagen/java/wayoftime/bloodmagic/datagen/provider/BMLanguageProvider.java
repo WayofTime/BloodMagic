@@ -314,6 +314,27 @@ public class BMLanguageProvider extends LanguageProvider {
         add(BMItems.ITEM_MOD_FILTER.get(), "Mod Filter");
         add(BMItems.ITEM_COMPOSITE_FILTER.get(), "Composite Filter");
 
+
+        // Bleeding Edge and Raw Demonite Block
+        add(BMItems.BLEEDING_EDGE.get(), "The Bleeding Edge");
+        add(BMBlocks.RAW_DEMONITE_BLOCK, "Raw Demonite Block");
+
+        // Alchemy Catalysts
+        add(BMItems.SIMPLE_CATALYST.get(), "Simple Catalyst");
+        add(BMItems.STRENGTHENED_CATALYST.get(), "Strengthened Catalyst");
+        add(BMItems.CYCLING_CATALYST.get(), "Cycling Catalyst");
+        add(BMItems.COMBINATIONAL_CATALYST.get(), "Combinational Catalyst");
+        add(BMItems.MUNDANE_LENGTHENING_CATALYST.get(), "Mundane Lengthening Catalyst");
+        add(BMItems.MUNDANE_POWER_CATALYST.get(), "Mundane Power Catalyst");
+        add(BMItems.AVERAGE_LENGTHENING_CATALYST.get(), "Average Lengthening Catalyst");
+        add(BMItems.AVERAGE_POWER_CATALYST.get(), "Average Power Catalyst");
+
+        // Weak Filling Agent
+        add(BMItems.WEAK_FILLING_AGENT.get(), "Weak Filling Agent");
+
+        // Hellforged Parts
+        add(BMItems.HELLFORGED_PARTS.get(), "Hellforged Parts");
+
         // Teleposer Focus Items
         add(BMItems.TELEPOSER_FOCUS.get(), "Teleposer Focus");
         add(BMItems.TELEPOSER_FOCUS_ENHANCED.get(), "Enhanced Teleposer Focus");

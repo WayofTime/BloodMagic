@@ -283,6 +283,26 @@ public class BMItems {
     public static final DeferredHolder<Item, Item> ITEM_MOD_FILTER = BASIC_ITEMS.register("itemrouterfiltermoditems", () -> new Item(new Item.Properties()));
     public static final DeferredHolder<Item, Item> ITEM_COMPOSITE_FILTER = BASIC_ITEMS.register("itemrouterfiltercomposite", () -> new Item(new Item.Properties()));
 
+
+    // Bleeding Edge Music Disc
+    public static final DeferredHolder<Item, Item> BLEEDING_EDGE = BASIC_ITEMS.register("bleedingedge", () -> new Item(new Item.Properties().stacksTo(1)));
+
+    // Alchemy Catalysts (used in potion brewing system)
+    public static final DeferredHolder<Item, Item> SIMPLE_CATALYST = BASIC_ITEMS.register("simplecatalyst", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> STRENGTHENED_CATALYST = BASIC_ITEMS.register("strengthenedcatalyst", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> CYCLING_CATALYST = BASIC_ITEMS.register("cyclingcatalyst", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> COMBINATIONAL_CATALYST = BASIC_ITEMS.register("combinationalcatalyst", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> MUNDANE_LENGTHENING_CATALYST = BASIC_ITEMS.register("mundanelengtheningcatalyst", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> MUNDANE_POWER_CATALYST = BASIC_ITEMS.register("mundanepowercatalyst", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> AVERAGE_LENGTHENING_CATALYST = BASIC_ITEMS.register("averagelengtheningcatalyst", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> AVERAGE_POWER_CATALYST = BASIC_ITEMS.register("averagepowercatalyst", () -> new Item(new Item.Properties()));
+
+    // Weak Filling Agent (used in potion brewing)
+    public static final DeferredHolder<Item, Item> WEAK_FILLING_AGENT = BASIC_ITEMS.register("weakfillingagent", () -> new Item(new Item.Properties()));
+
+    // Hellforged Parts (dropped from rune reversion)
+    public static final DeferredHolder<Item, Item> HELLFORGED_PARTS = BASIC_ITEMS.register("hellforgedparts", () -> new Item(new Item.Properties()));
+
     public static void register(IEventBus modBus) {
         BASIC_ITEMS.register(modBus);
         ITEMS.register(modBus);
