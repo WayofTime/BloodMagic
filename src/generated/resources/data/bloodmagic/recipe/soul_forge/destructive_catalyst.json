@@ -1,18 +1,21 @@
 {
   "type": "bloodmagic:soul_forge",
-  "drain": 50.0,
+  "drain": 20.0,
   "inputs": [
     {
-      "item": "bloodmagic:destructivecrystal"
+      "tag": "c:crops/nether_wart"
     },
     {
-      "tag": "c:dusts/glowstone"
+      "item": "bloodmagic:tauoil"
     },
     {
-      "tag": "c:dusts/redstone"
+      "tag": "bloodmagic:dusts/sulfur"
+    },
+    {
+      "item": "minecraft:beetroot"
     }
   ],
-  "minDrain": 500.0,
+  "minDrain": 400.0,
   "output": {
     "count": 1,
     "id": "bloodmagic:destructivecatalyst"

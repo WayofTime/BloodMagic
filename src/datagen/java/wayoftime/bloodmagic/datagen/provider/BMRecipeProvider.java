@@ -814,50 +814,60 @@ public class BMRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_common_gem", has(BMItems.SOUL_GEM_COMMON.get()))
                 .save(output, BloodMagic.rl("mine_key"));
 
-        // Crystal Catalysts
+        // Crystal Catalysts - nether_wart + tau_oil + sulfur + unique_seed
+        // Raw catalyst uses potato
         ForgeRecipeBuilder.build(BMItems.RAW_CRYSTAL_CATALYST.get())
-                .requires(BMItems.RAW_CRYSTAL.get())
-                .requires(Tags.Items.DUSTS_GLOWSTONE)
-                .requires(Tags.Items.DUSTS_REDSTONE)
-                .minWill(500)
-                .drain(50)
-                .unlockedBy("has_raw_crystal", has(BMItems.RAW_CRYSTAL.get()))
+                .requires(Tags.Items.CROPS_NETHER_WART)
+                .requires(BMItems.TAU_OIL.get())
+                .requires(BMTags.Items.DUSTS_SULFUR)
+                .requires(Items.POTATO)
+                .minWill(400)
+                .drain(20)
+                .unlockedBy("has_tau_oil", has(BMItems.TAU_OIL.get()))
                 .save(output, BloodMagic.rl("raw_catalyst"));
 
+        // Corrosive catalyst uses wheat_seeds
         ForgeRecipeBuilder.build(BMItems.CORROSIVE_CRYSTAL_CATALYST.get())
-                .requires(BMItems.CORROSIVE_CRYSTAL.get())
-                .requires(Tags.Items.DUSTS_GLOWSTONE)
-                .requires(Tags.Items.DUSTS_REDSTONE)
-                .minWill(500)
-                .drain(50)
-                .unlockedBy("has_corrosive_crystal", has(BMItems.CORROSIVE_CRYSTAL.get()))
+                .requires(Tags.Items.CROPS_NETHER_WART)
+                .requires(BMItems.TAU_OIL.get())
+                .requires(BMTags.Items.DUSTS_SULFUR)
+                .requires(Items.WHEAT_SEEDS)
+                .minWill(400)
+                .drain(20)
+                .unlockedBy("has_tau_oil", has(BMItems.TAU_OIL.get()))
                 .save(output, BloodMagic.rl("corrosive_catalyst"));
 
+        // Destructive catalyst uses beetroot
         ForgeRecipeBuilder.build(BMItems.DESTRUCTIVE_CRYSTAL_CATALYST.get())
-                .requires(BMItems.DESTRUCTIVE_CRYSTAL.get())
-                .requires(Tags.Items.DUSTS_GLOWSTONE)
-                .requires(Tags.Items.DUSTS_REDSTONE)
-                .minWill(500)
-                .drain(50)
-                .unlockedBy("has_destructive_crystal", has(BMItems.DESTRUCTIVE_CRYSTAL.get()))
+                .requires(Tags.Items.CROPS_NETHER_WART)
+                .requires(BMItems.TAU_OIL.get())
+                .requires(BMTags.Items.DUSTS_SULFUR)
+                .requires(Items.BEETROOT)
+                .minWill(400)
+                .drain(20)
+                .unlockedBy("has_tau_oil", has(BMItems.TAU_OIL.get()))
                 .save(output, BloodMagic.rl("destructive_catalyst"));
 
+        // Vengeful catalyst uses melon_seeds
         ForgeRecipeBuilder.build(BMItems.VENGEFUL_CRYSTAL_CATALYST.get())
-                .requires(BMItems.VENGEFUL_CRYSTAL.get())
-                .requires(Tags.Items.DUSTS_GLOWSTONE)
-                .requires(Tags.Items.DUSTS_REDSTONE)
-                .minWill(500)
-                .drain(50)
-                .unlockedBy("has_vengeful_crystal", has(BMItems.VENGEFUL_CRYSTAL.get()))
+                .requires(Tags.Items.CROPS_NETHER_WART)
+                .requires(BMItems.TAU_OIL.get())
+                .requires(BMTags.Items.DUSTS_SULFUR)
+                .requires(Items.MELON_SEEDS)
+                .minWill(400)
+                .drain(20)
+                .unlockedBy("has_tau_oil", has(BMItems.TAU_OIL.get()))
                 .save(output, BloodMagic.rl("vengeful_catalyst"));
 
+        // Steadfast catalyst uses pumpkin_seeds
         ForgeRecipeBuilder.build(BMItems.STEADFAST_CRYSTAL_CATALYST.get())
-                .requires(BMItems.STEADFAST_CRYSTAL.get())
-                .requires(Tags.Items.DUSTS_GLOWSTONE)
-                .requires(Tags.Items.DUSTS_REDSTONE)
-                .minWill(500)
-                .drain(50)
-                .unlockedBy("has_steadfast_crystal", has(BMItems.STEADFAST_CRYSTAL.get()))
+                .requires(Tags.Items.CROPS_NETHER_WART)
+                .requires(BMItems.TAU_OIL.get())
+                .requires(BMTags.Items.DUSTS_SULFUR)
+                .requires(Items.PUMPKIN_SEEDS)
+                .minWill(400)
+                .drain(20)
+                .unlockedBy("has_tau_oil", has(BMItems.TAU_OIL.get()))
                 .save(output, BloodMagic.rl("steadfast_catalyst"));
 
         // Explosive Charges

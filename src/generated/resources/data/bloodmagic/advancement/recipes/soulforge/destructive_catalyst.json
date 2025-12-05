@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_destructive_crystal": {
+    "has_tau_oil": {
       "conditions": {
         "items": [
           {
-            "items": "bloodmagic:destructivecrystal"
+            "items": "bloodmagic:tauoil"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_destructive_crystal"
+      "has_tau_oil"
     ]
   ],
   "rewards": {

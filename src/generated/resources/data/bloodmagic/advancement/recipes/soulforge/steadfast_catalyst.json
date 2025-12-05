@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_steadfast_crystal": {
+    "has_tau_oil": {
       "conditions": {
         "items": [
           {
-            "items": "bloodmagic:steadfastcrystal"
+            "items": "bloodmagic:tauoil"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_steadfast_crystal"
+      "has_tau_oil"
     ]
   ],
   "rewards": {
