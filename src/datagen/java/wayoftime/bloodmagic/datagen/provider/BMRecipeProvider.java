@@ -1672,15 +1672,13 @@ public class BMRecipeProvider extends RecipeProvider {
                 .minimumTier(4)
                 .save(output, "reagent_teleposition");
 
-        // Arcane Ash - redstone x4, bone x2, coal
+        // Arcane Ash - redstone, white dye (bone meal), gunpowder, coal
         AlchemyTableRecipeBuilder.build(BMItems.ARCANE_ASHES.get())
                 .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
-                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
-                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
-                .input(Ingredient.of(Tags.Items.DUSTS_REDSTONE))
-                .input(Ingredient.of(Tags.Items.BONES))
-                .input(Items.COAL)
-                .syphon(200)
+                .input(Ingredient.of(Tags.Items.DYES_WHITE))
+                .input(Ingredient.of(Tags.Items.GUNPOWDERS))
+                .input(Ingredient.of(ItemTags.COALS))
+                .syphon(500)
                 .ticks(200)
                 .minimumTier(1)
                 .save(output, "arcane_ash");

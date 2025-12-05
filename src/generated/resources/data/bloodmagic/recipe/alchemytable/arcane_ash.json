@@ -5,26 +5,20 @@
       "tag": "c:dusts/redstone"
     },
     {
-      "tag": "c:dusts/redstone"
+      "tag": "c:dyes/white"
     },
     {
-      "tag": "c:dusts/redstone"
+      "tag": "c:gunpowders"
     },
     {
-      "tag": "c:dusts/redstone"
-    },
-    {
-      "tag": "c:bones"
-    },
-    {
-      "item": "minecraft:coal"
+      "tag": "minecraft:coals"
     }
   ],
   "output": {
     "count": 1,
     "id": "bloodmagic:arcane_ashes"
   },
-  "syphon": 200,
+  "syphon": 500,
   "ticks": 200,
   "upgradeLevel": 1
 }
