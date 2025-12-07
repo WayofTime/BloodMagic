@@ -95,18 +95,18 @@ public class ConfigManager
 			builder.comment("State that the dungeon spawning ritual can only be activated when using a Creative Activation Crystal.", "Used on servers for if you do not trust your players to not destroy other people's bases.");
 			makeDungeonRitualCreativeOnly = builder.define("makeDungeonRitualCreativeOnly", false);
 
-			builder.comment("LP costs for sigils. For toggleable sigils, this is the upkeep cost drained every 5 seconds while active.").push("sigils");
-			sigilAirCost = builder.comment("LP cost for Air Sigil per use").defineInRange("air_sigil_cost", 50, 0, 10000000);
-			sigilBloodLightCost = builder.comment("LP cost for Blood Light Sigil per use").defineInRange("blood_light_sigil_cost", 10, 0, 10000000);
-			sigilWaterCost = builder.comment("LP cost for Water Sigil per use").defineInRange("water_sigil_cost", 100, 0, 10000000);
-			sigilLavaCost = builder.comment("LP cost for Lava Sigil per use").defineInRange("lava_sigil_cost", 1000, 0, 10000000);
-			sigilVoidCost = builder.comment("LP cost for Void Sigil per use").defineInRange("void_sigil_cost", 50, 0, 10000000);
-			sigilTelepositionCost = builder.comment("LP cost for Teleposition Sigil per use").defineInRange("teleposition_sigil_cost", 1000, 0, 10000000);
-			sigilFastMinerCost = builder.comment("LP upkeep cost for Fast Miner Sigil (drained every 5 seconds while active)").defineInRange("fast_miner_sigil_cost", 100, 0, 10000000);
-			sigilGreenGroveCost = builder.comment("LP upkeep cost for Green Grove Sigil (drained every 5 seconds while active)").defineInRange("green_grove_sigil_cost", 150, 0, 10000000);
-			sigilFrostCost = builder.comment("LP upkeep cost for Frost Sigil (drained every 5 seconds while active)").defineInRange("frost_sigil_cost", 100, 0, 10000000);
-			sigilMagnetismCost = builder.comment("LP upkeep cost for Magnetism Sigil (drained every 5 seconds while active)").defineInRange("magnetism_sigil_cost", 50, 0, 10000000);
-			sigilSuppressionCost = builder.comment("LP upkeep cost for Suppression Sigil (drained every 5 seconds while active)").defineInRange("suppression_sigil_cost", 400, 0, 10000000);
+			builder.comment("LP costs for sigils. For toggleable sigils, this is the upkeep cost drained every 5 seconds while active.").push("sigil_cost");
+			sigilAirCost = builder.comment("LP cost per use").defineInRange("air", 50, 0, 10000000);
+			sigilBloodLightCost = builder.comment("LP cost per use").defineInRange("blood_light", 10, 0, 10000000);
+			sigilWaterCost = builder.comment("LP cost per use").defineInRange("water", 100, 0, 10000000);
+			sigilLavaCost = builder.comment("LP cost per use").defineInRange("lava", 1000, 0, 10000000);
+			sigilVoidCost = builder.comment("LP cost per use").defineInRange("void", 50, 0, 10000000);
+			sigilTelepositionCost = builder.comment("LP cost per use").defineInRange("teleposition", 1000, 0, 10000000);
+			sigilFastMinerCost = builder.comment("LP upkeep cost (drained every 5 seconds while active)").defineInRange("fast_miner", 100, 0, 10000000);
+			sigilGreenGroveCost = builder.comment("LP upkeep cost (drained every 5 seconds while active)").defineInRange("green_grove", 150, 0, 10000000);
+			sigilFrostCost = builder.comment("LP upkeep cost (drained every 5 seconds while active)").defineInRange("frost", 100, 0, 10000000);
+			sigilMagnetismCost = builder.comment("LP upkeep cost (drained every 5 seconds while active)").defineInRange("magnetism", 50, 0, 10000000);
+			sigilSuppressionCost = builder.comment("LP upkeep cost (drained every 5 seconds while active)").defineInRange("suppression", 400, 0, 10000000);
 			builder.pop();
 
 			builder.push("Geode Ritual");
