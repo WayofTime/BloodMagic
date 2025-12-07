@@ -29,9 +29,7 @@ public class ItemSigilWater extends ItemSigilFluidBase implements IAlchemyItem
 	@Override
 	public int getLpUsed()
 	{
-		int cost = ConfigManager.COMMON.sigilWaterCost.get();
-		System.out.println("[BloodMagic Debug] Water Sigil LP cost from config: " + cost);
-		return cost;
+		return ConfigManager.COMMON.sigilWaterCost.get();
 	}
 
 	@Override
