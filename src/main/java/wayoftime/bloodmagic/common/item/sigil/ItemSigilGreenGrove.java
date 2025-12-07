@@ -14,12 +14,19 @@ import net.minecraft.server.level.ServerLevel;
 import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
+import wayoftime.bloodmagic.ConfigManager;
 
 public class ItemSigilGreenGrove extends ItemSigilToggleableBase
 {
 	public ItemSigilGreenGrove()
 	{
 		super("green_grove", 150);
+	}
+
+	@Override
+	public int getLpUsed()
+	{
+		return ConfigManager.COMMON.sigilGreenGroveCost.get();
 	}
 
 	@Override

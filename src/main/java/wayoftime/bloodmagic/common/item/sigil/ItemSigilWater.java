@@ -17,12 +17,21 @@ import wayoftime.bloodmagic.common.item.IAlchemyItem;
 import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
+import wayoftime.bloodmagic.ConfigManager;
 
 public class ItemSigilWater extends ItemSigilFluidBase implements IAlchemyItem
 {
 	public ItemSigilWater()
 	{
 		super("water", 100, new FluidStack(Fluids.WATER, 10000));
+	}
+
+	@Override
+	public int getLpUsed()
+	{
+		int cost = ConfigManager.COMMON.sigilWaterCost.get();
+		System.out.println("[BloodMagic Debug] Water Sigil LP cost from config: " + cost);
+		return cost;
 	}
 
 	@Override

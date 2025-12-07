@@ -7,12 +7,19 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.common.tile.TileSpectral;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
+import wayoftime.bloodmagic.ConfigManager;
 
 public class ItemSigilSuppression extends ItemSigilToggleableBase
 {
 	public ItemSigilSuppression()
 	{
 		super("suppression", 400);
+	}
+
+	@Override
+	public int getLpUsed()
+	{
+		return ConfigManager.COMMON.sigilSuppressionCost.get();
 	}
 
 	@Override

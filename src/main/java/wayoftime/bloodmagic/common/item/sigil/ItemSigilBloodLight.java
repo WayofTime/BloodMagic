@@ -18,12 +18,19 @@ import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
+import wayoftime.bloodmagic.ConfigManager;
 
 public class ItemSigilBloodLight extends ItemSigilBase
 {
 	public ItemSigilBloodLight()
 	{
 		super("bloodlight", 10);
+	}
+
+	@Override
+	public int getLpUsed()
+	{
+		return ConfigManager.COMMON.sigilBloodLightCost.get();
 	}
 
 	@Override
