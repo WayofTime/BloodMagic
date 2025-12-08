@@ -11,6 +11,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -28,6 +29,7 @@ import wayoftime.bloodmagic.common.capability.BMCaps;
 import wayoftime.bloodmagic.common.menu.NodeFilterMenu;
 import wayoftime.bloodmagic.common.routing.IRoutingFilter;
 import wayoftime.bloodmagic.common.routing.NodeContext;
+import wayoftime.bloodmagic.common.tag.BMTags;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -35,7 +37,7 @@ import java.util.function.BiConsumer;
 public class FilterNodeTile extends RoutingNodeTile implements MenuProvider {
 
     public static final int MAX_PRIO = 10;
-    private final boolean isOutput;
+    public final boolean isOutput;
     public FilterNodeTile(BlockPos pos, BlockState blockState, boolean isOutput) {
         super(BMTiles.FILTER_ROUTING_NODE.get(), pos, blockState);
         this.isOutput = isOutput;
@@ -45,7 +47,7 @@ public class FilterNodeTile extends RoutingNodeTile implements MenuProvider {
         this(pos, state, false);
     }
 
-    public int[] priorities = new int[] {0, 0, 0, 0, 0, 0};
+    public int[] priorities = new int[] {0, 0, 0, 0, 0, 0, 0};
 
     public final ItemStackHandler filterInv = new ItemStackHandler(6) {
         @Override
@@ -55,7 +57,9 @@ public class FilterNodeTile extends RoutingNodeTile implements MenuProvider {
 
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
-            return stack.getCapability(BMCaps.ROUTING_FILTER_PROVIDER, NodeContext.EMPTY) != null;
+            //return stack.getCapability(BMCaps.ROUTING_FILTER_PROVIDER, NodeContext.EMPTY) != null;
+            // TODO temporary convenience
+            return stack.is(BMTags.Items.FILTERS);
         }
 
         @Override
@@ -102,25 +106,21 @@ public class FilterNodeTile extends RoutingNodeTile implements MenuProvider {
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-        return new NodeFilterMenu(containerId, playerInventory, filterInv, new SimpleContainerData(7) {
-            private int side;
+        return new NodeFilterMenu(containerId, playerInventory, filterInv, new ContainerData() {
             @Override
             public int get(int index) {
-                if (index < 6) {
-                    return FilterNodeTile.this.priorities[index];
-                } else {
-                    return side;
-                }
+                return FilterNodeTile.this.priorities[index];
             }
 
             @Override
             public void set(int index, int value) {
-                if (index < 6) {
-                    FilterNodeTile.this.priorities[index] = value;
-                    FilterNodeTile.this.setChanged();
-                } else {
-                    side = value;
-                }
+                FilterNodeTile.this.priorities[index] = value;
+                FilterNodeTile.this.setChanged();
+            }
+
+            @Override
+            public int getCount() {
+                return FilterNodeTile.this.priorities.length;
             }
         }, getBlockPos(), isOutput);
     }

@@ -1,9 +1,11 @@
 package wayoftime.bloodmagic.common.menu;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import wayoftime.bloodmagic.common.blockentity.FilterNodeTile;
 import wayoftime.bloodmagic.util.helper.FilterHelper;
 
 import static wayoftime.bloodmagic.util.helper.FilterHelper.*;
@@ -12,21 +14,34 @@ public class FilterMenu extends AbstractGhostMenu<FilterMenu> {
 
     public final boolean isTag;
     public final boolean isEnchant;
+    public final BlockPos nodePos;
     public FilterMenu(int containerId, Inventory playerInv, RegistryFriendlyByteBuf buf) {
         super(BMMenus.ITEM_FILTER.get(), containerId, playerInv, FilterHelper.CONTAINER_DATA_SIZE, 3, 3, 110, 15, 105, buf.readInt());
         isTag = buf.readBoolean();
         isEnchant = buf.readBoolean();
+        nodePos = buf.readBlockPos();
     }
 
-    public FilterMenu(int containerId, Inventory playerInv, GhostItemHandler filterInv, FilterData filterData, int slot, boolean tag, boolean enchant) {
+    public FilterMenu(int containerId, Inventory playerInv, GhostItemHandler filterInv, FilterData filterData, int slot, boolean tag, boolean enchant, BlockPos nodePos) {
         super(BMMenus.ITEM_FILTER.get(), containerId, playerInv, filterData, filterInv, 3, 3, 110, 15, 105, slot);
         isTag = tag;
         isEnchant = enchant;
+        this.nodePos = nodePos;
     }
 
     @Override
     public boolean clickMenuButton(Player player, int id) {
         return switch (id) {
+            case BUTTON_RETURN -> {
+                if (player.level().getBlockEntity(nodePos) instanceof FilterNodeTile node) {
+                    player.openMenu(node, buf -> {
+                        buf.writeBlockPos(nodePos);
+                        buf.writeBoolean(node.isOutput);
+                    });
+                }
+                yield true;
+            }
+
             case BUTTON_BWLIST -> {
                 int state = tracker.get(DATA_BWLIST);
                 setData(DATA_BWLIST, state == 0 ? 1 : 0);

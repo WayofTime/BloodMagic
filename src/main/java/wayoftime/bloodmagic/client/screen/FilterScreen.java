@@ -77,10 +77,17 @@ public class FilterScreen extends AbstractGhostScreen<FilterMenu> {
 
         addRenderableWidget(amountBox);
 
+        if (menu.heldSlot == -1) {
+            addRenderableWidget(Button.builder(FilterHelper.translate("return"), button -> sendButtonClick(BUTTON_RETURN))
+                    .pos(leftPos + 8, topPos + 55)
+                    .size(50, 20)
+                    .build());
+        }
+
         addMultiIconButton(DATA_BWLIST, MultiIconButton.builder(button -> sendButtonClick(BUTTON_BWLIST))
                 .icons(whitelist, blacklist)
                 .tooltips(FilterHelper.translate("whitelist"), FilterHelper.translate("blacklist"))
-                .pos(leftPos + 7, topPos + 32)
+                .pos(leftPos + 8, topPos + 32)
                 .size(20, 20)
                 .build()
         );
@@ -89,7 +96,7 @@ public class FilterScreen extends AbstractGhostScreen<FilterMenu> {
             addPerSlotButton(DATA_TAG, MultiIconButton.builder(button -> sendButtonClick(BUTTON_TAG))
                     .icons(tag_all, tag)
                     .stateGetter(state -> state == 0 ? 0 : 1)
-                    .pos(leftPos + 27, topPos + 32)
+                    .pos(leftPos + 28, topPos + 32)
                     .size(20, 20)
                     .build()
             );
@@ -104,14 +111,14 @@ public class FilterScreen extends AbstractGhostScreen<FilterMenu> {
 
                         default -> 2;
                     })
-                    .pos(leftPos + 27, topPos + 32)
+                    .pos(leftPos + 28, topPos + 32)
                     .size(20, 20)
                     .build()
             );
 
             addPerSlotButton(DATA_ENCHANT_LVL, MultiIconButton.builder(button -> sendButtonClick(BUTTON_ENCHANT_LVL))
                     .icons(enchant_level_exact, enchant_level_any)
-                    .pos(leftPos + 47, topPos + 32)
+                    .pos(leftPos + 48, topPos + 32)
                     .size(20, 20)
                     .build()
             );
@@ -175,15 +182,18 @@ public class FilterScreen extends AbstractGhostScreen<FilterMenu> {
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         super.mouseClicked(mouseX, mouseY, button); // otherwise screen dies
 
-        if (menu.getData(DATA_SLOT) != -1) { // Text box only selectable if a ghost slot has been clicked.
-            if (amountBox.isMouseOver(mouseX, mouseY) && button == 1) // Right-Clicked
-            {
+        if (menu.getData(DATA_SLOT) != -1 && amountBox.isMouseOver(mouseX, mouseY)) { // Text box only selectable if a ghost slot has been clicked.
+            if (button == 1) {
                 amountBox.setValue("");
                 setGhostAmount(0);
                 amountBox.setFocused(true);
-                return true;
             }
+            if (button == 0) {
+                amountBox.setFocused(true);
+            }
+            return true;
         }
+
         amountBox.setFocused(false);
         return true;
     }

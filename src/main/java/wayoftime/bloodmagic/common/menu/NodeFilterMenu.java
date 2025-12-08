@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.common.menu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
@@ -14,6 +15,8 @@ import net.neoforged.neoforge.items.SlotItemHandler;
 import wayoftime.bloodmagic.common.block.BMBlocks;
 import wayoftime.bloodmagic.common.blockentity.BMTiles;
 import wayoftime.bloodmagic.common.blockentity.FilterNodeTile;
+import wayoftime.bloodmagic.common.item.FilterItem;
+import wayoftime.bloodmagic.common.tag.BMTags;
 
 public class NodeFilterMenu extends AbstractContainerMenu {
 
@@ -40,47 +43,18 @@ public class NodeFilterMenu extends AbstractContainerMenu {
     public final boolean isOutput;
     public NodeFilterMenu(int containerId, Inventory playerInv, IItemHandler filterInv, ContainerData priorities, BlockPos nodePos, boolean isOutput) {
         super(BMMenus.FILTERED_NODE.get(), containerId);
-        addDataSlots(priorities);
         this.priorities = priorities;
+        addDataSlots(this.priorities);
         this.nodePos = nodePos;
         this.player = playerInv.player;
         this.isOutput = isOutput;
 
-        // TODO extract into separate class so this is more sightly
-        this.addSlot(new SlotItemHandler(filterInv, 0, 71, 33) {
-            @Override
-            public boolean mayPlace(ItemStack stack) {
-                if (stack.isEmpty())
-                    return false;
-                return getItemHandler().isItemValid(priorities.get(DATA_SIDE), stack);
-            }
-
-            @Override
-            public ItemStack getItem() {
-                return getItemHandler().getStackInSlot(priorities.get(DATA_SIDE));
-            }
-
-            @Override
-            public void set(ItemStack stack) {
-                ((IItemHandlerModifiable) this.getItemHandler()).setStackInSlot(priorities.get(DATA_SIDE), stack);
-                this.setChanged();
-            }
-
-            public void initialize(ItemStack stack) {
-                ((IItemHandlerModifiable) this.getItemHandler()).setStackInSlot(priorities.get(DATA_SIDE), stack);
-                this.setChanged();
-            }
-
-            @Override
-            public boolean mayPickup(Player playerIn) {
-                return !this.getItemHandler().extractItem(priorities.get(DATA_SIDE), 1, true).isEmpty();
-            }
-
-            @Override
-            public ItemStack remove(int amount) {
-                return this.getItemHandler().extractItem(priorities.get(DATA_SIDE), amount, false);
-            }
-        });
+        this.addSlot(new FilterSlot(filterInv, 0, 71, 33));
+        this.addSlot(new FilterSlot(filterInv, 1, 71, 33));
+        this.addSlot(new FilterSlot(filterInv, 2, 71, 33));
+        this.addSlot(new FilterSlot(filterInv, 3, 71, 33));
+        this.addSlot(new FilterSlot(filterInv, 4, 71, 33));
+        this.addSlot(new FilterSlot(filterInv, 5, 71, 33));
 
         // player inv
         for (int i = 0; i < 3; i++) {
@@ -99,21 +73,27 @@ public class NodeFilterMenu extends AbstractContainerMenu {
     public boolean clickMenuButton(Player player, int id) {
         return switch (id) {
             case BUTTON_PRIO_DOWN, BUTTON_PRIO_UP -> {
-                int side = priorities.get(DATA_SIDE);
-                int prio = priorities.get(side);
+                int side = getData(DATA_SIDE);
+                int prio = getData(side);
                 int newPrio = Math.clamp(prio + (id == BUTTON_PRIO_UP ? 1 : -1), 0, FilterNodeTile.MAX_PRIO);
-                priorities.set(side, newPrio);
-                broadcastChanges();
+                setData(side, newPrio);
                 yield true;
             }
+
             case BUTTON_EDIT -> {
+                int slot = getData(DATA_SIDE);
+                ItemStack filterStack = getSlot(slot).getItem();
+                if (!filterStack.isEmpty() && filterStack.is(BMTags.Items.FILTERS)) {
+                    player.openMenu(FilterItem.getFilterProvider(filterStack, -1, nodePos), buf -> FilterItem.writeBuf(filterStack, -1, nodePos, buf));
+                }
                 yield false;
             }
+
             case DATA_DOWN, DATA_UP, DATA_NORTH, DATA_SOUTH, DATA_WEST, DATA_EAST -> {
-                priorities.set(DATA_SIDE, id);
-                broadcastChanges();
+                setData(DATA_SIDE, id);
                 yield true;
             }
+
             default -> false;
         };
     }
@@ -122,15 +102,56 @@ public class NodeFilterMenu extends AbstractContainerMenu {
         return priorities.get(index);
     }
 
+    private static final int playerInvStart = 6;
+    private static final int playerInvEnd = playerInvStart + (3 * 9); // end is exclusive anyways
+    private static final int hotbarStart = playerInvEnd;
+    private static final int hotbarEnd = hotbarStart + 9;
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        // TODO at least implement shift-clicking filters out maybe
-        return ItemStack.EMPTY;
+        ItemStack movedStack = ItemStack.EMPTY;
+        Slot movedSlot = this.slots.get(index);
+
+        if (movedSlot.hasItem()) {
+            ItemStack rawStack = movedSlot.getItem();
+            movedStack = rawStack.copy();
+
+            if (index < playerInvStart) {
+                if (!this.moveItemStackTo(rawStack, playerInvStart, hotbarEnd, false)) {
+                    return ItemStack.EMPTY;
+                }
+            }
+
+            if (index >= playerInvStart) {
+                int target = getData(DATA_SIDE);
+                if (!this.moveItemStackTo(rawStack, target, target + 1, false)) {
+                    return ItemStack.EMPTY;
+                }
+            }
+
+            if (rawStack.isEmpty()) {
+                movedSlot.set(ItemStack.EMPTY);
+            } else {
+                movedSlot.setChanged();
+            }
+        }
+
+        return movedStack;
     }
 
     @Override
     public boolean stillValid(Player player) {
         return AbstractContainerMenu.stillValid(ContainerLevelAccess.create(this.player.level(), this.nodePos), player, isOutput ?
                 BMBlocks.OUTPUT_ROUTING_NODE.block().get() : BMBlocks.INPUT_ROUTING_NODE.block().get());
+    }
+
+    public class FilterSlot extends SlotItemHandler {
+        public FilterSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
+            super(itemHandler, index, xPosition, yPosition);
+        }
+
+        @Override
+        public boolean isActive() {
+            return index == NodeFilterMenu.this.getData(DATA_SIDE);
+        }
     }
 }

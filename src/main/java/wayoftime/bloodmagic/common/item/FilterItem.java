@@ -1,7 +1,9 @@
 package wayoftime.bloodmagic.common.item;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentType;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.MenuProvider;
@@ -38,16 +40,19 @@ public class FilterItem extends Item {
 
         if (!level.isClientSide) {
             int slot = usedHand == InteractionHand.MAIN_HAND ? player.getInventory().selected : 0;
-            player.openMenu(getFilterProvider(filterStack, slot), buf -> {
-                buf.writeInt(slot);
-                buf.writeBoolean(filterStack.is(BMTags.Items.TAG_FILTER));
-                buf.writeBoolean(filterStack.is(BMTags.Items.ENCHANT_FILTER));
-            });
+            player.openMenu(getFilterProvider(filterStack, slot, BlockPos.ZERO), buf -> writeBuf(filterStack, slot, BlockPos.ZERO, buf));
         }
         return InteractionResultHolder.sidedSuccess(filterStack, level.isClientSide);
     }
 
-    public static MenuProvider getFilterProvider(ItemStack filterStack, int slot) {
+    public static void writeBuf(ItemStack filterStack, int slot, BlockPos nodePos, RegistryFriendlyByteBuf buf) {
+        buf.writeInt(slot);
+        buf.writeBoolean(filterStack.is(BMTags.Items.TAG_FILTER));
+        buf.writeBoolean(filterStack.is(BMTags.Items.ENCHANT_FILTER));
+        buf.writeBlockPos(nodePos);
+    }
+
+    public static MenuProvider getFilterProvider(ItemStack filterStack, int slotHeldIn, BlockPos nodePos) {
         NonNullList<ItemStack> stacks = NonNullList.withSize(9, ItemStack.EMPTY);
         if (filterStack.has(BMDataComponents.FILTER_INVENTORY)) {
             ItemContainerContents contents = filterStack.get(BMDataComponents.FILTER_INVENTORY);
@@ -122,9 +127,10 @@ public class FilterItem extends Item {
                         playerInv,
                         filterInv,
                         data,
-                        slot,
+                        slotHeldIn,
                         filterStack.has(BMDataComponents.FILTER_TAG_INDEX),
-                        filterStack.has(BMDataComponents.FILTER_ENCHANT_INDEX)
+                        filterStack.has(BMDataComponents.FILTER_ENCHANT_INDEX),
+                        nodePos
                 ),
                 filterStack.getDisplayName()
         );

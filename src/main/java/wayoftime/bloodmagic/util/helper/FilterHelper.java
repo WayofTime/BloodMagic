@@ -28,6 +28,7 @@ public class FilterHelper {
     public static final int BUTTON_TAG = 1;
     public static final int BUTTON_ENCHANT = 2;
     public static final int BUTTON_ENCHANT_LVL = 3;
+    public static final int BUTTON_RETURN = 4;
 
     public static TagKey<Item> getTag(ItemStack target, int index) {
         return target.getTags().toList().get(index - 1);

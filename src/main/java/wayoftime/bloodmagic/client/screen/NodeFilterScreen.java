@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.menu.NodeFilterMenu;
+import wayoftime.bloodmagic.util.helper.FilterHelper;
 
 public class NodeFilterScreen extends AbstractContainerScreen<NodeFilterMenu> {
 
@@ -60,7 +61,6 @@ public class NodeFilterScreen extends AbstractContainerScreen<NodeFilterMenu> {
             up = Direction.UP;
             down = Direction.DOWN;
         }
-        sendButtonClick(front.get3DDataValue());
     }
 
     @Override
@@ -84,6 +84,14 @@ public class NodeFilterScreen extends AbstractContainerScreen<NodeFilterMenu> {
                 .size(8, 20)
                 .build()
         );
+
+        addRenderableWidget(Button.builder(FilterHelper.translate("edit"), button -> sendButtonClick(NodeFilterMenu.BUTTON_EDIT))
+                .pos(leftPos + 8, topPos + 31)
+                .size(50, 20)
+                .build()
+        );
+
+        // sendButtonClick(front.get3DDataValue()); // not sure whether to always focus front or to keep track of last selected
     }
 
     private Button directionButton(Direction dir, Pair<Integer, Integer> pos) {
@@ -121,6 +129,17 @@ public class NodeFilterScreen extends AbstractContainerScreen<NodeFilterMenu> {
 
         Pair<Integer, Integer> activePos = getPosForDir(Direction.from3DDataValue(menu.getData(6)));
         guiGraphics.blitSprite(selected, activePos.getFirst() - 3, activePos.getSecond() - 3, 24, 24);
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        // TODO implement E/esc/backspace to "go back" one layer
+        return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    @Override
+    public boolean shouldCloseOnEsc() {
+        return false; // we handle esc ourselves, so ignore in super
     }
 
     private Pair<Integer, Integer> getPosForDir(Direction dir) {
