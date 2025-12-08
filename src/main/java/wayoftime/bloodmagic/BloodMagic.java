@@ -24,7 +24,6 @@ import wayoftime.bloodmagic.common.item.BMItems;
 import wayoftime.bloodmagic.common.item.BMMaterialsAndTiers;
 import wayoftime.bloodmagic.common.recipe.BMRecipes;
 import wayoftime.bloodmagic.common.registry.BMRegistries;
-import wayoftime.bloodmagic.common.structure.BMMultiblock;
 
 @Mod(BloodMagic.MODID)
 public class BloodMagic {
@@ -55,7 +54,6 @@ public class BloodMagic {
         BMDataAttachments.register(modBus);
         BMAttributes.register(modBus);
         BMRecipes.register(modBus);
-        BMMultiblock.register(NeoForge.EVENT_BUS);
         BMMenus.register(modBus);
         BMTabs.register(modBus);
 

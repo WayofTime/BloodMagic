@@ -50,7 +50,7 @@ public class BMTiles {
         event.registerBlockEntity(
                 Capabilities.FluidHandler.BLOCK,
                 BLOOD_ALTAR_TYPE.get(),
-                (tile, side) -> tile
+                (tile, side) -> side == null ? null : tile
         );
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,

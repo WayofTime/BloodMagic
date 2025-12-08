@@ -1,86 +1,9 @@
 {
-  "components": [
-    {
-      "pos": [
-        0,
-        0,
-        0
-      ],
-      "upgrade": false,
-      "valid": "bloodmagic:blood_altar"
-    },
-    {
-      "pos": [
-        1,
-        -1,
-        0
-      ],
-      "upgrade": true,
-      "valid": "#bloodmagic:altar/runes"
-    },
-    {
-      "pos": [
-        0,
-        -1,
-        1
-      ],
-      "upgrade": true,
-      "valid": "#bloodmagic:altar/runes"
-    },
-    {
-      "pos": [
-        -1,
-        -1,
-        0
-      ],
-      "upgrade": true,
-      "valid": "#bloodmagic:altar/runes"
-    },
-    {
-      "pos": [
-        0,
-        -1,
-        -1
-      ],
-      "upgrade": true,
-      "valid": "#bloodmagic:altar/runes"
-    },
-    {
-      "pos": [
-        1,
-        -1,
-        1
-      ],
-      "upgrade": false,
-      "valid": "#bloodmagic:altar/runes"
-    },
-    {
-      "pos": [
-        1,
-        -1,
-        -1
-      ],
-      "upgrade": false,
-      "valid": "#bloodmagic:altar/runes"
-    },
-    {
-      "pos": [
-        -1,
-        -1,
-        1
-      ],
-      "upgrade": false,
-      "valid": "#bloodmagic:altar/runes"
-    },
-    {
-      "pos": [
-        -1,
-        -1,
-        -1
-      ],
-      "upgrade": false,
-      "valid": "#bloodmagic:altar/runes"
-    }
-  ],
-  "tier": 1
+  "capstone": "minecraft:air",
+  "distance": 1,
+  "pillarHeight": 0,
+  "pillarOffset": 0,
+  "sideBlocks": 0,
+  "sideRunes": 1,
+  "tier": 2
 }

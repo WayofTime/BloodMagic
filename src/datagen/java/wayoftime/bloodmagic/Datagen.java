@@ -37,7 +37,6 @@ public class Datagen {
 
         ProviderHelper helper = new ProviderHelper(fileHelper);
 
-        event.createProvider(helper.tagsFor(BMRegistries.Keys.ALTAR_TIER_KEY, AltarTiers::tags));
         event.createProvider(helper.tagsFor(BMRegistries.Keys.LIVING_UPGRADES, LivingUpgrades::tags));
         event.createProvider(helper.tagsFor(Registries.DAMAGE_TYPE, BloodyDamageSources::tags));
         event.createBlockAndItemTags(BMBlockTagProvider::new, BMItemTagProvider::new);

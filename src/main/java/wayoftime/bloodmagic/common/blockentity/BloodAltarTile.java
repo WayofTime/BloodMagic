@@ -101,8 +101,8 @@ public class BloodAltarTile extends BaseTile implements IFluidHandler {
 
         tile.ticks++;
         if (tile.ticks % (20 * 5) == 0) {
-            int newTier = AltarUtil.getTier(level, pos);
-            Map<EnumRuneType, Integer> newUpgrades = AltarUtil.getUpgrades(newTier, level, pos);
+            tile.tier = AltarUtil.getTier(level, pos);
+            Map<EnumRuneType, Integer> newUpgrades = AltarUtil.getUpgrades(tile.tier, level, pos);
             tile.calculateStats(newUpgrades);
             tile.setChanged();
             if (tile.isActive || tile.cooldownAfterCrafting <= 0) {

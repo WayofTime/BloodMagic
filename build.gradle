@@ -106,15 +106,12 @@ configurations {
 
 dependencies {
     implementation("maven.modrinth:jade:${jade_version}+neoforge")
-    implementation("vazkii.patchouli:Patchouli:${patchouli_version}") // TODO change back to compile/runtime once SparseMB book rendering works properly
 
     compileOnly("mezz.jei:jei-${mc_version}-neoforge-api:${jei_version}")
     compileOnly("top.theillusivec4.curios:curios-neoforge:${curios_version}+${minecraft_version}:api")
-    //compileOnly("vazkii.patchouli:Patchouli:${patchouli_version}:api")
 
     runtimeOnly("mezz.jei:jei-${mc_version}-neoforge:${jei_version}")
     runtimeOnly("top.theillusivec4.curios:curios-neoforge:${curios_version}+${minecraft_version}")
-    //runtimeOnly("vazkii.patchouli:Patchouli:${patchouli_version}")
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
@@ -129,8 +126,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             mod_license            : mod_license,
             mod_version            : mod_version,
             mod_authors            : mod_authors,
-            mod_description        : mod_description,
-            patchouli_version      : patchouli_version
+            mod_description        : mod_description
     ]
     inputs.properties replaceProperties
     expand replaceProperties
