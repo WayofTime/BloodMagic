@@ -14,6 +14,6 @@ public class LivingArmourItem extends ArmorItem implements UpgradeHolderBase {
                         .durability(Type.CHESTPLATE.getDurability(33))
                         .component(BMDataComponents.REQUIRED_SET, BMTags.Items.LIVING_SET)
                         .component(BMDataComponents.CURRENT_UPGRADE_POINTS, 0)
-                );
+        );
     }
 }

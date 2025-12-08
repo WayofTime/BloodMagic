@@ -60,11 +60,6 @@ public class TrainerScreen extends AbstractGhostScreen<TrainerMenu> {
 
     private static final ResourceLocation allow = ResourceLocation.fromNamespaceAndPath(BloodMagic.MODID, "container/trainer/allow_others");
     private static final ResourceLocation deny = ResourceLocation.fromNamespaceAndPath(BloodMagic.MODID, "container/trainer/deny_others");
-    @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        super.render(guiGraphics, mouseX, mouseY, partialTick);
-        renderTooltip(guiGraphics, mouseX, mouseY);
-    }
 
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {

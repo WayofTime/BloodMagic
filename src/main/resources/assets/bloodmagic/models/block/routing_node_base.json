@@ -1,0 +1,10 @@
+{
+  "parent": "block/block",
+  "loader": "neoforge:obj",
+  "flip_v": true, 
+  "model": "bloodmagic:models/block/routing/modelroutingnodebase.obj",
+  "textures": {
+    "base": "bloodmagic:block/routing_node",
+    "particle": "#base"
+  }
+}

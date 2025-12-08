@@ -1,0 +1,11 @@
+{
+  "parent": "block/block",
+  "loader": "neoforge:obj",
+  "flip_v": true, 
+  "model": "bloodmagic:models/block/routing/modelmasterroutingnodecombined.obj",
+  "textures": {
+    "core": "bloodmagic:block/routing_node_master",
+    "base": "bloodmagic:block/routing_node_master",
+    "particle": "#core"
+  }
+}

@@ -16,6 +16,12 @@ public class BMTags {
     public static class Items {
         public static final TagKey<Item> SOUL_GEM = tag(bm("soul_gems"));
 
+        public static final TagKey<Item> NODE_DEBUGGER = tag(bm("node_debugger"));
+
+        public static final TagKey<Item> FILTERS = tag(bm("routing_filter"));
+        public static final TagKey<Item> TAG_FILTER = withParent(FILTERS, bm("tag"));
+        public static final TagKey<Item> ENCHANT_FILTER = withParent(FILTERS, bm("enchant"));
+
         public static final TagKey<Item> STORAGE_BLOCKS_HELLFORGED = fromBlock(Blocks.STORAGE_BLOCKS_HELLFORGED);
 
         public static final TagKey<Item> ARC_TOOL = tag(bm("arc_tool"));

@@ -90,6 +90,7 @@ public class BloodAltarTile extends BaseTile implements IFluidHandler {
         efficiencyMod = (float) Math.pow(0.85, upgrades.getOrDefault(EnumRuneType.EFFICIENCY, 0));
     }
 
+    private int changingGrace = 0;
     public static void tick(Level level, BlockPos pos, BlockState state, BloodAltarTile tile) {
         if (level.isClientSide) {
             return;
@@ -110,26 +111,39 @@ public class BloodAltarTile extends BaseTile implements IFluidHandler {
             }
         }
 
+        if (tile.mainTank > tile.getMainCapacity()) {
+            tile.changingGrace++;
+        } else {
+            tile.changingGrace = 0;
+        }
+
+        if (tile.changingGrace >= 20 * 5) {
+            tile.mainTank = Math.min(tile.mainTank, tile.getMainCapacity());
+            tile.inputTank = Math.min(tile.inputTank, tile.getIOCapacity());
+            tile.outputTank = Math.min(tile.inputTank, tile.getIOCapacity());
+        }
+
         if (tile.ticks % Math.max(tile.tickRate, 1) == 0) {
             float ioAmount = 20F * tile.dislocationMod;
             int input = (int) Math.min(tile.inputTank, ioAmount);
-            input = (int) Math.min(input, tile.getMainCapacity() - tile.mainTank);
+            input = Math.clamp(input, 0, tile.getMainCapacity() - tile.mainTank);
             tile.inputTank -= input;
             tile.mainTank += input;
 
             int output = (int) Math.min(tile.mainTank, ioAmount);
-            output = (int) Math.min(output, tile.getIOCapacity() - tile.outputTank);
+            output = Math.clamp(output, 0, tile.getIOCapacity() - tile.outputTank);
             tile.mainTank -= output;
             tile.outputTank += output;
 
             if (!tile.isActive) {
                 tile.progress = 0;
                 int charge = (int) Math.min(tile.mainTank, tile.chargeAmountMod);
-                charge = (int) Math.min(charge, tile.getChargingCapacity() - tile.chargingTank);
+                charge = Math.clamp(charge, 0, tile.getChargingCapacity() - tile.chargingTank);
                 tile.mainTank -= charge;
                 tile.chargingTank += charge;
             }
         }
+        tile.setChanged();
 
         if (!tile.isActive && tile.cooldownAfterCrafting > 0) {
             tile.cooldownAfterCrafting--;
@@ -212,7 +226,7 @@ public class BloodAltarTile extends BaseTile implements IFluidHandler {
     }
 
     public void sacrificialDaggerCall(int lpAdded, boolean isSacrifice) {
-        mainTank = mainTank + Math.min((getMainCapacity() - mainTank), (int) ((isSacrifice ? 1 + sacrificeMod : 1 + selfSacMod) * lpAdded));
+        mainTank = mainTank + Math.clamp((int) ((isSacrifice ? 1f + sacrificeMod : 1f + selfSacMod) * (float) lpAdded), 0, getMainCapacity() - mainTank);
         setChanged();
     }
 

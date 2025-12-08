@@ -16,14 +16,6 @@ public class BlockEntityHelper {
         return clientType == serverType ? (BlockEntityTicker<A>) ticker : null;
     }
 
-    public static MutableComponent translatableHover(String key, Object... args) {
-        return Component.translatable(key, args).withStyle(ChatFormatting.GRAY);
-    }
-
-    public static MutableComponent translatableHover(String key) {
-        return Component.translatable(key).withStyle(ChatFormatting.GRAY);
-    }
-
     public static void dropContents(Level level, BlockPos pos, IItemHandler handler) {
         for (int i = 0; i < handler.getSlots(); i++) {
             Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), handler.getStackInSlot(i));

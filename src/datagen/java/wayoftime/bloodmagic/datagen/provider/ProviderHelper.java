@@ -25,7 +25,6 @@ public class ProviderHelper {
             protected void addTags(HolderLookup.Provider provider) {
                 adder.accept(this::tag);
             }
-
         };
     }
 }

@@ -11,6 +11,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipProvider;
+import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.helper.BlockEntityHelper;
 
 import java.nio.charset.StandardCharsets;
@@ -41,9 +42,9 @@ public record Binding(UUID uuid, String name) implements TooltipProvider {
     @Override
     public void addToTooltip(Item.TooltipContext context, Consumer<Component> tooltip, TooltipFlag tooltipFlag) {
             if (this.isEmpty()) {
-                tooltip.accept(BlockEntityHelper.translatableHover("tooltip.bloodmagic.no_owner"));
+                tooltip.accept(ChatUtil.translatableHover("tooltip.bloodmagic.no_owner"));
             } else {
-                tooltip.accept(BlockEntityHelper.translatableHover("tooltip.bloodmagic.current_owner", this.name));
+                tooltip.accept(ChatUtil.translatableHover("tooltip.bloodmagic.current_owner", this.name));
             }
     }
 }

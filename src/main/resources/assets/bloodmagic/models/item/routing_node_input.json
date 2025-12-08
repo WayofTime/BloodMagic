@@ -1,0 +1,7 @@
+{
+  "parent": "bloodmagic:item/routing_node",
+  "textures": {
+    "core": "bloodmagic:block/routing_node_input",
+    "base": "bloodmagic:block/routing_node_input"
+  }
+}

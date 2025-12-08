@@ -28,6 +28,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.Nullable;
 import wayoftime.bloodmagic.common.blockentity.BloodTankTile;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
+import wayoftime.bloodmagic.util.ChatUtil;
 import wayoftime.bloodmagic.util.helper.BlockEntityHelper;
 
 import java.util.List;
@@ -67,14 +68,14 @@ public class BloodTankBlock extends Block implements EntityBlock {
         if (tier == 0) {
             components.add(Component.translatable("tooltip.bloodmagic.container_tier_missing").withStyle(ChatFormatting.RED, ChatFormatting.BOLD));
         } else {
-            components.add(BlockEntityHelper.translatableHover("tooltip.bloodmagic.container_tier", tier));
+            components.add(ChatUtil.translatableHover("tooltip.bloodmagic.container_tier", tier));
         }
 
         FluidStack fluidStack = stack.getOrDefault(BMDataComponents.FLUID_CONTENT, SimpleFluidContent.EMPTY).copy();
         if (fluidStack.isEmpty()) {
-            components.add(BlockEntityHelper.translatableHover("tooltip.bloodmagic.fluid_content_empty"));
+            components.add(ChatUtil.translatableHover("tooltip.bloodmagic.fluid_content_empty"));
         } else {
-            components.add(BlockEntityHelper.translatableHover("tooltip.bloodmagic.fluid_content", fluidStack.getAmount(), fluidStack.getHoverName()));
+            components.add(ChatUtil.translatableHover("tooltip.bloodmagic.fluid_content", fluidStack.getAmount(), fluidStack.getHoverName()));
         }
     }
 

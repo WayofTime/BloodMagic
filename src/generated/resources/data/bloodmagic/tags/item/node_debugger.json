@@ -1,0 +1,10 @@
+{
+  "values": [
+    "bloodmagic:node_router",
+    "bloodmagic:routing_node_master",
+    "bloodmagic:routing_node",
+    "bloodmagic:routing_node_input",
+    "bloodmagic:routing_node_output",
+    "#bloodmagic:soul_gems"
+  ]
+}

@@ -77,10 +77,9 @@ public class TrainerItem extends Item {
 
             serverPlayer.openMenu(
                     new SimpleMenuProvider(
-                            (id, inv, playerIn) -> new TrainerMenu(id, inv, handler, data, playerIn.getInventory().selected),
+                            (id, inv, playerIn) -> new TrainerMenu(id, inv, handler, data),
                             Component.translatable(getDescriptionId())
-                    ),
-                    buf -> buf.writeInt(serverPlayer.getInventory().selected)
+                    )
             );
         }
 

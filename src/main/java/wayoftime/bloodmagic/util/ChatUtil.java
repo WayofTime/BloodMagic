@@ -1,8 +1,36 @@
 package wayoftime.bloodmagic.util;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+
 import java.text.DecimalFormat;
 
 public class ChatUtil {
+
+    public static void sendChat(Player player, Component text) {
+        player.sendSystemMessage(text);
+    }
+
+    public static String posString(BlockPos pos) {
+        return "%d, %d, %d".formatted(pos.getX(), pos.getY(), pos.getZ());
+    }
+
+    public static String dimensionString(ResourceKey<Level> dim) {
+        return "%s:%s".formatted(dim.location().getNamespace(), dim.location().getPath());
+    }
+
+    public static MutableComponent translatableHover(String key, Object... args) {
+        return Component.translatable(key, args).withStyle(ChatFormatting.GRAY);
+    }
+
+    public static MutableComponent translatableHover(String key) {
+        return Component.translatable(key).withStyle(ChatFormatting.GRAY);
+    }
     public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("###,###,###.##");
 
     private static final char[] ones = new char[]{'I', 'X', 'C', 'M'};

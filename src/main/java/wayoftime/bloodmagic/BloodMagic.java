@@ -22,6 +22,7 @@ import wayoftime.bloodmagic.common.datamap.BMDataMaps;
 import wayoftime.bloodmagic.common.fluid.BMFluids;
 import wayoftime.bloodmagic.common.item.BMItems;
 import wayoftime.bloodmagic.common.item.BMMaterialsAndTiers;
+import wayoftime.bloodmagic.common.network.BMPackets;
 import wayoftime.bloodmagic.common.recipe.BMRecipes;
 import wayoftime.bloodmagic.common.registry.BMRegistries;
 import wayoftime.bloodmagic.common.structure.BMMultiblock;
@@ -37,10 +38,17 @@ public class BloodMagic {
     public static final ServerConfig SERVER_CONFIG;
     private static final ModConfigSpec SERVER_CONFIG_SPEC;
 
+    public static final ClientConfig CLIENT_CONFIG;
+    private static final ModConfigSpec CLIENT_CONFIG_SPEC;
+
     static {
-        Pair<ServerConfig, ModConfigSpec> pair = new ModConfigSpec.Builder().configure(ServerConfig::new);
-        SERVER_CONFIG = pair.getLeft();
-        SERVER_CONFIG_SPEC = pair.getRight();
+        Pair<ServerConfig, ModConfigSpec> serverConf = new ModConfigSpec.Builder().configure(ServerConfig::new);
+        SERVER_CONFIG = serverConf.getLeft();
+        SERVER_CONFIG_SPEC = serverConf.getRight();
+
+        Pair<ClientConfig, ModConfigSpec> clientConf = new ModConfigSpec.Builder().configure(ClientConfig::new);
+        CLIENT_CONFIG = clientConf.getLeft();
+        CLIENT_CONFIG_SPEC = clientConf.getRight();
     }
 
     public BloodMagic(IEventBus modBus, ModContainer container) {
@@ -52,6 +60,7 @@ public class BloodMagic {
         BMMaterialsAndTiers.register(modBus);
         BMItems.register(modBus);
         modBus.addListener(BMDataMaps::register);
+        modBus.addListener(BMPackets::register);
         BMDataAttachments.register(modBus);
         BMAttributes.register(modBus);
         BMRecipes.register(modBus);
@@ -60,6 +69,7 @@ public class BloodMagic {
         BMTabs.register(modBus);
 
         container.registerConfig(ModConfig.Type.SERVER, SERVER_CONFIG_SPEC);
+        container.registerConfig(ModConfig.Type.CLIENT, CLIENT_CONFIG_SPEC);
 
         NeoForge.EVENT_BUS.addListener(BMCommands::register);
     }

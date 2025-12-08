@@ -6,6 +6,7 @@ import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.block.BMBlocks;
 import wayoftime.bloodmagic.common.item.BMItems;
 import wayoftime.bloodmagic.common.tag.BMTags;
 
@@ -48,5 +49,28 @@ public class BMItemTagProvider extends ItemTagsProvider {
                 .addTag(BMTags.Items.CUTTING_FLUIDS)
                 .addTag(BMTags.Items.HYDRATION)
                 .addTag(BMTags.Items.ARC_FURNACE);
+
+        tag(BMTags.Items.SOUL_GEM)
+                .add(BMItems.SOUL_GEM_PETTY.get())
+                .add(BMItems.SOUL_GEM_LESSER.get())
+                .add(BMItems.SOUL_GEM_COMMON.get())
+                .add(BMItems.SOUL_GEM_GREATER.get())
+                .add(BMItems.SOUL_GEM_GRAND.get());
+
+        tag(BMTags.Items.NODE_DEBUGGER)
+                .add(BMItems.NODE_ROUTER.get())
+                .add(BMBlocks.MASTER_NODE.asItem(), BMBlocks.ROUTING_NODE.asItem(), BMBlocks.INPUT_ROUTING_NODE.asItem(), BMBlocks.OUTPUT_ROUTING_NODE.asItem())
+                .addTag(BMTags.Items.SOUL_GEM);
+
+        tag(BMTags.Items.TAG_FILTER)
+                .add(BMItems.TAG_FILTER.get());
+
+        tag(BMTags.Items.ENCHANT_FILTER)
+                .add(BMItems.ENCHANT_FILTER.get());
+
+        tag(BMTags.Items.FILTERS)
+                .addTag(BMTags.Items.TAG_FILTER)
+                .addTag(BMTags.Items.ENCHANT_FILTER)
+                .add(BMItems.STANDARD_FILTER.get(), BMItems.MOD_FILTER.get(), BMItems.COMPOSITE_FILTER.get());
     }
 }

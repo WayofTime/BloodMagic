@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.common.blockentity;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -14,6 +15,7 @@ import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.client.render.blockentity.BloodAltarRenderer;
 import wayoftime.bloodmagic.client.render.blockentity.BloodTankRenderer;
 import wayoftime.bloodmagic.client.render.blockentity.HellfireForgeRenderer;
+import wayoftime.bloodmagic.client.render.blockentity.NodeRenderer;
 import wayoftime.bloodmagic.common.block.BMBlocks;
 
 import java.util.Set;
@@ -35,6 +37,15 @@ public class BMTiles {
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LivingStationTile>> LIVING_STATION_TYPE = TILES.register("living_station",
             () -> new BlockEntityType<>(LivingStationTile::new, Set.of(BMBlocks.LIVING_STATION.block().get()), null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RoutingNodeTile>> ROUTING_NODE = TILES.register("routing_node",
+            () -> new BlockEntityType<>(RoutingNodeTile::new, Set.of(BMBlocks.ROUTING_NODE.block().get()), null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FilterNodeTile>> FILTER_ROUTING_NODE = TILES.register("filter_routing_node",
+            () -> new BlockEntityType<>(FilterNodeTile::new, Set.of(BMBlocks.INPUT_ROUTING_NODE.block().get(), BMBlocks.OUTPUT_ROUTING_NODE.block().get()), null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MasterNodeTile>> MASTER_ROUTING_NODE = TILES.register("master_routing_node",
+            () -> new BlockEntityType<>(MasterNodeTile::new, Set.of(BMBlocks.MASTER_NODE.block().get()), null));
 
     private static void registerTileCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
@@ -86,6 +97,8 @@ public class BMTiles {
         event.registerBlockEntityRenderer(HELLFIRE_FORGE_TYPE.get(), HellfireForgeRenderer::new);
         event.registerBlockEntityRenderer(BLOOD_ALTAR_TYPE.get(), BloodAltarRenderer::new);
         event.registerBlockEntityRenderer(BLOOD_TANK_TYPE.get(), BloodTankRenderer::new);
+        event.registerBlockEntityRenderer(ROUTING_NODE.get(), NodeRenderer::new);
+        event.registerBlockEntityRenderer(FILTER_ROUTING_NODE.get(), NodeRenderer::new);
     }
 
     public static void register(IEventBus modBus) {

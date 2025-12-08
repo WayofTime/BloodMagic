@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "bloodmagic:hellforged_block"
+          "name": "bloodmagic:hellforged_block_default"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "bloodmagic:blocks/hellforged_block"
+  "random_sequence": "bloodmagic:blocks/hellforged_block_default"
 }
