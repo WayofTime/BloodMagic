@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.common.command;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
 public class BMCommands {
@@ -10,7 +11,10 @@ public class BMCommands {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
         CommandBuildContext buildContext = event.getBuildContext();
 
-        SoulNetworkCommand.register(dispatcher);
-        LivingUpgradesCommand.register(dispatcher, buildContext);
+        dispatcher.register(
+                Commands.literal("bloodmagic")
+                        .then(LivingUpgradesCommand.command(buildContext))
+                        .then(SoulNetworkCommand.COMMAND)
+        );
     }
 }

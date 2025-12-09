@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.common.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -13,9 +14,7 @@ import wayoftime.bloodmagic.util.helper.SoulNetworkHelper;
 import wayoftime.bloodmagic.util.SoulTicket;
 
 public class SoulNetworkCommand {
-    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-        dispatcher.register(
-                Commands.literal("bm-network")
+    public static LiteralArgumentBuilder<CommandSourceStack> COMMAND = Commands.literal("soul-network")
                         .requires(source -> source.hasPermission(Commands.LEVEL_GAMEMASTERS))
                         .then(
                                 Commands.argument("target", EntityArgument.player())
@@ -41,9 +40,7 @@ public class SoulNetworkCommand {
                                                                         .executes(context -> addNetwork(context, EntityArgument.getPlayer(context, "target"), IntegerArgumentType.getInteger(context, "amount")))
                                                         )
                                         )
-                        )
-        );
-    }
+                        );
 
     private static int setNetwork(CommandContext<CommandSourceStack> context, ServerPlayer target, int amount) {
         SoulNetwork network = SoulNetworkHelper.getSoulNetwork(target);

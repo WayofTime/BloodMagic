@@ -1,0 +1,9 @@
+{
+  "values": {
+    "bloodmagic:living_plate": {
+      "blacklist": "bloodmagic:empty",
+      "required_set": "bloodmagic:living_upgrade_set/living",
+      "starting_upgrades": "bloodmagic:living_start"
+    }
+  }
+}

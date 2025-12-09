@@ -9,12 +9,20 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.neoforge.common.extensions.IItemExtension;
 import org.jetbrains.annotations.Nullable;
+import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.living.LivingEffectComponents;
 import wayoftime.bloodmagic.common.living.LivingHelper;
 
 import java.util.function.Consumer;
 
 public interface UpgradeHolderBase extends IItemExtension {
+
+    default int getMaxUpgradePoints(ItemStack chestStack) {
+        return chestStack.getOrDefault(BMDataComponents.IS_EVOLVED, false) ?
+                BloodMagic.SERVER_CONFIG.EVOLVED_UPGRADE_POINTS.get()
+                : BloodMagic.SERVER_CONFIG.DEFAULT_UPGRADE_POINTS.get();
+    }
 
     @Override
     default <T extends LivingEntity> int damageItem(ItemStack stack, int amount, @Nullable T entity, Consumer<Item> onBroken) {

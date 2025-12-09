@@ -20,7 +20,6 @@ import net.minecraft.world.item.enchantment.LevelBasedValue;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.neoforged.neoforge.attachment.AttachmentHolder;
-import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.attribute.BMAttributes;
@@ -409,7 +408,7 @@ public class LivingUpgrades {
         context.register(
                 REPAIR,
                 new LivingUpgrade.Builder()
-                        .level(10, 25) // TODO with repairing salve this could easily be 100xp needed (or called redundant tbh)
+                        .level(10, 25)
                         .withEffect(LivingEffectComponents.TICK.get(), new CooldownEffect(REPAIR.location()))
                         .withEffect(LivingEffectComponents.TICK.get(), new ResetCooldownEffect(REPAIR.location(), LevelBasedValue.constant(100), Optional.of(new RandomArmourDamageEffect(LevelBasedValue.constant(-2)))), cooldownCondition(REPAIR))
                         .build()
@@ -610,6 +609,8 @@ public class LivingUpgrades {
 
         adder.apply(BMTags.Living.TOOLTIP_HIDE)
                 .addTag(BMTags.Living.TRAINERS);
+
+        adder.apply(BMTags.Living.LIVING_BLACKLIST); // add upgrades not meant for Living Armour here
     }
 
     public static void translations(BiConsumer<String, String> translator) {

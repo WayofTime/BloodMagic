@@ -82,6 +82,8 @@ public class BMTags {
         public static final TagKey<LivingUpgrade> TRAINERS = tag(bm("trainer"));
         public static final TagKey<LivingUpgrade> IS_SCRAPPABLE = tag(bm("is_scrappable"));
 
+        public static final TagKey<LivingUpgrade> LIVING_BLACKLIST = tag(bm("empty"));
+
         private static TagKey<LivingUpgrade> tag(ResourceLocation id) {
             return TagKey.create(BMRegistries.Keys.LIVING_UPGRADES, id);
         }

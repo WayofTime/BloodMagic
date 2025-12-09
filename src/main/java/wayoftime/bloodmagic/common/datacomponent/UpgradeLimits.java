@@ -27,7 +27,7 @@ public record UpgradeLimits(boolean allowOthers, Object2FloatOpenHashMap<Holder<
             BMDataComponents.UPGRADE_HOLDER_CODEC.fieldOf("limits").forGetter(UpgradeLimits::limits)
     ).apply(builder, UpgradeLimits::new));
 
-    public static final UpgradeLimits EMPTY = new UpgradeLimits(false, LivingHelper.EMPTY_UPGRADE_MAP);
+    public static final UpgradeLimits EMPTY = new UpgradeLimits(true, LivingHelper.EMPTY_UPGRADE_MAP);
 
     public float getLimit(Holder<LivingUpgrade> upgrade) {
         float def = allowOthers ? -1 : 0;

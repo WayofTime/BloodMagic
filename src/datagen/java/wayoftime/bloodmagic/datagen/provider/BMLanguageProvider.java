@@ -122,13 +122,10 @@ public class BMLanguageProvider extends LanguageProvider {
         add("trainer.bloodmagic.deny_others", "Deny Others");
         add("trainer.bloodmagic.save", "Save");
 
-        add("item.bloodmagic.living_plate.dead", "Formerly Living Plate");
-        addTooltip("has_living_stats", "Theres some kind of notes, but you cant decipher them");
-
         addCommand("upgrade.get", "%s has the following upgrades:\n");
         addCommand("upgrade.set", "Set %s to %s exp for %s");
-        addCommand("upgrade.no_armour", "The chestplate %s is wearing does not have a bloodmagic:required_set component set. Upgrades cannot take effect like this");
-        addCommand("cap.success", "Set max upgrade points to %s");
+        addCommand("upgrade.no_armour", "The chestplate %s is wearing does not have an entry in the 'Living Armour Data' data map. Upgrades cannot take effect like this");
+        addCommand("evolve.success", "Set evolved state to %s");
         addCommand("recalc.success", "Upgrades use up %s points");
         addCommand("limit.get", "%s is in '%s' mode and has the following limits:\n");
         addCommand("limit.set", "Set limit of %s to %s exp for %s");
