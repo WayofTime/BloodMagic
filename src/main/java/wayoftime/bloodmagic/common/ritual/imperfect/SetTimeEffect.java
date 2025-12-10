@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.common.ritual.weak;
+package wayoftime.bloodmagic.common.ritual.imperfect;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;

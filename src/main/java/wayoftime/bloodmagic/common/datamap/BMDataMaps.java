@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.common.datamap;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
@@ -30,9 +31,17 @@ public class BMDataMaps {
             BloodRune.CODEC.listOf()
     ).synced(BloodRune.CODEC.listOf(), true).build();
 
+    public static final DataMapType<Block, ResourceLocation> IMPERFECT_RITUAL_CATALYST = DataMapType.builder(
+            BloodMagic.rl("imperfect_ritual_catalysts"),
+            Registries.BLOCK,
+            ResourceLocation.CODEC
+    ).synced(ResourceLocation.CODEC, true).build();
+
     public static void register(RegisterDataMapTypesEvent event) {
         event.register(TARTARIC_GEM_MAX_AMOUNTS);
         event.register(BLOOD_ORB_STATS);
         event.register(BLOOD_RUNES);
+
+        event.register(IMPERFECT_RITUAL_CATALYST);
     }
 }

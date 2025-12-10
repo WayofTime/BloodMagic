@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.common.ritual.weak;
+package wayoftime.bloodmagic.common.ritual.imperfect;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -23,7 +23,9 @@ public record ApplyPotionEffect(int cost, Holder<MobEffect> effectType, int effe
 
     @Override
     public void perform(Player player, ServerLevel level, BlockPos ritualPos) {
-        new MobEffectInstance(effectType, effectTime, amplifier.isPresent() ? amplifier().get() : 0, false, showIcon.isPresent() ? showIcon().get() : true);
+        player.addEffect(
+                new MobEffectInstance(effectType, effectTime, amplifier.isPresent() ? amplifier().get() : 0, false, showIcon.isPresent() ? showIcon().get() : true)
+        );
     }
 
     public static final MapCodec<ApplyPotionEffect> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(

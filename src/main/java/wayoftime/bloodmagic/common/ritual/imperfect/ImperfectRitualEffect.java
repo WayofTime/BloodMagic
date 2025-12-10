@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.common.ritual.weak;
+package wayoftime.bloodmagic.common.ritual.imperfect;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 
 // TODO should probably define cost here and have it be part of this codec, but not sure how to do that
 public interface ImperfectRitualEffect {
-    DeferredRegister<MapCodec<? extends ImperfectRitualEffect>> WEAK_RITUAL_EFFECT_TYPE = DeferredRegister.create(BMRegistries.Keys.WEAK_RITUAL_EFFECT_TYPE, BloodMagic.MODID);
+    DeferredRegister<MapCodec<? extends ImperfectRitualEffect>> WEAK_RITUAL_EFFECT_TYPE = DeferredRegister.create(BMRegistries.Keys.IMPERFECT_RITUAL_EFFECT_TYPE, BloodMagic.MODID);
     Codec<ImperfectRitualEffect> CODEC = Codec.lazyInitialized(() -> WEAK_RITUAL_EFFECT_TYPE
             .getRegistry()
             .get()

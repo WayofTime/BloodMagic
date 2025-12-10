@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.common.ritual.weak;
+package wayoftime.bloodmagic.common.ritual.imperfect;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -31,7 +31,10 @@ public record SpawnMobEffect(int cost, Holder<EntityType<?>> entityType, Optiona
         Entity toSpawn = entityType.value().create(level, this::addAdditional, ritualPos.above(2), MobSpawnType.TRIGGERED, false, false);
         if (toSpawn == null) {
             // TODO spawn got probably cancelled. not sure what to do there
+            return;
         }
+
+        level.addFreshEntity(toSpawn);
     }
 
     public void addAdditional(Entity entity) {

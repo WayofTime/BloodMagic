@@ -1,0 +1,36 @@
+{
+  "type": "bloodmagic:spawn_mob",
+  "cost": 1000,
+  "entity_type": "minecraft:zombie",
+  "mob_effects": [
+    {
+      "duration": 2000,
+      "id": "minecraft:fire_resistance",
+      "neoforge:cures": [
+        "milk",
+        "protected_by_totem"
+      ],
+      "show_icon": true
+    },
+    {
+      "amplifier": 7,
+      "duration": 2000,
+      "id": "minecraft:strength",
+      "neoforge:cures": [
+        "milk",
+        "protected_by_totem"
+      ],
+      "show_icon": true
+    },
+    {
+      "amplifier": 3,
+      "duration": 2000,
+      "id": "minecraft:resistance",
+      "neoforge:cures": [
+        "milk",
+        "protected_by_totem"
+      ],
+      "show_icon": true
+    }
+  ]
+}
