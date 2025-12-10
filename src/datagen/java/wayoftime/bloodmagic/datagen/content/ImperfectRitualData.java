@@ -8,9 +8,11 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.DataMapProvider;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
+import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.BMIdentifiers.ImperfectRituals;
 import wayoftime.bloodmagic.common.datamap.BMDataMaps;
 import wayoftime.bloodmagic.common.registry.BMRegistries;
@@ -29,10 +31,12 @@ public class ImperfectRitualData {
         context.register(key(ImperfectRituals.DAY_RITUAL), new SetTimeEffect(1000, 1000));
         context.register(key(ImperfectRituals.RESISTANCE_RITUAL), new ApplyPotionEffect(1000, MobEffects.DAMAGE_RESISTANCE, 1200, Optional.of(1), Optional.empty()));
         context.register(key(ImperfectRituals.ZOMBIE_RITUAL), new SpawnMobEffect(1000, EntityType.ZOMBIE.builtInRegistryHolder(), Optional.empty(), Optional.of(List.of(
-                new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 2000),
-                new MobEffectInstance(MobEffects.DAMAGE_BOOST, 2000, 7),
-                new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 2000, 3)
-        ))));
+                        new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 2000),
+                        new MobEffectInstance(MobEffects.DAMAGE_BOOST, 2000, 7),
+                        new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 2000, 3)
+                )),
+                Optional.empty()
+        ));
     }
 
     private static ResourceKey<ImperfectRitualEffect> key(ResourceLocation id) {

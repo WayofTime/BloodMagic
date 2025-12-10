@@ -6,6 +6,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -20,7 +22,7 @@ import net.minecraft.world.entity.player.Player;
 import java.util.List;
 import java.util.Optional;
 
-public record SpawnMobEffect(int cost, Holder<EntityType<?>> entityType, Optional<List<AttributeData>> attributes, Optional<List<MobEffectInstance>> mobEffects) implements ImperfectRitualEffect {
+public record SpawnMobEffect(int cost, Holder<EntityType<?>> entityType, Optional<List<AttributeData>> attributes, Optional<List<MobEffectInstance>> mobEffects, Optional<ResourceLocation> customLootTable) implements ImperfectRitualEffect {
     @Override
     public int getCost() {
         return cost;
@@ -53,6 +55,12 @@ public record SpawnMobEffect(int cost, Holder<EntityType<?>> entityType, Optiona
                     mob.addEffect(effect);
                 }
             }
+
+            if (customLootTable().isPresent()) {
+                CompoundTag tag = new CompoundTag();
+                tag.putString("DeathLootTable", customLootTable.get().toString());
+                mob.readAdditionalSaveData(tag);
+            }
         }
     }
 
@@ -60,7 +68,8 @@ public record SpawnMobEffect(int cost, Holder<EntityType<?>> entityType, Optiona
             Codec.INT.fieldOf("cost").forGetter(SpawnMobEffect::cost),
             BuiltInRegistries.ENTITY_TYPE.holderByNameCodec().fieldOf("entity_type").forGetter(SpawnMobEffect::entityType),
             AttributeData.CODEC.listOf().optionalFieldOf("attributes").forGetter(SpawnMobEffect::attributes),
-            MobEffectInstance.CODEC.listOf().optionalFieldOf("mob_effects").forGetter(SpawnMobEffect::mobEffects)
+            MobEffectInstance.CODEC.listOf().optionalFieldOf("mob_effects").forGetter(SpawnMobEffect::mobEffects),
+            ResourceLocation.CODEC.optionalFieldOf("custom_loot_table").forGetter(SpawnMobEffect::customLootTable)
     ).apply(builder, SpawnMobEffect::new));
 
     @Override
