@@ -40,7 +40,14 @@ public class CuriosCompat
 
 	public int recalculateCuriosSlots(Player player)
 	{
-		ICurioStacksHandler livingArmourSockets = CuriosApi.getCuriosInventory(player).resolve().get().getCurios().get("living_armour_socket");
+		Optional<ICuriosItemHandler> curioInv = CuriosApi.getCuriosInventory(player).resolve();
+		if (curioInv.isEmpty()) {
+			return 0;
+		}
+		ICurioStacksHandler livingArmourSockets = curioInv.get().getCurios().get("living_armour_socket");
+		if (livingArmourSockets == null) {
+			return 0;
+		}
 		if (LivingUtil.hasFullSet(player))
 		{
 			LivingStats stats = LivingStats.fromPlayer(player);
