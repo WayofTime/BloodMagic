@@ -18,6 +18,7 @@ import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.ritual.*;
 import wayoftime.bloodmagic.util.Utils;
+import wayoftime.bloodmagic.util.helper.BlockProtectionHelper;
 import wayoftime.bloodmagic.will.DemonWillHolder;
 
 import java.util.List;
@@ -175,15 +176,19 @@ public class RitualGreenGrove extends Ritual
 				boolean hydratedBlock = false;
 				if (block == Blocks.DIRT || block == Blocks.GRASS)
 				{
-					world.setBlockAndUpdate(newPos, farmlandState);
-					hydratedBlock = true;
+					if (BlockProtectionHelper.tryPlaceBlock(world, newPos, farmlandState, masterRitualStone.getOwner()))
+					{
+						hydratedBlock = true;
+					}
 				} else if (block == Blocks.FARMLAND)
 				{
 					int meta = state.getValue(FarmBlock.MOISTURE);
 					if (meta < 7)
 					{
-						world.setBlockAndUpdate(newPos, farmlandState);
-						hydratedBlock = true;
+						if (BlockProtectionHelper.tryPlaceBlock(world, newPos, farmlandState, masterRitualStone.getOwner()))
+						{
+							hydratedBlock = true;
+						}
 					}
 				}
 

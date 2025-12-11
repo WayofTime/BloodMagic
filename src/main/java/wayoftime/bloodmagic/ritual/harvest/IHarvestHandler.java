@@ -1,6 +1,9 @@
 package wayoftime.bloodmagic.ritual.harvest;
 
 import java.util.List;
+import java.util.UUID;
+
+import javax.annotation.Nullable;
 
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.ItemStack;
@@ -18,13 +21,14 @@ public interface IHarvestHandler
 	 * Use this to break the block and plant a new one. <br>
 	 * Add the items to be dropped to the drops list. <br>
 	 *
-	 * @param world - The world
-	 * @param pos   - The position of the {@link BlockState} being checked
-	 * @param state - The {@link BlockState} being checked
-	 * @param drops - The items to be dropped
+	 * @param world     - The world
+	 * @param pos       - The position of the {@link BlockState} being checked
+	 * @param state     - The {@link BlockState} being checked
+	 * @param drops     - The items to be dropped
+	 * @param ownerUUID - The UUID of the ritual owner for protection checks
 	 * @return If the block was successfully harvested.
 	 */
-	boolean harvest(Level world, BlockPos pos, BlockState state, List<ItemStack> drops);
+	boolean harvest(Level world, BlockPos pos, BlockState state, List<ItemStack> drops, @Nullable UUID ownerUUID);
 
 	/**
 	 * Tests to see if the block is valid for harvest.

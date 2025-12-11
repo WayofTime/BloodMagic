@@ -4,6 +4,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.UUID;
+
+import javax.annotation.Nullable;
 
 import com.blakebr0.mysticalagriculture.api.MysticalAgricultureAPI;
 import com.blakebr0.mysticalagriculture.api.crop.Crop;
@@ -26,6 +29,7 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.util.BMLog;
+import wayoftime.bloodmagic.util.helper.BlockProtectionHelper;
 
 /**
  * Harvest handler for standard plantable crops such as Wheat, Potatoes, and
@@ -68,7 +72,7 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 	}
 
 	@Override
-	public boolean harvest(Level world, BlockPos pos, BlockState state, List<ItemStack> drops)
+	public boolean harvest(Level world, BlockPos pos, BlockState state, List<ItemStack> drops, @Nullable UUID ownerUUID)
 	{
 //		NonNullList<ItemStack> blockDrops = NonNullList.create();
 //		state.getBlock().getDrops(blockDrops, world, pos, state, 0);
@@ -97,7 +101,10 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 
 		if (foundSeed)
 		{
-			world.setBlockAndUpdate(pos, state.getBlock().defaultBlockState());
+			if (!BlockProtectionHelper.tryPlaceBlock(world, pos, state.getBlock().defaultBlockState(), ownerUUID))
+			{
+				return false;
+			}
 			world.levelEvent(2001, pos, Block.getId(state));
 			for (ItemStack stack : blockDrops)
 			{

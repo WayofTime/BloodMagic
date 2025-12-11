@@ -1,6 +1,9 @@
 package wayoftime.bloodmagic.ritual.harvest;
 
 import java.util.List;
+import java.util.UUID;
+
+import javax.annotation.Nullable;
 
 import net.minecraft.world.level.block.BambooStalkBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,6 +20,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
+import wayoftime.bloodmagic.util.helper.BlockProtectionHelper;
 
 /**
  * Harvest handler for crops that grow vertically such as Sugar Cane and Cactus.
@@ -38,16 +42,19 @@ public class HarvestHandlerTall implements IHarvestHandler
 	}
 
 	@Override
-	public boolean harvest(Level world, BlockPos pos, BlockState state, List<ItemStack> drops)
+	public boolean harvest(Level world, BlockPos pos, BlockState state, List<ItemStack> drops, @Nullable UUID ownerUUID)
 	{
 		BlockState up = world.getBlockState(pos.above());
 		if (up.getBlock() == state.getBlock())
 		{
+			if (!BlockProtectionHelper.tryBreakBlockNoDrops(world, pos.above(), ownerUUID))
+			{
+				return false;
+			}
 			LootParams.Builder lootBuilder = new LootParams.Builder((ServerLevel) world);
 			Vec3 blockCenter = new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
 			List<ItemStack> blockDrops = state.getDrops(lootBuilder.withParameter(LootContextParams.ORIGIN, blockCenter).withParameter(LootContextParams.TOOL, mockHoe));
 			drops.addAll(blockDrops);
-			world.destroyBlock(pos.above(), false);
 			return true;
 		}
 

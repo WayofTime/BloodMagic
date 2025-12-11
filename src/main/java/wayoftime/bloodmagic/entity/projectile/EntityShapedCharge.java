@@ -11,8 +11,10 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
@@ -30,6 +32,7 @@ import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.common.tile.TileExplosiveCharge;
+import wayoftime.bloodmagic.util.helper.BlockProtectionHelper;
 
 public class EntityShapedCharge extends ThrowableProjectile
 {
@@ -85,13 +88,27 @@ public class EntityShapedCharge extends ThrowableProjectile
 			BlockState fallTile = this.getBlockState();
 			if (blockstate.isAir() || blockstate.is(BlockTags.FIRE) || blockstate.liquid() || blockstate.canBeReplaced())
 			{
-				this.getCommandSenderWorld().setBlockAndUpdate(blockpos, fallTile.setValue(BlockShapedExplosive.ATTACHED, faceHit));
-				BlockEntity tile = this.getCommandSenderWorld().getBlockEntity(blockpos);
-				if (tile instanceof TileExplosiveCharge)
+				// Check block protection before placing
+				if (BlockProtectionHelper.tryPlaceBlock(this.level(), blockpos, fallTile.setValue(BlockShapedExplosive.ATTACHED, faceHit), this.getOwner()))
 				{
-					((TileExplosiveCharge) tile).setAnointmentHolder(holder);
+					BlockEntity tile = this.getCommandSenderWorld().getBlockEntity(blockpos);
+					if (tile instanceof TileExplosiveCharge explosiveCharge)
+					{
+						explosiveCharge.setAnointmentHolder(holder);
+						// Set the owner from the entity that threw this projectile
+						Entity owner = this.getOwner();
+						if (owner instanceof Player player)
+						{
+							explosiveCharge.setOwnerUUID(player.getUUID());
+						}
+					}
+					this.removeAfterChangingDimensions();
+				} else
+				{
+					// Protection prevented placement, drop the item
+					this.spawnAtLocation(fallTile.getBlock());
+					this.removeAfterChangingDimensions();
 				}
-				this.removeAfterChangingDimensions();
 			} else
 			{
 //				BlockItem d;

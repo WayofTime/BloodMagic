@@ -29,6 +29,7 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import wayoftime.bloodmagic.common.block.BlockShapedExplosive;
+import wayoftime.bloodmagic.util.helper.BlockProtectionHelper;
 
 public class TileVeinMineCharge extends TileExplosiveCharge
 {
@@ -229,6 +230,13 @@ public class TileVeinMineCharge extends TileExplosiveCharge
 //				this.world.getProfiler().startSection("explosion_blocks");
 					if (this.level instanceof ServerLevel)
 					{
+						// Check protection before breaking - use strict mode to prevent breaking
+						// if owner is unknown (e.g., placed by dispenser) or offline
+						if (!BlockProtectionHelper.canBreakBlockStrict(level, blockPos, getOwnerUUID()))
+						{
+							continue;
+						}
+
 						BlockEntity tileentity = blockstate.getBlock() instanceof EntityBlock
 								? this.level.getBlockEntity(blockPos)
 								: null;

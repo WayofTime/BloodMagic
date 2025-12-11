@@ -18,6 +18,7 @@ import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.ritual.*;
 import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.Utils;
+import wayoftime.bloodmagic.util.helper.BlockProtectionHelper;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -197,13 +198,18 @@ public class RitualYawningVoid extends Ritual
 
 							if (destroy)
 							{
-								world.setBlock(newPos, Blocks.AIR.defaultBlockState(), 3);
-								masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
-								k++;
-								this.lastPos = new BlockPos(i, j, k);
-								isDone = true;
-								// Block wasn't protected
-								consumeSteadfastWill = false;
+								if (BlockProtectionHelper.tryRemoveBlock(world, newPos, masterRitualStone.getOwner()))
+								{
+									masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
+									k++;
+									this.lastPos = new BlockPos(i, j, k);
+									isDone = true;
+									// Block wasn't protected
+									consumeSteadfastWill = false;
+								} else
+								{
+									k++;
+								}
 							} else if (replace)
 							{
 								Utils.swapLocations(world, newPos, world, replacement);

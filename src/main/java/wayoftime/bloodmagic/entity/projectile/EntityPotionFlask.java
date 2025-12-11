@@ -33,6 +33,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkHooks;
 
+import wayoftime.bloodmagic.util.helper.BlockProtectionHelper;
+
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Predicate;
@@ -240,12 +242,20 @@ public class EntityPotionFlask extends ThrowableItemProjectile implements ItemSu
 		BlockState blockstate = this.level().getBlockState(pos);
 		if (blockstate.is(BlockTags.FIRE))
 		{
-			this.level().removeBlock(pos, false);
+			// Check protection before removing fire
+			if (BlockProtectionHelper.tryRemoveBlock(this.level(), pos, this.getOwner()))
+			{
+				// Block already removed by tryRemoveBlock
+			}
 		} else if (CampfireBlock.isLitCampfire(blockstate))
 		{
-			this.level().levelEvent((Player) null, 1009, pos, 0);
-			CampfireBlock.dowse(null, this.level(), pos, blockstate);
-			this.level().setBlockAndUpdate(pos, blockstate.setValue(CampfireBlock.LIT, Boolean.valueOf(false)));
+			// Check protection before modifying campfire
+			if (BlockProtectionHelper.canPlaceBlock(this.level(), pos, this.getOwner()))
+			{
+				this.level().levelEvent((Player) null, 1009, pos, 0);
+				CampfireBlock.dowse(null, this.level(), pos, blockstate);
+				this.level().setBlockAndUpdate(pos, blockstate.setValue(CampfireBlock.LIT, Boolean.valueOf(false)));
+			}
 		}
 
 	}

@@ -6,7 +6,6 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
@@ -22,6 +21,8 @@ import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.ritual.RitualRegister;
 import wayoftime.bloodmagic.util.Utils;
+import wayoftime.bloodmagic.util.helper.BlockProtectionHelper;
+import net.minecraft.world.level.block.Block;
 
 @RitualRegister("placer")
 public class RitualPlacer extends Ritual
@@ -78,18 +79,16 @@ public class RitualPlacer extends Ritual
 					if (stack.isEmpty() || !(stack.getItem() instanceof BlockItem))
 						continue;
 
-					InteractionResult result = ((BlockItem) stack.getItem()).place(ctx);
-					if (result.consumesAction())
+					Block blockToPlace = Block.byItem(stack.getItem());
+					if (!BlockProtectionHelper.tryPlaceBlock(world, blockPos, blockToPlace.defaultBlockState(), masterRitualStone.getOwner()))
 					{
-						itemHandler.extractItem(invSlot, 1, false);
-						tileEntity.setChanged();
-						masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
-						break posLoop; // Break instead of return in case we add things later
+						continue posLoop; // Skip to next position if protection prevents placement
 					}
 
-//					BlockState placeState = Block.getBlockFromItem(itemHandler.getStackInSlot(invSlot).getItem()).getDefaultState();
-//					world.setBlockState(blockPos, placeState);
-
+					itemHandler.extractItem(invSlot, 1, false);
+					tileEntity.setChanged();
+					masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
+					break posLoop; // Break instead of return in case we add things later
 				}
 			}
 		}

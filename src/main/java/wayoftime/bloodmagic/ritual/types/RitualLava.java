@@ -24,6 +24,7 @@ import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.potion.BloodMagicPotions;
 import wayoftime.bloodmagic.ritual.*;
 import wayoftime.bloodmagic.util.Utils;
+import wayoftime.bloodmagic.util.helper.BlockProtectionHelper;
 import wayoftime.bloodmagic.will.DemonWillHolder;
 
 import java.util.List;
@@ -99,14 +100,16 @@ public class RitualLava extends Ritual
 				{
 					break;
 				}
-				world.setBlockAndUpdate(newPos, Blocks.LAVA.defaultBlockState());
-				currentEssence -= lpCost;
-				lpDrain += lpCost;
-				if (rawWill > 0)
+				if (BlockProtectionHelper.tryPlaceBlock(world, newPos, Blocks.LAVA.defaultBlockState(), masterRitualStone.getOwner()))
 				{
-					double drain = getWillCostForRawWill(rawWill);
-					rawWill -= drain;
-					rawDrained += drain;
+					currentEssence -= lpCost;
+					lpDrain += lpCost;
+					if (rawWill > 0)
+					{
+						double drain = getWillCostForRawWill(rawWill);
+						rawWill -= drain;
+						rawDrained += drain;
+					}
 				}
 			}
 		}
