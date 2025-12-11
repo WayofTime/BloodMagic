@@ -51,19 +51,24 @@ public class BMPotionUtils
 
 		for (BlockPos blockPos : growList)
 		{
-			Block block = world.getBlockState(blockPos).getBlock();
-//          if (world.rand.nextInt(50) == 0)
+			BlockState preBlockState = world.getBlockState(blockPos);
+			for (int n = 0; n < 10; n++)
 			{
-				BlockState preBlockState = world.getBlockState(blockPos);
-				for (int n = 0; n < 10; n++)
-					block.randomTick(world.getBlockState(blockPos), (ServerLevel) world, blockPos, world.random);
-
-				BlockState newState = world.getBlockState(blockPos);
-				if (!newState.equals(preBlockState))
+				BlockState currentState = world.getBlockState(blockPos);
+				// Stop if the block has changed (e.g., sapling grew into a tree)
+				// or if it's no longer a growable block
+				if (!currentState.is(preBlockState.getBlock()) || !(currentState.getBlock() instanceof BonemealableBlock))
 				{
-					world.levelEvent(2005, blockPos, 0);
-					incurredDamage += damageRatio;
+					break;
 				}
+				currentState.randomTick((ServerLevel) world, blockPos, world.random);
+			}
+
+			BlockState newState = world.getBlockState(blockPos);
+			if (!newState.equals(preBlockState))
+			{
+				world.levelEvent(2005, blockPos, 0);
+				incurredDamage += damageRatio;
 			}
 		}
 
