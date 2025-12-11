@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.ritual;
 
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.fml.ModList;
 import wayoftime.bloodmagic.ritual.harvest.*;
 
 public class ModRituals
@@ -18,7 +19,10 @@ public class ModRituals
 		HarvestRegistry.registerHandler(new HarvestHandlerNetherWart());
 		HarvestRegistry.registerHandler(new HarvestHandlerGrowingPlant());
 		HarvestRegistry.registerHandler(new HarvestHandlerJungleVines());
-        HarvestRegistry.registerHandler(new HarvestHandlerAgricraft());
+		if (ModList.get().isLoaded("agricraft"))
+		{
+			HarvestRegistry.registerHandler(new HarvestHandlerAgricraft());
+		}
 	}
 //
 //    public static void initCuttingFluids() {
