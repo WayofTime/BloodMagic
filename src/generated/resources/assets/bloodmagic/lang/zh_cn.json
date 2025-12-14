@@ -923,7 +923,7 @@
   "tooltip.bloodmagic.tier": "%d级",
   "tooltip.bloodmagic.trainer.blacklist": "允许其它升级。",
   "tooltip.bloodmagic.trainer.deny": "黑名单：",
-  "tooltip.bloodmagic.trainer.whitelist": "阻挡其它升级。",
+  "tooltip.bloodmagic.trainer.whitelist": "阻止其它升级。",
   "tooltip.bloodmagic.will": "意志量：%s。",
   "tooltip.bloodmagic.willGauge": "一个奇怪的装置，可以测量灵域中的恶魔意志。",
   "trainer.bloodmagic.allowupgrade": "最多允许：%s %s",
