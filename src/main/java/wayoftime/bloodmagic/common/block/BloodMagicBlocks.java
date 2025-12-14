@@ -108,7 +108,7 @@ public class BloodMagicBlocks
 	public static final RegistryObject<Block> MIMIC = BLOCKS.register("mimic", () -> new BlockMimic(Properties.of().requiresCorrectToolForDrops().sound(SoundType.METAL).strength(2.0f).isRedstoneConductor(BloodMagicBlocks::isntSolid).isSuffocating(BloodMagicBlocks::isntSolid).isViewBlocking(BloodMagicBlocks::isntSolid).noOcclusion()));
 	public static final RegistryObject<Block> ETHEREAL_MIMIC = BLOCKS.register("ethereal_mimic", () -> new BlockMimic(Properties.of().requiresCorrectToolForDrops().sound(SoundType.METAL).strength(2.0f).isRedstoneConductor(BloodMagicBlocks::isntSolid).isSuffocating(BloodMagicBlocks::isntSolid).isViewBlocking(BloodMagicBlocks::isntSolid).noOcclusion().noCollission()));
 
-	public static final RegistryObject<Block> SPECTRAL = BLOCKS.register("spectral", () -> new BlockSpectral(Properties.of().sound(SoundType.METAL).strength(100.0f).isRedstoneConductor(BloodMagicBlocks::isntSolid).isSuffocating(BloodMagicBlocks::isntSolid).isViewBlocking(BloodMagicBlocks::isntSolid).noOcclusion().noCollission()));
+	public static final RegistryObject<Block> SPECTRAL = BLOCKS.register("spectral", () -> new BlockSpectral(Properties.of().sound(SoundType.METAL).strength(100.0f).isRedstoneConductor(BloodMagicBlocks::isntSolid).isSuffocating(BloodMagicBlocks::isntSolid).isViewBlocking(BloodMagicBlocks::isntSolid).noOcclusion().noCollission().forceSolidOn()));
 
 	// TODO: Move these to a dedicated class?
 	public static final RegistryObject<MenuType<ContainerSoulForge>> SOUL_FORGE_CONTAINER = CONTAINERS.register("soul_forge_container", () -> IForgeMenuType.create(ContainerSoulForge::new));

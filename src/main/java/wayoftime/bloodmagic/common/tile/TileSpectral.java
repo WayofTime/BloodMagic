@@ -46,11 +46,9 @@ public class TileSpectral extends TileBase
 			BlockEntity spectralTile = world.getBlockEntity(pos);
 			if (spectralTile instanceof TileSpectral)
 			{
-				BloodMagic.LOGGER.info("was a spectral tile");
 				((TileSpectral) spectralTile).setContainedBlockInfo(potentialFluidBlockState);
 				world.scheduleTick(pos, spectralTile.getBlockState().getBlock(), BlockSpectral.DECAY_RATE);
 			} else {
-				BloodMagic.LOGGER.info("it was not, in fact, a spectral tile");
 			}
 		} else if (potentialFluidBlockState.getBlock() == BloodMagicBlocks.SPECTRAL.get() && potentialFluidBlockState.getValue(BlockSpectral.SPECTRAL_STATE) == SpectralBlockType.LEAKING)
 		{
