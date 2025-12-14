@@ -48,7 +48,7 @@ public class ImperfectRitualData {
                 .add(Tags.Blocks.STORAGE_BLOCKS_LAPIS, ImperfectRituals.NIGHT_RITUAL, false)
                 .add(Tags.Blocks.STORAGE_BLOCKS_COAL, ImperfectRituals.DAY_RITUAL, false)
                 .add(Blocks.BEDROCK.builtInRegistryHolder(), ImperfectRituals.RESISTANCE_RITUAL, false)
-                .add(Tags.Blocks.COBBLESTONES, ImperfectRituals.ZOMBIE_RITUAL, false)
+                .add(Tags.Blocks.COBBLESTONES_MOSSY, ImperfectRituals.ZOMBIE_RITUAL, false)
                 .build();
     }
 }

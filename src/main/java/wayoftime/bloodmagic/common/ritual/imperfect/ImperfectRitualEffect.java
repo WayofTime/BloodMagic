@@ -15,21 +15,21 @@ import java.util.function.Supplier;
 
 // TODO should probably define cost here and have it be part of this codec, but not sure how to do that
 public interface ImperfectRitualEffect {
-    DeferredRegister<MapCodec<? extends ImperfectRitualEffect>> WEAK_RITUAL_EFFECT_TYPE = DeferredRegister.create(BMRegistries.Keys.IMPERFECT_RITUAL_EFFECT_TYPE, BloodMagic.MODID);
-    Codec<ImperfectRitualEffect> CODEC = Codec.lazyInitialized(() -> WEAK_RITUAL_EFFECT_TYPE
+    DeferredRegister<MapCodec<? extends ImperfectRitualEffect>> IMPERFECT_RITUAL_EFFECT_TYPE = DeferredRegister.create(BMRegistries.Keys.IMPERFECT_RITUAL_EFFECT_TYPE, BloodMagic.MODID);
+    Codec<ImperfectRitualEffect> CODEC = Codec.lazyInitialized(() -> IMPERFECT_RITUAL_EFFECT_TYPE
             .getRegistry()
             .get()
             .byNameCodec()
             .dispatch(ImperfectRitualEffect::codec, Function.identity())
     );
 
-    Supplier<MapCodec<SetTimeEffect>> SET_TIME_EFFECT = WEAK_RITUAL_EFFECT_TYPE.register("set_time", () -> SetTimeEffect.CODEC);
-    Supplier<MapCodec<ApplyPotionEffect>> APPLY_POTION_EFFECT = WEAK_RITUAL_EFFECT_TYPE.register("apply_potion", () -> ApplyPotionEffect.CODEC);
-    Supplier<MapCodec<SpawnMobEffect>> SPAWN_MOB_EFFECT = WEAK_RITUAL_EFFECT_TYPE.register("spawn_mob", () -> SpawnMobEffect.CODEC);
+    Supplier<MapCodec<SetTimeEffect>> SET_TIME_EFFECT = IMPERFECT_RITUAL_EFFECT_TYPE.register("set_time", () -> SetTimeEffect.CODEC);
+    Supplier<MapCodec<ApplyPotionEffect>> APPLY_POTION_EFFECT = IMPERFECT_RITUAL_EFFECT_TYPE.register("apply_potion", () -> ApplyPotionEffect.CODEC);
+    Supplier<MapCodec<SpawnMobEffect>> SPAWN_MOB_EFFECT = IMPERFECT_RITUAL_EFFECT_TYPE.register("spawn_mob", () -> SpawnMobEffect.CODEC);
 
     static void register(IEventBus modBus) {
-        WEAK_RITUAL_EFFECT_TYPE.makeRegistry(builder -> {});
-        WEAK_RITUAL_EFFECT_TYPE.register(modBus);
+        IMPERFECT_RITUAL_EFFECT_TYPE.makeRegistry(builder -> {});
+        IMPERFECT_RITUAL_EFFECT_TYPE.register(modBus);
     }
 
     int getCost();
