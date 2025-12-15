@@ -40,7 +40,7 @@ public class ClientModEventHandler {
 
             ItemProperties.register(BMItems.SIGIL.get(), BMIdentifiers.ItemProperties.SIGIL_ACTIVE,
                     (stack, level, entity, seed) ->
-                            stack.getOrDefault(BMDataComponents.SIGIL_ACTIVE, false) ? 1 : 0);
+                            stack.has(BMDataComponents.SIGIL_ACTIVE) ? 1 : 0);
         });
     }
 

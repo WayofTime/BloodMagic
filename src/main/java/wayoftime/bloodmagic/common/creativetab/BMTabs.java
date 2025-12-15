@@ -63,17 +63,10 @@ public class BMTabs {
         // TODO cant seem to get all entries for a given registry from here, either make a tag with all sigils to add here or do it manually
         ItemStack sigilStack = new ItemStack(BMItems.SIGIL);
         // for now, this is the order of them appearing in the tab
-        List<ResourceKey<SigilType>> displaySigils = List.of(Sigils.DIVINATION, Sigils.SEER, Sigils.LAVA, Sigils.WATER, Sigils.VOID);
+        List<ResourceKey<SigilType>> displaySigils = List.of(Sigils.DIVINATION, Sigils.SEER, Sigils.LAVA, Sigils.WATER, Sigils.VOID, Sigils.MINER);
         displaySigils.forEach(key -> {
             ItemStack tmp = sigilStack.copy();
             tmp.set(BMDataComponents.SIGIL_TYPE, key);
-            tab.accept(tmp);
-        });
-        List<ResourceKey<SigilType>> toggle = List.of(Sigils.MINER);
-        toggle.forEach(key -> {
-            ItemStack tmp = sigilStack.copy();
-            tmp.set(BMDataComponents.SIGIL_TYPE, key);
-            tmp.set(BMDataComponents.SIGIL_ACTIVE, false);
             tab.accept(tmp);
         });
     }

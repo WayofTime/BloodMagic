@@ -16,12 +16,12 @@ import java.util.function.BiConsumer;
 
 public class SigilData {
     public static void sigilTypes(BootstrapContext<SigilType> context) {
-        context.register(Sigils.DIVINATION, new SigilType(0, 0, 0, 0, new DivinationEffect(false)));
-        context.register(Sigils.SEER, new SigilType(0, 0, 0, 0, new DivinationEffect(true)));
-        context.register(Sigils.LAVA, new SigilType(0, 1000, 0, 0, new FluidPlaceEffect(Fluids.LAVA.builtInRegistryHolder(), 10 * FluidType.BUCKET_VOLUME)));
-        context.register(Sigils.WATER, new SigilType(0, 100, 0, 0, new FluidPlaceEffect(Fluids.WATER.builtInRegistryHolder(), 10 * FluidType.BUCKET_VOLUME)));
-        context.register(Sigils.VOID, new SigilType(50, 50, 0, 0, new FluidRemoveEffect(1 * FluidType.BUCKET_VOLUME)));
-        context.register(Sigils.MINER, new SigilType(0, 0, 0, 100, new ApplyPotionEffect(
+        context.register(Sigils.DIVINATION, new SigilType(0, 0, 0, 0, false, new DivinationEffect(false)));
+        context.register(Sigils.SEER, new SigilType(0, 0, 0, 0, false, new DivinationEffect(true)));
+        context.register(Sigils.LAVA, new SigilType(0, 1000, 0, 0, false, new FluidPlaceEffect(Fluids.LAVA.builtInRegistryHolder(), 10 * FluidType.BUCKET_VOLUME)));
+        context.register(Sigils.WATER, new SigilType(0, 100, 0, 0, false, new FluidPlaceEffect(Fluids.WATER.builtInRegistryHolder(), 10 * FluidType.BUCKET_VOLUME)));
+        context.register(Sigils.VOID, new SigilType(50, 50, 0, 0, false, new FluidRemoveEffect(1 * FluidType.BUCKET_VOLUME)));
+        context.register(Sigils.MINER, new SigilType(0, 0, 0, 100, true, new ApplyPotionEffect(
                 MobEffects.DIG_SPEED,
                 0,
                 40,

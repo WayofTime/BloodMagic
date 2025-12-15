@@ -14,8 +14,8 @@ import wayoftime.bloodmagic.common.living.LivingEntityEffect;
 import wayoftime.bloodmagic.common.living.LivingUpgrade;
 import wayoftime.bloodmagic.common.living.LivingValueEffect;
 import wayoftime.bloodmagic.common.ritual.imperfect.ImperfectRitualEffect;
-import wayoftime.bloodmagic.api.sigil.SigilEffect;
 import wayoftime.bloodmagic.api.sigil.SigilType;
+import wayoftime.bloodmagic.common.sigil.SigilEffects;
 
 public class BMRegistries {
     public static class Keys {
@@ -59,7 +59,7 @@ public class BMRegistries {
         LivingValueEffect.register(modBus);
         LivingEntityEffect.register(modBus);
         ImperfectRitualEffect.register(modBus);
-        SigilEffect.register(modBus);
+        SigilEffects.register(modBus);
     }
 
     private static ResourceLocation bm(String path) {

@@ -21,7 +21,7 @@ public class BMIdentifiers {
 
     public static class RegistryKeys {
         public static final ResourceKey<Registry<MapCodec<? extends SigilEffect>>> SIGIL_EFFECT_TYPES = ResourceKey.createRegistryKey(bm("sigil_effect_type"));
-        public static final ResourceKey<Registry<SigilType>> SIGIL_TYPES = ResourceKey.createRegistryKey(bm("sigil_type"));
+        public static final ResourceKey<Registry<SigilType>> SIGIL_TYPES = ResourceKey.createRegistryKey(bm("sigil"));
     }
 
     public static class Sigils {

@@ -4,6 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.Unit;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -16,6 +17,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.api.BMIdentifiers;
+import wayoftime.bloodmagic.api.BMIdentifiers.Sigils;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.datacomponent.Binding;
 import wayoftime.bloodmagic.common.datacomponent.SoulNetwork;
@@ -34,12 +36,12 @@ public class SigilItem extends Item {
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         if (!stack.has(BMDataComponents.SIGIL_TYPE)) {
             tooltipComponents.add(Component.translatable("This sigil has no type set! It will work as a Divination Sigil but you should add a sigil_type data component"));
-        } else {
-            String name = stack.getOrDefault(BMDataComponents.SIGIL_TYPE, BMIdentifiers.Sigils.DIVINATION).location().getPath();
-            tooltipComponents.add(Component.translatable("tooltip.bloodmagic.sigil." + name));
         }
-        if (stack.has(BMDataComponents.SIGIL_ACTIVE)) {
-            boolean isActive = stack.getOrDefault(BMDataComponents.SIGIL_ACTIVE, false);
+        ResourceKey<SigilType> key = stack.getOrDefault(BMDataComponents.SIGIL_TYPE, Sigils.DIVINATION);
+        tooltipComponents.add(Component.translatable("tooltip.bloodmagic.sigil." + key.location().getPath()));
+        SigilType type = context.level().registryAccess().registryOrThrow(BMIdentifiers.RegistryKeys.SIGIL_TYPES).getOrThrow(key);
+        if (type.isActivatable()) {
+            boolean isActive = stack.has(BMDataComponents.SIGIL_ACTIVE);
             tooltipComponents.add(Component.translatable("tooltip.bloodmagic.sigil." + (isActive ? "activated" : "deactivated")).withStyle(ChatFormatting.GRAY));
         }
 
@@ -108,9 +110,14 @@ public class SigilItem extends Item {
             return InteractionResultHolder.pass(stack);
         }
 
-        if (stack.has(BMDataComponents.SIGIL_ACTIVE) && player.isShiftKeyDown()) {
-            boolean state = stack.getOrDefault(BMDataComponents.SIGIL_ACTIVE, false); // using .get() makes it complain about it being null, so using getOrDefault anyways
-            stack.set(BMDataComponents.SIGIL_ACTIVE, !state);
+        SigilType type = getType(stack, level.registryAccess());
+        if (type.isActivatable() && player.isShiftKeyDown()) {
+            if (stack.has(BMDataComponents.SIGIL_ACTIVE)) {
+                stack.remove(BMDataComponents.SIGIL_ACTIVE);
+            } else {
+                stack.set(BMDataComponents.SIGIL_ACTIVE, Unit.INSTANCE);
+            }
+
             return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
         }
 
@@ -118,7 +125,6 @@ public class SigilItem extends Item {
             return InteractionResultHolder.sidedSuccess(stack, true);
         }
 
-        SigilType type = getType(stack, level.registryAccess());
         boolean result = type.effect().useOnAir(stack, player, usedHand);
         if (result) {
             network.syphonAndDamage(SoulTicket.item(stack, player.level(), player, type.airCost()), player);
@@ -180,7 +186,7 @@ public class SigilItem extends Item {
             return;
         }
 
-        if (stack.getOrDefault(BMDataComponents.SIGIL_ACTIVE, false)) {
+        if (stack.has(BMDataComponents.SIGIL_ACTIVE)) {
             SigilType type = getType(stack, level.registryAccess());
             if (player.tickCount % 100 == 0) { // this could be cheesed by switching it off just before the damage would occur and back on just after. not sure if this is an actual issue
                                                // if it is, switch to a data component for tracking time
