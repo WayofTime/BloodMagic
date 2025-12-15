@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.common.item;
+package wayoftime.bloodmagic.api.item;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;

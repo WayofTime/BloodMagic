@@ -28,9 +28,9 @@ import wayoftime.bloodmagic.common.datacomponent.LivingStats;
 import wayoftime.bloodmagic.common.datacomponent.UpgradeLimits;
 import wayoftime.bloodmagic.common.datacomponent.UpgradeTome;
 import wayoftime.bloodmagic.common.datamap.BMDataMaps;
-import wayoftime.bloodmagic.common.datamap.LivingArmourData;
-import wayoftime.bloodmagic.common.event.LivingArmourEvent;
-import wayoftime.bloodmagic.common.item.UpgradeHolderBase;
+import wayoftime.bloodmagic.common.datamap.LivingArmorData;
+import wayoftime.bloodmagic.common.event.LivingArmorEvent;
+import wayoftime.bloodmagic.api.item.UpgradeHolderBase;
 import wayoftime.bloodmagic.common.registry.BMRegistries;
 import wayoftime.bloodmagic.common.tag.BMTags;
 import wayoftime.bloodmagic.util.ChatUtil;
@@ -42,7 +42,7 @@ import java.util.function.BiConsumer;
 public class LivingHelper {
     public static boolean hasFullSet(Player player) {
         ItemStack chestStack = getChest(player);
-        LivingArmourData data = chestStack.getItemHolder().getData(BMDataMaps.LIVING_ARMOUR_DATA);
+        LivingArmorData data = chestStack.getItemHolder().getData(BMDataMaps.LIVING_ARMOUR_DATA);
         if (data == null) {
             return false;
         }
@@ -68,7 +68,7 @@ public class LivingHelper {
         if (!(plate.getItem() instanceof UpgradeHolderBase)) {
             return true;
         }
-        LivingArmourData data = plate.getItemHolder().getData(BMDataMaps.LIVING_ARMOUR_DATA);
+        LivingArmorData data = plate.getItemHolder().getData(BMDataMaps.LIVING_ARMOUR_DATA);
         return data == null;
     }
 
@@ -207,7 +207,7 @@ public class LivingHelper {
             return 0;
         }
         ItemStack chest = getChest(wearer);
-        LivingArmourData data = chest.getItemHolder().getData(BMDataMaps.LIVING_ARMOUR_DATA);
+        LivingArmorData data = chest.getItemHolder().getData(BMDataMaps.LIVING_ARMOUR_DATA);
         if (data == null) {
             return 0;
         }
@@ -221,7 +221,7 @@ public class LivingHelper {
         int maxPoints = chestBase.getMaxUpgradePoints(chest);
         int currentPoints = chest.getOrDefault(BMDataComponents.CURRENT_UPGRADE_POINTS, 0);
 
-        LivingArmourEvent.ExpGain event = NeoForge.EVENT_BUS.post(new LivingArmourEvent.ExpGain(wearer, upgrade, amount, fromTome));
+        LivingArmorEvent.ExpGain event = NeoForge.EVENT_BUS.post(new LivingArmorEvent.ExpGain(wearer, upgrade, amount, fromTome));
         if (event.getCurrentAmount() <= 0) { // not dealing with negative exp gain. also dont need to calc this if we know its 0
             return 0;
         }
@@ -313,7 +313,7 @@ public class LivingHelper {
     }
 
     public static void setDefaultLiving(ItemStack livingPlate, HolderLookup.Provider holders) {
-        LivingArmourData data = livingPlate.getItemHolder().getData(BMDataMaps.LIVING_ARMOUR_DATA);
+        LivingArmorData data = livingPlate.getItemHolder().getData(BMDataMaps.LIVING_ARMOUR_DATA);
         if (data == null) {
             return;
         }

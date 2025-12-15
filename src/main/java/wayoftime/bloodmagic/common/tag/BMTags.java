@@ -32,7 +32,7 @@ public class BMTags {
         public static final TagKey<Item> ARC_SMOKING = withParent(ARC_FURNACE, bm("smoking"));
 
         public static final TagKey<Item> LIVING_UPGRADE_SET = tag(bm("living_upgrade_set"));
-        public static final TagKey<Item> LIVING_SET = withParent(LIVING_UPGRADE_SET, BMMaterialsAndTiers.LIVING_ARMOUR_MATERIAL.getId());
+        public static final TagKey<Item> LIVING_SET = withParent(LIVING_UPGRADE_SET, BMMaterialsAndTiers.LIVING_ARMOR_MATERIAL.getId());
 
         private static TagKey<Item> fromBlock(TagKey<Block> input) {
             return tag(input.location());

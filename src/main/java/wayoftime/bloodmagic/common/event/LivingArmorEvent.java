@@ -5,11 +5,11 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.Event;
 import wayoftime.bloodmagic.common.living.LivingUpgrade;
 
-public abstract class LivingArmourEvent extends Event {
+public abstract class LivingArmorEvent extends Event {
 
     private final Player wearer;
     private final Holder<LivingUpgrade> upgrade;
-    private LivingArmourEvent(Player wearer, Holder<LivingUpgrade> upgrade) {
+    private LivingArmorEvent(Player wearer, Holder<LivingUpgrade> upgrade) {
         this.wearer = wearer;
         this.upgrade = upgrade;
     }
@@ -22,7 +22,7 @@ public abstract class LivingArmourEvent extends Event {
         return this.upgrade;
     }
 
-    public static class ExpGain extends LivingArmourEvent {
+    public static class ExpGain extends LivingArmorEvent {
 
         private final float startingAmount;
         private final boolean fromTome;

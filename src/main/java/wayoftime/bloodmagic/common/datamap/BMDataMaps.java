@@ -30,11 +30,11 @@ public class BMDataMaps {
             BloodRune.CODEC.listOf()
     ).synced(BloodRune.CODEC.listOf(), true).build();
 
-    public static final DataMapType<Item, LivingArmourData> LIVING_ARMOUR_DATA = DataMapType.builder(
+    public static final DataMapType<Item, LivingArmorData> LIVING_ARMOUR_DATA = DataMapType.builder(
             BloodMagic.rl("armour_data"),
             Registries.ITEM,
-            LivingArmourData.CODEC
-    ).synced(LivingArmourData.CODEC, true).build();
+            LivingArmorData.CODEC
+    ).synced(LivingArmorData.CODEC, true).build();
 
     public static void register(RegisterDataMapTypesEvent event) {
         event.register(TARTARIC_GEM_MAX_AMOUNTS);
