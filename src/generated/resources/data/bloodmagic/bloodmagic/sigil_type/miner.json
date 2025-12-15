@@ -1,0 +1,14 @@
+{
+  "click_air_cost": 0,
+  "click_block_cost": 0,
+  "click_entity_cost": 0,
+  "refresh_cost": 100,
+  "sigil_effect": {
+    "type": "bloodmagic:apply_potion_effect",
+    "amplifier": 0,
+    "amplifier_others": 2,
+    "duration": 40,
+    "duration_others": 600,
+    "effect_type": "minecraft:haste"
+  }
+}

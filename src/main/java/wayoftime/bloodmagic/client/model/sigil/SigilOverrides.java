@@ -21,6 +21,6 @@ public class SigilOverrides extends ItemOverrides {
             endModel = Minecraft.getInstance().getModelManager().getModel(modelLoc);
         }
 
-        return endModel;
+        return endModel.getOverrides().resolve(endModel, stack, level, entity, seed);
     }
 }

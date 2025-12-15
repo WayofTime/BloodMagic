@@ -29,9 +29,18 @@ public class ClientModEventHandler {
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             BMItems.WILL_ITEMS.getEntries().forEach(item -> {
-                ItemProperties.register(item.get(), BloodMagic.TYPE_PROPERTY, (stack, level, player, seed) -> stack.getOrDefault(BMDataComponents.DEMON_WILL_TYPE, EnumWillType.DEFAULT).ordinal());
+                ItemProperties.register(item.get(), BloodMagic.TYPE_PROPERTY,
+                        (stack, level, player, seed) ->
+                                stack.getOrDefault(BMDataComponents.DEMON_WILL_TYPE, EnumWillType.DEFAULT).ordinal());
             });
-            ItemProperties.register(BMItems.SACRIFICIAL_DAGGER.get(), BloodMagic.INCENSE_PROPERTY, ((stack, level, entity, seed) -> stack.getOrDefault(BMDataComponents.INCENSE, false) ? 1 : 0));
+
+            ItemProperties.register(BMItems.SACRIFICIAL_DAGGER.get(), BloodMagic.INCENSE_PROPERTY,
+                    (stack, level, entity, seed) ->
+                            stack.getOrDefault(BMDataComponents.INCENSE, false) ? 1 : 0);
+
+            ItemProperties.register(BMItems.SIGIL.get(), BMIdentifiers.ItemProperties.SIGIL_ACTIVE,
+                    (stack, level, entity, seed) ->
+                            stack.getOrDefault(BMDataComponents.SIGIL_ACTIVE, false) ? 1 : 0);
         });
     }
 
