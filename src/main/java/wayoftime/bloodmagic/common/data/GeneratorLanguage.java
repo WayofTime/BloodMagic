@@ -19,6 +19,8 @@ public class GeneratorLanguage extends LanguageProvider
 		// HUD
 		add("hud.bloodmagic.inactive", "Inactive");
 
+		add("pack.bloodmagic.fan_translations", "Fanmade translations of Blood Magic");
+
 		// Creative Tab
 		add("itemGroup.bloodmagic.creativeTab", "Blood Magic");
 		add("itemGroup.bloodmagic.upgradeTab", "Blood Magic Living Upgrades");
