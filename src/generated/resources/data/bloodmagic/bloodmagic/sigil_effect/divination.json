@@ -1,0 +1,10 @@
+{
+  "click_air_cost": 0,
+  "click_block_cost": 0,
+  "click_entity_cost": 0,
+  "refresh_cost": 0,
+  "sigil_effect": {
+    "type": "bloodmagic:divination_effect",
+    "is_advanced": false
+  }
+}

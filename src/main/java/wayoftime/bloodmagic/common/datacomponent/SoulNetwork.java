@@ -81,6 +81,23 @@ public class SoulNetwork {
         return val;
     }
 
+    // TODO there used to be events fired for these. Are those needed?
+    public boolean syphon(SoulTicket ticket) {
+        if (getCurrentEssence() < ticket.getAmount()) {
+            return false;
+        }
+
+        setCurrentEssence(getCurrentEssence() - ticket.getAmount());
+        return true;
+    }
+
+    public void syphonAndDamage(SoulTicket ticket, Player player) {
+        if (!syphon(ticket)) {
+            hurtPlayer(player, ticket.getAmount());
+        }
+    }
+
+
     public void hurtPlayer(Player user, float syphon) {
         if (user != null) {
             if (syphon > 0) {

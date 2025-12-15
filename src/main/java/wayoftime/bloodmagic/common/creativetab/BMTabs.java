@@ -1,15 +1,18 @@
 package wayoftime.bloodmagic.common.creativetab;
 
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.BMIdentifiers.Sigils;
 import wayoftime.bloodmagic.common.block.BMBlocks;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.datacomponent.EnumWillType;
@@ -19,8 +22,10 @@ import wayoftime.bloodmagic.common.item.BMItems;
 import wayoftime.bloodmagic.common.living.LivingHelper;
 import wayoftime.bloodmagic.common.living.LivingUpgrade;
 import wayoftime.bloodmagic.common.registry.BMRegistries;
+import wayoftime.bloodmagic.api.sigil.SigilType;
 import wayoftime.bloodmagic.common.tag.BMTags;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public class BMTabs {
@@ -38,6 +43,7 @@ public class BMTabs {
                         LivingHelper.setDefaultLiving(living_plate, parameters.holders());
                         output.accept(living_plate);
 
+                        addSigils(parameters.holders(), output::accept);
                         addAll(BMItems.BASIC_ITEMS, output::accept);
                         addAll(BMItems.ITEMS, output::accept);
                         addAll(BMFluids.BUCKETS, output::accept);
@@ -52,6 +58,18 @@ public class BMTabs {
                     })
                     .build()
     );
+
+    private static void addSigils(HolderLookup.Provider registries, Consumer<ItemStack> tab) {
+        // TODO cant seem to get all entries for a given registry from here, either make a tag with all sigils to add here or do it manually
+        ItemStack sigilStack = new ItemStack(BMItems.SIGIL);
+        // for now, this is the order of them appearing in the tab
+        List<ResourceKey<SigilType>> displaySigils = List.of(Sigils.DIVINATION, Sigils.SEER, Sigils.LAVA, Sigils.WATER, Sigils.VOID, Sigils.MINER);
+        displaySigils.forEach(key -> {
+            ItemStack tmp = sigilStack.copy();
+            tmp.set(BMDataComponents.SIGIL_TYPE, key);
+            tab.accept(tmp);
+        });
+    }
 
     public static final Holder<CreativeModeTab> TOMES = TABS.register(
             "tomes",
@@ -75,6 +93,7 @@ public class BMTabs {
                     })
                     .build()
     );
+
 
     private static void addAll(HolderSet<LivingUpgrade> set, Consumer<ItemStack> tab) {
         ItemStack tome = new ItemStack(BMItems.UPGRADE_TOME);

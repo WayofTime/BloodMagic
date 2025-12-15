@@ -1,0 +1,10 @@
+{
+  "click_air_cost": 50,
+  "click_block_cost": 50,
+  "click_entity_cost": 0,
+  "refresh_cost": 0,
+  "sigil_effect": {
+    "type": "bloodmagic:fluid_remove_effect",
+    "remove_amount": 1000
+  }
+}

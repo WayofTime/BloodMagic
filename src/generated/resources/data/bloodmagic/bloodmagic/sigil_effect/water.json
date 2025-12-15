@@ -1,0 +1,11 @@
+{
+  "click_air_cost": 0,
+  "click_block_cost": 100,
+  "click_entity_cost": 0,
+  "refresh_cost": 0,
+  "sigil_effect": {
+    "type": "bloodmagic:fluid_place_effect",
+    "fluid_type": "minecraft:water",
+    "tank_fill_amount": 10000
+  }
+}

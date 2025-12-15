@@ -8,11 +8,13 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import wayoftime.bloodmagic.api.BMIdentifiers.RegistryKeys;
 import wayoftime.bloodmagic.common.registry.BMRegistries;
 import wayoftime.bloodmagic.datagen.content.AltarTiers;
 import wayoftime.bloodmagic.datagen.content.BloodyDamageSources;
 import wayoftime.bloodmagic.datagen.content.ImperfectRitualData;
 import wayoftime.bloodmagic.datagen.content.LivingUpgrades;
+import wayoftime.bloodmagic.datagen.content.SigilData;
 import wayoftime.bloodmagic.datagen.provider.*;
 
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
@@ -34,6 +36,7 @@ public class Datagen {
                 .add(BMRegistries.Keys.ALTAR_TIER_KEY, AltarTiers::bootstrap)
                 .add(BMRegistries.Keys.LIVING_UPGRADES, LivingUpgrades::bootstrap)
                 .add(BMRegistries.Keys.IMPERFECT_RITUALS, ImperfectRitualData::effects)
+                .add(RegistryKeys.SIGIL_TYPES, SigilData::sigilTypes)
         );
 
         ProviderHelper helper = new ProviderHelper(fileHelper);
