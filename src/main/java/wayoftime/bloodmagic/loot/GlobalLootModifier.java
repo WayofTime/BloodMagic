@@ -12,6 +12,7 @@ import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -50,19 +51,6 @@ public class GlobalLootModifier
 	public static final RegistryObject<Codec<SmeltingModifier>> SMELT = GLM.register("smelt", SmeltingModifier.CODEC);
 	public static final RegistryObject<Codec<VoidingModifier>> VOID = GLM.register("voiding", VoidingModifier.CODEC);
 
-    private static LootParams.Builder copyBlockNoTool(LootContext context) {
-        LootParams.Builder builder = new LootParams.Builder(context.getLevel());
-        builder.withLuck(context.getLuck());
-        builder.withParameter(LootContextParams.BLOCK_STATE, context.getParam(LootContextParams.BLOCK_STATE));
-        builder.withParameter(LootContextParams.ORIGIN, context.getParam(LootContextParams.ORIGIN));
-
-        builder.withOptionalParameter(LootContextParams.THIS_ENTITY, context.getParamOrNull(LootContextParams.THIS_ENTITY));
-        builder.withOptionalParameter(LootContextParams.BLOCK_ENTITY, context.getParamOrNull(LootContextParams.BLOCK_ENTITY));
-        builder.withOptionalParameter(LootContextParams.EXPLOSION_RADIUS, context.getParamOrNull(LootContextParams.EXPLOSION_RADIUS));
-
-        return builder;
-    }
-
 	private static class SilkTouchTestModifier extends LootModifier
 	{
 		public static final Supplier<Codec<SilkTouchTestModifier>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, SilkTouchTestModifier::new)));
@@ -75,7 +63,6 @@ public class GlobalLootModifier
 		@Nonnull
 		@Override
 		protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-            BMLog.DEFAULT.info("doApply!");
 			ItemStack ctxTool = context.getParamOrNull(LootContextParams.TOOL);
             if (ctxTool.is(BloodMagicTags.CHARGES)) {
                 return generatedLoot;
@@ -83,7 +70,6 @@ public class GlobalLootModifier
 			// return early if silk-touch is already applied (otherwise we'll get stuck in
 			// an infinite loop).
 			if (EnchantmentHelper.getEnchantments(ctxTool).containsKey(Enchantments.SILK_TOUCH)) {
-                BMLog.DEFAULT.info("silk touch present, returning data '{}'", generatedLoot.get(0).getOrCreateTag());
                 return generatedLoot;
             }
 			AnointmentHolder holder = AnointmentHolder.fromItemStack(ctxTool);
@@ -92,13 +78,18 @@ public class GlobalLootModifier
 				return generatedLoot;
 			}
 
+			BlockPos pos = BlockPos.containing(context.getParam(LootContextParams.ORIGIN));
+			BlockState state = context.getParam(LootContextParams.BLOCK_STATE);
+			BlockEntity tile = context.getParamOrNull(LootContextParams.BLOCK_ENTITY);
+
 			ItemStack fakeTool = ctxTool.copy();
 			fakeTool.enchant(Enchantments.SILK_TOUCH, 1);
-            LootParams.Builder builder = copyBlockNoTool(context);
-            builder.withParameter(LootContextParams.TOOL, fakeTool);
-            LootTable lootTable = context.getLevel().getServer().getLootData().getLootTable(context.getParam(LootContextParams.BLOCK_STATE).getBlock().getLootTable());
-            BMLog.DEFAULT.info("loot table I guess '{}'", lootTable.getLootTableId());
-            return lootTable.getRandomItems(builder.create(LootContextParamSets.EMPTY));
+
+			List<ItemStack> drops = Block.getDrops(state, context.getLevel(), pos, tile, null, fakeTool);
+			ObjectArrayList<ItemStack> returnList = new ObjectArrayList<>();
+            returnList.addAll(drops);
+
+			return returnList;
 		}
 
 		@Override
@@ -154,23 +145,15 @@ public class GlobalLootModifier
 			enchants.put(Enchantments.BLOCK_FORTUNE, baseFortuneLevel + additionalFortune);
 			EnchantmentHelper.setEnchantments(enchants, fakeTool);
 
-//			EnchantmentHelper.setEnchantmentLevel(p_182441_, p_182442_);
+			BlockPos pos = BlockPos.containing(context.getParam(LootContextParams.ORIGIN));
+			BlockState state = context.getParam(LootContextParams.BLOCK_STATE);
+			BlockEntity tile = context.getParamOrNull(LootContextParams.BLOCK_ENTITY);
 
-			LootParams.Builder builder = new LootParams.Builder(context.getLevel());
-			builder.withParameter(LootContextParams.TOOL, fakeTool);
+			List<ItemStack> drops = Block.getDrops(state, context.getLevel(), pos, tile, null, fakeTool);
+			ObjectArrayList<ItemStack> returnList = new ObjectArrayList<>();
+			returnList.addAll(drops);
 
-            Vec3 vec = context.getParam(LootContextParams.ORIGIN);
-            if (vec != null) {
-                BlockPos pos = BlockPos.containing(vec);
-                BlockEntity be = context.getLevel().getBlockEntity(pos);
-                if (be != null) {
-                    builder.withParameter(LootContextParams.BLOCK_ENTITY, be);
-                }
-            }
-
-            LootParams ctx = builder.create(LootContextParamSets.EMPTY);
-			LootTable loottable = context.getLevel().getServer().getLootData().getLootTable(context.getParamOrNull(LootContextParams.BLOCK_STATE).getBlock().getLootTable());
-			return loottable.getRandomItems(ctx);
+			return returnList;
 		}
 
 		@Override
