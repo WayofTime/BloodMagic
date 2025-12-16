@@ -570,6 +570,22 @@ public class GenericHandler
 		}
 	}
 
+	@SubscribeEvent
+	public void onPotionRemoved(MobEffectEvent.Remove event) {
+		if (event.getEffect() == BloodMagicPotions.FLIGHT.get() && event.getEntity() instanceof Player) {
+			((Player) event.getEntity()).getAbilities().mayfly = ((Player) event.getEntity()).isCreative();
+			((Player) event.getEntity()).getAbilities().flying = false;
+
+			if (event.getEntity().level().isClientSide)
+			{
+				((Player) event.getEntity()).getAbilities().setFlyingSpeed(prevFlySpeedMap.getOrDefault((((Player) event.getEntity()).getUUID()), getFlySpeedForFlightLevel(-1)));
+				prevFlySpeedMap.remove(((Player) event.getEntity()).getUUID());
+			}
+
+			((Player) event.getEntity()).onUpdateAbilities();
+		}
+	}
+
 	private float getFlySpeedForFlightLevel(int level)
 	{
 		if (level >= 0)
