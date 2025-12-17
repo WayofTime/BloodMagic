@@ -13,6 +13,8 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
+import wayoftime.bloodmagic.api.item.UpgradeHolderBase;
+import wayoftime.bloodmagic.common.living.LivingHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +33,15 @@ public class ClientEventHandler {
         List<Component> toAdd = new ArrayList<>();
 
         addToTooltip(BMDataComponents.BINDING.get(), context, toAdd::add, flags, stack);
-        int max = stack.getOrDefault(BMDataComponents.CURRENT_MAX_UPGRADE_POINTS, 0);
-        if (max > 0) {
-            int current = stack.getOrDefault(BMDataComponents.CURRENT_UPGRADE_POINTS, 0);
-            toAdd.add(Component.translatable("tooltip.bloodmagic.upgrade_points", current, max).withStyle(ChatFormatting.GOLD));
+
+        if (!LivingHelper.isNeverValid(stack)) {
+            int max = ((UpgradeHolderBase) stack.getItem()).getMaxUpgradePoints(stack);
+            if (max > 0) {
+                int current = stack.getOrDefault(BMDataComponents.CURRENT_UPGRADE_POINTS, 0);
+                toAdd.add(Component.translatable("tooltip.bloodmagic.upgrade_points", current, max).withStyle(ChatFormatting.GOLD));
+            }
         }
-        addToTooltip(BMDataComponents.UPGRADES.get(), context, toAdd::add, flags, stack);
+            addToTooltip(BMDataComponents.UPGRADES.get(), context, toAdd::add, flags, stack);
 
         // add after name. idgaf
         tooltip.addAll(1, toAdd);

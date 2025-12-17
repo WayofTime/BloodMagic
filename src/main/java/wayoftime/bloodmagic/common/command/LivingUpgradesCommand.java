@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.common.command;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
@@ -33,9 +34,8 @@ import java.util.Optional;
 public class LivingUpgradesCommand {
     private static final DynamicCommandExceptionType ERROR_NO_LIVING_HOLDER = new DynamicCommandExceptionType(playername -> Component.translatable("command.bloodmagic.upgrade.no_armour", playername));
 
-    public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext buildContext) {
-        dispatcher.register(
-                Commands.literal("living-upgrade")
+    public static LiteralArgumentBuilder<CommandSourceStack> command(CommandBuildContext buildContext) {
+                return Commands.literal("living-upgrade")
                         .requires(source -> source.hasPermission(Commands.LEVEL_GAMEMASTERS))
                         .then(
                                 Commands.argument("target", EntityArgument.player())
@@ -118,23 +118,16 @@ public class LivingUpgradesCommand {
                                                                         .executes(context -> recalcPoints(context.getSource(), EntityArgument.getPlayer(context, "target")))
                                                         )
                                                         .then(
-                                                                Commands.literal("set-cap")
-                                                                        .then(
-                                                                                Commands.argument("cap", IntegerArgumentType.integer(0))
-                                                                                        .executes(context -> setCap(context.getSource(), EntityArgument.getPlayer(context, "target"), IntegerArgumentType.getInteger(context, "cap")))
+                                                                Commands.literal("set-evolved-state")
+                                                                        .then(Commands.literal("evolved")
+                                                                                .executes(context -> setEvolved(context.getSource(), EntityArgument.getPlayer(context, "target"), true))
                                                                         )
-                                                                        .then(
-                                                                                Commands.literal("default")
-                                                                                        .executes(context -> setCap(context.getSource(), EntityArgument.getPlayer(context, "target"), BloodMagic.SERVER_CONFIG.DEFAULT_UPGRADE_POINTS.get()))
-                                                                        )
-                                                                        .then(
-                                                                                Commands.literal("evolved")
-                                                                                        .executes(context -> setCap(context.getSource(), EntityArgument.getPlayer(context, "target"), BloodMagic.SERVER_CONFIG.EVOLUTION_UPGRADE_POINTS.get()))
+                                                                        .then(Commands.literal("not-evolved")
+                                                                                .executes(context -> setEvolved(context.getSource(), EntityArgument.getPlayer(context, "target"), false))
                                                                         )
                                                         )
                                         )
-                        )
-        );
+                        );
     }
 
     private static int setMode(CommandSourceStack source, ServerPlayer target, boolean mode) throws CommandSyntaxException {
@@ -161,13 +154,13 @@ public class LivingUpgradesCommand {
         return Command.SINGLE_SUCCESS;
     }
 
-    private static int setCap(CommandSourceStack source, ServerPlayer target, int amount) throws CommandSyntaxException {
+    private static int setEvolved(CommandSourceStack source, ServerPlayer target, boolean evolved) throws CommandSyntaxException {
         if (LivingHelper.isNeverValid(target)) {
             throw ERROR_NO_LIVING_HOLDER.create(target.getName());
         }
         ItemStack chest = LivingHelper.getChest(target);
-        chest.set(BMDataComponents.CURRENT_MAX_UPGRADE_POINTS, amount);
-        source.sendSuccess(() -> Component.translatable("commands.bloodmagic.cap.success", amount), true);
+        chest.set(BMDataComponents.IS_EVOLVED, evolved);
+        source.sendSuccess(() -> Component.translatable("commands.bloodmagic.evolve.success", evolved), true);
 
         return Command.SINGLE_SUCCESS;
     }

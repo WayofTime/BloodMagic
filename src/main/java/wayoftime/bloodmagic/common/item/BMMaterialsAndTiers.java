@@ -13,9 +13,9 @@ import wayoftime.bloodmagic.BloodMagic;
 import java.util.List;
 
 public class BMMaterialsAndTiers {
-    public static final DeferredRegister<ArmorMaterial> ARMOUR_MATERIALS = DeferredRegister.create(BuiltInRegistries.ARMOR_MATERIAL, BloodMagic.MODID);
+    public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS = DeferredRegister.create(BuiltInRegistries.ARMOR_MATERIAL, BloodMagic.MODID);
 
-    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> LIVING_ARMOUR_MATERIAL = ARMOUR_MATERIALS.register("living", () -> new ArmorMaterial(
+    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> LIVING_ARMOR_MATERIAL = ARMOR_MATERIALS.register("living", () -> new ArmorMaterial(
             ArmorMaterials.IRON.value().defense(), ArmorMaterials.IRON.value().enchantmentValue(),
             ArmorMaterials.IRON.value().equipSound(), () -> Ingredient.of(BMItems.RAW_WILL.get()),
             List.of(new ArmorMaterial.Layer(bm("living"))), 0, 0
@@ -26,6 +26,6 @@ public class BMMaterialsAndTiers {
     }
 
     public static void register(IEventBus modBus) {
-        ARMOUR_MATERIALS.register(modBus);
+        ARMOR_MATERIALS.register(modBus);
     }
 }

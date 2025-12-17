@@ -32,7 +32,7 @@ public class BMTags {
         public static final TagKey<Item> ARC_SMOKING = withParent(ARC_FURNACE, bm("smoking"));
 
         public static final TagKey<Item> LIVING_UPGRADE_SET = tag(bm("living_upgrade_set"));
-        public static final TagKey<Item> LIVING_SET = withParent(LIVING_UPGRADE_SET, BMMaterialsAndTiers.LIVING_ARMOUR_MATERIAL.getId());
+        public static final TagKey<Item> LIVING_SET = withParent(LIVING_UPGRADE_SET, BMMaterialsAndTiers.LIVING_ARMOR_MATERIAL.getId());
 
         private static TagKey<Item> fromBlock(TagKey<Block> input) {
             return tag(input.location());
@@ -81,6 +81,8 @@ public class BMTags {
         public static final TagKey<LivingUpgrade> LIVING_START = tag(bm("living_start"));
         public static final TagKey<LivingUpgrade> TRAINERS = tag(bm("trainer"));
         public static final TagKey<LivingUpgrade> IS_SCRAPPABLE = tag(bm("is_scrappable"));
+
+        public static final TagKey<LivingUpgrade> LIVING_BLACKLIST = tag(bm("empty"));
 
         private static TagKey<LivingUpgrade> tag(ResourceLocation id) {
             return TagKey.create(BMRegistries.Keys.LIVING_UPGRADES, id);

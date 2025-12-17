@@ -3,7 +3,9 @@ package wayoftime.bloodmagic.datagen.provider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.BMItems;
@@ -22,6 +24,15 @@ public class BMItemTagProvider extends ItemTagsProvider {
 
         tag(BMTags.Items.LIVING_SET)
                 .add(BMItems.LIVING_HELMET.get(), BMItems.LIVING_PLATE.get(), BMItems.LIVING_LEGGINGS.get(), BMItems.LIVING_BOOTS.get());
+
+        tag(ItemTags.HEAD_ARMOR)
+                .add(BMItems.LIVING_HELMET.get());
+        tag(ItemTags.CHEST_ARMOR)
+                .add(BMItems.LIVING_PLATE.get());
+        tag(ItemTags.LEG_ARMOR)
+                .add(BMItems.LIVING_LEGGINGS.get());
+        tag(ItemTags.FOOT_ARMOR)
+                .add(BMItems.LIVING_BOOTS.get());
 
         tag(BMTags.Items.LIVING_UPGRADE_SET)
                 .addTag(BMTags.Items.LIVING_SET);

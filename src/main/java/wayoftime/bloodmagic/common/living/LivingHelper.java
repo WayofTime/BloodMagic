@@ -27,7 +27,10 @@ import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.datacomponent.LivingStats;
 import wayoftime.bloodmagic.common.datacomponent.UpgradeLimits;
 import wayoftime.bloodmagic.common.datacomponent.UpgradeTome;
-import wayoftime.bloodmagic.common.event.LivingArmourEvent;
+import wayoftime.bloodmagic.common.datamap.BMDataMaps;
+import wayoftime.bloodmagic.common.datamap.LivingArmorData;
+import wayoftime.bloodmagic.common.event.LivingArmorEvent;
+import wayoftime.bloodmagic.api.item.UpgradeHolderBase;
 import wayoftime.bloodmagic.common.registry.BMRegistries;
 import wayoftime.bloodmagic.common.tag.BMTags;
 import wayoftime.bloodmagic.util.ChatUtil;
@@ -39,10 +42,11 @@ import java.util.function.BiConsumer;
 public class LivingHelper {
     public static boolean hasFullSet(Player player) {
         ItemStack chestStack = getChest(player);
-        TagKey<Item> set = chestStack.get(BMDataComponents.REQUIRED_SET);
-        if (set == null) {
+        LivingArmorData data = chestStack.getItemHolder().getData(BMDataMaps.LIVING_ARMOUR_DATA);
+        if (data == null) {
             return false;
         }
+        TagKey<Item> set = data.requiredSet();
         if (chestStack.getDamageValue() +1 >= chestStack.getMaxDamage()) {
             return false;
         }
@@ -61,7 +65,11 @@ public class LivingHelper {
     }
 
     public static boolean isNeverValid(ItemStack plate) {
-        return !plate.has(BMDataComponents.REQUIRED_SET);
+        if (!(plate.getItem() instanceof UpgradeHolderBase)) {
+            return true;
+        }
+        LivingArmorData data = plate.getItemHolder().getData(BMDataMaps.LIVING_ARMOUR_DATA);
+        return data == null;
     }
 
     public static ItemStack getChest(Player player) {
@@ -195,13 +203,25 @@ public class LivingHelper {
     }
 
     public static float applyExp(Player wearer, Holder<LivingUpgrade> upgrade, float amount, boolean fromTome) {
+        if (!hasFullSet(wearer)) {
+            return 0;
+        }
         ItemStack chest = getChest(wearer);
+        LivingArmorData data = chest.getItemHolder().getData(BMDataMaps.LIVING_ARMOUR_DATA);
+        if (data == null) {
+            return 0;
+        }
+        if (upgrade.is(data.blacklist())) {
+            return 0;
+        }
+
         Object2FloatOpenHashMap<Holder<LivingUpgrade>> upgrades = chest.getOrDefault(BMDataComponents.UPGRADES, LivingStats.EMPTY).upgrades().clone();
         UpgradeLimits limits = chest.getOrDefault(BMDataComponents.LIMITS, UpgradeLimits.EMPTY);
-        int maxPoints = chest.getOrDefault(BMDataComponents.CURRENT_MAX_UPGRADE_POINTS, 0);
+        UpgradeHolderBase chestBase = (UpgradeHolderBase) chest.getItem();
+        int maxPoints = chestBase.getMaxUpgradePoints(chest);
         int currentPoints = chest.getOrDefault(BMDataComponents.CURRENT_UPGRADE_POINTS, 0);
 
-        LivingArmourEvent.ExpGain event = NeoForge.EVENT_BUS.post(new LivingArmourEvent.ExpGain(wearer, upgrade, amount, fromTome));
+        LivingArmorEvent.ExpGain event = NeoForge.EVENT_BUS.post(new LivingArmorEvent.ExpGain(wearer, upgrade, amount, fromTome));
         if (event.getCurrentAmount() <= 0) { // not dealing with negative exp gain. also dont need to calc this if we know its 0
             return 0;
         }
@@ -293,9 +313,13 @@ public class LivingHelper {
     }
 
     public static void setDefaultLiving(ItemStack livingPlate, HolderLookup.Provider holders) {
-        HolderSet<LivingUpgrade> set = holders.lookupOrThrow(BMRegistries.Keys.LIVING_UPGRADES).get(BMTags.Living.LIVING_START).orElseThrow();
-        livingPlate.set(BMDataComponents.UPGRADES, new LivingStats(fromHolderSet(set)));
-        livingPlate.set(BMDataComponents.CURRENT_MAX_UPGRADE_POINTS, BloodMagic.SERVER_CONFIG.DEFAULT_UPGRADE_POINTS.get());
+        LivingArmorData data = livingPlate.getItemHolder().getData(BMDataMaps.LIVING_ARMOUR_DATA);
+        if (data == null) {
+            return;
+        }
+        HolderSet<LivingUpgrade> startingSet = holders.lookupOrThrow(BMRegistries.Keys.LIVING_UPGRADES).get(data.startingUpgrades()).orElseThrow();
+        livingPlate.set(BMDataComponents.UPGRADES, new LivingStats(fromHolderSet(startingSet)));
+        livingPlate.set(BMDataComponents.IS_EVOLVED, false);
     }
 
     public static int recalcPoints(Player player) {
