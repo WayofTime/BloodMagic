@@ -1,0 +1,5 @@
+{
+  "type": "bloodmagic:set_time",
+  "cost": 1000,
+  "day_time": 1000
+}

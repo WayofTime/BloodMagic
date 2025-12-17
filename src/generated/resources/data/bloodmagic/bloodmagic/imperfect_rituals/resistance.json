@@ -1,0 +1,7 @@
+{
+  "type": "bloodmagic:apply_potion",
+  "amplifier": 1,
+  "cost": 1000,
+  "effect_time": 1200,
+  "effect_type": "minecraft:resistance"
+}
