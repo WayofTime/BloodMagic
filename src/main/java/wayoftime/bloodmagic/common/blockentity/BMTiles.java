@@ -45,7 +45,7 @@ public class BMTiles {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 BLOOD_ALTAR_TYPE.get(),
-                (tile, side) -> tile.inv
+                (tile, side) -> tile.getInventory()
         );
         event.registerBlockEntity(
                 Capabilities.FluidHandler.BLOCK,

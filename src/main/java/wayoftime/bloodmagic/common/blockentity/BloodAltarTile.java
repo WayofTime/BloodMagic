@@ -5,25 +5,21 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import org.jetbrains.annotations.Nullable;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.datacomponent.Binding;
+import wayoftime.bloodmagic.common.datacomponent.SoulNetwork;
 import wayoftime.bloodmagic.common.datamap.BMDataMaps;
 import wayoftime.bloodmagic.common.datamap.BloodOrb;
 import wayoftime.bloodmagic.common.event.BloodMagicCraftedEvent;
@@ -42,19 +38,22 @@ import java.util.Optional;
 
 public class BloodAltarTile extends BaseTile implements IFluidHandler {
 
-    public boolean isActive = false;
-    public boolean canFill = false;
-    public BloodAltarRecipe currentRecipe = null;
-    public int cooldownAfterCrafting = 0;
-    public int progress = 0;
-    public int tier = 0;
-    public int ticks;
-    public int inputTank = 0;
-    public int outputTank = 0;
-    public int mainTank = 0;
-    public int chargingTank = 0;
-    public boolean isSignaling = false;
-    public ItemStackHandler inv = new ItemStackHandler(1) {
+    private boolean isActive = false;
+    private boolean canFill = false;
+    private BloodAltarRecipe currentRecipe = null;
+    private int cooldownAfterCrafting = 0;
+    private int progress = 0;
+    private int tier = 0;
+    private int ticks;
+    private int inputTank = 0;
+    private int outputTank = 0;
+    private int mainTank = 0;
+    private int chargingTank = 0;
+    private boolean isSignaling = false;
+    public ItemStackHandler getInventory() {
+        return inv;
+    }
+    private ItemStackHandler inv = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
             super.onContentsChanged(slot);
@@ -63,21 +62,59 @@ public class BloodAltarTile extends BaseTile implements IFluidHandler {
     };
 
     private float capacityMod = 1;
+    public float getCapacityMod() {
+        return capacityMod;
+    }
+
     private int tickRate = 20;
-    private float consumptionMod = 1;
-    private float sacrificeMod = 1;
-    private float selfSacMod = 1;
-    private float dislocationMod = 1;
-    private float orbCapMod = 1;
-    private float chargeAmountMod = 1;
-    private float chargeCapMod = 1;
-    private float efficiencyMod = 1;
+    public int getTickRate() {
+        return tickRate;
+    }
+
+    private float consumptionMod = 0;
+    public float getConsumptionMod() {
+        return 1 + consumptionMod;
+    }
+
+    private float sacrificeMod = 0;
+    public float getSacrificeMod() {
+        return 1 + sacrificeMod;
+    }
+
+    private float selfSacMod = 0;
+    public float getSelfSacMod() {
+        return 1 + selfSacMod;
+    }
+
+    private float dislocationMod = 0;
+    public float getDislocationMod() {
+        return 1 + dislocationMod;
+    }
+
+    private float orbCapMod = 0;
+    public float getOrbCapMod() {
+        return 1 + orbCapMod;
+    }
+
+    private float chargeAmount = 0;
+    public float getChargeAmount() {
+        return chargeAmount;
+    }
+
+    private float chargeCapMod = 0;
+    public float getChargeCapMod() {
+        return 1 + chargeCapMod;
+    }
+    private float efficiencyMod = 0;
+    public float getEfficiencyMod() {
+        return 1 + efficiencyMod;
+    }
 
     public BloodAltarTile(BlockPos pos, BlockState blockState) {
         super(BMTiles.BLOOD_ALTAR_TYPE.get(), pos, blockState);
     }
 
-    public void calculateStats(Map<EnumRuneType, Integer> upgrades) {
+    private void calculateStats(Map<EnumRuneType, Integer> upgrades) {
         capacityMod = (float) ((1D + 0.2D * upgrades.getOrDefault(EnumRuneType.CAPACITY, 0) * Math.pow(1.075, upgrades.getOrDefault(EnumRuneType.AUGMENTED_CAPACITY, 0))));
         tickRate = Math.max(1, 20 - upgrades.getOrDefault(EnumRuneType.ACCELERATION, 0));
         consumptionMod = 0.2F * upgrades.getOrDefault(EnumRuneType.SPEED, 0);
@@ -85,7 +122,7 @@ public class BloodAltarTile extends BaseTile implements IFluidHandler {
         selfSacMod = 0.1F * upgrades.getOrDefault(EnumRuneType.SELF_SACRIFICE, 0);
         dislocationMod = (float) Math.pow(1.2, upgrades.getOrDefault(EnumRuneType.DISPLACEMENT, 0));
         orbCapMod = 0.2F * upgrades.getOrDefault(EnumRuneType.ORB, 0);
-        chargeAmountMod = (10 * upgrades.getOrDefault(EnumRuneType.CHARGING, 0) * (1 + consumptionMod/2));
+        chargeAmount = (10 * upgrades.getOrDefault(EnumRuneType.CHARGING, 0) * (1 + consumptionMod/2));
         chargeCapMod = (float) Math.max(0.5 * capacityMod, 1) * upgrades.getOrDefault(EnumRuneType.CHARGING, 0);
         efficiencyMod = (float) Math.pow(0.85, upgrades.getOrDefault(EnumRuneType.EFFICIENCY, 0));
     }
@@ -124,7 +161,7 @@ public class BloodAltarTile extends BaseTile implements IFluidHandler {
 
             if (!tile.isActive) {
                 tile.progress = 0;
-                int charge = (int) Math.min(tile.mainTank, tile.chargeAmountMod);
+                int charge = (int) Math.min(tile.mainTank, tile.chargeAmount);
                 charge = (int) Math.min(charge, tile.getChargingCapacity() - tile.chargingTank);
                 tile.mainTank -= charge;
                 tile.chargingTank += charge;
@@ -200,7 +237,11 @@ public class BloodAltarTile extends BaseTile implements IFluidHandler {
             }
             if (tile.mainTank > 0) {
                 int available = Math.min(tile.mainTank, (int) (orb.fillRate() * (1 + tile.consumptionMod)));
-                int drained = SoulNetworkHelper.getSoulNetwork(binding.uuid()).add(SoulTicket.block(level, pos, available), (int) (orb.capacity() * (1 + tile.orbCapMod)));
+                SoulNetwork network = SoulNetworkHelper.getSoulNetwork(binding.uuid());
+                if (network == null) {
+                    return;
+                }
+                int drained = network.add(SoulTicket.block(level, pos, available), (int) (orb.capacity() * (1 + tile.orbCapMod)));
                 tile.mainTank -= drained;
                 if (drained > 0) {
                     ((ServerLevel) level).sendParticles(ParticleTypes.WITCH, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 1, 0, 0, 0, 0.001);
@@ -266,6 +307,10 @@ public class BloodAltarTile extends BaseTile implements IFluidHandler {
         return (int) ((float) FluidType.BUCKET_VOLUME * chargeCapMod);
     }
 
+    public boolean getIsSignaling() {
+        return isSignaling;
+    }
+
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
@@ -279,7 +324,7 @@ public class BloodAltarTile extends BaseTile implements IFluidHandler {
         selfSacMod = stats.getFloat("selfsacrifice");
         dislocationMod = stats.getFloat("dislocation");
         orbCapMod = stats.getFloat("orb");
-        chargeAmountMod = stats.getFloat("chargeamount");
+        chargeAmount = stats.getFloat("chargeamount");
         chargeCapMod = stats.getFloat("chargecap");
 
         CompoundTag tanks = tag.getCompound("tanks");
@@ -310,7 +355,7 @@ public class BloodAltarTile extends BaseTile implements IFluidHandler {
         stats.putFloat("selfsacrifice", selfSacMod);
         stats.putFloat("dislocation", dislocationMod);
         stats.putFloat("orb", orbCapMod);
-        stats.putFloat("chargeamount", chargeAmountMod);
+        stats.putFloat("chargeamount", chargeAmount);
         stats.putFloat("chargecap", chargeCapMod);
 
         CompoundTag tanks = new CompoundTag();
