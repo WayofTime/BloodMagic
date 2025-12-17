@@ -52,9 +52,3 @@ Training Bracelet
 - will allow at most the minimum exp required for the selected level for each of the set tomes
  - in deny others mode all "unknown" upgrades (the ones not set) will return the limit of 0 meaning nothing else can be trained
  - in allow others mode all "unknown" upgrades will return the limit of -1 signifying that there is no limit set and can be trained as normal
-
-
-Imperfect Rituals
- - Should be largely the same as they were, one change is zombie is now cobble because coal is used for day
- - cost is down a bit since 5k is a bit much for early game
- - Blocks used to activate are configured by data map, the effect and cost for each using datapack registry, different effect kinds can be added using a MapCodec registry.
