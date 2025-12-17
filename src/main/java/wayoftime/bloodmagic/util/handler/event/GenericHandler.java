@@ -528,59 +528,9 @@ public class GenericHandler
 	public static Map<UUID, Double> posXMap = new HashMap<>();
 	public static Map<UUID, Double> posZMap = new HashMap<>();
 	public static Map<UUID, Integer> foodMap = new HashMap<>();
-	public static Map<UUID, Float> prevFlySpeedMap = new HashMap<>();
 
 	Map<UUID, TargetGoal> goalMap = new HashMap<>();
 	Map<UUID, MeleeAttackGoal> attackGoalMap = new HashMap<>();
-
-	@SubscribeEvent
-	public void onPotionAdded(MobEffectEvent.Added event)
-	{
-		if (event.getEffectInstance().getEffect() == BloodMagicPotions.FLIGHT.get() && event.getEntity() instanceof Player)
-		{
-			Player player = (Player) event.getEntity();
-			player.getAbilities().mayfly = true;
-			if (!prevFlySpeedMap.containsKey(player.getUUID()))
-			{
-				prevFlySpeedMap.put(player.getUUID(), player.getAbilities().getFlyingSpeed());
-			}
-
-			if (event.getEntity().level().isClientSide)
-				player.getAbilities().setFlyingSpeed(getFlySpeedForFlightLevel(event.getEffectInstance().getAmplifier()));
-			player.onUpdateAbilities();
-		}
-
-	}
-
-	@SubscribeEvent
-	public void onPotionExpired(MobEffectEvent.Expired event)
-	{
-		if (event.getEffectInstance().getEffect() == BloodMagicPotions.FLIGHT.get() && event.getEntity() instanceof Player)
-		{
-			((Player) event.getEntity()).getAbilities().mayfly = ((Player) event.getEntity()).isCreative();
-			((Player) event.getEntity()).getAbilities().flying = false;
-
-			if (event.getEntity().level().isClientSide)
-			{
-				((Player) event.getEntity()).getAbilities().setFlyingSpeed(prevFlySpeedMap.getOrDefault((((Player) event.getEntity()).getUUID()), getFlySpeedForFlightLevel(-1)));
-				prevFlySpeedMap.remove(((Player) event.getEntity()).getUUID());
-			}
-
-			((Player) event.getEntity()).onUpdateAbilities();
-		}
-	}
-
-	private float getFlySpeedForFlightLevel(int level)
-	{
-		if (level >= 0)
-		{
-			return 0.05F * (level + 1);
-		} else
-		{
-			// Default fly speed
-			return 0.05F;
-		}
-	}
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onEntityUpdate(LivingEvent.LivingTickEvent event)
@@ -604,22 +554,8 @@ public class GenericHandler
 			}
 		}
 
-		if (event.getEntity() instanceof Player)
+		if (event.getEntity() instanceof Player player)
 		{
-			Player player = (Player) event.getEntity();
-			if (player.hasEffect(BloodMagicPotions.FLIGHT.get()))
-			{
-				player.fallDistance = 0;
-				if (!player.getAbilities().mayfly || !prevFlySpeedMap.containsKey(player.getUUID()))
-				{
-					prevFlySpeedMap.put(player.getUUID(), player.getAbilities().getFlyingSpeed());
-					player.getAbilities().mayfly = true;
-					if (player.level().isClientSide)
-						player.getAbilities().setFlyingSpeed(getFlySpeedForFlightLevel(player.getEffect(BloodMagicPotions.FLIGHT.get()).getAmplifier()));
-					player.onUpdateAbilities();
-				}
-			}
-
 			float percentIncrease = 0;
 
 //			System.out.println("Player's motion: " + player.getMotion().getY() + ", Player's final fall distance: " + player.fallDistance);
