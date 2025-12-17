@@ -60,8 +60,10 @@ public class TileSpectral extends TileBase
 
 	public void revertToFluid()
 	{
-		level.setBlock(worldPosition, storedBlock, 3);
-//		BlockState fluidState = Block.getStateById(meta);
+		if (storedBlock != null)
+		{
+			level.setBlock(worldPosition, storedBlock, 3);
+		}
 	}
 
 	public static boolean isFluidBlock(Block block)
@@ -84,7 +86,10 @@ public class TileSpectral extends TileBase
 	@Override
 	public CompoundTag serialize(CompoundTag tag)
 	{
-		tag.put("BlockState", NbtUtils.writeBlockState(storedBlock));
+		if (storedBlock != null)
+		{
+			tag.put("BlockState", NbtUtils.writeBlockState(storedBlock));
+		}
 		return tag;
 	}
 }

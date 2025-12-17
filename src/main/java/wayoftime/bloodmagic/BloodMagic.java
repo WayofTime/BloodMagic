@@ -6,20 +6,21 @@ import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.ModelEvent.RegisterGeometryLoaders;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
+import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.DispenseFluidContainer;
@@ -29,8 +30,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.javafmlmod.FMLModContainer;
+import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.forgespi.locating.IModFile;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
+import net.minecraftforge.resource.PathPackResources;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import wayoftime.bloodmagic.anointment.Anointment;
@@ -39,8 +44,6 @@ import wayoftime.bloodmagic.client.hud.ElementRegistry;
 import wayoftime.bloodmagic.client.hud.Elements;
 import wayoftime.bloodmagic.client.key.BloodMagicKeyHandler;
 import wayoftime.bloodmagic.client.key.KeyBindingBloodMagic;
-import wayoftime.bloodmagic.client.model.MimicModelLoader;
-import wayoftime.bloodmagic.client.model.SigilHoldingModelLoader;
 import wayoftime.bloodmagic.client.sounds.SoundRegistry;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.*;
@@ -77,6 +80,7 @@ import wayoftime.bloodmagic.structures.ModRoomPools;
 import wayoftime.bloodmagic.util.handler.event.GenericHandler;
 import wayoftime.bloodmagic.util.handler.event.WillHandler;
 
+import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
 
 @Mod("bloodmagic")
@@ -137,6 +141,7 @@ public class BloodMagic {
         // Register the doClientStuff method for modloading
         modBus.addListener(this::doClientStuff);
         modBus.addListener(this::gatherData);
+        modBus.addListener(this::addPackfinders);
         modBus.addListener(this::onRegisterCapabilities);
 
         modBus.addListener(this::registerRecipes);
@@ -236,6 +241,27 @@ public class BloodMagic {
         gen.addProvider(event.includeServer(), new GeneratorEntityTags(output, provider, event.getExistingFileHelper()));
     }
 
+    public void addPackfinders(AddPackFindersEvent event) {
+        if (event.getPackType().equals(PackType.CLIENT_RESOURCES)) {
+            PathPackResources res = new PathPackResources(
+                    rl("translations").toString(),
+                    true,
+                    ModList.get().getModFileById(MODID).getFile().getSecureJar().getPath("packs", "translations")
+            );
+            Pack pack = Pack.readMetaAndCreate(
+                    res.packId(),
+                    Component.translatable("pack.bloodmagic.fan_translations"),
+                    false,
+                    id -> res,
+                    PackType.CLIENT_RESOURCES,
+                    Pack.Position.TOP,
+                    PackSource.BUILT_IN
+            );
+            if (pack != null) {
+                event.addRepositorySource(consumer -> consumer.accept(pack));
+            }
+        }
+    }
 
     private void setup(final FMLCommonSetupEvent event) {
         packetHandler.initialize();
