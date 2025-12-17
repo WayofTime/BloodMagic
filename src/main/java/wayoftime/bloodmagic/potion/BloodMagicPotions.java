@@ -20,7 +20,7 @@ public class BloodMagicPotions {
     public static final RegistryObject<MobEffect> SOUL_FRAY = MOB_EFFECTS.register("soulfray", () -> new PotionBloodMagic(MobEffectCategory.HARMFUL, 0xFFFFFFFF));
     public static final RegistryObject<MobEffect> PLANT_LEECH = MOB_EFFECTS.register("plantleech", PotionPlantLeech::new);
     public static final RegistryObject<MobEffect> SACRIFICIAL_LAMB = MOB_EFFECTS.register("sacrificallamb", PotionSacrificialLamb::new);
-    public static final RegistryObject<MobEffect> FLIGHT = MOB_EFFECTS.register("flight", () -> new PotionBloodMagic(MobEffectCategory.BENEFICIAL, 0x23DDE1));
+    public static final RegistryObject<MobEffect> FLIGHT = MOB_EFFECTS.register("flight", () -> new PotionFlight(MobEffectCategory.BENEFICIAL, 0x23DDE1));
     public static final RegistryObject<MobEffect> SPECTRAL_SIGHT = MOB_EFFECTS.register("spectral_sight", () -> new PotionBloodMagic(MobEffectCategory.BENEFICIAL, 0x2FB813));
     public static final RegistryObject<MobEffect> GRAVITY = MOB_EFFECTS.register("gravity", () -> new PotionBloodMagic(MobEffectCategory.HARMFUL, 0x800080).addAttributeModifier(ForgeMod.ENTITY_GRAVITY.get(), "AF8B6E3F-3328-4C0A-AA66-6BA6BB6DBEF6", 0.5F, AttributeModifier.Operation.MULTIPLY_BASE));
     public static final RegistryObject<MobEffect> HEAVY_HEART = MOB_EFFECTS.register("heavy_heart", PotionHeavyHeart::new);
