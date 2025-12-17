@@ -16,8 +16,8 @@ public class SigilOverrides extends ItemOverrides {
     @Override
     public @Nullable BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed) {
         BakedModel endModel = Minecraft.getInstance().getModelManager().getMissingModel();
-        if (stack.has(BMDataComponents.SIGIL_TYPE)) {
-            ModelResourceLocation modelLoc = BMIdentifiers.ModelLocations.fromSigilKey(stack.get(BMDataComponents.SIGIL_TYPE));
+        if (stack.has(BMDataComponents.SIGIL_EFFECT)) {
+            ModelResourceLocation modelLoc = BMIdentifiers.ModelLocations.fromSigilKey(stack.get(BMDataComponents.SIGIL_EFFECT));
             endModel = Minecraft.getInstance().getModelManager().getModel(modelLoc);
         }
 

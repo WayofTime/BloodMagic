@@ -9,12 +9,12 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.BMIdentifiers.RegistryKeys;
+import wayoftime.bloodmagic.api.sigil.SigilEffect;
 import wayoftime.bloodmagic.common.living.LivingEffectComponents;
 import wayoftime.bloodmagic.common.living.LivingEntityEffect;
 import wayoftime.bloodmagic.common.living.LivingUpgrade;
 import wayoftime.bloodmagic.common.living.LivingValueEffect;
 import wayoftime.bloodmagic.common.ritual.imperfect.ImperfectRitualEffect;
-import wayoftime.bloodmagic.api.sigil.SigilType;
 import wayoftime.bloodmagic.common.sigil.SigilEffects;
 
 public class BMRegistries {
@@ -45,9 +45,9 @@ public class BMRegistries {
                 builder -> builder.sync(true)
         );
         event.dataPackRegistry(
-                RegistryKeys.SIGIL_TYPES,
-                SigilType.CODEC,
-                SigilType.CODEC,
+                RegistryKeys.SIGIL_EFFECT,
+                SigilEffect.CODEC,
+                SigilEffect.CODEC,
                 builder -> builder.sync(true)
         );
     }

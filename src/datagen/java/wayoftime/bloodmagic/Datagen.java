@@ -36,7 +36,7 @@ public class Datagen {
                 .add(BMRegistries.Keys.ALTAR_TIER_KEY, AltarTiers::bootstrap)
                 .add(BMRegistries.Keys.LIVING_UPGRADES, LivingUpgrades::bootstrap)
                 .add(BMRegistries.Keys.IMPERFECT_RITUALS, ImperfectRitualData::effects)
-                .add(RegistryKeys.SIGIL_TYPES, SigilData::sigilTypes)
+                .add(RegistryKeys.SIGIL_EFFECT, SigilData::sigilTypes)
         );
 
         ProviderHelper helper = new ProviderHelper(fileHelper);

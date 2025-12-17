@@ -7,7 +7,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.sigil.SigilEffect;
-import wayoftime.bloodmagic.api.sigil.SigilType;
 
 public class BMIdentifiers {
     public static class ImperfectRituals {
@@ -21,16 +20,16 @@ public class BMIdentifiers {
 
     public static class RegistryKeys {
         public static final ResourceKey<Registry<MapCodec<? extends SigilEffect>>> SIGIL_EFFECT_TYPES = ResourceKey.createRegistryKey(bm("sigil_effect_type"));
-        public static final ResourceKey<Registry<SigilType>> SIGIL_TYPES = ResourceKey.createRegistryKey(bm("sigil"));
+        public static final ResourceKey<Registry<SigilEffect>> SIGIL_EFFECT = ResourceKey.createRegistryKey(bm("sigil"));
     }
 
     public static class Sigils {
-        public static final ResourceKey<SigilType> DIVINATION = ResourceKey.create(RegistryKeys.SIGIL_TYPES, bm("divination"));
-        public static final ResourceKey<SigilType> SEER = ResourceKey.create(RegistryKeys.SIGIL_TYPES, bm("seer"));
-        public static final ResourceKey<SigilType> LAVA = ResourceKey.create(RegistryKeys.SIGIL_TYPES, bm("lava"));
-        public static final ResourceKey<SigilType> WATER = ResourceKey.create(RegistryKeys.SIGIL_TYPES, bm("water"));
-        public static final ResourceKey<SigilType> VOID = ResourceKey.create(RegistryKeys.SIGIL_TYPES, bm("void"));
-        public static final ResourceKey<SigilType> MINER = ResourceKey.create(RegistryKeys.SIGIL_TYPES, bm("miner"));
+        public static final ResourceKey<SigilEffect> DIVINATION = ResourceKey.create(RegistryKeys.SIGIL_EFFECT, bm("divination"));
+        public static final ResourceKey<SigilEffect> SEER = ResourceKey.create(RegistryKeys.SIGIL_EFFECT, bm("seer"));
+        public static final ResourceKey<SigilEffect> LAVA = ResourceKey.create(RegistryKeys.SIGIL_EFFECT, bm("lava"));
+        public static final ResourceKey<SigilEffect> WATER = ResourceKey.create(RegistryKeys.SIGIL_EFFECT, bm("water"));
+        public static final ResourceKey<SigilEffect> VOID = ResourceKey.create(RegistryKeys.SIGIL_EFFECT, bm("void"));
+        public static final ResourceKey<SigilEffect> MINER = ResourceKey.create(RegistryKeys.SIGIL_EFFECT, bm("miner"));
     }
 
     public static class ItemProperties {
@@ -49,7 +48,7 @@ public class BMIdentifiers {
         public static final ModelResourceLocation VOID = fromSigilKey(Sigils.VOID);
         public static final ModelResourceLocation MINER = fromSigilKey(Sigils.MINER);
 
-        public static ModelResourceLocation fromSigilKey(ResourceKey<SigilType> key) {
+        public static ModelResourceLocation fromSigilKey(ResourceKey<SigilEffect> key) {
             return ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(key.location().getNamespace(), "item/sigil_" + key.location().getPath()));
         }
     }

@@ -1,11 +1,4 @@
 {
-  "is_activatable": false,
-  "refresh_cost": 0,
-  "sigil_effect": {
-    "type": "bloodmagic:divination_effect",
-    "is_advanced": true
-  },
-  "use_air_cost": 0,
-  "use_block_cost": 0,
-  "use_entity_cost": 0
+  "type": "bloodmagic:divination_effect",
+  "is_advanced": true
 }

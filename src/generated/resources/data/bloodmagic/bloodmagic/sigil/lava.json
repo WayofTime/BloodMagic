@@ -1,12 +1,6 @@
 {
-  "is_activatable": false,
-  "refresh_cost": 0,
-  "sigil_effect": {
-    "type": "bloodmagic:fluid_place_effect",
-    "fluid_type": "minecraft:lava",
-    "tank_fill_amount": 10000
-  },
-  "use_air_cost": 0,
-  "use_block_cost": 1000,
-  "use_entity_cost": 0
+  "type": "bloodmagic:fluid_place_effect",
+  "fluid_type": "minecraft:lava",
+  "success_cost": 1000,
+  "tank_fill_amount": 10000
 }

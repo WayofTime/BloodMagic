@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.item;
+package wayoftime.bloodmagic.common.item;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.RegistryAccess;
@@ -18,10 +18,10 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.api.BMIdentifiers;
 import wayoftime.bloodmagic.api.BMIdentifiers.Sigils;
+import wayoftime.bloodmagic.api.sigil.SigilEffect;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.datacomponent.Binding;
 import wayoftime.bloodmagic.common.datacomponent.SoulNetwork;
-import wayoftime.bloodmagic.api.sigil.SigilType;
 import wayoftime.bloodmagic.util.SoulTicket;
 import wayoftime.bloodmagic.util.helper.SoulNetworkHelper;
 
@@ -34,15 +34,15 @@ public class SigilItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        if (!stack.has(BMDataComponents.SIGIL_TYPE)) {
-            tooltipComponents.add(Component.translatable("This sigil has no type set! It will work as a Divination Sigil but you should add a sigil_type data component"));
+        if (!stack.has(BMDataComponents.SIGIL_EFFECT)) {
+            tooltipComponents.add(Component.translatable("This sigil has no effect set! It will work as a Divination Sigil but you should add a sigil_effect data component"));
         }
-        ResourceKey<SigilType> key = stack.getOrDefault(BMDataComponents.SIGIL_TYPE, Sigils.DIVINATION);
+        ResourceKey<SigilEffect> key = stack.getOrDefault(BMDataComponents.SIGIL_EFFECT, Sigils.DIVINATION);
         tooltipComponents.add(Component.translatable("tooltip.bloodmagic.sigil." + key.location().getPath()));
-        SigilType type = context.level().registryAccess().registryOrThrow(BMIdentifiers.RegistryKeys.SIGIL_TYPES).getOrThrow(key);
-        if (type.isActivatable()) {
+        SigilEffect effect = context.level().registryAccess().registryOrThrow(BMIdentifiers.RegistryKeys.SIGIL_EFFECT).getOrThrow(key);
+        if (effect.isActivatable()) {
             boolean isActive = stack.has(BMDataComponents.SIGIL_ACTIVE);
-            tooltipComponents.add(Component.translatable("tooltip.bloodmagic.sigil." + (isActive ? "activated" : "deactivated")).withStyle(ChatFormatting.GRAY));
+            tooltipComponents.add(Component.translatable(effect.getActiveTooltip(isActive)).withStyle(ChatFormatting.GRAY));
         }
 
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
@@ -50,17 +50,17 @@ public class SigilItem extends Item {
 
     @Override
     public String getDescriptionId(ItemStack stack) {
-        if (!stack.has(BMDataComponents.SIGIL_TYPE)) {
+        if (!stack.has(BMDataComponents.SIGIL_EFFECT)) {
             return "item.bloodmagic.sigil.invalid";
         } else {
-            String name = stack.getOrDefault(BMDataComponents.SIGIL_TYPE, BMIdentifiers.Sigils.DIVINATION).location().getPath();
+            String name = stack.getOrDefault(BMDataComponents.SIGIL_EFFECT, BMIdentifiers.Sigils.DIVINATION).location().getPath();
             return "item.bloodmagic.sigil." + name;
         }
     }
 
-    public static SigilType getType(ItemStack stack, RegistryAccess registries) {
-        ResourceKey<SigilType> key = stack.getOrDefault(BMDataComponents.SIGIL_TYPE, BMIdentifiers.Sigils.DIVINATION);
-        return registries.registryOrThrow(BMIdentifiers.RegistryKeys.SIGIL_TYPES).getOrThrow(key);
+    public static SigilEffect getEffect(ItemStack stack, RegistryAccess registries) {
+        ResourceKey<SigilEffect> key = stack.getOrDefault(BMDataComponents.SIGIL_EFFECT, BMIdentifiers.Sigils.DIVINATION);
+        return registries.registryOrThrow(BMIdentifiers.RegistryKeys.SIGIL_EFFECT).getOrThrow(key);
     }
 
     @Override
@@ -84,10 +84,10 @@ public class SigilItem extends Item {
             return InteractionResult.sidedSuccess(true);
         }
 
-        SigilType type = getType(stack, context.getLevel().registryAccess());
-        boolean result = type.effect().useOnBlock(stack, player, context);
-        if (result) {
-            network.syphonAndDamage(SoulTicket.item(stack, player.level(), player, type.blockCost()), player);
+        SigilEffect effect = getEffect(stack, context.getLevel().registryAccess());
+        int cost = effect.useOnBlock(stack, player, context);
+        if (cost > 0) {
+            network.syphonAndDamage(SoulTicket.item(stack, player.level(), player, cost), player);
             return InteractionResult.sidedSuccess(false);
         }
 
@@ -110,8 +110,8 @@ public class SigilItem extends Item {
             return InteractionResultHolder.pass(stack);
         }
 
-        SigilType type = getType(stack, level.registryAccess());
-        if (type.isActivatable() && player.isShiftKeyDown()) {
+        SigilEffect effect = getEffect(stack, level.registryAccess());
+        if (effect.isActivatable() && player.isShiftKeyDown()) {
             if (stack.has(BMDataComponents.SIGIL_ACTIVE)) {
                 stack.remove(BMDataComponents.SIGIL_ACTIVE);
             } else {
@@ -125,9 +125,9 @@ public class SigilItem extends Item {
             return InteractionResultHolder.sidedSuccess(stack, true);
         }
 
-        boolean result = type.effect().useOnAir(stack, player, usedHand);
-        if (result) {
-            network.syphonAndDamage(SoulTicket.item(stack, player.level(), player, type.airCost()), player);
+        int cost = effect.useOnAir(stack, player, usedHand);
+        if (cost > 0) {
+            network.syphonAndDamage(SoulTicket.item(stack, player.level(), player, cost), player);
             return InteractionResultHolder.sidedSuccess(stack, false);
         }
 
@@ -153,10 +153,10 @@ public class SigilItem extends Item {
             return InteractionResult.sidedSuccess(true);
         }
 
-        SigilType type = getType(stack, player.level().registryAccess());
-        boolean result = type.effect().useOnEntity(stack, player, interactionTarget);
-        if (result) {
-            network.syphonAndDamage(SoulTicket.item(stack, player.level(), player, type.entityCost()), player);
+        SigilEffect effect = getEffect(stack, player.level().registryAccess());
+        int cost = effect.useOnEntity(stack, player, interactionTarget);
+        if (cost > 0) {
+            network.syphonAndDamage(SoulTicket.item(stack, player.level(), player, cost), player);
             return InteractionResult.sidedSuccess(true);
         }
 
@@ -187,12 +187,12 @@ public class SigilItem extends Item {
         }
 
         if (stack.has(BMDataComponents.SIGIL_ACTIVE)) {
-            SigilType type = getType(stack, level.registryAccess());
+            SigilEffect effect = getEffect(stack, level.registryAccess());
+            int cost = effect.activeTick(stack, level, player); // slotId and isSelected? I dont think those are relevant ever for a sigil
             if (player.tickCount % 100 == 0) { // this could be cheesed by switching it off just before the damage would occur and back on just after. not sure if this is an actual issue
                                                // if it is, switch to a data component for tracking time
-                network.syphonAndDamage(SoulTicket.item(stack, level, player, type.refreshCost()), player);
+                network.syphonAndDamage(SoulTicket.item(stack, level, player, cost), player);
             }
-            type.effect().activeTick(stack, level, player); // slotId and isSelected? I dont think those are relevant ever for a sigil
         }
     }
 }

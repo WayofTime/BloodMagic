@@ -23,23 +23,33 @@ public interface SigilEffect {
 
     MapCodec<? extends SigilEffect> codec();
 
-    default void activeTick(ItemStack sigil, Level level, Player player) {}
+    default String getActiveTooltip(boolean isActive) {
+        return "tooltip.bloodmagic.sigil." + (isActive ? "activated" : "deactivated");
+    }
 
-    default boolean useOnAir(ItemStack sigil, Player player, InteractionHand usedHand) {
+    default boolean isActivatable() {
         return false;
     }
 
-    default boolean useOnBlock(ItemStack sigil, Player player, UseOnContext context) {
-        return false;
+    default int activeTick(ItemStack sigil, Level level, Player player) {
+        return 0;
     }
 
-    default boolean useOnEntity(ItemStack sigil, Player player, LivingEntity target) {
-        return false;
+    default int useOnAir(ItemStack sigil, Player player, InteractionHand usedHand) {
+        return 0;
+    }
+
+    default int useOnBlock(ItemStack sigil, Player player, UseOnContext context) {
+        return 0;
+    }
+
+    default int useOnEntity(ItemStack sigil, Player player, LivingEntity target) {
+        return 0;
     }
 
     // TODO implement these. Need Arrays first and figure out the "rules" for them
-    default boolean arrayTick(ItemStack sigil, Level level, BlockPos arrayPos) {
-        return false;
+    default int arrayTick(ItemStack sigil, Level level, BlockPos arrayPos) {
+        return 0;
     }
 
     default boolean hasArrayEffect() {

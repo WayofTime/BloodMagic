@@ -21,36 +21,37 @@ import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import wayoftime.bloodmagic.api.sigil.SigilEffect;
 
-public record FluidRemoveEffect(int removeAmount) implements SigilEffect {
+public record FluidRemoveEffect(int removeAmount, int cost) implements SigilEffect {
     public static final MapCodec<FluidRemoveEffect> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
-            Codec.INT.fieldOf("remove_amount").forGetter(FluidRemoveEffect::removeAmount)
+            Codec.INT.fieldOf("remove_amount").forGetter(FluidRemoveEffect::removeAmount),
+            Codec.INT.fieldOf("success_cost").forGetter(FluidRemoveEffect::cost)
     ).apply(builder, FluidRemoveEffect::new));
 
     @Override
-    public boolean useOnBlock(ItemStack sigil, Player player, UseOnContext context) {
+    public int useOnBlock(ItemStack sigil, Player player, UseOnContext context) {
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
         IFluidHandler handler = level.getCapability(Capabilities.FluidHandler.BLOCK, pos, context.getClickedFace());
         if (handler != null) {
             FluidStack drained = handler.drain(removeAmount, IFluidHandler.FluidAction.EXECUTE);
             if (drained.getAmount() > 0) {
-                return true;
+                return cost;
             }
         }
 
         FluidActionResult result = FluidUtil.tryPickUpFluid(Items.BUCKET.getDefaultInstance(), player, level, pos.relative(context.getClickedFace()), context.getClickedFace().getOpposite());
-        return result.isSuccess();
+        return result.isSuccess() ? cost : 0;
     }
 
     @Override
-    public boolean useOnAir(ItemStack sigil, Player player, InteractionHand usedHand) {
+    public int useOnAir(ItemStack sigil, Player player, InteractionHand usedHand) {
         BlockHitResult lookResult = Item.getPlayerPOVHitResult(player.level(), player, ClipContext.Fluid.SOURCE_ONLY);
         if (lookResult.getType() != HitResult.Type.BLOCK) {
-            return false;
+            return 0;
         }
 
         FluidActionResult fluidResult = FluidUtil.tryPickUpFluid(Items.BUCKET.getDefaultInstance(), player, player.level(), lookResult.getBlockPos(), lookResult.getDirection());
-        return fluidResult.isSuccess();
+        return fluidResult.isSuccess() ? cost : 0;
     }
 
     @Override

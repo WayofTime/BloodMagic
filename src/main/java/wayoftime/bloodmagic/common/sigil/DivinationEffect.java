@@ -26,11 +26,11 @@ public record DivinationEffect(boolean isAdvanced) implements SigilEffect {
     ).apply(builder, DivinationEffect::new));
 
     @Override
-    public boolean useOnAir(ItemStack sigil, Player player, InteractionHand usedHand) {
+    public int useOnAir(ItemStack sigil, Player player, InteractionHand usedHand) {
         Binding binding = sigil.getOrDefault(BMDataComponents.BINDING, Binding.EMPTY);
         if (binding.isEmpty()) {
             ChatUtil.sendChatNoSpam(player, List.of(Component.translatable("chat.bloodmagic.item_not_bound")));
-            return false;
+            return 0;
         }
 
         List<Component> send = new ArrayList<>();
@@ -41,7 +41,7 @@ public record DivinationEffect(boolean isAdvanced) implements SigilEffect {
 
         ChatUtil.sendChatNoSpam(player, send);
 
-        return true;
+        return 0;
     }
 
     private static Component translateAltar(String thing, Object... args) {
@@ -49,7 +49,7 @@ public record DivinationEffect(boolean isAdvanced) implements SigilEffect {
     }
 
     @Override
-    public boolean useOnBlock(ItemStack sigil, Player player, UseOnContext context) {
+    public int useOnBlock(ItemStack sigil, Player player, UseOnContext context) {
         Level level = context.getLevel();
         BlockEntity be = level.getBlockEntity(context.getClickedPos());
 
@@ -63,12 +63,12 @@ public record DivinationEffect(boolean isAdvanced) implements SigilEffect {
             }
 
             ChatUtil.sendChatNoSpam(player, send);
-            return true;
+            return 0;
         }
 
         // TODO IncenseAltarTile impl
 
-        return false;
+        return 0;
     }
 
     @Override

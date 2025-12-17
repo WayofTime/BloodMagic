@@ -13,6 +13,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.BMIdentifiers.Sigils;
+import wayoftime.bloodmagic.api.sigil.SigilEffect;
 import wayoftime.bloodmagic.common.block.BMBlocks;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.datacomponent.EnumWillType;
@@ -22,7 +23,6 @@ import wayoftime.bloodmagic.common.item.BMItems;
 import wayoftime.bloodmagic.common.living.LivingHelper;
 import wayoftime.bloodmagic.common.living.LivingUpgrade;
 import wayoftime.bloodmagic.common.registry.BMRegistries;
-import wayoftime.bloodmagic.api.sigil.SigilType;
 import wayoftime.bloodmagic.common.tag.BMTags;
 
 import java.util.List;
@@ -63,10 +63,10 @@ public class BMTabs {
         // TODO cant seem to get all entries for a given registry from here, either make a tag with all sigils to add here or do it manually
         ItemStack sigilStack = new ItemStack(BMItems.SIGIL);
         // for now, this is the order of them appearing in the tab
-        List<ResourceKey<SigilType>> displaySigils = List.of(Sigils.DIVINATION, Sigils.SEER, Sigils.LAVA, Sigils.WATER, Sigils.VOID, Sigils.MINER);
+        List<ResourceKey<SigilEffect>> displaySigils = List.of(Sigils.DIVINATION, Sigils.SEER, Sigils.LAVA, Sigils.WATER, Sigils.VOID, Sigils.MINER);
         displaySigils.forEach(key -> {
             ItemStack tmp = sigilStack.copy();
-            tmp.set(BMDataComponents.SIGIL_TYPE, key);
+            tmp.set(BMDataComponents.SIGIL_EFFECT, key);
             tab.accept(tmp);
         });
     }

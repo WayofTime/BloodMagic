@@ -1,11 +1,5 @@
 {
-  "is_activatable": false,
-  "refresh_cost": 0,
-  "sigil_effect": {
-    "type": "bloodmagic:fluid_remove_effect",
-    "remove_amount": 1000
-  },
-  "use_air_cost": 50,
-  "use_block_cost": 50,
-  "use_entity_cost": 0
+  "type": "bloodmagic:fluid_remove_effect",
+  "remove_amount": 1000,
+  "success_cost": 50
 }

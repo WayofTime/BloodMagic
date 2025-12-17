@@ -9,9 +9,9 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.BMIdentifiers;
 import wayoftime.bloodmagic.api.BMIdentifiers.Sigils;
+import wayoftime.bloodmagic.api.sigil.SigilEffect;
 import wayoftime.bloodmagic.common.datacomponent.EnumWillType;
 import wayoftime.bloodmagic.common.item.BMItems;
-import wayoftime.bloodmagic.api.sigil.SigilType;
 
 import java.util.function.Supplier;
 
@@ -52,14 +52,14 @@ public class BMItemModelProvider extends ItemModelProvider {
         createToggle(Sigils.MINER);
     }
 
-    private void createStandard(ResourceKey<SigilType> key) {
+    private void createStandard(ResourceKey<SigilEffect> key) {
         String path = key.location().getPath();
         getBuilder("sigil_" + path)
                 .parent(new ModelFile.UncheckedModelFile("item/handheld"))
                 .texture("layer0", modLoc("item/sigil_" + path));
     }
 
-    private void createToggle(ResourceKey<SigilType> key) {
+    private void createToggle(ResourceKey<SigilEffect> key) {
         String path = key.location().getPath();
         getBuilder("sigil_" + path)
                 .parent(new ModelFile.UncheckedModelFile("item/handheld"))

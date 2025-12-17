@@ -19,14 +19,15 @@ import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import wayoftime.bloodmagic.api.sigil.SigilEffect;
 
-public record FluidPlaceEffect(Holder<Fluid> fluid, int tankFillAmount) implements SigilEffect {
+public record FluidPlaceEffect(Holder<Fluid> fluid, int tankFillAmount, int cost) implements SigilEffect {
     public static final MapCodec<FluidPlaceEffect> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
             BuiltInRegistries.FLUID.holderByNameCodec().fieldOf("fluid_type").forGetter(FluidPlaceEffect::fluid),
-            Codec.INT.fieldOf("tank_fill_amount").forGetter(FluidPlaceEffect::tankFillAmount)
+            Codec.INT.fieldOf("tank_fill_amount").forGetter(FluidPlaceEffect::tankFillAmount),
+            Codec.INT.fieldOf("success_cost").forGetter(FluidPlaceEffect::cost)
     ).apply(builder, FluidPlaceEffect::new));
 
     @Override
-    public boolean useOnBlock(ItemStack sigil, Player player, UseOnContext context) {
+    public int useOnBlock(ItemStack sigil, Player player, UseOnContext context) {
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
         FluidStack toFill = new FluidStack(fluid, tankFillAmount);
@@ -34,12 +35,12 @@ public record FluidPlaceEffect(Holder<Fluid> fluid, int tankFillAmount) implemen
         if (handler != null) {
             int amount = handler.fill(toFill, IFluidHandler.FluidAction.EXECUTE);
             if (amount > 0) {
-                return true;
+                return cost;
             }
         }
 
         FluidActionResult result = FluidUtil.tryPlaceFluid(player, level, context.getHand(), pos.relative(context.getClickedFace()), fluid.value().getBucket().getDefaultInstance(), new FluidStack(fluid, FluidType.BUCKET_VOLUME));
-        return result.isSuccess();
+        return result.isSuccess() ? cost : 0;
     }
 
     @Override

@@ -6,7 +6,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.api.item.SigilItem;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 
 import java.util.function.Supplier;
