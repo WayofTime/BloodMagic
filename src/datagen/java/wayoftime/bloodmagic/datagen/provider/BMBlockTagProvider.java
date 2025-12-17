@@ -60,7 +60,6 @@ public class BMBlockTagProvider extends BlockTagsProvider {
                 .add(BMBlocks.BLOOD_ALTAR.block().getKey(), BMBlocks.BLOOD_TANK.block().getKey());
 
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(BMBlocks.IMPERFECT_RITUAL_BLOCK.block().getKey())
                 .addAll(BlockGroups.BLOODSTONE)
                 .addAll(BlockGroups.HELLFORGED_BLOCK)
                 .addAll(BlockGroups.CRYSTAL_CLUSTER)
@@ -68,7 +67,6 @@ public class BMBlockTagProvider extends BlockTagsProvider {
                 .addAll(BlockGroups.RUNE_T2);
 
         this.tag(BlockTags.NEEDS_STONE_TOOL)
-                .add(BMBlocks.IMPERFECT_RITUAL_BLOCK.block().getKey())
                 .addAll(BlockGroups.BLOODSTONE)
                 .addAll(BlockGroups.CRYSTAL_CLUSTER)
                 .addAll(BlockGroups.RUNE_T1);

@@ -4,6 +4,7 @@ import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.server.packs.PackType;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -11,7 +12,6 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 import wayoftime.bloodmagic.common.registry.BMRegistries;
 import wayoftime.bloodmagic.datagen.content.AltarTiers;
 import wayoftime.bloodmagic.datagen.content.BloodyDamageSources;
-import wayoftime.bloodmagic.datagen.content.ImperfectRitualData;
 import wayoftime.bloodmagic.datagen.content.LivingUpgrades;
 import wayoftime.bloodmagic.datagen.provider.*;
 
@@ -30,10 +30,9 @@ public class Datagen {
         event.createProvider(BMLanguageProvider::new);
 
         event.createDatapackRegistryObjects(new RegistrySetBuilder()
-                .add(Registries.DAMAGE_TYPE, BloodyDamageSources::bootstrap)
-                .add(BMRegistries.Keys.ALTAR_TIER_KEY, AltarTiers::bootstrap)
-                .add(BMRegistries.Keys.LIVING_UPGRADES, LivingUpgrades::bootstrap)
-                .add(BMRegistries.Keys.IMPERFECT_RITUALS, ImperfectRitualData::effects)
+            .add(Registries.DAMAGE_TYPE, BloodyDamageSources::bootstrap)
+            .add(BMRegistries.Keys.ALTAR_TIER_KEY, AltarTiers::bootstrap)
+            .add(BMRegistries.Keys.LIVING_UPGRADES, LivingUpgrades::bootstrap)
         );
 
         ProviderHelper helper = new ProviderHelper(fileHelper);
