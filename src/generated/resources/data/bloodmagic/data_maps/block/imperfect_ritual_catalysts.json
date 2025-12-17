@@ -1,0 +1,8 @@
+{
+  "values": {
+    "#c:cobblestones/mossy": "bloodmagic:zombie",
+    "#c:storage_blocks/coal": "bloodmagic:day",
+    "#c:storage_blocks/lapis": "bloodmagic:night",
+    "minecraft:bedrock": "bloodmagic:resistance"
+  }
+}

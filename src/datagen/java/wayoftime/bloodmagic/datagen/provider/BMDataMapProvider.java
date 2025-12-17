@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.datagen.provider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.DataMapProvider;
+import wayoftime.bloodmagic.datagen.content.ImperfectRitualData;
 import wayoftime.bloodmagic.datagen.content.datamap.BloodOrbStats;
 import wayoftime.bloodmagic.datagen.content.datamap.BloodRuneData;
 import wayoftime.bloodmagic.datagen.content.datamap.TartaricGemMax;
@@ -19,5 +20,6 @@ public class BMDataMapProvider extends DataMapProvider {
         TartaricGemMax.bootstrap(this::builder);
         BloodOrbStats.bootstrap(this::builder);
         BloodRuneData.bootstrap(this::builder);
+        ImperfectRitualData.dataMap(this::builder);
     }
 }
