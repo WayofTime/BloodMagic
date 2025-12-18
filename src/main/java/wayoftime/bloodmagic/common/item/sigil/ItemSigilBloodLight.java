@@ -15,6 +15,7 @@ import wayoftime.bloodmagic.core.data.SoulNetwork;
 import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.entity.projectile.EntityBloodLight;
 import wayoftime.bloodmagic.util.Constants;
+import wayoftime.bloodmagic.util.helper.BlockProtectionHelper;
 import wayoftime.bloodmagic.util.helper.NBTHelper;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
@@ -61,14 +62,16 @@ public class ItemSigilBloodLight extends ItemSigilBase
 
 			if (world.isEmptyBlock(blockPos))
 			{
-				world.setBlockAndUpdate(blockPos, BloodMagicBlocks.BLOOD_LIGHT.get().defaultBlockState());
-				if (!world.isClientSide)
+				if (BlockProtectionHelper.tryPlaceBlock(world, blockPos, BloodMagicBlocks.BLOOD_LIGHT.get().defaultBlockState(), player))
 				{
-					SoulNetwork network = NetworkHelper.getSoulNetwork(getBinding(stack));
-					network.syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed()));
+					if (!world.isClientSide)
+					{
+						SoulNetwork network = NetworkHelper.getSoulNetwork(getBinding(stack));
+						network.syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed()));
+					}
+					resetCooldown(stack);
+					player.swing(hand);
 				}
-				resetCooldown(stack);
-				player.swing(hand);
 				return super.use(world, player, hand);
 			}
 		} else

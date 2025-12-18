@@ -13,6 +13,7 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.wrappers.BlockWrapper;
+import wayoftime.bloodmagic.util.helper.BlockProtectionHelper;
 
 public abstract class ItemSigilFluidBase extends ItemSigilBase
 {
@@ -101,6 +102,13 @@ public abstract class ItemSigilFluidBase extends ItemSigilBase
 	{
 		FluidStack resource = sigilFluid;
 		BlockState state = sigilFluid.getFluid().getFluidType().getBlockForFluidState(world, blockPos, sigilFluid.getFluid().defaultFluidState());
+
+		// Check protection before placing fluid
+		if (!BlockProtectionHelper.canPlaceBlock(world, blockPos, player))
+		{
+			return false;
+		}
+
 		BlockWrapper wrapper = new BlockWrapper(state, world, blockPos);
 
 		if (world.dimensionType().ultraWarm() && resource.getFluid().getFluidType().isVaporizedOnPlacement(world, blockPos, resource))

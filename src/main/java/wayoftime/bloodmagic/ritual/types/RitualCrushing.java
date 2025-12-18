@@ -25,6 +25,7 @@ import wayoftime.bloodmagic.common.block.BlockMasterRitualStone;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.ritual.*;
 import wayoftime.bloodmagic.util.Utils;
+import wayoftime.bloodmagic.util.helper.BlockProtectionHelper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -260,17 +261,19 @@ public class RitualCrushing extends Ritual
 				}
 			}
 
-			world.destroyBlock(newPos, false);
-			masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
-			hasOperated = true;
-
-			if (consumeRawWill)
+			if (BlockProtectionHelper.tryBreakBlockNoDrops(world, newPos, masterRitualStone.getOwner()))
 			{
-				rawDrain += rawWillDrain;
-				rawWill -= rawWillDrain;
-			}
+				masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
+				hasOperated = true;
 
-			break;
+				if (consumeRawWill)
+				{
+					rawDrain += rawWillDrain;
+					rawWill -= rawWillDrain;
+				}
+
+				break;
+			}
 		}
 
 //		if (hasOperated && tile != null && vengefulWill >= vengefulWillDrain)

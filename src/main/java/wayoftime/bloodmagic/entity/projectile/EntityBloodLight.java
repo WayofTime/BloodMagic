@@ -23,6 +23,7 @@ import net.minecraftforge.network.NetworkHooks;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
+import wayoftime.bloodmagic.util.helper.BlockProtectionHelper;
 
 public class EntityBloodLight extends ThrowableItemProjectile
 {
@@ -64,8 +65,11 @@ public class EntityBloodLight extends ThrowableItemProjectile
 			BlockState blockstate = this.level().getBlockState(blockpos);
 			if (blockstate.isAir() || blockstate.is(BlockTags.FIRE) || blockstate.canBeReplaced() || blockstate.liquid())
 			{
-				this.getCommandSenderWorld().setBlockAndUpdate(blockpos, BloodMagicBlocks.BLOOD_LIGHT.get().defaultBlockState());
-				this.removeAfterChangingDimensions();
+				// Check block protection before placing
+				if (BlockProtectionHelper.tryPlaceBlock(this.level(), blockpos, BloodMagicBlocks.BLOOD_LIGHT.get().defaultBlockState(), this.getOwner()))
+				{
+					this.removeAfterChangingDimensions();
+				}
 			}
 		}
 	}

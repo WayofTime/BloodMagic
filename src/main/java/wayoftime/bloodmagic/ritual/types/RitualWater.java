@@ -22,6 +22,7 @@ import wayoftime.bloodmagic.ritual.IMasterRitualStone;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.ritual.RitualRegister;
+import wayoftime.bloodmagic.util.helper.BlockProtectionHelper;
 
 @RitualRegister("water")
 public class RitualWater extends Ritual
@@ -64,8 +65,10 @@ public class RitualWater extends Ritual
 		{
 			if (world.isEmptyBlock(newPos))
 			{
-				world.setBlockAndUpdate(newPos, Blocks.WATER.defaultBlockState());
-				totalEffects++;
+				if (BlockProtectionHelper.tryPlaceBlock(world, newPos, Blocks.WATER.defaultBlockState(), masterRitualStone.getOwner()))
+				{
+					totalEffects++;
+				}
 			}
 
 			if (totalEffects >= maxEffects)

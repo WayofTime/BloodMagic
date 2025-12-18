@@ -2,6 +2,9 @@ package wayoftime.bloodmagic.ritual.harvest;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
+
+import javax.annotation.Nullable;
 
 import net.minecraft.world.level.block.AttachedStemBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -16,6 +19,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
+import wayoftime.bloodmagic.util.helper.BlockProtectionHelper;
 
 /**
  * Harvest handler for crops with stems such as Pumpkins and Melons. Rotation
@@ -38,7 +42,7 @@ public class HarvestHandlerStem implements IHarvestHandler
 	}
 
 	@Override
-	public boolean harvest(Level world, BlockPos pos, BlockState state, List<ItemStack> drops)
+	public boolean harvest(Level world, BlockPos pos, BlockState state, List<ItemStack> drops, @Nullable UUID ownerUUID)
 	{
 		Direction cropDir = state.getValue(AttachedStemBlock.FACING);
 
@@ -52,11 +56,14 @@ public class HarvestHandlerStem implements IHarvestHandler
 			{
 				if (registeredCrop == probableCrop)
 				{
+					if (!BlockProtectionHelper.tryBreakBlockNoDrops(world, cropPos, ownerUUID))
+					{
+						return false;
+					}
 					LootParams.Builder lootBuilder = new LootParams.Builder((ServerLevel) world);
 					Vec3 blockCenter = new Vec3(cropPos.getX() + 0.5, cropPos.getY() + 0.5, cropPos.getZ() + 0.5);
 					List<ItemStack> blockDrops = registeredCrop.getDrops(lootBuilder.withParameter(LootContextParams.ORIGIN, blockCenter).withParameter(LootContextParams.TOOL, mockHoe));
 					drops.addAll(blockDrops);
-					world.destroyBlock(cropPos, false);
 					return true;
 				}
 			}

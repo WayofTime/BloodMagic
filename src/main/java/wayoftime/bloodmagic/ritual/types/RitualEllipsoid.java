@@ -20,6 +20,7 @@ import wayoftime.bloodmagic.ritual.IMasterRitualStone;
 import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.ritual.RitualRegister;
+import wayoftime.bloodmagic.util.helper.BlockProtectionHelper;
 
 @RitualRegister("ellipsoid")
 public class RitualEllipsoid extends Ritual
@@ -138,7 +139,11 @@ public class RitualEllipsoid extends Ritual
 								}
 
 								BlockState placeState = Block.byItem(itemHandler.getStackInSlot(blockSlot).getItem()).defaultBlockState();
-								world.setBlockAndUpdate(newPos, placeState);
+								if (!BlockProtectionHelper.tryPlaceBlock(world, newPos, placeState, masterRitualStone.getOwner()))
+								{
+									k++;
+									continue;
+								}
 
 								itemHandler.extractItem(blockSlot, 1, false);
 								tileInventory.setChanged();

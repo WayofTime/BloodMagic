@@ -1,7 +1,10 @@
 package wayoftime.bloodmagic.ritual.types;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Consumer;
+
+import javax.annotation.Nullable;
 
 import com.google.common.collect.Lists;
 
@@ -68,7 +71,7 @@ public class RitualHarvest extends Ritual
 		while (harvestArea.hasNext())
 		{
 			BlockPos nextPos = harvestArea.next().offset(pos);
-			if (harvestBlock(world, nextPos, masterRitualStone.getMasterBlockPos()))
+			if (harvestBlock(world, nextPos, masterRitualStone.getMasterBlockPos(), masterRitualStone.getOwner()))
 			{
 				harvested++;
 			}
@@ -104,7 +107,7 @@ public class RitualHarvest extends Ritual
 		return new RitualHarvest();
 	}
 
-	public static boolean harvestBlock(Level world, BlockPos cropPos, BlockPos controllerPos)
+	public static boolean harvestBlock(Level world, BlockPos cropPos, BlockPos controllerPos, @Nullable UUID ownerUUID)
 	{
 		BlockState harvestState = world.getBlockState(cropPos);
 		BlockEntity potentialInventory = world.getBlockEntity(controllerPos.above());
@@ -117,7 +120,7 @@ public class RitualHarvest extends Ritual
 			if (handler.test(world, cropPos, harvestState))
 			{
 				List<ItemStack> drops = Lists.newArrayList();
-				if (handler.harvest(world, cropPos, harvestState, drops))
+				if (handler.harvest(world, cropPos, harvestState, drops, ownerUUID))
 				{
 					for (ItemStack stack : drops)
 					{

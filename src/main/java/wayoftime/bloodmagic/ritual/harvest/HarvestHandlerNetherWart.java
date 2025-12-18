@@ -1,6 +1,9 @@
 package wayoftime.bloodmagic.ritual.harvest;
 
 import java.util.List;
+import java.util.UUID;
+
+import javax.annotation.Nullable;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -14,13 +17,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
+import wayoftime.bloodmagic.util.helper.BlockProtectionHelper;
 
 public class HarvestHandlerNetherWart implements IHarvestHandler
 {
 	private static final ItemStack mockHoe = new ItemStack(Items.DIAMOND_HOE, 1);
 
 	@Override
-	public boolean harvest(Level world, BlockPos pos, BlockState state, List<ItemStack> drops)
+	public boolean harvest(Level world, BlockPos pos, BlockState state, List<ItemStack> drops, @Nullable UUID ownerUUID)
 	{
 		boolean foundSeed = false;
 		LootParams.Builder lootBuilder = new LootParams.Builder((ServerLevel) world);
@@ -43,7 +47,10 @@ public class HarvestHandlerNetherWart implements IHarvestHandler
 
 		if (foundSeed)
 		{
-			world.setBlockAndUpdate(pos, state.getBlock().defaultBlockState());
+			if (!BlockProtectionHelper.tryPlaceBlock(world, pos, state.getBlock().defaultBlockState(), ownerUUID))
+			{
+				return false;
+			}
 			world.levelEvent(2001, pos, Block.getId(state));
 			for (ItemStack stack : blockDrops)
 			{

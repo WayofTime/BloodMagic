@@ -39,6 +39,7 @@ import wayoftime.bloodmagic.ritual.Ritual;
 import wayoftime.bloodmagic.ritual.RitualComponent;
 import wayoftime.bloodmagic.ritual.RitualRegister;
 import wayoftime.bloodmagic.util.Utils;
+import wayoftime.bloodmagic.util.helper.BlockProtectionHelper;
 
 @RitualRegister("felling")
 public class RitualFelling extends Ritual
@@ -109,8 +110,16 @@ public class RitualFelling extends Ritual
 
 		if (blockPosIterator.hasNext() && tileInventory != null)
 		{
-			masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
 			currentPos = blockPosIterator.next();
+
+			// Check protection before breaking
+			if (!BlockProtectionHelper.canBreakBlock(world, currentPos, masterRitualStone.getOwner()))
+			{
+				blockPosIterator.remove();
+				return;
+			}
+
+			masterRitualStone.getOwnerNetwork().syphon(masterRitualStone.ticket(getRefreshCost()));
 			IItemHandler inventory = Utils.getInventory(tileInventory, Direction.DOWN);
 			BlockState state = world.getBlockState(currentPos);
 			placeInInventory(state, world, currentPos, inventory);

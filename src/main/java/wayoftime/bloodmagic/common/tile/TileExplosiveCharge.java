@@ -14,9 +14,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import wayoftime.bloodmagic.anointment.AnointmentHolder;
 import wayoftime.bloodmagic.common.tile.base.TileTicking;
 
+import javax.annotation.Nullable;
+import java.util.UUID;
+
 public class TileExplosiveCharge extends TileTicking
 {
 	public AnointmentHolder anointmentHolder = new AnointmentHolder();
+	@Nullable
+	protected UUID ownerUUID = null;
 
 	public TileExplosiveCharge(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
@@ -60,6 +65,10 @@ public class TileExplosiveCharge extends TileTicking
 		{
 			anointmentHolder = AnointmentHolder.fromNBT(tag.getCompound("holder"));
 		}
+		if (tag.hasUUID("ownerUUID"))
+		{
+			ownerUUID = tag.getUUID("ownerUUID");
+		}
 
 	}
 
@@ -70,6 +79,10 @@ public class TileExplosiveCharge extends TileTicking
 		{
 			tag.put("holder", anointmentHolder.serialize());
 		}
+		if (ownerUUID != null)
+		{
+			tag.putUUID("ownerUUID", ownerUUID);
+		}
 
 		return tag;
 	}
@@ -77,6 +90,17 @@ public class TileExplosiveCharge extends TileTicking
 	public void setAnointmentHolder(AnointmentHolder holder)
 	{
 		this.anointmentHolder = holder;
+	}
+
+	@Nullable
+	public UUID getOwnerUUID()
+	{
+		return ownerUUID;
+	}
+
+	public void setOwnerUUID(@Nullable UUID ownerUUID)
+	{
+		this.ownerUUID = ownerUUID;
 	}
 
 	public void dropSelf()

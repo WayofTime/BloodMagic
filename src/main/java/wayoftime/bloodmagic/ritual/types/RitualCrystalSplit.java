@@ -12,6 +12,9 @@ import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.tile.TileDemonCrystal;
 import wayoftime.bloodmagic.ritual.*;
+import wayoftime.bloodmagic.util.helper.BlockProtectionHelper;
+
+import java.util.UUID;
 
 import java.util.function.Consumer;
 
@@ -110,10 +113,11 @@ public class RitualCrystalSplit extends Ritual
 
 			rawTile.setCrystalCount(rawTile.getCrystalCount() - 4);
 
-			growCrystal(world, vengefulPos, EnumDemonWillType.VENGEFUL, vengefulCrystals);
-			growCrystal(world, corrosivePos, EnumDemonWillType.CORROSIVE, corrosiveCrystals);
-			growCrystal(world, steadfastPos, EnumDemonWillType.STEADFAST, steadfastCrystals);
-			growCrystal(world, destructivePos, EnumDemonWillType.DESTRUCTIVE, destructiveCrystals);
+			UUID ownerUUID = masterRitualStone.getOwner();
+			growCrystal(world, vengefulPos, EnumDemonWillType.VENGEFUL, vengefulCrystals, ownerUUID);
+			growCrystal(world, corrosivePos, EnumDemonWillType.CORROSIVE, corrosiveCrystals, ownerUUID);
+			growCrystal(world, steadfastPos, EnumDemonWillType.STEADFAST, steadfastCrystals, ownerUUID);
+			growCrystal(world, destructivePos, EnumDemonWillType.DESTRUCTIVE, destructiveCrystals, ownerUUID);
 			rawTile.setChanged();
 			world.sendBlockUpdated(rawPos, rawState, rawState, 3);
 		}
@@ -135,7 +139,7 @@ public class RitualCrystalSplit extends Ritual
 		}
 	}
 
-	public void growCrystal(Level world, BlockPos pos, EnumDemonWillType type, int currentCrystalCount)
+	public void growCrystal(Level world, BlockPos pos, EnumDemonWillType type, int currentCrystalCount, UUID ownerUUID)
 	{
 		if (currentCrystalCount <= 0)
 		{
@@ -160,7 +164,7 @@ public class RitualCrystalSplit extends Ritual
 			default:
 				state = BloodMagicBlocks.RAW_CRYSTAL_BLOCK.get().defaultBlockState();
 			}
-			world.setBlock(pos, state, 3);
+			BlockProtectionHelper.tryPlaceBlock(world, pos, state, ownerUUID);
 		} else
 		{
 			TileDemonCrystal tile = (TileDemonCrystal) world.getBlockEntity(pos);

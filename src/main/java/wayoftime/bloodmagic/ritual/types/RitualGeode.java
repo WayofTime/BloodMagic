@@ -24,6 +24,7 @@ import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 import wayoftime.bloodmagic.demonaura.WorldDemonWillHandler;
 import wayoftime.bloodmagic.ritual.*;
 import wayoftime.bloodmagic.util.Utils;
+import wayoftime.bloodmagic.util.helper.BlockProtectionHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,7 +136,7 @@ public class RitualGeode extends Ritual {
                 Vec3 blockCenter = new Vec3(harvestPos.getX() + 0.5, harvestPos.getY() + 0.5, harvestPos.getZ() + 0.5);
                 List<ItemStack> blockDrops = state.getDrops(lootBuilder.withParameter(LootContextParams.ORIGIN, blockCenter).withParameter(LootContextParams.TOOL, toolStack));
                 drops.addAll(blockDrops);
-                world.destroyBlock(harvestPos, false);
+                BlockProtectionHelper.tryBreakBlockNoDrops(world, harvestPos, masterRitualStone.getOwner());
                 if (doFortune) {
                     fortuneWill -= WILL_PER_FORTUNE;
                 }
