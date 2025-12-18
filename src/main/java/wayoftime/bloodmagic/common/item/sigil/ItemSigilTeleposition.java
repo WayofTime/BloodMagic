@@ -32,6 +32,7 @@ import wayoftime.bloodmagic.util.helper.BindableHelper;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 import wayoftime.bloodmagic.util.helper.TextHelper;
+import wayoftime.bloodmagic.ConfigManager;
 
 import java.util.List;
 
@@ -40,6 +41,12 @@ public class ItemSigilTeleposition extends ItemSigilBase
 	public ItemSigilTeleposition()
 	{
 		super("teleposition", 1000);
+	}
+
+	@Override
+	public int getLpUsed()
+	{
+		return ConfigManager.COMMON.sigilTelepositionCost.get();
 	}
 
 	@Override

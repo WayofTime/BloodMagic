@@ -17,12 +17,19 @@ import net.minecraftforge.fluids.FluidStack;
 import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
+import wayoftime.bloodmagic.ConfigManager;
 
 public class ItemSigilVoid extends ItemSigilFluidBase
 {
 	public ItemSigilVoid()
 	{
 		super("void", 50, new FluidStack(Fluids.EMPTY, 1000));
+	}
+
+	@Override
+	public int getLpUsed()
+	{
+		return ConfigManager.COMMON.sigilVoidCost.get();
 	}
 
 	@Override

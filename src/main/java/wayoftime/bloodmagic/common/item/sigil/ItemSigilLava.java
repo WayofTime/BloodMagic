@@ -17,6 +17,7 @@ import wayoftime.bloodmagic.common.item.IAlchemyItem;
 import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
+import wayoftime.bloodmagic.ConfigManager;
 
 import wayoftime.bloodmagic.common.item.sigil.ISigil.Holding;
 
@@ -25,6 +26,12 @@ public class ItemSigilLava extends ItemSigilFluidBase implements IAlchemyItem
 	public ItemSigilLava()
 	{
 		super("lava", 1000, new FluidStack(Fluids.LAVA, 10000));
+	}
+
+	@Override
+	public int getLpUsed()
+	{
+		return ConfigManager.COMMON.sigilLavaCost.get();
 	}
 
 	@Override

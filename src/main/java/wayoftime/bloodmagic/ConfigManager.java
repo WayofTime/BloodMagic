@@ -43,6 +43,19 @@ public class ConfigManager
         public final ForgeConfigSpec.IntValue defaultUpgradePoints;
         public final ForgeConfigSpec.IntValue evolvedUpgradePoints;
 
+		// Sigil LP Costs
+		public final ForgeConfigSpec.IntValue sigilAirCost;
+		public final ForgeConfigSpec.IntValue sigilBloodLightCost;
+		public final ForgeConfigSpec.IntValue sigilWaterCost;
+		public final ForgeConfigSpec.IntValue sigilLavaCost;
+		public final ForgeConfigSpec.IntValue sigilVoidCost;
+		public final ForgeConfigSpec.IntValue sigilTelepositionCost;
+		public final ForgeConfigSpec.IntValue sigilFastMinerCost;
+		public final ForgeConfigSpec.IntValue sigilGreenGroveCost;
+		public final ForgeConfigSpec.IntValue sigilFrostCost;
+		public final ForgeConfigSpec.IntValue sigilMagnetismCost;
+		public final ForgeConfigSpec.IntValue sigilSuppressionCost;
+
 		public final ConfigValue<Integer> activation_cost;
 		public final ConfigValue<Integer> refresh_cost;
 		public final ConfigValue<Double> min_raw_will;
@@ -81,6 +94,20 @@ public class ConfigManager
 
 			builder.comment("State that the dungeon spawning ritual can only be activated when using a Creative Activation Crystal.", "Used on servers for if you do not trust your players to not destroy other people's bases.");
 			makeDungeonRitualCreativeOnly = builder.define("makeDungeonRitualCreativeOnly", false);
+
+			builder.comment("LP costs for sigils. For toggleable sigils, this is the upkeep cost drained every 5 seconds while active.").push("sigil_cost");
+			sigilAirCost = builder.comment("LP cost per use").defineInRange("air", 50, 0, 10000000);
+			sigilBloodLightCost = builder.comment("LP cost per use").defineInRange("blood_light", 10, 0, 10000000);
+			sigilWaterCost = builder.comment("LP cost per use").defineInRange("water", 100, 0, 10000000);
+			sigilLavaCost = builder.comment("LP cost per use").defineInRange("lava", 1000, 0, 10000000);
+			sigilVoidCost = builder.comment("LP cost per use").defineInRange("void", 50, 0, 10000000);
+			sigilTelepositionCost = builder.comment("LP cost per use").defineInRange("teleposition", 1000, 0, 10000000);
+			sigilFastMinerCost = builder.comment("LP upkeep cost (drained every 5 seconds while active)").defineInRange("fast_miner", 100, 0, 10000000);
+			sigilGreenGroveCost = builder.comment("LP upkeep cost (drained every 5 seconds while active)").defineInRange("green_grove", 150, 0, 10000000);
+			sigilFrostCost = builder.comment("LP upkeep cost (drained every 5 seconds while active)").defineInRange("frost", 100, 0, 10000000);
+			sigilMagnetismCost = builder.comment("LP upkeep cost (drained every 5 seconds while active)").defineInRange("magnetism", 50, 0, 10000000);
+			sigilSuppressionCost = builder.comment("LP upkeep cost (drained every 5 seconds while active)").defineInRange("suppression", 400, 0, 10000000);
+			builder.pop();
 
 			builder.push("Geode Ritual");
 			activation_cost = builder.define("activation_cost", 50_000);

@@ -8,6 +8,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
+import wayoftime.bloodmagic.ConfigManager;
 import wayoftime.bloodmagic.core.data.SoulTicket;
 import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
@@ -19,6 +20,12 @@ public class ItemSigilAir extends ItemSigilBase
 	public ItemSigilAir()
 	{
 		super("air", 50);
+	}
+
+	@Override
+	public int getLpUsed()
+	{
+		return ConfigManager.COMMON.sigilAirCost.get();
 	}
 
 	@Override

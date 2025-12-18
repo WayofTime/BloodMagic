@@ -11,12 +11,19 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.common.registries.BloodMagicDamageTypes;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
+import wayoftime.bloodmagic.ConfigManager;
 
 public class ItemSigilFastMiner extends ItemSigilToggleableBase
 {
 	public ItemSigilFastMiner()
 	{
 		super("fast_miner", 100);
+	}
+
+	@Override
+	public int getLpUsed()
+	{
+		return ConfigManager.COMMON.sigilFastMinerCost.get();
 	}
 
 	@Override

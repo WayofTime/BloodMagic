@@ -9,12 +9,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
+import wayoftime.bloodmagic.ConfigManager;
 
 public class ItemSigilMagnetism extends ItemSigilToggleableBase
 {
 	public ItemSigilMagnetism()
 	{
 		super("magnetism", 50);
+	}
+
+	@Override
+	public int getLpUsed()
+	{
+		return ConfigManager.COMMON.sigilMagnetismCost.get();
 	}
 
 	@Override
