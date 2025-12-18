@@ -2,6 +2,7 @@ package wayoftime.bloodmagic.common.item.routing;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -20,9 +21,10 @@ import wayoftime.bloodmagic.util.Constants;
 import wayoftime.bloodmagic.util.GhostItemHelper;
 import wayoftime.bloodmagic.util.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ItemStandardFilter extends ItemCompositeFilter
+public class ItemStandardFilter extends ItemRouterFilter implements ICompositeItemFilterProvider
 {
     // of course this inherits from composite... anyways, copy-paste from IRF
     @Override
@@ -120,4 +122,81 @@ public class ItemStandardFilter extends ItemCompositeFilter
 	{
 		return new BasicFilterKey(ghostStack, amount);
 	}
+
+    public List<ItemStack> getNestedFilters(ItemStack mainFilterStack)
+    {
+        List<ItemStack> nestedFilters = new ArrayList<>();
+        InventoryFilter inv = getInv(mainFilterStack);
+        for (int i = 0; i < inv.getSlots(); i++)
+        {
+            ItemStack testStack = inv.getStackInSlot(i);
+            if (testStack.isEmpty())
+            {
+                continue;
+            }
+
+            if (testStack.getItem() instanceof INestableItemFilterProvider)
+            {
+                nestedFilters.add(testStack);
+            }
+        }
+
+        return nestedFilters;
+    }
+
+    @Override
+    public boolean canReceiveNestedFilter(ItemStack mainFilterStack, ItemStack nestedFilterStack)
+    {
+        if (nestedFilterStack.isEmpty())
+        {
+            return false;
+        } else if (!(nestedFilterStack.getItem() instanceof INestableItemFilterProvider))
+        {
+            return false;
+        }
+
+        boolean hasEmpty = false;
+
+        InventoryFilter inv = getInv(mainFilterStack);
+        for (int i = 0; i < inv.getSlots(); i++)
+        {
+            ItemStack testStack = inv.getStackInSlot(i);
+            if (testStack.isEmpty())
+            {
+                hasEmpty = true;
+                continue;
+            }
+
+            if (testStack.getItem().equals(nestedFilterStack.getItem()))
+            {
+                return false;
+            }
+        }
+
+        return hasEmpty;
+    }
+
+    @Override
+    public ItemStack nestFilter(ItemStack mainFilterStack, ItemStack nestedFilterStack)
+    {
+        if (canReceiveNestedFilter(mainFilterStack, nestedFilterStack))
+        {
+            ItemStack copyStack = mainFilterStack.copy();
+
+            InventoryFilter inv = getInv(copyStack);
+            for (int i = 0; i < inv.getSlots(); i++)
+            {
+                ItemStack testStack = inv.getStackInSlot(i);
+                if (testStack.isEmpty())
+                {
+                    inv.setStackInSlot(i, nestedFilterStack);
+                    CompoundTag tag = copyStack.getOrCreateTag();
+                    tag.put(Constants.NBT.ITEM_INVENTORY, inv.serializeNBT());
+                    return copyStack;
+                }
+            }
+        }
+
+        return ItemStack.EMPTY;
+    }
 }

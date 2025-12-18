@@ -4,6 +4,7 @@ import net.minecraft.Util;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
@@ -12,8 +13,10 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -21,6 +24,7 @@ import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.AddPackFindersEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.DispenseFluidContainer;
@@ -30,10 +34,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.javafmlmod.FMLModContainer;
-import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.forgespi.locating.IModFile;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.MissingMappingsEvent;
 import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.resource.PathPackResources;
 import org.apache.logging.log4j.LogManager;
@@ -45,6 +47,8 @@ import wayoftime.bloodmagic.client.hud.Elements;
 import wayoftime.bloodmagic.client.key.BloodMagicKeyHandler;
 import wayoftime.bloodmagic.client.key.KeyBindingBloodMagic;
 import wayoftime.bloodmagic.client.sounds.SoundRegistry;
+import wayoftime.bloodmagic.command.CommandBloodMagic;
+import wayoftime.bloodmagic.command.sub.SoulNetworkCommand;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.*;
 import wayoftime.bloodmagic.common.fluid.BloodMagicFluids;
@@ -80,7 +84,7 @@ import wayoftime.bloodmagic.structures.ModRoomPools;
 import wayoftime.bloodmagic.util.handler.event.GenericHandler;
 import wayoftime.bloodmagic.util.handler.event.WillHandler;
 
-import java.nio.file.Path;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @Mod("bloodmagic")
@@ -151,12 +155,15 @@ public class BloodMagic {
         MinecraftForge.EVENT_BUS.register(new GenericHandler());
         modBus.addListener(this::registerColors);
 
+        MinecraftForge.EVENT_BUS.addListener(CommandBloodMagic::register);
+
         MinecraftForge.EVENT_BUS.register(new WillHandler());
 //		MinecraftForge.EVENT_BUS.register(new BloodMagicBlocks());
 //		MinecraftForge.EVENT_BUS.addListener(this::commonSetup);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.addListener(BloodMagic::handleMissingMappings);
 
         ModLoadingContext context = ModLoadingContext.get();
         context.registerConfig(ModConfig.Type.CLIENT, ConfigManager.CLIENT_SPEC);
@@ -168,6 +175,28 @@ public class BloodMagic {
 
     public static ResourceLocation rl(String name) {
         return new ResourceLocation(BloodMagic.MODID, name);
+    }
+
+    public static void handleMissingMappings(MissingMappingsEvent event) {
+        event.getMappings(Registries.BLOCK, MODID)
+                .forEach(mapping -> {
+                    String path = mapping.getKey().getPath().replaceAll("_c$", "_corrosive");
+                    path = path.replaceAll("_d$", "_destructive");
+                    path = path.replaceAll("_s$", "_steadfast");
+                    path = path.replaceAll("_v$", "_vengeful");
+
+                    mapping.remap(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(MODID, path)));
+                });
+
+        event.getMappings(Registries.ITEM, MODID)
+                .forEach(mapping -> {
+                    String path = mapping.getKey().getPath().replaceAll("_c$", "_corrosive");
+                    path = path.replaceAll("_d$", "_destructive");
+                    path = path.replaceAll("_s$", "_steadfast");
+                    path = path.replaceAll("_v$", "_vengeful");
+
+                    mapping.remap(ForgeRegistries.ITEMS.getValue(new ResourceLocation(MODID, path)));
+                });
     }
 
     public static void handleConfigValues(BloodMagicAPI api) {

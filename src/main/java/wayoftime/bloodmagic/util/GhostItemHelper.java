@@ -16,8 +16,7 @@ public class GhostItemHelper
 
 	public static int getItemGhostAmount(ItemStack stack)
 	{
-		NBTHelper.checkNBT(stack);
-		CompoundTag tag = stack.getTag();
+		CompoundTag tag = stack.getOrCreateTag();
 
 		return tag.getInt(Constants.NBT.GHOST_STACK_SIZE);
 	}
@@ -66,13 +65,8 @@ public class GhostItemHelper
 	public static ItemStack getSingleStackFromGhost(ItemStack ghostStack)
 	{
 		ItemStack newStack = ghostStack.copy();
-		NBTHelper.checkNBT(newStack);
-		CompoundTag tag = newStack.getTag();
+		CompoundTag tag = newStack.getOrCreateTag();
 		tag.remove(Constants.NBT.GHOST_STACK_SIZE);
-		if (tag.isEmpty())
-		{
-			newStack.setTag(null);
-		}
 		newStack.setCount(1);
 
 		return newStack;

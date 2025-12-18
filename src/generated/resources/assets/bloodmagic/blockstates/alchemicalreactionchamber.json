@@ -1,7 +1,7 @@
 {
   "variants": {
     "facing=east,lit=false,type=corrosive": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_c",
+      "model": "bloodmagic:block/alchemicalreactionchamber_corrosive",
       "y": 90
     },
     "facing=east,lit=false,type=default": {
@@ -9,19 +9,19 @@
       "y": 90
     },
     "facing=east,lit=false,type=destructive": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_d",
+      "model": "bloodmagic:block/alchemicalreactionchamber_destructive",
       "y": 90
     },
     "facing=east,lit=false,type=steadfast": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_s",
+      "model": "bloodmagic:block/alchemicalreactionchamber_steadfast",
       "y": 90
     },
     "facing=east,lit=false,type=vengeful": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_v",
+      "model": "bloodmagic:block/alchemicalreactionchamber_vengeful",
       "y": 90
     },
     "facing=east,lit=true,type=corrosive": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_c_lit",
+      "model": "bloodmagic:block/alchemicalreactionchamber_corrosive_lit",
       "y": 90
     },
     "facing=east,lit=true,type=default": {
@@ -29,49 +29,49 @@
       "y": 90
     },
     "facing=east,lit=true,type=destructive": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_d_lit",
+      "model": "bloodmagic:block/alchemicalreactionchamber_destructive_lit",
       "y": 90
     },
     "facing=east,lit=true,type=steadfast": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_s_lit",
+      "model": "bloodmagic:block/alchemicalreactionchamber_steadfast_lit",
       "y": 90
     },
     "facing=east,lit=true,type=vengeful": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_v_lit",
+      "model": "bloodmagic:block/alchemicalreactionchamber_vengeful_lit",
       "y": 90
     },
     "facing=north,lit=false,type=corrosive": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_c"
+      "model": "bloodmagic:block/alchemicalreactionchamber_corrosive"
     },
     "facing=north,lit=false,type=default": {
       "model": "bloodmagic:block/alchemicalreactionchamber"
     },
     "facing=north,lit=false,type=destructive": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_d"
+      "model": "bloodmagic:block/alchemicalreactionchamber_destructive"
     },
     "facing=north,lit=false,type=steadfast": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_s"
+      "model": "bloodmagic:block/alchemicalreactionchamber_steadfast"
     },
     "facing=north,lit=false,type=vengeful": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_v"
+      "model": "bloodmagic:block/alchemicalreactionchamber_vengeful"
     },
     "facing=north,lit=true,type=corrosive": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_c_lit"
+      "model": "bloodmagic:block/alchemicalreactionchamber_corrosive_lit"
     },
     "facing=north,lit=true,type=default": {
       "model": "bloodmagic:block/alchemicalreactionchamber_lit"
     },
     "facing=north,lit=true,type=destructive": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_d_lit"
+      "model": "bloodmagic:block/alchemicalreactionchamber_destructive_lit"
     },
     "facing=north,lit=true,type=steadfast": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_s_lit"
+      "model": "bloodmagic:block/alchemicalreactionchamber_steadfast_lit"
     },
     "facing=north,lit=true,type=vengeful": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_v_lit"
+      "model": "bloodmagic:block/alchemicalreactionchamber_vengeful_lit"
     },
     "facing=south,lit=false,type=corrosive": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_c",
+      "model": "bloodmagic:block/alchemicalreactionchamber_corrosive",
       "y": 180
     },
     "facing=south,lit=false,type=default": {
@@ -79,19 +79,19 @@
       "y": 180
     },
     "facing=south,lit=false,type=destructive": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_d",
+      "model": "bloodmagic:block/alchemicalreactionchamber_destructive",
       "y": 180
     },
     "facing=south,lit=false,type=steadfast": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_s",
+      "model": "bloodmagic:block/alchemicalreactionchamber_steadfast",
       "y": 180
     },
     "facing=south,lit=false,type=vengeful": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_v",
+      "model": "bloodmagic:block/alchemicalreactionchamber_vengeful",
       "y": 180
     },
     "facing=south,lit=true,type=corrosive": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_c_lit",
+      "model": "bloodmagic:block/alchemicalreactionchamber_corrosive_lit",
       "y": 180
     },
     "facing=south,lit=true,type=default": {
@@ -99,19 +99,19 @@
       "y": 180
     },
     "facing=south,lit=true,type=destructive": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_d_lit",
+      "model": "bloodmagic:block/alchemicalreactionchamber_destructive_lit",
       "y": 180
     },
     "facing=south,lit=true,type=steadfast": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_s_lit",
+      "model": "bloodmagic:block/alchemicalreactionchamber_steadfast_lit",
       "y": 180
     },
     "facing=south,lit=true,type=vengeful": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_v_lit",
+      "model": "bloodmagic:block/alchemicalreactionchamber_vengeful_lit",
       "y": 180
     },
     "facing=west,lit=false,type=corrosive": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_c",
+      "model": "bloodmagic:block/alchemicalreactionchamber_corrosive",
       "y": 270
     },
     "facing=west,lit=false,type=default": {
@@ -119,19 +119,19 @@
       "y": 270
     },
     "facing=west,lit=false,type=destructive": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_d",
+      "model": "bloodmagic:block/alchemicalreactionchamber_destructive",
       "y": 270
     },
     "facing=west,lit=false,type=steadfast": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_s",
+      "model": "bloodmagic:block/alchemicalreactionchamber_steadfast",
       "y": 270
     },
     "facing=west,lit=false,type=vengeful": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_v",
+      "model": "bloodmagic:block/alchemicalreactionchamber_vengeful",
       "y": 270
     },
     "facing=west,lit=true,type=corrosive": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_c_lit",
+      "model": "bloodmagic:block/alchemicalreactionchamber_corrosive_lit",
       "y": 270
     },
     "facing=west,lit=true,type=default": {
@@ -139,15 +139,15 @@
       "y": 270
     },
     "facing=west,lit=true,type=destructive": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_d_lit",
+      "model": "bloodmagic:block/alchemicalreactionchamber_destructive_lit",
       "y": 270
     },
     "facing=west,lit=true,type=steadfast": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_s_lit",
+      "model": "bloodmagic:block/alchemicalreactionchamber_steadfast_lit",
       "y": 270
     },
     "facing=west,lit=true,type=vengeful": {
-      "model": "bloodmagic:block/alchemicalreactionchamber_v_lit",
+      "model": "bloodmagic:block/alchemicalreactionchamber_vengeful_lit",
       "y": 270
     }
   }

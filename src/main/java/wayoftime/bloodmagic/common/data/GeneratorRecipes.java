@@ -7,22 +7,17 @@ import java.util.function.Consumer;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.StonecutterRecipe;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.recipe.BaseRecipeProvider;
 import wayoftime.bloodmagic.common.item.BloodMagicItems;
@@ -201,7 +196,7 @@ public class GeneratorRecipes extends BaseRecipeProvider
                 Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_TILE.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_TILE_SPECIAL.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_SMALL_BRICK.get(), 1), Pair.of(BloodMagicBlocks.VENGEFUL_DUNGEON_POLISHED_STONE.get(), 1)
         );
 
-        decoHelper(consumer, BloodMagicTags.BLOCK_HELLFORGED,
+        decoHelper(consumer, BloodMagicTags.STORAGE_BLOCKS_HELLFORGED,
                 Pair.of(BloodMagicBlocks.HELLFORGED_BLOCK.get(), 1),
                 Pair.of(BloodMagicBlocks.CORROSIVE_HELLFORGED_BLOCK.get(), 1),
                 Pair.of(BloodMagicBlocks.DESTRUCTIVE_HELLFORGED_BLOCK.get(), 1),
@@ -281,7 +276,7 @@ public class GeneratorRecipes extends BaseRecipeProvider
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,BloodMagicItems.ALCHEMY_FLASK_THROWABLE.get()).requires(BloodMagicItems.ALCHEMY_FLASK_THROWABLE.get()).requires(Ingredient.of(Items.WATER_BUCKET)).unlockedBy("has_flask", has(BloodMagicItems.ALCHEMY_FLASK.get())).save(consumer, BloodMagic.rl("alchemy_flask_throwable"));
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,BloodMagicItems.ALCHEMY_FLASK_LINGERING.get()).requires(BloodMagicItems.ALCHEMY_FLASK_LINGERING.get()).requires(Ingredient.of(Items.WATER_BUCKET)).unlockedBy("has_flask", has(BloodMagicItems.ALCHEMY_FLASK.get())).save(consumer, BloodMagic.rl("alchemy_flask_lingering"));
 
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,BloodMagicItems.HELLFORGED_INGOT.get(), 9).requires(BloodMagicTags.BLOCK_HELLFORGED).unlockedBy("has_hellforged_block", has(BloodMagicBlocks.HELLFORGED_BLOCK.get())).save(consumer, BloodMagic.rl("hellforged_block_to_ingot"));
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,BloodMagicItems.HELLFORGED_INGOT.get(), 9).requires(BloodMagicTags.STORAGE_BLOCKS_HELLFORGED).unlockedBy("has_hellforged_block", has(BloodMagicBlocks.HELLFORGED_BLOCK.get())).save(consumer, BloodMagic.rl("hellforged_block_to_ingot"));
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC,BloodMagicBlocks.TELEPOSER.get()).pattern("ggg").pattern("ete").pattern("ggg").define('g', Ingredient.of(Tags.Items.INGOTS_GOLD)).define('e', Ingredient.of(Tags.Items.ENDER_PEARLS)).define('t', Ingredient.of(BloodMagicItems.TELEPOSER_FOCUS.get())).unlockedBy("has_gold", has(BloodMagicItems.TELEPOSER_FOCUS.get())).save(consumer, BloodMagic.rl("teleposer"));
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,BloodMagicItems.REINFORCED_TELEPOSER_FOCUS.get()).requires(BloodMagicItems.ENHANCED_TELEPOSER_FOCUS.get()).requires(BloodMagicItems.WEAK_BLOOD_SHARD.get()).unlockedBy("has_shard", has(BloodMagicItems.WEAK_BLOOD_SHARD.get())).save(consumer, BloodMagic.rl("enhanced_teleposer_focus"));
@@ -309,6 +304,7 @@ public class GeneratorRecipes extends BaseRecipeProvider
 		clearFilter(BloodMagicItems.ITEM_MOD_FILTER.get(), BloodMagic.rl("clear_mod_filter"), consumer);
 		clearFilter(BloodMagicItems.ITEM_COMPOSITE_FILTER.get(), BloodMagic.rl("clear_composite_filter"), consumer);
 		SpecialRecipeBuilder.special(BloodMagicRecipeSerializers.FILTER_COPY.getRecipeSerializer()).save(consumer, "bloodmagic:filter_copy");
+        SpecialRecipeBuilder.special(BloodMagicRecipeSerializers.TOME_COMBINE.getRecipeSerializer()).save(consumer, "bloodmagic:tome_combine");
 	}
 
 	private void clearFilter(ItemLike filter, ResourceLocation path, Consumer<FinishedRecipe> output) {

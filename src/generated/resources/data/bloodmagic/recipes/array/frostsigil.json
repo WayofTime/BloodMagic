@@ -1,0 +1,13 @@
+{
+  "type": "bloodmagic:array",
+  "addedinput": {
+    "item": "bloodmagic:infusedslate"
+  },
+  "baseinput": {
+    "item": "bloodmagic:reagentfrost"
+  },
+  "output": {
+    "item": "bloodmagic:icesigil"
+  },
+  "texture": "bloodmagic:textures/models/alchemyarrays/stupidarray.png"
+}

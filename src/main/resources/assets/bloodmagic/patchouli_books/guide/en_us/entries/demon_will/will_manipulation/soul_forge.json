@@ -10,6 +10,10 @@
     {
       "type": "patchouli:crafting",
       "recipe": "bloodmagic:soul_forge"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "All of the $(item)Hellfire Forges$() slots are accessible from any side, but it will prioritise certain slots over others when accepting items from different sides. Each of the four cardinal directions for example will prioritise its own input slot while pushing in items from the top will try to place it into the gem slot first. Items will never be placed into the output slot and extracting from the bottom will only try to take from the output slot"
     }
   ]
 }

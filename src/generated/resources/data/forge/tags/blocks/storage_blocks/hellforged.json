@@ -1,9 +1,9 @@
 {
   "values": [
     "bloodmagic:dungeon_metal",
-    "bloodmagic:dungeon_metal_c",
-    "bloodmagic:dungeon_metal_d",
-    "bloodmagic:dungeon_metal_s",
-    "bloodmagic:dungeon_metal_v"
+    "bloodmagic:dungeon_metal_corrosive",
+    "bloodmagic:dungeon_metal_destructive",
+    "bloodmagic:dungeon_metal_steadfast",
+    "bloodmagic:dungeon_metal_vengeful"
   ]
 }

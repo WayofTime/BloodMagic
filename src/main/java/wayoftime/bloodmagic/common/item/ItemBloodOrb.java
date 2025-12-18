@@ -72,6 +72,7 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IForgeI
 			ownerNetwork.setOrbTier(orb.getTier());
 
 		ownerNetwork.add(SoulTicket.item(stack, world, player, 200), orb.getCapacity()); // Add LP to owner's network
+        player.invulnerableTime = 0;
 		ownerNetwork.hurtPlayer(player, 200); // Hurt whoever is using it
 		return super.use(world, player, hand);
 	}

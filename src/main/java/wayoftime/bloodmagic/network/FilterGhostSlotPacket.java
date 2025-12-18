@@ -19,12 +19,8 @@ import wayoftime.bloodmagic.util.GhostItemHelper;
 
 public class FilterGhostSlotPacket
 {
-	private int ghostSlot;
-	private ItemStack stack;
-
-	public FilterGhostSlotPacket()
-	{
-	}
+	private final int ghostSlot;
+	private final ItemStack stack;
 
 	public FilterGhostSlotPacket(int ghostSlot, ItemStack stack)
 	{
@@ -40,23 +36,23 @@ public class FilterGhostSlotPacket
 
 	public static FilterGhostSlotPacket decode(FriendlyByteBuf buf)
 	{
-		FilterGhostSlotPacket pkt = new FilterGhostSlotPacket(buf.readInt(), buf.readItem());
-        BMLog.DEFAULT.info("decoded slot {} and stack {} with tag '{}'", pkt.ghostSlot, pkt.stack, pkt.stack.getTag());
-
-		return pkt;
+		return new FilterGhostSlotPacket(buf.readInt(), buf.readItem());
 	}
 
 	public static void handle(FilterGhostSlotPacket message, Supplier<Context> context)
 	{
-		context.get().enqueueWork(() -> {
+		context.get().enqueueWork(() -> { // not sure .enqueueWork is needed here, according to neo docs this should be executed on server thread anyways, but whatever
 			ServerPlayer sender = context.get().getSender();
 			if (sender == null) {
                 return;
             }
 
-            if (!(sender.containerMenu instanceof ContainerFilter)) {
+            if (!(sender.containerMenu instanceof ContainerFilter filterMenu)) {
                 return;
             }
+            filterMenu.inventoryFilter.setStackInSlot(message.ghostSlot, message.stack);
+
+            /* actually dont need any of this since setting the stack in the server side menu will save it to the filter stack automatically
             ItemStack filterStack = sender.getItemInHand(InteractionHand.MAIN_HAND);
             CompoundTag tag = filterStack.getOrCreateTag();
             InventoryFilter filterInv = new InventoryFilter(9);
@@ -64,22 +60,8 @@ public class FilterGhostSlotPacket
             filterInv.setStackInSlot(message.ghostSlot, message.stack);
             tag.put(Constants.NBT.ITEM_INVENTORY, filterInv.serializeNBT());
             filterStack.setTag(tag);
+             */
 		});
 		context.get().setPacketHandled(true);
 	}
-
-//	public static void sendKeyToServer(FilterGhostSlotPacket msg, Player playerEntity)
-//	{
-//		ItemStack itemStack = ItemStack.EMPTY;
-//
-//		if (msg.slot > -1 && msg.slot < 9)
-//		{
-//			itemStack = playerEntity.getInventory().getItem(msg.slot);
-//		}
-//
-//		if (!itemStack.isEmpty() && itemStack.getItem() instanceof IItemFilterProvider)
-//		{
-//			((IItemFilterProvider) itemStack.getItem()).receiveButtonPress(itemStack, msg.buttonKey, msg.ghostSlot, msg.currentButtonState);
-//		}
-//	}
 }

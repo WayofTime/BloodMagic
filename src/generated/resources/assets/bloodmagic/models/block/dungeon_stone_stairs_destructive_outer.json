@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "bloodmagic:block/dungeon/dungeon_stone_destructive",
+    "side": "bloodmagic:block/dungeon/dungeon_stone_destructive",
+    "top": "bloodmagic:block/dungeon/dungeon_stone_destructive"
+  }
+}

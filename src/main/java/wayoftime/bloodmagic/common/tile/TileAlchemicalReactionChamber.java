@@ -58,8 +58,18 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 	public static final int INPUT_BUCKET_SLOT = 7;
 	public static final int OUTPUT_BUCKET_SLOT = 8;
 
-	public FluidTank inputTank = new FluidTank(FluidType.BUCKET_VOLUME * 20);
-	public FluidTank outputTank = new FluidTank(FluidType.BUCKET_VOLUME * 20);
+	public FluidTank inputTank = new FluidTank(FluidType.BUCKET_VOLUME * 20) {
+        @Override
+        protected void onContentsChanged() {
+            TileAlchemicalReactionChamber.this.setChanged();
+        }
+    };
+	public FluidTank outputTank = new FluidTank(FluidType.BUCKET_VOLUME * 20) {
+        @Override
+        protected void onContentsChanged() {
+            TileAlchemicalReactionChamber.this.setChanged();
+        }
+    };
 
 	public double currentProgress = 0;
 	public static final double DEFAULT_SPEED = 0.005;
@@ -132,23 +142,24 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 
 		if (!level.isClientSide)
 		{
-			if (!fullBucketStack.isEmpty() && inputTank.getSpace() >= 1000)
+			if (!fullBucketStack.isEmpty())
 			{
 				ItemStack testFullBucketStack = ItemHandlerHelper.copyStackWithSize(fullBucketStack, 1);
 				LazyOptional<IFluidHandlerItem> fluidHandlerWrapper = FluidUtil.getFluidHandler(testFullBucketStack);
 				if (fluidHandlerWrapper.isPresent())
 				{
-					IFluidHandlerItem fluidHandler = fluidHandlerWrapper.resolve().get();
-					FluidStack transferedStack = FluidUtil.tryFluidTransfer(inputTank, fluidHandler, 1000, false);
-					if (!transferedStack.isEmpty())
+					IFluidHandlerItem fluidHandler = fluidHandlerWrapper.resolve().get(); // if its not present it cant go into the slot
+
+					FluidStack transferredStack = FluidUtil.tryFluidTransfer(inputTank, fluidHandler, inputTank.getSpace(), false);
+					if (!transferredStack.isEmpty())
 					{
-						fluidHandler.drain(transferedStack, FluidAction.EXECUTE);
+						fluidHandler.drain(transferredStack, FluidAction.EXECUTE);
 						List<ItemStack> arrayList = new ArrayList<>();
 						arrayList.add(fluidHandler.getContainer());
 						if (outputSlotHandler.canTransferAllItemsToSlots(arrayList, true))
 						{
 							outputChanged = true;
-							inputTank.fill(transferedStack, FluidAction.EXECUTE);
+							inputTank.fill(transferredStack, FluidAction.EXECUTE);
 							outputSlotHandler.canTransferAllItemsToSlots(arrayList, false);
 							if (fullBucketStack.getCount() > 1)
 							{
@@ -158,18 +169,37 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 								setItem(INPUT_BUCKET_SLOT, ItemStack.EMPTY);
 							}
 						}
-					}
+					} else {
+                        transferredStack = FluidUtil.tryFluidTransfer(fluidHandler, inputTank, inputTank.getFluid().getAmount(), false);
+                        if (!transferredStack.isEmpty()) {
+                            int amount = fluidHandler.fill(transferredStack, FluidAction.EXECUTE);
+                            List<ItemStack> arrayList = new ArrayList<>();
+                            arrayList.add(fluidHandler.getContainer());
+                            if (outputSlotHandler.canTransferAllItemsToSlots(arrayList, true)) {
+                                outputChanged = true;
+                                inputTank.drain(amount, FluidAction.EXECUTE);
+                                outputSlotHandler.canTransferAllItemsToSlots(arrayList, false);
+                                if (fullBucketStack.getCount() > 1)
+                                {
+                                    fullBucketStack.setCount(fullBucketStack.getCount() - 1);
+                                } else
+                                {
+                                    setItem(INPUT_BUCKET_SLOT, ItemStack.EMPTY);
+                                }
+                            }
+                        }
+                    }
 				}
 			}
 
-			if (!emptyBucketStack.isEmpty() && outputTank.getFluidAmount() >= 1000)
+			if (!emptyBucketStack.isEmpty() && outputTank.getFluidAmount() >= 0)
 			{
 				ItemStack testEmptyBucketStack = ItemHandlerHelper.copyStackWithSize(emptyBucketStack, 1);
 				LazyOptional<IFluidHandlerItem> fluidHandlerWrapper = FluidUtil.getFluidHandler(testEmptyBucketStack);
 				if (fluidHandlerWrapper.isPresent())
 				{
 					IFluidHandlerItem fluidHandler = fluidHandlerWrapper.resolve().get();
-					FluidStack transferedStack = FluidUtil.tryFluidTransfer(fluidHandler, outputTank, 1000, false);
+					FluidStack transferedStack = FluidUtil.tryFluidTransfer(fluidHandler, outputTank, outputTank.getFluidAmount(), false);
 					if (!transferedStack.isEmpty())
 					{
 						fluidHandler.fill(transferedStack, FluidAction.EXECUTE);
@@ -451,9 +481,9 @@ public class TileAlchemicalReactionChamber extends TileInventory implements Menu
 	{
 		if (index == INPUT_BUCKET_SLOT || index == OUTPUT_BUCKET_SLOT)
 		{
-			Optional<FluidStack> fluidStackOptional = FluidUtil.getFluidContained(itemStack);
+			LazyOptional<IFluidHandlerItem> handlerOptional = FluidUtil.getFluidHandler(itemStack);
 
-			return fluidStackOptional.isPresent() && ((index == OUTPUT_BUCKET_SLOT && !fluidStackOptional.get().isEmpty()) || (index == INPUT_BUCKET_SLOT && fluidStackOptional.get().isEmpty()));
+			return handlerOptional.isPresent();
 		}
 
 		if (index >= OUTPUT_SLOT && index < OUTPUT_SLOT + NUM_OUTPUTS)

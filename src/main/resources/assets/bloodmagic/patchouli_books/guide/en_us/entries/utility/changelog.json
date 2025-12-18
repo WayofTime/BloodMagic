@@ -11,7 +11,27 @@
     {
       "type": "patchouli:text",
       "title": "3.3.6",
-      "text": "$(li)Ritual of the Beating Anvil didnt check to see if the recipe as valid and just produced the result. Recipe checking has been added, so you do now actually need the correct inputs$(li)MagiChem's fully grown clusters have been added to the geode_harvestable tag to work out of the box rather than requiring a datapack. The budding blocks are already in the forge:budding tag which is already part of geode_acceleratable"
+      "text": "Added:$(li)Upgrade Tomes holding the same Up- or Downgrade can now be combined in a crafting grid to add their points together$(li)Commands to manipulate a players soul network$(li)ARC input tank can be emptied by putting buckets or other fluid handler items into the input bucket slot. It will also try to transfer as much as possible instead of only ever 1 bucket at a time"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)ARC tanks can be interacted with from in-world now. Order of operations tried is Fill input tank > Empty output tank > Empty input tank > Open GUI$(li)Sigil of the Frozen Lake is now craftable"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)Weak and Saturated Tau now count towards tranquility$(li)Froglight variants are now valid in place of glowstone for the altar"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Fixed:$(li)Ritual of the Beating Anvil didnt check to see if the recipe as valid and just produced the result. Recipe checking has been added, so you do now actually need the correct inputs$(li)MagiChem's fully grown clusters have been added to the geode_harvestable tag to work out of the box rather than requiring a datapack. The budding blocks are already in the forge:budding tag which is already part of geode_acceleratable"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)Apparently Oculus doesnt take _s to mean steadfast version but something else and doesnt put the texture into the texture atlas, so we've literally spelled it out for it$(li)Blood Orbs could be used without getting damaged while spawn protection lasts. It now does the same thing the rest of the sacrifice stuff does and first gets rid of invulnerability"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)improved item automation interactions for the Hellfire Forge. More on this $(l:bloodmagic:demon_will/will_manipulation/soul_forge)here$()$(li)Composite Item Filters didnt work, now they do$(li)forge:storage_blocks/hellforged wasnt added to forge:storage_blocks$(li)prevent a crash when opening the Edit HUD position screen while looking at an entity"
     },
     {
       "type": "patchouli:text",

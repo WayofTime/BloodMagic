@@ -3,9 +3,7 @@ package wayoftime.bloodmagic.common.data;
 import java.util.concurrent.CompletableFuture;
 
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -76,7 +74,9 @@ public class GeneratorItemTags extends ItemTagsProvider
         this.copy(BloodMagicTags.Blocks.DUNGEON_STEADFAST, BloodMagicTags.DUNGEON_STEADFAST);
         this.copy(BloodMagicTags.Blocks.DUNGEON_VENGEFUL, BloodMagicTags.DUNGEON_VENGEFUL);
 
-        this.copy(BloodMagicTags.Blocks.BLOCK_HELLFORGED, BloodMagicTags.BLOCK_HELLFORGED);
+        this.copy(BloodMagicTags.Blocks.STORAGE_BLOCKS_HELLFORGED, BloodMagicTags.STORAGE_BLOCKS_HELLFORGED);
+        this.tag(Tags.Items.STORAGE_BLOCKS)
+                .addTag(BloodMagicTags.STORAGE_BLOCKS_HELLFORGED);
 
 		this.copy(BloodMagicTags.Blocks.MUSHROOM_STEM, BloodMagicTags.MUSHROOM_STEM);
 		this.copy(BloodMagicTags.Blocks.MUSHROOM_HYPHAE, BloodMagicTags.MUSHROOM_HYPHAE);

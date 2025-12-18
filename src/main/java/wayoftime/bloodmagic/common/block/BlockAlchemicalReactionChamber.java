@@ -28,6 +28,10 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidActionResult;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.network.NetworkHooks;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 import wayoftime.bloodmagic.common.tile.TileAlchemicalReactionChamber;
@@ -95,17 +99,48 @@ public class BlockAlchemicalReactionChamber extends Block implements EntityBlock
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult blockRayTraceResult)
 	{
-		if (world.isClientSide)
-			return InteractionResult.SUCCESS;
-
 		BlockEntity tile = world.getBlockEntity(pos);
-		if (!(tile instanceof TileAlchemicalReactionChamber))
-			return InteractionResult.FAIL;
+		if (!(tile instanceof TileAlchemicalReactionChamber arc)) {
+            return InteractionResult.PASS;
+        }
 
-		NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) tile, pos);
-//			player.openGui(BloodMagic.instance, Constants.Gui.SOUL_FORGE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
+        if (world.isClientSide) {
+            return InteractionResult.sidedSuccess(true);
+        }
 
-		return InteractionResult.SUCCESS;
+        ItemStack bucketStack = player.getItemInHand(hand);
+        if (!bucketStack.isEmpty()) {
+            LazyOptional<IFluidHandlerItem> fluidWrapper = FluidUtil.getFluidHandler(bucketStack);
+            if (fluidWrapper.resolve().isPresent()) {
+                // bucket -> input
+                FluidActionResult result = FluidUtil.tryEmptyContainerAndStow(bucketStack, arc.inputTank, null, arc.inputTank.getSpace(), player, true);
+                if (result.isSuccess()) {
+                    world.sendBlockUpdated(pos, state, state, UPDATE_CLIENTS);
+                    player.setItemInHand(hand, result.getResult());
+                    return InteractionResult.sidedSuccess(false);
+                }
+
+                // output -> bucket
+                result = FluidUtil.tryFillContainerAndStow(bucketStack, arc.outputTank, null, arc.outputTank.getFluidAmount(), player, true);
+                if (result.isSuccess()) {
+                    world.sendBlockUpdated(pos, state, state, UPDATE_CLIENTS);
+                    player.setItemInHand(hand, result.getResult());
+                    return InteractionResult.sidedSuccess(false);
+                }
+
+                // input -> bucket
+                result = FluidUtil.tryFillContainerAndStow(bucketStack, arc.inputTank, null, arc.inputTank.getFluidAmount(), player, true);
+                if (result.isSuccess()) {
+                    world.sendBlockUpdated(pos, state, state, UPDATE_CLIENTS);
+                    player.setItemInHand(hand, result.getResult());
+                    return InteractionResult.sidedSuccess(false);
+                }
+            }
+        }
+
+		NetworkHooks.openScreen((ServerPlayer) player, arc, pos);
+
+		return InteractionResult.sidedSuccess(false);
 	}
 
 	@Override

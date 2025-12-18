@@ -39,7 +39,7 @@ public class BloodMagicTags
 	public static final TagKey<Block> BLOCK_SLAG = getForgeBlockStorageTag("slag");
 	public static final TagKey<Block> BLOCK_FLUIX = BlockTags.create(new ResourceLocation("appliedenergistics2:fluix_block"));
 	public static final TagKey<Block> BLOCK_SKY_STONE = BlockTags.create(new ResourceLocation("appliedenergistics2:sky_stone_block"));
-	public static final TagKey<Item> BLOCK_HELLFORGED = ItemTags.create(new ResourceLocation("forge:storage_blocks/hellforged"));
+	public static final TagKey<Item> STORAGE_BLOCKS_HELLFORGED = ItemTags.create(new ResourceLocation("forge:storage_blocks/hellforged"));
 
 	public static final TagKey<Block> TELEPOSE_BLOCK_BLACKLIST = BlockTags.create(BloodMagic.rl("telepose_blacklist"));
 	public static final TagKey<EntityType<?>> TELEPOSE_BLACKLIST = TagKey.create(Registries.ENTITY_TYPE, BloodMagic.rl("telepose_blacklist"));
@@ -153,7 +153,7 @@ public class BloodMagicTags
 
 		public static final TagKey<Block> MUNDANE_BLOCK = BlockTags.create(BloodMagic.rl("mundane_block"));
 
-        public static final TagKey<Block> BLOCK_HELLFORGED = getForgeBlockStorageTag("hellforged");
+        public static final TagKey<Block> STORAGE_BLOCKS_HELLFORGED = getForgeBlockStorageTag("hellforged");
         public static final TagKey<Block> DUNGEON_RAW = BlockTags.create(BloodMagic.rl("dungeon_raw"));
         public static final TagKey<Block> DUNGEON_CORROSIVE = BlockTags.create(BloodMagic.rl("dungeon_corrosive"));
         public static final TagKey<Block> DUNGEON_DESTRUCTIVE = BlockTags.create(BloodMagic.rl("dungeon_destructive"));

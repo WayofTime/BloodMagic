@@ -7,10 +7,10 @@ import net.minecraft.world.item.ItemStack;
 
 public class CompositeFilterKey implements IFilterKey
 {
-	private List<IFilterKey> keyList = new ArrayList<IFilterKey>();
+	private final List<IFilterKey> keyList = new ArrayList<IFilterKey>();
 	private int count;
-
 	public CompositeFilterKey(int count)
+
 	{
 		this.count = count;
 	}
@@ -33,13 +33,13 @@ public class CompositeFilterKey implements IFilterKey
 
 		for (IFilterKey key : keyList)
 		{
-			if (!key.doesStackMatch(testStack))
+			if (key.doesStackMatch(testStack))
 			{
-				return false;
+				return true;
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	@Override

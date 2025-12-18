@@ -11,8 +11,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.tags.BloodMagicTags;
 import wayoftime.bloodmagic.common.tile.TileAlchemicalReactionChamber;
@@ -167,17 +169,15 @@ public class ContainerAlchemicalReactionChamber extends AbstractContainerMenu
 		@Override
 		public boolean mayPlace(ItemStack itemStack)
 		{
-			Optional<FluidStack> fluidStackOptional = FluidUtil.getFluidContained(itemStack);
-
-			return fluidStackOptional.isPresent() && ((needsFullBucket && !fluidStackOptional.get().isEmpty()) || (!needsFullBucket && fluidStackOptional.get().isEmpty()));
+            return isBucket(itemStack, needsFullBucket);
 		}
 	}
 
 	private static boolean isBucket(ItemStack stack, boolean requiredFull)
 	{
-		Optional<FluidStack> fluidStackOptional = FluidUtil.getFluidContained(stack);
+        LazyOptional<IFluidHandlerItem> fluidHandlerWrapper = FluidUtil.getFluidHandler(stack);
 
-		return fluidStackOptional.isPresent() && ((requiredFull && !fluidStackOptional.get().isEmpty()) || (!requiredFull && fluidStackOptional.get().isEmpty()));
+        return fluidHandlerWrapper.resolve().isPresent();
 	}
 
 	private class SlotOutput extends Slot

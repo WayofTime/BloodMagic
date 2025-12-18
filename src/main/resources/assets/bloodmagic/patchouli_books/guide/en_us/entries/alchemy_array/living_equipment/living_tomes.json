@@ -18,6 +18,10 @@
     {
       "type": "patchouli:text",
       "text": "This is an excellent way to focus training on abilities you wish to see more of, whilst conveniently forgetting ones you find less useful. $(br2)Alternately, you can teach different chestplates different skills, so you can have one chestplate for mining, one for combat, and yet another for exploration."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "To better manage these $(item)Tomes$() you can put two or more of the same up- or downgrade in a crafting grid to combine the EXP they store"
     }
   ]
 }

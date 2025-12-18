@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "tag": "bloodmagic:dungeon_corrosive"
+  },
+  "result": "bloodmagic:dungeon_pillar_cap_corrosive"
+}
