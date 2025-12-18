@@ -44,16 +44,25 @@ public class AltarUtil {
         PatchouliAPI.IPatchouliAPI api = PatchouliAPI.get();
         for (int i = 0; i < BMMultiblock.TIER_KEYS.length; i++) {
             IMultiblock toCheck = api.getMultiblock(BMMultiblock.TIER_KEYS[i]);
-            Rotation rot = toCheck.validate(level, altarPos.above());
-            if (!(rot == null)) {
-                tier = i;
+            if (toCheck != null) {
+                Rotation rot = toCheck.validate(level, altarPos.above());
+                if (rot != null) {
+                    tier = i;
+                    break;
+                }
             }
         }
         return tier;
     }
 
+
     public static Map<EnumRuneType, Integer> getUpgrades(int tier, Level level, BlockPos altarPos) {
         Map<EnumRuneType, Integer> upgrades = new HashMap<>();
+
+        if (tier < 0 || tier >= BMMultiblock.TIER_LIST.length) {
+            return upgrades;
+        }
+
         for (AltarComponent component : BMMultiblock.TIER_LIST[tier].components()) {
             if (component.isUpgrade()) {
                 List<BloodRune> runes = level.getBlockState(altarPos.offset(component.pos())).getBlockHolder().getData(BMDataMaps.BLOOD_RUNES);
