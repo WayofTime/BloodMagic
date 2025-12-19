@@ -25,10 +25,7 @@ public class SigilData {
                 MobEffects.DIG_SPEED,
                 0,
                 40,
-                100,
-                Optional.of(2),
-                Optional.of(600),
-                Optional.of(100)
+                100
         ));
     }
 

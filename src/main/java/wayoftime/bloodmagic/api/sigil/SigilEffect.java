@@ -46,13 +46,4 @@ public interface SigilEffect {
     default int useOnEntity(ItemStack sigil, Player player, LivingEntity target) {
         return 0;
     }
-
-    // TODO implement these. Need Arrays first and figure out the "rules" for them
-    default int arrayTick(ItemStack sigil, Level level, BlockPos arrayPos) {
-        return 0;
-    }
-
-    default boolean hasArrayEffect() {
-        return false;
-    }
 }

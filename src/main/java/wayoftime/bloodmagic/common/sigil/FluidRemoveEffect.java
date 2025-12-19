@@ -23,8 +23,8 @@ import wayoftime.bloodmagic.api.sigil.SigilEffect;
 
 public record FluidRemoveEffect(int removeAmount, int cost) implements SigilEffect {
     public static final MapCodec<FluidRemoveEffect> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
-            Codec.INT.fieldOf("remove_amount").forGetter(FluidRemoveEffect::removeAmount),
-            Codec.INT.fieldOf("success_cost").forGetter(FluidRemoveEffect::cost)
+            Codec.INT.fieldOf("fluid_amount").forGetter(FluidRemoveEffect::removeAmount),
+            Codec.INT.fieldOf("cost").forGetter(FluidRemoveEffect::cost)
     ).apply(builder, FluidRemoveEffect::new));
 
     @Override

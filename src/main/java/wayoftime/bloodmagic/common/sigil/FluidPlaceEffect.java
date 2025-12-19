@@ -22,8 +22,8 @@ import wayoftime.bloodmagic.api.sigil.SigilEffect;
 public record FluidPlaceEffect(Holder<Fluid> fluid, int tankFillAmount, int cost) implements SigilEffect {
     public static final MapCodec<FluidPlaceEffect> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
             BuiltInRegistries.FLUID.holderByNameCodec().fieldOf("fluid_type").forGetter(FluidPlaceEffect::fluid),
-            Codec.INT.fieldOf("tank_fill_amount").forGetter(FluidPlaceEffect::tankFillAmount),
-            Codec.INT.fieldOf("success_cost").forGetter(FluidPlaceEffect::cost)
+            Codec.INT.fieldOf("fluid_amount").forGetter(FluidPlaceEffect::tankFillAmount),
+            Codec.INT.fieldOf("cost").forGetter(FluidPlaceEffect::cost)
     ).apply(builder, FluidPlaceEffect::new));
 
     @Override

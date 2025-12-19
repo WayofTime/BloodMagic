@@ -13,17 +13,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import wayoftime.bloodmagic.api.sigil.SigilEffect;
 
-import java.util.Optional;
-
-public record ApplyPotionEffect(Holder<MobEffect> effect, int selfAmplifier, int selfTicks, int upkeep, Optional<Integer> otherAmplifier, Optional<Integer> otherTicks, Optional<Integer> otherCost) implements SigilEffect {
+public record ApplyPotionEffect(Holder<MobEffect> effect, int amplifier, int duration, int upkeep) implements SigilEffect {
     public static final MapCodec<ApplyPotionEffect> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
-            MobEffect.CODEC.fieldOf("effect_type").forGetter(ApplyPotionEffect::effect),
-            Codec.INT.fieldOf("amplifier").forGetter(ApplyPotionEffect::selfAmplifier),
-            Codec.INT.fieldOf("duration").forGetter(ApplyPotionEffect::selfTicks),
-            Codec.INT.fieldOf("upkeep").forGetter(ApplyPotionEffect::upkeep),
-            Codec.INT.optionalFieldOf("amplifier_others").forGetter(ApplyPotionEffect::otherAmplifier),
-            Codec.INT.optionalFieldOf("duration_others").forGetter(ApplyPotionEffect::otherTicks),
-            Codec.INT.optionalFieldOf("cost_others").forGetter(ApplyPotionEffect::otherCost)
+            MobEffect.CODEC.fieldOf("mob_effect_type").forGetter(ApplyPotionEffect::effect),
+            Codec.INT.fieldOf("amplifier").forGetter(ApplyPotionEffect::amplifier),
+            Codec.INT.fieldOf("duration").forGetter(ApplyPotionEffect::duration),
+            Codec.INT.fieldOf("upkeep_cost").forGetter(ApplyPotionEffect::upkeep)
     ).apply(builder, ApplyPotionEffect::new));
 
     @Override
@@ -33,7 +28,7 @@ public record ApplyPotionEffect(Holder<MobEffect> effect, int selfAmplifier, int
 
     @Override
     public int activeTick(ItemStack sigil, Level level, Player player) {
-        player.addEffect(new MobEffectInstance(effect, selfTicks, selfAmplifier));
+        player.addEffect(new MobEffectInstance(effect, duration, amplifier));
         return upkeep;
     }
 
@@ -41,17 +36,6 @@ public record ApplyPotionEffect(Holder<MobEffect> effect, int selfAmplifier, int
     public int useOnEntity(ItemStack sigil, Player player, LivingEntity target) {
         // TODO allow giving effect to entities? could be used offensively as well with negative effects maybe
         return SigilEffect.super.useOnEntity(sigil, player, target);
-    }
-
-    // TODO implement these
-    @Override
-    public boolean hasArrayEffect() {
-        return SigilEffect.super.hasArrayEffect();
-    }
-
-    @Override
-    public int arrayTick(ItemStack sigil, Level level, BlockPos arrayPos) {
-        return SigilEffect.super.arrayTick(sigil, level, arrayPos);
     }
 
     @Override
