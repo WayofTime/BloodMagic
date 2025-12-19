@@ -1,5 +1,5 @@
 {
-  "name": "Dungeon Eyes",
+  "name": "Demon Eyes",
   "icon": "bloodmagic:dungeon_eye",
   "category": "bloodmagic:dungeons",
   "extra_recipe_mappings": {
@@ -9,17 +9,17 @@
     {
       "type": "patchouli:crafting",
       "recipe": "bloodmagic:dungeon_eye",
-      "text": "A $(thing)Dungeon Eye$() is a light-emitting block often found within the depths of the $(l:bloodmagic:dungeons/endless_realm)Endless Realm$()."
+      "text": "A $(thing)Demon Eye$() is a light-emitting block often found within the depths of the $(l:bloodmagic:dungeons/endless_realm)Endless Realm$()."
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "bloodmagic:dungeon_eye_c",
-      "recipe2": "bloodmagic:dungeon_eye_d"
+      "recipe": "bloodmagic:dungeon_eye_corrosive",
+      "recipe2": "bloodmagic:dungeon_eye_destructive"
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "bloodmagic:dungeon_eye_s",
-      "recipe2": "bloodmagic:dungeon_eye_v"
+      "recipe": "bloodmagic:dungeon_eye_steadfast",
+      "recipe2": "bloodmagic:dungeon_eye_vengeful"
     }
   ]
 }

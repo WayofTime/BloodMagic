@@ -6,9 +6,7 @@
     "bloodmagic:inversion_pillar": 0,
     "bloodmagic:dungeon_seal": 0,
     "bloodmagic:dungeon_controller": 0,
-    "bloodmagic:inversion_pillar_cap": 0,
-    "bloodmagic:spikes": 1,
-    "bloodmagic:dungeon_spike_trap": 1
+    "bloodmagic:inversion_pillar_cap": 0
   },
   "pages": [
     {
