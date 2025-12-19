@@ -17,10 +17,9 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
-import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.block.BMBlocks;
 import wayoftime.bloodmagic.common.caps.BMCaps;
-import wayoftime.bloodmagic.common.caps.IBloodRune;
+import wayoftime.bloodmagic.common.caps.IRunePowers;
 import wayoftime.bloodmagic.common.damagesource.BMDamageSources;
 import wayoftime.bloodmagic.common.registry.AltarTier;
 import wayoftime.bloodmagic.common.registry.BMRegistries;
@@ -155,11 +154,11 @@ public class AltarUtil {
 
         Map<EnumRuneType, Integer> upgrades = new HashMap<>();
         upgradePositions.forEach(pos -> {
-            IBloodRune rune = level.getCapability(BMCaps.BLOOD_RUNE, pos);
+            IRunePowers rune = level.getCapability(BMCaps.RUNE_POWERS, pos);
             if (rune == null) {
                 return;
             }
-            rune.getUpgrades().forEach((type, amount) -> {
+            rune.getRunePowers().forEach((type, amount) -> {
                 upgrades.compute(type, (k, v) -> v == null ? amount : v + amount);
             });
         });

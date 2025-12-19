@@ -9,13 +9,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.common.blockentity.HellfireForgeTile;
 import wayoftime.bloodmagic.common.caps.BMCaps;
-import wayoftime.bloodmagic.common.caps.IBloodRune;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.datamap.BMDataMaps;
 import wayoftime.bloodmagic.common.datamap.BloodRune;
@@ -83,7 +80,7 @@ public class BMBlocks {
 
     private static void registerBlockCapability(RegisterCapabilitiesEvent event) {
         event.registerBlock(
-                BMCaps.BLOOD_RUNE,
+                BMCaps.RUNE_POWERS,
                 (level, pos, state, blockEntity, context) -> () -> {
                     List<BloodRune> runes = state.getBlockHolder().getData(BMDataMaps.BLOOD_RUNES);
                     Map<EnumRuneType, Integer> upgrades = new HashMap<>();
