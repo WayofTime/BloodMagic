@@ -158,7 +158,7 @@ public class AltarUtil {
             if (rune == null) {
                 return;
             }
-            rune.getRunePowers().forEach((type, amount) -> {
+            rune.get().forEach((type, amount) -> {
                 upgrades.compute(type, (k, v) -> v == null ? amount : v + amount);
             });
         });

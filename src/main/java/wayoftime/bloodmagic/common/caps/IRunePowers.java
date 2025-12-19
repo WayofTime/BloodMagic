@@ -6,5 +6,5 @@ import java.util.Map;
 
 @FunctionalInterface
 public interface IRunePowers {
-    Map<EnumRuneType, Integer> getRunePowers();
+    Map<EnumRuneType, Integer> get();
 }
