@@ -42,7 +42,7 @@ Refer to the [contributing page](CONTRIBUTING.MD)
 4. Run `gradlew build` (or `./gradlew build` if that doesn't work).
 5. Navigate to `./build/libs`, you will find the compiled jars there.
 
-Note that custom builds are meant for either yourself or your friend groups. If you intend to release it publicly you should consider making it an add-on instead or ask us if we'd like to include the changes in the actual Blood Magic
+Note that custom builds are meant for either yourself or your friend groups. If you intend to release it publicly you should consider making it an add-on instead or ask us if we'd like to include the changes in the actual Blood Magic. Check the [contributions](CONTRIBUTING.MD) page for details.
 Custom Builds will receive very little support from us, if any at all. If you find an issue in a custom build, try if you can replicate it in the official build first.
 
 ## Add-ons
