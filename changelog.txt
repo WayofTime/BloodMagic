@@ -7,18 +7,27 @@ Added:
 - ARC input tank can be emptied by putting buckets or other fluid handler items into the input bucket slot. It will also try to transfer as much as possible instead of only ever 1 bucket at a time
 - ARC tanks can be interacted with from in-world now. Order of operations tried is Fill input tank > Empty output tank > Empty input tank > Open GUI
 - Sigil of the Frozen Lake is now craftable
-- Weak and Saturated Tau now count towards tranquility
+- Weak and Saturated Tau now count towards tranquility when building the incense altar
 - Froglight variants are now valid in place of glowstone for the altar
+- Configuration options in bloodmagic-common.toml for the LP cost of all sigils
+- Fan translations! Currently we've deployed Simplified Chinese (zh_CN), thanks to Rain-Flying. If you'd like to help contribute a language to the pack, or improve an existing language, come join our Discord (link on github/modrinth/curseforge)
+- block protection compatibility (i.e. ftbchunks et al). Mining charges, the ritual of magnetism, and other things that affect or modify blocks should now respect teams and claims. Server owners, rejoice!
+
 
 Fixed:
+- Fixed a world-breaking crash with the Reap of the Harvest Moon ritual if it found a TileEntity in its range when
+AgriCraft is *not* installed.
+- - If your world has been affected by this, go to 'forge-server.toml' and set 'removeErroringBlockEntities' to 'true'. Launch your world and confirm that it's running, then set this back to false. (see the warning in the .toml for more info)
+- The 'flight' potion effect now properly clears when players drink a bucket of milk (or otherwise end it prematurely)
 - Ritual of the Beating Anvil didnt check to see if the recipe as valid and just produced the result. Recipe checking has been added, so you do now actually need the correct inputs
 - MagiChem's fully grown clusters have been added to the geode_harvestable tag to work out of the box rather than requiring a datapack. The budding blocks are already in the forge:budding tag which is already part of geode_acceleratable
-- Apparently Oculus doesnt take _s to mean steadfast version but something else and doesnt put the texture into the texture atlas, so we've literally spelled it out for it
+- Apparently Oculus takes _s to mean 'shader' and helpfully removes such instances from the texture map. Unfortunately all our steadfast variant blocks ended in _s. We've renamed them to _steadfast as a result
 - Blood Orbs could be used without getting damaged while spawn protection lasts. It now does the same thing the rest of the sacrifice stuff does and first gets rid of invulnerability
-- Hellfire Forge does not let item automation stuff place items into the autput slot anymore. Its also learned some other handy things like prioritizing a different input slot for each of the different sides as well as targeting the gem slot first from above and only ever taking from the output slot from below
-- Composite Item Filters didnt work, now they do
-- forge:storage_blocks/hellforged block and item tags were not added to the respective forge:storage_blocks tag
+- The Hellfire Forge does not let item automation stuff place items into the output slot anymore. Its also learned some other handy things like prioritizing a different input slot for each of the different sides as well as targeting the gem slot first from above and only ever taking from the output slot from below
+- Composite Item Filters didn't work, now they do
+- forge:storage_blocks/hellforged block and item tags have been added to the respective forge:storage_blocks tag
 - prevent a crash when opening the Edit HUD position screen while looking at an entity
+- soft coating no longer voids the contents of shulker boxes (or other tile-entities)
 
 ------------------------------------------------------
 Version 3.3.5
