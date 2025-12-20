@@ -39,7 +39,8 @@ public class BMBlockTagProvider extends BlockTagsProvider {
         this.tag(BMTags.Blocks.T6_CAPSTONES)
                 .addAll(BlockGroups.CRYSTAL_CLUSTER);
 
-        this.tag(BMTags.Blocks.PILLARS); // means all solid blocks are viable, has to be added otherwise the tag isnt generated
+        this.tag(BMTags.Blocks.PILLARS)
+                .add(Blocks.STONE_BRICKS); // TODO implement empty pillar tag = 1.20 behaviour-ish. perhaps isFaceSturdy shenanigans can help here too
 
         this.tag(BMTags.Blocks.SOUL_NETWORK_COMPARATOR)
                 .addAll(BlockGroups.BLOODSTONE);

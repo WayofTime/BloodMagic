@@ -1,7 +1,6 @@
 package wayoftime.bloodmagic.common.block;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -10,15 +9,21 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.common.caps.BMCaps;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
+import wayoftime.bloodmagic.common.datamap.BMDataMaps;
+import wayoftime.bloodmagic.common.datamap.BloodRune;
+import wayoftime.bloodmagic.util.EnumRuneType;
 import wayoftime.bloodmagic.util.helper.BlockEntityHelper;
 import wayoftime.bloodmagic.util.helper.BlockWithItemHolder;
 import wayoftime.bloodmagic.util.helper.BlockWithItemRegister;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.function.Supplier;
+import java.util.Map;
 
 public class BMBlocks {
     public static final DeferredRegister<Block> BASIC_BLOCKS = DeferredRegister.createBlocks(BloodMagic.MODID);
@@ -75,10 +80,37 @@ public class BMBlocks {
     public static final BlockWithItemHolder<Block, BlockItem> CRYSTAL_CLUSTER = BASIC_REG.register("crystal_cluster", rune_properties, decoration_item_properties);
     public static final BlockWithItemHolder<Block, BlockItem> CRYSTAL_CLUSTER_BRICK = BASIC_REG.register("crystal_cluster_brick", rune_properties, decoration_item_properties);
 
+    private static void registerBlockCapability(RegisterCapabilitiesEvent event) {
+        event.registerBlock(
+                BMCaps.RUNE_POWERS,
+                (level, pos, state, blockEntity, context) -> () -> {
+                    List<BloodRune> runes = state.getBlockHolder().getData(BMDataMaps.BLOOD_RUNES);
+                    Map<EnumRuneType, Integer> upgrades = new HashMap<>();
+                    if (runes == null) {
+                        return upgrades;
+                    }
+
+                    for (BloodRune rune : runes) {
+                        upgrades.compute(rune.type(), (k, v) -> v == null ? rune.amount() : v + rune.amount());
+                    }
+                    return upgrades;
+                },
+                RUNE_ACCELERATION.block().get(), RUNE_SPEED.block().get(), RUNE_CHARGING.block().get(),
+                RUNE_SACRIFICE.block().get(), RUNE_SELF_SACRIFICE.block().get(), RUNE_ORB.block().get(),
+                RUNE_CAPACITY.block().get(), RUNE_CAPACITY_AUGMENTED.block().get(), RUNE_DISLOCATION.block().get(),
+                RUNE_EFFICIENCY.block().get(),
+                RUNE_2_ACCELERATION.block().get(), RUNE_2_SPEED.block().get(), RUNE_2_CHARGING.block().get(),
+                RUNE_2_SACRIFICE.block().get(), RUNE_2_SELF_SACRIFICE.block().get(), RUNE_2_ORB.block().get(),
+                RUNE_2_CAPACITY.block().get(), RUNE_2_CAPACITY_AUGMENTED.block().get(), RUNE_2_DISLOCATION.block().get(),
+                RUNE_2_EFFICIENCY.block().get()
+        );
+    }
+
     public static void register(IEventBus modBus) {
         BASIC_BLOCKS.register(modBus);
         BASIC_BLOCK_ITEMS.register(modBus);
         BLOCKS.register(modBus);
         BLOCK_ITEMS.register(modBus);
+        modBus.addListener(BMBlocks::registerBlockCapability);
     }
 }

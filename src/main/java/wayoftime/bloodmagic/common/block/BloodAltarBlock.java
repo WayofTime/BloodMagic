@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 import wayoftime.bloodmagic.common.blockentity.BMTiles;
 import wayoftime.bloodmagic.common.blockentity.BloodAltarTile;
@@ -45,7 +46,7 @@ public class BloodAltarBlock extends Block implements EntityBlock {
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (!state.is(newState.getBlock())) {
             if (level.getBlockEntity(pos) instanceof BloodAltarTile tile) {
-                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), tile.inv.getStackInSlot(0));
+                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), tile.getInventory().getStackInSlot(0));
             }
         }
         super.onRemove(state, level, pos, newState, movedByPiston);
@@ -76,7 +77,7 @@ public class BloodAltarBlock extends Block implements EntityBlock {
         if (!(tile instanceof BloodAltarTile altar)) {
             return 0;
         }
-        return altar.isSignaling ? 15 : 0;
+        return altar.getIsSignaling() ? 15 : 0;
     }
 
     @Override
@@ -92,25 +93,30 @@ public class BloodAltarBlock extends Block implements EntityBlock {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (hand != InteractionHand.MAIN_HAND) {
-            return ItemInteractionResult.CONSUME;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
+
         BlockEntity be = level.getBlockEntity(pos);
         if (!(be instanceof BloodAltarTile tile)) {
             return ItemInteractionResult.FAIL;
         }
-        ItemStack altarStack = tile.inv.getStackInSlot(0);
+        ItemStackHandler altarHandler = tile.getInventory();
+        ItemStack altarStack = altarHandler.getStackInSlot(0);
+        // TODO perhaps implement this again, though not sure its needed
         //altarStack.getCapability(BloodMagicCapabilities.ALTAR_READER);
+
         if (altarStack.isEmpty() && !stack.isEmpty()) {
-            tile.inv.setStackInSlot(0, stack.copy());
+            tile.getInventory().setStackInSlot(0, stack.copy());
             level.sendBlockUpdated(pos, state, state, Block.UPDATE_ALL);
             player.setItemInHand(hand, ItemStack.EMPTY);
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         } else if (!altarStack.isEmpty() && stack.isEmpty()) {
             player.setItemInHand(hand, altarStack.copy());
-            tile.inv.setStackInSlot(0, ItemStack.EMPTY);
+            tile.getInventory().setStackInSlot(0, ItemStack.EMPTY);
             level.sendBlockUpdated(pos, state, state, Block.UPDATE_ALL);
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
-        return ItemInteractionResult.CONSUME;
+
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 }
