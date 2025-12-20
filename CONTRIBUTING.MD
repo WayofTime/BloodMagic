@@ -6,7 +6,7 @@
 4. Add this repository as upstream by running `git remote add upstream git@github.com:WayofTime/BloodMagic.git` and make sure your local clone knows about all the branches of it by running `git fetch upstream` after.
 5. Create a new local branch based on the upstream branch you wish to target (eg `git checkout -b <your branch name> upstream/1.21.1`)
 6. Make your changes in your new branch.
-7. Test your changes both on client only and client - server setups. We will still test it ourselves as more brains usually means covering more dumb stuff that could be done and might not work as intended
+7. Test your changes both on client only and client - server setups. We'll still test it ourselves, for completeness' sake
 8. Now you can commit your changes, push them to your fork (`git push --set-upstream <your branch name>`) and open a pull request
 9. We will review and test your changes and may ask you to change some things. If we do, change them on your local branch, commit and push it again (--set-upstream not needed anymore) and let us know we did so, so we can repeat as needed.
 
