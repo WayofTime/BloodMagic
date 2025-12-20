@@ -149,10 +149,14 @@ tasks.named('jar', Jar).configure {
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
+    archiveClassifier = 'slim'
     finalizedBy 'reobfJar'
 }
 
-
+tasks.named('jarJar', Jar).configure {
+    archiveClassifier = ''
+    finalizedBy 'reobfJarJar'
+}
 
 task srcJar(type: Jar) {
     from(sourceSets.main.java)
@@ -174,6 +178,7 @@ artifacts {
 publishing {
     publications {
         register('mavenJava', MavenPublication) {
+            jarJar.component(it)
             artifact jar
             artifact srcJar
             artifact apiJar
