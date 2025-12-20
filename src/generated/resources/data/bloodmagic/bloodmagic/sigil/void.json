@@ -1,0 +1,5 @@
+{
+  "type": "bloodmagic:fluid_remove_effect",
+  "cost": 50,
+  "fluid_amount": 1000
+}

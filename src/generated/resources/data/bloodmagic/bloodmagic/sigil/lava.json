@@ -1,0 +1,6 @@
+{
+  "type": "bloodmagic:fluid_place_effect",
+  "cost": 1000,
+  "fluid_amount": 10000,
+  "fluid_type": "minecraft:lava"
+}

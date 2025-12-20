@@ -1,9 +1,23 @@
 package wayoftime.bloodmagic.util;
 
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
+
 import java.text.DecimalFormat;
+import java.util.List;
 
 public class ChatUtil {
     public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("###,###,###.##");
+
+    public static void sendChat(Player player, List<Component> text) {
+        text.forEach(player::sendSystemMessage);
+    }
+
+    // TODO implement the no-spam version. looks like that would have to be done with a mixin that likely exists on like 5 mods that will be loaded at any given time already
+    public static void sendChatNoSpam(Player player, List<Component> text) {
+        sendChat(player, text);
+    }
+
 
     private static final char[] ones = new char[]{'I', 'X', 'C', 'M'};
     private static final char[] fives = new char[]{'V', 'L', 'D'};

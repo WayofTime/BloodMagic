@@ -11,6 +11,7 @@ import wayoftime.bloodmagic.common.datacomponent.EnumWillType;
 import wayoftime.bloodmagic.common.fluid.BMFluids;
 import wayoftime.bloodmagic.common.item.BMItems;
 import wayoftime.bloodmagic.datagen.content.LivingUpgrades;
+import wayoftime.bloodmagic.datagen.content.SigilData;
 import wayoftime.bloodmagic.util.helper.BlockWithItemHolder;
 
 public class BMLanguageProvider extends LanguageProvider {
@@ -138,6 +139,7 @@ public class BMLanguageProvider extends LanguageProvider {
         add("chat.bloodmagic.living_upgrade.level_up", "%s has levelled up to %s!");
 
         LivingUpgrades.translations(this::add);
+        SigilData.translations(this::add);
     }
 
     public void addCommand(String key, String value) {

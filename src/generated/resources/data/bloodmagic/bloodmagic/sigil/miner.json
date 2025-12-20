@@ -1,0 +1,7 @@
+{
+  "type": "bloodmagic:apply_potion_effect",
+  "amplifier": 0,
+  "duration": 40,
+  "mob_effect_type": "minecraft:haste",
+  "upkeep_cost": 100
+}
