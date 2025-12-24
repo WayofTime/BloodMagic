@@ -43,6 +43,10 @@
     },
     {
       "type": "patchouli:text",
+      "text": "$(li)teleposition sigil now teleports you when clicking on a non-teleposer block as well. it also now checks itself for a destination when inside a sigil of holding$()$(li)ritual diviner and tinkerer can now be cycled even when looking at a (non master ritual stone) block"
+    },
+    {
+      "type": "patchouli:text",
       "title": "3.3.5",
       "text": "$(li)Missing Recipe Serializer prevented people from joining servers. Its been found and put where it belongs"
     },

@@ -29,6 +29,8 @@ AgriCraft is *not* installed.
 - prevent a crash when opening the Edit HUD position screen while looking at an entity
 - soft coating no longer voids the contents of shulker boxes (or other tile-entities)
 - bloodmagic:geode_harvestable now adds forge:clusters as a tag instead of a block, meaning it'll actually work with them
+- teleposition sigil now teleports you when clicking on a non-teleposer block as well. it also now checks itself for a destination when inside a sigil of holding
+- ritual diviner and tinkerer can now be cycled even when looking at a (non master ritual stone) block
 
 ------------------------------------------------------
 Version 3.3.5
