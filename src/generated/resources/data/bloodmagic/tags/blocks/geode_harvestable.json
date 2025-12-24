@@ -2,7 +2,7 @@
   "values": [
     "minecraft:amethyst_cluster",
     {
-      "id": "forge:clusters",
+      "id": "#forge:clusters",
       "required": false
     },
     {
