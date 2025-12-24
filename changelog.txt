@@ -28,6 +28,7 @@ AgriCraft is *not* installed.
 - forge:storage_blocks/hellforged block and item tags have been added to the respective forge:storage_blocks tag
 - prevent a crash when opening the Edit HUD position screen while looking at an entity
 - soft coating no longer voids the contents of shulker boxes (or other tile-entities)
+- bloodmagic:geode_harvestable now adds forge:clusters as a tag instead of a block, meaning it'll actually work with them
 
 ------------------------------------------------------
 Version 3.3.5
