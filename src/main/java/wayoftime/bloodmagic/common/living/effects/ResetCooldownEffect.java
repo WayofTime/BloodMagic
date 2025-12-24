@@ -6,7 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.enchantment.LevelBasedValue;
 import wayoftime.bloodmagic.common.dataattachment.BMDataAttachments;
-import wayoftime.bloodmagic.common.living.LivingEntityEffect;
+import wayoftime.bloodmagic.api.living.LivingEntityEffect;
 
 import java.util.Map;
 import java.util.Optional;

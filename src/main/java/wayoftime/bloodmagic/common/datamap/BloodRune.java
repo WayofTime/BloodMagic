@@ -2,8 +2,7 @@ package wayoftime.bloodmagic.common.datamap;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.util.StringRepresentable;
-import wayoftime.bloodmagic.util.EnumRuneType;
+import wayoftime.bloodmagic.api.altar.EnumRuneType;
 
 public record BloodRune(EnumRuneType type, int amount) {
     public static final Codec<BloodRune> CODEC = RecordCodecBuilder.create(builder -> builder.group(

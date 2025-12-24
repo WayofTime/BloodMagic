@@ -5,8 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.common.living.LivingEntityEffect;
+import wayoftime.bloodmagic.api.living.LivingEntityEffect;
 import wayoftime.bloodmagic.common.living.LivingHelper;
 import wayoftime.bloodmagic.common.living.LivingUpgrade;
 

@@ -9,9 +9,8 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import wayoftime.bloodmagic.api.BMIdentifiers.RegistryKeys;
-import wayoftime.bloodmagic.common.registry.BMRegistries;
 import wayoftime.bloodmagic.datagen.content.AltarTiers;
-import wayoftime.bloodmagic.datagen.content.BloodyDamageSources;
+import wayoftime.bloodmagic.datagen.content.BMDamageTypes;
 import wayoftime.bloodmagic.datagen.content.ImperfectRitualData;
 import wayoftime.bloodmagic.datagen.content.LivingUpgrades;
 import wayoftime.bloodmagic.datagen.content.SigilData;
@@ -32,17 +31,17 @@ public class Datagen {
         event.createProvider(BMLanguageProvider::new);
 
         event.createDatapackRegistryObjects(new RegistrySetBuilder()
-                .add(Registries.DAMAGE_TYPE, BloodyDamageSources::bootstrap)
-                .add(BMRegistries.Keys.ALTAR_TIER_KEY, AltarTiers::bootstrap)
-                .add(BMRegistries.Keys.LIVING_UPGRADES, LivingUpgrades::bootstrap)
-                .add(BMRegistries.Keys.IMPERFECT_RITUALS, ImperfectRitualData::effects)
+                .add(Registries.DAMAGE_TYPE, BMDamageTypes::types)
+                .add(RegistryKeys.ALTAR_TIER_KEY, AltarTiers::tiers)
+                .add(RegistryKeys.LIVING_UPGRADES, LivingUpgrades::upgrades)
+                .add(RegistryKeys.IMPERFECT_RITUALS, ImperfectRitualData::effects)
                 .add(RegistryKeys.SIGIL_EFFECT, SigilData::sigilTypes)
         );
 
         ProviderHelper helper = new ProviderHelper(fileHelper);
 
-        event.createProvider(helper.tagsFor(BMRegistries.Keys.LIVING_UPGRADES, LivingUpgrades::tags));
-        event.createProvider(helper.tagsFor(Registries.DAMAGE_TYPE, BloodyDamageSources::tags));
+        event.createProvider(helper.tagsFor(RegistryKeys.LIVING_UPGRADES, LivingUpgrades::tags));
+        event.createProvider(helper.tagsFor(Registries.DAMAGE_TYPE, BMDamageTypes::tags));
         event.createBlockAndItemTags(BMBlockTagProvider::new, BMItemTagProvider::new);
 
         event.createProvider(BMDataMapProvider::new);

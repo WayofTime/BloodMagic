@@ -7,9 +7,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import wayoftime.bloodmagic.api.BMIdentifiers;
 import wayoftime.bloodmagic.common.world.BMSavedData;
-import wayoftime.bloodmagic.common.damagesource.BMDamageSources;
-import wayoftime.bloodmagic.util.SoulTicket;
+import wayoftime.bloodmagic.api.soulnetwork.SoulTicket;
 
 import java.util.UUID;
 
@@ -106,7 +106,7 @@ public class SoulNetwork {
                     int dmg = Math.ceilDiv((int) syphon, 100);
                     user.invulnerableTime = 0;
                     Level level = user.level();
-                    user.hurt(level.damageSources().source(BMDamageSources.SACRIFICE, user), dmg);
+                    user.hurt(level.damageSources().source(BMIdentifiers.DamageTypes.SACRIFICE, user), dmg);
                 }
             }
         }

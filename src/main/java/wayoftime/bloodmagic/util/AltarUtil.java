@@ -17,13 +17,13 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
+import wayoftime.bloodmagic.api.BMIdentifiers;
+import wayoftime.bloodmagic.api.altar.EnumRuneType;
 import wayoftime.bloodmagic.common.block.BMBlocks;
 import wayoftime.bloodmagic.common.caps.BMCaps;
-import wayoftime.bloodmagic.common.caps.IRunePowers;
-import wayoftime.bloodmagic.common.damagesource.BMDamageSources;
-import wayoftime.bloodmagic.common.registry.AltarTier;
-import wayoftime.bloodmagic.common.registry.BMRegistries;
-import wayoftime.bloodmagic.common.tag.BMTags;
+import wayoftime.bloodmagic.api.capability.IRunePowers;
+import wayoftime.bloodmagic.api.altar.AltarTier;
+import wayoftime.bloodmagic.api.BMTags;
 
 import java.util.*;
 
@@ -33,7 +33,7 @@ public class AltarUtil {
     static List<AltarTier> TIERS = null;
     @SubscribeEvent
     public static void onServerStarted(ServerStartedEvent event) {
-        TIERS = event.getServer().registryAccess().registry(BMRegistries.Keys.ALTAR_TIER_KEY).orElseThrow().stream()
+        TIERS = event.getServer().registryAccess().registry(BMIdentifiers.RegistryKeys.ALTAR_TIER_KEY).orElseThrow().stream()
                 .sorted()
                 .toList();
     }
@@ -60,7 +60,7 @@ public class AltarUtil {
 
     public static DamageSource sacrificeDamage(Player causer) {
         DamageSources sources = causer.level().damageSources();
-        return sources.source(BMDamageSources.SELF_SACRIFICE, causer);
+        return sources.source(BMIdentifiers.DamageTypes.SELF_SACRIFICE, causer);
     }
 
     public static int getTier(Level level, BlockPos altarPos) {

@@ -8,13 +8,15 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.BMIdentifiers;
+import wayoftime.bloodmagic.api.living.LivingEntityEffect;
+import wayoftime.bloodmagic.api.living.LivingValueEffect;
 import wayoftime.bloodmagic.common.living.effects.*;
-import wayoftime.bloodmagic.common.registry.BMRegistries;
 
 import java.util.List;
 
 public class LivingEffectComponents {
-    public static final DeferredRegister.DataComponents LIVING_EFFECT_COMPONENTS = DeferredRegister.createDataComponents(BMRegistries.Keys.LIVING_EFFECT_COMPONENTS, BloodMagic.MODID);
+    public static final DeferredRegister.DataComponents LIVING_EFFECT_COMPONENTS = DeferredRegister.createDataComponents(BMIdentifiers.RegistryKeys.LIVING_EFFECT_COMPONENTS, BloodMagic.MODID);
     public static final Codec<DataComponentType<?>> COMPONENT_CODEC = Codec.lazyInitialized(() -> LIVING_EFFECT_COMPONENTS.getRegistry().get().byNameCodec());
     public static final Codec<DataComponentMap> CODEC = DataComponentMap.makeCodec(COMPONENT_CODEC);
 

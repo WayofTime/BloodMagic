@@ -8,7 +8,7 @@ import wayoftime.bloodmagic.common.blockentity.HellfireForgeTile;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.datacomponent.EnumWillType;
 import wayoftime.bloodmagic.common.recipe.BMRecipes;
-import wayoftime.bloodmagic.common.tag.BMTags;
+import wayoftime.bloodmagic.api.BMTags;
 
 import java.util.ArrayList;
 import java.util.List;

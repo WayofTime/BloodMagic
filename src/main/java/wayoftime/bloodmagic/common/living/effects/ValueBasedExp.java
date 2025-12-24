@@ -9,7 +9,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import wayoftime.bloodmagic.common.living.LivingHelper;
 import wayoftime.bloodmagic.common.living.LivingUpgrade;
-import wayoftime.bloodmagic.common.living.LivingValueEffect;
+import wayoftime.bloodmagic.api.living.LivingValueEffect;
 
 public record ValueBasedExp(Holder<LivingUpgrade> upgrade, boolean victim) implements LivingValueEffect {
     public static final MapCodec<ValueBasedExp> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(

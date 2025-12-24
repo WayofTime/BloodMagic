@@ -1,6 +1,6 @@
-package wayoftime.bloodmagic.common.caps;
+package wayoftime.bloodmagic.api.capability;
 
-import wayoftime.bloodmagic.util.EnumRuneType;
+import wayoftime.bloodmagic.api.altar.EnumRuneType;
 
 import java.util.Map;
 

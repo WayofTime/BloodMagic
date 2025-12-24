@@ -9,7 +9,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.enchantment.LevelBasedValue;
-import wayoftime.bloodmagic.common.living.LivingEntityEffect;
+import wayoftime.bloodmagic.api.living.LivingEntityEffect;
 
 public record AddMobEffect(Holder<MobEffect> mobEffect, LevelBasedValue amplifier, LevelBasedValue duration) implements LivingEntityEffect {
     public static final MapCodec<AddMobEffect> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(

@@ -4,8 +4,8 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import wayoftime.bloodmagic.common.living.LivingEntityEffect;
-import wayoftime.bloodmagic.common.living.LivingValueEffect;
+import wayoftime.bloodmagic.api.living.LivingEntityEffect;
+import wayoftime.bloodmagic.api.living.LivingValueEffect;
 
 public record DelegateEffect(LivingEntityEffect effect) implements LivingValueEffect {
     public static final MapCodec<DelegateEffect> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(

@@ -8,8 +8,9 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.TagsUpdatedEvent;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.BMIdentifiers;
+import wayoftime.bloodmagic.api.BMTags;
 import wayoftime.bloodmagic.common.living.LivingUpgrade;
-import wayoftime.bloodmagic.common.registry.BMRegistries;
 
 import java.util.function.Consumer;
 
@@ -44,12 +45,12 @@ public class TagsCache {
         RegistryAccess access = event.getRegistryAccess();
         datapackHelper(
                 access,
-                BMRegistries.Keys.LIVING_UPGRADES,
+                BMIdentifiers.RegistryKeys.LIVING_UPGRADES,
                 registry -> TOOLTIP_ORDER = registry.getOrCreateTag(BMTags.Living.TOOLTIP_ORDER)
         );
         datapackHelper(
                 access,
-                BMRegistries.Keys.LIVING_UPGRADES,
+                BMIdentifiers.RegistryKeys.LIVING_UPGRADES,
                 registry -> UPGRADE_SCRAPPABLE = registry.getOrCreateTag(BMTags.Living.IS_SCRAPPABLE)
         );
     }

@@ -20,10 +20,10 @@ import wayoftime.bloodmagic.api.BMIdentifiers;
 import wayoftime.bloodmagic.api.BMIdentifiers.Sigils;
 import wayoftime.bloodmagic.api.sigil.SigilEffect;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
-import wayoftime.bloodmagic.common.datacomponent.Binding;
+import wayoftime.bloodmagic.api.datacomponent.Binding;
 import wayoftime.bloodmagic.common.datacomponent.SoulNetwork;
-import wayoftime.bloodmagic.util.SoulTicket;
-import wayoftime.bloodmagic.util.helper.SoulNetworkHelper;
+import wayoftime.bloodmagic.api.soulnetwork.SoulTicket;
+import wayoftime.bloodmagic.api.helper.SoulNetworkHelper;
 
 import java.util.List;
 

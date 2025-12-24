@@ -26,9 +26,10 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import org.apache.commons.lang3.mutable.MutableFloat;
 import org.apache.logging.log4j.util.TriConsumer;
+import wayoftime.bloodmagic.api.BMIdentifiers;
+import wayoftime.bloodmagic.api.living.LivingValueEffect;
 import wayoftime.bloodmagic.common.living.effects.AttributeEffect;
 import wayoftime.bloodmagic.common.living.effects.ConditionalEffect;
-import wayoftime.bloodmagic.common.registry.BMRegistries;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -45,13 +46,13 @@ public record LivingUpgrade(Levels levels, DataComponentMap effects) {
             Codec.unit(DataComponentMap.EMPTY).fieldOf("effects").forGetter(LivingUpgrade::effects)
     ).apply(builder, LivingUpgrade::new));
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, Holder<LivingUpgrade>> HOLDER_STREAM_CODEC = ByteBufCodecs.holderRegistry(BMRegistries.Keys.LIVING_UPGRADES);
+    public static final StreamCodec<RegistryFriendlyByteBuf, Holder<LivingUpgrade>> HOLDER_STREAM_CODEC = ByteBufCodecs.holderRegistry(BMIdentifiers.RegistryKeys.LIVING_UPGRADES);
 
     public static String descriptionId(ResourceKey<LivingUpgrade> key) {
         return Util.makeDescriptionId("living_upgrade", key.location());
     }
 
-    public static final Codec<Holder<LivingUpgrade>> HOLDER_CODEC = RegistryFixedCodec.create(BMRegistries.Keys.LIVING_UPGRADES);
+    public static final Codec<Holder<LivingUpgrade>> HOLDER_CODEC = RegistryFixedCodec.create(BMIdentifiers.RegistryKeys.LIVING_UPGRADES);
 
     public void modifyKnockback(Integer level, LivingEntity victim, DamageSource source, MutableFloat mutablefloat) {
         modifyFilteredDamageValue(LivingEffectComponents.KNOCKBACK.get(), level, victim, source, mutablefloat);

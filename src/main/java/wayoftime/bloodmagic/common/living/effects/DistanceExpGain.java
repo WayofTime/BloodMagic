@@ -9,11 +9,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.dataattachment.BMDataAttachments;
-import wayoftime.bloodmagic.common.living.LivingEntityEffect;
+import wayoftime.bloodmagic.api.living.LivingEntityEffect;
 import wayoftime.bloodmagic.common.living.LivingHelper;
 import wayoftime.bloodmagic.common.living.LivingUpgrade;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public record DistanceExpGain(Holder<LivingUpgrade> upgrade, Movement movement) implements LivingEntityEffect {

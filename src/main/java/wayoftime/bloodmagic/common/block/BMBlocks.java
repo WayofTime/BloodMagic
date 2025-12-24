@@ -16,7 +16,7 @@ import wayoftime.bloodmagic.common.caps.BMCaps;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.datamap.BMDataMaps;
 import wayoftime.bloodmagic.common.datamap.BloodRune;
-import wayoftime.bloodmagic.util.EnumRuneType;
+import wayoftime.bloodmagic.api.altar.EnumRuneType;
 import wayoftime.bloodmagic.util.helper.BlockEntityHelper;
 import wayoftime.bloodmagic.util.helper.BlockWithItemHolder;
 import wayoftime.bloodmagic.util.helper.BlockWithItemRegister;

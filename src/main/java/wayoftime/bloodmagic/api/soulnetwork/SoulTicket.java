@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.util;
+package wayoftime.bloodmagic.api.soulnetwork;
 
 import net.minecraft.commands.CommandSource;
 import net.minecraft.core.BlockPos;

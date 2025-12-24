@@ -1,15 +1,9 @@
-package wayoftime.bloodmagic.common.registry;
+package wayoftime.bloodmagic.api.altar;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
-import java.util.Optional;
 
 public record AltarTier(int tier, int distance, int sideRunes, int sideBlocks, int pillarHeight, int pillarOffset, ExtraCodecs.TagOrElementLocation capstone) implements Comparable<AltarTier> {
     public static final Codec<AltarTier> CODEC = RecordCodecBuilder.create(instance -> instance.group(

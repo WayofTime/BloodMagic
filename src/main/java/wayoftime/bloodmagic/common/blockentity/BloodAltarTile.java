@@ -18,7 +18,7 @@ import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
-import wayoftime.bloodmagic.common.datacomponent.Binding;
+import wayoftime.bloodmagic.api.datacomponent.Binding;
 import wayoftime.bloodmagic.common.datacomponent.SoulNetwork;
 import wayoftime.bloodmagic.common.datamap.BMDataMaps;
 import wayoftime.bloodmagic.common.datamap.BloodOrb;
@@ -27,11 +27,11 @@ import wayoftime.bloodmagic.common.fluid.BMFluids;
 import wayoftime.bloodmagic.common.recipe.BMRecipes;
 import wayoftime.bloodmagic.common.recipe.bloodaltar.BloodAltarInput;
 import wayoftime.bloodmagic.common.recipe.bloodaltar.BloodAltarRecipe;
-import wayoftime.bloodmagic.common.tag.BMTags;
-import wayoftime.bloodmagic.util.EnumRuneType;
+import wayoftime.bloodmagic.api.BMTags;
+import wayoftime.bloodmagic.api.altar.EnumRuneType;
 import wayoftime.bloodmagic.util.AltarUtil;
-import wayoftime.bloodmagic.util.SoulTicket;
-import wayoftime.bloodmagic.util.helper.SoulNetworkHelper;
+import wayoftime.bloodmagic.api.soulnetwork.SoulTicket;
+import wayoftime.bloodmagic.api.helper.SoulNetworkHelper;
 
 import java.util.Map;
 import java.util.Optional;
@@ -43,7 +43,12 @@ public class BloodAltarTile extends BaseTile implements IFluidHandler {
     private BloodAltarRecipe currentRecipe = null;
     private int cooldownAfterCrafting = 0;
     private int progress = 0;
+
     private int tier = 0;
+    public int getTier() {
+        return tier;
+    }
+
     private int ticks;
     private int inputTank = 0;
     private int outputTank = 0;

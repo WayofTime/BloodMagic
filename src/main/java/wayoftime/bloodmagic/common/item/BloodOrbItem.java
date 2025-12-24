@@ -11,11 +11,11 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
-import wayoftime.bloodmagic.common.datacomponent.Binding;
+import wayoftime.bloodmagic.api.datacomponent.Binding;
 import wayoftime.bloodmagic.common.datacomponent.SoulNetwork;
 import wayoftime.bloodmagic.common.datamap.BMDataMaps;
-import wayoftime.bloodmagic.util.SoulTicket;
-import wayoftime.bloodmagic.util.helper.SoulNetworkHelper;
+import wayoftime.bloodmagic.api.soulnetwork.SoulTicket;
+import wayoftime.bloodmagic.api.helper.SoulNetworkHelper;
 
 public class BloodOrbItem extends Item {
 
