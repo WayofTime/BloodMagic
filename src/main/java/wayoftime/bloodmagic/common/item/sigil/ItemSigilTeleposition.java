@@ -89,6 +89,10 @@ public class ItemSigilTeleposition extends ItemSigilBase
 	public InteractionResult useOn(UseOnContext context)
 	{
 		ItemStack stack = context.getItemInHand();
+		// need this to work in holding sigil
+		if (stack.getItem() instanceof ISigil.Holding) {
+			stack = ((Holding) stack.getItem()).getHeldItem(stack, context.getPlayer());
+		}
 		BlockPos pos = context.getClickedPos();
 		Level world = context.getLevel();
 		Player player = context.getPlayer();
@@ -108,9 +112,10 @@ public class ItemSigilTeleposition extends ItemSigilBase
 						BindableHelper.applyBinding(stack, player);
 				}
 			}
+			return InteractionResult.SUCCESS;
 		}
 
-		return InteractionResult.SUCCESS;
+		return InteractionResult.PASS;
 	}
 
 	public void setStoredPos(ItemStack stack, BlockPos pos)
