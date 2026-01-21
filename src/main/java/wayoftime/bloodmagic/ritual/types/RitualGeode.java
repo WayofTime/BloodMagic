@@ -1,5 +1,6 @@
 package wayoftime.bloodmagic.ritual.types;
 
+import com.mojang.authlib.GameProfile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -14,8 +15,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.FakePlayerFactory;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.ConfigManager;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
@@ -113,6 +118,8 @@ public class RitualGeode extends Ritual {
         if (steadfastWill > MIN_STEADFAST) {
             toolStack = silkPick;
             doSilk = true;
+            // if both are configured silk touch takes priority and fortune cost shouldnt be paid
+            doFortune = false;
         }
 
         double fortuneWill = destructiveWill;
@@ -132,9 +139,15 @@ public class RitualGeode extends Ritual {
                         continue;
                     }
                 }
-                LootParams.Builder lootBuilder = new LootParams.Builder((ServerLevel) world);
-                Vec3 blockCenter = new Vec3(harvestPos.getX() + 0.5, harvestPos.getY() + 0.5, harvestPos.getZ() + 0.5);
-                List<ItemStack> blockDrops = state.getDrops(lootBuilder.withParameter(LootContextParams.ORIGIN, blockCenter).withParameter(LootContextParams.TOOL, toolStack));
+
+                LootParams.Builder paramsBuilder = new LootParams.Builder((ServerLevel) world)
+                        .withParameter(LootContextParams.ORIGIN, pos.getCenter())
+                        .withParameter(LootContextParams.BLOCK_STATE, world.getBlockState(pos))
+                        .withParameter(LootContextParams.TOOL, toolStack)
+                        .withOptionalParameter(LootContextParams.BLOCK_ENTITY, world.getBlockEntity(pos))
+                        .withOptionalParameter(LootContextParams.THIS_ENTITY, FakePlayerFactory.get((ServerLevel) world, new GameProfile(masterRitualStone.getOwner(), "[BM Geode]")));
+
+                List<ItemStack> blockDrops = state.getDrops(paramsBuilder);
                 drops.addAll(blockDrops);
                 BlockProtectionHelper.tryBreakBlockNoDrops(world, harvestPos, masterRitualStone.getOwner());
                 if (doFortune) {
@@ -145,10 +158,9 @@ public class RitualGeode extends Ritual {
                 }
 
                 for (ItemStack dropStack : drops) {
-                    if (doStore && storeWill >= WILL_PER_STORE * blockDrops.size()) {
-                        int size = dropStack.getCount();
+                    if (doStore && storeWill >= WILL_PER_STORE) {
                         dropStack = Utils.insertStackIntoTile(dropStack, inv, Direction.DOWN);
-                        storeWill -= (size - dropStack.getCount());
+                        storeWill -= WILL_PER_STORE;
                     }
                     if (!dropStack.isEmpty()) {
                         Utils.spawnStackAtBlock(world, harvestPos, Direction.UP, dropStack);

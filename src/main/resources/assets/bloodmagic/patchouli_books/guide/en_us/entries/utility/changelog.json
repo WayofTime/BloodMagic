@@ -39,7 +39,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "$(li)forge:storage_blocks/hellforged block and item tags have been added to the respective forge:storage_blocks tag$(li)prevent a crash when opening the Edit HUD position screen while looking at an entity$(li)soft coating no longer voids the contents of shulker boxes (or other tile-entities)"
+      "text": "$(li)forge:storage_blocks/hellforged block and item tags have been added to the respective forge:storage_blocks tag$(li)prevent a crash when opening the Edit HUD position screen while looking at an entity$(li)soft coating no longer voids the contents of shulker boxes (or other tile-entities)$(li)now actually harvests certus quartz"
     },
     {
       "type": "patchouli:text",
