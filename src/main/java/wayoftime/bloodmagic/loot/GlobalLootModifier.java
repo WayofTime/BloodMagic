@@ -5,6 +5,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -64,9 +66,17 @@ public class GlobalLootModifier
 		@Override
 		protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 			ItemStack ctxTool = context.getParamOrNull(LootContextParams.TOOL);
+			// charges use anointment differently
             if (ctxTool.is(BloodMagicTags.CHARGES)) {
                 return generatedLoot;
             }
+
+			BlockEntity be = context.getParamOrNull(LootContextParams.BLOCK_ENTITY);
+			// dont apply on BE's
+			if (be != null) {
+				return generatedLoot;
+			}
+
 			// return early if silk-touch is already applied (otherwise we'll get stuck in
 			// an infinite loop).
 			if (EnchantmentHelper.getEnchantments(ctxTool).containsKey(Enchantments.SILK_TOUCH)) {
@@ -78,18 +88,21 @@ public class GlobalLootModifier
 				return generatedLoot;
 			}
 
-			BlockPos pos = BlockPos.containing(context.getParam(LootContextParams.ORIGIN));
-			BlockState state = context.getParam(LootContextParams.BLOCK_STATE);
-			BlockEntity tile = context.getParamOrNull(LootContextParams.BLOCK_ENTITY);
-
 			ItemStack fakeTool = ctxTool.copy();
 			fakeTool.enchant(Enchantments.SILK_TOUCH, 1);
 
-			List<ItemStack> drops = Block.getDrops(state, context.getLevel(), pos, tile, null, fakeTool);
-			ObjectArrayList<ItemStack> returnList = new ObjectArrayList<>();
-            returnList.addAll(drops);
+			ResourceLocation tableID = context.getQueriedLootTableId();
+			ServerLevel level = context.getLevel();
+			LootTable table = level.getServer().getLootData().getLootTable(tableID);
+			LootParams params = new LootParams.Builder(level)
+					.withParameter(LootContextParams.ORIGIN, context.getParam(LootContextParams.ORIGIN))
+					.withParameter(LootContextParams.BLOCK_STATE, context.getParam(LootContextParams.BLOCK_STATE))
+					.withParameter(LootContextParams.TOOL, fakeTool)
+					.withOptionalParameter(LootContextParams.THIS_ENTITY, context.getParamOrNull(LootContextParams.THIS_ENTITY))
+					.withLuck(context.getLuck())
+					.create(LootContextParamSets.BLOCK);
 
-			return returnList;
+			return table.getRandomItems(params);
 		}
 
 		@Override
@@ -119,12 +132,21 @@ public class GlobalLootModifier
 			{
 				return generatedLoot;
 			}
+
             if (ctxTool.is(BloodMagicTags.CHARGES)) {
                 return generatedLoot;
             }
 
-			if (EnchantmentHelper.getEnchantments(ctxTool).containsKey(Enchantments.SILK_TOUCH))
+			BlockEntity be = context.getParamOrNull(LootContextParams.BLOCK_ENTITY);
+			// dont apply on BE's
+			if (be != null) {
 				return generatedLoot;
+			}
+
+			if (EnchantmentHelper.getEnchantments(ctxTool).containsKey(Enchantments.SILK_TOUCH)) {
+				return generatedLoot;
+			}
+
 			AnointmentHolder holder = AnointmentHolder.fromItemStack(ctxTool);
 			if (holder == null)
 			{
@@ -145,15 +167,18 @@ public class GlobalLootModifier
 			enchants.put(Enchantments.BLOCK_FORTUNE, baseFortuneLevel + additionalFortune);
 			EnchantmentHelper.setEnchantments(enchants, fakeTool);
 
-			BlockPos pos = BlockPos.containing(context.getParam(LootContextParams.ORIGIN));
-			BlockState state = context.getParam(LootContextParams.BLOCK_STATE);
-			BlockEntity tile = context.getParamOrNull(LootContextParams.BLOCK_ENTITY);
+			ResourceLocation tableID = context.getQueriedLootTableId();
+			ServerLevel level = context.getLevel();
+			LootTable table = level.getServer().getLootData().getLootTable(tableID);
+			LootParams params = new LootParams.Builder(level)
+					.withParameter(LootContextParams.ORIGIN, context.getParam(LootContextParams.ORIGIN))
+					.withParameter(LootContextParams.BLOCK_STATE, context.getParam(LootContextParams.BLOCK_STATE))
+					.withParameter(LootContextParams.TOOL, fakeTool)
+					.withOptionalParameter(LootContextParams.THIS_ENTITY, context.getParamOrNull(LootContextParams.THIS_ENTITY))
+					.withLuck(context.getLuck())
+					.create(LootContextParamSets.BLOCK);
 
-			List<ItemStack> drops = Block.getDrops(state, context.getLevel(), pos, tile, null, fakeTool);
-			ObjectArrayList<ItemStack> returnList = new ObjectArrayList<>();
-			returnList.addAll(drops);
-
-			return returnList;
+			return table.getRandomItems(params);
 		}
 
 		@Override
