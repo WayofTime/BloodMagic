@@ -8,6 +8,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -82,13 +84,18 @@ public class ItemSigilWater extends ItemSigilFluidBase implements IAlchemyItem
 //					world.setBlockAndUpdate(blockPos, Blocks.CAULDRON.defaultBlockState().setValue(CauldronBlock., 3));
 //					return InteractionResultHolder.success(stack);
 //				}
+                //waterlog block if possible
+                if (tryWaterlogBlock(world, player, stack, blockPos)
+                        || tryWaterlogBlock(world, player, stack, blockpos1))
+                {
+                    return InteractionResultHolder.success(stack);
+                }
 
 				// Case for if block at blockPos is not a tank
 				// Place fluid in world
 				if (destination == null && destinationSide == null)
 				{
-					BlockPos targetPos = blockPos.relative(sideHit);
-					if (tryPlaceSigilFluid(player, world, targetPos) && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess())
+					if (tryPlaceSigilFluid(player, world, blockpos1) && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess())
 					{
 						return InteractionResultHolder.success(stack);
 					}
@@ -98,6 +105,17 @@ public class ItemSigilWater extends ItemSigilFluidBase implements IAlchemyItem
 
 		return super.use(world, player, hand);
 	}
+
+    private boolean tryWaterlogBlock(Level world, Player player, ItemStack stack, BlockPos blockPos) {
+        if (world.getBlockState(blockPos).getBlock() instanceof SimpleWaterloggedBlock
+                && world.setBlock(blockPos, world.getBlockState(blockPos).setValue(BlockStateProperties.WATERLOGGED, true), 3)
+                && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess())
+        {
+            world.scheduleTick(blockPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+            return true;
+        }
+        return false;
+    }
 
 	@Override
 	public ItemStack onConsumeInput(ItemStack stack)

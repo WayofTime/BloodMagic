@@ -19,8 +19,6 @@ import wayoftime.bloodmagic.util.helper.NetworkHelper;
 import wayoftime.bloodmagic.util.helper.PlayerHelper;
 import wayoftime.bloodmagic.ConfigManager;
 
-import wayoftime.bloodmagic.common.item.sigil.ISigil.Holding;
-
 public class ItemSigilLava extends ItemSigilFluidBase implements IAlchemyItem
 {
 	public ItemSigilLava()
@@ -82,8 +80,7 @@ public class ItemSigilLava extends ItemSigilFluidBase implements IAlchemyItem
 				// Place fluid in world
 				if (destination == null && destinationSide == null)
 				{
-					BlockPos targetPos = blockPos.relative(sideHit);
-					if (tryPlaceSigilFluid(player, world, targetPos) && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess())
+					if (tryPlaceSigilFluid(player, world, blockpos1) && NetworkHelper.getSoulNetwork(getBinding(stack)).syphonAndDamage(player, SoulTicket.item(stack, world, player, getLpUsed())).isSuccess())
 					{
 						return InteractionResultHolder.success(stack);
 					}

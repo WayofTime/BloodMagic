@@ -100,6 +100,8 @@ public abstract class ItemSigilFluidBase extends ItemSigilBase
 	 */
 	protected boolean tryPlaceSigilFluid(Player player, Level world, BlockPos blockPos)
 	{
+        if (!world.isEmptyBlock(blockPos) && !world.getBlockState(blockPos).canBeReplaced()) return false;
+
 		FluidStack resource = sigilFluid;
 		BlockState state = sigilFluid.getFluid().getFluidType().getBlockForFluidState(world, blockPos, sigilFluid.getFluid().defaultFluidState());
 
