@@ -11,11 +11,11 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import wayoftime.bloodmagic.api.BMIdentifiers;
 import wayoftime.bloodmagic.common.datamap.BMDataMaps;
-import wayoftime.bloodmagic.common.registry.BMRegistries;
-import wayoftime.bloodmagic.common.ritual.imperfect.ImperfectRitualEffect;
+import wayoftime.bloodmagic.api.ritual.ImperfectRitualEffect;
 import wayoftime.bloodmagic.util.RitualUtil;
-import wayoftime.bloodmagic.util.helper.SoulNetworkHelper;
+import wayoftime.bloodmagic.api.helper.SoulNetworkHelper;
 
 import java.util.Optional;
 
@@ -35,7 +35,7 @@ public class ImperfectRitualBlock extends Block {
         if (type == null) {
             return super.useWithoutItem(state, level, pos, player, hitResult);
         }
-        Optional<ImperfectRitualEffect> optionalEffect = level.registryAccess().registryOrThrow(BMRegistries.Keys.IMPERFECT_RITUALS).getOptional(type);
+        Optional<ImperfectRitualEffect> optionalEffect = level.registryAccess().registryOrThrow(BMIdentifiers.RegistryKeys.IMPERFECT_RITUALS).getOptional(type);
         if (optionalEffect.isEmpty()) {
             return super.useWithoutItem(state, level, pos, player, hitResult);
         }

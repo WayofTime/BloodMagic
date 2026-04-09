@@ -3,7 +3,6 @@ package wayoftime.bloodmagic.common.blockentity;
 import it.unimi.dsi.fastutil.Pair;
 import it.unimi.dsi.fastutil.objects.Object2FloatOpenHashMap;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentMap;
@@ -16,9 +15,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.items.wrapper.RangedWrapper;
 import org.jetbrains.annotations.Nullable;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.menu.LivingStationMenu;
@@ -27,11 +24,8 @@ import wayoftime.bloodmagic.common.datacomponent.UpgradeTome;
 import wayoftime.bloodmagic.common.item.BMItems;
 import wayoftime.bloodmagic.common.living.LivingHelper;
 import wayoftime.bloodmagic.common.living.LivingUpgrade;
-import wayoftime.bloodmagic.common.tag.BMTags;
+import wayoftime.bloodmagic.api.BMTags;
 import wayoftime.bloodmagic.common.tag.TagsCache;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LivingStationTile extends BaseTile implements MenuProvider {
 

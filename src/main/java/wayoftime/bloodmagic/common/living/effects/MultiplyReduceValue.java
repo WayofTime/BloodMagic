@@ -5,7 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.item.enchantment.LevelBasedValue;
 import net.minecraft.world.level.storage.loot.LootContext;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.common.living.LivingValueEffect;
+import wayoftime.bloodmagic.api.living.LivingValueEffect;
 
 public record MultiplyReduceValue(LevelBasedValue amounts) implements LivingValueEffect {
     public static final MapCodec<MultiplyReduceValue> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(

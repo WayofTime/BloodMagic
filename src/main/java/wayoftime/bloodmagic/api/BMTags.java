@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.common.tag;
+package wayoftime.bloodmagic.api;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -9,8 +9,7 @@ import net.minecraft.world.level.block.Block;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.item.BMMaterialsAndTiers;
 import wayoftime.bloodmagic.common.living.LivingUpgrade;
-import wayoftime.bloodmagic.common.registry.AltarTier;
-import wayoftime.bloodmagic.common.registry.BMRegistries;
+import wayoftime.bloodmagic.api.altar.AltarTier;
 
 public class BMTags {
     public static class Items {
@@ -71,7 +70,7 @@ public class BMTags {
     }
 
     public static class Tiers {
-        public static final TagKey<AltarTier> VALID_TIERS = TagKey.create(BMRegistries.Keys.ALTAR_TIER_KEY, bm("valid_tiers"));
+        public static final TagKey<AltarTier> VALID_TIERS = TagKey.create(BMIdentifiers.RegistryKeys.ALTAR_TIER_KEY, bm("valid_tiers"));
     }
 
     public static class Living {
@@ -85,7 +84,7 @@ public class BMTags {
         public static final TagKey<LivingUpgrade> LIVING_BLACKLIST = tag(bm("empty"));
 
         private static TagKey<LivingUpgrade> tag(ResourceLocation id) {
-            return TagKey.create(BMRegistries.Keys.LIVING_UPGRADES, id);
+            return TagKey.create(BMIdentifiers.RegistryKeys.LIVING_UPGRADES, id);
         }
     }
 

@@ -36,7 +36,7 @@ import wayoftime.bloodmagic.common.datacomponent.EnumWillType;
 import wayoftime.bloodmagic.common.recipe.BMRecipes;
 import wayoftime.bloodmagic.common.recipe.arc.ARCRecipe;
 import wayoftime.bloodmagic.common.recipe.arc.ARCRecipeInput;
-import wayoftime.bloodmagic.common.tag.BMTags;
+import wayoftime.bloodmagic.api.BMTags;
 import wayoftime.bloodmagic.util.ARCOutputHandler;
 
 import javax.annotation.Nullable;

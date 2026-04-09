@@ -1,9 +1,8 @@
-package wayoftime.bloodmagic.common.datacomponent;
+package wayoftime.bloodmagic.api.datacomponent;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -11,7 +10,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipProvider;
-import wayoftime.bloodmagic.util.helper.BlockEntityHelper;
+import wayoftime.bloodmagic.util.BlockEntityHelper;
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;

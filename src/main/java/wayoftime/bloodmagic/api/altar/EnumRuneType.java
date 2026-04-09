@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.util;
+package wayoftime.bloodmagic.api.altar;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.util.StringRepresentable;

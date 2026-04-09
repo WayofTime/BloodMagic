@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.util.helper;
+package wayoftime.bloodmagic.api.helper;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.saveddata.SavedData.Factory;
@@ -7,7 +7,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
-import wayoftime.bloodmagic.common.datacomponent.Binding;
+import wayoftime.bloodmagic.api.datacomponent.Binding;
 import wayoftime.bloodmagic.common.datacomponent.SoulNetwork;
 import wayoftime.bloodmagic.common.world.BMSavedData;
 

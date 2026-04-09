@@ -8,8 +8,8 @@ import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import wayoftime.bloodmagic.common.block.BMBlocks;
 import wayoftime.bloodmagic.common.datamap.BMDataMaps;
 import wayoftime.bloodmagic.common.datamap.BloodRune;
-import wayoftime.bloodmagic.util.EnumRuneType;
-import wayoftime.bloodmagic.util.helper.BlockWithItemHolder;
+import wayoftime.bloodmagic.api.altar.EnumRuneType;
+import wayoftime.bloodmagic.util.blockitem.BlockWithItemHolder;
 
 import java.util.List;
 import java.util.function.Function;

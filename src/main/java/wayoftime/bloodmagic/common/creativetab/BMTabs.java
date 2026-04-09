@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.BMIdentifiers;
 import wayoftime.bloodmagic.api.BMIdentifiers.Sigils;
 import wayoftime.bloodmagic.api.sigil.SigilEffect;
 import wayoftime.bloodmagic.common.block.BMBlocks;
@@ -22,8 +23,7 @@ import wayoftime.bloodmagic.common.fluid.BMFluids;
 import wayoftime.bloodmagic.common.item.BMItems;
 import wayoftime.bloodmagic.common.living.LivingHelper;
 import wayoftime.bloodmagic.common.living.LivingUpgrade;
-import wayoftime.bloodmagic.common.registry.BMRegistries;
-import wayoftime.bloodmagic.common.tag.BMTags;
+import wayoftime.bloodmagic.api.BMTags;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -78,7 +78,7 @@ public class BMTabs {
                     .title(Component.translatable("item_group.bloodmagic.tomes"))
                     .displayItems((params, output) -> {
                         // TODO maybe have actual tags for up/downgrade to use? idk, this is probably fine
-                        addAll(params.holders().lookupOrThrow(BMRegistries.Keys.LIVING_UPGRADES).get(BMTags.Living.TOOLTIP_ORDER).orElseThrow(), output::accept);
+                        addAll(params.holders().lookupOrThrow(BMIdentifiers.RegistryKeys.LIVING_UPGRADES).get(BMTags.Living.TOOLTIP_ORDER).orElseThrow(), output::accept);
                     })
                     .build()
     );
@@ -89,7 +89,7 @@ public class BMTabs {
                     .icon(() -> new ItemStack(BMItems.UPGRADE_TOME))
                     .title(Component.translatable("item_group.bloodmagic.trainers"))
                     .displayItems((params, output) -> {
-                        addAll(params.holders().lookupOrThrow(BMRegistries.Keys.LIVING_UPGRADES).get(BMTags.Living.TRAINERS).orElseThrow(), output::accept);
+                        addAll(params.holders().lookupOrThrow(BMIdentifiers.RegistryKeys.LIVING_UPGRADES).get(BMTags.Living.TRAINERS).orElseThrow(), output::accept);
                     })
                     .build()
     );

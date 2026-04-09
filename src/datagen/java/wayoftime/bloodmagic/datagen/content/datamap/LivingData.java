@@ -6,7 +6,7 @@ import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import wayoftime.bloodmagic.common.datamap.BMDataMaps;
 import wayoftime.bloodmagic.common.datamap.LivingArmorData;
 import wayoftime.bloodmagic.common.item.BMItems;
-import wayoftime.bloodmagic.common.tag.BMTags;
+import wayoftime.bloodmagic.api.BMTags;
 
 import java.util.function.Function;
 

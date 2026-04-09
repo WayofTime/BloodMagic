@@ -1,14 +1,13 @@
 package wayoftime.bloodmagic.client.screen;
 
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.ImageWidget;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.menu.ARCMenu;
-import wayoftime.bloodmagic.util.helper.RenderHelper;
+import wayoftime.bloodmagic.util.RenderHelper;
 
 public class ARCScreen extends AbstractContainerScreen<ARCMenu> {
     private final ResourceLocation background = ResourceLocation.fromNamespaceAndPath(BloodMagic.MODID, "textures/gui/container/arc_gui.png");

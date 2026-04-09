@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
+import wayoftime.bloodmagic.api.ritual.ImperfectRitualEffect;
 
 import java.util.Optional;
 

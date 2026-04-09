@@ -21,7 +21,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import wayoftime.bloodmagic.common.blockentity.BloodAltarTile;
 import wayoftime.bloodmagic.common.fluid.BMFluids;
-import wayoftime.bloodmagic.util.helper.RenderHelper;
+import wayoftime.bloodmagic.util.RenderHelper;
 
 public class BloodAltarRenderer implements BlockEntityRenderer<BloodAltarTile> {
 

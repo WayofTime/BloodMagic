@@ -1,7 +1,6 @@
 package wayoftime.bloodmagic.common.menu;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -12,11 +11,10 @@ import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import wayoftime.bloodmagic.common.block.BMBlocks;
-import wayoftime.bloodmagic.common.blockentity.LivingStationTile;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
 import wayoftime.bloodmagic.common.datacomponent.UpgradeTome;
 import wayoftime.bloodmagic.common.item.BMItems;
-import wayoftime.bloodmagic.common.tag.BMTags;
+import wayoftime.bloodmagic.api.BMTags;
 
 public class LivingStationMenu extends AbstractContainerMenu {
 

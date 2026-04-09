@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import wayoftime.bloodmagic.common.blockentity.ARCTile;
 import wayoftime.bloodmagic.common.blockentity.BMTiles;
 import wayoftime.bloodmagic.common.datacomponent.EnumWillType;
-import wayoftime.bloodmagic.util.helper.BlockEntityHelper;
+import wayoftime.bloodmagic.util.BlockEntityHelper;
 
 public class ARCBlock extends Block implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;

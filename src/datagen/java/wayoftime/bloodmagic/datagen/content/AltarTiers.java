@@ -5,13 +5,13 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs.TagOrElementLocation;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.common.registry.AltarTier;
-import wayoftime.bloodmagic.common.registry.BMRegistries;
-import wayoftime.bloodmagic.common.tag.BMTags;
+import wayoftime.bloodmagic.api.BMIdentifiers;
+import wayoftime.bloodmagic.api.altar.AltarTier;
+import wayoftime.bloodmagic.api.BMTags;
 
 public class AltarTiers {
 
-    public static void bootstrap(BootstrapContext<AltarTier> builder) {
+    public static void tiers(BootstrapContext<AltarTier> builder) {
         builder.register(Keys.APPRENTICE, APPRENTICE);
         builder.register(Keys.MAGE, MAGE);
         builder.register(Keys.MASTER, MASTER);
@@ -24,12 +24,12 @@ public class AltarTiers {
     }
 
     public static class Keys {
-        public static final ResourceKey<AltarTier> WEAK = ResourceKey.create(BMRegistries.Keys.ALTAR_TIER_KEY, Locs.WEAK);
-        public static final ResourceKey<AltarTier> APPRENTICE = ResourceKey.create(BMRegistries.Keys.ALTAR_TIER_KEY, Locs.APPRENTICE);
-        public static final ResourceKey<AltarTier> MAGE = ResourceKey.create(BMRegistries.Keys.ALTAR_TIER_KEY, Locs.MAGE);
-        public static final ResourceKey<AltarTier> MASTER = ResourceKey.create(BMRegistries.Keys.ALTAR_TIER_KEY, Locs.MASTER);
-        public static final ResourceKey<AltarTier> ARCHMAGE = ResourceKey.create(BMRegistries.Keys.ALTAR_TIER_KEY, Locs.ARCHMAGE);
-        public static final ResourceKey<AltarTier> TRANSCENDENT = ResourceKey.create(BMRegistries.Keys.ALTAR_TIER_KEY, Locs.TRANSCENDENT);
+        public static final ResourceKey<AltarTier> WEAK = ResourceKey.create(BMIdentifiers.RegistryKeys.ALTAR_TIER_KEY, Locs.WEAK);
+        public static final ResourceKey<AltarTier> APPRENTICE = ResourceKey.create(BMIdentifiers.RegistryKeys.ALTAR_TIER_KEY, Locs.APPRENTICE);
+        public static final ResourceKey<AltarTier> MAGE = ResourceKey.create(BMIdentifiers.RegistryKeys.ALTAR_TIER_KEY, Locs.MAGE);
+        public static final ResourceKey<AltarTier> MASTER = ResourceKey.create(BMIdentifiers.RegistryKeys.ALTAR_TIER_KEY, Locs.MASTER);
+        public static final ResourceKey<AltarTier> ARCHMAGE = ResourceKey.create(BMIdentifiers.RegistryKeys.ALTAR_TIER_KEY, Locs.ARCHMAGE);
+        public static final ResourceKey<AltarTier> TRANSCENDENT = ResourceKey.create(BMIdentifiers.RegistryKeys.ALTAR_TIER_KEY, Locs.TRANSCENDENT);
     }
 
     public static class Locs {

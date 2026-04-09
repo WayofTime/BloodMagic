@@ -13,9 +13,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import wayoftime.bloodmagic.api.sigil.SigilEffect;
 import wayoftime.bloodmagic.common.blockentity.BloodAltarTile;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
-import wayoftime.bloodmagic.common.datacomponent.Binding;
+import wayoftime.bloodmagic.api.datacomponent.Binding;
 import wayoftime.bloodmagic.util.ChatUtil;
-import wayoftime.bloodmagic.util.helper.SoulNetworkHelper;
+import wayoftime.bloodmagic.api.helper.SoulNetworkHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ public record DivinationEffect(boolean isAdvanced) implements SigilEffect {
 
         if (be instanceof BloodAltarTile altar) {
             List<Component> send = new ArrayList<>();
-            send.add(translateAltar("tier", Component.translatable("altar.bloodmagic.tier_" + altar.tier)));
+            send.add(translateAltar("tier", Component.translatable("altar.bloodmagic.tier_" + altar.getTier())));
             send.add(translateAltar("essence", altar.getFluidInTank(0)));
             send.add(translateAltar("max_essence", altar.getMainCapacity()));
             if (isAdvanced) {

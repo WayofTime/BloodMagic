@@ -11,7 +11,7 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import wayoftime.bloodmagic.common.block.BMBlocks;
-import wayoftime.bloodmagic.util.helper.BlockWithItemHolder;
+import wayoftime.bloodmagic.util.blockitem.BlockWithItemHolder;
 
 import java.util.ArrayList;
 import java.util.List;

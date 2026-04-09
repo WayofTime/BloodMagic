@@ -8,16 +8,14 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.DataMapProvider;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
-import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.BMIdentifiers;
 import wayoftime.bloodmagic.api.BMIdentifiers.ImperfectRituals;
 import wayoftime.bloodmagic.common.datamap.BMDataMaps;
-import wayoftime.bloodmagic.common.registry.BMRegistries;
 import wayoftime.bloodmagic.common.ritual.imperfect.ApplyPotionEffect;
-import wayoftime.bloodmagic.common.ritual.imperfect.ImperfectRitualEffect;
+import wayoftime.bloodmagic.api.ritual.ImperfectRitualEffect;
 import wayoftime.bloodmagic.common.ritual.imperfect.SetTimeEffect;
 import wayoftime.bloodmagic.common.ritual.imperfect.SpawnMobEffect;
 
@@ -40,7 +38,7 @@ public class ImperfectRitualData {
     }
 
     private static ResourceKey<ImperfectRitualEffect> key(ResourceLocation id) {
-        return ResourceKey.create(BMRegistries.Keys.IMPERFECT_RITUALS, id);
+        return ResourceKey.create(BMIdentifiers.RegistryKeys.IMPERFECT_RITUALS, id);
     }
 
     public static void dataMap(Function<DataMapType<Block, ResourceLocation>, DataMapProvider.Builder<ResourceLocation, Block>> setup) {

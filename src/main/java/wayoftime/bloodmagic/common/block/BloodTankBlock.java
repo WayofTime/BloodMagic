@@ -28,7 +28,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.Nullable;
 import wayoftime.bloodmagic.common.blockentity.BloodTankTile;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
-import wayoftime.bloodmagic.util.helper.BlockEntityHelper;
+import wayoftime.bloodmagic.util.BlockEntityHelper;
 
 import java.util.List;
 

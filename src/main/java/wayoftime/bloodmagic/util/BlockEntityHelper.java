@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.util.helper;
+package wayoftime.bloodmagic.util;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;

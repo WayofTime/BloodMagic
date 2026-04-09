@@ -12,7 +12,7 @@ import wayoftime.bloodmagic.common.fluid.BMFluids;
 import wayoftime.bloodmagic.common.item.BMItems;
 import wayoftime.bloodmagic.datagen.content.LivingUpgrades;
 import wayoftime.bloodmagic.datagen.content.SigilData;
-import wayoftime.bloodmagic.util.helper.BlockWithItemHolder;
+import wayoftime.bloodmagic.util.blockitem.BlockWithItemHolder;
 
 public class BMLanguageProvider extends LanguageProvider {
 

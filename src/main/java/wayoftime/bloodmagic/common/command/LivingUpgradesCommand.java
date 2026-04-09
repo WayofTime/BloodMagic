@@ -1,14 +1,11 @@
 package wayoftime.bloodmagic.common.command;
 
 import com.mojang.brigadier.Command;
-import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import it.unimi.dsi.fastutil.objects.Object2FloatOpenHashMap;
-import net.minecraft.Util;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -20,15 +17,13 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.BMIdentifiers;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
-import wayoftime.bloodmagic.common.datacomponent.LivingStats;
+import wayoftime.bloodmagic.api.datacomponent.LivingStats;
 import wayoftime.bloodmagic.common.datacomponent.UpgradeLimits;
 import wayoftime.bloodmagic.common.living.LivingHelper;
 import wayoftime.bloodmagic.common.living.LivingUpgrade;
-import wayoftime.bloodmagic.common.registry.BMRegistries;
 
-import javax.swing.text.html.CSS;
 import java.util.Optional;
 
 public class LivingUpgradesCommand {
@@ -44,11 +39,11 @@ public class LivingUpgradesCommand {
                                                         .then(
                                                                 Commands.literal("set")
                                                                         .then(
-                                                                                Commands.argument("id", ResourceArgument.resource(buildContext, BMRegistries.Keys.LIVING_UPGRADES))
+                                                                                Commands.argument("id", ResourceArgument.resource(buildContext, BMIdentifiers.RegistryKeys.LIVING_UPGRADES))
                                                                                         .then(
                                                                                                 Commands.argument("exp", IntegerArgumentType.integer(0))
                                                                                                         .executes(
-                                                                                                                context -> setUpgrade(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceArgument.getResource(context, "id", BMRegistries.Keys.LIVING_UPGRADES), IntegerArgumentType.getInteger(context, "exp"))
+                                                                                                                context -> setUpgrade(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceArgument.getResource(context, "id", BMIdentifiers.RegistryKeys.LIVING_UPGRADES), IntegerArgumentType.getInteger(context, "exp"))
                                                                                                         )
                                                                                         )
                                                                         )
@@ -59,9 +54,9 @@ public class LivingUpgradesCommand {
                                                                                 context -> getUpgrades(context.getSource(), EntityArgument.getPlayer(context, "target"), Optional.empty())
                                                                         )
                                                                         .then(
-                                                                                Commands.argument("id", ResourceArgument.resource(buildContext, BMRegistries.Keys.LIVING_UPGRADES))
+                                                                                Commands.argument("id", ResourceArgument.resource(buildContext, BMIdentifiers.RegistryKeys.LIVING_UPGRADES))
                                                                                         .executes(
-                                                                                                context -> getUpgrades(context.getSource(), EntityArgument.getPlayer(context, "target"), Optional.of(ResourceArgument.getResource(context, "id", BMRegistries.Keys.LIVING_UPGRADES)))
+                                                                                                context -> getUpgrades(context.getSource(), EntityArgument.getPlayer(context, "target"), Optional.of(ResourceArgument.getResource(context, "id", BMIdentifiers.RegistryKeys.LIVING_UPGRADES)))
                                                                                         )
                                                                         )
                                                         )
@@ -71,11 +66,11 @@ public class LivingUpgradesCommand {
                                                         .then(
                                                                 Commands.literal("set")
                                                                         .then(
-                                                                                Commands.argument("id", ResourceArgument.resource(buildContext, BMRegistries.Keys.LIVING_UPGRADES))
+                                                                                Commands.argument("id", ResourceArgument.resource(buildContext, BMIdentifiers.RegistryKeys.LIVING_UPGRADES))
                                                                                         .then(
                                                                                                 Commands.argument("exp", IntegerArgumentType.integer(0))
                                                                                                         .executes(
-                                                                                                                context -> setLimit(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceArgument.getResource(context, "id", BMRegistries.Keys.LIVING_UPGRADES), IntegerArgumentType.getInteger(context, "exp"))
+                                                                                                                context -> setLimit(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceArgument.getResource(context, "id", BMIdentifiers.RegistryKeys.LIVING_UPGRADES), IntegerArgumentType.getInteger(context, "exp"))
                                                                                                         )
                                                                                         )
                                                                         )
@@ -86,17 +81,17 @@ public class LivingUpgradesCommand {
                                                                                 context -> getLimit(context.getSource(), EntityArgument.getPlayer(context, "target"), Optional.empty())
                                                                         )
                                                                         .then(
-                                                                                Commands.argument("id", ResourceArgument.resource(buildContext, BMRegistries.Keys.LIVING_UPGRADES))
+                                                                                Commands.argument("id", ResourceArgument.resource(buildContext, BMIdentifiers.RegistryKeys.LIVING_UPGRADES))
                                                                                         .executes(
-                                                                                                context -> getLimit(context.getSource(), EntityArgument.getPlayer(context, "target"), Optional.of(ResourceArgument.getResource(context, "id", BMRegistries.Keys.LIVING_UPGRADES)))
+                                                                                                context -> getLimit(context.getSource(), EntityArgument.getPlayer(context, "target"), Optional.of(ResourceArgument.getResource(context, "id", BMIdentifiers.RegistryKeys.LIVING_UPGRADES)))
                                                                                         )
                                                                         )
                                                         )
                                                         .then(
                                                                 Commands.literal("remove")
                                                                         .then(
-                                                                                Commands.argument("id", ResourceArgument.resource(buildContext, BMRegistries.Keys.LIVING_UPGRADES))
-                                                                                        .executes(context -> removeLimit(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceArgument.getResource(context, "id", BMRegistries.Keys.LIVING_UPGRADES)))
+                                                                                Commands.argument("id", ResourceArgument.resource(buildContext, BMIdentifiers.RegistryKeys.LIVING_UPGRADES))
+                                                                                        .executes(context -> removeLimit(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceArgument.getResource(context, "id", BMIdentifiers.RegistryKeys.LIVING_UPGRADES)))
                                                                         )
                                                         )
                                                         .then(

@@ -23,16 +23,16 @@ import net.neoforged.neoforge.common.NeoForge;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.commons.lang3.mutable.MutableFloat;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.BMIdentifiers;
+import wayoftime.bloodmagic.api.datacomponent.LivingStats;
 import wayoftime.bloodmagic.common.datacomponent.BMDataComponents;
-import wayoftime.bloodmagic.common.datacomponent.LivingStats;
 import wayoftime.bloodmagic.common.datacomponent.UpgradeLimits;
 import wayoftime.bloodmagic.common.datacomponent.UpgradeTome;
 import wayoftime.bloodmagic.common.datamap.BMDataMaps;
 import wayoftime.bloodmagic.common.datamap.LivingArmorData;
 import wayoftime.bloodmagic.common.event.LivingArmorEvent;
 import wayoftime.bloodmagic.api.item.UpgradeHolderBase;
-import wayoftime.bloodmagic.common.registry.BMRegistries;
-import wayoftime.bloodmagic.common.tag.BMTags;
+import wayoftime.bloodmagic.api.BMTags;
 import wayoftime.bloodmagic.util.ChatUtil;
 
 import java.util.Map;
@@ -317,7 +317,7 @@ public class LivingHelper {
         if (data == null) {
             return;
         }
-        HolderSet<LivingUpgrade> startingSet = holders.lookupOrThrow(BMRegistries.Keys.LIVING_UPGRADES).get(data.startingUpgrades()).orElseThrow();
+        HolderSet<LivingUpgrade> startingSet = holders.lookupOrThrow(BMIdentifiers.RegistryKeys.LIVING_UPGRADES).get(data.startingUpgrades()).orElseThrow();
         livingPlate.set(BMDataComponents.UPGRADES, new LivingStats(fromHolderSet(startingSet)));
         livingPlate.set(BMDataComponents.IS_EVOLVED, false);
     }

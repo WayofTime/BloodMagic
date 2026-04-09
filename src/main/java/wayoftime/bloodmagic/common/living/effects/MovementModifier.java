@@ -6,7 +6,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.enchantment.LevelBasedValue;
 import net.minecraft.world.phys.Vec3;
-import wayoftime.bloodmagic.common.living.LivingEntityEffect;
+import wayoftime.bloodmagic.api.living.LivingEntityEffect;
 
 public record MovementModifier(LevelBasedValue amounts) implements LivingEntityEffect {
     public static final MapCodec<MovementModifier> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(

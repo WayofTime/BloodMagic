@@ -5,7 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.LevelBasedValue;
-import wayoftime.bloodmagic.common.living.LivingEntityEffect;
+import wayoftime.bloodmagic.api.living.LivingEntityEffect;
 
 public record CauseExhaustionEffect(LevelBasedValue amounts) implements LivingEntityEffect {
     public static final MapCodec<CauseExhaustionEffect> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
