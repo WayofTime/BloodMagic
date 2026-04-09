@@ -9,7 +9,10 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageType;
 import wayoftime.bloodmagic.BloodMagic;
-import wayoftime.bloodmagic.api.ritual.ImperfectRitualEffect;
+import wayoftime.bloodmagic.api.ritual.Range;
+import wayoftime.bloodmagic.api.ritual.Ritual;
+import wayoftime.bloodmagic.api.ritual.RitualStructure;
+import wayoftime.bloodmagic.api.ritual.imperfect.ImperfectRitualEffect;
 import wayoftime.bloodmagic.api.sigil.SigilEffect;
 import wayoftime.bloodmagic.api.living.LivingEntityEffect;
 import wayoftime.bloodmagic.common.living.LivingUpgrade;
@@ -37,6 +40,25 @@ public class BMIdentifiers {
 
         public static final ResourceKey<Registry<ImperfectRitualEffect>> IMPERFECT_RITUALS = ResourceKey.createRegistryKey(bm("imperfect_rituals"));
         public static final ResourceKey<Registry<MapCodec<? extends ImperfectRitualEffect>>> IMPERFECT_RITUAL_EFFECT_TYPE = ResourceKey.createRegistryKey(bm("imperfect_ritual_effect_types"));
+
+        public static final ResourceKey<Registry<MapCodec<? extends Range>>> RITUAL_RANGE_TYPES = ResourceKey.createRegistryKey(bm("ritual_ranges"));
+        public static final ResourceKey<Registry<MapCodec<? extends Ritual>>> RITUAL_TYPES = ResourceKey.createRegistryKey(bm("ritual_types"));
+        public static final ResourceKey<Registry<Ritual>> RITUALS = ResourceKey.createRegistryKey(bm("rituals"));
+        public static final ResourceKey<Registry<RitualStructure>> RITUAL_STRUCTURES = ResourceKey.createRegistryKey(bm("ritual_structures"));
+    }
+
+    public static class Rituals {
+        public static final ResourceKey<Ritual> WATER = ResourceKey.create(RegistryKeys.RITUALS, bm("water"));
+        public static final ResourceKey<Ritual> LAVA = ResourceKey.create(RegistryKeys.RITUALS, bm("lava"));
+    }
+
+    public static class RitualStructures {
+        public static final ResourceKey<RitualStructure> WATER = ResourceKey.create(RegistryKeys.RITUAL_STRUCTURES, fromRitual(Rituals.WATER));
+        public static final ResourceKey<RitualStructure> LAVA = ResourceKey.create(RegistryKeys.RITUAL_STRUCTURES, fromRitual(Rituals.LAVA));
+
+        private static ResourceLocation fromRitual(ResourceKey<Ritual> key) {
+            return key.location();
+        }
     }
 
     public static class Sigils {

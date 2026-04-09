@@ -15,7 +15,7 @@ import wayoftime.bloodmagic.api.BMIdentifiers;
 import wayoftime.bloodmagic.api.BMIdentifiers.ImperfectRituals;
 import wayoftime.bloodmagic.common.datamap.BMDataMaps;
 import wayoftime.bloodmagic.common.ritual.imperfect.ApplyPotionEffect;
-import wayoftime.bloodmagic.api.ritual.ImperfectRitualEffect;
+import wayoftime.bloodmagic.api.ritual.imperfect.ImperfectRitualEffect;
 import wayoftime.bloodmagic.common.ritual.imperfect.SetTimeEffect;
 import wayoftime.bloodmagic.common.ritual.imperfect.SpawnMobEffect;
 

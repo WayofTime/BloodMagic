@@ -8,6 +8,10 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import wayoftime.bloodmagic.BloodMagic;
+import wayoftime.bloodmagic.api.BMIdentifiers;
+import wayoftime.bloodmagic.api.ritual.Ritual;
+import wayoftime.bloodmagic.api.ritual.RitualStructure;
+import wayoftime.bloodmagic.common.registry.BMRegistries;
 
 import java.util.List;
 
@@ -43,6 +47,12 @@ public class BMDataMaps {
             ResourceLocation.CODEC
     ).synced(ResourceLocation.CODEC, true).build();
 
+    public static final DataMapType<RitualStructure, Ritual> RITUAL_BUILD = DataMapType.builder(
+            BloodMagic.rl("ritual_build"),
+            BMIdentifiers.RegistryKeys.RITUAL_STRUCTURES,
+            Ritual.CODEC
+    ).build();
+
     public static void register(RegisterDataMapTypesEvent event) {
         event.register(TARTARIC_GEM_MAX_AMOUNTS);
         event.register(BLOOD_ORB_STATS);
@@ -50,5 +60,6 @@ public class BMDataMaps {
         event.register(LIVING_ARMOUR_DATA);
 
         event.register(IMPERFECT_RITUAL_CATALYST);
+        event.register(RITUAL_BUILD);
     }
 }
