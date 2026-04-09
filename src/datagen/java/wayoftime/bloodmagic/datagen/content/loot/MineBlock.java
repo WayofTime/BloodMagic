@@ -46,6 +46,19 @@ public class MineBlock extends BlockLootSubProvider {
         dropSelfList.forEach(this::dropSelf);
         copyComponents(BMBlocks.BLOOD_TANK);
         copyComponents(BMBlocks.LIVING_STATION);
+        ritualStone(BMBlocks.RITUAL_STONE_WATER);
+        ritualStone(BMBlocks.RITUAL_STONE_FIRE);
+        ritualStone(BMBlocks.RITUAL_STONE_EARTH);
+        ritualStone(BMBlocks.RITUAL_STONE_AIR);
+        ritualStone(BMBlocks.RITUAL_STONE_DUSK);
+        ritualStone(BMBlocks.RITUAL_STONE_DAWN);
+    }
+
+    private void ritualStone(BlockWithItemHolder<? extends Block, ? extends BlockItem> holder) {
+        add(
+                holder.block().get(),
+                in -> this.createSingleItemTableWithSilkTouch(in, BMBlocks.RITUAL_STONE_BLANK)
+        );
     }
 
     private void copyComponents(BlockWithItemHolder<? extends Block, ? extends BlockItem> holder) {

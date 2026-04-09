@@ -36,6 +36,9 @@ public class BMTiles {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LivingStationTile>> LIVING_STATION_TYPE = TILES.register("living_station",
             () -> new BlockEntityType<>(LivingStationTile::new, Set.of(BMBlocks.LIVING_STATION.block().get()), null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MasterRitualTile>> MASTER_RITUAL_TYPE = TILES.register("master_ritual",
+            () -> new BlockEntityType<>(MasterRitualTile::new, Set.of(BMBlocks.MASTER_RITUAL_STONE.block().get(), BMBlocks.INVERTED_MASTER_RITUAL_STONE.block().get()), null));
+
     private static void registerTileCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,

@@ -11,6 +11,7 @@ import wayoftime.bloodmagic.common.datacomponent.EnumWillType;
 import wayoftime.bloodmagic.common.fluid.BMFluids;
 import wayoftime.bloodmagic.common.item.BMItems;
 import wayoftime.bloodmagic.datagen.content.LivingUpgrades;
+import wayoftime.bloodmagic.datagen.content.RitualData;
 import wayoftime.bloodmagic.datagen.content.SigilData;
 import wayoftime.bloodmagic.util.blockitem.BlockWithItemHolder;
 
@@ -87,6 +88,17 @@ public class BMLanguageProvider extends LanguageProvider {
 
         add(BMBlocks.IMPERFECT_RITUAL_BLOCK, "Imperfect Ritual Stone");
 
+        add(BMBlocks.MASTER_RITUAL_STONE, "Master Ritual Stone");
+        add(BMBlocks.INVERTED_MASTER_RITUAL_STONE, "Master Ritual Stone (Inverted)");
+
+        add(BMBlocks.RITUAL_STONE_BLANK, "Ritual Stone");
+        add(BMBlocks.RITUAL_STONE_WATER, "Ritual Stone: Water");
+        add(BMBlocks.RITUAL_STONE_FIRE, "Ritual Stone: Fire");
+        add(BMBlocks.RITUAL_STONE_EARTH, "Ritual Stone: Earth");
+        add(BMBlocks.RITUAL_STONE_AIR, "Ritual Stone: Air");
+        add(BMBlocks.RITUAL_STONE_DUSK, "Ritual Stone: Dusk");
+        add(BMBlocks.RITUAL_STONE_DAWN, "Ritual Stone: Dawn");
+
         add(BMBlocks.HELLFIRE_FORGE, "Hellfire Forge");
         add(BMItems.RAW_WILL.get(), "Raw Will");
 
@@ -140,6 +152,7 @@ public class BMLanguageProvider extends LanguageProvider {
 
         LivingUpgrades.translations(this::add);
         SigilData.translations(this::add);
+        RitualData.translations(this::add);
     }
 
     public void addCommand(String key, String value) {

@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.datagen.provider;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.client.model.generators.VariantBlockStateBuilder;
@@ -23,6 +24,13 @@ public class BMBlockstateProvider extends BlockStateProvider {
             simpleBlockWithItem(block.get(), cubeAll(block.get()));
         });
 
+        regular(BMBlocks.RITUAL_STONE_WATER.block().get());
+        regular(BMBlocks.RITUAL_STONE_FIRE.block().get());
+        regular(BMBlocks.RITUAL_STONE_EARTH.block().get());
+        regular(BMBlocks.RITUAL_STONE_AIR.block().get());
+        regular(BMBlocks.RITUAL_STONE_DUSK.block().get());
+        regular(BMBlocks.RITUAL_STONE_DAWN.block().get());
+
         VariantBlockStateBuilder builder = getVariantBuilder(BMBlocks.ARC_BLOCK.block().get());
         String bottom = "block/arc_bottom";
         String lit = "_lit";
@@ -42,6 +50,10 @@ public class BMBlockstateProvider extends BlockStateProvider {
                 builder.partialState().with(ARCBlock.LIT, true).with(ARCBlock.FACING, facing).with(ARCBlock.TYPE, type).modelForState().modelFile(on).rotationY((int) facing.getOpposite().toYRot()).addModel();
             }
         }
+    }
+
+    private void regular(Block block) {
+        simpleBlockWithItem(block, cubeAll(block));
     }
 
     private static ResourceLocation bm(String path) {

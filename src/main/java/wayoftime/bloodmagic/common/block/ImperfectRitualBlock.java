@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import wayoftime.bloodmagic.api.BMIdentifiers;
 import wayoftime.bloodmagic.common.datamap.BMDataMaps;
-import wayoftime.bloodmagic.api.ritual.ImperfectRitualEffect;
+import wayoftime.bloodmagic.api.ritual.imperfect.ImperfectRitualEffect;
 import wayoftime.bloodmagic.util.RitualUtil;
 import wayoftime.bloodmagic.api.helper.SoulNetworkHelper;
 

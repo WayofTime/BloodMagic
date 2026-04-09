@@ -5,7 +5,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.BMIdentifiers;
-import wayoftime.bloodmagic.api.ritual.ImperfectRitualEffect;
+import wayoftime.bloodmagic.api.ritual.imperfect.ImperfectRitualEffect;
 
 import java.util.function.Supplier;
 

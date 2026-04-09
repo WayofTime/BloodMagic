@@ -44,9 +44,20 @@ public class BMBlocks {
 
     public static final BlockWithItemHolder<ImperfectRitualBlock, BlockItem> IMPERFECT_RITUAL_BLOCK = BASIC_REG.register("ritual_stone_imperfect", ImperfectRitualBlock::new);
 
+    public static final BlockWithItemHolder<MasterRitualBlock, BlockItem> MASTER_RITUAL_STONE = BLOCK_REG.register("master_ritual_stone", MasterRitualBlock::new);
+    public static final BlockWithItemHolder<MasterRitualBlock, BlockItem> INVERTED_MASTER_RITUAL_STONE = BLOCK_REG.register("master_ritual_stone_inverted", MasterRitualBlock::new);
+
     private static final BlockBehaviour.Properties rune_properties = BlockBehaviour.Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops();
     private static final ItemLore save_decoration = new ItemLore(List.of(BlockEntityHelper.translatableHover("tooltip.bloodmagic.save_for_decoration").withStyle(ChatFormatting.ITALIC)));
     private static final Item.Properties decoration_item_properties = new Item.Properties().component(DataComponents.LORE, save_decoration);
+
+    public static final BlockWithItemHolder<Block, BlockItem> RITUAL_STONE_BLANK = BASIC_REG.register("ritual_stone_blank", rune_properties, decoration_item_properties);
+    public static final BlockWithItemHolder<Block, BlockItem> RITUAL_STONE_WATER = BLOCK_REG.register("ritual_stone_water", rune_properties, decoration_item_properties);
+    public static final BlockWithItemHolder<Block, BlockItem> RITUAL_STONE_FIRE = BLOCK_REG.register("ritual_stone_fire", rune_properties, decoration_item_properties);
+    public static final BlockWithItemHolder<Block, BlockItem> RITUAL_STONE_EARTH = BLOCK_REG.register("ritual_stone_earth", rune_properties, decoration_item_properties);
+    public static final BlockWithItemHolder<Block, BlockItem> RITUAL_STONE_AIR = BLOCK_REG.register("ritual_stone_air", rune_properties, decoration_item_properties);
+    public static final BlockWithItemHolder<Block, BlockItem> RITUAL_STONE_DUSK = BLOCK_REG.register("ritual_stone_dusk", rune_properties, decoration_item_properties);
+    public static final BlockWithItemHolder<Block, BlockItem> RITUAL_STONE_DAWN = BLOCK_REG.register("ritual_stone_dawn", rune_properties, decoration_item_properties);
 
     public static final BlockWithItemHolder<Block, BlockItem> RUNE_BLANK = BASIC_REG.register("rune_blank", rune_properties, decoration_item_properties);
 

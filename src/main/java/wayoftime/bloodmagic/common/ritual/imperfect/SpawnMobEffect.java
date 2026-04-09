@@ -18,7 +18,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import wayoftime.bloodmagic.api.ritual.ImperfectRitualEffect;
+import wayoftime.bloodmagic.api.ritual.imperfect.ImperfectRitualEffect;
 
 import java.util.List;
 import java.util.Optional;
