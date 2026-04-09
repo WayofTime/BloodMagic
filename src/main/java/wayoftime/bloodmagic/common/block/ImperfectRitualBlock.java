@@ -14,7 +14,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import wayoftime.bloodmagic.api.BMIdentifiers;
 import wayoftime.bloodmagic.common.datamap.BMDataMaps;
 import wayoftime.bloodmagic.api.ritual.ImperfectRitualEffect;
-import wayoftime.bloodmagic.api.helper.RitualUtil;
+import wayoftime.bloodmagic.util.RitualUtil;
 import wayoftime.bloodmagic.api.helper.SoulNetworkHelper;
 
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.util.helper;
+package wayoftime.bloodmagic.util.blockitem;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

@@ -1,4 +1,4 @@
-package wayoftime.bloodmagic.api.helper;
+package wayoftime.bloodmagic.util;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

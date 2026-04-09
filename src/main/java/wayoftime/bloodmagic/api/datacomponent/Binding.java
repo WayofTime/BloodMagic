@@ -10,7 +10,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipProvider;
-import wayoftime.bloodmagic.util.helper.BlockEntityHelper;
+import wayoftime.bloodmagic.util.BlockEntityHelper;
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;

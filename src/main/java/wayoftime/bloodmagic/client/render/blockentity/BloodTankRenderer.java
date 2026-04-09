@@ -14,9 +14,8 @@ import net.minecraft.world.level.material.FluidState;
 import net.neoforged.neoforge.client.RenderTypeHelper;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.FluidStack;
-import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.blockentity.BloodTankTile;
-import wayoftime.bloodmagic.util.helper.RenderHelper;
+import wayoftime.bloodmagic.util.RenderHelper;
 
 public class BloodTankRenderer implements BlockEntityRenderer<BloodTankTile> {
     public BloodTankRenderer(BlockEntityRendererProvider.Context context) {}

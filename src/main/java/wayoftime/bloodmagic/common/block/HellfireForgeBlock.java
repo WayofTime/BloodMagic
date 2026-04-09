@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.blockentity.BMTiles;
 import wayoftime.bloodmagic.common.blockentity.HellfireForgeTile;
-import wayoftime.bloodmagic.util.helper.BlockEntityHelper;
+import wayoftime.bloodmagic.util.BlockEntityHelper;
 
 public class HellfireForgeBlock extends Block implements EntityBlock {
     public static final VoxelShape BOX = box(1, 0, 1, 15, 12, 15);
