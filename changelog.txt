@@ -31,6 +31,7 @@ AgriCraft is *not* installed.
 - bloodmagic:geode_harvestable now adds forge:clusters as a tag instead of a block, meaning it'll actually work with them
 - teleposition sigil now teleports you when clicking on a non-teleposer block as well. it also now checks itself for a destination when inside a sigil of holding
 - ritual diviner and tinkerer can now be cycled even when looking at a (non master ritual stone) block
+- now uses a fake player so certus quartz now actually drops, instead of getting voided because there was no entity passed to the drop generation
 
 ------------------------------------------------------
 Version 3.3.5
