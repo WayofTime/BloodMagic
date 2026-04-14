@@ -15,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -193,8 +194,12 @@ public class AlchemyTableTile extends BaseTile implements MenuProvider {
 
     public IItemHandler getItemHandler(Direction direction) {
         if (PART == TablePart.RIGHT) {
-            return ((AlchemyTableTile) level.getBlockEntity(getBlockPos().relative(FACING.getCounterClockWise())))
-                    .getItemHandler(direction);
+            BlockEntity be = level.getBlockEntity(getBlockPos().relative(FACING.getCounterClockWise()));
+            if (be instanceof AlchemyTableTile tile) {
+                return tile.getItemHandler(direction);
+            }
+
+            return new ItemStackHandler(0);
         }
 
         if (direction == null) {

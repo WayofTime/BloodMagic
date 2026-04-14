@@ -40,15 +40,16 @@ public class AlchemyTableScreen extends AbstractContainerScreen<AlchemyTableMenu
 
     private Component all = Component.literal("64");
     private Component one = Component.literal("1");
-    private Button stackLimitToggle = Button.builder(all, button -> minecraft.gameMode.handleInventoryButtonClick(menu.containerId, 0))
-            .size(20, 20)
-            .pos(49, 141)
-            .build();
+    private Button stackLimitToggle;
 
     @Override
     protected void init() {
         super.init();
         this.inventoryLabelY = this.imageHeight - 94; // auto recalc
+        stackLimitToggle = Button.builder(all, button -> minecraft.gameMode.handleInventoryButtonClick(menu.containerId, 0))
+                .size(20, 20)
+                .pos(leftPos + 141, topPos + 49)
+                .build();
         addRenderableWidget(stackLimitToggle);
     }
 

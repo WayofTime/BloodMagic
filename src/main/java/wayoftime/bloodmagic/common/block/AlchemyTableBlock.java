@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoubleBlockCombiner;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
+import wayoftime.bloodmagic.common.blockentity.ARCTile;
 import wayoftime.bloodmagic.common.blockentity.AlchemyTableTile;
 import wayoftime.bloodmagic.common.blockentity.BMTiles;
 import wayoftime.bloodmagic.util.BlockEntityHelper;
@@ -90,6 +92,16 @@ public class AlchemyTableBlock extends Block implements EntityBlock {
     }
 
     @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (!state.is(newState.getBlock())) {
+            if (level.getBlockEntity(pos) instanceof AlchemyTableTile table && state.getValue(PART) == TablePart.LEFT) {
+                BlockEntityHelper.dropContents(level, pos, table.inv);
+            }
+        }
+        super.onRemove(state, level, pos, newState, movedByPiston);
+    }
+
+    @Override
     public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (!level.isClientSide && player.isCreative()) {
             TablePart part = state.getValue(PART);
@@ -106,8 +118,19 @@ public class AlchemyTableBlock extends Block implements EntityBlock {
         return super.playerWillDestroy(level, pos, state, player);
     }
 
+    @Override
+    protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+        if (facing == getNeighbourDirection(state.getValue(PART), state.getValue(FACING))) {
+            if (facingState.is(this) && facingState.getValue(PART) != state.getValue(PART)) {
+                return super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+            }
+        }
+
+        return Blocks.AIR.defaultBlockState();
+    }
+
     private static Direction getNeighbourDirection(TablePart part, Direction direction) {
-        return part == TablePart.RIGHT ? direction : direction.getOpposite();
+        return part == TablePart.RIGHT ? direction.getCounterClockWise() : direction.getClockWise();
     }
 
     @Override
