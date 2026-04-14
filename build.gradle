@@ -149,10 +149,25 @@ tasks.named('jar', Jar).configure {
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
+    archiveClassifier = 'slim'
     finalizedBy 'reobfJar'
 }
 
-
+tasks.named('jarJar', Jar).configure {
+    manifest {
+        attributes([
+                "Specification-Title": mod_id,
+                "Specification-Vendor": mod_authors,
+                "Specification-Version": "1", // We are version 1 of ourselves
+                "Implementation-Title": project.name,
+                "Implementation-Version": project.jar.archiveVersion,
+                "Implementation-Vendor" : mod_authors,
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+    archiveClassifier = ''
+    finalizedBy 'reobfJarJar'
+}
 
 task srcJar(type: Jar) {
     from(sourceSets.main.java)
@@ -174,6 +189,7 @@ artifacts {
 publishing {
     publications {
         register('mavenJava', MavenPublication) {
+            jarJar.component(it)
             artifact jar
             artifact srcJar
             artifact apiJar
