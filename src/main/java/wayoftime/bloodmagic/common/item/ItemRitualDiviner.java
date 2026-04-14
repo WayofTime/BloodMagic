@@ -145,6 +145,11 @@ public class ItemRitualDiviner extends Item
 	@Override
 	public InteractionResult useOn(UseOnContext context)
 	{
+		// the things in this method only care about it being used on a MRS, if thats not the case we ignore
+		if (!(context.getLevel().getBlockEntity(context.getClickedPos()) instanceof TileMasterRitualStone)) {
+			return InteractionResult.PASS;
+		}
+
 		ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
 		if (context.getPlayer().isShiftKeyDown())
 		{
@@ -362,13 +367,6 @@ public class ItemRitualDiviner extends Item
 	{
 		ItemStack stack = player.getItemInHand(hand);
 		setActivatedState(stack, false);
-
-		HitResult ray = getPlayerPOVHitResult(world, player, ClipContext.Fluid.NONE);
-
-		if (ray != null && ray.getType() == HitResult.Type.BLOCK)
-		{
-			return new InteractionResultHolder<>(InteractionResult.PASS, stack);
-		}
 
 		if (player.isShiftKeyDown())
 		{
