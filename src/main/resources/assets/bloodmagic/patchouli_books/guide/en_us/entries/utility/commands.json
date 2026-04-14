@@ -1,0 +1,17 @@
+{
+  "name": "Commands",
+  "icon": "minecraft:command_block",
+  "category": "bloodmagic:utility",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:command_block",
+      "title": "Commands",
+      "text": "for server admins and those with cheat mode enabled, $(6)Blood Magic$() now has some useful commands: $(li)$(l)/bloodmagic network <username> add [amount]$() adds the given amount of LP to the listed player's $(l:bloodmagic:altar/soul_network)Soul Network$()$(li)$(l)/bloodmagic network <username> query$() lists the current total for"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "that player's Soul Network (akin to using a $(l:bloodmagic:alchemy_array/sigil/divination)Divination Sigil$() bound to them)$(li)$(l)/bloodmagic network <username> reset$() empties their Soul Network$(li)$(l)/bloodmagic network <username> set [amount]$() sets the total LP in their soul network to the given amount."
+    }
+  ]
+}
