@@ -1,14 +1,19 @@
 {
-  "name": "Sigil of the Frozen Lake [NYI]",
+  "name": "Sigil of the Frozen Lake",
   "icon": "bloodmagic:icesigil",
   "category": "bloodmagic:alchemy_array/sigil",
-  "extra_recipe_mappings": {
-    "bloodmagic:icesigil": 0
-  },
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "[WIP Notes]$(br)[Not Yet Implemented]$(br2)Frostwalker Enchantment as a Sigil."
+      "text": "you've heard tell of ancient boots enchanted with $(thing)Frost-walking$(), freezing the ground and water beneath the wearer's feet. That sounds like fine inspiration for a sigil! It's even able to be toggled, so you're not in danger of freezing over your farmlands every time you get close."
+    },
+    {
+      "type": "bloodmagic:crafting_2-step_sigil",
+      "alchemy_table.heading": "frost Reagent",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_frost",
+      "array.heading": "Frost Sigil",
+      "array.recipe": "bloodmagic:array/frostsigil",
+      "array.text": "$(italic)Slippy-Slidey Ice World!$()"
     }
   ]
 }
