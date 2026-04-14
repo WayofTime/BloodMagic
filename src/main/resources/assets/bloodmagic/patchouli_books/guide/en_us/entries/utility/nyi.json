@@ -18,7 +18,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "$(li)Arcane Ash Rituals. Some of these are coming back soon(tm),for now wait and see. $(li)Ritual of Binding. This went out with 1.7.10, stop asking. $(li)Imperfect Rituals (Lapis etc) - some of these have been implemented as Arcane Ash Arrays.  $(li)Sigil of the Frozen Lake. $(li)Sigil of Elasticity. $(li)Sigil of Elemental Affinity. $(li)Sigil of the Claw. $(li)Interdiction Ritual. $(li)Ritual of Containment. $(li)Le Vulcano Frigius."
+      "text": "$(li)Arcane Ash Rituals. Some of these are coming back soon(tm),for now wait and see. $(li)Ritual of Binding. This went out with 1.7.10, stop asking. $(li)Imperfect Rituals (Lapis etc) - some of these have been implemented as Arcane Ash Arrays. $(li)Sigil of Elasticity. $(li)Sigil of Elemental Affinity. $(li)Sigil of the Claw. $(li)Interdiction Ritual. $(li)Ritual of Containment. $(li)Le Vulcano Frigius."
     },
     {
       "type": "patchouli:text",
