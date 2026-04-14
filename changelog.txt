@@ -2,24 +2,28 @@
 Version 3.3.6
 ------------------------------------------------------
 Added:
-- Upgrade Tomes holding the same Up- or Downgrade can now be combined in a crafting grid to add their points together
+- Upgrade Tomes holding the same Upgrade or Downgrade can now be combined in a crafting grid to add their points together
 - Commands to manipulate a players soul network
+- - Currently "bloodmagic network <username> <add/query/reset/set> [amount]" to read or write a player's LP.
+- - Add adds a given amount, Query returns the current value, Reset sets it to 0, Set sets it to a given amount.
 - ARC input tank can be emptied by putting buckets or other fluid handler items into the input bucket slot. It will also try to transfer as much as possible instead of only ever 1 bucket at a time
 - ARC tanks can be interacted with from in-world now. Order of operations tried is Fill input tank > Empty output tank > Empty input tank > Open GUI
 - Sigil of the Frozen Lake is now craftable
+- - By default, this tier-3 recipe takes packed ice, a snow block, a snowball, and water to make Frost Reagent, and an infused slate to make the Sigil itself.
+- - Acts as a Frostwalker enchantment when active.
 - Weak and Saturated Tau now count towards tranquility when building the incense altar
 - Froglight variants are now valid in place of glowstone for the altar
 - Configuration options in bloodmagic-common.toml for the LP cost of all sigils
 - Fan translations! Currently we've deployed Simplified Chinese (zh_CN), thanks to Rain-Flying. If you'd like to help contribute a language to the pack, or improve an existing language, come join our Discord (link on github/modrinth/curseforge)
-- block protection compatibility (i.e. ftbchunks et al). Mining charges, the ritual of magnetism, and other things that affect or modify blocks should now respect teams and claims. Server owners, rejoice!
-
+- Block protection compatibility (i.e. ftbchunks et al). Mining charges, the ritual of magnetism, and other things that affect or modify blocks should now respect teams and claims. Server owners, rejoice!
+- added waterlogging support to the Water Sigil, and prevented the Water and Lava Sigils from deleting blocks in certain corner cases
 
 Fixed:
 - Fixed a world-breaking crash with the Reap of the Harvest Moon ritual if it found a TileEntity in its range when
 AgriCraft is *not* installed.
 - - If your world has been affected by this, go to 'forge-server.toml' and set 'removeErroringBlockEntities' to 'true'. Launch your world and confirm that it's running, then set this back to false. (see the warning in the .toml for more info)
 - The 'flight' potion effect now properly clears when players drink a bucket of milk (or otherwise end it prematurely)
-- Ritual of the Beating Anvil didnt check to see if the recipe as valid and just produced the result. Recipe checking has been added, so you do now actually need the correct inputs
+- Rhythm of the Beating Anvil didn't check to see if the recipe was valid and just produced the result. Recipe checking has been added, so you do now actually need the correct inputs
 - MagiChem's fully grown clusters have been added to the geode_harvestable tag to work out of the box rather than requiring a datapack. The budding blocks are already in the forge:budding tag which is already part of geode_acceleratable
 - Apparently Oculus takes _s to mean 'shader' and helpfully removes such instances from the texture map. Unfortunately all our steadfast variant blocks ended in _s. We've renamed them to _steadfast as a result
 - Blood Orbs could be used without getting damaged while spawn protection lasts. It now does the same thing the rest of the sacrifice stuff does and first gets rid of invulnerability
@@ -32,6 +36,7 @@ AgriCraft is *not* installed.
 - teleposition sigil now teleports you when clicking on a non-teleposer block as well. it also now checks itself for a destination when inside a sigil of holding
 - ritual diviner and tinkerer can now be cycled even when looking at a (non master ritual stone) block
 - now uses a fake player so certus quartz now actually drops, instead of getting voided because there was no entity passed to the drop generation
+- Added a check to prevent alchemy arrays from duplicating items
 
 ------------------------------------------------------
 Version 3.3.5

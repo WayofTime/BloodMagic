@@ -11,39 +11,47 @@
     {
       "type": "patchouli:text",
       "title": "3.3.6",
-      "text": "Added:$(li)Upgrade Tomes holding the same Up- or Downgrade can now be combined in a crafting grid to add their points together$(li)Commands to manipulate a players soul network$(li)ARC input tank can be emptied by putting buckets or other fluid handler items into the input bucket slot. It will also try to transfer as much as possible instead of only ever 1 bucket at a time"
+      "text": "Added:$(li)$(l:alchemy_array/living_equipment/living_tomes)Upgrade Tomes$() holding the same Up- or Downgrade can now be combined in a crafting grid to add their points together$(li)$(l:bloodmagic:utility/commands)Commands$() to manipulate a players $(l:bloodmagic:altar/soul_network)Soul Network$()$(li2)Currently \"bloodmagic network <username> <add/query/reset/set> [amount]\" to read or write a player's LP.$(li2)$(thing)Add$() adds a given amount, $(thing)Query$() returns the current value, $(thing)Reset$() sets it to 0, $(thing)Set$() sets it to a given amount"
     },
     {
       "type": "patchouli:text",
-      "text": "$(li)ARC tanks can be interacted with from in-world now. Order of operations tried is Fill input tank > Empty output tank > Empty input tank > Open GUI$(li)Sigil of the Frozen Lake is now craftable$(li)Weak and Saturated Tau now count towards tranquility when building the incense altar$(li)Froglight variants are now valid in place of glowstone for the altar$(li)configuration options in bloodmagic-common.toml for the LP cost of all sigils"
+      "text": "$(li)$(l:bloodmagic:utility/alchemical_reaction_chamber)ARC$() input tank can be emptied by putting $(thing)buckets$() or other fluid handler items into the input bucket slot. It will also try to transfer as much as possible instead of only ever 1 bucket at a time$(li)ARC tanks can be interacted with from in-world now. Order of operations tried is Fill input tank > Empty output tank > Empty input tank > Open GUI$(li)$(l:bloodmagic:alchemy_array/sigil/ice)Sigil of the Frozen Lake$() is now craftable$(li2)By default, this tier-3"
     },
     {
       "type": "patchouli:text",
-      "text": "$(li)Fan translations! Currently we've deployed Simplified Chinese (zh_CN), thanks to Rain-Flying. If you'd like to help contribute a language to the pack, or improve an existing language, come join our $(l:https://discord.gg/VtNrGrs)Discord$()$(li)Block protection compatibility (i.e. ftbchunks et al). Mining charges, the ritual of magnetism, and other things that affect or modify blocks should now respect teams and claims. Server owners, rejoice!"
+      "text": "recipe takes packed ice, a snow block, a snowball, and water to make $(item)Frost Reagent$(), and an infused slate to make the Sigil itself.$(li2)Acts as a Frostwalker enchantment when active.$(li)$(item)Weak$() and $(item)Saturated Tau$() now count towards tranquility when building the $(l:bloodmagic:utility/incense_altar)Incense Altar$()$(li)$(item)Froglight variants$() are now valid in place of $(item)glowstone$() for the altar$(li)configuration options in bloodmagic-common.toml for the LP cost of all sigils"
     },
     {
       "type": "patchouli:text",
-      "text": "Fixed:$(li)fixed a world-breaking crash with the Reap of the Harvest Moon ritual if it found a TileEntity in its range when AgriCraft is *not* installed$(li2)If your world has been affected by this, go to 'forge-server.toml' and set 'removeErroringBlockEntities' to 'true'. Launch your world and confirm that it's running, then set this back to false. (see the warning in the .toml for more info)"
+      "text": "$(li)Fan translations! Currently we've deployed Simplified Chinese (zh_CN), thanks to Rain-Flying. If you'd like to help contribute a language to the pack, or improve an existing language, come join our $(l:https://discord.gg/VtNrGrs)Discord$()!$(li)Block protection compatibility (i.e. ftbchunks et al). $(l:bloodmagic:demon_will/demonic_items/explosive_charges)Mining charges$(), the $(l:bloodmagic:rituals/ritual_list/ritual_magnetic)Ritual of Magnetism$(), and other things that affect or modify blocks should now respect teams and claims. Server owners, rejoice!"
     },
     {
       "type": "patchouli:text",
-      "text": "$(li)The 'flight' potion effect now properly clears when players drink a bucket of milk (or otherwise end it prematurely)$(li)Ritual of the Beating Anvil didnt check to see if the recipe as valid and just produced the result. Recipe checking has been added, so you do now actually need the correct inputs$(li)Composite Item Filters didnt work, now they do"
+      "text": "$(li)added waterlogging support to the $(l:bloodmagic:alchemy_array/sigil/water)Water Sigil$(), and prevented the Water and $(l:bloodmagic:alchemy_array/sigil/lava)Lava Sigils$() from deleting blocks in certain corner cases"
     },
     {
       "type": "patchouli:text",
-      "text": "$(li)Apparently Oculus takes _s to mean 'shader' and helpfully removes such instances from the texture map. Unfortunately all our steadfast variant blocks ended in _s. We've renamed them to _steadfast as a result$(li)Blood Orbs could be used without getting damaged while spawn protection lasts. It now does the same thing the rest of the sacrifice stuff does and first gets rid of invulnerability"
+      "text": "Fixed:$(li)fixed a world-breaking crash with the $(l:bloodmagic:rituals/ritual_list/ritual_harvest)Reap of the Harvest Moon$() ritual if it found a TileEntity in its range when $(thing)AgriCraft$() is *not* installed$(li2)If your world has been affected by this, go to 'forge-server.toml' and set 'removeErroringBlockEntities' to 'true'. Launch your world and confirm that it's running, then set this back to false. (see the warning in the .toml for more info)"
     },
     {
       "type": "patchouli:text",
-      "text": "$(li)improved item automation interactions for the Hellfire Forge. More on this $(l:bloodmagic:demon_will/will_manipulation/soul_forge)here$()$(li)MagiChem's fully grown clusters have been added to the geode_harvestable tag to work out of the box rather than requiring a datapack. The budding blocks are already in the forge:budding tag which is already part of geode_acceleratable"
+      "text": "$(li)The '$(l:bloodmagic:alchemy_table/potion_flasks/blood_magic/flight)flight$()' potion effect now properly clears when players drink a bucket of $(item)milk$() (or otherwise end it prematurely)$(li)$(l:bloodmagic:rituals/ritual_list/ritual_crafting)Rhythm of the Beating Anvil$() didn't check to see if the recipe was valid and just produced the result. Recipe checking has been added, so you do now actually need the correct inputs$(li)$(l:bloodmagic:demon_will/item_routing/composite_item_filter)Composite Item Filters$() didn't work, now they do"
     },
     {
       "type": "patchouli:text",
-      "text": "$(li)forge:storage_blocks/hellforged block and item tags have been added to the respective forge:storage_blocks tag$(li)prevent a crash when opening the Edit HUD position screen while looking at an entity$(li)soft coating no longer voids the contents of shulker boxes (or other tile-entities)$(li)now actually harvests certus quartz"
+      "text": "$(li)Apparently $(thing)Oculus$() takes _s to mean 'shader' and helpfully removes such instances from the texture map. Unfortunately all our $(steadfast)Steadfast$() variant blocks ended in _s. We've renamed them to _steadfast as a result$(li)$(l:bloodmagic:altar/soul_network)Blood Orbs$() could be used without getting damaged while spawn protection lasts. It now does the same thing the rest of the sacrifice stuff does and first gets rid of invulnerability"
     },
     {
       "type": "patchouli:text",
-      "text": "$(li)teleposition sigil now teleports you when clicking on a non-teleposer block as well. it also now checks itself for a destination when inside a sigil of holding$()$(li)ritual diviner and tinkerer can now be cycled even when looking at a (non master ritual stone) block"
+      "text": "$(li)improved item automation interactions for the Hellfire Forge. More on this $(l:bloodmagic:demon_will/will_manipulation/soul_forge)here$()$(li)$(thing)MagiChem$()'s fully grown clusters have been added to the geode_harvestable tag to work out of the box rather than requiring a datapack. The budding blocks are already in the forge:budding tag which is already part of geode_acceleratable"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)forge:storage_blocks/hellforged block and item tags have been added to the respective forge:storage_blocks tag$(li)prevent a crash when opening the Edit HUD position screen while looking at an entity$(li)$(l:bloodmagic:alchemy_table/anointments/silk_touch_anointment)Soft Coating$() no longer voids the contents of $(item)shulker boxes$() (or other tile-entities)$(li)now actually harvests certus quartz"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)$(l:bloodmagic:alchemy_array/sigil/teleposition)Teleposition Sigil$() now teleports you when clicking on a non-$(l:bloodmagic:utility/teleposer)teleposer$() block as well. it also now checks itself for a destination when inside a $(l:bloodmagic:alchemy_array/sigil/holding)Sigil of Holding$()$(li)$(l:bloodmagic:rituals/ritual_diviner)ritual diviner$() and $(l:bloodmagic:rituals/ritual_tinkerer)tinkerer$() can now be cycled even when looking at a (non master ritual stone) block"
     },
     {
       "type": "patchouli:text",
@@ -256,7 +264,8 @@
       "type": "patchouli:text",
       "title": "3.1.10",
       "text": "$(li)Fixed server-sided issue that prevented recipes from loading for certain types."
-    },    {
+    },
+    {
       "type": "patchouli:text",
       "title": "3.1.9",
       "text": "$(li)Added the missing recipes for a couple of the $(thing)Living Armour Downgrades$(). $(li2)Yes, Way is indeed blind."
