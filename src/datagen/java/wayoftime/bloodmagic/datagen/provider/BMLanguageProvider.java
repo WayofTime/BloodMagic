@@ -105,6 +105,14 @@ public class BMLanguageProvider extends LanguageProvider {
         for (EnumWillType type : EnumWillType.values()) {
             addTooltip("current_type." + type.getSerializedName(), String.format("Contains: %s Will", type.toCapitalized()));
         }
+
+        add(BMBlocks.ALCHEMY_TABLE, "Alchemy Table");
+        addTooltip("alchemy_table.orb_error.title", "Orb Error");
+        addTooltip("alchemy_table.orb_error.text", "Blood Orb not bound or missing");
+        addTooltip("alchemy_table.essence_error.title", "Life Essence Error");
+        addTooltip("alchemy_table.essence_error.text", "Not enough Life Essence in Soul Network");
+        addTooltip("alchemy_table.stack_limit_toggle", "Toggle Max Stack Amount for Input Slots");
+
         add("item_group.bloodmagic.main", "Blood Magic");
         add("item_group.bloodmagic.tomes", "Blood Magic Upgrade Tomes");
         add("item_group.bloodmagic.trainers", "Blood Magic Trainer Tomes");

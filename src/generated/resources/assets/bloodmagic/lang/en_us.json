@@ -1,4 +1,5 @@
 {
+  "block.bloodmagic.alchemy_table": "Alchemy Table",
   "block.bloodmagic.arc": "Alchemical Reaction Chamber",
   "block.bloodmagic.blood_altar": "Blood Altar",
   "block.bloodmagic.blood_tank": "Blood Tank",
@@ -139,6 +140,11 @@
   "living_upgrade.bloodmagic.sprint_attack": "Charging Strike",
   "living_upgrade.bloodmagic.storm_trooper": "Storm Trooper",
   "living_upgrade.bloodmagic.swim_decrease": "Concrete Shoes",
+  "tooltip.bloodmagic.alchemy_table.essence_error.text": "Not enough Life Essence in Soul Network",
+  "tooltip.bloodmagic.alchemy_table.essence_error.title": "Life Essence Error",
+  "tooltip.bloodmagic.alchemy_table.orb_error.text": "Blood Orb not bound or missing",
+  "tooltip.bloodmagic.alchemy_table.orb_error.title": "Orb Error",
+  "tooltip.bloodmagic.alchemy_table.stack_limit_toggle": "Toggle Max Stack Amount for Input Slots",
   "tooltip.bloodmagic.container_tier": "Current Tier: %s",
   "tooltip.bloodmagic.container_tier_missing": "No Tier found!",
   "tooltip.bloodmagic.current_owner": "Current Owner: %s",

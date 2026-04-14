@@ -13,6 +13,7 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.api.BMIdentifiers;
 import wayoftime.bloodmagic.client.model.sigil.SigilLoader;
+import wayoftime.bloodmagic.client.screen.AlchemyTableScreen;
 import wayoftime.bloodmagic.client.screen.TrainerScreen;
 import wayoftime.bloodmagic.common.menu.BMMenus;
 import wayoftime.bloodmagic.client.render.entity.layer.LivingElytraLayer;
@@ -74,5 +75,6 @@ public class ClientModEventHandler {
         event.register(BMMenus.ARC.get(), ARCScreen::new);
         event.register(BMMenus.LIVING_STATION.get(), LivingStationScreen::new);
         event.register(BMMenus.TRAINER.get(), TrainerScreen::new);
+        event.register(BMMenus.ALCHEMY_TABLE.get(), AlchemyTableScreen::new);
     }
 }
