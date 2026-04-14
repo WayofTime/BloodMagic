@@ -135,6 +135,7 @@ public class TileAlchemyArray extends TileInventory
 				this.removeItem(0, 1);
 				this.removeItem(1, 1);
 				this.getLevel().setBlockAndUpdate(getBlockPos(), Blocks.AIR.defaultBlockState());
+				return false;
 			}
 
 			return true;
