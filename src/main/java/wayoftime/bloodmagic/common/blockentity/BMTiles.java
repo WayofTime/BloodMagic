@@ -7,6 +7,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.RangedWrapper;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -81,6 +82,16 @@ public class BMTiles {
                         end++;
                     }
                     return new RangedWrapper(tile.itemCap, start, end);
+                }
+        );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                ARCANE_ASHES.get(),
+                (tile, side) -> {
+                    if (side == null) {
+                        return tile.inv; // jade & co only. no automation
+                    }
+                    return null;
                 }
         );
     }

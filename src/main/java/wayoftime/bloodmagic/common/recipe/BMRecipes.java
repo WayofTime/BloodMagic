@@ -10,6 +10,9 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import wayoftime.bloodmagic.BloodMagic;
 import wayoftime.bloodmagic.common.recipe.arc.ARCRecipe;
 import wayoftime.bloodmagic.common.recipe.arc.ARCSerializer;
+import wayoftime.bloodmagic.common.recipe.ash.AshCraftingRecipe;
+import wayoftime.bloodmagic.common.recipe.ash.AshCraftingSerializer;
+import wayoftime.bloodmagic.common.recipe.ash.AshRecipe;
 import wayoftime.bloodmagic.common.recipe.bloodaltar.BloodAltarRecipe;
 import wayoftime.bloodmagic.common.recipe.bloodaltar.BloodAltarRecipeSerializer;
 import wayoftime.bloodmagic.common.recipe.forge.ForgeRecipe;
@@ -37,6 +40,9 @@ public class BMRecipes {
 
     public static final DeferredHolder<RecipeType<?>, RecipeType<EnergyTieredRecipe>> ENERGY_TIERED_TYPE = TYPES.register(EnergyTieredRecipe.NAME, () -> RecipeType.simple(bm(EnergyTieredRecipe.NAME)));
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<EnergyTieredRecipe>> ENERGY_TIERED_SERIALIZER = SERIALIZERS.register(EnergyTieredRecipe.NAME, EnergyTieredSerializer::new);
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<AshRecipe>> ASH_TYPE = TYPES.register(AshRecipe.NAME, () -> RecipeType.simple(bm(AshRecipe.NAME)));
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<AshCraftingRecipe>> ASH_CRAFTING_SERIALIZER = SERIALIZERS.register(AshCraftingSerializer.NAME, AshCraftingSerializer::new);
 
     public static void register(IEventBus modBus) {
         SERIALIZERS.register(modBus);

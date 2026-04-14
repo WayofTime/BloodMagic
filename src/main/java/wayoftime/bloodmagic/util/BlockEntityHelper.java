@@ -29,4 +29,10 @@ public class BlockEntityHelper {
             Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), handler.getStackInSlot(i));
         }
     }
+
+    public static void dropContents(Level level, BlockPos pos, IItemHandler handler, int maxIndex) {
+        for (int i = 0; i < maxIndex; i++) {
+            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), handler.getStackInSlot(i));
+        }
+    }
 }
