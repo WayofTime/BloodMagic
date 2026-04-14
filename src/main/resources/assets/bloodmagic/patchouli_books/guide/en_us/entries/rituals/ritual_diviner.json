@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Crafting rituals is an intricate business; Even if you have the correct $(item)Inscription Tools$(), you can't just slap runic inscriptions down any old how and expect things to happen. Luckily, the $(item)Ritual Diviner$() is here to help. $(br2)Hold [$(k:sneak)] and press [$(k:use)] or [$(k:attack)] while looking at empty air to cycle through the avaliable rituals in either direction."
+      "text": "Crafting rituals is an intricate business; Even if you have the correct $(item)Inscription Tools$(), you can't just slap runic inscriptions down any old how and expect things to happen. Luckily, the $(item)Ritual Diviner$() is here to help. $(br2)Hold [$(k:sneak)] and press [$(k:use)] or [$(k:attack)] to cycle through the avaliable rituals in either direction."
     },
     {
       "type": "patchouli:text",

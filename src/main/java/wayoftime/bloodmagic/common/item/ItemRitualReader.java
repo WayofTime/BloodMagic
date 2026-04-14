@@ -79,11 +79,6 @@ public class ItemRitualReader extends Item
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
-		HitResult ray = Item.getPlayerPOVHitResult(world, player, Fluid.NONE);
-		if (ray != null && ray.getType() == HitResult.Type.BLOCK)
-		{
-			return new InteractionResultHolder<>(InteractionResult.PASS, stack);
-		}
 
 		if (player.isShiftKeyDown())
 		{
@@ -114,10 +109,9 @@ public class ItemRitualReader extends Item
 		{
 			EnumRitualReaderState state = this.getState(stack);
 			BlockEntity tile = world.getBlockEntity(pos);
-			if (tile instanceof IMasterRitualStone)
+			if (tile instanceof IMasterRitualStone master)
 			{
-				IMasterRitualStone master = (IMasterRitualStone) tile;
-				if (master.getCurrentRitual() == null)
+                if (master.getCurrentRitual() == null)
 					super.useOn(context);
 				this.setMasterBlockPos(stack, pos);
 				this.setBlockPos(stack, BlockPos.ZERO);
@@ -195,10 +189,9 @@ public class ItemRitualReader extends Item
 						} else
 						{
 							tile = world.getBlockEntity(masterPos);
-							if (tile instanceof IMasterRitualStone)
+							if (tile instanceof IMasterRitualStone master)
 							{
-								IMasterRitualStone master = (IMasterRitualStone) tile;
-								BlockPos pos2 = pos.subtract(masterPos);
+                                BlockPos pos2 = pos.subtract(masterPos);
 								String range = this.getCurrentBlockRange(stack);
 								if (range == null || range.isEmpty())
 								{

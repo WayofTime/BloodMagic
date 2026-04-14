@@ -140,11 +140,11 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
 		if (itemUsing.isEmpty() || ((IBindable) itemUsing.getItem()).getBinding(itemUsing) == null)
 			return InteractionResultHolder.pass(stack);
 
-		itemUsing.getItem().use(world, player, hand);
-
+		InteractionResultHolder<ItemStack> result = itemUsing.getItem().use(world, player, hand);
 		saveInventory(stack, inv);
 
-		return InteractionResultHolder.pass(stack);
+		// dont throw away the internal sigils use result, didnt do that in useOn either
+		return result;
 	}
 
 	@Nonnull

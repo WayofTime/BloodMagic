@@ -202,6 +202,16 @@ public class GenericHandler
 	}
 
 	@SubscribeEvent
+	// make cycling the diviner also work on clicking on a block instead of only on clicking nothing
+	public void onPlayerLeftClickBlock(PlayerInteractEvent.LeftClickBlock event)
+	{
+		if (event.getItemStack().getItem() instanceof ItemRitualDiviner)
+		{
+			BloodMagicPacketHandler.INSTANCE.sendToServer(new CycleRitualDivinerPacket(event.getEntity().getInventory().selected));
+		}
+	}
+
+	@SubscribeEvent
 	// Called when an entity is set to be hurt. Called before vanilla armour
 	// calculations.
 	public void onLivingHurt(LivingHurtEvent event)
