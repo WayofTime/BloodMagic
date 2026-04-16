@@ -27,7 +27,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "$(li)added waterlogging support to the $(l:bloodmagic:alchemy_array/sigil/water)Water Sigil$(), and prevented the Water and $(l:bloodmagic:alchemy_array/sigil/lava)Lava Sigils$() from deleting blocks in certain corner cases"
+      "text": "$(li)Added waterlogging support to the $(l:bloodmagic:alchemy_array/sigil/water)Water Sigil$(), and prevented the Water and $(l:bloodmagic:alchemy_array/sigil/lava)Lava Sigils$() from deleting blocks in certain corner cases"
     },
     {
       "type": "patchouli:text",
@@ -43,15 +43,19 @@
     },
     {
       "type": "patchouli:text",
-      "text": "$(li)improved item automation interactions for the Hellfire Forge. More on this $(l:bloodmagic:demon_will/will_manipulation/soul_forge)here$()$(li)$(thing)MagiChem$()'s fully grown clusters have been added to the geode_harvestable tag to work out of the box rather than requiring a datapack. The budding blocks are already in the forge:budding tag which is already part of geode_acceleratable"
+      "text": "$(li)improved item automation interactions for the Hellfire Forge. More on this $(l:bloodmagic:demon_will/will_manipulation/soul_forge)here$()$(li)$(thing)MagiChem$()'s fully grown clusters have been added to the geode_harvestable tag to work with the $(l:bloodmagic:rituals/ritual_list/ritual_geode)Ritual of the Geode's Bounty$() out of the box rather than requiring a datapack. The budding blocks are already in the forge:budding tag which is already part of geode_acceleratable"
     },
     {
       "type": "patchouli:text",
-      "text": "$(li)forge:storage_blocks/hellforged block and item tags have been added to the respective forge:storage_blocks tag$(li)prevent a crash when opening the Edit HUD position screen while looking at an entity$(li)$(l:bloodmagic:alchemy_table/anointments/silk_touch_anointment)Soft Coating$() no longer voids the contents of $(item)shulker boxes$() (or other tile-entities)$(li)now actually harvests certus quartz"
+      "text": "$(li)forge:storage_blocks/hellforged block and item tags have been added to the respective forge:storage_blocks tag$(li)prevent a crash when opening the Edit HUD position screen while looking at an entity$(li)$(l:bloodmagic:alchemy_table/anointments/silk_touch_anointment)Soft Coating$() no longer voids the contents of $(item)shulker boxes$() (or other tile-entities)"
     },
     {
       "type": "patchouli:text",
       "text": "$(li)$(l:bloodmagic:alchemy_array/sigil/teleposition)Teleposition Sigil$() now teleports you when clicking on a non-$(l:bloodmagic:utility/teleposer)teleposer$() block as well. it also now checks itself for a destination when inside a $(l:bloodmagic:alchemy_array/sigil/holding)Sigil of Holding$()$(li)$(l:bloodmagic:rituals/ritual_diviner)ritual diviner$() and $(l:bloodmagic:rituals/ritual_tinkerer)tinkerer$() can now be cycled even when looking at a (non master ritual stone) block"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)Added a check to prevent alchemy arrays from duplicating items$(li)bloodmagic:geode_harvestable now adds forge:clusters as a tag instead of a block, meaning that The $(l:bloodmagic:rituals/ritual_list/ritual_geode)Ritual of the Geode's Bounty$() will actually work with them$(li)The ritual now uses a fake player so certus quartz now actually drops, instead of getting voided because there was no entity passed to the drop generation"
     },
     {
       "type": "patchouli:text",

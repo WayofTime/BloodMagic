@@ -16,7 +16,7 @@ Added:
 - Configuration options in bloodmagic-common.toml for the LP cost of all sigils
 - Fan translations! Currently we've deployed Simplified Chinese (zh_CN), thanks to Rain-Flying. If you'd like to help contribute a language to the pack, or improve an existing language, come join our Discord (link on github/modrinth/curseforge)
 - Block protection compatibility (i.e. ftbchunks et al). Mining charges, the ritual of magnetism, and other things that affect or modify blocks should now respect teams and claims. Server owners, rejoice!
-- added waterlogging support to the Water Sigil, and prevented the Water and Lava Sigils from deleting blocks in certain corner cases
+- Added waterlogging support to the Water Sigil, and prevented the Water and Lava Sigils from deleting blocks in certain corner cases
 
 Fixed:
 - Fixed a world-breaking crash with the Reap of the Harvest Moon ritual if it found a TileEntity in its range when
@@ -24,18 +24,18 @@ AgriCraft is *not* installed.
 - - If your world has been affected by this, go to 'forge-server.toml' and set 'removeErroringBlockEntities' to 'true'. Launch your world and confirm that it's running, then set this back to false. (see the warning in the .toml for more info)
 - The 'flight' potion effect now properly clears when players drink a bucket of milk (or otherwise end it prematurely)
 - Rhythm of the Beating Anvil didn't check to see if the recipe was valid and just produced the result. Recipe checking has been added, so you do now actually need the correct inputs
-- MagiChem's fully grown clusters have been added to the geode_harvestable tag to work out of the box rather than requiring a datapack. The budding blocks are already in the forge:budding tag which is already part of geode_acceleratable
+- MagiChem's fully grown clusters have been added to the geode_harvestable tag to work out of the box with The Ritual of the Geode's Bounty rather than requiring a datapack. The budding blocks are already in the forge:budding tag which is already part of geode_acceleratable
 - Apparently Oculus takes _s to mean 'shader' and helpfully removes such instances from the texture map. Unfortunately all our steadfast variant blocks ended in _s. We've renamed them to _steadfast as a result
 - Blood Orbs could be used without getting damaged while spawn protection lasts. It now does the same thing the rest of the sacrifice stuff does and first gets rid of invulnerability
 - The Hellfire Forge does not let item automation stuff place items into the output slot anymore. Its also learned some other handy things like prioritizing a different input slot for each of the different sides as well as targeting the gem slot first from above and only ever taking from the output slot from below
 - Composite Item Filters didn't work, now they do
-- forge:storage_blocks/hellforged block and item tags have been added to the respective forge:storage_blocks tag
-- prevent a crash when opening the Edit HUD position screen while looking at an entity
-- soft coating no longer voids the contents of shulker boxes (or other tile-entities)
-- bloodmagic:geode_harvestable now adds forge:clusters as a tag instead of a block, meaning it'll actually work with them
-- teleposition sigil now teleports you when clicking on a non-teleposer block as well. it also now checks itself for a destination when inside a sigil of holding
-- ritual diviner and tinkerer can now be cycled even when looking at a (non master ritual stone) block
-- now uses a fake player so certus quartz now actually drops, instead of getting voided because there was no entity passed to the drop generation
+- Forge:storage_blocks/hellforged block and item tags have been added to the respective forge:storage_blocks tag
+- Prevent a crash when opening the Edit HUD position screen while looking at an entity
+- Soft coating no longer voids the contents of shulker boxes (or other tile-entities)
+- Bloodmagic:geode_harvestable now adds forge:clusters as a tag instead of a block, meaning that The Ritual of the Geode's Bounty will actually work with them
+- Teleposition sigil now teleports you when clicking on a non-teleposer block as well. it also now checks itself for a destination when inside a sigil of holding
+- Ritual diviner and tinkerer can now be cycled even when looking at a (non master ritual stone) block
+- The Ritual of the Geode's Bounty now uses a fake player so certus quartz now actually drops, instead of getting voided because there was no entity passed to the drop generation
 - Added a check to prevent alchemy arrays from duplicating items
 
 ------------------------------------------------------
