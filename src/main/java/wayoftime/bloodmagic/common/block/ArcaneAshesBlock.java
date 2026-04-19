@@ -72,8 +72,12 @@ public class ArcaneAshesBlock extends Block implements EntityBlock {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
         ItemStack heldItem = player.getItemInHand(hand);
+        if (heldItem.is(BMBlocks.ARCANE_ASHES.asItem())) {
+            return ItemInteractionResult.CONSUME; // do not want to place ashes
+        }
         if (ashes.inv.getStackInSlot(0).isEmpty()) {
             ashes.inv.setStackInSlot(0, heldItem.split(1));
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         } else if (ashes.inv.getStackInSlot(1).isEmpty()) {
             ashes.inv.setStackInSlot(1, heldItem.split(1));
 
@@ -89,9 +93,9 @@ public class ArcaneAshesBlock extends Block implements EntityBlock {
                     ashes.inv.setStackInSlot(2, holder.value().assemble(input, level.registryAccess()));
                     level.sendBlockUpdated(pos, state, state.setValue(MODE, AshMode.CRAFTING), UPDATE_ALL);
                     level.scheduleTick(pos, state.getBlock(), 1);
-                    return ItemInteractionResult.sidedSuccess(level.isClientSide);
                 }
             }
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
 
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
@@ -167,7 +171,7 @@ public class ArcaneAshesBlock extends Block implements EntityBlock {
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (!state.is(newState.getBlock())) {
             if (level.getBlockEntity(pos) instanceof ArcaneAshesTile ash) {
-                BlockEntityHelper.dropContents(level, pos, ash.inv, 1);
+                BlockEntityHelper.dropContents(level, pos, ash.inv, 2);
             }
         }
         super.onRemove(state, level, pos, newState, movedByPiston);
