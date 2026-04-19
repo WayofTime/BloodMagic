@@ -143,8 +143,9 @@ public class ItemSigilHolding extends ItemSigilBase implements IKeybindable, IAl
 		InteractionResultHolder<ItemStack> result = itemUsing.getItem().use(world, player, hand);
 		saveInventory(stack, inv);
 
-		// dont throw away the internal sigils use result, didnt do that in useOn either
-		return result;
+		// Fluid sigils return success(innerHeldStack); propagating that directly would
+		// have vanilla replace the hand with the inner sigil and lose the holding.
+		return new InteractionResultHolder<>(result.getResult(), stack);
 	}
 
 	@Nonnull
