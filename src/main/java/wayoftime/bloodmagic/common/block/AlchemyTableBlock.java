@@ -43,6 +43,7 @@ public class AlchemyTableBlock extends Block implements EntityBlock {
                 .isRedstoneConductor((state, level, pos) -> false)
                 .isViewBlocking((state, level, pos) -> false)
                 .requiresCorrectToolForDrops()
+                .forceSolidOn()
         );
     }
 
@@ -121,12 +122,12 @@ public class AlchemyTableBlock extends Block implements EntityBlock {
     @Override
     protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
         if (facing == getNeighbourDirection(state.getValue(PART), state.getValue(FACING))) {
-            if (facingState.is(this) && facingState.getValue(PART) != state.getValue(PART)) {
-                return super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+            if (!(facingState.is(this) && facingState.getValue(PART) != state.getValue(PART))) {
+                return Blocks.AIR.defaultBlockState();
             }
         }
 
-        return Blocks.AIR.defaultBlockState();
+        return super.updateShape(state, facing, facingState, level, currentPos, facingPos);
     }
 
     private static Direction getNeighbourDirection(TablePart part, Direction direction) {
