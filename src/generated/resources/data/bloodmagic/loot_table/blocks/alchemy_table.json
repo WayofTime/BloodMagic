@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "bloodmagic:alchemy_table",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "part": "left"
+              }
+            }
+          ],
+          "name": "bloodmagic:alchemy_table"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "bloodmagic:blocks/alchemy_table"
+}

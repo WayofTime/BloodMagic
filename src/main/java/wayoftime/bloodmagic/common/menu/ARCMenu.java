@@ -18,13 +18,13 @@ public class ARCMenu extends AbstractContainerMenu {
         super(BMMenus.ARC.get(), containerId);
 
         this.tile = tile;
-        this.addSlot(new SlotItemHandler(ARCTile.getItemHandler(tile, null), ARCTile.INPUT_BUCKET_SLOT, 8, 18));
-        this.addSlot(new SlotItemHandler(ARCTile.getItemHandler(tile, null), ARCTile.OUTPUT_BUCKET_SLOT, 152, 90));
-        this.addSlot(new SlotItemHandler(ARCTile.getItemHandler(tile, null), ARCTile.TOOL_SLOT, 35, 54));
-        this.addSlot(new SlotItemHandler(ARCTile.getItemHandler(tile, null), ARCTile.INPUT_SLOT, 71, 18));
+        this.addSlot(new SlotItemHandler(tile.getItemHandler(null), ARCTile.INPUT_BUCKET_SLOT, 8, 18));
+        this.addSlot(new SlotItemHandler(tile.getItemHandler(null), ARCTile.OUTPUT_BUCKET_SLOT, 152, 90));
+        this.addSlot(new SlotItemHandler(tile.getItemHandler(null), ARCTile.TOOL_SLOT, 35, 54));
+        this.addSlot(new SlotItemHandler(tile.getItemHandler(null), ARCTile.INPUT_SLOT, 71, 18));
 
         for (int i = 0; i < ARCTile.NUM_OUTPUTS; i++) {
-            this.addSlot(new SlotItemHandler(ARCTile.getItemHandler(tile, null), ARCTile.OUTPUT_SLOT + i, 116, 18 + i * 18) {
+            this.addSlot(new SlotItemHandler(tile.getItemHandler(null), ARCTile.OUTPUT_SLOT + i, 116, 18 + i * 18) {
                 @Override
                 public boolean mayPlace(ItemStack stack) {
                     return false;

@@ -38,6 +38,7 @@ public class BMBlocks {
     public static final BlockWithItemHolder<BloodTankBlock, BlockItem> BLOOD_TANK = BLOCK_REG.register("blood_tank", BloodTankBlock::new, block -> new BlockItem(block, new Item.Properties().component(BMDataComponents.CONTAINER_TIER, 1)));
     public static final BlockWithItemHolder<HellfireForgeBlock, BlockItem> HELLFIRE_FORGE = BLOCK_REG.register("hellfire_forge", HellfireForgeBlock::new);
     public static final BlockWithItemHolder<ARCBlock, BlockItem> ARC_BLOCK = BLOCK_REG.register("arc", ARCBlock::new);
+    public static final BlockWithItemHolder<AlchemyTableBlock, BlockItem> ALCHEMY_TABLE = BLOCK_REG.register("alchemy_table", AlchemyTableBlock::new);
 
     // TODO add model/textures for this and change registry to BASIC_REG
     public static final BlockWithItemHolder<LivingStationBlock, BlockItem> LIVING_STATION = BLOCK_REG.register("living_station", LivingStationBlock::new);

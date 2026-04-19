@@ -10,7 +10,9 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import wayoftime.bloodmagic.common.block.AlchemyTableBlock;
 import wayoftime.bloodmagic.common.block.BMBlocks;
+import wayoftime.bloodmagic.util.TablePart;
 import wayoftime.bloodmagic.util.blockitem.BlockWithItemHolder;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ public class MineBlock extends BlockLootSubProvider {
         dropSelfList.add(toAdd.block().get());
     }
 
-    private final List<Block> specialDropList = List.of(BMBlocks.BLOOD_TANK.block().get(), BMBlocks.LIVING_STATION.block().get());
+    private final List<Block> specialDropList = List.of(BMBlocks.BLOOD_TANK.block().get(), BMBlocks.LIVING_STATION.block().get(), BMBlocks.ALCHEMY_TABLE.block().get());
     private List<Block> dropSelfList = new ArrayList<>();
 
     @Override
@@ -46,6 +48,8 @@ public class MineBlock extends BlockLootSubProvider {
         dropSelfList.forEach(this::dropSelf);
         copyComponents(BMBlocks.BLOOD_TANK);
         copyComponents(BMBlocks.LIVING_STATION);
+
+        add(BMBlocks.ALCHEMY_TABLE.block().get(), block -> createSinglePropConditionTable(block, AlchemyTableBlock.PART, TablePart.LEFT));
     }
 
     private void copyComponents(BlockWithItemHolder<? extends Block, ? extends BlockItem> holder) {

@@ -103,17 +103,17 @@ public class ARCTile extends BaseTile implements MenuProvider {
         return (int) (progress * 38);
     }
 
-    public static IItemHandler getItemHandler(ARCTile tile, @Nullable Direction side) {
+    public IItemHandler getItemHandler(@Nullable Direction side) {
         if (side == null) {
-            return tile.arcInv;
+            return arcInv;
         }
         switch (side) {
             case UP:
-                return new RangedWrapper(tile.arcInv, TOOL_SLOT, TOOL_SLOT + 1);
+                return new RangedWrapper(arcInv, TOOL_SLOT, TOOL_SLOT + 1);
             case DOWN:
-                new RangedWrapper(tile.arcInv, OUTPUT_SLOT, OUTPUT_SLOT + NUM_OUTPUTS);
+                new RangedWrapper(arcInv, OUTPUT_SLOT, OUTPUT_SLOT + NUM_OUTPUTS);
             default:
-                return new RangedWrapper(tile.arcInv, INPUT_SLOT, OUTPUT_BUCKET_SLOT+1);
+                return new RangedWrapper(arcInv, INPUT_SLOT, OUTPUT_BUCKET_SLOT+1);
         }
     }
 

@@ -10,6 +10,7 @@ import wayoftime.bloodmagic.common.ritual.imperfect.ImperfectRitualEffects;
 import java.util.function.Function;
 
 // TODO should probably define cost here and have it be part of this codec, but not sure how to do that
+// the answer seems to be Codec#dispatchedMap
 public interface ImperfectRitualEffect {
     Codec<ImperfectRitualEffect> CODEC = Codec.lazyInitialized(() -> ImperfectRitualEffects.IMPERFECT_RITUAL_EFFECT_TYPE
             .getRegistry()
