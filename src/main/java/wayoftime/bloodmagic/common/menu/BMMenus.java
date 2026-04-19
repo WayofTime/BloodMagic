@@ -15,6 +15,7 @@ public class BMMenus {
 
     public static final DeferredHolder<MenuType<?>, MenuType<ARCMenu>> ARC = MENUS.register("arc_menu", () -> IMenuTypeExtension.create(ARCMenu::new));
     public static final DeferredHolder<MenuType<?>, MenuType<LivingStationMenu>> LIVING_STATION = MENUS.register("living_station", () -> IMenuTypeExtension.create(LivingStationMenu::new));
+    public static final DeferredHolder<MenuType<?>, MenuType<AlchemyTableMenu>> ALCHEMY_TABLE = MENUS.register("alchemy_table", () -> IMenuTypeExtension.create(AlchemyTableMenu::new));
 
     public static final DeferredHolder<MenuType<?>, MenuType<TrainerMenu>> TRAINER = MENUS.register("trainer", () -> IMenuTypeExtension.create(TrainerMenu::new));
 

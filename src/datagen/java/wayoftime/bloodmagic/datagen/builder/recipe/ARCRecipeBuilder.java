@@ -10,17 +10,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.fluids.FluidStack;
+import wayoftime.bloodmagic.common.blockentity.ARCTile;
 import wayoftime.bloodmagic.common.recipe.arc.ARCRecipe;
 import wayoftime.bloodmagic.datagen.builder.recipe.BaseRecipeBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class ARCRecipeBuilder extends BaseRecipeBuilder {
 
-    private TagKey<Item> toolTag;
-    private Ingredient input;
+    private TagKey<Item> toolTag = null;
+    private Ingredient input = null;
     private List<ItemStack> guaranteed = new ArrayList<>();
     private List<Pair<ItemStack, Double>> chanced = new ArrayList<>();
     private FluidStack inputFluid = null;
@@ -71,6 +73,10 @@ public class ARCRecipeBuilder extends BaseRecipeBuilder {
     @Override
     public void save(RecipeOutput output, ResourceLocation id) {
         Advancement.Builder advBuilder = getBuilder(output, id);
+        Objects.requireNonNull(input);
+        Objects.requireNonNull(toolTag);
+        int maxOutputs = guaranteed.size() + chanced.size();
+        assert maxOutputs > 0 && maxOutputs <= ARCTile.NUM_OUTPUTS;
         ARCRecipe recipe = new ARCRecipe(Ingredient.of(toolTag), input, guaranteed, chanced, Optional.ofNullable(inputFluid), Optional.ofNullable(outputFluid));
         output.accept(makeId(id, toolTag.location()), recipe, advBuilder.build(advancementId(id, "arc")));
     }

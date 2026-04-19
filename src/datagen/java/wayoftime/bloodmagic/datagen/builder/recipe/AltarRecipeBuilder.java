@@ -10,13 +10,15 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import wayoftime.bloodmagic.common.recipe.bloodaltar.BloodAltarRecipe;
 
+import java.util.Objects;
+
 public class AltarRecipeBuilder extends BaseRecipeBuilder {
 
     protected int minTier = 0;
-    protected int totalBlood;
-    protected int craftingSpeed;
-    protected int drainSpeed;
-    protected Ingredient input;
+    protected Integer totalBlood = null;
+    protected Integer craftingSpeed = null;
+    protected Integer drainSpeed = null;
+    protected Ingredient input = null;
     protected AltarRecipeBuilder(ItemStack result) {
         super(result);
     }
@@ -61,6 +63,10 @@ public class AltarRecipeBuilder extends BaseRecipeBuilder {
     @Override
     public void save(RecipeOutput output, ResourceLocation id) {
         Advancement.Builder advBuilder = getBuilder(output, id);
+        Objects.requireNonNull(input);
+        Objects.requireNonNull(totalBlood);
+        Objects.requireNonNull(craftingSpeed);
+        Objects.requireNonNull(drainSpeed);
         BloodAltarRecipe recipe = new BloodAltarRecipe(input, result, minTier, totalBlood, craftingSpeed, drainSpeed);
         output.accept(id.withPrefix("blood_altar/"), recipe, advBuilder.build(advancementId(id, "blood_altar")));
     }

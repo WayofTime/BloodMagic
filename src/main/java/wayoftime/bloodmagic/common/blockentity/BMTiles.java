@@ -40,6 +40,9 @@ public class BMTiles {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ArcaneAshesTile>> ARCANE_ASHES = TILES.register("arcane_ashes",
             () -> new BlockEntityType<>(ArcaneAshesTile::new, Set.of(BMBlocks.ARCANE_ASHES.block().get()), null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AlchemyTableTile>> ALCHEMY_TABLE_TYPE = TILES.register("alchemy_table",
+            () -> new BlockEntityType<>(AlchemyTableTile::new, Set.of(BMBlocks.ALCHEMY_TABLE.block().get()), null));
+
     private static void registerTileCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
@@ -93,6 +96,11 @@ public class BMTiles {
                     }
                     return null;
                 }
+        );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                ALCHEMY_TABLE_TYPE.get(),
+                AlchemyTableTile::getItemHandler
         );
     }
 

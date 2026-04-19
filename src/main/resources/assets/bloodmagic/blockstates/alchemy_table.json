@@ -1,0 +1,31 @@
+{
+  "variants": {
+    "facing=north,part=left": {
+      "model": "bloodmagic:block/alchemy_table",
+      "y": 180
+    },
+    "facing=south,part=left": {
+      "model": "bloodmagic:block/alchemy_table"
+    },
+    "facing=east,part=left": {
+      "model": "bloodmagic:block/alchemy_table",
+      "y": 270
+    },
+    "facing=west,part=left": {
+      "model": "bloodmagic:block/alchemy_table",
+      "y": 90
+    },
+    "facing=north,part=right": {
+      "model": "bloodmagic:block/alchemy_table_invis"
+    },
+    "facing=south,part=right": {
+      "model": "bloodmagic:block/alchemy_table_invis"
+    },
+    "facing=east,part=right": {
+      "model": "bloodmagic:block/alchemy_table_invis"
+    },
+    "facing=west,part=right": {
+      "model": "bloodmagic:block/alchemy_table_invis"
+    }
+  }
+}
