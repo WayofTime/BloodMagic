@@ -1,0 +1,11 @@
+{
+  "type": {
+    "id": "modopedia:classic",
+    "locked_view_type": "translucent"
+  },
+  "creative_tab": "bloodmagic:main",
+  "landing_text": "guide.bloodmagic.landing_text",
+  "subtitle": "guide.bloodmagic.subtitle",
+  "texture": "modopedia:red_brass",
+  "title": "guide.bloodmagic.title"
+}
