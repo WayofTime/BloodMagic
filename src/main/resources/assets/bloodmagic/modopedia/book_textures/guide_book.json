@@ -1,0 +1,25 @@
+{
+  "texture": "modopedia:textures/gui/books/red_brass.png",
+  "width": 290,
+  "height": 182,
+  "tex_width": 290,
+  "tex_height": 310,
+  "pages": [
+    { "u": 33, "v": 16, "width": 100, "height": 150 },
+    { "u": 157, "v": 16, "width": 100, "height": 150 }
+  ],
+  "title_backer": { "x": 0, "y": 12, "u": 0, "v": 213, "width": 140, "height": 35 },
+  "left_button": { "x": 0, "y": 183, "u": 0, "v": 183, "width": 18, "height": 10 },
+  "right_button": { "x": 272, "y": 183, "u": 19, "v": 183, "width": 18, "height": 10 },
+  "back_button": { "x": 136, "y": 183, "u": 54, "v": 183, "width": 18, "height": 11 },
+  "refresh_button": { "x": 26, "y": 159, "u": 38, "v": 183, "width": 15, "height": 14 },
+  "widgets": {
+    "separator": { "u": 0, "v": 249, "width": 100, "height": 6 },
+    "small_frame": { "u": 54, "v": 255, "width": 20, "height": 20 },
+    "medium_frame": { "u": 0, "v": 255, "width": 54, "height": 54 },
+    "large_frame": { "u": 140, "v": 182, "width": 104, "height": 104 },
+    "crafting_grid": { "u": 74, "v": 255, "width": 54, "height": 54 },
+    "crafting_arrow": { "u": 73, "v": 183, "width": 16, "height": 13 }
+  }
+
+}
