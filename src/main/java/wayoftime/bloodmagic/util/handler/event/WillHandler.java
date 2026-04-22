@@ -247,9 +247,6 @@ public class WillHandler
 			DemonWillHolder current = new DemonWillHolder();
 			current.readFromNBT(nbt, "current");
 			WorldDemonWillHandler.addWillChunk(rl, event.getChunk(), base, current);
-		} else
-		{
-			WorldDemonWillHandler.generateWill(event.getChunk(), (Level) event.getLevel());
 		}
 	}
 }
