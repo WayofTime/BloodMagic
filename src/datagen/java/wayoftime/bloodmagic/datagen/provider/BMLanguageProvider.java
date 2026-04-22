@@ -22,10 +22,17 @@ public class BMLanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
+        //Fluids - Life Essence
         add(BMFluids.LIFE_ESSENCE_TYPE.get().getDescriptionId(), "Life Essence");
         add(BMFluids.LIFE_ESSENCE_BUCKET.get(), "Bucket of Life");
         add(BMFluids.LIFE_ESSENCE_BLOCK.get(), "Life Essence");
 
+        //Fluids - Liquid Doubt
+        add(BMFluids.DOUBT_TYPE.get().getDescriptionId(), "Liquid Doubt");
+        add(BMFluids.DOUBT_BUCKET.get(), "Doubt Bucket");
+        add(BMFluids.DOUBT_BLOCK.get(), "Liquid Doubt");
+
+        //Orbs
         add(BMItems.ORB_WEAK.get(), "Weak Blood Orb");
         add(BMItems.ORB_APPRENTICE.get(), "Apprentice Blood Orb");
         add(BMItems.ORB_MAGICIAN.get(), "Magician Blood Orb");
@@ -33,14 +40,17 @@ public class BMLanguageProvider extends LanguageProvider {
         add(BMItems.ORB_ARCHMAGE.get(), "Archmage Blood Orb");
         add(BMItems.ORB_TRANSCENDENT.get(), "Transcendent Blood Orb");
 
+        //Binding Info
         addTooltip("current_owner", "Current Owner: %s");
         addTooltip("no_owner", "Not bound yet");
 
         add(BMBlocks.BLOOD_ALTAR, "Blood Altar");
         add(BMItems.SACRIFICIAL_DAGGER.get(), "Sacrificial Dagger");
 
+        //Runes - Blank
         add(BMBlocks.RUNE_BLANK, "Blank Rune");
 
+        //Runes - Basic
         add(BMBlocks.RUNE_SACRIFICE, "Rune of Sacrifice");
         add(BMBlocks.RUNE_SELF_SACRIFICE, "Rune of Self Sacrifice");
         add(BMBlocks.RUNE_SPEED, "Speed Rune");
@@ -52,6 +62,7 @@ public class BMLanguageProvider extends LanguageProvider {
         add(BMBlocks.RUNE_ORB, "Rune of the Orb");
         add(BMBlocks.RUNE_EFFICIENCY, "Rune of Efficiency");
 
+        //Runes - Reinforced
         add(BMBlocks.RUNE_2_SACRIFICE, "Reinforced Rune of Sacrifice");
         add(BMBlocks.RUNE_2_SELF_SACRIFICE, "Reinforced Rune of Self Sacrifice");
         add(BMBlocks.RUNE_2_SPEED, "Reinforced Speed Rune");
@@ -71,11 +82,7 @@ public class BMLanguageProvider extends LanguageProvider {
         add(BMBlocks.CRYSTAL_CLUSTER, "Crystal Cluster");
         add(BMBlocks.CRYSTAL_CLUSTER_BRICK, "Crystal Cluster Brick");
 
-        addTooltip("save_for_decoration", "Save for Decoration");
-
-        add(BMFluids.DOUBT_TYPE.get().getDescriptionId(), "Liquid Doubt");
-        add(BMFluids.DOUBT_BUCKET.get(), "Doubt Bucket");
-        add(BMFluids.DOUBT_BLOCK.get(), "Liquid Doubt");
+        addTooltip("safe_for_decoration", "Safe for Decoration");
 
         add(BMBlocks.ARC_BLOCK, "Alchemical Reaction Chamber");
 
@@ -90,6 +97,7 @@ public class BMLanguageProvider extends LanguageProvider {
         add(BMBlocks.HELLFIRE_FORGE, "Hellfire Forge");
         add(BMItems.RAW_WILL.get(), "Raw Will");
 
+        //Soul Gems
         add(BMItems.SOUL_GEM_PETTY.get(), "Petty Tartaric Gem");
         add(BMItems.SOUL_GEM_LESSER.get(), "Lesser Tartaric Gem");
         add(BMItems.SOUL_GEM_COMMON.get(), "Common Tartaric Gem");
@@ -113,6 +121,7 @@ public class BMLanguageProvider extends LanguageProvider {
         addTooltip("alchemy_table.essence_error.text", "Not enough Life Essence in Soul Network");
         addTooltip("alchemy_table.stack_limit_toggle", "Toggle Max Stack Amount for Input Slots");
 
+        //Living Armour and upgrades
         add("item_group.bloodmagic.main", "Blood Magic");
         add("item_group.bloodmagic.tomes", "Blood Magic Upgrade Tomes");
         add("item_group.bloodmagic.trainers", "Blood Magic Trainer Tomes");
@@ -148,6 +157,13 @@ public class BMLanguageProvider extends LanguageProvider {
 
         LivingUpgrades.translations(this::add);
         SigilData.translations(this::add);
+
+        //Modopedia Guidebook lang-keys (was Patchouli)
+        add("guide.bloodmagic.name", "Sanguine Scientiem");
+        add("guide.bloodmagic.landing_text", "Welcome to $(6)Blood Magic$()! \n\n$(el:bloodmagic:utility/nyi)A lot of stuff$() isn't yet implemented, so please excuse our dust. \n\nClick $(el:bloodmagic:utility/getting_started)HERE$() to get started. If you find any bugs, please report them on our $(l:https://github.com/WayofTime/BloodMagic/issues)Github$().");
+        add("guide.bloodmagic.subtitle", "Alchemical Wizardry");
+
+
     }
 
     public void addCommand(String key, String value) {
