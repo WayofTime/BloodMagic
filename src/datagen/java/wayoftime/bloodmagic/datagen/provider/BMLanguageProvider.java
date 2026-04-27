@@ -159,11 +159,13 @@ public class BMLanguageProvider extends LanguageProvider {
         SigilData.translations(this::add);
 
         //Modopedia Guidebook lang-keys (was Patchouli)
-        add("guide.bloodmagic.name", "Sanguine Scientiem");
-        add("guide.bloodmagic.landing_text", "Welcome to $(blood)Blood Magic$()! \n\n$(bmentry:utility/nyi)A lot of stuff$() isn't yet implemented, so please excuse our dust. \n\nClick $(bmentry:utility/getting_started)HERE$() to get started. If you find any bugs, please report them on our $(l:https://github.com/WayofTime/BloodMagic/issues)Github$().");
-        add("guide.bloodmagic.subtitle", "Alchemical Wizardry");
+        addBook("name", "Sanguine Scientiem");
+        addBook("landing_text", "Welcome to $(blood)Blood Magic$()! \n\n$(bmentry:utility/nyi)A lot of stuff$() isn't yet implemented, so please excuse our dust. \n\nClick $(bmentry:utility/getting_started)HERE$() to get started. If you find any bugs, please report them on our $(l:https://github.com/WayofTime/BloodMagic/issues)Github$().");
+        addBook("subtitle", "Alchemical Wizardry");
+    }
 
-
+    public void addBook(String key, String value) {
+        add("guide.bloodmagic." + key, value);
     }
 
     public void addCommand(String key, String value) {
