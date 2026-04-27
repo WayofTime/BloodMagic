@@ -160,7 +160,7 @@ public class BMLanguageProvider extends LanguageProvider {
 
         //Modopedia Guidebook lang-keys (was Patchouli)
         add("guide.bloodmagic.name", "Sanguine Scientiem");
-        add("guide.bloodmagic.landing_text", "Welcome to $(c:6)Blood Magic$()! \n\n$(el:utility/nyi)A lot of stuff$() isn't yet implemented, so please excuse our dust. \n\nClick $(el:utility/getting_started)HERE$() to get started. If you find any bugs, please report them on our $(l:https://github.com/WayofTime/BloodMagic/issues)Github$().");
+        add("guide.bloodmagic.landing_text", "Welcome to $(dawn)Blood Magic$()! \n\n$(bmentry:utility/nyi)A lot of stuff$() isn't yet implemented, so please excuse our dust. \n\nClick $(bmentry:utility/getting_started)HERE$() to get started. If you find any bugs, please report them on our $(l:https://github.com/WayofTime/BloodMagic/issues)Github$().");
         add("guide.bloodmagic.subtitle", "Alchemical Wizardry");
 
 
