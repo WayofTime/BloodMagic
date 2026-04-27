@@ -13,17 +13,17 @@ import java.util.function.UnaryOperator;
 public class LinkFormatter implements TextFormatter {
 
     public final String prefix;
-    public final String category;
+    public final String type;
 
-    public LinkFormatter(String prefix, String category) {
+    public LinkFormatter(String prefix, String type) {
         this.prefix = prefix;
-        this.category = category;
+        this.type = type;
     }
 
-    public UnaryOperator<Style> linkStyle(String entry) {
+    public UnaryOperator<Style> linkStyle(String id) {
         return style -> {
-            style.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/modopedia open entry " + entry));
-            style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable("guide.bloodmagic.link." + category + "." + entry)));
+            style.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, String.format("/modopedia open %s \"%s\"", type, id)));
+            style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(String.format("guide.bloodmagic.%s.%s", type, id))));
             style.applyFormat(ChatFormatting.UNDERLINE);
             style.withColor(ChatFormatting.BLUE);
 
