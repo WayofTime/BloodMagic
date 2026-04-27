@@ -51,7 +51,7 @@
   "commands.bloodmagic.upgrade.set": "Set %s to %s exp for %s",
   "fluid.bloodmagic.doubt_fluid": "Liquid Doubt",
   "fluid.bloodmagic.life_essence_fluid": "Life Essence",
-  "guide.bloodmagic.landing_text": "Welcome to $(dawn)Blood Magic$()! \n\n$(bmentry:utility/nyi)A lot of stuff$() isn't yet implemented, so please excuse our dust. \n\nClick $(bmentry:utility/getting_started)HERE$() to get started. If you find any bugs, please report them on our $(l:https://github.com/WayofTime/BloodMagic/issues)Github$().",
+  "guide.bloodmagic.landing_text": "Welcome to $(blood)Blood Magic$()! \n\n$(bmentry:utility/nyi)A lot of stuff$() isn't yet implemented, so please excuse our dust. \n\nClick $(bmentry:utility/getting_started)HERE$() to get started. If you find any bugs, please report them on our $(l:https://github.com/WayofTime/BloodMagic/issues)Github$().",
   "guide.bloodmagic.name": "Sanguine Scientiem",
   "guide.bloodmagic.subtitle": "Alchemical Wizardry",
   "item.bloodmagic.blood_orb_apprentice": "Apprentice Blood Orb",
