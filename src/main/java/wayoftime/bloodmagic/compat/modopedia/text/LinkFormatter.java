@@ -1,0 +1,44 @@
+package wayoftime.bloodmagic.compat.modopedia.text;
+
+import net.favouriteless.modopedia.api.text.StyleStack;
+import net.favouriteless.modopedia.api.text.TextFormatter;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.chat.Style;
+
+import java.util.function.UnaryOperator;
+
+public class LinkFormatter implements TextFormatter {
+
+    public final String prefix;
+    public final String category;
+
+    public LinkFormatter(String prefix, String category) {
+        this.prefix = prefix;
+        this.category = category;
+    }
+
+    public UnaryOperator<Style> linkStyle(String entry) {
+        return style -> {
+            style.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/modopedia open entry " + entry));
+            style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable("guide.bloodmagic.link." + category + "." + entry)));
+            style.applyFormat(ChatFormatting.UNDERLINE);
+            style.withColor(ChatFormatting.BLUE);
+
+            return style;
+        };
+    }
+
+    @Override
+    public boolean matches(String tag) {
+        return tag.startsWith(prefix);
+    }
+
+    @Override
+    public void apply(StyleStack stack, String tag) {
+        String id = tag.substring(prefix.length());
+        stack.modify(linkStyle(id));
+    }
+}
