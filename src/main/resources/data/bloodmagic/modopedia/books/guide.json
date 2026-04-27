@@ -6,6 +6,7 @@
   "creative_tab": "bloodmagic:main",
   "landing_text": "guide.bloodmagic.landing_text",
   "subtitle": "guide.bloodmagic.subtitle",
-  "texture": "modopedia:red_brass",
-  "title": "guide.bloodmagic.title"
+  "texture": "bloodmagic:guide_book",
+  "title": "guide.bloodmagic.name",
+  "model": "bloodmagic:item/modopedia_books/guide"
 }
