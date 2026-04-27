@@ -21,14 +21,10 @@ public class LinkFormatter implements TextFormatter {
     }
 
     public UnaryOperator<Style> linkStyle(String id) {
-        return style -> {
-            style.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, String.format("/modopedia open %s \"%s\"", type, id)));
-            style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(String.format("guide.bloodmagic.%s.%s", type, id))));
-            style.applyFormat(ChatFormatting.UNDERLINE);
-            style.withColor(ChatFormatting.BLUE);
-
-            return style;
-        };
+        return style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, String.format("/modopedia open %s \"%s\"", type, id)))
+            .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(String.format("guide.bloodmagic.%s.%s", type, id))))
+            .applyFormat(ChatFormatting.UNDERLINE)
+            .withColor(ChatFormatting.BLUE);
     }
 
     @Override
