@@ -6,5 +6,6 @@
   "textures": {
     "default": "bloodmagic:block/alchemy_table",
     "particle": "#default"
-  }
+  },
+  "render_type": "minecraft:"
 }

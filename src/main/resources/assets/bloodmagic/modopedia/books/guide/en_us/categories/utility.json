@@ -1,0 +1,9 @@
+{
+  "title": "Utility Blocks & Items",
+  "icon": {"id": "bloodmagic:living_station"},
+  "landing_text": "AKA the \"Miscellaneous\" bin. General information about the mod goes here, along with anything else that doesn't quite fit in another category, yet doesn't have enough to warrant a category of its own.",
+  "entries": [
+    "utility/nyi"
+  ],
+  "sort_num": 99
+}

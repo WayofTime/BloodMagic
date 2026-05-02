@@ -58,3 +58,10 @@ Imperfect Rituals
  - Should be largely the same as they were, one change is zombie is now cobble because coal is used for day
  - cost is down a bit since 5k is a bit much for early game
  - Blocks used to activate are configured by data map, the effect and cost for each using datapack registry, different effect kinds can be added using a MapCodec registry.
+
+Alchemy Table
+
+Arcane Ashes
+
+Will Stuff
+
