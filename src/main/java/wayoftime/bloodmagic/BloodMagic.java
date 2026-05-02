@@ -2,6 +2,7 @@ package wayoftime.bloodmagic;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -24,6 +25,7 @@ import wayoftime.bloodmagic.common.item.BMItems;
 import wayoftime.bloodmagic.common.item.BMMaterialsAndTiers;
 import wayoftime.bloodmagic.common.recipe.BMRecipes;
 import wayoftime.bloodmagic.common.registry.BMRegistries;
+import wayoftime.bloodmagic.compat.modopedia.BookCompat;
 
 @Mod(BloodMagic.MODID)
 public class BloodMagic {
@@ -42,7 +44,7 @@ public class BloodMagic {
         SERVER_CONFIG_SPEC = pair.getRight();
     }
 
-    public BloodMagic(IEventBus modBus, ModContainer container) {
+    public BloodMagic(IEventBus modBus, ModContainer container, Dist side) {
         BMRegistries.register(modBus);
         BMDataComponents.register(modBus);
         BMFluids.register(modBus);
@@ -60,6 +62,10 @@ public class BloodMagic {
         container.registerConfig(ModConfig.Type.SERVER, SERVER_CONFIG_SPEC);
 
         NeoForge.EVENT_BUS.addListener(BMCommands::register);
+
+        if (side == Dist.CLIENT) {
+            BookCompat.init();
+        }
     }
 
     public static ResourceLocation rl(String path) {
