@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.common.item.soul;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Difficulty;
@@ -293,9 +294,22 @@ public class ItemSentientSword extends SwordItem implements IDemonWillWeapon, IM
 		if (!stack.hasTag())
 			return;
 
-//		tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.bloodmagic.sentientSword.desc"))));
-		tooltip.add(Component.translatable("tooltip.bloodmagic.sentientSword.desc").withStyle(ChatFormatting.GRAY));
-		tooltip.add(Component.translatable("tooltip.bloodmagic.currentType." + getCurrentType(stack).name().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GRAY));
+		EnumDemonWillType type = getCurrentType(stack);
+		Player player = Minecraft.getInstance().player;
+		double will = player != null ? PlayerDemonWillHandler.getTotalDemonWill(type, player) : 0;
+		int level = getLevel(stack, will);
+
+		SentientTooltipHelper.appendSentientTooltip(
+				tooltip,
+				"tooltip.bloodmagic.sentientSword.desc",
+				type,
+				level,
+				getExtraDamage(type, level),
+				null,
+				null,
+				poisonTime[Math.max(0, level)], poisonLevel[Math.max(0, level)],
+				absorptionTime[Math.max(0, level)],
+				type == EnumDemonWillType.VENGEFUL ? movementSpeed[Math.max(0, level)] : 0);
 	}
 
 	@Override

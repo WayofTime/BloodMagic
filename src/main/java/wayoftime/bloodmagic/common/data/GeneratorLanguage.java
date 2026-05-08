@@ -109,6 +109,16 @@ public class GeneratorLanguage extends LanguageProvider
 		add("tooltip.bloodmagic.currentBaseType.destructive", "Destructive");
 		add("tooltip.bloodmagic.currentBaseType.vengeful", "Vengeful");
 		add("tooltip.bloodmagic.currentBaseType.steadfast", "Steadfast");
+
+		add("tooltip.bloodmagic.sentient.attuned", "Attuned: %s");
+		add("tooltip.bloodmagic.sentient.levelPool", "Level %d (%s will)");
+		add("tooltip.bloodmagic.sentient.inactive", "Inactive (gather more will)");
+		add("tooltip.bloodmagic.sentient.bonusDamage", "%s bonus damage");
+		add("tooltip.bloodmagic.sentient.aoe", "AoE radius: %s");
+		add("tooltip.bloodmagic.sentient.rider.corrosive", "On hit: Wither %ss (Lv %d)");
+		add("tooltip.bloodmagic.sentient.rider.steadfast", "On kill: Absorption %ss");
+		add("tooltip.bloodmagic.sentient.rider.vengeful", "Movement Speed: %s");
+		add("tooltip.bloodmagic.sentient.rider.digspeed", "Mining Speed: %s");
 		add("tooltip.bloodmagic.sacrificialdagger.desc", "Just a prick of the finger will suffice...");
 		add("tooltip.bloodmagic.slate.desc", "Infused stone inside of a Blood Altar.");
 		add("tooltip.bloodmagic.inscriber.desc", "The writing is on the wall...");
