@@ -99,7 +99,7 @@ public final class SentientTooltipHelper
 			if (vengefulMovementSpeed > 0)
 			{
 				tooltip.add(Component.translatable("tooltip.bloodmagic.sentient.rider.vengeful",
-						formatPercent(vengefulMovementSpeed)).withStyle(color));
+						formatSigned(vengefulMovementSpeed)).withStyle(color));
 			}
 			break;
 		default:
@@ -133,8 +133,4 @@ public final class SentientTooltipHelper
 		return sign + formatNumber(value);
 	}
 
-	private static String formatPercent(double value)
-	{
-		return formatNumber(value * 100) + "%";
-	}
 }
