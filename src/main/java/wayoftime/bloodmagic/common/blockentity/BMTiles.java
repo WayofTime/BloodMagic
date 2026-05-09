@@ -7,6 +7,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.RangedWrapper;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -35,6 +36,9 @@ public class BMTiles {
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LivingStationTile>> LIVING_STATION_TYPE = TILES.register("living_station",
             () -> new BlockEntityType<>(LivingStationTile::new, Set.of(BMBlocks.LIVING_STATION.block().get()), null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ArcaneAshesTile>> ARCANE_ASHES = TILES.register("arcane_ashes",
+            () -> new BlockEntityType<>(ArcaneAshesTile::new, Set.of(BMBlocks.ARCANE_ASHES.block().get()), null));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AlchemyTableTile>> ALCHEMY_TABLE_TYPE = TILES.register("alchemy_table",
             () -> new BlockEntityType<>(AlchemyTableTile::new, Set.of(BMBlocks.ALCHEMY_TABLE.block().get()), null));
@@ -81,6 +85,16 @@ public class BMTiles {
                         end++;
                     }
                     return new RangedWrapper(tile.itemCap, start, end);
+                }
+        );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                ARCANE_ASHES.get(),
+                (tile, side) -> {
+                    if (side == null) {
+                        return tile.inv; // jade & co only. no automation
+                    }
+                    return null;
                 }
         );
         event.registerBlockEntity(
