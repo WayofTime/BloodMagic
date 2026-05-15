@@ -47,5 +47,6 @@ public class Datagen {
         event.createProvider(BMDataMapProvider::new);
 
         event.createProvider(BMLootTableProvider::new);
+        event.createProvider(BMRecipeProvider::new);
     }
 }
