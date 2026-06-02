@@ -1,0 +1,31 @@
+{
+  "name": "主厅",
+  "icon": "bloodmagic:dungeon_seal",
+  "category": "bloodmagic:dungeons",
+  "extra_recipe_mappings": {
+    "bloodmagic:inversion_pillar": 0,
+    "bloodmagic:dungeon_seal": 0,
+    "bloodmagic:dungeon_controller": 0,
+    "bloodmagic:inversion_pillar_cap": 0,
+    "bloodmagic:spikes": 1,
+    "bloodmagic:dungeon_spike_trap": 1
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "完成$(l:bloodmagic:rituals/ritual_list/ritual_simple_dungeon)隐域之缘$()仪式后，你会看向一座$(thing)转位之柱$()。右击它，你就会被转位至主厅，这是你第一次涉足$(thing)恶魔领域$()。$(br)在这首个房间中，有一些东西需要注意：$(li)一个宝藏箱，其中有一些基础的战利品，如果你比较幸运，里面也会有一些$(l:bloodmagic:dungeons/keys)铁钥匙$()。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)第二，几个$(thing)门廊$()，都用$(thing)地牢之封$()锁住。使用$(item)钥匙$()解开这些封锁，就可以打开下一个房间的大门。$(li)第三，一座$(item)转位之柱$()，这是此前那座转位之柱的镜像，对它按[$(k:use)]即可返回你先前所在的世界。$(br2)这里也有大量的装饰性方块，看到它们，你也许会觉得你的基地需要更多魅力。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "从主厅出发，你能到达的所有房间中，都会有战利品、怪物、陷阱中的一个或多个，甚至可能有一些未激活的仪式。保持警惕！$(br2)以下是一些你可能找到的战利品：$(li)附魔书$(li)附魔武器与盔甲$(li)$(l:bloodmagic:alchemy_table/anointments)各种涂覆用油$()$(li)$(l:bloodmagic:demon_will/will_manipulation/demon_will)恶魔意志$()$(li)药水材料"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)血命果$(li)饱满血命果$(li)血命油$(br2)去狩猎吧，记得留意宝藏和陷阱！"
+    }
+  ]
+}

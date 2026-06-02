@@ -1,0 +1,20 @@
+{
+  "name": "虚拟模仿者",
+  "icon": "bloodmagic:ethereal_mimic",
+  "category": "bloodmagic:dungeons",
+  "extra_recipe_mappings": {
+    "bloodmagic:mimic": 0,
+    "bloodmagic:ethereal_mimic": 0
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)虚拟模仿者$()可以具有任何其它方块的外观，且完全无法辨认。因此，用它们建造陷坑或隐藏入口，都会有很好的效果。在$(l:bloodmagic:dungeons/endless_realm)无尽领域$()中多多留心，你也许可以找到它们。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:ethereal_mimic",
+      "text": "将模仿者放置出来，使用任何其它方块右击它，即可让其外观变为这种方块。"
+    }
+  ]
+}
