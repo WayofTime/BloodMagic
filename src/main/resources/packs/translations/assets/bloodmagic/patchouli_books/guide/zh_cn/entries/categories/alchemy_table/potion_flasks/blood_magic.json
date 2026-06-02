@@ -1,0 +1,6 @@
+{
+  "name": "血魔法效果",
+  "description": "只有真正的血魔法师才可以创造这些效果。",
+  "icon": "bloodmagic:simplecatalyst",
+  "parent": "bloodmagic:alchemy_table/potion_flasks"
+}
