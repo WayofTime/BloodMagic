@@ -1,0 +1,23 @@
+{
+  "name": "隐域之缘",
+  "icon": "bloodmagic:simplekey",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "隐域之缘",
+      "multiblock_id": "bloodmagic:simple_dungeon",
+      "text": "使用$(l:bloodmagic:rituals/ritual_diviner)仪式推测杖$(/l)以更方便地建造。"
+    },
+    {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "simple_dungeon",
+      "text_overrides": [
+        [
+        "恶魔领域",
+        "thing"
+        ]
+      ]
+    }
+  ]
+}

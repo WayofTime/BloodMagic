@@ -1,0 +1,21 @@
+{
+  "name": "激活水晶",
+  "icon": "bloodmagic:activationcrystalweak",
+  "category": "bloodmagic:rituals",
+  "extra_recipe_mappings": {
+    "bloodmagic:activationcrystalcreative": 0
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "一个仪式，不仅需要正确排列各种方块和印记。你需要用意志力打开一条由灵魂网络通向仪式的通道，而$(item)激活水晶$()可以让你集中足够多的意志力来激活你的仪式。"
+    },
+    {
+      "type": "bloodmagic:crafting_altar",
+      "heading": "虚弱激活水晶",
+      "recipe": "bloodmagic:weak_activation_crystal",
+      "text": "只需要手持一个已绑定的激活水晶，再对主仪式石按下[$(k:use)]，就可以激活它所属的仪式——假设它以适当的方式搭建了。",
+      "anchor": "weak"
+    }
+  ]
+}
