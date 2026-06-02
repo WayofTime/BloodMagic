@@ -1,0 +1,31 @@
+{
+  "name": "红石与自动化",
+  "icon": "minecraft:redstone",
+  "category": "bloodmagic:altar",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l:bloodmagic:altar/blood_altar)血之祭坛$()是一个很棒的工具，但站在祭坛旁苦等石板合成并不好受。还好，物品和$(blood)LP$()可以自动输入/输出祭坛，尽管有几点限制。$(br2)虽然$(item)漏斗$()可以向祭坛输入物品，但祭坛不会阻止它输入多个物品，因此祭坛很乐意一口气合成64个石板，"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "并消耗64倍的$(blood)LP$()——如果你不能以足够快的速度提供这些$(blood)LP$()，就会出现大问题。$(br2)此外，祭坛并不会区分输入物品与输出物品，因此如果没有任何过滤器，物品会以传输系统可以承受的最大速度不停地输入、输出祭坛。也许，看一下$(l:bloodmagic:demon_will/item_routing/routing_nodes)路由节点$()会提供一些帮助……"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "祭坛也支持传输$(blood)生命源质$()，既可输入又可输出。只需要简简单单地接上你相中的流体管道，就可以存储多余的$(blood)生命源质$()以供后续合成使用。$(br2)需注意在默认情况下传输速率很慢。如果你想要加速，最好考虑$(l:bloodmagic:altar/blood_rune/acceleration_rune)促速符文$()和$(l:bloodmagic:altar/blood_rune/dislocation_rune)转位符文$()。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "别忘了$(blood)生命源质$()并不会直接从$(l:bloodmagic:altar/blood_altar)祭坛$()本身中抽取，而是从另一个更隐秘的流体栏中输出。该流体栏最多容纳祭坛所能容纳的$(blood)生命源质$()的$(thing)10%$()，因此如果源质总量看起来不完全准确，或$(blood)生命源质$()看上去从祭坛中消失了，它们或许正去了这个流体栏里。向祭坛输入$(blood)生命源质$()也有同样的限制。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "类似于原版箱子，$(l:bloodmagic:altar/blood_altar)血之祭坛$()中的$(blood)生命源质$()也可以通过红石比较器读取。$(br2)如果你在祭坛下放置一个$(item)血石砖$()，比较器就会读取祭坛中宝珠主人的$(l:bloodmagic:altar/soul_network)灵魂网络$(/l)。$(br2)信号强度取决于祭坛中宝珠的储量，而非网络的最大$(blood)LP$()储量。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "例如，如果你有$(blood)500,000 LP$()，一个虚弱气血宝珠会显示为全满，但一个大师气血宝珠仅会显示为半满。举个例子，这一性质可用于在$(blood)LP$()较少时停止仪式，以确保网络不被抽干。$(br2)最后，在祭坛下放置$(item)红石灯$()会让祭坛在合成完成时输出红石信号。"
+    }
+  ]
+}

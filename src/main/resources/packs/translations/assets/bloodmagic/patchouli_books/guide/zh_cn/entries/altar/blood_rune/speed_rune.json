@@ -1,0 +1,25 @@
+{
+  "name": "速度符文",
+  "icon": "bloodmagic:speedrune",
+  "category": "bloodmagic:altar/blood_rune",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)速度符文$()能加快血之祭坛的任何合成行为，将合成速度（和祭坛被抽干时合成进度下降的速度）增加20%，叠加时效果相加。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:blood_rune_speed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:blood_rune_speed_2",
+      "text": "有了一些$(item)下界合金碎片$()和一些从$(l:bloodmagic:dungeons/endless_realm)恶魔领域$()中得到的$(item)复杂狱锻部件$()，你可以让$(item)速度符文$()的效果翻倍，使每个符文都将合成速度增加40%，叠加时效果相加。"
+    },
+    {
+      "type": "bloodmagic:crafting_arc",
+      "recipe": "bloodmagic:arc/reversion/speed",
+      "text": "若你改变了主意，你还可以在炼金反应炉里拆解该符文。"
+    }
+  ]
+}

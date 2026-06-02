@@ -1,0 +1,25 @@
+{
+  "name": "促速符文",
+  "icon": "bloodmagic:accelerationrune",
+  "category": "bloodmagic:altar/blood_rune",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)促速符文$()可以增加多种效果生效的速率。正常情况下，$(l:bloodmagic:altar/blood_rune/charging_rune)充能符文$(/l)和$(l:bloodmagic:altar/blood_rune/dislocation_rune)转位符文$(/l)每20刻生效一次，而每个促速符文都可以让其减少一个游戏刻，最低减少至每个游戏刻都生效1次。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:blood_rune_acceleration"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:blood_rune_acceleration_2",
+      "text": "有了一些$(item)下界合金碎片$()和一些从$(l:bloodmagic:dungeons/endless_realm)恶魔领域$()中得到的$(item)复杂狱锻部件$()，你可以让$(item)促速符文$()的效果翻倍，每个符文减少两刻的操作冷却，为祭坛省出更多的符文槽位。"
+    },
+    {
+      "type": "bloodmagic:crafting_arc",
+      "recipe": "bloodmagic:arc/reversion/acceleration",
+      "text": "若你改变了主意，你还可以在炼金反应炉里拆解该符文。"
+    }
+  ]
+}

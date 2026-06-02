@@ -1,0 +1,29 @@
+{
+  "name": "充能符文",
+  "icon": "bloodmagic:chargingrune",
+  "category": "bloodmagic:altar/blood_rune",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)充能符文$()是一个特殊的功效符文。当$(l:bloodmagic:altar/blood_altar)血之祭坛$()不在进行合成，也不在填充$(l:bloodmagic:altar/soul_network)气血宝珠$()时，它会吸收祭坛的$(blood)LP$()，并存入内部缓存。在物品放入祭坛后，它会瞬间将存储的生命源质释放以进行合成，此过程中不损耗生命源质。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "每20个游戏刻，血之祭坛会为充能符文充入一次能量，每个$(l:bloodmagic:altar/blood_rune/acceleration_rune)促速符文$(/l)减少1刻。$(br2)每次充能充入的能量为：[ $(blood)10 LP$() × $(l:bloodmagic:altar/blood_rune/charging_rune)充能符文$()数量 × ( 1 + $(l:bloodmagic:altar/blood_rune/speed_rune)速度符文$()数量 / 10 ) ]$(br2)每次充能，血之祭坛最多为每个$(item)充能符文$()充入$(blood)1000 LP$()，如果算式 [ ( 血之祭坛的容量 ) / 20000 ] 的值大于1，则每次重入的能量会乘以该值。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:blood_rune_charging"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:blood_rune_charging_2",
+      "text": "有了一些$(item)下界合金碎片$()和一些从$(l:bloodmagic:dungeons/endless_realm)恶魔领域$()中得到的$(item)复杂狱锻部件$()，你可以让$(item)充能符文$()的效果翻倍，同时翻倍其容量和充入速度。"
+    },
+    {
+      "type": "bloodmagic:crafting_arc",
+      "recipe": "bloodmagic:arc/reversion/charging",
+      "text": "若你改变了主意，你还可以在炼金反应炉里拆解该符文。"
+    }
+  ]
+}
