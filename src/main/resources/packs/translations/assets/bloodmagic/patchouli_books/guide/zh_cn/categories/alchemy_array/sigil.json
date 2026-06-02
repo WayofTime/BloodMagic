@@ -1,7 +1,0 @@
-{
-  "name": "印记",
-  "description": "$(item)印记$()可以通过$(l:bloodmagic:alchemy_array/functional_arrays/crafting_array)炼金矩阵$()形成，部分$(item)试剂$()可以和$(l:bloodmagic:altar/slates)石板$()结合以制造它们。它们会从你的$(l:bloodmagic:altar/soul_network)灵魂网络$()中抽取$(blood)LP$()以完成各种有用的任务。",
-  "icon": "bloodmagic:divinationsigil",
-  "parent": "bloodmagic:alchemy_array",
-  "sortnum": 1
-}

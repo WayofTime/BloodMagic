@@ -1,6 +1,0 @@
-{
-  "name": "炼金术桌",
-  "description": "作为一个有许多设备的血魔法师，$(l:bloodmagic:alchemy_table/alchemy_table)炼金术桌$()在其中显得十分有用。它可以用来增产矿物，消耗不那么有用的物品来生产基础资源，甚至可以为装备$(l:bloodmagic:alchemy_table/anointments)涂油$()！",
-  "icon": "bloodmagic:alchemytable",
-  "sortnum": 1
-}

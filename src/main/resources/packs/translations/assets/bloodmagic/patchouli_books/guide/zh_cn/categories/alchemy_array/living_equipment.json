@@ -1,7 +1,0 @@
-{
-  "name": "束灵装备",
-  "description": "在有了几份$(item)奥术粉灰$()和一些$(item)束缚试剂$()后，一扇新世界的大门正向你打开，其中不乏防御手段和实用功能。$(br)点击下方图标查看所有升级的列表。",
-  "icon": "bloodmagic:livinghelmet",
-  "parent": "bloodmagic:alchemy_array",
-  "sortnum": 2
-}

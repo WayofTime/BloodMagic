@@ -1,6 +1,0 @@
-{
-  "name": "探索地牢",
-  "description": "进行$(l:bloodmagic:rituals/ritual_list/ritual_simple_dungeon)隐域之缘$()仪式，在$(thing)恶魔领域$()中建立一个落脚点。这是个危险之地，里面充满了威胁与陷阱，但也能给你宝藏！",
-  "icon": "bloodmagic:simplekey",
-  "sortnum": 7
-}

@@ -1,6 +1,0 @@
-{
-  "name": "恶魔物品",
-  "description": "从实用物品到致命杀器，恶魔意志为崛起的血魔法师解锁了许多强力的工具。",
-  "icon": "bloodmagic:soulsword",
-  "parent": "bloodmagic:demon_will"
-}
