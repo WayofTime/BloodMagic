@@ -1,0 +1,19 @@
+{
+  "name": "虚空印记",
+  "icon": "bloodmagic:voidsigil",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "当你注视任何流体并按下[$(k:use)]时，$(item)虚空印记$()会以每方块50LP的代价将其销毁。这非常适合清理恼人的岩浆流，免去了不断放置和破坏单独方块的繁琐过程。"
+    },
+    {
+      "type": "bloodmagic:crafting_2-step_sigil",
+      "alchemy_table.heading": "虚空试剂",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_void",
+      "array.heading": "虚空印记",
+      "array.recipe": "bloodmagic:array/voidsigil",
+      "array.text": "$(italic)胜过速易洁®！"
+    }
+  ]
+}

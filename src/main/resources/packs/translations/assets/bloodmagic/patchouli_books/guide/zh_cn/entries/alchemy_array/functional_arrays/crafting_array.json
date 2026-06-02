@@ -1,0 +1,15 @@
+{
+  "name": "使用炼金阵列合成",
+  "icon": "bloodmagic:divinationsigil",
+  "category": "bloodmagic:alchemy_array/functional_array",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(1)合成炼金阵列$()是最简单的炼金阵列形态之一。这些阵列将$(item)基础物品$()刻入$(item)催化剂$()，将二者合为一个有用的物品（在一段小巧的动画后）。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "虽然部分产物可以$(l:bloodmagic:alchemy_array/sigil/divination)使用非常简单的物品$(/l)合成，但其它则需要更多步骤来合成有用的东西。"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "战斗饥渴",
+  "icon": "minecraft:rotten_flesh",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_downgrades",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "近期未进行攻击时获得饥饿效果。等级越高冷却时间越少且获得的饥饿效果越强。"
+    },
+    {
+      "type": "bloodmagic:living_armour_downgrade",
+      "a.recipe": "bloodmagic:downgrade/battle_hungry",
+      "b.upgrade": "bloodmagic:battle_hungry"
+    }
+  ]
+}

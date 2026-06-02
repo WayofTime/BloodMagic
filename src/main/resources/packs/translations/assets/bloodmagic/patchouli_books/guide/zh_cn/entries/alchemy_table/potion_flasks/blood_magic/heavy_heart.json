@@ -1,0 +1,31 @@
+{
+  "name": "沉重之心",
+  "icon": "minecraft:slime_ball",
+  "category": "bloodmagic:alchemy_table/potion_flasks/blood_magic",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)沉重之心$()会让带有该效果的生物向下运动，无法抗衡，使其很难飞行和游泳。$(br2)可由同时存在$(l:bloodmagic:alchemy_table/potion_flasks/blood_magic/gravity)重力$()与$(l:bloodmagic:alchemy_table/potion_flasks/vanilla/instant_health)瞬间治疗$()效果的药水酿成。"
+    },
+    {
+      "type": "bloodmagic:3x_crafting_flask",
+      "a.heading": "沉重之心（3:00）",
+      "a.recipe": "bloodmagic:flask/gravity_to_heart",
+      "b.heading": "沉重之心（8:00）",
+      "b.recipe": "bloodmagic:flask/length_heavy_heart",
+      "c.heading": "沉重之心 II（1:30）",
+      "c.recipe": "bloodmagic:flask/potency_heavy_heart"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "添加$(l:bloodmagic:alchemy_table/potions#average_potions)标准催化剂$()可以进一步增强药水效果。"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_flask",
+      "a.heading": "沉重之心 III（0:45）",
+      "a.recipe": "bloodmagic:flask/potency_average_heavy_heart",
+      "b.heading": "沉重之心（21:20）",
+      "b.recipe": "bloodmagic:flask/length_average_heavy_heart"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "占卜印记",
+  "icon": "bloodmagic:divinationsigil",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)占卜印记$()大概会是你在血魔法众多印记中想要合成的首个印记。为了合成它，你需要创建一个$(l:bloodmagic:alchemy_array/functional_arrays/arcane_ash)炼金阵列$(/l)，并使用$(item)红石粉$()和$(item)空白石板$()分别作为基础物品和催化剂。"
+    },
+    {
+      "type": "bloodmagic:crafting_array",
+      "heading": "占卜印记",
+      "recipe": "bloodmagic:array/divinationsigil",
+      "text": " $(italic)窥视灵魂。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/sigil/divination_sigil.png"
+      ],
+      "title": "占卜印记阵列",
+      "border": true,
+      "text": "占卜印记，位于其合成阵列旁。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "占卜印记有两个主要用途：$(br)$(li)当玩家手持已绑定的印记对着空气按下[$(k:use)]时，它将显示所有者$(l:bloodmagic:altar/soul_network)灵魂网络$(/l)中现有的$(blood)LP$()总量。$(li)对着$(l:bloodmagic:altar/blood_altar)血之祭坛$(/l)按下[$(k:use)]时，它会告诉玩家祭坛当前的等级、祭坛中存储的$(blood)生命源质$()总量，以及当前的最大容量。手头有一个$(item)占卜印记$()对于$(l:bloodmagic:utility/incense_altar)熏香祭坛$(/l)也很有帮助。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/sigil/divination_sigil_info.png"
+      ],
+      "title": "占卜印记显示",
+      "border": true,
+      "text": "当你注视血之祭坛时，占卜印记会显示此HUD。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "最后，当按住潜行键并按下[$(k:use)]时，会打开一个新的界面，显示所有可用的血魔法HUD元素。可以通过点击并拖动元素来选择和移动它。松开元素并点击“保存”将保存元素的新位置。$(br2)选择“默认”将使元素返回其默认位置。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/sigil/gui_editing.png"
+      ],
+      "title": "GUI编辑",
+      "border": true,
+      "text": "血魔法的各种GUI元素。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "这些元素，从上到下，然后从左到右，依次如下：$(li)$(l:bloodmagic:utility/incense_altar)熏香祭坛$()（浅灰色）$(li)$(l:bloodmagic:alchemy_array/sigil/seer)先知印记$()（紫色）$(li)$(item)占卜印记$()（淡紫色）$(li)$(l:bloodmagic:demon_will/will_manipulation/aura_gauge)灵域测量仪$()（橙色） $(li)$(l:bloodmagic:alchemy_array/sigil/holding)集持印记$()（绿色）"
+    }
+  ]
+}

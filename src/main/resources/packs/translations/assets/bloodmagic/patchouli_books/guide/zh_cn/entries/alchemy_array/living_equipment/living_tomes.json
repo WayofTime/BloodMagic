@@ -1,0 +1,23 @@
+{
+  "name": "强化手册",
+  "icon": "bloodmagic:upgradetome",
+  "priority": true,
+  "category": "bloodmagic:alchemy_array/living_equipment",
+  "extra_recipe_mappings": {
+    "bloodmagic:upgradetome": 0
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "激活$(l:bloodmagic:rituals/ritual_list/ritual_upgrade_remove)净灵之音$()仪式后，一系列魔法$(item)手册$()会显现在你周围。$(br2)当手持其一时，按下[$(k:use)]就可以把这种技能“传授”给你的胸甲，让它提升一级（若其剩余点数足以学习）。而按住[$(k:sneak)]和[$(k:use)]根据该手册消耗尽可能多的经验值。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "这么做会消耗该$(item)手册$()并将，并将其中所有经验注入你的胸甲——除非$(thing)升级点数$()不够。$(br2)在这种情况下，手册会尽可能多地注入经验，并将剩余经验留存——除非只剩下1级，此时手册将毁坏。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "如果你想集中精力训练某项能力，并忽略那些对你而言没有用的能力，那这就是一个绝佳的选择。$(br2)亦或者，你可以给不同的胸甲传授不同的知识，如一个胸甲专用于挖矿、一个专用于战斗、一个专用于探险。"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "name": "迅捷溶剂",
+  "icon": "bloodmagic:quick_draw_anointment",
+  "category": "bloodmagic:alchemy_table/anointments",
+  "pages": [
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "迅捷溶剂",
+      "recipe": "bloodmagic:alchemytable/quick_draw_anointment",
+      "text": "将弓和弩的拉弓时间减少33%。$(br2)可用物品：弓、弩。$(br2)提供：迅捷之手 I（256次射击）"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "迅捷溶剂 L",
+      "recipe": "bloodmagic:alchemytable/quick_draw_anointment_l",
+      "text": "该种涂油效果的升级版，持续时间延长四倍。$(br2)提供：迅捷之手 I（1024次射击）"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "迅捷溶剂 II",
+      "recipe": "bloodmagic:alchemytable/quick_draw_anointment_2",
+      "text": "该种涂油效果的升级版，将拉弓时间减少50%。$(br2)提供：迅捷之手 II（256次射击）"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "迅捷溶剂 XL",
+      "recipe": "bloodmagic:alchemytable/quick_draw_anointment_xl",
+      "text": "该种涂油效果的升级版，持续时间延长十六倍。$(br2)提供：迅捷之手 I（4096次射击）"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "迅捷溶剂 III",
+      "recipe": "bloodmagic:alchemytable/quick_draw_anointment_3",
+      "text": "该种涂油效果的升级版，将拉弓时间减少67%。$(br2)提供：迅捷之手 III（256次射击）"
+    }
+  ]
+}

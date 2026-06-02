@@ -1,0 +1,19 @@
+{
+  "name": "转位印记",
+  "icon": "bloodmagic:telepositionsigil",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "每次使用消耗$(blood)1000 LP$()，将使用者传送至已绑定的相位传送台。手持印记Shift右击传送器，即可记录该传送器的位置和维度，从而能够快速逃回家中。$(br2)只是千万别不小心把那个传送器移走了……"
+    },
+    {
+      "type": "bloodmagic:crafting_2-step_sigil",
+      "alchemy_table.heading": "转位试剂",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_teleposition",
+      "array.heading": "转位印记",
+      "array.recipe": "bloodmagic:array/telepositionsigil",
+      "array.text": "$(italic)现在你看到我了...!$()"
+    }
+  ]
+}

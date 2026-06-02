@@ -1,0 +1,17 @@
+{
+  "name": "无可挑剔",
+  "icon": "minecraft:diamond",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "无可挑剔",
+      "recipe": "bloodmagic:alchemytable/upgrade_brilliance",
+      "text": "效果：增加盔甲防御力。最高增加5点护甲值和8点盔甲韧性。$(br2)训练方式：在炼金术桌上合成束灵盔甲强化手册，每个手册增加1级“无可挑剔”。$(br2)最高等级：5"
+    },
+    {
+      "type": "bloodmagic:living_armour_upgrade_table",
+      "upgrade": "bloodmagic:diamond_protect"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "鞘翅",
+  "icon": "minecraft:elytra",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_upgrades",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "为束灵盔甲增加一双鞘翅。此$(l:bloodmagic:alchemy_array/living_equipment/living_tomes)强化手册$()必须合成，而非通过寻路习得。$(br2)这双鞘翅会消耗胸甲的耐久，但消耗速度只有常规鞘翅的一半。$(br2)它看上去也很棒。"
+    },
+    {
+      "type": "bloodmagic:crafting_upgrade_array",
+      "a.heading": "鞘翅手册",
+      "a.recipe": "bloodmagic:array/living_elytra_upgrade",
+      "b.upgrade": "bloodmagic:elytra"
+    }
+  ]
+}

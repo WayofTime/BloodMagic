@@ -1,0 +1,29 @@
+{
+  "name": "瞬间伤害",
+  "icon": "minecraft:iron_sword",
+  "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "每级$(thing)瞬间伤害$()会造成6点$(thing)魔法伤害$()，但若对$(thing)亡灵生物$()施用，会治疗其6点生命值。$(br2)可由$(l:bloodmagic:alchemy_table/potion_flasks/vanilla/instant_health)瞬间治疗$()或$(l:bloodmagic:alchemy_table/potion_flasks/vanilla/poison)剧毒$()效果的药水酿成。"
+    },
+    {
+      "type": "bloodmagic:3x_crafting_flask",
+      "a.heading": "由瞬间治疗药水酿造瞬间伤害药水",
+      "a.recipe": "bloodmagic:flask/health_to_harm",
+      "b.heading": "由剧毒药水酿造瞬间伤害药水",
+      "b.recipe": "bloodmagic:flask/poison_to_harm",
+      "c.heading": "瞬间伤害 II",
+      "c.recipe": "bloodmagic:flask/potency_harm"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "添加$(l:bloodmagic:alchemy_table/potions#average_potions)标准催化剂$()可以进一步增强药水效果。"
+    },
+    {
+      "type": "bloodmagic:crafting_flask",
+      "heading": "瞬间伤害 III",
+      "recipe": "bloodmagic:flask/potency_average_harm"
+    }
+  ]
+}
