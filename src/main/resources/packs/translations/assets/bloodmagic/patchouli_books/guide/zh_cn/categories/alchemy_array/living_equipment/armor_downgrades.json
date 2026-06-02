@@ -1,0 +1,6 @@
+{
+  "name": "束灵盔甲降级",
+  "description": "束灵盔甲可用降级列表。$(br2)点击$(l:bloodmagic:rituals/ritual_list/ritual_living_downgrade#downgrades)此处$()以了解它们是如何运作的。",
+  "icon": "bloodmagic:upgradescraps",
+  "parent": "bloodmagic:alchemy_array/living_equipment"
+}

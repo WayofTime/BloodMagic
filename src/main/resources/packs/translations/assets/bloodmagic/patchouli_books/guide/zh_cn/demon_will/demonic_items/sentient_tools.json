@@ -1,0 +1,48 @@
+{
+  "name": "感知工具",
+  "icon": "bloodmagic:soulpickaxe",
+  "category": "bloodmagic:demon_will/demonic_items",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l:bloodmagic:demon_will/demonic_items/sentient_sword)感知之剑$()已是巨大的成功，你自然想知道，如果对其它工具做类似的处理，会产生什么反应……$(br2)注意，这些工具与$(l:bloodmagic:demon_will/demonic_items/sentient_sword)感知之剑$()都可以在铁砧上被$(l:bloodmagic:demon_will/will_manipulation/crystallized_will)意志结晶$()修复。$(br2)之前提到过感知工具和武器都有很高的附魔潜质？"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "感知之镐",
+      "recipe": "bloodmagic:soulforge/sentientpickaxe",
+      "text": "随着意志增多，这把镐也会变强，能轻而易举地凿穿石头。如果没有意志加持，它只比它的前身——$(item)铁镐$()——略胜一筹；但有了存储足够多意志的$(l:bloodmagic:demon_will/will_manipulation/soul_gem)地狱魂石$()，你可以预见到，它甚至可以超越$(item)下界合金镐$()。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(item)感知之镰$()与铁锄略有不同，给它注入意志，就可以把它变成可怕的武器。虽然速度较慢，也没有其他武器那么强大，但它拥有巨大的攻击范围，会对其中的所有敌人造成全额伤害，使其成为控制群怪的绝佳选择。"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "感知之镰",
+      "recipe": "bloodmagic:soulforge/sentientscythe",
+      "anchor": "scythe",
+      "text": "就像感知之镐一样，如果没有意志来强化这把镰刀，它就会显得又钝又笨；但有了存储足够多意志的$(l:bloodmagic:demon_will/will_manipulation/soul_gem)地狱魂石$()，你可以预见到，它会成为一把毁灭性的工具。$(br)我们曾提到过它还有锄头的功能吗？"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "与$(item)感知之镐$()类似，$(item)感知之斧$()相比于铁斧而言有了不小的提升。此外，它的伤害输出得到了显著的提升，对于那些不介意它的笨重的人来说，它就是一把可怕的武器。"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "感知之斧",
+      "recipe": "bloodmagic:soulforge/sentientaxe",
+      "text": "就像感知之镐一样，如果没有意志来强化这柄斧，它只比它的前身——$(item)铁斧$()——略胜一筹；但有了存储足够多意志的$(l:bloodmagic:demon_will/will_manipulation/soul_gem)地狱魂石$()，你可以预见到，它甚至可以超越$(item)下界合金斧$()。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "与$(item)感知之镐$()相似，$(item)感知之锹$()相比于铁锹而言有了不小的提升，即使没有任何额外的$(l:bloodmagic:demon_will/will_manipulation/demon_will)恶魔意志$()为之充能。"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "感知之锹",
+      "recipe": "bloodmagic:soulforge/sentientshovel",
+      "text": "就像感知之镐一样，如果没有意志来强化这把锹，它只比它的前身——$(item)铁锹$()——略胜一筹；但有了存储足够多意志的$(l:bloodmagic:demon_will/will_manipulation/soul_gem)地狱魂石$()，你可以预见到，它甚至可以超越$(item)下界合金锹$()。"
+    }
+  ]
+}

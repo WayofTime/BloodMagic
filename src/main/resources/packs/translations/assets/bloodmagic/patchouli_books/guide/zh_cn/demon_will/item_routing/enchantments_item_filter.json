@@ -1,0 +1,30 @@
+{
+  "name": "魔咒物品过滤器",
+  "icon": "bloodmagic:itemrouterfilterenchant",
+  "category": "bloodmagic:demon_will/item_routing",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)魔咒物品过滤器$()可以通过物品具有（或不具有）的$(thing)魔咒$()来分类物品，其行为与$(l:bloodmagic:demon_will/item_routing/standard_item_filter)标准物品过滤器$()类似，但除了数量和黑/白名单功能，它还提供了一系列其它按钮。"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "魔咒物品过滤器",
+      "recipe": "bloodmagic:alchemytable/enchant_router_filter",
+      "text": "任意一种附魔书都可以参与该配方的合成。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/routing/enchant_item_filter_gui.png"
+      ],
+      "title": "魔咒过滤器GUI",
+      "border": true,
+      "text": "请注意“白名单”右边的两个新按钮。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "第一个按钮可以选择匹配一个附魔物品上的$(thing)所有魔咒$()、$(thing)任意魔咒$()或$(thing)特定魔咒$()。第二个按钮可以指定是否关注该魔咒的等级（如“保护III”而不是“保护”）。$(br2)如果向过滤器中放入$(thing)一个无附魔的物品$()，就可以高效地将$(thing)任何魔咒$()列为黑名单或白名单，控制特定容器的输入与输出。"
+    }
+  ]
+}

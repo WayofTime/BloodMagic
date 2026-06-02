@@ -1,0 +1,6 @@
+{
+  "name": "原版效果",
+  "description": "这些效果可以被常规的$(item)酿造台$()复制，即使这显然没那么高效。",
+  "icon": "minecraft:brewing_stand",
+  "parent": "bloodmagic:alchemy_table/potion_flasks"
+}

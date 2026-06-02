@@ -1,0 +1,31 @@
+{
+  "name": "中毒",
+  "icon": "minecraft:spider_eye",
+  "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)中毒$()效果每隔一段时间会造成伤害，但不能直接致死，等级越高，造成伤害的频率越高。"
+    },
+    {
+      "type": "bloodmagic:3x_crafting_flask",
+      "a.heading": "中毒（3:00）",
+      "a.recipe": "bloodmagic:flask/poison",
+      "b.heading": "中毒（8:00）",
+      "b.recipe": "bloodmagic:flask/length_poison",
+      "c.heading": "中毒 II（1:30）",
+      "c.recipe": "bloodmagic:flask/potency_poison"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "添加$(l:bloodmagic:alchemy_table/potions#average_potions)标准催化剂$()可以进一步增强药水效果。"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_flask",
+      "a.heading": "中毒 III（0:45）",
+      "a.recipe": "bloodmagic:flask/potency_average_poison",
+      "b.heading": "中毒（21:20）",
+      "b.recipe": "bloodmagic:flask/length_average_poison"
+    }
+  ]
+}
