@@ -1,0 +1,86 @@
+{
+  "name": "路由节点",
+  "icon": "bloodmagic:masterroutingnode",
+  "category": "bloodmagic:demon_will/item_routing",
+  "priority": "true",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "对于某些人而言，把物品搬来搬去可能不是什么问题，但我们是血魔法师，我们甚至拥有$(raw)恶魔意志$()！因此我们当然有一种更好的办法。$(br2)因此，你想到了$(thing)路由节点$()，它们可以按照你下达的指令来转移、分类、过滤物品，功能十分强大。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)路由节点网络$()拥有3个主要部件：$(item)输入节点$()、$(item)输出节点$()以及$(item)主路由节点$()。$(br2)每个网络都需要1个$(item)主路由节点$()，且网络中所有的其它节点都要能连接至主节点，可以直接连接，亦可通过其它节点。$(br2)输入与输出节点分别可以从容器中抽取、向容器中存入物品。"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "主路由节点",
+      "recipe": "bloodmagic:soulforge/master_routing_node",
+      "text": "将来，主节点可以被升级，但它现在只是控制并引导网络，像网络的“大脑”一样。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(item)主路由节点$()非常强大，但没有其余两种节点，它本身也没有多大用，所以让我们看看下一部分内容吧。$(br2)$(item)路由输入节点$()将物品吸收到网络中，$(item)路由输出节点$()将物品重新导出到网络外，而普通的$(item)路由节点$()用于扩大网络的范围。由于输入与输出节点很相似，以下重点讲解路由输入节点，可以推广至输出节点，除非另有强调。"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "路由节点",
+      "recipe": "bloodmagic:soulforge/routing_node",
+      "text": "其本身并没有太多功能，但可以将$(thing)路由网络$()的连接延伸到16外。"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_soulforge",
+      "a.heading": "路由输入节点",
+      "a.recipe": "bloodmagic:soulforge/input_routing_node",
+      "b.heading": "路由输出节点",
+      "b.recipe": "bloodmagic:soulforge/output_routing_node"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "放置路由输入或输出节点时，它会自动连接到$(thing)所有相邻的物品栏$()，但如果它所有面上都没有任何一种$(item)过滤器$()，它就不会执行任何操作。例如，你可以在$(item)熔炉$()上面的节点里放入标记了$(item)铁矿石$()的$(l:bloodmagic:demon_will/item_routing/standard_item_filter)标准物品过滤器$()，在熔炉侧面的节点里放入标记了煤炭的过滤器，再在熔炉下面放一个物品输入节点，放入标记了铁锭的过滤器。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/routing/node_demo.png"
+      ],
+      "border": true,
+      "text": "世界中的输出节点。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/routing/node_gui_right.png"
+      ],
+      "border": true,
+      "text": "建立了节点后，就可以打开节点的GUI了。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "在右侧，显示了六个基本方向——$(bold)下$()、$(bold)上$()、$(bold)北$()、$(bold)南$()、$(bold)西$()、$(bold)东$()。可以注意到，有些按钮上会出现一个方块的小图片，表示节点的这一侧贴着什么。打开GUI时，默认会选中一个有物品栏的方块，如果周围没有方块有物品栏，那么就会选中“下”。按钮按照玩家的朝向排列，因此最上方的按钮表示“前”，左侧的按钮表示“左”，等等。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/routing/node_gui_left.png"
+      ],
+      "border": true
+    },
+    {
+      "type": "patchouli:text",
+      "text": "在左侧有一个空格，可以为选中的一侧放入一个过滤器，并设置优先级，优先级数字越大表示越重要。$(br2)节点每侧可以放一个过滤器——所以先选择要放入哪一侧，然后将过滤器放入其中。（有关过滤器的更多信息，详见“过滤器入门”）"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "设置好输入和输出节点之后，用$(l:bloodmagic:demon_will/item_routing/node_router)节点连接器$()将其连接在同一个网络里，使该网络有且仅有一个$(item)主路由节点$()，并在合适的面上放入物品过滤器，就万事大吉了！物品会根据优先级和过滤器中的标记进行路由。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/routing/network_demo.png"
+      ],
+      "border": true,
+      "text": "这些节点不必直接连接到$(item)主路由节点$()，只需连接到网络中的任何节点即可。"
+    }
+  ]
+}

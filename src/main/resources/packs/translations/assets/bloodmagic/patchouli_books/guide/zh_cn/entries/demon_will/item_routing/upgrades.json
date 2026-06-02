@@ -1,0 +1,27 @@
+{
+  "name": "升级",
+  "icon": "bloodmagic:mastercore",
+  "category": "bloodmagic:demon_will/item_routing",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "路由网络目前有两种升级方式。$(br2)第一，$(item)基础路由逻辑升级$()增加每次操作转移的物品总数。（每秒操作一次，见下一页）。默认情况下，网络一次可以传输16个物品，但每个路由逻辑升级都会将上限增加8个。"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "基础路由逻辑升级",
+      "recipe": "bloodmagic:soulforge/master_node_upgrade",
+      "text": "这种升级可以堆叠16个，最大每秒转移144个项目。请注意，如果需要一次转移许多不同的物品，升级的效果可以拆分给多组物品。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "第二个升级是$(item)基础路由速度升级$()，它增加了物品传输的速率。默认速率是每20个游戏刻（1秒）操作一次，但每个速度升级都会将间隔减少1个游戏刻，最多放入19个，使其每个游戏刻都操作一次。"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "基础路由速度升级",
+      "recipe": "bloodmagic:soulforge/master_node_upgrade_speed",
+      "text": "$(italic)这种升级可以堆叠19个？感觉有点……$(underline)不对劲$()$(italic)，但要么如此，要么改变整个世界，让所有东西每秒执行65个游戏刻，但这反而会让人更不开心。$()"
+    }
+  ]
+}

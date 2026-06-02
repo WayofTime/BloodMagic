@@ -1,0 +1,29 @@
+{
+  "name": "编辑过滤器",
+  "icon": "minecraft:writable_book",
+  "category": "bloodmagic:demon_will/item_routing",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "如果你需要配置大量的$(thing)过滤器$()，或想要扩展目前已配置的过滤器，只需要将2~9个过滤器放在工作台中，就可以将第一格过滤器的配置复制到其它过滤器中。"
+    },
+    {
+      "type": "bloodmagic:manual_recipe",
+      "input1": "bloodmagic:itemrouterfilterexact{Items: [{Slot: 0b, id: \"minecraft:leather\", Count: 1b, tag: {stackSize: 1}}], \"button:blackwhitelist\": 0}",
+      "input2": "bloodmagic:itemrouterfilterexact",
+      "input9": "bloodmagic:itemrouterfilterexact",
+      "output": "bloodmagic:itemrouterfilterexact#3{Items: [{Slot: 0b, id: \"minecraft:leather\", Count: 1b, tag: {stackSize: 1}}], \"button:blackwhitelist\": 0}"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "同样，如需清除一个过滤器的配置，将其单独放在工作台中即可清除配置。"
+    },
+    {
+      "type": "bloodmagic:manual_recipe",
+      "input1": "bloodmagic:itemrouterfilterexact{Items: [{Slot: 0b, id: \"minecraft:leather\", Count: 1b, tag: {stackSize: 1}}], \"button:blackwhitelist\": 0}",
+      "input2": "minecraft:air",
+      "input9": "minecraft:air",
+      "output": "bloodmagic:itemrouterfilterexact"
+    }
+  ]
+}

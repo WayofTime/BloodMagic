@@ -1,0 +1,37 @@
+{
+  "name": "结晶意志",
+  "icon": "bloodmagic:defaultcrystal",
+  "category": "bloodmagic:demon_will/will_manipulation",
+  "extra_recipe_mappings": {
+    "bloodmagic:demoncrucible": 1,
+    "bloodmagic:demoncrystallizer": 1,
+    "bloodmagic:rawdemoncrystal": 1,
+    "bloodmagic:defaultcrystal": 1
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "在$(l:bloodmagic:demon_will/will_manipulation/soul_gem)地狱魂石$()里存储了大量$(l:bloodmagic:demon_will/will_manipulation/demon_will)恶魔意志$()后，就该探索一下将意志释放到世界中会发生什么了。$(br2)第一步，你需要将$(raw)意志$()转移到$(l:bloodmagic:demon_will/will_manipulation/aura)灵域$()中，接着，你还需要造一个$(thing)恶魔结晶坛$()。"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "恶魔结晶坛",
+      "recipe": "bloodmagic:soulforge/demon_crystallizer",
+      "text": "它会慢慢地消耗$(l:bloodmagic:demon_will/will_manipulation/aura)灵域$()中的$(l:bloodmagic:demon_will/will_manipulation/demon_will)恶魔意志$()来产生$(item)意志晶簇$()，形成第一株水晶需要100$(raw)意志$()，而后续每一株只需要45$(raw)意志$()。但每株水晶在$(item)恶魔坩埚$()中烧掉时都可以产生50$(raw)意志$()，产生5$(raw)意志$()的净增益。$(item)恶魔晶簇$()最大可以长到7株。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "如果你的物品栏中有超过512$(raw)意志$()（任意一种要素，可以分存在多个$(l:bloodmagic:demon_will/will_manipulation/soul_gem)地狱魂石$()中），你就可以空手右击晶簇来采集，并且会保留最中心的那一株。$(br2)如果你实在没有足够$(raw)意志$()，或者$(italic)真的很$()需要中心晶簇，还是仅仅因为很急，你都可以直接用镐直接采集所有晶簇。"
+    },
+    {
+      "type": "patchouli:relations",
+      "title": "相关链接",
+      "entries": [
+        "bloodmagic:rituals/ritual_list/ritual_crystal_split",
+        "bloodmagic:rituals/ritual_list/ritual_crystal_catalyst",
+        "bloodmagic:rituals/ritual_list/ritual_crystal_harvest"
+      ],
+      "text": "每个结晶获得5意志并非很多，但以上这些仪式（还有$(l:bloodmagic:demon_will/will_manipulation/will_catalysts)意志催化剂$()）都可以让你自动化意志的生产，并极大增加每个结晶的产出。"
+    }
+  ]
+}
