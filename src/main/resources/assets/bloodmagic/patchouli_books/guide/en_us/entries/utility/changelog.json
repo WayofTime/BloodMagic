@@ -10,6 +10,16 @@
     },
     {
       "type": "patchouli:text",
+      "title": "3.3.8",
+      "text": "Fixed: $(li)$(thing)Meteors$() should fall a bit more smoothly now, and are less likely to spontaneously fall through any blocks that may happen to be in their way."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "3.3.7",
+      "text": "Fixed: $(li)Recent changes to the $(l:bloodmagic:alchemy_array/sigil/holding)Sigil of Holding$()'s logic meant that it could sometimes turn into one of the sigils it was holding. The $(thing)Sigil of Holding$() is now better at holding $(thing)Sigils, particularly the $(l:bloodmagic:alchemy_array/sigil/lava)Lava Sigil$() and $(l:bloodmagic:alchemy_array/sigil/water)Water Sigil$()."
+    },
+    {
+      "type": "patchouli:text",
       "title": "3.3.6",
       "text": "Added:$(li)$(l:alchemy_array/living_equipment/living_tomes)Upgrade Tomes$() holding the same Up- or Downgrade can now be combined in a crafting grid to add their points together$(li)$(l:bloodmagic:utility/commands)Commands$() to manipulate a players $(l:bloodmagic:altar/soul_network)Soul Network$()$(li2)Currently \"bloodmagic network <username> <add/query/reset/set> [amount]\" to read or write a player's LP.$(li2)$(thing)Add$() adds a given amount, $(thing)Query$() returns the current value, $(thing)Reset$() sets it to 0, $(thing)Set$() sets it to a given amount"
     },

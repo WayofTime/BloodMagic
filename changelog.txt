@@ -1,4 +1,16 @@
 ------------------------------------------------------
+Version 3.3.8
+------------------------------------------------------
+Fixed:
+- Meteors should fall a bit more smoothly now, and are less likely to spontaneously fall through any blocks that may happen to be in their way.
+
+------------------------------------------------------
+Version 3.3.7
+------------------------------------------------------
+Fixed:
+- Recent changes to the Sigil of Holding's logic meant that it could sometimes turn into one of the sigils it was holding. The Sigil of Holding is now better at holding Sigils, particularly the Lava Sigil and Water Sigil.
+
+------------------------------------------------------
 Version 3.3.6
 ------------------------------------------------------
 Added:
