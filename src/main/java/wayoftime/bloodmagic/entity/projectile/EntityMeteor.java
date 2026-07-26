@@ -4,41 +4,84 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.util.Mth;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 import wayoftime.bloodmagic.common.registries.BloodMagicEntityTypes;
 import wayoftime.bloodmagic.impl.BloodMagicAPI;
 import wayoftime.bloodmagic.recipe.RecipeMeteor;
 import wayoftime.bloodmagic.util.Constants;
 
-public class EntityMeteor extends ThrowableProjectile
+public class EntityMeteor extends Entity
 {
 	private ItemStack containedStack = ItemStack.EMPTY;
+	protected static final EntityDataAccessor<BlockPos> DATA_START_POS = SynchedEntityData.defineId(EntityMeteor.class, EntityDataSerializers.BLOCK_POS);
+	public int time;
 
-	public EntityMeteor(EntityType<EntityMeteor> p_i50159_1_, Level p_i50159_2_)
+	public EntityMeteor(EntityType<EntityMeteor> entityType, Level level)
 	{
-		super(p_i50159_1_, p_i50159_2_);
-	}
-
-	public EntityMeteor(Level worldIn, LivingEntity throwerIn)
-	{
-		super(BloodMagicEntityTypes.METEOR.getEntityType(), throwerIn, worldIn);
+		super(entityType, level);
 	}
 
 	public EntityMeteor(Level worldIn, double x, double y, double z)
 	{
-		super(BloodMagicEntityTypes.METEOR.getEntityType(), x, y, z, worldIn);
+		this(BloodMagicEntityTypes.METEOR.getEntityType(), worldIn);
+		this.setPos(x, y, z);
+		this.setDeltaMovement(Vec3.ZERO);
+		this.xo = x;
+		this.yo = y;
+		this.zo = z;
+		this.setStartPos(this.blockPosition());
+	}
+
+	public void setStartPos(BlockPos p_31960_) {
+		this.entityData.set(DATA_START_POS, p_31960_);
 	}
 
 	public void setContainedStack(ItemStack stack)
 	{
 		this.containedStack = stack;
+	}
+
+	public ItemStack getContainedStack() {
+		return containedStack;
+	}
+
+	public void tick() {
+		++this.time;
+		if (!this.isNoGravity()) {
+			this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.04D, 0.0D));
+		}
+
+		this.move(MoverType.SELF, this.getDeltaMovement());
+		if (!this.level().isClientSide) {
+			BlockPos pos = this.blockPosition();
+
+			BlockState blockstate = this.level().getBlockState(pos);
+			if (!blockstate.is(Blocks.MOVING_PISTON)) {
+				if (!FallingBlock.isFree(this.level().getBlockState(pos.below()))) {
+					RecipeMeteor recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getMeteor(this.level(), containedStack);
+					if (recipe != null)
+					{
+						recipe.spawnMeteorInWorld(this.level(), pos);
+					}
+					this.discard();
+				}
+			}
+		}
+
+		this.setDeltaMovement(this.getDeltaMovement().scale(0.98D));
 	}
 
 	@Override
@@ -47,25 +90,20 @@ public class EntityMeteor extends ThrowableProjectile
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
+	protected Entity.MovementEmission getMovementEmission() {
+		return Entity.MovementEmission.NONE;
+	}
+
+	public boolean isPickable() {
+		return false;
+	}
+
 	@Override
 	protected void addAdditionalSaveData(CompoundTag compound)
 	{
 		compound.put(Constants.NBT.ITEM, containedStack.save(new CompoundTag()));
-
-//	      compound.putInt("Time", this.fallTime);
-//	      compound.putBoolean("DropItem", this.shouldDropItem);
-//	      compound.putBoolean("HurtEntities", this.hurtEntities);
-//	      compound.putFloat("FallHurtAmount", this.fallHurtAmount);
-//	      compound.putInt("FallHurtMax", this.fallHurtMax);
-//	      if (this.tileEntityData != null) {
-//	         compound.put("TileEntityData", this.tileEntityData);
-//	      }
-
 	}
 
-	/**
-	 * (abstract) Protected helper method to read subclass entity data from NBT.
-	 */
 	@Override
 	protected void readAdditionalSaveData(CompoundTag tagCompound)
 	{
@@ -74,67 +112,7 @@ public class EntityMeteor extends ThrowableProjectile
 	}
 
 	@Override
-	public void tick()
-	{
-		super.tick();
-		// TODO: Check doBlockCollision
-
-//		RayTraceResult raytraceresult = ProjectileHelper.getHitResult(this, this::canHitEntity);
-////		boolean flag = false;
-//		if (raytraceresult.getType() == RayTraceResult.Type.BLOCK)
-//		{
-//			BlockPos blockpos = ((BlockRayTraceResult) raytraceresult).getPos().offset(((BlockRayTraceResult) raytraceresult).getFace());
-//			BlockState blockstate = this.world.getBlockState(blockpos);
-//			Material material = blockstate.getMaterial();
-//			if (blockstate.isAir() || blockstate.isIn(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable())
-//			{
-//				this.getEntityWorld().setBlockState(blockpos, BloodMagicBlocks.BLOOD_LIGHT.get().getDefaultState());
-//				this.setDead();
-//			}
-//		}
+	protected void defineSynchedData() {
+		this.entityData.define(DATA_START_POS, BlockPos.ZERO);
 	}
-
-	protected void onInsideBlock(BlockState state)
-	{
-		if (level().isClientSide)
-		{
-			return;
-		}
-
-//		System.out.println("Now inside a block: " + state.getBlock());
-		int i = Mth.floor(position().x);
-		int j = Mth.floor(position().y);
-		int k = Mth.floor(position().z);
-		BlockPos blockpos = new BlockPos(i, j, k);
-
-		if (!state.canOcclude())
-		{
-			return;
-		}
-
-//		System.out.println("Contained item: " + containedStack.toString());
-
-		RecipeMeteor recipe = BloodMagicAPI.INSTANCE.getRecipeRegistrar().getMeteor(level(), containedStack);
-		if (recipe != null)
-		{
-			recipe.spawnMeteorInWorld(level(), blockpos);
-		}
-
-//		this.getEntityWorld().setBlockState(blockpos, BloodMagicBlocks.AIR_RITUAL_STONE.get().getDefaultState());
-//		spawnMeteorInWorld
-		this.removeAfterChangingDimensions();
-	}
-
-//	protected float getGravityVelocity()
-//	{
-//		return 0;
-//	}
-
-	@Override
-	protected void defineSynchedData()
-	{
-		// TODO Auto-generated method stub
-
-	}
-
 }
