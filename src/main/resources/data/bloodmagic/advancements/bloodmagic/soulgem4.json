@@ -1,0 +1,34 @@
+{
+  "parent": "bloodmagic:bloodmagic/soulgem3",
+  "criteria": {
+    "hold_item":{
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["bloodmagic:soulgemgreater"]
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "icon": {
+      "item": "bloodmagic:soulgemgreater"
+    },
+    "title": {
+      "translate": "advancements.bloodmagic.soulgem4.title"
+    },
+    "frame": "task",
+    "description": {
+      "translate": "advancements.bloodmagic.soulgem4.description"
+    },
+    "show_toast": false,
+    "announce_to_chat": true
+  },
+  "requirements": [
+    [
+      "hold_item"
+    ]
+  ]
+}

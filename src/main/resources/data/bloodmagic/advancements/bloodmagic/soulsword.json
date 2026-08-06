@@ -1,0 +1,34 @@
+{
+  "parent": "bloodmagic:bloodmagic/soulgem1",
+  "criteria": {
+    "hold_item":{
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["bloodmagic:soulsword"]
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "icon": {
+      "item": "bloodmagic:soulsword"
+    },
+    "title": {
+      "translate": "advancements.bloodmagic.soulsword.title"
+    },
+    "frame": "task",
+    "description": {
+      "translate": "advancements.bloodmagic.soulsword.description"
+    },
+    "show_toast": false,
+    "announce_to_chat": false
+  },
+  "requirements": [
+    [
+      "hold_item"
+    ]
+  ]
+}

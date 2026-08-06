@@ -1,0 +1,34 @@
+{
+  "parent": "bloodmagic:bloodmagic/soulgem1",
+  "criteria": {
+    "hold_item":{
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["bloodmagic:soulgemlesser"]
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "icon": {
+      "item": "bloodmagic:soulgemlesser"
+    },
+    "title": {
+      "translate": "advancements.bloodmagic.soulgem2.title"
+    },
+    "frame": "task",
+    "description": {
+      "translate": "advancements.bloodmagic.soulgem2.description"
+    },
+    "show_toast": false,
+    "announce_to_chat": true
+  },
+  "requirements": [
+    [
+      "hold_item"
+    ]
+  ]
+}
