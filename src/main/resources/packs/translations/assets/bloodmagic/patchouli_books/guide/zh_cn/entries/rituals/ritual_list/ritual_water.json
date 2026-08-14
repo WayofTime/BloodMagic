@@ -14,7 +14,7 @@
       "ritual": "water",
       "text_overrides": [
         [
-        "Master Ritual Stone",
+        "主仪式石",
         "l:bloodmagic:rituals/ritual_stones"
         ]
       ]
