@@ -14,11 +14,11 @@
       "ritual": "crystal_harvest",
       "text_overrides": [
         [
-        "Demon Will Crystal Clusters",
+        "恶魔意志晶簇",
         "l:bloodmagic:demon_will/will_manipulation/crystallized_will"
         ],
         [
-        "aspects",
+        "要素",
         "l:bloodmagic:demon_will/will_manipulation/aspected_will"
         ]
       ]
