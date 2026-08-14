@@ -22,7 +22,7 @@
       "type": "bloodmagic:ritual_data",
       "ritual": "grounding",
       "page_type": "corrosive",
-      "text": "Behaves similarly to the $(l:bloodmagic:alchemy_table/potion_flasks/blood_magic/suspended)Suspended$() effect."
+      "text": "与$(l:bloodmagic:alchemy_table/potion_flasks/blood_magic/suspended)悬空$()效果相近。"
     },
     {
       "type": "bloodmagic:ritual_data",
@@ -30,7 +30,7 @@
       "page_type": "vengeful",
       "text_overrides": [
         [
-        "Levitation",
+        "飘浮",
         "l:bloodmagic:alchemy_table/potion_flasks/vanilla/levitation"
         ]
       ]
@@ -41,7 +41,7 @@
       "page_type": "destructive",
       "text_overrides": [
         [
-        "Heavy Heart",
+        "沉重之心",
         "l:bloodmagic:alchemy_table/potion_flasks/blood_magic/heavy_heart"
         ]
       ]
