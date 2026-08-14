@@ -15,11 +15,11 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Using the vast powers at your disposal, the most conclusion is that it is a good idea to summon a meteor from outer space to crash upon the world.$(br2)By dropping an appropriate offering on top of the MRS, the ritual will consume the item (plus a large amount of LP, default of a million LP) and summon a meteor at the build height of the map. Once the meteor hits something, it will detonate and leave behind many resources to mine and process."
+      "text": "使用你拥有的巨大力量，很显而易见的一点是，你可以从外太空中召唤一个陨石，使其撞击地面。$(br2)在主仪式石上方丢一个合适的祭品，该仪式就会消耗掉这个物品（和大量生命源质，默认一百万LP），并在世界高度上限处生成一颗陨石，一旦它撞击到东西，就会爆炸，并留下许多资源以供采掘和处理。"
     },
     {
       "type": "patchouli:text",
-      "text": "The size and resources gained vary based on the offering given. Normal offerings include: $(item)Diamond$(), $(item)Block of Iron$(), $(item)Glowstone Dust$(), and $(item)Stone$().$(br2)Mod items include: Ice and Fire $(item)Dragon Bones$(), AE2 $(item)Certus Quartz$(), Create $(item)Andesite Alloy$(), IE $(item)Copper Wire Coil$(), Mystical Agriculture $(item)Prosperity Shard$(), Thermal $(item)RF Coil$(), and Mekanism $(item)Advanced Alloy$()."
+      "text": "提供的祭品决定了资源的种类与数量，常规祭品包括：$(item)钻石$()、$(item)铁块$()、$(item)荧石粉$()和$(item)石头$()。$(br2)其它模组提供的祭品包括：冰火传说的$(item)龙骨$()、AE2的$(item)赛特斯石英$()、机械动力的$(item)安山合金$()、IE的$(item)低压线圈$()、神秘农业的$(item)活化水晶碎片$()、热力系列的$(item)RF线圈$()和通用机械的$(item)灌注合金$()。"
     }
   ]
 }
