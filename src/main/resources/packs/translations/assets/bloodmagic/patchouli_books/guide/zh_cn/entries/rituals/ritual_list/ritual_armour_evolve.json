@@ -18,7 +18,7 @@
         "l:bloodmagic:alchemy_array/living_equipment/living_basics"
         ]
       ],
-      "text": "Stand on the $(l:bloodmagic:rituals/ritual_stones)Master Ritual Stone$() while wearing $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armor$() to use this $(thing)ritual$()."
+      "text": "穿着$(l:bloodmagic:alchemy_array/living_equipment/living_basics)束灵盔甲$()站在$(l:bloodmagic:rituals/ritual_stones)主仪式石$()上以使用该$(thing)仪式$()."
     }
   ]
 }
