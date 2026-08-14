@@ -14,7 +14,7 @@
       "ritual": "lava",
       "text_overrides": [
         [
-        "master ritual stone",
+        "主仪式石",
         "l:bloodmagic:rituals/ritual_stones"
         ]
       ]
@@ -29,7 +29,7 @@
         "blood"
         ],
         [
-        "tank",
+        "储罐",
         "item"
         ]
       ]
@@ -38,7 +38,7 @@
       "type": "bloodmagic:ritual_data",
       "ritual": "lava",
       "page_type": "corrosive",
-      "text": "Particularly useful against denizens of The Nether."
+      "text": "对抗下界土著生物时非常有效。"
     },
     {
       "type": "bloodmagic:ritual_data",
@@ -46,11 +46,11 @@
       "page_type": "vengeful",
       "text_overrides": [
         [
-        "Fire Fuse",
+        "烈火引信",
         "thing"
         ]
       ],
-      "text": "When the debuff ends, they will do a wonderful impression of a firework."
+      "text": "当这种负面效果结束时，生物将化为一场绚烂的烟花秀。"
     },
     {
       "type": "bloodmagic:ritual_data",
@@ -58,7 +58,7 @@
       "page_type": "destructive",
       "text_overrides": [
         [
-        "Destructive Will",
+        "破坏",
         "destructive"
         ]
       ]
@@ -69,7 +69,7 @@
       "page_type": "steadfast",
       "text_overrides": [
         [
-        "Fire Resistance",
+        "抗火",
         "thing"
         ]
       ]
@@ -85,7 +85,7 @@
       "page_type": "fireDamage",
       "text_overrides": [
         [
-        "Corrosive Will",
+        "腐蚀",
         "corrosive"
         ]
       ]
@@ -96,7 +96,7 @@
       "page_type": "fireFuse",
       "text_overrides": [
         [
-        "Fire Fuse",
+        "烈火引信",
         "thing"
         ]
       ]
@@ -107,7 +107,7 @@
       "page_type": "fireResist",
       "text_overrides": [
         [
-        "Fire Resistance",
+        "抗火",
         "thing"
         ]
       ]
@@ -118,7 +118,7 @@
       "page_type": "lavaTank",
       "text_overrides": [
         [
-        "tank",
+        "储罐",
         "item"
         ]
       ]
