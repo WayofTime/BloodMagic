@@ -58,7 +58,7 @@
       "page_type": "destructive",
       "text_overrides": [
         [
-        "破坏",
+        "破坏意志",
         "destructive"
         ]
       ]
@@ -85,7 +85,7 @@
       "page_type": "fireDamage",
       "text_overrides": [
         [
-        "腐蚀",
+        "腐蚀意志",
         "corrosive"
         ]
       ]
