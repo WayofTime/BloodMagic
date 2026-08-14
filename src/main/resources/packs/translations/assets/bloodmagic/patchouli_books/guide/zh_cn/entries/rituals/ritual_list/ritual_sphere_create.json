@@ -30,9 +30,9 @@
         "bloodmagic:images/entries/ritual/sphere_above.png",
         "bloodmagic:images/entries/ritual/sphere_below.png"
       ],
-      "title": "Default Size",
+      "title": "默认尺寸",
       "border": true,
-      "text": "The result of using the ritual with the default settings."
+      "text": "在默认设置下激活该仪式产生的结果。"
     }
   ]
 }
