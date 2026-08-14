@@ -63,7 +63,7 @@
       "page_type": "vengeful",
       "text_overrides": [
         [
-        "坚毅",
+        "坚毅意志",
         "steadfast"
         ]
       ]
@@ -74,7 +74,7 @@
       "page_type": "destructive",
       "text_overrides": [
         [
-        "破坏",
+        "破坏意志",
         "destructive"
         ]
       ]
