@@ -30,11 +30,11 @@
       "page_type": "corrosive",
       "text_overrides": [
         [
-        "filter",
+        "过滤器",
         "item"
         ]
       ],
-      "text": "To set a filter, place any form of $(item)Item Filter$() into the linked $(item)Chest$(). The ritual will only use the first filter it finds, but will accept $(l:bloodmagic:demon_will/item_routing/standard_item_filter)Standard$(), $(l:bloodmagic:demon_will/item_routing/tag_item_filter)Tag$(), $(l:bloodmagic:demon_will/item_routing/mod_item_filter)Mod$(), and $(l:bloodmagic:demon_will/item_routing/composite_item_filter)Composite Item Filters$(). Blacklisting works too!"
+      "text": "在连接的$(item)箱子$()中放入任何一种$(item)物品过滤器$()就可以设置过滤。此仪式只会使用第一个过滤器，但接受$(l:bloodmagic:demon_will/item_routing/standard_item_filter)标准$()、$(l:bloodmagic:demon_will/item_routing/tag_item_filter)标签$()、$(l:bloodmagic:demon_will/item_routing/mod_item_filter)模组$()与$(l:bloodmagic:demon_will/item_routing/composite_item_filter)复合物品过滤器$()，黑名单也能正常运作！"
     },
     {
       "type": "bloodmagic:ritual_data",
@@ -52,7 +52,7 @@
       "page_type": "chest",
       "text_overrides": [
         [
-        "Item Filter",
+        "物品过滤器",
         "item"
         ]
       ]
