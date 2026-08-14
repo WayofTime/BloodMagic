@@ -14,11 +14,11 @@
       "ritual": "upgrade_remove",
       "text_overrides": [
         [
-        "Living Armor",
+        "束灵盔甲",
         "l:bloodmagic:alchemy_array/living_equipment/living_basics"
         ],
         [
-        "Upgrade Tomes",
+        "强化手册",
         "l:bloodmagic:alchemy_array/living_equipment/living_tomes"
         ]
       ]
