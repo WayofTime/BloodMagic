@@ -19,7 +19,7 @@
       "page_type": "crystal",
       "text_overrides": [
         [
-        "catalysts",
+        "催化剂",
         "l:bloodmagic:demon_will/will_manipulation/will_catalysts"
         ]
       ]
@@ -30,7 +30,7 @@
       "page_type": "chest",
       "text_overrides": [
         [
-        "catalyst",
+        "催化剂",
         "l:bloodmagic:demon_will/will_manipulation/will_catalysts"
         ]
       ]
