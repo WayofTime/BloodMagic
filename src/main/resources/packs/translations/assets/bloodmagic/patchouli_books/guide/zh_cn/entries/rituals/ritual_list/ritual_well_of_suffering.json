@@ -18,27 +18,27 @@
         "blood"
         ],
         [
-        "blood altar",
+        "血之祭坛",
         "l:bloodmagic:altar/blood_altar"
         ]
       ]
     },
     {
       "type": "patchouli:text",
-      "text": "This ritual attacks mobs within its damage zone and puts the harvested $(blood)Blood$() into a nearby $(l:bloodmagic:altar/blood_altar)Blood Altar$(). Put a $(l:bloodmagic:altar/soul_network)Blood Orb$() in the Altar, maybe add a few $(l:bloodmagic:altar/blood_rune/sacrifice_rune)Runes of Sacrifice$() for good measure and you'll never have to worry about your LP supplies again... As long as you can supply enough mobs."
+      "text": "该仪式会攻击其作用范围内的实体，并将收集到的$(blood)血$()存入附近的$(l:bloodmagic:altar/blood_altar)血之祭坛$()。在祭坛中放一颗$(l:bloodmagic:altar/soul_network)气血宝珠$()——或许也可以适当添加一些$(l:bloodmagic:altar/blood_rune/sacrifice_rune)献祭符文$()来增产——然后你就不需要担心你的生命源质供应了……如果你能提供足够多生物的话。"
     },
     {
       "type": "bloodmagic:ritual_data",
       "ritual": "well_of_suffering",
       "page_type": "altar",
-      "text": "The Ritual can only link to one altar at a time.",
+      "text": "该仪式只能连接到一个祭坛。",
       "text_overrides": [
         [
-        "Blood Altar",
+        "血之祭坛",
         "l:bloodmagic:altar/blood_altar"
         ],
         [
-        " Blood",
+        "血",
         "blood"
         ]
       ]
@@ -47,7 +47,7 @@
       "type": "bloodmagic:ritual_data",
       "ritual": "well_of_suffering",
       "page_type": "damage",
-      "text": "Mobs will still drop non-Player Kill mob drops."
+      "text": "生物依然会掉落非玩家击杀时掉落的物品。"
     }
   ]
 }
