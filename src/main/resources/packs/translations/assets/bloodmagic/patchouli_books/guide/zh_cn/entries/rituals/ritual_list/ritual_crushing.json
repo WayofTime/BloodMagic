@@ -43,7 +43,7 @@
       "type": "bloodmagic:ritual_data",
       "ritual": "crushing",
       "page_type": "vengeful",
-      "text": "For example, it will turn Coal into Blocks of Coal, Redstone Dust into Blocks of Redstone, etc."
+      "text": "例如，它会将煤炭压缩成煤炭块、红石粉压缩成红石块，以此类推。"
     },
     {
       "type": "bloodmagic:ritual_data",
