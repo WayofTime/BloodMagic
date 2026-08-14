@@ -21,15 +21,15 @@
     },
     {
       "type": "patchouli:text",
-      "text": "The $(thing)Rythm of the Beating Anvil$() is a powerful and versatile ritual, allowing you to autocraft standard crafting recipes alongside recipes using your $(l:bloodmagic:alchemy_table/alchemy_table)Alchemy Table$() or $(l:bloodmagic:demon_will/will_manipulation/soul_forge)Hellfire Forge$() (If properly augmented). However, it can be a little complex, so what follows is a tutorial for setting it up. $(br2)Each ritual can handle exactly one recipe."
+      "text": "$(thing)击砧之谐$()仪式是一个强大且通用的仪式，除了自动执行原版的合成配方之外，如果升级得当，还可以使用你的$(l:bloodmagic:alchemy_table/alchemy_table)炼金术桌$()和$(l:bloodmagic:demon_will/will_manipulation/soul_forge)狱火锻炉$()进行合成。但这个仪式可能显得有一些复杂，因此接下来是关于如何建立该仪式的教程。$(br2)每个仪式都只能处理恰好一个配方。"
     },
     {
       "type": "patchouli:text",
-      "text": "First off, we need to specify the recipe that we want the ritual to craft. This is done using an Item Filter. $(br2)Multiple types of Item Filter can be used, however the ritual will only ever accept one filter at a time; any additional filters will be ignored."
+      "text": "首先，我们需要指定仪式执行的配方，这里需要使用物品过滤器。$(br2)多种物品过滤器都可以生效，但仪式一次只能接受一种过滤器，任何额外的过滤器都会被忽略。"
     },
     {
       "type": "patchouli:text",
-      "text": "The following filters are accepted: $(li)Standard Item Filter: specifies exactly which item to use in each slot. $(li)Tag Item Filter: Uses $(thing)Tags$() to specify what items to use. E.G. If a recipe requires any kind of stone (but will work with andesite, granite, etc), you can use forge:stone in the filter. $(li)Mod Item Filter: This will try to use any item from the mod in this slot."
+      "text": "以下过滤器可以使用：$(li)标准物品过滤器：严格指定该槽位中放入什么物品。$(li)标签物品过滤器：使用$(thing)标签$()以指定使用哪一类物品。例如，如果一个配方需要任意石头（也可以用安山岩、花岗岩等），你就可以在这个过滤器中填入 forge:stone。$(li)模组物品过滤器：这么做会尝试在该物品格中放入此模组的任意物品。"
     },
     {
       "type": "patchouli:image",
@@ -38,11 +38,11 @@
       ],
       "title": "Sample Filter",
       "border": true,
-      "text": "A Standard Item Filter configured to autocraft $(item)Stone Pickaxes$()."
+      "text": "已配置的标准物品过滤器，用于自动合成$(item)石镐$()."
     },
     {
       "type": "patchouli:text",
-      "text": "Next, the Item Filter has to be placed on the ritual. In this image we've used an $(item)Item Frame$(), however a chest can be used instead. Note that if you put multiple $(item)filters$() in the chest, only the first one will be used. $(br2)By default, the Input chest and Output chest are in the same place; however, this can be changed with the $(l:bloodmagic/rituals/ritual_tinkerer)Ritual Tinkerer.$() This can be useful for recipes that re-use some components, such as your $(l:bloodmagic:altar/soul_network)Blood Orb.$()"
+      "text": "接下来，物品过滤器必须放在仪式上。在这张图片中我们使用了$(item)物品展示框$()，当然你也可以使用箱子替代。注意如果你在箱子中放入了多个$(item)过滤器$()，仪式只会使用第一个。$(br2)默认情况下，负责输入的箱子与负责输出的箱子位于同一位置，但可以使用$(l:bloodmagic/rituals/ritual_tinkerer)仪式调整器$()来修改位置。这对于一些带有可复用材料的配方比较实用，例如你的$(l:bloodmagic:altar/soul_network)气血宝珠$()。"
     },
     {
       "type": "patchouli:image",
@@ -50,22 +50,22 @@
       "bloodmagic:images/entries/ritual/autocraft/default_placement.png",
       "bloodmagic:images/entries/ritual/autocraft/optional_placement.png"
       ],
-      "title": "The Placed Filter",
+      "title": "已放好的过滤器",
       "border": true,
-      "text": "A filter and chest in normal locations, and a $(l:bloodmagic/rituals/ritual_tinkerer)Tinkered$() ritual with in and out chests"
+      "text": "位于常规位置的过滤器和箱子，以及带有输入输出箱的、$(l:bloodmagic/rituals/ritual_tinkerer)调整后$()的仪式"
     },
     {
       "type": "patchouli:text",
-      "text": "If you supply the ritual with $(steadfast)Steadfast$() or $(corrosive)Corrosive$() Will, then the ritual will instead try to autocraft with a linked $(l:bloodmagic:demon_will/will_manipulation/soul_forge)Hellfire Forge$() or $(l:bloodmagic:alchemy_table/alchemy_table)Alchemy Table$(), respectively. These recipes are all shapeless, but if you need 2 of an item, you'll have to specify it twice in the filter."
+      "text": "如果为仪式提供$(steadfast)坚毅$()或$(corrosive)腐蚀$()意志，该仪式就会相应地尝试使用连接的$(l:bloodmagic:demon_will/will_manipulation/soul_forge)狱火锻炉$()或$(l:bloodmagic:alchemy_table/alchemy_table)炼金术桌$()合成。这些配方都是无序配方，但如果你需要输入两个相同物品，你就需要在过滤器中标记两次该物品。"
     },
     {
       "type": "patchouli:image",
       "images": [
       "bloodmagic:images/entries/ritual/autocraft/catalyst_recipe.png"
       ],
-      "title": "Alchemy Filter",
+      "title": "炼金过滤器",
       "border": true,
-      "text": "A filter configured for the crafting of $(l:bloodmagic:alchemy_table/potions)Simple Catalysts$()."
+      "text": "已配置的过滤器，用于自动合成$(l:bloodmagic:alchemy_table/potions)简单催化剂$()。"
     },
     {
       "type": "bloodmagic:ritual_data",
@@ -77,7 +77,7 @@
       "l:bloodmagic:demon_will/item_routing/standard_item_filter"
       ]
       ],
-      "text": "Supports $(l:bloodmagic:demon_will/item_routing/standard_item_filter)Standard$(), $(l:bloodmagic:demon_will/item_routing/tag_item_filter)Tag$(), and $(l:bloodmagic:demon_will/item_routing/mod_item_filter)Mod Item Filters$()."
+      "text": "支持$(l:bloodmagic:demon_will/item_routing/standard_item_filter)标准$()、$(l:bloodmagic:demon_will/item_routing/tag_item_filter)标签$()和$(l:bloodmagic:demon_will/item_routing/mod_item_filter)模组物品过滤器$()。"
     },
     {
       "type": "bloodmagic:ritual_data",
@@ -95,11 +95,11 @@
       "page_type": "outputFilterRange",
       "text_overrides": [
       [
-      "filter",
+      "过滤器",
       "l:bloodmagic:demon_will/item_routing/standard_item_filter"
       ]
       ],
-      "text": "Supports $(l:bloodmagic:demon_will/item_routing/standard_item_filter)Standard$(), $(l:bloodmagic:demon_will/item_routing/tag_item_filter)Tag$(), and $(l:bloodmagic:demon_will/item_routing/mod_item_filter)Mod Item Filters$()."
+      "text": "支持$(l:bloodmagic:demon_will/item_routing/standard_item_filter)标准$()、$(l:bloodmagic:demon_will/item_routing/tag_item_filter)标签$()和$(l:bloodmagic:demon_will/item_routing/mod_item_filter)模组物品过滤器$()。"
     },
     {
       "type": "bloodmagic:ritual_data",
