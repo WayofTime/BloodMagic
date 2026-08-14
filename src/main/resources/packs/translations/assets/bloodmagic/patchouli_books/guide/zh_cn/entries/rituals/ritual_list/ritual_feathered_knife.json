@@ -18,15 +18,15 @@
         "blood"
         ],
         [
-        "blood altar",
+        "血之祭坛",
         "l:bloodmagic:altar/blood_altar"
         ],
         [
-        "Runes of Self Sacrifice",
+        "牺牲符文",
         "l:bloodmagic:altar/blood_rune/self_sacrifice_rune"
         ],
         [
-        "Tough Palms",
+        "坚韧手掌",
         "l:bloodmagic:alchemy_array/living_equipment/armor_upgrades/tough_palms"
         ]
       ]
@@ -48,11 +48,11 @@
       "page_type": "corrosive",
       "text_overrides": [
         [
-        "Incense Bonus",
+        "熏香增益",
         "thing"
         ],
         [
-        "Incense Altar",
+        "熏香祭坛",
         "l:bloodmagic:utility/incense_altar"
         ]
       ]
@@ -63,7 +63,7 @@
       "page_type": "vengeful",
       "text_overrides": [
         [
-        "Steadfast",
+        "坚毅",
         "steadfast"
         ]
       ]
@@ -74,7 +74,7 @@
       "page_type": "destructive",
       "text_overrides": [
         [
-        "Destructive Will",
+        "破坏",
         "destructive"
         ]
       ]
@@ -90,7 +90,7 @@
       "page_type": "altar",
       "text_overrides": [
         [
-        "Blood Altar",
+        "血之祭坛",
         "l:bloodmagic:altar/blood_altar"
         ]
       ]
