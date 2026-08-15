@@ -1,0 +1,30 @@
+{
+  "name": "训练手镯",
+  "icon": "bloodmagic:upgradetrainer",
+  "category": "bloodmagic:alchemy_array/living_equipment",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "新的盔甲是一个极好的帮手，但它不定向的成长有时会……让人沮丧。为了让它定向成长，你设计了一种$(item)训练手镯$()来帮助你训练盔甲。合成后，点击[$(k:use)]会打开其界面，你可以在其中选定想要专注于其上的能力……或想要避免哪些。"
+    },
+    {
+      "type": "bloodmagic:crafting_array",
+      "heading": "训练手镯",
+      "recipe": "bloodmagic:array/living_trainer",
+      "text": "$(italic)*于此插入训练蒙太奇*$()$(br2)这些手镯一次只能生效一个。副手 > 饰品栏（如可用）> 主物品栏（包括主手）> 附加物品栏。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/alchemy_array/living_equipment/training_bracelet.png"
+      ],
+      "title": "训练手镯GUI",
+      "border": false,
+      "text": "训练手镯界面——它最多可以同时追踪16个不同的升级。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "训练手镯可以为任何一个升级指定限制（假如你手边有其$(item)训练手册$()的复制品）。例如，你可以将“壮实双腿”能力限制到3级——当你达到该等级后，“壮实双腿”将不再接收任何经验。它还可以阻止或允许你训练所有没有选定的其它技能。如果你想允许除了某种升级以外的其它所有升级，你可以将它添加到“黑名单”中，并将其等级上限设置为0。"
+    }
+  ]
+}

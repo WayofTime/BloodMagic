@@ -1,0 +1,31 @@
+{
+  "name": "光灵视野",
+  "icon": "minecraft:glowstone_dust",
+  "category": "bloodmagic:alchemy_table/potion_flasks/blood_magic",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)光灵视野$()会揭示周围的生物，就像它们有发光效果一样。该效果的基准范围为24个方块，每高一级可以将范围增加32个方块。$(br2)可由$(l:bloodmagic:alchemy_table/potion_flasks/vanilla/night_vision)夜视$()效果的药水酿成。"
+    },
+    {
+      "type": "bloodmagic:3x_crafting_flask",
+      "a.heading": "光灵视野（3:00）",
+      "a.recipe": "bloodmagic:flask/night_to_spectral",
+      "b.heading": "光灵视野（8:00）",
+      "b.recipe": "bloodmagic:flask/length_spectral_sight",
+      "c.heading": "光灵视野 II（1:30）",
+      "c.recipe": "bloodmagic:flask/potency_spectral_sight"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "添加$(l:bloodmagic:alchemy_table/potions#average_potions)标准催化剂$()可以进一步增强药水效果。"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_flask",
+      "a.heading": "光灵视野 III（0:45）",
+      "a.recipe": "bloodmagic:flask/potency_average_spectral_sight",
+      "b.heading": "光灵视野（21:20）",
+      "b.recipe": "bloodmagic:flask/length_average_spectral_sight"
+    }
+  ]
+}

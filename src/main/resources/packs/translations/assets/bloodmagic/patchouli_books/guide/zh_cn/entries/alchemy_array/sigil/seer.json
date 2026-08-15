@@ -1,0 +1,32 @@
+{
+  "name": "先知印记",
+  "icon": "bloodmagic:seersigil",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)先知印记$()是$(l:bloodmagic:alchemy_array/sigil/divination)占卜印记$()的进阶形式。除了显示绑定玩家$(l:bloodmagic:altar/soul_network)灵魂网络$(/l)中的LP总量外，当注视$(l:bloodmagic:altar/blood_altar)血之祭坛$(/l)时，它还能显示更多信息。$(br2)与$(item)占卜印记$()一样，它也可用于编辑你的GUI。（详见占卜印记条目）"
+    },
+    {
+      "type": "bloodmagic:crafting_2-step_sigil",
+      "alchemy_table.heading": "视界试剂",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_sight",
+      "array.heading": "先知印记",
+      "array.recipe": "bloodmagic:array/seersigil",
+      "array.text": "$(italic)当知晓一切不再足够时"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "从上至下依次为：$(li)$(l:bloodmagic:altar/blood_altar)血之祭坛$(/l)当前的等级。$(li)祭坛内当前的血液量，以及祭坛当前的总容量。（默认为10,000mB，但可通过$(l:bloodmagic:altar/blood_rune/capacity_rune)增容符文$()和$(l:bloodmagic:altar/blood_rune/aug_capacity_rune)超容符文$()增加）。$(li)当前的合成进度（如有）。$(li)LP消耗/刻 —— 祭坛合成时每刻消耗的LP量。$(li)你所拥有的$(l:bloodmagic:altar/blood_rune/charging_rune)充能符文$()中当前存储的LP量。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/sigil/seer_sigil_info.png"
+      ],
+      "title": "先知印记显示",
+      "border": true,
+      "text": "当你注视血之祭坛时，先知印记会显示此HUD。"
+    }
+  ]
+}

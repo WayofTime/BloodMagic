@@ -1,0 +1,104 @@
+{
+  "name": "羽刀仪式",
+  "icon": "bloodmagic:sacrificialdagger",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "羽刀仪式",
+      "multiblock_id": "bloodmagic:feathered_knife",
+      "text": "使用$(l:bloodmagic:rituals/ritual_diviner#dusk)仪式推测杖【薄暮】$(/l)以更方便地建造。"
+    },
+    {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "feathered_knife",
+      "text_overrides": [
+        [
+        "LP",
+        "blood"
+        ],
+        [
+        "血之祭坛",
+        "l:bloodmagic:altar/blood_altar"
+        ],
+        [
+        "牺牲符文",
+        "l:bloodmagic:altar/blood_rune/self_sacrifice_rune"
+        ],
+        [
+        "坚韧手掌",
+        "l:bloodmagic:alchemy_array/living_equipment/armor_upgrades/tough_palms"
+        ]
+      ]
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "feathered_knife",
+      "page_type": "raw",
+      "text_overrides": [
+        [
+        "原生意志",
+        "raw"
+        ]
+      ]
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "feathered_knife",
+      "page_type": "corrosive",
+      "text_overrides": [
+        [
+        "熏香增益",
+        "thing"
+        ],
+        [
+        "熏香祭坛",
+        "l:bloodmagic:utility/incense_altar"
+        ]
+      ]
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "feathered_knife",
+      "page_type": "vengeful",
+      "text_overrides": [
+        [
+        "坚毅意志",
+        "steadfast"
+        ]
+      ]
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "feathered_knife",
+      "page_type": "destructive",
+      "text_overrides": [
+        [
+        "破坏意志",
+        "destructive"
+        ]
+      ]
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "feathered_knife",
+      "page_type": "steadfast"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "feathered_knife",
+      "page_type": "altar",
+      "text_overrides": [
+        [
+        "血之祭坛",
+        "l:bloodmagic:altar/blood_altar"
+        ]
+      ]
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "feathered_knife",
+      "page_type": "damage"
+    }
+  ]
+}

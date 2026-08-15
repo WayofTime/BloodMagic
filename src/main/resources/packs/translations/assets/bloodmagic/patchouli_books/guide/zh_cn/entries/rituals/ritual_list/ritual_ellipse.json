@@ -1,0 +1,31 @@
+{
+  "name": "椭球之焦",
+  "icon": "minecraft:bucket",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "椭球之焦",
+      "multiblock_id": "bloodmagic:ellipsoid",
+      "text": "使用$(l:bloodmagic:rituals/ritual_diviner#dusk)仪式推测杖【薄暮】$(/l)以更方便地建造。"
+    },
+    {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "ellipsoid"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "这个仪式本质上纯粹是装饰性的，专为我们每个人心中那个怀揣建筑梦、却又懒于动手的自己而设计。它尤其适合建造复杂的形状，比如在你的邪恶巢穴上方建造一个宏伟的金色穹顶……你确实有个巢穴，对吧？"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "ellipsoid",
+      "page_type": "chest"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "ellipsoid",
+      "page_type": "spheroidRange"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "缓慢",
+  "icon": "minecraft:soul_sand",
+  "category": "bloodmagic:alchemy_table/potion_flasks/vanilla",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "每级$(thing)缓慢$()都会将移动速度降低15%。$(br2)可由$(l:bloodmagic:alchemy_table/potion_flasks/vanilla/speed)速度$()或$(l:bloodmagic:alchemy_table/potion_flasks/vanilla/jump_boost)跳跃提升$()效果的药水酿成。$(br2)催化剂的组合方式见于下一页。"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_flask",
+      "a.heading": "由速度药水酿造缓慢药水",
+      "a.recipe": "bloodmagic:flask/speed_to_slow",
+      "b.heading": "由跳跃提升药水酿造缓慢药水",
+      "b.recipe": "bloodmagic:flask/jump_to_slow"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_flask",
+      "a.heading": "缓慢（8:00）",
+      "a.recipe": "bloodmagic:flask/length_slowness",
+      "b.heading": "缓慢 II（1:30）",
+      "b.recipe": "bloodmagic:flask/potency_slowness"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_flask",
+      "a.heading": "缓慢 III（0:45）",
+      "a.recipe": "bloodmagic:flask/potency_average_slowness",
+      "b.heading": "缓慢（21:20）",
+      "b.recipe": "bloodmagic:flask/length_average_slowness"
+    }
+  ]
+}

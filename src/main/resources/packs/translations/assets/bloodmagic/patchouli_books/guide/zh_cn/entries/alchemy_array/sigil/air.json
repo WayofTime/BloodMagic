@@ -1,0 +1,19 @@
+{
+  "name": "风之印记",
+  "icon": "bloodmagic:airsigil",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "每次使用消耗$(blood)50 LP$()，将你推向你面朝的方向。注意，这并不提供任何形式的摔落缓冲效果，所以落地时请务必小心！这是一种快速赶路的好方法，尽管伴随着一些风险。许多粗心的法师都因在野外高空飞行时耗尽了$(l:bloodmagic:altar/soul_network)灵魂网络$(/l)中的$(blood)LP$()而丧命。"
+    },
+    {
+      "type": "bloodmagic:crafting_2-step_sigil",
+      "alchemy_table.heading": "风之试剂",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_air",
+      "array.heading": "风之印记",
+      "array.recipe": "bloodmagic:array/airsigil",
+      "array.text": "$(italic)感觉轻飘飘的……$()"
+    }
+  ]
+}

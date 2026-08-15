@@ -1,0 +1,66 @@
+{
+  "name": "虚空之口",
+  "icon": "minecraft:black_stained_glass",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "虚空之口",
+      "multiblock_id": "bloodmagic:yawning_void",
+      "text": "使用$(l:bloodmagic:rituals/ritual_diviner#dusk)仪式推测杖【薄暮】$(/l)以更方便地建造。"
+    },
+    {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "yawning_void"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "yawning_void",
+      "page_type": "raw",
+      "text_overrides": [
+        [
+        "原生意志",
+        "raw"
+        ]
+      ]
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "yawning_void",
+      "page_type": "corrosive",
+      "text_overrides": [
+        [
+        "过滤器",
+        "item"
+        ]
+      ],
+      "text": "在连接的$(item)箱子$()中放入任何一种$(item)物品过滤器$()就可以设置过滤。此仪式只会使用第一个过滤器，但接受$(l:bloodmagic:demon_will/item_routing/standard_item_filter)标准$()、$(l:bloodmagic:demon_will/item_routing/tag_item_filter)标签$()、$(l:bloodmagic:demon_will/item_routing/mod_item_filter)模组$()与$(l:bloodmagic:demon_will/item_routing/composite_item_filter)复合物品过滤器$()，黑名单也能正常运作！"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "yawning_void",
+      "page_type": "steadfast"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "yawning_void",
+      "page_type": "quarryRange"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "yawning_void",
+      "page_type": "chest",
+      "text_overrides": [
+        [
+        "物品过滤器",
+        "item"
+        ]
+      ]
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "yawning_void",
+      "page_type": "placementRange"
+    }
+  ]
+}

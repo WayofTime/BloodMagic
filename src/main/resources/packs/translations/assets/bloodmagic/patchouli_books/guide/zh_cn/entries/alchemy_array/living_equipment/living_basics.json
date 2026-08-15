@@ -1,0 +1,34 @@
+{
+  "name": "束灵盔甲基础",
+  "icon": "bloodmagic:reagentbinding",
+  "category": "bloodmagic:alchemy_array/living_equipment",
+  "extra_recipe_mappings": {
+    "bloodmagic:reagentbinding": 1,
+    "bloodmagic:livinghelmet": 3,
+    "bloodmagic:livingplate": 3,
+    "bloodmagic:livingleggings": 3,
+    "bloodmagic:livingboots": 3
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "为合成$(item)束灵盔甲$()，你需要$(item)铁盔甲$()、一点$(l:bloodmagic:alchemy_array/functional_arrays/arcane_ash)奥术粉灰$()、一些$(item)束缚试剂$()。你也至少需要一个$(br)$(l:bloodmagic:demon_will/will_manipulation/soul_gem)普通地狱魂石$()来存储所需的$(item)恶魔意志$()。"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "束缚试剂",
+      "recipe": "bloodmagic:alchemytable/reagent_binding",
+      "text": "$(italic)它紧紧地缠着我……$()$(br2)$(br2)$(item)束灵盔甲$()的耐久与$(item)钻石盔甲$()相当，还可以在$(thing)铁砧$()上使用$(thing)束缚试剂$()修复。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "和其它炼金阵列一样，手持$(item)奥术粉灰$()、看向方块、按下[$(k:use)]，然后对其使用$(item)束缚试剂$()，再把你的$(item)铁头盔$()、$(item)铁胸甲$()、$(item)铁护腿$()或$(item)铁靴子$()放上去，最后，后退几步观看阵列运行。$(br2)束灵盔甲一开始和铁盔甲相当，但有一些$(thing)升级点数$()，你可以谨慎地用这些点数，以某种方式训练盔甲。训练点数从100点开始，但似乎有一些方式可以越过这一上限……"
+    },
+    {
+      "type": "bloodmagic:crafting_array",
+      "heading": "束灵仪式",
+      "recipe": "bloodmagic:array/living_helmet",
+      "text": "它是活的，好吧……它还在向你学习。你最好注意点你教了他什么。$(br2)当你看它的时候，你可以长按[$(k:sneak)]来更详细地知道它目前为止学了什么。"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "涂油",
+  "icon": "bloodmagic:melee_anointment",
+  "category": "bloodmagic:alchemy_table",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)涂覆用油$()堪称为工具、武器，甚至$(l:bloodmagic:demon_will/demonic_items/explosive_charges)炸药$()的$(item)药水$()。如果可以，手持$(item)涂覆用油$()并按下[$(k:use)]，就会把它涂在另一只手所持有的东西上，但并非所有的油都可以涂在任何东西上！$(br2)与$(item)药水$()不同，$(item)涂油$()并没有时限，反之，每次使用武器或工具都会用掉一点。"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "注入石板的小瓶",
+      "recipe": "bloodmagic:alchemytable/slate_vial",
+      "text": "坚固的小瓶子，可以盛放原本无法盛装的混合物。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "物品也可以在锻造台上$(item)涂油$()，对于需要双手持握的武器，或在$(l:bloodmagic:alchemy_array/living_equipment/armour_downgrades/crippled_arm)其它让你感到手不够用的情形中$()，这就会显得非常实用。此时$(item)涂覆用油$()充当了锻造模板。"
+    }
+  ]
+}

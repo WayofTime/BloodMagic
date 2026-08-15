@@ -1,0 +1,36 @@
+{
+  "name": "地牢钥匙",
+  "icon": "bloodmagic:simplekey",
+  "category": "bloodmagic:dungeons",
+  "extra_recipe_mappings": {
+    "bloodmagic:mineentrancekey": 2
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)钥匙$()是操控$(thing)地牢$()的基本方式。它们出现在$(thing)恶魔领域$()的地牢宝箱里，你也可以合成。最基础的钥匙是$(item)铁钥匙$()，在$(thing)主厅$()中即可生成，也可以在$(thing)恶魔领域$()最近一层中生成。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "最终，在探索地牢的过程中，你可能会遇到一处$(thing)空间扭曲$()。它可能会让你得到一把特殊的、无法合成的钥匙，或让你找到一扇只能用这把钥匙打开的门。空间扭曲只会出现在恶魔领域中，主厅里永远找不到它。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "bloodmagic:mineentrancekey",
+      "title": "矿井",
+      "text": "$(thing)矿井$()的大门只能使用那把无法合成的$(thing)领工钥匙$()打开，而这扇门之后的所有门都可以使用$(thing)矿工钥匙$()打开。你可以在矿井中获得$(l:bloodmagic:dungeons/demonite)恶魔合金矿石$()和稀有的战利品，但也有挑战与之对应。"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "铁钥匙",
+      "recipe": "bloodmagic:soulforge/simple_key",
+      "text": "$(italic)如果真这么简单，我们为什么不开锁呢？$()"
+    },
+    {
+      "type": "bloodmagic:crafting_soulforge",
+      "heading": "矿工钥匙",
+      "recipe": "bloodmagic:soulforge/mine_key",
+      "text": "$(italic)我们要去上工了……！$()"
+    }
+  ]
+}

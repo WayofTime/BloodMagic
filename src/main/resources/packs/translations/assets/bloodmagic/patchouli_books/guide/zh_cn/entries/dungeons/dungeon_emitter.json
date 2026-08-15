@@ -1,0 +1,15 @@
+{
+  "name": "地牢发信器",
+  "icon": "bloodmagic:dungeon_emitter",
+  "category": "bloodmagic:dungeons",
+  "extra_recipe_mappings": {
+    "bloodmagic:dungeon_emitter": 0
+  },
+  "pages": [
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:dungeon_emitter",
+      "text": "$(thing)地牢发信器$()可以发出恒定的红石信号，与$(thing)红石块$()类似。不同于$(l:bloodmagic:dungeons/dungeon_alternator)地牢交变器$()，此方块的信号稳定且不变。"
+    }
+  ]
+}

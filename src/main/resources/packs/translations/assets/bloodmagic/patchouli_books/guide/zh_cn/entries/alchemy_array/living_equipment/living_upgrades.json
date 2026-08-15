@@ -1,0 +1,16 @@
+{
+  "name": "束灵盔甲升级",
+  "icon": "bloodmagic:upgradetome",
+  "priority": true,
+  "category": "bloodmagic:alchemy_array/living_equipment",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "穿着这套新的盔甲，你感受到它在成长，并协助你完成各种各样的任务。$(br2)它似乎能够在许多地方发挥作用，但它的成长空间有限，并且试图同时做所有事情简直无法成功。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "也许多套专门的盔甲是个好主意？当然，但如果你想要的不仅仅是诸多方向不明的增益，你就必须好好训练它。$(br2)很幸运，你有一个专门的$(l:rituals/ritual_list/ritual_upgrade_remove)仪式$()来辅助训练，还有$(l:rituals/ritual_list/ritual_armour_evolve)另一个仪式$()可以给你的盔甲注入更强的成长力。"
+    }
+  ]
+}

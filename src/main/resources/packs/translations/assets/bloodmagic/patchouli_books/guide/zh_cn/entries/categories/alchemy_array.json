@@ -1,0 +1,6 @@
+{
+  "name": "炼金矩阵",
+  "description": "使用$(l:bloodmagic:alchemy_array/functional_arrays/arcane_ash)奥术粉灰$(/l)在地上画些圆，它们会产生一些简单效应，这就是炼金矩阵。绘制它们非常简单，并且在游戏的前期和后期都很有用。",
+  "icon": "bloodmagic:arcaneashes",
+  "sortnum": 2
+}

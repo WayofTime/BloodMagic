@@ -1,0 +1,43 @@
+{
+  "name": "灵魂网络",
+  "icon": "bloodmagic:weakbloodorb",
+  "category": "bloodmagic:altar",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)灵魂网络$()可以将你的$(thing)灵魂$()与所有绑定至你的物品、仪式、方块连接起来。从功能上讲，它是一个全局$(blood)LP$()存储空间，各玩家间独立，可以向其中输入，也可以从其中输出，都以玩家绑定的物品为媒介。当你第一次手持一个可以绑定至$(thing)灵魂网络$()的物品并按下[$(k:use)]，它会绑定至你，并显示为你“拥有”了它。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "因此，该物品的需要的所有$(blood)LP$()都会从你的$(thing)灵魂网络$()中消耗。一些情况下，如果它无法从你的$(thing)灵魂网络$()中获得所需的$(blood)LP$()，它将会直接消耗你的生命值以获得这些$(blood)LP$()。$(br2)另一些情况下（如$(thing)仪式$()将你的灵魂网络抽干了），它们只会不停给你施加反胃效果，直到你暂停仪式，或你的$(thing)灵魂网络$()不再为空。 "
+    },
+    {
+      "type": "patchouli:text",
+      "text": "为了填充$(thing)灵魂网络$()，你需要合成$(item)气血宝珠$()。$(br2)气血宝珠有两种充入$(blood)LP$()的方式。$(li)玩家可以手持$(item)气血宝珠$()并按[$(k:use)]，消耗1颗心以向$(thing)灵魂网络$()中充入$(blood)200 LP$()。$(li)$(item)气血宝珠$()可以放于有$(blood)生命源质$()的$(l:bloodmagic:altar/blood_altar)血之祭坛$(/l)中，宝珠会尽可能快地吸收生命源质，受祭坛$(item)速度符文$()数量限制。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "不同等级的$(item)血之祭坛$()上可以合成不同的$(item)气血宝珠$()，其配方见于次页。$(li)$(item)虚弱气血宝珠$()——最大容量：$(blood)5k LP$()。$(li)$(item)学徒气血宝珠$()——最大容量：$(blood)25k LP$()。$(li)$(item)法师气血宝珠$()——最大容量：$(blood)150k LP$()。$(li)$(item)大师气血宝珠$()——最大容量：$(blood)1M LP$()。$(li)$(item)术士气血宝珠$()——最大容量：$(blood)10M LP$()。"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_altar",
+      "a.heading": "虚弱气血宝珠",
+      "a.recipe": "bloodmagic:altar/weakbloodorb",
+      "b.heading": "学徒气血宝珠",
+      "b.recipe": "bloodmagic:altar/apprenticebloodorb"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_altar",
+      "a.heading": "法师气血宝珠",
+      "a.recipe": "bloodmagic:altar/magicianbloodorb",
+      "b.heading": "大师气血宝珠",
+      "b.recipe": "bloodmagic:altar/masterbloodorb"
+    },
+    {
+      "type": "bloodmagic:crafting_altar",
+      "heading": "术士气血宝珠",
+      "recipe": "bloodmagic:altar/archmagebloodorb",
+      "text": "如果你的$(blood)LP存储空间$()仍然不足，可以考虑使用$(l:bloodmagic:altar/blood_rune/orb_rune)宝珠符文$()。"
+    }
+  ]
+}

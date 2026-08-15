@@ -1,0 +1,39 @@
+{
+  "name": "炼金阵列基础",
+  "icon": "bloodmagic:arcaneashes",
+  "category": "bloodmagic:alchemy_array/functional_array",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)奥术粉灰$()是用来创造炼金阵列的关键物品。可以使用游戏前期的材料在$(l:bloodmagic:alchemy_table/alchemy_table)炼金术桌$()上合成$(item)奥术粉灰$()。"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "奥术粉灰",
+      "recipe": "bloodmagic:alchemytable/arcane_ash"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "为创造炼金阵列，你需要手持$(item)奥术粉灰$()、看向方块、按下[$(k:use)]。这会消耗$(item)奥术粉灰$()20点总耐久中的1点，并绘制一个简单的$(thing)炼金阵列$()，它自身没有任何效果。$(br2)当你点击$(thing)炼金阵列$()时，会消耗一个手持$(item)物品$()，并将其放入阵列中。这一物品决定了$(thing)炼金阵列$()的效果。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/alchemy_array/simple_array.png",
+        "bloodmagic:images/entries/alchemy_array/divination_array_1.png",
+        "bloodmagic:images/entries/alchemy_array/divination_array_2.png"
+      ],
+      "title": "炼金阵列",
+      "border": true,
+      "text": "$(thing)炼金阵列$()按以下顺序显示：无输入；仅有$(item)基础物品$()；既有$(item)基础物品$()又有$(item)催化剂$()。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "每种阵列效果都需要两个物品：$(item)基础物品$()与$(item)催化剂$()。在画下炼金阵列后，你需要先放入$(item)基础物品$()，再放入$(item)催化剂$()。如果放入的基础物品有效，阵列的外观会发生改变，在放入催化剂后，阵列会立即激活。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "虽然目前仅有几个阵列已实装，但除了简单的$(l:bloodmagic:alchemy_array/functional_arrays/crafting_array)合成阵列$(/l)外，炼金阵列最终甚至会包括传送阵列。"
+    }
+  ]
+}

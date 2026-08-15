@@ -1,0 +1,26 @@
+{
+  "name": "超容符文",
+  "icon": "bloodmagic:bettercapacityrune",
+  "category": "bloodmagic:altar/blood_rune",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "每个$(item)超容符文$()都会将$(l:bloodmagic:altar/blood_altar)血之祭坛$(/l)的容量增加7.5%，且以倍乘叠加。超容符文的效果在常规的$(l:bloodmagic:altar/blood_rune/capacity_rune)增容符文$()$(o)后$()结算。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "超容符文",
+      "recipe": "bloodmagic:blood_rune_aug_capacity"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:blood_rune_aug_capacity_2",
+      "text": "有了一些$(item)下界合金碎片$()和一些从$(l:bloodmagic:dungeons/endless_realm)恶魔领域$()中得到的$(item)复杂狱锻部件$()，你可以让$(item)超容符文$()的效果翻倍，使每个符文都将$(l:bloodmagic:altar/blood_altar)血之祭坛$(/l)的容量增加15%，且仍以倍乘叠加。"
+    },
+    {
+      "type": "bloodmagic:crafting_arc",
+      "recipe": "bloodmagic:arc/reversion/aug_capacity",
+      "text": "若你改变了主意，你还可以在炼金反应炉里拆解该符文。"
+    }
+  ]
+}

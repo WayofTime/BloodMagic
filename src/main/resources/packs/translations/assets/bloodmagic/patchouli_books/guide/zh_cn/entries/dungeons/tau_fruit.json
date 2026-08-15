@@ -1,0 +1,30 @@
+{
+  "name": "血命果",
+  "icon": "bloodmagic:weak_tau",
+  "category": "bloodmagic:dungeons",
+  "extra_recipe_mappings": {
+    "bloodmagic:weak_tau": 0
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "血命果出现于$(l:bloodmagic:dungeons/lobby)简单地牢$()中，找到一个后就可以种植它们。不幸的是，作为$(thing)恶魔领域$()的原住民，它的生命周期要比普通的$(item)马铃薯$()来得复杂一点。$(br2)血命果会长成两个品种之一，取决于种植它们的条件。一般情况下，它们会长成$(item)血命果$()，可以被制成$(item)血命油$()。"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "血命油",
+      "recipe": "bloodmagic:alchemytable/tau_oil",
+      "text": "$(italic)尝起来像血橙，只是不一样。$()"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "目前，血命油有两种主要用途。它可以将任何$(l:bloodmagic:alchemy_table/anointments)涂油$()效果的持续时间延长四倍，或用于合成$(item)中级切削油$()，其作用与$(l:bloodmagic:utility/alchemical_reaction_chamber#basic_cutting_fluid)基础切削油$()类似，但持续时间要长上八倍，且提供25%的速度增益。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "bloodmagic:strong_tau",
+      "link_recipe": "true",
+      "text": "但还有一种更难种植的$(item)血命果$()。如果血命果成熟时其上站着一只$(thing)生物$()（如一头牛），它就会吸收该生物的生命值，以填饱它那黑暗的欲望。这样，你就种出了$(item)饱满血命果$()。"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "name": "无尽领域",
+  "icon": "bloodmagic:special_dungeon_seal",
+  "category": "bloodmagic:dungeons",
+  "extra_recipe_mappings": {
+    "bloodmagic:special_dungeon_seal": 0,
+    "bloodmagic:bleedingedge": 0,
+    "bloodmagic:hellforgedparts": 3
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "与较简易的$(l:bloodmagic:rituals/ritual_list/ritual_simple_dungeon)隐域之缘$()仪式类似，$(l:bloodmagic:rituals/ritual_list/ritual_standard_dungeon)永域之途$()仪式也可以打开通往$(thing)恶魔领域$()的道路。你将再次面对一尊$(thing)转位之柱$()，进入$(thing)主厅$()后，可以找到一个由粗心的恶魔留下的战利品箱（也可能是由一个不幸的血魔法师留下的）和几扇门，"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "还有一尊带你回家的转位之柱。$(br2)地牢的房间中充斥着各种比主厅里可怕的敌人，也会有与之对应的战利品。好好注意各种$(thing)空间扭曲$()，也记得留意一下稀有$(l:bloodmagic:dungeons/keys)钥匙$()，如$(item)领工钥匙$()。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "空间扭曲发生时，会在聊天栏中公布自己的存在——如果你看到了这样的消息，就表示你身处一个有特殊门锁的房间里。目前，该房间可能是$(thing)矿井$()的入口，也可能是含有$(thing)领工钥匙$()小屋入口的房间——领工钥匙房间可以用$(thing)铁钥匙$()打开。矿井入口总会在钥匙房间生成前生成，因此你可能需要返回之前生成的房间。 "
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/dungeon/mine_key.png"
+      ],
+      "title": "领工钥匙",
+      "border": true,
+      "text": "这扇门可以使用铁钥匙打开，领工钥匙正藏于其后。"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/dungeon/mine_entrance.png"
+      ],
+      "title": "矿井入口",
+      "border": true,
+      "text": "这扇门只能用领工钥匙打开，你可能需要回去找找！"
+    },
+    {
+      "type": "patchouli:text",
+      "anchor": "mines",
+      "text": "有了领工钥匙，你才能进入$(thing)矿井$()，以获得更丰厚的战利品，但也要面临更大的挑战。除了高阶$(l:bloodmagic:alchemy_table/potions)药水酿造$()和$(l:bloodmagic:altar/blood_altar)5级血之祭坛$()对应的$(l:bloodmagic:altar/soul_network)宝珠$()所必须的$(l:bloodmagic:dungeons/demonite)恶魔合金矿$()，这里还有更多常规战利品、附魔武器与工具、涂覆用油、药水等。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "bloodmagic:hellforgedparts",
+      "title": "复杂狱锻部件",
+      "anchor": "hellforged_parts",
+      "text": "多探索一些，你可能会幸运地发现一些$(item)复杂狱锻部件$()，可用于升级现有的$(item)符文$()。其强度相当于将两座$(blood)血之祭坛$()合二为一！"
+    }
+  ]
+}

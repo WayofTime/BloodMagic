@@ -1,0 +1,6 @@
+{
+  "name": "恶魔意志",
+  "description": "$(item)恶魔意志$()是你可以在$(blood)血魔法$()中率先获得的物品之一。在使用$(l:bloodmagic:demon_will/will_manipulation/soul_snare)灵魂投网$()获得一些恶魔意志之后，你就可以合成一个$(l:bloodmagic:demon_will/will_manipulation/soul_gem)微尘地狱魂石$()和一把$(l:bloodmagic:demon_will/demonic_items/sentient_sword)感知之剑$(/l)$()了。",
+  "icon": "bloodmagic:basemonstersoul",
+  "sortnum": 3
+}

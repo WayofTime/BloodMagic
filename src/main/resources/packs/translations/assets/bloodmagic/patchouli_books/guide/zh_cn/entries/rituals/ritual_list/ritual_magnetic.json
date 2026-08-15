@@ -1,0 +1,32 @@
+{
+  "name": "磁引仪式",
+  "icon": "minecraft:iron_ore",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "磁引仪式",
+      "multiblock_id": "bloodmagic:magnetism",
+      "text": "使用$(l:bloodmagic:rituals/ritual_diviner)仪式推测杖$(/l)以更方便地建造。"
+    },
+    {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "magnetism"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "默认情况下，$()磁引仪式$()会搜索$(item)主仪式石$()周围水平3个方块内、向下直至基岩的所有矿石，并收集它们。在主仪式石正下方放置昂贵的方块，可扩大搜寻半径，具体如下：$(br)$(li)$(item)铁块$() - 7个方块。$(li)$(item)金块$() - 15个方块。$(li)$(item)钻石块$() - 31个方块。"
+    },
+    {
+      "type": "bloodmagic:ritual_data",
+      "ritual": "magnetism",
+      "page_type": "placementRange",
+      "text_overrides": [
+        [
+        "矿石",
+        "item"
+        ]
+      ]
+    }
+  ]
+}

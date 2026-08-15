@@ -1,0 +1,35 @@
+{
+  "name": "水之印记",
+  "icon": "bloodmagic:watersigil",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)水之印记$()是一个相当简单的印记。当你注视方块并按下[$(k:use)]时，你可以从$(l:bloodmagic:altar/soul_network)灵魂网络$(/l)中消耗100LP，在世界上放置一格水源方块。若LP不足，它将改为扣除你的生命值作为代价。该印记由$(item)水之试剂$()和$(item)空白石板$()合成。"
+    },
+    {
+      "type": "bloodmagic:crafting_2-step_sigil",
+      "alchemy_table.heading": "水之试剂",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_water",
+      "array.heading": "水之印记",
+      "array.recipe": "bloodmagic:array/watersigil",
+      "array.text": "$(italic)无限水，有人要吗？"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/sigil/water_sigil1.png",
+        "bloodmagic:images/entries/sigil/water_sigil2.png"
+      ],
+      "title": "水之印记阵列",
+      "border": true,
+      "text": "水之印记，位于其合成阵列旁，及其主要用途。"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "水桶",
+      "recipe": "bloodmagic:alchemytable/sigil_water_bucket",
+      "text": "此外，它还可以在$(l:bloodmagic:alchemy_table/alchemy_table)炼金术桌$()中用于自动化生产$(water)水桶$()。该印记不会在此配方中被消耗。"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "昼夜阵列",
+  "icon": "minecraft:clock",
+  "category": "bloodmagic:alchemy_array/functional_array",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "基于时间的阵列可以直接控制游戏时间。在阵列开始改变时间后，放入的物品将被消耗。所示配方均是临时的，会在未来改变。$(br2)白日阵列会将时间更改至下一次日出，黑夜阵列会将时间更改至下一次日落。"
+    },
+    {
+      "type": "bloodmagic:2x_functional_array",
+      "a.heading": "崭新黎明",
+      "a.recipe": "bloodmagic:array/day",
+      "a.image": "sunarray.png",
+      "b.heading": "昏暮沉沉",
+      "b.recipe": "bloodmagic:array/night",
+      "b.image": "moonarray.png"
+    }
+  ]
+}

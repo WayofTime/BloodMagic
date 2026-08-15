@@ -1,0 +1,24 @@
+{
+  "name": "仪式调整器",
+  "icon": "bloodmagic:ritualtinkerer",
+  "category": "bloodmagic:rituals",
+  "priority": "true",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "对于那些对$(thing)仪式$()的所有功能感兴趣的高级血魔法师而言，$(item)仪式调整器$()正式必要的工具。正如前页所述，它有三种主要模式，你可以按下[$(k:sneak)]和[$(k:use)]以循环切换。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:ritual_reader"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)信息：描述该$(thing)仪式$()的功能，与$(l:bloodmagic:rituals/ritual_diviner)仪式推测杖$()相似。$(li)设置意志消耗：决定该$(thing)仪式$()从$(l:bloodmagic:demon_will/will_manipulation/aura)灵域$()中消耗何种$(raw)恶魔意志$()（如有）。在快捷栏中携带$(item)恶魔意志结晶$()，即可指定该$(thing)仪式$()消耗的$(raw)意志$()类型，每种携带一个即可。关于$(raw)恶魔意志$()作用于$(thing)仪式$()产生的效果，请查看本书中各$(thing)仪式$()所在的页面。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)设定范围：指定$(thing)仪式$()的作用范围，并显示当前的范围。如果有多个可以指定的区域，对着$(item)主仪式石$()按下[$(k:sneak)]和[$(k:use)]即可在其中循环切换，部分$(thing)仪式$()可以拓展至其默认的作用范围之外，但需留意，这会相应地增加仪式的$(blood)LP$()消耗……"
+    }
+  ]
+}

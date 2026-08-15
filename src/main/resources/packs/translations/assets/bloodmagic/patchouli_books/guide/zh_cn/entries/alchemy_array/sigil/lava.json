@@ -1,0 +1,35 @@
+{
+  "name": "熔岩印记",
+  "icon": "bloodmagic:lavasigil",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l:bloodmagic:alchemy_array/sigil/water)水之印记$(/l)的姊妹印记。手持$(item)熔岩印记$()并按下[$(k:use)]，即可消耗$(blood)1000 LP$()在地面生成一个$(fire)熔岩$()源块。该印记由$(item)熔岩试剂$()和$(item)空白石板$()在$(l:bloodmagic:alchemy_array/functional_arrays/arcane_ash)炼金阵列$(/l)中合成。若你的$(l:bloodmagic:altar/soul_network)灵魂网络$(/l)中LP不足，它将扣除你5颗心的生命值"
+    },
+    {
+      "type": "bloodmagic:crafting_2-step_sigil",
+      "alchemy_table.heading": "熔岩试剂",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_lava",
+      "array.heading": "熔岩印记",
+      "array.recipe": "bloodmagic:array/lavasigil",
+      "array.text": "$(italic)很烫！禁止食用$()"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/sigil/lava_sigil1.png",
+        "bloodmagic:images/entries/sigil/lava_sigil2.png"
+      ],
+      "title": "熔岩印记阵列",
+      "border": true,
+      "text": "熔岩印记，位于其合成阵列旁，及其主要用途。"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "熔岩桶",
+      "recipe": "bloodmagic:alchemytable/sigil_lava_bucket",
+      "text": "此外，它还可以在$(l:bloodmagic:alchemy_table/alchemy_table)炼金台$()中用于自动化生产$(fire)熔岩桶$()。该印记不会在此配方中被消耗。"
+    }
+  ]
+}

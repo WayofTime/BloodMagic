@@ -1,0 +1,15 @@
+{
+  "name": "尖刺陷阱",
+  "icon": "bloodmagic:dungeon_spike_trap",
+  "category": "bloodmagic:dungeons",
+  "extra_recipe_mappings": {
+    "bloodmagic:spike_trap": 0
+  },
+  "pages": [
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:dungeon_spike_trap",
+      "text": "在收到红石信号之前，$(thing)尖刺陷阱$()只是看起来有点可疑。一旦接收到信号，任何挡道的东西都会被它邪恶的刀片刺穿。无论是谁（或者什么）设计了这个陷阱，很明显都是想阻止入侵者进入。"
+    }
+  ]
+}

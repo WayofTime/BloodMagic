@@ -1,0 +1,16 @@
+{
+  "name": "染病",
+  "icon": "minecraft:ghast_tear",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_downgrades",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "减少所有治疗的疗效，最多减少80%。因此通常治疗10颗心的方式只能治疗2颗心。"
+    },
+    {
+      "type": "bloodmagic:living_armour_downgrade",
+      "a.recipe": "bloodmagic:downgrade/slow_heal",
+      "b.upgrade": "bloodmagic:slow_heal"
+    }
+  ]
+}

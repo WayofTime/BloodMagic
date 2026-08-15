@@ -1,0 +1,6 @@
+{
+  "name": "血之符文",
+  "description": "超多种符文，可以做很酷的事！尝试混合搭配，看看哪种最适合你。",
+  "icon": "bloodmagic:blankrune",
+  "parent": "bloodmagic:altar"
+}

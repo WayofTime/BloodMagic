@@ -1,0 +1,25 @@
+{
+  "name": "转位符文",
+  "icon": "bloodmagic:dislocationrune",
+  "category": "bloodmagic:altar/blood_rune",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)转位符文$()会增加$(blood)生命源质$()的流入或流出祭坛的速度，从外部输入/向外部输出时，每个符文都会增加20%速度，且以倍乘叠加"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:blood_rune_displacement"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bloodmagic:blood_rune_displacement_2",
+      "text": "有了一些$(item)下界合金碎片$()和一些从$(l:bloodmagic:dungeons/endless_realm)恶魔领域$()中得到的$(item)复杂狱锻部件$()，你可以让$(item)转位符文$()的效果翻倍，使每个符文都增加40%流入/流出速度，且仍以倍乘叠加。"
+    },
+    {
+      "type": "bloodmagic:crafting_arc",
+      "recipe": "bloodmagic:arc/reversion/displacement",
+      "text": "若你改变了主意，你还可以在炼金反应炉里拆解该符文。"
+    }
+  ]
+}

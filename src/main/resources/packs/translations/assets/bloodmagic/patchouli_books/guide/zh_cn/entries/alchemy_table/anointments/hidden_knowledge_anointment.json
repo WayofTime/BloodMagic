@@ -1,0 +1,37 @@
+{
+  "name": "矿工之秘",
+  "icon": "bloodmagic:hidden_knowledge_anointment",
+  "category": "bloodmagic:alchemy_table/anointments",
+  "pages": [
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "矿工之秘",
+      "recipe": "bloodmagic:alchemytable/hidden_knowledge_anointment",
+      "text": "成功破坏能掉落经验值的方块后，增加2点掉落的经验，只在产生更多经验时消耗。$(br2)可用物品：工具、剑。$(br2)提供：矿工之秘 I（256个掉落经验的方块）"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "矿工之秘 L",
+      "recipe": "bloodmagic:alchemytable/hidden_knowledge_anointment_l",
+      "text": "该种涂油效果的升级版，持续时间延长四倍。$(br2)提供：矿工之秘 I（1024个掉落经验的方块）"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "矿工之秘 II",
+      "recipe": "bloodmagic:alchemytable/hidden_knowledge_anointment_2",
+      "text": "该种涂油效果的升级版，增加4点掉落的经验。$(br2)提供：提供：矿工之秘 II（256个掉落经验的方块）"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "矿工之秘 XL",
+      "recipe": "bloodmagic:alchemytable/hidden_knowledge_anointment_xl",
+      "text": "该种涂油效果的升级版，持续时间延长十六倍。$(br2)提供：矿工之秘 I（4096个掉落经验的方块）"
+    },
+    {
+      "type": "bloodmagic:crafting_alchemy_table",
+      "heading": "矿工之秘 III",
+      "recipe": "bloodmagic:alchemytable/hidden_knowledge_anointment_3",
+      "text": "种涂油效果的升级版，增加6点掉落的经验。$(br2)提供：提供：矿工之秘 III（256个掉落经验的方块）"
+    }
+  ]
+}

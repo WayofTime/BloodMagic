@@ -1,0 +1,16 @@
+{
+  "name": "坚实之靴",
+  "icon": "minecraft:water_bucket",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_downgrades",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "效果：极大降低游泳速度，最多减少80%。"
+    },
+    {
+      "type": "bloodmagic:living_armour_downgrade",
+      "a.recipe": "bloodmagic:downgrade/swim_decrease",
+      "b.upgrade": "bloodmagic:swim_decrease"
+    }
+  ]
+}

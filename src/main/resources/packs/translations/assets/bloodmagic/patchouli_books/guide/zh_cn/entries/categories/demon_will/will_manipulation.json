@@ -1,0 +1,6 @@
+{
+  "name": "意志操作",
+  "description": "恶魔意志是一种奇怪的东西。未利用时，它似乎围绕着实体；但它可以被抽取、利用和控制。本章阐述了操作恶魔意志的潜在概念和进阶技巧。",
+  "icon": "bloodmagic:basemonstersoul",
+  "parent": "bloodmagic:demon_will"
+}

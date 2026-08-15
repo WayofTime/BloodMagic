@@ -1,0 +1,16 @@
+{
+  "name": "止渴",
+  "icon": "minecraft:glass_bottle",
+  "category": "bloodmagic:alchemy_array/living_equipment/armor_downgrades",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "穿着盔甲时不能饮用任何药水。"
+    },
+    {
+      "type": "bloodmagic:living_armour_downgrade",
+      "a.recipe": "bloodmagic:downgrade/quenched",
+      "b.upgrade": "bloodmagic:quenched"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "name": "恶魔合金矿",
+  "icon": "bloodmagic:dungeon_ore",
+  "category": "bloodmagic:dungeons",
+  "extra_recipe_mappings": {
+    "bloodmagic:dungeon_ore": 0,
+    "bloodmagic:rawdemonite": 0,
+    "bloodmagic:dungeon_metal_c": 6,
+    "bloodmagic:dungeon_metal_d": 6,
+    "bloodmagic:dungeon_metal_s": 6,
+    "bloodmagic:dungeon_metal_v": 6
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)恶魔合金矿$()只能在$(thing)地牢$()中发掘，具体来说，只能在$(thing)矿井$()里。为了进入这里，你需要在一个类似于迷宫的结构中找到一把$(item)领工钥匙$()，并用它来启动$(thing)空间扭曲$()。这种矿石可以被制成$(item)狱锻锭$()和$(item)狱锻矿砂$()。$(br2)使用精准采集挖掘时，你可以直接获得原矿，否则，它就会掉落几块$(item)粗恶魔合金$()。"
+    },
+    {
+      "type": "patchouli:smelting",
+      "heading": "狱锻锭",
+      "recipe": "bloodmagic:smelting/ingot_from_demonite",
+      "recipe2": "bloodmagic:smelting/ingot_from_raw_hellforged",
+      "recipe3": "bloodmagic:smelting/ingot_hellforged"
+    },
+    {
+      "type": "patchouli:smelting",
+      "heading": "狱锻锭",
+      "recipe": "bloodmagic:smelting/ingot_hellforged"
+    },
+    {
+      "type": "bloodmagic:3x_crafting_arc",
+      "a.heading": "狱锻矿砂",
+      "a.recipe": "bloodmagic:arc/dustsfrom_gravel_hellforged",
+      "b.recipe": "bloodmagic:arc/dustsfrom_ore_hellforged",
+      "c.recipe": "bloodmagic:arc/dustsfrom_raw_hellforged"
+    },
+    {
+      "type": "bloodmagic:2x_crafting_arc",
+      "a.heading": "恶魔合金矿处理",
+      "a.recipe": "bloodmagic:arc/fragmentshellforged",
+      "b.recipe": "bloodmagic:arc/gravelshellforged"
+    },
+    {
+      "type": "patchouli:crafting",
+      "heading": "狱锻块",
+      "recipe": "bloodmagic:hellforged_block",
+      "recipe2": "bloodmagic:raw_hellforged_block"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "这种矿物确有一些装饰性方块。$(thing)切石机$()可以让它沾染上淡淡的$(corrosive)腐蚀$()、$(destructive)破坏$()、$(steadfast)坚毅$()或$(vengeful)复仇$()意志。$(br2)这些方块都可直接被拆解为9个$(item)狱锻锭$()。"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "坠星标位",
+  "icon": "minecraft:fire_charge",
+  "category": "bloodmagic:rituals/ritual_list",
+  "pages": [
+    {
+      "type": "multiblock",
+      "name": "坠星标位",
+      "multiblock_id": "bloodmagic:meteor",
+      "text": "使用$(l:bloodmagic:rituals/ritual_diviner#dusk)仪式推测杖【薄暮】$(/l)以更方便地建造。"
+    },
+    {
+      "type": "bloodmagic:ritual_info",
+      "ritual": "meteor"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "使用你拥有的巨大力量，很显而易见的一点是，你可以从外太空中召唤一个陨石，使其撞击地面。$(br2)在主仪式石上方丢一个合适的祭品，该仪式就会消耗掉这个物品（和大量生命源质，默认一百万LP），并在世界高度上限处生成一颗陨石，一旦它撞击到东西，就会爆炸，并留下许多资源以供采掘和处理。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "提供的祭品决定了资源的种类与数量，常规祭品包括：$(item)钻石$()、$(item)铁块$()、$(item)荧石粉$()和$(item)石头$()。$(br2)其它模组提供的祭品包括：冰火传说的$(item)龙骨$()、AE2的$(item)赛特斯石英$()、机械动力的$(item)安山合金$()、IE的$(item)低压线圈$()、神秘农业的$(item)活化水晶碎片$()、热力系列的$(item)RF线圈$()和通用机械的$(item)灌注合金$()。"
+    }
+  ]
+}

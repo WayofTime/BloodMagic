@@ -1,0 +1,38 @@
+{
+  "name": "绿丛印记",
+  "icon": "bloodmagic:growthsigil",
+  "category": "bloodmagic:alchemy_array/sigil",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)绿丛印记$()是一种具有多种用途的物品。它由$(item)促生试剂$()和$(item)强化石板$()在阵列中合成，可以消耗你$(thing)灵魂网络$()中的$(blood)LP$()来滋养并催熟附近的植物。"
+    },
+    {
+      "type": "bloodmagic:crafting_2-step_sigil",
+      "alchemy_table.heading": "促生试剂",
+      "alchemy_table.recipe": "bloodmagic:alchemytable/reagent_growth",
+      "array.heading": "绿丛印记",
+      "array.recipe": "bloodmagic:array/growthsigil"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "bloodmagic:images/entries/sigil/grove_sigil1.png",
+        "bloodmagic:images/entries/sigil/grove_sigil2.png",
+        "bloodmagic:images/entries/sigil/grove_sigil3.png"
+      ],
+      "title": "绿丛印记阵列",
+      "border": true,
+      "text": "绿丛印记阵列，及其主要用途。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "如果你对着一个$(2)可生长$()的方块按下[$(k:use)]，它将施加骨粉效果并消耗$(blood)150 LP$()。$(br2)然而，如果你按住[$(k:sneak)]并对着空气按下[$(k:use)]，它会亮起以表示已激活，并将每5秒消耗$(blood)150 LP$()直至停用。以玩家为中心的7×7×5范围内，每个方块都会获得一次生长刻加速。种土豆的好帮手！"
+    },
+    {
+      "type": "patchouli:text",
+      "flag": "mod:curios",
+      "text": "若你已经安装了 $(thing)Curios API$()，你可以将此$(item)印记$()作为护身符装备。如果你想同时佩戴更多饰品，可以考虑使用$(l:bloodmagic:alchemy_array/sigil/holding)集持印记$()，或者用于$(l:bloodmagic:alchemy_array/living_equipment/living_basics)束灵盔甲$()的$(l:bloodmagic:alchemy_array/living_equipment/armor_upgrades/curios_sockets)插槽升级$()。"
+    }
+  ]
+}

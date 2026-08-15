@@ -1,0 +1,20 @@
+{
+  "name": "运动阵列",
+  "icon": "minecraft:feather",
+  "category": "bloodmagic:alchemy_array/functional_array",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "移动阵列是一对阵列，可以将玩家、生物、物品等抛向特定的方向。其一水平抛射，其二则竖直抛射。"
+    },
+    {
+      "type": "bloodmagic:2x_functional_array",
+      "a.heading": "速度阵列",
+      "a.recipe": "bloodmagic:array/movement",
+      "a.image": "movementarray.png",
+      "b.heading": "上升阵列",
+      "b.recipe": "bloodmagic:array/updraft",
+      "b.image": "updraftarray.png"
+    }
+  ]
+}
