@@ -17,7 +17,9 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext.Fluid;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -87,7 +89,7 @@ public class ItemRitualReader extends Item
 				cycleReader(stack, player);
 			}
 
-			return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+			return InteractionResultHolder.success(stack);
 		}
 
 		return new InteractionResultHolder<>(InteractionResult.PASS, stack);
@@ -101,28 +103,25 @@ public class ItemRitualReader extends Item
 
 		Player player = context.getPlayer();
 		ItemStack stack = context.getItemInHand();
-		InteractionHand hand = context.getHand();
-		Direction direction = context.getClickedFace();
 
-//		ItemStack stack = player.getHeldItem(hand);
-		if (!world.isClientSide)
+		EnumRitualReaderState state = this.getState(stack);
+		BlockEntity tile = world.getBlockEntity(pos);
+		if (tile instanceof IMasterRitualStone master)
 		{
-			EnumRitualReaderState state = this.getState(stack);
-			BlockEntity tile = world.getBlockEntity(pos);
-			if (tile instanceof IMasterRitualStone master)
-			{
-                if (master.getCurrentRitual() == null)
-					super.useOn(context);
-				this.setMasterBlockPos(stack, pos);
-				this.setBlockPos(stack, BlockPos.ZERO);
+			if (master.getCurrentRitual() == null) {
+				return super.useOn(context);
+			}
+			this.setMasterBlockPos(stack, pos);
+			this.setBlockPos(stack, BlockPos.ZERO);
 
-				switch (state)
-				{
+			switch (state)
+			{
 				case INFORMATION:
 					master.provideInformationOfRitualToPlayer(player);
 
-					break;
+					return InteractionResult.SUCCESS;
 				case SET_AREA:
+					ClientHandler.setRitualRangeHolo((TileMasterRitualStone) tile, true);
 					if (player.isShiftKeyDown() && player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof ItemBloodOrb)
 					{
 						Ritual ritual = master.getCurrentRitual();
@@ -130,8 +129,12 @@ public class ItemRitualReader extends Item
 						{
 							AreaDescriptor aabb = ritual.getBlockRange(range);
 							master.setBlockRange(range, aabb);
+							tile.setChanged();
+							BlockState blockState = world.getBlockState(pos);
+							world.sendBlockUpdated(pos, blockState, blockState, Block.UPDATE_ALL_IMMEDIATE);
+							ClientHandler.setRitualRangeHolo((TileMasterRitualStone) tile, true);
 						}
-						break;
+						return InteractionResult.SUCCESS;
 					}
 
 					String range = this.getCurrentBlockRange(stack);
@@ -145,7 +148,7 @@ public class ItemRitualReader extends Item
 
 					master.provideInformationOfRangeToPlayer(player, range);
 
-					break;
+					return InteractionResult.SUCCESS;
 				case SET_WILL_TYPES:
 					List<EnumDemonWillType> typeList = new ArrayList<>();
 					NonNullList<ItemStack> inv = player.getInventory().items;
@@ -169,46 +172,46 @@ public class ItemRitualReader extends Item
 
 					master.setActiveWillConfig(player, typeList);
 					master.provideInformationOfWillConfigToPlayer(player, typeList);
-					break;
-				}
+					return InteractionResult.SUCCESS;
+			}
 
-				return InteractionResult.FAIL;
-			} else
+			return InteractionResult.FAIL;
+		} else
+		{
+			if (state == EnumRitualReaderState.SET_AREA)
 			{
-				if (state == EnumRitualReaderState.SET_AREA)
+				BlockPos masterPos = this.getMasterBlockPos(stack);
+				if (!masterPos.equals(BlockPos.ZERO))
 				{
-					BlockPos masterPos = this.getMasterBlockPos(stack);
-					if (!masterPos.equals(BlockPos.ZERO))
+					BlockPos containedPos = getBlockPos(stack);
+					if (containedPos.equals(BlockPos.ZERO))
 					{
-						BlockPos containedPos = getBlockPos(stack);
-						if (containedPos.equals(BlockPos.ZERO))
+						BlockPos pos1 = pos.subtract(masterPos);
+						this.setBlockPos(stack, pos1);
+						player.displayClientMessage(Component.translatable("ritual.bloodmagic.blockRange.firstBlock"), true);
+					} else
+					{
+						tile = world.getBlockEntity(masterPos);
+						if (tile instanceof IMasterRitualStone master)
 						{
-							BlockPos pos1 = pos.subtract(masterPos);
-							this.setBlockPos(stack, pos1);
-							player.displayClientMessage(Component.translatable("ritual.bloodmagic.blockRange.firstBlock"), true);
-						} else
-						{
-							tile = world.getBlockEntity(masterPos);
-							if (tile instanceof IMasterRitualStone master)
+							BlockPos pos2 = pos.subtract(masterPos);
+							String range = this.getCurrentBlockRange(stack);
+							if (range == null || range.isEmpty())
 							{
-                                BlockPos pos2 = pos.subtract(masterPos);
-								String range = this.getCurrentBlockRange(stack);
-								if (range == null || range.isEmpty())
-								{
-									String newRange = master.getNextBlockRange(range);
-									range = newRange;
-									this.setCurrentBlockRange(stack, newRange);
-								}
-								Ritual ritual = master.getCurrentRitual();
-								List<EnumDemonWillType> willConfig = master.getActiveWillConfig();
-								DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(master.getWorldObj(), master.getMasterBlockPos());
+								String newRange = master.getNextBlockRange(range);
+								range = newRange;
+								this.setCurrentBlockRange(stack, newRange);
+							}
+							Ritual ritual = master.getCurrentRitual();
+							List<EnumDemonWillType> willConfig = master.getActiveWillConfig();
+							DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(master.getWorldObj(), master.getMasterBlockPos());
 
-								int maxHorizontalRange = ritual.getMaxHorizontalRadiusForRange(range, willConfig, holder);
-								int maxVerticalRange = ritual.getMaxVerticalRadiusForRange(range, willConfig, holder);
-								int maxVolume = ritual.getMaxVolumeForRange(range, willConfig, holder);
+							int maxHorizontalRange = ritual.getMaxHorizontalRadiusForRange(range, willConfig, holder);
+							int maxVerticalRange = ritual.getMaxVerticalRadiusForRange(range, willConfig, holder);
+							int maxVolume = ritual.getMaxVolumeForRange(range, willConfig, holder);
 
-								switch (master.setBlockRangeByBounds(player, range, containedPos, pos2))
-								{
+							switch (master.setBlockRangeByBounds(player, range, containedPos, pos2))
+							{
 								case SUCCESS:
 									player.displayClientMessage(Component.translatable("ritual.bloodmagic.blockRange.success"), true);
 									break;
@@ -221,29 +224,12 @@ public class ItemRitualReader extends Item
 								default:
 									player.displayClientMessage(Component.translatable("ritual.bloodmagic.blockRange.noRange"), false);
 									break;
-								}
 							}
-							this.setBlockPos(stack, BlockPos.ZERO);
 						}
+						this.setBlockPos(stack, BlockPos.ZERO);
 					}
 				}
 			}
-		} else
-		{
-			EnumRitualReaderState state = this.getState(stack);
-
-			if (state == EnumRitualReaderState.SET_AREA)
-			{
-				BlockEntity tile = world.getBlockEntity(pos);
-				if (tile instanceof TileMasterRitualStone)
-				{
-
-//					System.out.println("Setting range holo... I think");
-					ClientHandler.setRitualRangeHolo((TileMasterRitualStone) tile, true);
-
-				}
-			}
-
 		}
 
 		return super.useOn(context);

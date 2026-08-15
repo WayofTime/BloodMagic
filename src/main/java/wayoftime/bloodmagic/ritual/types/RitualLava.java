@@ -1,6 +1,7 @@
 package wayoftime.bloodmagic.ritual.types;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -125,7 +126,7 @@ public class RitualLava extends Ritual
 			{
 				if (tile != null)
 				{
-					LazyOptional<IFluidHandler> capability = tile.getCapability(ForgeCapabilities.FLUID_HANDLER, null);
+					LazyOptional<IFluidHandler> capability = tile.getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.UP);
 					if (capability.isPresent())
 					{
 						IFluidHandler handler = capability.resolve().get();

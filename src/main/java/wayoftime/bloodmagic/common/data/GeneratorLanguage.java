@@ -295,8 +295,9 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.geode.acceleration.info", "(Acceleration) The range in which growth is sped up");
 
 		add("ritual.bloodmagic.waterRitual.info", "Generates a source of water from the Master Ritual Stone.");
+		add("ritual.bloodmagic.waterRitual.default.info", "(Raw) Allows the water to be directly placed into a tank or other fluid-handling block. This will simulate insertion from the top of the target.");
 		add("ritual.bloodmagic.lavaRitual.info", "Generates a source of lava from the master ritual stone.");
-		add("ritual.bloodmagic.lavaRitual.default.info", "(Raw) Decreases the LP cost of placing lava and allows the lava to be directly placed into a tank or other fluid-handling block.");
+		add("ritual.bloodmagic.lavaRitual.default.info", "(Raw) Decreases the LP cost of placing lava and allows the lava to be directly placed into a tank or other fluid-handling block. This will simulate insertion from the top of the target.");
 		add("ritual.bloodmagic.lavaRitual.corrosive.info", "(Corrosive) Entities within range that are immune to fire are damaged severely.");
 		add("ritual.bloodmagic.lavaRitual.destructive.info", "(Destructive) Lava placement range is increased based on the total amount of Destructive Will in the Aura.");
 		add("ritual.bloodmagic.lavaRitual.vengeful.info", "(Vengeful) Entities within range have Fire Fuse applied to them.");
@@ -325,11 +326,11 @@ public class GeneratorLanguage extends LanguageProvider
 		add("ritual.bloodmagic.greenGroveRitual.vengeful.info", "(Vengeful) Increases the rate that a growth tick is successful.");
 		add("ritual.bloodmagic.greenGroveRitual.steadfast.info", "(Steadfast) Seeds are replanted and blocks are hydrated within the Hydration range.");
 		add("ritual.bloodmagic.greenGroveRitual.destructive.info", "(Destructive) Increases the maximum growth range of the ritual based on the total amount of Destructive Will in the Aura.");
-		add("ritual.bloodmagic.featheredKnifeRitual.default.info", "(Raw) Increases the speed of the ritual based on the total amount of Raw Will in the Aura.");
+		add("ritual.bloodmagic.featheredKnifeRitual.default.info", "(Raw) Doubles the rate at which sacrifices happen.");
 		add("ritual.bloodmagic.featheredKnifeRitual.destructive.info", "(Destructive) Increases the yield of the ritual based on the total amount of Destructive Will in the Aura.");
-		add("ritual.bloodmagic.featheredKnifeRitual.vengeful.info", "(Vengeful) Sets the minimum health for sacrificing to 10%%. Overridden by Steadfast for the Owner if active.");
+		add("ritual.bloodmagic.featheredKnifeRitual.vengeful.info", "(Vengeful) Sets the minimum health for sacrificing to 10%%. Overridden by Steadfast for the Owner only if active.");
 		add("ritual.bloodmagic.featheredKnifeRitual.corrosive.info", "(Corrosive) Uses the player's current Incense Bonus (if any) to increase the yield. Stand near an Incense Altar to maintain this bonus.");
-		add("ritual.bloodmagic.featheredKnifeRitual.steadfast.info", "(Steadfast) Sets the minimum health for sacrificing from 30%% to 70%%.");
+		add("ritual.bloodmagic.featheredKnifeRitual.steadfast.info", "(Steadfast) Sets the minimum health for sacrificing from 30%% to 70%%. In combination with Vengeful this affects only the Owner");
 		add("ritual.bloodmagic.speedRitual.default.info", "(Raw) Increases the velocity caused by the ritual based on total Will.");
 		add("ritual.bloodmagic.speedRitual.vengeful.info", "(Vengeful) Prevents adult mobs and players from being transported. Players are transported if paired with Destructive.");
 		add("ritual.bloodmagic.speedRitual.destructive.info", "(Destructive) Prevents child mobs and players from being transported. Players are transported if paired with Vengeful.");

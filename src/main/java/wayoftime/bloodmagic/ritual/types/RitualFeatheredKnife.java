@@ -37,7 +37,7 @@ public class RitualFeatheredKnife extends Ritual
 	public static double vengefulWillThreshold = 10;
 	public static int defaultRefreshTime = 20;
 	public int refreshTime = 20;
-	public BlockPos altarOffsetPos = new BlockPos(0, 0, 0); // TODO: Save!
+	public BlockPos altarOffsetPos = new BlockPos(0, 2, 0);
 
 	public RitualFeatheredKnife()
 	{
@@ -53,10 +53,6 @@ public class RitualFeatheredKnife extends Ritual
 	public void performRitual(IMasterRitualStone masterRitualStone)
 	{
 		Level world = masterRitualStone.getWorldObj();
-//		if (world.isRemote)
-//		{
-//			return;
-//		}
 		int currentEssence = masterRitualStone.getOwnerNetwork().getCurrentEssence();
 
 		if (currentEssence < getRefreshCost())
@@ -119,11 +115,20 @@ public class RitualFeatheredKnife extends Ritual
 
 			for (Player player : entities)
 			{
-				float healthThreshold = steadfastWill >= steadfastWillThreshold ? 0.7f : 0.3f;
+				boolean useSteadfast = steadfastWill >= steadfastWillThreshold;
+				boolean useVengeful = vengefulWill >= vengefulWillThreshold;
+				float healthThreshold = 0.3f;
 
-				if (vengefulWill >= vengefulWillThreshold && !player.getGameProfile().getId().equals(masterRitualStone.getOwner()))
+				if (useSteadfast) {
+					healthThreshold = 0.7f;
+				}
+
+				if (useVengeful)
 				{
 					healthThreshold = 0.1f;
+					if (useSteadfast && player.getGameProfile().getId().equals(masterRitualStone.getOwner())) {
+						healthThreshold = 0.7f;
+					}
 				}
 
 				float health = player.getHealth();
@@ -177,7 +182,7 @@ public class RitualFeatheredKnife extends Ritual
 
 			if (destructiveDrain > 0)
 			{
-				WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.STEADFAST, destructiveDrain, true);
+				WorldDemonWillHandler.drainWill(world, pos, EnumDemonWillType.DESTRUCTIVE, destructiveDrain, true);
 			}
 		}
 
