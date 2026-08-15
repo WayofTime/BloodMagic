@@ -19,30 +19,30 @@
     {
       "type": "patchouli:text",
       "anchor": "downgrades",
-      "text": "This ritual consumes excess $(thing)Upgrade Points$() (in the form of $(item)Tomes$(), $(item)Scraps$(), and $(item)Synthetic Upgrade Points$()) alongside one  $(item)Key Item$() per level, in order to apply Downgrades to your worn $(l:bloodmagic:alchemy_array/living_equipment/living_basics)Living Armour$(). The key item is different for each downgrade, and is pictured in each Downgrade Entry. These downgrades will harshly limit your abilities, but will provide you with a wealth of additional $(thing)Upgrade Points$() to play around with, allowing for much more specialisation than was previously available to you."
+      "text": "该仪式会消耗多余的$(thing)升级点$()（以$(item)手册$()、$(item)碎片$()、$(item)人造升级点$()的形式均可），每级还需要附加一个额外的$(item)特殊物品$()，以为$(l:bloodmagic:alchemy_array/living_equipment/living_basics)束灵盔甲$()施加降级。不同的降级需要的特殊物品不同，在每种降级的条目中均有说明。降级后，盔甲的能力将会受到极大限制，但是它给你非常多的可用$(thing)升级点$()，用来让你的盔甲比先前更加专精于某一方面。"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "bloodmagic:synthetic_point",
-      "text": "If you do not have enough points avaliable to you, you can craft Synthetic Upgrade Points. Each one of these is worth a single Upgrade Point. "
+      "text": "如果你没有足够多的升级点，你可以考虑合成人造升级点，每一个都相当于一个升级点。"
     },
     {
       "type": "patchouli:text",
-      "text": "To use the ritual, simply place your tomes (or other sources of Upgrade Points) and the required Item(s) for the particular downgrade you have in mind into the attached chest (see the previous page), while wearing your Living Armour. The ritual will consume the points and apply the downgrade to your armour. The order of consumption is $(item)Living Armour Upgrade Scraps$(), then $(item)Living Armour Upgrade Tomes$(), and finally $(item)Synthetic Upgrade Points$()."
+      "text": "使用该仪式时，只需要将强化手册（或其它形式的升级点）和降级所需的特殊物品放入连接的箱子（见前页）中，并身着束灵盔甲，该仪式就可以消耗这些升级点，并为你的束灵盔甲施加降级。消耗时，优先使用$(item)束灵盔甲升级碎片$()，接着是$(item)束灵盔甲升级手册$()，最后是$(item)人造升级点$()。"
     },
     {
       "type": "patchouli:text",
-      "text": "The downgrades applied to your armour depends on what Item(s) you place in the chest. Each item that matches a particular downgrade will increase the desired downgrade's level by one. In this manner, multiple downgrades can be applied at once with a single ritual activation. So if you wanted, say, Battle Hungry level 3, you'd put 3 $(item)Rotten Flesh$() and items worth 35 $(thing)Upgrade Points$() into the chest, and activate the ritual whilst wearing a full set of $(thing)Living Armour$()."
+      "text": "具体施加的降级取决于箱子中放入了何种物品，每个存在相应降级的物品都会多施加一级降级，通过这种方式可以，可以一次激活仪式而施加多种降级。举个例子，如果你想要3级战斗饥渴，你就可以向箱子中放入3个$(item)腐肉$()并放入价值35个$(thing)升级点$()的物品，然后穿着全套$(thing)束灵盔甲$()，最后激活该仪式。"
     },
     {
       "type": "patchouli:text",
-      "text": "The ritual will respect any settings you have configured on your $(l:bloodmagic:alchemy_array/living_equipment/training_bracelet)Living Armour Training Bracelet$(), so if you have it set to 'do not allow other upgrades' then the ritual will fail to apply the downgrades to you. If in doubt, put your Training Bracelet away!"
+      "text": "该仪式会受到$(l:bloodmagic:alchemy_array/living_equipment/training_bracelet)束灵盔甲训练手镯$()的影响，因此如果将其设置为“不允许其它升级”，该仪式就无法施加降级。如有疑惑，先考虑拿掉训练手镯！"
     },
     {
       "type": "patchouli:spotlight",
       "item": "bloodmagic:upgradescraps",
-      "title": "LA Upgrade Scraps",
-      "text": "Excess points will be returned in the form of $(item)Living Armour Upgrade Scraps$(), which can be used in subsequent rituals."
+      "title": "束灵盔甲强化碎片",
+      "text": "多余的升级点会以$(item)束灵盔甲升级碎片$()的形式被返还，可以用在后续仪式中。"
     }
   ]
 }
