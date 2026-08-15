@@ -3,6 +3,7 @@ package wayoftime.bloodmagic.ritual.types;
 import java.util.List;
 import java.util.function.Consumer;
 
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -93,7 +94,7 @@ public class RitualWater extends Ritual
 			{
 				if (tile != null)
 				{
-					LazyOptional<IFluidHandler> capability = tile.getCapability(ForgeCapabilities.FLUID_HANDLER, null);
+					LazyOptional<IFluidHandler> capability = tile.getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.UP);
 					if (capability.isPresent())
 					{
 						IFluidHandler handler = capability.resolve().get();
