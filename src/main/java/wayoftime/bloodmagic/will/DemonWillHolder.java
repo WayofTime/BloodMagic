@@ -3,10 +3,18 @@ package wayoftime.bloodmagic.will;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.common.util.LazyOptional;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import wayoftime.bloodmagic.api.compat.EnumDemonWillType;
 
-public class DemonWillHolder
+public class DemonWillHolder implements INBTSerializable<CompoundTag>
 {
 	public HashMap<EnumDemonWillType, Double> willMap = new HashMap<>();
 
@@ -29,9 +37,11 @@ public class DemonWillHolder
 		if (willMap.containsKey(type))
 		{
 			willMap.put(type, amount + willMap.get(type));
+			onContentsChanged();
 		} else
 		{
 			willMap.put(type, amount);
+			onContentsChanged();
 		}
 	}
 
@@ -45,9 +55,11 @@ public class DemonWillHolder
 			if (reduced >= current)
 			{
 				willMap.remove(type);
+				onContentsChanged();
 			} else
 			{
 				willMap.put(type, current - reduced);
+				onContentsChanged();
 			}
 
 			return reduced;
@@ -66,15 +78,28 @@ public class DemonWillHolder
 		return 0;
 	}
 
-	public void readFromNBT(CompoundTag tag, String key)
-	{
-		CompoundTag willTag = tag.getCompound(key);
+	@Override
+	public CompoundTag serializeNBT() {
+		CompoundTag willTag = new CompoundTag();
+		for (Entry<EnumDemonWillType, Double> entry : willMap.entrySet())
+		{
+			willTag.putDouble("EnumWill" + entry.getKey().name(), entry.getValue());
+		}
+		return willTag;
+	}
 
+	public void writeToNBT(CompoundTag tag, String key)
+	{
+		tag.put(key, serializeNBT());
+	}
+
+	@Override
+	public void deserializeNBT(CompoundTag nbt) {
 		willMap.clear();
 
 		for (EnumDemonWillType type : EnumDemonWillType.values())
 		{
-			double amount = willTag.getDouble("EnumWill" + type.name());
+			double amount = nbt.getDouble("EnumWill" + type.name());
 			if (amount > 0)
 			{
 				willMap.put(type, amount);
@@ -82,19 +107,10 @@ public class DemonWillHolder
 		}
 	}
 
-	public void writeToNBT(CompoundTag tag, String key)
+	public void readFromNBT(CompoundTag tag, String key)
 	{
-		CompoundTag willTag = new CompoundTag();
-		for (Entry<EnumDemonWillType, Double> entry : willMap.entrySet())
-		{
-			willTag.putDouble("EnumWill" + entry.getKey().name(), entry.getValue());
-		}
-
-		tag.put(key, willTag);
+		deserializeNBT(tag.getCompound(key));
 	}
 
-	public void clearWill()
-	{
-		willMap.clear();
-	}
+	public void onContentsChanged() {}
 }

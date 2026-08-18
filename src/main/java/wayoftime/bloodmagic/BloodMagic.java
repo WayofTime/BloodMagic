@@ -1,30 +1,32 @@
 package wayoftime.bloodmagic;
 
 import net.minecraft.Util;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
+import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.AddPackFindersEvent;
-import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.DispenseFluidContainer;
@@ -40,6 +42,8 @@ import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.resource.PathPackResources;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import wayoftime.bloodmagic.anointment.Anointment;
 import wayoftime.bloodmagic.client.ClientEvents;
 import wayoftime.bloodmagic.client.hud.ElementRegistry;
@@ -48,7 +52,6 @@ import wayoftime.bloodmagic.client.key.BloodMagicKeyHandler;
 import wayoftime.bloodmagic.client.key.KeyBindingBloodMagic;
 import wayoftime.bloodmagic.client.sounds.SoundRegistry;
 import wayoftime.bloodmagic.command.CommandBloodMagic;
-import wayoftime.bloodmagic.command.sub.SoulNetworkCommand;
 import wayoftime.bloodmagic.common.block.BloodMagicBlocks;
 import wayoftime.bloodmagic.common.data.*;
 import wayoftime.bloodmagic.common.fluid.BloodMagicFluids;
@@ -83,8 +86,8 @@ import wayoftime.bloodmagic.structures.ModDungeons;
 import wayoftime.bloodmagic.structures.ModRoomPools;
 import wayoftime.bloodmagic.util.handler.event.GenericHandler;
 import wayoftime.bloodmagic.util.handler.event.WillHandler;
+import wayoftime.bloodmagic.will.DemonWillHolder;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @Mod("bloodmagic")
@@ -98,6 +101,7 @@ public class BloodMagic {
     // Custom ItemGroup TAB
     public static final String NAME = "Blood Magic: Alchemical Wizardry";
     public static Boolean curiosLoaded;
+    public static final Capability<DemonWillHolder> WILL_AURA_CAP = CapabilityManager.get(new CapabilityToken<>() {});
 
     public BloodMagic() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -147,6 +151,7 @@ public class BloodMagic {
         modBus.addListener(this::gatherData);
         modBus.addListener(this::addPackfinders);
         modBus.addListener(this::onRegisterCapabilities);
+        MinecraftForge.EVENT_BUS.addGenericListener(LevelChunk.class, this::attachWillCapability);
 
         modBus.addListener(this::registerRecipes);
         modBus.addListener(ConfigManager::onCommonReload);
@@ -222,6 +227,37 @@ public class BloodMagic {
 
     private void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
         event.register(CapabilityRuneType.class);
+        event.register(DemonWillHolder.class);
+    }
+
+    public void attachWillCapability(AttachCapabilitiesEvent<LevelChunk> event) {
+        DemonWillHolder holder = new DemonWillHolder() {
+            @Override
+            public void onContentsChanged() {
+                event.getObject().setUnsaved(true);
+            }
+        };
+        LazyOptional<DemonWillHolder> lazy = LazyOptional.of(() -> holder);
+
+        ICapabilitySerializable<CompoundTag> provider = new ICapabilitySerializable<>() {
+            @Override
+            public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+                return WILL_AURA_CAP.orEmpty(cap, lazy.cast());
+            }
+
+            @Override
+            public CompoundTag serializeNBT() {
+                return holder.serializeNBT();
+            }
+
+            @Override
+            public void deserializeNBT(CompoundTag nbt) {
+                holder.deserializeNBT(nbt);
+            }
+        };
+
+        event.addCapability(BloodMagic.rl("will_aura"), provider);
+        event.addListener(lazy::invalidate);
     }
 
     public void onLoadComplete(FMLLoadCompleteEvent event) {
