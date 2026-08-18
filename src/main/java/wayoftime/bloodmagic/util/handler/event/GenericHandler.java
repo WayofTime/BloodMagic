@@ -494,8 +494,7 @@ public class GenericHandler
 	{
 		if (player instanceof ServerPlayer)
 		{
-			BlockPos pos = player.blockPosition();
-			DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(WorldDemonWillHandler.getDimensionResourceLocation(player.level()), pos.getX() >> 4, pos.getZ() >> 4);
+			DemonWillHolder holder = WorldDemonWillHandler.getWillHolder(player.level(), player.blockPosition());
 			if (holder != null)
 			{
 				BloodMagic.packetHandler.sendTo(new DemonAuraClientPacket(holder), (ServerPlayer) player);
